@@ -606,6 +606,38 @@ TTS_CASE("repace_na")
   test(std::array {na_, na_}, 1, std::array {1, 1});
 };
 
+TTS_CASE("just_second_shuffle")
+{
+  auto test = [](auto _in, std::ptrdiff_t with, auto _expected)
+  {
+    auto in       = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual   = eve::detail::idxm::just_second_shuffle(in, with);
+    TTS_EQUAL(expected, actual) << "with: " << with;
+  };
+
+  test(std::array {0, 1}, na_, std::array {na_, na_});
+  test(std::array {3, 2}, na_, std::array {1, 0});
+  test(std::array {na_, 0}, na_, std::array {na_, na_});
+  test(std::array {we_, 0}, na_, std::array {we_, na_});
+};
+
+TTS_CASE("just_first_shuffle")
+{
+  auto test = [](auto _in, std::ptrdiff_t with, auto _expected)
+  {
+    auto in       = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual   = eve::detail::idxm::just_first_shuffle(in, with);
+    TTS_EQUAL(expected, actual) << "with: " << with;
+  };
+
+  test(std::array {0, 1}, na_, std::array {0, 1});
+  test(std::array {3, 2}, na_, std::array {na_, na_});
+  test(std::array {na_, 2}, na_, std::array {na_, na_});
+  test(std::array {we_, 2}, na_, std::array {we_, na_});
+};
+
 TTS_CASE("is_blend")
 {
   auto test = [](auto _in, std::ptrdiff_t cardinal, bool expected)
@@ -755,6 +787,18 @@ TTS_CASE("split_to_groups")
 
   test(std::array {0, 1, 2, 3}, eve::lane<2>, std::array {0, 1}, std::array {2, 3});
   test(std::array {0, 1, 2, 3}, eve::lane<4>, std::array {0, 1, 2, 3});
+};
+
+TTS_CASE("add shuffle levels")
+{
+  auto add = [](auto... args) { return eve::detail::idxm::add_shuffle_levels(args...); };
+  TTS_EQUAL(1, add(eve::index<1>, eve::index<1>));
+  TTS_EQUAL(1, add(eve::index<1>, eve::index<1>, eve::index<1>));
+  TTS_EQUAL(3, add(eve::index<2>, eve::index<1>, eve::index<1>));
+  TTS_EQUAL(4, add(eve::index<2>, eve::index<2>));
+  TTS_EQUAL(6, add(eve::index<4>, eve::index<2>));
+  TTS_EQUAL(7, add(eve::index<4>, eve::index<3>));
+  TTS_EQUAL(7, add(eve::index<4>, eve::index<3>, eve::index<1>));
 };
 
 }

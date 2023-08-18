@@ -309,9 +309,7 @@ constexpr auto repeated_pattern_of_size = []
   {
     std::optional<std::array<std::ptrdiff_t, target>> res;
     constexpr auto repeated = idxm::reduce_repeated_pattern_until_impl<target, std::array {I...}>();
-    if constexpr (repeated.size() == target) {
-      res = repeated;
-    }
+    if constexpr( repeated.size() == target ) { res = repeated; }
     return res;
   }
 }();
@@ -617,6 +615,56 @@ replace_na(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t with)
   return replace_na(std::span<const std::ptrdiff_t, N>(idxs), with);
 }
 
+template<std::size_t N>
+constexpr auto
+just_second_shuffle(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t with)
+{
+  std::array<std::ptrdiff_t, N> res = {};
+
+  auto s = (std::ptrdiff_t)N;
+
+  for( std::size_t i = 0; i != N; ++i )
+  {
+    auto in = idxs[i];
+    if( 0 <= in && in < s ) res[i] = with;
+    else if ( in < 0) res[i] = in;
+    else res[i] = in - s;
+  }
+  return res;
+}
+
+template<std::size_t N>
+constexpr auto
+just_second_shuffle(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t with)
+{
+  return just_second_shuffle(std::span<const std::ptrdiff_t, N>(idxs), with);
+}
+
+template<std::size_t N>
+constexpr auto
+just_first_shuffle(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t with)
+{
+  std::array<std::ptrdiff_t, N> res = {};
+
+  auto s = (std::ptrdiff_t)N;
+
+  for( std::size_t i = 0; i != N; ++i )
+  {
+    auto in = idxs[i];
+    if( in >= s ) res[i] = with;
+    else res[i] = in;
+  }
+
+  return res;
+}
+
+template<std::size_t N>
+constexpr auto
+just_first_shuffle(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t with)
+{
+  return just_first_shuffle(std::span<const std::ptrdiff_t, N>(idxs), with);
+}
+
 constexpr bool
 is_blend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t cardinal)
 {
@@ -812,6 +860,26 @@ constexpr auto
 split_to_groups(const std::array<std::ptrdiff_t, N>& idxs)
 {
   return split_to_groups<G>(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
+constexpr auto add_shuffle_levels(std::span<const std::ptrdiff_t> ls) {
+  std::ptrdiff_t base = 0;
+  std::ptrdiff_t use_masks = 0;
+
+  for (auto l : ls) {
+    base += l & (~1);
+    use_masks |= l & 1;
+  }
+  return base + use_masks;
+}
+
+constexpr auto add_shuffle_levels(std::array<std::ptrdiff_t, 3> ls) {
+  return add_shuffle_levels(std::span(ls));
+}
+
+template <std::ptrdiff_t ... ls>
+constexpr auto add_shuffle_levels(eve::index_t<ls>... ) {
+  return index<add_shuffle_levels(std::array{ls...})>;
 }
 
 } // namespace eve::detail::idxm

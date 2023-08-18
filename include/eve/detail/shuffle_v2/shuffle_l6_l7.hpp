@@ -26,6 +26,8 @@ namespace detail
 EVE_CALLABLE_API(shuffle_l6_l7_, shuffle_l6_l7)
 }
 
+#include <eve/detail/shuffle_v2/simd/common/shuffle_l6_l7.hpp>
+
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/shuffle_v2/simd/x86/shuffle_l6_l7.hpp>
 #endif

@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/regular/if_else.hpp>
+
 namespace eve::detail
 {
 
@@ -100,6 +102,7 @@ EVE_FORCEINLINE auto
 shuffle_l2_x86_within_128_alignr(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
+  else if constexpr( current_api < ssse3 ) return no_matching_shuffle;
   else
   {
     constexpr auto rotation = idxm::is_rotate(*P::repeated_16);
@@ -154,7 +157,7 @@ shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto pos = eve::detail::idxm::is_just_setting_one_zero(P::idxs2match);
   if constexpr( !pos ) return no_matching_shuffle;
-  else if constexpr ( P::reg_size == 16 )
+  else if constexpr( P::reg_size == 16 )
   {
     constexpr int m = *pos;
 
@@ -215,7 +218,7 @@ EVE_FORCEINLINE auto
 shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( P::g_size < 16 ) return no_matching_shuffle;
-  else if constexpr ( P::reg_size == 32)
+  else if constexpr( P::reg_size == 32 )
   {
     constexpr int mm = idxm::x86_permute2f128_one_reg_mask(P::idxs);
     return _mm256_permute2f128_si256(x, x, mm);
@@ -251,11 +254,10 @@ requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == 16)
   else return no_matching_shuffle;
 }
 
-
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(avx_), P p, fixed<G> g, wide<T, N> x)
-requires (P::out_reg_size == P::reg_size)
+requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_x86_within_128(p, g, x); matched_shuffle<decltype(r)> )
   {
@@ -279,39 +281,56 @@ requires (P::out_reg_size == P::reg_size)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_(EVE_SUPPORTS(sse2_), P, fixed<G>, wide<T, N> x, wide<T, N> y)
-requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
+shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   // Immediate blends are very good, even if are covered by other ops
   // https://stackoverflow.com/questions/76552874/how-should-i-chose-between-mm-move-sd-mm-shuffle-pd-mm-blend-pd
   //
-  // FIX-1617 - enable `_mm_blend_epi16`
-  if constexpr( eve::current_api >= eve::sse4_1 && sizeof(T) >= 4
-                && idxm::is_blend(P::idxs2match, N::value / G) )
-  {
-    constexpr int m = idxm::x86_blend_immediate_mask(P::idxs2match);
 
-    if constexpr( sizeof(T) == 8 )
+  // here using idxs, not idxs2match, no zeroing blend on avx512
+  if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle;
+  else if constexpr( P::reg_size <= 32 && P::g_size >= 4 )
+  {
+    constexpr int m = idxm::x86_blend_immediate_mask(P::idxs, G);
+
+    if constexpr( eve::current_api >= eve::sse4_1 && P::g_size >= 8 )
     {
-      auto x_f64 = bit_cast(x, eve::as<eve::wide<double, eve::fixed<2>>> {});
-      auto y_f64 = bit_cast(y, eve::as<eve::wide<double, eve::fixed<2>>> {});
-      return _mm_blend_pd(x_f64, y_f64, m);
+      auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
+      auto y_f64 = bit_cast(y, eve::as<eve::wide<double, N>> {});
+
+      if constexpr( P::reg_size == 16 ) return _mm_blend_pd(x_f64, y_f64, m);
+      else return _mm256_blend_pd(x_f64, y_f64, m);
     }
-    else if constexpr( sizeof(T) == 4 )
+    else if constexpr( eve::current_api >= eve::sse4_1 && P::g_size >= 4 )
     {
-      auto x_f32 = bit_cast(x, eve::as<eve::wide<float, eve::fixed<4>>> {});
-      auto y_f32 = bit_cast(y, eve::as<eve::wide<float, eve::fixed<4>>> {});
-      return _mm_blend_ps(x_f32, y_f32, m);
+      auto x_f32 = bit_cast(x, eve::as<eve::wide<float, N>> {});
+      auto y_f32 = bit_cast(y, eve::as<eve::wide<float, N>> {});
+
+      if constexpr( P::reg_size == 16 ) return _mm_blend_ps(x_f32, y_f32, m);
+      else return _mm256_blend_ps(x_f32, y_f32, m);
     }
-#if 0 // FIX-1617 - enable `_mm_blend_epi16`
-    else
-    {
-      //
-      return _mm_blend_epi16(x, y, m);
-    }
-#endif
+    // FIX-1617 - enable `_mm_blend_epi16`
+    else return no_matching_shuffle;
   }
-  else if constexpr( sizeof(T) == 8 )
+  else if constexpr( eve::current_api >= avx512 )
+  {
+    // On avx512 we don't count logical masks
+    eve::logical<wide<T, N>> m([](int i, int size) { return P::idxs[i / G] >= size / G; });
+    return eve::if_else(m, y, x);
+  }
+  else return no_matching_shuffle;
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+requires (P::out_reg_size == P::reg_size)
+{
+  if constexpr( auto r = shuffle_l2_x86_blend(p, g, x, y); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( sizeof(T) == 8 && P::reg_size == 16 )
   {
     // half from x, half from y
     // No w/e or zeroes are possible here

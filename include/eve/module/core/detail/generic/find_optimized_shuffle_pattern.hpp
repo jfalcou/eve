@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/rotate.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/pattern.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
@@ -100,6 +100,34 @@ template<typename Callable, typename... Args> struct bound
   }
 };
 
+// Part time migration to shuffle_v2
+
+template<std::ptrdiff_t G, std::ptrdiff_t N>
+inline constexpr auto swap_adjacent_groups_pattern = fix_pattern<N>(
+    [](auto i, auto)
+    {
+      if constexpr( G != N && G != 0 ) return (i + G) % (G * 2) + (G * 2) * (i / (G * 2));
+      else return i;
+    });
+
+template<std::ptrdiff_t... I>
+inline constexpr auto is_swag = []()
+{
+  // List all possible swags for a current size
+  constexpr auto sz = sizeof...(I);
+  constexpr auto x  = []<std::size_t... N>(std::index_sequence<N...>)
+  {
+    return kumi::make_tuple(swap_adjacent_groups_pattern<sz / (1 << (N + 1)), sz>...);
+  }
+  (std::make_index_sequence<std::bit_width(sz) - 1> {});
+
+  // Find the fitting one
+  constexpr auto idx = detail::find_index(pattern<I...>, x);
+  return fixed<sz / (1 << (idx + 1))> {};
+}();
+
+// ---------------------------------
+
 //================================================================================================
 // Look to see if a given pattern is optimizable and returns the optimized function object
 //================================================================================================
@@ -115,7 +143,7 @@ find_optimized_shuffle_pattern()
   else if constexpr( is_identity<I0, I...> ) return bound {identity_swizzle {}, p};
   else if constexpr( is_swag<I0, I...> != sz )
   {
-    return bound {swap_adjacent_groups, is_swag<I0, I...>};
+    return bound {swap_adjacent, is_swag<I0, I...>};
   }
   else if constexpr( constexpr auto st = is_broadcast_group<InCardinal, I0, I...> )
   {

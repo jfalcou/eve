@@ -86,7 +86,7 @@ namespace eve
 //!    If to produce 4 results we need to apply it 4 times it doesn't become more complex,
 //!    you just have more work to do.
 //!    From a practicle stand point, we want to be able to say:
-//!    "swap_adjacent_groups is at most level 5", and not "5 * number of output registers"
+//!    "swap_adjacent is at most level 5", and not "5 * number of output registers"
 //!
 //!    If it proves to be important to accumulate all shuffles, we will change it in the future.
 //! @}

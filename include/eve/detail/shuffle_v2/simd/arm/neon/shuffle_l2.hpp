@@ -65,10 +65,10 @@ vcopy_lane(eve::wide<T, N> x, eve::index_t<To>, eve::wide<T, N> y, eve::index_t<
   }
   else
   {
-    if constexpr( sizeof(T) == 8 ) return vcopy_laneq_u64(x, To, y, From);
-    else if constexpr( sizeof(T) == 4 ) return vcopy_laneq_u32(x, To, y, From);
-    else if constexpr( sizeof(T) == 2 ) return vcopy_laneq_u16(x, To, y, From);
-    else return vcopy_laneq_u8(x, To, y, From);
+    if constexpr( sizeof(T) == 8 ) return vcopyq_laneq_u64(x, To, y, From);
+    else if constexpr( sizeof(T) == 4 ) return vcopyq_laneq_u32(x, To, y, From);
+    else if constexpr( sizeof(T) == 2 ) return vcopyq_laneq_u16(x, To, y, From);
+    else return vcopyq_laneq_u8(x, To, y, From);
   }
 }
 
@@ -209,6 +209,37 @@ requires(P::out_reg_size == P::reg_size)
   }
   else if constexpr( auto r = shuffle_l2_neon_copy_lane_self(p, g, x);
                      matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else return no_matching_shuffle_t {};
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_neon_copy_lane_other(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  constexpr auto to_from0 = idxm::is_just_setting_one_lane(P::idxs);
+  constexpr auto to_from1 = idxm::is_just_setting_one_lane(P::xy_swapped);
+
+  if constexpr( current_api < asimd ) return no_matching_shuffle_t {};
+  else if constexpr( to_from0 )
+  {
+    return vcopy_lane(x, eve::index<(*to_from0)[0]>, y, eve::index<(*to_from0)[1] - N::value * G>);
+  }
+  else if constexpr( to_from1 )
+  {
+    return vcopy_lane(y, eve::index<(*to_from1)[0]>, x, eve::index<(*to_from1)[1] - N::value * G>);
+  }
+  else return no_matching_shuffle_t {};
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+requires(P::out_reg_size == P::reg_size)
+{
+  if constexpr( auto r = shuffle_l2_neon_copy_lane_other(p, g, x, y); matched_shuffle<decltype(r)> )
   {
     return r;
   }

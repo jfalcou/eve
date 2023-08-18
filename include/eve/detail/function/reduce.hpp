@@ -9,7 +9,7 @@
 
 #include <eve/concept/vectorized.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/module/core/regular/swap_adjacent_groups.hpp>
+#include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 #include <bit>
 
 namespace eve::detail
@@ -29,7 +29,7 @@ namespace eve::detail
 
       return [&]<std::size_t... I>(std::index_sequence<I...>) mutable
       {
-        ((v = f(v,swap_adjacent_groups(v, fixed<(1<<I)>{} ))),...);
+        ((v = f(v,swap_adjacent(v, fixed<(1<<I)>{} ))),...);
         return v;
       }(std::make_index_sequence<depth>{});
     }

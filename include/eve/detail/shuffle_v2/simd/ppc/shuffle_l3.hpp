@@ -49,6 +49,30 @@ shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
   }
 }
 
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle;
+  else
+  {
+    eve::logical<wide<T, N>> m([](int i, int size) { return P::idxs[i / G] >= size / G; });
+    return vec_sel(x.storage(), y.storage(), m.storage());
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+requires(P::out_reg_size == P::reg_size)
+{
+  if constexpr( auto r = shuffle_l3_ppc_vec_sel(p, g, x, y); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else return no_matching_shuffle_t {};
+}
+
 }
 
 //     return vec_perm(what.storage(), what.storage(), pattern.storage());
