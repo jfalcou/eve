@@ -30,5 +30,5 @@ namespace eve
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/compress/simd/x86/compress_using_bmi.hpp>
+#  include <eve/module/core/compress/detail/simd/x86/compress_using_bmi.hpp>
 #endif

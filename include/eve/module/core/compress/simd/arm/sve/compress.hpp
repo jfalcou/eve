@@ -52,7 +52,7 @@ namespace eve::detail
     return N() > eve::expected_cardinal_v<std::int32_t>;
   }
 
-  template<relative_conditional_expr C, typename T, typename U, typename N>
+  template<relative_conditional_expr C, std::unsigned_integral T, std::unsigned_integral U, typename N>
   EVE_FORCEINLINE
   auto compress_(EVE_SUPPORTS(sve_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
   {

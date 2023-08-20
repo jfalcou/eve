@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/compress/compress_using_bmi.hpp>
-#include <eve/detail/compress/compress_using_switch.hpp>
+#include <eve/module/core/compress/detail/compress_using_bmi.hpp>
+#include <eve/module/core/compress/detail/compress_using_switch.hpp>
 
 namespace eve::detail
 {

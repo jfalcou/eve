@@ -50,4 +50,4 @@ namespace eve
 EVE_MAKE_CALLABLE(compress_store_, compress_store);
 }
 
-#include <eve/module/core/regular/impl/compress_store.hpp>
+#include <eve/module/core/compress/simd/common/compress_store.hpp>

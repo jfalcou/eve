@@ -5,9 +5,9 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "test.hpp"
+#pragma once
 
-#include <eve/module/core/regular/compress_store.hpp>
+#include "test.hpp"
 
 #include <algorithm>
 #include <array>

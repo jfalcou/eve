@@ -23,23 +23,15 @@
 
 namespace eve
 {
-  EVE_REGISTER_CALLABLE(compress_)
-  EVE_DECLARE_CALLABLE(compress_, compress)
-
-  namespace detail
-  {
-    EVE_ALIAS_CALLABLE(compress_, compress);
-  }
-
-  EVE_CALLABLE_API(compress_, compress)
+  EVE_MAKE_CALLABLE(compress_, compress);
 }
 
-#include <eve/detail/compress/simd/common/compress.hpp>
+#include <eve/module/core/compress/simd/common/compress.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/compress/simd/x86/compress.hpp>
+#  include <eve/module/core/compress/simd/x86/compress.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/detail/compress/simd/arm/sve/compress.hpp>
+#  include <eve/module/core/compress/simd/arm/sve/compress.hpp>
 #endif
