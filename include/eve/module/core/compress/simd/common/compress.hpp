@@ -12,60 +12,50 @@
 namespace eve::detail
 {
 
-template<simd_value T>
-EVE_FORCEINLINE auto
-compress_convert_back(auto res, eve::as<T>)
-{
-  using abi = typename T::abi_type;
-
-  return kumi::map(
-      [](auto compressed_count)
-      {
-        auto [compressed, count] = compressed_count;
-
-        T r;
-
-        constexpr bool is_not_wide_logical = logical_simd_value<T> && abi::is_wide_logical;
-
-        if constexpr( !is_not_wide_logical ) r = eve::bit_cast(compressed, eve::as(r));
-        else r = eve::bit_cast(to_logical(compressed), eve::as(r));
-
-        return kumi::tuple {r, count};
-      },
-      res);
-}
-
-template<relative_conditional_expr C, std::unsigned_integral T, std::unsigned_integral U, typename N>
+template<relative_conditional_expr C, typename T, typename U, typename N>
 EVE_FORCEINLINE auto
 compress_(EVE_SUPPORTS(cpu_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 {
-  return compress_using_masks[c](v, mask);
+  if constexpr( C::is_complete && !C::is_inverted )
+  {
+    kumi::tuple cur {v, (std::ptrdiff_t)0};
+    return kumi::tuple<decltype(cur)> {cur};
+  }
+  else return compress_using_masks[c](v, mask);
 }
 
-template<relative_conditional_expr C, simd_value T, typename U, typename N>
-EVE_FORCEINLINE auto
-compress_(EVE_SUPPORTS(cpu_), C c, T v, logical<wide<U, N>> m) noexcept
-requires(T::size() == N::value)
+template<typename L> struct compress_bits_to_logical
 {
-  // canonicalize to reduce duplication in compilation
-  if constexpr( !std::unsigned_integral<U> )
+  // unfortunately, we are not consistent with integer types
+  template<typename T, typename N, std::integral I>
+  EVE_FORCEINLINE auto operator()(kumi::tuple<wide<T, N>, I> bits_offset)
   {
-    using L1 = logical<wide<make_integer<sizeof(U), unsigned>, N>>;
-    return compress(c, v, bit_cast(m, eve::as<L1> {}));
-  }
-  else if constexpr( logical_value<T> )
-  {
-    auto bits = compress(c, v.bits(), m);
-    return compress_convert_back(bits, eve::as<T> {});
-  }
-  else
-  {
-    using e_t1 = make_integer<sizeof(eve::element_type_t<T>), unsigned>;
-    using T1   = eve::wide<e_t1, typename T::cardinal_type>;
+    auto [bits, offset] = bits_offset;
 
-    auto compressed = compress(c, bit_cast(v, eve::as<T1> {}), m);
-    return compress_convert_back(compressed, eve::as<T> {});
+    eve::as_wide_t<eve::element_type_t<L>, N> r;
+
+    if constexpr( abi_t<T, N>::is_wide_logical ) r = bit_cast(bits, as(r));
+    else r = bit_cast(to_logical(bits), as(r));
+
+    return kumi::tuple {r, offset};
   }
+};
+
+template<relative_conditional_expr C, logical_simd_value T, logical_simd_value L>
+EVE_FORCEINLINE auto
+compress_(EVE_SUPPORTS(cpu_), C c, T v, L mask) noexcept
+requires(T::size() == L::size())
+{
+  auto compressed = compress[c](v.bits(), mask);
+  return kumi::map(compress_bits_to_logical<T> {}, compressed);
+}
+
+template<relative_conditional_expr C, simd_value T, logical_simd_value L>
+EVE_FORCEINLINE auto
+compress_(EVE_SUPPORTS(cpu_), C, T, L) noexcept
+requires(T::size() == L::size()) && (has_bundle_abi_v<T>)
+{
+  static_assert(!has_bundle_abi_v<T>, "FIX: 1647, eve::compress does not support bundle at the moment.");
 }
 
 template<simd_value T, logical_simd_value L>
