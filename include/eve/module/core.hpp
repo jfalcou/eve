@@ -93,7 +93,7 @@
 //! @ingroup core
 //! Functions that are just shuffles with a different api.
 //!
-//! @defgroup core_comporess Compress functions
+//! @defgroup core_compress Compress functions
 //! @ingroup core
 //! Functions that in different way expose `compressing` selected elements
 //! together to beginning. This is at the core of `remove_if`, `copy_if` etc.
