@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::compress_store</title>
+<title>E.V.E: eve::algo::for_each</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__simd_gaa538588c547767772b1b1fe4b61f357e.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_gabc4fab3473dac382f3ad4edc9531aec0.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__core__simd_gaa538588c547767772b
 </div>
 
 <div class="contents">
-<a id="gaa538588c547767772b1b1fe4b61f357e" name="gaa538588c547767772b1b1fe4b61f357e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa538588c547767772b1b1fe4b61f357e">&#9670;&#160;</a></span>compress_store</h2>
+<a id="gabc4fab3473dac382f3ad4edc9531aec0" name="gabc4fab3473dac382f3ad4edc9531aec0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc4fab3473dac382f3ad4edc9531aec0">&#9670;&#160;</a></span>for_each</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gaa538588c547767772b
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::compress_store = {}</td>
+          <td class="memname">eve::algo::for_each = function_with_traits&lt;for_each_&gt;</td>
         </tr>
       </table>
   </td>
@@ -140,24 +140,19 @@ $(document).ready(function(){initNavTree('group__core__simd_gaa538588c547767772b
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">   TODO</div>
-<div class="line">}</div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
+
+<p><code>#include &lt;eve/module/algo/algo/for_each.hpp&gt;</code></p>
 <ul>
-<li><code>x</code>: An instance of an <a class="el" href="concepteve_1_1simd__value.html">SIMD value</a></li>
+<li>The operation is called with <code>iterator</code> and <code>ignore</code>.</li>
+<li>Result of the operation is ignored.</li>
+<li>Operation is passed by value.</li>
+<li>There is no default traits.</li>
+<li>We do not return anything.</li>
+<li>The unrolling just calls the single step.</li>
+<li>Will align by default.</li>
 </ul>
-<p><b>Return value</b></p>
-<ul>
-<li>TODO</li>
-</ul>
-<h2 class="groupheader">Example </h2>
-<p>TODO </p>
+<p>If you you have a more advanced unrolling, consider using the <code>for_each_iteration</code>.</p>
+<p><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/for_each.hpp&gt;</code> </p>
 
 </div>
 </div>
@@ -167,7 +162,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gaa538588c547767772b
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

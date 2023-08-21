@@ -3,6 +3,7 @@ var group__core =
     [ "Accuracy helpers", "group__core__accuracy.html", "group__core__accuracy" ],
     [ "Arithmetic operations", "group__core__arithmetic.html", "group__core__arithmetic" ],
     [ "Bitwise functions", "group__core__bitops.html", "group__core__bitops" ],
+    [ "Compress functions", "group__core__comporess.html", null ],
     [ "Constants", "group__core__constants.html", "group__core__constants" ],
     [ "Conversions", "group__core__conversions.html", "group__core__conversions" ],
     [ "Decorators", "group__core__decorators.html", "group__core__decorators" ],

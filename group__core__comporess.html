@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::transform_to</title>
+<title>E.V.E: Compress functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algorithms_ga023d457444697194cbb8dcf21bcb236e.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__comporess.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -120,48 +120,17 @@ $(document).ready(function(){initNavTree('group__algorithms_ga023d457444697194cb
 </div>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">Compress functions<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a> &raquo; <a class="el" href="group__core.html">Core functions</a></div></div></div>
+</div><!--header-->
 <div class="contents">
-<a id="ga023d457444697194cbb8dcf21bcb236e" name="ga023d457444697194cbb8dcf21bcb236e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga023d457444697194cbb8dcf21bcb236e">&#9670;&#160;</a></span>transform_to</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">eve::algo::transform_to = function_with_traits&lt;transform_to_&gt;[default_simple_algo_traits]</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p><code>#include &lt;eve/module/algo/algo/transform.hpp&gt;</code></p>
-<ul>
-<li>Accepts two things zipping together to range of pair.</li>
-<li>Also can accept a <code>zipped_range_pair</code>.</li>
-<li>returns void.</li>
-<li>default unrolling is 4.</li>
-<li>will align by default.</li>
-<li>the output type of the operation, is not considered in cardinal computation. (otherwise we'd have to require the predicate to be a template).</li>
-<li>if the operation output type differs from the output range type, converts.</li>
-</ul>
-<p><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/transform.hpp&gt;</code> </p>
-
-</div>
-</div>
+<p>Functions that in different way expose <code>compressing</code> selected elements together to beginning. This is at the core of <code>remove_if</code>, <code>copy_if</code> etc. Alternative search keywords: filter, remove, pack </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="group__algorithms.html">Algorithms and Views</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

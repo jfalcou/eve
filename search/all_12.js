@@ -94,5 +94,5 @@ var searchData=
   ['swap_5fadjacent_91',['swap_adjacent',['../group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5',1,'eve']]],
   ['swap_5fif_92',['swap_if',['../group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c',1,'eve']]],
   ['swap_5fpairs_93',['swap_pairs',['../group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576',1,'eve']]],
-  ['swap_5franges_94',['swap_ranges',['../group__algorithms_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
+  ['swap_5franges_94',['swap_ranges',['../group__algos_ga63bba063962e8782acace22069c8d641.html#ga63bba063962e8782acace22069c8d641',1,'eve::algo']]]
 ];

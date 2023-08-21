@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::iota</title>
+<title>E.V.E: eve::algo::swap_ranges</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algorithms_gaca4936fc6b0b70ef06e72b118dce7c7a.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_ga63bba063962e8782acace22069c8d641.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__algorithms_gaca4936fc6b0b70ef06
 </div>
 
 <div class="contents">
-<a id="gaca4936fc6b0b70ef06e72b118dce7c7a" name="gaca4936fc6b0b70ef06e72b118dce7c7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaca4936fc6b0b70ef06e72b118dce7c7a">&#9670;&#160;</a></span>iota</h2>
+<a id="ga63bba063962e8782acace22069c8d641" name="ga63bba063962e8782acace22069c8d641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga63bba063962e8782acace22069c8d641">&#9670;&#160;</a></span>swap_ranges</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__algorithms_gaca4936fc6b0b70ef06
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::iota = function_with_traits&lt;iota_&gt;[copy.get_traits()]</td>
+          <td class="memname">eve::algo::swap_ranges = function_with_traits&lt;swap_ranges_&gt;[default_simple_algo_traits]</td>
         </tr>
       </table>
   </td>
@@ -141,8 +141,16 @@ $(document).ready(function(){initNavTree('group__algorithms_gaca4936fc6b0b70ef06
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/module/algo/algo/iota.hpp&gt;</code></p>
-<p><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/iota.hpp&gt;</code> </p>
+<p><code>#include &lt;eve/module/algo/algo/swap_ranges.hpp&gt;</code></p>
+<ul>
+<li>Accepts two things zipping together to range of pair.</li>
+<li>Also can accept a <code>zipped_range_pair</code>.</li>
+<li>returns void.</li>
+<li>default unrolling is 4.</li>
+<li>will align by default.</li>
+<li>will do conversions if necessary.</li>
+</ul>
+<p><b>Required header:</b> <code>#include &lt;eve/module/algo/algo/swap_ranges.hpp&gt;</code> </p>
 
 </div>
 </div>
@@ -152,7 +160,7 @@ $(document).ready(function(){initNavTree('group__algorithms_gaca4936fc6b0b70ef06
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="group__algorithms.html">Algorithms and Views</a></li>
+    <li class="navelem"><a class="el" href="group__algos.html">Algorithms</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->

@@ -27,7 +27,7 @@ var searchData=
   ['invlog_5f2_24',['invlog_2',['../group__math__constants_gaeb667b96225f1f9d9e6a5b480d960344.html#gaeb667b96225f1f9d9e6a5b480d960344',1,'eve']]],
   ['invlog_5fphi_25',['invlog_phi',['../group__math__constants_ga5545448268f6f786e4e4211578a130ac.html#ga5545448268f6f786e4e4211578a130ac',1,'eve']]],
   ['invsqrt_5f2_26',['invsqrt_2',['../group__math__constants_ga49667d76f54c0c7753c703215266975f.html#ga49667d76f54c0c7753c703215266975f',1,'eve']]],
-  ['iota_27',['iota',['../group__algorithms_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a',1,'eve::algo::iota()'],['../group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5',1,'eve::algo::views::iota()']]],
+  ['iota_27',['iota',['../group__algos_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a',1,'eve::algo::iota()'],['../group__views_gac775cd27d2cf90ff76710e45c8e5e1d5.html#gac775cd27d2cf90ff76710e45c8e5e1d5',1,'eve::algo::views::iota()']]],
   ['iota_5fwith_5fstep_28',['iota_with_step',['../group__views_ga15a3720ef5286619ec41001d7f252913.html#ga15a3720ef5286619ec41001d7f252913',1,'eve::algo::views']]],
   ['ipart_29',['ipart',['../group__quaternion_ga2daca498356d4e95f30deaa8082b247f.html#ga2daca498356d4e95f30deaa8082b247f',1,'eve']]],
   ['is_5faggregated_30',['is_aggregated',['../structeve_1_1top__bits.html#a5154a768fbc421af8a5301e9096c7350',1,'eve::top_bits']]],
