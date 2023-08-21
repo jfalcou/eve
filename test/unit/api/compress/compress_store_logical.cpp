@@ -11,17 +11,16 @@
 
 TTS_CASE_WITH( "Check compress store behavior"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1))
+        , tts::generate(tts::logicals(1,2))
         )
-<typename T> (T data)
+<typename L> (L logical_data)
 {
-#if defined(SPY_SIMD_IS_ARM_FIXED_SVE)
-  TTS_PASS("FIX-ME: 1493");
-  return;  // not
-#endif
-  using N = eve::fixed<T::size()>;
-  smaller_test_v<eve::logical<eve::wide<std::uint8_t,  N>>>(data);
-  smaller_test_v<eve::logical<eve::wide<std::uint16_t, N>>>(data);
-  smaller_test_v<eve::logical<eve::wide<std::uint32_t, N>>>(data);
-  smaller_test_v<eve::logical<eve::wide<std::uint64_t, N>>>(data);
+  using N = eve::fixed<L::size()>;
+
+
+  compress_store_test<L>(logical_data);
+  compress_store_test<eve::logical<eve::wide<std::uint8_t,  N>>>(logical_data);
+  compress_store_test<eve::logical<eve::wide<std::uint16_t, N>>>(logical_data);
+  compress_store_test<eve::logical<eve::wide<std::uint32_t, N>>>(logical_data);
+  compress_store_test<eve::logical<eve::wide<std::uint64_t, N>>>(logical_data);
 };

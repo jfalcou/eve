@@ -27,8 +27,8 @@ namespace eve
   EVE_CALLABLE_API(compress_using_switch_, compress_using_switch)
 }
 
-#include <eve/detail/compress/simd/common/compress_using_switch.hpp>
+#include <eve/module/core/compress/detail/simd/common/compress_using_switch.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/compress/simd/x86/compress_using_switch.hpp>
+#  include <eve/module/core/compress/detail/simd/x86/compress_using_switch.hpp>
 #endif

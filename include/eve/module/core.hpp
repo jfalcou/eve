@@ -93,9 +93,16 @@
 //! @ingroup core
 //! Functions that are just shuffles with a different api.
 //!
+//! @defgroup core_comporess Compress functions
+//! @ingroup core
+//! Functions that in different way expose `compressing` selected elements
+//! together to beginning. This is at the core of `remove_if`, `copy_if` etc.
+//! Alternative search keywords: filter, remove, pack
+//!
 //! @}
 //==================================================================================================
 
+#include <eve/module/core/compress/core.hpp>
 #include <eve/module/core/constant/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/core.hpp>
