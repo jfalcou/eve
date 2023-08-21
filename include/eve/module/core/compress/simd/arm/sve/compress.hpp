@@ -56,11 +56,7 @@ namespace eve::detail
   EVE_FORCEINLINE
   auto compress_(EVE_SUPPORTS(sve_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
   {
-    if constexpr ( C::is_complete && !C::is_inverted )
-    {
-      kumi::tuple cur{ v, (std::ptrdiff_t) 0 };
-      return kumi::tuple<decltype(cur)> { cur };
-    }
+    if constexpr( C::is_complete && !C::is_inverted ) return compress_(EVE_RETARGET(cpu_), c, v, mask);
     else if constexpr ( !C::is_complete )
     {
       return compress(ignore_none, v, mask && c.mask(as(mask)));

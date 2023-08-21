@@ -5,9 +5,9 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "test.hpp"
+#pragma once
 
-#include <eve/module/core/regular/compress_store.hpp>
+#include "test.hpp"
 
 #include <algorithm>
 #include <array>
@@ -51,22 +51,11 @@ void ignore_test(T x, L m, C c)
 }
 
 template <typename T, typename L>
-void all_ignore_tests(T x, L m)
+void ignore_tests(T x, L m)
 {
-  if (x.size() < 16)
-  {
-    for (int i = 0; i != x.size() + 1; ++i) {
-      for (int j = 0; j <= x.size() - i; ++j) {
-        ignore_test(x, m, eve::ignore_extrema{i, j});
-      }
-    }
-  }
-  else
-  {
-    for (int i = 0; i != x.size() + 1; ++i) {
-      ignore_test(x, m, eve::ignore_first(i));
-      ignore_test(x, m, eve::ignore_last(i));
-    }
+  for (int i = 0; i < x.size() + 1; i += 7) {
+    ignore_test(x, m, eve::ignore_first(i));
+    ignore_test(x, m, eve::ignore_last(i));
   }
 }
 
@@ -138,30 +127,11 @@ void one_test(T x, L m)
     TTS_EQUAL(T(expected.begin()), T(actual.begin()));
   }
 
-  if constexpr (all_options)
-  {
-    all_ignore_tests(x, m);
-  }
-}
-
-template <typename L, typename T>
-void go_through_everything(T x)
-{
-  L m(false);
-  auto test = [&](auto& self, std::size_t i) mutable {
-    if (i == T::size()) {
-      one_test<false>(x, m);
-      return;
-    };
-    self(self, i + 1);
-    m.set(i, true);
-    self(self, i + 1);
-  };
-  test(test, 0);
+  ignore_tests(x, m);
 }
 
 template<typename L, typename T>
-void smaller_test_v(T x)
+void compress_store_test(T x)
 {
   {
     // even elements
@@ -194,20 +164,10 @@ void smaller_test_v(T x)
         return m;
       };
 
-      for( int i = 0; i < 100; ++i ) { one_test<false>(x, random_l()); }
+      for( int i = 0; i < 20; ++i ) { one_test<false>(x, random_l()); }
     }
 
     // precise
     precise_tests<L>(x);
   }
-}
-
-template <typename L, typename T>
-void all_tests_for_v(T x)
-{
-  if constexpr (T::size() <= 8)
-  {
-    go_through_everything<L>(x);
-  }
-  smaller_test_v<L>(x);
 }

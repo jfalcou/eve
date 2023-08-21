@@ -13,7 +13,7 @@ TTS_CASE("compress_store helpers")
   TTS_PASS("Nothing to do here");
 };
 #else
-#include <eve/detail/compress/compress_mask_num.hpp>
+#include <eve/module/core/compress/detail/compress_mask_num.hpp>
 
 #include <bit>
 #include <random>

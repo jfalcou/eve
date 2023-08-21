@@ -48,6 +48,7 @@ glob_unit("doc" ${doc_root} "quaternion/regular/*.cpp"  )
 ##==================================================================================================
 add_custom_target(doc.core.exe        )
 add_dependencies(doc.exe doc.core.exe )
+glob_unit("doc" ${doc_root} "core/compress/*.cpp" )
 glob_unit("doc" ${doc_root} "core/constant/*.cpp"       )
 glob_unit("doc" ${doc_root} "core/fuzzy/*.cpp"          )
 glob_unit("doc" ${doc_root} "core/masked/*.cpp"         )

@@ -62,6 +62,22 @@ namespace eve::algo
     }
   };
 
+  //================================================================================================
+  //! @addtogroup algos
+  //! @{
+  //!  @var remove_if
+  //!  @brief SIMD version of std::remove_if
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/algo.hpp>
+  //!   @endcode
+  //!
+  //!   TODO: docs
+  //!
+  //! @}
+  //================================================================================================
   inline constexpr auto remove_if = function_with_traits<remove_if_>[no_traits];
 
   template <typename TraitsSupport>
@@ -74,5 +90,21 @@ namespace eve::algo
     }
   };
 
+ //================================================================================================
+  //! @addtogroup algos
+  //! @{
+  //!  @var remove
+  //!  @brief SIMD version of std::remove
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/algo.hpp>
+  //!   @endcode
+  //!
+  //!   TODO: docs
+  //!
+  //! @}
+  //================================================================================================
   inline constexpr auto remove = function_with_traits<remove_>[no_traits];
 }
