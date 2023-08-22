@@ -61,8 +61,10 @@ namespace eve
   //!       template <simd_value T, logical_simd_value L>
   //!       auto compress(T x, L m);                       // (1)
   //!
-  //!       template <simd_value T, logical_simd_value L>
-  //!       auto compress[ignore](T x, L m)                // (2)
+  //!       template <relative_conditional_expr C,
+  //!                 simd_value T,
+  //!                 logical_simd_value L>
+  //!       auto compress[C ignore](T x, L m)                // (2)
   //!    }
   //!    @endcode
   //!
