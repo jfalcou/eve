@@ -281,6 +281,7 @@ var namespaceeve =
     [ "fanm", "group__core__fma__family_ga4f4ca543d5f16fa535a0307128ec27aa.html#ga4f4ca543d5f16fa535a0307128ec27aa", null ],
     [ "fdim", "group__core__arithmetic_gae321c7322c1e89bb6e54b882569caf43.html#gae321c7322c1e89bb6e54b882569caf43", null ],
     [ "fibonacci", "group__combinatorial_ga2926f86282a2eea8226d89f8111418e6.html#ga2926f86282a2eea8226d89f8111418e6", null ],
+    [ "first_true", "group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597", null ],
     [ "firstbitset", "group__core__bitops_gad440bea367cdc362a6e90919cc601e35.html#gad440bea367cdc362a6e90919cc601e35", null ],
     [ "firstbitunset", "group__core__bitops_ga8bc33d70eb0f0eb36126b95e06588748.html#ga8bc33d70eb0f0eb36126b95e06588748", null ],
     [ "float32", "group__core__conversions_ga274dac2c4e1dfa15f47d228529791c5a.html#ga274dac2c4e1dfa15f47d228529791c5a", null ],

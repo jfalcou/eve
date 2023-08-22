@@ -7,36 +7,36 @@ var eve_dev =
       [ "Masked operations support", "design_rationale.html#rationale-mask", null ]
     ] ],
     [ "SIMD Algorithms", "algo_rationale.html", [
-      [ "General Principles", "algo_rationale.html#autotoc_md142", null ],
-      [ "Basic Components", "algo_rationale.html#autotoc_md143", [
-        [ "Reusable loops", "algo_rationale.html#autotoc_md144", null ],
-        [ "Ranges or Iterators", "algo_rationale.html#autotoc_md145", [
-          [ "General concepts", "algo_rationale.html#autotoc_md146", null ],
-          [ "Relaxed concepts", "algo_rationale.html#autotoc_md147", null ]
+      [ "General Principles", "algo_rationale.html#autotoc_md144", null ],
+      [ "Basic Components", "algo_rationale.html#autotoc_md145", [
+        [ "Reusable loops", "algo_rationale.html#autotoc_md146", null ],
+        [ "Ranges or Iterators", "algo_rationale.html#autotoc_md147", [
+          [ "General concepts", "algo_rationale.html#autotoc_md148", null ],
+          [ "Relaxed concepts", "algo_rationale.html#autotoc_md149", null ]
         ] ]
       ] ],
-      [ "Customization", "algo_rationale.html#autotoc_md148", [
-        [ "Algorithms traits", "algo_rationale.html#autotoc_md149", null ]
+      [ "Customization", "algo_rationale.html#autotoc_md150", [
+        [ "Algorithms traits", "algo_rationale.html#autotoc_md151", null ]
       ] ]
     ] ],
     [ "Components Semantic", "glossary_semantic.html", [
-      [ "Property of EVE types", "glossary_semantic.html#autotoc_md153", [
-        [ "Cardinal", "glossary_semantic.html#autotoc_md154", null ],
-        [ "Element type", "glossary_semantic.html#autotoc_md155", null ],
-        [ "ABI traits", "glossary_semantic.html#autotoc_md156", null ]
+      [ "Property of EVE types", "glossary_semantic.html#autotoc_md155", [
+        [ "Cardinal", "glossary_semantic.html#autotoc_md156", null ],
+        [ "Element type", "glossary_semantic.html#autotoc_md157", null ],
+        [ "ABI traits", "glossary_semantic.html#autotoc_md158", null ]
       ] ],
-      [ "Operations Classification", "glossary_semantic.html#autotoc_md157", [
-        [ "Generalized Element Access", "glossary_semantic.html#autotoc_md158", null ],
+      [ "Operations Classification", "glossary_semantic.html#autotoc_md159", [
+        [ "Generalized Element Access", "glossary_semantic.html#autotoc_md160", null ],
         [ "Element-wise Operations", "glossary_semantic.html#glossary_elementwise", null ],
         [ "Reductions", "glossary_semantic.html#glossary_reduction", null ]
       ] ],
-      [ "Function Semantic", "glossary_semantic.html#autotoc_md159", [
+      [ "Function Semantic", "glossary_semantic.html#autotoc_md161", [
         [ "Arithmetic Functions", "glossary_semantic.html#glossary_arithmetic", null ],
         [ "Bitwise Functions", "glossary_semantic.html#glossary_bitwise", null ],
         [ "Logical Functions", "glossary_semantic.html#glossary_logical", null ],
         [ "Constant Functions", "glossary_semantic.html#glossary_constant", null ],
-        [ "General Principles", "glossary_semantic.html#autotoc_md160", null ],
-        [ "Precision handling", "glossary_semantic.html#autotoc_md161", null ]
+        [ "General Principles", "glossary_semantic.html#autotoc_md162", null ],
+        [ "Precision handling", "glossary_semantic.html#autotoc_md163", null ]
       ] ]
     ] ],
     [ "Development Environment", "dev_environment.html", [
@@ -44,8 +44,8 @@ var eve_dev =
       [ "Running EVE docker", "dev_environment.html#dev_docker_helper", null ]
     ] ],
     [ "Building for Testing", "dev_cmake.html", [
-      [ "CMake setup", "dev_cmake.html#autotoc_md150", null ],
-      [ "Compiling EVE Unit Tests", "dev_cmake.html#autotoc_md151", null ],
-      [ "Compiling EVE Random Tests", "dev_cmake.html#autotoc_md152", null ]
+      [ "CMake setup", "dev_cmake.html#autotoc_md152", null ],
+      [ "Compiling EVE Unit Tests", "dev_cmake.html#autotoc_md153", null ],
+      [ "Compiling EVE Random Tests", "dev_cmake.html#autotoc_md154", null ]
     ] ]
 ];
