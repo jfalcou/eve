@@ -1374,6 +1374,16 @@ namespace kumi
       (std::make_index_sequence<size<Tuple>::value>());
     }
   }
+  template<typename Function, sized_product_type_or_more<1> Tuple>
+  [[nodiscard]] constexpr auto fold_left(Function f, Tuple&& t)
+  {
+    if constexpr(sized_product_type<Tuple,1>) return get<0>(t);
+    else
+    {
+      auto&&[heads, tail] = split(KUMI_FWD(t), index<2>);
+      return fold_left(f, tail, kumi::apply(f,heads));
+    }
+  }
   template<typename Function, product_type Tuple, typename Value>
   [[nodiscard]] constexpr auto fold_right(Function f, Tuple&& t, Value init)
   {
@@ -1387,9 +1397,19 @@ namespace kumi
       (std::make_index_sequence<size<Tuple>::value>());
     }
   }
+  template<typename Function, sized_product_type_or_more<1> Tuple>
+  [[nodiscard]] constexpr auto fold_right(Function f, Tuple&& t)
+  {
+    if constexpr(sized_product_type<Tuple,1>) return get<0>(t);
+    else
+    {
+      auto&&[head, tails] = split(KUMI_FWD(t), index<size_v<Tuple>-2>);
+      return fold_left(f, head, kumi::apply(f,tails));
+    }
+  }
   namespace result
   {
-    template<typename Function, product_type Tuple, typename Value>
+    template<typename Function, product_type Tuple, typename Value = void>
     struct fold_right
     {
       using type = decltype ( kumi::fold_right( std::declval<Function>()
@@ -1398,7 +1418,15 @@ namespace kumi
                                               )
                             );
     };
-    template<typename Function, product_type Tuple, typename Value>
+    template<typename Function, product_type Tuple>
+    struct fold_right<Function,Tuple>
+    {
+      using type = decltype ( kumi::fold_right( std::declval<Function>()
+                                              , std::declval<Tuple>()
+                                              )
+                            );
+    };
+    template<typename Function, product_type Tuple, typename Value = void>
     struct fold_left
     {
       using type = decltype ( kumi::fold_left ( std::declval<Function>()
@@ -1407,9 +1435,17 @@ namespace kumi
                                               )
                             );
     };
-    template<typename Function, product_type Tuple, typename Value>
+    template<typename Function, product_type Tuple>
+    struct fold_left<Function,Tuple>
+    {
+      using type = decltype ( kumi::fold_left ( std::declval<Function>()
+                                              , std::declval<Tuple>()
+                                              )
+                            );
+    };
+    template<typename Function, product_type Tuple, typename Value = void>
     using fold_right_t = typename fold_right<Function,Tuple,Value>::type;
-    template<typename Function, product_type Tuple, typename Value>
+    template<typename Function, product_type Tuple, typename Value = void>
     using fold_left_t = typename fold_left<Function,Tuple,Value>::type;
   }
 }
@@ -1537,29 +1573,58 @@ namespace kumi
 namespace kumi
 {
   template<typename Pred, typename T>
-  [[nodiscard]] constexpr bool all_of( T const& ts, Pred p) noexcept
+  [[nodiscard]] constexpr auto all_of(T const& ts, Pred p) noexcept
   {
     if constexpr( !product_type<T> ) return p(ts);
     else
     {
-      if constexpr(size_v<T> == 0) return true;
-      else return kumi::apply( [&](auto const&... m) { return (p(m) && ... && true); }, ts );
+      if      constexpr(size_v<T> == 0) return true;
+      else if constexpr(size_v<T> == 1) return p(get<0>(ts));
+      else return kumi::apply( [&](auto const&... m) { return (p(m) && ... && p(get<0>(ts))); }, extract(ts,index<1>));
+    }
+  }
+  template<typename T>
+  [[nodiscard]] constexpr auto all_of(T const& ts) noexcept
+  {
+    if constexpr( !product_type<T> ) return !!ts;
+    else
+    {
+      if      constexpr(size_v<T> == 0) return true;
+      else if constexpr(size_v<T> == 1) return !!get<0>(ts);
+      else return kumi::apply( [&](auto const&... m) { return (m && ... && get<0>(ts)); }, extract(ts,index<1>) );
     }
   }
   template<typename Pred, typename T>
-  [[nodiscard]] constexpr bool any_of( T const& ts, Pred p) noexcept
+  [[nodiscard]] constexpr auto any_of(T const& ts, Pred p) noexcept
   {
     if constexpr( !product_type<T> ) return p(ts);
     else
     {
-      if constexpr(size_v<T> == 0) return false;
-      else return kumi::apply( [&](auto const&... m) { return (p(m) || ... || false); }, ts );
+      if      constexpr(size_v<T> == 0) return true;
+      else if constexpr(size_v<T> == 1) return p(get<0>(ts));
+      else return kumi::apply( [&](auto const&... m) { return (p(m) || ... || p(get<0>(ts))); }, extract(ts,index<1>));
+    }
+  }
+  template<typename T>
+  [[nodiscard]] constexpr auto any_of(T const& ts) noexcept
+  {
+    if constexpr( !product_type<T> ) return !!ts;
+    else
+    {
+      if      constexpr(size_v<T> == 0) return false;
+      else if constexpr(size_v<T> == 1) return !!get<0>(ts);
+      else return kumi::apply( [&](auto const&... m) { return (m || ... || get<0>(ts)); }, extract(ts,index<1>) );
     }
   }
   template<typename Pred, typename Tuple>
-  [[nodiscard]] constexpr bool none_of( Tuple const& ts, Pred p) noexcept
+  KUMI_TRIVIAL_NODISCARD constexpr bool none_of( Tuple const& ts, Pred p) noexcept
   {
     return !any_of(ts,p);
+  }
+  template<typename Tuple>
+  KUMI_TRIVIAL_NODISCARD constexpr bool none_of(Tuple const& ts) noexcept
+  {
+    return !any_of(ts);
   }
   template<typename Pred, typename T>
   [[nodiscard]] constexpr std::size_t count_if( T const& ts, Pred p) noexcept
@@ -1606,11 +1671,21 @@ namespace kumi
     if constexpr(_::empty_tuple<Tuple>) return init;
     else return kumi::apply( [init](auto const&... m) { return (m + ... + init); }, KUMI_FWD(t) );
   }
+  template<product_type Tuple>
+  [[nodiscard]] constexpr auto sum(Tuple&& t)
+  {
+    return sum(kumi::extract(t,index<1>),get<0>(t));
+  }
   template<product_type Tuple, typename Value>
   [[nodiscard]] constexpr auto prod(Tuple&& t, Value init)
   {
     if constexpr(_::empty_tuple<Tuple>) return init;
     else return kumi::apply( [init](auto const&... m) { return (m * ... * init); }, KUMI_FWD(t) );
+  }
+  template<product_type Tuple>
+  [[nodiscard]] constexpr auto prod(Tuple&& t)
+  {
+    return prod(kumi::extract(t,index<1>),get<0>(t));
   }
   template<product_type Tuple, typename Value>
   [[nodiscard]] constexpr auto bit_and(Tuple&& t, Value init)
@@ -1618,41 +1693,70 @@ namespace kumi
     if constexpr(_::empty_tuple<Tuple>) return init;
     else return kumi::apply( [init](auto const&... m) { return (m & ... & init); }, KUMI_FWD(t) );
   }
+  template<product_type Tuple>
+  [[nodiscard]] constexpr auto bit_and(Tuple&& t)
+  {
+    return bit_and(kumi::extract(t,index<1>),get<0>(t));
+  }
   template<product_type Tuple, typename Value>
   [[nodiscard]] constexpr auto bit_or(Tuple&& t, Value init)
   {
     if constexpr(_::empty_tuple<Tuple>) return init;
     else return kumi::apply( [init](auto const&... m) { return (m | ... | init); }, KUMI_FWD(t) );
   }
+  template<product_type Tuple>
+  [[nodiscard]] constexpr auto bit_or(Tuple&& t)
+  {
+    return bit_or(kumi::extract(t,index<1>),get<0>(t));
+  }
   namespace result
   {
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple, typename Value = void>
     struct sum
     {
       using type = decltype(kumi::sum(std::declval<Tuple>(), std::declval<Value>()));
     };
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple> struct sum<Tuple>
+    {
+      using type = decltype(kumi::sum(std::declval<Tuple>()));
+    };
+    template<product_type Tuple, typename Value = void>
     struct prod
     {
       using type = decltype(kumi::prod(std::declval<Tuple>(), std::declval<Value>()));
     };
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple>
+    struct prod<Tuple>
+    {
+      using type = decltype(kumi::prod(std::declval<Tuple>()));
+    };
+    template<product_type Tuple, typename Value = void>
     struct bit_and
     {
       using type = decltype(kumi::bit_and(std::declval<Tuple>(), std::declval<Value>()));
     };
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple>
+    struct bit_and<Tuple>
+    {
+      using type = decltype(kumi::bit_and(std::declval<Tuple>()));
+    };
+    template<product_type Tuple, typename Value = void>
     struct bit_or
     {
       using type = decltype(kumi::bit_or(std::declval<Tuple>(), std::declval<Value>()));
     };
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple>
+    struct bit_or<Tuple>
+    {
+      using type = decltype(kumi::bit_or(std::declval<Tuple>()));
+    };
+    template<product_type Tuple, typename Value = void>
     using sum_t = typename sum<Tuple,Value>::type;
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple, typename Value = void>
     using prod_t = typename prod<Tuple,Value>::type;
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple, typename Value = void>
     using bit_and_t = typename bit_and<Tuple,Value>::type;
-    template<product_type Tuple, typename Value>
+    template<product_type Tuple, typename Value = void>
     using bit_or_t = typename bit_or<Tuple,Value>::type;
   }
 }
