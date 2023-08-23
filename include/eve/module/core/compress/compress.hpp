@@ -25,11 +25,11 @@ namespace eve
   //!   @endcode
   //!
   //!    @note this is very low level function, most likely you are looking for
-  //!    `eve::compress_copy` or `eve::compress_store`.
+  //!    eve::compress_copy or eve::compress_store.
   //!
-  //!    @note FIX-1647: `eve::compress` doesn't support `wide<tuple>` yet.
-  //!
-  //!    @note the mask type can be any logical with the same cardinal.
+  //!    @note
+  //!      * FIX-1647: eve::compress doesn't support `wide<tuple>` yet.
+  //!      * the mask type can be any logical with the same cardinal.
   //!
   //!    Compression in simd is moving selected elements to the front of the simd_value.
   //!    Unfortunately, not for all `simd_value`, not for all plaftorms that can be done
@@ -70,9 +70,9 @@ namespace eve
   //!
   //!   **Parameters**
   //!
-  //!     * x - `simd_value` to compress
+  //!     * x - simd_value to compress
   //!     * m - mask which markes selected elements as true
-  //!     * ignore - optional `eve::relative_conditional_expr`, passed in `[]`.
+  //!     * ignore - optional eve::relative_conditional_expr, passed in `[]`.
   //!                Ignored elements are treated as not selected.
   //!
   //!  **Return value**

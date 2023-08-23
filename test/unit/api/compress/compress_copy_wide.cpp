@@ -5,8 +5,11 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#pragma once
+#include "compress_copy_test.hpp"
 
-#include <eve/module/core/compress/compress.hpp>
-#include <eve/module/core/compress/compress_copy.hpp>
-#include <eve/module/core/compress/compress_store.hpp>
+#include <eve/module/core.hpp>
+
+TTS_CASE_TPL("Check compress copy behavior", eve::test::simd::all_types)
+<typename T>(tts::type<T>) {
+  compress_copy_tst(eve::as<T>{}, eve::as<eve::logical<T>>{}, eve::compress_copy);
+};

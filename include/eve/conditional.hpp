@@ -160,7 +160,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
-      return cardinal_v<T>;
+      return T::size();
     }
 
     //! Number of lanes to be left unmasked
@@ -223,7 +223,7 @@ namespace eve
     //! Number of lanes to be left unmasked
     template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
-      return cardinal_v<T>;
+      return T::size();
     }
 
     //! Checks equality between two eve::ignore_none_ instances
@@ -284,7 +284,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
-      return cardinal_v<T> - count_;
+      return T::size() - count_;
     }
 
     //! Number of lanes to be left unmasked
@@ -347,7 +347,7 @@ namespace eve
     //! Number of lanes to be left unmasked
     template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
-      return cardinal_v<T> - count_;
+      return T::size() - count_;
     }
 
     std::ptrdiff_t count_;
@@ -392,7 +392,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t offset(eve::as<T> const&) const
     {
-      return cardinal_v<T> - count_;
+      return T::size() - count_;
     }
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
@@ -451,7 +451,7 @@ namespace eve
     //! Number of lanes to be left unmasked
     template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
-      return cardinal_v<T> - count_;
+      return T::size() - count_;
     }
 
     //! Checks equality between two eve::ignore_first instances
@@ -505,7 +505,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE constexpr std::ptrdiff_t roffset(eve::as<T> const&) const
     {
-      return cardinal_v<T> - end_;
+      return T::size() - end_;
     }
 
     //! Number of lanes to be left unmasked
@@ -569,7 +569,7 @@ namespace eve
     //! Number of lanes to be left unmasked
     template<typename T> EVE_FORCEINLINE constexpr auto count(eve::as<T> const&) const
     {
-      return cardinal_v<T> - last_count_ - first_count_;
+      return T::size() - last_count_ - first_count_;
     }
 
     //! Checks equality between two eve::ignore_extrema instances

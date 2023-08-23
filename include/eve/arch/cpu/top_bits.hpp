@@ -255,6 +255,8 @@ namespace detail
 
     // getters/setter ----------------------
 
+    static constexpr std::ptrdiff_t size() { return static_size; }
+
     //! setter
     EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
     {
