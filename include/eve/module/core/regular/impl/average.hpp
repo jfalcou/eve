@@ -41,8 +41,14 @@ average_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
   if constexpr(has_native_abi_v<T>)
   {
-    if constexpr( integral_value<T> ) return (a & b) + ((a ^ b) >> 1); //compute ceil( (x+y)/2 )
-    else return fma(a, half(eve::as(a)), b * half(eve::as(a)));
+    if constexpr( integral_value<T> )
+      return (a & b) + ((a ^ b) >> 1); //compute ceil( (x+y)/2 )
+    else
+    {
+      using u_t =  underlying_type_t<T>;
+      const auto h = eve::half(eve::as<u_t>());
+      return fma(a, h, b * h);
+    }
   }
   else return apply_over(average, a, b);
 }
