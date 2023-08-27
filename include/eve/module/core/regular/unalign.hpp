@@ -24,7 +24,11 @@ namespace eve
 //!
 //! @brief Callable object for computing an unaligned version of a relaxed iterator.
 //!
-//! **Required header:** `#include <eve/module/core.hpp>`
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
 //!   For a std::iterator returns itself.
 //!   For an aligned_ptr returns raw pointer.
