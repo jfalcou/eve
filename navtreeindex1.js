@@ -119,7 +119,8 @@ var NAVTREEINDEX1 =
 "group__core__bitops_gaf996698e31643fc5a631c460bce725fd.html#gaf996698e31643fc5a631c460bce725fd":[7,0,1,2,2,16],
 "group__core__compress.html":[7,0,1,2,3],
 "group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541":[7,0,1,2,3,0],
-"group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e":[7,0,1,2,3,1],
+"group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e":[7,0,1,2,3,2],
+"group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e":[7,0,1,2,3,1],
 "group__core__constants.html":[7,0,1,2,4],
 "group__core__constants_ga040465fe0ba98419d6ce5397bc60def0.html#ga040465fe0ba98419d6ce5397bc60def0":[7,0,1,2,4,8],
 "group__core__constants_ga048089d9f72f2fecb4dffab41ae615aa.html#ga048089d9f72f2fecb4dffab41ae615aa":[7,0,1,2,4,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1":[7,0,1,2,11,38],
 "group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8":[7,0,1,2,11,2],
 "group__core__predicates_ga6e7a64c2a6bf2fc626451e81cc749c2a.html#ga6e7a64c2a6bf2fc626451e81cc749c2a":[7,0,1,2,11,0],
-"group__core__predicates_ga7885f935549bf908f247982900555357.html#ga7885f935549bf908f247982900555357":[7,0,1,2,11,9],
-"group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce":[7,0,1,2,11,37]
+"group__core__predicates_ga7885f935549bf908f247982900555357.html#ga7885f935549bf908f247982900555357":[7,0,1,2,11,9]
 };

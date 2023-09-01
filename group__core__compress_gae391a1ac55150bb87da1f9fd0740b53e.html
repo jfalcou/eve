@@ -1,0 +1,317 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: eve::compress_copy</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!--END TITLEAREA -->
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="contents">
+<a id="gae391a1ac55150bb87da1f9fd0740b53e" name="gae391a1ac55150bb87da1f9fd0740b53e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae391a1ac55150bb87da1f9fd0740b53e">&#9670;&#160;</a></span>compress_copy</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::compress_copy = detail::compress_callable&lt;compress_copy_core&gt; {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>If this function doesn't work for you, maybe you are looking for eve::comress_store or <a class="el" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541" title="A low level function to compress one simd value based on a mask.">eve::compress</a>. However this function is faster.</p>
+<p>You can think about this function as <code>std::copy_if</code> but instead of a predicate, you pass in logical_simd_value. Similar to <code>std::copy_if</code> it returns you a pointers to where the output ended. </p><dl class="section note"><dt>Note</dt><dd>: you might be missing information about the last selected element written, but unfortunately that adds overhead we couldn't fix (#1656)</dd></dl>
+<p>There are the following two modifiers:</p><ul>
+<li>safe/unsafe - unsafe version is allowed to write up to <code>mask.size()</code> elements, even if not all are selected. Those values are undefined. safe is not allowed to perform those writes, at the price of being slower for certain usecases.</li>
+<li>dense/sparse - wether or not you expect a lot of selected elements.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><code>safe</code> version does not touch not selected elements. So, for example, other threads can read/write them without a race condition.</dd></dl>
+<h2><a class="anchor" id="autotoc_md36"></a>
+Preloaded values</h2>
+<p>Very often the mask is computed based on the values loaded from input. We would expect the optimizer to eliminate duplicated loads, but for some very complex pointer-like it might not be able to.</p>
+<p>So we provide overloads where you can pass an already preloaded value. It should match loaded value from in, otherwise the behaviour is unspecified.</p>
+<h2><a class="anchor" id="autotoc_md37"></a>
+Masked Calls</h2>
+<p>You can pass up to two <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a> ignore modifiers. 1st is the input side ignore:</p><ul>
+<li>the ignored elements can are not loaded (same as load[ignore])</li>
+<li>they are treated as not selected, regardless of the mask value 2nd is the output side ignore:</li>
+<li>elements that are ignored, will not be written. Example: if the ignore_first(1) is passed, the first selected element will not appear anywhere in the output and the 2nd selected element will be written in (out + 1) Defaults to 1st ignore.</li>
+</ul>
+<p>If the mask == true this and it's <code>unsafe</code> variation, this is the same behaviour as</p>
+<div class="fragment"><div class="line"><span class="comment">// start with + offset</span></div>
+<div class="line">in += ignore_in.offset(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(m));</div>
+<div class="line">out += ignore_out.offset(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(m));</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a> ignore_in1(ignore_in.count(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(m)));</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a> ignore_out1(ignore_out.count(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(m)));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// load + store</span></div>
+<div class="line"><span class="keyword">auto</span> x = eve::load[ignore_in1](in);</div>
+<div class="line"><a class="code hl_variable" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a>[ignore_out1](x, out);</div>
+<div class="ttc" id="agroup__memory_ga92b6c322f7422825155c2a590be84f09_html_ga92b6c322f7422825155c2a590be84f09"><div class="ttname"><a href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a></div><div class="ttdeci">constexpr callable_store_ store</div><div class="ttdoc">Callable object computing //! description NOT FOUND.</div><div class="ttdef"><b>Definition:</b> store.hpp:72</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1keep__first_html"><div class="ttname"><a href="structeve_1_1keep__first.html">eve::keep_first</a></div><div class="ttdoc">Conditional expression selecting the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:250</div></div>
+</div><!-- fragment --><p>For safe behaviour, we'd also have to make sure not to write not selected elements.</p>
+<h2 class="groupheader">Callable Signatures </h2>
+<dl class="section note"><dt>Note</dt><dd>- no proper concept for input and output, these are pointer like things, but <code>eve::algo::iterator</code> also work here. FIX-1652</dd></dl>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C1,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C2,</div>
+<div class="line">             <span class="keyword">typename</span> I,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L,</div>
+<div class="line">             <span class="keyword">typename</span> O&gt;</div>
+<div class="line">   autoo <a class="code hl_variable" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e">compress_copy</a></div>
+<div class="line">     [safe/unsafe][sparse/dense]</div>
+<div class="line">     [C1 ignore_in][C2 ignore_out](</div>
+<div class="line">        I in,</div>
+<div class="line">        L mask,</div>
+<div class="line">        O out) -&gt; <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;O&gt;</a>;   <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C1,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C2,</div>
+<div class="line">             <span class="keyword">typename</span> I,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L,</div>
+<div class="line">             <span class="keyword">typename</span> O&gt;</div>
+<div class="line">   autoo <a class="code hl_variable" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e">compress_copy</a></div>
+<div class="line">     [safe/unsafe][sparse/dense]</div>
+<div class="line">     [C1 ignore_in][C2 ignore_out](</div>
+<div class="line">        I in,</div>
+<div class="line">        <a class="code hl_struct" href="structeve_1_1wide.html">wide&lt;value_type_t&lt;I&gt;</a>, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed</a>&lt;L::size()&gt;&gt; preloaded,</div>
+<div class="line">        L mask,</div>
+<div class="line">        O out) -&gt; <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;O&gt;</a>;   <span class="comment">// (2)</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value.</div><div class="ttdef"><b>Definition:</b> simd.hpp:45</div></div>
+<div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:50</div></div>
+<div class="ttc" id="agroup__core__compress_gae391a1ac55150bb87da1f9fd0740b53e_html_gae391a1ac55150bb87da1f9fd0740b53e"><div class="ttname"><a href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e">eve::compress_copy</a></div><div class="ttdeci">auto compress_copy</div><div class="ttdoc">A function that copies selected elements from source to destination, while compressing them to the le...</div><div class="ttdef"><b>Definition:</b> compress_copy.hpp:63</div></div>
+<div class="ttc" id="agroup__memory_ga33eaeb7216e54812993e44457de2c34c_html_ga33eaeb7216e54812993e44457de2c34c"><div class="ttname"><a href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">eve::unaligned_t</a></div><div class="ttdeci">decltype(unalign(std::declval&lt; T &gt;())) unaligned_t</div><div class="ttdoc">Required header: #include &lt;eve/module/core.hpp&gt;</div><div class="ttdef"><b>Definition:</b> unalign.hpp:54</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><code>safe/unsafe</code> - required - variations described above.</li>
+<li><code>sparse/dense</code> - optional - default to <code>dense</code>. described above.</li>
+<li><code>ignore_in</code> - optional (default - ignore_none) - ignored elements are treated as not selected.</li>
+<li><code>ignore_out</code> - optional (default - ignore_in) - ignored elements are not written to in the output.</li>
+<li><code>in</code>: input ptr-like from which to copy</li>
+<li><code>m</code>: mask indicating selected elements</li>
+<li><code>out</code>: output to will write elements</li>
+</ul>
+<p><b>Return value</b></p>
+<ul>
+<li>unaligned_t&lt;O&gt; where result - out == number of elements written</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// In abscense of eve::algo, we could write `copy_if` like this</span></div>
+<div class="line"> </div>
+<div class="line">std::vector&lt;int&gt;::iterator</div>
+<div class="line">copy_non_zeroes(<span class="keyword">const</span> std::vector&lt;int&gt;&amp; in, std::vector&lt;int&gt;&amp; out)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">int</span> *in_f = in.data();</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">int</span> *in_l = in.data() + in.size();</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">int</span> *out_f = out.data();</div>
+<div class="line">  <span class="keywordtype">int</span> *out_l = out.data() + out.size();</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// We do the same thing in main loop and for the tail, difference is that</span></div>
+<div class="line">  <span class="comment">// in the tail we can&#39;t read and write w_t::size().</span></div>
+<div class="line">  <span class="comment">//</span></div>
+<div class="line">  <span class="comment">// This is where ignore helps:</span></div>
+<div class="line">  <span class="comment">// eve::compress_copy_unsafe_sparse[ignore] - will become safe for the tail.</span></div>
+<div class="line">  <span class="keyword">auto</span> copy_if_step = [&amp;](<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> <span class="keyword">auto</span> ignore_in,</div>
+<div class="line">                          <a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> <span class="keyword">auto</span> ignore_out) <span class="keyword">mutable</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> in_w = eve::load[ignore_in](in_f);</div>
+<div class="line">    <span class="keyword">auto</span> m    = in_w != 0;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// because we already have an in_w we pass it here.</span></div>
+<div class="line">    <span class="comment">// eve::compress_copy_unsafe_sparse[...](in_f, m, out_f) would have the same result.</span></div>
+<div class="line">    out_f =</div>
+<div class="line">        <a class="code hl_variable" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e">eve::compress_copy</a>[eve::unsafe][eve::dense][ignore_in][ignore_out](in_f, in_w, m, out_f);</div>
+<div class="line">    in_f += w_t::size();</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">while</span>( (in_l - in_f) &gt;= w_t::size() &amp;&amp; (out_l - out_f) &gt;= w_t::size() )</div>
+<div class="line">  {</div>
+<div class="line">    copy_if_step(<a class="code hl_variable" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a>, <a class="code hl_variable" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a>);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">while</span>( in_l - in_f &gt;= w_t::size() &amp;&amp; (out_f != out_l) )</div>
+<div class="line">  {</div>
+<div class="line">    copy_if_step(<a class="code hl_variable" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a>, <a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a>(out_l - out_f));</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  copy_if_step(<a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a>(in_l - in_f), <a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a>(out_l - out_f));</div>
+<div class="line">  <span class="keywordflow">return</span> out.begin() + (out_f - out.data());</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">const</span> std::vector&lt;int&gt; input {1, 2, 3, 0, 4, 5, 0, 6, 0, 7};</div>
+<div class="line"> </div>
+<div class="line">  {</div>
+<div class="line">    std::vector&lt;int&gt; enough(input.size(), 0);</div>
+<div class="line">    enough.erase(copy_non_zeroes(input, enough), enough.end());</div>
+<div class="line">    TTS_EQUAL(enough, std::vector({1, 2, 3, 4, 5, 6, 7}));</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  {</div>
+<div class="line">    std::vector&lt;int&gt; not_enough(4, 0);</div>
+<div class="line">    TTS_EQUAL(copy_non_zeroes(input, not_enough), not_enough.end());</div>
+<div class="line">    TTS_EQUAL(not_enough, std::vector({1, 2, 3, 4}));</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__conditional_html_gae234dce7533ecc38fe2c70fd69383633"><div class="ttname"><a href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a></div><div class="ttdeci">constexpr ignore_none_ ignore_none</div><div class="ttdoc">Object representing the eve::ignore_none_ conditional expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:240</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

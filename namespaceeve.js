@@ -192,6 +192,7 @@ var namespaceeve =
     [ "combine", "group__core__simd_ga6b5426b411f619a1b836eeda12cdc9c0.html#ga6b5426b411f619a1b836eeda12cdc9c0", null ],
     [ "compensated", "group__core__decorators_ga4b6f131db74556004934d2d61f185d92.html#ga4b6f131db74556004934d2d61f185d92", null ],
     [ "compress", "group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541", null ],
+    [ "compress_copy", "group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e", null ],
     [ "compress_store", "group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e", null ],
     [ "conj", "group__core__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951", null ],
     [ "convert", "group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867", null ],

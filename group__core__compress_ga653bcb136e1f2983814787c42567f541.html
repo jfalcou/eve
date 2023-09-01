@@ -142,11 +142,13 @@ $(document).ready(function(){initNavTree('group__core__compress_ga653bcb136e1f29
 </div><div class="memdoc">
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>this is very low level function, most likely you are looking for <code>eve::compress_copy</code> or <code><a class="el" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e" title="A function that stores selected elements from an eve::simd_value to an evesimd_compatible_ptr,...">eve::compress_store</a></code>.</dd>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>this is very low level function, most likely you are looking for <a class="el" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e" title="A function that copies selected elements from source to destination, while compressing them to the le...">eve::compress_copy</a> or <a class="el" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e" title="A function that stores selected elements from an eve::simd_value to an eve::simd_compatible_ptr,...">eve::compress_store</a>.</dd>
 <dd>
-FIX-1647: <code><a class="el" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541" title="A low level function to compress one simd value based on a mask.">eve::compress</a></code> doesn't support <code>wide&lt;tuple&gt;</code> yet.</dd>
-<dd>
-the mask type can be any logical with the same cardinal.</dd></dl>
+<ul>
+<li>FIX-1647: <a class="el" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541" title="A low level function to compress one simd value based on a mask.">eve::compress</a> doesn't support <code>wide&lt;tuple&gt;</code> yet.</li>
+<li>the mask type can be any logical with the same cardinal.</li>
+</ul>
+</dd></dl>
 <p>Compression in simd is moving selected elements to the front of the simd_value. Unfortunately, not for all <code>simd_value</code>, not for all plaftorms that can be done efficiently. So the operation splits the input into chunks for which it's possible.</p>
 <p>The function pefroms the following steps: 1) splits the simd_value and mask into chunks, that can be processed in one go. This depends on what instructions are availiable. 2) Each chunk, gets shuffled in a way that moves selected elements (mask == true) to the front. The tail of the resulting value is unspecified. [a, b, c, d], (false, true, false, true) -&gt; [b, d, _, _] 3) For each chunk we also compute how many elements are selected. (in the example - 2). 4) Both shuffled chunk and a number are put in a <code>kumi::tupe&lt;simd_value, std::ptrdiff_t&gt;</code> TODO: there is a bug where sometimes it's an <code>int</code> and not <code>std::ptrdiff_t</code>. 5) Those chunks are combined together in another tuple.</p>
 <p>List of people who's work was instrumental for building this: @aqrit user on Stack Overflow Peter Cordes</p>
@@ -169,9 +171,9 @@ the mask type can be any logical with the same cardinal.</dd></dl>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li>x - <code>simd_value</code> to compress</li>
+<li>x - simd_value to compress</li>
 <li>m - mask which markes selected elements as true</li>
-<li>ignore - optional <code><a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a></code>, passed in <code>[]</code>. Ignored elements are treated as not selected.</li>
+<li>ignore - optional <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a>, passed in <code>[]</code>. Ignored elements are treated as not selected.</li>
 </ul>
 <p><b>Return value</b></p>
 <p><code>kumi::tuple&lt;kumi::tuple&lt;simd_value, std::ptrdiff_t&gt;, ...&gt;</code> - tuple of compressed chunks, constructed as described earlier.</p>
