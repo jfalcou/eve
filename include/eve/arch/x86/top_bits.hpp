@@ -90,6 +90,8 @@ requires(current_api >= avx512 && !has_aggregated_abi_v<Logical>) struct top_bit
 
   // getters/setter ----------------------
 
+  static constexpr std::ptrdiff_t size() { return static_size; }
+
   EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x) { storage.set(i, x); }
   EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const { return storage.get(i); }
 

@@ -70,6 +70,15 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
   }
 };
 
+
+TTS_CASE_TPL("Check top_bits size", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using logical = eve::logical<T>;
+
+  TTS_CONSTEXPR_EQUAL(logical::size(), eve::top_bits<logical>::size());
+};
+
 TTS_CASE_TPL("Check top bits from logical", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
