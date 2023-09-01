@@ -33,4 +33,12 @@ none_(EVE_SUPPORTS(cpu_), logical<T> const& v) noexcept
   if constexpr( scalar_value<T> ) return !v;
   else return eve::none[ignore_none](v);
 }
+
+template<logical_simd_value T>
+EVE_FORCEINLINE bool
+none_(EVE_SUPPORTS(cpu_), top_bits<T> v) noexcept
+{
+  return !any(v);
+}
+
 }
