@@ -64,10 +64,9 @@ to_logical(C c, eve::as<T>) noexcept
   // represented. We then use an unsigned version of the index type.
   // We don't just use unsigned indexes all the time cause on most cases,
   // signed comparisons are faster and this will lead to pessimisation.
-  using i_t = std::conditional_t< (T::size()>=128 && sizeof(element_type_t<T>) == 1)
-                                , as_integer_t<typename as_logical_t<T>::mask_type,unsigned>
-                                , as_integer_t<typename as_logical_t<T>::mask_type>
-                                >;
+  using i_t = std::conditional_t<(T::size() >= 128 && sizeof(element_type_t<l_t>) == 1),
+                                 typename l_t::bits_type,
+                                 as_integer_t<typename l_t::bits_type, signed>>;
 
   if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
   else if constexpr( std::same_as<C, ignore_none_> ) return l_t {true};
