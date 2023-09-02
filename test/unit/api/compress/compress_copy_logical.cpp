@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 
-TTS_CASE_TPL("Check compress copy behavior", eve::test::simd::all_types)
+TTS_CASE_TPL("Check compress copy logical", eve::test::simd::all_types)
 <typename T>(tts::type<T>) {
-  compress_copy_tst(eve::as<T>{}, eve::compress_copy);
+  compress_copy_tst(eve::as<eve::logical<T>>{}, eve::compress_copy);
 };

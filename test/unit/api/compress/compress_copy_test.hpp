@@ -80,7 +80,6 @@ compress_copy_tst_one_case(bool                                is_safe,
 
     TTS_EQUAL(expected, actual) << "is_safe: " << is_safe << " m: " << m << " i0: " << i0
                                 << " i1: " << i1;
-    TTS_EQUAL(expected, actual, REQUIRED);
   };
 
   algo[i0][i1](input<T>.data(), m, actual.data());
@@ -109,39 +108,41 @@ compress_copy_tst_all_versions(eve::as<T>                          tgt,
 
 template<typename T, typename L>
 void
-compress_copy_tst(eve::as<T> tgt, L m, auto algo)
+compress_copy_tst_mask(eve::as<T> tgt, L m, auto algo)
 {
   compress_copy_tst_all_versions(tgt, m, eve::ignore_none, eve::ignore_none, algo);
   compress_copy_tst_all_versions(tgt, m, eve::ignore_none, eve::ignore_all, algo);
   compress_copy_tst_all_versions(tgt, m, eve::ignore_all, eve::ignore_none, algo);
 
-  auto for_ignore_tests = [&](auto ignore) {
+  auto for_ignore_tests = [&](auto ignore)
+  {
     compress_copy_tst_all_versions(tgt, m, ignore, eve::ignore_none, algo);
     compress_copy_tst_all_versions(tgt, m, eve::ignore_none, ignore, algo);
     compress_copy_tst_all_versions(tgt, m, ignore, ignore, algo);
   };
 
-  if (T::size() < 16) {
-    for (int i = 0; i != T::size(); ++i) {
-      for (int j = 0; j != T::size() - i; ++j) {
-        for_ignore_tests(eve::ignore_extrema(i, j));
-      }
+  if( T::size() < 16 )
+  {
+    for( int i = 0; i != T::size(); ++i )
+    {
+      for( int j = 0; j != T::size() - i; ++j ) { for_ignore_tests(eve::ignore_extrema(i, j)); }
     }
-  } else {
-    for (int i = 0; i <= T::size(); i += 9) {
-      for (int j = 0; j <= T::size() - i; j += 7) {
-        for_ignore_tests(eve::ignore_extrema(i, j));
-      }
+  }
+  else
+  {
+    for( int i = 0; i <= T::size(); i += 9 )
+    {
+      for( int j = 0; j <= T::size() - i; j += 7 ) { for_ignore_tests(eve::ignore_extrema(i, j)); }
     }
   }
 }
 
 template<typename T, typename L>
 void
-compress_copy_tst(eve::as<T> tgt, eve::as<L>, auto algo)
+compress_copy_tst_l_type(eve::as<T> tgt, eve::as<L>, auto algo)
 {
-  compress_copy_tst(tgt, L {true}, algo);
-  compress_copy_tst(tgt, L {false}, algo);
+  compress_copy_tst_mask(tgt, L {true}, algo);
+  compress_copy_tst_mask(tgt, L {false}, algo);
 
   constexpr auto seed = sizeof(eve::element_type_t<L>) + sizeof(eve::element_type_t<T>) + T::size();
   std::mt19937   g(seed);
@@ -154,5 +155,67 @@ compress_copy_tst(eve::as<T> tgt, eve::as<L>, auto algo)
     return m;
   };
 
-  for( int i = 0; i < 20; ++i ) compress_copy_tst(tgt, random_l(), algo);
+  for( int i = 0; i < 20; ++i ) compress_copy_tst_mask(tgt, random_l(), algo);
+}
+
+template<typename T>
+void
+compress_copy_tst(eve::as<T> tgt, auto algo)
+{
+  using N = typename T::cardinal_type;
+
+  if constexpr( eve::has_bundle_abi_v<T> )
+  {
+    using e_t = std::tuple_element_t<1, eve::element_type_t<T>>;
+    using l_t = eve::logical<eve::wide<e_t, N>>;
+
+    compress_copy_tst_l_type(tgt, eve::as<l_t> {}, algo);
+  }
+  else if constexpr( eve::logical_simd_value<T> )
+  {
+    compress_copy_tst_l_type(eve::as<T> {}, eve::as<T> {}, eve::compress_copy);
+
+    // is just impossibly slow
+    if constexpr( eve::current_api != eve::sve512 )
+    {
+      compress_copy_tst_l_type(
+          eve::as<T> {}, eve::as<eve::logical<eve::wide<std::uint8_t, N>>> {}, eve::compress_copy);
+    }
+  }
+  else
+  {
+    using e_t = eve::element_type_t<T>;
+
+    compress_copy_tst_l_type(eve::as<T> {}, eve::as<eve::logical<T>> {}, eve::compress_copy);
+
+    if constexpr( !std::same_as<e_t, std::uint8_t> )
+    {
+      compress_copy_tst_l_type(
+          eve::as<T> {}, eve::as<eve::logical<eve::wide<std::uint8_t, N>>> {}, eve::compress_copy);
+    }
+
+    // is just impossibly slow
+    if constexpr( eve::current_api != eve::sve512 )
+    {
+      if constexpr( !std::same_as<e_t, std::uint16_t> )
+      {
+        compress_copy_tst_l_type(eve::as<T> {},
+                                 eve::as<eve::logical<eve::wide<std::uint16_t, N>>> {},
+                                 eve::compress_copy);
+      }
+      if constexpr( !std::same_as<e_t, std::uint32_t> )
+      {
+        compress_copy_tst_l_type(eve::as<T> {},
+                                 eve::as<eve::logical<eve::wide<std::uint32_t, N>>> {},
+                                 eve::compress_copy);
+      }
+
+      if constexpr( !std::same_as<e_t, std::uint64_t> )
+      {
+        compress_copy_tst_l_type(eve::as<T> {},
+                                 eve::as<eve::logical<eve::wide<std::uint64_t, N>>> {},
+                                 eve::compress_copy);
+      }
+    }
+  }
 }
