@@ -13,12 +13,15 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value U>
+template<floating_ordered_value T, ordered_value U>
 auto
 pow1p_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
 -> decltype(pow(a, b))
 {
-  return arithmetic_call(pow1p, a, b);
+  if constexpr(integral_value<U>)
+    return pow(dec(a), b);
+  else
+    return arithmetic_call(pow1p, a, b);
 }
 
 template<floating_ordered_value T>
