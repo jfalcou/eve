@@ -23,7 +23,8 @@ TTS_CASE_TPL("Check return types of powm1", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::powm1(T(), T()), T);
   TTS_EXPR_IS(eve::powm1(v_t(), v_t()), v_t);
   TTS_EXPR_IS(eve::powm1(T(), v_t()), T);
-};
+  TTS_EXPR_IS(eve::powm1(v_t(), int()), v_t);
+  TTS_EXPR_IS(eve::powm1(T(),   int()), T);};
 
 //==================================================================================================
 // powm1  tests
