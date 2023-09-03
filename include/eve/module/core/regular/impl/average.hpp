@@ -108,7 +108,7 @@ average_(EVE_SUPPORTS(cpu_),
          T0 a0,
          Ts... args) -> common_value_t<T0, Ts...>
 {
-  return add(a0, args...) / (sizeof...(args) y+ 1);
+  return add(a0, args...) / (sizeof...(args) + 1);
 }
 
 template<conditional_expr C, value T0, value... Ts>
