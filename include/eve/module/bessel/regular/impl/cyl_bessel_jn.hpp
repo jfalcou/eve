@@ -10,6 +10,7 @@
 #include <eve/module/bessel/detail/kernel_bessel_j.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/as_element.hpp>
 
 namespace eve::detail
 {
@@ -75,7 +76,7 @@ cyl_bessel_jn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto n = convert(nu, as<element_type_t<T>>());
+      auto n = convert(nu, as_element(x));
       return kernel_bessel_j_int(n, x);
     }
     else return apply_over(cyl_bessel_jn, nu, x);

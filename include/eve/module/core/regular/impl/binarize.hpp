@@ -15,6 +15,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/as_element.hpp>
 
 #include <type_traits>
 
@@ -25,7 +26,7 @@ EVE_FORCEINLINE auto
 binarize_(EVE_SUPPORTS(cpu_), logical<T> const& cond) noexcept
 {
   if constexpr( has_native_abi_v<T> )
-    return bit_and(one(eve::as<T>()), cond.bits()); 
+    return bit_and(one(eve::as<T>()), cond.bits());
   else
     return apply_over(binarize, cond);
 }
@@ -35,7 +36,7 @@ EVE_FORCEINLINE auto
 binarize_(EVE_SUPPORTS(cpu_), logical<T> const& cond, U const& val) noexcept
 {
   if constexpr( has_native_abi_v<T> )
-    return if_else(cond, val, zero); 
+    return if_else(cond, val, zero);
 else
   return apply_over(binarize, cond, val);
 }
@@ -70,6 +71,6 @@ binarize_(EVE_SUPPORTS(cpu_), logical<T> const& cond, callable_mone_ const&) noe
   if constexpr( integral_value<T> )
     return cond.mask();
   else
-    return eve::binarize(cond, mone(eve::as<element_type_t<T>>()));
+    return eve::binarize(cond, mone(eve::as_element<T>()));
 }
 }
