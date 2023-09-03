@@ -91,4 +91,40 @@ template<typename Callable, typename... Settings> struct compress_callable : Cal
   }
 };
 
+// While we don't have a proper implementation
+template<typename Callable, typename... Settings> struct compress_callable_no_density : Callable
+{
+  kumi::tuple<Settings...> settings;
+
+  template<typename Opt> constexpr auto operator[](Opt opt) const
+  {
+    return compress_callable_no_density<Callable, Settings..., Opt> {
+      {},
+      kumi::push_back(settings, opt)
+    };
+  }
+
+  EVE_FORCEINLINE auto operator()(auto ...args) const
+  {
+    static_assert(sizeof...(Settings) >= 1, "safe/unsafe setting is required");
+    if constexpr( sizeof...(Settings) == 1 )
+    {
+      return (*this)[ignore_none][ignore_none](args...);
+    }
+    else if constexpr( sizeof...(Settings) == 2 ) { return (*this)[get<1>(settings)](args...); }
+    else
+    {
+      static_assert(sizeof...(Settings) == 3);
+      auto s0 = get<0>(settings);
+      static_assert(std::same_as<decltype(s0), unsafe_type>
+                    || std::same_as<decltype(s0), safe_type>);
+
+      relative_conditional_expr auto s1 = get<1>(settings);
+      relative_conditional_expr auto s2 = get<2>(settings);
+
+      return Callable::operator()(compress_callable_settings(s0, dense, s1, s2), args...);
+    }
+  }
+};
+
 }

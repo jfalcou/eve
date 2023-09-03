@@ -55,7 +55,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   // Prepare the output in case it was not empty.
   res.clear();
 
-  // Over allocating to always use `unsafe(compress_store)`.
+  // Over allocating to always use `compress_store[unsafe]`.
   // eve won't go beyound eve::expected_cardinal_v<IdxType> per wide here.
   res.resize((r.end() - r.begin()) + eve::expected_cardinal_v<IdxType>);
   IdxType* out = res.data();
@@ -91,7 +91,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
         // We don't know what was the result of applying a predicate to garbage, we need to mask it.
         test = eve::replace_ignored(test, ignore, eve::false_);
 
-        // unsafe(compress_store) - write elements marked as true to the output.
+        // compress_store[unsafe] - write elements marked as true to the output.
         // the elements are packed together to the left.
         // unsafe means we can write up to the register width of extra stuff.
         // returns pointer behind last written element
@@ -100,7 +100,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
         //  test    : [ f t f t ]
         //  written : [ 2 4 x x ]
         //  returns : out + 2
-        out  = eve::unsafe(eve::compress_store)(idxs, test, out);
+        out  = eve::compress_store[eve::unsafe](idxs, test, out);
       });
 
   res.resize(out - res.data());

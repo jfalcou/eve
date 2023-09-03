@@ -194,13 +194,7 @@ namespace algo_test
 
     eve::logical<eve::wide<std::uint16_t, eve::fixed<T::size()>>> mask{false};
     mask.set(T::size() - 1, true);
-    eve::unaligned_t<I> res = eve::safe(eve::compress_store)(v, mask, f);
-    TTS_EQUAL(eve::load(f), expected);
-    TTS_EQUAL((res - f), 1);
-
-    eve::store(or_, f);
-
-    res = eve::unsafe(eve::compress_store[eve::ignore_first(0)])(v, mask, f);
+    eve::unaligned_t<I> res = eve::compress_store[eve::safe](v, mask, f);
     TTS_EQUAL(eve::load(f), expected);
     TTS_EQUAL((res - f), 1);
 
