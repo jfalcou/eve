@@ -89,10 +89,10 @@ average_(EVE_SUPPORTS(cpu_),
          Ts... args) -> common_value_t<T0, Ts...>
 {
   using r_t   = common_value_t<T0, Ts...>;
-  if constexpr(std::is_floating_point_v<eve::underlying_type_t<r_t>>)
+  using u_t = underlying_type_t<r_t>;
+  if constexpr(std::is_floating_point_v<u_t>)
   {
-    using elt_t = element_type_t<r_t>;
-    elt_t invn  = rec(elt_t(sizeof...(args) + 1u));
+    u_t invn  = rec(u_t(sizeof...(args) + 1u));
     r_t   that(a0 * invn);
     auto  next = [invn](auto avg, auto x) { return fma(x, invn, avg); };
     ((that = next(that, args)), ...);
