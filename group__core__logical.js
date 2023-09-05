@@ -12,5 +12,6 @@ var group__core__logical =
     [ "eve::logical_notor", "group__core__logical_ga87c6af7531a1c2adc94d0947357cc417.html#ga87c6af7531a1c2adc94d0947357cc417", null ],
     [ "eve::logical_or", "group__core__logical_ga4eadf093443d36b1e0fea9462d64d452.html#ga4eadf093443d36b1e0fea9462d64d452", null ],
     [ "eve::logical_ornot", "group__core__logical_ga7ba7ab421719275f96d76882a4b7097c.html#ga7ba7ab421719275f96d76882a4b7097c", null ],
-    [ "eve::logical_xor", "group__core__logical_gaa37feb8e6153eb0ac5e256ba632b232e.html#gaa37feb8e6153eb0ac5e256ba632b232e", null ]
+    [ "eve::logical_xor", "group__core__logical_gaa37feb8e6153eb0ac5e256ba632b232e.html#gaa37feb8e6153eb0ac5e256ba632b232e", null ],
+    [ "eve::replace_ignored", "group__core__logical_gafaa07222ff0f44384515607d9f7d43a7.html#gafaa07222ff0f44384515607d9f7d43a7", null ]
 ];
