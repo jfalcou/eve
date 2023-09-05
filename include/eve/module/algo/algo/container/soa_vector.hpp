@@ -31,6 +31,7 @@ namespace eve::algo
   //================================================================================================
   //! @addtogroup memory
   //! @{
+  //!   @class soa_vector
   //!   @brief SIMD-aware container for product types
   //!
   //!   **Required header:** `#include <eve/memory/soa_vector.hpp>`
@@ -52,25 +53,29 @@ namespace eve::algo
     using const_storage_type  = detail::soa_storage<Type,Allocator> const;
 
     public:
-    //!=============================================================================================
+    //=============================================================================================
     //! @name Member types
     //! @{
     //==============================================================================================
     //! Type of data stored in the container
     using value_type = Type;
 
-    //!   @brief pointer and iterator types.
-    //!   pointer*  - are eve::algo::views::zip_iterator over fields (no conversion to type, just flat fields)
-    //!   iterator* - are a pointer, converter to the Type.
-    //!   They all satisfy eve::algo::relaxed_iterator but not std::iterator
+    // They all satisfy eve::algo::relaxed_iterator but not std::iterator
 
+    //! Iterator over the the stored Type
     using iterator               = decltype(views::convert(storage_type{}.data() , as<value_type>{}));
+    //! Const iterator over the the stored Type
     using const_iterator         = decltype(views::convert(std::declval<storage_type const>().data(), as<value_type>{}));
+
     using iterator_aligned       = decltype(views::convert(storage_type{}.data_aligned(), as<value_type>{}));
     using const_iterator_aligned = decltype(views::convert(std::declval<storage_type const>().data_aligned(), as<value_type>{}));
 
+    //! Pointer to a eve::algo::views::zip_iterator over fields
     using pointer               = iterator;
+
+    //! Const pointer to a eve::algo::views::zip_iterator over fields
     using const_pointer         = const_iterator;
+
     using pointer_aligned       = iterator_aligned;
     using const_pointer_aligned = const_iterator_aligned;
 
@@ -144,6 +149,7 @@ namespace eve::algo
     EVE_FORCEINLINE bool empty() const noexcept { return !size(); }
 
     //! @brief Increase the capacity of the vector to a value that's greater or equal to `n`.
+    //!
     //! If `n` is greater than the current capacity(), new storage is allocated and all iterators,
     //! including the past-the-end iterator, and all references to the elements are invalidated.
     //! Otherwise, the method does nothing.
@@ -172,6 +178,7 @@ namespace eve::algo
     void clear() { size_ = 0; }
 
     //! @brief Removes an element from the container.
+    //!
     //! Has the same invalidation semantics as std::vector.
     //! end() iterator is not a valid pos.
     iterator erase(const_iterator pos)
@@ -181,13 +188,13 @@ namespace eve::algo
     }
 
     //! @brief Removes the elements in the range [first, last)
-    //! Empty range is OK, does nothing
     iterator erase(const_iterator f, const_iterator l)
     {
       return erase_impl(f - cbegin(),l - cbegin());
     }
 
     //! @brief Appends the given element value to the end of the container.
+    //!
     //! If the new size() is greater than capacity() then all iterators and references (including
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
     //! invalidated.
@@ -200,6 +207,7 @@ namespace eve::algo
     }
 
     //! @brief Removes the last element of the container.
+    //!
     //! Calling pop_back on an empty container results in undefined behavior.
     //! Iterators and references to the last element, as well as the end() iterator, are invalidated.
     EVE_FORCEINLINE void pop_back() noexcept
@@ -232,6 +240,7 @@ namespace eve::algo
     void resize(size_type n) { resize(n, value_type{}); }
 
     //! @brief Exchanges the contents of the container with those of `other`.
+    //!
     //! Does not invoke any move, copy, or swap operations on individual elements.
     //! All iterators and references remain valid. The past-the-end iterator is invalidated.
     void swap(soa_vector& other) noexcept
