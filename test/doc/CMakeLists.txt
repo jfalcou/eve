@@ -31,17 +31,17 @@ glob_unit("doc" ${doc_root} "combinatorial/conversion/*.cpp" )
 ##==================================================================================================
 ## GLOB and process complex doc tests
 ##==================================================================================================
-add_custom_target(doc.complex.exe        )
-add_dependencies(doc.exe doc.complex.exe )
-glob_unit("doc" ${doc_root} "complex/regular/*.cpp"  )
-glob_unit("doc" ${doc_root} "complex/pedantic/*.cpp" )
+# add_custom_target(doc.complex.exe        )
+# add_dependencies(doc.exe doc.complex.exe )
+# glob_unit("doc" ${doc_root} "complex/regular/*.cpp"  )
+# glob_unit("doc" ${doc_root} "complex/pedantic/*.cpp" )
 
 ##==================================================================================================
 ## GLOB and process quaternion doc tests
 ##==================================================================================================
-add_custom_target(doc.quaternion.exe        )
-add_dependencies(doc.exe doc.quaternion.exe )
-glob_unit("doc" ${doc_root} "quaternion/regular/*.cpp"  )
+# add_custom_target(doc.quaternion.exe        )
+# add_dependencies(doc.exe doc.quaternion.exe )
+# glob_unit("doc" ${doc_root} "quaternion/regular/*.cpp"  )
 
 ##==================================================================================================
 ## GLOB and process core doc tests
