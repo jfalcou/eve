@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include "test.hpp"
 #include <eve/module/complex.hpp>
 
 namespace tts
@@ -72,5 +73,13 @@ namespace tts
   auto absolute_distance(eve::wide<T,N> const &l, eve::wide<T,N> const &r) requires(eve::is_complex_v<T>)
   {
      return eve::maximum(eve::dist(l, r));
+  }
+
+  template<typename T>
+  inline bool is_ieee_equal(T const &l, T const &r) requires(eve::is_complex_v<T>)
+  {
+    auto [rl,il] = l;
+    auto [rr,ir] = r;
+    return is_ieee_equal(rl,rr) && is_ieee_equal(il,ir);
   }
 }
