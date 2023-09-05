@@ -8,7 +8,6 @@
 #pragma once
 #define TTS_MAIN
 #define TTS_CUSTOM_DRIVER_FUNCTION eve_entry_point
-#include <tts/tts.hpp>
 
 //==================================================================================================
 // EVE Specific testing overloads
@@ -36,12 +35,21 @@ namespace eve
 
 namespace tts
 {
+  template<typename T, typename U>
+  double ulp_distance(T const &l, U const &r);
+
+  template<typename T, typename U>
+  double relative_distance(T const &l, U const &r);
+
+  template<typename T, typename U>
+  double absolute_distance(T const &l, U const &r);
+
   template<typename T, typename N>
   inline double ulp_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, tts::ulp_distance(T(l.get(i)), T(r.get(i))));
+      max_ulp = std::max(max_ulp, ulp_distance(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
@@ -53,11 +61,28 @@ namespace tts
   }
 
   template<typename T, typename N>
+  inline bool is_ieee_equal(eve::wide<T, N> const &a, eve::wide<T, N> const &b)
+  {
+    for(auto i = 0; i < a.size(); ++i)
+    {
+      if( (a.get(i) != b.get(i)) && !(eve::is_nan(a.get(i)) && eve::is_nan(b.get(i))))
+        return false;
+    }
+    return true;
+  }
+
+  template<typename T>
+  inline bool is_ieee_equal(eve::logical<T> const &l, eve::logical<T>const &r)
+  {
+    return eve::compare_equal(l,r);
+  }
+
+  template<typename T, typename N>
   inline double relative_distance(eve::wide<T, N> const &l, eve::wide<T, N> const &r)
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, tts::relative_distance(T(l.get(i)), T(r.get(i))));
+      max_ulp = std::max(max_ulp, relative_distance(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
@@ -73,7 +98,7 @@ namespace tts
   {
     double max_ulp = 0;
     for(auto i = 0; i < l.size(); ++i)
-      max_ulp = std::max(max_ulp, tts::absolute_distance(T(l.get(i)), T(r.get(i))));
+      max_ulp = std::max(max_ulp, absolute_distance(T(l.get(i)), T(r.get(i))));
 
     return max_ulp;
   }
@@ -84,6 +109,8 @@ namespace tts
     return eve::compare_equal(l,r) ? 0. : 1;
   }
 }
+
+#include <tts/tts.hpp>
 
 //==================================================================================================
 // EVE Specific types
