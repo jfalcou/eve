@@ -4,6 +4,7 @@ var namespaceeve =
     [ "aligned_allocator", "structeve_1_1aligned__allocator.html", "structeve_1_1aligned__allocator" ],
     [ "aligned_ptr", "structeve_1_1aligned__ptr.html", "structeve_1_1aligned__ptr" ],
     [ "as", "structeve_1_1as.html", "structeve_1_1as" ],
+    [ "as_element", "structeve_1_1as__element.html", "structeve_1_1as__element" ],
     [ "as_pattern", "structeve_1_1as__pattern.html", null ],
     [ "cardinal", "structeve_1_1cardinal.html", null ],
     [ "common_compatible", "structeve_1_1common__compatible.html", null ],

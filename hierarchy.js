@@ -4,6 +4,9 @@ var hierarchy =
     [ "eve::aligned_allocator< T, Lanes >", "structeve_1_1aligned__allocator.html", null ],
     [ "eve::aligned_ptr< Type, Lanes >", "structeve_1_1aligned__ptr.html", null ],
     [ "eve::as< T >", "structeve_1_1as.html", null ],
+    [ "eve::as< element_type_t< T > >", "structeve_1_1as.html", [
+      [ "eve::as_element< T >", "structeve_1_1as__element.html", null ]
+    ] ],
     [ "eve::as_pattern< F >", "structeve_1_1as__pattern.html", null ],
     [ "backward_iterator", "structbackward__iterator.html", null ],
     [ "eve::algo::views::backward_iterator< I >", "structeve_1_1algo_1_1views_1_1backward__iterator.html", null ],

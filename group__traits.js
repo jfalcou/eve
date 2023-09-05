@@ -6,6 +6,9 @@ var group__traits =
     [ "eve::as< T >", "structeve_1_1as.html", [
       [ "type", "structeve_1_1as.html#a904ff0e88e1f435dc24505e3168b52f5", null ]
     ] ],
+    [ "eve::as_element< T >", "structeve_1_1as__element.html", [
+      [ "type", "structeve_1_1as__element.html#a904ff0e88e1f435dc24505e3168b52f5", null ]
+    ] ],
     [ "eve::cardinal< Type >", "structeve_1_1cardinal.html", null ],
     [ "eve::common_compatible< Ts >", "structeve_1_1common__compatible.html", null ],
     [ "eve::common_type< Ts >", "structeve_1_1common__type.html", null ],
