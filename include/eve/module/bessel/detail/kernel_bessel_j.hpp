@@ -12,6 +12,7 @@
 #include <eve/module/bessel/detail/kernel_bessel_jy_large.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/as_element.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of cylindrical bessel functions
@@ -63,7 +64,7 @@ EVE_FORCEINLINE auto
 kernel_bessel_j_int_forward(I nn, T x, T j0, T j1) noexcept
 {
   if constexpr( simd_value<I> )
-    return kernel_bessel_j_int_forward(convert(nn, as<element_type_t<T>>()), x, j0, j1);
+    return kernel_bessel_j_int_forward(convert(nn, as_element(j0)), x, j0, j1);
   else return kernel_bessel_j_int_forward(T(nn), x, j0, j1);
 }
 

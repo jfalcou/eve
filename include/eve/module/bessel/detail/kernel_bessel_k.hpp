@@ -12,6 +12,7 @@
 #include <eve/module/bessel/regular/cyl_bessel_k1.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/as_element.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
 // These routines are detail of the computation of modifiesd cylindrical bessel
@@ -30,7 +31,7 @@ kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
   if constexpr(integral_value<I>)
   {
     if constexpr( simd_value<I> )
-      return kernel_bessel_k_int_forward(convert(nn, as<element_type_t<T>>()), x, k0, k1);
+      return kernel_bessel_k_int_forward(convert(nn, as_element(k0)), x, k0, k1);
     else
       return kernel_bessel_k_int_forward(T(nn), x, k0, k1);
   }

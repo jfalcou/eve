@@ -7,30 +7,30 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/as.hpp>
+#include <eve/traits/element_type.hpp>
+
 namespace eve
 {
   //================================================================================================
   //! @addtogroup traits
   //! @{
-  //! @struct as
-  //! @brief Lightweight type-wrapper
+  //! @struct as_element
+  //! @brief Lightweight type-wrapper over element type
   //!
   //! **Required header:** `#include <eve/as.hpp>`
   //!
-  //! Wraps type into a constexpr, trivially constructible empty class to optimize passing type
-  //! parameters via object instead of via template parameters.
+  //! eve::as_element<T> is a short-cut for eve::as<eve::element_type_t<T>> designed to work with
+  //! automatic type deduction.
   //!
   //! @tparam T Type to wrap
   //!
   //! @}
   //================================================================================================
   template<typename T>
-  struct as
+  struct as_element : as<element_type_t<T>>
   {
-    //! @brief Wrapped type
-    using type = T;
-
-    constexpr as()          noexcept {}
-    constexpr as(T const&)  noexcept {}
+    constexpr as_element()          noexcept {}
+    constexpr as_element(T const&)  noexcept {}
   };
 }

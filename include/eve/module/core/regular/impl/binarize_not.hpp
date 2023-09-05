@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/as_element.hpp>
 
 #include <type_traits>
 
@@ -64,7 +65,7 @@ binarize_not_(EVE_SUPPORTS(cpu_), logical<T> const& cond, callable_mone_ const&)
   if constexpr( integral_value<T> )
     return bit_not(cond.mask());
   else
-    return eve::binarize_not(cond, mone(eve::as<element_type_t<T>>()));
+    return eve::binarize_not(cond, mone(eve::as_element<T>()));
 }
 
 }

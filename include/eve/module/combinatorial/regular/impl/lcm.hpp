@@ -10,6 +10,7 @@
 #include <eve/module/combinatorial/regular/gcd.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits/common_value.hpp>
+#include <eve/as_element.hpp>
 
 namespace eve::detail
 {
@@ -55,12 +56,12 @@ lcm_(EVE_SUPPORTS(cpu_), upgrade_converter const&, T a, T b) noexcept
   if constexpr( std::is_same_v<efup_t, float> )
   {
     auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
-    return convert(r, as<element_type_t<up_t>>());
+    return convert(r, as_element<up_t>());
   }
   else // double element
   {
     auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
-    return convert(r, as<element_type_t<up_t>>());
+    return convert(r, as_element<up_t>());
   }
 }
 }

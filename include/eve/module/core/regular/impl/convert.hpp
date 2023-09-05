@@ -19,6 +19,7 @@
 #include <eve/module/core/regular/shuffle.hpp>
 #include <eve/traits/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <eve/as_element.hpp>
 
 #include <bit>
 
@@ -50,7 +51,7 @@ struct convert_lambda
   template<typename T, typename M>
   EVE_FORCEINLINE constexpr void operator()(T const& in, M *res_m) const noexcept
   {
-    *res_m = eve::convert(in, eve::as<element_type_t<M>> {});
+    *res_m = eve::convert(in, eve::as_element<M>{});
   }
 };
 
