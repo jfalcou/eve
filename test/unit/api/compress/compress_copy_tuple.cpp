@@ -11,5 +11,6 @@
 
 TTS_CASE_TPL("Check compress copy behavior", eve::test::simd::all_types)
 <typename T>(tts::type<T>) {
-  compress_copy_tst(eve::as<T>{}, eve::compress_copy);
+  using e_t = kumi::tuple<std::int8_t, eve::element_type_t<T>, double>;
+  compress_copy_tst(eve::as<eve::wide<e_t, typename T::cardinal_type>>{}, eve::compress_copy);
 };

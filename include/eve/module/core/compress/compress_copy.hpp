@@ -58,10 +58,12 @@ namespace eve
 //!     * the ignored elements can are not loaded (same as load[ignore])
 //!     * they are treated as not selected, regardless of the mask value
 //!   2nd is the output side ignore:
-//!     * elements that are ignored, will not be written. Example:
-//!       if the ignore_first(1) is passed, the first selected element
-//!       will not appear anywhere in the output and the 2nd selected
-//!       element will be written in (out + 1)
+//!     * elements that are ignored, will not be written.
+//!       having initial offset is equvialent to offeting the `o + offset`.
+//!       followed by keep_first(count)
+//!     Example:
+//!       if the `eve::ignore_extrema(1, L::size() - 2)` is passed,
+//`       the first selected element will be written at o + 1.
 //!     Defaults to 1st ignore.
 //!
 //!   If the mask == true this and it's `unsafe` variation, this is the same behaviour as
@@ -95,7 +97,7 @@ namespace eve
 //!                typename I,
 //!                logical_simd_value L,
 //!                typename O>
-//!      autoo compress_copy
+//!      auto compress_copy
 //!        [safe/unsafe][sparse/dense]
 //!        [C1 ignore_in][C2 ignore_out](
 //!           I in,
@@ -107,7 +109,7 @@ namespace eve
 //!                typename I,
 //!                logical_simd_value L,
 //!                typename O>
-//!      autoo compress_copy
+//!      auto compress_copy
 //!        [safe/unsafe][sparse/dense]
 //!        [C1 ignore_in][C2 ignore_out](
 //!           I in,
