@@ -9,6 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
+#include <eve/as_element.hpp>
 
 namespace eve::detail
 {
@@ -118,7 +119,7 @@ EVE_FORCEINLINE auto
 tchebytchev_(EVE_SUPPORTS(cpu_), kind_2_type const&, I n, T x) noexcept
 {
   EVE_ASSERT(eve::all(is_gez(n)), "some elements of n are not positive");
-  auto nn  = inc(convert(n, as<element_type_t<T>>()));
+  auto nn  = inc(convert(n, as_element(x)));
   auto z   = eve::abs(x);
   auto acx = acos(x);
 

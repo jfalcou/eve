@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/bessel/detail/kernel_bessel_k.hpp>
+#include <eve/as_element.hpp>
 
 namespace eve::detail
 {
@@ -78,7 +79,7 @@ cyl_bessel_kn_(EVE_SUPPORTS(cpu_), I nu, T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto n = convert(nu, as<element_type_t<T>>());
+      auto n = convert(nu, as_element(x));
       return kernel_bessel_k_int(n, x);
     }
     else return apply_over(cyl_bessel_kn, nu, x);

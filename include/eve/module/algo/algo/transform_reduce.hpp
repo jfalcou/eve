@@ -14,6 +14,7 @@
 #include <eve/module/algo/algo/views/convert.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
+#include <eve/as_element.hpp>
 
 #include <utility>
 
@@ -49,7 +50,7 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
         sums[idx()] = if_else(ignore, map_op(loaded, sums[idx()]), sums[idx()]);
       } else {
         auto mapped = map_op(loaded);
-        auto cvt    = eve::convert(mapped, eve::as<element_type_t<SumWide>> {});
+        auto cvt    = eve::convert(mapped, eve::as_element<SumWide>{});
         sums[idx()] = add_op(sums[idx()], if_else(ignore, cvt, zero));
       }
       return false;

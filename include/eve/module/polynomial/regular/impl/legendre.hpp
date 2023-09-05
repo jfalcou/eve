@@ -263,8 +263,8 @@ namespace detail
     EVE_ASSERT(eve::all(m >= 0 && is_flint(m)),
                "sph(legendre)(l, m, theta): m is negative or not integral");
     EVE_ASSERT(eve::all(m <= l), "sph(legendre)(l, m, theta): some m are greater than l");
-    auto ll   = convert(l, as<element_type_t<T>>());
-    auto mm   = convert(m, as<element_type_t<T>>());
+    auto ll   = convert(l, as_element(theta));
+    auto mm   = convert(m, as_element(theta));
     using r_t = eve::common_value_t<T, decltype(ll), decltype(mm)>;
     r_t p0(theta);
     p0 = eve::legendre(l, m, cos(p0));
