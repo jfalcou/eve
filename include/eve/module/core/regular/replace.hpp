@@ -15,6 +15,43 @@
 
 namespace eve
 {
+
+//================================================================================================
+//! @addtogroup core_logical
+//! @{
+//!    @var replace_ignored
+//!    @brief A small helper tto replace ignored values
+//!
+//!   **Defined in Header**
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   A convinience wrapper around if_else.
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      template< eve::value T, eve::conditional_expr Ignore, eve::value Other >
+//!      auto replace_ignored(T x, Ignore ignore, Other with )
+//!        -> decltype(eve::if_else[ignore](x, with))
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!   * `x` - main value
+//!   * `ignore` - selection
+//!   * `with` - value to replace with
+//!
+//!   **Return value**
+//!
+//!   Same as if_else.
+//!
+//================================================================================================
+
 EVE_MAKE_CALLABLE(replace_ignored_, replace_ignored);
 
 namespace detail

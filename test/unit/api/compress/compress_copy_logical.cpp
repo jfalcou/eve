@@ -1,18 +1,15 @@
 //==================================================================================================
-/*
+/**
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
-*/
+**/
 //==================================================================================================
-#pragma once
+#include "compress_copy_test.hpp"
 
-#include <eve/module/core/compress/detail/compress_callable.hpp>
-#include <eve/module/core/compress/compress_copy_scalar.hpp>
+#include <eve/module/core.hpp>
 
-namespace eve
-{
-
-inline constexpr auto compress_copy = compress_copy_scalar;
-
-}
+TTS_CASE_TPL("Check compress copy logical", eve::test::simd::all_types)
+<typename T>(tts::type<T>) {
+  compress_copy_tst(eve::as<eve::logical<T>>{}, eve::compress_copy);
+};
