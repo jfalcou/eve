@@ -265,11 +265,11 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <div class="line"> </div>
 <div class="line">  <span class="keyword">using </span>pair_t = kumi::tuple&lt;int, double&gt;;</div>
 <div class="line"> </div>
-<div class="line">  eve::algo::soa_vector&lt;pair_t&gt; pairs {{0, 1.1f}, {2, 2.2f}, {3, 3.3f}, {4, 4.4f}};</div>
+<div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> pairs {{0, 1.1f}, {2, 2.2f}, {3, 3.3f}, {4, 4.4f}};</div>
 <div class="line">  std::vector&lt;int&gt;              scalars {2, 4};</div>
 <div class="line"> </div>
-<div class="line">  eve::algo::soa_vector&lt;pair_t&gt; r;</div>
-<div class="line">  r.resize(pairs.size());</div>
+<div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> r;</div>
+<div class="line">  r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a>(pairs.size());</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> project = []&lt;<span class="keyword">typename</span> T&gt;(T a) {</div>
 <div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;T, pair_t&gt;</a>) <span class="keywordflow">return</span> get&lt;0&gt;(a);</div>
@@ -289,9 +289,9 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <div class="line">    <span class="keywordflow">return</span> project(a) == project(b);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
-<div class="line">  r.erase(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(pairs, scalars, r, lt, eq).out, r.end());</div>
+<div class="line">  r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28.html#a9d1fa950c126da0ea504f3cad11ddd28">erase</a>(<a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>(pairs, scalars, r, lt, eq).out, r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector.html#a7db16dc990e0a9f719cad868584894c3">end</a>());</div>
 <div class="line"> </div>
-<div class="line">  eve::algo::soa_vector&lt;pair_t&gt; r_expected {{2, 2.2f}, {4, 4.4f}};</div>
+<div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> r_expected {{2, 2.2f}, {4, 4.4f}};</div>
 <div class="line">  TTS_EQUAL(r, r_expected);</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; pairs:   &quot;</span> &lt;&lt; tts::as_string(pairs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -374,6 +374,10 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:110</div></div>
 <div class="ttc" id="agroup__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867_html_gaa19dcccbb0ef0ef464e95ffd7a588867"><div class="ttname"><a href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">eve::convert</a></div><div class="ttdeci">detail::callable_object&lt; tag::convert_ &gt; const convert</div><div class="ttdoc">Converts a value to another type.</div><div class="ttdef"><b>Definition:</b> convert.hpp:68</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91_html_a00d09efb7c037e5a1b2393e091e94c91"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">eve::algo::soa_vector::resize</a></div><div class="ttdeci">void resize(size_type n, value_type value)</div><div class="ttdoc">Resizes the container to contain count elements.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:226</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28_html_a9d1fa950c126da0ea504f3cad11ddd28"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28.html#a9d1fa950c126da0ea504f3cad11ddd28">eve::algo::soa_vector::erase</a></div><div class="ttdeci">iterator erase(const_iterator pos)</div><div class="ttdoc">Removes an element from the container.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:184</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_html"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a></div><div class="ttdoc">SIMD-aware container for product types.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:50</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1soa__vector_html_a7db16dc990e0a9f719cad868584894c3"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector.html#a7db16dc990e0a9f719cad868584894c3">eve::algo::soa_vector::end</a></div><div class="ttdeci">auto end() -&gt; iterator</div><div class="ttdoc">Returns an iterator to the end.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:332</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --> 
 </div>

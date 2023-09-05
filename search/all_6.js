@@ -8,6 +8,6 @@ var searchData=
   ['gegenbauer_5',['gegenbauer',['../group__polynomial_gaee731c76b893d8394075aaa0e5a16cf5.html#gaee731c76b893d8394075aaa0e5a16cf5',1,'eve']]],
   ['generalized_20tag_20invoke_20protocol_6',['Generalized Tag Invoke Protocol',['../group__invoke.html',1,'']]],
   ['geommean_7',['geommean',['../group__math__exp_gafac2fbecb48c62079c84db6314ddc0e8.html#gafac2fbecb48c62079c84db6314ddc0e8',1,'eve']]],
-  ['get_8',['get',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7e669e8b662996c0cb3553c33a09dedc',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::get()'],['../structeve_1_1wide.html#a5f47b4c7696ac6bf60ad8641c42f88b4',1,'eve::wide::get()'],['../structeve_1_1aligned__ptr.html#aa6c43a41bc91bdc491818820953f7b4d',1,'eve::aligned_ptr::get()']]],
+  ['get_8',['get',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7e669e8b662996c0cb3553c33a09dedc',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::get()'],['../structeve_1_1wide.html#a5f47b4c7696ac6bf60ad8641c42f88b4',1,'eve::wide::get()'],['../structeve_1_1aligned__ptr.html#aa6c43a41bc91bdc491818820953f7b4d',1,'eve::aligned_ptr::get()'],['../structeve_1_1algo_1_1soa__vector_ab8e96562f8b090a2575e0b5a7116a9ed.html#ab8e96562f8b090a2575e0b5a7116a9ed',1,'eve::algo::soa_vector::get()']]],
   ['glaisher_9',['glaisher',['../group__math__constants_ga6a24f7d3548894f773a0683a37485033.html#ga6a24f7d3548894f773a0683a37485033',1,'eve']]]
 ];

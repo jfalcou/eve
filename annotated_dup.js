@@ -18,6 +18,7 @@ var annotated_dup =
         [ "nothing_t", "structeve_1_1algo_1_1nothing__t.html", null ],
         [ "ptr_iterator", "structeve_1_1algo_1_1ptr__iterator.html", null ],
         [ "range_ref_wrapper", "structeve_1_1algo_1_1range__ref__wrapper.html", null ],
+        [ "soa_vector", "structeve_1_1algo_1_1soa__vector.html", "structeve_1_1algo_1_1soa__vector" ],
         [ "traits", "structeve_1_1algo_1_1traits.html", null ]
       ] ],
       [ "abi", "structeve_1_1abi.html", null ],
