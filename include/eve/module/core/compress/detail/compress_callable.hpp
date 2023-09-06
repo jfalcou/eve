@@ -73,7 +73,7 @@ template<typename Callable, typename... Settings> struct compress_callable : Cal
     {
       return (*this)[ignore_none][ignore_none](args...);
     }
-    else if constexpr( sizeof...(Settings) == 3 ) { return (*this)[get<3>(settings)](args...); }
+    else if constexpr( sizeof...(Settings) == 3 ) { return (*this)[get<2>(settings)](args...); }
     else
     {
       auto s0 = get<0>(settings);

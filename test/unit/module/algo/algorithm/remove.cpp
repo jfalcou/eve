@@ -129,6 +129,7 @@ TTS_CASE_TPL("Check remove test", algo_test::selected_types)
 <typename T>(tts::type<T>)
 {
   remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove);
+  remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::sparse_output]);
   remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::unroll<3>]);
   // FIX-#816
   if constexpr (T::size() < eve::expected_cardinal_v<eve::element_type_t<T>>) return;

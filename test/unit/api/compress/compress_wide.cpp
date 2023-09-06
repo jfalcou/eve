@@ -6,5 +6,5 @@ TTS_CASE_WITH( "Check compress behavior"
         )
 <typename T> (T data)
 {
-  compress_store_test<eve::logical<T>>(data);
+  compress_test<eve::logical<T>>(data);
 };
