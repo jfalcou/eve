@@ -27,58 +27,58 @@ var NAVTREE =
   [ "E.V.E", "index.html", [
     [ "The Expressive Vector Engine", "index.html", "index" ],
     [ "Installation & Quick Start", "install.html", [
-      [ "Pre-requisites", "install.html#autotoc_md166", null ],
-      [ "Retrieving the source", "install.html#autotoc_md167", [
-        [ "Github", "install.html#autotoc_md168", null ],
-        [ "CPM", "install.html#autotoc_md169", null ],
-        [ "SPACK", "install.html#autotoc_md170", null ],
-        [ "AUR", "install.html#autotoc_md171", null ],
-        [ "Conan", "install.html#autotoc_md172", null ],
-        [ "VCPKG", "install.html#autotoc_md173", null ]
+      [ "Pre-requisites", "install.html#autotoc_md165", null ],
+      [ "Retrieving the source", "install.html#autotoc_md166", [
+        [ "Github", "install.html#autotoc_md167", null ],
+        [ "CPM", "install.html#autotoc_md168", null ],
+        [ "SPACK", "install.html#autotoc_md169", null ],
+        [ "AUR", "install.html#autotoc_md170", null ],
+        [ "Conan", "install.html#autotoc_md171", null ],
+        [ "VCPKG", "install.html#autotoc_md172", null ]
       ] ],
-      [ "Installation from Source", "install.html#autotoc_md174", [
-        [ "Setting up the Library", "install.html#autotoc_md175", null ],
-        [ "Building the Documentation", "install.html#autotoc_md176", null ]
+      [ "Installation from Source", "install.html#autotoc_md173", [
+        [ "Setting up the Library", "install.html#autotoc_md174", null ],
+        [ "Building the Documentation", "install.html#autotoc_md175", null ]
       ] ],
-      [ "Using the library", "install.html#autotoc_md177", [
-        [ "Compilation", "install.html#autotoc_md178", null ],
-        [ "Instruction Set Selection", "install.html#autotoc_md179", null ],
-        [ "Execution", "install.html#autotoc_md180", null ],
-        [ "Use in CMake", "install.html#autotoc_md181", null ]
+      [ "Using the library", "install.html#autotoc_md176", [
+        [ "Compilation", "install.html#autotoc_md177", null ],
+        [ "Instruction Set Selection", "install.html#autotoc_md178", null ],
+        [ "Execution", "install.html#autotoc_md179", null ],
+        [ "Use in CMake", "install.html#autotoc_md180", null ]
       ] ],
-      [ "Advanced options", "install.html#autotoc_md182", null ]
+      [ "Advanced options", "install.html#autotoc_md181", null ]
     ] ],
     [ "Tutorials", "tutorials.html", "tutorials" ],
     [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
-      [ "Version 2023.02.15", "changelog.html#autotoc_md183", [
-        [ "What's Changed", "changelog.html#autotoc_md184", [
-          [ "Removal and Depreciation", "changelog.html#autotoc_md185", null ],
-          [ "Architectures/Compilers Support & Fixes", "changelog.html#autotoc_md186", [
-            [ "The One Big News for this release: SVE", "changelog.html#autotoc_md187", null ],
-            [ "Other Fixes", "changelog.html#autotoc_md188", null ]
+      [ "Version 2023.02.15", "changelog.html#autotoc_md182", [
+        [ "What's Changed", "changelog.html#autotoc_md183", [
+          [ "Removal and Depreciation", "changelog.html#autotoc_md184", null ],
+          [ "Architectures/Compilers Support & Fixes", "changelog.html#autotoc_md185", [
+            [ "The One Big News for this release: SVE", "changelog.html#autotoc_md186", null ],
+            [ "Other Fixes", "changelog.html#autotoc_md187", null ]
           ] ],
-          [ "Features", "changelog.html#autotoc_md189", null ],
-          [ "Bug Fixes", "changelog.html#autotoc_md190", null ]
+          [ "Features", "changelog.html#autotoc_md188", null ],
+          [ "Bug Fixes", "changelog.html#autotoc_md189", null ]
         ] ]
       ] ],
-      [ "Version 2022.09.1", "changelog.html#autotoc_md191", null ],
-      [ "Version 2022.09.0", "changelog.html#autotoc_md192", [
-        [ "What's Changed", "changelog.html#autotoc_md193", null ],
-        [ "New Contributors", "changelog.html#autotoc_md194", null ]
+      [ "Version 2022.09.1", "changelog.html#autotoc_md190", null ],
+      [ "Version 2022.09.0", "changelog.html#autotoc_md191", [
+        [ "What's Changed", "changelog.html#autotoc_md192", null ],
+        [ "New Contributors", "changelog.html#autotoc_md193", null ]
       ] ],
-      [ "Version 2022.03.0", "changelog.html#autotoc_md195", [
-        [ "What's Changed", "changelog.html#autotoc_md196", null ],
-        [ "New Contributors", "changelog.html#autotoc_md197", null ]
+      [ "Version 2022.03.0", "changelog.html#autotoc_md194", [
+        [ "What's Changed", "changelog.html#autotoc_md195", null ],
+        [ "New Contributors", "changelog.html#autotoc_md196", null ]
       ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md198", [
-        [ "What's Changed", "changelog.html#autotoc_md199", null ]
+      [ "Version 2021.10.0", "changelog.html#autotoc_md197", [
+        [ "What's Changed", "changelog.html#autotoc_md198", null ]
       ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md200", null ]
+      [ "Version beta.2020.09", "changelog.html#autotoc_md199", null ]
     ] ],
     [ "Licence", "licence.html", null ],
     [ "Interaction with native code.", "inter-with-native.html", [
-      [ "What about non-native sizes?", "inter-with-native.html#autotoc_md207", null ]
+      [ "What about non-native sizes?", "inter-with-native.html#autotoc_md206", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", "namespaces.html", [

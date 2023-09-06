@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__compress_gaa538588c547767
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::compress_store = {}</td>
+          <td class="memname">eve::compress_store = detail::compress_callable_no_density&lt;compress_store_core&gt; {}</td>
         </tr>
       </table>
   </td>
@@ -142,65 +142,39 @@ $(document).ready(function(){initNavTree('group__core__compress_gaa538588c547767
 </div><div class="memdoc">
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>you should use <a class="el" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e" title="A function that copies selected elements from source to destination, while compressing them to the le...">eve::compress_copy</a> if possible, it has more opportunities for optimizations.</dd></dl>
-<p>If this function is not what you are looking for, maybe <a class="el" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541" title="A low level function to compress one simd value based on a mask.">eve::compress</a> will be help.</p>
-<p>You can think about this function as <code>std::copy_if</code> for <code>simd_value</code>. Similar to <code>std::copy_if</code>, it returns you a <code>ptr</code> after the last written element.</p>
-<p>There are 2 versions: <code>unsafe</code> and <code>safe</code>:</p><ul>
-<li><code>unsafe</code> is allowed to write up to <code>simd_value::size()</code> elements regardless of how many elements are selected. In other words it is <a class="el" href="group__core__compress_ga653bcb136e1f2983814787c42567f541.html#ga653bcb136e1f2983814787c42567f541" title="A low level function to compress one simd value based on a mask.">eve::compress</a> + <a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09" title="Callable object computing //! description NOT FOUND.">eve::store</a>.</li>
-<li><code>safe</code> version will write exactly how many elements are selected. This makes it slow on most platforms.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd><code>safe</code> version does not touch not selected elements. So, for example, other threads can read/write them without a race condition.</dd></dl>
-<h2><a class="anchor" id="autotoc_md38"></a>
-Masked Calls</h2>
-<p>You can pass <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a> ignore modifier to indicate that some elements should not be considered.</p>
-<p>Passing <code>ignore</code> other than <a class="el" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633" title="Object representing the eve::ignore_none_ conditional expression.">eve::ignore_none</a> to <code>unsafe(compress_store)</code> converts it into <code>safe</code>.</p>
-<p>Ignored elements are treated as not selected when compressing. We start writing from <code>c.offset()</code>. This is the same behaviour as <a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09" title="Callable object computing //! description NOT FOUND.">eve::store</a>.</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1ignore__first.html">ignore_first</a>(1), [a, b, c, d], (<span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>)</div>
-<div class="line">ouput: [_, b, d, _] - here _ indicates previous <a class="code hl_concept" href="concepteve_1_1value.html">value</a> that was not modified.</div>
-<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:31</div></div>
-<div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:420</div></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>passing <code>ignore</code> other that <a class="el" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633" title="Object representing the eve::ignore_none_ conditional expression.">eve::ignore_none</a> to <code>unsafe(compress_store)</code> is making it <code>safe</code>. As soon as we start not writing some elements, it doesn't cost us extra. Plus it simplifies writing code for ranges with unequal length.</dd></dl>
-<p>Ignored elements are treated as not selected when compressing. We start writing from <code>c.offset()</code>.</p>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structeve_1_1ignore__first.html">ignore_first</a>(1), [a, b, c, d], (<span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>)</div>
-<div class="line">ouput: [_, b, d, _] - here _ indicates previous <a class="code hl_concept" href="concepteve_1_1value.html">value</a> that was not modified.</div>
-</div><!-- fragment --><p>Another explanation: <code>unsafe(compress_store[ignore])(x, x != 0)</code> behaves exactly like <code>store[ignore]</code> if none of the elements are 0s.</p>
+</div><!-- fragment --><p>This function behaves like <a class="el" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e" title="A function that copies selected elements from source to destination, while compressing them to the le...">eve::compress_copy</a>[dense] but as input it takes loaded register. </p><dl class="section see"><dt>See also</dt><dd>eve::compres_copy for explained behavour.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>you should use <a class="el" href="group__core__compress_gae391a1ac55150bb87da1f9fd0740b53e.html#gae391a1ac55150bb87da1f9fd0740b53e" title="A function that copies selected elements from source to destination, while compressing them to the le...">eve::compress_copy</a> if possible, it has more opportunities for optimizations.</dd></dl>
 <h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span> &lt;simd_value T, logical_simd_value L, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;Ptr&gt;</a> unsafe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">compress_store</a>)(T x, L m, Ptr ptr)   <span class="comment">// (1)</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C,</div>
-<div class="line">            <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T,</div>
-<div class="line">            <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L,</div>
-<div class="line">            simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;Ptr&gt;</a> unsafe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">compress_store</a>[C ignore])(T x, L m, Ptr ptr)   <span class="comment">// (2)</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T, <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;Ptr&gt;</a> safe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">compress_store</a>)(T x, L m, Ptr ptr)   <span class="comment">// (3)</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C,</div>
-<div class="line">            <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T,</div>
-<div class="line">            <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L,</div>
-<div class="line">            simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;Ptr&gt;</a> safe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">compress_store</a>[C ignore])(T x, L m, Ptr ptr)   <span class="comment">// (4)</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C1,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> C2,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T,</div>
+<div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L,</div>
+<div class="line">             <span class="keyword">typename</span> O&gt;</div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">compress_store</a></div>
+<div class="line">       [safe/unsafe]</div>
+<div class="line">       [C1 ignore_in][C2 ignore_out]</div>
+<div class="line">       (T x, L m, O o)  -&gt; <a class="code hl_typedef" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t&lt;O&gt;</a> <span class="comment">// (1)</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value.</div><div class="ttdef"><b>Definition:</b> simd.hpp:45</div></div>
 <div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:50</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
-<div class="ttc" id="agroup__core__compress_gaa538588c547767772b1b1fe4b61f357e_html_gaa538588c547767772b1b1fe4b61f357e"><div class="ttname"><a href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a></div><div class="ttdeci">constexpr callable_compress_store_ compress_store</div><div class="ttdoc">A function that stores selected elements from an eve::simd_value to an eve::simd_compatible_ptr,...</div><div class="ttdef"><b>Definition:</b> compress_store.hpp:122</div></div>
+<div class="ttc" id="agroup__core__compress_gaa538588c547767772b1b1fe4b61f357e_html_gaa538588c547767772b1b1fe4b61f357e"><div class="ttname"><a href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a></div><div class="ttdeci">constexpr auto compress_store</div><div class="ttdoc">A function that stores selected elements from an eve::simd_value to an eve::simd_compatible_ptr,...</div><div class="ttdef"><b>Definition:</b> compress_store.hpp:116</div></div>
 <div class="ttc" id="agroup__memory_ga33eaeb7216e54812993e44457de2c34c_html_ga33eaeb7216e54812993e44457de2c34c"><div class="ttname"><a href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">eve::unaligned_t</a></div><div class="ttdeci">decltype(unalign(std::declval&lt; T &gt;())) unaligned_t</div><div class="ttdoc">Required header: #include &lt;eve/module/core.hpp&gt;</div><div class="ttdef"><b>Definition:</b> unalign.hpp:54</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
+<li>safe/unsafe - mode of the operation - required</li>
+<li>ignore_in - optional, ignored elements considered not selected.</li>
+<li>ignore_out - optional, defaults to ignore_in. controls part of the output where the data will be written.</li>
 <li><code>x</code>: <code>simd_value</code> to compress</li>
 <li><code>m</code>: mask indicating selected elements</li>
-<li><code>ptr</code>: pointer-like where to write the elements</li>
-<li><code>ignore</code> - optional <code>eve::relative_condiation_expr</code>, see detailed explanation above</li>
+<li><code>o</code>: pointer-like where to write the elements</li>
 </ul>
 <p><b>Return value</b></p>
 <ul>
-<li>ptr after the last selected element written</li>
+<li>o after the last selected element written</li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -219,7 +193,7 @@ Masked Calls</h2>
 <div class="line">    <span class="comment">// We have to have 4 elements in the output, even if only 2 are selected.</span></div>
 <div class="line">    std::array&lt;int, 4&gt; out {};</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordtype">int</span>* o = eve::unsafe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>)(in, m, out.data());</div>
+<div class="line">    <span class="keywordtype">int</span>* o = <a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>[eve::unsafe](in, m, out.data());</div>
 <div class="line">    TTS_EQUAL(2, o - out.data());  <span class="comment">// 2 elements are selected and written</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// We don&#39;t know what elements are after</span></div>
@@ -232,23 +206,33 @@ Masked Calls</h2>
 <div class="line">    <span class="comment">// Here we know we won&#39;t write more than selected,</span></div>
 <div class="line">    <span class="comment">// at the price of it being more expensive</span></div>
 <div class="line">    std::array&lt;int, 2&gt; out {};</div>
-<div class="line">    <span class="keywordtype">int</span>* o = eve::safe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>)(in, m, out.data());</div>
+<div class="line">    <span class="keywordtype">int</span>* o = <a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>[eve::safe](in, m, out.data());</div>
 <div class="line"> </div>
 <div class="line">    TTS_EQUAL(o - out.data(), 2);</div>
 <div class="line">    TTS_EQUAL((std::array{2, 3}), out);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  {</div>
-<div class="line">    <span class="comment">// Ignore affects output as well as input.</span></div>
-<div class="line">    <span class="comment">// `unsafe` becomes `safe` as soon as we ignore anything.</span></div>
+<div class="line">    <span class="comment">// Ignore output defaults to the input ignore.</span></div>
 <div class="line">    std::array&lt;int, 3&gt; out {-1, 0, 0};</div>
-<div class="line">    <span class="keywordtype">int</span>* o = eve::unsafe(<a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1)])(in, m, out.data());</div>
+<div class="line">    <span class="keywordtype">int</span>* o = <a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>[eve::unsafe][<a class="code hl_struct" href="structeve_1_1keep__between.html">eve::keep_between</a>(1, 3)](in, m, out.data());</div>
 <div class="line"> </div>
 <div class="line">    TTS_EQUAL(o - out.data(), 3);</div>
 <div class="line">    TTS_EQUAL((std::array{-1, 2, 3}), out);</div>
 <div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// But can be separate</span></div>
+<div class="line">    std::array&lt;int, 3&gt; out {0, -1, -1};</div>
+<div class="line">    <span class="keywordtype">int</span>* o = <a class="code hl_variable" href="group__core__compress_gaa538588c547767772b1b1fe4b61f357e.html#gaa538588c547767772b1b1fe4b61f357e">eve::compress_store</a>[eve::unsafe][<a class="code hl_variable" href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a>][<a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a>(1)](in, m, out.data());</div>
+<div class="line">    TTS_EQUAL(o - out.data(), 1);</div>
+<div class="line">    TTS_EQUAL((std::array{2, -1, -1}), out);</div>
+<div class="line">  }</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__conditional_html_gae234dce7533ecc38fe2c70fd69383633"><div class="ttname"><a href="group__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a></div><div class="ttdeci">constexpr ignore_none_ ignore_none</div><div class="ttdoc">Object representing the eve::ignore_none_ conditional expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:240</div></div>
 <div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1keep__between_html"><div class="ttname"><a href="structeve_1_1keep__between.html">eve::keep_between</a></div><div class="ttdoc">Conditional expression keeping all lanes between two position.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:477</div></div>
+<div class="ttc" id="astructeve_1_1keep__first_html"><div class="ttname"><a href="structeve_1_1keep__first.html">eve::keep_first</a></div><div class="ttdoc">Conditional expression selecting the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:250</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>

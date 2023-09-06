@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('inter-with-native.html',''); initResiz
 <p>That's why <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and eve::logical for native sizes are implicitly convertible to and from the intrinsic type you'd expect.</p>
 <p>x86: __m128/256/512 for floats and double, __m128i/256i/512i for ints neon: int8x8_t, int8x16_t for int8s and similar for other types. sve, power: similar.</p>
 <p>To combine this with algorithms, force a specific cardinal. All of algorithms are designed to not require templated callbacks so that you are able to do this. (unfortunately views still require you to provide a template).</p>
-<div class="fragment"></div><!-- fragment --><h1><a class="anchor" id="autotoc_md207"></a>
+<div class="fragment"></div><!-- fragment --><h1><a class="anchor" id="autotoc_md206"></a>
 What about non-native sizes?</h1>
 <p>If the cardinal is less than can be natively represented, it's internally still represented as a full register. For example wide&lt;int, eve::fixed&lt;2&gt;&gt; on x86 is still __m128i. The data is at the first 2 elements, the rest can be garbage.</p>
 <p>If the cradinal is larger than the one natively representable, you can use slice to get to the half the wide size.</p>
