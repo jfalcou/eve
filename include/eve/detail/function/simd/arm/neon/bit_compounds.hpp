@@ -58,6 +58,32 @@ namespace eve::detail
     return v;
   }
 
+  template<integral_scalar_value T, typename N, typename U, U S>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, std::integral_constant<U,S> const&) noexcept
+  requires arm_abi<abi_t<T, N>>
+  {
+
+    constexpr auto c = categorize<wide<T, N>>();
+
+          if constexpr( c == category::int64x1  ) v = vshl_n_s64 (v, S);
+    else  if constexpr( c == category::int32x2  ) v = vshl_n_s32 (v, S);
+    else  if constexpr( c == category::int16x4  ) v = vshl_n_s16 (v, S);
+    else  if constexpr( c == category::int8x8   ) v = vshl_n_s8  (v, S);
+    else  if constexpr( c == category::uint64x1 ) v = vshl_n_u64 (v, S);
+    else  if constexpr( c == category::uint32x2 ) v = vshl_n_u32 (v, S);
+    else  if constexpr( c == category::uint16x4 ) v = vshl_n_u16 (v, S);
+    else  if constexpr( c == category::uint8x8  ) v = vshl_n_u8  (v, S);
+    else  if constexpr( c == category::int64x2  ) v = vshlq_n_s64(v, S);
+    else  if constexpr( c == category::int32x4  ) v = vshlq_n_s32(v, S);
+    else  if constexpr( c == category::int16x8  ) v = vshlq_n_s16(v, S);
+    else  if constexpr( c == category::int8x16  ) v = vshlq_n_s8 (v, S);
+    else  if constexpr( c == category::uint64x2 ) v = vshlq_n_u64(v, S);
+    else  if constexpr( c == category::uint32x4 ) v = vshlq_n_u32(v, S);
+    else  if constexpr( c == category::uint16x8 ) v = vshlq_n_u16(v, S);
+    else  if constexpr( c == category::uint8x16 ) v = vshlq_n_u8 (v, S);
+
+    return v;
+  }
   //================================================================================================
   // >>=
   //================================================================================================
@@ -73,6 +99,33 @@ namespace eve::detail
       requires arm_abi<abi_t<T, N>>
   {
     return self_shl(v, -s);
+  }
+
+  template<integral_scalar_value T, typename N, typename U, U S>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, std::integral_constant<U,S> const&) noexcept
+  requires arm_abi<abi_t<T, N>>
+  {
+
+    constexpr auto c = categorize<wide<T, N>>();
+
+          if constexpr( c == category::int64x1  ) v = vshr_n_s64 (v, S);
+    else  if constexpr( c == category::int32x2  ) v = vshr_n_s32 (v, S);
+    else  if constexpr( c == category::int16x4  ) v = vshr_n_s16 (v, S);
+    else  if constexpr( c == category::int8x8   ) v = vshr_n_s8  (v, S);
+    else  if constexpr( c == category::uint64x1 ) v = vshr_n_u64 (v, S);
+    else  if constexpr( c == category::uint32x2 ) v = vshr_n_u32 (v, S);
+    else  if constexpr( c == category::uint16x4 ) v = vshr_n_u16 (v, S);
+    else  if constexpr( c == category::uint8x8  ) v = vshr_n_u8  (v, S);
+    else  if constexpr( c == category::int64x2  ) v = vshrq_n_s64(v, S);
+    else  if constexpr( c == category::int32x4  ) v = vshrq_n_s32(v, S);
+    else  if constexpr( c == category::int16x8  ) v = vshrq_n_s16(v, S);
+    else  if constexpr( c == category::int8x16  ) v = vshrq_n_s8 (v, S);
+    else  if constexpr( c == category::uint64x2 ) v = vshrq_n_u64(v, S);
+    else  if constexpr( c == category::uint32x4 ) v = vshrq_n_u32(v, S);
+    else  if constexpr( c == category::uint16x8 ) v = vshrq_n_u16(v, S);
+    else  if constexpr( c == category::uint8x16 ) v = vshrq_n_u8 (v, S);
+
+    return v;
   }
 
   //================================================================================================
