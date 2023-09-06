@@ -257,7 +257,7 @@ namespace detail
         auto v2 = eve::load(f2);
 
         auto matches = eve::has_equal_in(v1, v2, equal);
-        o            = eve::unsafe(eve::compress_store)(v1, matches, o);
+        o            = eve::compress_store[eve::unsafe](v1, matches, o);
 
         // maybe benefictial to move up but we will hope for a compiler
         //

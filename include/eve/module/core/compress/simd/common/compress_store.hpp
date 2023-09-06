@@ -13,134 +13,106 @@
 #include <eve/module/core/regular/store.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::detail
+namespace eve
 {
 
-  template<relative_conditional_expr C, typename T, typename U, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE
-  unaligned_t<Ptr> compress_store_core( C c,
-                                        wide<T, N> v,
-                                        logical<wide<U, N>> mask,
-                                        Ptr ptr) noexcept
+struct compress_store_core
+{
+  template<typename Settings, simd_value T, logical_simd_value U, typename O>
+  EVE_FORCEINLINE auto operator()(Settings settings, T x, U m, O o) const -> unaligned_t<O>
   {
-    if constexpr ( has_emulated_abi_v<wide<T, N>> )
-    {
-      auto offset = c.offset(as(v));
-      auto count  = c.count(as(v));
-      auto* ptr_ = unalign(ptr);
+    using CIn  = typename Settings::cond_in_t;
+    using COut = typename Settings::cond_out_t;
 
-      for (int idx = offset; idx != (int)(offset + count); ++idx) {
-        if (mask.get(idx)) *ptr_++ = v.get(idx);
+    if constexpr( CIn::is_complete && !CIn::is_inverted ) return o;
+    else if constexpr( COut::is_complete && !COut::is_inverted ) return o;
+    else if constexpr( has_store_equivalent<T, O> )
+    {
+      auto [c_out1, x1, o1] = store_equivalent(settings.c_out, x, o);
+      auto res1             = operator()(
+          detail::compress_callable_settings(settings.safety, dense, settings.c_in, c_out1),
+          x1,
+          m,
+          o1);
+      return unalign(o) + (res1 - o1);
+    }
+    else if constexpr( !COut::is_complete && !std::same_as<COut, keep_first> )
+    {
+      auto   offset = settings.c_out.offset(as(x));
+      auto   count  = settings.c_out.count(as(x));
+      return operator()(detail::compress_callable_settings(
+                            settings.safety, dense, settings.c_in, keep_first(count)),
+                        x,
+                        m,
+                        unalign(o) + offset);
+    }
+    else if constexpr( Settings::is_safe )
+    {
+      stack_buffer<T> buf;
+
+      auto unsafe_settings =
+          detail::compress_callable_settings(unsafe, dense, settings.c_in, ignore_none);
+
+      auto up_to       =   operator()(unsafe_settings, x, m, buf.ptr());
+      std::ptrdiff_t n = up_to - buf.ptr();
+      if constexpr( !COut::is_complete ) { n = std::min(n, settings.c_out.count(as(x))); }
+      store[keep_first(n)](T(buf.ptr()), o);
+      return unalign(o) + n;
+    }
+    else if constexpr( has_emulated_abi_v<T> )
+    {
+      auto offset = settings.c_in.offset(as(x));
+      auto count  = settings.c_in.count(as(x));
+      auto o_     = unalign(o);
+      auto limit  = o_ + settings.c_out.count(as(x));
+
+      for( int idx = offset; idx != (int)(offset + count); ++idx )
+      {
+        if( m.get(idx) )
+        {
+          if( o_ == limit ) return o_;
+          *o_++ = x.get(idx);
+        }
       }
 
-      return ptr_;
+      return o_;
+    }
+    else if constexpr( !COut::is_complete
+                       && std::tuple_size_v<decltype(compress[settings.c_in](x, m))> == 1 )
+    {
+      auto [part, count_] = get<0>(compress[settings.c_in](x, m));
+      eve::store[settings.c_out](part, o);
+      std::ptrdiff_t count = count_;
+
+      if( !COut::is_complete ) count = std::min(count, settings.c_out.count(as(x)));
+
+      return unalign(o) + count;
+    }
+    else if( !COut::is_complete )
+    {
+      auto safe_settings =
+          detail::compress_callable_settings(safe, dense, settings.c_in, settings.c_out);
+      return operator()(safe_settings, x, m, o);
     }
     else
     {
-      auto parts = compress[c](v, mask);
+      auto parts = compress[settings.c_in](x, m);
+      auto o_    = unalign(o);
 
-      auto uptr = unalign(ptr);
+      kumi::for_each(
+          [&](auto part_count) mutable
+          {
+            auto [part, count] = part_count;
+            eve::store(part, o_);
+            o_ += count;
+          },
+          parts);
 
-      kumi::for_each([&](auto part_count) mutable {
-        auto [part, count] = part_count;
-        eve::store(part, uptr);
-        uptr += count;
-      }, parts);
-
-      return uptr;
+      return o_;
     }
   }
+};
 
-template<relative_conditional_expr C,
-         scalar_value              T,
-         arithmetic_scalar_value         U,
-         typename N,
-         simd_compatible_ptr<wide<T, N>> Ptr>
-requires(!has_store_equivalent<wide<T, N>, Ptr>)
-EVE_FORCEINLINE unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
-                                                 C c,
-                                                 safe_type,
-                                                 wide<T, N>          v,
-                                                 logical<wide<U, N>> mask,
-                                                 Ptr                 ptr)
-noexcept
-{
-  if( C::is_complete && !C::is_inverted ) return unalign(ptr);
-  else
-  {
-    stack_buffer<wide<T, N>> buffer;
-    auto                     up_to = compress_store_core(c, v, mask, buffer.ptr());
-    std::ptrdiff_t           n     = up_to - buffer.ptr();
+inline constexpr auto compress_store = detail::compress_callable_no_density<compress_store_core> {};
 
-    unaligned_t<Ptr> out = unalign(ptr) + c.offset(as(mask));
-
-    wide<T, N> compressed {buffer.ptr()};
-
-    store[keep_first(n)](compressed, out);
-    return out + n;
-  }
-}
-
-template<relative_conditional_expr C,
-         scalar_value              T,
-         arithmetic_scalar_value         U,
-         typename N,
-         simd_compatible_ptr<wide<T, N>> Ptr>
-requires(!has_store_equivalent<wide<T, N>, Ptr>)
-    EVE_FORCEINLINE unaligned_t<Ptr> compress_store_(EVE_SUPPORTS(cpu_),
-                                                     C c,
-                                                     unsafe_type,
-                                                     wide<T, N>          v,
-                                                     logical<wide<U, N>> mask,
-                                                     Ptr                 ptr)
-noexcept
-{
-  if( !C::is_complete || !C::is_inverted ) return safe(compress_store[c])(v, mask, ptr);
-  else return compress_store_core(c, v, mask, ptr);
-}
-
-template<relative_conditional_expr C, decorator Decorator, simd_value T, simd_value U, typename Ptr>
-requires has_store_equivalent<T, Ptr> EVE_FORCEINLINE unaligned_t<Ptr>
-compress_store_(EVE_SUPPORTS(cpu_), C c, Decorator d, T v, logical<U> mask, Ptr ptr)
-noexcept
-{
-  auto [c1, v1, ptr1] = store_equivalent(c, v, ptr);
-  auto res1           = compress_store(c1, d, v1, mask, ptr1);
-  return unalign(ptr) + (res1 - ptr1);
-}
-
-template<relative_conditional_expr C,
-         decorator                 Decorator,
-         arithmetic_scalar_value         T,
-         arithmetic_scalar_value         U,
-         typename N,
-         simd_compatible_ptr<logical<wide<T, N>>> Ptr>
-EVE_FORCEINLINE logical<T>                 *
-compress_store_(EVE_SUPPORTS(cpu_),
-                                C                   c,
-                                Decorator           d,
-                                logical<wide<T, N>> v,
-                                logical<wide<U, N>> mask,
-                                Ptr                 ptr) noexcept
-{
-  auto *raw_ptr =
-      compress_store(c, d, v.mask(), mask, ptr_cast<typename logical<T>::mask_type>(ptr));
-  return (logical<T> *)raw_ptr;
-}
-
-template<decorator Decorator, simd_value T, simd_value U, typename Ptr>
-EVE_FORCEINLINE auto
-compress_store_(EVE_SUPPORTS(cpu_), Decorator d, T v, logical<U> mask, Ptr ptr) noexcept
-    -> decltype(compress_store(ignore_none, d, v, mask, ptr))
-{
-  return compress_store(ignore_none, d, v, mask, ptr);
-}
-
-template<decorator Decorator, simd_value T, simd_value U, typename Ptr>
-EVE_FORCEINLINE auto
-compress_store_(EVE_SUPPORTS(cpu_), Decorator d, logical<T> v, logical<U> mask, Ptr ptr) noexcept
-    -> decltype(compress_store(ignore_none, d, v, mask, ptr))
-{
-  return compress_store(ignore_none, d, v, mask, ptr);
-}
 }

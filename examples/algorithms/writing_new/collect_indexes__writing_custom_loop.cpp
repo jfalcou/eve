@@ -80,7 +80,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
     // Returns a pointer to after the last stored.
     // `unsafe` refers to the fact that it's allowed to store up to the whole register,
     // as long as the first elements are fine.
-    out = eve::unsafe(eve::compress_store)(wide_i, test, out);
+    out = eve::compress_store[eve::unsafe](wide_i, test, out);
 
     wide_i += N{}();  // ++i
     f      += N{}();  // ++f
@@ -94,7 +94,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
 
     // We have overallocated the output, but we still need to mask out garbage elements
     test = test && ignore.mask(eve::as(test));
-    out  = eve::unsafe(eve::compress_store)(wide_i, test, out);
+    out  = eve::compress_store[eve::unsafe](wide_i, test, out);
   }
 
   // Clean up the vector
