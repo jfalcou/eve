@@ -32,7 +32,7 @@ namespace eve::algo
       {
         auto loaded = eve::load[ignore](it);
         auto mask   = !p(loaded);  // we decied that ! can be optimized well enough
-        out = unsafe(compress_store[ignore])(loaded, mask, out);
+        out = compress_store[unsafe][ignore](loaded, mask, out);
         return false;
       }
 

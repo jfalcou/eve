@@ -61,7 +61,7 @@ TTS_CASE("store_equivalent")
   {
     eve::store(u8s(0), buf.ptr());
     eve::logical<u32s> m( [](int i, int) { return i == 0; } );
-    std::uint8_t* res = eve::safe(eve::compress_store)(u32s(0), m, my_ptr{buf.ptr()});
+    std::uint8_t* res = eve::compress_store[eve::safe](u32s(0), m, my_ptr{buf.ptr()});
 
     u8s expected(0);
     expected.set(0, 3);
@@ -73,7 +73,7 @@ TTS_CASE("store_equivalent")
   {
     eve::store(u8s(0), buf.ptr());
     eve::logical<u32s> m( [](int i, int) { return i == 0; } );
-    std::uint8_t* res = eve::unsafe(eve::compress_store[eve::keep_first(1)])(u32s(0), m, my_ptr{buf.ptr()});
+    std::uint8_t* res = eve::compress_store[eve::unsafe][eve::keep_first(1)](u32s(0), m, my_ptr{buf.ptr()});
 
     u8s expected(0);
     expected.set(0, 3);
