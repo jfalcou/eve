@@ -735,8 +735,27 @@ namespace eve
       return detail::self_shl(w, s);
     }
 
+    //! @brief Perform the compound left-shift on all the eve::wide lanes with a constant and assign
+    //! the result to current one.
+    template<typename S, S V>
+    friend EVE_FORCEINLINE auto& operator<<=(wide& w, std::integral_constant<S,V> const& s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+        requires(!kumi::product_type<Type>)
+#endif
+    {
+      return detail::self_shl(w, s);
+    }
+
     //! @brief Perform the left-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S> friend EVE_FORCEINLINE auto operator<<(wide v, S s) noexcept
+    {
+      auto that = v;
+      return that <<= s;
+    }
+
+    //! @brief Perform the left-shift between all lanes of a eve::wide and an integral constant.
+    template<typename S, S V>
+    friend EVE_FORCEINLINE auto operator<<(wide v, std::integral_constant<S,V> const& s) noexcept
     {
       auto that = v;
       return that <<= s;
@@ -753,8 +772,27 @@ namespace eve
       return detail::self_shr(w, s);
     }
 
+    //! @brief Perform the compound right-shift on all the eve::wide lanes and assign
+    //! the result to current one.
+    template<typename T, T N>
+    friend EVE_FORCEINLINE auto& operator>>=(wide& w, std::integral_constant<T,N> const& s) noexcept
+#if !defined(EVE_DOXYGEN_INVOKED)
+        requires(!kumi::product_type<Type>)
+#endif
+    {
+      return detail::self_shr(w, s);
+    }
+
     //! @brief Perform the right-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S> friend EVE_FORCEINLINE auto operator>>(wide v, S s) noexcept
+    {
+      auto that = v;
+      return that >>= s;
+    }
+
+    //! @brief Perform the right-shift between all lanes of a eve::wide and an integral constant.
+    template<typename T, T N>
+    friend EVE_FORCEINLINE auto operator>>(wide v, std::integral_constant<T,N> const& s) noexcept
     {
       auto that = v;
       return that >>= s;

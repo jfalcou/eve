@@ -44,6 +44,12 @@ namespace eve::detail
     return v;
   }
 
+  template<integral_scalar_value T, typename N, typename U, U V>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, std::integral_constant<U,V> const& s) noexcept
+  {
+    return self_shl(v,V);
+  }
+
   //================================================================================================
   // >>=
   //================================================================================================
@@ -69,6 +75,12 @@ namespace eve::detail
     else                                          v = map(ss, v, s);
 
     return v;
+  }
+
+  template<integral_scalar_value T, typename N, typename U, U V>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, std::integral_constant<U,V> const& s) noexcept
+  {
+    return self_shr(v,V);
   }
 
   //================================================================================================

@@ -15,11 +15,14 @@ TTS_CASE_TPL( "Check behavior of shift operators on eve::wide", eve::test::simd:
 <typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
+  using c_t = std::integral_constant<int,0>;
   using vi_t = eve::element_type_t<i_t>;
 
   TTS_EXPR_IS( T() << i_t() , T);
+  TTS_EXPR_IS( T() << c_t() , T);
   TTS_EXPR_IS( T() << vi_t(), T);
   TTS_EXPR_IS( T() >> i_t() , T);
+  TTS_EXPR_IS( T() >> c_t() , T);
   TTS_EXPR_IS( T() >> vi_t(), T);
 };
 
@@ -34,6 +37,19 @@ TTS_CASE_WITH ( "Check behavior of shift operators on eve::wide"
 {
   TTS_EQUAL( (a0 << s), T([&](auto i, auto) { return eve::shl(a0.get(i), s.get(i)); }) );
   TTS_EQUAL( (a0 >> s), T([&](auto i, auto) { return eve::shr(a0.get(i), s.get(i)); }) );
+};
+
+//==================================================================================================
+// wide tests
+//==================================================================================================
+TTS_CASE_WITH ( "Check behavior of shift operators on eve::wide and integral constant"
+              , eve::test::simd::integers
+              , tts::generate(tts::randoms(-50,50))
+              )
+<typename T>(T a0)
+{
+  TTS_EQUAL( (a0 >> eve::index<1>), T([&](auto i, auto) { return a0.get(i) >> eve::index<1>; }) );
+  TTS_EQUAL( (a0 << eve::index<1>), T([&](auto i, auto) { return a0.get(i) << eve::index<1>; }) );
 };
 
 //==================================================================================================
