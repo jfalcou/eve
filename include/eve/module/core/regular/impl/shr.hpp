@@ -28,6 +28,13 @@ shr_(EVE_SUPPORTS(cpu_), T a, U s) noexcept
   else return a >> s;
 }
 
+template<integral_value T, typename U, U V>
+EVE_FORCEINLINE auto
+shr_(EVE_SUPPORTS(cpu_), T a, std::integral_constant<U,V> const& s) noexcept
+{
+  return a >> s;
+}
+
 //================================================================================================
 // Masked case
 //================================================================================================
@@ -36,6 +43,13 @@ EVE_FORCEINLINE auto
 shr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b) noexcept
 {
   return mask_op(cond, shr, a, b);
+}
+
+template<conditional_expr C, integral_value T, typename U, U V>
+EVE_FORCEINLINE auto
+shr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, std::integral_constant<U,V> const& b) noexcept
+{
+  return mask_op(cond, eve::shr, a, b);
 }
 
 }
