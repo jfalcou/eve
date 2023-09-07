@@ -5,6 +5,7 @@ var group__algo__traits =
     [ "eve::algo::common_type", "group__algo__traits_gaa96705b33d47ad123423cab14e0146df.html#gaa96705b33d47ad123423cab14e0146df", null ],
     [ "eve::algo::common_with_types", "group__algo__traits_ga52374a3523265b6c8725b571c2935236.html#ga52374a3523265b6c8725b571c2935236", null ],
     [ "eve::algo::consider_types", "group__algo__traits_gae39c02c8504a76a66ba1b2dd39db4ea1.html#gae39c02c8504a76a66ba1b2dd39db4ea1", null ],
+    [ "eve::algo::dense_output", "group__algo__traits_ga0c5777eb4a0596f2f8412b42d7723d89.html#ga0c5777eb4a0596f2f8412b42d7723d89", null ],
     [ "eve::algo::divisible_by_cardinal", "group__algo__traits_ga266dc4246f7e3a43f11992c4c74e48ce.html#ga266dc4246f7e3a43f11992c4c74e48ce", null ],
     [ "eve::algo::expect_smaller_range", "group__algo__traits_gacdd74cb4fad88646e4782a56d69ebddf.html#gacdd74cb4fad88646e4782a56d69ebddf", null ],
     [ "eve::algo::expensive_callable", "group__algo__traits_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731", null ],
@@ -16,5 +17,6 @@ var group__algo__traits =
     [ "eve::algo::no_unrolling", "group__algo__traits.html#ga660d80002f91db5c94a04f309e0015e7", null ],
     [ "eve::algo::overflow", "group__algo__traits.html#gaa8930f7c6f6695df724456400e2192de", null ],
     [ "eve::algo::single_pass", "group__algo__traits_ga213805e139827e376705611968b1e62b.html#ga213805e139827e376705611968b1e62b", null ],
+    [ "eve::algo::sparse_output", "group__algo__traits_ga287988654952e8715cf1fa674d7b9b3c.html#ga287988654952e8715cf1fa674d7b9b3c", null ],
     [ "eve::algo::unroll", "group__algo__traits_gacdfe3fb0999d566d02a71a0297b8bb88.html#gacdfe3fb0999d566d02a71a0297b8bb88", null ]
 ];

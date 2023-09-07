@@ -142,7 +142,9 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 </div><div class="memdoc">
 
 <p><code>#include &lt;eve/module/algo/algo/set_intersection.hpp&gt;</code></p>
-<p>The main idea for the algorithm comes from "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+</div><!-- fragment --><p>The main idea for the algorithm comes from "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
 <p>Differences:</p><ul>
 <li>duplicate handling, <code><a class="el" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba" title="SIMD variation on std::set_intersection that HAS A SLIGHTLY DIFFERENT SEMANTICS.">eve::algo::set_intersection</a></code> does not guarantee how many copies of a duplicated element will be in the output. Example: [a, a] intersect with [a, a, a] might produce [a], [a, a] and [a, a, a].</li>
 <li>we require both "Less" and "Equal" predicates, unlike <code>std</code> getting equal from less will be expensive.</li>
@@ -156,11 +158,10 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <li>Has <code>expect_smaller_range&lt;0&gt;</code>, <code>expect_smaller_range&lt;1&gt;</code> variations. These use combined simd/scalar approach. Since the problem is very data dependent, you want to measure for your usecase.</li>
 <li>Version <code>expect_smaller_range&lt;0&gt;</code> can be slightly faster, <code>eve</code> can't always use that due to a stability requirement but you might want to swap your inputs.</li>
 <li>The provided solution is minimal, eve won't search for beginning of intersection in any way. eve also won't do any dispatch based on size. If this is something that can be beneficial for your case - consider it.</li>
+<li>sparse_output/dense_output - controls which eve::algo::compress_copy is used, default is dense.</li>
 <li>Basic version does not support aligning/unrolling. <code>expect_smaller_range</code> do.</li>
 </ul>
-<p><b>Header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span>&lt;<a class="code hl_struct" href="structrelaxed__range.html">relaxed_range</a> R1, <a class="code hl_struct" href="structrelaxed__range.html">relaxed_range</a> R2, <a class="code hl_struct" href="structrelaxed__range.html">relaxed_range</a> RO, <span class="keyword">typename</span> Less, <span class="keyword">typename</span></div>
@@ -175,7 +176,7 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <div class="line">                               unaligned_iterator_t&lt;R2&gt;,</div>
 <div class="line">                               unaligned_iterator_t&lt;RO&gt;&gt;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__algos_ga00f15ead142e6f1c1f39bf00afdb60ba_html_ga00f15ead142e6f1c1f39bf00afdb60ba"><div class="ttname"><a href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a></div><div class="ttdeci">constexpr auto set_intersection</div><div class="ttdoc">SIMD variation on std::set_intersection that HAS A SLIGHTLY DIFFERENT SEMANTICS.</div><div class="ttdef"><b>Definition:</b> set_intersection.hpp:445</div></div>
+<div class="ttc" id="agroup__algos_ga00f15ead142e6f1c1f39bf00afdb60ba_html_ga00f15ead142e6f1c1f39bf00afdb60ba"><div class="ttname"><a href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a></div><div class="ttdeci">constexpr auto set_intersection</div><div class="ttdoc">SIMD variation on std::set_intersection that HAS A SLIGHTLY DIFFERENT SEMANTICS.</div><div class="ttdef"><b>Definition:</b> set_intersection.hpp:447</div></div>
 <div class="ttc" id="agroup__algos_ga2115b0f84f22d092050976f6f845a0b6_html_ga2115b0f84f22d092050976f6f845a0b6"><div class="ttname"><a href="group__algos_ga2115b0f84f22d092050976f6f845a0b6.html#ga2115b0f84f22d092050976f6f845a0b6">eve::algo::equal</a></div><div class="ttdeci">constexpr auto equal</div><div class="ttdoc">a SIMD version of std::equal</div><div class="ttdef"><b>Definition:</b> equal.hpp:111</div></div>
 <div class="ttc" id="astructrelaxed__range_html"><div class="ttname"><a href="structrelaxed__range.html">relaxed_range</a></div><div class="ttdoc">Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...</div></div>
 </div><!-- fragment --><p>(2) calls (1) with <code><a class="el" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099" title="Returns a logical true if and only if the element value of the first parameter is less than the secon...">eve::is_less</a></code>, <code><a class="el" href="group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7" title="Returns a logical true if and only if the element value are equal.">eve::is_equal</a></code> and converting to common type.</p>
@@ -363,6 +364,26 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_string(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span></div>
+<div class="line">sparse_output_example()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;sparse_output hint =================\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; v1(20u, 0), v2(20u, 0);</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> = 0; <span class="keyword">auto</span>&amp; x : v1) x = <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>++ * 3;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a> = 0; <span class="keyword">auto</span>&amp; x : v2) x = <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>++ * 5;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; r;</div>
+<div class="line">  r.<a class="code hl_function" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a>(20);</div>
+<div class="line"> </div>
+<div class="line">  r.erase(</div>
+<div class="line">    <a class="code hl_variable" href="group__algos_ga00f15ead142e6f1c1f39bf00afdb60ba.html#ga00f15ead142e6f1c1f39bf00afdb60ba">eve::algo::set_intersection</a>[<a class="code hl_variable" href="group__algo__traits_ga287988654952e8715cf1fa674d7b9b3c.html#ga287988654952e8715cf1fa674d7b9b3c">eve::algo::sparse_output</a>](v1, v2, r).out,</div>
+<div class="line">    r.end());</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; r: &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; std::endl;</div>
+<div class="line">  TTS_EQUAL(r, std::vector({0, 15, 30, 45}));</div>
+<div class="line">}</div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span></div>
 <div class="line">main()</div>
 <div class="line">{</div>
@@ -371,8 +392,11 @@ $(document).ready(function(){initNavTree('group__algos_ga00f15ead142e6f1c1f39bf0
 <div class="line">  pairs_example();</div>
 <div class="line">  different_scalar_types_example();</div>
 <div class="line">  biase_example();</div>
+<div class="line">  sparse_output_example();</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:110</div></div>
+<div class="ttc" id="agroup__algo__traits_ga287988654952e8715cf1fa674d7b9b3c_html_ga287988654952e8715cf1fa674d7b9b3c"><div class="ttname"><a href="group__algo__traits_ga287988654952e8715cf1fa674d7b9b3c.html#ga287988654952e8715cf1fa674d7b9b3c">eve::algo::sparse_output</a></div><div class="ttdeci">constexpr auto sparse_output</div><div class="ttdoc">for algorithms that output data based on input (eve::algo::copy_if, eve::algo::remove_if,...</div><div class="ttdef"><b>Definition:</b> traits.hpp:419</div></div>
+<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:52</div></div>
 <div class="ttc" id="agroup__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867_html_gaa19dcccbb0ef0ef464e95ffd7a588867"><div class="ttname"><a href="group__core__conversions_gaa19dcccbb0ef0ef464e95ffd7a588867.html#gaa19dcccbb0ef0ef464e95ffd7a588867">eve::convert</a></div><div class="ttdeci">detail::callable_object&lt; tag::convert_ &gt; const convert</div><div class="ttdoc">Converts a value to another type.</div><div class="ttdef"><b>Definition:</b> convert.hpp:68</div></div>
 <div class="ttc" id="astructeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91_html_a00d09efb7c037e5a1b2393e091e94c91"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">eve::algo::soa_vector::resize</a></div><div class="ttdeci">void resize(size_type n, value_type value)</div><div class="ttdoc">Resizes the container to contain count elements.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:226</div></div>
 <div class="ttc" id="astructeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28_html_a9d1fa950c126da0ea504f3cad11ddd28"><div class="ttname"><a href="structeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28.html#a9d1fa950c126da0ea504f3cad11ddd28">eve::algo::soa_vector::erase</a></div><div class="ttdeci">iterator erase(const_iterator pos)</div><div class="ttdoc">Removes an element from the container.</div><div class="ttdef"><b>Definition:</b> soa_vector.hpp:184</div></div>

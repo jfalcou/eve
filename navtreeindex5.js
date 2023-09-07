@@ -1,5 +1,7 @@
 var NAVTREEINDEX5 =
 {
+"structeve_1_1wide.html#a0952de838b35b55b415b1d5b898c9d63":[7,0,2,7,67],
+"structeve_1_1wide.html#a0be60111aec8c0aef7ab33b1d8d33066":[7,0,2,7,81],
 "structeve_1_1wide.html#a0c558b1099d1ab8939c82b766f12355a":[7,0,2,7,29],
 "structeve_1_1wide.html#a0f7b281af73da31581d699e1e915d75a":[7,0,2,7,74],
 "structeve_1_1wide.html#a11c12eb6691b179552797bee0abae0e8":[7,0,2,7,37],
