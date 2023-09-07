@@ -174,7 +174,7 @@ void smaller_test_for(T x)
 
 
 template <typename L, typename T>
-void compress_store_test(T x)
+void compress_test(T x)
 {
   if constexpr (T::size() <= 8 && !(eve::current_api >= eve::sve) )
   {

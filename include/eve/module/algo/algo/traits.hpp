@@ -393,8 +393,48 @@ namespace eve::algo
   //============================================================================
   template<std::unsigned_integral T> inline constexpr auto index_type = (index_type_key = std::type_identity<T>{});
 
-  // getters -------------------
+  struct density_key_t : rbr::as_keyword<density_key_t>
+  {
+    template<typename Value> constexpr auto operator=(Value const&) const noexcept
+    {
+      return rbr::option<density_key_t,Value>{};
+    }
+  };
+  inline constexpr density_key_t density_key;
 
+  //============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var sparse_output
+  //!
+  //!   @brief for algorithms that output data based on input (eve::algo::copy_if,
+  //!   eve::algo::remove_if, eve::algo::set_intersection etc),
+  //!   tells the algorithm to optimize for the case where there will be fairly few
+  //!   elements per iteration.
+  //!   eve::algo::dense_output is default since it's better in most cases measured.
+  //!
+  //!   @see eve::algo::dense_output
+  //! @}
+  //============================================================================
+  inline constexpr auto sparse_output = (density_key = eve::sparse);
+
+  //============================================================================
+  //! @addtogroup algo_traits
+  //! @{
+  //!   @var dense_output
+  //!
+  //!   @brief for algorithms that output data based on input (eve::algo::copy_if,
+  //!   eve::algo::remove_if, eve::algo::set_intersection etc),
+  //!   tells the algorithm to optimize for the case where there will be many
+  //!   elements per iteration.
+  //!   eve::algo::dense_output is default since it's better in most cases measured.
+  //!
+  //!   @see eve::algo::sparse_output
+  //! @}
+  //============================================================================
+  inline constexpr auto dense_output = (density_key = eve::dense);
+
+  // getters -------------------
 
   //================================================================================================
   //! @addtogroup algo_traits
@@ -548,6 +588,19 @@ namespace eve::algo
   //================================================================================================
   template <typename Traits>
   constexpr bool has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key);
+
+  //================================================================================================
+  //! @addtogroup algo_traits
+  //! @brief returns eve::sparse or eve::dense (default is eve::dense)
+  //! @tparam Traits
+  //================================================================================================
+  template<typename Traits>
+  constexpr auto
+  density_for_compress_copy()
+  {
+    using res_t = rbr::result::fetch_t<(density_key | eve::dense), Traits>;
+    return res_t {};
+  }
 
   //================================================================================================
   //! @addtogroup algo_traits
