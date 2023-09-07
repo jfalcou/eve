@@ -31,8 +31,9 @@ namespace eve::algo
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
         auto loaded = eve::load[ignore](it);
-        auto mask   = !p(loaded);  // we decied that ! can be optimized well enough
-        out = compress_store[unsafe][ignore](loaded, mask, out);
+        auto mask   = !p(loaded); // we decied that ! can be optimized well enough
+        auto density   = density_for_compress_copy<typename TraitsSupport::traits_type>();
+        out            = compress_copy[unsafe][density][ignore](it, loaded, mask, out);
         return false;
       }
 

@@ -7,8 +7,6 @@
 //==================================================================================================
 
 //
-// NOTE: another way of writing the same example can be found in: algorithms/writing_new/collect_indexes__writing_custom_loop.cpp
-//
 // In this example we will have a look at a problem from this blog post:
 //   https://maxdemarzi.com/2021/08/30/lets-build-something-outrageous-part-13-finding-things-faster/
 // This is a modified version of what they posted.
@@ -55,7 +53,7 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
   // Prepare the output in case it was not empty.
   res.clear();
 
-  // Over allocating to always use `compress_store[unsafe]`.
+  // Over allocating to always use `compress_copy[unsafe]`.
   // eve won't go beyound eve::expected_cardinal_v<IdxType> per wide here.
   res.resize((r.end() - r.begin()) + eve::expected_cardinal_v<IdxType>);
   IdxType* out = res.data();
@@ -81,26 +79,28 @@ void collect_indexes(R&& r, P p, std::vector<IdxType, Alloc>& res)
       r_with_idx,
       [&](eve::algo::iterator auto r_idx_it, eve::relative_conditional_expr auto ignore) mutable
       {
+        auto [elems_it, idxs_it] = r_idx_it;
+
         // load an element and an index for each element.
         // The values in the `ignored` part are garbage.
-        auto [elems, idxs] = eve::load[ignore](r_idx_it);
+        auto elems = eve::load[ignore](elems_it);
 
         // Apply the predicate
         auto test = p(elems);
 
-        // We don't know what was the result of applying a predicate to garbage, we need to mask it.
-        test = eve::replace_ignored(test, ignore, eve::false_);
-
-        // compress_store[unsafe] - write elements marked as true to the output.
+        // compress_copy[unsafe] - copies elements marked as true to the output.
         // the elements are packed together to the left.
         // unsafe means we can write up to the register width of extra stuff.
-        // returns pointer behind last written element
+        // sparse means we expect few elements (within test) to be true
+        // first ignore means that 'true' for garbage element should still not be written.
+        // second 'ignore_none' means we have enough space in the output to write 4 elements.
+        // returns pointer behind last written element.
         //
         //  idxs    : [ 1 2 3 4 ]
         //  test    : [ f t f t ]
         //  written : [ 2 4 x x ]
         //  returns : out + 2
-        out  = eve::compress_store[eve::unsafe](idxs, test, out);
+        out  = eve::compress_copy[eve::unsafe][eve::sparse][ignore][eve::ignore_none](idxs_it, test, out);
       });
 
   res.resize(out - res.data());

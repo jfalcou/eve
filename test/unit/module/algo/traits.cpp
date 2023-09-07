@@ -173,6 +173,32 @@ TTS_CASE("eve.algo.traits, expect_smaller_range")
   }
 };
 
+TTS_CASE("eve.algo.traits, density_for_compress_copy")
+{
+  {
+    eve::algo::traits tr {eve::algo::dense_output};
+    const auto density = eve::algo::density_for_compress_copy<decltype(tr)>();
+    TTS_TYPE_IS(decltype(density), decltype(eve::dense));
+  }
+  {
+    eve::algo::traits tr {eve::algo::sparse_output};
+    const auto density = eve::algo::density_for_compress_copy<decltype(tr)>();
+    TTS_TYPE_IS(decltype(density), decltype(eve::sparse));
+  }
+  {
+    eve::algo::traits tr {};
+    const auto density = eve::algo::density_for_compress_copy<decltype(tr)>();
+    TTS_TYPE_IS(decltype(density), decltype(eve::dense));
+  }
+  {
+    eve::algo::traits user {eve::algo::sparse_output};
+    eve::algo::traits defaults {eve::algo::dense_output};
+    auto tr = eve::algo::default_to(user, defaults);
+    const auto density = eve::algo::density_for_compress_copy<decltype(tr)>();
+    TTS_TYPE_IS(decltype(density), decltype(eve::sparse));
+  }
+};
+
 // Funciton with traits support
 
 template <typename TraitsSupport>

@@ -257,7 +257,8 @@ namespace detail
         auto v2 = eve::load(f2);
 
         auto matches = eve::has_equal_in(v1, v2, equal);
-        o            = eve::compress_store[eve::unsafe](v1, matches, o);
+        auto density = density_for_compress_copy<decltype(modified_traits())>();
+        o            = eve::compress_copy[eve::unsafe][density](f1, v1, matches, o);
 
         // maybe benefictial to move up but we will hope for a compiler
         //
@@ -361,11 +362,16 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
 //!
 //!  @brief SIMD variation on std::set_intersection that HAS A SLIGHTLY DIFFERENT SEMANTICS.
 //!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/algo.hpp>
+//!   @endcode
+//!
 //!  The main idea for the algorithm comes from
 //!    "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions"
 //!     by Guillermo Diez-Canas.
 //!     Link: https://arxiv.org/abs/2112.06342
-//!
 //!
 //!  Differences:
 //!    * duplicate handling, `eve::algo::set_intersection` does not
@@ -394,13 +400,9 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
 //!    * The provided solution is minimal, eve won't search for beginning of intersection in
 //!      any way. eve also won't do any dispatch based on size.
 //!      If this is something that can be beneficial for your case - consider it.
+//!    * sparse_output/dense_output - controls which eve::algo::compress_copy is used, default is
+//!                                   dense.
 //!    * Basic version does not support aligning/unrolling. `expect_smaller_range` do.
-//!
-//!  **Header**
-//!
-//!  @code
-//!  #include <eve/module/algo.hpp>
-//!  @endcode
 //!
 //!   @groupheader{Callable Signatures}
 //!

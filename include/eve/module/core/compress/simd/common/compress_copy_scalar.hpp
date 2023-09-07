@@ -16,16 +16,17 @@
 namespace eve::detail
 {
 
-template<typename I, typename M, typename O> struct copy_by_one_checking_each_lambda_unsafe
+template<typename I, typename O> struct copy_by_one_checking_each_lambda_unsafe
 {
-  I      & f;
-  const M& m;
-  O      & o;
+  I& f;
+  O& o;
 
-  void operator()(auto idx)
+  EVE_FORCEINLINE
+  bool operator()(bool v)
   {
     eve::write(eve::read(f++), o);
-    o += (bool)m.get(idx);
+    o += v;
+    return false;
   }
 };
 
@@ -33,16 +34,16 @@ template<typename... Args>
 copy_by_one_checking_each_lambda_unsafe(Args...)
     -> copy_by_one_checking_each_lambda_unsafe<Args...>;
 
-template<typename I, typename M, typename O> struct copy_by_one_checking_each_lambda_safe
+template<typename I, typename O> struct copy_by_one_checking_each_lambda_safe
 {
-  I      & f;
-  const M& m;
-  O      & o;
+  I& f;
+  O& o;
 
-  bool operator()(auto idx)
+  EVE_FORCEINLINE
+  bool operator()(bool v)
   {
     I cur = f++;
-    if( m.get(idx()) ) { eve::write(eve::read(cur), o++); }
+    if( v ) { eve::write(eve::read(cur), o++); }
     return false;
   }
 };
@@ -50,17 +51,17 @@ template<typename I, typename M, typename O> struct copy_by_one_checking_each_la
 template<typename... Args>
 copy_by_one_checking_each_lambda_safe(Args...) -> copy_by_one_checking_each_lambda_safe<Args...>;
 
-template<typename I, typename M, typename O> struct copy_by_one_checking_each_lambda_checked
+template<typename I, typename O> struct copy_by_one_checking_each_lambda_checked
 {
-  I      & f;
-  const M& m;
-  O      & o;
-  O        limit;
+  I& f;
+  O& o;
+  O  limit;
 
-  bool operator()(auto idx)
+  EVE_FORCEINLINE
+  bool operator()(bool v)
   {
     I cur = f++;
-    if( m.get(idx()) )
+    if( v )
     {
       if( o == limit ) return true;
       eve::write(eve::read(cur), o++);
@@ -69,9 +70,35 @@ template<typename I, typename M, typename O> struct copy_by_one_checking_each_la
   }
 };
 
-template<typename I, typename M, typename O>
-copy_by_one_checking_each_lambda_checked(I, M, O, O)
-    -> copy_by_one_checking_each_lambda_checked<I, M, O>;
+template<typename I, typename O>
+copy_by_one_checking_each_lambda_checked(I, O, O)
+    -> copy_by_one_checking_each_lambda_checked<I, O>;
+
+template<typename M>
+bool
+for_each_until_m(M m, auto op)
+{
+  if constexpr( M::size() == 1 ) return op(m.get(0));
+  if constexpr( M::size() == 2 ) return op(m.get(0)) || op(m.get(1));
+  if constexpr( M::size() == 4 )
+  {
+    return op(m.get(0)) || op(m.get(1)) || op(m.get(2)) || op(m.get(3));
+  }
+  if constexpr( M::size() > 4 )
+  {
+    static_assert(!logical_value<M>, "should be top bits");
+    int i = 0;
+    while( i != M::size() )
+    {
+      if( op(m.get(i)) ) return true;
+      if( op(m.get(i + 1)) ) return true;
+      if( op(m.get(i + 2)) ) return true;
+      if( op(m.get(i + 3)) ) return true;
+      i += 4;
+    }
+    return false;
+  }
+}
 
 template<typename Settings, typename I, typename M, typename O>
 EVE_FORCEINLINE auto
@@ -82,18 +109,18 @@ copy_by_one_checking_each(Settings settings, I f, M m, O o) -> O
 
   if constexpr( OC::is_complete && Settings::is_safe )
   {
-    detail::for_<0, 1, M::size()>(copy_by_one_checking_each_lambda_safe {f, m, o});
+    for_each_until_m(m, copy_by_one_checking_each_lambda_safe {f, o});
   }
   else if constexpr( OC::is_complete )
   {
-    detail::for_<0, 1, M::size()>(copy_by_one_checking_each_lambda_unsafe {f, m, o});
+    for_each_until_m(m, copy_by_one_checking_each_lambda_unsafe {f, o});
   }
   else
   {
     o += settings.c_out.offset(eve::as(m));
     O limit = o + settings.c_out.count(eve::as(m));
 
-    detail::for_until_<0, 1, M::size()>(copy_by_one_checking_each_lambda_checked {f, m, o, limit});
+    for_each_until_m(m, copy_by_one_checking_each_lambda_checked {f, o, limit});
   }
 
   return o;
@@ -193,7 +220,8 @@ compress_copy_scalar_impl_(EVE_SUPPORTS(cpu_), Settings settings, I f, L m, O o)
         o);
   }
   // on x86 or for sparse, we should just go top_bits.
-  else if constexpr( logical_simd_value<L> && (Settings::is_sparse || current_api >= sse2) )
+  else if constexpr( logical_simd_value<L>
+                     && (Settings::is_sparse || current_api >= sse2 || L::size() > 4) )
   {
     // Some experiments show that doing "none" here is not beneficial even for expensive ~ish
     // top bits.

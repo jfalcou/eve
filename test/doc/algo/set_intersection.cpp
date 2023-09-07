@@ -170,6 +170,26 @@ biase_example()
   std::cout << "-> r1:  " << tts::as_string(r1) << '\n';
 }
 
+void
+sparse_output_example()
+{
+  std::cout << "sparse_output hint =================\n";
+
+  std::vector<int> v1(20u, 0), v2(20u, 0);
+  for (int i = 0; auto& x : v1) x = i++ * 3;
+  for (int i = 0; auto& x : v2) x = i++ * 5;
+
+  std::vector<int> r;
+  r.resize(20);
+
+  r.erase(
+    eve::algo::set_intersection[eve::algo::sparse_output](v1, v2, r).out,
+    r.end());
+
+  std::cout << " -> r: " << tts::as_string(r) << std::endl;
+  TTS_EQUAL(r, std::vector({0, 15, 30, 45}));
+}
+
 int
 main()
 {
@@ -178,4 +198,5 @@ main()
   pairs_example();
   different_scalar_types_example();
   biase_example();
+  sparse_output_example();
 }
