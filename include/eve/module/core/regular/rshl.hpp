@@ -95,11 +95,29 @@ namespace detail
                                             << sizeof(element_type_t<T>) * 8 << "[.");
   }
   template<conditional_expr C, typename T, typename S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&,
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), C const&, T const&,
                              [[maybe_unused]] S const& s)
   {
     EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
                "[eve::rshl] - Shifting by " << s << " is out of the range ]"
+                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
+                                            << sizeof(element_type_t<T>) * 8 << "[.");
+  }
+
+  template<typename T, std::ptrdiff_t S>
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&,index_t<S> const&)
+  {
+    EVE_ASSERT(assert_good_shift<T>(eve::abs(S)),
+               "[eve::rshl] - Shifting by " << S << " is out of the range ]"
+                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
+                                            << sizeof(element_type_t<T>) * 8 << "[.");
+  }
+
+  template<conditional_expr C, typename T, std::ptrdiff_t S>
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), C const&, T const&,index_t<S> const&)
+  {
+    EVE_ASSERT(assert_good_shift<T>(eve::abs(S)),
+               "[eve::rshl] - Shifting by " << S << " is out of the range ]"
                                             << -int(sizeof(element_type_t<T>) * 8) << ", "
                                             << sizeof(element_type_t<T>) * 8 << "[.");
   }

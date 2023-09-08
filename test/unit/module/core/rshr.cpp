@@ -32,6 +32,8 @@ TTS_CASE_TPL("Check return types of rshr", eve::test::simd::unsigned_integers)
   TTS_EXPR_IS(eve::rshr(T(), vu_t()), T);
   TTS_EXPR_IS(eve::rshr(v_t(), vi_t()), v_t);
   TTS_EXPR_IS(eve::rshr(v_t(), vu_t()), v_t);
+  TTS_EXPR_IS(eve::rshr(v_t(), eve::index<+1>), v_t);
+  TTS_EXPR_IS(eve::rshr(v_t(), eve::index<-1>), v_t);
 };
 
 //==================================================================================================

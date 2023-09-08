@@ -32,4 +32,14 @@ EVE_FORCEINLINE wide<T, N>
   using i_t = wide<as_integer_t<T, signed>, N>;
   return eve::rshr(v0, i_t(v1));
 }
+
+template<integral_scalar_value T, typename N, std::ptrdiff_t S>
+EVE_FORCEINLINE wide<T, N>
+                rshr_(EVE_SUPPORTS(neon128_),
+                      wide<T, N> const                &v0,
+                      index_t<S> const&
+                      ) noexcept requires arm_abi<abi_t<T, N>>
+{
+  return neon_shifter(v0, index<-S>);
+}
 }
