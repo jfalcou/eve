@@ -14,6 +14,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 
 #include <concepts>
+#include <cstddef>
 
 namespace eve::detail
 {
@@ -58,11 +59,10 @@ namespace eve::detail
     return v;
   }
 
-  template<integral_scalar_value T, typename N, typename U, U S>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, std::integral_constant<U,S> const&) noexcept
+  template<integral_scalar_value T, typename N, std::ptrdiff_t S>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, index_t<S> const&) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-
     constexpr auto c = categorize<wide<T, N>>();
 
           if constexpr( c == category::int64x1  ) v = vshl_n_s64 (v, S);
@@ -101,8 +101,8 @@ namespace eve::detail
     return self_shl(v, -s);
   }
 
-  template<integral_scalar_value T, typename N, typename U, U S>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, std::integral_constant<U,S> const&) noexcept
+  template<integral_scalar_value T, typename N, std::ptrdiff_t S>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, index_t<S> const&) noexcept
   requires arm_abi<abi_t<T, N>>
   {
 

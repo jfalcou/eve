@@ -15,14 +15,13 @@ TTS_CASE_TPL( "Check behavior of shift operators on eve::wide", eve::test::simd:
 <typename T>(tts::type<T>)
 {
   using i_t = eve::as_integer_t<T>;
-  using c_t = std::integral_constant<int,0>;
   using vi_t = eve::element_type_t<i_t>;
 
   TTS_EXPR_IS( T() << i_t() , T);
-  TTS_EXPR_IS( T() << c_t() , T);
+  TTS_EXPR_IS( T() << eve::index<0> , T);
   TTS_EXPR_IS( T() << vi_t(), T);
   TTS_EXPR_IS( T() >> i_t() , T);
-  TTS_EXPR_IS( T() >> c_t() , T);
+  TTS_EXPR_IS( T() >> eve::index<0> , T);
   TTS_EXPR_IS( T() >> vi_t(), T);
 };
 

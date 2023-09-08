@@ -45,9 +45,9 @@ bit_shr_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
   else return apply_over(bit_shr, a, b);
 }
 
-template<integral_value T, typename U, U V>
+template<integral_value T, std::ptrdiff_t V>
 EVE_FORCEINLINE auto
-bit_shr_(EVE_SUPPORTS(cpu_), T const& a, std::integral_constant<U,V> const& b) noexcept
+bit_shr_(EVE_SUPPORTS(cpu_), T const& a, index_t<V> const& b) noexcept
 {
   using u_t = eve::as_integer_t<T, unsigned>;
   if constexpr( scalar_value<T> ) return static_cast<T>(u_t(a) >> b);
@@ -67,9 +67,9 @@ bit_shr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b) noexcept
   return mask_op(cond, eve::bit_shr, a, b);
 }
 
-template<conditional_expr C, integral_value T, typename U, U V>
+template<conditional_expr C, integral_value T, std::ptrdiff_t V>
 EVE_FORCEINLINE auto
-bit_shr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, std::integral_constant<U,V> const& b) noexcept
+bit_shr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, index_t<V> const& b) noexcept
 {
   return mask_op(cond, eve::bit_shr, a, b);
 }

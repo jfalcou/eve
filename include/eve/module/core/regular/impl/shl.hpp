@@ -26,9 +26,9 @@ shl_(EVE_SUPPORTS(cpu_), T a, U s) noexcept
   else return a << s;
 }
 
-template<integral_value T, typename U, U V>
+template<integral_value T, std::ptrdiff_t V>
 EVE_FORCEINLINE auto
-shl_(EVE_SUPPORTS(cpu_), T a, std::integral_constant<U,V> const& s) noexcept
+shl_(EVE_SUPPORTS(cpu_), T a, index_t<V> const& s) noexcept
 {
   return a << s;
 }
@@ -43,9 +43,9 @@ shl_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, U const& b) noexcept
   return mask_op(cond, eve::shl, a, b);
 }
 
-template<conditional_expr C, integral_value T, typename U, U V>
+template<conditional_expr C, integral_value T, std::ptrdiff_t V>
 EVE_FORCEINLINE auto
-shl_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, std::integral_constant<U,V> const& b) noexcept
+shl_(EVE_SUPPORTS(cpu_), C const& cond, T const& a, index_t<V> const& b) noexcept
 {
   return mask_op(cond, eve::shl, a, b);
 }
