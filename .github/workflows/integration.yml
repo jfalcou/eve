@@ -19,19 +19,25 @@ jobs:
   ## Check install process of EVE via CMake
   ##################################################################################################
   install:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
     container:
       image: ghcr.io/jfalcou/compilers:v6
+    strategy:
+      fail-fast: false
+
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
-      - name: Install EVE for branch ${{ github.head_ref }} via install target
+      - name: Install EVE from checkout
         run: |
-          git config --global --add safe.directory $PWD
-          cmake -B build -S . -G Ninja -DEVE_BUILD_INTEGRATION=ON -DEVE_BUILD_TEST=OFF -DEVE_BUILD_DOCUMENTATION=OFF
-          ctest --test-dir build --output-on-failure -R integration.install-eve.exe
-      - name: Test EVE via the install target
-        run:  ctest --test-dir build --output-on-failure -R integration.install.exe
+          mkdir build && cd build
+          cmake -G Ninja .. -DEVE_BUILD_TEST=OFF -DCMAKE_CXX_COMPILER=clang++
+          ninja install
+      - name: Run Sample CMake
+        run: |
+          mkdir install && cd install
+          cmake ../test/integration/install-test -G Ninja
+          ninja && ctest --verbose
 
   ##################################################################################################
   ## Check install process of EVE via CPM
