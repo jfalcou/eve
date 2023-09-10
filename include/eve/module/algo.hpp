@@ -28,6 +28,7 @@
 #include <eve/module/algo/algo/concepts.hpp>
 #include <eve/module/algo/algo/container/soa_vector.hpp>
 #include <eve/module/algo/algo/copy.hpp>
+#include <eve/module/algo/algo/copy_if.hpp>
 #include <eve/module/algo/algo/equal.hpp>
 #include <eve/module/algo/algo/fill.hpp>
 #include <eve/module/algo/algo/find.hpp>
@@ -55,6 +56,7 @@
 #include <eve/module/algo/algo/traits.hpp>
 #include <eve/module/algo/algo/transform.hpp>
 #include <eve/module/algo/algo/transform_reduce.hpp>
+#include <eve/module/algo/algo/two_stage_iteration.hpp>
 #include <eve/module/algo/views/backward.hpp>
 #include <eve/module/algo/views/convert.hpp>
 #include <eve/module/algo/views/iota.hpp>

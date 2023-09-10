@@ -75,6 +75,7 @@ copy_by_one_checking_each_lambda_checked(I, O, O)
     -> copy_by_one_checking_each_lambda_checked<I, O>;
 
 template<typename M>
+EVE_FORCEINLINE
 bool
 for_each_until_m(M m, auto op)
 {
