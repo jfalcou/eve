@@ -72,14 +72,14 @@ vcopy_lane(eve::wide<T, N> x, eve::index_t<To>, eve::wide<T, N> y, eve::index_t<
   }
 }
 
-struct
-{
-  template<std::ptrdiff_t S> EVE_FORCEINLINE auto operator()(auto x, eve::index_t<S>) const
-  {
-    if constexpr( S < 0 ) return vshr_n(x, eve::index<-S>);
-    else return vshl_n(x, eve::index<S>);
-  }
-} inline constexpr neon_shift_by_const;
+// struct
+// {
+//   template<std::ptrdiff_t S> EVE_FORCEINLINE auto operator()(auto x, eve::index_t<S>) const
+//   {
+//     if constexpr( S < 0 ) return vshr_n(x, eve::index<-S>);
+//     else return vshl_n(x, eve::index<S>);
+//   }
+// } inline constexpr neon_shift_by_const;
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
@@ -186,8 +186,7 @@ EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
-  if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x, neon_shift_by_const);
-                matched_shuffle<decltype(r)> )
+  if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
@@ -207,8 +206,7 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_neon_copy_lane_self(p, g, x);
-                     matched_shuffle<decltype(r)> )
+  else if constexpr( auto r = shuffle_l2_neon_copy_lane_self(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
