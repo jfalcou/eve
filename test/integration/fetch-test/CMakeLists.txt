@@ -7,16 +7,16 @@ cmake_minimum_required(VERSION 3.18)
 project(eve-fetch-test LANGUAGES CXX)
 enable_testing()
 
-message(STATUS "Testing FetchContent for commit ${eve_git_head}")
+message(STATUS "Testing FetchContent for commit ${GIT_BRANCH}")
 
 # Enable FetchContent
 include(FetchContent)
 
 # Retrieve EVE from relative git directory
-FetchContent_Declare(eve
-  GIT_REPOSITORY "${eve_SOURCE_DIR}"
-  GIT_TAG "${eve_git_head}"
-)
+FetchContent_Declare( eve
+                      GIT_REPOSITORY "https://github.com/jfalcou/eve.git"
+                      GIT_TAG "${GIT_BRANCH}"
+                    )
 
 # make available
 FetchContent_MakeAvailable(eve)
