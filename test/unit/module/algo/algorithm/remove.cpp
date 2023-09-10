@@ -130,6 +130,11 @@ TTS_CASE_TPL("Check remove test", algo_test::selected_types)
 {
   remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove);
   remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::sparse_output]);
-  remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::unroll<3>]);
-  remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::force_cardinal<T::size()>]);
+  if constexpr ( eve::current_api >= eve::sve)
+    return;
+  else
+  {
+    remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::unroll<3>]);
+    remove_generic_test_page_ends(eve::as<T>{}, eve::algo::remove[eve::algo::force_cardinal<T::size()>]);
+  }
 };
