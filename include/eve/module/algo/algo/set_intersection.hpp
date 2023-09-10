@@ -30,15 +30,6 @@ set_intersection_result(I1, I2, O) -> set_intersection_result<I1, I2, O>;
 
 namespace detail
 {
-  // FIX: 1629 - support common type and such
-  template<typename Traits, typename... Rs>
-  EVE_FORCEINLINE auto temporary_preprocess_ranges_hack(Traits tr, Rs&&...rs)
-  {
-    constexpr auto to_consider = kumi::cat(get_types_to_consider_for<Traits, Rs> {}...);
-    auto           traits2     = default_to(tr, traits {consider_types_key = to_consider});
-    return kumi::tuple {preprocess_range(traits2, rs)...};
-  }
-
   template<typename TraitsSupport> struct set_intersection_r1_small_ : TraitsSupport
   {
     template<typename R1, typename R2, typename RO, typename Less, typename Equal> struct delegate

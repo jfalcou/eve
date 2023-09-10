@@ -78,6 +78,7 @@ namespace eve::algo
   EVE_FORCEINLINE auto preprocess_range_::operator()(Traits with_equivalents_, I_ f_, S_ l_) const
   {
     auto traits_ = process_equivalents(with_equivalents_);
+
     auto f = detail::fix_up_cardinal(traits_, f_);
     auto l = detail::fix_up_cardinal(traits_, l_);
 
@@ -95,4 +96,14 @@ namespace eve::algo
 
     return preprocess_range_result { default_to(traits_, deduced), f, l};
   }
+
+  // FIX: 1629 - support common type and such
+  template<typename Traits, typename... Rs>
+  EVE_FORCEINLINE auto temporary_preprocess_ranges_hack(Traits tr, Rs&&...rs)
+  {
+    constexpr auto to_consider = kumi::cat(get_types_to_consider_for<Traits, Rs> {}...);
+    auto           traits2     = default_to(tr, traits {consider_types_key = to_consider});
+    return kumi::tuple {preprocess_range(traits2, rs)...};
+  }
+
 }

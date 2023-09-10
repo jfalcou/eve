@@ -17,17 +17,19 @@
 namespace algo_test
 {
   using selected_types = tts::types<
-      eve::wide<std::int8_t, eve::fixed<1>>
-    , eve::nofs_wide<std::uint8_t>
+      eve::nofs_wide<std::uint8_t>
     , eve::wide<std::int16_t>
     , eve::wide<std::uint16_t, eve::fixed<4>>
     , eve::wide<int>
-    , eve::nofs_wide<float>
     , eve::wide<double>
+#ifndef EVE_HW_ARM_SVE
+    , eve::wide<std::int8_t, eve::fixed<1>>
+    , eve::nofs_wide<float>
     , eve::wide<std::uint64_t>
     , eve::wide < std::uint32_t
                 , eve::fixed<eve::nofs_cardinal_v<std::uint32_t> * 2>
                 >
+#endif
   >;
 
   using selected_pairs_types = tts::types<
