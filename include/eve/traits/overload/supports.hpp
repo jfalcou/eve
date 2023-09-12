@@ -227,4 +227,8 @@ namespace eve
     /// Default settings of eve::conditional is eve::ignore_none
     EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{option::condition = ignore_none};  }
   };
+
+  /// Checks if the type associated to a given Keyword in a Option pack is equal to Type
+  template<auto Keyword, typename Opts, typename Type>
+  inline constexpr bool option_type_is =  std::same_as<Type, rbr::result::fetch_t<Keyword,Opts>>;
 }

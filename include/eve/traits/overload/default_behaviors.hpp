@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/detail/function/conditional.hpp>
 
 //======================================================================================================================
 // Overload's helpers
@@ -73,7 +74,9 @@ namespace eve
   //!
   //!   Constants functions in EVE are built using a very common pattern. Inheriting from eve::constant simplifies the
   //!   implementation of such eve::callable by just requiring your eve::callable type to implement a static `value`
-  //!   member function that provides the constant value.
+  //!   member function that provides the constant value using two parameters:
+  //!     * an eve::options pack containing potential decorators passed to the constant.
+  //!     * an eve::as instance to specify the output type.
   //!
   //!   Constant functions in EVE also supports masking, which is directly implemented in eve::constant.
   //!
@@ -92,10 +95,11 @@ namespace eve
     {
       template<typename T, typename O>
       static constexpr auto call(auto, options<O> const& opts, eve::as<T> const& tgt)
-      requires( requires{ Tag::value(tgt); } )
+      requires( requires{ Tag::value(opts, tgt); } )
       {
-        auto v = Tag::value(tgt);
-        if constexpr(std::same_as<ignore_none_, rbr::result::fetch_t<option::condition,O>>) return v;
+        // we pass opts to value so each constant can handle their own option support
+        auto v = Tag::value(opts,tgt);
+        if constexpr(option_type_is<option::condition, O, ignore_none_>) return v;
         else  return v & detail::expand_mask(opts[option::condition], tgt).mask();
       }
     };
