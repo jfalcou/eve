@@ -40,6 +40,7 @@ TAB_SIZE               = 2
 ALIASES += "raberu=[RABERU](https://jfalcou.github.io/raberu/) \1"
 ALIASES += "godbolt{1}=@include \1"
 ALIASES += "groupheader{1}=<h2 class=\"groupheader\"> \1 </h2>"
+ALIASES += "subgroupheader{1}=<h3 class=\"groupheader\"> \1 </h3>"
 ALIASES += "nullable=[NullablePointer](https://en.cppreference.com/w/cpp/named_req/NullablePointer)"
 ALIASES += "callable=[Callable Object](https://en.cppreference.com/w/cpp/named_req/Callable)"
 ALIASES += "container=[Container](https://en.cppreference.com/w/cpp/named_req/Container)"
