@@ -55,10 +55,6 @@ if( EVE_BUILD_TEST )
   add_subdirectory("${PROJECT_SOURCE_DIR}/examples/")
 endif()
 
-if( EVE_BUILD_INTEGRATION )
-  add_subdirectory("${PROJECT_SOURCE_DIR}/test/integration")
-endif()
-
 if( EVE_BUILD_BENCHMARKS )
   add_subdirectory("${PROJECT_SOURCE_DIR}/benchmarks/")
 endif()
