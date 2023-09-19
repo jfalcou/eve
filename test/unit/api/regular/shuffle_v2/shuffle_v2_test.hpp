@@ -47,22 +47,14 @@ verify(T x, eve::fixed<G>, eve::pattern_t<I...> p, U shuffled)
     return false;
   }();
 
-  TTS_EXPECT(!has_failures) << "sizeof(T): " << sizeof(T) << " G: " << G
-                                      << "\npattern: " << p << "\nactual:  " << shuffled;
+  TTS_EXPECT(!has_failures) << "sizeof(T): " << sizeof(T) << " G: " << G << "\npattern: " << p
+                            << "\nactual:  " << shuffled;
 }
 
 template<typename T, std::ptrdiff_t... I>
 void
 run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...> p)
 {
-#if 0
-  if (p != eve::pattern<1, 0> || g() != 1 || sizeof(eve::element_type_t<T>) != 4)
-  {
-    TTS_PASS();
-    return;
-  }
-#endif
-
   using e_t = eve::element_type_t<T>;
   if constexpr( requires { eve::shuffle_v2_core(input, g, p); } )
   {
@@ -189,6 +181,13 @@ for_each_group_size(eve::as<T>, auto op)
 
 template<typename T>
 void
+for_each_group_with_params(eve::as<T> tgt, auto op)
+{
+  for_each_group_size(tgt, op);
+}
+
+template<typename T>
+void
 for_each_group_with_params(eve::as<T> tgt, auto extra_param_gen, auto op)
 {
   for_each_group_size(tgt,
@@ -206,19 +205,21 @@ for_each_group_with_params(eve::as<T> tgt, auto extra_param_gen, auto op)
 
 template<bool supports_G_eq_T_Size, typename T, typename NamedShuffle>
 void
-named_shuffle1_test_one_input(T input, NamedShuffle named_shuffle, auto... args)
+named_shuffle1_test_one_input(T input, NamedShuffle named_shuffle, auto... extra_args_gen)
 {
   auto tgt = eve::as<T> {};
-  for_each_group_size(tgt,
-                      [&]<std::ptrdiff_t G>(eve::fixed<G> g)
-                      {
-                        if constexpr( G != T::size() || supports_G_eq_T_Size )
-                        {
-                          std::ptrdiff_t expected_level = named_shuffle.level(tgt, g, args...);
-                          auto           pattern        = named_shuffle.pattern(tgt, g, args...);
-                          run_one_case(expected_level, input, g, pattern);
-                        }
-                      });
+  for_each_group_with_params(tgt,
+                             extra_args_gen...,
+                             [&]<std::ptrdiff_t G>(eve::fixed<G> g, auto... extra)
+                             {
+                               if constexpr( G != T::size() || supports_G_eq_T_Size )
+                               {
+                                 std::ptrdiff_t expected_level =
+                                     named_shuffle.level(tgt, g, extra...);
+                                 auto pattern = named_shuffle.pattern(tgt, g, extra...);
+                                 run_one_case(expected_level, input, g, pattern);
+                               }
+                             });
 }
 
 template<bool supports_G_eq_T_Size, typename T, typename NamedShuffle>
@@ -242,7 +243,7 @@ named_shuffle2_test_one_input(T x, T y, NamedShuffle named_shuffle, auto extra_p
 
 template<bool supports_G_eq_T_Size, typename T, typename NamedShuffle>
 void
-named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... args)
+named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... extra_args_gen)
 {
   if( T::size() == 1 && !supports_G_eq_T_Size )
   {
@@ -251,11 +252,11 @@ named_shuffle1_test(eve::as<T>, NamedShuffle named_shuffle, auto... args)
   }
 
   T x {[](int i, int) { return i + 1; }};
-  named_shuffle1_test_one_input<supports_G_eq_T_Size>(x, named_shuffle, args...);
+  named_shuffle1_test_one_input<supports_G_eq_T_Size>(x, named_shuffle, extra_args_gen...);
 
   // false, true, false, false, true, true
   eve::logical<T> mask {[](int i, int) { return std::countl_zero((unsigned)i) & 1; }};
-  named_shuffle1_test_one_input<supports_G_eq_T_Size>(mask, named_shuffle, args...);
+  named_shuffle1_test_one_input<supports_G_eq_T_Size>(mask, named_shuffle, extra_args_gen...);
 }
 
 template<bool supports_G_eq_T_Size, typename T, typename N, typename NamedShuffle>

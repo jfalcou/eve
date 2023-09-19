@@ -21,9 +21,9 @@ namespace eve
 //!
 //!   **Defined in Header**
 //!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
+//!    @code
+//!    #include <eve/module/core.hpp>
+//!    @endcode
 //!
 //!    As any named shuffle, allows to pass a group size, to treat multiple elements as one.
 //!    Group size has to be 0 < G <= T::size()
@@ -53,6 +53,7 @@ namespace eve
 //!  @godbolt{doc/core/named_shuffles/reverse.cpp}
 //!
 //! @}
+//================================================================================================
 struct reverse_t
 {
   template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
