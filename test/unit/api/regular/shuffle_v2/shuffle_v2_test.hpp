@@ -47,14 +47,22 @@ verify(T x, eve::fixed<G>, eve::pattern_t<I...> p, U shuffled)
     return false;
   }();
 
-  TTS_EXPECT(!has_failures) << "sizeof(T): " << sizeof(T) << " G: " << G << "\npattern: " << p
-                            << "\nactual:  " << shuffled;
+  TTS_EXPECT(!has_failures) << "sizeof(T): " << sizeof(T) << " G: " << G
+                                      << "\npattern: " << p << "\nactual:  " << shuffled;
 }
 
 template<typename T, std::ptrdiff_t... I>
 void
 run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...> p)
 {
+#if 0
+  if (p != eve::pattern<1, 0> || g() != 1 || sizeof(eve::element_type_t<T>) != 4)
+  {
+    TTS_PASS();
+    return;
+  }
+#endif
+
   using e_t = eve::element_type_t<T>;
   if constexpr( requires { eve::shuffle_v2_core(input, g, p); } )
   {
@@ -68,7 +76,8 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
       expected_level = eve::detail::idxm::has_zeroes(idxs);
     }
     if( eve::has_emulated_abi_v<T> ) expected_level = 0;
-    TTS_EQUAL(expected_level, l()) << "G: " << g() << "\npattern: " << p;
+    TTS_EQUAL(expected_level, l())
+        << "G: " << g() << "\npattern: " << p << "\nT type: " << tts::typename_<T>;
   }
   else { TTS_FAIL("Failed to shuffle, G: " << g() << "\npattern: " << p); }
 }

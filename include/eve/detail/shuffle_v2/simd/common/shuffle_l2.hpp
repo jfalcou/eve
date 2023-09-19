@@ -20,6 +20,13 @@ up_element_size(wide<T, N> x)
   return eve::bit_cast(x, eve::as<wide<T1, N1>> {});
 }
 
+template<arithmetic_scalar_value T, typename N, std::ptrdiff_t To>
+EVE_FORCEINLINE auto
+up_element_size_to(wide<T, N> x, eve::fixed<To>) {
+  if constexpr (sizeof(T) == To) return x;
+  else return up_element_size_to(up_element_size(x), eve::lane<To>);
+}
+
 struct
 {
   template<std::ptrdiff_t S> EVE_FORCEINLINE auto operator()(auto x, eve::index_t<S>) const
