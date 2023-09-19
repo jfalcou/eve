@@ -547,7 +547,7 @@ var namespaceeve =
     [ "rem", "group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657", null ],
     [ "rempio2", "group__math__trig_gab8d411aa6820539627b8475e86395d45.html#gab8d411aa6820539627b8475e86395d45", null ],
     [ "replace_ignored", "group__core__logical_gafaa07222ff0f44384515607d9f7d43a7.html#gafaa07222ff0f44384515607d9f7d43a7", null ],
-    [ "reverse", "group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5", null ],
+    [ "reverse", "group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5", null ],
     [ "reverse_horner", "group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe", null ],
     [ "right", "group__core__decorators_ga7208f166d28c70de0106887ac92c5227.html#ga7208f166d28c70de0106887ac92c5227", null ],
     [ "rising_factorial", "group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd", null ],

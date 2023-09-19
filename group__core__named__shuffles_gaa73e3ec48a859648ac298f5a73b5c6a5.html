@@ -140,16 +140,23 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles_gaa73e3ec
   </tr>
 </table>
 </div><div class="memdoc">
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Can apply an opteration for group of elements instead of elements. Group size has to be 0 &lt; G &lt; T::size()</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t G&gt;</div>
 <div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;G&gt;</a>)  <span class="comment">// (1)</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;simd_value T&gt;</div>
 <div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">swap_adjacent</a>(T x)  <span class="comment">// (2)</span></div>
-<div class="ttc" id="agroup__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5_html_gaa73e3ec48a859648ac298f5a73b5c6a5"><div class="ttname"><a href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a></div><div class="ttdeci">constexpr auto swap_adjacent</div><div class="ttdoc">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1,...</div><div class="ttdef"><b>Definition:</b> swap_adjacent.hpp:99</div></div>
+<div class="ttc" id="agroup__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5_html_gaa73e3ec48a859648ac298f5a73b5c6a5"><div class="ttname"><a href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a></div><div class="ttdeci">constexpr auto swap_adjacent</div><div class="ttdoc">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1,...</div><div class="ttdef"><b>Definition:</b> swap_adjacent.hpp:118</div></div>
 <div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
-</div><!-- fragment --><p>(2) calls (1) with G == 1; (1) swaps adjacent groups of elements of size G</p>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - simd_value to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+</ul>
 <p><b>Return value</b></p>
-<p>Return x where groups with contiguous groups of N elements swapped</p>
+<p>Return x where groups of contiguous G elements are swapped.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>

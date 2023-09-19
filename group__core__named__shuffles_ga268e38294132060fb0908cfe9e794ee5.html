@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga268e38294132060f
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::reverse = {}</td>
+          <td class="memname">eve::reverse = detail::named_shuffle_1&lt;reverse_t&gt; {}</td>
         </tr>
       </table>
   </td>
@@ -142,45 +142,40 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga268e38294132060f
 </div><div class="memdoc">
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">reverse</a>(T x) <span class="keyword">noexcept</span>;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__bitops_ga268e38294132060fb0908cfe9e794ee5_html_ga268e38294132060fb0908cfe9e794ee5"><div class="ttname"><a href="group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a></div><div class="ttdeci">constexpr callable_reverse_ reverse</div><div class="ttdoc">elementwise reverses the elements order.</div><div class="ttdef"><b>Definition:</b> reverse.hpp:54</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size()</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">reverse</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>);  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">reverse</a>(T x);  <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5_html_ga268e38294132060fb0908cfe9e794ee5"><div class="ttname"><a href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a></div><div class="ttdeci">constexpr auto reverse</div><div class="ttdoc">a named shuffle for reversing a register.</div><div class="ttdef"><b>Definition:</b> reverse.hpp:132</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li>x - simd_value to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
 </ul>
+<p>(2) calls (1) with G == 1; (1) reverses positions of adjacent groups of elements of size G</p>
 <p><b>Return value</b></p>
-<p>The values of the parameter are shuffled in reverse order. On scalar values reverse is the identity.</p>
+<p>Return x where groups of contiguous G elements are reversed.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {1, 2, 3, 4, 5, 6, 7, 8};</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse(pi)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">;</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{3, 2, 1, 0} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{3, 2, 1, 0} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x, eve::lane&lt;1&gt;)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{2, 3, 0, 1} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x, eve::lane&lt;2&gt;)) );</div>
 <div class="line"> </div>
-<div class="line">  std::uint64_t xf = 0xf0ff0fff0ffff00ULL;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf          = &quot;</span> &lt;&lt; std::hex &lt;&lt; <span class="stringliteral">&quot;0x&quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse(xf) = &quot;</span> &lt;&lt; std::hex &lt;&lt; <span class="stringliteral">&quot;0x&quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
+<div class="line">  <span class="comment">// lane&lt;0&gt; is not OK</span></div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{0, 1, 2, 3} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x, eve::lane&lt;4&gt;)) );</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
+<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition:</b> all.hpp:70</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>

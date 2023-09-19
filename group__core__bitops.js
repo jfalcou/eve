@@ -34,6 +34,5 @@ var group__core__bitops =
     [ "eve::lo", "group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60", null ],
     [ "eve::lohi", "group__core__bitops_ga5fa01768959ec399cb0a910af345dd8b.html#ga5fa01768959ec399cb0a910af345dd8b", null ],
     [ "eve::popcount", "group__core__bitops_ga1b50817e111b93137f0ce15f44339322.html#ga1b50817e111b93137f0ce15f44339322", null ],
-    [ "eve::reverse", "group__core__bitops_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5", null ],
     [ "eve::swap_pairs", "group__core__bitops_ga80d559963dc763b6d8b2350e4c4b0576.html#ga80d559963dc763b6d8b2350e4c4b0576", null ]
 ];

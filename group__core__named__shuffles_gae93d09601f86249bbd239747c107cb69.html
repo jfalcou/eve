@@ -141,7 +141,9 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles_gae93d096
 </table>
 </div><div class="memdoc">
 <dl class="section note"><dt>Note</dt><dd>You might be looking for <code>eve::if_else_</code>.</dd></dl>
-<p>(TODO: support mixing more than 2 registers)</p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>(TODO: support mixing more than 2 registers)</p>
 <p>Accepts a pattern with just 0 and 1 that indicates number of the element for the current slot</p>
 <p><a class="el" href="group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69" title="a named shuffle for mixing 2 registers together, without changing positions.">blend([0, 1, 2, 3], [4, 5, 6, 7], pattern&lt;1, 0, 0, 1&gt;)</a> -&gt; [4, 1, 2, 7].</p>
 <p>As any named shuffle, allows to specify a group size.</p>
@@ -156,11 +158,18 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles_gae93d096
 <div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69">blend</a>(T x, T y, <a class="code hl_concept" href="concepteve_1_1pattern__formula.html">pattern_formula</a> <span class="keyword">auto</span> gen)</div>
 <div class="ttc" id="aconcepteve_1_1pattern__formula_html"><div class="ttname"><a href="concepteve_1_1pattern__formula.html">eve::pattern_formula</a></div><div class="ttdoc">what callable can be a pattern formula</div><div class="ttdef"><b>Definition:</b> pattern.hpp:99</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
-<div class="ttc" id="agroup__core__named__shuffles_gae93d09601f86249bbd239747c107cb69_html_gae93d09601f86249bbd239747c107cb69"><div class="ttname"><a href="group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69">eve::blend</a></div><div class="ttdeci">constexpr auto blend</div><div class="ttdoc">a named shuffle for mixing 2 registers together, without changing positions.</div><div class="ttdef"><b>Definition:</b> blend.hpp:139</div></div>
+<div class="ttc" id="agroup__core__named__shuffles_gae93d09601f86249bbd239747c107cb69_html_gae93d09601f86249bbd239747c107cb69"><div class="ttname"><a href="group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69">eve::blend</a></div><div class="ttdeci">constexpr auto blend</div><div class="ttdoc">a named shuffle for mixing 2 registers together, without changing positions.</div><div class="ttdef"><b>Definition:</b> blend.hpp:151</div></div>
 <div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
 <div class="ttc" id="astructeve_1_1pattern__t_html"><div class="ttname"><a href="structeve_1_1pattern__t.html">eve::pattern_t</a></div><div class="ttdoc">Shuffling pattern.</div><div class="ttdef"><b>Definition:</b> pattern.hpp:27</div></div>
-</div><!-- fragment --><p>(2) calls (1) with G == 1 (1) blends groups of elements from 2 registers, I == 0 -&gt; take a group from x I == 1 -&gt; take a group from y</p>
-<p><b>Return value</b> result of the shuffle</p>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x, y - values to shuffle.</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+<li>pattern - how to shuffle elements I == 0 -&gt; take a group from x I == 1 -&gt; take a group from y</li>
+<li>gen - <a class="el" href="concepteve_1_1pattern__formula.html" title="what callable can be a pattern formula">eve::pattern_formula</a> = alternative way to specify a pattern, computing it from index and size.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns a register with elements selected according to the mask.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"> </div>
