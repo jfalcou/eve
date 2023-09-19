@@ -130,7 +130,7 @@ shuffle_l2_neon_rev(P, fixed<G>, wide<T, N> x)
     else if constexpr( sizeof(T) == 2 && idxs.size() == 2 ) return vrev32q_u16(x);
     else if constexpr( sizeof(T) == 1 && idxs.size() == 2 ) return vrev16q_u8(x);
     else if constexpr( sizeof(T) == 2 && idxs.size() == 4 ) return vrev64q_u16(x);
-    else if constexpr( idxs.size() == 4 ) return vrevq32_u8(x);
+    else if constexpr( idxs.size() == 4 ) return vrev32q_u8(x);
     else return vrev64q_u8(x);
   }
 }
