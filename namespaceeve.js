@@ -549,6 +549,7 @@ var namespaceeve =
     [ "replace_ignored", "group__core__logical_gafaa07222ff0f44384515607d9f7d43a7.html#gafaa07222ff0f44384515607d9f7d43a7", null ],
     [ "reverse", "group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5", null ],
     [ "reverse_horner", "group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe", null ],
+    [ "reverse_in_subgroups", "group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c", null ],
     [ "right", "group__core__decorators_ga7208f166d28c70de0106887ac92c5227.html#ga7208f166d28c70de0106887ac92c5227", null ],
     [ "rising_factorial", "group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd", null ],
     [ "rotate", "group__core_ga073de555026307d7265ba21c49940a7f.html#ga073de555026307d7265ba21c49940a7f", null ],

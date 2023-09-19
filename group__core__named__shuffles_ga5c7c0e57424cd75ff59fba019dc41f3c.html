@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::reverse</title>
+<title>E.V.E: eve::reverse_in_subgroups</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles_ga268e382
 </div>
 
 <div class="contents">
-<a id="ga268e38294132060fb0908cfe9e794ee5" name="ga268e38294132060fb0908cfe9e794ee5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga268e38294132060fb0908cfe9e794ee5">&#9670;&#160;</a></span>reverse</h2>
+<a id="ga5c7c0e57424cd75ff59fba019dc41f3c" name="ga5c7c0e57424cd75ff59fba019dc41f3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5c7c0e57424cd75ff59fba019dc41f3c">&#9670;&#160;</a></span>reverse_in_subgroups</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles_ga268e382
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::reverse = detail::named_shuffle_1&lt;reverse_t&gt; {}</td>
+          <td class="memname">eve::reverse_in_subgroups = detail::named_shuffle_1&lt;reverse_in_subgroups_t&gt; {}</td>
         </tr>
       </table>
   </td>
@@ -142,38 +142,42 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles_ga268e382
 </div><div class="memdoc">
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size()</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G&gt;</div>
-<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">reverse</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>);  <span class="comment">// (1)</span></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size() Subgroup size has to be 1 &lt;= SubG &lt;= T::size() / G</p>
+<dl class="section note"><dt>Note</dt><dd>SubG == T::size() makes this function equivalent <a class="el" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5" title="a named shuffle for reversing a register.">eve::reverse</a>.</dd></dl>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t SubG&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">reverse_in_subgroups</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;SubG&gt;</a>);  <span class="comment">// (1)</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">template</span> &lt;simd_value T&gt;</div>
-<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">reverse</a>(T x);  <span class="comment">// (2)</span></div>
-<div class="ttc" id="agroup__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5_html_ga268e38294132060fb0908cfe9e794ee5"><div class="ttname"><a href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a></div><div class="ttdeci">constexpr auto reverse</div><div class="ttdoc">a named shuffle for reversing a register.</div><div class="ttdef"><b>Definition:</b> reverse.hpp:133</div></div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t SubG&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">reverse_in_subgroups</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;SubG&gt;</a>); <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c_html_ga5c7c0e57424cd75ff59fba019dc41f3c"><div class="ttname"><a href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">eve::reverse_in_subgroups</a></div><div class="ttdeci">constexpr auto reverse_in_subgroups</div><div class="ttdoc">a named shuffle for reversing all subgroups in a register</div><div class="ttdef"><b>Definition:</b> reverse_in_subgroups.hpp:132</div></div>
 <div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li>x - simd_value to shuffle</li>
 <li>G - (optional) - number of elements to treat as one.</li>
+<li>SubG - size of a subgroup</li>
 </ul>
-<p>(2) calls (1) with G == 1; (1) reverses positions of adjacent groups of elements of size G</p>
+<p>(2) calls (1) with G == 1; (1) within each SubG reverses positions elements</p>
 <p><b>Return value</b></p>
-<p>Return x where groups of contiguous G elements are reversed.</p>
+<p>Returns x where each subgroup is reversed.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
 <div class="line">{</div>
 <div class="line">  w_t x {0, 1, 2, 3};</div>
 <div class="line"> </div>
-<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{3, 2, 1, 0} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x)) );</div>
-<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{3, 2, 1, 0} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x, eve::lane&lt;1&gt;)) );</div>
-<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{2, 3, 0, 1} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x, eve::lane&lt;2&gt;)) );</div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t {0, 1, 2, 3} == <a class="code hl_variable" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">eve::reverse_in_subgroups</a>(x, eve::lane&lt;1&gt;)));</div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t {1, 0, 3, 2} == <a class="code hl_variable" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">eve::reverse_in_subgroups</a>(x, eve::lane&lt;2&gt;)));</div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t {3, 2, 1, 0} == <a class="code hl_variable" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">eve::reverse_in_subgroups</a>(x, eve::lane&lt;4&gt;)));</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// lane&lt;0&gt; is not OK</span></div>
-<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>( w_t{0, 1, 2, 3} == <a class="code hl_variable" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a>(x, eve::lane&lt;4&gt;)) );</div>
+<div class="line">  TTS_EXPECT(</div>
+<div class="line">      <a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t {2, 3, 0, 1} == <a class="code hl_variable" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">eve::reverse_in_subgroups</a>(x, eve::lane&lt;2&gt;, eve::lane&lt;2&gt;)));</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition:</b> all.hpp:70</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
