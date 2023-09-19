@@ -22,7 +22,14 @@ TTS_CASE("shuffle_v2: 8x1")
     if ( p.size() == 1 ) { return p[0] == eve::na_ ? 1 : 0; }
 
     // We can do better sometimes but not yet
-    if (eve::current_api >= eve::sve || eve::current_api >= eve::vmx) return 3;
+    if (eve::current_api >= eve::vmx) return 3;
+
+    if (eve::current_api >= eve::sve)
+    {
+      if (idxm::is_reverse(p)) return 2;
+      if (idxm::matches(p, {1, 0, 3, 2})) return 2;
+      return 3;
+    }
 
     if ( p.size() == 2 )
     {

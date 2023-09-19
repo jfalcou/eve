@@ -801,4 +801,41 @@ TTS_CASE("add shuffle levels")
   TTS_EQUAL(7, add(eve::index<4>, eve::index<3>, eve::index<1>));
 };
 
+TTS_CASE("put bigger group in position")
+{
+  auto yes_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _groups, auto _within)
+  {
+    auto in     = to_idxs(_in);
+    auto groups = to_idxs(_groups);
+    auto within = to_idxs(_within);
+
+    auto [actual_groups, actual_within] = *eve::detail::idxm::put_bigger_groups_in_position<G>(in);
+
+    TTS_EQUAL(groups, actual_groups);
+    TTS_EQUAL(within, actual_within);
+  };
+
+  auto no_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::put_bigger_groups_in_position<G>(in);
+
+    TTS_EXPECT_NOT(actual);
+  };
+
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<2>, std::array {1, 0}, std::array {1, 0, 2, 3});
+  yes_test(std::array {3, 2, na_, 1}, eve::lane<2>, std::array {1, 0}, std::array {1, 0, na_, 3});
+  yes_test(std::array {3, 2, 3, 2}, eve::lane<2>, std::array {1, 1}, std::array {1, 0, 3, 2});
+  yes_test(std::array {3, 2, na_, na_}, eve::lane<2>, std::array {1, we_}, std::array {1, 0, na_, na_});
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {0}, std::array {3, 2, 0, 1});
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {0}, std::array {3, 2, 0, 1});
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<1>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
+  yes_test(std::array {3, 2, 6, 7, 6, 7, 0, 1},
+           eve::lane<2>,
+           std::array {1, 3, 3, 0},
+           std::array {1, 0, 2, 3, 4, 5, 6, 7});
+
+  no_test(std::array {3, 0, 0, 1}, eve::lane<2>);
+};
+
 }

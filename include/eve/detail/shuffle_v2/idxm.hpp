@@ -285,6 +285,9 @@ most_repeated_pattern_impl()
 template<std::ptrdiff_t... I>
 constexpr auto most_repeated_pattern = most_repeated_pattern_impl<std::array {I...}>();
 
+template<auto arr>
+constexpr auto most_repeated_pattern_a = most_repeated_pattern_impl<arr>();
+
 template<std::size_t target, auto idxs>
 constexpr auto
 reduce_repeated_pattern_until_impl()
@@ -343,7 +346,7 @@ repeat(std::span<const std::ptrdiff_t, N> in)
 }
 
 template<std::size_t Times, std::size_t N>
-auto
+constexpr auto
 repeat(const std::array<std::ptrdiff_t, N>& in)
 {
   return repeat<Times>(std::span<const std::ptrdiff_t, N>(in));
@@ -627,7 +630,7 @@ just_second_shuffle(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t with
   {
     auto in = idxs[i];
     if( 0 <= in && in < s ) res[i] = with;
-    else if ( in < 0) res[i] = in;
+    else if( in < 0 ) res[i] = in;
     else res[i] = in - s;
   }
   return res;
@@ -862,24 +865,109 @@ split_to_groups(const std::array<std::ptrdiff_t, N>& idxs)
   return split_to_groups<G>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
-constexpr auto add_shuffle_levels(std::span<const std::ptrdiff_t> ls) {
-  std::ptrdiff_t base = 0;
+/*
+ * First shuffle big groups, then shuffle withing groups
+ *
+ * Big big questions about the order of small/big shuffle
+ * and when to do zeroes.
+ * Case by case we'll see.
+ */
+template<std::size_t G, std::size_t N>
+constexpr auto
+put_bigger_groups_in_position(std::span<const std::ptrdiff_t, N> idxs)
+{
+  constexpr std::size_t group_count = (G == 0 || G >= N) ? 1 : N / G;
+
+  using group_pattern_t   = std::array<std::ptrdiff_t, group_count>;
+  using withing_pattern_t = std::array<std::ptrdiff_t, N>;
+
+  std::optional<kumi::tuple<group_pattern_t, withing_pattern_t>> res;
+
+  if constexpr( G == 0 || G > N ) { return res; }
+  else
+  {
+    group_pattern_t   groups_pattern        = {};
+    withing_pattern_t within_groups_pattern = {};
+
+    for( std::size_t i = 0; i != group_count; ++i )
+    {
+      const std::size_t group_start = i * G;
+      const std::size_t group_end   = (i + 1) * G;
+
+      std::ptrdiff_t group_index = we_;
+      for( std::size_t j = group_start; j != group_end; ++j )
+      {
+        if( idxs[j] < 0 )
+        {
+          group_index = std::max(idxs[j], group_index);
+          continue;
+        }
+        std::ptrdiff_t cur = idxs[j] / G;
+        if( cur == group_index || group_index < 0 )
+        {
+          group_index = cur;
+          continue;
+        }
+        return res;
+      }
+
+      if( group_index < 0 )
+      {
+        groups_pattern[i] = we_;
+        for( std::size_t j = group_start; j != group_end; ++j ) { within_groups_pattern[j] = group_index; }
+        continue;
+      }
+
+      groups_pattern[i] = group_index;
+
+      for( std::size_t j = group_start; j != group_end; ++j )
+      {
+        if( idxs[j] < 0 )
+        {
+          within_groups_pattern[j] = idxs[j];
+          continue;
+        }
+        within_groups_pattern[j] = idxs[j] % G + group_start;
+      }
+    }
+
+    res = kumi::tuple {groups_pattern, within_groups_pattern};
+    return res;
+  }
+}
+
+template<std::size_t G, std::size_t N>
+constexpr auto
+put_bigger_groups_in_position(const std::array<std::ptrdiff_t, N>& idxs)
+{
+  return put_bigger_groups_in_position<G>(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
+constexpr auto
+add_shuffle_levels(std::span<const std::ptrdiff_t> ls)
+{
+  std::ptrdiff_t base      = 0;
   std::ptrdiff_t use_masks = 0;
 
-  for (auto l : ls) {
+  for( auto l : ls )
+  {
     base += l & (~1);
     use_masks |= l & 1;
   }
   return base + use_masks;
 }
 
-constexpr auto add_shuffle_levels(std::array<std::ptrdiff_t, 3> ls) {
+constexpr auto
+add_shuffle_levels(std::array<std::ptrdiff_t, 3> ls)
+{
   return add_shuffle_levels(std::span(ls));
 }
 
-template <std::ptrdiff_t ... ls>
-constexpr auto add_shuffle_levels(eve::index_t<ls>... ) {
-  return index<add_shuffle_levels(std::array{ls...})>;
+template<std::ptrdiff_t... ls>
+constexpr auto
+add_shuffle_levels(eve::index_t<ls>...)
+{
+  return index<add_shuffle_levels(std::array {ls...})>;
 }
 
 } // namespace eve::detail::idxm

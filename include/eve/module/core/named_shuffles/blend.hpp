@@ -20,6 +20,12 @@ namespace eve
 //!    @brief a named shuffle for mixing 2 registers together, without changing positions.
 //!    @note You might be looking for `eve::if_else_`.
 //!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
 //!    (TODO: support mixing more than 2 registers)
 //!
 //!    Accepts a pattern with just 0 and 1 that indicates number of the element for the current
@@ -41,13 +47,19 @@ namespace eve
 //!    T blend(T x, T y, pattern_formula auto gen)
 //!    @endcode
 //!
-//!    (2) calls (1) with G == 1
-//!    (1) blends groups of elements from 2 registers,
+//!   **Parameters**
+//!
+//!     * x, y - values to shuffle.
+//!     * G - (optional) - number of elements to treat as one.
+//!     * pattern - how to shuffle elements
 //!        I == 0 -> take a group from x
 //!        I == 1 -> take a group from y
+//!     * gen - eve::pattern_formula = alternative way to specify a pattern,
+//!             computing it from index and size.
 //!
 //!    **Return value**
-//!      result of the shuffle
+//!
+//!      Returns a register with elements selected according to the mask.
 //!
 //!    @groupheader{Example}
 //!
