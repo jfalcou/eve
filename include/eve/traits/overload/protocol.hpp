@@ -63,6 +63,20 @@ namespace eve
 //!   @param TYPE Current @callable type
 //!   @param NAME Function identifier for overloads. Calls to `NS::NAME` are supposed to succeed.
 //!
+//!   @see EVE_CALLABLE_OBJECT
+//!   @see EVE_CALLABLE_NAMESPACE
+//!
+//!   @groupheader{Usage}
+//!
+//!   @ref EVE_CALLABLE_OBJECT_FROM generates the expected code for defining a EVE @callable. EVE @callable are function
+//!   object which supports decorators and use an external function to specify its implementation.
+//!
+//!   @ref EVE_CALLABLE_OBJECT_FROM relies on its enclosing type to provide at least one declaration of a member function
+//!   named `call`which represent the expected prototype of the function object, including potential constraints, and
+//!   its associated return type. @ref EVE_CALLABLE_OBJECT also relies on the existence of an appropriate number of
+//!   function overloads named `NAME` defined in the `NS` namespace. Those function contains the implementation
+//!   of the @callable overload for each pre-defined function.
+//!
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/traits/callable_object_from.cpp}
@@ -107,6 +121,17 @@ using callable_tag_type     = TYPE                                              
 //!
 //!   @param TYPE Current @callable type
 //!   @param NAME Function identifier for overloads. Calls to `eve::detail::NAME` are supposed to succeed.
+//!
+//!   @groupheader{Usage}
+//!
+//!   @ref EVE_CALLABLE_OBJECT generates the expected code for defining a EVE @callable. EVE @callable are function
+//!   object which supports decorators and use an external function to specify its implementation.
+//!
+//!   @ref EVE_CALLABLE_OBJECT relies on its enclosing type to provide at least one declaration of a member function
+//!   named `call`which represent the expected prototype of the function object, including potential constraints, and
+//!   its associated return type. @ref EVE_CALLABLE_OBJECT also relies on the existence of an appropriate number of
+//!   function overloads named `NAME` defined in the eve::detail namespace. Those function contains the implementation
+//!   of the @callable overload for each pre-defined function.
 //!
 //!   @groupheader{Example}
 //!
