@@ -103,6 +103,23 @@ namespace detail
                                             << -int(sizeof(element_type_t<T>) * 8) << ", "
                                             << sizeof(element_type_t<T>) * 8 << "[.");
   }
+  template<typename T, std::ptrdiff_t S>
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshr_), T const&,index_t<S> const&)
+  {
+    EVE_ASSERT(assert_good_shift<T>(eve::abs(S)),
+               "[eve::rshr] - Shifting by " << S << " is out of the range ]"
+                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
+                                            << sizeof(element_type_t<T>) * 8 << "[.");
+  }
+
+  template<conditional_expr C, typename T, std::ptrdiff_t S>
+  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshr_), C const&, T const&,index_t<S> const&)
+  {
+    EVE_ASSERT(assert_good_shift<T>(eve::abs(S)),
+               "[eve::rshr] - Shifting by " << S << " is out of the range ]"
+                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
+                                            << sizeof(element_type_t<T>) * 8 << "[.");
+  }
 }
 
 EVE_MAKE_CALLABLE(rshr_, rshr);

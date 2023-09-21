@@ -51,6 +51,18 @@ TTS_CASE_WITH("Check behavior of shr(wide, wide)",
   TTS_EQUAL(bit_shr[test](a0, a1), eve::if_else(test, eve::bit_shr(a0, a1), a0));
 };
 
+TTS_CASE_WITH("Check behavior of bit_shr(wide, integral constant)",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(-50, 50), tts::logicals(0, 3)))
+<typename T, typename L>(T a0, L test)
+{
+  using eve::bit_shr;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_EQUAL(bit_shr(a0, eve::index<1>), map([&](auto e) -> v_t { return eve::bit_shr(e, eve::index<1>); }, a0));
+  TTS_EQUAL(bit_shr[test](a0, eve::index<1>), eve::if_else(test, eve::bit_shr(a0, eve::index<1>), a0));
+};
+
 TTS_CASE_WITH("Check behavior of shift(wide, scalar)",
               eve::test::simd::integers,
               tts::generate(tts::randoms(-50, 50), tts::random_bits(), tts::logicals(0, 3)))

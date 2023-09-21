@@ -50,6 +50,18 @@ TTS_CASE_WITH("Check behavior of shl on integral types",
   TTS_EQUAL(shl(a0, a1), T([&](auto i, auto) { return shl(a0.get(i), a1.get(i)); }));
 };
 
+TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(-50, 50), tts::logicals(0, 3)))
+<typename T, typename L>(T a0, L test)
+{
+  using eve::shl;
+  using eve::detail::map;
+  using v_t = typename T::value_type;
+  TTS_EQUAL(shl(a0, eve::index<1>), map([&](auto e) -> v_t { return e << 1; }, a0));
+  TTS_EQUAL(shl[test](a0, eve::index<1>), eve::if_else(test, eve::shl(a0, eve::index<1>), a0));
+};
+
 TTS_CASE_WITH("Check behavior of shl with scalar shift on integral types",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
@@ -72,6 +84,5 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::shl)(eve::wide)",
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::shl[mask](a0, 2),
-            eve::if_else(mask, eve::shl(a0, 2), a0));
+  TTS_IEEE_EQUAL(eve::shl[mask](a0, 2),eve::if_else(mask, eve::shl(a0, 2), a0));
 };

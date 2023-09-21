@@ -44,6 +44,12 @@ namespace eve::detail
     return v;
   }
 
+  template<integral_scalar_value T, typename N, std::ptrdiff_t V>
+  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, index_t<V> const&) noexcept
+  {
+    return self_shl(v,V);
+  }
+
   //================================================================================================
   // >>=
   //================================================================================================
@@ -69,6 +75,12 @@ namespace eve::detail
     else                                          v = map(ss, v, s);
 
     return v;
+  }
+
+  template<integral_scalar_value T, typename N, std::ptrdiff_t V>
+  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, index_t<V> const&) noexcept
+  {
+    return self_shr(v,V);
   }
 
   //================================================================================================

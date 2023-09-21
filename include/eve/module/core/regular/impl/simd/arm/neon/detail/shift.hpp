@@ -43,4 +43,30 @@ EVE_FORCEINLINE wide<T, N>
   else if constexpr( c == category::int8x8 ) return vshl_s8(v0, s1);
   else if constexpr( c == category::uint8x8 ) return vshl_u8(v0, s1);
 }
+
+template<integral_scalar_value T, typename N, std::ptrdiff_t S>
+EVE_FORCEINLINE wide<T, N>
+                neon_shifter(wide<T, N> v0, index_t<S> const&) noexcept requires arm_abi<abi_t<T, N>>
+{
+  constexpr auto c = categorize<wide<T, N>>();
+
+  // arm_128
+  if      constexpr( c == category::int64x2 ) return vshlq_n_s64(v0, S);
+  else if constexpr( c == category::uint64x2) return vshlq_n_u64(v0, S);
+  else if constexpr( c == category::int32x4 ) return vshlq_n_s32(v0, S);
+  else if constexpr( c == category::uint32x4) return vshlq_n_u32(v0, S);
+  else if constexpr( c == category::int16x8 ) return vshlq_n_s16(v0, S);
+  else if constexpr( c == category::uint16x8) return vshlq_n_u16(v0, S);
+  else if constexpr( c == category::int8x16 ) return vshlq_n_s8 (v0, S);
+  else if constexpr( c == category::uint8x16) return vshlq_n_u8 (v0, S);
+  // arm_64
+  else if constexpr( c == category::int64x1 ) return vshl_n_s64(v0, S);
+  else if constexpr( c == category::uint64x1) return vshl_n_u64(v0, S);
+  else if constexpr( c == category::int32x2 ) return vshl_n_s32(v0, S);
+  else if constexpr( c == category::uint32x2) return vshl_n_u32(v0, S);
+  else if constexpr( c == category::int16x4 ) return vshl_n_s16(v0, S);
+  else if constexpr( c == category::uint16x4) return vshl_n_u16(v0, S);
+  else if constexpr( c == category::int8x8  ) return vshl_n_s8 (v0, S);
+  else if constexpr( c == category::uint8x8 ) return vshl_n_u8 (v0, S);
+}
 }
