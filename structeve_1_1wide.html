@@ -484,21 +484,41 @@ template&lt;integral_value S&gt; </td></tr>
 <tr class="memitem:ac4a63d4983d7b90347131decf5c5e9f7"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, S s) noexcept</td></tr>
 <tr class="memdesc:ac4a63d4983d7b90347131decf5c5e9f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound left-shift on all the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes and assign the result to current one. <br /></td></tr>
 <tr class="separator:ac4a63d4983d7b90347131decf5c5e9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acca1cc45109f802d4e87dcbf54d8f830"><td class="memTemplParams" colspan="2"><a id="acca1cc45109f802d4e87dcbf54d8f830" name="acca1cc45109f802d4e87dcbf54d8f830"></a>
+template&lt;std::ptrdiff_t V&gt; </td></tr>
+<tr class="memitem:acca1cc45109f802d4e87dcbf54d8f830"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, index_t&lt; V &gt; const &amp;s) noexcept</td></tr>
+<tr class="memdesc:acca1cc45109f802d4e87dcbf54d8f830"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound left-shift on all the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes with a constant and assign the result to current one. <br /></td></tr>
+<tr class="separator:acca1cc45109f802d4e87dcbf54d8f830"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0952de838b35b55b415b1d5b898c9d63"><td class="memTemplParams" colspan="2"><a id="a0952de838b35b55b415b1d5b898c9d63" name="a0952de838b35b55b415b1d5b898c9d63"></a>
 template&lt;integral_value S&gt; </td></tr>
 <tr class="memitem:a0952de838b35b55b415b1d5b898c9d63"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S s) noexcept</td></tr>
 <tr class="memdesc:a0952de838b35b55b415b1d5b898c9d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the left-shift between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and an integral scalar. <br /></td></tr>
 <tr class="separator:a0952de838b35b55b415b1d5b898c9d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31de374c767478c8a02dd2fe26a5fd7b"><td class="memTemplParams" colspan="2"><a id="a31de374c767478c8a02dd2fe26a5fd7b" name="a31de374c767478c8a02dd2fe26a5fd7b"></a>
+template&lt;std::ptrdiff_t V&gt; </td></tr>
+<tr class="memitem:a31de374c767478c8a02dd2fe26a5fd7b"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&lt;&lt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, index_t&lt; V &gt; const &amp;s) noexcept</td></tr>
+<tr class="memdesc:a31de374c767478c8a02dd2fe26a5fd7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the left-shift between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and an integral constant. <br /></td></tr>
+<tr class="separator:a31de374c767478c8a02dd2fe26a5fd7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a831cbe7560dd4e9813185797a68c31"><td class="memTemplParams" colspan="2"><a id="a1a831cbe7560dd4e9813185797a68c31" name="a1a831cbe7560dd4e9813185797a68c31"></a>
 template&lt;integral_value S&gt; </td></tr>
 <tr class="memitem:a1a831cbe7560dd4e9813185797a68c31"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;&gt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, S s) noexcept</td></tr>
 <tr class="memdesc:a1a831cbe7560dd4e9813185797a68c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound right-shift on all the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes and assign the result to current one. <br /></td></tr>
 <tr class="separator:a1a831cbe7560dd4e9813185797a68c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a999085894b54da396888ad36831d5"><td class="memTemplParams" colspan="2"><a id="aa5a999085894b54da396888ad36831d5" name="aa5a999085894b54da396888ad36831d5"></a>
+template&lt;std::ptrdiff_t V&gt; </td></tr>
+<tr class="memitem:aa5a999085894b54da396888ad36831d5"><td class="memTemplItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;&gt;=</b> (<a class="el" href="structeve_1_1wide.html">wide</a> &amp;w, index_t&lt; V &gt; const &amp;s) noexcept</td></tr>
+<tr class="memdesc:aa5a999085894b54da396888ad36831d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the compound right-shift on all the <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> lanes and assign the result to current one. <br /></td></tr>
+<tr class="separator:aa5a999085894b54da396888ad36831d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0be60111aec8c0aef7ab33b1d8d33066"><td class="memTemplParams" colspan="2"><a id="a0be60111aec8c0aef7ab33b1d8d33066" name="a0be60111aec8c0aef7ab33b1d8d33066"></a>
 template&lt;integral_value S&gt; </td></tr>
 <tr class="memitem:a0be60111aec8c0aef7ab33b1d8d33066"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;&gt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, S s) noexcept</td></tr>
 <tr class="memdesc:a0be60111aec8c0aef7ab33b1d8d33066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the right-shift between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and an integral scalar. <br /></td></tr>
 <tr class="separator:a0be60111aec8c0aef7ab33b1d8d33066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9b0615905a9b32ce7e28ce8ae75d177"><td class="memTemplParams" colspan="2"><a id="af9b0615905a9b32ce7e28ce8ae75d177" name="af9b0615905a9b32ce7e28ce8ae75d177"></a>
+template&lt;std::ptrdiff_t V&gt; </td></tr>
+<tr class="memitem:af9b0615905a9b32ce7e28ce8ae75d177"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator&gt;&gt;</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, index_t&lt; V &gt; const &amp;s) noexcept</td></tr>
+<tr class="memdesc:af9b0615905a9b32ce7e28ce8ae75d177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the right-shift between all lanes of a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and an integral constant. <br /></td></tr>
+<tr class="separator:af9b0615905a9b32ce7e28ce8ae75d177"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f7b281af73da31581d699e1e915d75a"><td class="memItemLeft" align="right" valign="top"><a id="a0f7b281af73da31581d699e1e915d75a" name="a0f7b281af73da31581d699e1e915d75a"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1wide.html">wide</a> v, <a class="el" href="structeve_1_1wide.html">wide</a> w) noexcept</td></tr>
 <tr class="memdesc:a0f7b281af73da31581d699e1e915d75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of two <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. <br /></td></tr>
