@@ -51,6 +51,18 @@ TTS_CASE_WITH("Check behavior of shr on integral types",
   TTS_EQUAL(shr(a0, a1), T([&](auto i, auto) { return shr(a0.get(i), a1.get(i)); }));
 };
 
+TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
+              eve::test::simd::integers,
+              tts::generate(tts::randoms(-50, 50), tts::logicals(0, 3)))
+<typename T, typename L>(T a0, L test)
+{
+  using eve::shr;
+  using eve::detail::map;
+  using v_t = typename T::value_type;
+  TTS_EQUAL(shr(a0, eve::index<1>), map([&](auto e) -> v_t { return e >> 1; }, a0));
+  TTS_EQUAL(shr[test](a0, eve::index<1>), eve::if_else(test, eve::shr(a0, eve::index<1>), a0));
+};
+
 TTS_CASE_WITH("Check behavior of shr with scalar shift on integral types",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),

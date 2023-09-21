@@ -27,19 +27,10 @@ up_element_size_to(wide<T, N> x, eve::fixed<To>) {
   else return up_element_size_to(up_element_size(x), eve::lane<To>);
 }
 
-struct
-{
-  template<std::ptrdiff_t S> EVE_FORCEINLINE auto operator()(auto x, eve::index_t<S>) const
-  {
-    if constexpr( S < 0 ) return x >> -S;
-    else return x << S;
-  }
-} inline constexpr default_shift_by_const;
-
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x, auto shift_by_const)
-{  if constexpr( P::g_size * P::most_repeated.size() > 8 ) return no_matching_shuffle;
+EVE_FORCEINLINE auto shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
+{
+  if constexpr( P::g_size * P::most_repeated.size() > 8 ) return no_matching_shuffle;
   else
   {
     // sizeof(T) < 8 because otherwise that's identity
@@ -48,21 +39,14 @@ shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x, auto shift_by_const)
 
     if constexpr( constexpr auto slide = idxm::is_slide_left(P::most_repeated) )
     {
-      return shift_by_const(up_element_size(x), eve::index<-(int)(8 * sizeof(T))>);
+      return up_element_size(x) >> eve::index<8 * sizeof(T)>;
     }
     else if constexpr( constexpr auto slide = idxm::is_slide_right(P::most_repeated) )
     {
-      return shift_by_const(up_element_size(x), eve::index<sizeof(T) * 8>);
+      return up_element_size(x) << eve::index<8 * sizeof(T)>;
     }
     else return no_matching_shuffle;
   }
-}
-
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l2_element_bit_shift(P p, fixed<G> g, wide<T, N> x)
-{
-  return shuffle_l2_element_bit_shift(p, g, x, default_shift_by_const);
 }
 
 }

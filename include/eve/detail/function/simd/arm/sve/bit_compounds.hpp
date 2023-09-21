@@ -37,6 +37,17 @@ requires sve_abi<abi_t<T, N>>
   return self;
 }
 
+template<integral_scalar_value T, typename N, std::ptrdiff_t U>
+EVE_FORCEINLINE auto&
+self_shl(wide<T,N>& self, index_t<U>  const&) noexcept
+requires sve_abi<abi_t<T, N>>
+{
+  using i_t = as_integer_t<T, unsigned>;
+  constexpr i_t shift(U);
+  self = svlsl_x(sve_true<T>(), self, shift);
+  return self;
+}
+
 template<integral_scalar_value T, typename N, integral_scalar_value U>
 EVE_FORCEINLINE auto&
 self_shr(wide<T,N>& self, wide<U,N> shift) noexcept
@@ -63,6 +74,25 @@ requires sve_abi<abi_t<T, N>>
 {
   using u_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
 
+  if constexpr( std::is_signed_v<T> )
+  {
+    self = svasr_x(sve_true<T>(), self, u_t(shift));
+    return self;
+  }
+  else
+  {
+    self = svlsr_x(sve_true<T>(), self, u_t(shift));
+    return self;
+  }
+}
+
+template<integral_scalar_value T, typename N, std::ptrdiff_t U>
+EVE_FORCEINLINE auto&
+self_shr(wide<T,N>& self, index_t<U>  const&) noexcept
+requires sve_abi<abi_t<T, N>>
+{
+  using u_t = as_integer_t<T, unsigned>;
+  constexpr u_t shift(U);
   if constexpr( std::is_signed_v<T> )
   {
     self = svasr_x(sve_true<T>(), self, u_t(shift));

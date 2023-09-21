@@ -64,11 +64,26 @@ rshr_(EVE_SUPPORTS(cpu_), T const& a0, U const& a1) noexcept
     else { return apply_over(rshr, a0, a1); }
   }
 }
+
+template<unsigned_value T, std::ptrdiff_t N>
+EVE_FORCEINLINE auto
+rshr_(EVE_SUPPORTS(cpu_), T const& a0, index_t<N> const&) noexcept
+{
+  return rshr(a0, N);
+}
+
 // -----------------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, unsigned_simd_value T, integral_value U>
 EVE_FORCEINLINE auto
 rshr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a0, U const& a1) noexcept
+{
+  return mask_op(cond, eve::rshr, a0, a1);
+}
+
+template<conditional_expr C, unsigned_simd_value T, std::ptrdiff_t N>
+EVE_FORCEINLINE auto
+rshr_(EVE_SUPPORTS(cpu_), C const& cond, T const& a0, index_t<N> const& a1) noexcept
 {
   return mask_op(cond, eve::rshr, a0, a1);
 }
