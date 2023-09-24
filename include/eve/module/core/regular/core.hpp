@@ -203,6 +203,7 @@
 #include <eve/module/core/regular/signnz.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
+#include <eve/module/core/regular/sort.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/regular/sqr_abs.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
