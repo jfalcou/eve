@@ -42,6 +42,8 @@ namespace eve
 //!    * Google's: Vectorized and performance-portable Quicksort
 //!      Mark Blacher, Joachim Giesen, Peter Sanders, Jan Wassenberg
 //!      https://opensource.googleblog.com/2022/06/Vectorized%20and%?20performance%20portable%20Quicksort.html
+//!    * A Question of Sorts
+//!      http://seven-degrees-of-freedom.blogspot.com/2010/07/question-of-sorts.html
 //!    * Kyle Hegeman (@khegeman)
 //!      https://github.com/khegeman/floki
 //!
