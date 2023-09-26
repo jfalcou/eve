@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup core_simd
+//! @addtogroup core_reduction
 //! @{
 //!   @var reduce
 //!   @brief Computes the TODO
