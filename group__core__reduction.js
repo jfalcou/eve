@@ -6,5 +6,6 @@ var group__core__reduction =
     [ "eve::first_true", "group__core__reduction_gafe526beb78cfe17529587bbfff4bb597.html#gafe526beb78cfe17529587bbfff4bb597", null ],
     [ "eve::maximum", "group__core__reduction_ga8470a6fd7f9d7393c92ec63ca8ef050e.html#ga8470a6fd7f9d7393c92ec63ca8ef050e", null ],
     [ "eve::minimum", "group__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4", null ],
-    [ "eve::none", "group__core__reduction_ga6bac192090779b76bc7ffe5425fcabc8.html#ga6bac192090779b76bc7ffe5425fcabc8", null ]
+    [ "eve::none", "group__core__reduction_ga6bac192090779b76bc7ffe5425fcabc8.html#ga6bac192090779b76bc7ffe5425fcabc8", null ],
+    [ "eve::reduce", "group__core__reduction_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03", null ]
 ];

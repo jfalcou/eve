@@ -6,8 +6,8 @@ var group__core__simd =
     [ "eve::deinterleave_groups_shuffle", "group__core__simd_ga98ab2a42f4f490c18533095b6539edf3.html#ga98ab2a42f4f490c18533095b6539edf3", null ],
     [ "eve::gather", "group__core__simd_ga1104bd95e3b6b1a682c2fd9c290034d0.html#ga1104bd95e3b6b1a682c2fd9c290034d0", null ],
     [ "eve::has_equal_in", "group__core__simd_ga64cba22849ce7362968aa0c2661a5ab0.html#ga64cba22849ce7362968aa0c2661a5ab0", null ],
-    [ "eve::reduce", "group__core__simd_ga137e79b9fcabc8ebe46e75b300beaf03.html#ga137e79b9fcabc8ebe46e75b300beaf03", null ],
     [ "eve::scan", "group__core__simd_ga999433dcb57f95f8d149d92e68c071f0.html#ga999433dcb57f95f8d149d92e68c071f0", null ],
+    [ "eve::sort", "group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28", null ],
     [ "eve::splat", "group__core__simd_gab3e62d0320771141e199eeb36af09ed8.html#gab3e62d0320771141e199eeb36af09ed8", null ],
     [ "eve::zip", "group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94", null ]
 ];
