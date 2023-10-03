@@ -70,7 +70,7 @@ namespace eve
   //! @addtogroup extensions
   //! @{
   //!   @struct constant
-  //!   @brief CRTP base class imbuing a eve::callable with a constant function semantic
+  //!   @brief CRTP base class giving an eve::callable the constant function semantic
   //!
   //!   Constants functions in EVE are built using a very common pattern. Inheriting from eve::constant simplifies the
   //!   implementation of such eve::callable by just requiring your eve::callable type to implement a static `value`

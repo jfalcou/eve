@@ -85,7 +85,7 @@ namespace eve::option
   //!   @var condition
   //!   @brief Keyword for retrieving conditionals decorator
   //!
-  //!   When a eve::decorated_callable is called with an option provided vi eve::conditional, the value of the
+  //!   When a eve::decorated_callable is called with an option provided via eve::conditional, the value of the
   //!   conditional can be retrieved using eve::condition
   //!   @see eve::supports
   //! @}

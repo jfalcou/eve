@@ -6,20 +6,17 @@
 
 namespace eve
 {
-  namespace option
-  {
-    // Defines two RABERU flags
-    using namespace rbr::literals;
-    inline constexpr auto precise = "precise"_fl;
-    inline constexpr auto scale   = "scale"_kw;
-  }
+  // Defines two RABERU flags
+  using namespace rbr::literals;
+  inline constexpr auto precise = "precise"_fl;
+  inline constexpr auto scale   = "scale"_fl;
 
   // Defines a support specification
   struct precision
   {
-    auto operator[](rbr::concepts::exactly<option::precise> auto const&) -> void;
-    auto operator[](rbr::concepts::exactly<option::scale>   auto const&) -> void;
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{option::scale = 1.};  }
+    auto operator[](rbr::concepts::exactly<precise> auto const&) -> void;
+    auto operator[](rbr::concepts::exactly<scale>   auto const&) -> void;
+    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{};  }
   };
 
   // Make this callable supports the precision options
@@ -33,19 +30,19 @@ namespace eve
 namespace eve::detail
 {
   template<typename D>
-  auto func_(EVE_EXPECTS(cpu_), eve::options<D> const& opt, int x)
+  auto func_(EVE_REQUIRES(cpu_), eve::options<D> const& opt, int x)
   {
     // We retrieve the option's value via the RABERU settings interface
-    return x * opt[option::scale] * (opt[option::precise] ? 3.14159 : 3.14);
+    return  x * (opt[scale] ? 10. : 1.)
+              + (opt[precise] ? 3.14159 : 3.14);
   }
 }
 
 int main()
 {
-  using namespace eve::option;
-  std::cout << eve::func(1)                         << "\n";
-  std::cout << eve::func[precise](1)                << "\n";
-  std::cout << eve::func[scale = -.1](1)            << "\n";
-  std::cout << eve::func[scale = 10.][precise](1)   << "\n";
-  std::cout << eve::func[precise][scale = -1.5](1)  << "\n";
+  std::cout << eve::func(1)                 << "\n";
+  std::cout << eve::func[eve::precise](1)        << "\n";
+  std::cout << eve::func[eve::scale](1)          << "\n";
+  std::cout << eve::func[eve::scale][eve::precise](1) << "\n";
+  std::cout << eve::func[eve::precise][eve::scale](1) << "\n";
 }

@@ -20,8 +20,8 @@ namespace eve
 // As func_t used EVE_CALLABLE_OBJECT, we should write overloads in eve::detail
 namespace eve::detail
 {
-  auto func_(EVE_EXPECTS(cpu_), eve::integral_value auto x) {  return x*x;  }
-  auto func_(EVE_EXPECTS(cpu_), double x)                   {  return 1./x; }
+  auto func_(EVE_REQUIRES(cpu_), eve::integral_value auto x) {  return x*x;  }
+  auto func_(EVE_REQUIRES(cpu_), double x)                   {  return 1./x; }
 }
 
 int main()

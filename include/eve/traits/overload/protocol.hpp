@@ -177,7 +177,7 @@ inline constexpr auto adl_helper = adl_helper_t {}                              
 /**/
 
 // Flag a function to support delayed calls on given architecture
-#define EVE_EXPECTS(ARCH) adl_helper_t const &, ARCH const &
+#define EVE_REQUIRES(ARCH) adl_helper_t const &, ARCH const &
 
 // Register eve::detail as the deferred namespace by default
 namespace eve::detail { EVE_CALLABLE_NAMESPACE(); }

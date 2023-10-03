@@ -19,7 +19,7 @@ namespace eve::detail
 {
   // Decorated callable takes a decorators parameter first
   template<typename D>
-  auto func_(EVE_EXPECTS(cpu_), eve::options<D> opts, eve::integral_value auto x)
+  auto func_(EVE_REQUIRES(cpu_), eve::options<D> opts, eve::integral_value auto x)
   {
     // See RABERU documentation to check and access options inside a decorator.
     auto const mask = opts[option::condition];
