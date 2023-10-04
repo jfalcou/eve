@@ -100,6 +100,7 @@ struct blend_t
     if( ((I == 1) && ...) ) return 0;
 
     if( current_api >= sve ) return logical_simd_value<T> ? 6 : 2;
+    if( current_api == rvv ) return logical_simd_value<T> ? 6 : 2;
     if( current_api >= avx512 ) return logical_simd_value<T> ? 6 : 2;
     if( current_api >= vmx ) return 3;
 

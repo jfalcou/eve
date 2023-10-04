@@ -11,11 +11,11 @@
 
 #include <span>
 
-TTS_CASE("Min element one pass, uint8 index")
+TTS_CASE("Min element one pass, uint16 index")
 {
   auto alg = eve::algo::min_element         //
       [eve::algo::single_pass]              //
-      [eve::algo::index_type<std::uint8_t>] //
+      [eve::algo::index_type<std::uint16_t>] //
       [eve::algo::unroll<2>];
   {
     std::vector v {1, 2, 3};
@@ -59,10 +59,10 @@ TTS_CASE("Min element one pass, uint8 index")
   }
 };
 
-TTS_CASE("Min element one pass, uint8 index, first one is the answer") {
+TTS_CASE("Min element one pass, uint16 index, first one is the answer") {
   auto alg = eve::algo::min_element         //
       [eve::algo::single_pass]              //
-      [eve::algo::index_type<std::uint8_t>] //
+      [eve::algo::index_type<std::uint16_t>] //
       [eve::algo::unroll<2>];
 
   std::vector<std::int8_t> v;

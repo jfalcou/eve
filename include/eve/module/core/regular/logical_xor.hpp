@@ -65,3 +65,7 @@ EVE_MAKE_CALLABLE(logical_xor_, logical_xor);
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/logical_xor.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/logical_xor.hpp>
+#endif

@@ -39,3 +39,7 @@ namespace eve {
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/arch/arm/sve/top_bits.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/arch/riscv/top_bits.hpp>
+#endif

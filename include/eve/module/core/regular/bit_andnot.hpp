@@ -83,3 +83,7 @@ EVE_MAKE_CALLABLE(bit_andnot_, bit_andnot);
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/bit_andnot.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/bit_andnot.hpp>
+#endif
