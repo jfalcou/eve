@@ -7,13 +7,6 @@
 //==================================================================================================
 #ifndef KUMI_TUPLE_HPP_INCLUDED
 #define KUMI_TUPLE_HPP_INCLUDED
-#if defined(__GNUC__)
-#   define KUMI_TRIVIAL [[gnu::always_inline, gnu::flatten, gnu::artificial]] inline
-#   define KUMI_TRIVIAL_NODISCARD [[nodiscard, gnu::always_inline, gnu::flatten, gnu::artificial]] inline
-#elif defined(_MSC_VER)
-#   define KUMI_TRIVIAL __forceinline
-#   define KUMI_TRIVIAL_NODISCARD [[nodiscard]]
-#endif
 #if defined( __ANDROID__ ) || defined(__APPLE__)
 #include <type_traits>
 namespace kumi
@@ -28,6 +21,108 @@ namespace kumi
 {
   using std::convertible_to;
 }
+#endif
+#include <cstddef>
+#include <type_traits>
+#include <utility>
+namespace kumi
+{
+  template<typename T, typename Enable = void> struct is_product_type : std::false_type {};
+  template<typename T> struct is_product_type<T, typename T::is_product_type> : std::true_type {};
+  template<typename T> struct size : std::tuple_size<T>   {};
+  template<typename T> struct size<T &>         : size<T> {};
+  template<typename T> struct size<T &&>        : size<T> {};
+  template<typename T> struct size<T const>     : size<T> {};
+  template<typename T> struct size<T const &>   : size<T> {};
+  template<typename T> struct size<T const &&>  : size<T> {};
+  template<typename T> inline constexpr auto size_v = size<T>::value;
+  template<std::size_t I, typename T> struct element              : std::tuple_element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T&>        : element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T&&>       : element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T const&>  : element<I,T> {};
+  template<std::size_t I, typename T> struct element<I,T const&&> : element<I,T> {};
+  template<std::size_t I, typename T> using  element_t = typename element<I,T>::type;
+  template<std::size_t I, typename T> struct member
+  {
+    using type = decltype( get<I>(std::declval<T&>()));
+  };
+  template<std::size_t I, typename T> using  member_t = typename member<I,T>::type;
+}
+namespace kumi
+{
+  template<typename T>
+  struct is_homogeneous;
+  template<typename T>
+  requires( requires { T::is_homogeneous; } )
+  struct is_homogeneous<T> : std::bool_constant<T::is_homogeneous>
+  {};
+  template<typename T>
+  inline constexpr auto is_homogeneous_v = is_homogeneous<T>::value;
+  template<typename... Ts> struct tuple;
+}
+#include <cstddef>
+#include <utility>
+namespace kumi::_
+{
+  template<typename T> concept non_empty_tuple = requires( T const &t )
+  {
+    typename std::tuple_element<0,std::remove_cvref_t<T>>::type;
+    typename std::tuple_size<std::remove_cvref_t<T>>::type;
+  };
+  template<typename T> concept empty_tuple = (std::tuple_size<std::remove_cvref_t<T>>::value == 0);
+  template<typename From, typename To> struct is_piecewise_constructible;
+  template<typename From, typename To> struct is_piecewise_convertible;
+  template<typename From, typename To> struct is_piecewise_ordered;
+  template<template<class...> class Box, typename... From, typename... To>
+  struct is_piecewise_convertible<Box<From...>, Box<To...>>
+  {
+    static constexpr bool value = (... && kumi::convertible_to<From, To>);
+  };
+  template<template<class...> class Box, typename... From, typename... To>
+  struct is_piecewise_constructible<Box<From...>, Box<To...>>
+  {
+    static constexpr bool value = (... && std::is_constructible_v<To, From>);
+  };
+  template<typename From, typename To>
+  concept ordered = requires(From const& a, To const& b){ {a < b}; };
+  template<template<class...> class Box, typename... From, typename... To>
+  struct is_piecewise_ordered<Box<From...>, Box<To...>>
+  {
+    static constexpr bool value = (... && ordered<From,To> );
+  };
+  template<typename From, typename To>
+  concept piecewise_convertible = _::is_piecewise_convertible<From, To>::value;
+  template<typename From, typename To>
+  concept piecewise_constructible = _::is_piecewise_constructible<From, To>::value;
+  template<typename From, typename To>
+  concept piecewise_ordered = _::is_piecewise_ordered<From, To>::value;
+  template<typename T, typename... Args> concept implicit_constructible = requires(Args... args)
+  {
+    T {args...};
+  };
+  template<typename F, size_t I, typename... Tuples>
+  concept applicable_i = std::is_invocable_v<F, member_t<I,Tuples>...>;
+  template<typename F, typename Indices, typename... Tuples> struct is_applicable;
+  template<typename F, size_t... Is, typename... Tuples>
+  struct is_applicable<F, std::index_sequence<Is...>, Tuples...>
+      : std::bool_constant<(applicable_i<F, Is, Tuples...> && ...)>
+  {
+  };
+  template<typename F, typename... Tuples>
+  concept applicable = _::
+      is_applicable<F, std::make_index_sequence<(size<Tuples>::value, ...)>, Tuples...>::value;
+  template<typename T, typename U>
+  concept comparable = requires(T t, U u)
+  {
+    { t == u };
+  };
+}
+#if defined(__GNUC__)
+#   define KUMI_TRIVIAL [[gnu::always_inline, gnu::flatten, gnu::artificial]] inline
+#   define KUMI_TRIVIAL_NODISCARD [[nodiscard, gnu::always_inline, gnu::flatten, gnu::artificial]] inline
+#elif defined(_MSC_VER)
+#   define KUMI_TRIVIAL __forceinline
+#   define KUMI_TRIVIAL_NODISCARD [[nodiscard]]
 #endif
 #include <cstddef>
 #include <utility>
@@ -378,91 +473,6 @@ namespace kumi
     return []<typename T>(T const&) constexpr { return Pred<T>::value; };
   }
 }
-#include <cstddef>
-#include <type_traits>
-#include <utility>
-namespace kumi
-{
-  template<typename T, typename Enable = void> struct is_product_type : std::false_type {};
-  template<typename T> struct is_product_type<T, typename T::is_product_type> : std::true_type {};
-  template<typename T> struct size : std::tuple_size<T>   {};
-  template<typename T> struct size<T &>         : size<T> {};
-  template<typename T> struct size<T &&>        : size<T> {};
-  template<typename T> struct size<T const>     : size<T> {};
-  template<typename T> struct size<T const &>   : size<T> {};
-  template<typename T> struct size<T const &&>  : size<T> {};
-  template<typename T> inline constexpr auto size_v = size<T>::value;
-  template<std::size_t I, typename T> struct element              : std::tuple_element<I,T> {};
-  template<std::size_t I, typename T> struct element<I,T&>        : element<I,T> {};
-  template<std::size_t I, typename T> struct element<I,T&&>       : element<I,T> {};
-  template<std::size_t I, typename T> struct element<I,T const&>  : element<I,T> {};
-  template<std::size_t I, typename T> struct element<I,T const&&> : element<I,T> {};
-  template<std::size_t I, typename T> using  element_t = typename element<I,T>::type;
-  template<std::size_t I, typename T> struct member
-  {
-    using type = decltype( get<I>(std::declval<T&>()));
-  };
-  template<std::size_t I, typename T> using  member_t = typename member<I,T>::type;
-}
-namespace kumi
-{
-  template<typename T>
-  struct is_homogeneous;
-  template<typename T>
-  requires( requires { T::is_homogeneous; } )
-  struct is_homogeneous<T> : std::bool_constant<T::is_homogeneous>
-  {};
-  template<typename T>
-  inline constexpr auto is_homogeneous_v = is_homogeneous<T>::value;
-  template<typename... Ts> struct tuple;
-}
-#include <cstddef>
-#include <utility>
-namespace kumi::_
-{
-  template<typename T> concept non_empty_tuple = requires( T const &t )
-  {
-    typename std::tuple_element<0,std::remove_cvref_t<T>>::type;
-    typename std::tuple_size<std::remove_cvref_t<T>>::type;
-  };
-  template<typename T> concept empty_tuple = (std::tuple_size<std::remove_cvref_t<T>>::value == 0);
-  template<typename From, typename To> struct is_piecewise_constructible;
-  template<typename From, typename To> struct is_piecewise_convertible;
-  template<template<class...> class Box, typename... From, typename... To>
-  struct is_piecewise_convertible<Box<From...>, Box<To...>>
-  {
-    static constexpr bool value = (... && kumi::convertible_to<From, To>);
-  };
-  template<template<class...> class Box, typename... From, typename... To>
-  struct is_piecewise_constructible<Box<From...>, Box<To...>>
-  {
-    static constexpr bool value = (... && std::is_constructible_v<To, From>);
-  };
-  template<typename From, typename To>
-  concept piecewise_convertible = _::is_piecewise_convertible<From, To>::value;
-  template<typename From, typename To>
-  concept piecewise_constructible = _::is_piecewise_constructible<From, To>::value;
-  template<typename T, typename... Args> concept implicit_constructible = requires(Args... args)
-  {
-    T {args...};
-  };
-  template<typename F, size_t I, typename... Tuples>
-  concept applicable_i = std::is_invocable_v<F, member_t<I,Tuples>...>;
-  template<typename F, typename Indices, typename... Tuples> struct is_applicable;
-  template<typename F, size_t... Is, typename... Tuples>
-  struct is_applicable<F, std::index_sequence<Is...>, Tuples...>
-      : std::bool_constant<(applicable_i<F, Is, Tuples...> && ...)>
-  {
-  };
-  template<typename F, typename... Tuples>
-  concept applicable = _::
-      is_applicable<F, std::make_index_sequence<(size<Tuples>::value, ...)>, Tuples...>::value;
-  template<typename T, typename U>
-  concept comparable = requires(T t, U u)
-  {
-    { t == u };
-  };
-}
 #include <concepts>
 #include <cstddef>
 #include <type_traits>
@@ -677,7 +687,7 @@ namespace kumi
     }
     template<typename... Us>
     friend constexpr auto operator<(tuple const &lhs, tuple<Us...> const &rhs) noexcept
-    requires(sizeof...(Ts) == sizeof...(Us))
+    requires(sizeof...(Ts) == sizeof...(Us) && _::piecewise_ordered<tuple, tuple<Us...>>)
     {
       auto res = get<0>(lhs) < get<0>(rhs);
       auto const order = [&]<typename Index>(Index i)
@@ -695,19 +705,19 @@ namespace kumi
     }
     template<typename... Us>
     KUMI_TRIVIAL friend constexpr auto operator<=(tuple const &lhs, tuple<Us...> const &rhs) noexcept
-    requires(sizeof...(Ts) == sizeof...(Us))
+    requires requires { rhs < lhs; }
     {
       return !(rhs < lhs);
     }
     template<typename... Us>
     KUMI_TRIVIAL friend constexpr auto operator>(tuple const &lhs, tuple<Us...> const &rhs) noexcept
-    requires(sizeof...(Ts) == sizeof...(Us))
+    requires requires { rhs < lhs; }
     {
       return rhs < lhs;
     }
     template<typename... Us>
     KUMI_TRIVIAL friend constexpr auto operator>=(tuple const &lhs, tuple<Us...> const &rhs) noexcept
-    requires(sizeof...(Ts) == sizeof...(Us))
+    requires requires { lhs < rhs; }
     {
       return !(lhs < rhs);
     }
@@ -1134,7 +1144,7 @@ namespace kumi
   {
     return [&]<std::size_t... I>(std::index_sequence<I...>)
     {
-      return kumi::tuple{T(v+I)...};
+      return kumi::tuple{static_cast<T>(v+I)...};
     }(std::make_index_sequence<N>{});
   }
   namespace result
