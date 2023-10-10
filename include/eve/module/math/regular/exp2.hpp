@@ -37,7 +37,6 @@ namespace eve
 //! **Parameters**
 //!
 //!   * `x`:   [ordered value](@ref eve::ordered_value).
-//!   * `z`:   [complex ](@ref eve::complex) argument.
 //!
 //! **Return value**
 //!

@@ -46,7 +46,6 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!    `x`, `y`:   [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
 //!
 //! **Return value**
 //!

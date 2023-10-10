@@ -38,7 +38,6 @@ namespace eve
 //! **Parameters**
 //!
 //!   * `x`:   [floating real](@ref eve::floating_ordered_value)
-//!   * `z`:   [complex ](@ref eve::complex) argument.
 //!
 //! **Return value**
 //!
