@@ -15,8 +15,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var tgamma
-//!   @brief Computes \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$ or
-//!   its analytic continuation in the complex plane
+//!   @brief Computes \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$.
 //!
 //!   **Defined in header**
 //!

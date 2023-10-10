@@ -16,8 +16,7 @@ namespace eve
 //! @{
 //!   @var erf
 //!   @brief Computes the error function: \f$ \displaystyle
-//!   \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$ or
-//!   its analytic continuation in the complex plane
+//!   \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
 //!
 //!   **Defined in header**
 //!
