@@ -36,20 +36,14 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!    `x`:   [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!   **Return value**
 //!
 //!   The value of the Digamma function: \f$\frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
 //!
 //!   @groupheader{Example}
-//!    **Real version**
-//!
 //!   @godbolt{doc/special/regular/digamma.cpp}
 //!
-//!    **Complex version**
-//!
-//!   @godbolt{doc/complex/regular/digamma.cpp}
 //!
 //! @}
 //================================================================================================

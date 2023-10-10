@@ -30,17 +30,13 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T tgamma(T x) noexcept;                                    //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> tgamma(eve::complex<T> z) noexcept;        //2
+//!      T tgamma(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //!   **Return value**
 //!
@@ -48,13 +44,8 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!   @godbolt{doc/special/regular/tgamma.cpp}
 //!
-//!   **Complex version**
-//!
-//!   @godbolt{doc/complex/regular/tgamma.cpp}
 //!
 //! @}
 //================================================================================================

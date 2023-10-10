@@ -31,17 +31,13 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_ordered_value T >
-//!      T erf(T x) noexcept;                                  //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> erf(eve::complex<T> z) noexcept;      //2
+//!      T erf(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!     * `z`:  [complex ](@ref eve::complex) value.
 //!
 //!    **Return value**
 //!
@@ -53,13 +49,8 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!   @godbolt{doc/special/regular/erf.cpp}
 //!
-//!   **Complex version**
-//!
-//!   @godbolt{doc/complex/regular/erf.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(erf_, erf);
