@@ -50,9 +50,6 @@ namespace eve
 //!        * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!        * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value in
-//!     \f$\pi\f$ multiples of the arc cosecant of the input.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/acscpi.cpp}

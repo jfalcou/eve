@@ -49,8 +49,6 @@ namespace eve
 //!      * If the element is \f$\pm1\f$, \f$\pm\infty\f$ is returned.
 //!      * If the element does not belong \f$]0,1[\f$, `NaN` is returned.
 //!
-//!   2. Returns the complex arc hyperbolic cosecant of z, computed as \f$\mathop{\mathrm{asinh}}(1/z)\f$.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/acsch.cpp}

@@ -49,10 +49,6 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!      * If the element is less than 0, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the natural logarithm of the input
-//!      in the range of a strip in the interval \f$i\times[-\pi, \pi]\f$ along the imaginary axis
-//!      and mathematically unbounded along the real axis. .
-//!
 //!      * The function is continuous onto the branch cut  along the negative real axis,
 //!        taking into account the sign of imaginary part
 //!      * for every z: `eve::log(eve::conj(z)) == eve::conj(eve::log(z))`

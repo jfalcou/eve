@@ -48,9 +48,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
-//!      of the inverse of the hyperbolic tangent of the input.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/coth.cpp}

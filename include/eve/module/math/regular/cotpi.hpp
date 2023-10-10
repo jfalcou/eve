@@ -47,10 +47,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the cotangent of the input
-//!      in \f$\pi\f$ multiples.
-//!      The behavior of this function is equivalent to `eve::rec(eve::tanpi(z))`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/cotpi.cpp}

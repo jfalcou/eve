@@ -50,9 +50,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the hyperbolic cosecant of the input
-//!      The behavior of this function is equivalent to `eve::rec(eve::sinh(z))`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/csch.cpp}

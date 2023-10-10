@@ -50,9 +50,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns the complex arc hyperbolic sine of z, with branch cuts outside the interval
-//!      \f$i\times[-\pi/2, \pi/2]\f$ along the imaginary axis.
-//!
 //!      * for every z: eve::asinh(eve::conj(z)) == eve::conj(std::asinh(z))
 //!      * for every z: eve::asinh(-z) == -eve::asinh(z)
 //!      * If z is \f$+0\f$, the result is \f$+0\f$

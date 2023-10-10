@@ -47,9 +47,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the tangent of the input
-//!      in \f$\pi\f$ multiples.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/tanpi.cpp}

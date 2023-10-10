@@ -49,9 +49,6 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!      * If the element is a `NaN`, `NaN` is returned
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of base 10 of the input as if computed
-//!      by `eve::exp (eve::log_10(as(z))*z)`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/exp10.cpp}

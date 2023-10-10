@@ -49,10 +49,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns the [elementwise](@ref glossary_elementwise) the complex principal value
-//!      of the arc tangent of the input in the range of a strip unbounded along the imaginary axis
-//!      and in the interval \f$[-\pi/2, \pi/2]\f$ along the real axis.
-//!
 //!      special cases are handled as if the operation was implemented by \f$-i \mathrm{atanh}(i z)\f$
 //!
 //!  @groupheader{Example}

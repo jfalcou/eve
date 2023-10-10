@@ -49,8 +49,6 @@ namespace eve
 //!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!     * If the element is a `NaN`, `NaN` is returned
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of the input.
-//!
 //!      * for every z: eve::exp(eve::conj(z)) == eve::conj(std::exp(z))
 //!      * If z is \f$\pm0\f$, the result is \f$1\f$
 //!      * If z is \f$x+i \infty\f$ (for any finite x), the result is \f$NaN+i NaN\f$.

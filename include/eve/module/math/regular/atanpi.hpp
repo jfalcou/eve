@@ -50,9 +50,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
-//!      of the arc tangent of the input in \f$\pi\f$ multiples.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/atanpi.cpp}

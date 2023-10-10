@@ -51,9 +51,6 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!      * If the element is a `NaN`, `NaN` is returned
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of the input minus one, with good
-//!      accuracy, even for small values of `eve::abs(z)`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/expm1.cpp}

@@ -51,9 +51,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
-//!      of the hyperbolic tangent of the input.
-//!
 //!      * for every z: `eve::tanh(eve::conj(z)) == eve::conj(std::tanh(z))`
 //!      * for every z: `eve::tanh(-z)           == -eve::tanh(z)`
 //!      * If z is \f$+0\f$, the result is \f$+0\f$

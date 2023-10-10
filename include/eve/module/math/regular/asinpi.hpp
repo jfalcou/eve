@@ -49,9 +49,6 @@ namespace eve
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
-//!      of the arc sine of the input in \f$\pi\f$ multiples.
-//!
 //!  @godbolt{doc/math/regular/asinpi.cpp}
 //!  @}
 //================================================================================================

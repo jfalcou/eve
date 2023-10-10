@@ -51,9 +51,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
-//!      of the hyperbolic sine of the input.
-//!
 //!      * for every z: `eve::sinh(eve::conj(z)) == eve::conj(std::sinh(z))`
 //!      * for every z: `eve::sinh(-z)           == -eve::sinh(z)`
 //!      * If z is \f$+0\f$, the result is \f$+0\f$

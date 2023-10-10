@@ -50,9 +50,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `Nan`, `Nan` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the cosine of the input
-//!      The behavior of this function is equivalent to `eve::cosh(i*z)`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/cos.cpp}

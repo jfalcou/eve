@@ -50,8 +50,6 @@ namespace eve
 //!       * If the element is \f$1\f$, \f$+0\f$ returned.
 //!       * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
 //!
-//!   2. Returns the complex arc hyperbolic secant of z, computed as \f$\mathop{\mathrm{acosh}}(1/z)\f$.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/asech.cpp}

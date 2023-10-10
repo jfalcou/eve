@@ -52,9 +52,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the secant of the input
-//!      i.e. \f$\1/cos(z)\f$.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/sec.cpp}

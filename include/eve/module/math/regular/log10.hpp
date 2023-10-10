@@ -49,9 +49,6 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!      * If the element is less than 0, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the base 10 logarithm of the input
-//!      The behavior of this function is equivalent to `log(z)/log_10(as(x))`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/log10.cpp}

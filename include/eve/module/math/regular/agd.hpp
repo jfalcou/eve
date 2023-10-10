@@ -49,9 +49,6 @@ namespace eve
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
 //!      * If the element is not in a  \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value in
-//!      of the inverse gudermanian  of the input.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/agd.cpp}

@@ -48,9 +48,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
-//!      of the hyperbolic cosine of the input.
-//!
 //!      * for every z: `eve::cosh(eve::conj(z)) == eve::conj(std::cosh(z))`
 //!      * for every z: `eve::cosh(-z)           == eve::cosh(z)`
 //!      *  If z is \f$0\f$, the result is \f$1\f$

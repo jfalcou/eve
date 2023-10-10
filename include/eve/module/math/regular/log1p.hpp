@@ -50,10 +50,6 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!      * If the element is less than -1, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the natural logarithm of `1+z`.
-//!      The behavior of this function is equivalent to `eve::log(1+z),  with better precision when
-//!      `z` is   close to zero.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/log1p.cpp}

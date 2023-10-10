@@ -51,9 +51,6 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$+0\f$ is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the hyperbolic secant of the input
-//!      The behavior of this function is equivalent to `eve::rec(eve::cosh(z))`.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/sech.cpp}

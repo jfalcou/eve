@@ -50,10 +50,6 @@ namespace eve
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns the [elementwise](@ref glossary_elementwise) the complex principal value
-//!      of the arc sine of the input in the range of a strip unbounded along the imaginary axis
-//!      and in the interval \f$[-\pi/2, \pi/2]\f$ along the real axis.
-//!
 //!      special cases are handled as if the operation was implemented by \f$-i \mathrm{asinh}(i z)\f$
 //!
 //!  @groupheader{Example}

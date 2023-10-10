@@ -50,8 +50,6 @@ namespace eve
 //!      * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) \f$\mathop{\mathrm{acos}}(1/z)\f$.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/asec.cpp}

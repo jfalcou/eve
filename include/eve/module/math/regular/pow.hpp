@@ -77,9 +77,6 @@ namespace eve
 //!       * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
 //!       * except where specified above, if any argument is NaN, NaN is returned
 //!
-//!   2. In the other cases the call is semantically equivalent to `eve::exp(y*eve::log(x))` and
-//!      return and eve::complex result.
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/pow.cpp}

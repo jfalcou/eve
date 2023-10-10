@@ -49,10 +49,6 @@ namespace eve
 //!         * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!         * If the element is greater than one or a `NaN`, `NaN` is returned.
 //!
-//!   2.  Returns the complex arc hyperbolic sine of z, in the range of a half-strip mathematically
-//!       unbounded along the real axis and in the interval  \f$i\times[-\pi/2, \pi/2]\f$ along
-//!       the imaginary axis.
-//!
 //!         * for every z: eve::atanh(eve::conj(z)) == eve::conj(std::atanh(z))
 //!         * for every z: eve::atanh(-z) == -eve::atanh(z)
 //!         * If z is \f$+0\f$, the result is \f$+0\f$
