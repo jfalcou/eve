@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
+//!   *   Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
 //!       (the inverse of the sine)
 //!
 //!       In particular:

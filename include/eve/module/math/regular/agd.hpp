@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) inverse
+//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse
 //!      [gudermanian](@ref eve::gd) of the input.
 //!
 //!      In particular:

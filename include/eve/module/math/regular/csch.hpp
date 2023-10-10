@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
 //!      In particular:
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.

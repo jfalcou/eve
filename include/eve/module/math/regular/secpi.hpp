@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) secant of the input
+//!   *  Returns the [elementwise](@ref glossary_elementwise) secant of the input
 //!      expressed in \f$\pi\f$ multiples.
 //!
 //!      The call `secpi(x)` is semantically equivalent to \f$\sec(\pi x)\f$.

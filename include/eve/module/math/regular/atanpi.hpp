@@ -41,7 +41,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//!   *  Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
 //!      input in the range \f$[-\frac12, \frac12]\f$.
 //!
 //!      In particular:

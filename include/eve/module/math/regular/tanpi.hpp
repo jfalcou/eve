@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
+//!   *  Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
 //!      multiples. In particular:
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.

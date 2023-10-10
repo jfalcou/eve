@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
+//!   *   Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
 //!       In particular, for floating inputs:
 //!
 //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned

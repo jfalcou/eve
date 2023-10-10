@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of the input minus one, with good
+//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of the input minus one, with good
 //!      accuracy, even for small values of `x`.
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned

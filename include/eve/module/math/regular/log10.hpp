@@ -41,7 +41,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
+//!   *  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
 //!      In particular, for floating inputs:
 //!
 //!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.

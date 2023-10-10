@@ -41,7 +41,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
 //!      The inverse hyperbolic sine is semantically equivalent to \f$\log(x+\sqrt{x^2+1})\f$.
 //!
 //!      In particular:

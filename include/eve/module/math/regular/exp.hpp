@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
 //!
 //!     In particular:
 //!

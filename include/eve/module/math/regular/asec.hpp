@@ -40,7 +40,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) arc secant of the
+//!   *  Returns the [elementwise](@ref glossary_elementwise) arc secant of the
 //!      input in the range \f$[0 , \pi]\f$.
 //!
 //!      In particular:

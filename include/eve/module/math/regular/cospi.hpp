@@ -43,7 +43,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
+//!   *   Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
 //!       The call `cospi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
 //!
 //!       In particular:

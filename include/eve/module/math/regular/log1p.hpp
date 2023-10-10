@@ -41,7 +41,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) the natural logarithm of `1+x`
+//!   *  Returns the [elementwise](@ref glossary_elementwise) the natural logarithm of `1+x`
 //!      This function is more precise than the expression `log(1+x)` if  `x` is close to zero.
 //!      In particular:
 //!

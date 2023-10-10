@@ -41,7 +41,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) the natural
+//!   *  Returns the [elementwise](@ref glossary_elementwise) the natural
 //!      logarithm  of `x`: \f$\log x\f$.
 //!
 //!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.

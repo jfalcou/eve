@@ -39,7 +39,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cotangent of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cotangent of the input.
 //!      The inverse hyperbolic sine is semantically equivalent to \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
 //!
 //!      In particular:
