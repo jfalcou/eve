@@ -31,9 +31,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T acsch(T x) noexcept;                                    //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acsch(eve::complex<T> z) noexcept;        //2
 //!   }
 //!   @endcode
 //!

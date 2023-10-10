@@ -29,18 +29,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acoth(T x) noexcept;                                    //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acosh(eve::complex<T> z) noexcept;        //2
+//!      template< eve::floating_value T > T acoth(T x) noexcept; 
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
@@ -52,8 +47,6 @@ namespace eve
 //!     * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
 //!     * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!     * If the element is less than one or a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns the complex arc hyperbolic cotangent of z, computed as \f$\mathop{\mathrm{atanh}}(1/z)\f$.
 //!
 //!  @groupheader{Example}
 //!

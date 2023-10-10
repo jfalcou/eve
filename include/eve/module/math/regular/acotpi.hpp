@@ -30,22 +30,17 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acotpi(T x) noexcept;                                   //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acotpi(eve::complex<T> z) noexcept;       //2
+//!      template< eve::floating_value T > T acotpi(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//!   * Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
 //!      input in the range \f$]-\frac12, \frac12]\f$.
 //!
 //!      In particular:
@@ -53,9 +48,6 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm\frac12\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value in
-//!     \f$\pi\f$ multiples of the arc cotangent of the input.
 //!
 //!  @groupheader{Example}
 //!

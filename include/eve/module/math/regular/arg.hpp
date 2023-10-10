@@ -29,32 +29,22 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T arg(T x) noexcept;                  //1
-//!
-//!      template< eve::floating_value T >
-//!      T arg(eve::as_complex<T> z) noexcept; //2
+//!      template< eve::floating_value T > T arg(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    `x`:   [real](@ref eve::value) or [complex](@ref eve::complex) argument.
+//!    `x`:   [real](@ref eve::floating_value) argument.
 //!
 //! **Return value**
 //!
 //!   Returns the [elementwise](@ref glossary_elementwise)
-//!   the phase angle (in radians) of the input.
+//!   the phase angle (in radians) of the input (0 or\f$\pi\f$).
 //!
 //!  @groupheader{Example}
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/math/regular/arg.cpp}
-//!
-//!    **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/arg.cpp}
 //!
 //!  @}
 //================================================================================================
