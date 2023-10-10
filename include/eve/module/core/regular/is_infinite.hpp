@@ -35,7 +35,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real or complex argument](@ref eve::value).
+//!     * `x` :  [real argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
@@ -43,7 +43,6 @@ namespace eve
 //!     `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
 //!     in particular this is always false for integral types.
 //!
-//!     For complex entries  `is_infinite(z)` is semantically  equivalent to
 //!     `eve::is_infinite(real(z)) || eve::is_infinite(imag(z))`,
 //!
 //!  @groupheader{Example}

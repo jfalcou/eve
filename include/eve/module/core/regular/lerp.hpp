@@ -35,7 +35,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:   [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
+//!     * `x`, `y`:   [real](@ref eve::value) arguments.
 //!     * `t`:  [real floating](@ref eve::floating_value).  argument
 //!
 //!    **Return value**

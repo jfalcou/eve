@@ -32,15 +32,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U >
 //!      auto pow1p(T x, U y) noexcept;
-//!
-//!      template< eve::floating_value T, eve::floating_value U >           //2
-//!      auto pow1p(eve::as_complex_t<T> x, U y) noexcept;
-//!
-//!      template< eve::floating_value T, eve::floating_value U >           //2
-//!      auto pow1p(T x, eve::as_complex_t<U> y) noexcept;
-//!
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto pow1p(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
 //!   }
 //!   @endcode
 //!

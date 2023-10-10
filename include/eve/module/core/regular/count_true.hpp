@@ -29,7 +29,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T count_true(T x) noexcept;                 //1
+//!      T count_true(T x) noexcept;
 //!   }
 //!      template< eve::top_bits M >
 //!      as_wide_as<unsigned, M> any(M m) noexcept;  //2

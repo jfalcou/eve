@@ -29,25 +29,18 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T sqr_abs(T x) noexcept;                   //1
-//!
-//!      template< eve::value T >
-//!      T sqr_abs(eve::as_complex<T> z) noexcept;  //2
+//!      T sqr_abs(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real](@ref eve::ordered_value) argument.
-//!     * `z` :  [complex](@ref eve::complex) argument.
 //!
 //!    **Return value**
 //!
-//!    1.  value containing the [elementwise](@ref glossary_elementwise)
+//!    *  value containing the [elementwise](@ref glossary_elementwise)
 //!        square of `eve::abs(x)`.
-//!
-//!    2.  square of the modulus of the complex argument,
-//!        i.e `eve::sqr(eve::real(z)+ eve::sqr(eve::imag(z)))`
 //!
 //!  @groupheader{Example}
 //!

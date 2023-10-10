@@ -36,7 +36,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
+//!     * `x` :  [real](@ref eve::value) argument.
 //!
 //!    **Return value**
 //!
@@ -47,7 +47,6 @@ namespace eve
 //!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
 //!      `FE_TOWARDZERO`. This function object implements the `FE_TONEAREST` version.
 //!
-//!    For complex inputs the nearest operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!

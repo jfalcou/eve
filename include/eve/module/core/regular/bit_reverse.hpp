@@ -29,7 +29,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T bit_reverse(T x) noexcept;       //1
+//!      T bit_reverse(T x) noexcept;
 //!
 //!      template< unsignedvalue T,  integral_scalar_value N>
 //!      T bit_reverse(T x , N n) noexcept; //2

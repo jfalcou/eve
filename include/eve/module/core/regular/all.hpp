@@ -30,16 +30,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      bool all(eve::as_logical<T> x) noexcept;  //1
+//!      bool all(eve::as_logical<T> x) noexcept;
 //!
 //!      template< eve::top_bits M >
 //!      bool all(M m) noexcept;                   //2
 //!   }
 //!   @endcode
 //!
-//!   1. A bool value which is true if and only if all elements of `x` are not zero.
-//!   2  A bool value which is true if and only if all top bits elements of `x` are not zero.
-//!
+//!   *  A bool value which is true if and only if all elements of `x` are not zero.
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::logical_value).

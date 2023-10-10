@@ -31,9 +31,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T sinh(T x) noexcept;
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> sinh(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!

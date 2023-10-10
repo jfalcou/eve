@@ -31,9 +31,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T sec(T x) noexcept;
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> sec(as_complex_t<T> z) noexcept;  //2
 //!   }
 //!   @endcode
 //!
