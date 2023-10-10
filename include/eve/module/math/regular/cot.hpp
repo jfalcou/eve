@@ -31,9 +31,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T cot(T x) noexcept;                                 //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> cot(eve::complex<T> z) noexcept;     //2
 //!   }
 //!   @endcode
 //!

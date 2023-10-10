@@ -32,9 +32,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T atanpi(T x) noexcept;                                  //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acospi(eve::complex<T> z) noexcept;      //2
 //!   }
 //!   @endcode
 //!

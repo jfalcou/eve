@@ -31,9 +31,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T agd(T x) noexcept;                                      //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acotpi(eve::complex<T> z) noexcept;       //2
 //!   }
 //!   @endcode
 //!

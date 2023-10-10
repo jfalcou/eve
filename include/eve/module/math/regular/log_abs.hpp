@@ -32,9 +32,6 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >           //1
 //!      T log_abs(T x) noexcept;
-//!
-//!      template< eve::floating_value T >
-//!      T log_abs(eve::complex<T> z) noexcept;      //2
 //!   }
 //!   @endcode
 //!
