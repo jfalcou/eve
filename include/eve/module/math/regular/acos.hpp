@@ -47,6 +47,7 @@ namespace eve
 //!      * If the element is \f$1\f$, \f$+0\f$ is returned.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/acos.cpp}
