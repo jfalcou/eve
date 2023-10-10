@@ -57,13 +57,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/atan.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/atan.cpp}
 //!  @}
 //================================================================================================
 

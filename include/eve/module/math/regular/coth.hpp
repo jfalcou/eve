@@ -53,13 +53,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/coth.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/coth.cpp}
 //!
 //!  @}
 //================================================================================================

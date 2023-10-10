@@ -54,13 +54,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/log10.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/log10.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

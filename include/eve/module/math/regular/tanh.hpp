@@ -70,13 +70,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/math/regular/tanh.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/tanh.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(tanh_, tanh);

@@ -58,13 +58,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/asin.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/asin.cpp}
 //!  @}
 //================================================================================================
 namespace tag

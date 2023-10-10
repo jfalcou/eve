@@ -52,13 +52,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/tanpi.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/tanpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

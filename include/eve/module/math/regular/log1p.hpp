@@ -56,13 +56,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/log1p.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/log1p.cpp}
 //!
 //!   * Masked Call
 //!

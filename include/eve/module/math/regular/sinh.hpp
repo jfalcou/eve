@@ -70,13 +70,8 @@ namespace eve
 //!
 //!      where \f$\mathrm{cis}(y) =  \cos(y)+i\sin(y)\f$
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/math/regular/sinh.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/sinh.cpp}
 //!
 //!  @}
 //================================================================================================

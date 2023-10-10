@@ -68,13 +68,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/asinh.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/asinh.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(asinh_, asinh);

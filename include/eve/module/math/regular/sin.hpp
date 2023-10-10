@@ -52,13 +52,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/sin.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/sin.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

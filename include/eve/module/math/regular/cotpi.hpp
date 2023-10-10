@@ -53,13 +53,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/cotpi.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/cotpi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

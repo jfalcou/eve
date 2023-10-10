@@ -70,13 +70,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/exp.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/exp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

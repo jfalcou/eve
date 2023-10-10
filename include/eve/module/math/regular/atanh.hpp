@@ -69,13 +69,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!   @godbolt{doc/math/regular/atanh.cpp}
 //!
-//!   **Complex version**
-//!
-//!   @godbolt{doc/complex/regular/atanh.cpp}
 //!  @}
 //================================================================================================
 namespace tag

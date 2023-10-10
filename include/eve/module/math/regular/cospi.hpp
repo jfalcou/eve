@@ -58,13 +58,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/cospi.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/cospi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
