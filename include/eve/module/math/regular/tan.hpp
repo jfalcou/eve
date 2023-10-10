@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T tan(T x) noexcept;                                 //1
+//!      T tan(T x) noexcept;
 //!   }
 //!   @endcode
 //!

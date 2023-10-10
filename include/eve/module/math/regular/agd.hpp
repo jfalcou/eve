@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T agd(T x) noexcept;                                      //1
+//!      T agd(T x) noexcept;
 //!   }
 //!   @endcode
 //!

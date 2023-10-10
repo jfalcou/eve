@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T atanpi(T x) noexcept;                                  //1
+//!      T atanpi(T x) noexcept;
 //!   }
 //!   @endcode
 //!

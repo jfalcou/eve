@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T expm1(T x) noexcept;                              //1
+//!      T expm1(T x) noexcept;
 //!
 //!      template< eve::floating_value T >
 //!      as_complex_t<T> expm1(as_complex_t<T> z) noexcept;  //2

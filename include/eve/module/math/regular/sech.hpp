@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sech(T x) noexcept;                              //1
+//!      T sech(T x) noexcept;
 //!
 //!      template< eve::floating_value T >
 //!      as_complex_t<T> csch(as_complex_t<T> z) noexcept;  //2

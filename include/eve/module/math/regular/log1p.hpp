@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T log1p(T x) noexcept;                                 //1
+//!      T log1p(T x) noexcept;
 //!   }
 //!   @endcode
 //!

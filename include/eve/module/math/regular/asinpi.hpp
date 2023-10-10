@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T asinpi(T x) noexcept;                                   //1
+//!      T asinpi(T x) noexcept;
 //!   }
 //!   @endcode
 //!

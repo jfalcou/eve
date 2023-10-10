@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T >
-//!      T exp2(T x) noexcept;                                     //1
+//!      T exp2(T x) noexcept;
 //!   }
 //!   @endcode
 //!

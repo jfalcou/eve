@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T cot(T x) noexcept;                                 //1
+//!      T cot(T x) noexcept;
 //!   }
 //!   @endcode
 //!

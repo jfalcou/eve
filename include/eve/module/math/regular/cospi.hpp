@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T cospi(T x) noexcept;                              //1
+//!      T cospi(T x) noexcept;
 //!
 //!      template< eve::floating_value T >
 //!      as_complex_t<T> cospi(as_complex_t<T> z) noexcept;  //2

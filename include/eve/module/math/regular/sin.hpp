@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sin(T x) noexcept;                                //1
+//!      T sin(T x) noexcept;
 //!   }
 //!   @endcode
 //!

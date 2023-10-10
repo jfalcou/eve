@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T asech(T x) noexcept;                                   //1
+//!      T asech(T x) noexcept;
 //!   }
 //!   @endcode
 //!

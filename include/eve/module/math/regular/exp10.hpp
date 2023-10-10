@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T exp10(T x) noexcept;                                    //1
+//!      T exp10(T x) noexcept;
 //!   }
 //!   @endcode
 //!

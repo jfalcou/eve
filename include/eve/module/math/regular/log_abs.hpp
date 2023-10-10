@@ -30,7 +30,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >           //1
+//!      template< eve::floating_value T >
 //!      T log_abs(T x) noexcept;
 //!   }
 //!   @endcode

@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U >
-//!      auto pow(T x, U y) noexcept;                                       //1
+//!      auto pow(T x, U y) noexcept;
 //!
 //!      template< eve::floating_value T, eve::floating_value U >           //2
 //!      auto pow(eve::as_complex_t<T> x, U y) noexcept;

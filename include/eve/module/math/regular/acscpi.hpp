@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T acscpi(T x) noexcept;                                   //1
+//!      T acscpi(T x) noexcept;
 //!   }
 //!   @endcode
 //!
