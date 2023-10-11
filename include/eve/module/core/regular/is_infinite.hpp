@@ -43,8 +43,6 @@ namespace eve
 //!     `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
 //!     in particular this is always false for integral types.
 //!
-//!     `eve::is_infinite(real(z)) || eve::is_infinite(imag(z))`,
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/is_infinite.cpp}

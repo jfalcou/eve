@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template<simd_value... Ws>
-//!     auto operator()(Ws... ws) const noexcept;
+//!     auto operator()(Ws... ws) const noexcept;               //1
 //!
 //!     template<product_type Target, simd_value... Ws>
 //!     auto operator()(as<Target> t, Ws... ws) const noexcept; //2

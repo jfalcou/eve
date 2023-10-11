@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      bool all(eve::as_logical<T> x) noexcept;
+//!      bool all(eve::as_logical<T> x) noexcept;  //1
 //!
 //!      template< eve::top_bits M >
 //!      bool all(M m) noexcept;                   //2

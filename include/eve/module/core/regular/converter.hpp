@@ -104,7 +104,7 @@ template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, float> float32(T x) noexcept;
+//!      as_wide_as<T, float> float32(T x) noexcept;  //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, float> float32(C x) noexcept; //2
@@ -149,7 +149,7 @@ inline constexpr converter_type<float> const float32 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, double> float64(T x) noexcept;
+//!      as_wide_as<T, double> float64(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, double> float64(C x) noexcept; //2
@@ -194,7 +194,7 @@ inline constexpr converter_type<double> const float64 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::uint8_t> uint8(T x) noexcept;
+//!      as_wide_as<T, std::uint8_t> uint8(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::uint8_t> uint8(C x) noexcept; //2
@@ -240,7 +240,7 @@ inline constexpr converter_type<std::uint8_t> const uint8 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::uint16_t> uint16(T x) noexcept;
+//!      as_wide_as<T, std::uint16_t> uint16(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::uint16_t> uint16(C x) noexcept; //2
@@ -286,7 +286,7 @@ inline constexpr converter_type<std::uint16_t> const uint16 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::uint32_t> uint32(T x) noexcept;
+//!      as_wide_as<T, std::uint32_t> uint32(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::uint32_t> uint32(C x) noexcept; //2
@@ -332,7 +332,7 @@ inline constexpr converter_type<std::uint32_t> const uint32 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::uint64_t> uint64(T x) noexcept;
+//!      as_wide_as<T, std::uint64_t> uint64(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::uint64_t> uint64(C x) noexcept; //2
@@ -378,7 +378,7 @@ inline constexpr converter_type<std::uint64_t> const uint64 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::int8_t> int8(T x) noexcept;
+//!      as_wide_as<T, std::int8_t> int8(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::int8_t> int8(C x) noexcept; //2
@@ -424,7 +424,7 @@ inline constexpr converter_type<std::int8_t> const int8 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::int16_t> int16(T x) noexcept;
+//!      as_wide_as<T, std::int16_t> int16(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::int16_t> int16(C x) noexcept; //2
@@ -470,7 +470,7 @@ inline constexpr converter_type<std::int16_t> const int16 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::int32_t> int32(T x) noexcept;
+//!      as_wide_as<T, std::int32_t> int32(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::int32_t> int32(C x) noexcept; //2
@@ -516,7 +516,7 @@ inline constexpr converter_type<std::int32_t> const int32 = {};
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, std::int64_t> int64(T x) noexcept;
+//!      as_wide_as<T, std::int64_t> int64(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, std::int64_t> int64(C x) noexcept; //2
@@ -566,7 +566,7 @@ using int_converter = decorated<convert_by_<as_integer>()>;
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, eve::as_integer_t<T>> int_(T x) noexcept;
+//!      as_wide_as<T, eve::as_integer_t<T>> int_(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, , eve::as_integer_t<T>> int_(C x) noexcept; //2
@@ -615,7 +615,7 @@ using uint_converter = decorated<convert_by_<as_uinteger>()>;
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, eve::as_integer_t<T, unsigned>> uint_(T x) noexcept;
+//!      as_wide_as<T, eve::as_integer_t<T, unsigned>> uint_(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, , eve::as_integer_t<T, unsigned>> uint_(C x) noexcept; //2
@@ -664,7 +664,7 @@ using floating_converter = decorated<convert_by_<as_floating_point>()>;
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, eve::as_floating_point_t<T>> floating_(T x) noexcept;
+//!      as_wide_as<T, eve::as_floating_point_t<T>> floating_(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, , eve::as_floating_point_t<T>> floating_(C x) noexcept; //2
@@ -712,7 +712,7 @@ using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, eve::upgrade_t<T>> upgrade_(T x) noexcept;
+//!      as_wide_as<T, eve::upgrade_t<T>> upgrade_(T x) noexcept; //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, , eve::upgrade_t<T>> upgrade_(C x) noexcept; //2

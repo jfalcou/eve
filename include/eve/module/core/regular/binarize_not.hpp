@@ -31,7 +31,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value C  >
-//!      C binarize_not(eve::as_logical<C> c) noexcept;
+//!      C binarize_not(eve::as_logical<C> c) noexcept;          //1
 //!
 //!      template<eve::value C, eve::value V >
 //!      T binarize_not(eve::as_logical<C> c, T v) noexcept;     //2
