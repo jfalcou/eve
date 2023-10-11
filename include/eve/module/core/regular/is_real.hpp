@@ -17,9 +17,7 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_real
-//!   @brief Returns a logical true  if and only if the element value is real.
-//!
-//!   For real entries always return true.
+//!   @brief Returns a logical true.
 //!
 //!   **Defined in Header**
 //!
@@ -43,7 +41,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!    Returns [elementwise](@ref glossary_elementwise) true for real entries.
+//!    Returns [elementwise](@ref glossary_elementwise) true.
 //!
 //!  @groupheader{Example}
 //!

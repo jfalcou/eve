@@ -42,8 +42,6 @@ namespace eve
 //!       For real entries the call `eve::is_not_nan(x)`  is semantically  equivalent to:
 //!       `eve::is_equal(x, x)` in particular this is always true for integral types.
 //!
-//!       `eve::is_not_nan(real(z)) && eve::is_not_nan(imag(z))`,
-//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/is_not_nan.cpp}

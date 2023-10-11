@@ -38,10 +38,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     For real entries the call `is_finite(x)` is semantically  equivalent to `eve::is_not_nan(x-x)`, in particular
+//!     `is_finite(x)` is semantically  equivalent to `eve::is_not_nan(x-x)`, in particular
 //!     this is always true for integral types.
-//!
-//!     `eve::is_finite(real(z)) && eve::is_finite(imag(z))`,
 //!
 //!  @groupheader{Example}
 //!
