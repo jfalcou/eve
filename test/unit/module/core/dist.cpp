@@ -51,3 +51,28 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
                   else  return eve::if_else(eve::is_ltz(d),  eve::valmax(eve::as<T>()),  d);
                 }(a0, a1), 2);
 };
+
+TTS_CASE_WITH("Check behavior of dist(wide)",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::dist;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(dist(a0, a1),
+                map([](auto e, auto f) -> v_t { return std::max(e, f) - std::min(f, e); }, a0, a1),
+                2);
+  TTS_ULP_EQUAL(eve::saturated(dist)(a0, a1),
+                map(
+                    [](auto e, auto f) -> v_t
+                    {
+                      v_t d = eve::max(e, f) - eve::min(f, e);
+                      if constexpr( eve::unsigned_value<v_t> ) return d;
+                      else return d < 0 ? eve::valmax(eve::as(e)) : d;
+                    },
+                    a0,
+                    a1),
+                2);
+};
