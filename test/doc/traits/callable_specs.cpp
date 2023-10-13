@@ -14,8 +14,16 @@ namespace eve
   // Defines a support specification
   struct precision
   {
-    auto operator[](rbr::concepts::exactly<precise> auto const&) -> void;
-    auto operator[](rbr::concepts::exactly<scale>   auto const&) -> void;
+    auto process_option(auto const& base, rbr::concepts::exactly<precise> auto opt) const
+    {
+      return options{rbr::merge(options{opt}, base)};
+    }
+
+    auto process_option(auto const& base, rbr::concepts::exactly<scale> auto opt) const
+    {
+      return options{rbr::merge(options{opt}, base)};
+    }
+
     EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{};  }
   };
 

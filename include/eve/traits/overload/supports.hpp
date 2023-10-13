@@ -103,29 +103,23 @@ namespace eve::detail
   //====================================================================================================================
   // Intermediate type for handling chains of option like in func[opt1 = y][opt2 = x][ignore](...)
   //====================================================================================================================
-  template<typename Tag, typename Settings, typename... Specs> struct decorated_fn
+  template<typename Tag, typename Settings, typename... Specs>
+  struct decorated_fn : Specs...
   {
+    protected:
+    using Specs::process_option...;
+
+    public:
     using callable_tag_type = void;
 
-    template<is_supported<Specs...> O>
+    decorated_fn(Settings s) : opts(std::move(s)) {}
+
+    template<typename O>
     EVE_FORCEINLINE auto operator[](O const& o) const
+    requires( requires(Settings const& opts){ process_option(opts, o); })
     {
-      if constexpr(rbr::concepts::option<O>)
-      {
-        // Merge new option with current ones
-        auto new_opts = options{rbr::merge(rbr::settings{o}, opts)};
-        return decorated_fn<Tag,decltype(new_opts),Specs...>{new_opts};
-      }
-      // Wrap conditionals and booleans into a condition option
-      else if constexpr(conditional_expr<O> || eve::logical_value<O>)
-      {
-        return (*this)[condition = o];
-      }
-      else if constexpr(std::same_as<O,bool>)
-      {
-        using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
-        return (*this)[condition = if_(logical<type>(o))];
-      }
+      auto new_opts = process_option(opts, o);
+      return decorated_fn<Tag,decltype(new_opts),Specs...>{new_opts};
     }
 
     // Behave as a callable but pass the current bundle of options to the deferred_call handler
@@ -164,10 +158,12 @@ namespace eve
   //! @}
   //====================================================================================================================
   template<typename Tag, typename... Specs>
-  struct supports
+  struct supports : Specs...
   {
-    using is_decorated_callable = void;
+    protected:
+    using Specs::process_option...;
 
+    public:
     // Aggregate all defaults from all Specs
     EVE_FORCEINLINE static constexpr auto defaults() noexcept
     {
@@ -187,24 +183,12 @@ namespace eve
     //! @param o Option to add to current's @callable setup
     //! @return A eve::decorated_callable behaving as `Tag` but with the options `o` set.
     //==================================================================================================================
-    template<detail::is_supported<Specs...> O>
+    template<typename O>
     EVE_FORCEINLINE auto operator[](O const& o) const
+    requires( requires(options<rbr::settings<>> const& base){ supports::process_option(base, o); })
     {
-      if constexpr(rbr::concepts::option<O>)
-      {
-        auto base = options{o};
-        auto opts = rbr::merge(base,defaults());
-        return detail::decorated_fn<Tag,decltype(options{opts}),Specs...>{opts};
-      }
-      else if constexpr(conditional_expr<O> || eve::logical_value<O>)
-      {
-        return (*this)[condition = o];
-      }
-      else if constexpr(std::same_as<O,bool>)
-      {
-        using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
-        return (*this)[condition = if_(logical<type>(o))];
-      }
+      auto opts = process_option(defaults(), o);
+      return detail::decorated_fn<Tag,decltype(opts),Specs...>(opts);
     }
   };
 
@@ -224,10 +208,28 @@ namespace eve
   //====================================================================================================================
   struct conditional
   {
-    auto operator[](bool)                                                   -> void;
-    auto operator[](eve::logical_value auto const&)                         -> void;
-    auto operator[](eve::conditional_expr auto const&)                      -> void;
-    auto operator[](rbr::concepts::exactly<condition> auto const&)  -> void;
+    auto process_option(auto const& base, rbr::concepts::exactly<condition> auto opt) const
+    {
+      return options{rbr::merge(options{opt}, base)};
+    }
+
+    template<std::same_as<bool> O>
+    auto process_option(auto const& base, O opt) const
+    {
+      // Just delay the evaluation of the type by injecting some templates
+      using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
+      return process_option(base, condition = if_(logical<type>(opt)) );
+    }
+
+    auto process_option(auto const& base, eve::logical_value auto opt) const
+    {
+      return process_option(base, condition = opt);
+    }
+
+    auto process_option(auto const& base, eve::conditional_expr auto opt) const
+    {
+      return process_option(base, condition = opt);
+    }
 
     /// Default settings of eve::conditional is eve::ignore_none
     EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition = ignore_none};  }
