@@ -116,7 +116,9 @@ namespace eve::detail
 
     template<typename O>
     EVE_FORCEINLINE auto operator[](O const& o) const
-    requires( requires(Settings const& opts){ process_option(opts, o); })
+    -> decltype ( decorated_fn<Tag,decltype(process_option(std::declval<Settings>(), o)),Specs...>
+                  {process_option(std::declval<Settings>(), o)}
+                )
     {
       auto new_opts = process_option(opts, o);
       return decorated_fn<Tag,decltype(new_opts),Specs...>{new_opts};
@@ -185,7 +187,7 @@ namespace eve
     //==================================================================================================================
     template<typename O>
     EVE_FORCEINLINE auto operator[](O const& o) const
-    requires( requires(options<rbr::settings<>> const& base){ supports::process_option(base, o); })
+    -> decltype( detail::decorated_fn<Tag,decltype(process_option(defaults(), o)),Specs...>(process_option(defaults(), o)) )
     {
       auto opts = process_option(defaults(), o);
       return detail::decorated_fn<Tag,decltype(opts),Specs...>(opts);
