@@ -22,7 +22,7 @@ namespace eve::detail
   auto func_(EVE_REQUIRES(cpu_), eve::options<D> opts, eve::integral_value auto x)
   {
     // See RABERU documentation to check and access options inside a decorator.
-    auto const mask = opts[option::condition];
+    auto const mask = opts[condition];
 
     if constexpr(decltype(mask)::is_complete) return x*x;
     else                                      return eve::mul[mask](10,x);

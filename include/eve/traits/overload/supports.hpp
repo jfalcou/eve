@@ -68,10 +68,7 @@ namespace eve::detail
   //====================================================================================================================
   template<typename O, typename... Specs>
   concept is_supported = (supports_option<Specs,O> || ... );
-}
 
-namespace eve::option
-{
   //====================================================================================================================
   // Internal option carrying conditional mask or conditional expressions
   //====================================================================================================================
@@ -83,7 +80,10 @@ namespace eve::option
       return conditional_expr<std::remove_cvref_t<T>> || logical_value<std::remove_cvref_t<T>>;
     }
   };
+}
 
+namespace eve
+{
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
@@ -95,7 +95,7 @@ namespace eve::option
   //!   @see eve::supports
   //! @}
   //====================================================================================================================
-  inline constexpr condition_ condition = {};
+  inline constexpr detail::condition_ condition = {};
 }
 
 namespace eve::detail
@@ -119,12 +119,12 @@ namespace eve::detail
       // Wrap conditionals and booleans into a condition option
       else if constexpr(conditional_expr<O> || eve::logical_value<O>)
       {
-        return (*this)[option::condition = o];
+        return (*this)[condition = o];
       }
       else if constexpr(std::same_as<O,bool>)
       {
         using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
-        return (*this)[option::condition = if_(logical<type>(o))];
+        return (*this)[condition = if_(logical<type>(o))];
       }
     }
 
@@ -198,12 +198,12 @@ namespace eve
       }
       else if constexpr(conditional_expr<O> || eve::logical_value<O>)
       {
-        return (*this)[option::condition = o];
+        return (*this)[condition = o];
       }
       else if constexpr(std::same_as<O,bool>)
       {
         using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
-        return (*this)[option::condition = if_(logical<type>(o))];
+        return (*this)[condition = if_(logical<type>(o))];
       }
     }
   };
@@ -227,10 +227,10 @@ namespace eve
     auto operator[](bool)                                                   -> void;
     auto operator[](eve::logical_value auto const&)                         -> void;
     auto operator[](eve::conditional_expr auto const&)                      -> void;
-    auto operator[](rbr::concepts::exactly<option::condition> auto const&)  -> void;
+    auto operator[](rbr::concepts::exactly<condition> auto const&)  -> void;
 
     /// Default settings of eve::conditional is eve::ignore_none
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{option::condition = ignore_none};  }
+    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition = ignore_none};  }
   };
 
   /// Checks if the type associated to a given Keyword in a Option pack is equal to Type
