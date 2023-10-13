@@ -237,6 +237,31 @@ namespace eve
     EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition = ignore_none};  }
   };
 
+  //====================================================================================================================
+  //! @addtogroup extensions
+  //! @{
+  //!   @struct relative_conditional
+  //!   @brief Option specification for decoration via relative conditional value and expressions
+  //!
+  //!   eve::relative_conditional is an option specification that can be used when defining a eve::callable type to
+  //!   make it supports decoration via  any eve::relative_conditional_expr.
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/traits/callable_supports.cpp}
+  //! @}
+  //====================================================================================================================
+  struct relative_conditional
+  {
+    auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
+    {
+      return options{rbr::merge(options{condition = opt}, base)};
+    }
+
+    /// Default settings of eve::relative_conditional is eve::ignore_none
+    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition = ignore_none};  }
+  };
+
   /// Checks if the type associated to a given Keyword in a Option pack is equal to Type
   template<auto Keyword, typename Opts, typename Type>
   inline constexpr bool option_type_is =  std::same_as<Type, rbr::result::fetch_t<Keyword,Opts>>;
