@@ -48,9 +48,14 @@ namespace eve
 namespace eve::detail
 {
   //====================================================================================================================
-  // Delay the access to defaults() to after the proper operator() has been selected.
+  //  Delay the access to defaults() to after the proper operator() has been selected.
+  //  Also returns an empty set of options by default
   //====================================================================================================================
-  template<typename T, typename...> EVE_FORCEINLINE constexpr auto defaults() { return T::defaults(); }
+  template<typename T, typename...> EVE_FORCEINLINE constexpr auto defaults()
+  {
+    if constexpr(requires { T::defaults(); }) return T::defaults();
+    else                                      return options{};
+  }
 
   //====================================================================================================================
   // Internal concept checking if an option is supported by a specification

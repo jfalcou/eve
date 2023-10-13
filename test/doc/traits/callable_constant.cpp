@@ -24,12 +24,15 @@ int main()
   std::cout << eve::some_pi(eve::as<eve::wide<float>>{}) << "\n";
   std::cout << eve::some_pi[eve::keep_between(1,3)](eve::as<eve::wide<float>>{}) << "\n\n";
 
-
-  std::cout << "Pi(int)                 does not compile: "
-            << std::boolalpha << !std::is_invocable_v<eve::pi_t, float>
+  std::cout << "Is Pi(as<float>) supported: "
+            << std::boolalpha << std::is_invocable_v<eve::pi_t, eve::as<float>>
             << "\n";
 
-  std::cout << "Pi(wide<unsigned char>) does not compile: "
-            << std::boolalpha << !std::is_invocable_v<eve::pi_t, eve::wide<unsigned char>>
+  std::cout << "Is Pi(float) supported: "
+            << std::boolalpha << std::is_invocable_v<eve::pi_t, float>
+            << "\n";
+
+  std::cout << "Is Pi(as<wide<unsigned char>>) supported: "
+            << std::boolalpha << std::is_invocable_v<eve::pi_t, eve::as<eve::wide<unsigned char>>>
             << "\n";
 }

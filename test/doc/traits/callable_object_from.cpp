@@ -23,8 +23,8 @@ namespace my_lib
   // As func_t used EVE_CALLABLE_OBJECT_FROM, we can write overloads in this namespace
   namespace impl
   {
-    auto func_(EVE_REQUIRES(eve::cpu_), eve::integral_value auto x) {  return x*x;  }
-    auto func_(EVE_REQUIRES(eve::cpu_), double x)                   {  return 1./x; }
+    auto func_(EVE_REQUIRES(eve::cpu_), auto, eve::integral_value auto x) {  return x*x;  }
+    auto func_(EVE_REQUIRES(eve::cpu_), auto, double x)                   {  return 1./x; }
   }
 }
 
@@ -34,11 +34,11 @@ int main()
   std::cout << my_lib::func(eve::wide<short>{77}) << "\n";
   std::cout << my_lib::func(25.) << "\n";
 
-  std::cout << "func(float)       does not compile: "
-            << std::boolalpha << !std::is_invocable_v<my_lib::func_t, float>
+  std::cout << "Is func(float) supported: "
+            << std::boolalpha << std::is_invocable_v<my_lib::func_t, float>
             << "\n";
 
-  std::cout << "func(wide<float>) does not compile: "
-            << std::boolalpha << !std::is_invocable_v<my_lib::func_t, eve::wide<float>>
+  std::cout << "Is func(wide<float>) supported: "
+            << std::boolalpha << std::is_invocable_v<my_lib::func_t, eve::wide<float>>
             << "\n";
 }

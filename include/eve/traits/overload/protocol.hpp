@@ -33,20 +33,6 @@ namespace eve
   //====================================================================================================================
   template<typename T, typename...>
   concept callable = requires(T const&) { typename T::callable_tag_type; };
-
-  //====================================================================================================================
-  //! @addtogroup extensions
-  //! @{
-  //    @concept decorated_callable
-  //    @brief Concept modelling the fact a eve::callable has decorations
-  //!   @tparam T  T type for the @callable to check
-  //! @}
-  //====================================================================================================================
-  template<typename T, typename...>
-  concept decorated_callable = requires(T const&)
-  {
-    typename T::is_decorated_callable;
-  };
 }
 
 //======================================================================================================================
@@ -88,10 +74,7 @@ EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const                 
 -> decltype(std::declval<TYPE>().call(std::declval<Args>()...))                                                        \
 requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })                                                   \
 {                                                                                                                      \
-  if constexpr(eve::decorated_callable<TYPE,Args...>)                                                                  \
-    return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);             \
-  else                                                                                                                 \
-    return TYPE::deferred_call(eve::current_api, EVE_FWD(args)...);                                                    \
+  return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);               \
 }                                                                                                                      \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, auto&&...args) noexcept                                 \
 requires(requires { NAME(NS::adl_helper, arch, EVE_FWD(args)...); })                                                   \
@@ -145,10 +128,7 @@ EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const                 
 -> decltype(std::declval<TYPE>().call(std::declval<Args>()...))                                                        \
 requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })                                                   \
 {                                                                                                                      \
-  if constexpr(eve::decorated_callable<TYPE,Args...>)                                                                  \
-    return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);             \
-  else                                                                                                                 \
-    return TYPE::deferred_call(eve::current_api, EVE_FWD(args)...);                                                    \
+  return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);               \
 }                                                                                                                      \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, auto&&...args) noexcept                                 \
 requires(requires { NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...); })                                          \

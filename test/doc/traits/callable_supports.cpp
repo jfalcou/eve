@@ -17,7 +17,7 @@ namespace eve
 
 namespace eve::detail
 {
-  // Decorated callable takes a decorators parameter first
+  // Decorated callable takes a eve::options as first parameter
   template<typename D>
   auto func_(EVE_REQUIRES(cpu_), eve::options<D> opts, eve::integral_value auto x)
   {
