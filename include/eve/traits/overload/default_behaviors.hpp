@@ -89,7 +89,7 @@ namespace eve
   //!   @godbolt{doc/traits/callable_constant.cpp}
   //! @}
   //====================================================================================================================
-  template<typename Tag> struct constant : supports<Tag, conditional>
+  template<typename Tag> struct constant : supports<Tag, conditional_options>
   {
     struct behavior
     {

@@ -208,7 +208,7 @@ namespace eve
   //!   @godbolt{doc/traits/callable_supports.cpp}
   //! @}
   //====================================================================================================================
-  struct conditional
+  struct conditional_options
   {
     auto process_option(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
@@ -251,7 +251,7 @@ namespace eve
   //!   @godbolt{doc/traits/callable_supports.cpp}
   //! @}
   //====================================================================================================================
-  struct relative_conditional
+  struct relative_conditional_options
   {
     auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
     {
