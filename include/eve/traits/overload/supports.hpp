@@ -32,7 +32,7 @@ namespace eve
     constexpr EVE_FORCEINLINE explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
 
     template <typename... Options>
-    constexpr EVE_FORCEINLINE options(rbr::settings<Options...> const& opts) : Settings(opts) {}
+    constexpr EVE_FORCEINLINE explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
   };
 
   template <rbr::concepts::option ... Options>
@@ -72,9 +72,9 @@ namespace eve::detail
   //====================================================================================================================
   // Internal option carrying conditional mask or conditional expressions
   //====================================================================================================================
-  struct condition_ : rbr::as_keyword<condition_>
+  struct condition_key_t : rbr::as_keyword<condition_key_t>
   {
-    using rbr::as_keyword<condition_>::operator=;
+    using rbr::as_keyword<condition_key_t>::operator=;
     template<typename T> static constexpr bool check()
     {
       return conditional_expr<std::remove_cvref_t<T>> || logical_value<std::remove_cvref_t<T>>;
@@ -87,15 +87,15 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @var condition
+  //!   @var condition_key
   //!   @brief Keyword for retrieving conditionals decorator
   //!
   //!   When a eve::decorated_callable is called with an option provided via eve::conditional, the value of the
-  //!   conditional can be retrieved using eve::condition
+  //!   conditional can be retrieved using eve::condition_key
   //!   @see eve::supports
   //! @}
   //====================================================================================================================
-  inline constexpr detail::condition_ condition = {};
+  inline constexpr detail::condition_key_t condition_key = {};
 }
 
 namespace eve::detail
@@ -112,7 +112,7 @@ namespace eve::detail
     public:
     using callable_tag_type = void;
 
-    decorated_fn(Settings s) : opts(std::move(s)) {}
+    explicit decorated_fn(Settings s) : opts(std::move(s)) {}
 
     template<typename O>
     EVE_FORCEINLINE auto operator[](O const& o) const
@@ -210,7 +210,7 @@ namespace eve
   //====================================================================================================================
   struct conditional
   {
-    auto process_option(auto const& base, rbr::concepts::exactly<condition> auto opt) const
+    auto process_option(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
       return options{rbr::merge(options{opt}, base)};
     }
@@ -220,21 +220,21 @@ namespace eve
     {
       // Just delay the evaluation of the type by injecting some templates
       using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
-      return process_option(base, condition = if_(logical<type>(opt)) );
+      return process_option(base, condition_key = if_(logical<type>(opt)) );
     }
 
     auto process_option(auto const& base, eve::logical_value auto opt) const
     {
-      return process_option(base, condition = opt);
+      return process_option(base, condition_key = opt);
     }
 
     auto process_option(auto const& base, eve::conditional_expr auto opt) const
     {
-      return process_option(base, condition = opt);
+      return process_option(base, condition_key = opt);
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition = ignore_none};  }
+    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
   };
 
   //====================================================================================================================
@@ -255,11 +255,11 @@ namespace eve
   {
     auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
     {
-      return options{rbr::merge(options{condition = opt}, base)};
+      return options{rbr::merge(options{condition_key = opt}, base)};
     }
 
     /// Default settings of eve::relative_conditional is eve::ignore_none
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition = ignore_none};  }
+    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
   };
 
   /// Checks if the type associated to a given Keyword in a Option pack is equal to Type

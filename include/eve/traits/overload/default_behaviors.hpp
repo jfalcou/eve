@@ -99,8 +99,8 @@ namespace eve
       {
         // we pass opts to value so each constant can handle their own option support
         auto v = Tag::value(opts,tgt);
-        if constexpr(option_type_is<condition, O, ignore_none_>) return v;
-        else  return v & detail::expand_mask(opts[condition], tgt).mask();
+        if constexpr(option_type_is<condition_key, O, ignore_none_>) return v;
+        else  return v & detail::expand_mask(opts[condition_key], tgt).mask();
       }
     };
   };
