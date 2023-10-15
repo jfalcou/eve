@@ -26,6 +26,12 @@ namespace eve
   //!   @concept callable
   //!   @brief **EVE** callable
   //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
   //!   A type `T` satisfies eve::callable if and only if it is tagged as such manually.
   //!
   //!   @tparam T  T type for the @callable to check
@@ -40,6 +46,12 @@ namespace eve
 //! @{
 //!   @def   EVE_CALLABLE_OBJECT_FROM
 //!   @brief Generate the generic function interface for any EVE-compatible @callable
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
 //!   Use inside a @callable definition to generate the required EVE protocol of function's resolution based on type
 //!   and architecture informations.
@@ -76,16 +88,13 @@ requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })            
 {                                                                                                                      \
   return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);               \
 }                                                                                                                      \
-static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, auto&&...args) noexcept                                 \
-requires(requires { NAME(NS::adl_helper, arch, EVE_FWD(args)...); })                                                   \
-{                                                                                                                      \
-  return NAME(NS::adl_helper, arch, EVE_FWD(args)...);                                                                 \
-}                                                                                                                      \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
-requires(!requires { NAME(NS::adl_helper, arch, EVE_FWD(args)...); })                                                  \
 {                                                                                                                      \
-  return eve::detail::default_behavior<TYPE,Args...>::call(arch, EVE_FWD(args)...);                                    \
+  if constexpr( requires { NAME(NS::adl_helper, arch, EVE_FWD(args)...); } )                                           \
+    return NAME(NS::adl_helper, arch, EVE_FWD(args)...);                                                               \
+  else                                                                                                                 \
+    return eve::detail::default_behavior<TYPE,Args...>::call(arch, EVE_FWD(args)...);                                  \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
 /**/
@@ -95,6 +104,12 @@ using callable_tag_type     = TYPE                                              
 //! @{
 //!   @def   EVE_CALLABLE_OBJECT
 //!   @brief Generate the generic function interface for an actual eve::callable
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
 //!   Use inside a @callable definition to generate the required EVE protocol of function's resolution based on type
 //!   and architecture informations using overload from the `eve::detail` namespace.
@@ -130,16 +145,13 @@ requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })            
 {                                                                                                                      \
   return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);               \
 }                                                                                                                      \
-static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, auto&&...args) noexcept                                 \
-requires(requires { NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...); })                                          \
-{                                                                                                                      \
-  return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                        \
-}                                                                                                                      \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
-requires(!requires { NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...); })                                         \
 {                                                                                                                      \
-  return eve::detail::default_behavior<TYPE,Args...>::call(arch, EVE_FWD(args)...);                                    \
+  if constexpr( requires { NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...); } )                                  \
+    return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                      \
+  else                                                                                                                 \
+    return eve::detail::default_behavior<TYPE,Args...>::call(arch, EVE_FWD(args)...);                                  \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
 /**/
@@ -156,7 +168,7 @@ struct adl_helper_t {};                                                         
 inline constexpr auto adl_helper = adl_helper_t {}                                                                     \
 /**/
 
-// Flag a function to support delayed calls on given architecture
+/// Flag a function to support delayed calls on given architecture
 #define EVE_REQUIRES(ARCH) adl_helper_t const &, ARCH const &
 
 // Register eve::detail as the deferred namespace by default

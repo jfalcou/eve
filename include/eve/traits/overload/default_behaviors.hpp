@@ -72,6 +72,12 @@ namespace eve
   //!   @struct constant
   //!   @brief CRTP base class giving an eve::callable the constant function semantic
   //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
   //!   Constants functions in EVE are built using a very common pattern. Inheriting from eve::constant simplifies the
   //!   implementation of such eve::callable by just requiring your eve::callable type to implement a static `value`
   //!   member function that provides the constant value using two parameters:
@@ -89,7 +95,7 @@ namespace eve
   //!   @godbolt{doc/traits/callable_constant.cpp}
   //! @}
   //====================================================================================================================
-  template<typename Tag> struct constant : supports<Tag, conditional_options>
+  template<typename Tag> struct constant : supports<Tag, conditional_option>
   {
     struct behavior
     {

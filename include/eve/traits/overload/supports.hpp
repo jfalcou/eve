@@ -19,6 +19,12 @@ namespace eve
   //!   @struct options
   //!   @brief  Wrapper class around bundle of options passed to eve::callable
   //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
   //!   eve::callable can be decorated with options. eve::options is used internally to gather all those options
   //!   in a @raberu settings instance for further processing.
   //!
@@ -90,6 +96,12 @@ namespace eve
   //!   @var condition_key
   //!   @brief Keyword for retrieving conditionals decorator
   //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
   //!   When a eve::decorated_callable is called with an option provided via eve::conditional, the value of the
   //!   conditional can be retrieved using eve::condition_key
   //!   @see eve::supports
@@ -144,6 +156,12 @@ namespace eve
   //!   @struct supports
   //!   @brief Helper class to aggregate options handlers
   //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
   //!   eve::callable can be decorated with options. eve::supports is used to list all subset of options a given EVE
   //!   @callable is allowed to support and to handle the default values of such subsets.
   //!
@@ -197,10 +215,16 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @struct conditional_options
+  //!   @struct conditional_option
   //!   @brief Option specification for decoration via conditional value and expressions
   //!
-  //!   eve::conditional_options is an option specification that can be used when defining a eve::callable type to make
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   eve::conditional_option is an option specification that can be used when defining a eve::callable type to make
   //!   it supports decoration via `bool`, eve::logical, any eve::conditional_expr or eve::relative_conditional_expr.
   //!
   //!   @groupheader{Example}
@@ -208,7 +232,7 @@ namespace eve
   //!   @godbolt{doc/traits/callable_supports.cpp}
   //! @}
   //====================================================================================================================
-  struct conditional_options
+  struct conditional_option
   {
     auto process_option(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
@@ -240,10 +264,16 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @struct relative_conditional_options
+  //!   @struct relative_conditional_option
   //!   @brief Option specification for decoration via relative conditional value and expressions
   //!
-  //!   eve::relative_conditional_options is an option specification that can be used when defining a eve::callable
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   eve::relative_conditional_option is an option specification that can be used when defining a eve::callable
   //!   type to make it supports decoration via  any eve::relative_conditional_expr.
   //!
   //!   @groupheader{Example}
@@ -251,7 +281,7 @@ namespace eve
   //!   @godbolt{doc/traits/callable_supports.cpp}
   //! @}
   //====================================================================================================================
-  struct relative_conditional_options
+  struct relative_conditional_option
   {
     auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
     {
