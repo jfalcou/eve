@@ -27,7 +27,7 @@ namespace eve
   };
 
   // Make this callable supports the precision options
-  struct func_t : callable<func_t>, supports<func_t, precision>
+  struct func_t : basic_callable<func_t>, supports<func_t, precision>
   {
     auto call(int) -> double;
     EVE_CALLABLE_OBJECT(func_t, func_);
