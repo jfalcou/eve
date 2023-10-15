@@ -197,11 +197,11 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @struct conditional
+  //!   @struct conditional_options
   //!   @brief Option specification for decoration via conditional value and expressions
   //!
-  //!   eve::conditional is an option specification that can be used when defining a eve::callable type to make it
-  //!   supports decoration via `bool`, eve::logical, any eve::conditional_expr or any eve::relative_conditional_expr.
+  //!   eve::conditional_options is an option specification that can be used when defining a eve::callable type to make
+  //!   it supports decoration via `bool`, eve::logical, any eve::conditional_expr or eve::relative_conditional_expr.
   //!
   //!   @groupheader{Example}
   //!
@@ -240,11 +240,11 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @struct relative_conditional
+  //!   @struct relative_conditional_options
   //!   @brief Option specification for decoration via relative conditional value and expressions
   //!
-  //!   eve::relative_conditional is an option specification that can be used when defining a eve::callable type to
-  //!   make it supports decoration via  any eve::relative_conditional_expr.
+  //!   eve::relative_conditional_options is an option specification that can be used when defining a eve::callable
+  //!   type to make it supports decoration via  any eve::relative_conditional_expr.
   //!
   //!   @groupheader{Example}
   //!
