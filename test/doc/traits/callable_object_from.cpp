@@ -23,8 +23,8 @@ namespace my_lib
   // As func_t used EVE_CALLABLE_OBJECT_FROM, we can write overloads in this namespace
   namespace impl
   {
-    auto func_(EVE_REQUIRES(eve::cpu_), auto, eve::integral_value auto x) {  return x*x;  }
-    auto func_(EVE_REQUIRES(eve::cpu_), auto, double x)                   {  return 1./x; }
+    auto func_(EVE_REQUIRES(eve::cpu_), eve::callable_options auto const&, eve::integral_value auto x) {  return x*x;  }
+    auto func_(EVE_REQUIRES(eve::cpu_), eve::callable_options auto const&, double x)                   {  return 1./x; }
   }
 }
 

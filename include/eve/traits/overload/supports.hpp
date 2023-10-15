@@ -13,6 +13,18 @@
 
 namespace eve
 {
+  template<typename T>
+  concept callable_options = rbr::concepts::settings<T>;
+
+  template<typename T>
+  concept callable_option = rbr::concepts::option<T>;
+
+  template<typename Option, auto Keyword>
+  concept exactly = rbr::concepts::exactly<Option,Keyword>;
+}
+
+namespace eve
+{
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
@@ -64,27 +76,11 @@ namespace eve::detail
   }
 
   //====================================================================================================================
-  // Internal concept checking if an option is supported by a specification
-  //====================================================================================================================
-  template<typename Spec, typename O>
-  concept supports_option = requires(Spec sp, O const& o) { { sp[o] }; };
-
-  //====================================================================================================================
-  // Internal concept checking if an option is supported by a any specification in a given subset
-  //====================================================================================================================
-  template<typename O, typename... Specs>
-  concept is_supported = (supports_option<Specs,O> || ... );
-
-  //====================================================================================================================
   // Internal option carrying conditional mask or conditional expressions
   //====================================================================================================================
   struct condition_key_t : rbr::as_keyword<condition_key_t>
   {
     using rbr::as_keyword<condition_key_t>::operator=;
-    template<typename T> static constexpr bool check()
-    {
-      return conditional_expr<std::remove_cvref_t<T>> || logical_value<std::remove_cvref_t<T>>;
-    }
   };
 }
 
@@ -113,7 +109,7 @@ namespace eve
 namespace eve::detail
 {
   //====================================================================================================================
-  // Intermediate type for handling chains of option like in func[opt1 = y][opt2 = x][ignore](...)
+  // Intermediate type for handling chains of option like in func[opt1][opt2][ignore](...)
   //====================================================================================================================
   template<typename Tag, typename Settings, typename... Specs>
   struct decorated_fn : Specs...
@@ -212,6 +208,38 @@ namespace eve
     }
   };
 
+
+  //====================================================================================================================
+  //! @addtogroup extensions
+  //! @{
+  //!   @struct relative_conditional_option
+  //!   @brief Option specification for decoration via relative conditional value and expressions
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   eve::relative_conditional_option is an option specification that can be used when defining a eve::callable
+  //!   type to make it supports decoration via  any eve::relative_conditional_expr.
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/traits/callable_supports.cpp}
+  //! @}
+  //====================================================================================================================
+  struct relative_conditional_option
+  {
+    auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
+    {
+      return options{rbr::merge(options{condition_key = opt}, base)};
+    }
+
+    /// Default settings of eve::relative_conditional is eve::ignore_none
+    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
+  };
+
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
@@ -258,37 +286,6 @@ namespace eve
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
-  };
-
-  //====================================================================================================================
-  //! @addtogroup extensions
-  //! @{
-  //!   @struct relative_conditional_option
-  //!   @brief Option specification for decoration via relative conditional value and expressions
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   eve::relative_conditional_option is an option specification that can be used when defining a eve::callable
-  //!   type to make it supports decoration via  any eve::relative_conditional_expr.
-  //!
-  //!   @groupheader{Example}
-  //!
-  //!   @godbolt{doc/traits/callable_supports.cpp}
-  //! @}
-  //====================================================================================================================
-  struct relative_conditional_option
-  {
-    auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
-    {
-      return options{rbr::merge(options{condition_key = opt}, base)};
-    }
-
-    /// Default settings of eve::relative_conditional is eve::ignore_none
     EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
   };
 

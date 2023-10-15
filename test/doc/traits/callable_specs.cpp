@@ -13,12 +13,12 @@ namespace eve
   // Defines a support specification
   struct precision
   {
-    auto process_option(auto const& base, rbr::concepts::exactly<precise> auto opt) const
+    auto process_option(auto const& base, eve::exactly<precise> auto opt) const
     {
       return options{rbr::merge(options{opt}, base)};
     }
 
-    auto process_option(auto const& base, rbr::concepts::exactly<scale> auto opt) const
+    auto process_option(auto const& base, eve::exactly<scale> auto opt) const
     {
       return options{rbr::merge(options{opt}, base)};
     }
@@ -36,8 +36,7 @@ namespace eve
 
 namespace eve::detail
 {
-  template<typename D>
-  auto func_(EVE_REQUIRES(cpu_), eve::options<D> const& opt, int x)
+  auto func_(EVE_REQUIRES(cpu_), eve::callable_options auto const& opt, int x)
   {
     // We retrieve the option's value via the RABERU settings interface
     return  x * (opt[scale] ? 10. : 1.)
