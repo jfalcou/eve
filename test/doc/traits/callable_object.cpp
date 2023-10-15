@@ -5,7 +5,7 @@
 
 namespace eve
 {
-  struct func_t
+  struct func_t : callable<func_t>
   {
     // Supported signatures
     template<eve::integral_value T> auto call(T const&) -> T;

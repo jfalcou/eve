@@ -8,14 +8,14 @@ namespace eve
 {
   // + supports give rules for decorator to use on a given callable and a default set of options
   // + eve::conditional give the ability to pass a mask as a decoration.
-  struct func_t : supports<func_t, conditional_option>
+  struct func_t : callable<func_t>, supports<func_t, conditional_option>
   {
     // Note that decoration doesn't impact signature declaration
     template<eve::integral_value T> auto call(T const&) -> T;
     EVE_CALLABLE_OBJECT(func_t, func_);
   } inline constexpr func;
 
-  struct other_func_t : supports<func_t, relative_conditional_option>
+  struct other_func_t : callable<func_t>, supports<func_t, relative_conditional_option>
   {
     // Note that decoration doesn't impact signature declaration
     template<eve::integral_value T> auto call(T const&) -> T;

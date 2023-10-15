@@ -141,7 +141,7 @@ namespace eve::detail
     EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const
     -> decltype(std::declval<Tag>().call(std::declval<Args>()...))
     {
-      return Tag::deferred_call(eve::current_api, opts, EVE_FWD(args)...);
+      return Tag::behavior::process(eve::current_api, opts, EVE_FWD(args)...);
     }
 
     Settings opts;

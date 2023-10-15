@@ -9,7 +9,7 @@ namespace my_lib::impl { EVE_CALLABLE_NAMESPACE(); }
 // EVE_CALLABLE_OBJECT_FROM helps defining your own EVE-like callable in your own library
 namespace my_lib
 {
-  struct func_t
+  struct func_t : eve::callable<func_t>
   {
     // Supported signatures
     template<eve::integral_value T> auto call(T const&) -> T;

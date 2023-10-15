@@ -23,8 +23,8 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @concept callable
-  //!   @brief **EVE** callable
+  //!   @concept callable_object
+  //!   @brief **EVE** callable object
   //!
   //!   **Defined in Header**
   //!
@@ -32,13 +32,13 @@ namespace eve
   //!   #include <eve/module/core.hpp>
   //!   @endcode
   //!
-  //!   A type `T` satisfies eve::callable if and only if it is tagged as such manually.
+  //!   A type `T` satisfies eve::callable_object if and only if it is tagged as such manually.
   //!
   //!   @tparam T  T type for the @callable to check
   //! @}
   //====================================================================================================================
   template<typename T, typename...>
-  concept callable = requires(T const&) { typename T::callable_tag_type; };
+  concept callable_object = requires(T const&) { typename T::callable_tag_type; };
 }
 
 //======================================================================================================================
@@ -86,15 +86,12 @@ EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const                 
 -> decltype(std::declval<TYPE>().call(std::declval<Args>()...))                                                        \
 requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })                                                   \
 {                                                                                                                      \
-  return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);               \
+  return TYPE::behavior::process(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);           \
 }                                                                                                                      \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
 {                                                                                                                      \
-  if constexpr( requires { NAME(NS::adl_helper, arch, EVE_FWD(args)...); } )                                           \
-    return NAME(NS::adl_helper, arch, EVE_FWD(args)...);                                                               \
-  else                                                                                                                 \
-    return eve::detail::default_behavior<TYPE,Args...>::call(arch, EVE_FWD(args)...);                                  \
+  return NAME(NS::adl_helper, arch, EVE_FWD(args)...);                                                                 \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
 /**/
@@ -143,15 +140,12 @@ EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const                 
 -> decltype(std::declval<TYPE>().call(std::declval<Args>()...))                                                        \
 requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })                                                   \
 {                                                                                                                      \
-  return TYPE::deferred_call(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);               \
+  return TYPE::behavior::process(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);                                                     \
 }                                                                                                                      \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
 {                                                                                                                      \
-  if constexpr( requires { NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...); } )                                  \
-    return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                      \
-  else                                                                                                                 \
-    return eve::detail::default_behavior<TYPE,Args...>::call(arch, EVE_FWD(args)...);                                  \
+  return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                        \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
 /**/
