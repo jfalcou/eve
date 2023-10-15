@@ -991,6 +991,37 @@ namespace eve
   //! @}
   //================================================================================================
 
+  //====================================================================================================================
+  //! @name Deduction Guides
+  //! @{
+  //====================================================================================================================
+
+  /// Allows deduction from a single eve::scalar_value
+  template<scalar_value S> wide(S const&) -> wide<S, expected_cardinal_t<S>>;
+
+  /// Allows deduction from a @callable
+  template<eve::invocable<std::ptrdiff_t, std::ptrdiff_t> Generator>
+  wide(Generator&& g) -> wide<decltype( std::declval<Generator>()(0,0) )>;
+
+  /// Allows deduction from a pair of smaller wide
+  template<typename T, typename H>
+  wide(wide<T, H> const& l, wide<T, H> const& h) -> wide<T,typename H::combined_type>;
+
+  /// Allows deduction from variadic pack of eve::scalar_value
+  template<scalar_value S, std::same_as<S>... Ss>
+  wide(S, Ss...) -> wide<S,fixed<1+sizeof...(Ss)>>;
+
+  /// Allows deduction from a pair of iterators
+  template<std::input_iterator It>
+  wide(It, It) -> wide<std::remove_cvref_t<decltype(*std::declval<It>())>>;
+
+  /// Allows deduction from a Range
+  template<detail::range Range>
+  explicit wide(Range&& r) -> wide<std::remove_cvref_t<decltype(*std::begin(r))>>;
+  //====================================================================================================================
+  //! @}
+  //====================================================================================================================
+
   //==============================================================================================
   // Product type Support
   //==============================================================================================

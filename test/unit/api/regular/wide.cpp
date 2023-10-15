@@ -182,3 +182,50 @@ TTS_CASE_WITH( "Check eve::wide::combine behavior"
     TTS_PASS("No combine for 512 bits char wide");
   }
 };
+
+
+//==================================================================================================
+// Construct using CTAD
+//==================================================================================================
+TTS_CASE_TPL("Check eve::wide deduction guides", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  // Construct from a scalar
+  eve::wide  w0( T{7} );
+  TTS_EQUAL(w0.size(), eve::expected_cardinal_v<T>);
+  TTS_TYPE_IS(typename decltype(w0)::value_type, T);
+  TTS_TYPE_IS(typename decltype(w0)::value_type, T);
+
+  // Construct from scalars
+  eve::wide  w02( T{7}, T{7} );
+  eve::wide  w04( T{7}, T{7},T{7}, T{7} );
+  eve::wide  w08( T{7}, T{7},T{7}, T{7},T{7}, T{7},T{7}, T{7} );
+  TTS_EQUAL(w02.size(), 2);
+  TTS_TYPE_IS(typename decltype(w02)::value_type, T);
+  TTS_EQUAL(w04.size(), 4);
+  TTS_TYPE_IS(typename decltype(w04)::value_type, T);
+  TTS_EQUAL(w08.size(), 8);
+  TTS_TYPE_IS(typename decltype(w08)::value_type, T);
+
+  // Construct from a lambda
+  eve::wide  w1 = [](auto i, auto) { return static_cast<T>(1+i); };
+  TTS_EQUAL(w1.size(), eve::expected_cardinal_v<T>);
+  TTS_TYPE_IS(typename decltype(w1)::value_type, T);
+
+  // Construct from two smaller wide
+  eve::wide  w2(w0,w0);
+  TTS_EQUAL(w2.size(), 2*eve::expected_cardinal_v<T>);
+  TTS_TYPE_IS(typename decltype(w2)::value_type, T);
+
+  // Construct from iterators
+  T data[64] = {};
+  eve::wide w3(&data[0], &data[64]);
+  TTS_EQUAL(w3.size(), eve::expected_cardinal_v<T>);
+  TTS_TYPE_IS(typename decltype(w3)::value_type, T);
+
+  // Construct from a range
+  std::vector<T> rdata(64);
+  eve::wide w4(rdata);
+  TTS_EQUAL(w4.size(), eve::expected_cardinal_v<T>);
+  TTS_TYPE_IS(typename decltype(w4)::value_type, T);
+};
