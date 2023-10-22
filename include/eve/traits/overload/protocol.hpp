@@ -134,14 +134,10 @@ using callable_tag_type     = TYPE                                              
 //! @}
 //======================================================================================================================
 // THIS MACRO IS DUPLICATED TO ENSURE ERROR MESSAGE QUALITY
+#define EVE_DISPATCH_CALL(...)                                                                                  \
+this->behavior(eve::current_api, this->options(), __VA_ARGS__) \
+
 #define EVE_CALLABLE_OBJECT(TYPE,NAME)                                                                                 \
-template<typename... Args>                                                                                             \
-EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const                                                        \
--> decltype(std::declval<TYPE>().call(std::declval<Args>()...))                                                        \
-requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })                                                   \
-{                                                                                                                      \
-  return TYPE::behavior::process(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);                                                     \
-}                                                                                                                      \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
 {                                                                                                                      \

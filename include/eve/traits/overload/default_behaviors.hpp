@@ -34,11 +34,17 @@ namespace eve
   {
     struct behavior
     {
-      template<typename... Ts> static constexpr auto process(auto, Ts const&... xs)
+      template<typename... Ts> static constexpr auto process(auto arch, Ts const&... xs)
       requires( simd_value<Ts> || ...)
       {
-        if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(Tag{}, xs...);
-        else                                            return map(Tag{}, xs...);
+        // If a deferred call is present, let's call it
+        if constexpr( requires{ Tag::deferred_call(arch, xs...); } ) return Tag::deferred_call(arch, xs...);
+        else
+        {
+          // if not, try to slice/aggregate from smaller wides or to map the scalar version
+          if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(Tag{}, xs...);
+          else                                            return map(Tag{}, xs...);
+        }
       }
     };
   };

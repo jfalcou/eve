@@ -43,11 +43,13 @@ namespace eve
   //!   @tparam Settings @raberu settings type to wrap.
   //! @}
   //====================================================================================================================
-  template <rbr::concepts::settings Settings>
+  template <rbr::concepts::settings Settings = rbr::settings<>>
   struct options : Settings
   {
     template <rbr::concepts::option... Options>
     constexpr EVE_FORCEINLINE explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
+
+    constexpr EVE_FORCEINLINE options() : Settings{} {}
 
     template <typename... Options>
     constexpr EVE_FORCEINLINE explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
@@ -135,7 +137,7 @@ namespace eve::detail
     // Behave as a callable but pass the current bundle of options to the deferred_call handler
     template<typename... Args>
     EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const
-    -> decltype(std::declval<Tag>().call(std::declval<Args>()...))
+    -> decltype(std::declval<Tag>()(std::declval<Args>()...))
     {
       return Tag::behavior::process(eve::current_api, opts, EVE_FWD(args)...);
     }
@@ -262,27 +264,28 @@ namespace eve
   //====================================================================================================================
   struct conditional_option
   {
-    auto process_option(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
+    auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
-      return options{rbr::merge(options{opt}, base)};
+      auto new_opts = rbr::merge(rbr::settings{opt}, base);
+      return options<decltype(new_opts)>{new_opts};
     }
 
     template<std::same_as<bool> O>
-    auto process_option(auto const& base, O opt) const
+    auto process(auto const& base, O opt) const
     {
       // Just delay the evaluation of the type by injecting some templates
       using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
-      return process_option(base, condition_key = if_(logical<type>(opt)) );
+      return process(base, condition_key = if_(logical<type>(opt)) );
     }
 
-    auto process_option(auto const& base, eve::logical_value auto opt) const
+    auto process(auto const& base, eve::logical_value auto opt) const
     {
-      return process_option(base, condition_key = opt);
+      return process(base, condition_key = opt);
     }
 
-    auto process_option(auto const& base, eve::conditional_expr auto opt) const
+    auto process(auto const& base, eve::conditional_expr auto opt) const
     {
-      return process_option(base, condition_key = opt);
+      return process(base, condition_key = opt);
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
