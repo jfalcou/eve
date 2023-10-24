@@ -477,6 +477,17 @@ template&lt;typename Type &gt; </td></tr>
 <tr class="memitem:gae07cec0ceff676cedb02884af507fd2c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c">swap_if</a> (Mask const &amp;mask, Value &amp;lhs, Value &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:gae07cec0ceff676cedb02884af507fd2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional swap.  <br /></td></tr>
 <tr class="separator:gae07cec0ceff676cedb02884af507fd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Deduction Guides</div></td></tr>
+<tr class="memitem:a69ab9db52c90128a055b0aaf62db8892"><td class="memTemplParams" colspan="2"><a id="a69ab9db52c90128a055b0aaf62db8892" name="a69ab9db52c90128a055b0aaf62db8892"></a>
+template&lt;scalar_value S&gt; </td></tr>
+<tr class="memitem:a69ab9db52c90128a055b0aaf62db8892"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S const &amp;) -&gt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; S, <a class="el" href="group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5">expected_cardinal_t</a>&lt; S &gt; &gt;</td></tr>
+<tr class="memdesc:a69ab9db52c90128a055b0aaf62db8892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows deduction from a single <a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value.">eve::scalar_value</a>. <br /></td></tr>
+<tr class="separator:a69ab9db52c90128a055b0aaf62db8892"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac72f0e04016942948dc0d1bf861296f4"><td class="memTemplParams" colspan="2"><a id="ac72f0e04016942948dc0d1bf861296f4" name="ac72f0e04016942948dc0d1bf861296f4"></a>
+template&lt;scalar_value S, std::same_as&lt; S &gt;... Ss&gt; </td></tr>
+<tr class="memitem:ac72f0e04016942948dc0d1bf861296f4"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>wide</b> (S, Ss...) -&gt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; S, <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt; 1+sizeof...(Ss)&gt; &gt;</td></tr>
+<tr class="memdesc:ac72f0e04016942948dc0d1bf861296f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows deduction from variadic pack of <a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value.">eve::scalar_value</a>. <br /></td></tr>
+<tr class="separator:ac72f0e04016942948dc0d1bf861296f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>

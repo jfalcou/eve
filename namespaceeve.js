@@ -105,6 +105,8 @@ var namespaceeve =
     [ "map_alternative", "group__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1", null ],
     [ "reverse_conditional", "group__conditional_gab99c14f8c7e6cd5fc693a79c97bc89d8.html#gab99c14f8c7e6cd5fc693a79c97bc89d8", null ],
     [ "swap_if", "group__core__logical_gae07cec0ceff676cedb02884af507fd2c.html#gae07cec0ceff676cedb02884af507fd2c", null ],
+    [ "wide", "namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892", null ],
+    [ "wide", "namespaceeve.html#ac72f0e04016942948dc0d1bf861296f4", null ],
     [ "abs", "group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1", null ],
     [ "absmax", "group__core__arithmetic_ga166acc1f0809dd5181999e09379c8dbe.html#ga166acc1f0809dd5181999e09379c8dbe", null ],
     [ "absmin", "group__core__arithmetic_ga52e358ea1c9b4df51da813110fd09a30.html#ga52e358ea1c9b4df51da813110fd09a30", null ],
