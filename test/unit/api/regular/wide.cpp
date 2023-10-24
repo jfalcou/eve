@@ -182,3 +182,28 @@ TTS_CASE_WITH( "Check eve::wide::combine behavior"
     TTS_PASS("No combine for 512 bits char wide");
   }
 };
+
+
+//==================================================================================================
+// Construct using CTAD
+//==================================================================================================
+TTS_CASE_TPL("Check eve::wide deduction guides", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  // Construct from a scalar
+  eve::wide  w0( T{7} );
+  TTS_EQUAL(w0.size(), eve::expected_cardinal_v<T>);
+  TTS_TYPE_IS(typename decltype(w0)::value_type, T);
+  TTS_TYPE_IS(typename decltype(w0)::value_type, T);
+
+  // Construct from scalars
+  eve::wide  w02( T{7}, T{7} );
+  eve::wide  w04( T{7}, T{7},T{7}, T{7} );
+  eve::wide  w08( T{7}, T{7},T{7}, T{7},T{7}, T{7},T{7}, T{7} );
+  TTS_EQUAL(w02.size(), 2);
+  TTS_TYPE_IS(typename decltype(w02)::value_type, T);
+  TTS_EQUAL(w04.size(), 4);
+  TTS_TYPE_IS(typename decltype(w04)::value_type, T);
+  TTS_EQUAL(w08.size(), 8);
+  TTS_TYPE_IS(typename decltype(w08)::value_type, T);
+};

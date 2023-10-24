@@ -21,7 +21,7 @@ jobs:
   no_pch:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
       options: -u root
     strategy:
       fail-fast: false
@@ -112,7 +112,7 @@ jobs:
   x86-clang:
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
       options: -u root
     strategy:
       fail-fast: false
@@ -142,7 +142,7 @@ jobs:
     needs: x86-clang
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
       options: -u root
     strategy:
       fail-fast: false
@@ -176,7 +176,7 @@ jobs:
     needs: other-arch
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
       options: -u root
     strategy:
       fail-fast: false
@@ -206,7 +206,7 @@ jobs:
     needs: x86-gcc
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
       options: -u root
     strategy:
       fail-fast: false
@@ -272,7 +272,7 @@ jobs:
     needs: x86-custom
     runs-on: [self-hosted, generic-x86]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
       options: -u root
     strategy:
       fail-fast: false
