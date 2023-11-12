@@ -113,6 +113,9 @@ namespace eve
   {
     using Options::process...;
 
+    constexpr EVE_FORCEINLINE decorated_with() {}
+    constexpr EVE_FORCEINLINE decorated_with(OptionsValues v) : OptionsValues(std::move(v)) {}
+
     //==================================================================================================================
     //! @brief Adds an option to current callable
     //!
