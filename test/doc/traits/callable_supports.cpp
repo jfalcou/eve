@@ -6,21 +6,31 @@
 
 namespace eve
 {
-  // + supports give rules for decorator to use on a given callable and a default set of options
-  // + eve::conditional give the ability to pass a mask as a decoration.
-  struct func_t : basic_callable<func_t>, supports<func_t, conditional_option>
+  // + callable can add rules for decorator to use on a given callable and a default set of options
+  // + eve::conditional_option give the ability to pass a mask as a decoration.
+  template<typename Options>
+  struct func_t : callable<func_t, Options, conditional_option>
   {
     // Note that decoration doesn't impact signature declaration
-    template<eve::integral_value T> auto call(T const&) -> T;
+    template<eve::integral_value T>
+    EVE_FORCEINLINE auto  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(func_t, func_);
-  } inline constexpr func;
+  };
 
-  struct other_func_t : basic_callable<func_t>, supports<func_t, relative_conditional_option>
+  // Build the callable object from the function object type
+  inline constexpr auto func = functor<func_t>;
+
+  template<typename Options>
+  struct other_func_t : callable<other_func_t, Options, relative_conditional_option>
   {
     // Note that decoration doesn't impact signature declaration
-    template<eve::integral_value T> auto call(T const&) -> T;
+    template<eve::integral_value T>
+    EVE_FORCEINLINE auto  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(other_func_t, other_func_);
-  } inline constexpr other_func;
+  };
+
+  // Build the callable object from the function object type
+  inline constexpr auto other_func = functor<other_func_t>;
 };
 
 namespace eve::detail
@@ -60,18 +70,18 @@ int main()
   std::cout << eve::other_func[eve::keep_between(2,6)](eve::wide<short>{77}) << "\n";
 
   std::cout << "Is func[bool] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::func_t, bool>
+            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::func>, bool>
             << "\n";
 
   std::cout << "Is func[eve::keep_between] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::func_t, eve::keep_between>
+            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::func>, eve::keep_between>
             << "\n";
 
   std::cout << "Is other_func[bool] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::other_func_t, bool>
+            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::other_func>, bool>
             << "\n";
 
   std::cout << "Is other_func[eve::keep_between] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::other_func_t, eve::keep_between>
+            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::other_func>, eve::keep_between>
             << "\n";
 }

@@ -13,25 +13,27 @@ namespace eve
   // Defines a support specification
   struct precision
   {
-    auto process_option(auto const& base, eve::exactly<precise> auto opt) const
+    template<eve::callable_option O>
+    auto process(auto const& base, O const& opt) const
+    //requires( eve::options<O>::contains_any(precise, scale))
     {
-      return options{rbr::merge(options{opt}, base)};
+      auto new_opts = rbr::merge(options{opt}, base);
+      return options<decltype(new_opts)>{new_opts};
     }
 
-    auto process_option(auto const& base, eve::exactly<scale> auto opt) const
-    {
-      return options{rbr::merge(options{opt}, base)};
-    }
-
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{};  }
+    constexpr auto default_to(auto const& base) const noexcept { return base; }
   };
 
   // Make this callable supports the precision options
-  struct func_t : basic_callable<func_t>, supports<func_t, precision>
+  template<typename Options>
+  struct func_t : callable<func_t, Options, precision>
   {
-    auto call(int) -> double;
+    double operator()(int v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(func_t, func_);
-  } inline constexpr func;
+  };
+
+  // Build the callable object from the function object type
+  inline constexpr auto func = functor<func_t>;
 };
 
 namespace eve::detail
@@ -40,7 +42,7 @@ namespace eve::detail
   {
     // We retrieve the option's value via the RABERU settings interface
     return  x * (opt[scale] ? 10. : 1.)
-              + (opt[precise] ? 3.14159 : 3.14);
+              + (opt[precise] ? 3.1416 : 3.2);
   }
 }
 

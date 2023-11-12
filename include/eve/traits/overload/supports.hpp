@@ -46,10 +46,10 @@ namespace eve
   template <rbr::concepts::settings Settings = rbr::settings<>>
   struct options : Settings
   {
+    constexpr EVE_FORCEINLINE options() : Settings{} {}
+
     template <rbr::concepts::option... Options>
     constexpr EVE_FORCEINLINE explicit options(Options && ... opts) : Settings(EVE_FWD(opts) ...) {}
-
-    constexpr EVE_FORCEINLINE options() : Settings{} {}
 
     template <typename... Options>
     constexpr EVE_FORCEINLINE explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
@@ -65,29 +65,102 @@ namespace eve
 //======================================================================================================================
 // Overload's helpers
 //======================================================================================================================
-namespace eve::detail
+namespace eve
 {
   //====================================================================================================================
-  //  Delay the access to defaults() to after the proper operator() has been selected.
-  //  Also returns an empty set of options by default
+  //! @addtogroup extensions
+  //! @{
+  //!   @var functor
+  //!   @brief EVE's @callable generator
+  //! @}
   //====================================================================================================================
-  template<typename T, typename...> EVE_FORCEINLINE constexpr auto defaults()
-  {
-    if constexpr(requires { T::defaults(); }) return T::defaults();
-    else                                      return options{};
-  }
+  template<template<typename> class Func>
+  inline constexpr auto functor = Func<eve::options<>>{};
+
+  template<auto Func>
+  using tag_of = std::remove_cvref_t<decltype(Func)>;
 
   //====================================================================================================================
-  // Internal option carrying conditional mask or conditional expressions
+  //! @addtogroup extensions
+  //! @{
+  //!   @struct decorated_with
+  //!   @brief Helper class to aggregate options handlers and states
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   EVE's @callable can be decorated with options. eve::decorated_with is used to list all subset of options a
+  //!   given EVE's @callable is allowed to support, how to handle the default values of such subsets and how to store
+  //!   said options states.
+  //!
+  //!   @tparam OptionsValues Options state type
+  //!   @tparam Options       List of options specifications to support
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @subgroupheader{Interaction with eve::conditional}
+  //!   @godbolt{doc/traits/callable_supports.cpp}
+  //!
+  //!   @subgroupheader{Interaction with custom specifications}
+  //!   @godbolt{doc/traits/callable_specs.cpp}
+  //! @}
   //====================================================================================================================
-  struct condition_key_t : rbr::as_keyword<condition_key_t>
+  template< typename OptionsValues, typename... Options>
+  struct decorated_with : OptionsValues, Options...
   {
-    using rbr::as_keyword<condition_key_t>::operator=;
+    using Options::process...;
+
+    //==================================================================================================================
+    //! @brief Adds an option to current callable
+    //!
+    //! If the option `o` is supported by one of the specifications `Spec`, build a new @callable that will behave as
+    //! an instance of `Tag` except the option `o` is passed inside an eve::options as an additional parameter.
+    //!
+    //! Does not participate in overload resolution if `o` is not supported by any option specifications.
+    //!
+    //! @param o Option to add to current's @callable setup
+    //! @return A new @callable with the options `o` set.
+    //==================================================================================================================
+    template<typename O>
+    auto operator[](O o) const
+    requires( requires(OptionsValues const& ov) { this->process(ov,o);} )
+    {
+      return process(self(), o);
+    }
+
+    /// Retrieves the current options' state, including processed default
+    decltype(auto) options() const
+    {
+      return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
+                            , kumi::tuple<Options...>{}
+                            , self()
+                            );
+    }
+
+    // Short-cut to current state values
+    decltype(auto) self() const { return static_cast<OptionsValues const&>(*this); }
   };
 }
 
+//======================================================================================================================
+// Helper options for conditional specs
+//======================================================================================================================
 namespace eve
 {
+  namespace detail
+  {
+    //==================================================================================================================
+    // Internal option carrying conditional mask or conditional expressions
+    //==================================================================================================================
+    struct condition_key_t : rbr::as_keyword<condition_key_t>
+    {
+      using rbr::as_keyword<condition_key_t>::operator=;
+    };
+  }
+
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
@@ -106,110 +179,6 @@ namespace eve
   //! @}
   //====================================================================================================================
   inline constexpr detail::condition_key_t condition_key = {};
-}
-
-namespace eve::detail
-{
-  //====================================================================================================================
-  // Intermediate type for handling chains of option like in func[opt1][opt2][ignore](...)
-  //====================================================================================================================
-  template<typename Tag, typename Settings, typename... Specs>
-  struct decorated_fn : Specs...
-  {
-    protected:
-    using Specs::process_option...;
-
-    public:
-    using callable_tag_type = void;
-
-    explicit decorated_fn(Settings s) : opts(std::move(s)) {}
-
-    template<typename O>
-    EVE_FORCEINLINE auto operator[](O const& o) const
-    -> decltype ( decorated_fn<Tag,decltype(process_option(std::declval<Settings>(), o)),Specs...>
-                  {process_option(std::declval<Settings>(), o)}
-                )
-    {
-      auto new_opts = process_option(opts, o);
-      return decorated_fn<Tag,decltype(new_opts),Specs...>{new_opts};
-    }
-
-    // Behave as a callable but pass the current bundle of options to the deferred_call handler
-    template<typename... Args>
-    EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const
-    -> decltype(std::declval<Tag>()(std::declval<Args>()...))
-    {
-      return Tag::behavior::process(eve::current_api, opts, EVE_FWD(args)...);
-    }
-
-    Settings opts;
-  };
-}
-
-namespace eve
-{
-  //====================================================================================================================
-  //! @addtogroup extensions
-  //! @{
-  //!   @struct supports
-  //!   @brief Helper class to aggregate options handlers
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   eve::callable can be decorated with options. eve::supports is used to list all subset of options a given EVE
-  //!   @callable is allowed to support and to handle the default values of such subsets.
-  //!
-  //!   @tparam Tag Type of current @callable being implemented
-  //!   @tparam Specs List of options specifications to support
-  //!
-  //!   @groupheader{Example}
-  //!
-  //!   @subgroupheader{Interaction with eve::conditional}
-  //!   @godbolt{doc/traits/callable_supports.cpp}
-  //!
-  //!   @subgroupheader{Interaction with custom specifications}
-  //!   @godbolt{doc/traits/callable_specs.cpp}
-  //! @}
-  //====================================================================================================================
-  template<typename Tag, typename... Specs>
-  struct supports : Specs...
-  {
-    protected:
-    using Specs::process_option...;
-
-    public:
-    // Aggregate all defaults from all Specs
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept
-    {
-      return  kumi::fold_left ( [](auto const& acc, auto const& e) { return options{rbr::merge(e,acc)}; }
-                              , kumi::make_tuple(Specs::defaults()...)
-                              );
-    }
-
-    //==================================================================================================================
-    //! @brief Adds an option to current callable
-    //!
-    //! If the option `o` is supported by one of the specifications `Spec`, build a new @callable that will behave as
-    //! an instance of `Tag` except the option `o` is passed inside an eve::options as an additional parameter.
-    //!
-    //! Does not participate in overload resolution if `o` is not support by any option specifications.
-    //!
-    //! @param o Option to add to current's @callable setup
-    //! @return A eve::decorated_callable behaving as `Tag` but with the options `o` set.
-    //==================================================================================================================
-    template<typename O>
-    EVE_FORCEINLINE auto operator[](O const& o) const
-    -> decltype( detail::decorated_fn<Tag,decltype(process_option(defaults(), o)),Specs...>(process_option(defaults(), o)) )
-    {
-      auto opts = process_option(defaults(), o);
-      return detail::decorated_fn<Tag,decltype(opts),Specs...>(opts);
-    }
-  };
-
 
   //====================================================================================================================
   //! @addtogroup extensions
@@ -233,13 +202,18 @@ namespace eve
   //====================================================================================================================
   struct relative_conditional_option
   {
-    auto process_option(auto const& base, eve::relative_conditional_expr auto opt) const
+    auto process(auto const& base, eve::relative_conditional_expr auto opt) const
     {
-      return options{rbr::merge(options{condition_key = opt}, base)};
+      auto new_opts = rbr::merge(options{condition_key = opt}, base);
+      return options<decltype(new_opts)>{new_opts};
     }
 
     /// Default settings of eve::relative_conditional is eve::ignore_none
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const noexcept
+    {
+      auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
+      return options<decltype(new_opts)>{new_opts};
+    }
   };
 
   //====================================================================================================================
@@ -289,7 +263,11 @@ namespace eve
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
-    EVE_FORCEINLINE static constexpr auto defaults() noexcept { return options{condition_key = ignore_none};  }
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const noexcept
+    {
+      auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
+      return options<decltype(new_opts)>{new_opts};
+    }
   };
 
   /// Checks if the type associated to a given Keyword in a Option pack is equal to Type

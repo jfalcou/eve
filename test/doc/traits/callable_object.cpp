@@ -5,16 +5,21 @@
 
 namespace eve
 {
-  struct func_t : basic_callable<func_t>
+  template<typename Options>
+  struct func_t : callable<func_t, Options>
   {
-    // Supported signatures
-    template<eve::integral_value T> auto call(T const&) -> T;
-                                    auto call(double)   -> double;
-                                    auto call(float)    =  delete;
+    // operator() are defined here to maximize quality of error message. They all use EVE_DISPATCH_CALL at some point.
+    template<eve::integral_value T>
+    EVE_FORCEINLINE auto  operator()(T v)       const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE auto  operator()(double v)  const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE auto  operator()(float)     const = delete;
 
-    // Register this callable type to EVE overload system
+    // This ties the function object to the overload set
     EVE_CALLABLE_OBJECT(func_t, func_);
-  } inline constexpr func;
+  };
+
+  // Build the callable object from the function object type
+  inline constexpr auto func = functor<func_t>;
 };
 
 // As func_t used EVE_CALLABLE_OBJECT, we should write overloads in eve::detail
@@ -30,11 +35,15 @@ int main()
   std::cout << eve::func(eve::wide<short>{77}) << "\n";
   std::cout << eve::func(25.) << "\n";
 
-  std::cout << "Is func(float) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::func_t, float>
+  std::cout << "Is func(double) supported     : "
+            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::func>, double>
+            << "\n";
+
+  std::cout << "Is func(float) supported      : "
+            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::func>, float>
             << "\n";
 
   std::cout << "Is func(wide<float>) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::func_t, eve::wide<float>>
+            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::func>, eve::wide<float>>
             << "\n";
 }

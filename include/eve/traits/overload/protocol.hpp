@@ -70,7 +70,7 @@ namespace eve
 //!   object which supports decorators and use an external function to specify its implementation.
 //!
 //!   @ref EVE_CALLABLE_OBJECT_FROM relies on its enclosing type to provide at least one declaration of a member function
-//!   named `call`which represent the expected prototype of the function object, including potential constraints, and
+//!   named `call` which represent the expected prototype of the function object, including potential constraints, and
 //!   its associated return type. @ref EVE_CALLABLE_OBJECT also relies on the existence of an appropriate number of
 //!   function overloads named `NAME` defined in the `NS` namespace. Those function contains the implementation
 //!   of the @callable overload for each pre-defined function.
@@ -82,20 +82,14 @@ namespace eve
 //======================================================================================================================
 #define EVE_CALLABLE_OBJECT_FROM(NS,TYPE,NAME)                                                                         \
 template<typename... Args>                                                                                             \
-EVE_FORCEINLINE constexpr auto operator()(Args&&... args) const                                                        \
--> decltype(std::declval<TYPE>().call(std::declval<Args>()...))                                                        \
-requires( requires { std::declval<TYPE>().call(EVE_FWD(args)...); })                                                   \
-{                                                                                                                      \
-  return TYPE::behavior::process(eve::current_api, eve::detail::defaults<TYPE,Args...>(), EVE_FWD(args)...);           \
-}                                                                                                                      \
-template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
 {                                                                                                                      \
-  return NAME(NS::adl_helper, arch, EVE_FWD(args)...);                                                                 \
+  return NAME( NS::adl_helper, arch, EVE_FWD(args)...);                                                                \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
 /**/
 
+// THIS MACRO IS DUPLICATED TO ENSURE ERROR MESSAGE QUALITY
 //======================================================================================================================
 //! @addtogroup extensions
 //! @{
@@ -123,7 +117,7 @@ using callable_tag_type     = TYPE                                              
 //!   object which supports decorators and use an external function to specify its implementation.
 //!
 //!   @ref EVE_CALLABLE_OBJECT relies on its enclosing type to provide at least one declaration of a member function
-//!   named `call`which represent the expected prototype of the function object, including potential constraints, and
+//!   named `call` which represent the expected prototype of the function object, including potential constraints, and
 //!   its associated return type. @ref EVE_CALLABLE_OBJECT also relies on the existence of an appropriate number of
 //!   function overloads named `NAME` defined in the eve::detail namespace. Those function contains the implementation
 //!   of the @callable overload for each pre-defined function.
@@ -133,10 +127,6 @@ using callable_tag_type     = TYPE                                              
 //!   @godbolt{doc/traits/callable_object.cpp}
 //! @}
 //======================================================================================================================
-// THIS MACRO IS DUPLICATED TO ENSURE ERROR MESSAGE QUALITY
-#define EVE_DISPATCH_CALL(...)                                                                                  \
-this->behavior(eve::current_api, this->options(), __VA_ARGS__) \
-
 #define EVE_CALLABLE_OBJECT(TYPE,NAME)                                                                                 \
 template<typename... Args>                                                                                             \
 static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
@@ -144,6 +134,17 @@ static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) no
   return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                        \
 }                                                                                                                      \
 using callable_tag_type     = TYPE                                                                                     \
+/**/
+
+//======================================================================================================================
+//! @addtogroup extensions
+//! @{
+//!   @def EVE_DISPATCH_CALL
+//!   @brief Generate the proper call to current EVE's @callable implementation
+//! @}
+//======================================================================================================================
+#define EVE_DISPATCH_CALL(...)                                                                                         \
+this->behavior(eve::current_api, this->options(), __VA_ARGS__)                                                         \
 /**/
 
 //======================================================================================================================
@@ -158,7 +159,13 @@ struct adl_helper_t {};                                                         
 inline constexpr auto adl_helper = adl_helper_t {}                                                                     \
 /**/
 
-/// Flag a function to support delayed calls on given architecture
+//======================================================================================================================
+//! @addtogroup extensions
+//! @{
+//!   @def EVE_REQUIRES
+//!   @brief Flag a function to support delayed calls on given architecture
+//! @}
+//======================================================================================================================
 #define EVE_REQUIRES(ARCH) adl_helper_t const &, ARCH const &
 
 // Register eve::detail as the deferred namespace by default
