@@ -82,7 +82,8 @@ namespace eve
 //======================================================================================================================
 #define EVE_CALLABLE_OBJECT_FROM(NS,TYPE,NAME)                                                                         \
 template<typename... Args>                                                                                             \
-static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
+static EVE_FORCEINLINE auto deferred_call(auto arch, Args&&...args) noexcept                                           \
+-> decltype(NAME(NS::adl_helper, arch, EVE_FWD(args)...))                                                              \
 {                                                                                                                      \
   return NAME( NS::adl_helper, arch, EVE_FWD(args)...);                                                                \
 }                                                                                                                      \
@@ -129,7 +130,8 @@ using callable_tag_type     = TYPE                                              
 //======================================================================================================================
 #define EVE_CALLABLE_OBJECT(TYPE,NAME)                                                                                 \
 template<typename... Args>                                                                                             \
-static EVE_FORCEINLINE decltype(auto) deferred_call(auto arch, Args&&...args) noexcept                                 \
+static EVE_FORCEINLINE auto deferred_call(auto arch, Args&&...args) noexcept                                           \
+-> decltype(NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...))                                                     \
 {                                                                                                                      \
   return NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                        \
 }                                                                                                                      \

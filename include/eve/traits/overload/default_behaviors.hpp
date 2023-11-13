@@ -13,6 +13,12 @@
 
 namespace eve
 {
+  namespace detail
+  {
+    // Usual object function so we can have EVE_FORCEINLINE there for QoI on ARM/AARCH64
+    inline struct { EVE_FORCEINLINE auto operator()(auto, auto x) const { return x; } } eval_2nd = {};
+  }
+
   //====================================================================================================================
 
   //====================================================================================================================
@@ -48,23 +54,42 @@ namespace eve
           , typename OptionsValues
           , typename... Options
           >
-  struct elementwise
+  struct elementwise_callable : callable<Func, OptionsValues, conditional_option, Options...>
   {
-    template<typename... Ts> constexpr auto behavior(auto arch, Ts const&... xs)
-    requires( simd_value<Ts> || ...)
-    {
-      using tag_t = Func<OptionsValues>;
+    Func<OptionsValues> const& current() const { return static_cast<Func<OptionsValues>>(*this); }
 
-      // If a deferred call is present, let's call it
-      if constexpr( requires{ tag_t::deferred_call(arch, xs...); } )
+    template<callable_options O, typename T, typename... Ts>
+    constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    {
+      using func_t                =  Func<OptionsValues>;
+      constexpr bool is_supported = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
+      constexpr bool any_simd     = (simd_value<T> || ... || simd_value<Ts>);
+
+      // Are we dealing with a no-condition call ?
+      if constexpr( option_type_is<condition_key, O, ignore_none_> )
       {
-        return tag_t::deferred_call(arch, xs...);
+        // If a deferred call is present, let's call it
+        if      constexpr( is_supported )  return func_t::deferred_call(arch, opts, x0, xs...);
+        else if constexpr( any_simd )
+        {
+          // if not, try to slice/aggregate from smaller wides or to map the scalar version
+          if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(current(), x0, xs...);
+          else                                            return map(current(), x0, xs...);
+        }
       }
       else
       {
-        // if not, try to slice/aggregate from smaller wides or to map the scalar version
-        if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(tag_t{}, xs...);
-        else                                            return map(tag_t{}, xs...);
+        // Grab the condition
+        auto const cond     = opts[condition_key];
+
+        // Drop the conditional and process the function call with the universal masker
+        auto const rmv_cond = options{rbr::drop(condition_key, opts)};
+        auto const f        = Func<decltype(rmv_cond)>{rmv_cond};
+
+        // If the conditional call is supported, call it
+        if      constexpr( is_supported ) return detail::mask_op(cond, f, x0, xs...);
+        // if not, call the non-masked version then mask piecewise
+        else if constexpr( any_simd )     return detail::mask_op(cond, detail::eval_2nd, x0, f(x0,xs...));
       }
     }
   };
@@ -105,20 +130,28 @@ namespace eve
   struct constant_callable : callable<Func, OptionsValues, conditional_option, Options...>
   {
     template<typename O, typename T>
-    constexpr auto behavior(auto, O const& opts, as<T> const& target) const
+    constexpr auto behavior(auto arch, O const& opts, as<T> const& target) const
     {
-      // Compute the raw constant
-      auto const constant_value = [&]()
+      using func_t                =  Func<OptionsValues>;
+      if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )
       {
-        if      constexpr( requires{ Func<OptionsValues>::value(opts, target); } )
-          return Func<OptionsValues>::value(opts, target);
-        else if constexpr( requires{ Func<OptionsValues>::value(target); } )
-          return Func<OptionsValues>::value(target);
-      }();
+        return func_t::deferred_call(arch, opts, target);
+      }
+      else
+      {
+        // Compute the raw constant
+        auto const constant_value = [&]()
+        {
+          if      constexpr( requires{ Func<OptionsValues>::value(opts, target); } )
+            return Func<OptionsValues>::value(opts, target);
+          else if constexpr( requires{ Func<OptionsValues>::value(target); } )
+            return Func<OptionsValues>::value(target);
+        }();
 
-      // Apply a mask if any and replace missing values with 0 if no alternative is provided
-      if constexpr(option_type_is<condition_key, O, ignore_none_>) return constant_value;
-      else  return detail::mask_op(opts[condition_key],[](auto, auto x) { return x; }, 0, constant_value);
+        // Apply a mask if any and replace missing values with 0 if no alternative is provided
+        if constexpr(option_type_is<condition_key, O, ignore_none_>) return constant_value;
+        else  return detail::mask_op(opts[condition_key], detail::eval_2nd, 0, constant_value);
+      }
     }
   };
 }

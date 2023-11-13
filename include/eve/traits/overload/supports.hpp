@@ -8,20 +8,8 @@
 #pragma once
 
 #include <eve/logical.hpp>
-#include <eve/detail/raberu.hpp>
+#include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
-
-namespace eve
-{
-  template<typename T>
-  concept callable_options = rbr::concepts::settings<T>;
-
-  template<typename T>
-  concept callable_option = rbr::concepts::option<T>;
-
-  template<typename Option, auto Keyword>
-  concept exactly = rbr::concepts::exactly<Option,Keyword>;
-}
 
 namespace eve
 {
@@ -243,7 +231,7 @@ namespace eve
   {
     auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
-      auto new_opts = rbr::merge(rbr::settings{opt}, base);
+      auto new_opts = rbr::merge(base, rbr::settings{opt});
       return options<decltype(new_opts)>{new_opts};
     }
 
@@ -257,7 +245,7 @@ namespace eve
 
     auto process(auto const& base, eve::logical_value auto opt) const
     {
-      return process(base, condition_key = opt);
+      return process(base, condition_key = if_(opt));
     }
 
     auto process(auto const& base, eve::conditional_expr auto opt) const
