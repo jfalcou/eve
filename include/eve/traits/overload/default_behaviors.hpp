@@ -15,8 +15,7 @@ namespace eve
 {
   namespace detail
   {
-    // Usual object function so we can have EVE_FORCEINLINE there for QoI on ARM/AARCH64
-    inline struct { EVE_FORCEINLINE auto operator()(auto, auto x) const { return x; } } eval_2nd = {};
+    inline constexpr struct { EVE_FORCEINLINE auto operator()(auto, auto x) const { return x; } } return_2nd = {};
   }
 
   //====================================================================================================================
@@ -31,7 +30,7 @@ namespace eve
     using base = decorated_with<OptionsValues, Options...>;
 
     template<typename T>
-    auto operator[](T t) const
+    constexpr auto operator[](T t) const
     requires( requires(base const& b) { b[t];} )
     {
       auto new_traits = base::operator[](t);
@@ -45,6 +44,9 @@ namespace eve
     {
       return Func<OptionsValues>::deferred_call(arch, EVE_FWD(args)...);
     }
+
+    protected:
+    constexpr Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>>(*this); }
   };
 
   //====================================================================================================================
@@ -56,8 +58,6 @@ namespace eve
           >
   struct elementwise_callable : callable<Func, OptionsValues, conditional_option, Options...>
   {
-    Func<OptionsValues> const& current() const { return static_cast<Func<OptionsValues>>(*this); }
-
     template<callable_options O, typename T, typename... Ts>
     constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     {
@@ -73,8 +73,8 @@ namespace eve
         else if constexpr( any_simd )
         {
           // if not, try to slice/aggregate from smaller wides or to map the scalar version
-          if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(current(), x0, xs...);
-          else                                            return map(current(), x0, xs...);
+          if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(this->derived(), x0, xs...);
+          else                                            return map(this->derived(), x0, xs...);
         }
       }
       else
@@ -89,7 +89,7 @@ namespace eve
         // If the conditional call is supported, call it
         if      constexpr( is_supported ) return detail::mask_op(cond, f, x0, xs...);
         // if not, call the non-masked version then mask piecewise
-        else if constexpr( any_simd )     return detail::mask_op(cond, detail::eval_2nd, x0, f(x0,xs...));
+        else if constexpr( any_simd )     return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
       }
     }
   };
@@ -140,17 +140,11 @@ namespace eve
       else
       {
         // Compute the raw constant
-        auto const constant_value = [&]()
-        {
-          if      constexpr( requires{ Func<OptionsValues>::value(opts, target); } )
-            return Func<OptionsValues>::value(opts, target);
-          else if constexpr( requires{ Func<OptionsValues>::value(target); } )
-            return Func<OptionsValues>::value(target);
-        }();
+        auto const constant_value = Func<OptionsValues>::value(target,opts);
 
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
         if constexpr(option_type_is<condition_key, O, ignore_none_>) return constant_value;
-        else  return detail::mask_op(opts[condition_key], detail::eval_2nd, 0, constant_value);
+        else  return detail::mask_op(opts[condition_key], detail::return_2nd, 0, constant_value);
       }
     }
   };

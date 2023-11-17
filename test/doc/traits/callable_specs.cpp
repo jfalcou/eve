@@ -13,9 +13,8 @@ namespace eve
   // Defines a support specification
   struct precision
   {
-    template<eve::callable_option O>
+    template<eve::any_options_from<precise, scale> O>
     auto process(auto const& base, O const& opt) const
-    //requires( eve::options<O>::contains_any(precise, scale))
     {
       auto new_opts = rbr::merge(options{opt}, base);
       return options<decltype(new_opts)>{new_opts};

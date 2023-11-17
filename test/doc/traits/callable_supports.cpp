@@ -1,8 +1,7 @@
-#include "eve/conditional.hpp"
 #include <iostream>
 #include <type_traits>
 #include <eve/traits/overload.hpp>
-#include <eve/wide.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -13,7 +12,7 @@ namespace eve
   {
     // Note that decoration doesn't impact signature declaration
     template<eve::integral_value T>
-    EVE_FORCEINLINE auto  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(func_t, func_);
   };
 
@@ -25,7 +24,7 @@ namespace eve
   {
     // Note that decoration doesn't impact signature declaration
     template<eve::integral_value T>
-    EVE_FORCEINLINE auto  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
     EVE_CALLABLE_OBJECT(other_func_t, other_func_);
   };
 

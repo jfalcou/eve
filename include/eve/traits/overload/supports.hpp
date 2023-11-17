@@ -119,7 +119,7 @@ namespace eve
     auto operator[](O o) const
     requires( requires(OptionsValues const& ov) { this->process(ov,o);} )
     {
-      return process(self(), o);
+      return process(static_cast<OptionsValues const&>(*this), o);
     }
 
     /// Retrieves the current options' state, including processed default
@@ -127,12 +127,9 @@ namespace eve
     {
       return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
                             , kumi::tuple<Options...>{}
-                            , self()
+                            , static_cast<OptionsValues const&>(*this)
                             );
     }
-
-    // Short-cut to current state values
-    decltype(auto) self() const { return static_cast<OptionsValues const&>(*this); }
   };
 }
 
@@ -193,14 +190,14 @@ namespace eve
   //====================================================================================================================
   struct relative_conditional_option
   {
-    auto process(auto const& base, eve::relative_conditional_expr auto opt) const
+    EVE_FORCEINLINE constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
     {
       auto new_opts = rbr::merge(options{condition_key = opt}, base);
       return options<decltype(new_opts)>{new_opts};
     }
 
     /// Default settings of eve::relative_conditional is eve::ignore_none
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const noexcept
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
     {
       auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
       return options<decltype(new_opts)>{new_opts};
@@ -229,32 +226,32 @@ namespace eve
   //====================================================================================================================
   struct conditional_option
   {
-    auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
+    EVE_FORCEINLINE constexpr auto process(auto const& base, rbr::concepts::exactly<condition_key> auto opt) const
     {
       auto new_opts = rbr::merge(base, rbr::settings{opt});
       return options<decltype(new_opts)>{new_opts};
     }
 
     template<std::same_as<bool> O>
-    auto process(auto const& base, O opt) const
+    EVE_FORCEINLINE constexpr auto process(auto const& base, O opt) const
     {
       // Just delay the evaluation of the type by injecting some templates
       using type = std::conditional_t<std::same_as<bool,O>,std::uint8_t,O>;
       return process(base, condition_key = if_(logical<type>(opt)) );
     }
 
-    auto process(auto const& base, eve::logical_value auto opt) const
+    EVE_FORCEINLINE constexpr auto process(auto const& base, eve::logical_value auto opt) const
     {
       return process(base, condition_key = if_(opt));
     }
 
-    auto process(auto const& base, eve::conditional_expr auto opt) const
+    EVE_FORCEINLINE constexpr auto process(auto const& base, eve::conditional_expr auto opt) const
     {
       return process(base, condition_key = opt);
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const noexcept
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
     {
       auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
       return options<decltype(new_opts)>{new_opts};

@@ -19,4 +19,7 @@ namespace eve
 
   template<typename Option, auto Keyword>
   concept exactly = rbr::concepts::exactly<Option,Keyword>;
+
+  template<typename Option, auto... Keyword>
+  concept any_options_from = callable_option<Option> && (exactly<Option,Keyword> || ...);
 }
