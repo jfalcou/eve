@@ -19,7 +19,6 @@
 //!   **Required header:** @code{.cpp} #include <eve/module/algo.hpp> @endcode
 //! @}
 //==================================================================================================
-
 #include <eve/module/algo/algo/all_of.hpp>
 #include <eve/module/algo/algo/any_of.hpp>
 #include <eve/module/algo/algo/array_utils.hpp>

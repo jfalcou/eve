@@ -31,6 +31,6 @@ namespace eve
     using type = T;
 
     constexpr as()          noexcept {}
-    constexpr as(T const&)  noexcept {}
+    explicit constexpr as(T const&)  noexcept {}
   };
 }

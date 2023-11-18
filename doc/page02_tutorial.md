@@ -24,4 +24,5 @@ These tutorials cover topics for improving your usage of SIMD instructions set w
 
 **Advanced Topics**
 
+- \subpage inter-with-native
 - \subpage multiarch

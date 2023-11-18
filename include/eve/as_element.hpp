@@ -31,6 +31,6 @@ namespace eve
   struct as_element : as<element_type_t<T>>
   {
     constexpr as_element()          noexcept {}
-    constexpr as_element(T const&)  noexcept {}
+    explicit constexpr as_element(T const&)  noexcept {}
   };
 }

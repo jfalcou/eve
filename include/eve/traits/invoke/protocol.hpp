@@ -52,15 +52,6 @@ struct constant
   using constant_tag = void;
 };
 
-//==================================================================================================
-//! @concept callable
-//! @brief **EVE** callable
-//!
-//! A type `T` satisfies eve::callable if and only if it is tagged as such either
-//! manually or by inheriting from a T properties.
-//!
-//! @tparam T  T type for the @callable to check
-//==================================================================================================
 template<typename T>
 concept callable = requires(T) { typename T::callable_tag_type; };
 
