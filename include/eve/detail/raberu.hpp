@@ -108,8 +108,8 @@ namespace rbr::concepts
   //! instantiation of a precise [Keyword](@ref rbr::concepts::keyword)
   //================================================================================================
   template<typename Option, auto Keyword>
-  concept exactly = stdfix::same_as < typename Option::keyword_type
-                                    , std::remove_cvref_t<decltype(Keyword)>
+  concept exactly = std::derived_from< std::remove_cvref_t<decltype(Keyword)>
+                                    , typename Option::keyword_type
                                     >;
 }
 
@@ -598,6 +598,7 @@ namespace rbr
     }
 
     constexpr std::true_type operator()(keyword_type const&) const noexcept { return {}; }
+    constexpr std::true_type operator()(ID const&) const noexcept { return {}; }
 
     template<typename O0, typename O1, typename... Os>
     constexpr decltype(auto) operator()(O0&&, O1&&, Os&&... ) const

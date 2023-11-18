@@ -11,6 +11,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/raberu.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
 
@@ -162,12 +163,14 @@ namespace eve
 
   template<typename Decoration> struct decorated;
   template<typename Decoration, typename... Args>
-  struct decorated<Decoration(Args...)> : decorator_
+  struct decorated<Decoration(Args...)> : decorator_, rbr::flag_keyword<decorated<Decoration(Args...)>>
   {
     using base_type = Decoration;
+    using parent = rbr::flag_keyword<decorated<Decoration(Args...)>>;
 
     template<decorator Decorator>
-    constexpr EVE_FORCEINLINE auto operator()(Decorator d) const noexcept
+    constexpr EVE_FORCEINLINE auto operator()(Decorator const& d) const noexcept
+requires( !std::same_as<Decorator,decorated> )
     {
       return Decoration::combine(d);
     }
@@ -184,8 +187,16 @@ namespace eve
       }
     };
 
+    using parent::operator();
+
+    constexpr EVE_FORCEINLINE auto operator()(decorated const&) const noexcept
+    {
+      return std::true_type{};
+    }
+
     template<typename Function>
-    constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
+    constexpr EVE_FORCEINLINE auto operator()(Function const& f) const noexcept
+    requires( !std::same_as<Function,decorated> && !rbr::concepts::keyword<Function>)
     {
       if constexpr( specific_decorator<Decoration,Function> )  return Decoration{}(f);
       else                                          return fwding_lamda<Function>{f};
