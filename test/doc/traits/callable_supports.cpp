@@ -64,7 +64,7 @@ int main()
   std::cout << eve::func(eve::wide<short>{77}) << "\n";
   std::cout << eve::func[eve::keep_between(2,6)](eve::wide<short>{77}) << "\n";
 
-  std::cout << eve::other_func(8) << "\n";
+  std::cout << eve::other_func(80) << "\n";
   std::cout << eve::other_func(eve::wide<short>{77}) << "\n";
   std::cout << eve::other_func[eve::keep_between(2,6)](eve::wide<short>{77}) << "\n";
 

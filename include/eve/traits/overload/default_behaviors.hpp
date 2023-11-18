@@ -50,51 +50,6 @@ namespace eve
   };
 
   //====================================================================================================================
-
-  //====================================================================================================================
-  template< template<typename> class Func
-          , typename OptionsValues
-          , typename... Options
-          >
-  struct elementwise_callable : callable<Func, OptionsValues, conditional_option, Options...>
-  {
-    template<callable_options O, typename T, typename... Ts>
-    constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
-    {
-      using func_t                =  Func<OptionsValues>;
-      constexpr bool is_supported = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
-      constexpr bool any_simd     = (simd_value<T> || ... || simd_value<Ts>);
-
-      // Are we dealing with a no-condition call ?
-      if constexpr( option_type_is<condition_key, O, ignore_none_> )
-      {
-        // If a deferred call is present, let's call it
-        if      constexpr( is_supported )  return func_t::deferred_call(arch, opts, x0, xs...);
-        else if constexpr( any_simd )
-        {
-          // if not, try to slice/aggregate from smaller wides or to map the scalar version
-          if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(this->derived(), x0, xs...);
-          else                                            return map(this->derived(), x0, xs...);
-        }
-      }
-      else
-      {
-        // Grab the condition
-        auto const cond     = opts[condition_key];
-
-        // Drop the conditional and process the function call with the universal masker
-        auto const rmv_cond = options{rbr::drop(condition_key, opts)};
-        auto const f        = Func<decltype(rmv_cond)>{rmv_cond};
-
-        // If the conditional call is supported, call it
-        if      constexpr( is_supported ) return detail::mask_op(cond, f, x0, xs...);
-        // if not, call the non-masked version then mask piecewise
-        else if constexpr( any_simd )     return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
-      }
-    }
-  };
-
-  //====================================================================================================================
   //! @addtogroup extensions
   //! @{
   //!   @struct constant_callable
@@ -143,7 +98,7 @@ namespace eve
         auto const constant_value = Func<OptionsValues>::value(target,opts);
 
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
-        if constexpr(option_type_is<condition_key, O, ignore_none_>) return constant_value;
+        if constexpr(match_option<condition_key, O, ignore_none_>) return constant_value;
         else  return detail::mask_op(opts[condition_key], detail::return_2nd, 0, constant_value);
       }
     }

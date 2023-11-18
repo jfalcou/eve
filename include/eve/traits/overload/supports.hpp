@@ -257,8 +257,4 @@ namespace eve
       return options<decltype(new_opts)>{new_opts};
     }
   };
-
-  /// Checks if the type associated to a given Keyword in a Option pack is equal to Type
-  template<auto Keyword, typename Opts, typename Type>
-  inline constexpr bool option_type_is =  std::same_as<Type, rbr::result::fetch_t<Keyword,Opts>>;
 }

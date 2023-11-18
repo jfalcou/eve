@@ -22,4 +22,8 @@ namespace eve
 
   template<typename Option, auto... Keyword>
   concept any_options_from = callable_option<Option> && (exactly<Option,Keyword> || ...);
+
+  /// Checks if the type associated to a given Keyword in a Option pack is equal to Type
+  template<auto Keyword, typename Opts,typename Type>
+  concept match_option =  std::same_as<Type, rbr::result::fetch_t<Keyword,Opts>>;
 }
