@@ -600,8 +600,13 @@ namespace rbr
     constexpr std::true_type operator()(keyword_type const&) const noexcept { return {}; }
     constexpr std::true_type operator()(ID const&) const noexcept { return {}; }
 
+    // TMP-FIX: clang++ is not happy if not
     template<typename O0, typename O1, typename... Os>
-    constexpr decltype(auto) operator()(O0&&, O1&&, Os&&... ) const
+    constexpr auto operator()(O0&&, O1&&, Os&&... ) const
+    -> decltype (   stdfix::same_as<keyword_type, typename std::remove_cvref_t<O0>::keyword_type>
+                ||  stdfix::same_as<keyword_type, typename std::remove_cvref_t<O1>::keyword_type>
+                || (stdfix::same_as<keyword_type, typename std::remove_cvref_t<Os>::keyword_type> || ...)
+                )
     {
       return    stdfix::same_as<keyword_type, typename std::remove_cvref_t<O0>::keyword_type>
             ||  stdfix::same_as<keyword_type, typename std::remove_cvref_t<O1>::keyword_type>
