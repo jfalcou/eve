@@ -136,7 +136,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloading error reporting helper.  <a href="structeve_1_1decorators.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1support__options.html">eve::support_options&lt; Tag &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an <a class="el" href="concepteve_1_1callable.html" title="EVE callable">eve::callable</a> responsive to decorators and masks.  <a href="structeve_1_1support__options.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an eve::callable responsive to decorators and masks.  <a href="structeve_1_1support__options.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1unsupported__call.html">eve::unsupported_call&lt; Signature &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloading error reporting helper.  <a href="structeve_1_1unsupported__call.html#details">More...</a><br /></td></tr>
@@ -153,9 +153,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1callable.html">eve::callable</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>EVE</b> callable <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1deferred__callable.html">eve::deferred_callable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>EVE</b> deferred callable <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,11 +176,11 @@ template&lt;typename Tag , typename... Args&gt; </td></tr>
 <tr class="memitem:gac02d96a9e94b826ce20e7e29451a96e3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eve::tag_invoke_result</b> = std::invoke_result_t&lt; decltype(eve::tag_invoke), Tag, Args... &gt;</td></tr>
 <tr class="memdesc:gac02d96a9e94b826ce20e7e29451a96e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the return type of a eve::tag_invoke call. <br /></td></tr>
 <tr class="separator:gac02d96a9e94b826ce20e7e29451a96e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga25e5175b2bc593fc42970761a8d179e8"><td class="memTemplParams" colspan="2"><a id="ga25e5175b2bc593fc42970761a8d179e8" name="ga25e5175b2bc593fc42970761a8d179e8"></a>
+<tr class="memitem:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="memTemplParams" colspan="2"><a id="ga8dde0862945d94fceab4dbc0b0b29bf3" name="ga8dde0862945d94fceab4dbc0b0b29bf3"></a>
 template&lt;auto &amp; Func&gt; </td></tr>
-<tr class="memitem:ga25e5175b2bc593fc42970761a8d179e8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eve::tag_of</b> = std::decay_t&lt; decltype(Func)&gt;</td></tr>
-<tr class="memdesc:ga25e5175b2bc593fc42970761a8d179e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the type of an instance of an <b>EVE</b> <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. <br /></td></tr>
-<tr class="separator:ga25e5175b2bc593fc42970761a8d179e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eve::tag_of</b> = std::decay_t&lt; decltype(Func)&gt;</td></tr>
+<tr class="memdesc:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the type of an instance of an <b>EVE</b> <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. <br /></td></tr>
+<tr class="separator:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

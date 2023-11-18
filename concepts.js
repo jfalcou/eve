@@ -5,6 +5,7 @@ var concepts =
       [ "conditional_expr", "concepteve_1_1conditional__expr.html", null ],
       [ "relative_conditional_expr", "concepteve_1_1relative__conditional__expr.html", null ],
       [ "generator", "concepteve_1_1generator.html", null ],
+      [ "match_option", "concepteve_1_1match__option.html", null ],
       [ "plain_scalar_value", "concepteve_1_1plain__scalar__value.html", null ],
       [ "logical_scalar_value", "concepteve_1_1logical__scalar__value.html", null ],
       [ "product_scalar_value", "concepteve_1_1product__scalar__value.html", null ],
@@ -33,12 +34,12 @@ var concepts =
       [ "floating_simd_value", "concepteve_1_1floating__simd__value.html", null ],
       [ "has_store_equivalent", "concepteve_1_1has__store__equivalent.html", null ],
       [ "pattern_formula", "concepteve_1_1pattern__formula.html", null ],
-      [ "callable", "concepteve_1_1callable.html", null ],
       [ "deferred_callable", "concepteve_1_1deferred__callable.html", null ],
       [ "elementwise_callable", "concepteve_1_1elementwise__callable.html", null ],
       [ "reduction_callable", "concepteve_1_1reduction__callable.html", null ],
       [ "constant_callable", "concepteve_1_1constant__callable.html", null ],
       [ "tag_invocable", "concepteve_1_1tag__invocable.html", null ],
+      [ "callable_object", "concepteve_1_1callable__object.html", null ],
       [ "like", "concepteve_1_1like.html", null ]
     ] ]
 ];

@@ -43,5 +43,6 @@ var searchData=
   ['fsm_40',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
   ['fsnm_41',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
   ['full_5fcircle_42',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
-  ['fuse_5foperations_43',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]]
+  ['functor_43',['functor',['../group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467',1,'eve']]],
+  ['fuse_5foperations_44',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]]
 ];

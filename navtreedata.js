@@ -77,9 +77,6 @@ var NAVTREE =
       [ "Version beta.2020.09", "changelog.html#autotoc_md199", null ]
     ] ],
     [ "Licence", "licence.html", null ],
-    [ "Interaction with native code.", "inter-with-native.html", [
-      [ "What about non-native sizes?", "inter-with-native.html#autotoc_md206", null ]
-    ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -110,11 +107,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algo_rationale.html",
-"group__complex_ga2949d21bf825780b8c4ce4011904eebc.html#ga2949d21bf825780b8c4ce4011904eebc",
-"group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1",
-"group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c",
-"structeve_1_1algo_1_1soa__vector.html#ac908824a2ad8ed2989190452337b922c",
-"structeve_1_1wide.html#a0104aef15d7e3cb037fe59f49e8dc947"
+"group__complex.html",
+"group__core__predicates_ga629dd840e2cfda148550657259dcb18c.html#ga629dd840e2cfda148550657259dcb18c",
+"group__math__trig_gade4a273af7fb50439ae8974d4e5e8222.html#gade4a273af7fb50439ae8974d4e5e8222",
+"structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3",
+"structeve_1_1soa__ptr.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -34,6 +34,9 @@ var tutorials =
       [ "Conclusion", "conditional.html#autotoc_md205", null ]
     ] ],
     [ "Frequency Scaling.", "freqscale.html", null ],
+    [ "Interaction with native code.", "inter-with-native.html", [
+      [ "What about non-native sizes?", "inter-with-native.html#autotoc_md206", null ]
+    ] ],
     [ "Handling Multiple Architecture Targets", "multiarch.html", [
       [ "The Issue", "multiarch.html#autotoc_md223", null ],
       [ "From static to dynamic dispatch", "multiarch.html#autotoc_md224", [
