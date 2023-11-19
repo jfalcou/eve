@@ -28,33 +28,18 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
-//!      auto lbeta(T x,U y) noexcept;                                        //1
-//!
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto lbeta(eve::as_complex_t<T> x, U y) noexcept;                    //2
-//!
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      autol beta(T x, eve::as_complex_t<U> y) noexcept;                    //2
-//!
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto lbeta(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
+//!      auto lbeta(T x,U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     1. `x`, `y`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
-//!     2. `x`, `y`:  [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
+//!     `x`, `y`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/special/regular/lbeta.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/lbeta.cpp}
 //!
 //! @}
 //================================================================================================

@@ -35,15 +35,12 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real or complex argument](@ref eve::value).
+//!     * `x` :  [real argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
 //!       For real entries the call `eve::is_not_nan(x)`  is semantically  equivalent to:
 //!       `eve::is_equal(x, x)` in particular this is always true for integral types.
-//!
-//!       For complex entries  `is_not_nan(z)` is semantically  equivalent to
-//!       `eve::is_not_nan(real(z)) && eve::is_not_nan(imag(z))`,
 //!
 //!  @groupheader{Example}
 //!

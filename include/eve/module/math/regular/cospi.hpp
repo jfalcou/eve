@@ -30,21 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T cospi(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> cospi(as_complex_t<T> z) noexcept;  //2
+//!      T cospi(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
+//!   *   Returns the [elementwise](@ref glossary_elementwise) cosine of the input.
 //!       The call `cospi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
 //!
 //!       In particular:
@@ -54,18 +50,10 @@ namespace eve
 //!        * If the element is \f$\pm\infty\f$, Nan is returned.
 //!        * If the element is a `Nan`, `Nan` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the cosine of the input
-//!      in \f$\pi\f$ multiples.
-//!
 //!  @groupheader{Example}
-//!
-//!   **Real version**
 //!
 //!  @godbolt{doc/math/regular/cospi.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/cospi.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

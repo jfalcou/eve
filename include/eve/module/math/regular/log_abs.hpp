@@ -30,18 +30,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >           //1
-//!      T log_abs(T x) noexcept;
-//!
 //!      template< eve::floating_value T >
-//!      T log_abs(eve::complex<T> z) noexcept;      //2
+//!      T log_abs(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!

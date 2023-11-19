@@ -31,22 +31,18 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T cscpi(T x) noexcept;
-                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> cospi(as_complex_t<T> z) noexcept;  //2
+
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) cosecant of the input expressed in
+//!   *  Returns the [elementwise](@ref glossary_elementwise) cosecant of the input expressed in
 //!      \f$\pi\f$ multiples.
 //!
 //!      The call `cscpi(x)` is semantically equivalent to \f$\csc(\pi x)\f$.
@@ -55,9 +51,6 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the cosecant of the input expressed in
-//!      \f$\pi\f$ multiples.
 //!
 //!  @groupheader{Example}
 //!

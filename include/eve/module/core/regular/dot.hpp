@@ -36,7 +36,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`  :  [real or complex arguments](@ref eve::value).
+//!     * `x`, `y`  :  [real arguments](@ref eve::value).
 //!
 //!    **Return value**
 //!
@@ -44,13 +44,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/core/regular/dot.cpp}
 //!
-//!    **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/dot.cpp}
 //!
 //! @}
 //================================================================================================

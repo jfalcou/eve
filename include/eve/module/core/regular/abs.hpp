@@ -29,30 +29,21 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T abs(T x) noexcept;                  //1
-//!
-//!      template< eve::floating_value T >
-//!      T abs(eve::as_complex<T> z) noexcept; //2
-//!
+//!      template< eve::value T > T abs(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real argument](@ref eve::value).
-//!     * `z` :  [complex argument ](@ref eve::complex).
 //!
 //!    **Return value**
 //!
-//!    1.  value containing the [elementwise](@ref glossary_elementwise)
+//!     *  value containing the [elementwise](@ref glossary_elementwise)
 //!        absolute value of `x` if it is representable in this type.
 //!
 //!        More specifically, for signed integers : the absolute value of eve::valmin
 //!        is not representable and the result is undefined.
-//!
-//!
-//!    2.  modulus of the complex argument,  i.e `eve::hypot(eve::real(z), eve::imag(z))`
 //!
 //!  @warning
 //!        abs is also a standard library function name and there possibly
@@ -61,13 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/core/regular/abs.cpp}
-//!
-//!    **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/abs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -90,17 +75,6 @@ namespace eve
 //!      **Example**
 //!
 //!        @godbolt{doc/core/saturated/abs.cpp}
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::pedantic(eve::abs)(z)` computes a pedantic version of the modulus.
-//!
-//!     More specifically, `pedantic(eve::hypot)` is used in place of `eve::hypot)`
-//!     for complex inputs
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/complex/pedantic/abs.cpp}
 //!
 //! @}
 //================================================================================================

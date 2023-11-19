@@ -30,21 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T asec(T x) noexcept;                                    //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acsc(eve::complex<T> z) noexcept;        //2
+//!      T asec(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) arc secant of the
+//!   *  Returns the [elementwise](@ref glossary_elementwise) arc secant of the
 //!      input in the range \f$[0 , \pi]\f$.
 //!
 //!      In particular:
@@ -53,8 +49,6 @@ namespace eve
 //!      * If the element is \f$0\f$, \f$\pi\f$ is returned.
 //!      * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) \f$\mathop{\mathrm{acos}}(1/z)\f$.
 //!
 //!  @groupheader{Example}
 //!

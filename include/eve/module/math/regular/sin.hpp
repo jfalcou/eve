@@ -30,39 +30,27 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sin(T x) noexcept;                                //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> sin(eve::complex<T> z) noexcept;  //2
+//!      T sin(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) sine of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) sine of the input.
 //!      In particular:
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the sine of the input
-//!      The behavior of this function is equivalent to `-i * sinh(i*z)`.
-//!
 //!  @groupheader{Example}
-//!
-//!   **Real version**
 //!
 //!  @godbolt{doc/math/regular/sin.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/sin.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -15,9 +15,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_real
-//!   @brief Returns a logical true  if and only if the element value is not real.
+//!   @brief Returns a logical true  if and only if the element value is not real (never).
 //!
-//!   For real entries always return false.
+//!   Always return false.
 //!
 //!   **Defined in Header**
 //!
@@ -37,11 +37,11 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real or complex argument](@ref eve::value).
+//!     * `x` :  [real argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
-//!    Returns [elementwise](@ref glossary_elementwise) false for real entries.
+//!    Returns false for all floating entries.
 //!
 //!  @groupheader{Example}
 //!

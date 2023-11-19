@@ -30,30 +30,23 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T expm1(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> expm1(as_complex_t<T> z) noexcept;  //2
+//!      T expm1(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   * `x`:   [floating real](@ref eve::floating_ordered_value)
-//!   * `z`:   [complex ](@ref eve::complex) argument.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of the input minus one, with good
+//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of the input minus one, with good
 //!      accuracy, even for small values of `x`.
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
 //!      * If the element is \f$-\infty\f$, \f$-1\f$ is returned
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!      * If the element is a `NaN`, `NaN` is returned
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of the input minus one, with good
-//!      accuracy, even for small values of `eve::abs(z)`.
 //!
 //!  @groupheader{Example}
 //!

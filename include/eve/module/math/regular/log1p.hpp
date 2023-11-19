@@ -31,21 +31,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T log1p(T x) noexcept;                                 //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> log1p(eve::complex<T> z) noexcept;     //2
+//!      T log1p(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) the natural logarithm of `1+x`
+//!   *  Returns the [elementwise](@ref glossary_elementwise) the natural logarithm of `1+x`
 //!      This function is more precise than the expression `log(1+x)` if  `x` is close to zero.
 //!      In particular:
 //!
@@ -54,19 +50,10 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!      * If the element is less than -1, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the natural logarithm of `1+z`.
-//!      The behavior of this function is equivalent to `eve::log(1+z),  with better precision when
-//!      `z` is   close to zero.
-//!
 //!  @groupheader{Example}
-//!
-//!   **Real version**
 //!
 //!  @godbolt{doc/math/regular/log1p.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/log1p.cpp}
 //!
 //!   * Masked Call
 //!

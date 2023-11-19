@@ -31,21 +31,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< value T>
-//!      T expmx2(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> expmx2(as_complex_t<T> z) noexcept;  //2
+//!      T expmx2(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Parameters**
 //!
-//!    `x`:   [floating real or complex value](@ref eve::value).
+//!    `x`:   [floating real value](@ref eve::value).
 //!
 //! **Return value**
 //!

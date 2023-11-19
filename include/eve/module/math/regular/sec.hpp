@@ -30,21 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sec(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> sec(as_complex_t<T> z) noexcept;  //2
+//!      T sec(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) secant of
+//!   *  Returns the [elementwise](@ref glossary_elementwise) secant of
 //!      the input (inverse of the cosine).
 //!
 //!      In particular:
@@ -52,9 +48,6 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$1\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, Nan is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the secant of the input
-//!      i.e. \f$\1/cos(z)\f$.
 //!
 //!  @groupheader{Example}
 //!

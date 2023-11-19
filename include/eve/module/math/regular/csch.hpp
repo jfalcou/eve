@@ -30,29 +30,22 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T csch(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> csch(as_complex_t<T> z) noexcept;  //2
+//!      T csch(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
 //!      In particular:
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the hyperbolic cosecant of the input
-//!      The behavior of this function is equivalent to `eve::rec(eve::sinh(z))`.
 //!
 //!  @groupheader{Example}
 //!

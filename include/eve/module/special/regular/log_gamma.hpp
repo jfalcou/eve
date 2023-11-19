@@ -36,7 +36,6 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :   [real](@ref eve::value) or [complex](@ref eve::complex) argument.
 //!
 //!   **Return value**
 //!
@@ -47,13 +46,8 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/special/regular/log_gamma.cpp}
 //!
-//!    **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/log_gamma.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(log_gamma_, log_gamma);

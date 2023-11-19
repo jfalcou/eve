@@ -31,21 +31,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T asinh(T x) noexcept;                                    //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> asinh(eve::complex<T> z) noexcept;        //2
+//!      T asinh(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
 //!      The inverse hyperbolic sine is semantically equivalent to \f$\log(x+\sqrt{x^2+1})\f$.
 //!
 //!      In particular:
@@ -53,9 +49,6 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns the complex arc hyperbolic sine of z, with branch cuts outside the interval
-//!      \f$i\times[-\pi/2, \pi/2]\f$ along the imaginary axis.
 //!
 //!      * for every z: eve::asinh(eve::conj(z)) == eve::conj(std::asinh(z))
 //!      * for every z: eve::asinh(-z) == -eve::asinh(z)
@@ -72,13 +65,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/asinh.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/asinh.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(asinh_, asinh);

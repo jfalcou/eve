@@ -30,30 +30,23 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sinh(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> sinh(as_complex_t<T> z) noexcept;  //2
+//!      T sinh(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
 //!
 //!      In particular:
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
-//!      of the hyperbolic sine of the input.
 //!
 //!      * for every z: `eve::sinh(eve::conj(z)) == eve::conj(std::sinh(z))`
 //!      * for every z: `eve::sinh(-z)           == -eve::sinh(z)`
@@ -71,13 +64,8 @@ namespace eve
 //!
 //!      where \f$\mathrm{cis}(y) =  \cos(y)+i\sin(y)\f$
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/math/regular/sinh.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/sinh.cpp}
 //!
 //!  @}
 //================================================================================================

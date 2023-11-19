@@ -30,21 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T exp(T x) noexcept;                                     //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acos(eve::complex<T> z) noexcept;        //2
+//!      T exp(T x) noexcept;
 ///   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
 //!
 //!     In particular:
 //!
@@ -52,8 +48,6 @@ namespace eve
 //!     * If the element is \f$-\infty\f$, \f$+0\f$ is returned
 //!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
 //!     * If the element is a `NaN`, `NaN` is returned
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the exponential of the input.
 //!
 //!      * for every z: eve::exp(eve::conj(z)) == eve::conj(std::exp(z))
 //!      * If z is \f$\pm0\f$, the result is \f$1\f$
@@ -74,13 +68,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!   **Real version**
-//!
 //!  @godbolt{doc/math/regular/exp.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/exp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

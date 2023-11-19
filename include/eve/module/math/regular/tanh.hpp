@@ -30,30 +30,23 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T tanh(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> tanh(as_complex_t<T> z) noexcept;  //2
+//!      T tanh(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic tangent of the input.
+//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic tangent of the input.
 //!
 //!      In particular:
 //!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value
-//!      of the hyperbolic tangent of the input.
 //!
 //!      * for every z: `eve::tanh(eve::conj(z)) == eve::conj(std::tanh(z))`
 //!      * for every z: `eve::tanh(-z)           == -eve::tanh(z)`
@@ -71,13 +64,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!    **Real version**
-//!
 //!  @godbolt{doc/math/regular/tanh.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/tanh.cpp}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(tanh_, tanh);
