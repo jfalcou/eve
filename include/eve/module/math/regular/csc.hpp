@@ -30,21 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T csc(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> csc(as_complex_t<T> z) noexcept;  //2
+//!      T csc(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
+//!   *   Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
 //!       (the inverse of the sine)
 //!
 //!       In particular:
@@ -52,9 +48,6 @@ namespace eve
 //!       * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, Nan is returned.
 //!       * If the element is a `NaN`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the cosecant of the input
-//!      i.e. \f$\1/sin(z)\f$.
 //!
 //!  @groupheader{Example}
 //!

@@ -30,10 +30,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      bool none(T x) noexcept;   //1
+//!      bool none(T x) noexcept;
 //!
-//!      template< eve::top_bits M >
-//!      bool none(M m) noexcept;   //2
+//!      template< eve::top_bits M > //1
+//!      bool none(M m) noexcept;    //2
 //!   }
 //!   @endcode
 //!

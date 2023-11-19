@@ -40,6 +40,22 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T a0, T a1)
+{
+  using eve::dist;
+  using eve::detail::map;
+  TTS_ULP_EQUAL(dist(a0, a1), eve::max(a0, a1) - eve::min(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::saturated(dist)(a0, a1), [](auto a, auto b){
+                  auto d = eve::dist(a, b);
+                  if constexpr(eve::unsigned_value<T>) return d;
+                  else  return eve::if_else(eve::is_ltz(d),  eve::valmax(eve::as<T>()),  d);
+                }(a0, a1), 2);
+};
+
+TTS_CASE_WITH("Check behavior of dist(wide)",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::dist;

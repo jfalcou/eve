@@ -104,7 +104,7 @@ template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      as_wide_as<T, float> float32(T x) noexcept; //1
+//!      as_wide_as<T, float> float32(T x) noexcept;  //1
 //!
 //!      template< eve::callable C >
 //!      as_wide_as<T, float> float32(C x) noexcept; //2

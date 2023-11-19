@@ -31,21 +31,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T log10(T x) noexcept;                                  //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> log10(eve::complex<T> z) noexcept;      //2
+//!      T log10(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
+//!   *  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
 //!      In particular, for floating inputs:
 //!
 //!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
@@ -53,18 +49,10 @@ namespace eve
 //!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
 //!      * If the element is less than 0, `NaN` is returned.
 //!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the base 10 logarithm of the input
-//!      The behavior of this function is equivalent to `log(z)/log_10(as(x))`.
-//!
 //!  @groupheader{Example}
-//!
-//!   **Real version**
 //!
 //!  @godbolt{doc/math/regular/log10.cpp}
 //!
-//!   **Complex version**
-//!
-//!  @godbolt{doc/complex/regular/log10.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

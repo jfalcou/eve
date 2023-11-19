@@ -35,7 +35,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) or [complex](@ref eve::complex) argument.
+//!     * `x` :  [real](@ref eve::value) argument.
 //!
 //!   **Return value**
 //!
@@ -49,7 +49,6 @@ namespace eve
 //!       * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a
 //!        `Nan` is returned.
 //!
-//!      For complex inputs the frac operation is applied to both real and imaginary parts.
 //!
 //!  @groupheader{Example}
 //!

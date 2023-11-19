@@ -30,21 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T sinpi(T x) noexcept;                              //1
-//!
-//!      template< eve::floating_value T >
-//!      as_complex_t<T> cospi(as_complex_t<T> z) noexcept;  //2
+//!      T sinpi(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating value](@ref eve::floating_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) sine of the input.
+//!   *   Returns the [elementwise](@ref glossary_elementwise) sine of the input.
 //!       The call `sinpi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
 //!
 //!       In particular:

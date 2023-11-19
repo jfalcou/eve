@@ -32,20 +32,16 @@ namespace eve
 //!   {
 //!      template< eve::floating_value T >
 //!      T asecpi(T x) noexcept;
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> asecpi(eve::complex<T> z) noexcept;       //2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
 //!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!   *  `z`:   [complex ](@ref eve::complex) value.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) arc secant of the
+//!   *  Returns the [elementwise](@ref glossary_elementwise) arc secant of the
 //!      input in \f$\pi\f$ multiples in the range \f$[0, 1]\f$.
 //!
 //!      In particular:
@@ -54,9 +50,6 @@ namespace eve
 //!      * If the element is \f$0\f$, \f$1\f$ is returned.
 //!      * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex value in
-//!     \f$\pi\f$ multiples of the arc secant of the input.
 //!
 //!  @groupheader{Example}
 //!

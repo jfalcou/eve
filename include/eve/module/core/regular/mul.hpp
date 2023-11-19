@@ -36,7 +36,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `... xs` : [real](@ref eve::value) or [complex](@ref eve::complex) arguments.
+//!     * `... xs` : [real](@ref eve::value) arguments.
 //!
 //!    **Return value**
 //!
@@ -74,10 +74,6 @@ namespace eve
 //!
 //!        @godbolt{doc/core/saturated/mul.cpp}
 //!
-//!   * eve::pedantic
-//!
-//!     The call `pedantic(mul)(zargs...)` computes the pedantic  multiplication of the arguments.
-//!     This may  only differ of the regular call for complex inputs.
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(mul_, mul);

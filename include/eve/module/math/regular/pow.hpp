@@ -30,28 +30,18 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U >
-//!      auto pow(T x, U y) noexcept;                                       //1
-//!
-//!      template< eve::floating_value T, eve::floating_value U >           //2
-//!      auto pow(eve::as_complex_t<T> x, U y) noexcept;
-//!
-//!      template< eve::floating_value T, eve::floating_value U >           //2
-//!      auto pow(T x, eve::as_complex_t<U> y) noexcept;
-//!
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto pow(eve::as_complex_t<T> x, eve::as_complex_t<U> y) noexcept; //2
+//!      auto pow(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    `x`, `y`:   [real floating](@ref eve::floating_value) or [complex ](@ref eve::complex) arguments.
 //!
 //! **Return value**
 //!
 //!   Returns [elementwise](@ref glossary_elementwise) \f$x^y\f$.
 //!
-//!   1. The result type is the [common value type](@ref common_value_t) of the two parameters.
+//!   *  The result type is the [common value type](@ref common_value_t) of the two parameters.
 //!      In particular we have (IEC 60559):
 //!
 //!       * pow(+0, y), where y is a negative odd integer, returns \f$+\infty\f$
@@ -77,9 +67,6 @@ namespace eve
 //!       * pow(\f$+\infty\f$, y) returns +0 for any y less than 0
 //!       * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
 //!       * except where specified above, if any argument is NaN, NaN is returned
-//!
-//!   2. In the other cases the call is semantically equivalent to `eve::exp(y*eve::log(x))` and
-//!      return and eve::complex result.
 //!
 //!  @groupheader{Example}
 //!

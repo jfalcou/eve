@@ -29,11 +29,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acot(T x) noexcept;                                    //1
-//!
-//!      template< eve::floating_value T >
-//!      eve::complex<T> acot(eve::complex<T> z) noexcept;        //2
+//!     template< eve::floating_value T > T acot(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -43,7 +39,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//!   *   Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
 //!       input in the range \f$[-\frac\pi2, \frac\pi2]\f$.
 //!
 //!       In particular:
@@ -51,9 +47,6 @@ namespace eve
 //!       * If the element is \f$\pm0\f$, \f$\pm\frac\pi2\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!       * If the element is a `Nan`, `NaN` is returned.
-//!
-//!   2. Returns [elementwise](@ref glossary_elementwise) the complex principal value
-//!      of the arc cotangent of the input as the arc tangent of the inverse of the input.
 //!
 //!  @groupheader{Example}
 //!

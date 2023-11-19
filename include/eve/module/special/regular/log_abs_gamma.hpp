@@ -30,17 +30,13 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      T log_abs_gamma(T x) noexcept;                     //1
-//!
-//!      template< eve::floating_value T >
-//!      T log_abs_gamma(as_complex_t<T> T z) noexcept;     //2
+//!      T log_abs_gamma(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real argument](@ref eve::value).
-//!     * `z` :  [complex argument ](@ref eve::complex).
 //!
 //!   **Return value**
 //!

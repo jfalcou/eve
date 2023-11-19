@@ -35,7 +35,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real or complex argumentargument](@ref eve::value).
+//!     * `x` :  [real argumentargument](@ref eve::value).
 //!
 //!   **Return value**
 //!
@@ -46,7 +46,6 @@ namespace eve
 //!         else constexpr(integral_value<T>) return false_(as(x));
 //!       @endcode
 //!
-//!       For complex entries  `is_infinite(z)` is semantically  equivalent to
 //!       `eve::is_nan(real(z)) || eve::is_nan(imag(z))`,
 //!
 //!  @groupheader{Example}
