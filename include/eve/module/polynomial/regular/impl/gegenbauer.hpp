@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-template<scalar_value I, floating_ordered_value T, floating_ordered_value U>
+template<scalar_value I, floating_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept requires compatible_values<T, U>
 {
@@ -84,7 +84,7 @@ requires(simd_value<T>)
   else return apply_over(gegenbauer, nn, lambda, x);
 }
 
-template<simd_value I, floating_ordered_value T, floating_ordered_value U>
+template<simd_value I, floating_value T, floating_ordered_value U>
 EVE_FORCEINLINE auto
 gegenbauer_(EVE_SUPPORTS(cpu_),
             I nn,

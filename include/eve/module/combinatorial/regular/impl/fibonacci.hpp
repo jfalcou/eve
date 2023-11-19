@@ -24,7 +24,7 @@ template<unsigned_value N, floating_value T>
 EVE_FORCEINLINE auto
 fibonacci_(EVE_SUPPORTS(cpu_), N n, T a, T b) noexcept
 {
-  if constexpr( has_native_abi_v<T> )
+  if constexpr( has_native_abi_v<T> &&  has_native_abi_v<N>)
   {
     using elt_t               = element_type_t<T>;
     using eli_t               = as_integer_t<elt_t, unsigned>;
