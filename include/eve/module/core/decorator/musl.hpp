@@ -7,27 +7,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
-//================================================================================================
-// Function decorators mark-up used in function overloads
-struct musl_type : decorator_
+struct musl_t
 {
-  template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-  {
-    return [f](auto&&...args) { return f(musl_type {}, EVE_FWD(args)...); };
-  }
+  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 };
 
-//================================================================================================
-// Function decorator - musl mode
-template<typename Function>
-constexpr EVE_FORCEINLINE auto
-musl_(Function f) noexcept
-{
-  return musl_type {}(f);
-}
+using musl_type = decorated<musl_t()>;
+inline constexpr musl_type const musl_ = {};
 }

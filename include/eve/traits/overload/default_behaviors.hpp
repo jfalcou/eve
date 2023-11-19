@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
@@ -36,7 +37,16 @@ namespace eve
       return  Func<decltype(new_traits)>{new_traits};
     }
 
-    template<typename T> void operator[](T t) const =delete;
+    // TEMPORARY - Map old decorator to the new ones
+    template<typename T> auto operator[](T const& t) const
+    requires(decorator<T>)
+    {
+      return (*this)[as_option(t)];
+    }
+
+    template<typename T> void operator[](T t) const
+    // This requires is also TEMPORARY
+    requires( !requires(base const& b) { b[t];} && !decorator<T>) =delete;
 
     template<typename... Args>
     constexpr auto behavior(auto arch, Args&&... args) const
