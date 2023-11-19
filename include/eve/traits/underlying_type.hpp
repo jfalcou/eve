@@ -9,7 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/wide_forward.hpp>
-#include <eve/traits/common_value.hpp>
+//#include <eve/traits/common_value.hpp>
 #include <eve/concept/scalar.hpp>
 
 namespace eve
