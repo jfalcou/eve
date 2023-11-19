@@ -149,11 +149,11 @@ $(document).ready(function(){initNavTree('group__core__compress_gae391a1ac55150b
 <li>dense/sparse - wether or not you expect a lot of selected elements.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><code>safe</code> version does not touch not selected elements. So, for example, other threads can read/write them without a race condition.</dd></dl>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md14"></a>
 Preloaded values</h2>
 <p>Very often the mask is computed based on the values loaded from input. We would expect the optimizer to eliminate duplicated loads, but for some very complex pointer-like it might not be able to.</p>
 <p>So we provide overloads where you can pass an already preloaded value. It should match loaded value from in, otherwise the behaviour is unspecified.</p>
-<h2><a class="anchor" id="autotoc_md37"></a>
+<h2><a class="anchor" id="autotoc_md15"></a>
 Masked Calls</h2>
 <p>You can pass up to two <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a> ignore modifiers. 1st is the input side ignore:</p><ul>
 <li>the ignored elements can are not loaded (same as load[ignore])</li>

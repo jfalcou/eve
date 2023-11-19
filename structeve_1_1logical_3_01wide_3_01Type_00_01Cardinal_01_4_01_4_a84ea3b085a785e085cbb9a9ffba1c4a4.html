@@ -170,10 +170,9 @@ template&lt;eve::invocable&lt; <a class="el" href="structeve_1_1logical_3_01wide
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Generates the wide [true false true .. ]</span></div>
-<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">i</a>%2 == 0;};</div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> i%2 == 0;};</div>
 <div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__complex_ga8c06f86a8cb42562fa92a5873424d5e2_html_ga8c06f86a8cb42562fa92a5873424d5e2"><div class="ttname"><a href="group__complex_ga8c06f86a8cb42562fa92a5873424d5e2.html#ga8c06f86a8cb42562fa92a5873424d5e2">eve::i</a></div><div class="ttdeci">constexpr callable_i_ i</div><div class="ttdoc">Callable object computing the pure imaginary ( ) value.</div><div class="ttdef"><b>Definition:</b> i.hpp:52</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

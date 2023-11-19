@@ -146,31 +146,22 @@ $(document).ready(function(){initNavTree('group__math__exp_ga56a5f857ff59ee64bb1
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">exp</a>(T x) <span class="keyword">noexcept</span>;                                     <span class="comment">//1</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   <a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> <a class="code hl_variable" href="group__math__invtrig_gac046f0bc4a97b845c5dc86dacec11727.html#gac046f0bc4a97b845c5dc86dacec11727">acos</a>(<a class="code hl_struct" href="structeve_1_1complex.html">eve::complex&lt;T&gt;</a> z) <span class="keyword">noexcept</span>;        <span class="comment">//2</span></div>
+<div class="line">   T <a class="code hl_variable" href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">exp</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42_html_ga56a5f857ff59ee64bb1ab21999eaae42"><div class="ttname"><a href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">eve::exp</a></div><div class="ttdeci">constexpr callable_exp_ exp</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> exp.hpp:97</div></div>
-<div class="ttc" id="agroup__math__invtrig_gac046f0bc4a97b845c5dc86dacec11727_html_gac046f0bc4a97b845c5dc86dacec11727"><div class="ttname"><a href="group__math__invtrig_gac046f0bc4a97b845c5dc86dacec11727.html#gac046f0bc4a97b845c5dc86dacec11727">eve::acos</a></div><div class="ttdeci">constexpr callable_acos_ acos</div><div class="ttdoc">Callable object computing the arc cosine.</div><div class="ttdef"><b>Definition:</b> acos.hpp:100</div></div>
+<div class="ttc" id="agroup__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42_html_ga56a5f857ff59ee64bb1ab21999eaae42"><div class="ttname"><a href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">eve::exp</a></div><div class="ttdeci">constexpr callable_exp_ exp</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> exp.hpp:86</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="astructeve_1_1complex_html"><div class="ttname"><a href="structeve_1_1complex.html">eve::complex</a></div><div class="ttdoc">SIMD-compatible representation of complex numbers.</div><div class="ttdef"><b>Definition:</b> complex.hpp:39</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
-<li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
 </ul>
 <p><b>Return value</b></p>
-<ol type="1">
+<ul>
 <li><p class="startli">Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> exponential of the input.</p>
 <p class="startli">In particular:</p><ul>
 <li>If the element is \(\pm0\), \(1\) is returned</li>
 <li>If the element is \(-\infty\), \(+0\) is returned</li>
 <li>If the element is \(\infty\), \(\infty\) is returned</li>
-<li>If the element is a <code>NaN</code>, <code>NaN</code> is returned</li>
-</ul>
-</li>
-<li><p class="startli">Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the exponential of the input.</p><ul>
+<li><p class="startli">If the element is a <code>NaN</code>, <code>NaN</code> is returned</p><ul>
 <li>for every z: <a class="el" href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42" title="Callable object computing .">eve::exp(eve::conj(z))</a> == <a class="el" href="group__core__arithmetic_ga3da1ad6fd04f08ac14cbe0ff478b6951.html#ga3da1ad6fd04f08ac14cbe0ff478b6951" title="Computes the the conjugate value.">eve::conj(std::exp(z))</a></li>
 <li>If z is \(\pm0\), the result is \(1\)</li>
 <li>If z is \(x+i \infty\) (for any finite x), the result is \(NaN+i NaN\).</li>
@@ -188,9 +179,10 @@ $(document).ready(function(){initNavTree('group__math__exp_ga56a5f857ff59ee64bb1
 </ul>
 <p class="startli">where \(\mathrm{cis}(y) = \cos(y)+i \sin(y)\)</p>
 </li>
-</ol>
+</ul>
+</li>
+</ul>
 <h2 class="groupheader">Example </h2>
-<p><b>Real version</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -220,25 +212,6 @@ $(document).ready(function(){initNavTree('group__math__exp_ga56a5f857ff59ee64bb1
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr callable_inf_ inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:58</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p><b>Complex version</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = eve::wide &lt;float, eve::fixed&lt;4&gt;&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft ref = { 0.0f, 1.0f, -1.0f, 0.5f};</div>
-<div class="line">  wide_ft imf = { 2.0f , -1.0,  -5.0, 0.0};</div>
-<div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
-<div class="line"> </div>
-<div class="line">  std::cout</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z       = &quot;</span> &lt;&lt; z &lt;&lt; std::endl</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; exp(z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_ga56a5f857ff59ee64bb1ab21999eaae42.html#ga56a5f857ff59ee64bb1ab21999eaae42">eve::exp</a>(z) &lt;&lt; std::endl;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>

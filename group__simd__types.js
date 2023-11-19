@@ -1,7 +1,6 @@
 var group__simd__types =
 [
     [ "Architecture related Types and Helpers", "group__arch.html", "group__arch" ],
-    [ "Complex Numbers", "group__complex.html", "group__complex" ],
     [ "Conditional Expressions", "group__conditional.html", "group__conditional" ],
     [ "Type traits", "group__traits.html", "group__traits" ],
     [ "eve::fixed< Cardinal >", "structeve_1_1fixed.html", null ],
@@ -171,18 +170,6 @@ var group__simd__types =
       [ "scalar_type", "structeve_1_1top__bits.html#a46b500a7f5599d078b9c1069f400aa56", null ],
       [ "storage_type", "structeve_1_1top__bits.html#a9710f1c9c44fda47778a072781e5105a", null ],
       [ "set", "structeve_1_1top__bits.html#a70e3fa2976c2eca5099140554fb24920", null ]
-    ] ],
-    [ "eve::complex< Type >", "structeve_1_1complex.html", [
-      [ "underlying_type", "structeve_1_1complex.html#afd48e594b4deefe91da424aea69580de", null ],
-      [ "value_type", "structeve_1_1complex.html#ac59e565ee91812449127aeb2f325ec1b", null ],
-      [ "complex", "structeve_1_1complex.html#aec33f14db29f24c36695953c7285588a", null ],
-      [ "operator<<", "structeve_1_1complex.html#a0aef00cfb869cd94127c7c17703c9935", null ]
-    ] ],
-    [ "eve::quaternion< Type >", "structeve_1_1quaternion.html", [
-      [ "underlying_type", "structeve_1_1quaternion.html#a5e89c547a13cc15bebb4c6798db5e49a", null ],
-      [ "value_type", "structeve_1_1quaternion.html#a942a01e7b1709f071d6bb0d85a0e49d2", null ],
-      [ "quaternion", "structeve_1_1quaternion.html#a5f4380a4d7d76718dcefaf727ebebbc9", null ],
-      [ "operator<<", "structeve_1_1quaternion.html#a3cd002cd3fcf09aec62f8aa864010808", null ]
     ] ],
     [ "eve::pattern_t< I >", "structeve_1_1pattern__t.html", [
       [ "operator!=", "structeve_1_1pattern__t.html#a490329fb584803b715c1a5b3cd843e35", null ],

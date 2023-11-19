@@ -71,12 +71,6 @@ var hierarchy =
     [ "eve::algo::soa_vector< Type, Allocator >", "structeve_1_1algo_1_1soa__vector.html", null ],
     [ "eve::stack_buffer< T >", "structeve_1_1stack__buffer.html", null ],
     [ "eve::struct_support< Self, Fields >", "structeve_1_1struct__support.html", null ],
-    [ "eve::struct_support< complex< Type >, Type, Type >", "structeve_1_1struct__support.html", [
-      [ "eve::complex< Type >", "structeve_1_1complex.html", null ]
-    ] ],
-    [ "eve::struct_support< quaternion< Type >, Type, Type, Type, Type >", "structeve_1_1struct__support.html", [
-      [ "eve::quaternion< Type >", "structeve_1_1quaternion.html", null ]
-    ] ],
     [ "eve::support_options< Tag >", "structeve_1_1support__options.html", null ],
     [ "eve::supports_like< Wrapper, Self >", "structeve_1_1supports__like.html", null ],
     [ "eve::supports_ordering< Type >", "structeve_1_1supports__ordering.html", null ],

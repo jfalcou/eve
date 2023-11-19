@@ -146,30 +146,24 @@ $(document).ready(function(){initNavTree('group__math__trig_ga39e50b4c59911e463b
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>(T x) <span class="keyword">noexcept</span>;                              <span class="comment">//1</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   as_complex_t&lt;T&gt; <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>(as_complex_t&lt;T&gt; z) <span class="keyword">noexcept</span>;  <span class="comment">//2</span></div>
+<div class="line">   T <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__trig_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr callable_cos_ cos</div><div class="ttdoc">Callable object computing the cosine.</div><div class="ttdef"><b>Definition:</b> cos.hpp:76</div></div>
+<div class="ttc" id="agroup__math__trig_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr callable_cos_ cos</div><div class="ttdoc">Callable object computing the cosine.</div><div class="ttdef"><b>Definition:</b> cos.hpp:64</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
-<li><code>z</code>: <a class="el" href="structeve_1_1complex.html">complex </a> value.</li>
 </ul>
 <p><b>Return value</b></p>
-<ol type="1">
+<ul>
 <li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> cosine of the input. In particular:<ul>
 <li>If the element is \(\pm0\), \(1\) is returned.</li>
 <li>If the element is \(\pm\infty\), Nan is returned.</li>
 <li>If the element is a <code>Nan</code>, <code>Nan</code> is returned.</li>
 </ul>
 </li>
-<li>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> the cosine of the input The behavior of this function is equivalent to <code><a class="el" href="group__math__hyper_gab52648ab8990c126fd024ddf8badb536.html#gab52648ab8990c126fd024ddf8badb536" title="Callable object computing .">eve::cosh(i*z)</a></code>.</li>
-</ol>
+</ul>
 <h2 class="groupheader">Example </h2>
-<p><b>Real version</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -196,25 +190,6 @@ $(document).ready(function(){initNavTree('group__math__trig_ga39e50b4c59911e463b
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr callable_pi_ pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:49</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p><b>Complex version</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/complex.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = eve::wide &lt;float, eve::fixed&lt;4&gt;&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft ref = { 0.0f, 1.0f, -1.0f, 0.5f};</div>
-<div class="line">  wide_ft imf = { 2.0f , -1.0,  -5.0, 0.0};</div>
-<div class="line">  <span class="keyword">auto</span> z = eve::as_complex_t&lt;wide_ft&gt;(ref, imf);</div>
-<div class="line"> </div>
-<div class="line">  std::cout</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::endl</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- z       = &quot;</span> &lt;&lt; z &lt;&lt; std::endl</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; cos(z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a>(z) &lt;&lt; std::endl;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli"><a class="el" href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::quarter_circle</a>, <a class="el" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9" title="Higher-order Callable Object imbuing a limited range standard semantic onto other Callable Objects.">eve::half_circle</a>, <a class="el" href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::full_circle</a></p>
