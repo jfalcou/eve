@@ -112,4 +112,8 @@ add_custom_target(unit.special.exe         )
 add_dependencies(unit.exe unit.special.exe )
 glob_unit("unit" ${unit_root} "module/special/*.cpp" )
 
+add_custom_target(unit.contfrac.exe         )
+add_dependencies(unit.exe unit.contfrac.exe )
+glob_unit("unit" ${unit_root} "module/contfrac/*.cpp" )
+
 endif()
