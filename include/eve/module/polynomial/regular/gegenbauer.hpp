@@ -36,7 +36,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value T eve::floating_ordered_value T, eve::floating_ordered_value U >
+//!     template< eve::integral_value T eve::floating_value T, eve::floating_ordered_value U >
 //!     eve::as_wide_as<eve::common_value_t<T, U>, N>
 //!     auto  gegenbauer(N n, T lambda, U x) noexcept;
 //!   }

@@ -9,7 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/wide_forward.hpp>
-#include <eve/traits/common_value.hpp>
+//#include <eve/traits/common_value.hpp>
 #include <eve/concept/scalar.hpp>
 
 namespace eve
@@ -56,7 +56,7 @@ namespace eve
     using type = typename T::underlying_type;
   };
 
-  template<plain_scalar_value T>
+  template<arithmetic_scalar_value T>
   struct underlying_type<T>
   {
     using type = T;
@@ -80,4 +80,5 @@ namespace eve
 
   template<typename Ts>
   using underlying_type_t = typename underlying_type<Ts>::type;
+
 }
