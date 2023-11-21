@@ -11,6 +11,7 @@
 #include <eve/concept/vectorizable.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/traits/is_logical.hpp>
+#include <eve/traits/underlying_type.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -39,7 +40,7 @@ namespace eve
   //! - `int`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept integral_value        = value<T> && std::integral<element_type_t<T>>;
+  template<typename T> concept integral_value        = value<T> && std::integral<underlying_type_t<T>>;
 
   //================================================================================================
   //! @concept signed_value
@@ -50,7 +51,7 @@ namespace eve
   //! - `float`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_value          = value<T> && std::is_signed_v<element_type_t<T>>;
+  template<typename T> concept signed_value          = value<T> && std::is_signed_v<underlying_type_t<T>>;
 
   //================================================================================================
   //! @concept unsigned_value
@@ -60,7 +61,7 @@ namespace eve
   //! - `unsigned int`
   //! - `eve::wide<std::uint8_t, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<element_type_t<T>>;
+  template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<underlying_type_t<T>>;
 
   //================================================================================================
   //! @concept signed_integral_value
@@ -70,7 +71,7 @@ namespace eve
   //! - `short int`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_integral_value = value<T> && std::signed_integral<element_type_t<T>>;
+  template<typename T> concept signed_integral_value = value<T> && std::signed_integral<underlying_type_t<T>>;
 
   //================================================================================================
   //! @concept floating_value
@@ -80,7 +81,7 @@ namespace eve
   //! - `double`
   //! - `eve::wide<float, eve::fixed<2>>`
   //================================================================================================
-  template<typename T> concept floating_value        = value<T> && std::floating_point<element_type_t<T>>;
+  template<typename T> concept floating_value        = value<T> && std::floating_point<underlying_type_t<T>>;
 
   //================================================================================================
   //! @concept logical_value

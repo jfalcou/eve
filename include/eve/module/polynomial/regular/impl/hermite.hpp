@@ -20,7 +20,7 @@ hermite_(EVE_SUPPORTS(cpu_), successor_type const&, N n, T x, T hn, T hnm1) noex
   return z + z;
 }
 
-template<scalar_value I, floating_ordered_value T>
+template<scalar_value I, value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
 requires(scalar_value<T>)
@@ -38,7 +38,7 @@ requires(scalar_value<T>)
   return p1;
 }
 
-template<scalar_value I, floating_ordered_value T>
+template<scalar_value I, value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I n, T x) noexcept
 requires(simd_value<T>)
@@ -56,7 +56,7 @@ requires(simd_value<T>)
   return p1;
 }
 
-template<simd_value I, floating_ordered_value T>
+template<simd_value I, value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 requires(scalar_value<T>)
@@ -65,7 +65,7 @@ requires(scalar_value<T>)
   return hermite(nn, f_t(x));
 }
 
-template<simd_value I, floating_ordered_value T>
+template<simd_value I, value T>
 EVE_FORCEINLINE auto
 hermite_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
 requires(simd_value<T>)

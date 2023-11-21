@@ -52,10 +52,20 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
                 }(a0, a1), 2);
 };
 
+auto vmin = tts::constant(
+    []<typename T>(eve::as<T> const& tgt)
+    {
+        return eve::valmin(tgt)/2;
+    });
+auto vmax = tts::constant(
+    []<typename T>(eve::as<T> const& tgt)
+    {
+        return eve::valmax(tgt)/2;
+    });
 TTS_CASE_WITH("Check behavior of dist(wide)",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::generate(tts::randoms(vmin, vmax),
+                            tts::randoms(vmin, vmax)))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::dist;

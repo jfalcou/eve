@@ -67,7 +67,7 @@ pow_(EVE_SUPPORTS(cpu_), raw_type const&, T a, U b) noexcept
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // integral second parameter
-template<value T, integral_value U>
+template<floating_value T, integral_value U>
 EVE_FORCEINLINE constexpr auto
 pow_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
 {
