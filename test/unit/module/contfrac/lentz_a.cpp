@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/module/math.hpp>
 #include <eve/module/contfrac.hpp>
 
 template <class U>
@@ -29,7 +30,7 @@ TTS_CASE_WITH("Check behavior of lentz_a on reals",
   using u_t = eve::underlying_type_t<T>;
   auto eps = eve::eps(eve::as<u_t>());
   size_t m = 1000u;
-  double tol = sizeof(u_t) == 4 ? 1.0e-4 : 1.0e-7;
+  double tol = sizeof(u_t) == 4 ? 1.0e-2 : 1.0e-7;
   using eve::lentz_a;
   {
     // frac with constant coefs

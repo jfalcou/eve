@@ -23,7 +23,7 @@ struct tan_fraction
 };
 
 template <class T>
-T tan(T a)
+T mytan(T a)
 {
   tan_fraction<T> fract(a);
   return a/eve::lentz_b(fract, eve::eps(eve::as<eve::underlying_type_t<T>>()), 100);
@@ -38,7 +38,7 @@ int main()
   auto gr = eve::lentz_b(func,eve::eps(eve::as<double>()), 100);
   std::cout << "    constant fracs " << gr << std::endl;
   w_t z{eve::pio_4(eve::as<double>()), eve::pio_3(eve::as<double>()), 0.0, 1.0};
-  std::cout << "frac tan(" << z << ") is: " << tan(z) << std::endl;
+  std::cout << "frac tan(" << z << ") is: " << mytan(z) << std::endl;
   std::cout << "ref  tan(" << z << ") is: " << eve::tan(z) << std::endl;
 
   return 0;
