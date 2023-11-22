@@ -92,7 +92,7 @@ namespace eve::detail
     using r_t = std::decay_t<tmp_t>;
     using u_t =   underlying_type_t<r_t>;
     u_t tiny = 16*smallestposval(as<u_t>()) ;
-    u_t terminator(eps <= 0 ? 16*eve::eps(as<u_t>()) : u_t(eps));
+    u_t terminator(eps <= 0 ? eve::abs(eps)*eve::eps(as<u_t>()) : u_t(eps));
     size_t counter(max_terms);
 
     r_t f{};
@@ -150,7 +150,7 @@ namespace eve::detail
     using r_t = std::decay_t<tmp_t>;
     using u_t =   underlying_type_t<r_t>;
     u_t tiny = 16*smallestposval(as<u_t>()) ;
-    u_t terminator(eps <= 0 ? 16*eve::eps(as<u_t>()) : u_t(eps));
+    u_t terminator(eps <= 0 ? eve::abs(eps)*eve::eps(as<u_t>()) : u_t(eps));
     size_t counter(max_terms);
 
     r_t f{};
