@@ -5,34 +5,18 @@
 
 
 template <class T>
-struct golden_ratio_fraction
+struct const_fraction
 {
-  typedef T result_type;
-
-  result_type operator()()
-  {
-    return T{1, 2, 3, 4};
-  }
+  auto operator()(){ return T{1, 2, 3, 4}; }
 };
 
 template <typename T>
 struct tan_fraction
 {
-private:
   T a, b;
-public:
-  tan_fraction(T v)
-    : a(-v * v), b(-1)
+  tan_fraction(T v) : a(-v * v), b(-1) {}
+  auto operator()()
   {
-    std::cout << "init a " << a << std::endl;
-    std::cout << "init b " << b << std::endl;
-  }
-
-  using result_type = kumi::tuple<T, T>;
-  result_type operator()()
-  {
-//     std::cout << " a " << a << std::endl;
-//     std::cout << " b " << b << std::endl;
     b += T(2);
     return kumi::tuple{a, b};
   }
@@ -48,14 +32,14 @@ T tan(T a)
 int main()
 {
   using w_t = eve::wide<double, eve::fixed<4>>;
-  golden_ratio_fraction<w_t> func;
-  auto gr = eve::lentz_b(func,eve::eps(eve::as<double>()), 100);
-  std::cout << "The constant fracs are: " << gr << std::endl;
+  const_fraction<w_t> func;
   w_t zz{1, 2, 3, 4};
-  std::cout << "The constant fracs are: " << (zz+eve::sqrt(eve::sqr(zz)+4))/2 << std::endl;
-  w_t z(eve::pio_4(eve::as<double>())); //w_t*/{eve::pio_4(eve::as<double>()), eve::pio_3(eve::as<double>()), 0.0, 1.0};
-  std::cout << "     tan(" << z << ") is: " << tan(z) << std::endl;
-  std::cout << "eve::tan(" << z << ") is: " << eve::tan(z) << std::endl;
+  std::cout << "ref constant fracs " << (zz+eve::sqrt(eve::sqr(zz)+4))/2 << std::endl;
+  auto gr = eve::lentz_b(func,eve::eps(eve::as<double>()), 100);
+  std::cout << "    constant fracs " << gr << std::endl;
+  w_t z{eve::pio_4(eve::as<double>()), eve::pio_3(eve::as<double>()), 0.0, 1.0};
+  std::cout << "frac tan(" << z << ") is: " << tan(z) << std::endl;
+  std::cout << "ref  tan(" << z << ") is: " << eve::tan(z) << std::endl;
 
   return 0;
 }
