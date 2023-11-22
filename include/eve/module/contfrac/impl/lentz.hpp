@@ -16,56 +16,6 @@ namespace eve::detail
   template <typename T, typename U>
   struct is_pair<kumi::tuple<T,U>> : public std::true_type{};
 
-  template <typename T>
-  concept addable = requires(T a, T b, T c){c = a+b; };
-
- template <typename Gen>
-  struct fraction_traits_simple
-  {
-    using result_type = typename Gen::result_type;
-    using  value_type = typename Gen::result_type;
-
-    static result_type a(const value_type&) noexcept
-    {
-      return result_type(1);
-    }
-    static result_type b(const value_type& v) noexcept
-    {
-      return v;
-    }
-  };
-
-  template <typename Gen>
-  struct fraction_traits_pair
-  {
-    using  value_type = typename Gen::result_type;
-    using result_type = kumi::element_t<0, value_type>;
-
-    static auto a(const value_type& v) noexcept
-    {
-      return get<0>(v);
-    }
-    static auto b(const value_type& v) noexcept
-    {
-      return get<1>(v);
-    }
-  };
-
-  template <typename Gen>
-  struct fraction_traits
-    : public std::conditional<
-    is_pair<typename Gen::result_type>::value,
-    fraction_traits_pair<Gen>,
-    fraction_traits_simple<Gen>>::type
-  {};
-
-//   template <typename T>
-//   struct tiny_value
-//   {
-//     using u_t = eve::underlying_type<T>;
-//     static T get() { return 16*eve::smallestposval(as<T>()); }
-//   };
-
   //
   // continued_fraction_b
   // Evaluates:
@@ -87,7 +37,7 @@ namespace eve::detail
   {
     using eve::abs;
     auto v = g();
-    constexpr auto pure_pair = is_pair<decltype(v)>::value && !addable<decltype(v)>;
+    constexpr auto pure_pair = is_pair<decltype(v)>::value;
     using tmp_t = decltype([v](){ if constexpr(pure_pair) return get<0>(v); else  return v;}());
     using r_t = std::decay_t<tmp_t>;
     using u_t =   underlying_type_t<r_t>;
@@ -145,7 +95,7 @@ namespace eve::detail
   {
     using eve::abs;
     auto v = g();
-    constexpr auto pure_pair = is_pair<decltype(v)>::value && !addable<decltype(v)>;
+    constexpr auto pure_pair = is_pair<decltype(v)>::value;
     using tmp_t = decltype([v](){ if constexpr(pure_pair) return get<0>(v); else  return v;}());
     using r_t = std::decay_t<tmp_t>;
     using u_t =   underlying_type_t<r_t>;
