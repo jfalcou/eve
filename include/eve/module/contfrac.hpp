@@ -13,6 +13,7 @@
 //! @defgroup contfrac Continuous fractions
 //!
 //! @brief  This module provides an simd compatible implementation of the lentz algorithm.
+//!         to evaluate continuous fractions.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/module/contfrac.hpp> @endcode
 //!
