@@ -13,7 +13,7 @@ jobs:
   generate-doc:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
     strategy:
       fail-fast: false
     steps:

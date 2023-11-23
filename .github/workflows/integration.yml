@@ -21,7 +21,7 @@ jobs:
   install:
     runs-on: [ubuntu-latest]
     container:
-      image: ghcr.io/jfalcou/compilers:v6
+      image: ghcr.io/jfalcou/compilers:v7
     strategy:
       fail-fast: false
 
@@ -103,4 +103,3 @@ jobs:
           cmake ../examples/multi-arch -G Ninja
           ninja multi-arch
           ./multi-arch
-
