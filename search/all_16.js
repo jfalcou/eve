@@ -1,10 +1,15 @@
 var searchData=
 [
-  ['we_5f_0',['we_',['../group__simd__types.html#gab6c3c30138d82ef45b1bbcf9e65145d4',1,'eve']]],
-  ['why_20and_20how_1',['Why and How',['../eve-dev.html',1,'']]],
-  ['wide_2',['wide',['../structeve_1_1wide.html',1,'eve::wide&lt; Type, Cardinal &gt;'],['../structeve_1_1wide.html#a00eb579b8dede0a60445a148b01f18e0',1,'eve::wide::wide()'],['../namespaceeve.html#ac72f0e04016942948dc0d1bf861296f4',1,'eve::wide(S, Ss...) -&gt; wide&lt; S, fixed&lt; 1+sizeof...(Ss)&gt; &gt;'],['../namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892',1,'eve::wide(S const &amp;) -&gt; wide&lt; S, expected_cardinal_t&lt; S &gt; &gt;'],['../structeve_1_1wide.html#ac160ba5fd444550682594fa16c5f189d',1,'eve::wide::wide(wide&lt; Type, Half &gt; const &amp;l, wide&lt; Type, Half &gt; const &amp;h) noexcept'],['../structeve_1_1wide_a007581d779fcbfc70bfcee970ee95451.html#a007581d779fcbfc70bfcee970ee95451',1,'eve::wide::wide(Generator &amp;&amp;g) noexcept'],['../structeve_1_1wide.html#ac0dae309cb7ceee577c5a9f90b4d1841',1,'eve::wide::wide(S0 const &amp;v0, Ss const &amp;...vs) noexcept'],['../structeve_1_1wide.html#adf12020cb7ac67cc5ee1c165c2b563d7',1,'eve::wide::wide(S0 v0, S1 v1, Ss... vs) noexcept'],['../structeve_1_1wide.html#afd2944c4f0f54a386e887762385c91ba',1,'eve::wide::wide(eve::soa_ptr&lt; Ptr... &gt; ptr) noexcept'],['../structeve_1_1wide.html#a9e8f8635331b18d7ce9e1c28019722be',1,'eve::wide::wide(Ptr ptr) noexcept'],['../structeve_1_1wide.html#a2b902c5e2c2b9cccd1a5ebb94ea4f295',1,'eve::wide::wide(Range &amp;&amp;r) noexcept'],['../structeve_1_1wide.html#a75fcee86f103e039da6bb498b7c59cf2',1,'eve::wide::wide(It b, It e) noexcept'],['../structeve_1_1wide.html#a4ad46a6f998bb898592da9625181634d',1,'eve::wide::wide(storage_type const &amp;r) noexcept'],['../structeve_1_1wide.html#a4c3c77232aadeb56066359ff149af963',1,'eve::wide::wide()'],['../structeve_1_1wide.html#a361d5a9fd15f6b2e4a86ec5ae2880e06',1,'eve::wide::wide()']]],
-  ['wide_3c_20value_5ftype_2c_20n_20_3e_3',['wide&lt; value_type, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_3c_20value_5ftype_5ft_3c_20i_20_3e_2c_20n_20_3e_4',['wide&lt; value_type_t&lt; I &gt;, N &gt;',['../structeve_1_1wide.html',1,'eve']]],
-  ['wide_5fvalue_5ftype_5ft_5',['wide_value_type_t',['../group__traits_ga51d0901c39a489a5d6e0449339291c57.html#ga51d0901c39a489a5d6e0449339291c57',1,'eve']]],
-  ['write_6',['write',['../group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d',1,'eve']]]
+  ['udt_0',['Creating SIMD-aware UDT',['../intro-04.html#autotoc_md156',1,'']]],
+  ['udt_20to_20simd_20processing_1',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md155',1,'']]],
+  ['under_2',['under',['../structeve_1_1pattern__t.html#aef70581b6e3b30db25467efcc08eff1c',1,'eve::pattern_t']]],
+  ['underlying_5ftype_3',['underlying_type',['../structeve_1_1underlying__type.html',1,'eve']]],
+  ['underlying_5ftype_3c_20t_20_3e_4',['underlying_type&lt; T &gt;',['../structeve_1_1underlying__type.html',1,'eve']]],
+  ['unit_20tests_5',['Compiling EVE Unit Tests',['../dev_cmake.html#autotoc_md90',1,'']]],
+  ['unsupported_5fcall_6',['unsupported_call',['../structeve_1_1unsupported__call.html',1,'eve']]],
+  ['up_20the_20library_7',['Setting up the Library',['../install.html#autotoc_md110',1,'']]],
+  ['use_20in_20cmake_8',['Use in CMake',['../install.html#autotoc_md116',1,'']]],
+  ['using_20dynamic_20kernels_9',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md163',1,'']]],
+  ['using_20eve_3a_3awide_10',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md144',1,'']]],
+  ['using_20the_20library_11',['Using the library',['../install.html#autotoc_md112',1,'']]]
 ];

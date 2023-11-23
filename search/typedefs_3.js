@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['expected_5fcardinal_5ft_0',['expected_cardinal_t',['../group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5',1,'eve']]]
+  ['half_5flogical_0',['half_logical',['../structeve_1_1top__bits.html#a3332a95c17f90652380d16a746ed91ac',1,'eve::top_bits']]]
 ];
