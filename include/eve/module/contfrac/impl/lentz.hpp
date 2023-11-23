@@ -11,10 +11,10 @@ namespace eve::detail
 {
 
   template <typename T>
-  struct is_pair : public std::false_type{};
+  struct is_pair : std::false_type{};
 
   template <typename T, typename U>
-  struct is_pair<kumi::tuple<T,U>> : public std::true_type{};
+  struct is_pair<kumi::tuple<T,U>> : std::true_type{};
 
   //
   // continued_fraction_b
