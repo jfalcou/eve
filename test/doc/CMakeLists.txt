@@ -101,10 +101,3 @@ glob_unit("doc" ${doc_root} "special/regular/*.cpp"  )
 add_custom_target(doc.traits.exe        )
 add_dependencies(doc.exe doc.traits.exe )
 glob_unit("doc" ${doc_root} "traits/*.cpp")
-
-##==================================================================================================
-## GLOB and process traits doc tests
-##==================================================================================================
-add_custom_target(doc.contfrac.exe        )
-add_dependencies(doc.exe doc.contfrac.exe )
-glob_unit("doc" ${doc_root} "contfrac/*.cpp")

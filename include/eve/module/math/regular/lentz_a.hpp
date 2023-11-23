@@ -41,7 +41,7 @@ namespace eve
 //!
 //!   The generator type should be an invocable which supports the following operations:
 //!   *  The call to g()  returns a floating value or a pair (kumi::tuple) of such.
-//!      Each time this operator is called then the next pair of a and b values has to be returned, 
+//!      Each time this operator is called then the next pair of a and b values has to be returned,
 //!      or, if result_type is not a pair type, then the next b value
 //!      has to be returned and all the a values are assumed to be equal to one.
 //!
@@ -64,4 +64,4 @@ namespace eve
 EVE_MAKE_CALLABLE(lentz_a_, lentz_a);
 }
 
-#include <eve/module/contfrac/impl/lentz.hpp>
+#include <eve/module/math/regular/impl/lentz.hpp>

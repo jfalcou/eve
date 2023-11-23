@@ -69,4 +69,4 @@ namespace eve
 EVE_MAKE_CALLABLE(lentz_b_, lentz_b);
 }
 
-#include <eve/module/contfrac/impl/lentz.hpp>
+#include <eve/module/math/regular/impl/lentz.hpp>

@@ -17,7 +17,7 @@ namespace eve::detail
   struct is_pair<kumi::tuple<T,U>> : std::true_type{};
 
   //
-  // continued_fraction_b
+  // lentz_b
   // Evaluates:
   //
   //               a1
@@ -74,7 +74,7 @@ namespace eve::detail
   }
 
   //
-  // continued_fraction_a
+  // lentz_a
   // Evaluates:
   //
   //            a0

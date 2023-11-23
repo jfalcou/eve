@@ -59,6 +59,8 @@
 #include <eve/module/math/regular/geommean.hpp>
 #include <eve/module/math/regular/hypot.hpp>
 #include <eve/module/math/regular/agd.hpp>
+#include <eve/module/math/regular/lentz_a.hpp>
+#include <eve/module/math/regular/lentz_b.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/log10.hpp>
 #include <eve/module/math/regular/log1p.hpp>
