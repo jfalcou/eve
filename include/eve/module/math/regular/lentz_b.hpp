@@ -20,7 +20,7 @@ namespace eve
 //!   **Defined in header**
 //!
 //!   @code
-//!   #include <eve/module/contfrac.hpp>
+//!   #include <eve/module/math.hpp>
 //!   @endcode
 //!
 //!   @groupheader{Callable Signatures}
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/polynomial/regular/lentz_b.cpp}
+//!   @godbolt{doc/math/regular/lentz_b.cpp}
 //!
 //! @}
 //================================================================================================
