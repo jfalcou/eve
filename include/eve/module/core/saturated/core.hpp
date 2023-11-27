@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/saturated/abs.hpp>
 #include <eve/module/core/saturated/absmax.hpp>
 #include <eve/module/core/saturated/absmin.hpp>
 #include <eve/module/core/saturated/add.hpp>
