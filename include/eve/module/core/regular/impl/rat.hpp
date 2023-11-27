@@ -23,7 +23,6 @@
 #include <eve/module/core/regular/rec.hpp>
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/sign.hpp>
-#include <eve/module/core/saturated/abs.hpp>
 
 namespace eve::detail
 {

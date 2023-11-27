@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 namespace eve::detail
 {

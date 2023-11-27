@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 namespace eve::detail
 {

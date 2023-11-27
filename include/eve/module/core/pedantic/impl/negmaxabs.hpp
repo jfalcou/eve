@@ -14,7 +14,7 @@
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/pedantic/maxabs.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 #include <eve/arch/platform.hpp>
 
 #include <type_traits>
