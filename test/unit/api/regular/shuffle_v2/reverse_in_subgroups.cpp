@@ -37,7 +37,7 @@ all_subgroups()
   }
 }
 
-TTS_CASE_TPL("Check reverse, generic", eve::test::simd::all_types)
+TTS_CASE_TPL("Check reverse in subgroups, generic", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   shuffle_test::named_shuffle1_test<
