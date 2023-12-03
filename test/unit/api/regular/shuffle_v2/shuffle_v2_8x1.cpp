@@ -30,6 +30,7 @@ TTS_CASE("shuffle_v2: 8x1")
 
     if (eve::current_api >= eve::sve)
     {
+      if (idxm::is_lane_broadcast(p)) return 2;
       if (idxm::is_reverse(p)) return 2;
       if (idxm::matches(p, {1, 0, 3, 2})) return 2;
       return 3;
