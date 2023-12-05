@@ -16,6 +16,7 @@
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/constant/ieee_constant.hpp>
 #include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/constant/logeps.hpp>
 #include <eve/module/core/constant/mantissamask.hpp>
 #include <eve/module/core/constant/maxexponent.hpp>

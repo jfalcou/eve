@@ -12,7 +12,7 @@
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/load.hpp>
-#include <eve/detail/function/simd/arm/sve/iota.hpp>
+#include <eve/module/core/constant/iota.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/as_integer.hpp>
 
@@ -55,7 +55,7 @@ requires sve_abi<abi_t<T, N>> && (N::value > 1)
   if constexpr( N::value < eve::fundamental_cardinal_v<T> )
   {
     // Use svdup then mask using optimized iota comparison
-    return wide<T>{x} & (linear_ramp(as<wide<as_integer_t<T>>>{}) < N::value).mask();
+    return wide<T>{x} & (iota(as<wide<as_integer_t<T>>>{}) < N::value).mask();
   }
   else
   {
@@ -99,7 +99,7 @@ requires sve_abi<abi_t<T, N>> && (N::value > 1)
   if constexpr( N::value < f_t::value )
   {
     // Use svdup then mask using optimized iota comparison
-    return logical<wide<T>>{(bool)x} && (linear_ramp(as<wide<as_integer_t<T>>>{}) < N::value);
+    return logical<wide<T>>{(bool)x} && (iota(as<wide<as_integer_t<T>>>{}) < N::value);
   }
   else
   {

@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/iota.hpp>
+#include <eve/module/core/constant/iota.hpp>
 
 namespace eve::detail
 {
@@ -32,7 +32,7 @@ namespace eve::detail
     }
     else
     {
-      auto const maps = linear_ramp(as<wide<as_integer_t<T>,N>>{}) < N::value;
+      auto const maps = iota(as<wide<as_integer_t<T>,N>>{}) < N::value;
       return svsplice(maps,l,h);
     }
   }

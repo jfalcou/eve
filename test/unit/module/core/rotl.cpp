@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of rotl on wide",
   TTS_EQUAL(rotl(a0, 1u), map([](auto e) { return std::rotl(e, 1u); }, a0));
   using v_t = eve::element_type_t<T>;
   a0        = eve::one(eve::as(a0));
-  a1        = eve::detail::linear_ramp(eve::as(a0));
+  a1        = eve::iota(eve::as(a0));
   a1        = a1 % (sizeof(v_t) * 8);
   auto ua1  = eve::int_(a1);
   TTS_EQUAL(rotl(a0, a1), map([](auto e, auto f) -> v_t { return std::rotl(e, f); }, a0, a1));
