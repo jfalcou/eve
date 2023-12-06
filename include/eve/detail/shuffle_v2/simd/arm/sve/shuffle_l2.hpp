@@ -12,6 +12,23 @@
 namespace eve::detail
 {
 
+template<typename P, typename T, typename N, std::ptrdiff_t G>
+auto
+shuffle_l2_svdup(P, eve::fixed<G>, eve::wide<T, N> x)
+{
+  constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
+
+  if constexpr( !lane || G > 1) return no_matching_shuffle;
+  else
+  {
+    constexpr std::ptrdiff_t m = *lane;
+    if constexpr( sizeof(T) == 8 ) return eve::wide<T, N> {svdup_lane_u64(x, m)};
+    else if constexpr( sizeof(T) == 4 ) return eve::wide<T, N> {svdup_lane_u32(x, m)};
+    else if constexpr( sizeof(T) == 2 ) return eve::wide<T, N> {svdup_lane_u16(x, m)};
+    else if constexpr( sizeof(T) == 1 ) return eve::wide<T, N> {svdup_lane_u8(x, m)};
+  }
+}
+
 template<typename P, simd_value T, std::ptrdiff_t G>
 auto
 shuffle_l2_svrev(P, eve::fixed<G>, T x)
@@ -49,7 +66,7 @@ shuffle_l2_svrevbhw(P p, eve::fixed<G> g, eve::wide<T, N> _x)
     }
     else
     {
-       // Didn't work out of the gate for some reason.
+      // Didn't work out of the gate for some reason.
       (void)p;
       (void)g;
       return no_matching_shuffle;
@@ -82,7 +99,8 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 {
-  if constexpr( auto r = shuffle_l2_svrev(p, g, x); matched_shuffle<decltype(r)> ) return r;
+  if constexpr( auto r = shuffle_l2_svdup(p, g, x); matched_shuffle<decltype(r)> ) return r;
+  else if constexpr( auto r = shuffle_l2_svrev(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l2_svrevbhw(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l2_svext_self(p, g, x); matched_shuffle<decltype(r)> )
   {
