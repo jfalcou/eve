@@ -65,12 +65,28 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
+  else if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x); matched_shuffle<decltype(get<0>(r))> )
+  {
+    return r;
+  }
   else if constexpr( auto r = shuffle_l4_l5_x86_put_u64x2_in_position(p, g, x);
                      matched_shuffle<decltype(get<0>(r))> )
   {
     return r;
   }
   else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l4_l5_(EVE_SUPPORTS(avx512_), P p, fixed<G> g, logical<wide<T, N>> x)
+requires(P::out_reg_size == P::reg_size)
+{
+ if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x); matched_shuffle<decltype(get<0>(r))> )
+ {
+  return r;
+ }
+ else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
 }

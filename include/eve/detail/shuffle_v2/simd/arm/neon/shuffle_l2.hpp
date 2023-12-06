@@ -152,13 +152,14 @@ shuffle_l2_neon_dup_lane(P, fixed<G>, wide<T, N> x)
       else if constexpr( sizeof(T) == 2 ) return vdup_lane_u16(x, m);
       else return vdup_lane_u8(x, m);
     }
-    else
+    else if constexpr ( current_api >= asimd )
     {
-      if constexpr( sizeof(T) == 8 ) return vdup_laneq_u64(x, m);
-      else if constexpr( sizeof(T) == 4 ) return vdup_laneq_u32(x, m);
-      else if constexpr( sizeof(T) == 2 ) return vdup_laneq_u16(x, m);
-      else return vdup_laneq_u8(x, m);
+      if constexpr( sizeof(T) == 8 ) return vdupq_laneq_u64(x, m);
+      else if constexpr( sizeof(T) == 4 ) return vdupq_laneq_u32(x, m);
+      else if constexpr( sizeof(T) == 2 ) return vdupq_laneq_u16(x, m);
+      else return vdupq_laneq_u8(x, m);
     }
+    else return no_matching_shuffle_t{};
   }
 }
 
