@@ -49,7 +49,7 @@ namespace eve
   template<typename Ts>
   struct underlying_type;
 
-  template<typename T>
+  template<arithmetic_scalar_value T>
   requires requires { typename T::underlying_type; }
   struct underlying_type<T>
   {
