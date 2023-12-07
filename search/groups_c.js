@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operations_0',['operations',['../group__core__arithmetic.html',1,'Arithmetic operations'],['../group__core__internal.html',1,'IEEE operations'],['../group__core__logical.html',1,'Logical operations'],['../group__core__simd.html',1,'SIMD Specific Operations']]]
+  ['polynomial_20functions_0',['Polynomial functions',['../group__polynomial.html',1,'']]],
+  ['predicates_1',['Predicates',['../group__core__predicates.html',1,'']]]
 ];

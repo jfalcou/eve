@@ -48,104 +48,8 @@ var NAVTREE =
       ] ],
       [ "Advanced options", "install.html#autotoc_md117", null ]
     ] ],
-    [ "Tutorials", "tutorials.html", [
-      [ "Basic Operations", "intro-01.html", [
-        [ "Initial problem", "intro-01.html#autotoc_md143", null ],
-        [ "From scalar to SIMD using eve::wide", "intro-01.html#autotoc_md144", null ],
-        [ "Handling eve::wide", "intro-01.html#autotoc_md145", null ],
-        [ "Mathematical Epilogue", "intro-01.html#autotoc_md146", null ],
-        [ "Conclusion", "intro-01.html#autotoc_md147", null ]
-      ] ],
-      [ "Algorithms", "intro-02.html", [
-        [ "Initial problem", "intro-02.html#autotoc_md148", null ],
-        [ "Toward SIMD Algorithms", "intro-02.html#autotoc_md149", null ],
-        [ "Tuning algorithms", "intro-02.html#autotoc_md150", null ],
-        [ "Conclusion", "intro-02.html#autotoc_md151", null ]
-      ] ],
-      [ "Tuples", "intro-03.html", [
-        [ "Tuple of SIMD registers", "intro-03.html#autotoc_md152", null ],
-        [ "SIMD register of tuples", "intro-03.html#autotoc_md153", null ],
-        [ "Conclusion", "intro-03.html#autotoc_md154", null ]
-      ] ],
-      [ "Data Structures", "intro-04.html", [
-        [ "Adapting UDT to SIMD processing", "intro-04.html#autotoc_md155", null ],
-        [ "Creating SIMD-aware UDT", "intro-04.html#autotoc_md156", null ],
-        [ "Storage and Processing", "intro-04.html#autotoc_md157", null ],
-        [ "Conclusion", "intro-04.html#autotoc_md158", null ]
-      ] ],
-      [ "Conditional operations", "conditional.html", [
-        [ "Explicit Selection", "conditional.html#autotoc_md136", null ],
-        [ "Conditional Function Syntax", "conditional.html#autotoc_md137", null ],
-        [ "Conditional Expressions", "conditional.html#autotoc_md138", [
-          [ "Mask with alternative", "conditional.html#autotoc_md139", null ],
-          [ "Context-sensitive mask", "conditional.html#autotoc_md140", null ]
-        ] ],
-        [ "Conclusion", "conditional.html#autotoc_md141", null ]
-      ] ],
-      [ "Frequency Scaling.", "freqscale.html", null ],
-      [ "Interaction with native code.", "inter-with-native.html", [
-        [ "What about non-native sizes?", "inter-with-native.html#autotoc_md142", null ]
-      ] ],
-      [ "Handling Multiple Architecture Targets", "multiarch.html", [
-        [ "The Issue", "multiarch.html#autotoc_md159", null ],
-        [ "From static to dynamic dispatch", "multiarch.html#autotoc_md160", [
-          [ "Writing the kernel", "multiarch.html#autotoc_md161", null ],
-          [ "Writing the dynamic function hub", "multiarch.html#autotoc_md162", null ],
-          [ "Compiling and Using Dynamic Kernels", "multiarch.html#autotoc_md163", null ]
-        ] ],
-        [ "Conclusion", "multiarch.html#autotoc_md164", null ]
-      ] ]
-    ] ],
-    [ "Why and How", "eve-dev.html", [
-      [ "Design Decisions", "design_rationale.html", [
-        [ "SIMD registers as Type x Cardinal", "design_rationale.html#rationale-simd", null ],
-        [ "Callable Function Objects as main API", "design_rationale.html#rationale-callable", null ],
-        [ "Function customization via higher-order decorator", "design_rationale.html#rationale-decorator", null ],
-        [ "Masked operations support", "design_rationale.html#rationale-mask", null ]
-      ] ],
-      [ "SIMD Algorithms", "algo_rationale.html", [
-        [ "General Principles", "algo_rationale.html#autotoc_md81", null ],
-        [ "Basic Components", "algo_rationale.html#autotoc_md82", [
-          [ "Reusable loops", "algo_rationale.html#autotoc_md83", null ],
-          [ "Ranges or Iterators", "algo_rationale.html#autotoc_md84", [
-            [ "General concepts", "algo_rationale.html#autotoc_md85", null ],
-            [ "Relaxed concepts", "algo_rationale.html#autotoc_md86", null ]
-          ] ]
-        ] ],
-        [ "Customization", "algo_rationale.html#autotoc_md87", [
-          [ "Algorithms traits", "algo_rationale.html#autotoc_md88", null ]
-        ] ]
-      ] ],
-      [ "Components Semantic", "glossary_semantic.html", [
-        [ "Property of EVE types", "glossary_semantic.html#autotoc_md92", [
-          [ "Cardinal", "glossary_semantic.html#autotoc_md93", null ],
-          [ "Element type", "glossary_semantic.html#autotoc_md94", null ],
-          [ "ABI traits", "glossary_semantic.html#autotoc_md95", null ]
-        ] ],
-        [ "Operations Classification", "glossary_semantic.html#autotoc_md96", [
-          [ "Generalized Element Access", "glossary_semantic.html#autotoc_md97", null ],
-          [ "Element-wise Operations", "glossary_semantic.html#glossary_elementwise", null ],
-          [ "Reductions", "glossary_semantic.html#glossary_reduction", null ]
-        ] ],
-        [ "Function Semantic", "glossary_semantic.html#autotoc_md98", [
-          [ "Arithmetic Functions", "glossary_semantic.html#glossary_arithmetic", null ],
-          [ "Bitwise Functions", "glossary_semantic.html#glossary_bitwise", null ],
-          [ "Logical Functions", "glossary_semantic.html#glossary_logical", null ],
-          [ "Constant Functions", "glossary_semantic.html#glossary_constant", null ],
-          [ "General Principles", "glossary_semantic.html#autotoc_md99", null ],
-          [ "Precision handling", "glossary_semantic.html#autotoc_md100", null ]
-        ] ]
-      ] ],
-      [ "Development Environment", "dev_environment.html", [
-        [ "Docker setup", "dev_environment.html#dev_docker_setup", null ],
-        [ "Running EVE docker", "dev_environment.html#dev_docker_helper", null ]
-      ] ],
-      [ "Building for Testing", "dev_cmake.html", [
-        [ "CMake setup", "dev_cmake.html#autotoc_md89", null ],
-        [ "Compiling EVE Unit Tests", "dev_cmake.html#autotoc_md90", null ],
-        [ "Compiling EVE Random Tests", "dev_cmake.html#autotoc_md91", null ]
-      ] ]
-    ] ],
+    [ "Tutorials", "tutorials.html", "tutorials" ],
+    [ "Why and How", "eve-dev.html", "eve-dev" ],
     [ "Change Log", "changelog.html", [
       [ "Version 2023.02.15", "changelog.html#autotoc_md118", [
         [ "What's Changed", "changelog.html#autotoc_md119", [
@@ -173,13 +77,15 @@ var NAVTREE =
       [ "Version beta.2020.09", "changelog.html#autotoc_md135", null ]
     ] ],
     [ "Licence", "licence.html", null ],
+    [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
+        [ "All", "namespacemembers.html", "namespacemembers_dup" ],
         [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ],
-        [ "Typedefs", "namespacemembers_type.html", null ]
+        [ "Variables", "namespacemembers_vars.html", "namespacemembers_vars" ],
+        [ "Typedefs", "namespacemembers_type.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ]
       ] ]
     ] ],
     [ "Concepts", "concepts.html", "concepts" ],
@@ -192,7 +98,7 @@ var NAVTREE =
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
         [ "Typedefs", "functions_type.html", null ],
-        [ "Related Symbols", "functions_rela.html", null ]
+        [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ]
   ] ]
@@ -200,7 +106,12 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"algo_rationale.html"
+"algo_rationale.html",
+"group__conditional.html#ga6ce7ac450593ee98fe8ca0d9cf65e4b4",
+"group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce",
+"group__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555",
+"structeve_1_1algo_1_1views_1_1converting__iterator.html",
+"structeve_1_1wide.html#a32b2459f9e09887921b0425fddf3b08c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

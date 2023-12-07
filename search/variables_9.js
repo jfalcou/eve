@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['two_5fsub_0',['two_sub',['../namespaceeve_abc88ded4203ae8d5d7698193ca58cc40.html#abc88ded4203ae8d5d7698193ca58cc40',1,'eve']]]
+  ['jacobi_0',['jacobi',['../group__polynomial_ga9fa0403edd79d74a9fce76f06af3727d.html#ga9fa0403edd79d74a9fce76f06af3727d',1,'eve']]]
 ];

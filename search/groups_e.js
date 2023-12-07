@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['reductions_0',['Reductions',['../group__core__reduction.html',1,'']]],
-  ['related_20types_1',['SIMD related types',['../group__simd__types.html',1,'']]],
-  ['related_20types_20and_20helpers_2',['Architecture related Types and Helpers',['../group__arch.html',1,'']]]
+  ['simd_20related_20types_0',['SIMD related types',['../group__simd__types.html',1,'']]],
+  ['simd_20specific_20operations_1',['SIMD Specific Operations',['../group__core__simd.html',1,'']]],
+  ['special_20functions_2',['Special functions',['../group__special.html',1,'']]],
+  ['structured_20types_20management_3',['Structured Types Management',['../group__struct.html',1,'']]]
 ];

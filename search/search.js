@@ -156,7 +156,7 @@ function SearchBox(name, resultsPath, extension)
 
   this.OnSearchSelectHide = function()
   {
-    this.hideTimeout = setTimeout(this.CloseSelectionWindow.bind(this),
+    this.hideTimeout = setTimeout(this.name +".CloseSelectionWindow()",
                                   this.closeSelectionTimeout);
   }
 
@@ -195,7 +195,6 @@ function SearchBox(name, resultsPath, extension)
     }
     else if (e.keyCode==27) // Escape out of the search field
     {
-      e.stopPropagation();
       this.DOMSearchField().blur();
       this.DOMPopupSearchResultsWindow().style.display = 'none';
       this.DOMSearchClose().style.display = 'none';
@@ -212,7 +211,7 @@ function SearchBox(name, resultsPath, extension)
       if (searchValue != "") // non-empty search
       {
         // set timer for search update
-        this.keyTimeout = setTimeout(this.Search.bind(this),
+        this.keyTimeout = setTimeout(this.name + '.Search()',
                                      this.keyTimeoutLength);
       }
       else // empty search field
@@ -290,7 +289,6 @@ function SearchBox(name, resultsPath, extension)
     }
     else if (e.keyCode==13 || e.keyCode==27)
     {
-      e.stopPropagation();
       this.OnSelectItem(this.searchIndex);
       this.CloseSelectionWindow();
       this.DOMSearchField().focus();
@@ -358,11 +356,7 @@ function SearchBox(name, resultsPath, extension)
         document.getElementById("NoMatches").style.display="none";
       }
  
-      if (idx!=-1) {
-        searchResults.Search(searchValue);
-      } else { // no file with search results => force empty search results
-        searchResults.Search('====');
-      }
+      searchResults.Search(searchValue);
 
       if (domPopupSearchResultsWindow.style.display!='block')
       {
@@ -672,7 +666,6 @@ function SearchResults(name)
       }
       else if (this.lastKey==27) // Escape
       {
-        e.stopPropagation();
         searchBox.CloseResultsWindow();
         document.getElementById("MSearchField").focus();
       }
@@ -716,7 +709,6 @@ function SearchResults(name)
       }
       else if (this.lastKey==27) // Escape
       {
-        e.stopPropagation();
         searchBox.CloseResultsWindow();
         document.getElementById("MSearchField").focus();
       }
@@ -810,7 +802,6 @@ function createResults(resultsPath)
 function init_search()
 {
   var results = document.getElementById("MSearchSelectWindow");
-  results.tabIndex=0;
   for (var key in indexSectionLabels)
   {
     var link = document.createElement('a');
@@ -821,20 +812,5 @@ function init_search()
     results.appendChild(link);
   }
   searchBox.OnSelectItem(0);
-
-  var input = document.getElementById("MSearchSelect");
-  var searchSelectWindow = document.getElementById("MSearchSelectWindow");
-  input.tabIndex=0;
-  input.addEventListener("keydown", function(event) {
-    if (event.keyCode==13 || event.keyCode==40) {
-      event.preventDefault();
-      if (searchSelectWindow.style.display == 'block') {
-        searchBox.CloseSelectionWindow();
-      } else {
-        searchBox.OnSearchSelectShow();
-        searchBox.DOMSearchSelectWindow().focus();
-      }
-    }
-  });
 }
 /* @license-end */

@@ -94,7 +94,7 @@ function cachedLink()
   }
 }
 
-function getScript(scriptName,func)
+function getScript(scriptName,func,show)
 {
   var head = document.getElementsByTagName("head")[0];
   var script = document.createElement('script');
@@ -124,7 +124,7 @@ function createIndent(o,domNode,node,level)
         node.plus_img.innerHTML=arrowRight;
         node.expanded = false;
       } else {
-        expandNode(o, node, false, true);
+        expandNode(o, node, false, false);
       }
     }
     node.expandToggle.appendChild(imgNode);
@@ -265,15 +265,15 @@ function showRoot()
   })();
 }
 
-function expandNode(o, node, imm, setFocus)
+function expandNode(o, node, imm, showRoot)
 {
   if (node.childrenData && !node.expanded) {
     if (typeof(node.childrenData)==='string') {
       var varName    = node.childrenData;
       getScript(node.relpath+varName,function(){
         node.childrenData = getData(varName);
-        expandNode(o, node, imm, setFocus);
-      });
+        expandNode(o, node, imm, showRoot);
+      }, showRoot);
     } else {
       if (!node.childrenVisited) {
         getNode(o, node);
@@ -281,9 +281,6 @@ function expandNode(o, node, imm, setFocus)
       $(node.getChildrenUL()).slideDown("fast");
       node.plus_img.innerHTML = arrowDown;
       node.expanded = true;
-      if (setFocus) {
-        $(node.expandToggle).focus();
-      }
     }
   }
 }
@@ -347,7 +344,7 @@ function showNode(o, node, index, hash)
       getScript(node.relpath+varName,function(){
         node.childrenData = getData(varName);
         showNode(o,node,index,hash);
-      });
+      },true);
     } else {
       if (!node.childrenVisited) {
         getNode(o, node);
@@ -365,11 +362,11 @@ function showNode(o, node, index, hash)
             n.childrenData = getData(varName);
             node.expanded=false;
             showNode(o,node,index,hash); // retry with child node expanded
-          });
+          },true);
         } else {
           var rootBase = stripPath(o.toroot.replace(/\..+$/, ''));
           if (rootBase=="index" || rootBase=="pages" || rootBase=="search") {
-            expandNode(o, n, true, false);
+            expandNode(o, n, true, true);
           }
           selectAndHighlight(hash,n);
         }
@@ -447,7 +444,7 @@ function navTo(o,root,hash,relpath)
       if (navTreeSubIndices[i]) {
         gotoNode(o,i,root,hash,relpath);
       }
-    });
+    },true);
   }
 }
 
@@ -547,13 +544,6 @@ function initNavTree(toroot,relpath)
        $('.item').removeAttr('id');
        navTo(o,toroot,hashUrl(),relpath);
      }
-  })
-
-  $("div.toc a[href]").click(function(e) {
-    e.preventDefault();
-    var docContent = $('#doc-content');
-    var aname = $(this).attr("href");
-    gotoAnchor($(aname),aname,true);
   })
 }
 /* @license-end */
