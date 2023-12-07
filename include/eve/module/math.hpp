@@ -79,6 +79,10 @@
 //!
 //!  @warning Note that these decorator only work for floating real values.
 //!
+//! @defgroup contfrac  Continued Fractions
+//! @ingroup math
+//! These functions computes continued fractions
+//!
 //! @defgroup math_invtrig  Inverse trigonometric
 //! @ingroup math
 //! These functions allows performing trigonometric computations
