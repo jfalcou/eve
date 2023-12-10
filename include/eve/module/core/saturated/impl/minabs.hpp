@@ -34,7 +34,7 @@ minabs_(EVE_SUPPORTS(cpu_),
         T const& a,
         T const& b) noexcept requires has_native_abi_v<T>
 {
-  return eve::min(saturated(eve::abs)(a), saturated(eve::abs)(b));
+  return eve::min(eve::abs[saturated](a), eve::abs[saturated](b));
 }
 
 //================================================================================================
@@ -45,7 +45,7 @@ auto
 minabs_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(minabs(a0, a1, args...))
 {
-  auto sa = saturated(eve::abs);
+  auto sa = eve::abs[saturated];
   return eve::min(sa(a0), sa(a1), sa(args)...);
 }
 }

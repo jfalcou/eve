@@ -34,7 +34,7 @@ negabsmin_(EVE_SUPPORTS(cpu_),
            T const& a,
            T const& b) noexcept requires has_native_abi_v<T>
 {
-  return saturated(minus)(saturated(eve::abs)(eve::min(a, b)));
+  return saturated(minus)(eve::abs[saturated](eve::min(a, b)));
 }
 
 //================================================================================================
@@ -45,7 +45,7 @@ auto
 negabsmin_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(mul(a0, a1, args...))
 {
-  return saturated(minus)(saturated(eve::abs)(eve::min(a0, a1, args...)));
+  return saturated(minus)(eve::abs[saturated](eve::min(a0, a1, args...)));
 }
 
 }

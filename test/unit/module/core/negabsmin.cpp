@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of negabsmin on all types full range",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  auto m = [](auto a, auto b, auto c) -> v_t { return eve::saturated(eve::minus)(eve::saturated(eve::abs)(eve::min(a, b, c))); };
+  auto m = [](auto a, auto b, auto c) -> v_t { return eve::saturated(eve::minus)(eve::abs[eve::saturated](eve::min(a, b, c))); };
   TTS_ULP_EQUAL(negabsmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::pedantic(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::numeric(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);

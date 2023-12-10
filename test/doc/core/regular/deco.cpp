@@ -11,7 +11,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pi =                         =  " << pi << '\n'
             << "-> eve::abs(pi) =               =  " << eve::abs(pi) << '\n'
-            << "-> eve::saturated(eve::abs)(pi) =  " << eve::saturated(eve::abs)(pi) << '\n';
+            << "-> eve::abs[saturated](pi) =  " << eve::abs[saturated](pi) << '\n';
 
   return 0;
 }

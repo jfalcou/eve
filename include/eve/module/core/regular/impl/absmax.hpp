@@ -77,12 +77,12 @@ absmax_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
   else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
 }
 
-template<decorator D, kumi::non_empty_product_type Ts>
+template<kumi::non_empty_product_type Ts>
 auto
-absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+absmax_(EVE_SUPPORTS(cpu_), saturated_type const& d, Ts tup)
 {
-  if constexpr( kumi::size_v<Ts> == 1) return d(eve::abs)(get<0>(tup));
-  else return d(eve::abs)(kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+  if constexpr( kumi::size_v<Ts> == 1) return eve::abs[d](get<0>(tup));
+  else return eve::abs[d](kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
 }
 
 
