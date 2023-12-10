@@ -285,8 +285,7 @@ most_repeated_pattern_impl()
 template<std::ptrdiff_t... I>
 constexpr auto most_repeated_pattern = most_repeated_pattern_impl<std::array {I...}>();
 
-template<auto arr>
-constexpr auto most_repeated_pattern_a = most_repeated_pattern_impl<arr>();
+template<auto arr> constexpr auto most_repeated_pattern_a = most_repeated_pattern_impl<arr>();
 
 template<std::size_t target, auto idxs>
 constexpr auto
@@ -321,7 +320,7 @@ template<std::size_t Times, std::size_t N>
 constexpr std::array<std::ptrdiff_t, Times * N>
 repeat(std::span<const std::ptrdiff_t, N> in)
 {
-  std::array<std::ptrdiff_t, Times *N> res = {};
+  std::array<std::ptrdiff_t, Times * N> res = {};
 
   const auto *f = in.data();
   const auto *l = in.data() + in.size();
@@ -687,7 +686,7 @@ template<std::ptrdiff_t G, std::size_t N>
 constexpr std::array<std::ptrdiff_t, N * G>
 expand_group(std::span<const std::ptrdiff_t, N> idxs)
 {
-  std::array<std::ptrdiff_t, N *G> res = {};
+  std::array<std::ptrdiff_t, N * G> res = {};
 
   std::ptrdiff_t *o = res.data();
 
@@ -876,16 +875,20 @@ template<std::size_t G, std::size_t N>
 constexpr auto
 put_bigger_groups_in_position(std::span<const std::ptrdiff_t, N> idxs)
 {
-  constexpr std::size_t group_count = (G == 0 || G >= N) ? 1 : N / G;
-
-  using group_pattern_t   = std::array<std::ptrdiff_t, group_count>;
-  using withing_pattern_t = std::array<std::ptrdiff_t, N>;
-
-  std::optional<kumi::tuple<group_pattern_t, withing_pattern_t>> res;
-
-  if constexpr( G == 0 || G > N ) { return res; }
+  if constexpr( G == 0 || G > N )
+  {
+    return std::optional<
+        kumi::tuple<std::array<std::ptrdiff_t, 1>, std::array<std::ptrdiff_t, N>>> {};
+  }
   else
   {
+    constexpr std::size_t group_count = (G == 0 || G >= N) ? 1 : N / G;
+
+    using group_pattern_t   = std::array<std::ptrdiff_t, group_count>;
+    using withing_pattern_t = std::array<std::ptrdiff_t, N>;
+
+    std::optional<kumi::tuple<group_pattern_t, withing_pattern_t>> res;
+
     group_pattern_t   groups_pattern        = {};
     withing_pattern_t within_groups_pattern = {};
 
@@ -914,7 +917,10 @@ put_bigger_groups_in_position(std::span<const std::ptrdiff_t, N> idxs)
       if( group_index < 0 )
       {
         groups_pattern[i] = we_;
-        for( std::size_t j = group_start; j != group_end; ++j ) { within_groups_pattern[j] = group_index; }
+        for( std::size_t j = group_start; j != group_end; ++j )
+        {
+          within_groups_pattern[j] = group_index;
+        }
         continue;
       }
 

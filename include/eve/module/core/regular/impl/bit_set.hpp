@@ -21,7 +21,7 @@ namespace eve::detail
   EVE_FORCEINLINE T
   bit_set_(EVE_SUPPORTS(cpu_), T a, I i) noexcept
   {
-    [[maybe_unused]] constexpr size_t S8 = sizeof(element_type_t<T>)*8;
+    [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;
     EVE_ASSERT(eve::all(i >= 0 && i < S8), "indexis out or range");
     return bit_or(a, bit_shl(one(as(a)), i));
   }

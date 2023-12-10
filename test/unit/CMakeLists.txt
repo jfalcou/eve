@@ -76,6 +76,7 @@ glob_unit("unit" ${unit_root} "module/algo/views/*.cpp"    )
 add_custom_target(unit.core.exe         )
 add_dependencies(unit.exe unit.core.exe )
 glob_unit("unit" ${unit_root} "module/core/*.cpp"          )
+glob_unit("unit" ${unit_root} "module/core/constant/*.cpp"  )
 glob_unit("unit" ${unit_root} "module/core/convert/*.cpp"  )
 glob_unit("unit" ${unit_root} "module/core/saturate/*.cpp" )
 

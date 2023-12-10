@@ -21,7 +21,7 @@ namespace eve::detail
   EVE_FORCEINLINE T
   bit_swap_pairs_(EVE_SUPPORTS(cpu_), T a, I0 i0,  I1 i1) noexcept
   {
-    [[maybe_unused]] constexpr size_t S8 = sizeof(element_type_t<T>)*8;
+    [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;
     EVE_ASSERT(eve::all(i0 < S8 && i1 < S8), "some indexes are out or range");
     auto x = bit_and(bit_xor(bit_shr(a, i0), bit_shr(a, i1)), one(as(a)));
     a ^= bit_shl(x, i1);

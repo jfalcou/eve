@@ -9,9 +9,9 @@
 
 #include "eve/traits/element_type.hpp"
 #include <eve/detail/abi.hpp>
-#include <eve/detail/function/iota.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
 
@@ -91,7 +91,7 @@ to_logical(C c, eve::as<T>) noexcept
   }
   else
   {
-    auto           i     = detail::linear_ramp(eve::as<i_t>());
+    auto           i     = eve::iota(eve::as<i_t>());
     std::ptrdiff_t count = c.count(as<i_t> {});
 
     if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
