@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"structeve_1_1algo_1_1views_1_1backward__range.html":[6,0,0,3,1],
 "structeve_1_1algo_1_1views_1_1converting__iterator.html":[6,0,0,3,2],
 "structeve_1_1algo_1_1views_1_1converting__range.html":[6,0,0,3,3],
 "structeve_1_1algo_1_1views_1_1iota__with__step__iterator.html":[6,0,0,3,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "structeve_1_1wide.html#a2b902c5e2c2b9cccd1a5ebb94ea4f295":[6,0,3,6,12],
 "structeve_1_1wide.html#a2cfdc7944754eb9c050d59c29ecb3041":[6,0,3,6,40],
 "structeve_1_1wide.html#a30062a067e1482c9fb61d49e12db32e5":[6,0,3,6,39],
-"structeve_1_1wide.html#a31cc77d8a8f3300e7e810036f7065aa9":[6,0,3,6,26],
-"structeve_1_1wide.html#a31de374c767478c8a02dd2fe26a5fd7b":[6,0,3,6,67]
+"structeve_1_1wide.html#a31cc77d8a8f3300e7e810036f7065aa9":[6,0,3,6,26]
 };

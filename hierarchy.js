@@ -21,6 +21,7 @@ var hierarchy =
     [ "converting_range", "structconverting__range.html", null ],
     [ "eve::algo::views::converting_range< R, T >", "structeve_1_1algo_1_1views_1_1converting__range.html", null ],
     [ "eve::decorated_with< OptionsValues, Options >", "structeve_1_1decorated__with.html", null ],
+    [ "eve::decorated_with< Options, Options... >", "structeve_1_1decorated__with.html", null ],
     [ "eve::decorated_with< OptionsValues, Options... >", "structeve_1_1decorated__with.html", null ],
     [ "eve::decorators< Settings >", "structeve_1_1decorators.html", null ],
     [ "eve::element_type< T >", "structeve_1_1element__type.html", null ],

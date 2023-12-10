@@ -344,6 +344,7 @@ var namespaceeve =
     [ "invlog_2", "group__math__constants_gaeb667b96225f1f9d9e6a5b480d960344.html#gaeb667b96225f1f9d9e6a5b480d960344", null ],
     [ "invlog_phi", "group__math__constants_ga5545448268f6f786e4e4211578a130ac.html#ga5545448268f6f786e4e4211578a130ac", null ],
     [ "invsqrt_2", "group__math__constants_ga49667d76f54c0c7753c703215266975f.html#ga49667d76f54c0c7753c703215266975f", null ],
+    [ "iota", "group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48", null ],
     [ "is_denormal", "group__core__predicates_ga6e7a64c2a6bf2fc626451e81cc749c2a.html#ga6e7a64c2a6bf2fc626451e81cc749c2a", null ],
     [ "is_equal", "group__core__predicates_gad3071564e3dd31bf2aacba41aa2079e7.html#gad3071564e3dd31bf2aacba41aa2079e7", null ],
     [ "is_eqz", "group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8", null ],

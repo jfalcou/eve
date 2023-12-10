@@ -7,6 +7,7 @@ var group__core__constants =
     [ "eve::false_", "group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6", null ],
     [ "eve::half", "group__core__constants_ga8d9cee3337e0a95b596cef102e04e1a5.html#ga8d9cee3337e0a95b596cef102e04e1a5", null ],
     [ "eve::inf", "group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08", null ],
+    [ "eve::iota", "group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48", null ],
     [ "eve::logeps", "group__core__constants_ga048089d9f72f2fecb4dffab41ae615aa.html#ga048089d9f72f2fecb4dffab41ae615aa", null ],
     [ "eve::mantissamask", "group__core__constants_ga040465fe0ba98419d6ce5397bc60def0.html#ga040465fe0ba98419d6ce5397bc60def0", null ],
     [ "eve::maxexponent", "group__core__constants_ga08c97899074a949e8ee122d483d77a85.html#ga08c97899074a949e8ee122d483d77a85", null ],
