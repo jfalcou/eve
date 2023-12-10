@@ -1,4 +1,4 @@
-#include <eve/wide.hpp>
+#include <eve/module/core.hpp>
 #include <iostream>
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
