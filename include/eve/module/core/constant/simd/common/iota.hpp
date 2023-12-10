@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve::detail
 {
@@ -23,12 +24,6 @@ iota_(EVE_REQUIRES(cpu_), eve::callable_options auto const& opts, eve::as<T> tgt
 
   if constexpr( C::is_complete && C::is_inverted ) return T {[](int i, int) { return i; }};
   else if constexpr( !C::has_alternative ) return iota[cx.else_(eve::zero(tgt))](tgt);
-  else if constexpr( C::is_complete && !C::is_inverted ) return T {cx.alternative};
-  else
-  {
-    T x = iota(tgt);
-    if constexpr( !C::is_complete ) x = eve::if_else(cx, x, cx.alternative);
-    return x;
-  }
+  else return mask_op(cx, iota, tgt);
 }
 }

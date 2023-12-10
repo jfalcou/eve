@@ -40,4 +40,10 @@ template<relative_conditional_expr C, simd_value T> auto to_logical(C c, eve::as
 
 template<relative_conditional_expr C, simd_value T>
 auto EVE_FORCEINLINE to_logical(C c, eve::as<T>) noexcept requires(current_api >= avx512);
+
+template<conditional_expr C, typename Op, typename Arg0, typename... Args>
+EVE_FORCEINLINE auto mask_op(C const&                     c,
+                             [[maybe_unused]] Op          f,
+                             [[maybe_unused]] Arg0 const& a0,
+                             [[maybe_unused]] Args const&...as);
 }
