@@ -40,14 +40,14 @@ int main()
   std::cout << my_lib::func(25.) << "\n";
 
   std::cout << "Is func(double) supported     : "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<my_lib::func>, double>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<my_lib::func>, double>
             << "\n";
 
   std::cout << "Is func(float) supported      : "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<my_lib::func>, float>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<my_lib::func>, float>
             << "\n";
 
   std::cout << "Is func(wide<float>) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<my_lib::func>, eve::wide<float>>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<my_lib::func>, eve::wide<float>>
             << "\n";
 }
