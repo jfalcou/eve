@@ -66,7 +66,7 @@ namespace eve
   inline constexpr auto functor = Func<eve::options<>>{};
 
   template<auto Func>
-  using tag_of = std::remove_cvref_t<decltype(Func)>;
+  using tag_t = std::remove_cvref_t<decltype(Func)>;
 
   //====================================================================================================================
   //! @addtogroup extensions

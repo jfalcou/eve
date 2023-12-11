@@ -36,14 +36,14 @@ int main()
   std::cout << eve::some_pi[eve::keep_between(1,3).else_(99)](eve::as<eve::wide<float>>{}) << "\n\n";
 
   std::cout << "Is Pi(as<float>) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::some_pi>, eve::as<float>>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<eve::some_pi>, eve::as<float>>
             << "\n";
 
   std::cout << "Is Pi(float) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::some_pi>, float>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<eve::some_pi>, float>
             << "\n";
 
   std::cout << "Is Pi(as<wide<unsigned char>>) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::some_pi>, eve::as<eve::wide<unsigned char>>>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<eve::some_pi>, eve::as<eve::wide<unsigned char>>>
             << "\n";
 }

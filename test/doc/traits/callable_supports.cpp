@@ -69,18 +69,18 @@ int main()
   std::cout << eve::other_func[eve::keep_between(2,6)](eve::wide<short>{77}) << "\n";
 
   std::cout << "Is func[bool] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::func>, bool>
+            << std::boolalpha << can_be_decorated_with<eve::tag_t<eve::func>, bool>
             << "\n";
 
   std::cout << "Is func[eve::keep_between] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::func>, eve::keep_between>
+            << std::boolalpha << can_be_decorated_with<eve::tag_t<eve::func>, eve::keep_between>
             << "\n";
 
   std::cout << "Is other_func[bool] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::other_func>, bool>
+            << std::boolalpha << can_be_decorated_with<eve::tag_t<eve::other_func>, bool>
             << "\n";
 
   std::cout << "Is other_func[eve::keep_between] supported: "
-            << std::boolalpha << can_be_decorated_with<eve::tag_of<eve::other_func>, eve::keep_between>
+            << std::boolalpha << can_be_decorated_with<eve::tag_t<eve::other_func>, eve::keep_between>
             << "\n";
 }
