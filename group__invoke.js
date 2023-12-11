@@ -16,5 +16,5 @@ var group__invoke =
     [ "eve::constant_callable", "concepteve_1_1constant__callable.html", null ],
     [ "eve::tag_invocable", "concepteve_1_1tag__invocable.html", null ],
     [ "eve::tag_invoke_result", "group__invoke.html#gac02d96a9e94b826ce20e7e29451a96e3", null ],
-    [ "eve::tag_of", "group__invoke.html#ga8dde0862945d94fceab4dbc0b0b29bf3", null ]
+    [ "eve::tag_of", "group__invoke.html#ga25e5175b2bc593fc42970761a8d179e8", null ]
 ];

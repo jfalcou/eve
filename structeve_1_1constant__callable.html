@@ -187,15 +187,15 @@ struct eve::constant_callable&lt; Func, OptionsValues, Options &gt;</div><p><b>D
 <div class="line">  std::cout &lt;&lt; eve::some_pi[<a class="code hl_struct" href="structeve_1_1keep__between.html">eve::keep_between</a>(1,3).<a class="code hl_function" href="structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb">else_</a>(99)](<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::wide&lt;float&gt;</a>&gt;{}) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is Pi(as&lt;float&gt;) supported: &quot;</span></div>
-<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_of&lt;eve::some_pi&gt;, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>&gt;</div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;eve::some_pi&gt;, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>&gt;</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is Pi(float) supported: &quot;</span></div>
-<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_of&lt;eve::some_pi&gt;, <span class="keywordtype">float</span>&gt;</div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;eve::some_pi&gt;, <span class="keywordtype">float</span>&gt;</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is Pi(as&lt;wide&lt;unsigned char&gt;&gt;) supported: &quot;</span></div>
-<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_of&lt;eve::some_pi&gt;, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::wide&lt;unsigned char&gt;</a>&gt;&gt;</div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;eve::some_pi&gt;, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::wide&lt;unsigned char&gt;</a>&gt;&gt;</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1constant__callable_html"><div class="ttname"><a href="concepteve_1_1constant__callable.html">eve::constant_callable</a></div><div class="ttdoc">EVE callable with constant semantic</div><div class="ttdef"><b>Definition:</b> protocol.hpp:104</div></div>

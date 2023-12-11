@@ -405,11 +405,11 @@ template&lt;typename Tag , typename... Args&gt; </td></tr>
 <tr class="memitem:gac02d96a9e94b826ce20e7e29451a96e3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>tag_invoke_result</b> = std::invoke_result_t&lt; decltype(eve::tag_invoke), Tag, Args... &gt;</td></tr>
 <tr class="memdesc:gac02d96a9e94b826ce20e7e29451a96e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the return type of a eve::tag_invoke call. <br /></td></tr>
 <tr class="separator:gac02d96a9e94b826ce20e7e29451a96e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="memTemplParams" colspan="2">
+<tr class="memitem:ga25e5175b2bc593fc42970761a8d179e8"><td class="memTemplParams" colspan="2">
 template&lt;auto &amp; Func&gt; </td></tr>
-<tr class="memitem:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>tag_of</b> = std::decay_t&lt; decltype(Func)&gt;</td></tr>
-<tr class="memdesc:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the type of an instance of an <b>EVE</b> <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. <br /></td></tr>
-<tr class="separator:ga8dde0862945d94fceab4dbc0b0b29bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25e5175b2bc593fc42970761a8d179e8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>tag_of</b> = std::decay_t&lt; decltype(Func)&gt;</td></tr>
+<tr class="memdesc:ga25e5175b2bc593fc42970761a8d179e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the type of an instance of an <b>EVE</b> <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. <br /></td></tr>
+<tr class="separator:ga25e5175b2bc593fc42970761a8d179e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga1eb720c70448889dec28d1d72973a980"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980">iterator_cardinal_t</a> = decltype(detail::iterator_cardinal_impl&lt; T &gt;())</td></tr>
 <tr class="memdesc:ga1eb720c70448889dec28d1d72973a980"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <code>iterator_cardinal()</code> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>)  <br /></td></tr>

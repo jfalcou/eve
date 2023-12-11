@@ -89,7 +89,7 @@ var namespaceeve =
     [ "expected_cardinal_t", "group__arch_gad810107735c9074d509f0ba2773d14d5.html#gad810107735c9074d509f0ba2773d14d5", null ],
     [ "iterator_cardinal_t", "group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980", null ],
     [ "tag_invoke_result", "group__invoke.html#gac02d96a9e94b826ce20e7e29451a96e3", null ],
-    [ "tag_of", "group__invoke.html#ga8dde0862945d94fceab4dbc0b0b29bf3", null ],
+    [ "tag_of", "group__invoke.html#ga25e5175b2bc593fc42970761a8d179e8", null ],
     [ "unaligned_t", "group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c", null ],
     [ "value_type_t", "group__traits_gaf9ce08c683bb04a9a96e99ddd3edaee2.html#gaf9ce08c683bb04a9a96e99ddd3edaee2", null ],
     [ "wide_value_type_t", "group__traits_ga51d0901c39a489a5d6e0449339291c57.html#ga51d0901c39a489a5d6e0449339291c57", null ],
