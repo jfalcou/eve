@@ -36,14 +36,14 @@ int main()
   std::cout << eve::func(25.) << "\n";
 
   std::cout << "Is func(double) supported     : "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::func>, double>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<eve::func>, double>
             << "\n";
 
   std::cout << "Is func(float) supported      : "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::func>, float>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<eve::func>, float>
             << "\n";
 
   std::cout << "Is func(wide<float>) supported: "
-            << std::boolalpha << std::is_invocable_v<eve::tag_of<eve::func>, eve::wide<float>>
+            << std::boolalpha << std::is_invocable_v<eve::tag_t<eve::func>, eve::wide<float>>
             << "\n";
 }
