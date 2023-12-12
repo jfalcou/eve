@@ -53,7 +53,7 @@ struct constant
 };
 
 template<typename T>
-concept callable = requires(T) { typename T::callable_tag_type; };
+concept callable_entity = requires(T) { typename T::callable_tag_type; };
 
 //==================================================================================================
 //! @concept deferred_callable
@@ -68,7 +68,7 @@ template<typename T>
 concept deferred_callable = requires(T) { typename T::deferred_callable_tag; };
 
 //==================================================================================================
-//! @concept elementwise_callable
+//! @concept elementwise_entity
 //! @brief **EVE** callable with elementwise semantic
 //!
 //! A type `T` satisfies eve::elementwise_callable if and only if it is an eve::callable that
@@ -77,10 +77,10 @@ concept deferred_callable = requires(T) { typename T::deferred_callable_tag; };
 //! @tparam T  T type for the @callable to check
 //==================================================================================================
 template<typename T>
-concept elementwise_callable = callable<T> && requires(T) { typename T::elementwise_tag; };
+concept elementwise_entity = callable_entity<T> && requires(T) { typename T::elementwise_tag; };
 
 //==================================================================================================
-//! @concept reduction_callable
+//! @concept reduction_entity
 //! @brief **EVE** callable with reduction semantic
 //!
 //! A type `T` satisfies eve::reduction_callable if and only if it is an eve::callable that
@@ -89,10 +89,10 @@ concept elementwise_callable = callable<T> && requires(T) { typename T::elementw
 //! @tparam T  T type for the @callable to check
 //==================================================================================================
 template<typename T>
-concept reduction_callable = callable<T> && requires(T) { typename T::reduction_tag; };
+concept reduction_entity = callable_entity<T> && requires(T) { typename T::reduction_tag; };
 
 //==================================================================================================
-//! @concept constant_callable
+//! @concept constant_entity
 //! @brief **EVE** callable with constant semantic
 //!
 //! A type `T` satisfies eve::constant_callable if and only if it is an eve::callable that
@@ -101,14 +101,14 @@ concept reduction_callable = callable<T> && requires(T) { typename T::reduction_
 //! @tparam T  T type for the @callable to check
 //==================================================================================================
 template<typename T>
-concept constant_callable = callable<T> && requires(T) { typename T::constant_tag; };
+concept constant_entity = callable_entity<T> && requires(T) { typename T::constant_tag; };
 
 //==================================================================================================
 // All callable can have their type streamed to an output stream
 // Other project can use tags that inherit from an EVE tag family type or add
 // `using eve::operator<<;` to their own tags namespace to benefit from this.
 //==================================================================================================
-template<callable Tag>
+template<callable_entity Tag>
 std::ostream& operator<<(std::ostream& os, Tag const&)
 {
   return os << rbr::detail::type<Tag>.name();
