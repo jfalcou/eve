@@ -11,9 +11,9 @@ var group__invoke =
     [ "eve::reduction", "structeve_1_1reduction.html", null ],
     [ "eve::constant", "structeve_1_1constant.html", null ],
     [ "eve::deferred_callable", "concepteve_1_1deferred__callable.html", null ],
-    [ "eve::elementwise_callable", "concepteve_1_1elementwise__callable.html", null ],
-    [ "eve::reduction_callable", "concepteve_1_1reduction__callable.html", null ],
-    [ "eve::constant_callable", "concepteve_1_1constant__callable.html", null ],
+    [ "eve::elementwise_entity", "concepteve_1_1elementwise__entity.html", null ],
+    [ "eve::reduction_entity", "concepteve_1_1reduction__entity.html", null ],
+    [ "eve::constant_entity", "concepteve_1_1constant__entity.html", null ],
     [ "eve::tag_invocable", "concepteve_1_1tag__invocable.html", null ],
     [ "eve::tag_invoke_result", "group__invoke.html#gac02d96a9e94b826ce20e7e29451a96e3", null ],
     [ "eve::tag_of", "group__invoke.html#ga25e5175b2bc593fc42970761a8d179e8", null ]
