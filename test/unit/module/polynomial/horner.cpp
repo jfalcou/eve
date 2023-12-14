@@ -42,7 +42,6 @@ TTS_CASE_WITH("Check behavior of horner on wide",
              )//generate(tts::ramp(0)))
 <typename T>(T const& a0)
 {
-  using eve::compensated;
   using eve::fma;
   using eve::horner;
   using eve::numeric;

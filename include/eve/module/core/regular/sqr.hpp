@@ -43,7 +43,7 @@ namespace eve
 //!    square of `x` if it is representable in this type.
 //!
 //!  @note
-//!      For  [integral signed values](@ref eve::value)   if `eve::abs[saturated](x)`
+//!      For  [integral signed values](@ref eve::value)   if `eve::abs[eve::saturated](x)`
 //!      is greater than `eve::Sqrtvalmax(as(x))` the corresponding element result
 //!      is undefined.
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!
 //!      evaluates to:
 //!
-//!      [`eve::valmax(as(x))`](@ref eve::valmax) as soon as `eve::abs[saturated](x)`
+//!      [`eve::valmax(as(x))`](@ref eve::valmax) as soon as `eve::abs[eve::saturated](x)`
 //!      is greater than `eve::sqrtvalmax(as(x))`.
 //!
 //!      **Example**
