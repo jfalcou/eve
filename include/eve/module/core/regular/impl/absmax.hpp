@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include "eve/module/core/decorator/saturated.hpp"
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/detail/function/conditional.hpp>
@@ -77,14 +78,21 @@ absmax_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
   else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
 }
 
-template<kumi::non_empty_product_type Ts>
+template<decorator D, kumi::non_empty_product_type Ts>
 auto
-absmax_(EVE_SUPPORTS(cpu_), saturated_type const& d, Ts tup)
+absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {
-  if constexpr( kumi::size_v<Ts> == 1) return eve::abs[d](get<0>(tup));
-  else return eve::abs[d](kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+  if constexpr(std::same_as<D,saturated_type>)
+  {
+    if constexpr( kumi::size_v<Ts> == 1) return eve::abs[d](get<0>(tup));
+    else return eve::abs[d](kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+  }
+  else
+  {
+    if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+    else return eve::abs(kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+  }
 }
-
 
 // -----------------------------------------------------------------------------------------------
 // Masked case

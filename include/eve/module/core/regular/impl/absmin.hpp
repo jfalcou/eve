@@ -76,15 +76,24 @@ absmin_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
   else return eve::abs(kumi::apply( [&](auto... m) { return min(m...); }, tup));
 }
 
+
 template<decorator D, kumi::non_empty_product_type Ts>
 auto
-absmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
+absmin_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
 {
-  if constexpr( kumi::size_v<Ts> == 1) return d(eve::abs)(get<0>(tup));
-  else return d(eve::abs)(kumi::apply( [&](auto... m) { return d(min)(m...); }, tup));
-
+  if constexpr(std::same_as<D,saturated_type>)
+  {
+    if constexpr( kumi::size_v<Ts> == 1) return eve::abs[d](get<0>(tup));
+    else return eve::abs[d](kumi::apply( [&](auto... m) { return d(min)(m...); }, tup));
+  }
+  else
+  {
+    if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+    else return eve::abs(kumi::apply( [&](auto... m) { return d(min)(m...); }, tup));
+  }
 }
-// -----------------------------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------------------
 // Masked case
 template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
 EVE_FORCEINLINE auto

@@ -99,7 +99,8 @@ namespace eve
     {
         // Grab the condition and drop it from the callable
         auto cond     = opts[condition_key];
-        auto rmv_cond = options{rbr::drop(condition_key, opts)};
+        auto drop     =  rbr::drop(condition_key, opts);
+        auto rmv_cond = options<decltype(drop)>{drop};
 
         [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
 
