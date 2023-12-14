@@ -74,7 +74,7 @@ namespace eve::detail
 
   template<arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  abs_(EVE_REQUIRES(avx512_), C const& mask, O const& opts, wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
+  abs_(EVE_REQUIRES(avx512_), C const& mask, O const&,  wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
   {
     auto const            s = alternative(mask, v, as(v));
     [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
