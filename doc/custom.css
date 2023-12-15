@@ -76,3 +76,18 @@
 html.dark-mode #variants_image img {
     filter: brightness(87%) hue-rotate(180deg) invert();
 }
+
+div.code-output, pre.code-output {
+    margin: var(--spacing-medium) 0;
+    padding: calc(var(--spacing-large) - (var(--spacing-large) / 6)) var(--spacing-large);
+    background: var(--separator-color);
+    color: var(--fragment-foreground);
+    font-family: var(--font-family-monospace);
+    font-size: var(--code-font-size) !important;
+}
+
+code, div.code-output, pre.code-output {
+    border-radius: var(--border-radius-small);
+    border: 1px solid var(--separator-color);
+    overflow: hidden;
+}
