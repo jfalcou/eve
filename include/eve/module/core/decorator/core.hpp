@@ -54,33 +54,55 @@ namespace eve
       return rbr::option<rounding_key_t,Value>{};
     }
   };
-  inline constexpr rounding_key_t rounding_key = {};
+  [[maybe_unused]] inline constexpr rounding_key_t rounding_key = {};
 
   template<int N>
-  inline constexpr auto rounding = (rounding_key = eve::index<N>);
+  [[maybe_unused]] inline constexpr auto rounding = (rounding_key = eve::index<N>);
 
-  [[maybe_unused]] inline constexpr auto const almost2      = ::rbr::flag( almost_mode{}    );
-  [[maybe_unused]] inline constexpr auto const definitely2  = ::rbr::flag( definitely_mode{});
-  [[maybe_unused]] inline constexpr auto const downward2    = rounding<(0x01 | 0x08)>;
-  [[maybe_unused]] inline constexpr auto const kind_12      = ::rbr::flag( kind_1_mode{}    );
-  [[maybe_unused]] inline constexpr auto const kind_22      = ::rbr::flag( kind_2_mode{}    );
-  [[maybe_unused]] inline constexpr auto const musl2        = ::rbr::flag( musl_mode{}      );
-  [[maybe_unused]] inline constexpr auto const numeric2     = ::rbr::flag( numeric_mode{}   );
-  [[maybe_unused]] inline constexpr auto const p_kind2      = ::rbr::flag( p_kind_mode{}    );
-  [[maybe_unused]] inline constexpr auto const pedantic2    = ::rbr::flag( pedantic_mode{}  );
-  [[maybe_unused]] inline constexpr auto const plain2       = ::rbr::flag( plain_mode{}     );
-  [[maybe_unused]] inline constexpr auto const promote2     = ::rbr::flag( promote_mode{}   );
-  [[maybe_unused]] inline constexpr auto const q_kind2      = ::rbr::flag( q_kind_mode{}    );
-  [[maybe_unused]] inline constexpr auto const raw2         = ::rbr::flag( raw_mode{}       );
-  [[maybe_unused]] inline constexpr auto const regular2     = ::rbr::flag( regular_mode{}   );
-  [[maybe_unused]] inline constexpr auto const saturated2   = ::rbr::flag( saturated_mode{} );
-  [[maybe_unused]] inline constexpr auto const spherical    = ::rbr::flag( spherical_mode{} );
-  [[maybe_unused]] inline constexpr auto const successor2   = ::rbr::flag( successor_mode{} );
-  [[maybe_unused]] inline constexpr auto const to_nearest2  = rounding<(0x00 | 0x08)>;
-  [[maybe_unused]] inline constexpr auto const tolerant2    = ::rbr::flag( tolerant_mode{}  );
-  [[maybe_unused]] inline constexpr auto const toward_zero2 = rounding<(0x03 | 0x08)>;
-  [[maybe_unused]] inline constexpr auto const upward2      = rounding<(0x02 | 0x08)>;
+  [[maybe_unused]] inline constexpr auto almost2      = ::rbr::flag( almost_mode{}    );
+  [[maybe_unused]] inline constexpr auto definitely2  = ::rbr::flag( definitely_mode{});
+  [[maybe_unused]] inline constexpr auto downward2    = rounding<(0x01 | 0x08)>;
+  [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}    );
+  [[maybe_unused]] inline constexpr auto kind_22      = ::rbr::flag( kind_2_mode{}    );
+  [[maybe_unused]] inline constexpr auto musl2        = ::rbr::flag( musl_mode{}      );
+  [[maybe_unused]] inline constexpr auto numeric2     = ::rbr::flag( numeric_mode{}   );
+  [[maybe_unused]] inline constexpr auto p_kind2      = ::rbr::flag( p_kind_mode{}    );
+  [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}  );
+  [[maybe_unused]] inline constexpr auto plain2       = ::rbr::flag( plain_mode{}     );
+  [[maybe_unused]] inline constexpr auto promote2     = ::rbr::flag( promote_mode{}   );
+  [[maybe_unused]] inline constexpr auto q_kind2      = ::rbr::flag( q_kind_mode{}    );
+  [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}       );
+  [[maybe_unused]] inline constexpr auto regular2     = ::rbr::flag( regular_mode{}   );
+  [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{} );
+  [[maybe_unused]] inline constexpr auto spherical    = ::rbr::flag( spherical_mode{} );
+  [[maybe_unused]] inline constexpr auto successor2   = ::rbr::flag( successor_mode{} );
+  [[maybe_unused]] inline constexpr auto to_nearest2  = rounding<(0x00 | 0x08)>;
+  [[maybe_unused]] inline constexpr auto tolerant2    = ::rbr::flag( tolerant_mode{}  );
+  [[maybe_unused]] inline constexpr auto toward_zero2 = rounding<(0x03 | 0x08)>;
+  [[maybe_unused]] inline constexpr auto upward2      = rounding<(0x02 | 0x08)>;
 
+  struct almost_option      : detail::exact_option<almost2>       {};
+  struct definitely_option  : detail::exact_option<definitely2>   {};
+  struct kind_1_option      : detail::exact_option<kind_12>       {};
+  struct kind_2_option      : detail::exact_option<kind_22>       {};
+  struct musl_option        : detail::exact_option<musl2>         {};
+  struct numeric_option     : detail::exact_option<numeric2>      {};
+  struct p_kind_option      : detail::exact_option<p_kind2>       {};
+  struct pedantic_option    : detail::exact_option<pedantic2>     {};
+  struct plain_option       : detail::exact_option<plain2>        {};
+  struct promote_option     : detail::exact_option<promote2>      {};
+  struct q_kind_option      : detail::exact_option<q_kind2>       {};
+  struct raw_option         : detail::exact_option<raw2>          {};
+  struct regular_option     : detail::exact_option<regular2>      {};
+  struct rounding_option    : detail::exact_option<rounding_key>  {};
+  struct saturated_option   : detail::exact_option<saturated2>    {};
+  struct spherical_option   : detail::exact_option<spherical>     {};
+  struct successor_option   : detail::exact_option<successor2>    {};
+  struct tolerant_option    : detail::exact_option<tolerant2>     {};
+
+  // ----------------------------------------------------------------------------------
+  // [TEMPORARY] Will be removed when all decorator have been converted
+  // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(almost_type       const&) { return almost2;       }
   inline constexpr auto as_option(definitely_type   const&) { return definitely2;   }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }

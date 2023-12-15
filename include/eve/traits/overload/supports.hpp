@@ -71,35 +71,6 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup extensions
   //! @{
-  //!   @struct accept
-  //!   @brief Helper class to accept multiple options
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   eve::accept builds an option specification class that accept any of the keywords in its template parameters
-  //!   and don't have any default state.
-  //!
-  //!   @tparam Options Variadic lists of keyword to accept
-  //! @}
-  //====================================================================================================================
-  template<auto... Options> struct accept
-  {
-    EVE_FORCEINLINE constexpr auto process(auto const& base, any_options_from<Options...> auto const& opts) const
-    {
-      auto new_opts = rbr::merge(options{opts}, base);
-      return options<decltype(new_opts)>{new_opts};
-    }
-
-    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
-  };
-
-  //====================================================================================================================
-  //! @addtogroup extensions
-  //! @{
   //!   @struct decorated_with
   //!   @brief Helper class to aggregate options handlers and states
   //!
@@ -285,5 +256,20 @@ namespace eve
       auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
       return options<decltype(new_opts)>{new_opts};
     }
+  };
+}
+
+namespace eve::detail
+{
+  // Internal helper for decorator setup
+  template<auto Decorator> struct exact_option
+  {
+    EVE_FORCEINLINE constexpr auto process(auto const& base, exactly<Decorator> auto const& opts) const
+    {
+      auto news = rbr::merge(options{opts}, base);
+      return options<decltype(news)>{news};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
 }

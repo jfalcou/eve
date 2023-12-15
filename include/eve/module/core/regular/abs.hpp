@@ -14,7 +14,7 @@
 namespace eve
 {
 template<typename Options>
-struct abs_t : elementwise_callable<abs_t, Options, accept<saturated2>>
+struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 {
   template<eve::value T>
   EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
