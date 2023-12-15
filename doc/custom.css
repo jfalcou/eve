@@ -91,3 +91,35 @@ code, div.code-output, pre.code-output {
     border: 1px solid var(--separator-color);
     overflow: hidden;
 }
+
+dl.compiler {
+    background: var(--warning-color);
+    border-left: 8px solid var(--warning-color-dark);
+    border-radius: var(--border-radius-small);
+    color: var(--warning-color-darker);
+    font-family: monospace;
+    margin-left: 0;
+    margin: var(--spacing-medium) 0;
+    overflow: hidden;
+    padding: var(--spacing-medium);
+}
+
+dl.compiler dt{
+    color: var(--warning-color-dark);
+}
+
+dl.success {
+    background: var(--note-color);
+    border-left: 8px solid var(--note-color-dark);
+    border-radius: var(--border-radius-small);
+    color: var(--note-color-darker);
+    font-family: monospace;
+    margin-left: 0;
+    margin: var(--spacing-medium) 0;
+    overflow: hidden;
+    padding: var(--spacing-medium);
+}
+
+dl.success dt{
+    color: var(--note-color-dark);
+}
