@@ -4,6 +4,29 @@
 //  SPDX-License-Identifier: BSL-1.0
 //==================================================================================================
 
+function escapeHtml(str)
+{
+    const escapeMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    };
+
+    return str.replace(/[&<>"']/g, match => escapeMap[match]);
+}
+
+function removeANSIEscapeCodes(inputString) {
+    // Regular expression to match ANSI escape codes
+    const ansiEscapeRegex = /\x1B\[[0-9;]*[A-Za-z]/g;
+
+    // Remove ANSI escape codes from the input string
+    const cleanedString = inputString.replace(ansiEscapeRegex, '');
+
+    return cleanedString;
+}
+
 async function postCE(jsonObject) {
   try {
     const response = await fetch("https://www.godbolt.org/api/compiler/clang1500/compile", {
@@ -20,12 +43,14 @@ async function postCE(jsonObject) {
     }
 
     const actualResponse = await response.json();
-    const stdoutLines = actualResponse.stdout.map(entry => entry.text);
-    return stdoutLines.join("<br/>");
+    const stdoutLines = actualResponse.stdout.map(entry => escapeHtml(removeANSIEscapeCodes(entry.text))).join("<br/>");
+    const stderrLines = actualResponse.buildResult.stderr.map(entry => escapeHtml(removeANSIEscapeCodes(entry.text))).join("<br/>");
+    return [stdoutLines,stderrLines];
   } catch (error) {
     console.error("Error during postCE:", error);
   }
 }
+
 
 class SendToGodbolt extends HTMLElement {
   constructor() {
@@ -35,8 +60,8 @@ class SendToGodbolt extends HTMLElement {
 
   static title = "Run with Compiler Explorer";
   static icon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-                   <!-- Your SVG content here -->
-                   </svg>`;
+                  <switch><g><path d="M58.6 46.5c-.3-.5-.3-1.2 0-1.7.3-.6.7-1.3 1-2 .2-.5-.1-1-.7-1h-5.8c-.6 0-1.2.3-1.4.8-.7 1.1-1.6 2.2-2.6 3.2-3.7 3.7-8.6 5.7-13.9 5.7-5.3 0-10.2-2-13.9-5.7-3.8-3.7-5.8-8.6-5.8-13.9s2-10.2 5.8-13.9c3.7-3.7 8.6-5.7 13.9-5.7 5.3 0 10.2 2 13.9 5.7 1 1 1.9 2.1 2.6 3.2.3.5.9.8 1.4.8h5.8c.5 0 .9-.5.7-1-.3-.7-.6-1.3-1-2-.3-.5-.3-1.2 0-1.7l1.9-3.5c.4-.7.3-1.5-.3-2.1l-4.9-4.9c-.6-.6-1.4-.7-2.1-.3l-3.6 2c-.5.3-1.2.3-1.7 0-1.7-.9-3.5-1.7-5.4-2.2-.6-.2-1-.6-1.2-1.2l-1.1-3.9C40.1.5 39.5 0 38.7 0h-6.9C31 0 30.2.5 30 1.3l-1.1 3.9c-.2.6-.6 1-1.2 1.2-1.9.6-3.6 1.3-5.3 2.2-.5.3-1.2.3-1.7 0l-3.6-2c-.7-.4-1.5-.3-2.1.3l-4.9 4.9c-.6.6-.7 1.4-.3 2.1l2 3.6c.3.5.3 1.2 0 1.7-.9 1.7-1.7 3.5-2.2 5.3-.2.6-.6 1-1.2 1.2l-3.9 1.1c-.7.2-1.3.9-1.3 1.7v6.9c0 .8.5 1.5 1.3 1.7l3.9 1.1c.6.2 1 .6 1.2 1.2.5 1.9 1.3 3.6 2.2 5.3.3.6.3 1.2 0 1.7l-2 3.6c-.4.7-.3 1.5.3 2.1L15 57c.6.6 1.4.7 2.1.3l3.6-2c.6-.3 1.2-.3 1.7 0 1.7.9 3.5 1.7 5.3 2.2.6.2 1 .6 1.2 1.2l1.1 3.9c.2.7.9 1.3 1.7 1.3h6.9c.8 0 1.5-.5 1.7-1.3l1.1-3.9c.2-.6.6-1 1.2-1.2 1.9-.6 3.6-1.3 5.4-2.2.5-.3 1.2-.3 1.7 0l3.6 2c.7.4 1.5.3 2.1-.3l4.9-4.9c.6-.6.7-1.4.3-2.1l-2-3.5z" fill="#67c52a"/><path d="M23.5 37.7v4.4h23.8v-4.4H23.5zm0-7.8v4.4h19.6v-4.4H23.5zm0-7.9v4.4h23.8V22H23.5z" fill="#3c3c3f"/></g></switch></svg>
+                  </svg>`
 
   static init() {
     $(function () {
@@ -67,7 +92,7 @@ class SendToGodbolt extends HTMLElement {
 
           textContent = textContent.substring(0, textContent.length - numberOfTrailingNewlines);
 
-          if (textContent.includes("main")) {
+          if (textContent.includes("main(")) {
             let data = {
               "source": textContent,
               "compiler": "clang1500",
@@ -85,9 +110,19 @@ class SendToGodbolt extends HTMLElement {
             };
 
             postCE(data).then((out) => {
-              const output = document.createElement("div");
-              output.className = "code-output";
-              output.innerHTML = out;
+              const [display, error] = out
+              const output = document.createElement("dl");
+
+              if(display.length != 0)
+              {
+                output.className = "section success";
+                output.innerHTML = display;
+              }
+              else
+              {
+                output.className = "section compiler";
+                output.innerHTML = error;
+              }
 
               const block = document.createElement("div");
               block.innerHTML = "<b>Output:</b><br/>";
