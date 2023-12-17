@@ -214,6 +214,10 @@
 #include <eve/module/core/regular/swap_pairs.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/try_each_group_position.hpp>
+#include <eve/module/core/regular/two_add.hpp>
+#include <eve/module/core/regular/two_prod.hpp>
+#include <eve/module/core/regular/two_sqr.hpp>
+#include <eve/module/core/regular/two_sub.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>

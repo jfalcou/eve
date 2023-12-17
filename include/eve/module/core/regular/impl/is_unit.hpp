@@ -14,6 +14,7 @@
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/sqr_abs.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
