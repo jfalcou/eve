@@ -174,6 +174,8 @@
 #include <eve/module/core/regular/plus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/quick_two_add.hpp>
+#include <eve/module/core/regular/quick_two_sub.hpp>
 #include <eve/module/core/regular/rat.hpp>
 #include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/rec.hpp>
