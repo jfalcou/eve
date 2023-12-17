@@ -3,39 +3,98 @@
   <!-- Navigation index tabs for HTML output -->
   <navindex>
     <tab type="mainpage" visible="yes" title=""/>
-    <tab type="pages" visible="yes" title="" intro=""/>
-    <tab type="modules" visible="yes" title="" intro=""/>
-    <tab type="namespaces" visible="yes" title="">
-      <tab type="namespacelist" visible="yes" title="" intro=""/>
-      <tab type="namespacemembers" visible="yes" title="" intro=""/>
+    <tab type="usergroup" visible="yes" title="Tutorials">
+      <tab type="user" url="@ref setup"     title="Quick-Start"/>
+      <tab type="usergroup" visible="yes" title="SIMD 101">
+        <tab type="user" url="@ref intro-01" title="Basic Operations"/>
+        <tab type="user" url="@ref intro-02" title="Algorithms"/>
+        <tab type="user" url="@ref intro-03" title="Tuples"/>
+        <tab type="user" url="@ref intro-04" title="Data Structures"/>
+      </tab>
+      <tab type="usergroup" visible="yes" title="Specific Idioms">
+        <tab type="user" url="@ref conditional" title="Conditional Operations"/>
+        <tab type="user" url="@ref freqscale" title="Frequency Scaling"/>
+      </tab>
+      <tab type="usergroup" visible="yes" title="Advanced Topics">
+        <tab type="user" url="@ref inter-with-native" title="Interaction with native code"/>
+        <tab type="user" url="@ref multiarch" title="Handling Multiple Architecture Targets"/>
+      </tab>
     </tab>
-    <tab type="concepts" visible="yes" title="">
+
+    <tab type="usergroup" visible="yes" title="Reference Documentation">
+      <tab type="user" url="@ref eve"     title="EVE Namespace"/>
+      <tab type="usergroup" visible="yes" title="Main API">
+        <tab type="usergroup"  title="SIMD Abstractions">
+          <tab type="user" url="@ref simd_types"    title="SIMD Types"/>
+          <tab type="user" url="@ref conditional"   title="Conditional Expressions"/>
+          <tab type="user" url="@ref memory"        title="Memory Management"/>
+          <tab type="user" url="@ref simd_concepts" title="Concepts"/>
+        </tab>
+        <tab type="usergroup" visible="yes" title="Core Functions">
+          <tab type="user" url="@ref core_arithmetic"     title="Arithmetic Operations"/>
+          <tab type="user" url="@ref core_fma_family"     title="FMA-like Operations"/>
+          <tab type="user" url="@ref core_bitops"         title="Bitwise Functions"/>
+          <tab type="user" url="@ref core_logical"        title="Logical Operations"/>
+          <tab type="user" url="@ref core_predicates"     title="Predicates"/>
+          <tab type="user" url="@ref core_conversions"    title="Conversions"/>
+          <tab type="user" url="@ref core_internal"       title="IEEE-754 Operations"/>
+          <tab type="user" url="@ref core_accuracy"       title="Accuracy Helpers"/>
+          <tab type="user" url="@ref core_decorators"     title="Options"/>
+        </tab>
+        <tab type="usergroup" visible="yes" title="Constants">
+          <tab type="user" url="@ref core_constants"      title="Generic Constants"/>
+          <tab type="user" url="@ref math_constants"      title="Math Constants"/>
+        </tab>
+        <tab type="usergroup" visible="yes" title="Common Math Functions">
+          <tab type="user" url="@ref math_log"      title="Logarithm"/>
+          <tab type="user" url="@ref math_exp"      title="Exponential"/>
+          <tab type="user" url="@ref math_trig"     title="Trigonometric"/>
+          <tab type="user" url="@ref math_invtrig"  title="Inverse Trigonometric"/>
+          <tab type="user" url="@ref math_hyper"    title="Hyperbolic"/>
+          <tab type="user" url="@ref math_invhyper" title="Inverse Hyperbolic"/>
+        </tab>
+        <tab type="usergroup" visible="yes" title="Advanced Math Functions">
+          <tab type="user" url="@ref bessel"        title="Bessel functions"/>
+          <tab type="user" url="@ref combinatorial" title="Combinatorial functions"/>
+          <tab type="user" url="@ref elliptic"      title="Elliptic functions"/>
+          <tab type="user" url="@ref polynomial"    title="Polynomial functions"/>
+          <tab type="user" url="@ref special"       title="Special functions"/>
+        </tab>
+        <tab type="usergroup" visible="yes" title="SIMD Specifics">
+          <tab type="user" url="@ref core_compress"       title="Compress functions"/>
+          <tab type="user" url="@ref core_simd"           title="SWAR Operations"/>
+          <tab type="user" url="@ref core_named_shuffles" title="Named Shuffles"/>
+          <tab type="user" url="@ref core_reduction"      title="Reductions"/>
+        </tab>
+        <tab type="usergroup" visible="yes" title="Algorithms &amp; Views">
+          <tab type="user" url="@ref algos"         title="Algorithms"/>
+          <tab type="user" url="@ref views"         title="Views"/>
+          <tab type="user" url="@ref algo_traits"   title="Options"/>
+          <tab type="user" url="@ref algo_concepts" title="Concepts"/>
+        </tab>
+      </tab>
+      <tab type="usergroup" visible="yes" title="Developer API">
+        <tab type="user" url="@ref traits"      title="Type Traits"/>
+        <tab type="user" url="@ref arch"        title="Architecture Helpers"/>
+        <tab type="user" url="@ref extensions"  title="Functions and Callables"/>
+        <tab type="user" url="@ref struct"      title="User-Defined Types Supports"/>
+      </tab>
+      <tab type="concepts" visible="yes"      title="Concepts List"/>
     </tab>
-    <tab type="interfaces" visible="yes" title="">
-      <tab type="interfacelist" visible="yes" title="" intro=""/>
-      <tab type="interfaceindex" visible="$ALPHABETICAL_INDEX" title=""/>
-      <tab type="interfacehierarchy" visible="yes" title="" intro=""/>
+    <tab type="usergroup" visible="yes" title="About The Library">
+      <tab type="user" url="@ref glossary_semantic" title="Glossary"/>
+      <tab type="user" url="@ref changelog" title="Changelog"/>
+      <tab type="usergroup" visible="yes" title="EVE Development">
+        <tab type="user" url="@ref dev_environment" title="Environment"/>
+        <tab type="user" url="@ref dev_cmake" title="CMake Usage"/>
+      </tab>
+      <tab type="usergroup" visible="yes" title="Rationale">
+        <tab type="user" url="@ref design_rationale" title="Design Decisions"/>
+        <tab type="user" url="@ref algo_rationale" title="SIMD Algorithms"/>
+      </tab>
+      <tab type="user" url="@ref licence" title="Licence"/>
     </tab>
-    <tab type="classes" visible="yes" title="">
-      <tab type="classlist" visible="yes" title="" intro=""/>
-      <tab type="classindex" visible="$ALPHABETICAL_INDEX" title=""/>
-      <tab type="hierarchy" visible="yes" title="" intro=""/>
-      <tab type="classmembers" visible="yes" title="" intro=""/>
-    </tab>
-    <tab type="structs" visible="yes" title="">
-      <tab type="structlist" visible="yes" title="" intro=""/>
-      <tab type="structindex" visible="$ALPHABETICAL_INDEX" title=""/>
-    </tab>
-    <tab type="exceptions" visible="yes" title="">
-      <tab type="exceptionlist" visible="yes" title="" intro=""/>
-      <tab type="exceptionindex" visible="$ALPHABETICAL_INDEX" title=""/>
-      <tab type="exceptionhierarchy" visible="yes" title="" intro=""/>
-    </tab>
-    <tab type="files" visible="yes" title="">
-      <tab type="filelist" visible="yes" title="" intro=""/>
-      <tab type="globals" visible="yes" title="" intro=""/>
-    </tab>
-    <tab type="examples" visible="yes" title="" intro=""/>
+
   </navindex>
 
   <!-- Layout definition for a class page -->

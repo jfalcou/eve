@@ -535,7 +535,8 @@ RECURSIVE              = YES
 
 EXCLUDE                =  ../include/eve/detail/function/tmp  \
                           ../include/eve/module/real/         \
-                          ../include/eve/detail/
+                          ../include/eve/detail/              \
+                          ../include/eve/module/algo/algo/array_utils.hpp
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
@@ -877,22 +878,6 @@ TREEVIEW_WIDTH         = 250
 
 EXT_LINKS_IN_WINDOW    = NO
 FORMULA_FONTSIZE       = 10
-
-# Use the FORMULA_TRANSPARENT tag to determine whether or not the images
-# generated for formulas are transparent PNGs. Transparent PNGs are not
-# supported properly for IE 6.0, but are supported on all modern browsers.
-#
-# Note that when changing this option you need to delete any form_*.png files in
-# the HTML output directory before the changes have effect.
-# The default value is: YES.
-# This tag requires that the tag GENERATE_HTML is set to YES.
-
-FORMULA_TRANSPARENT    = YES
-
-# The FORMULA_MACROFILE can contain LaTeX \newcommand and \renewcommand commands
-# to create new LaTeX commands to be used in formulas as building blocks. See
-# the section "Including formulas" for details.
-
 FORMULA_MACROFILE      =
 
 # Enable the USE_MATHJAX option to render LaTeX formulas using MathJax (see

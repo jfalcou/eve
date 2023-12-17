@@ -1,4 +1,4 @@
-Installation & Quick Start {#install}
+Installation & Quick Start {#setup}
 ==========================
 
 # Pre-requisites
