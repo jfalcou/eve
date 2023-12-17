@@ -1,7 +1,6 @@
 var group__core__decorators =
 [
     [ "eve::almost", "group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c", null ],
-    [ "eve::compensated", "group__core__decorators_ga4b6f131db74556004934d2d61f185d92.html#ga4b6f131db74556004934d2d61f185d92", null ],
     [ "eve::cyl", "group__core__decorators_ga4029354e92cc2575f406c1335e4f2fef.html#ga4029354e92cc2575f406c1335e4f2fef", null ],
     [ "eve::definitely", "group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b", null ],
     [ "eve::downward", "group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6", null ],

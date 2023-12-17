@@ -2,12 +2,12 @@ var group__extensions =
 [
     [ "eve::constant_callable< Func, OptionsValues, Options >", "structeve_1_1constant__callable.html", [
       [ "operator[]", "structeve_1_1constant__callable.html#a280bca3227c4b2b2f307c826626cf2d3", null ],
-      [ "options", "structeve_1_1constant__callable.html#ace8b7b17ca15d00089a4e96b44bcb950", null ]
+      [ "options", "structeve_1_1constant__callable.html#a0570e1fe5098270a58effe64cacc9f6b", null ]
     ] ],
     [ "eve::options< Settings >", "structeve_1_1options.html", null ],
     [ "eve::decorated_with< OptionsValues, Options >", "structeve_1_1decorated__with.html", [
       [ "operator[]", "structeve_1_1decorated__with_a280bca3227c4b2b2f307c826626cf2d3.html#a280bca3227c4b2b2f307c826626cf2d3", null ],
-      [ "options", "structeve_1_1decorated__with.html#ace8b7b17ca15d00089a4e96b44bcb950", null ]
+      [ "options", "structeve_1_1decorated__with.html#a0570e1fe5098270a58effe64cacc9f6b", null ]
     ] ],
     [ "eve::relative_conditional_option", "structeve_1_1relative__conditional__option.html", [
       [ "default_to", "structeve_1_1relative__conditional__option.html#ac6970f8101a6b9e3fc67dc4f6c500d61", null ]
