@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 namespace eve::detail
 {
@@ -28,12 +28,11 @@ sqr_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a0) noexcept
     if constexpr( floating_value<T> ) { return sqr(a0); }
     else if constexpr( scalar_value<T> )
     {
-      return (eve::saturated(eve::abs)(a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0))
-                                                                      : sqr(a0);
+      return (eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0)) : sqr(a0);
     }
     else
     {
-      return if_else((saturated(abs)(a0) > sqrtvalmax(eve::as(a0))), valmax(eve::as(a0)), sqr(a0));
+      return if_else(eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0)), valmax(eve::as(a0)), sqr(a0));
     }
   }
   else { return apply_over(saturated(sqr), a0); }

@@ -149,7 +149,7 @@ namespace eve
     std::true_type derived_from_struct_support_impl(struct_support<Self, Fields...> const&);
 
     template <typename Type>
-    concept derived_from_struct_support = decltype(derived_from_struct_support_impl(Type{}))::value;
+    concept derived_from_struct_support = decltype(derived_from_struct_support_impl(std::declval<Type>()))::value;
   }
 
   template <typename Self, typename ... Fields>

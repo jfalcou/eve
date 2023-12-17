@@ -8,22 +8,21 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
-
-#include <type_traits>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                abs_(EVE_SUPPORTS(vmx_), wide<T, N> const& v) noexcept
-requires ppc_abi<abi_t<T, N>>
-{
-  constexpr auto cat = categorize<wide<T, N>>();
+  template<arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N>
+  abs_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> const& v) noexcept requires ppc_abi<abi_t<T, N>>
+  {
+    constexpr auto cat = categorize<wide<T, N>>();
 
-  if constexpr( match(cat, category::unsigned_) ) return v;
-  else if constexpr( match(cat, category::size64_) ) return map(eve::abs, v);
-  else return vec_abs(v.storage());
-}
+    if      constexpr(O::contains(saturated2))            return abs_(EVE_TARGETS(cpu_), opts, v);
+    else if constexpr( match(cat, category::unsigned_)  ) return v;
+    else if constexpr( match(cat, category::size64_)    ) return map(eve::abs, v);
+    else                                                  return vec_abs(v.storage());
+  }
 }

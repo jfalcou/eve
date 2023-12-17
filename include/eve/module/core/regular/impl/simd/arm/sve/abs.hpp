@@ -9,40 +9,32 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-template<scalar_value T, typename N>
-EVE_FORCEINLINE auto
-abs_(EVE_SUPPORTS(sve_), wide<T, N> const& a) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr( match(c, category::unsigned_) ) return a;
-  else return svabs_z(sve_true<T>(),a);
-}
-
-template<conditional_expr C, scalar_value T, typename N>
-EVE_FORCEINLINE auto
-abs_(EVE_SUPPORTS(sve_), C const& cx, wide<T, N> const& v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr( match(c, category::unsigned_) ) return v;
-  else
+  template<arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
+  EVE_FORCEINLINE wide<T, N>
+  abs_(EVE_REQUIRES(sve_), C const& mask, O const&, wide<T, N> const& v) noexcept requires sve_abi<abi_t<T, N>>
   {
-    if constexpr( C::is_complete ) return abs_(EVE_RETARGET(cpu_), cx, v);
-    else
-    {
-      auto src = alternative(cx, v, as<wide<T, N>> {});
-      auto m   = expand_mask(cx, as<wide<T, N>> {});
+    constexpr auto  c   = categorize<wide<T, N>>();
+    auto const      src = alternative(mask, v, as(v));
 
-      return svabs_m(src,m,v);
-    }
+    if      constexpr( C::is_complete )                 return src;
+    else if constexpr( match(c, category::unsigned_) )  return if_else(mask, v, src);
+    else                                                return svabs_m(src,expand_mask(mask, as(v)),v);
   }
-}
+
+  template<arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N>
+  abs_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> const& v) noexcept requires sve_abi<abi_t<T, N>>
+  {
+    constexpr auto c = categorize<wide<T, N>>();
+
+    if      constexpr(O::contains(saturated2))          return abs_(EVE_TARGETS(cpu_), opts, v);
+    else if constexpr( match(c, category::unsigned_) )  return v;
+    else                                                return svabs_z(sve_true<T>(),v);
+  }
 }

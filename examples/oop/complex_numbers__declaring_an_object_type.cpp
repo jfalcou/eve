@@ -9,12 +9,12 @@
 //
 // Writing custom cmplx numbers.
 //
-// NOTE: we will definetly have a proper `eve::complex` but we don't have one yet.
+// NOTE: SIMD compatible complex numbers and beyond are available in https://github.com/jfalcou/kyosu
 //
 // This example will demonstrate the basics of how you can write code that looks like
-// it uses objects but actally utilizes parallel arrays and simd under the hood.
+// it uses objects but actually utilizes parallel arrays and simd under the hood.
 //
-// Related termins are: SOA (structure of arrays) and ECS - entity component system.
+// Related terms are: SOA (structure of arrays) and ECS - entity component system.
 //
 // NOTE:
 //   You might also want to have a look at:
@@ -92,23 +92,18 @@ struct cmplx : eve::struct_support<cmplx, float, float>
     return self;
   }
 
+  friend EVE_FORCEINLINE auto abs(eve::like<cmplx> auto self)
+  {
+    return eve::hypot(re(self), im(self));
+  }
+
   // The ostream operator you don't need to customise for wide, it will do the right thing.
   friend std::ostream& operator<<(std::ostream& out, cmplx self)
   {
     return out << '(' << re(self) << " + " << im(self) << "i)";
   }
-
-  // Custoizing eve functions ----
-
-  // All eve callables are customiseable through tagged dispatch.
-  // We find it useful but you do it at your own risk, we are quite likely to break you.
-  // Alternatively - use your own functions.
-
-  EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::abs_, eve::like<cmplx> auto self)
-  {
-    return eve::hypot(re(self), im(self));
-  }
 };
+
 
 // ------------------
 // Using
@@ -179,7 +174,7 @@ TTS_CASE("wide works")
   {
     eve::wide<cmplx> x{cmplx{3.0, 4.0}};
     eve::wide<float> expected{5.0};
-    eve::wide<float> actual = eve::abs(x);
+    eve::wide<float> actual = abs(x);
     TTS_RELATIVE_EQUAL(expected, actual, 0.00001);
   }
 };
@@ -219,7 +214,7 @@ TTS_CASE("scalar works")
   {
     cmplx x{3.0, 4.0};
     float expected{5.0};
-    float actual = eve::abs(x);
+    float actual = abs(x);
     TTS_RELATIVE_EQUAL(expected, actual, 0.00001);
   }
 };

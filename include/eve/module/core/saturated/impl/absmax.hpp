@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 namespace eve::detail
 {
@@ -34,7 +34,7 @@ absmax_(EVE_SUPPORTS(cpu_),
         T const& a,
         T const& b) noexcept requires has_native_abi_v<T>
 {
-  return saturated(eve::abs)(eve::max(a, b));
+  return eve::abs[saturated](eve::max(a, b));
 }
 
 //================================================================================================
@@ -45,6 +45,6 @@ auto
 absmax_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(absmax(a0, a1, args...))
 {
-  return saturated(eve::abs)(eve::max(a0, a1, args...));
+  return eve::abs[saturated](eve::max(a0, a1, args...));
 }
 }

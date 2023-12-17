@@ -1,24 +1,36 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
-//================================================================================================
+template<typename Options>
+struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
+{
+  template<eve::value T>
+  EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(abs_t, abs_);
+};
+
+//======================================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var abs
 //!   @brief Computes the absolute value of the parameter.
 //!
-//!   **Defined in Header**
+//!   Computes the absolute value of the parameter.
+//!
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -35,50 +47,44 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x` :  [SIMD or scalar arithmetic value](@ref eve::value).
 //!
 //!    **Return value**
 //!
-//!     *  value containing the [elementwise](@ref glossary_elementwise)
-//!        absolute value of `x` if it is representable in this type.
+//!    The [elementwise](@ref glossary_elementwise) absolute value of `x`, if it is representable.
+//!    More specifically, for signed integers : the absolute value of eve::valmin is not representable and
+//!    the result is undefined.
 //!
-//!        More specifically, for signed integers : the absolute value of eve::valmin
-//!        is not representable and the result is undefined.
+//!   @warning
+//!   `abs` is also a standard library function name and there possibly
+//!   exists a C macro version which may be called instead of the EVE version.<br/>
+//!   To avoid confusion, use the eve::abs notation.
 //!
-//!  @warning
-//!        abs is also a standard library function name and there possibly
-//!        exists a C macro version which may be called instead of the EVE version.
-//!        To avoid confusion, use the eve::abs notation.
+//!   @groupheader{Example}
 //!
-//!  @groupheader{Example}
+//!   @godbolt{doc/core/regular/abs.cpp}
 //!
-//!  @godbolt{doc/core/regular/abs.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
+//!   @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::abs[mask](x)` provides a masked version of `eve::abs` which is
+//!     The call `eve::abs[mask](x)` provides a masked version of `eve::abs` which is
 //!     equivalent to `if_else (mask, abs(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/abs.cpp}
+//!     **Example**
+//!     @godbolt{doc/core/masked/abs.cpp}
 //!
 //!   * eve::saturated
 //!
-//!     The call `eve::saturated(eve::abs)(x)` computes a saturated version of eve::abs.
-//!
+//!     The call `eve::abs[eve::saturated](x)` computes a saturated version of eve::abs.
 //!     More specifically, for any signed integer value `x`, the expression
-//!     `eve::saturated(eve::abs)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
+//!     `eve::abs[eve::saturated](eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/abs.cpp}
-//!
+//!     **Example**
+//!     @godbolt{doc/core/saturated/abs.cpp}
 //! @}
-//================================================================================================
-EVE_MAKE_CALLABLE(abs_, abs);
+//======================================================================================================================
+inline constexpr auto abs = functor<abs_t>;
 }
 
 #include <eve/module/core/regular/impl/abs.hpp>

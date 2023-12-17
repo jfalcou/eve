@@ -32,7 +32,7 @@ TTS_CASE_TPL("Random check for eve::abs", eve::test::simd::all_types)
     };
 
     EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>( eve::inc(vmin), vmax ), std_abs, eve::abs );
-    EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>( vmin, vmax ), std_abs, eve::saturated(eve::abs) );
+    EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>( vmin, vmax ), std_abs, eve::abs[eve::saturated] );
   }
   else
   {
