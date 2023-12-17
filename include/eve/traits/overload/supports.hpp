@@ -97,7 +97,10 @@ namespace eve
   //! @}
   //====================================================================================================================
   template< typename OptionsValues, typename... Options>
-  struct decorated_with : OptionsValues, Options...
+  struct  decorated_with
+#if !defined(EVE_DOXYGEN_INVOKED)
+        : OptionsValues, Options...
+#endif
   {
     using Options::process...;
 

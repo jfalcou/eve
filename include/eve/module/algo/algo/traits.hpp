@@ -107,7 +107,7 @@ namespace eve::algo
   //!   to use a certain one. The main usecase for this is ease of interaction with
   //!   native register code.
   //!
-  //!   @snipet tutorial/interacting_with_native.cpp interating_with_native_algo
+  //!   @snippet tutorial/interacting_with_native.cpp interating_with_native_algo
   //!
   //!   @see consider_types if maybe using some extra type is the reason you want
   //!   to change cardinal.

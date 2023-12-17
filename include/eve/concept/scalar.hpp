@@ -31,6 +31,7 @@ namespace eve
 template<typename Type> struct logical;
 
 //==================================================================================================
+//! @ingroup simd_concepts
 //! @concept plain_scalar_value
 //! @brief Specify that a type represents a plain scalar value
 //!
@@ -45,6 +46,7 @@ template<typename T>
 concept plain_scalar_value = detail::is_plain<T>();
 
 //==================================================================================================
+//! @ingroup simd_concepts
 //! @concept logical_scalar_value
 //! @brief Specify that a type represents a logical scalar value
 //!
@@ -81,6 +83,7 @@ scalar_tuple() noexcept
 namespace eve
 {
 //==================================================================================================
+//! @ingroup simd_concepts
 //! @concept product_scalar_value
 //! @brief Specify that a type represents a product type made of scalars
 //!
@@ -94,6 +97,7 @@ template<typename T>
 concept product_scalar_value = detail::scalar_tuple<T>();
 
 //==================================================================================================
+//! @ingroup simd_concepts
 //! @concept arithmetic_scalar_value
 //! @brief Specify that a type represents a type suitable for vectorization
 //!

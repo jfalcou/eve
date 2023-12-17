@@ -13,6 +13,7 @@
 namespace eve
 {
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept integral_scalar_value
   //! @brief Specify that a type represents an integral scalar value
   //!
@@ -26,6 +27,7 @@ namespace eve
   concept integral_scalar_value  = arithmetic_scalar_value<T> && std::integral<T>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept signed_scalar_value
   //! @brief Specify that a type represents a signed scalar value
   //!
@@ -40,6 +42,7 @@ namespace eve
   concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<T>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept unsigned_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -53,6 +56,7 @@ namespace eve
   concept unsigned_scalar_value = arithmetic_scalar_value<T> && std::unsigned_integral<T>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept signed_integral_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!
@@ -66,6 +70,7 @@ namespace eve
   concept signed_integral_scalar_value = arithmetic_scalar_value<T> && std::signed_integral<T>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept floating_scalar_value
   //! @brief Specify that a type represents a scalar value
   //!

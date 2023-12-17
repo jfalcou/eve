@@ -33,11 +33,12 @@ using iterator_t = decltype(std::declval<R>().begin());
 //================================================================================================
 //! @addtogroup algo_concepts
 //! @{
-//!    @typedef iterator for a relaxed range
+//!   @typedef sentinel_t
+//!   @brief Iterator for a relaxed range
 //!
-//!    @tparam R - relaxed range to process
+//!   @tparam R - relaxed range to process
 //!
-//! **Required header:** `#include <eve/module/algo/algo/concepts.hpp>`
+//!   **Required header:** `#include <eve/module/algo/algo/concepts.hpp>`
 //!
 //!   @code{.cpp}
 //!   template <relaxed_range R>

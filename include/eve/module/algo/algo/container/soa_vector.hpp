@@ -67,7 +67,10 @@ namespace eve::algo
     //! Const iterator over the the stored Type
     using const_iterator         = decltype(views::convert(std::declval<storage_type const>().data(), as<value_type>{}));
 
+    //! Iterator over the the stored Type using aligned data
     using iterator_aligned       = decltype(views::convert(storage_type{}.data_aligned(), as<value_type>{}));
+
+    //! Const iterator over the the stored Type using aligned data
     using const_iterator_aligned = decltype(views::convert(std::declval<storage_type const>().data_aligned(), as<value_type>{}));
 
     //! Pointer to a eve::algo::views::zip_iterator over fields
@@ -76,9 +79,13 @@ namespace eve::algo
     //! Const pointer to a eve::algo::views::zip_iterator over fields
     using const_pointer         = const_iterator;
 
+    //! Aligned pointer to a eve::algo::views::zip_iterator over fields
     using pointer_aligned       = iterator_aligned;
+
+    //! Const aligned pointer to a eve::algo::views::zip_iterator over fields
     using const_pointer_aligned = const_iterator_aligned;
 
+    //! Size type
     using size_type = std::size_t;
 
     //==============================================================================================
@@ -198,7 +205,7 @@ namespace eve::algo
     //! If the new size() is greater than capacity() then all iterators and references (including
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
     //! invalidated.
-    //! @param value [Value](@eve::vectorizable) to append
+    //! @param value [Value](@ref eve::scalar_value) to append
     EVE_FORCEINLINE void push_back(value_type const& value) noexcept
     {
       if(size_ != capacity()) eve::write(value, begin()+size_);

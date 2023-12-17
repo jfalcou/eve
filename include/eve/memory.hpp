@@ -8,8 +8,6 @@
 #pragma once
 
 //================================================================================================
-//! @addtogroup arch
-//! @{
 //! @defgroup memory Memory Management
 //!
 //! **EVE** provides various element to simplify the management of SIMD-compatible memory like
@@ -17,8 +15,6 @@
 //! to discriminate aligned memory from regular one, and alignment computation functions.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/memory.hpp> @endcode
-//!
-//! @}
 //================================================================================================
 
 #include <eve/memory/align.hpp>
