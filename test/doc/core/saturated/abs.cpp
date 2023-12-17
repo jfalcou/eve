@@ -9,7 +9,7 @@ int main()
   wide_it pi = {-1, 2, -3, -32768};
 
   std::cout << "---- simd" << '\n'
-            << "<- pi                  = " << pi << '\n'
-            << "-> saturated(abs)(pi)  = " << eve::saturated(eve::abs)(pi) << '\n';
+            << "<- pi                       = " << pi << '\n'
+            << "-> eve::abs[saturated](pi)  = " << eve::abs[eve::saturated](pi) << '\n';
   return 0;
 }

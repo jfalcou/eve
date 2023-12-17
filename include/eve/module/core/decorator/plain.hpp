@@ -7,27 +7,15 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
-//================================================================================================
-// Function decorators mark-up used in function overloads
-struct plain_type : decorator_
+struct plain_
 {
-  template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
-  {
-    return [f](auto&&...args) { return f(plain_type {}, EVE_FWD(args)...); };
-  }
+  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 };
 
-//================================================================================================
-// Function decorator - plain mode
-template<typename Function>
-constexpr EVE_FORCEINLINE auto
-plain(Function f) noexcept
-{
-  return plain_type {}(f);
-}
+using plain_type = decorated<plain_()>;
+inline constexpr plain_type const plain = {};
 }

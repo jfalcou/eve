@@ -169,6 +169,7 @@ inline constexpr auto adl_helper = adl_helper_t {}                              
 //! @}
 //======================================================================================================================
 #define EVE_REQUIRES(ARCH) adl_helper_t const &, ARCH const &
+#define EVE_TARGETS(ARCH)   adl_helper_t{}, ARCH{}
 
 // Register eve::detail as the deferred namespace by default
 namespace eve::detail { EVE_CALLABLE_NAMESPACE(); }

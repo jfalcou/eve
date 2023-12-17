@@ -123,7 +123,7 @@ namespace eve
     }
 
     /// Retrieves the current options' state, including processed default
-    decltype(auto) options() const
+    auto options() const
     {
       return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
                             , kumi::tuple<Options...>{}
@@ -256,5 +256,20 @@ namespace eve
       auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
       return options<decltype(new_opts)>{new_opts};
     }
+  };
+}
+
+namespace eve::detail
+{
+  // Internal helper for decorator setup
+  template<auto Decorator> struct exact_option
+  {
+    EVE_FORCEINLINE constexpr auto process(auto const& base, exactly<Decorator> auto const& opts) const
+    {
+      auto news = rbr::merge(options{opts}, base);
+      return options<decltype(news)>{news};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
 }

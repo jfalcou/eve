@@ -63,7 +63,7 @@ TTS_CASE_WITH("Check behavior of eve::sqr(eve::wide)",
     TTS_EQUAL(saturated(sqr)(a0),
               map(
                   [](auto e) -> v_t {
-                    return saturated(eve::abs)(e) > eve::sqrtvalmax(as(e)) ? eve::valmax(as(e))
+                    return eve::abs[eve::saturated](e) > eve::sqrtvalmax(as(e)) ? eve::valmax(as(e))
                                                                            : e * e;
                   },
                   a0));

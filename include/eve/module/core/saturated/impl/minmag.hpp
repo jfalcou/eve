@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 namespace eve::detail
 {
@@ -26,7 +26,7 @@ EVE_FORCEINLINE auto
 minmag_(EVE_SUPPORTS(cpu_),
         saturated_type const&,
         T const& a,
-        U const& b) noexcept 
+        U const& b) noexcept
 -> decltype(maxabs(a, b))
 {
   return arithmetic_call(saturated(minmag), a, b);
@@ -36,8 +36,8 @@ template<ordered_value T>
 EVE_FORCEINLINE auto
 minmag_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
 {
-  auto aa = saturated(eve::abs)(a);
-  auto bb = saturated(eve::abs)(b);
+  auto aa = eve::abs[saturated](a);
+  auto bb = eve::abs[saturated](b);
   if constexpr( simd_value<T> )
   {
     auto tmp = if_else(is_not_greater_equal(bb, aa), b, eve::min(a, b));

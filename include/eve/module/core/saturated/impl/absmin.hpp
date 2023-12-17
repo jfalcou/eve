@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/min.hpp>
-#include <eve/module/core/saturated/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 namespace eve::detail
 {
@@ -34,7 +34,7 @@ absmin_(EVE_SUPPORTS(cpu_),
         T const& a,
         T const& b) noexcept requires has_native_abi_v<T>
 {
-  return saturated(eve::abs)(eve::min(a, b));
+  return eve::abs[saturated](eve::min(a, b));
 }
 
 //================================================================================================
@@ -45,7 +45,7 @@ auto
 absmin_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexcept
 -> decltype(absmin(a0, a1, args...))
 {
-  return saturated(eve::abs)(eve::min(a0, a1, args...));
+  return eve::abs[saturated](eve::min(a0, a1, args...));
 }
 
 }
