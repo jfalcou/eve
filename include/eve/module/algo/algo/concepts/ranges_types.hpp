@@ -15,57 +15,59 @@ namespace eve::algo
 //================================================================================================
 //! @addtogroup algo_concepts
 //! @{
-//!    @typedef iterator for a relaxed range
+//================================================================================================
+
+//================================================================================================
+//! @typedef iterator_t
+//! @brief Iterator for a relaxed range
 //!
-//!    @tparam R - relaxed range to process
+//! @tparam R - relaxed range to process
 //!
 //! **Required header:** `#include <eve/module/algo/algo/concepts.hpp>`
 //!
-//!   @code{.cpp}
-//!   template <relaxed_range R>
-//!   using iterator_t = decltype(std::declval<R>().begin());
-//!   @endcode
-//! @}
+//! @code{.cpp}
+//! template <relaxed_range R>
+//! using iterator_t = decltype(std::declval<R>().begin());
+//! @endcode
 //================================================================================================
 template <typename R>
 using iterator_t = decltype(std::declval<R>().begin());
 
 //================================================================================================
-//! @addtogroup algo_concepts
-//! @{
-//!   @typedef sentinel_t
-//!   @brief Iterator for a relaxed range
+//! @typedef sentinel_t
+//! @brief Sentinel for a relaxed range
 //!
-//!   @tparam R - relaxed range to process
+//! @tparam R - relaxed range to process
 //!
-//!   **Required header:** `#include <eve/module/algo/algo/concepts.hpp>`
+//! **Required header:** `#include <eve/module/algo/algo/concepts.hpp>`
 //!
-//!   @code{.cpp}
-//!   template <relaxed_range R>
-//!   using sentinel_t = decltype(std::declval<R>().end());
-//!   @endcode
-//! @}
+//! @code{.cpp}
+//! template <relaxed_range R>
+//! using sentinel_t = decltype(std::declval<R>().end());
+//! @endcode
 //================================================================================================
 template <typename R>
 using sentinel_t = decltype(std::declval<R>().end());
 
 //================================================================================================
-//! @addtogroup algo_concepts
-//! @{
-//!    @typedef unalgined_iterator_t for a relaxed range
+//! @typedef unaligned_iterator_t
+//! @brief Unaligned iterator for a relaxed range
 //!
-//!    @tparam R - relaxed range to process
+//! @tparam R - relaxed range to process
 //!
-//!    @brief an iterator that can represent every position in the range
+//! @brief an iterator that can represent every position in the range
 //!
 //! **Required header:** `#include <eve/module/algo/algo/concepts.hpp>`
 //!
-//!   @code{.cpp}
-//!   template <typename R>
-//!   using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
-//!   @endcode
-//! @}
+//! @code{.cpp}
+//! template <typename R>
+//! using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
+//! @endcode
 //================================================================================================
 template <typename R>
 using unaligned_iterator_t = unaligned_t<iterator_t<R>>;
+
+//================================================================================================
+//! @}
+//================================================================================================
 }

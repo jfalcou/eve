@@ -104,10 +104,10 @@ namespace eve::algo
   //!   @var force_cardinal
   //!
   //!   @brief A trait that overrides all other cardinal selection and just says
-  //!   to use a certain one. The main usecase for this is ease of interaction with
+  //!   to use a certain one. The main use-case for this is ease of interaction with
   //!   native register code.
   //!
-  //!   @snippet tutorial/interacting_with_native.cpp interating_with_native_algo
+  //!   @snippet tutorial/interacting_with_native.cpp interacting_with_native_algo
   //!
   //!   @see consider_types if maybe using some extra type is the reason you want
   //!   to change cardinal.

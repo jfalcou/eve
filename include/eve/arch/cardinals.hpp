@@ -61,24 +61,8 @@ namespace eve
 
   }  // namespace detail
 
-  //================================================================================================
-  //! @brief concept to determine if this is cardinal type of a wide
-  //!
-  //! @tparam T
-  //!
-  //! only true if T is instance of `eve::fixed`.
-  //!
-  //! This concept is needed to define some other concepts, unlikely to be useful on it's own.
-  //================================================================================================
-  template <typename T>
-  concept wide_cardinal = detail::is_wide_cardinal<T>::value;
-
   template<std::ptrdiff_t Cardinal>
   inline constexpr fixed<Cardinal> const lane = {};
-
-  //================================================================================================
-  //! @}
-  //================================================================================================
 
   //================================================================================================
   // Constant index template class
@@ -93,10 +77,27 @@ namespace eve
   template<std::ptrdiff_t N> inline constexpr auto index = index_t<N>{};
 
   //================================================================================================
+  //! @}
+  //================================================================================================
+
+  //================================================================================================
   // Hardware-agnostic cardinal
   //================================================================================================
   namespace detail
   {
     template<typename T> using cache_line_cardinal = fixed<64 / sizeof(T)>;
   }
+
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @brief concept to determine if this is cardinal type of a wide
+  //!
+  //! @tparam T
+  //!
+  //! only true if T is instance of `eve::fixed`.
+  //!
+  //! This concept is needed to define some other concepts, unlikely to be useful on it's own.
+  //================================================================================================
+  template <typename T>
+  concept wide_cardinal = detail::is_wide_cardinal<T>::value;
 }

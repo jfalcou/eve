@@ -244,6 +244,7 @@ namespace eve::algo
       size_ = n;
     }
 
+    //! @brief Resizes the current eve::soa_vector to a new size
     void resize(size_type n) { resize(n, value_type{}); }
 
     //! @brief Exchanges the contents of the container with those of `other`.
@@ -259,6 +260,7 @@ namespace eve::algo
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
     friend EVE_FORCEINLINE void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
 
+    //! @brief Retrieves an instance of the current allocator
     Allocator get_allocator() { return storage.get_allocator(); }
 
     //==============================================================================================
@@ -352,12 +354,14 @@ namespace eve::algo
     //! @name Comparisons and ordering
     //! @{
     //==============================================================================================
+    //! @brief Checks if the contents of lhs and rhs are equal
     friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
     {
       if( lhs.size() != rhs.size() ) return false;
       return eve::algo::equal(lhs, rhs.begin_aligned());
     }
 
+    //! @brief Checks if the contents of lhs and rhs are not equal
     friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
     {
       return !(lhs == rhs);
