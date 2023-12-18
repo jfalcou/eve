@@ -19,17 +19,14 @@
 #include <compare>
 
 //==================================================================================================
-//! @addtogroup simd_types
-//! @{
-//!   @defgroup conditional Conditional Expressions
-//!   @brief    Types and operations to defines conditional mask expressions
+//! @defgroup conditional Conditional Expressions
+//! @brief    Types and operations to defines conditional mask expressions
 //!
-//!   Masking lanes from an eve::simd_value is a frequent operations. To simplify and optimize such
-//!   code, **EVE** provides objects and functions to define conditions with a high-level of
-//!   flexibility including: alternative value, index-based relative conditions and more.
+//! Masking lanes from an eve::simd_value is a frequent operations. To simplify and optimize such
+//! code, **EVE** provides objects and functions to define conditions with a high-level of
+//! flexibility including: alternative value, index-based relative conditions and more.
 //!
-//!   **See also:** @ref conditional
-//! @}
+//! **See also:** @ref conditional
 //==================================================================================================
 namespace eve
 {

@@ -55,7 +55,7 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::is_not_finite[mask](x)` provides a masked version of `eve::is_not_finite`
+//!     The call `is_not_finite[mask](x)` provides a masked version of eve::is_not_finite
 //!     which is equivalent to `if_else (mask, is_not_finite(x), eve::false( eve::as(x)))`.
 //!
 //!      **Example**

@@ -14,9 +14,9 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
-//!   @var is_less_equal
+//!   @var is_not_less_equal
 //!   @brief Returns a logical true  if and only if the element value of the first parameter is
-//!          less or equal to the second one.
+//!          not less or equal to the second one.
 //!
 //!   **Defined in Header**
 //!
@@ -30,7 +30,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      eve::as_logical<T> is_less_equal(T x,U y) noexcept;
+//!      eve::as_logical<T> is_not_less_equal(T x,U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -40,36 +40,37 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!    The call `eve::is_less_equal(x,y)`  is semantically  equivalent to `!(x <= y)`:
+//!    The call `eve::is_not_less_equal(x,y)`  is semantically  equivalent to `!(x <= y)`:
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_less_equal.cpp}
+//!  @godbolt{doc/core/regular/is_not_less_equal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::is_less_equal[mask](x,y)` provides a masked version of `eve::is_less_equal`
-//!     which is equivalent to `if_else (mask, is_less_equal(x), eve::false( eve::as(x,y)))`.
+//!     The call `eve;::is_not_less_equal[mask](x,y)` provides a masked version of `eve::is_not_less_equal`
+//!     which is equivalent to `if_else (mask, is_not_less_equal(x), eve::false( eve::as(x,y)))`.
 //!
 //!     **Example**
 //!
-//!     @godbolt{doc/core/masked/is_less_equal.cpp}
+//!     @godbolt{doc/core/masked/is_not_less_equal.cpp}
 //!
 //!   * `definitely`
 //!
 //!     The expression `definitely(is_not_less_equal)(x, y, t)` where `x` and `y` must be
 //!     floating point values, evaluates to true if and only if and only if `x` is definitely not less
-//!     or equal to `y`. This means that the pair `x, y` is unordered or:
+//!     or equal to `y`.
 //!
-//!       * if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
-//!       * if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
-//!       * if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+//!     This means that the pair `x, y` is unordered:
+//!       - if `t` is a floating_value then  \f$(x \ge y + t \max(|x|, |y|))\f$
+//!       - if `t` is a positive integral_value then \f$(x \ge \mbox{next}(y, t)\f$;
+//!       - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
 //!     **Example**
 //!
-//!     @godbolt{doc/core/fuzzy/is_less_equal.cpp}
+//!     @godbolt{doc/core/fuzzy/is_not_less_equal.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);

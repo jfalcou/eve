@@ -124,6 +124,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 //!      template<relaxed_range In, relaxed_range Out, typename P>
 //!      auto copy_if(In&& in, Out&& out, P p) -> unaligned_iterator_t<Out>
 //!   }
+//!   @endcode
 //!
 //!   ** Parameters **
 //!

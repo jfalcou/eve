@@ -19,6 +19,7 @@
 namespace eve
 {
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept value
   //! The concept `value<T>` is satisfied if and only if T satisfies
   //! either `eve::scalar_value` or `eve::simd_value`.
@@ -32,6 +33,7 @@ namespace eve
   template<typename T> concept value                 = simd_value<T> || scalar_value<T>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept integral_value
   //! TODO describe
   //!
@@ -43,6 +45,7 @@ namespace eve
   template<typename T> concept integral_value        = value<T> && std::integral<underlying_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept signed_value
   //! TODO describe
   //!
@@ -54,6 +57,7 @@ namespace eve
   template<typename T> concept signed_value          = value<T> && std::is_signed_v<underlying_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept unsigned_value
   //! TODO describe
   //!
@@ -64,6 +68,7 @@ namespace eve
   template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<underlying_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept signed_integral_value
   //! TODO describe
   //!
@@ -74,6 +79,7 @@ namespace eve
   template<typename T> concept signed_integral_value = value<T> && std::signed_integral<underlying_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept floating_value
   //! TODO describe
   //!
@@ -84,6 +90,7 @@ namespace eve
   template<typename T> concept floating_value        = value<T> && std::floating_point<underlying_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept logical_value
   //! TODO describe
   //!
@@ -95,6 +102,7 @@ namespace eve
 
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept ordered_value
   //! TODO describe
   //!
@@ -105,7 +113,8 @@ namespace eve
   template<typename T> concept ordered_value = value<T> && std::totally_ordered<element_type_t<T>>;
 
    //================================================================================================
-  //! @concept floating_ordered_value
+   //! @ingroup simd_concepts
+ //! @concept floating_ordered_value
   //! TODO describe
   //!
   //! @groupheader{Examples}

@@ -18,7 +18,7 @@ To combine this with algorithms, force a specific cardinal. All of algorithms
 are designed to not require templated callbacks so that you are able to do this.
 (unfortunately views still require you to provide a template).
 
-@snippet tutorial/interacting_with_native_code.cpp interating_with_native_algo
+@snippet tutorial/interacting_with_native.cpp interacting_with_native_algo
 
 # What about non-native sizes?
 
@@ -27,10 +27,10 @@ still represented as a full register. For example wide<int, eve::fixed<2>>
 on x86 is still __m128i. The data is at the first 2 elements, the rest can
 be garbage.
 
-If the cradinal is larger than the one natively representable, you can
+If the cardinal is larger than the one natively representable, you can
 use slice to get to the half the wide size.
 
-@snippet tutorial/interacting_with_native_code.cpp slicing_aggregate
+@snippet tutorial/interacting_with_native.cpp slicing_aggregate
 
 If you write something generally useful, maybe consider contributing?
 **/

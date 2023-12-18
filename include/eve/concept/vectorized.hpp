@@ -18,6 +18,7 @@
 namespace eve
 {
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept simd_value
   //! @brief   Specifies that a type a SIMD type
   //!
@@ -33,6 +34,7 @@ namespace eve
   concept simd_value = arithmetic_simd_value<T> || logical_simd_value<T>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept integral_simd_value
   //! @brief   Specifies that a type a SIMD type with integral elements
   //!
@@ -47,6 +49,7 @@ namespace eve
   concept integral_simd_value = arithmetic_simd_value<T> && std::integral<element_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept signed_simd_value
   //! @brief   Specifies that a type a SIMD type with signed elements
   //!
@@ -61,6 +64,7 @@ namespace eve
   concept signed_simd_value = arithmetic_simd_value<T> && std::is_signed_v<element_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept unsigned_simd_value
   //! @brief   Specifies that a type a SIMD type with unsigned elements
   //!
@@ -76,6 +80,7 @@ namespace eve
                                 &&  std::unsigned_integral<element_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept signed_integral_simd_value
   //! @brief   Specifies that a type a SIMD type with signed integral elements
   //!
@@ -91,6 +96,7 @@ namespace eve
                                         &&  std::signed_integral<element_type_t<T>>;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept floating_simd_value
   //! @brief   Specifies that a type a SIMD type with signed integral elements
   //!

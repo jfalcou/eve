@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 
-//! [interating_with_native_algo]
+//! [interacting_with_native_algo]
 
 #include <eve/module/core.hpp>
 #include <eve/module/algo.hpp>
@@ -39,7 +39,7 @@ void remove_spaces(std::string& s)
 
 #endif  // __SSSE3__
 
-//! [interating_with_native_algo]
+//! [interacting_with_native_algo]
 
 #include "test.hpp"
 
