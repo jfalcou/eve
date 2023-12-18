@@ -16,7 +16,7 @@
 //!   @defgroup views Views
 //!   @brief Provides views to work with SIMD algorihms
 //!
-//!   @defgroup algo_concepts Concepts
+//!   @defgroup algo_concepts Algorithms Concepts
 //!   @brief Provides Concepts for algorithms and related components
 //!
 //!   @defgroup algo_traits AlgoTraits

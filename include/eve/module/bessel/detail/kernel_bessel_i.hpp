@@ -1,9 +1,9 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
-**/
+*/
 //==================================================================================================
 #pragma once
 
@@ -15,7 +15,7 @@
 #include <eve/module/math.hpp>
 
 /////////////////////////////////////////////////////////////////////////////////
-// These routines are detail of the computation of modifiesd cylindrical bessel
+// These routines are detail of the computation of modified cylindrical bessel
 // fnctions of the first kind.                  .
 // They are not meant to be called directly,  as their validities depends on
 // n and x ranges values which are not tested on entry.

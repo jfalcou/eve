@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @subtogroup core_accuracy
+//! @addtogroup core_accuracy
 //! @{
 //!   @var two_sub
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)

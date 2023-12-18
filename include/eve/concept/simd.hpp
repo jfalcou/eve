@@ -31,6 +31,7 @@ namespace eve
   template<typename Type> struct logical;
 
   //================================================================================================
+  //! @ingroup simd_concepts
   //! @concept logical_simd_value
   //! @brief Specify that a type represents a logical SIMD value
   //!

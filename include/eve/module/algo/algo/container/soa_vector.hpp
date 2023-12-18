@@ -67,7 +67,10 @@ namespace eve::algo
     //! Const iterator over the the stored Type
     using const_iterator         = decltype(views::convert(std::declval<storage_type const>().data(), as<value_type>{}));
 
+    //! Iterator over the the stored Type using aligned data
     using iterator_aligned       = decltype(views::convert(storage_type{}.data_aligned(), as<value_type>{}));
+
+    //! Const iterator over the the stored Type using aligned data
     using const_iterator_aligned = decltype(views::convert(std::declval<storage_type const>().data_aligned(), as<value_type>{}));
 
     //! Pointer to a eve::algo::views::zip_iterator over fields
@@ -76,9 +79,13 @@ namespace eve::algo
     //! Const pointer to a eve::algo::views::zip_iterator over fields
     using const_pointer         = const_iterator;
 
+    //! Aligned pointer to a eve::algo::views::zip_iterator over fields
     using pointer_aligned       = iterator_aligned;
+
+    //! Const aligned pointer to a eve::algo::views::zip_iterator over fields
     using const_pointer_aligned = const_iterator_aligned;
 
+    //! Size type
     using size_type = std::size_t;
 
     //==============================================================================================
@@ -198,7 +205,7 @@ namespace eve::algo
     //! If the new size() is greater than capacity() then all iterators and references (including
     //! the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is
     //! invalidated.
-    //! @param value [Value](@eve::vectorizable) to append
+    //! @param value [Value](@ref eve::scalar_value) to append
     EVE_FORCEINLINE void push_back(value_type const& value) noexcept
     {
       if(size_ != capacity()) eve::write(value, begin()+size_);
@@ -237,6 +244,7 @@ namespace eve::algo
       size_ = n;
     }
 
+    //! @brief Resizes the current eve::soa_vector to a new size
     void resize(size_type n) { resize(n, value_type{}); }
 
     //! @brief Exchanges the contents of the container with those of `other`.
@@ -252,6 +260,7 @@ namespace eve::algo
     //! @brief Swaps the contents of `lhs` and `rhs` by calling `lhs.swap(rhs)`.
     friend EVE_FORCEINLINE void swap(soa_vector &lhs, soa_vector &rhs) noexcept { lhs.swap(rhs); }
 
+    //! @brief Retrieves an instance of the current allocator
     Allocator get_allocator() { return storage.get_allocator(); }
 
     //==============================================================================================
@@ -345,12 +354,14 @@ namespace eve::algo
     //! @name Comparisons and ordering
     //! @{
     //==============================================================================================
+    //! @brief Checks if the contents of lhs and rhs are equal
     friend bool operator==(soa_vector const& lhs, soa_vector const& rhs)
     {
       if( lhs.size() != rhs.size() ) return false;
       return eve::algo::equal(lhs, rhs.begin_aligned());
     }
 
+    //! @brief Checks if the contents of lhs and rhs are not equal
     friend bool operator!=(soa_vector const& lhs, soa_vector const& rhs)
     {
       return !(lhs == rhs);

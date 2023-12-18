@@ -36,6 +36,7 @@ namespace detail
 }
 
 //==================================================================================================
+//! @ingroup simd_concepts
 //! @concept generator
 //! The concept `generator<Constant,Type>` is satisfied if `Constant{}( eve::as<Type>() )` is
 //! well formed.

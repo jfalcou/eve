@@ -15,16 +15,13 @@
 #include <type_traits>
 
 //==================================================================================================
-//! @addtogroup traits
-//! @{
-//!   @defgroup struct Structured Types Management
-//!   @brief Traits and functions to handle user defined types in SIMD registers
+//! @defgroup struct Structured Types Management
+//! @brief Traits and functions to handle user defined types in SIMD registers
 //!
-//!   **EVE** provides various elements to simplify the management of user-defined structures
-//!   as vectorized types.
+//! **EVE** provides various elements to simplify the management of user-defined structures
+//! as vectorized types.
 //!
-//!   **Convenience header:** @code{.cpp} #include <eve/traits/product_type.hpp> @endcode
-//! @}
+//! **Convenience header:** @code{.cpp} #include <eve/traits/product_type.hpp> @endcode
 //==================================================================================================
 
 namespace eve

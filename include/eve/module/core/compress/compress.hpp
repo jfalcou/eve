@@ -47,8 +47,8 @@ namespace eve
   //!      5) Those chunks are combined together in another tuple.
   //!
   //!   List of people who's work was instrumental for building this:
-  //!    @aqrit user on Stack Overflow
-  //!    Peter Cordes
+  //!    - `@aqrit` user on Stack Overflow
+  //!    - Peter Cordes
   //!
   //!    Throughout the code of compress there are references to what was taken from where
   //!    as well as explanations.
