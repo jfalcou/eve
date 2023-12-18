@@ -119,7 +119,6 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: x86, opts: -msse2   }
         - { comp: clang , arch: x86, opts: -msse4.2 }
         - { comp: clang , arch: x86, opts: -mavx    }
         - { comp: clang , arch: x86, opts: -mavx2   }
@@ -132,9 +131,9 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 8
+        run:  cd build && ninja unit.exe -j 10
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 8  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
   ## Phase 2 - Non-X86 - Requires gcc and qemu
@@ -164,11 +163,11 @@ jobs:
       - name: Compile Unit Tests
         run:  |
           cd build
-          ninja unit.exe -j 8
+          ninja unit.exe -j 10
       - name: Running Random Sampling Tests
         run:  |
           cd build
-          ctest --output-on-failure -j 8 -E ^doc.*.exe
+          ctest --output-on-failure -j 10 -E ^doc.*.exe
 
   ##################################################################################################
   ## Phase 3 - Pre-Skylake SIMD ISA - g++
@@ -183,7 +182,6 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc , arch: x86, opts: -msse2    }
         - { comp: gcc , arch: x86, opts: -msse4.2  }
         - { comp: gcc , arch: x86, opts: -mavx     }
         - { comp: gcc , arch: x86, opts: -mavx2    }
@@ -196,9 +194,9 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 8
+        run:  cd build && ninja unit.exe -j 10
       - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 8  -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
   ## Phase 3 - Pre-Skylake SIMD ISA - Special cases
