@@ -242,6 +242,9 @@ namespace eve
     pointer pointer_;
   };
 
+  template<typename Type>
+  aligned_ptr(Type* ) -> aligned_ptr<Type>;
+
   //================================================================================================
   //! @brief Checks if an aligned_ptr is aligned on a given alignment.
   //! @param  ptr aligned_ptr to checks
