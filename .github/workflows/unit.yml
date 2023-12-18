@@ -28,6 +28,7 @@ jobs:
       matrix:
         cfg:
         - { comp: clang, arch: x86    , opts: -msse2    }
+        - { comp: gcc  , arch: x86    , opts: -msse2    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
