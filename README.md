@@ -19,9 +19,10 @@ needs to change.
 
 ## Getting Started
 
- - [Installing and using the library](https://jfalcou.github.io/eve/install.html)
- - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/tutorials.html)
- - [References Documentation](https://jfalcou.github.io/eve/modules.html)
+ - [Installing and using the library](https://jfalcou.github.io/eve/setup.html)
+ - [Your first SIMD code using EVE](https://jfalcou.github.io/eve/intro-01.html)
+ - [The complete set of EVE tutorials](https://jfalcou.github.io/eve/usergroup1.html)
+ - [References Documentation](https://jfalcou.github.io/eve/usergroup4.html)
 
 ## Video materials
 
