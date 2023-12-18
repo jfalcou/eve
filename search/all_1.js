@@ -5,7 +5,7 @@ var searchData=
   ['backward_5fiterator_2',['backward_iterator',['../structbackward__iterator.html',1,'backward_iterator'],['../structeve_1_1algo_1_1views_1_1backward__iterator.html',1,'eve::algo::views::backward_iterator&lt; I &gt;']]],
   ['backward_5frange_3',['backward_range',['../structbackward__range.html',1,'backward_range'],['../structeve_1_1algo_1_1views_1_1backward__range.html',1,'eve::algo::views::backward_range&lt; R &gt;']]],
   ['base_4',['base',['../structeve_1_1or__.html#aa7164869090edd22bd724f4c2ef3f8a5',1,'eve::or_']]],
-  ['basic_20operations_5',['Basic Operations',['../intro-01.html',1,'tutorials']]],
+  ['basic_20operations_5',['Basic Operations',['../intro-01.html',1,'']]],
   ['begin_6',['begin',['../structeve_1_1algo_1_1soa__vector.html#a02dcc5da444d505275581b32a0b1790d',1,'eve::algo::soa_vector::begin() -&gt; iterator'],['../structeve_1_1algo_1_1soa__vector.html#a146dbca0b714b7ecf2af0c92f57aa442',1,'eve::algo::soa_vector::begin() const -&gt; const_iterator']]],
   ['begin_5faligned_7',['begin_aligned',['../structeve_1_1algo_1_1soa__vector.html#af8f93ff8b4c9bafc2035d86edac299e0',1,'eve::algo::soa_vector::begin_aligned() const -&gt; const_iterator_aligned'],['../structeve_1_1algo_1_1soa__vector.html#aac9595c0eb4efe379e7f34b6e04c83f9',1,'eve::algo::soa_vector::begin_aligned() -&gt; iterator_aligned']]],
   ['bernouilli_8',['bernouilli',['../group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba',1,'eve']]],
@@ -48,7 +48,7 @@ var searchData=
   ['broadcast_45',['broadcast',['../group__core__simd_gaa8fb67b18a0c3046d9281ed21953444d.html#gaa8fb67b18a0c3046d9281ed21953444d',1,'eve']]],
   ['broadcast_5fgroup_46',['broadcast_group',['../group__core__simd_ga5817b773d143fea4fec4e6cd923b6e6e.html#ga5817b773d143fea4fec4e6cd923b6e6e',1,'eve']]],
   ['broadcast_5flane_47',['broadcast_lane',['../group__core__named__shuffles_ga511d8b336d54331461e09e61373e37de.html#ga511d8b336d54331461e09e61373e37de',1,'eve']]],
-  ['building_20for_20testing_48',['Building for Testing',['../dev_cmake.html',1,'eve-dev']]],
+  ['building_20for_20testing_48',['Building for Testing',['../dev_cmake.html',1,'']]],
   ['byte_5freverse_49',['byte_reverse',['../group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50',1,'eve']]],
   ['byte_5fswap_5fadjacent_50',['byte_swap_adjacent',['../group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07',1,'eve']]]
 ];

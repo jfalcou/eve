@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('structeve_1_1algo_1_1soa__vector.html'
 <div class="header">
   <div class="summary">
 <a href="structeve_1_1algo_1_1soa__vector-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::algo::soa_vector&lt; Type, Allocator &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__simd__types.html">SIMD related types</a> &raquo; <a class="el" href="group__arch.html">Architecture related Types and Helpers</a> &raquo; <a class="el" href="group__memory.html">Memory Management</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::algo::soa_vector&lt; Type, Allocator &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__memory.html">Memory Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -159,9 +159,11 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator</b> =
 <tr class="separator:a08ca84b8e41391cf3323531322cb0838"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cebd79982e022f940660bf05183ff6e"><td class="memItemLeft" align="right" valign="top"><a id="a1cebd79982e022f940660bf05183ff6e" name="a1cebd79982e022f940660bf05183ff6e"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>iterator_aligned</b> = decltype(<a class="el" href="group__views_ga4cc00e59b322f70ba2c789afde3593aa.html#ga4cc00e59b322f70ba2c789afde3593aa">views::convert</a>(storage_type{}.<a class="el" href="structeve_1_1algo_1_1soa__vector.html#afb1302da46f4c4235040f1d6717aac60">data_aligned</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt; <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> &gt;{}))</td></tr>
+<tr class="memdesc:a1cebd79982e022f940660bf05183ff6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator over the the stored Type using aligned data. <br /></td></tr>
 <tr class="separator:a1cebd79982e022f940660bf05183ff6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06409dfeb9c697552b3cbc4bbba13663"><td class="memItemLeft" align="right" valign="top"><a id="a06409dfeb9c697552b3cbc4bbba13663" name="a06409dfeb9c697552b3cbc4bbba13663"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator_aligned</b> = decltype(<a class="el" href="group__views_ga4cc00e59b322f70ba2c789afde3593aa.html#ga4cc00e59b322f70ba2c789afde3593aa">views::convert</a>(std::declval&lt; storage_type const  &gt;().<a class="el" href="structeve_1_1algo_1_1soa__vector.html#afb1302da46f4c4235040f1d6717aac60">data_aligned</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt; <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> &gt;{}))</td></tr>
+<tr class="memdesc:a06409dfeb9c697552b3cbc4bbba13663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const iterator over the the stored Type using aligned data. <br /></td></tr>
 <tr class="separator:a06409dfeb9c697552b3cbc4bbba13663"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7db1163ad1d400fc98afad5b3715b13f"><td class="memItemLeft" align="right" valign="top"><a id="a7db1163ad1d400fc98afad5b3715b13f" name="a7db1163ad1d400fc98afad5b3715b13f"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b> = <a class="el" href="structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3">iterator</a></td></tr>
@@ -172,13 +174,16 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>const_pointer</b> = 
 <tr class="memdesc:aa69ac173d5f52992f17bfa1b3db7cb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const pointer to a <a class="el" href="structeve_1_1algo_1_1views_1_1zip__iterator.html" title="A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...">eve::algo::views::zip_iterator</a> over fields. <br /></td></tr>
 <tr class="separator:aa69ac173d5f52992f17bfa1b3db7cb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73d36efe89af3939f2d6bcfaf2d0352a"><td class="memItemLeft" align="right" valign="top"><a id="a73d36efe89af3939f2d6bcfaf2d0352a" name="a73d36efe89af3939f2d6bcfaf2d0352a"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer_aligned</b> = iterator_aligned</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer_aligned</b> = <a class="el" href="structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e">iterator_aligned</a></td></tr>
+<tr class="memdesc:a73d36efe89af3939f2d6bcfaf2d0352a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aligned pointer to a <a class="el" href="structeve_1_1algo_1_1views_1_1zip__iterator.html" title="A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...">eve::algo::views::zip_iterator</a> over fields. <br /></td></tr>
 <tr class="separator:a73d36efe89af3939f2d6bcfaf2d0352a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10087850fe16634a56678b967843875d"><td class="memItemLeft" align="right" valign="top"><a id="a10087850fe16634a56678b967843875d" name="a10087850fe16634a56678b967843875d"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>const_pointer_aligned</b> = const_iterator_aligned</td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_pointer_aligned</b> = <a class="el" href="structeve_1_1algo_1_1soa__vector.html#a06409dfeb9c697552b3cbc4bbba13663">const_iterator_aligned</a></td></tr>
+<tr class="memdesc:a10087850fe16634a56678b967843875d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const aligned pointer to a <a class="el" href="structeve_1_1algo_1_1views_1_1zip__iterator.html" title="A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...">eve::algo::views::zip_iterator</a> over fields. <br /></td></tr>
 <tr class="separator:a10087850fe16634a56678b967843875d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4b822a0023ad3a8cec4bc090c41b381"><td class="memItemLeft" align="right" valign="top"><a id="ad4b822a0023ad3a8cec4bc090c41b381" name="ad4b822a0023ad3a8cec4bc090c41b381"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>size_type</b> = std::size_t</td></tr>
+<tr class="memdesc:ad4b822a0023ad3a8cec4bc090c41b381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size type. <br /></td></tr>
 <tr class="separator:ad4b822a0023ad3a8cec4bc090c41b381"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -193,27 +198,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1cfd01b1cec55dd3fab8e0c6809764f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty container. <br /></td></tr>
 <tr class="separator:a1cfd01b1cec55dd3fab8e0c6809764f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea7e91a0c99b91cf1450c54b02836b3c"><td class="memItemLeft" align="right" valign="top"><a id="aea7e91a0c99b91cf1450c54b02836b3c" name="aea7e91a0c99b91cf1450c54b02836b3c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (size_type n, Allocator a)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, Allocator a)</td></tr>
 <tr class="memdesc:aea7e91a0c99b91cf1450c54b02836b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the container with <code>n</code> default-inserted instances of <code>Type</code> and a custom <code>Allocator</code>. <br /></td></tr>
 <tr class="separator:aea7e91a0c99b91cf1450c54b02836b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a371c329f5be284001625d7c6c14de497"><td class="memItemLeft" align="right" valign="top"><a id="a371c329f5be284001625d7c6c14de497" name="a371c329f5be284001625d7c6c14de497"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (size_type n)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
 <tr class="memdesc:a371c329f5be284001625d7c6c14de497"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the container with <code>n</code> default-inserted instances of <code>Type</code>. <br /></td></tr>
 <tr class="separator:a371c329f5be284001625d7c6c14de497"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2860518add05d6c27812837fca6af7d4"><td class="memItemLeft" align="right" valign="top"><a id="a2860518add05d6c27812837fca6af7d4" name="a2860518add05d6c27812837fca6af7d4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (no_init_t, size_type n, Allocator a)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (no_init_t, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, Allocator a)</td></tr>
 <tr class="memdesc:a2860518add05d6c27812837fca6af7d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the container with <code>n</code> default-inserted instances of <code>Type</code> and a custom <code>Allocator</code>. <br /></td></tr>
 <tr class="separator:a2860518add05d6c27812837fca6af7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37a921fa715625233a0498098ea5ab08"><td class="memItemLeft" align="right" valign="top"><a id="a37a921fa715625233a0498098ea5ab08" name="a37a921fa715625233a0498098ea5ab08"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (no_init_t, size_type n)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (no_init_t, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
 <tr class="memdesc:a37a921fa715625233a0498098ea5ab08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the container with <code>n</code> default-inserted instances of <code>Type</code>. <br /></td></tr>
 <tr class="separator:a37a921fa715625233a0498098ea5ab08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa588a9a21fc315c6f6ef07142937313e"><td class="memItemLeft" align="right" valign="top"><a id="aa588a9a21fc315c6f6ef07142937313e" name="aa588a9a21fc315c6f6ef07142937313e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (size_type n, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> v, Allocator a)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> v, Allocator a)</td></tr>
 <tr class="memdesc:aa588a9a21fc315c6f6ef07142937313e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the container with <code>n</code> copies of elements with <code>value</code> value and a custom <code>Allocator</code>. <br /></td></tr>
 <tr class="separator:aa588a9a21fc315c6f6ef07142937313e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d3663ed3c3c058cd25621becea1aab2"><td class="memItemLeft" align="right" valign="top"><a id="a2d3663ed3c3c058cd25621becea1aab2" name="a2d3663ed3c3c058cd25621becea1aab2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (size_type n, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> v)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><b>soa_vector</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> v)</td></tr>
 <tr class="memdesc:a2d3663ed3c3c058cd25621becea1aab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the container with <code>n</code> copies of elements with <code>value</code> value. <br /></td></tr>
 <tr class="separator:a2d3663ed3c3c058cd25621becea1aab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac634d1c503afc06588b14ca58eb0804f"><td class="memItemLeft" align="right" valign="top"><a id="ac634d1c503afc06588b14ca58eb0804f" name="ac634d1c503afc06588b14ca58eb0804f"></a>
@@ -226,11 +231,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac908824a2ad8ed2989190452337b922c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Capacity</div></td></tr>
 <tr class="memitem:acfa067cbe1080920388e2637eb920180"><td class="memItemLeft" align="right" valign="top"><a id="acfa067cbe1080920388e2637eb920180" name="acfa067cbe1080920388e2637eb920180"></a>
-size_type&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const noexcept</td></tr>
+<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const noexcept</td></tr>
 <tr class="memdesc:acfa067cbe1080920388e2637eb920180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of elements in the container. <br /></td></tr>
 <tr class="separator:acfa067cbe1080920388e2637eb920180"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a932b76d28707377aea95c7332c62c2"><td class="memItemLeft" align="right" valign="top"><a id="a7a932b76d28707377aea95c7332c62c2" name="a7a932b76d28707377aea95c7332c62c2"></a>
-size_type&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b> () const noexcept</td></tr>
+<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b> () const noexcept</td></tr>
 <tr class="memdesc:a7a932b76d28707377aea95c7332c62c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of elements that the container has currently allocated space for. <br /></td></tr>
 <tr class="separator:a7a932b76d28707377aea95c7332c62c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f0bf415832f111ba79c83e51aad08bc"><td class="memItemLeft" align="right" valign="top"><a id="a0f0bf415832f111ba79c83e51aad08bc" name="a0f0bf415832f111ba79c83e51aad08bc"></a>
@@ -241,7 +246,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>shrink_to_fit</b> ()<
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () const noexcept</td></tr>
 <tr class="memdesc:a583e0a2bb360fef57e2fb1cfa856fa45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the container has no elements. <br /></td></tr>
 <tr class="separator:a583e0a2bb360fef57e2fb1cfa856fa45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a23a8b5cff720fd36c88f8bcda9cc3cf0.html#a23a8b5cff720fd36c88f8bcda9cc3cf0">reserve</a> (size_type n)</td></tr>
+<tr class="memitem:a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a23a8b5cff720fd36c88f8bcda9cc3cf0.html#a23a8b5cff720fd36c88f8bcda9cc3cf0">reserve</a> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
 <tr class="memdesc:a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the capacity of the vector to a value that's greater or equal to <code>n</code>.  <br /></td></tr>
 <tr class="separator:a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Element access</div></td></tr>
@@ -261,10 +266,10 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> ()</td></tr>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> () const</td></tr>
 <tr class="memdesc:a41ff6fdeb30e98261d9bafa3ffcbe45b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a constant zipped pointer to the beginning. <br /></td></tr>
 <tr class="separator:a41ff6fdeb30e98261d9bafa3ffcbe45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8e96562f8b090a2575e0b5a7116a9ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_ab8e96562f8b090a2575e0b5a7116a9ed.html#ab8e96562f8b090a2575e0b5a7116a9ed">get</a> (size_type i) const</td></tr>
+<tr class="memitem:ab8e96562f8b090a2575e0b5a7116a9ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_ab8e96562f8b090a2575e0b5a7116a9ed.html#ab8e96562f8b090a2575e0b5a7116a9ed">get</a> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> i) const</td></tr>
 <tr class="memdesc:ab8e96562f8b090a2575e0b5a7116a9ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the <code>i</code>th element of the container.  <br /></td></tr>
 <tr class="separator:ab8e96562f8b090a2575e0b5a7116a9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2916bce62a37b27a040f50727df724c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a2916bce62a37b27a040f50727df724c9.html#a2916bce62a37b27a040f50727df724c9">set</a> (size_type i, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;v)</td></tr>
+<tr class="memitem:a2916bce62a37b27a040f50727df724c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a2916bce62a37b27a040f50727df724c9.html#a2916bce62a37b27a040f50727df724c9">set</a> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> i, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;v)</td></tr>
 <tr class="memdesc:a2916bce62a37b27a040f50727df724c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the value of the <code>i</code>th element of the container.  <br /></td></tr>
 <tr class="separator:a2916bce62a37b27a040f50727df724c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab508d79bcf317cfc3a543d0c3dcb26aa"><td class="memItemLeft" align="right" valign="top"><a id="ab508d79bcf317cfc3a543d0c3dcb26aa" name="ab508d79bcf317cfc3a543d0c3dcb26aa"></a>
@@ -273,15 +278,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>fill</b> (<a class="e
 <tr class="separator:ab508d79bcf317cfc3a543d0c3dcb26aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
 <tr class="memitem:aac9595c0eb4efe379e7f34b6e04c83f9"><td class="memItemLeft" align="right" valign="top"><a id="aac9595c0eb4efe379e7f34b6e04c83f9" name="aac9595c0eb4efe379e7f34b6e04c83f9"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>begin_aligned</b> () -&gt; iterator_aligned</td></tr>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>begin_aligned</b> () -&gt; <a class="el" href="structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e">iterator_aligned</a></td></tr>
 <tr class="memdesc:aac9595c0eb4efe379e7f34b6e04c83f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an aligned iterator to the beginning. <br /></td></tr>
 <tr class="separator:aac9595c0eb4efe379e7f34b6e04c83f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8f93ff8b4c9bafc2035d86edac299e0"><td class="memItemLeft" align="right" valign="top"><a id="af8f93ff8b4c9bafc2035d86edac299e0" name="af8f93ff8b4c9bafc2035d86edac299e0"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>begin_aligned</b> () const -&gt; const_iterator_aligned</td></tr>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>begin_aligned</b> () const -&gt; <a class="el" href="structeve_1_1algo_1_1soa__vector.html#a06409dfeb9c697552b3cbc4bbba13663">const_iterator_aligned</a></td></tr>
 <tr class="memdesc:af8f93ff8b4c9bafc2035d86edac299e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an aligned iterator to the beginning. <br /></td></tr>
 <tr class="separator:af8f93ff8b4c9bafc2035d86edac299e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade7d1e71b4633182d97230c74781198e"><td class="memItemLeft" align="right" valign="top"><a id="ade7d1e71b4633182d97230c74781198e" name="ade7d1e71b4633182d97230c74781198e"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>cbegin_aligned</b> () const -&gt; const_iterator_aligned</td></tr>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>cbegin_aligned</b> () const -&gt; <a class="el" href="structeve_1_1algo_1_1soa__vector.html#a06409dfeb9c697552b3cbc4bbba13663">const_iterator_aligned</a></td></tr>
 <tr class="memdesc:ade7d1e71b4633182d97230c74781198e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a constant aligned iterator to the beginning. <br /></td></tr>
 <tr class="separator:ade7d1e71b4633182d97230c74781198e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02dcc5da444d505275581b32a0b1790d"><td class="memItemLeft" align="right" valign="top"><a id="a02dcc5da444d505275581b32a0b1790d" name="a02dcc5da444d505275581b32a0b1790d"></a>
@@ -314,9 +319,11 @@ Friends</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Comparisons and ordering</div></td></tr>
 <tr class="memitem:abb509d075fdd2fd5f5669ad45a09c9e9"><td class="memItemLeft" align="right" valign="top"><a id="abb509d075fdd2fd5f5669ad45a09c9e9" name="abb509d075fdd2fd5f5669ad45a09c9e9"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> const &amp;lhs, <a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> const &amp;rhs)</td></tr>
+<tr class="memdesc:abb509d075fdd2fd5f5669ad45a09c9e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the contents of lhs and rhs are equal. <br /></td></tr>
 <tr class="separator:abb509d075fdd2fd5f5669ad45a09c9e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a706408ace5be95890cfc6c9e0cf22d3a"><td class="memItemLeft" align="right" valign="top"><a id="a706408ace5be95890cfc6c9e0cf22d3a" name="a706408ace5be95890cfc6c9e0cf22d3a"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> const &amp;lhs, <a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> const &amp;rhs)</td></tr>
+<tr class="memdesc:a706408ace5be95890cfc6c9e0cf22d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the contents of lhs and rhs are not equal. <br /></td></tr>
 <tr class="separator:a706408ace5be95890cfc6c9e0cf22d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader">Modifiers</h2></td></tr>
@@ -337,17 +344,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr
 <tr class="memitem:a23cd76edc7e71f4d164a571de326a24a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a23cd76edc7e71f4d164a571de326a24a.html#a23cd76edc7e71f4d164a571de326a24a">pop_back</a> () noexcept</td></tr>
 <tr class="memdesc:a23cd76edc7e71f4d164a571de326a24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the last element of the container.  <br /></td></tr>
 <tr class="separator:a23cd76edc7e71f4d164a571de326a24a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00d09efb7c037e5a1b2393e091e94c91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a> (size_type n, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> value)</td></tr>
+<tr class="memitem:a00d09efb7c037e5a1b2393e091e94c91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, <a class="el" href="structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec">value_type</a> value)</td></tr>
 <tr class="memdesc:a00d09efb7c037e5a1b2393e091e94c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the container to contain count elements.  <br /></td></tr>
 <tr class="separator:a00d09efb7c037e5a1b2393e091e94c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a454bdf6879ae86443e4df0af94642127"><td class="memItemLeft" align="right" valign="top"><a id="a454bdf6879ae86443e4df0af94642127" name="a454bdf6879ae86443e4df0af94642127"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (size_type n)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
+<tr class="memdesc:a454bdf6879ae86443e4df0af94642127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the current eve::soa_vector to a new size. <br /></td></tr>
 <tr class="separator:a454bdf6879ae86443e4df0af94642127"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab677ad163c4f357e765d5f685f4a327c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector_ab677ad163c4f357e765d5f685f4a327c.html#ab677ad163c4f357e765d5f685f4a327c">swap</a> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> &amp;other) noexcept</td></tr>
 <tr class="memdesc:ab677ad163c4f357e765d5f685f4a327c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchanges the contents of the container with those of <code>other</code>.  <br /></td></tr>
 <tr class="separator:ab677ad163c4f357e765d5f685f4a327c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2045227da8d8624b2fc82304f54fe4ce"><td class="memItemLeft" align="right" valign="top"><a id="a2045227da8d8624b2fc82304f54fe4ce" name="a2045227da8d8624b2fc82304f54fe4ce"></a>
 Allocator&#160;</td><td class="memItemRight" valign="bottom"><b>get_allocator</b> ()</td></tr>
+<tr class="memdesc:a2045227da8d8624b2fc82304f54fe4ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an instance of the current allocator. <br /></td></tr>
 <tr class="separator:a2045227da8d8624b2fc82304f54fe4ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3deb25a3ff1468a7e4ccd1937a8d049e"><td class="memItemLeft" align="right" valign="top"><a id="a3deb25a3ff1468a7e4ccd1937a8d049e" name="a3deb25a3ff1468a7e4ccd1937a8d049e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> &amp;lhs, <a class="el" href="structeve_1_1algo_1_1soa__vector.html">soa_vector</a> &amp;rhs) noexcept</td></tr>

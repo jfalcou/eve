@@ -26,92 +26,102 @@ var NAVTREE =
 [
   [ "E.V.E", "index.html", [
     [ "The Expressive Vector Engine", "index.html", "index" ],
-    [ "Installation & Quick Start", "install.html", [
-      [ "Pre-requisites", "install.html#autotoc_md99", null ],
-      [ "Retrieving the source", "install.html#autotoc_md100", [
-        [ "Github", "install.html#autotoc_md101", null ],
-        [ "CPM", "install.html#autotoc_md102", null ],
-        [ "SPACK", "install.html#autotoc_md103", null ],
-        [ "AUR", "install.html#autotoc_md104", null ],
-        [ "Conan", "install.html#autotoc_md105", null ],
-        [ "VCPKG", "install.html#autotoc_md106", null ]
+    [ "Tutorials", "usergroup0.html", [
+      [ "Quick-Start", "setup.html", null ],
+      [ "SIMD 101", "usergroup1.html", [
+        [ "Basic Operations", "intro-01.html", null ],
+        [ "Algorithms", "intro-02.html", null ],
+        [ "Tuples", "intro-03.html", null ],
+        [ "Data Structures", "intro-04.html", null ]
       ] ],
-      [ "Installation from Source", "install.html#autotoc_md107", [
-        [ "Setting up the Library", "install.html#autotoc_md108", null ],
-        [ "Building the Documentation", "install.html#autotoc_md109", null ]
+      [ "Specific Idioms", "usergroup2.html", [
+        [ "Conditional Operations", "conditional.html", null ],
+        [ "Frequency Scaling", "freqscale.html", null ]
       ] ],
-      [ "Using the library", "install.html#autotoc_md110", [
-        [ "Compilation", "install.html#autotoc_md111", null ],
-        [ "Instruction Set Selection", "install.html#autotoc_md112", null ],
-        [ "Execution", "install.html#autotoc_md113", null ],
-        [ "Use in CMake", "install.html#autotoc_md114", null ]
-      ] ],
-      [ "Advanced options", "install.html#autotoc_md115", null ]
+      [ "Advanced Topics", "usergroup3.html", [
+        [ "Interaction with native code", "inter-with-native.html", null ],
+        [ "Handling Multiple Architecture Targets", "multiarch.html", null ]
+      ] ]
     ] ],
-    [ "Tutorials", "tutorials.html", "tutorials" ],
-    [ "Why and How", "eve-dev.html", "eve-dev" ],
-    [ "Change Log", "changelog.html", [
-      [ "Version 2023.02.15", "changelog.html#autotoc_md116", [
-        [ "What's Changed", "changelog.html#autotoc_md117", [
-          [ "Removal and Depreciation", "changelog.html#autotoc_md118", null ],
-          [ "Architectures/Compilers Support & Fixes", "changelog.html#autotoc_md119", [
-            [ "The One Big News for this release: SVE", "changelog.html#autotoc_md120", null ],
-            [ "Other Fixes", "changelog.html#autotoc_md121", null ]
-          ] ],
-          [ "Features", "changelog.html#autotoc_md122", null ],
-          [ "Bug Fixes", "changelog.html#autotoc_md123", null ]
+    [ "Reference Documentation", "usergroup4.html", [
+      [ "EVE Namespace", "namespaceeve.html", null ],
+      [ "Main API", "usergroup5.html", [
+        [ "SIMD Abstractions", "usergroup6.html", [
+          [ "SIMD Types", "group__simd__types.html", null ],
+          [ "Conditional Expressions", "conditional.html", null ],
+          [ "Memory Management", "group__memory.html", null ],
+          [ "Concepts", "group__simd__concepts.html", null ]
+        ] ],
+        [ "Core Functions", "usergroup7.html", [
+          [ "Arithmetic Operations", "group__core__arithmetic.html", null ],
+          [ "FMA-like Operations", "group__core__fma__family.html", null ],
+          [ "Bitwise Functions", "group__core__bitops.html", null ],
+          [ "Logical Operations", "group__core__logical.html", null ],
+          [ "Predicates", "group__core__predicates.html", null ],
+          [ "Conversions", "group__core__conversions.html", null ],
+          [ "IEEE-754 Operations", "group__core__internal.html", null ],
+          [ "Accuracy Helpers", "group__core__accuracy.html", null ],
+          [ "Options", "group__core__decorators.html", null ]
+        ] ],
+        [ "Constants", "usergroup8.html", [
+          [ "Generic Constants", "group__core__constants.html", null ],
+          [ "Math Constants", "group__math__constants.html", null ]
+        ] ],
+        [ "Common Math Functions", "usergroup9.html", [
+          [ "Logarithm", "group__math__log.html", null ],
+          [ "Exponential", "group__math__exp.html", null ],
+          [ "Trigonometric", "group__math__trig.html", null ],
+          [ "Inverse Trigonometric", "group__math__invtrig.html", null ],
+          [ "Hyperbolic", "group__math__hyper.html", null ],
+          [ "Inverse Hyperbolic", "group__math__invhyper.html", null ]
+        ] ],
+        [ "Advanced Math Functions", "usergroup10.html", [
+          [ "Bessel functions", "group__bessel.html", null ],
+          [ "Combinatorial functions", "group__combinatorial.html", null ],
+          [ "Elliptic functions", "group__elliptic.html", null ],
+          [ "Polynomial functions", "group__polynomial.html", null ],
+          [ "Special functions", "group__special.html", null ]
+        ] ],
+        [ "SIMD Specifics", "usergroup11.html", [
+          [ "Compress functions", "group__core__compress.html", null ],
+          [ "SWAR Operations", "group__core__simd.html", null ],
+          [ "Named Shuffles", "group__core__named__shuffles.html", null ],
+          [ "Reductions", "group__core__reduction.html", null ]
+        ] ],
+        [ "Algorithms & Views", "usergroup12.html", [
+          [ "Algorithms", "group__algos.html", null ],
+          [ "Views", "group__views.html", null ],
+          [ "Options", "group__algo__traits.html", null ],
+          [ "Concepts", "group__algo__concepts.html", null ]
         ] ]
       ] ],
-      [ "Version 2022.09.1", "changelog.html#autotoc_md124", null ],
-      [ "Version 2022.09.0", "changelog.html#autotoc_md125", [
-        [ "What's Changed", "changelog.html#autotoc_md126", null ],
-        [ "New Contributors", "changelog.html#autotoc_md127", null ]
+      [ "Developer API", "usergroup13.html", [
+        [ "Type Traits", "group__traits.html", null ],
+        [ "Architecture Helpers", "group__arch.html", null ],
+        [ "Functions and Callables", "group__extensions.html", null ],
+        [ "User-Defined Types Supports", "group__struct.html", null ]
       ] ],
-      [ "Version 2022.03.0", "changelog.html#autotoc_md128", [
-        [ "What's Changed", "changelog.html#autotoc_md129", null ],
-        [ "New Contributors", "changelog.html#autotoc_md130", null ]
-      ] ],
-      [ "Version 2021.10.0", "changelog.html#autotoc_md131", [
-        [ "What's Changed", "changelog.html#autotoc_md132", null ]
-      ] ],
-      [ "Version beta.2020.09", "changelog.html#autotoc_md133", null ]
+      [ "Concepts List", "concepts.html", "concepts" ]
     ] ],
-    [ "Licence", "licence.html", null ],
-    [ "Modules", "modules.html", "modules" ],
-    [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
-      [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", "namespacemembers_dup" ],
-        [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", "namespacemembers_vars" ],
-        [ "Typedefs", "namespacemembers_type.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ]
-      ] ]
-    ] ],
-    [ "Concepts", "concepts.html", "concepts" ],
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ],
-        [ "Related Functions", "functions_rela.html", null ]
-      ] ]
+    [ "About The Library", "usergroup14.html", [
+      [ "Glossary", "glossary_semantic.html", null ],
+      [ "Changelog", "changelog.html", null ],
+      [ "EVE Development", "usergroup15.html", [
+        [ "Environment", "dev_environment.html", null ],
+        [ "CMake Usage", "dev_cmake.html", null ]
+      ] ],
+      [ "Rationale", "usergroup16.html", [
+        [ "Design Decisions", "design_rationale.html", null ],
+        [ "SIMD Algorithms", "algo_rationale.html", null ]
+      ] ],
+      [ "Licence", "licence.html", null ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"algo_rationale.html",
-"group__conditional.html#ga6ce7ac450593ee98fe8ca0d9cf65e4b4",
-"group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce",
-"group__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555",
-"structeve_1_1algo_1_1views_1_1converting__iterator.html",
-"structeve_1_1wide.html#a32b2459f9e09887921b0425fddf3b08c"
+"algo_rationale.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

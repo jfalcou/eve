@@ -144,8 +144,42 @@ template&lt;int N&gt; </div>
 </div><div class="memdoc">
 
 <p><code>#include &lt;eve/module/algo/algo/traits.hpp&gt;</code></p>
-<p>@snipet tutorial/interacting_with_native.cpp interating_with_native_algo</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__algo__traits_gae39c02c8504a76a66ba1b2dd39db4ea1.html#gae39c02c8504a76a66ba1b2dd39db4ea1" title="A trait that tells the algorithm to take an extra type into account when selecting a cardinal....">consider_types</a> if maybe using some extra type is the reason you want to change <a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">cardinal</a>. </dd></dl>
+<div class="fragment"><div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;span&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifdef __SSSE3__</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> remove_spaces(std::string&amp; s)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using </span>u8x16 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint8_t, eve::fixed&lt;16&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// eve only supports std::int8_t and std::uint8_t, not char.</span></div>
+<div class="line">  std::span s_bytes{<span class="keyword">reinterpret_cast&lt;</span>std::uint8_t*<span class="keyword">&gt;</span>(s.data()), s.<a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">size</a>()};</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> end = <a class="code hl_variable" href="group__algos_gad5165d2d2860b87c94861f62014efe5f.html#gad5165d2d2860b87c94861f62014efe5f">eve::algo::remove_if</a>[eve::algo::force_cardinal&lt;16&gt;](</div>
+<div class="line">    s_bytes,[](u8x16 v) -&gt; eve::logical&lt;u8x16&gt; {</div>
+<div class="line">    <span class="comment">// A simd is_space we took from @aqrit</span></div>
+<div class="line">    __m128i lut = _mm_setr_epi8(<span class="charliteral">&#39; &#39;</span>,    0,    0,  0,</div>
+<div class="line">                                  0,    0,    0,  0,</div>
+<div class="line">                                  0, <span class="charliteral">&#39;\t&#39;</span>, <span class="charliteral">&#39;\n&#39;</span>,  0,</div>
+<div class="line">                                  0, <span class="charliteral">&#39;\r&#39;</span>,    0,  0);</div>
+<div class="line">    <span class="keywordflow">return</span> v == u8x16{_mm_shuffle_epi8(lut, v)};</div>
+<div class="line">  });</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> offset = end - s_bytes.begin();</div>
+<div class="line">  s.erase(s.begin() + offset, s.end());</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#endif  </span><span class="comment">// __SSSE3__</span></div>
+<div class="line"> </div>
+<div class="ttc" id="agroup__algos_gad5165d2d2860b87c94861f62014efe5f_html_gad5165d2d2860b87c94861f62014efe5f"><div class="ttname"><a href="group__algos_gad5165d2d2860b87c94861f62014efe5f.html#gad5165d2d2860b87c94861f62014efe5f">eve::algo::remove_if</a></div><div class="ttdeci">constexpr auto remove_if</div><div class="ttdoc">SIMD version of std::remove_if.</div><div class="ttdef"><b>Definition:</b> remove.hpp:82</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition:</b> wide.hpp:365</div></div>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__algo__traits_gae39c02c8504a76a66ba1b2dd39db4ea1.html#gae39c02c8504a76a66ba1b2dd39db4ea1" title="A trait that tells the algorithm to take an extra type into account when selecting a cardinal....">consider_types</a> if maybe using some extra type is the reason you want to change <a class="el" href="structeve_1_1cardinal.html" title="Computes the cardinal of a given type.">cardinal</a>. </dd></dl>
 
 </div>
 </div>

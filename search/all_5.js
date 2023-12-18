@@ -37,7 +37,7 @@ var searchData=
   ['four_5fpio_5f3_34',['four_pio_3',['../group__math__constants_ga348ec58b614ef783f4183689f21850b1.html#ga348ec58b614ef783f4183689f21850b1',1,'eve']]],
   ['frac_35',['frac',['../group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732',1,'eve']]],
   ['fracscale_36',['fracscale',['../group__core__arithmetic_ga9f385ed27d84ed89eab131bf7bbaa5bf.html#ga9f385ed27d84ed89eab131bf7bbaa5bf',1,'eve']]],
-  ['frequency_20scaling_2e_37',['Frequency Scaling.',['../freqscale.html',1,'tutorials']]],
+  ['frequency_20scaling_2e_37',['Frequency Scaling.',['../freqscale.html',1,'']]],
   ['frexp_38',['frexp',['../group__core__internal_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
   ['front_39',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::front()'],['../structeve_1_1wide.html#a91abf1f8683e031f8169a5b5473c1660',1,'eve::wide::front()']]],
   ['fsm_40',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],

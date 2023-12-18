@@ -63,13 +63,14 @@ var searchData=
   ['is_5fnot_5fimag_60',['is_not_imag',['../group__core__predicates_ga916b353f1b02f20cfda5c1f0e30481a2.html#ga916b353f1b02f20cfda5c1f0e30481a2',1,'eve']]],
   ['is_5fnot_5finfinite_61',['is_not_infinite',['../group__core__predicates_ga629dd840e2cfda148550657259dcb18c.html#ga629dd840e2cfda148550657259dcb18c',1,'eve']]],
   ['is_5fnot_5fless_62',['is_not_less',['../group__core__predicates_gaae43e7c0594bdcbbc612427d3322c1df.html#gaae43e7c0594bdcbbc612427d3322c1df',1,'eve']]],
-  ['is_5fnot_5fnan_63',['is_not_nan',['../group__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d',1,'eve']]],
-  ['is_5fnot_5freal_64',['is_not_real',['../group__core__predicates_ga4cae3be0b087d2f772d987e3b1cff4d1.html#ga4cae3be0b087d2f772d987e3b1cff4d1',1,'eve']]],
-  ['is_5fodd_65',['is_odd',['../group__core__predicates_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e',1,'eve']]],
-  ['is_5fordered_66',['is_ordered',['../group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce',1,'eve']]],
-  ['is_5fpositive_67',['is_positive',['../group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1',1,'eve']]],
-  ['is_5fpow2_68',['is_pow2',['../group__core__predicates_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306',1,'eve']]],
-  ['is_5freal_69',['is_real',['../group__core__predicates_ga38314db2a1da99c8bdec146b4ed56c9b.html#ga38314db2a1da99c8bdec146b4ed56c9b',1,'eve']]],
-  ['is_5funit_70',['is_unit',['../group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0',1,'eve']]],
-  ['is_5funordered_71',['is_unordered',['../group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]]
+  ['is_5fnot_5fless_5fequal_63',['is_not_less_equal',['../group__core__predicates_ga7ff690d0806cf05be796bdc45cf47801.html#ga7ff690d0806cf05be796bdc45cf47801',1,'eve']]],
+  ['is_5fnot_5fnan_64',['is_not_nan',['../group__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d',1,'eve']]],
+  ['is_5fnot_5freal_65',['is_not_real',['../group__core__predicates_ga4cae3be0b087d2f772d987e3b1cff4d1.html#ga4cae3be0b087d2f772d987e3b1cff4d1',1,'eve']]],
+  ['is_5fodd_66',['is_odd',['../group__core__predicates_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e',1,'eve']]],
+  ['is_5fordered_67',['is_ordered',['../group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce',1,'eve']]],
+  ['is_5fpositive_68',['is_positive',['../group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1',1,'eve']]],
+  ['is_5fpow2_69',['is_pow2',['../group__core__predicates_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306',1,'eve']]],
+  ['is_5freal_70',['is_real',['../group__core__predicates_ga38314db2a1da99c8bdec146b4ed56c9b.html#ga38314db2a1da99c8bdec146b4ed56c9b',1,'eve']]],
+  ['is_5funit_71',['is_unit',['../group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0',1,'eve']]],
+  ['is_5funordered_72',['is_unordered',['../group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]]
 ];

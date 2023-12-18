@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Concepts</title>
+<title>E.V.E: Algorithms Concepts</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -122,8 +122,9 @@ $(document).ready(function(){initNavTree('group__algo__concepts.html',''); initR
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
-  <div class="headertitle"><div class="title">Concepts<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__algorithms.html">Algorithms and Views</a></div></div></div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
+  <div class="headertitle"><div class="title">Algorithms Concepts<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__algorithms.html">Algorithms and Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -148,6 +149,21 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmap__store__op.html">map_store_op</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">requirement for the operation applied on store in map. should work on both scalar and wide for the underlying iterator for any cardinal.  <a href="structmap__store__op.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2b10643c19cf7b6ee3ace583f1b68595"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:ga2b10643c19cf7b6ee3ace583f1b68595"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__algo__concepts_ga2b10643c19cf7b6ee3ace583f1b68595.html#ga2b10643c19cf7b6ee3ace583f1b68595">eve::algo::iterator_t</a> = decltype(std::declval&lt; R &gt;().begin())</td></tr>
+<tr class="memdesc:ga2b10643c19cf7b6ee3ace583f1b68595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator for a relaxed range.  <br /></td></tr>
+<tr class="separator:ga2b10643c19cf7b6ee3ace583f1b68595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04720f581be43aef306570432d3782bd"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:ga04720f581be43aef306570432d3782bd"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__algo__concepts_ga04720f581be43aef306570432d3782bd.html#ga04720f581be43aef306570432d3782bd">eve::algo::sentinel_t</a> = decltype(std::declval&lt; R &gt;().end())</td></tr>
+<tr class="memdesc:ga04720f581be43aef306570432d3782bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel for a relaxed range.  <br /></td></tr>
+<tr class="separator:ga04720f581be43aef306570432d3782bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00d2830217f2d03fa59157dc17d66fe4"><td class="memTemplParams" colspan="2">template&lt;typename R &gt; </td></tr>
+<tr class="memitem:ga00d2830217f2d03fa59157dc17d66fe4"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a> = <a class="el" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">unaligned_t</a>&lt; <a class="el" href="group__algo__concepts_ga2b10643c19cf7b6ee3ace583f1b68595.html#ga2b10643c19cf7b6ee3ace583f1b68595">iterator_t</a>&lt; R &gt; &gt;</td></tr>
+<tr class="memdesc:ga00d2830217f2d03fa59157dc17d66fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unaligned iterator for a relaxed range.  <br /></td></tr>
+<tr class="separator:ga00d2830217f2d03fa59157dc17d66fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
