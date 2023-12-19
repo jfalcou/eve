@@ -1,11 +1,12 @@
 //==================================================================================================
-/**
+/*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
-**/
+*/
 //==================================================================================================
 #include "test.hpp"
+#include "tts/tts.hpp"
 #include <eve/memory/aligned_ptr.hpp>
 
 #include <array>
@@ -20,15 +21,7 @@ TTS_CASE("aligned_ptr exposes proper traits")
   TTS_TYPE_IS( cit_t::value_type, double);
 };
 
-TTS_CASE("aligned_ptr constructor from nullptr")
-{
-  eve::aligned_ptr<double> nullptr_constructed_ptr = nullptr;
-
-  TTS_EQUAL(nullptr_constructed_ptr.get() , nullptr);
-  TTS_EQUAL(nullptr_constructed_ptr       , nullptr);
-};
-
-TTS_CASE("aligned_ptr constructor from more resticted")
+TTS_CASE("aligned_ptr conversion rules")
 {
   TTS_CONSTEXPR_EXPECT( (
     std::convertible_to<
@@ -69,6 +62,37 @@ TTS_CASE("aligned_ptr constructor from more resticted")
                         eve::aligned_ptr<int      , eve::fixed<4>>
                        >) );
 };
+
+TTS_CASE("aligned_ptr constructor from nullptr")
+{
+  eve::aligned_ptr<double> nullptr_constructed_ptr = nullptr;
+
+  TTS_EQUAL(nullptr_constructed_ptr.get() , nullptr);
+  TTS_EQUAL(nullptr_constructed_ptr       , nullptr);
+};
+
+TTS_CASE("aligned_ptr deduction guide - Default SIMD alignment")
+{
+  constexpr auto size = eve::current_abi_type::bytes;
+  alignas(size) std::array<std::byte, 2 * size> values;
+
+  auto *        ptr   = &values[ 0 ];
+  TTS_TYPE_IS(decltype(eve::aligned_ptr(ptr)), eve::aligned_ptr<std::byte>);
+  TTS_EQUAL(eve::aligned_ptr(ptr).get()   , &values[ 0 ]);
+  TTS_EQUAL(eve::aligned_ptr(ptr)         , &values[ 0 ]);
+  TTS_EQUAL(eve::aligned_ptr(ptr)         , eve::as_aligned(ptr));
+  TTS_NOT_EQUAL(eve::aligned_ptr(ptr)     , &values[ 3 ]);
+  TTS_NOT_EQUAL(eve::aligned_ptr(ptr)     , eve::as_aligned(&values[ size ]));
+
+  auto const *  cptr  = &values[ 0 ];
+  TTS_TYPE_IS(decltype(eve::aligned_ptr(cptr)), eve::aligned_ptr<std::byte const>);
+  TTS_EQUAL(eve::aligned_ptr(cptr).get()   , &values[ 0 ]);
+  TTS_EQUAL(eve::aligned_ptr(cptr)         , &values[ 0 ]);
+  TTS_EQUAL(eve::aligned_ptr(cptr)         , eve::as_aligned(cptr));
+  TTS_NOT_EQUAL(eve::aligned_ptr(cptr)     , &values[ 3 ]);
+  TTS_NOT_EQUAL(eve::aligned_ptr(cptr)     , eve::as_aligned(&values[ size ]));
+};
+
 
 TTS_CASE("aligned_ptr factory functions - Default SIMD alignment")
 {
