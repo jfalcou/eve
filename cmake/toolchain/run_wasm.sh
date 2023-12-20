@@ -1,8 +1,8 @@
 ##==================================================================================================
 ##  EVE - Expressive Vector Engine
-##  Copyright : EVE Project Contributors
-##  SPDX-License-Identifier: BSL-1.0
+##  Copyright : EVE Contributors & Maintainers
+##  SPDX-License-Identifier: MIT
 ##==================================================================================================
 #!/bin/sh
 
-node $@
+node --experimental-wasm-simd  $@
