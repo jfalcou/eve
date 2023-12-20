@@ -240,6 +240,7 @@ namespace spy
   using compiler_type = detail::intel_t<(SPY0 / 100) % 100,SPY0 % 100, __INTEL_COMPILER_UPDATE>;
   #undef SPY0
 #elif defined(__EMSCRIPTEN__)
+#include <emscripten/version.h>
   #define SPY_COMPILER_IS_CLANG
   using compiler_type = detail::emscripten_t<__EMSCRIPTEN_major__, __EMSCRIPTEN_minor__, __EMSCRIPTEN_tiny__ >;
   #undef SPY0

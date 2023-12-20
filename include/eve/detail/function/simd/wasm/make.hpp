@@ -19,7 +19,7 @@ namespace eve::detail
 //================================================================================================
 // enumerated make - 128bits
 //================================================================================================
-template<real_scalar_value T, typename S, typename... Vs>
+template<arithmetic_scalar_value T, typename S, typename... Vs>
 EVE_FORCEINLINE auto
 make(eve::as<wide<T, S>>, Vs... vs) noexcept requires std::same_as<abi_t<T, S>, wasm_128_>
 {
@@ -73,7 +73,7 @@ make(eve::as<wide<T, S>>, Vs... vs) noexcept requires std::same_as<abi_t<T, S>, 
 //================================================================================================
 // splat make
 //================================================================================================
-template<real_scalar_value T, typename S, typename V>
+template<arithmetic_scalar_value T, typename S, typename V>
 EVE_FORCEINLINE auto
 make(eve::as<wide<T, S>> const&, V v) noexcept requires wasm_abi<abi_t<T, S>>
 {
@@ -104,14 +104,14 @@ make(eve::as<wide<T, S>> const&, V v) noexcept requires wasm_abi<abi_t<T, S>>
 //================================================================================================
 // logical cases
 //================================================================================================
-template<real_scalar_value T, typename S, typename... Vs>
+template<arithmetic_scalar_value T, typename S, typename... Vs>
 EVE_FORCEINLINE auto
 make(as<logical<wide<T, S>>> const&, Vs... vs) noexcept requires wasm_abi<abi_t<T, S>>
 {
   return make(as<wide<T, S>> {}, logical<T>(vs).mask()...);
 }
 
-template<real_scalar_value T, typename S, typename V>
+template<arithmetic_scalar_value T, typename S, typename V>
 EVE_FORCEINLINE auto
 make(as<logical<wide<T, S>>> const&, V v) noexcept requires wasm_abi<abi_t<T, S>>
 {

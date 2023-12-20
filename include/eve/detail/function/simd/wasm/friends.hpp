@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 //==================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_lognot(logical<wide<T, N>> v) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -24,7 +24,7 @@ self_lognot(logical<wide<T, N>> v) noexcept requires wasm_abi<abi_t<T, N>>
 }
 
 //==================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_eq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -44,7 +44,7 @@ self_eq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == uint64x2 ) return type {wasm_i64x2_eq(v, w)};
 }
 
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -52,7 +52,7 @@ self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires wasm_abi
 }
 
 //==================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_neq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -72,7 +72,7 @@ self_neq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
   else if constexpr( c == uint64x2 ) return type {wasm_i64x2_ne(v, w)};
 }
 
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -80,7 +80,7 @@ self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires wasm_ab
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_less(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -101,7 +101,7 @@ self_less(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_greater(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -122,7 +122,7 @@ self_greater(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_geq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -143,7 +143,7 @@ self_geq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 }
 
 //================================================================================================
-template<real_value T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 self_leq(wide<T, N> v, wide<T, N> w) noexcept requires wasm_abi<abi_t<T, N>>
 {

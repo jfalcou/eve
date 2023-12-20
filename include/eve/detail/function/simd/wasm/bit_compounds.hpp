@@ -19,7 +19,7 @@ namespace eve::detail
 //================================================================================================
 // <<=
 //================================================================================================
-template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+template<integral_scalar_value T, typename N, integral_scalar_value U>
 EVE_FORCEINLINE decltype(auto)
 self_shr(wide<T, N>& v, U s) noexcept requires wasm_abi<abi_t<T, N>>
 {
@@ -40,7 +40,7 @@ self_shr(wide<T, N>& v, U s) noexcept requires wasm_abi<abi_t<T, N>>
 //================================================================================================
 // <<=
 //================================================================================================
-template<integral_real_scalar_value T, typename N, integral_real_scalar_value U>
+template<integral_scalar_value T, typename N, integral_scalar_value U>
 EVE_FORCEINLINE decltype(auto)
 self_shl(wide<T, N>& v, U s) noexcept requires wasm_abi<abi_t<T, N>>
 {
