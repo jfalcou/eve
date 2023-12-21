@@ -130,7 +130,7 @@ The resulting HTML files will be available in the `docs` folder inside your buil
 
 ## Compilation
 
-To compiel code using **EVE**, use your C++20 aware favorite compiler, for example g++.
+To compile code using **EVE**, use your C++20 aware favorite compiler, for example g++.
 
 @verbatim
 $ g++ test.cpp -std=c++20  -march=native -O3 -DNDEBUG -I/path/to/install/include/eve-<version> -o output
