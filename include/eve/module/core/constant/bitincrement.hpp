@@ -7,22 +7,37 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct bitincrement_t : constant_callable<bitincrement_t, Options, downward_option, upward_option>
+{
+  template<typename T>
+  static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+  {
+    using e_t = element_type_t<T>;
+
+    if      constexpr(std::integral<e_t>        ) return T(1);
+    else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-149);
+    else if constexpr(std::same_as<e_t, double> ) return T(0x0.0000000000001p-1022);
+  }
+
+  template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
+  EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(bitincrement_t, bitincrement_);
+};
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
 //!   @var bitincrement
-//!   @brief Computes the constant of type T in which the only bit set is the least significant
+//!   @brief Computes a constant with only the least significant bit set.
 //!
 //!   **Defined in Header**
 //!
@@ -35,8 +50,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bitincrement(as<T> x) noexcept;
+//!     template< eve::value T > constexpr T bitincrement(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -44,37 +58,15 @@ namespace eve
 //!
 //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      The call `eve::bitincrement(as<T>())` returns a value of type T in which the only bit
-//!      set is the least significant
+//!   The call `eve::bitincrement(as<T>())` returns a value of type `T` with only the least significant
+//!   bit set.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/bitincrement.cpp}
+//!   @godbolt{doc/core/constant/bitincrement.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bitincrement_, bitincrement);
-
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto bitincrement_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_integral_v<t_t> ) return T(1);
-    else if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0X1U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x1ULL>();
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto bitincrement_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(bitincrement(as<T>()))
-  {
-    return bitincrement(as<T>());
-  }
-}
+inline constexpr auto bitincrement = functor<bitincrement_t>;
 }
