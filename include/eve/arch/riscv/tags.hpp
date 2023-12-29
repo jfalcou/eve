@@ -13,7 +13,7 @@
 #include <eve/concept/scalar.hpp>
 #include <eve/detail/meta.hpp>
 
-#include <climits>
+#include <bit>
 
 namespace eve
 {
@@ -22,7 +22,6 @@ namespace eve
 //================================================================================================
 template<std::size_t Size> struct rvv_abi_
 {
-  static_assert(CHAR_BIT == 8, "[eve riscv] - For riscv we expect CHAR_BIT to be 8");
   static constexpr std::size_t MaxLmul         = 8;
   static constexpr std::size_t bits            = Size * MaxLmul;
   static constexpr std::size_t bytes           = bits / 8;
@@ -51,9 +50,7 @@ template<std::size_t Size> struct rvv_abi_
   template<typename Type> static consteval int get_max_frac_lmul()
   {
     auto type_size = sizeof(Type);
-    if( type_size == 1 ) return 2;
-    if( type_size == 2 ) return 2;
-    if( type_size == 4 ) return 2;
+    if( type_size <= 4 ) return 2;
     // for bigger types we can not use frac lmul.
     // Return bigger than size of vector register value.
     return Size + 1;
@@ -91,7 +88,7 @@ struct riscv_rvv_dyn_ : rvv_abi_<1>
 #endif
 
 //================================================================================================
-// Dispatching tag for ARM SIMD implementation
+// Dispatching tag for RISC-V SIMD implementation
 //================================================================================================
 struct rvv_ : simd_api<simd_, spy::rvv_>
 {
@@ -109,7 +106,7 @@ inline constexpr rvv_     rvv     = {};
 inline constexpr rvv_api_ rvv_api = {};
 
 //================================================================================================
-// RISCV SVE ABI concept
+// RISCV RVV ABI concept
 //================================================================================================
 template<typename T>
 concept rvv_abi = detail::is_one_of<T>(detail::types<riscv_rvv_dyn_> {});

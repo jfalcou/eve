@@ -816,7 +816,7 @@ namespace avx512
 #endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__riscv) && defined(__riscv_vector)
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::rvv_
-#  define SPY_SIMD_IS_RISCV_FLEXIBLE_SVE
+#  define SPY_SIMD_IS_RISCV_FLEXIBLE
 #  define SPY_SIMD_VENDOR ::spy::detail::simd_isa::riscv_
 #endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__aarch64__)
