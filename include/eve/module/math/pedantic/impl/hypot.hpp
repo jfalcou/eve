@@ -34,7 +34,8 @@ namespace eve::detail
         return if_else(is_eqz(h), h, h-x/(2*h)); // Maclaurin correction
       };
       auto h = if_else(is_eqz(ab), zero, ab*doit(aa/ab));
-      return if_else(is_infinite(a) || is_infinite(b), inf(as<r_t>()), h);
+      h = if_else(is_infinite(a) || is_infinite(b), inf(as<r_t>()), h);
+      return if_else(aa < ab*eve::sqrteps(as(a)), ab, h);
     }
     else { return apply_over(pedantic(hypot), r_t(a), r_t(b)); }
   }
