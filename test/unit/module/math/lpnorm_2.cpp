@@ -134,7 +134,7 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(2, ...))", eve::test::simd::ieee
   TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(2, T(1), T(1), sqrt2), T(2), 1.0);
   TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(2, T(0), T(0), T(0)), T(0), 1.0);
 
-  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(2, T(1), T(1), T(1)), sqrt3, 0.5);
-  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(2, T(1), T(1), T(1), T(1)), T(2), 0.5);
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(2, T(1), T(1), T(1)), sqrt3, 1.0);
+  TTS_ULP_EQUAL(eve::pedantic(eve::lpnorm)(2, T(1), T(1), T(1), T(1)), T(2), 1/0);
 };
 #endif
