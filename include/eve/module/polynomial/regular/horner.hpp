@@ -42,7 +42,7 @@ namespace eve
 //!   @endcode
 //!
 //!   1. Polynom is evaluated at x the other inputs are the polynomial coefficients.
-//!   2. Polynom is evaluated at x the other input is a range containing the coefficients
+//!   2. Polynom is evaluated at x the other input is a range or a kumi::tuple containing the coefficients
 //!
 //!   **Parameters**
 //!
@@ -51,7 +51,7 @@ namespace eve
 //!     * `coefs...` :  [real floating arguments](@ref eve::floating_ordered_value).
 //!        The coefficients by decreasing power order
 //!
-//!     * `r` : Range containing The coefficients by decreasing power order.
+//!     * `r` : Range or kumi::tuple containing The coefficients by decreasing power order.
 //!
 //!   **Return value**
 //!

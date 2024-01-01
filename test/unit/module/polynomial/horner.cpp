@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/polynomial.hpp>
-
+#include <eve/module/core/detail/poleval.hpp>
 #include <array>
 #include <cmath>
 #include <vector>
@@ -47,6 +47,7 @@ TTS_CASE_WITH("Check behavior of horner on wide",
   using eve::numeric;
   using eve::one;
   using eve::pedantic;
+  using eve::compensated;
   //============================================================================
   //== variadic
   //============================================================================
@@ -92,4 +93,42 @@ TTS_CASE_WITH("Check behavior of horner on wide",
     TTS_EQUAL(numeric(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
 
   };
+
+  {
+    //============================================================================
+    //== ranges
+    //============================================================================
+    using v_t = eve::element_type_t<T>;
+
+    std::vector<v_t>   tab0; // std does not want array of size 0
+    std::array<v_t, 1> tab1 = {1};
+    std::array<v_t, 2> tab2 = {1, 2};
+    std::array<v_t, 3> tab3 = {1, 2, 3};
+
+    TTS_EQUAL((horner)(a0, tab0), T(0));
+    TTS_EQUAL((horner)(a0, tab1), T(1));
+    TTS_EQUAL((horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL((horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(pedantic(horner)(a0, tab0), T(0));
+    TTS_EQUAL(pedantic(horner)(a0, tab1), T(1));
+    TTS_EQUAL(pedantic(horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(pedantic(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(numeric(horner)(a0, tab0), T(0));
+    TTS_EQUAL(numeric(horner)(a0, tab1), T(1));
+    TTS_EQUAL(numeric(horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(numeric(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(compensated(horner)(a0, tab0), T(0));
+    TTS_EQUAL(compensated(horner)(a0, tab1), T(1));
+    TTS_EQUAL(compensated(horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(compensated(horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL((horner)(a0, tab0), eve::detail::poleval(a0, tab0));
+    TTS_EQUAL((horner)(a0, tab1), eve::detail::poleval(a0, tab1));
+    TTS_EQUAL((horner)(a0, tab2), eve::detail::poleval(a0, tab2));
+    TTS_EQUAL((horner)(a0, tab3), eve::detail::poleval(a0, tab3));
+   };
+
 };

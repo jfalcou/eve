@@ -44,4 +44,15 @@ reverse_horner_(EVE_SUPPORTS(cpu_), D const & d, T0 x, kumi::tuple<Ts...> args) 
   return d(horner)(x, kumi::reverse(args));
 }
 
+//================================================================================================
+//== reverse Horner with ranges
+//================================================================================================
+template<value T0, range R>
+EVE_FORCEINLINE constexpr auto
+reverse_horner_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) noexcept
+-> common_value_t<T0, typename R::value_type>
+{
+  return detail::reverse_horner_impl(regular_type(), xx, r);
+}
+
 }
