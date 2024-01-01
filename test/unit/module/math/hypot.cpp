@@ -18,7 +18,6 @@
 TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  std::cout << tts::typename_<T> << std::endl;
   using v_t = eve::element_type_t<T>;
   using eve::hypot;
   using eve::pedantic;
@@ -72,8 +71,6 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(pedantic(hypot)(v_t(), int(), T()), T);
   TTS_EXPR_IS(pedantic(hypot)(v_t(), T(), int()), T);
   TTS_EXPR_IS(pedantic(hypot)(v_t(), v_t(), v_t()), v_t);
-  std::cout << hypot(0.0014, 1.1e+02) << std::endl;
-
 };
 
 //==================================================================================================
