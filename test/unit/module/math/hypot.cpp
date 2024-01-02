@@ -18,7 +18,6 @@
 TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  std::cout << tts::typename_<T> << std::endl;
   using v_t = eve::element_type_t<T>;
   using eve::hypot;
   using eve::pedantic;
@@ -116,28 +115,31 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
 <typename T>(T const& a0)
 {
   auto cases = tts::limits(tts::type<T> {});
-
+#ifdef SPY_ARCH_IS_ARM
   TTS_IEEE_EQUAL(eve::hypot(cases.nan, a0), cases.nan);
   TTS_EQUAL(eve::hypot(cases.minf, a0), cases.inf);
   TTS_EQUAL(eve::hypot(cases.mzero, cases.mzero), T(0));
   TTS_EQUAL(eve::hypot(cases.valmax / 2, cases.valmax / 2), cases.inf);
   TTS_EQUAL(eve::hypot(cases.valmin / 2, cases.valmin / 2), cases.inf);
   TTS_EQUAL(eve::pedantic(eve::hypot)(cases.mzero, cases.mzero), T(0));
-
+#else
   TTS_IEEE_EQUAL(eve::pedantic(eve::hypot)(cases.nan, a0), cases.nan);
   TTS_EQUAL(eve::pedantic(eve::hypot)(cases.minf, a0), cases.inf);
   TTS_EQUAL(eve::pedantic(eve::hypot)(cases.nan, cases.minf), cases.inf);
   TTS_EQUAL(eve::pedantic(eve::hypot)(cases.inf, cases.nan), cases.inf);
   TTS_EQUAL(eve::pedantic(eve::hypot)(cases.mzero, cases.mzero), T(0));
-#ifndef SPY_ARCH_IS_ARM
   TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(cases.valmin / 2, cases.valmin / 2),
-                cases.valmax / eve::sqrt_2(eve::as<T>()),
-                2);
+                cases.valmax / eve::sqrt_2(eve::as<T>()), 1) << cases.valmin / 2 << '\n';
   TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(cases.valmax / 2, cases.valmax / 2),
-                cases.valmax / eve::sqrt_2(eve::as<T>()),
-                2);
+                cases.valmax / eve::sqrt_2(eve::as<T>()), 1)<< cases.valmin / 2 << '\n';
+  TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(cases.valmax, cases.valmin),
+                cases.valmax, 1)<< cases.valmax<< '\n';
+  TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(cases.smallestposval*2, cases.smallestposval),
+                cases.smallestposval*eve::sqrt(T(5)), 1)<< cases.smallestposval<< '\n';
+  TTS_ULP_EQUAL(eve::pedantic(eve::hypot)(cases.smallestposval, cases.smallestposval),
+                cases.smallestposval*eve::sqrt_2(eve::as<T>()), 1)<< cases.smallestposval<< '\n';
 #endif
-};
+                };
 
 
 //==================================================================================================
