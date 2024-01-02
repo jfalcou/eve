@@ -17,7 +17,7 @@ template<typename Options>
 struct eps_t : constant_callable<eps_t, Options, downward_option, upward_option>
 {
   template<typename T>
-  static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
   {
     using e_t = element_type_t<T>;
 
@@ -28,7 +28,7 @@ struct eps_t : constant_callable<eps_t, Options, downward_option, upward_option>
 
   template<typename T>
   requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(eps_t, eps_);
 };

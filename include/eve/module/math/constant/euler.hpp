@@ -17,7 +17,7 @@ template<typename Options>
 struct euler_t : constant_callable<euler_t, Options, downward_option, upward_option>
 {
   template<typename T, typename Opts>
-  static EVE_FORCEINLINE T value(eve::as<T> const&, Opts const&)
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
@@ -32,7 +32,7 @@ struct euler_t : constant_callable<euler_t, Options, downward_option, upward_opt
   }
 
   template<floating_value T>
-  EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(euler_t, euler_);
 };

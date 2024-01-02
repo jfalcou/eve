@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include "eve/module/core/constant/eps.hpp"
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <type_traits>
 
 namespace eve
 {
@@ -21,12 +19,12 @@ struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward
   template<typename T>
   static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
   {
-    using t_t           = element_type_t<T>;
-    using i_t           = as_integer_t<t_t, unsigned>;
+    using e_t           = element_type_t<T>;
+    using i_t           = as_integer_t<e_t, unsigned>;
     constexpr auto mask = ~0ULL;
 
-    if constexpr( std::is_integral_v<t_t> ) return T(mask);
-    else                                    return T(bit_cast(i_t(mask), as<t_t>()));
+    if constexpr( std::integral<e_t> ) return T(mask);
+    else                               return T(bit_cast(i_t(mask), as<e_t>()));
   }
 
   template<typename T>

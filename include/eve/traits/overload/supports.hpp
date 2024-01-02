@@ -119,14 +119,14 @@ namespace eve
     //! @return A new @callable with the options `o` set.
     //==================================================================================================================
     template<typename O>
-    auto operator[](O o) const
+    constexpr auto operator[](O o) const
     requires( requires(OptionsValues const& ov) { this->process(ov,o);} )
     {
       return process(static_cast<OptionsValues const&>(*this), o);
     }
 
     /// Retrieves the current options' state, including processed default
-    auto options() const
+    constexpr auto options() const
     {
       return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
                             , kumi::tuple<Options...>{}
