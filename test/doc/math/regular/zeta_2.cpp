@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> zeta_2(as<wide_ft>())                 = " << eve::zeta_2(eve::as<wide_ft>())                << std::endl
             << "-> zeta_2(as(wxf))                       = " << eve::zeta_2(eve::as(wxf))                      << std::endl
-            << "-> upward(zeta_2)(as<wide_ft>())         = " << eve::upward(eve::zeta_2)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(zeta_2)(as(wxf))               = " << eve::upward(eve::zeta_2)(eve::as(wxf))         << std::endl
-            << "-> downward(zeta_2)(as<wide_ft>())       = " << eve::downward(eve::zeta_2)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(zeta_2)(as(wxf))             = " << eve::downward(eve::zeta_2)(eve::as(wxf))       << std::endl
+            << "-> zeta_2[upward](as<wide_ft>())         = " << eve::zeta_2[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> zeta_2[upward](as(wxf))               = " << eve::zeta_2[eve::upward](eve::as(wxf))         << std::endl
+            << "-> zeta_2[downward](as<wide_ft>())       = " << eve::zeta_2[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> zeta_2[downward](as(wxf))             = " << eve::zeta_2[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> zeta_2(as<wide_dt>())           = " << eve::zeta_2(eve::as<wide_dt>())                << std::endl
             << "-> zeta_2(as(wxd))                 = " << eve::zeta_2(eve::as(wxd))                      << std::endl
-            << "-> upward(zeta_2)(as<wide_dt>())   = " << eve::upward(eve::zeta_2)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(zeta_2)(as(wxd))         = " << eve::upward(eve::zeta_2)(eve::as(wxd))         << std::endl
-            << "-> downward(zeta_2)(as<wide_dt>()) = " << eve::downward(eve::zeta_2)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(zeta_2)(as(wxd))       = " << eve::downward(eve::zeta_2)(eve::as(wxd))       << std::endl;
+            << "-> zeta_2[upward](as<wide_dt>())   = " << eve::zeta_2[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> zeta_2[upward](as(wxd))         = " << eve::zeta_2[eve::upward](eve::as(wxd))         << std::endl
+            << "-> zeta_2[downward](as<wide_dt>()) = " << eve::zeta_2[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> zeta_2[downward](as(wxd))       = " << eve::zeta_2[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

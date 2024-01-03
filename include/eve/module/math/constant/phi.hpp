@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct phi_t : constant_callable<phi_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.9e377cp+0);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.9e377ap+0);
+      else                                         return T(0x1.9e377ap+0);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.9e3779b97f4a8p+0);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.9e3779b97f4a7p+0);
+      else                                         return T(0x1.9e3779b97f4a8p+0);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(phi_t, phi_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,23 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/phi.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(phi_, phi);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto phi_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    return Ieee_constant<T, 0X3FCF1BBDU, 0X3FF9E3779B97F4A8ULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto phi_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    if constexpr( std::is_same_v<D, upward_type> )
-      return Ieee_constant<T, 0X3FCF1BBDU, 0X3FF9E3779B97F4A8ULL>();
-    else return Ieee_constant<T, 0X3FCF1BBCU, 0X3FF9E3779B97F4A7ULL>();
-  }
-}
+inline constexpr auto phi = functor<phi_t>;
 }

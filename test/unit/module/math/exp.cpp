@@ -91,13 +91,13 @@ TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals)
 
 
 //==================================================================================================
-// Tests for masked exp
+//  Tests for masked exp
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::exp)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::exp[mask](a0),

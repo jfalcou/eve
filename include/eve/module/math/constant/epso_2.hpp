@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct epso_2_t : constant_callable<epso_2_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.552c98p-2);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.552c96p-2);
+      else                                         return T(0x1.552c98p-2);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.552c97fa03696p-2);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.552c97fa03695p-2);
+      else                                         return T(0x1.552c97fa03695p-2);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(epso_2_t, epso_2_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,24 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/epso_2.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(epso_2_, epso_2);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto epso_2_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0X33800000U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0X3CA0000000000000ULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto epso_2_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return epso_2(as<T>());
-  }
-}
+inline constexpr auto epso_2 = functor<epso_2_t>;
 }

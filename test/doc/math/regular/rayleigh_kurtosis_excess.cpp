@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> rayleigh_kurtosis_excess(as<wide_ft>())                 = " << eve::rayleigh_kurtosis_excess(eve::as<wide_ft>())                << std::endl
             << "-> rayleigh_kurtosis_excess(as(wxf))                       = " << eve::rayleigh_kurtosis_excess(eve::as(wxf))                      << std::endl
-            << "-> upward(rayleigh_kurtosis_excess)(as<wide_ft>())         = " << eve::upward(eve::rayleigh_kurtosis_excess)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(rayleigh_kurtosis_excess)(as(wxf))               = " << eve::upward(eve::rayleigh_kurtosis_excess)(eve::as(wxf))         << std::endl
-            << "-> downward(rayleigh_kurtosis_excess)(as<wide_ft>())       = " << eve::downward(eve::rayleigh_kurtosis_excess)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(rayleigh_kurtosis_excess)(as(wxf))             = " << eve::downward(eve::rayleigh_kurtosis_excess)(eve::as(wxf))       << std::endl
+            << "-> rayleigh_kurtosis_excess[upward](as<wide_ft>())         = " << eve::rayleigh_kurtosis_excess[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> rayleigh_kurtosis_excess[upward](as(wxf))               = " << eve::rayleigh_kurtosis_excess[eve::upward](eve::as(wxf))         << std::endl
+            << "-> rayleigh_kurtosis_excess[downward](as<wide_ft>())       = " << eve::rayleigh_kurtosis_excess[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> rayleigh_kurtosis_excess[downward](as(wxf))             = " << eve::rayleigh_kurtosis_excess[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> rayleigh_kurtosis_excess(as<wide_dt>())           = " << eve::rayleigh_kurtosis_excess(eve::as<wide_dt>())                << std::endl
             << "-> rayleigh_kurtosis_excess(as(wxd))                 = " << eve::rayleigh_kurtosis_excess(eve::as(wxd))                      << std::endl
-            << "-> upward(rayleigh_kurtosis_excess)(as<wide_dt>())   = " << eve::upward(eve::rayleigh_kurtosis_excess)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(rayleigh_kurtosis_excess)(as(wxd))         = " << eve::upward(eve::rayleigh_kurtosis_excess)(eve::as(wxd))         << std::endl
-            << "-> downward(rayleigh_kurtosis_excess)(as<wide_dt>()) = " << eve::downward(eve::rayleigh_kurtosis_excess)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(rayleigh_kurtosis_excess)(as(wxd))       = " << eve::downward(eve::rayleigh_kurtosis_excess)(eve::as(wxd))       << std::endl;
+            << "-> rayleigh_kurtosis_excess[upward](as<wide_dt>())   = " << eve::rayleigh_kurtosis_excess[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> rayleigh_kurtosis_excess[upward](as(wxd))         = " << eve::rayleigh_kurtosis_excess[eve::upward](eve::as(wxd))         << std::endl
+            << "-> rayleigh_kurtosis_excess[downward](as<wide_dt>()) = " << eve::rayleigh_kurtosis_excess[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> rayleigh_kurtosis_excess[downward](as(wxd))       = " << eve::rayleigh_kurtosis_excess[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

@@ -35,6 +35,5 @@ TTS_CASE_TPL("Check behavior of minlog10denormal on wide", eve::test::simd::ieee
   using eve::as;
   TTS_ULP_EQUAL(eve::exp10(eve::minlog10denormal(as<T>())), eve::zero(as<T>()), 0.0);
   if constexpr( eve::platform::supports_denormals )
-    TTS_EXPECT(eve::all(
-        eve::is_gtz(eve::pedantic(eve::exp10)(eve::next(eve::minlog10denormal(as<T>()))))));
+    TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp10)(eve::next(eve::minlog10denormal(as<T>()))))));
 };

@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> rsqrt_2pi(as<wide_ft>())                 = " << eve::rsqrt_2pi(eve::as<wide_ft>())                << std::endl
             << "-> rsqrt_2pi(as(wxf))                       = " << eve::rsqrt_2pi(eve::as(wxf))                      << std::endl
-            << "-> upward(rsqrt_2pi)(as<wide_ft>())         = " << eve::upward(eve::rsqrt_2pi)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(rsqrt_2pi)(as(wxf))               = " << eve::upward(eve::rsqrt_2pi)(eve::as(wxf))         << std::endl
-            << "-> downward(rsqrt_2pi)(as<wide_ft>())       = " << eve::downward(eve::rsqrt_2pi)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(rsqrt_2pi)(as(wxf))             = " << eve::downward(eve::rsqrt_2pi)(eve::as(wxf))       << std::endl
+            << "-> rsqrt_2pi[upward](as<wide_ft>())         = " << eve::rsqrt_2pi[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> rsqrt_2pi[upward](as(wxf))               = " << eve::rsqrt_2pi[eve::upward](eve::as(wxf))         << std::endl
+            << "-> rsqrt_2pi[downward](as<wide_ft>())       = " << eve::rsqrt_2pi[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> rsqrt_2pi[downward](as(wxf))             = " << eve::rsqrt_2pi[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> rsqrt_2pi(as<wide_dt>())           = " << eve::rsqrt_2pi(eve::as<wide_dt>())                << std::endl
             << "-> rsqrt_2pi(as(wxd))                 = " << eve::rsqrt_2pi(eve::as(wxd))                      << std::endl
-            << "-> upward(rsqrt_2pi)(as<wide_dt>())   = " << eve::upward(eve::rsqrt_2pi)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(rsqrt_2pi)(as(wxd))         = " << eve::upward(eve::rsqrt_2pi)(eve::as(wxd))         << std::endl
-            << "-> downward(rsqrt_2pi)(as<wide_dt>()) = " << eve::downward(eve::rsqrt_2pi)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(rsqrt_2pi)(as(wxd))       = " << eve::downward(eve::rsqrt_2pi)(eve::as(wxd))       << std::endl;
+            << "-> rsqrt_2pi[upward](as<wide_dt>())   = " << eve::rsqrt_2pi[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> rsqrt_2pi[upward](as(wxd))         = " << eve::rsqrt_2pi[eve::upward](eve::as(wxd))         << std::endl
+            << "-> rsqrt_2pi[downward](as<wide_dt>()) = " << eve::rsqrt_2pi[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> rsqrt_2pi[downward](as(wxd))       = " << eve::rsqrt_2pi[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

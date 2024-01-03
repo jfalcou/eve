@@ -38,11 +38,13 @@ TTS_CASE_TPL("Check behavior of e on wide", eve::test::simd::ieee_reals)
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(downward(eve::egamma)(as<elt_t>()) < 0.57721566490153286060651209008l);
-    TTS_EXPECT(upward(eve::egamma)(as<elt_t>()) > 0.57721566490153286060651209008l);
+    TTS_EXPECT(eve::egamma[eve::downward](as<elt_t>()) < 0.57721566490153286060651209008l);
+    TTS_EXPECT(eve::egamma[eve::upward](as<elt_t>()) > 0.57721566490153286060651209008l);
   }
   TTS_EQUAL(eve::egamma(as<T>()), T(0.57721566490153286060651209008l));
-  TTS_EXPECT(eve::all(downward(eve::egamma)(as<T>()) <= eve::egamma(as<T>())));
-  TTS_EXPECT(eve::all(eve::egamma(as<T>()) <= upward(eve::egamma)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::egamma)(as<T>()), upward(eve::egamma)(as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::egamma[eve::downward](as<T>()) <= eve::egamma(as<T>())));
+  TTS_EXPECT(eve::all(eve::egamma(as<T>()) <= eve::egamma[eve::upward](as<T>())));
+  TTS_ULP_EQUAL(eve::egamma[eve::downward](as<T>()), eve::egamma[eve::upward](as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::egamma[eve::downward](as<T>()), eve::egamma[eve::upward](as<T>()))));
+  TTS_ULP_EQUAL(eve::egamma[eve::downward](as<T>()), eve::egamma[eve::upward](as<T>()), 0.5);
 };

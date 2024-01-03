@@ -36,7 +36,10 @@ TTS_CASE_TPL("Check behavior of two_o_pi on wide", eve::test::simd::ieee_reals)
   using eve::upward;
 
   TTS_EQUAL(eve::two_o_pi(as<T>()), T(2) / T(4 * std::atan(1.0l)));
-  TTS_EXPECT(eve::all(downward(eve::two_o_pi)(as<T>()) <= eve::two_o_pi(as<T>())));
-  TTS_EXPECT(eve::all(eve::two_o_pi(as<T>()) <= upward(eve::two_o_pi)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::two_o_pi)(as<T>()), upward(eve::two_o_pi)(as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::two_o_pi[eve::downward](as<T>()) <= eve::two_o_pi(as<T>())));
+  TTS_EXPECT(eve::all(eve::two_o_pi(as<T>()) <= eve::two_o_pi[eve::upward](as<T>())));
+  TTS_ULP_EQUAL(eve::two_o_pi[eve::downward](as<T>()), eve::two_o_pi[eve::upward](as<T>()), 0.5);
+  auto is_near = [](auto a, auto b){ return eve::if_else( a < b, (eve::next(a) == b) && (eve::prev(a) == b) , a == b); };
+  TTS_EXPECT(eve::all(is_near(eve::next(eve::two_o_pi[eve::downward](as<T>())), eve::two_o_pi[eve::upward](as<T>()))));
+  TTS_ULP_EQUAL(eve::two_o_pi[eve::downward](as<T>()), eve::two_o_pi[eve::upward](as<T>()), 0.5);
 };

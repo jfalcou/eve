@@ -38,11 +38,12 @@ TTS_CASE_TPL("Check behavior of sqrt_3 on wide", eve::test::simd::ieee_reals)
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(downward(eve::sqrt_3)(as<elt_t>()) < std::sqrt(3.0l));
-    TTS_EXPECT(upward(eve::sqrt_3)(as<elt_t>()) > std::sqrt(3.0l));
+    TTS_EXPECT(eve::sqrt_3[eve::downward](as<elt_t>()) < std::sqrt(3.0l));
+    TTS_EXPECT(eve::sqrt_3[eve::upward](as<elt_t>()) > std::sqrt(3.0l));
   }
-  TTS_ULP_EQUAL(eve::sqrt_3(as<T>()), T(std::sqrt(3.0l)), 0.0);
-  TTS_EXPECT(eve::all(downward(eve::sqrt_3)(as<T>()) <= eve::sqrt_3(as<T>())));
-  TTS_EXPECT(eve::all(eve::sqrt_3(as<T>()) <= upward(eve::sqrt_3)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::sqrt_3)(as<T>()), upward(eve::sqrt_3)(as<T>()), 0.5);
+  TTS_IEEE_EQUAL(eve::sqrt_3(as<T>()), T(std::sqrt(3.0l)));
+  TTS_EXPECT(eve::all(eve::sqrt_3[eve::downward](as<T>()) <= eve::sqrt_3(as<T>())));
+  TTS_EXPECT(eve::all(eve::sqrt_3(as<T>()) <= eve::sqrt_3[eve::upward](as<T>())));
+  TTS_ULP_EQUAL(eve::sqrt_3[eve::downward](as<T>()), eve::sqrt_3[eve::upward](as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::sqrt_3[eve::downward](as<T>())), eve::sqrt_3[eve::upward](as<T>()))));
 };

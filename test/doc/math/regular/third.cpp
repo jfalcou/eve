@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> third(as<wide_ft>())                 = " << eve::third(eve::as<wide_ft>())                << std::endl
             << "-> third(as(wxf))                       = " << eve::third(eve::as(wxf))                      << std::endl
-            << "-> upward(third)(as<wide_ft>())         = " << eve::upward(eve::third)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(third)(as(wxf))               = " << eve::upward(eve::third)(eve::as(wxf))         << std::endl
-            << "-> downward(third)(as<wide_ft>())       = " << eve::downward(eve::third)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(third)(as(wxf))             = " << eve::downward(eve::third)(eve::as(wxf))       << std::endl
+            << "-> third[upward](as<wide_ft>())         = " << eve::third[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> third[upward](as(wxf))               = " << eve::third[eve::upward](eve::as(wxf))         << std::endl
+            << "-> third[downward](as<wide_ft>())       = " << eve::third[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> third[downward](as(wxf))             = " << eve::third[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> third(as<wide_dt>())           = " << eve::third(eve::as<wide_dt>())                << std::endl
             << "-> third(as(wxd))                 = " << eve::third(eve::as(wxd))                      << std::endl
-            << "-> upward(third)(as<wide_dt>())   = " << eve::upward(eve::third)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(third)(as(wxd))         = " << eve::upward(eve::third)(eve::as(wxd))         << std::endl
-            << "-> downward(third)(as<wide_dt>()) = " << eve::downward(eve::third)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(third)(as(wxd))       = " << eve::downward(eve::third)(eve::as(wxd))       << std::endl;
+            << "-> third[upward](as<wide_dt>())   = " << eve::third[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> third[upward](as(wxd))         = " << eve::third[eve::upward](eve::as(wxd))         << std::endl
+            << "-> third[downward](as<wide_dt>()) = " << eve::third[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> third[downward](as(wxd))       = " << eve::third[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

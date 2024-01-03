@@ -7,10 +7,34 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct minlog10_t : constant_callable<minlog10_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      return T(-0x1.2f703p+5);
+    }
+    else
+    {
+      return T(-0x1.33a7146f72a42p+8);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(minlog10_t, minlog10_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -47,24 +71,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/minlog10.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(minlog10_, minlog10);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto minlog10_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0xc217b818U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0xc0733a7146f72a42ULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto minlog10_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return minlog10(as<T>());
-  }
-}
+inline constexpr auto minlog10 = functor<minlog10_t>;
 }

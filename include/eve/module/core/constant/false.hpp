@@ -18,13 +18,13 @@ template<typename Options>
 struct false_t : constant_callable<false_t, Options, downward_option, upward_option>
 {
   template<typename T>
-  static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+  static EVE_FORCEINLINE auto value(eve::as<T> const&, auto const&)
   {
     return as_logical_t<T>(false);
   }
 
   template<eve::value T>
-  EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_FORCEINLINE as_logical_t<T>  operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(false_t, false__);
 };

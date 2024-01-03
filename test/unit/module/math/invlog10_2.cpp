@@ -38,13 +38,16 @@ TTS_CASE_TPL("Check behavior of invlog10_2 on wide", eve::test::simd::ieee_reals
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(downward(eve::invlog10_2)(as<elt_t>())
+    TTS_EXPECT(eve::invlog10_2[eve::downward](as<elt_t>())
                < 3.3219280948873623478703194294893901758648313930246l);
-    TTS_EXPECT(upward(eve::invlog10_2)(as<elt_t>())
+    TTS_EXPECT(eve::invlog10_2[eve::upward](as<elt_t>())
                > 3.3219280948873623478703194294893901758648313930246l);
   }
   TTS_EQUAL(eve::invlog10_2(as<T>()), T(3.3219280948873623478703194294893901758648313930246l));
-  TTS_EXPECT(eve::all(downward(eve::invlog10_2)(as<T>()) <= eve::invlog10_2(as<T>())));
-  TTS_EXPECT(eve::all(eve::invlog10_2(as<T>()) <= upward(eve::invlog10_2)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::invlog10_2)(as<T>()), upward(eve::invlog10_2)(as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::invlog10_2[eve::downward](as<T>()) <= eve::invlog10_2(as<T>())));
+  TTS_EXPECT(eve::all(eve::invlog10_2(as<T>()) <= eve::invlog10_2[eve::upward](as<T>())));
+  TTS_ULP_EQUAL(eve::invlog10_2[eve::downward](as<T>()), eve::invlog10_2[eve::upward](as<T>()), 0.5);
+  auto is_near = [](auto a, auto b){ return eve::if_else( a < b, (eve::next(a) == b) && (eve::prev(a) == b) , a == b); };
+  TTS_EXPECT(eve::all(is_near(eve::next(eve::invlog10_2[eve::downward](as<T>())), eve::invlog10_2[eve::upward](as<T>()))));
+  TTS_ULP_EQUAL(eve::invlog10_2[eve::downward](as<T>()), eve::invlog10_2[eve::upward](as<T>()), 0.5);
 };

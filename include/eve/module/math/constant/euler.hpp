@@ -21,13 +21,15 @@ struct euler_t : constant_callable<euler_t, Options, downward_option, upward_opt
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2)) return T(0x1.5bf0aap+1);
-      else                                  return T(0x1.5bf0a8p+1);
+      if constexpr(Opts::contains(upward2))   return T(0x1.5bf0aap+1);
+      if constexpr(Opts::contains(downward2)) return T(0x1.5bf0a8p+1);
+      else                                    return T(0x1.5bf0a8p+1);
     }
     else
     {
-      if constexpr(Opts::contains(upward2)) return T(0x1.5bf0a8b14576ap+1);
-      else                                  return T(0x1.5bf0a8b145769p+1);
+      if constexpr(Opts::contains(upward2))   return T(0x1.5bf0a8b14576ap+1);
+      if constexpr(Opts::contains(downward2)) return T(0x1.5bf0a8b145769p+1);
+      else                                    return T(0x1.5bf0a8b145769p+1);
     }
   }
 

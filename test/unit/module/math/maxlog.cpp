@@ -35,4 +35,6 @@ TTS_CASE_TPL("Check behavior of maxlog on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_ULP_EQUAL(eve::exp(eve::maxlog(as<T>())), eve::inf(as<T>()), 0.0);
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog(as<T>()))))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog[eve::downward](as<T>()), eve::maxlog[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog(as<T>()))))));
 };

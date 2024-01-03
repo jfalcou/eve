@@ -38,11 +38,14 @@ TTS_CASE_TPL("Check behavior of log_2 on wide", eve::test::simd::ieee_reals)
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(downward(eve::log_2)(as<elt_t>()) < std::log(2.0l));
-    TTS_EXPECT(upward(eve::log_2)(as<elt_t>()) > std::log(2.0l));
+    TTS_EXPECT(eve::log_2[eve::downward](as<elt_t>()) < std::log(2.0l));
+    TTS_EXPECT(eve::log_2[eve::upward](as<elt_t>()) > std::log(2.0l));
   }
   TTS_ULP_EQUAL(eve::log_2(as<T>()), T(std::log(2.0l)), 0.0);
-  TTS_EXPECT(eve::all(downward(eve::log_2)(as<T>()) <= eve::log_2(as<T>())));
-  TTS_EXPECT(eve::all(eve::log_2(as<T>()) <= upward(eve::log_2)(as<T>())));
-  TTS_ULP_EQUAL(downward(eve::log_2)(as<T>()), upward(eve::log_2)(as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::log_2[eve::downward](as<T>()) <= eve::log_2(as<T>())));
+  TTS_EXPECT(eve::all(eve::log_2(as<T>()) <= eve::log_2[eve::upward](as<T>())));
+  TTS_ULP_EQUAL(eve::log_2[eve::downward](as<T>()), eve::log_2[eve::upward](as<T>()), 0.5);
+  auto is_near = [](auto a, auto b){ return eve::if_else( a < b, (eve::next(a) == b) && (eve::prev(a) == b) , a == b); };
+  TTS_EXPECT(eve::all(is_near(eve::next(eve::log_2[eve::downward](as<T>())), eve::log_2[eve::upward](as<T>()))));
+  TTS_ULP_EQUAL(eve::log_2[eve::downward](as<T>()), eve::log_2[eve::upward](as<T>()), 0.5);
 };

@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> extreme_value_skewness(as<wide_ft>())                 = " << eve::extreme_value_skewness(eve::as<wide_ft>())                << std::endl
             << "-> extreme_value_skewness(as(wxf))                       = " << eve::extreme_value_skewness(eve::as(wxf))                      << std::endl
-            << "-> upward(extreme_value_skewness)(as<wide_ft>())         = " << eve::upward(eve::extreme_value_skewness)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(extreme_value_skewness)(as(wxf))               = " << eve::upward(eve::extreme_value_skewness)(eve::as(wxf))         << std::endl
-            << "-> downward(extreme_value_skewness)(as<wide_ft>())       = " << eve::downward(eve::extreme_value_skewness)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(extreme_value_skewness)(as(wxf))             = " << eve::downward(eve::extreme_value_skewness)(eve::as(wxf))       << std::endl
+            << "-> extreme_value_skewness[upward](as<wide_ft>())         = " << eve::extreme_value_skewness[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> extreme_value_skewness[upward](as(wxf))               = " << eve::extreme_value_skewness[eve::upward](eve::as(wxf))         << std::endl
+            << "-> extreme_value_skewness[downward](as<wide_ft>())       = " << eve::extreme_value_skewness[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> extreme_value_skewness[downward](as(wxf))             = " << eve::extreme_value_skewness[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> extreme_value_skewness(as<wide_dt>())           = " << eve::extreme_value_skewness(eve::as<wide_dt>())                << std::endl
             << "-> extreme_value_skewness(as(wxd))                 = " << eve::extreme_value_skewness(eve::as(wxd))                      << std::endl
-            << "-> upward(extreme_value_skewness)(as<wide_dt>())   = " << eve::upward(eve::extreme_value_skewness)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(extreme_value_skewness)(as(wxd))         = " << eve::upward(eve::extreme_value_skewness)(eve::as(wxd))         << std::endl
-            << "-> downward(extreme_value_skewness)(as<wide_dt>()) = " << eve::downward(eve::extreme_value_skewness)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(extreme_value_skewness)(as(wxd))       = " << eve::downward(eve::extreme_value_skewness)(eve::as(wxd))       << std::endl;
+            << "-> extreme_value_skewness[upward](as<wide_dt>())   = " << eve::extreme_value_skewness[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> extreme_value_skewness[upward](as(wxd))         = " << eve::extreme_value_skewness[eve::upward](eve::as(wxd))         << std::endl
+            << "-> extreme_value_skewness[downward](as<wide_dt>()) = " << eve::extreme_value_skewness[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> extreme_value_skewness[downward](as(wxd))       = " << eve::extreme_value_skewness[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;
