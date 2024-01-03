@@ -88,5 +88,30 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
     TTS_EQUAL(numeric(reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
     TTS_EQUAL(numeric(reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
   }
+  {
+    //============================================================================
+    //== ranges
+    //============================================================================
+    using v_t = eve::element_type_t<T>;
+    std::vector<v_t>   tab0; // std does not want array of size 0
+    std::array<v_t, 1> tab1 = {1};
+    std::array<v_t, 2> tab2 = {2, 1};
+    std::array<v_t, 3> tab3 = {3, 2, 1};
+
+    TTS_EQUAL((reverse_horner)(a0, tab0), T(0));
+    TTS_EQUAL((reverse_horner)(a0, tab1), T(1));
+    TTS_EQUAL((reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL((reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(pedantic(reverse_horner)(a0, tab0), T(0));
+    TTS_EQUAL(pedantic(reverse_horner)(a0, tab1), T(1));
+    TTS_EQUAL(pedantic(reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(pedantic(reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+
+    TTS_EQUAL(numeric(reverse_horner)(a0, tab0), T(0));
+    TTS_EQUAL(numeric(reverse_horner)(a0, tab1), T(1));
+    TTS_EQUAL(numeric(reverse_horner)(a0, tab2), (fma)(a0, 1, 2));
+    TTS_EQUAL(numeric(reverse_horner)(a0, tab3), (fma)(a0, (fma)(a0, 1, 2), 3));
+  }
 
  };

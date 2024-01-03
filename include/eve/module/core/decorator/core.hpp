@@ -7,6 +7,7 @@
 //======================================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/compensated.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/fuzzy.hpp>
 #include <eve/module/core/decorator/kind.hpp>
@@ -30,6 +31,7 @@
 namespace eve
 {
   struct almost_mode      {};
+  struct compensated_mode {};
   struct definitely_mode  {};
   struct kind_1_mode      {};
   struct kind_2_mode      {};
@@ -60,6 +62,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto rounding = (rounding_key = eve::index<N>);
 
   [[maybe_unused]] inline constexpr auto almost2      = ::rbr::flag( almost_mode{}    );
+  [[maybe_unused]] inline constexpr auto compensated2 = ::rbr::flag( compensated_mode{});
   [[maybe_unused]] inline constexpr auto definitely2  = ::rbr::flag( definitely_mode{});
   [[maybe_unused]] inline constexpr auto downward2    = rounding<(0x01 | 0x08)>;
   [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}    );
@@ -82,6 +85,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto upward2      = rounding<(0x02 | 0x08)>;
 
   struct almost_option      : detail::exact_option<almost2>       {};
+  struct compensated_option : detail::exact_option<compensated2>  {};
   struct definitely_option  : detail::exact_option<definitely2>   {};
   struct kind_1_option      : detail::exact_option<kind_12>       {};
   struct kind_2_option      : detail::exact_option<kind_22>       {};
@@ -104,6 +108,7 @@ namespace eve
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(almost_type       const&) { return almost2;       }
+  inline constexpr auto as_option(compensated_type  const&) { return compensated2;  }
   inline constexpr auto as_option(definitely_type   const&) { return definitely2;   }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
