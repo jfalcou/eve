@@ -43,9 +43,13 @@ TTS_CASE_TPL("Check behavior of minlog2denormal on scalar", eve::test::simd::iee
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_IEEE_EQUAL(eve::exp2(eve::minlog2denormal(as<T>())), eve::zero(as<T>()));
+  TTS_IEEE_EQUAL(eve::pedantic(eve::exp2)(eve::minlog2denormal(as<T>())), eve::zero(as<T>()));
   if constexpr( eve::platform::supports_denormals )
     TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp2)(eve::next(eve::minlog2denormal(as<T>()))))));
+
+  double x = eve::minlog2denormal(as<double>());
+  while(eve::is_nez(eve::pedantic(eve::exp2)(x))) x = eve::prev(x);
+  std::cout << std::hexfloat << eve::prev(x) << std::endl;
 };
 
 
@@ -56,7 +60,7 @@ TTS_CASE_WITH("Check behavior of minlog2denormal[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::minlog2denormal[mask](eve::as(a0)), eve::if_else(mask, eve::minlog2denormal(eve::as(a0)), eve::zero));

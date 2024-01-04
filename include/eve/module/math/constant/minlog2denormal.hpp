@@ -20,9 +20,9 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, downwar
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
-      return T(-0x1.fcp+7);
+      return T(-0x1.fc0002p+7);
     else
-      return T(-0x1.ffp+10);
+      return T(-0x1.ff00000000001p+10);
   }
 
   template<floating_value T>
@@ -60,7 +60,7 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, downwar
 //!    **Return value**
 //!
 //!      The call `eve::minlog2denormal(as<T>())` returns  the least value for which eve::exp2
-//!      is not denormal.
+//!      is not zero.
 //!
 //!  @groupheader{Example}
 //!
