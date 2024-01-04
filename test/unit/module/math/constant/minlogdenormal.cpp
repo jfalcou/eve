@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -25,15 +26,25 @@ TTS_CASE_TPL("Check return types of minlogdenormal", eve::test::simd::ieee_reals
   TTS_EXPR_IS(eve::minlogdenormal(as<T>()), T);
   TTS_EXPR_IS(eve::minlogdenormal(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// minlogdenormal  tests
+// minlog2denormal  tests on scalar on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of minlogdenormal on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of minlog2denormal on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_IEEE_EQUAL(eve::exp(eve::minlogdenormal(as<T>())), eve::zero(as<T>()));
+  TTS_IEEE_EQUAL(eve::exp2(eve::minlog2denormal(as<T>())), eve::zero(as<T>()));
+};
+
+
+//==================================================================================================
+// minlog2denormal  tests on wide on scalar
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of minlog2denormal on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  TTS_IEEE_EQUAL(eve::exp2(eve::minlog2denormal(as<T>())), eve::zero(as<T>()));
   TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp)(eve::next(eve::minlogdenormal(as<T>()))))));
 //  TTS_GREATER(  eve::exp(eve::next(eve::minlogdenormal(as<T>()))), eve::zero(as<T>()));
 

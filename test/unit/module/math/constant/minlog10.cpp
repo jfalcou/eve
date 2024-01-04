@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -25,17 +26,27 @@ TTS_CASE_TPL("Check return types of minlog10", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::minlog10(as<T>()), T);
   TTS_EXPR_IS(eve::minlog10(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// minlog10  tests
+// minlog10  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of minlog10 on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of minlog10 on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
   using eve::downward;
   using eve::upward;
-  TTS_ULP_EQUAL(eve::exp10(eve::minlog10(as<T>())), eve::zero(as<T>()), 0.0);
+  TTS_IEEE_EQUAL(eve::exp10(eve::minlog10(as<T>())), eve::zero(as<T>()));
+};
+
+//==================================================================================================
+// minlog10  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of minlog10 on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  using eve::downward;
+  using eve::upward;
   TTS_EXPECT(eve::all(eve::is_gtz(eve::exp10(eve::next(eve::minlog10(as<T>()))))));
   TTS_EXPECT(eve::all(eve::test::is_near(eve::minlog10[eve::downward](as<T>()), eve::minlog10[eve::upward](as<T>()))));
   TTS_EXPECT(eve::all(eve::is_gtz(eve::exp10(eve::next(eve::minlog10(as<T>()))))));

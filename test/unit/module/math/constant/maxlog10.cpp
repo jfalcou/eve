@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -25,15 +26,24 @@ TTS_CASE_TPL("Check return types of maxlog10", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::maxlog10(as<T>()), T);
   TTS_EXPR_IS(eve::maxlog10(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// maxlog10  tests
+// maxlog10  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of maxlog10 on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of maxlog10 on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_ULP_EQUAL(eve::exp10(eve::maxlog10(as<T>())), eve::inf(as<T>()), 0.0);
+  TTS_IEEE_EQUAL(eve::exp10(eve::maxlog10(as<T>())), eve::inf(as<T>()));
+};
+
+//==================================================================================================
+// maxlog10  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of maxlog10 on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  TTS_IEEE_EQUAL(eve::exp10(eve::maxlog10(as<T>())), eve::inf(as<T>()));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog10(as<T>()))))));
   TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog10[eve::downward](as<T>()), eve::maxlog10[eve::upward](as<T>()))));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog10(as<T>()))))));

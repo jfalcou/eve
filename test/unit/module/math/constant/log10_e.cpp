@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -25,11 +26,10 @@ TTS_CASE_TPL("Check return types of log10_e", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::log10_e(as<T>()), T);
   TTS_EXPR_IS(eve::log10_e(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// log10_e  tests
+// log10_e  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of log10_e on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of log10_e on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -42,11 +42,17 @@ TTS_CASE_TPL("Check behavior of log10_e on wide", eve::test::simd::ieee_reals)
     TTS_EXPECT(eve::log10_e[eve::downward](as<elt_t>()) < std::log10(std::exp(1.0l)));
     TTS_EXPECT(eve::log10_e[eve::upward](as<elt_t>()) > std::log10(std::exp(1.0l)));
   }
-  TTS_ULP_EQUAL(eve::log10_e(as<T>()), T(std::log10(std::exp(1.0l))), 0.0);
-  TTS_EXPECT(eve::all(eve::log10_e[eve::downward](as<T>()) <= eve::log10_e(as<T>())));
-  TTS_EXPECT(eve::all(eve::log10_e(as<T>()) <= eve::log10_e[eve::upward](as<T>())));
-  TTS_ULP_EQUAL(eve::log10_e[eve::downward](as<T>()), eve::log10_e[eve::upward](as<T>()), 0.5);
-  auto is_near = [](auto a, auto b){ return eve::if_else( a < b, (eve::next(a) == b) && (eve::prev(a) == b) , a == b); };
-  TTS_EXPECT(eve::all(is_near(eve::next(eve::log10_e[eve::downward](as<T>())), eve::log10_e[eve::upward](as<T>()))));
-  TTS_ULP_EQUAL(eve::log10_e[eve::downward](as<T>()), eve::log10_e[eve::upward](as<T>()), 0.5);
+  TTS_IEEE_EQUAL(eve::log10_e(as<T>()), T(std::log10(std::exp(1.0l))));
+};
+
+//==================================================================================================
+// log10_e  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of log10_e on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  using eve::downward;
+  using eve::upward;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::log10_e[eve::downward](as<T>())), eve::log10_e[eve::upward](as<T>()))));
 };

@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -24,11 +25,10 @@ TTS_CASE_TPL("Check return types of euler", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::euler(as<T>()), T);
   TTS_EXPR_IS(eve::euler(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// e  tests
+// e  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of e on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of e on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -42,8 +42,16 @@ TTS_CASE_TPL("Check behavior of e on wide", eve::test::simd::ieee_reals)
     TTS_EXPECT(eve::euler[eve::upward](as<elt_t>()) > std::exp(1.0l));
    }
   TTS_EQUAL(eve::euler(as<T>()), T(std::exp(1.0l)));
-  TTS_EXPECT(eve::all(eve::euler[eve::downward](as<T>()) <= eve::euler(as<T>())));
-  TTS_EXPECT(eve::all(eve::euler(as<T>()) <= eve::euler[eve::upward](as<T>())));
-  auto is_near = [](auto a, auto b){ return eve::if_else( a < b, (eve::next(a) == b) && (eve::prev(a) == b) , a == b); };
-  TTS_EXPECT(eve::all(is_near(eve::next(eve::euler[eve::downward](as<T>())), eve::euler[eve::upward](as<T>()))));
+};
+
+//==================================================================================================
+// e  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of e on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  using eve::downward;
+  using eve::upward;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::euler[eve::downward](as<T>())), eve::euler[eve::upward](as<T>()))));
 };

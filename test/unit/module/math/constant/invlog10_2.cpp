@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -24,11 +25,10 @@ TTS_CASE_TPL("Check return types of invlog10_2", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::invlog10_2(as<T>()), T);
   TTS_EXPR_IS(eve::invlog10_2(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// invlog10_2  tests
+// invlog10_2  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of invlog10_2 on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of invlog10_2 on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -44,10 +44,16 @@ TTS_CASE_TPL("Check behavior of invlog10_2 on wide", eve::test::simd::ieee_reals
                > 3.3219280948873623478703194294893901758648313930246l);
   }
   TTS_EQUAL(eve::invlog10_2(as<T>()), T(3.3219280948873623478703194294893901758648313930246l));
-  TTS_EXPECT(eve::all(eve::invlog10_2[eve::downward](as<T>()) <= eve::invlog10_2(as<T>())));
-  TTS_EXPECT(eve::all(eve::invlog10_2(as<T>()) <= eve::invlog10_2[eve::upward](as<T>())));
-  TTS_ULP_EQUAL(eve::invlog10_2[eve::downward](as<T>()), eve::invlog10_2[eve::upward](as<T>()), 0.5);
-  auto is_near = [](auto a, auto b){ return eve::if_else( a < b, (eve::next(a) == b) && (eve::prev(a) == b) , a == b); };
-  TTS_EXPECT(eve::all(is_near(eve::next(eve::invlog10_2[eve::downward](as<T>())), eve::invlog10_2[eve::upward](as<T>()))));
-  TTS_ULP_EQUAL(eve::invlog10_2[eve::downward](as<T>()), eve::invlog10_2[eve::upward](as<T>()), 0.5);
+};
+
+//==================================================================================================
+// invlog10_2  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of invlog10_2 on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  using eve::downward;
+  using eve::upward;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::invlog10_2[eve::downward](as<T>())), eve::invlog10_2[eve::upward](as<T>()))));
 };

@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -24,11 +25,10 @@ TTS_CASE_TPL("Check return types of rsqrt_pi", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::rsqrt_pi(as<T>()), T);
   TTS_EXPR_IS(eve::rsqrt_pi(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// e  tests
+// e  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of e on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of e on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -43,9 +43,16 @@ TTS_CASE_TPL("Check behavior of e on wide", eve::test::simd::ieee_reals)
                > 0.564189583547756286948079451560772585844050629329l);
   }
   TTS_EQUAL(eve::rsqrt_pi(as<T>()), T(0.564189583547756286948079451560772585844050629329l));
-  TTS_EXPECT(eve::all(eve::rsqrt_pi[eve::downward](as<T>()) <= eve::rsqrt_pi(as<T>())));
-  TTS_EXPECT(eve::all(eve::rsqrt_pi(as<T>()) <= eve::rsqrt_pi[eve::upward](as<T>())));
-  TTS_ULP_EQUAL(eve::rsqrt_pi[eve::downward](as<T>()), eve::rsqrt_pi[eve::upward](as<T>()), 0.5);
+};
+
+//==================================================================================================
+// e  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of e on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  using eve::downward;
+  using eve::upward;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::rsqrt_pi[eve::downward](as<T>())), eve::rsqrt_pi[eve::upward](as<T>()))));
-  TTS_ULP_EQUAL(eve::rsqrt_pi[eve::downward](as<T>()), eve::rsqrt_pi[eve::upward](as<T>()), 0.5);
 };

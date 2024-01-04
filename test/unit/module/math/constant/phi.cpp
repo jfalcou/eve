@@ -1,3 +1,4 @@
+//revised
 //==================================================================================================
 /**
   EVE - Expressive Vector Engine
@@ -25,11 +26,10 @@ TTS_CASE_TPL("Check return types of phi", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::phi(as<T>()), T);
   TTS_EXPR_IS(eve::phi(as<v_t>()), v_t);
 };
-
 //==================================================================================================
-// phi  tests
+// phi  tests on scalar
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of phi on wide", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of phi on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
@@ -40,6 +40,16 @@ TTS_CASE_TPL("Check behavior of phi on wide", eve::test::simd::ieee_reals)
   TTS_EXPECT(eve::all(eve::phi[eve::downward](as<T>()) <= eve::phi(as<T>())));
   TTS_EXPECT(eve::all(eve::phi(as<T>()) <= eve::phi[eve::upward](as<T>())));
   TTS_ULP_EQUAL(eve::phi[eve::downward](as<T>()), eve::phi[eve::upward](as<T>()), 0.5);
+};
+
+//==================================================================================================
+// phi  tests on wide
+//==================================================================================================
+TTS_CASE_TPL("Check behavior of phi on scalar", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using eve::as;
+  using eve::downward;
+  using eve::upward;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::phi[eve::downward](as<T>()), eve::phi[eve::upward](as<T>()))));
-  TTS_ULP_EQUAL(eve::phi[eve::downward](as<T>()), eve::phi[eve::upward](as<T>()), 0.5);
 };
