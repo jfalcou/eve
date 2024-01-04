@@ -23,7 +23,7 @@ struct false_t : constant_callable<false_t, Options, downward_option, upward_opt
     return as_logical_t<T>(false);
   }
 
-  template<eve::value T>
+  template<typename T>
   EVE_FORCEINLINE as_logical_t<T>  operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(false_t, false__);
