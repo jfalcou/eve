@@ -21,11 +21,11 @@ struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, downw
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      return T(-0x1.2f703p+5);
+      return T(-0x1.693c6cp+5);
     }
     else
     {
-      return T(-0x1.33a7146f72a42p+8);
+      return T(-0x1.439b7422d1bfbp+8);
     }
   }
 

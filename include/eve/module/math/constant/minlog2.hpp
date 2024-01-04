@@ -20,13 +20,9 @@ namespace eve
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
       if constexpr(std::same_as<element_type_t<T>, float>)
-      {
         return T(-0x1.fcp+6);
-      }
       else
-      {
         return T(-0x1.ffp+9);
-      }
     }
 
     template<floating_value T>

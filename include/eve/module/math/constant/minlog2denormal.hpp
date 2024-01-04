@@ -20,17 +20,9 @@ struct minlog2denormal_t : constant_callable<minlog2denormal_t, Options, downwar
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
-    {
-      if constexpr(Opts::contains(upward2))        return T(0x1.ecc2ccp-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.ecc2cap-2);
-      else                                         return T(-150);
-    }
+      return T(-0x1.fcp+7);
     else
-    {
-      if constexpr(Opts::contains(upward2))        return T(0x1.ecc2caec5160ap-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.ecc2caec51609p-2);
-      else                                         return T(-1075);
-    }
+      return T(-0x1.ffp+10);
   }
 
   template<floating_value T>

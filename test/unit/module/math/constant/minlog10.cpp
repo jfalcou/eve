@@ -50,6 +50,7 @@ TTS_CASE_TPL("Check behavior of minlog10 on scalar", eve::test::simd::ieee_reals
   TTS_EXPECT(eve::all(eve::is_gtz(eve::exp10(eve::next(eve::minlog10(as<T>()))))));
   TTS_EXPECT(eve::all(eve::test::is_near(eve::minlog10[eve::downward](as<T>()), eve::minlog10[eve::upward](as<T>()))));
   TTS_EXPECT(eve::all(eve::is_gtz(eve::exp10(eve::next(eve::minlog10(as<T>()))))));
+  TTS_EXPECT(eve::all(eve::is_eqz(eve::exp10(eve::minlog10(as<T>())))));
 };
 
 
@@ -60,7 +61,7 @@ TTS_CASE_WITH("Check behavior of minlog10[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::minlog10[mask](eve::as(a0)), eve::if_else(mask, eve::minlog10(eve::as(a0)), eve::zero));

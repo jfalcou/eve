@@ -33,7 +33,10 @@ TTS_CASE_TPL("Check behavior of minlog10denormal on scalar", eve::test::scalar::
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_IEEE_EQUAL(eve::exp10(eve::minlog10denormal(as<T>())), eve::zero(as<T>()));
+  if constexpr( eve::platform::supports_denormals )
+    TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp10)(eve::next(eve::minlog10denormal(as<T>()))))));
+  TTS_IEEE_EQUAL(eve::pedantic(eve::exp10)(eve::minlog10denormal(as<T>())), eve::zero(as<T>()));
+
 };
 
 //==================================================================================================
@@ -43,9 +46,9 @@ TTS_CASE_TPL("Check behavior of minlog10denormal on scalar", eve::test::simd::ie
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_IEEE_EQUAL(eve::exp10(eve::minlog10denormal(as<T>())), eve::zero(as<T>()));
   if constexpr( eve::platform::supports_denormals )
     TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp10)(eve::next(eve::minlog10denormal(as<T>()))))));
+  TTS_IEEE_EQUAL(eve::exp10(eve::minlog10denormal(as<T>())), eve::zero(as<T>()));
 };
 
 
@@ -56,7 +59,7 @@ TTS_CASE_WITH("Check behavior of minlog10denormal[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::minlog10denormal[mask](eve::as(a0)), eve::if_else(mask, eve::minlog10denormal(eve::as(a0)), eve::zero));

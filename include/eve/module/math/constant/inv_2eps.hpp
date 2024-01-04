@@ -20,13 +20,9 @@ struct inv_2eps_t : constant_callable<inv_2eps_t, Options, downward_option, upwa
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
-    {
       return T(0x1p+22);
-    }
     else
-    {
       return T(0x1p+51);
-    }
   }
 
   template<floating_value T>
