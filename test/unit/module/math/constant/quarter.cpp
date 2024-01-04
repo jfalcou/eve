@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of quarter on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::quarter[eve::downward](as<T>()), eve::quarter[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked quarter
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of quarter[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::quarter[mask](eve::as(a0)), eve::if_else(mask, eve::quarter(eve::as(a0)), eve::zero));
+};

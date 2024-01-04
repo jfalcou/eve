@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of pi_pow_e on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::pi_pow_e[eve::downward](as<T>()), eve::pi_pow_e[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked pi_pow_e
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of pi_pow_e[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::pi_pow_e[mask](eve::as(a0)), eve::if_else(mask, eve::pi_pow_e(eve::as(a0)), eve::zero));
+};

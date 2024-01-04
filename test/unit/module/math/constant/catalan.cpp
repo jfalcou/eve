@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of catalan on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::catalan[eve::downward](as<T>()), eve::catalan[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked catalan
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of catalan[mask] on wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::catalan[mask](eve::as(a0)), eve::if_else(mask, eve::catalan(eve::as(a0)), eve::zero));
+};

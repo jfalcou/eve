@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of three_o_4 on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::three_o_4[eve::downward](as<T>()), eve::three_o_4[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked three_o_4
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of three_o_4[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::three_o_4[mask](eve::as(a0)), eve::if_else(mask, eve::three_o_4(eve::as(a0)), eve::zero));
+};

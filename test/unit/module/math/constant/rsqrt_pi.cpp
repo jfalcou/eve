@@ -56,3 +56,17 @@ TTS_CASE_TPL("Check behavior of e on scalar", eve::test::simd::ieee_reals)
   using eve::upward;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::rsqrt_pi[eve::downward](as<T>())), eve::rsqrt_pi[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked rsqrt_pi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of rsqrt_pi[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::rsqrt_pi[mask](eve::as(a0)), eve::if_else(mask, eve::rsqrt_pi(eve::as(a0)), eve::zero));
+};

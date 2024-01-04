@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of maxlog10 on scalar", eve::test::simd::ieee_reals
   TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog10[eve::downward](as<T>()), eve::maxlog10[eve::upward](as<T>()))));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog10(as<T>()))))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked maxlog10
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of maxlog10[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::maxlog10[mask](eve::as(a0)), eve::if_else(mask, eve::maxlog10(eve::as(a0)), eve::zero));
+};

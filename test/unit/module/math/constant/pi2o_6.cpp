@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of pi2o_6 on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::pi2o_6[eve::downward](as<T>()), eve::pi2o_6[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked pi2o_6
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of pi2o_6[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::pi2o_6[mask](eve::as(a0)), eve::if_else(mask, eve::pi2o_6(eve::as(a0)), eve::zero));
+};

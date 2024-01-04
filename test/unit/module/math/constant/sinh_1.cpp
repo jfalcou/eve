@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of sinh_1 on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::sinh_1[eve::downward](as<T>()), eve::sinh_1[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked sinh_1
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of sinh_1[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sinh_1[mask](eve::as(a0)), eve::if_else(mask, eve::sinh_1(eve::as(a0)), eve::zero));
+};

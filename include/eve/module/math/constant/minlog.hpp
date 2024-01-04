@@ -13,31 +13,27 @@
 
 namespace eve
 {
-template<typename Options>
-struct minlog_t : constant_callable<minlog_t, Options, downward_option, upward_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct minlog_t : constant_callable<minlog_t, Options, downward_option, upward_option>
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      if constexpr(Opts::contains(upward2))        return T(-0x1.5d814ap+6);
-      else if constexpr(Opts::contains(downward2)) return T(-0x1.5d814ap+6);
-      else                                         return T(-0x1.5d814ap+6);
+      if constexpr(std::same_as<element_type_t<T>, float>)
+      {
+        return T(-0x1.5d814ap+6);
+      }
+      else
+      {
+        return T(-0x1.6232bdd7abcd3p+9);
+      }
     }
-    else
-    {
-      if constexpr(Opts::contains(upward2))        return T(-0x1.6232bdd7abcd3p+9);
-      else if constexpr(Opts::contains(downward2)) return T(-0x1.6232bdd7abcd3p+9);
-      else                                         return T(-0x1.6232bdd7abcd3p+9);
-    }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(minlog_t, minlog_);
-};
+    EVE_CALLABLE_OBJECT(minlog_t, minlog_);
+  };
 
 //================================================================================================
 //! @addtogroup math_constants

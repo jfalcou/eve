@@ -56,3 +56,17 @@ TTS_CASE_TPL("Check behavior of log10_e on scalar", eve::test::simd::ieee_reals)
   using eve::upward;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::log10_e[eve::downward](as<T>())), eve::log10_e[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked log10_e
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of log10_e[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::log10_e[mask](eve::as(a0)), eve::if_else(mask, eve::log10_e(eve::as(a0)), eve::zero));
+};

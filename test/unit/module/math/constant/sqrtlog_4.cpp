@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of sqrtlog_4 on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::sqrtlog_4[eve::downward](as<T>()), eve::sqrtlog_4[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked sqrtlog_4
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of sqrtlog_4[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::sqrtlog_4[mask](eve::as(a0)), eve::if_else(mask, eve::sqrtlog_4(eve::as(a0)), eve::zero));
+};

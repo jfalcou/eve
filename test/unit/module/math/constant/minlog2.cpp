@@ -46,3 +46,17 @@ TTS_CASE_TPL("Check behavior of minlog2 on scalar", eve::test::simd::ieee_reals)
   TTS_IEEE_EQUAL(eve::exp2(eve::minlog2(as<T>())), eve::zero(as<T>()));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp2(eve::next(eve::minlog2(as<T>()))))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked minlog2
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of minlog2[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::minlog2[mask](eve::as(a0)), eve::if_else(mask, eve::minlog2(eve::as(a0)), eve::zero));
+};

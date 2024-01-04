@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of inv_2eps on wide", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_2eps[eve::downward](as<T>()), eve::inv_2eps[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked inv_2eps
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of inv_2eps[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::inv_2eps[mask](eve::as(a0)), eve::if_else(mask, eve::inv_2eps(eve::as(a0)), eve::zero));
+};

@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of invlog_phi on wide", eve::test::simd::ieee_reals
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::invlog_phi[eve::downward](as<T>()), eve::invlog_phi[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked invlog_phi
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of invlog_phi[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::invlog_phi[mask](eve::as(a0)), eve::if_else(mask, eve::invlog_phi(eve::as(a0)), eve::zero));
+};

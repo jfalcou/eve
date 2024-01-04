@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of inv_egamma on wide", eve::test::simd::ieee_reals
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_egamma[eve::downward](as<T>()), eve::inv_egamma[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked inv_egamma
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of inv_egamma[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::inv_egamma[mask](eve::as(a0)), eve::if_else(mask, eve::inv_egamma(eve::as(a0)), eve::zero));
+};

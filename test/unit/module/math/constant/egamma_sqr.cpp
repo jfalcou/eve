@@ -48,3 +48,17 @@ TTS_CASE_TPL("Check behavior of egamma_sqr on wide", eve::test::simd::ieee_reals
   using eve::as;
   TTS_EXPECT(eve::all(eve::test::is_near(eve::egamma_sqr[eve::downward](as<T>()), eve::egamma_sqr[eve::upward](as<T>()))));
 };
+
+
+//==================================================================================================
+// simd Tests for masked egamma_sqr
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of egamma_sqr[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::egamma_sqr[mask](eve::as(a0)), eve::if_else(mask, eve::egamma_sqr(eve::as(a0)), eve::zero));
+};

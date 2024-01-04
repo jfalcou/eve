@@ -49,3 +49,17 @@ TTS_CASE_TPL("Check behavior of minlog2denormal on scalar", eve::test::simd::iee
 //  TTS_GREATER(  eve::exp(eve::next(eve::minlogdenormal(as<T>()))), eve::zero(as<T>()));
 
 };
+
+
+//==================================================================================================
+// simd Tests for masked minlogdenormal
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of minlogdenormal[mask] on :wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0, 
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::minlogdenormal[mask](eve::as(a0)), eve::if_else(mask, eve::minlogdenormal(eve::as(a0)), eve::zero));
+};
