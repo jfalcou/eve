@@ -19,18 +19,7 @@ struct quarter_t : constant_callable<quarter_t, Options, downward_option, upward
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
-    {
-      if constexpr(Opts::contains(upward2))        return T(0x1.0c1524p-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.0c1522p-1);
-      else                                         return T(0x1.0p-2);
-    }
-    else
-    {
-      if constexpr(Opts::contains(upward2))        return T(0x1.0c152382d7366p-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.0c152382d7365p-1);
-      else                                         return T(0x1.0p-2);
-    }
+    return T(0x1p-2);
   }
 
   template<floating_value T>

@@ -21,15 +21,15 @@ struct loglog_2_t : constant_callable<loglog_2_t, Options, downward_option, upwa
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.ecc2ccp-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.ecc2cap-2);
-      else                                         return T(0x1.ecc2cap-2);
+      if constexpr(Opts::contains(upward2))        return T(-0x1.774f28p-2);
+      else if constexpr(Opts::contains(downward2)) return T(-0x1.774f2ap-2);
+      else                                         return T(-0x1.774f2ap-2);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.ecc2caec5160ap-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.ecc2caec51609p-2);
-      else                                         return T(0x1.ecc2caec5160ap-2);
+      if constexpr(Opts::contains(upward2))        return T(-0x1.774f29bdd6b9ep-2);
+      else if constexpr(Opts::contains(downward2)) return T(-0x1.774f29bdd6b9fp-2);
+      else                                         return T(-0x1.774f29bdd6b9fp-2);
     }
   }
 

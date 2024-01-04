@@ -27,7 +27,7 @@ struct rsqrt_pio_2_t : constant_callable<rsqrt_pio_2_t, Options, downward_option
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.9884533d43651p-1);
+      if constexpr(Opts::contains(upward2))        return T(0x1.9884533d436511p-1);
       else if constexpr(Opts::contains(downward2)) return T(0x1.9884533d4365p-1);
       else                                         return T(0x1.9884533d43651p-1);
     }
