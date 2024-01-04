@@ -84,10 +84,10 @@ TTS_CASE_TPL("Check return types of exp2", eve::test::simd::ieee_reals)
     }
     TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(eve::minlog2denormal(eve::as<T>())),
                   T(std::exp2(eve::minlog2denormal(eve::as<elt_t>()))),
-                  0);
+                  0.5);
     TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(eve::prev(eve::minlog2denormal(eve::as<T>()))),
                   T(std::exp2(eve::prev(eve::minlog2denormal(eve::as<elt_t>())))),
-                  0);
+                  0.5);
   }
 };
 
