@@ -8,7 +8,7 @@ using wide_dt = eve::wide<double>;
 
 int main()
 {
-  wide_ft wxf;
+  wide_ft wxf([](auto i, auto){return eve::is_odd(i)?-1.f:1.f; ; });
   wide_dt wxd;
 
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
@@ -35,5 +35,9 @@ int main()
             << "-> catalan(as<double>())            = " << eve::catalan(eve::as(double()))<< std::endl
             << "-> catalan(as<xd))                  = " << eve::catalan(eve::as(xd))      << std::endl;
 
+   std::cout << "---- masked" << std::endl
+             << "<- wxf                               = " << wxf << std::endl
+             << "-> catalan[wxf <  0.0f](as(wxf))     = " << eve::catalan[wxf < 0.0f](eve::as(wxf)) << std::endl
+             << "-> catalan[ignore_first(3)](as(wxf)) = " << eve::catalan[eve::ignore_first(3)](eve::as(wxf))  << std::endl;
   return 0;
 }
