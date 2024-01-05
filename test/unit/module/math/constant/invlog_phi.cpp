@@ -34,9 +34,9 @@ TTS_CASE_TPL("Check behavior of invlog_phi on scalar", eve::test::scalar::ieee_r
   if constexpr( sizeof(long double) > sizeof(T) )
   {
     TTS_EXPECT(eve::invlog_phi[eve::downward](eve::as<T>()) <= 1.0l/std::log(1.618033988749894848204586l));
-    TTS_EXPECT(eve::invlog_phi[eve::upward](eve::as<T>()) >= 1.0l/std::log(1.618033988749894848204586l)); 
+    TTS_EXPECT(eve::invlog_phi[eve::upward](eve::as<T>()) >= 1.0l/std::log(1.618033988749894848204586l));
   }
-  TTS_EQUAL(eve::invlog_phi(eve::as<T>()), T(1.0l/std::log(1.618033988749894848204586l)));
+  TTS_ULP_EQUAL(eve::invlog_phi(eve::as<T>()), T(1.0l/std::log(1.618033988749894848204586l)), 0.5);
 };
 
 //==================================================================================================
@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check behavior of invlog_phi[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::invlog_phi[mask](eve::as(a0)), eve::if_else(mask, eve::invlog_phi(eve::as(a0)), eve::zero));

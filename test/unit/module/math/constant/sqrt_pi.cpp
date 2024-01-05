@@ -34,9 +34,9 @@ TTS_CASE_TPL("Check behavior of sqrt_pi on scalar", eve::test::scalar::ieee_real
   if constexpr( sizeof(long double) > sizeof(T) )
   {
     TTS_EXPECT(eve::sqrt_pi[eve::downward](eve::as<T>()) <= std::sqrt(3.141592653589793238462643l));
-    TTS_EXPECT(eve::sqrt_pi[eve::upward](eve::as<T>()) >= std::sqrt(3.141592653589793238462643l)); 
+    TTS_EXPECT(eve::sqrt_pi[eve::upward](eve::as<T>()) >= std::sqrt(3.141592653589793238462643l));
   }
-  TTS_EQUAL(eve::sqrt_pi(eve::as<T>()), T(std::sqrt(3.141592653589793238462643l)));
+  TTS_ULP_EQUAL(eve::sqrt_pi(eve::as<T>()), T(std::sqrt(3.141592653589793238462643l)), 0.);
 };
 
 //==================================================================================================
@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check behavior of sqrt_pi[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::sqrt_pi[mask](eve::as(a0)), eve::if_else(mask, eve::sqrt_pi(eve::as(a0)), eve::zero));

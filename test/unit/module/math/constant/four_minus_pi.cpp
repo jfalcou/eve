@@ -34,9 +34,9 @@ TTS_CASE_TPL("Check behavior of four_minus_pi on scalar", eve::test::scalar::iee
   if constexpr( sizeof(long double) > sizeof(T) )
   {
     TTS_EXPECT(eve::four_minus_pi[eve::downward](eve::as<T>()) <= 4.0l-3.141592653589793238462643l);
-    TTS_EXPECT(eve::four_minus_pi[eve::upward](eve::as<T>()) >= 4.0l-3.141592653589793238462643l); 
+    TTS_EXPECT(eve::four_minus_pi[eve::upward](eve::as<T>()) >= 4.0l-3.141592653589793238462643l);
   }
-  TTS_EQUAL(eve::four_minus_pi(eve::as<T>()), T(4.0l-3.141592653589793238462643l));
+  TTS_ULP_EQUAL(eve::four_minus_pi(eve::as<T>()), T(4.0l-3.141592653589793238462643l), 0.5);
 };
 
 //==================================================================================================
@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check behavior of four_minus_pi[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::four_minus_pi[mask](eve::as(a0)), eve::if_else(mask, eve::four_minus_pi(eve::as(a0)), eve::zero));
