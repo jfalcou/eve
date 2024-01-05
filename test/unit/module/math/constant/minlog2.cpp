@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check behavior of minlog2 on scalar", eve::test::simd::ieee_reals)
 {
   using eve::as;
   TTS_IEEE_EQUAL(eve::exp2(eve::minlog2(as<T>())), eve::zero(as<T>()));
-#ifdef SPY_ARCH_IS_ARM
+#infdef SPY_ARCH_IS_ARM
   TTS_EXPECT(eve::all(eve::is_gtz(eve::exp2(eve::next(eve::minlog2(as<T>()))))));
 #endif
 };
