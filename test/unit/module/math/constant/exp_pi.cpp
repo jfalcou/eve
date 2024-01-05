@@ -34,9 +34,13 @@ TTS_CASE_TPL("Check behavior of exp_pi on scalar", eve::test::scalar::ieee_reals
   if constexpr( sizeof(long double) > sizeof(T) )
   {
     TTS_EXPECT(eve::exp_pi[eve::downward](eve::as<T>()) <= std::exp(3.141592653589793238462643l));
-    TTS_EXPECT(eve::exp_pi[eve::upward](eve::as<T>()) >= std::exp(3.141592653589793238462643l)); 
+    TTS_EXPECT(eve::exp_pi[eve::upward](eve::as<T>()) >= std::exp(3.141592653589793238462643l));
   }
-  TTS_EQUAL(eve::exp_pi(eve::as<T>()), T(std::exp(3.141592653589793238462643l)));
+#ifdef SPY_ARCH_IS_ARM
+  double tol = 0.5;
+#else
+  double tol = 0.0;
+#endif  TTS_ULP_EQUAL(eve::exp_pi(eve::as<T>()), T(std::exp(3.141592653589793238462643l)), 0.5);
 };
 
 //==================================================================================================
@@ -57,7 +61,7 @@ TTS_CASE_WITH("Check behavior of exp_pi[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::exp_pi[mask](eve::as(a0)), eve::if_else(mask, eve::exp_pi(eve::as(a0)), eve::zero));

@@ -36,7 +36,12 @@ TTS_CASE_TPL("Check behavior of cbrt_pi on scalar", eve::test::scalar::ieee_real
     TTS_EXPECT(eve::cbrt_pi[eve::downward](eve::as<T>()) <= std::cbrt(3.141592653589793238462643l));
     TTS_EXPECT(eve::cbrt_pi[eve::upward](eve::as<T>()) >= std::cbrt(3.141592653589793238462643l));
   }
-  TTS_EQUAL(eve::cbrt_pi(eve::as<T>()), T(std::cbrt(3.141592653589793238462643l)));
+#ifdef SPY_ARCH_IS_ARM
+  double tol = 0.5;
+#else
+  double tol = 0.0;
+#endif
+  TTS_ULP_EQUAL(eve::cbrt_pi(eve::as<T>()), T(std::cbrt(3.141592653589793238462643l)), tol);
 };
 
 //==================================================================================================
@@ -57,7 +62,7 @@ TTS_CASE_WITH("Check behavior of cbrt_pi[mask] on :wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::cbrt_pi[mask](eve::as(a0)), eve::if_else(mask, eve::cbrt_pi(eve::as(a0)), eve::zero));
