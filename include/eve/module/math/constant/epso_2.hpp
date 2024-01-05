@@ -19,7 +19,7 @@ struct epso_2_t : constant_callable<epso_2_t, Options, downward_option, upward_o
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-
+    using e_t = element_type_t<T>;
     if constexpr(std::same_as<e_t, float>  ) return T(0x1p-24);
     else if constexpr(std::same_as<e_t, double> ) return T(0x1p-53);
   }
