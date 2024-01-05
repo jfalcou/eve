@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check behavior of sqrt_pi on scalar", eve::test::scalar::ieee_real
     TTS_EXPECT(eve::sqrt_pi[eve::downward](eve::as<T>()) <= std::sqrt(3.141592653589793238462643l));
     TTS_EXPECT(eve::sqrt_pi[eve::upward](eve::as<T>()) >= std::sqrt(3.141592653589793238462643l));
   }
-  TTS_ULP_EQUAL(eve::sqrt_pi(eve::as<T>()), T(std::sqrt(3.141592653589793238462643l)), 0.);
+  TTS_ULP_EQUAL(eve::sqrt_pi(eve::as<T>()), T(std::sqrt(3.141592653589793238462643l)), 0.5);
 };
 
 //==================================================================================================

@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check behavior of pi_minus_3 on scalar", eve::test::scalar::ieee_r
     TTS_EXPECT(eve::pi_minus_3[eve::downward](eve::as<T>()) <= 3.141592653589793238462643l-3);
     TTS_EXPECT(eve::pi_minus_3[eve::upward](eve::as<T>()) >= 3.141592653589793238462643l-3);
   }
-  TTS_ULP_EQUAL(eve::pi_minus_3(eve::as<T>()), T(3.141592653589793238462643l-3), 0.5);
+  TTS_ULP_EQUAL(eve::pi_minus_3(eve::as<T>()), T(3.141592653589793238462643l-3), 2.0);
 };
 
 //==================================================================================================

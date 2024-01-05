@@ -45,7 +45,8 @@ TTS_CASE_TPL("Check behavior of minlogdenormal on scalar", eve::test::simd::ieee
 {
   using eve::as;
   TTS_IEEE_EQUAL(eve::exp(eve::minlogdenormal(as<T>())), eve::zero(as<T>()));
-  TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp)(eve::next(eve::minlogdenormal(as<T>()))))));
+  if constexpr( eve::platform::supports_denormals )
+    TTS_EXPECT(eve::all(eve::is_gtz(eve::pedantic(eve::exp)(eve::next(eve::minlogdenormal(as<T>()))))));
 };
 
 
