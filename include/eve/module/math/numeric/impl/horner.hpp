@@ -86,6 +86,6 @@ template<value T0, kumi::product_type Ts>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 x, Ts tup) noexcept
 {
-  return kumi::apply( [&](auto... m) { return numeric(horner)(x, m...); }, tup);
+  return kumi::apply( [&](auto... m) { return  horner_impl(numeric_type(), x, m...); }, tup);
 }
 }
