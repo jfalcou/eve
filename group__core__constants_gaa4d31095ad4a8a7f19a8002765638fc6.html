@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gaa4d31095ad4a8
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::false_ = {}</td>
+          <td class="memname">eve::false_ = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;false_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,10 +145,9 @@ $(document).ready(function(){initNavTree('group__core__constants_gaa4d31095ad4a8
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">false_</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">template</span>&lt;eve::value T&gt; <span class="keyword">constexpr</span> eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">false_</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6_html_gaa4d31095ad4a8a7f19a8002765638fc6"><div class="ttname"><a href="group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">eve::false_</a></div><div class="ttdeci">constexpr callable_false__ false_</div><div class="ttdoc">Computes the false logical value.</div><div class="ttdef"><b>Definition:</b> false.hpp:52</div></div>
+<div class="ttc" id="agroup__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6_html_gaa4d31095ad4a8a7f19a8002765638fc6"><div class="ttname"><a href="group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6">eve::false_</a></div><div class="ttdeci">constexpr auto false_</div><div class="ttdoc">Computes the false logical value.</div><div class="ttdef"><b>Definition:</b> false.hpp:66</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -156,7 +155,7 @@ $(document).ready(function(){initNavTree('group__core__constants_gaa4d31095ad4a8
 <li><code>x</code> : <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the constant.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>the call <code><a class="el" href="group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6" title="Computes the false logical value.">eve::false_</a>(as&lt;T&gt;())</code> returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a>, the false logical value.</p>
+<p>The call <code><a class="el" href="group__core__constants_gaa4d31095ad4a8a7f19a8002765638fc6.html#gaa4d31095ad4a8a7f19a8002765638fc6" title="Computes the false logical value.">eve::false_</a>(as&lt;T&gt;())</code> returns the <code>false</code> logical value for type <code>T</code>.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

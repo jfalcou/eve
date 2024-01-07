@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__math__constants_gaf836e8bf4c839
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::minlog2denormal = {}</td>
+          <td class="memname">eve::minlog2denormal = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;minlog2denormal_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__math__constants_gaf836e8bf4c839
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1">minlog2denormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1_html_gaf836e8bf4c83978fe3980f5a56a322a1"><div class="ttname"><a href="group__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1">eve::minlog2denormal</a></div><div class="ttdeci">constexpr callable_minlog2denormal_ minlog2denormal</div><div class="ttdoc">Callable object computing the least value for which eve::exp2 is not denormal.</div><div class="ttdef"><b>Definition:</b> minlog2denormal.hpp:50</div></div>
+<div class="ttc" id="agroup__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1_html_gaf836e8bf4c83978fe3980f5a56a322a1"><div class="ttname"><a href="group__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1">eve::minlog2denormal</a></div><div class="ttdeci">constexpr auto minlog2denormal</div><div class="ttdoc">Callable object computing the least value for which eve::exp2 is not denormal.</div><div class="ttdef"><b>Definition:</b> minlog2denormal.hpp:70</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -156,7 +156,7 @@ $(document).ready(function(){initNavTree('group__math__constants_gaf836e8bf4c839
 <li><code>x</code> : <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type of the constant.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The call <code><a class="el" href="group__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1" title="Callable object computing the least value for which eve::exp2 is not denormal.">eve::minlog2denormal</a>(as&lt;T&gt;())</code> returns the least value for which <a class="el" href="group__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51" title="Callable object computing .">eve::exp2</a> is not denormal.</p>
+<p>The call <code><a class="el" href="group__math__constants_gaf836e8bf4c83978fe3980f5a56a322a1.html#gaf836e8bf4c83978fe3980f5a56a322a1" title="Callable object computing the least value for which eve::exp2 is not denormal.">eve::minlog2denormal</a>(as&lt;T&gt;())</code> returns the least value for which <a class="el" href="group__math__exp_gaad00c9d24af2d29a5ab7656a3a975c51.html#gaad00c9d24af2d29a5ab7656a3a975c51" title="Callable object computing .">eve::exp2</a> is not zero.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>

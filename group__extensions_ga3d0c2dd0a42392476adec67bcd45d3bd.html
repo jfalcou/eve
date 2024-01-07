@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('group__extensions_ga3d0c2dd0a42392476a
 
 <p><code>#include &lt;eve/traits/overload/protocol.hpp&gt;</code></p>
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;                                                                                             \</div>
-<div class="line"><span class="keyword">static</span> EVE_FORCEINLINE <span class="keyword">auto</span> deferred_call(<span class="keyword">auto</span> arch, Args&amp;&amp;...args) <span class="keyword">noexcept</span>                                           \</div>
+<div class="line"><span class="keyword">static</span> EVE_FORCEINLINE <span class="keyword">constexpr</span> <span class="keyword">auto</span> deferred_call(<span class="keyword">auto</span> arch, Args&amp;&amp;...args) <span class="keyword">noexcept</span>                                 \</div>
 <div class="line">-&gt; <span class="keyword">decltype</span>(NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...))                                                     \</div>
 <div class="line">{                                                                                                                      \</div>
 <div class="line">  <span class="keywordflow">return</span> NAME(eve::detail::adl_helper, arch, EVE_FWD(args)...);                                                        \</div>
