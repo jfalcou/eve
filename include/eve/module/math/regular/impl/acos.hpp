@@ -21,7 +21,7 @@ acos_(EVE_SUPPORTS(cpu_), raw_type const&, T const& a0) noexcept
   if constexpr( has_native_abi_v<T> )
   {
     auto tmp =
-        pio_2(eve::as(a0)) + (Ieee_constant<T, 0XB33BBD2EU, 0x3c91a62633145c07ll>() - asin(a0));
+      pio_2(eve::as(a0)) + (ieee_constant<T>(-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54) - asin(a0));
     return if_else(a0 == T(1), eve::zero, tmp);
   }
   else { return apply_over(raw(acos), a0); }
