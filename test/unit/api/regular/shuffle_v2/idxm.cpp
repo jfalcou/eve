@@ -169,6 +169,7 @@ TTS_CASE("is_repeating_pattern")
     TTS_EXPECT_NOT(res) << tts::as_string(full) << " res: " << tts::as_string(*res);
   };
 
+  // 1 register
   yes_test(std::array {0, 1}, std::array {0});
   yes_test(std::array {0, we_}, std::array {0});
   yes_test(std::array {we_, 1}, std::array {0});
@@ -189,6 +190,16 @@ TTS_CASE("is_repeating_pattern")
 
   no_test(std::array {1, 0, 2, 3});
   no_test(std::array {na_, 0, we_, 3});
+
+  // 2 registers  [0, 1, 2, 3] [4, 5, 6, 7]
+  yes_test(std::array{0, 4, 2, 6}, std::array{0, 4});
+  yes_test(std::array{1, 4, 3, 6}, std::array{1, 4});
+  yes_test(std::array{1, 4, 3, we_}, std::array{1, 4});
+  yes_test(std::array{1, we_, 3, 6}, std::array{1, 4});
+  yes_test(std::array{na_, 4, na_, 6}, std::array{na_, 4});
+
+  no_test(std::array {0, 4, 2, 7});
+  no_test(std::array {0, 3});
 };
 
 TTS_CASE("most_repeated_pattern")

@@ -214,6 +214,8 @@ requires(P::out_reg_size == P::reg_size)
   else return no_matching_shuffle_t {};
 }
 
+// 2 register shuffles ---------------------------------------------------------
+
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_neon_copy_lane_other(P, fixed<G>, wide<T, N> x, wide<T, N> y)
@@ -235,10 +237,23 @@ shuffle_l2_neon_copy_lane_other(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
+shuffle_l2_neon_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  constexpr auto starts_from = idxm::is_in_order(P::idxs);
+  if constexpr (!starts_from) return no_matching_shuffle_t{};
+  else return vext(x, y, eve::index<*starts_from>);
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_neon_copy_lane_other(p, g, x, y); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr ( auto r = shuffle_l2_neon_ext_2(p, g, x, y); matched_shuffle<decltype(r)> )
   {
     return r;
   }
