@@ -45,9 +45,9 @@ cot_(EVE_SUPPORTS(cpu_), half_circle_type const&, T a0) noexcept
     auto xleeps = x <= eps(as<T>());
     auto reduce = [](auto x)
     {
-      auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
-      auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
-      auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
+      auto pio2_1 = ieee_constant<T>(0x1.921f000p+0f, 0x1.921fb54400000p+0);
+      auto pio2_2 = ieee_constant<T>(0x1.6a88000p-17f, 0x1.0b4611a600000p-34);
+      auto pio2_3 = ieee_constant<T>(0x1.0b46000p-34f, 0x1.3198a2e000000p-69);
       auto xr     = x - pio2_1;
       xr -= pio2_2;
       xr -= pio2_3;
