@@ -57,6 +57,7 @@
 #include <eve/module/math/regular/expx2.hpp>
 #include <eve/module/math/regular/gd.hpp>
 #include <eve/module/math/regular/geommean.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math/regular/hypot.hpp>
 #include <eve/module/math/regular/agd.hpp>
 #include <eve/module/math/regular/lentz_a.hpp>
@@ -79,6 +80,7 @@
 #include <eve/module/math/regular/radinpi.hpp>
 #include <eve/module/math/regular/rem_pio2.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
+#include <eve/module/math/regular/reverse_horner.hpp>
 #include <eve/module/math/regular/sec.hpp>
 #include <eve/module/math/regular/secd.hpp>
 #include <eve/module/math/regular/sech.hpp>

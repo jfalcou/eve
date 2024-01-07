@@ -9,9 +9,9 @@
 
 #include <eve/concept/range.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/polynomial/numeric/horner.hpp>
-#include <eve/module/polynomial/pedantic/horner.hpp>
-#include <eve/module/polynomial/regular/horner.hpp>
+#include <eve/module/math/numeric/horner.hpp>
+#include <eve/module/math/pedantic/horner.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/traits/common_value.hpp>
 
 #include <concepts>

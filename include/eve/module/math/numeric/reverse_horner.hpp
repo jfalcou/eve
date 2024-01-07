@@ -7,4 +7,5 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/numeric/newton.hpp>
+#include <eve/module/math/numeric/impl/reverse_horner.hpp>
+#include <eve/module/math/regular/reverse_horner.hpp>

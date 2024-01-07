@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/detail/horner_impl.hpp>
+#include <eve/module/math/detail/reverse_horner_impl.hpp>
 
 namespace eve::detail
 {
@@ -16,10 +16,14 @@ namespace eve::detail
 //================================================================================================
 template<value T0, std::input_iterator IT>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, IT const& first, IT const& last) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, first, last))
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0        xx,
+                IT const& first,
+                IT const& last) noexcept
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, first, last))
 {
-  return detail::horner_impl(numeric_type(), xx, first, last);
+  return detail::reverse_horner_impl(numeric_type(), xx, first, last);
 }
 
 //================================================================================================
@@ -28,15 +32,15 @@ horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, IT const& first, IT cons
 
 template<value T0, std::input_iterator IT>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_),
-        numeric_type const&,
-        T0 xx,
-        callable_one_ const&,
-        IT const& first,
-        IT const& last) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, one, first, last))
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0 xx,
+                callable_one_ const&,
+                IT const& first,
+                IT const& last) noexcept
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, one, first, last))
 {
-  return detail::horner_impl(numeric_type(), xx, one, first, last);
+  return detail::reverse_horner_impl(numeric_type(), xx, one, first, last);
 }
 
 //================================================================================================
@@ -44,10 +48,10 @@ horner_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, r))
+reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, r))
 {
-  return detail::horner_impl(numeric_type(), xx, r);
+  return detail::reverse_horner_impl(numeric_type(), xx, r);
 }
 
 //================================================================================================
@@ -55,10 +59,14 @@ horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
 //================================================================================================
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, callable_one_ const&, R const& r) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, one, r))
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0 xx,
+                callable_one_ const&,
+                R const& r) noexcept
+-> decltype(detail::reverse_horner_impl(numeric_type(), xx, one, r))
 {
-  return detail::horner_impl(numeric_type(), xx, one, r);
+  return detail::reverse_horner_impl(numeric_type(), xx, one, r);
 }
 
 //================================================================================================
@@ -66,9 +74,10 @@ horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, callable_one_ const&, R 
 //================================================================================================
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, Ts... args) noexcept
-{
-  return horner_impl(numeric_type(), x, args...);
+reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, Ts... args) noexcept
+-> decltype( reverse_horner_impl(numeric_type(), x, args...))
+  {
+  return reverse_horner_impl(numeric_type(), x, args...);
 }
 
 //================================================================================================
@@ -77,15 +86,23 @@ horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, Ts... args) noexcept
 
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, callable_one_ const&, Ts... args) noexcept
+reverse_horner_(EVE_SUPPORTS(cpu_),
+                numeric_type const&,
+                T0 x,
+                callable_one_ const&,
+                Ts... args) noexcept
+-> decltype(reverse_horner_impl(numeric_type(), x, one, args...))
 {
-  return horner_impl(numeric_type(), x, one, args...);
+  return reverse_horner_impl(numeric_type(), x, one, args...);
 }
 
-template<value T0, kumi::product_type Ts>
+//================================================================================================
+//== tuples
+//================================================================================================
+template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-horner_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 x, Ts tup) noexcept
+reverse_horner_(EVE_SUPPORTS(cpu_), numeric_type const & , T0 x, kumi::tuple<Ts...> args) noexcept
 {
-  return kumi::apply( [&](auto... m) { return numeric(horner)(x, m...); }, tup);
+  return numeric(horner)(x, kumi::reverse(args));
 }
 }

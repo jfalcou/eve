@@ -10,7 +10,6 @@
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/polynomial.hpp>
 
 namespace eve::detail
 {

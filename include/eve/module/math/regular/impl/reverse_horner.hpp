@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/detail/reverse_horner_impl.hpp>
+#include <eve/module/math/detail/reverse_horner_impl.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/traits/common_value.hpp>
 

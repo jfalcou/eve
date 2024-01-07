@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/polynomial/detail/reverse_horner_impl.hpp>
+#include <eve/module/math/detail/horner_impl.hpp>
 #include <eve/traits/common_value.hpp>
 
 namespace eve::detail
@@ -18,14 +18,10 @@ namespace eve::detail
 
 template<value T0, std::input_iterator IT>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_),
-                pedantic_type const&,
-                T0        xx,
-                IT const& first,
-                IT const& last) noexcept
--> decltype( detail::reverse_horner_impl(pedantic_type(), xx, first, last))
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, IT const& first, IT const& last) noexcept
+-> common_value_t<T0, typename std::iterator_traits<IT>::value_type>
 {
-  return detail::reverse_horner_impl(pedantic_type(), xx, first, last);
+  return detail::horner_impl(pedantic_type(), xx, first, last);
 }
 
 //================================================================================================
@@ -34,15 +30,15 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 
 template<value T0, std::input_iterator IT>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_),
-                pedantic_type const&,
-                T0 xx,
-                callable_one_ const&,
-                IT const& first,
-                IT const& last) noexcept
--> decltype(detail::reverse_horner_impl(pedantic_type(), xx, one, first, last))
+horner_(EVE_SUPPORTS(cpu_),
+        pedantic_type const&,
+        T0 xx,
+        callable_one_ const&,
+        IT const& first,
+        IT const& last) noexcept
+-> common_value_t<T0, typename std::iterator_traits<IT>::value_type>
 {
-  return detail::reverse_horner_impl(pedantic_type(), xx, one, first, last);
+  return detail::horner_impl(pedantic_type(), xx, one, first, last);
 }
 
 //================================================================================================
@@ -50,10 +46,10 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 //================================================================================================
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, R const& r) noexcept
--> decltype(detail::reverse_horner_impl(pedantic_type(), xx, r))
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, R const& r) noexcept
+-> common_value_t<T0, typename R::value_type>
 {
-  return detail::reverse_horner_impl(pedantic_type(), xx, r);
+  return detail::horner_impl(pedantic_type(), xx, r);
 }
 
 //================================================================================================
@@ -61,14 +57,10 @@ reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, R const& r) noe
 //================================================================================================
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_),
-                pedantic_type const&,
-                T0 xx,
-                callable_one_ const&,
-                R const& r) noexcept
--> decltype( detail::reverse_horner_impl(pedantic_type(), xx, one, r))
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 xx, callable_one_ const&, R const& r) noexcept
+-> common_value_t<T0, typename R::value_type>
 {
-  return detail::reverse_horner_impl(pedantic_type(), xx, one, r);
+  return detail::horner_impl(pedantic_type(), xx, one, r);
 }
 
 //================================================================================================
@@ -77,9 +69,10 @@ reverse_horner_(EVE_SUPPORTS(cpu_),
 
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 x, Ts... args) noexcept
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 x, Ts... args) noexcept
+-> decltype(horner_impl(pedantic_type(), x, args...))
 {
-  return reverse_horner_impl(pedantic_type(), x, args...);
+  return horner_impl(pedantic_type(), x, args...);
 }
 
 //================================================================================================
@@ -88,22 +81,17 @@ reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 x, Ts... args) noex
 
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_),
-                pedantic_type const&,
-                T0 x,
-                callable_one_ const&,
-                Ts... args) noexcept
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const&, T0 x, callable_one_ const&, Ts... args) noexcept
+-> decltype(horner_impl(pedantic_type(), x, one, args...))
 {
-  return reverse_horner_impl(pedantic_type(), x, one, args...);
+  return horner_impl(pedantic_type(), x, one, args...);
 }
 
-//================================================================================================
-//== tuples
-//================================================================================================
-template<value T0, value... Ts>
+template<value T0, kumi::product_type Ts>
 EVE_FORCEINLINE constexpr auto
-reverse_horner_(EVE_SUPPORTS(cpu_), pedantic_type const & , T0 x, kumi::tuple<Ts...> args) noexcept
+horner_(EVE_SUPPORTS(cpu_), pedantic_type const &, T0 x, Ts tup) noexcept
 {
-  return pedantic(horner)(x, kumi::reverse(args));
+  return kumi::apply( [&](auto... m) { return pedantic(horner)(x, m...); }, tup);
 }
+
 }
