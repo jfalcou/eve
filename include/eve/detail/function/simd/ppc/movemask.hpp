@@ -25,12 +25,12 @@ namespace eve::detail
       return  []<std::size_t... I,std::size_t... J>
               (std::index_sequence<I...>,std::index_sequence<J...>)
       {
-        using vu8 = __vector unsigned char;
-        return vu8{(I,128)...,(J*spacing)...};
+        using vu8 = typename wide<T,N>::template rebind<std::uint8_t>;
+        return vu8{(I,128)...,((N::value-J-1)*spacing)...};
       }(std::make_index_sequence<16-N::value>{}, std::make_index_sequence<N::value>{});
     }();
 
-    auto result = vec_vbpermq(bit_cast(v.bits(),as(mask)), mask);
+    auto result = vec_vbpermq(bit_cast(v.bits(),as(mask)).storage(), mask.storage());
     return std::pair{result[0], eve::lane<1>};
   }
 }
