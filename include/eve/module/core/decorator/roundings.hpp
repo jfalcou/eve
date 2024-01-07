@@ -157,8 +157,8 @@ using to_nearest_type = decorated<to_nearest_()>;
 //================================================================================================
 using toward_zero_type = decorated<toward_zero_()>;
 
-inline constexpr upward_type const      upward      = {};
-inline constexpr downward_type const    downward    = {};
-inline constexpr to_nearest_type const  to_nearest  = {};
-inline constexpr toward_zero_type const toward_zero = {};
+[[maybe_unused]] inline constexpr upward_type const      upward      = {};
+[[maybe_unused]] inline constexpr downward_type const    downward    = {};
+[[maybe_unused]] inline constexpr to_nearest_type const  to_nearest  = {};
+[[maybe_unused]] inline constexpr toward_zero_type const toward_zero = {};
 }

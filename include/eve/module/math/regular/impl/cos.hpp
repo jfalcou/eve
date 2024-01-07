@@ -29,7 +29,7 @@ cos_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
   if constexpr( has_native_abi_v<T> )
   {
     auto x2          = sqr(a0);
-    auto x2nlepi2_16 = is_not_less_equal(x2, upward(pi2o_16)(as(a0)));
+    auto x2nlepi2_16 = is_not_less_equal(x2, pi2o_16[upward](as(a0)));
     if constexpr( scalar_value<T> ) return (x2nlepi2_16) ? nan(eve::as<T>()) : cos_eval(x2);
     else return if_else(x2nlepi2_16, eve::allbits, cos_eval(x2));
   }

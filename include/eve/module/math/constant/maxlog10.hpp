@@ -7,10 +7,34 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct maxlog10_t : constant_callable<maxlog10_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      return T(0x1.31d8b2p+5);
+    }
+    else
+    {
+      return T(0x1.341aace35661p+8);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(maxlog10_t, maxlog10_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -47,24 +71,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/maxlog10.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(maxlog10_, maxlog10);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto maxlog10_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x4218ec59U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x407341aace356610ULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto maxlog10_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return maxlog10(as<T>());
-  }
-}
+inline constexpr auto maxlog10 = functor<maxlog10_t>;
 }

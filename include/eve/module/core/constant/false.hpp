@@ -7,17 +7,33 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/arch.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct false_t : constant_callable<false_t, Options, downward_option, upward_option>
+{
+  template<typename T>
+  static EVE_FORCEINLINE auto value(eve::as<T> const&, auto const&)
+  {
+    return as_logical_t<T>(false);
+  }
+
+  template<typename T>
+  EVE_FORCEINLINE as_logical_t<T>  operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(false_t, false__);
+};
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
 //!   @var false_
-//!   @brief Computes  the false logical value.
+//!   @brief Computes the false logical value.
 //!
 //!   **Defined in Header**
 //!
@@ -30,8 +46,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> false_(as<T> x) noexcept;
+//!      template<eve::value T> constexpr eve::as_logical<T> false_(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -39,24 +54,14 @@ namespace eve
 //!
 //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      the call `eve::false_(as<T>())` returns [elementwise](@ref glossary_elementwise), the false
-//!      logical value.
+//!   The call `eve::false_(as<T>())` returns the `false` logical value for type `T`.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/false_.cpp}
+//!   @godbolt{doc/core/constant/false_.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(false__, false_);
-
-namespace detail
-{
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> false__(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    return as_logical_t<T>(false);
-  }
-}
+inline constexpr auto false_ = functor<false_t>;
 }

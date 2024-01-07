@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct rsqrt_pi_t : constant_callable<rsqrt_pi_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.20dd76p-1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.20dd74p-1);
+      else                                         return T(0x1.20dd76p-1);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.20dd750429b6ep-1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.20dd750429b6dp-1);
+      else                                         return T(0x1.20dd750429b6dp-1);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(rsqrt_pi_t, rsqrt_pi_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,28 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/rsqrt_pi.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(rsqrt_pi_, rsqrt_pi);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto rsqrt_pi_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    return Ieee_constant<
-        T,
-        0X3F106EBBU,
-        0X3FE20DD750429B6DULL>(); // 0.564189583547756286948079451560772585844050629329
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto rsqrt_pi_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    if constexpr( std::is_same_v<D, downward_type> )
-    {
-      return Ieee_constant<T, 0X3F106EBAU, 0X3FE20DD750429B6DULL>();
-    }
-    else { return Ieee_constant<T, 0X3F106EBBU, 0X3FE20DD750429B6EULL>(); }
-  }
-}
+inline constexpr auto rsqrt_pi = functor<rsqrt_pi_t>;
 }

@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct pi_t : constant_callable<pi_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.921fb6p+1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.921fb4p+1);
+      else                                         return T(0x1.921fb6p+1);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.921fb54442d19p+1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.921fb54442d18p+1);
+      else                                         return T(0x1.921fb54442d18p+1);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(pi_t, pi_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,34 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/pi.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(pi_, pi);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x40490FDBU>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x400921FB54442D18ULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto pi_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> )
-    {
-      if constexpr( std::is_same_v<D, upward_type> ) return eve::pi(as<T>());
-      else return Constant<T, 0x40490FDAU>();
-    }
-    else
-    {
-      if constexpr( std::is_same_v<D, downward_type> ) return eve::pi(as<T>());
-      else return Constant<T, 0x400921FB54442D19ULL>();
-    }
-  }
-}
+inline constexpr auto pi = functor<pi_t>;
 }

@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct pi_minus_3_t : constant_callable<pi_minus_3_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.21fb56p-3);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.21fb54p-3);
+      else                                         return T(0x1.21fb54p-3);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.21fb54442d185p-3);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.21fb54442d184p-3);
+      else                                         return T(0x1.21fb54442d184p-3);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(pi_minus_3_t, pi_minus_3_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,33 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/pi_minus_3.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(pi_minus_3_, pi_minus_3);
-
-namespace detail
-{
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE auto pi_minus_3_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.21fb54p-3);
-    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.21fb54442d184p-3);
-  }
-
-  template<floating_ordered_value T, typename D>
-  EVE_FORCEINLINE constexpr auto pi_minus_3_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<D, upward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.21fb56p-3);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.21fb54442d185p-3);
-    }
-    else if constexpr( std::is_same_v<D, downward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.21fb54p-3);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.21fb54442d184p-3);
-    }
-  }
-}
+inline constexpr auto pi_minus_3 = functor<pi_minus_3_t>;
 }

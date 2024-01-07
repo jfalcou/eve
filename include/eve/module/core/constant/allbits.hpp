@@ -7,21 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/detail/function/bit_cast.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-#include <eve/traits/as_integer.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward_option>
+{
+  template<typename T>
+  static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+  {
+    using e_t           = element_type_t<T>;
+    using i_t           = as_integer_t<e_t, unsigned>;
+    constexpr auto mask = ~0ULL;
+
+    if constexpr( std::integral<e_t> ) return T(mask);
+    else                               return T(bit_cast(i_t(mask), as<e_t>()));
+  }
+
+  template<typename T>
+  requires(plain_scalar_value<element_type_t<T>>)
+  EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(allbits_t, allbits_);
+};
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
 //!   @var allbits
-//!   @brief Computes the constant with all bits set.
+//!   @brief Computes a constant with all bits set.
 //!
 //!   **Defined in Header**
 //!
@@ -34,8 +51,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T allbits(as<T> x) noexcept;
+//!     template<eve::value T> constexpr T allbits(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -43,37 +59,17 @@ namespace eve
 //!
 //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      The call `eve::allbits(as<T>())` returns a value of type T with all bits set.
+//!   The call `eve::allbits(as<T>())` returns a value of type `T` with all bits set.
 //!
-//!  @groupheader{Example}
+//!   @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/allbits.cpp}
+//!   @godbolt{doc/core/constant/allbits.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(allbits_, allbits);
+inline constexpr auto allbits = functor<allbits_t>;
 
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t           = element_type_t<T>;
-    using i_t           = as_integer_t<t_t, unsigned>;
-    constexpr auto mask = ~0ULL;
-
-    if constexpr( std::is_integral_v<t_t> ) return T(mask);
-    else return T(bit_cast(i_t(mask), as<t_t>()));
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto allbits_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(allbits(as<T>()))
-  {
-    return allbits(as<T>());
-  }
-}
+// Required for if_else optimisation detections
+using callable_allbits_ = tag_t<allbits>;
 }

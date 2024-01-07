@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> invlog_phi(as<wide_ft>())                 = " << eve::invlog_phi(eve::as<wide_ft>())                << std::endl
             << "-> invlog_phi(as(wxf))                       = " << eve::invlog_phi(eve::as(wxf))                      << std::endl
-            << "-> upward(invlog_phi)(as<wide_ft>())         = " << eve::upward(eve::invlog_phi)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(invlog_phi)(as(wxf))               = " << eve::upward(eve::invlog_phi)(eve::as(wxf))         << std::endl
-            << "-> downward(invlog_phi)(as<wide_ft>())       = " << eve::downward(eve::invlog_phi)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(invlog_phi)(as(wxf))             = " << eve::downward(eve::invlog_phi)(eve::as(wxf))       << std::endl
+            << "-> invlog_phi[upward](as<wide_ft>())         = " << eve::invlog_phi[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> invlog_phi[upward](as(wxf))               = " << eve::invlog_phi[eve::upward](eve::as(wxf))         << std::endl
+            << "-> invlog_phi[downward](as<wide_ft>())       = " << eve::invlog_phi[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> invlog_phi[downward](as(wxf))             = " << eve::invlog_phi[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> invlog_phi(as<wide_dt>())           = " << eve::invlog_phi(eve::as<wide_dt>())                << std::endl
             << "-> invlog_phi(as(wxd))                 = " << eve::invlog_phi(eve::as(wxd))                      << std::endl
-            << "-> upward(invlog_phi)(as<wide_dt>())   = " << eve::upward(eve::invlog_phi)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(invlog_phi)(as(wxd))         = " << eve::upward(eve::invlog_phi)(eve::as(wxd))         << std::endl
-            << "-> downward(invlog_phi)(as<wide_dt>()) = " << eve::downward(eve::invlog_phi)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(invlog_phi)(as(wxd))       = " << eve::downward(eve::invlog_phi)(eve::as(wxd))       << std::endl;
+            << "-> invlog_phi[upward](as<wide_dt>())   = " << eve::invlog_phi[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> invlog_phi[upward](as(wxd))         = " << eve::invlog_phi[eve::upward](eve::as(wxd))         << std::endl
+            << "-> invlog_phi[downward](as<wide_dt>()) = " << eve::invlog_phi[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> invlog_phi[downward](as(wxd))       = " << eve::invlog_phi[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

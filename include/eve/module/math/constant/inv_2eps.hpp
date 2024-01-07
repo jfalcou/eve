@@ -7,10 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct inv_2eps_t : constant_callable<inv_2eps_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+      return T(0x1p+22);
+    else
+      return T(0x1p+51);
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(inv_2eps_t, inv_2eps_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,25 +66,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/inv_2eps.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(inv_2eps_, inv_2eps);
-
-namespace detail
-{
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr auto inv_2eps_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0X4A800000U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0X4320000000000000ULL>();
-    else return T(1);
-  }
-
-  template<floating_ordered_value T, typename D>
-  EVE_FORCEINLINE constexpr auto inv_2eps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    return inv_2eps(as<T>());
-  }
-}
+inline constexpr auto inv_2eps = functor<inv_2eps_t>;
 }

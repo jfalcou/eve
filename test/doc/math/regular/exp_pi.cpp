@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> exp_pi(as<wide_ft>())                 = " << eve::exp_pi(eve::as<wide_ft>())                << std::endl
             << "-> exp_pi(as(wxf))                       = " << eve::exp_pi(eve::as(wxf))                      << std::endl
-            << "-> upward(exp_pi)(as<wide_ft>())         = " << eve::upward(eve::exp_pi)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(exp_pi)(as(wxf))               = " << eve::upward(eve::exp_pi)(eve::as(wxf))         << std::endl
-            << "-> downward(exp_pi)(as<wide_ft>())       = " << eve::downward(eve::exp_pi)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(exp_pi)(as(wxf))             = " << eve::downward(eve::exp_pi)(eve::as(wxf))       << std::endl
+            << "-> exp_pi[upward](as<wide_ft>())         = " << eve::exp_pi[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> exp_pi[upward](as(wxf))               = " << eve::exp_pi[eve::upward](eve::as(wxf))         << std::endl
+            << "-> exp_pi[downward](as<wide_ft>())       = " << eve::exp_pi[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> exp_pi[downward](as(wxf))             = " << eve::exp_pi[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> exp_pi(as<wide_dt>())           = " << eve::exp_pi(eve::as<wide_dt>())                << std::endl
             << "-> exp_pi(as(wxd))                 = " << eve::exp_pi(eve::as(wxd))                      << std::endl
-            << "-> upward(exp_pi)(as<wide_dt>())   = " << eve::upward(eve::exp_pi)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(exp_pi)(as(wxd))         = " << eve::upward(eve::exp_pi)(eve::as(wxd))         << std::endl
-            << "-> downward(exp_pi)(as<wide_dt>()) = " << eve::downward(eve::exp_pi)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(exp_pi)(as(wxd))       = " << eve::downward(eve::exp_pi)(eve::as(wxd))       << std::endl;
+            << "-> exp_pi[upward](as<wide_dt>())   = " << eve::exp_pi[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> exp_pi[upward](as(wxd))         = " << eve::exp_pi[eve::upward](eve::as(wxd))         << std::endl
+            << "-> exp_pi[downward](as<wide_dt>()) = " << eve::exp_pi[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> exp_pi[downward](as(wxd))       = " << eve::exp_pi[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

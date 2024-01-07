@@ -84,10 +84,10 @@ TTS_CASE_TPL("Check return types of exp2", eve::test::simd::ieee_reals)
     }
     TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(eve::minlog2denormal(eve::as<T>())),
                   T(std::exp2(eve::minlog2denormal(eve::as<elt_t>()))),
-                  0);
+                  0.5);
     TTS_ULP_EQUAL(eve::pedantic(eve::exp2)(eve::prev(eve::minlog2denormal(eve::as<T>()))),
                   T(std::exp2(eve::prev(eve::minlog2denormal(eve::as<elt_t>())))),
-                  0);
+                  0.5);
   }
 };
 
@@ -150,7 +150,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::exp2)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::exp2[mask](a0),

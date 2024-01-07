@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct invlog_10_t : constant_callable<invlog_10_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.bcb7b2p-2);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.bcb7bp-2 );
+      else                                         return T(0x1.bcb7b2p-2);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.bcb7b1526e50fp-2);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.bcb7b1526e50ep-2);
+      else                                         return T(0x1.bcb7b1526e50ep-2);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(invlog_10_t, invlog_10_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,25 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/invlog_10.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(invlog_10_, invlog_10);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto invlog_10_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x3ede5bd9U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x3fdbcb7b1526e50EULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto invlog_10_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    if constexpr( std::is_same_v<D, upward_type> )
-      return Ieee_constant<T, 0x3ede5bd9U, 0x3fdbcb7b1526e50fULL>();
-    else return Ieee_constant<T, 0x3ede5bd8U, 0x3fdbcb7b1526e50eULL>();
-  }
-}
+inline constexpr auto invlog_10 = functor<invlog_10_t>;
 }

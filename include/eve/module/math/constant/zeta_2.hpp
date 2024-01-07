@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct zeta_2_t : constant_callable<zeta_2_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.a51a68p+0);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.a51a66p+0);
+      else                                         return T(0x1.a51a66p+0);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.a51a6625307d4p+0);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.a51a6625307d3p+0);
+      else                                         return T(0x1.a51a6625307d3p+0);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(zeta_2_t, zeta_2_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,33 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/zeta_2.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(zeta_2_, zeta_2);
-
-namespace detail
-{
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE auto zeta_2_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.a51a66p+0);
-    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.a51a6625307d3p+0);
-  }
-
-  template<floating_ordered_value T, typename D>
-  EVE_FORCEINLINE constexpr auto zeta_2_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<D, upward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.a51a68p+0);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.a51a6625307d4p+0);
-    }
-    else if constexpr( std::is_same_v<D, downward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.a51a66p+0);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.a51a6625307d3p+0);
-    }
-  }
-}
+inline constexpr auto zeta_2 = functor<zeta_2_t>;
 }

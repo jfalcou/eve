@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct log_10_t : constant_callable<log_10_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.26bb1cp+1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.26bb1ap+1);
+      else                                         return T(0x1.26bb1cp+1);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.26bb1bbb55516p+1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.26bb1bbb55515p+1);
+      else                                         return T(0x1.26bb1bbb55516p+1);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(log_10_t, log_10_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,22 +74,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/log_10.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(log_10_, log_10);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto log_10_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    return Ieee_constant<T, 0X40135D8EU, 0X40026BB1BBB55516ULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto log_10_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    if constexpr( std::is_same_v<D, upward_type> ) return eve::log_10(as<T>());
-    else return Ieee_constant<T, 0X40135D8DU, 0X40026BB1BBB55515ULL>();
-  }
-}
+inline constexpr auto log_10 = functor<log_10_t>;
 }

@@ -7,10 +7,39 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct sqrt_3_t : constant_callable<sqrt_3_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.bb67b0p+0);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.bb67aep+0);
+      else                                         return T(0x1.bb67aep+0);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.bb67ae8584cabp+0);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.bb67ae8584caap+0);
+      else                                         return T(0x1.bb67ae8584caap+0);
+    }
+  }
+
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(sqrt_3_t, sqrt_3_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -46,23 +75,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/sqrt_3.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sqrt_3_, sqrt_3);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE auto sqrt_3_(EVE_SUPPORTS(cpu_), eve::as<T> const& = {}) noexcept
-  {
-    return Ieee_constant<T, 0X3FDDB3D7U, 0X3FFBB67AE8584CAAULL>();
-  }
-
-  template<floating_value T, typename D>
-  EVE_FORCEINLINE constexpr auto sqrt_3_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    if constexpr( std::is_same_v<D, upward_type> )
-      return Ieee_constant<T, 0X3FDDB3D8U, 0X3FFBB67AE8584CABULL>();
-    else return Ieee_constant<T, 0X3FDDB3D7U, 0X3FFBB67AE8584CAAULL>();
-  }
-}
+inline constexpr auto sqrt_3 = functor<sqrt_3_t>;
 }
