@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> sinh_1(as<wide_ft>())                 = " << eve::sinh_1(eve::as<wide_ft>())                << std::endl
             << "-> sinh_1(as(wxf))                       = " << eve::sinh_1(eve::as(wxf))                      << std::endl
-            << "-> upward(sinh_1)(as<wide_ft>())         = " << eve::upward(eve::sinh_1)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(sinh_1)(as(wxf))               = " << eve::upward(eve::sinh_1)(eve::as(wxf))         << std::endl
-            << "-> downward(sinh_1)(as<wide_ft>())       = " << eve::downward(eve::sinh_1)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(sinh_1)(as(wxf))             = " << eve::downward(eve::sinh_1)(eve::as(wxf))       << std::endl
+            << "-> sinh_1[upward](as<wide_ft>())         = " << eve::sinh_1[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> sinh_1[upward](as(wxf))               = " << eve::sinh_1[eve::upward](eve::as(wxf))         << std::endl
+            << "-> sinh_1[downward](as<wide_ft>())       = " << eve::sinh_1[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> sinh_1[downward](as(wxf))             = " << eve::sinh_1[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> sinh_1(as<wide_dt>())           = " << eve::sinh_1(eve::as<wide_dt>())                << std::endl
             << "-> sinh_1(as(wxd))                 = " << eve::sinh_1(eve::as(wxd))                      << std::endl
-            << "-> upward(sinh_1)(as<wide_dt>())   = " << eve::upward(eve::sinh_1)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(sinh_1)(as(wxd))         = " << eve::upward(eve::sinh_1)(eve::as(wxd))         << std::endl
-            << "-> downward(sinh_1)(as<wide_dt>()) = " << eve::downward(eve::sinh_1)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(sinh_1)(as(wxd))       = " << eve::downward(eve::sinh_1)(eve::as(wxd))       << std::endl;
+            << "-> sinh_1[upward](as<wide_dt>())   = " << eve::sinh_1[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> sinh_1[upward](as(wxd))         = " << eve::sinh_1[eve::upward](eve::as(wxd))         << std::endl
+            << "-> sinh_1[downward](as<wide_dt>()) = " << eve::sinh_1[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> sinh_1[downward](as(wxd))       = " << eve::sinh_1[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

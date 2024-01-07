@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> log_phi(as<wide_ft>())                 = " << eve::log_phi(eve::as<wide_ft>())                << std::endl
             << "-> log_phi(as(wxf))                       = " << eve::log_phi(eve::as(wxf))                      << std::endl
-            << "-> upward(log_phi)(as<wide_ft>())         = " << eve::upward(eve::log_phi)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(log_phi)(as(wxf))               = " << eve::upward(eve::log_phi)(eve::as(wxf))         << std::endl
-            << "-> downward(log_phi)(as<wide_ft>())       = " << eve::downward(eve::log_phi)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(log_phi)(as(wxf))             = " << eve::downward(eve::log_phi)(eve::as(wxf))       << std::endl
+            << "-> log_phi[upward](as<wide_ft>())         = " << eve::log_phi[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> log_phi[upward](as(wxf))               = " << eve::log_phi[eve::upward](eve::as(wxf))         << std::endl
+            << "-> log_phi[downward](as<wide_ft>())       = " << eve::log_phi[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> log_phi[downward](as(wxf))             = " << eve::log_phi[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> log_phi(as<wide_dt>())           = " << eve::log_phi(eve::as<wide_dt>())                << std::endl
             << "-> log_phi(as(wxd))                 = " << eve::log_phi(eve::as(wxd))                      << std::endl
-            << "-> upward(log_phi)(as<wide_dt>())   = " << eve::upward(eve::log_phi)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(log_phi)(as(wxd))         = " << eve::upward(eve::log_phi)(eve::as(wxd))         << std::endl
-            << "-> downward(log_phi)(as<wide_dt>()) = " << eve::downward(eve::log_phi)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(log_phi)(as(wxd))       = " << eve::downward(eve::log_phi)(eve::as(wxd))       << std::endl;
+            << "-> log_phi[upward](as<wide_dt>())   = " << eve::log_phi[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> log_phi[upward](as(wxd))         = " << eve::log_phi[eve::upward](eve::as(wxd))         << std::endl
+            << "-> log_phi[downward](as<wide_dt>()) = " << eve::log_phi[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> log_phi[downward](as(wxd))       = " << eve::log_phi[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

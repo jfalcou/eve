@@ -100,6 +100,7 @@ glob_unit("unit" ${unit_root} "module/elliptic/*.cpp" )
 add_custom_target(unit.math.exe         )
 add_dependencies(unit.exe unit.math.exe )
 glob_unit("unit" ${unit_root} "module/math/*.cpp" )
+glob_unit("unit" ${unit_root} "module/math/constant/*.cpp" )
 
 add_custom_target(unit.polynomial.exe         )
 add_dependencies(unit.exe unit.polynomial.exe )

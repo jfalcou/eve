@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> invlog10_e(as<wide_ft>())                 = " << eve::invlog10_e(eve::as<wide_ft>())                << std::endl
             << "-> invlog10_e(as(wxf))                       = " << eve::invlog10_e(eve::as(wxf))                      << std::endl
-            << "-> upward(invlog10_e)(as<wide_ft>())         = " << eve::upward(eve::invlog10_e)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(invlog10_e)(as(wxf))               = " << eve::upward(eve::invlog10_e)(eve::as(wxf))         << std::endl
-            << "-> downward(invlog10_e)(as<wide_ft>())       = " << eve::downward(eve::invlog10_e)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(invlog10_e)(as(wxf))             = " << eve::downward(eve::invlog10_e)(eve::as(wxf))       << std::endl
+            << "-> invlog10_e[upward](as<wide_ft>())         = " << eve::invlog10_e[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> invlog10_e[upward](as(wxf))               = " << eve::invlog10_e[eve::upward](eve::as(wxf))         << std::endl
+            << "-> invlog10_e[downward](as<wide_ft>())       = " << eve::invlog10_e[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> invlog10_e[downward](as(wxf))             = " << eve::invlog10_e[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> invlog10_e(as<wide_dt>())           = " << eve::invlog10_e(eve::as<wide_dt>())                << std::endl
             << "-> invlog10_e(as(wxd))                 = " << eve::invlog10_e(eve::as(wxd))                      << std::endl
-            << "-> upward(invlog10_e)(as<wide_dt>())   = " << eve::upward(eve::invlog10_e)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(invlog10_e)(as(wxd))         = " << eve::upward(eve::invlog10_e)(eve::as(wxd))         << std::endl
-            << "-> downward(invlog10_e)(as<wide_dt>()) = " << eve::downward(eve::invlog10_e)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(invlog10_e)(as(wxd))       = " << eve::downward(eve::invlog10_e)(eve::as(wxd))       << std::endl;
+            << "-> invlog10_e[upward](as<wide_dt>())   = " << eve::invlog10_e[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> invlog10_e[upward](as(wxd))         = " << eve::invlog10_e[eve::upward](eve::as(wxd))         << std::endl
+            << "-> invlog10_e[downward](as<wide_dt>()) = " << eve::invlog10_e[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> invlog10_e[downward](as(wxd))       = " << eve::invlog10_e[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

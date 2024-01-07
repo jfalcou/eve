@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> sqrtlog_4(as<wide_ft>())                 = " << eve::sqrtlog_4(eve::as<wide_ft>())                << std::endl
             << "-> sqrtlog_4(as(wxf))                       = " << eve::sqrtlog_4(eve::as(wxf))                      << std::endl
-            << "-> upward(sqrtlog_4)(as<wide_ft>())         = " << eve::upward(eve::sqrtlog_4)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(sqrtlog_4)(as(wxf))               = " << eve::upward(eve::sqrtlog_4)(eve::as(wxf))         << std::endl
-            << "-> downward(sqrtlog_4)(as<wide_ft>())       = " << eve::downward(eve::sqrtlog_4)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(sqrtlog_4)(as(wxf))             = " << eve::downward(eve::sqrtlog_4)(eve::as(wxf))       << std::endl
+            << "-> sqrtlog_4[upward](as<wide_ft>())         = " << eve::sqrtlog_4[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> sqrtlog_4[upward](as(wxf))               = " << eve::sqrtlog_4[eve::upward](eve::as(wxf))         << std::endl
+            << "-> sqrtlog_4[downward](as<wide_ft>())       = " << eve::sqrtlog_4[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> sqrtlog_4[downward](as(wxf))             = " << eve::sqrtlog_4[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> sqrtlog_4(as<wide_dt>())           = " << eve::sqrtlog_4(eve::as<wide_dt>())                << std::endl
             << "-> sqrtlog_4(as(wxd))                 = " << eve::sqrtlog_4(eve::as(wxd))                      << std::endl
-            << "-> upward(sqrtlog_4)(as<wide_dt>())   = " << eve::upward(eve::sqrtlog_4)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(sqrtlog_4)(as(wxd))         = " << eve::upward(eve::sqrtlog_4)(eve::as(wxd))         << std::endl
-            << "-> downward(sqrtlog_4)(as<wide_dt>()) = " << eve::downward(eve::sqrtlog_4)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(sqrtlog_4)(as(wxd))       = " << eve::downward(eve::sqrtlog_4)(eve::as(wxd))       << std::endl;
+            << "-> sqrtlog_4[upward](as<wide_dt>())   = " << eve::sqrtlog_4[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> sqrtlog_4[upward](as(wxd))         = " << eve::sqrtlog_4[eve::upward](eve::as(wxd))         << std::endl
+            << "-> sqrtlog_4[downward](as<wide_dt>()) = " << eve::sqrtlog_4[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> sqrtlog_4[downward](as(wxd))       = " << eve::sqrtlog_4[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

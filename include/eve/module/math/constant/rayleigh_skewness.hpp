@@ -7,10 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct rayleigh_skewness_t : constant_callable<rayleigh_skewness_t, Options, downward_option, upward_option>
+{
+  template<typename T, typename Opts>
+  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  {
+    if constexpr(std::same_as<element_type_t<T>, float>)
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.4320fp-1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.4320eep-1);
+      else                                         return T(0x1.4320fp-1);
+    }
+    else
+    {
+      if constexpr(Opts::contains(upward2))        return T(0x1.4320efa6fa904p-1);
+      else if constexpr(Opts::contains(downward2)) return T(0x1.4320efa6fa903p-1);
+      else                                         return T(0x1.4320efa6fa904p-1);
+    }
+  }
+
+  template<floating_value T>
+  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(rayleigh_skewness_t, rayleigh_skewness_);
+};
+
 //================================================================================================
 //! @addtogroup math_constants
 //! @{
@@ -47,34 +75,5 @@ namespace eve
 //!  @godbolt{doc/math/regular/rayleigh_skewness.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(rayleigh_skewness_, rayleigh_skewness);
-
-namespace detail
-{
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE auto rayleigh_skewness_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return T(0x1.4320fp-1);
-    else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.4320efa6fa904p-1);
-  }
-
-  template<floating_ordered_value T, typename D>
-  EVE_FORCEINLINE constexpr auto
-  rayleigh_skewness_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-      requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<D, upward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.4320fp-1);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.4320efa6fa904p-1);
-    }
-    else if constexpr( std::is_same_v<D, downward_type> )
-    {
-      if constexpr( std::is_same_v<t_t, float> ) return T(0x1.4320eep-1);
-      else if constexpr( std::is_same_v<t_t, double> ) return T(0x1.4320efa6fa903p-1);
-    }
-  }
-}
+inline constexpr auto rayleigh_skewness = functor<rayleigh_skewness_t>;
 }

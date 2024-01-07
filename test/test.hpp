@@ -110,6 +110,19 @@ namespace tts
   }
 }
 
+namespace tts
+{
+
+  template<typename T, typename V> auto as_value(V const&);
+
+template<typename T, typename V>
+  auto as_value(V const& v)
+  requires( requires { v(eve::as<T>{}); } )
+  {
+    return v(eve::as<T>{});
+  }
+}
+
 #include <tts/tts.hpp>
 
 //==================================================================================================
@@ -183,6 +196,12 @@ namespace eve::test
                               , eve::fixed< 512>
                               , eve::fixed<1024>
                               >;
+
+  EVE_FORCEINLINE auto is_near(auto a,  auto b){
+    return eve::if_else( a < b
+                       , (eve::next(a) == b) && (eve::prev(b) == a)
+                       , a == b);
+  }
 }
 
 namespace eve::test::scalar
@@ -210,6 +229,8 @@ namespace eve::test::simd
 //==================================================================================================
 // EVE Data generators
 //==================================================================================================
+
+
 namespace eve::detail
 {
   template<typename T, typename V> auto as_value(callable_object<V> const& v)
@@ -218,8 +239,11 @@ namespace eve::detail
   }
 }
 
+
+
 namespace tts
 {
+
   template<typename T> struct bunch
   {
     template<typename L> struct make;

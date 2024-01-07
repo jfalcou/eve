@@ -14,17 +14,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> sqrt_e(as<wide_ft>())                 = " << eve::sqrt_e(eve::as<wide_ft>())                << std::endl
             << "-> sqrt_e(as(wxf))                       = " << eve::sqrt_e(eve::as(wxf))                      << std::endl
-            << "-> upward(sqrt_e)(as<wide_ft>())         = " << eve::upward(eve::sqrt_e)(eve::as<wide_ft>())   << std::endl
-            << "-> upward(sqrt_e)(as(wxf))               = " << eve::upward(eve::sqrt_e)(eve::as(wxf))         << std::endl
-            << "-> downward(sqrt_e)(as<wide_ft>())       = " << eve::downward(eve::sqrt_e)(eve::as<wide_ft>()) << std::endl
-            << "-> downward(sqrt_e)(as(wxf))             = " << eve::downward(eve::sqrt_e)(eve::as(wxf))       << std::endl
+            << "-> sqrt_e[upward](as<wide_ft>())         = " << eve::sqrt_e[eve::upward](eve::as<wide_ft>())   << std::endl
+            << "-> sqrt_e[upward](as(wxf))               = " << eve::sqrt_e[eve::upward](eve::as(wxf))         << std::endl
+            << "-> sqrt_e[downward](as<wide_ft>())       = " << eve::sqrt_e[eve::downward](eve::as<wide_ft>()) << std::endl
+            << "-> sqrt_e[downward](as(wxf))             = " << eve::sqrt_e[eve::downward](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> sqrt_e(as<wide_dt>())           = " << eve::sqrt_e(eve::as<wide_dt>())                << std::endl
             << "-> sqrt_e(as(wxd))                 = " << eve::sqrt_e(eve::as(wxd))                      << std::endl
-            << "-> upward(sqrt_e)(as<wide_dt>())   = " << eve::upward(eve::sqrt_e)(eve::as<wide_dt>())   << std::endl
-            << "-> upward(sqrt_e)(as(wxd))         = " << eve::upward(eve::sqrt_e)(eve::as(wxd))         << std::endl
-            << "-> downward(sqrt_e)(as<wide_dt>()) = " << eve::downward(eve::sqrt_e)(eve::as<wide_dt>()) << std::endl
-            << "-> downward(sqrt_e)(as(wxd))       = " << eve::downward(eve::sqrt_e)(eve::as(wxd))       << std::endl;
+            << "-> sqrt_e[upward](as<wide_dt>())   = " << eve::sqrt_e[eve::upward](eve::as<wide_dt>())   << std::endl
+            << "-> sqrt_e[upward](as(wxd))         = " << eve::sqrt_e[eve::upward](eve::as(wxd))         << std::endl
+            << "-> sqrt_e[downward](as<wide_dt>()) = " << eve::sqrt_e[eve::downward](eve::as<wide_dt>()) << std::endl
+            << "-> sqrt_e[downward](as(wxd))       = " << eve::sqrt_e[eve::downward](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;
