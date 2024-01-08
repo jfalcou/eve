@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
 #include <eve/module/math/constant/invlog10_2.hpp>
@@ -44,21 +46,19 @@ exp10_(EVE_SUPPORTS(cpu_), pedantic_type const&, T x) noexcept
     x      = fnma(c, Log10_2lo, x);
     if constexpr( std::is_same_v<elt_t, float> )
     {
-      c = inc(horn<T, 0x40135d8e, 0x4029a926, 0x400237da, 0x3f95eb4c, 0x3f0aacef, 0x3e54dff1>(x)
-              * x);
+      c = inc(
+      eve::reverse_horner(x, T(0x1.26bb1cp+1f), T(0x1.53524cp+1f), T(0x1.046fb4p+1f)
+                         , T(0x1.2bd698p+0f), T(0x1.1559dep-1f), T(0x1.a9bfe2p-3f)) * x);
     }
     else if constexpr( std::is_same_v<elt_t, double> )
     {
       T xx = sqr(x);
       T px = x
-             * horn<T,
-                    0x40a2b4798e134a01ull,
-                    0x40796b7a050349e4ull,
-                    0x40277d9474c55934ull,
-                    0x3fa4fd75f3062dd4ull>(xx);
-      T x2 = px
-             / (horn1<T, 0x40a03f37650df6e2ull, 0x4093e05eefd67782ull, 0x405545fdce51ca08ull>(xx)
-                - px);
+             *
+             eve::reverse_horner(xx, T(0x1.2b4798e134a01p+11), T(0x1.96b7a050349e4p+8)
+                                , T(0x1.77d9474c55934p+3), T(0x1.4fd75f3062dd4p-5));
+      T x2 = px / ( eve::reverse_horner(xx, T(0x1.03f37650df6e2p+11), T(0x1.3e05eefd67782p+10)
+                                       , T(0x1.545fdce51ca08p+6), T(0x1.0p0)) - px);
       c = inc(x2 + x2);
     }
     auto z = D()(ldexp)(c, k);
