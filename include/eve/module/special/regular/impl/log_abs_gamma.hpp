@@ -122,7 +122,7 @@ log_abs_gamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
       {
         if( (is_infinite(a0)) ) return inf(as<T>());
         const T Maxlog_abs_gamma =
-            Ieee_constant<T, 0x7bc3f8eaU, 0x7f574c5dd06d2516ULL>(); // 2.035093e36f, 2.556348e305
+            ieee_constant<T>(0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014); // 2.035093e36f, 2.556348e305
         auto log_abs_gamma_pos = [Logsqrt2pi](T x)
         {
           if( x < 6.5f )
@@ -316,7 +316,7 @@ log_abs_gamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
       if constexpr( scalar_value<T> ) // scalar double
       {
         const T Maxlog_abs_gamma =
-            Ieee_constant<T, 0x7bc3f8eaU, 0x7f574c5dd06d2516ULL>(); // 2.035093e36f, 2.556348e305
+            ieee_constant<T>(0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014); // 2.035093e36f, 2.556348e305
         auto log_abs_gamma_pos = [Logsqrt2pi](T x)
         {
           if( x < 13.0 )

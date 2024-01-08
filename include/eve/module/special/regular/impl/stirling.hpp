@@ -38,10 +38,10 @@ stirling_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
       }
     };
     const T Stirlingsplitlim =
-        Ieee_constant<T, 0X41D628F6U, 0X4061E083BA3443D4ULL>(); // 26.77f, 143.01608
+        ieee_constant<T>(0x1.ac51ec0p+4f, 0x1.1e083ba3443d4p+7); // 26.77f, 143.01608
     const T Stirlinglargelim =
-        Ieee_constant<T, 0X420C28F3U, 0x4065800000000000ULL>();                // 35.0399895f, 172
-    const T Sqrt_2pi = Ieee_constant<T, 0X40206C99U, 0X40040D931FF62704ULL>(); // 2.50662827463100
+        ieee_constant<T>(0x1.1851e60p+5f, 0x1.5800000000000p+7);                // 35.0399895f, 172
+    const T Sqrt_2pi = ieee_constant<T>(0x1.40d9320p+1f, 0x1.40d931ff62704p+1); // 2.50662827463100
     if constexpr( simd_value<T> )
     {
       a0        = if_else(is_gez(a0), a0, eve::allbits);
