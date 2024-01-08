@@ -175,12 +175,12 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
         6658437.0,  6231200.0,  6832269.0,  16767104.0, 5075751.0,  3212806.0,  1398474.0,
         7579849.0,  6349435.0,  12618859.0, 4703257.0,  12806093.0, 14477321.0, 2786137.0,
         12875403.0, 9837734.0,  14528324.0, 13719321.0, 343717.0};
-    double tm600 = Constant<double, 0x1a70000000000000ULL>(); /* 2 ^- 600 */
-    double split = Constant<double, 0x41a0000002000000ULL>(); /* 2^27 + 1 */
-    double hp0   = Constant<double, 0x3FF921FB54442D18ULL>(); /* 1.5707963267948966     */
-    double hp1   = Constant<double, 0x3C91A62633145C07ULL>(); /* 6.123233995736766e-17  */
-    double mp1   = Constant<double, 0x3FF921FB58000000ULL>(); /* 1.5707963407039642     */
-    double mp2   = Constant<double, 0xBE4DDE9740000000ULL>(); /*-1.3909067675399456e-08 */
+    double tm600 = double(0x1.0000000000000p-600); /* 2 ^- 600 */
+    double split = double(0x1.0000002000000p+27); /* 2^27 + 1 */
+    double hp0   = double(0x1.921fb54442d18p+0); /* 1.5707963267948966     */
+    double hp1   = double(0x1.1a62633145c07p-54); /* 6.123233995736766e-17  */
+    double mp1   = double(0x1.921fb58000000p+0); /* 1.5707963407039642     */
+    double mp2   = double(-0x1.dde9740000000p-27); /*-1.3909067675399456e-08 */
     T      x     = xx * tm600;
     T      t     = prevent_gcc_abusive_contract(x * split);
     T      x1    = t - (t - x);
@@ -190,9 +190,9 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     auto pass = [&toverp](auto x1, T& b1, T& bb1)
     {
       uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
-      double   tm24 = Constant<double, 0x3e70000000000000ULL>(); /* 2 ^- 24  */
-      double   big  = Constant<double, 0x4338000000000000ULL>(); /*  6755399441055744      */
-      double   big1 = Constant<double, 0x4358000000000000ULL>(); /* 27021597764222976      */
+      double   tm24 = double(0x1.0000000000000p-24); /* 2 ^- 24  */
+      double   big  = double(0x1.8000000000000p+52); /*  6755399441055744      */
+      double   big1 = double(0x1.8000000000000p+54); /* 27021597764222976      */
       T        sum(0);
       ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
       i32_t    k;

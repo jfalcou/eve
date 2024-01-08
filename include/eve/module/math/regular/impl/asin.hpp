@@ -66,7 +66,7 @@ namespace eve::detail
           auto vp  = num / den;
           zz1      = sqrt(zz1 + zz1);
           auto z   = pio_4(eve::as<T>()) - zz1;
-          zz1      = fms(zz1, vp, Constant<T, 0X3C91A62633145C07ULL>()); // pio_2lo
+          zz1      = fms(zz1, vp, T(0x1.1a62633145c07p-54)); // pio_2lo
           z        = z - zz1;
           zz1      = z + pio_4(eve::as<T>());
           return zz1;
@@ -84,7 +84,7 @@ namespace eve::detail
           zz2      = fma(x, z, x);
           return zz2;
         };
-        auto ct1    = Constant<T, 0x3fe4000000000000ll>(); // 0.625;
+        auto ct1    = T(0x1.4000000000000p-1); // 0.625;
         auto xgtct1 = x > ct1;
         auto res    = branch<scalar_value<T>>(xgtct1, case_1, case_2)(x);
         if constexpr( simd_value<T> ) { res = if_else(small, x, res); }

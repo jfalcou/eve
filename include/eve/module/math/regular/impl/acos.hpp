@@ -69,7 +69,7 @@ acos_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
       T const pio4 = pio_4(eve::as<T>());
 
       T z = pio4 - eve::asin(a0);
-      z += Constant<T, 0X3C81A62633145C07ULL>(); // Pio_4lo(as<T>());
+      z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>());
       z += pio4;
 
       return z;
