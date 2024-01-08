@@ -101,7 +101,8 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_x86_within_128_alignr(P, fixed<G>, wide<T, N> x)
 {
-  if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
+  if constexpr( current_api < ssse3 ) return no_matching_shuffle;
+  else if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
   else if constexpr( current_api < ssse3 ) return no_matching_shuffle;
   else
   {
