@@ -73,7 +73,7 @@ namespace detail
   EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
   {
     if constexpr( std::is_same_v<D, downward_type> ) return logeps(as<T>());
-    else return Ieee_constant<T, 0XC17F1401U, 0XC04205966F2B4F11ULL>();
+    else return ieee_constant<T>(-0x1.fe28020p+3f, -0x1.205966f2b4f11p+5);
   }
 }
 }

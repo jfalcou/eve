@@ -63,7 +63,7 @@ cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
       auto br_2 = [](auto x)
         {
           const T z = sqr(x);
-          return (z - 5.7831859588623046875E0f) * // Ieee_constant<T,0x40b90fdc> ())*
+          return (z - 5.7831859588623046875E0f) *
           horn<T, 0xbe3110a6, 0x3c5a6271, 0xb9d01fb1, 0x36d660a0, 0xb382511c>(z);
         };
 
