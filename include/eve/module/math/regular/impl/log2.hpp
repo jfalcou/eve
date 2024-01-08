@@ -172,8 +172,8 @@ namespace eve::detail
 
           /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
 
-          T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
-          T Invlog_2hi = Ieee_constant<T, 0x3fb8b000U, 0x3ff7154765200000ULL>();
+          T Invlog_2lo = ieee_constant<T>(-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33);
+          T Invlog_2hi = ieee_constant<T>(0x1.7160000p+0f, 0x1.7154765200000p+0);
           T hi         = f - hfsq;
           hi           = (hi & (allbits(eve::as<uiT>()) << 32));
           T lo         = fma(s, hfsq + R, f - hi - hfsq);
@@ -343,8 +343,8 @@ namespace eve::detail
 
         /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
 
-        T Invlog_2lo = Ieee_constant<T, 0xb9389ad4U, 0x3de705fc2eefa200ULL>();
-        T Invlog_2hi = Ieee_constant<T, 0x3fb8b000UL, 0x3ff7154765200000ULL>();
+        T Invlog_2lo = ieee_constant<T>(-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33);
+        T Invlog_2hi = ieee_constant<T>(0x1.7160000p+0f, 0x1.7154765200000p+0);
         T hi         = f - hfsq;
         hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
         T lo         = f - hi - hfsq + s * (hfsq + R);

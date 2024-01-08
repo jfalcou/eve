@@ -11,33 +11,33 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T>
-EVE_FORCEINLINE constexpr auto
-radindeg_(EVE_SUPPORTS(cpu_), T const& a) noexcept
-{
-  if constexpr( has_native_abi_v<T> )
+  template<floating_ordered_value T>
+  EVE_FORCEINLINE constexpr auto
+  radindeg_(EVE_SUPPORTS(cpu_), T const& a) noexcept
   {
-    auto radradindeg  = Ieee_constant<T, 0X42652EE1U, 0X404CA5DC1A63C1F8ULL>();
-    auto radradindegr = Ieee_constant<T, 0X353387C0U, 0X3CE1E7AB456405F8ULL>();
-    return fma(a, radradindegr, a * radradindeg);
+    if constexpr( has_native_abi_v<T> )
+    {
+      auto radradindeg  = ieee_constant<T>(0x1.ca5dc20p+5f, 0x1.ca5dc1a63c1f8p+5);
+      auto radradindegr = ieee_constant<T>(0x1.670f800p-21f, 0x1.1e7ab456405f8p-49);
+      return fma(a, radradindegr, a * radradindeg);
+    }
+    else return apply_over(radindeg, a);
   }
-  else return apply_over(radindeg, a);
-}
-
-
+  
+  
 // -----------------------------------------------------------------------------------------------
 // Masked cases
-template<conditional_expr C, value U>
-EVE_FORCEINLINE auto
-radindeg_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-{
-  return mask_op(cond, eve::radindeg, t);
-}
-
-template<conditional_expr C, decorator D, value U>
-EVE_FORCEINLINE auto
-radindeg_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
-{
-  return mask_op(cond, d(eve::radindeg), t);
-}
+  template<conditional_expr C, value U>
+  EVE_FORCEINLINE auto
+  radindeg_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
+  {
+    return mask_op(cond, eve::radindeg, t);
+  }
+  
+  template<conditional_expr C, decorator D, value U>
+  EVE_FORCEINLINE auto
+  radindeg_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
+  {
+    return mask_op(cond, d(eve::radindeg), t);
+  }
 }

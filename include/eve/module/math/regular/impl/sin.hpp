@@ -25,10 +25,7 @@ sin_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    auto pi2_16 = Ieee_constant<T,
-                                0X3F1DE9E7U,
-                                0x3FE3BD3CC9BE45DEULL>(); // 0.61685027506808491367715568749226
-                                                          // but rounded upward
+    auto pi2_16 = pi2o_16[upward](as<T>());
     auto x2 = sqr(a0);
     if constexpr( scalar_value<T> )
       if( is_not_less_equal(x2, pi2_16) ) return nan(eve::as<T>());
