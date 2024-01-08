@@ -19,16 +19,13 @@ namespace eve::detail
   EVE_FORCEINLINE std::pair<std::uint64_t,fixed<1>>
   movemask(logical<wide<T, N>> const &v) noexcept requires ppc_abi<abi_t<T, N>>
   {
-    auto mask = []()
+    using vu8 = typename wide<T,N>::template rebind<std::uint8_t>;
+    auto mask = vu8([](auto i, auto c)
     {
       constexpr auto spacing = sizeof(T)*8;
-      return  []<std::size_t... I,std::size_t... J>
-              (std::index_sequence<I...>,std::index_sequence<J...>)
-      {
-        using vu8 = typename wide<T,N>::template rebind<std::uint8_t>;
-        return vu8{(I,128)...,((N::value-J-1)*spacing)...};
-      }(std::make_index_sequence<16-N::value>{}, std::make_index_sequence<N::value>{});
-    }();
+      // Any value above 128 means 0 so this always work without checking if i is above or below N
+      return (c-1-i) * spacing;
+    });
 
     auto result = vec_vbpermq(bit_cast(v.bits(),as(mask)).storage(), mask.storage());
     return {result[0], eve::lane<1>};
