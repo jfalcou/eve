@@ -20,8 +20,8 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      T Log_2hi   = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-      T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+      T Log_2hi   = ieee_constant<T>(0x1.6300000p-1f, 0x1.62e42fee00000p-1);
+      T Log_2lo   = ieee_constant<T>(-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33);
       using uiT   = as_integer_t<T, unsigned>;
       using iT    = as_integer_t<T, signed>;
       using elt_t = element_type_t<T>;
@@ -143,8 +143,8 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
     auto x = a0;
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T, signed>;
-    T Log_2hi = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-    T Log_2lo = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+    T Log_2hi = ieee_constant<T>(0x1.6300000p-1f, 0x1.62e42fee00000p-1);
+    T Log_2lo = ieee_constant<T>(-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33);
     if constexpr( std::is_same_v<T, float> )
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */

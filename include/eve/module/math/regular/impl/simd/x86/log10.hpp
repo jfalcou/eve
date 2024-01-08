@@ -18,10 +18,10 @@ template<floating_simd_value T>
 auto
 log10_(EVE_SUPPORTS(cpu_), plain_type const&, const T& a0) noexcept
 {
-  T Invlog_10hi = Ieee_constant<T, 0x3ede6000U, 0x3fdbcb7b15200000ULL>();
-  T Invlog_10lo = Ieee_constant<T, 0xb804ead9U, 0x3dbb9438ca9aadd5ULL>();
-  T Log10_2hi   = Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
-  T Log10_2lo   = Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
+  T Invlog_10hi = ieee_constant<T>(0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2);
+  T Invlog_10lo = ieee_constant<T>(-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36);
+  T Log10_2hi   = ieee_constant<T>(0x1.3400000p-2f, 0x1.3440000000000p-2);
+  T Log10_2lo   = ieee_constant<T>(0x1.04d4280p-12f, 0x1.3509f79fef312p-18);
   if constexpr( has_native_abi_v<T> )
   {
     using elt_t = element_type_t<T>;

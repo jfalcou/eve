@@ -29,8 +29,8 @@ exp10_(EVE_SUPPORTS(cpu_), pedantic_type const&, T x) noexcept
       if constexpr( (!eve::platform::supports_denormals) ) { return minlog10(eve::as<T>()); }
       else { return minlog10denormal(eve::as<T>()); }
     };
-    const T Log10_2hi   = Ieee_constant<T, 0x3e9a0000U, 0x3fd3440000000000ULL>();
-    const T Log10_2lo   = Ieee_constant<T, 0x39826a14U, 0x3ed3509f79fef312ULL>();
+    const T Log10_2hi   = ieee_constant<T>(0x1.3400000p-2f, 0x1.3440000000000p-2);
+    const T Log10_2lo   = ieee_constant<T>(0x1.04d4280p-12f, 0x1.3509f79fef312p-18);
     auto    xltminlog10 = x <= minlogval();
     auto    xgemaxlog10 = x >= maxlog10(eve::as(x));
     if constexpr( scalar_value<T> )
