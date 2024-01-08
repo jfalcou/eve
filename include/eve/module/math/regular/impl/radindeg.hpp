@@ -17,8 +17,8 @@ namespace eve::detail
   {
     if constexpr( has_native_abi_v<T> )
     {
-      auto radradindeg  = ieee_constant<T>(0x1.ca5dc20p+5f, 0x1.ca5dc1a63c1f8p+5);
-      auto radradindegr = ieee_constant<T>(0x1.670f800p-21f, 0x1.1e7ab456405f8p-49);
+      auto radradindeg  = ieee_cts<0x1.ca5dc20p+5f, 0x1.ca5dc1a63c1f8p+5>(eve::as<T>{});
+      auto radradindegr = ieee_cts<0x1.670f800p-21f, 0x1.1e7ab456405f8p-49>(eve::as<T>{});
       return fma(a, radradindegr, a * radradindeg);
     }
     else return apply_over(radindeg, a);

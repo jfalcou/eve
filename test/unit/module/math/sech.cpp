@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of sech", eve::test::simd::ieee_reals)
 auto maxi = []<typename T>(eve::as<T> const&)
 {
   using v_t = eve::element_type_t<T>;
-  v_t ovl   = eve::ieee_constant<v_t>(88.376251220703125f, 709.782712893384);
+  v_t ovl   = eve::ieee_cts<88.376251220703125f, 709.782712893384>(eve::as<v_t>{});
   return T(ovl);
 };
 auto mini = []<typename T>(eve::as<T> const& tgt) { return -maxi(tgt); };

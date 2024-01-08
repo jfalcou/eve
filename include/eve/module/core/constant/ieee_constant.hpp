@@ -76,4 +76,18 @@ namespace eve
        return T(vd);
     }
   }
+
+  namespace _
+  {
+    struct real32 { constexpr real32(auto v) : value(v) {} float  value; };
+    struct real64 { constexpr real64(auto v) : value(v) {} double value; };
+  }
+
+  template<eve::_::real32 BF, eve::_::real64 BD,typename T>
+  auto ieee_cts(eve::as<T>)
+  {
+    using e_t = eve::element_type_t<T>;
+    if      constexpr(std::same_as<float,e_t>) return T(BF.value);
+    else if constexpr(std::same_as<double,e_t>) return T(BD.value);
+  }
 }

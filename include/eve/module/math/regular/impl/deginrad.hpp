@@ -17,8 +17,8 @@ deginrad_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    auto ridh = ieee_constant<T>(0x1.1de0000p-6f, 0x1.1df46a0000000p-6);
-    auto ridl = ieee_constant<T>(0x1.46a2520p-18f, 0x1.294e9c8ae0ec6p-33);
+    auto ridh = ieee_cts<0x1.1de0000p-6f, 0x1.1df46a0000000p-6>(eve::as<T>{});
+    auto ridl = ieee_cts<0x1.46a2520p-18f, 0x1.294e9c8ae0ec6p-33>(eve::as<T>{});
     return fma(a, ridl, a * ridh);
   }
   else return apply_over(deginrad, a);

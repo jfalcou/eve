@@ -84,7 +84,7 @@ exp_int_(EVE_SUPPORTS(cpu_), T n, T x) noexcept
           auto    psi1 = zero(as(x));
           int32_t maxn = dec(max(1, int32_t(eve::maximum(n))));
           for( int32_t i = maxn; i != 0; --i ) psi1 = add[T(i) < n](psi1, rec(T(i)));
-          auto euler = ieee_constant<T>(0x1.2788d00p-1f, 0x1.2788cfc6fb619p-1);
+          auto euler = ieee_cts<0x1.2788d00p-1f, 0x1.2788cfc6fb619p-1>(eve::as<T>{});
           auto psi   = -euler - log(x) + psi1;
           T    t;
           ;

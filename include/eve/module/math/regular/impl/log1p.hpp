@@ -24,8 +24,8 @@ namespace eve::detail
         using elt_t         = element_type_t<T>;
         using uiT           = as_integer_t<T, unsigned>;
         using iT            = as_integer_t<T, signed>;
-        const elt_t Log_2hi = ieee_constant<elt_t>(0x1.6300000p-1f, 0x1.62e42fee00000p-1);
-        const elt_t Log_2lo = ieee_constant<elt_t>(-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33);
+        const elt_t Log_2hi = ieee_cts<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<elt_t>{});
+        const elt_t Log_2lo = ieee_cts<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<elt_t>{});
         T           uf      = inc(a0);
         auto        isnez   = is_nez(uf);
         if constexpr( std::is_same_v<elt_t, float> )
@@ -115,8 +115,8 @@ namespace eve::detail
       auto x = a0;
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T, signed>;
-      T Log_2hi = ieee_constant<T>(0x1.6300000p-1f, 0x1.62e42fee00000p-1);
-      T Log_2lo = ieee_constant<T>(-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33);
+      T Log_2hi = ieee_cts<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+      T Log_2lo = ieee_cts<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
       if constexpr( std::is_same_v<T, float> )
       {
         /* origin: FreeBSD /usr/src/lib/msun/src/e_log1pf.c */

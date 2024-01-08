@@ -19,10 +19,10 @@ namespace eve::detail
   auto
   log10_(EVE_SUPPORTS(cpu_), plain_type const&, const T& a0) noexcept
   {
-    T Invlog_10hi = ieee_constant<T>(0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2);
-    T Invlog_10lo = ieee_constant<T>(-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36);
-    T Log10_2hi   = ieee_constant<T>(0x1.3400000p-2f, 0x1.3440000000000p-2);
-    T Log10_2lo   = ieee_constant<T>(0x1.04d4280p-12f, 0x1.3509f79fef312p-18);
+    T Invlog_10hi = ieee_cts<0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2>(eve::as<T>{});
+    T Invlog_10lo = ieee_cts<-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36>(eve::as<T>{});
+    T Log10_2hi   = ieee_cts<0x1.3400000p-2f, 0x1.3440000000000p-2>(eve::as<T>{});
+    T Log10_2lo   = ieee_cts<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(eve::as<T>{});
     if constexpr( has_native_abi_v<T> )
     {
       using elt_t = element_type_t<T>;

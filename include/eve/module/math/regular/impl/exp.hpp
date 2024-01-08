@@ -38,9 +38,9 @@ namespace eve::detail
     {
       using elt_t       = element_type_t<T>;
       auto    minlogval = []() { return minlog(eve::as<T>()); };
-      const T Log_2hi   = ieee_constant<T>(0x1.6300000p-1f, 0x1.62e42fee00000p-1);
-      const T Log_2lo   = ieee_constant<T>(-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33);
-      const T Invlog_2  = ieee_constant<T>(0x1.7154760p+0f, 0x1.71547652b82fep+0);
+      const T Log_2hi   = ieee_cts<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+      const T Log_2lo   = ieee_cts<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
+      const T Invlog_2  = ieee_cts<0x1.7154760p+0f, 0x1.71547652b82fep+0>(eve::as<T>{});
       auto    xltminlog = x <= minlogval();
       auto    xgemaxlog = x >= maxlog(eve::as(x));
       if constexpr( scalar_value<T> )
