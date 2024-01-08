@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/hz_device.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
@@ -37,34 +38,27 @@ digamma_(EVE_SUPPORTS(cpu_), T x) noexcept
       x = dec(x);
       if constexpr( std::is_same_v<elt_t, double> )
       {
-        auto r = horn<T,
-                      0x3fd04e9e69894978ll,
-                      0xbfd4d5d0f9ab412fll,
-                      0xbfe4cf68d26e295all,
-                      0xbfd2821c13c5e2bfll,
-                      0xbfa72b2e63723c78ll,
-                      0xbf60f7e5f66c2537ll>(x)
-                 / horn<T,
-                        0x3ff0000000000000ll,
-                        0x40009d1b06674d41ll,
-                        0x3ff75eb79397c930ll,
-                        0x3fdbe65d28de361cll,
-                        0x3fabb9c8cc612ca3ll,
-                        0x3f616fc90a0a1908ll,
-                        0xbea2b84f95bbf448ll>(x);
+        auto r =
+        eve::reverse_horner(x, T(0x1.04e9e69894978p-2), T(-0x1.4d5d0f9ab412fp-2), T(-0x1.4cf68d26e295ap-1)
+                           , T(-0x1.2821c13c5e2bfp-2), T(-0x1.72b2e63723c78p-5), T(-0x1.0f7e5f66c2537p-9))
+
+                 /
+                 eve::reverse_horner(x, T(0x1.0000000000000p+0), T(0x1.09d1b06674d41p+1), T(0x1.75eb79397c930p+0)
+                                    , T(0x1.be65d28de361cp-2), T(0x1.bb9c8cc612ca3p-5), T(0x1.16fc90a0a1908p-9)
+                                    , T(-0x1.2b84f95bbf448p-21))
+                 ;
         return fma(g, y, g * r) + result;
       }
       else
       {
-        auto r = horn<T, 0x3e8274f3, 0xbea6ae88, 0xbf267b47, 0xbe9410e1, 0xbd395973, 0xbb07bf30>(x)
-                 / horn<T,
-                        0x3f800000,
-                        0x4004e8d8,
-                        0x3fbaf5bd,
-                        0x3edf32e9,
-                        0x3d5dce46,
-                        0x3b0b7e48,
-                        0xb515c27d>(x);
+        auto r =
+        eve::reverse_horner(x, T(0x1.04e9e6p-2f), T(-0x1.4d5d10p-2f), T(-0x1.4cf68ep-1f), T(-0x1.2821c2p-2f)
+                           , T(-0x1.72b2e6p-5f), T(-0x1.0f7e60p-9f))
+
+                 /
+                 eve::reverse_horner(x, T(0x1.000000p+0f), T(0x1.09d1b0p+1f), T(0x1.75eb7ap+0f), T(0x1.be65d2p-2f)
+                                    , T(0x1.bb9c8cp-5f), T(0x1.16fc90p-9f), T(-0x1.2b84fap-21f))
+                 ;
         return fma(g, y, g * r) + result;
       }
     };
@@ -79,27 +73,18 @@ digamma_(EVE_SUPPORTS(cpu_), T x) noexcept
       T    y(0);
       if constexpr( std::is_same_v<elt_t, double> )
       {
-        y = horn<T,
-                 0x3fb5555555555555ll,
-                 0xbf81111111111111ll,
-                 0x3f70410410410410ll,
-                 0xbf71111111111111ll,
-                 0x3f7f07c1f07c1f08ll,
-                 0xbf95995995995996ll,
-                 0x3fb5555555555555ll,
-                 0xbfdc5e5e5e5e5e5ell>(z);
+        y =
+        eve::reverse_horner(z, T(0x1.5555555555555p-4), T(-0x1.1111111111111p-7), T(0x1.0410410410410p-8)
+                           , T(-0x1.1111111111111p-8), T(0x1.f07c1f07c1f08p-8), T(-0x1.5995995995996p-6)
+                           , T(0x1.5555555555555p-4), T(-0x1.c5e5e5e5e5e5ep-2))
+        ;
       }
       else
       {
-        y = horn<T,
-                 0x3daaaaab,
-                 0xbc088889,
-                 0x3b820821,
-                 0xbb888889,
-                 0x3bf83e10,
-                 0xbcaccacd,
-                 0x3daaaaab,
-                 0xbee2f2f3>(z);
+        y =
+        eve::reverse_horner(z, T(0x1.555556p-4f), T(-0x1.111112p-7f), T(0x1.041042p-8f), T(-0x1.111112p-8f)
+                           , T(0x1.f07c20p-8f), T(-0x1.59959ap-6f), T(0x1.555556p-4f), T(-0x1.c5e5e6p-2f))
+        ;
       }
       result -= z * y;
       return result;
@@ -161,7 +146,7 @@ digamma_(EVE_SUPPORTS(cpu_), T x) noexcept
         result         = if_else(is_eqz(a), copysign(inf(as(x)), a), remainder);
         result         = if_else(test, result, zero);
       }
-      auto r = nan(as<T>()); // nan case treated here
+      auto r = nan(as<T>());
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_large, notdone, x >= dlarge, r, x, result);
