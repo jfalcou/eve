@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of coshsinh", eve::test::simd::ieee_reals)
 auto maxi = []<typename T>(eve::as<T> const&)
 {
   using v_t = eve::element_type_t<T>;
-  v_t ovl   = eve::Ieee_constant<v_t, 0x42B0C0A4U, 0x40862E42FEFA39EFULL>(); // 88.376251220703125f,
+  v_t ovl   = eve::ieee_constant<v_t>(0x1.6181480p+6f, 0x1.62e42fefa39efp+9); // 88.376251220703125f,
                                                                              // 709.782712893384
   return T(ovl);
 };
