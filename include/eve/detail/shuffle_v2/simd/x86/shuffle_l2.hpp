@@ -279,6 +279,8 @@ requires(P::out_reg_size == P::reg_size)
   else return no_matching_shuffle;
 }
 
+// 2 register shuffles ---------------------------------------------------------
+
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
@@ -323,24 +325,82 @@ shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
+shuffle_l2_x86_within_128x2_shuffle_pd(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( sizeof(T) < 8 ) return no_matching_shuffle;
+  else
+  {
+    // half from x, half from y
+    // No w/e or zeroes are possible here
+    auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
+    auto y_f64 = bit_cast(y, eve::as<eve::wide<double, N>> {});
+
+    constexpr int mm = _MM_SHUFFLE2(P::idxs2match[1] - 2, P::idxs2match[0]);
+    if constexpr( P::reg_size == 16 ) return _mm_shuffle_pd(x_f64, y_f64, mm);
+    else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_pd(x_f64, y_f64, mm);
+    else if constexpr( !P::has_zeroes ) return _mm512_shuffle_pd(x_f64, y_f64, mm);
+    else
+    {
+      auto zero_mask = is_na_or_we_mask(p, g, eve::as<logical<wide<T, N>>> {});
+      return _mm512_maskz_shuffle_pd(zero_mask.storage(), x_f64, y_f64, mm);
+    }
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_x86_within_128x2_alignr(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
+  else if constexpr( current_api < ssse3 ) return no_matching_shuffle;
+  else
+  {
+    constexpr auto starts_from = idxm::is_in_order(*P::repeated_16);
+
+    if constexpr( !starts_from ) return no_matching_shuffle;
+    else
+    {
+      constexpr std::ptrdiff_t shift = *starts_from * P::g_size;
+      static_assert(shift < 16, "veryfing assumptions");
+      // No support for maskz yet
+      if constexpr( P::reg_size == 16 ) return _mm_alignr_epi8(y, x, shift);
+      else if constexpr( P::reg_size == 32 ) return _mm256_alignr_epi8(y, x, shift);
+      else return _mm512_alignr_epi8(y, x, shift);
+    }
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_x86_within_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( !P::repeated_16 ) return no_matching_shuffle;
+  else if constexpr( auto r = shuffle_l2_x86_within_128x2_shuffle_pd(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_within_128x2_alignr(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else return no_matching_shuffle;
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
-requires (P::out_reg_size == P::reg_size)
+requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_x86_blend(p, g, x, y); matched_shuffle<decltype(r)> )
   {
     return r;
   }
-  else if constexpr( sizeof(T) == 8 && P::reg_size == 16 )
+  else if constexpr( auto r = shuffle_l2_x86_within_128x2(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
   {
-    // half from x, half from y
-    // No w/e or zeroes are possible here
-    auto x_f64 = bit_cast(x, eve::as<eve::wide<double, eve::fixed<2>>> {});
-    auto y_f64 = bit_cast(y, eve::as<eve::wide<double, eve::fixed<2>>> {});
-
-    // There is also _mm_move_sd but there is no reason to generate it for us.
-    // Compiler sometimes transforms.
-    constexpr int m = _MM_SHUFFLE2(P::idxs2match[1] - 2, P::idxs2match[0]);
-    return _mm_shuffle_pd(x_f64, y_f64, m);
+    return r;
   }
   else return no_matching_shuffle;
 }
