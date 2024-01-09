@@ -236,6 +236,7 @@ shuffle_halves_independetly(const std::array<std::ptrdiff_t, N>& p)
   return std::array {lo, hi};
 }
 
+// works for 2 registers too
 template<std::size_t N>
 constexpr std::optional<std::array<std::ptrdiff_t, N / 2>>
 is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
@@ -248,8 +249,9 @@ is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
     std::ptrdiff_t x = p[i];
     std::ptrdiff_t y = p[i + (std::size_t)half];
 
-    if( x >= half ) return std::nullopt;
-    if( 0 <= y && y < half ) return std::nullopt;
+    // even havles for x, odd for y
+    if (0 <= x && (x / half) % 2) return std::nullopt;
+    if (0 <= y && (y / half) % 2 == 0) return std::nullopt;
 
     if( y > 0 ) y -= half;
 
