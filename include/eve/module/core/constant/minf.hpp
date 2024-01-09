@@ -7,19 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <limits>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct minf_t : constant_callable<minf_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+
+      return T(-std::numeric_limits<e_t>::infinity());
+   }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(minf_t, minf_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -56,23 +67,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/minf.cpp}
 //! @}
 //================================================================================================
-
-EVE_MAKE_CALLABLE(minf_, minf);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto minf_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    return T(-std::numeric_limits<t_t>::infinity());
-  }
-
-  template<floating_value T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto minf_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  {
-    return minf(as<T>());
-  }
-}
+  inline constexpr auto minf = functor<minf_t>;
 }

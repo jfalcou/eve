@@ -20,7 +20,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core
 //! @{
-//! @var Ieee_constant
+//! @var ieee_cts
 //!
 //! @brief Callable object computing a floating constant from its scalar hexadecimal integral
 //! representations |
@@ -29,31 +29,35 @@ namespace eve
 //!
 //! | Member       | Effect                                                     |
 //! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | generates a floating constant from its scalar hexadecimal integral
-//! representations |
+//! | `operator()` | generates a floating constant                              |
 //!
 //! ---
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template <floating_ordered_value T BitsPatternfloat, BitsPatterndouble > T operator()() const
+//!  template <auto f, auto d, floating_ordered_value T> T operator()(as<T> target) const
 //!  noexcept;
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!
 //! **template Parameters**
 //!
-//!`BitsPatternfloat': hexadecimal integral representation of the float scalar constant
+//! `f':  float scalar constant
 //!
-//!`BitsPatterndouble': hexadecimal integral representation of the double scalar constant
+//!`'d': double scalar constant
+//!
+//!   ** Parameters**
+//!
+//!  'target': as<T>() where T is the chosen return type
 //!
 //! **Return value**
 //!
-//! the call `eve::ieee_constant(as<T>()) < T, BitsPatternfloat, BitsPatterndouble>`
+//! the call `eve::ieee_cts<f, d>(as<T>())`
 //! is semantically equivalent to :
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
 //!  using t_t = element_type_t<T>;
-//!  if constexpr(std::same_as<t_t, float>) return eve::constant<T, BitsPatternfloat>();
-//!  else                                   return eve::constant<T, BitsPatterndouble>();
+//!  if constexpr(std::same_as<t_t, float>) return T(f)
+//!  else if constexpr(std::same_as<t_t, double>)  return T(d);
+//!  else the result is UB
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //! ---
 //!

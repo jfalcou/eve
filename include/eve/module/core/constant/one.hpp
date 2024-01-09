@@ -7,12 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct one_t : constant_callable<one_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+    {
+      return T(1);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(one_t, one_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -48,22 +64,8 @@ namespace eve
 //!  @godbolt{doc/core/constant/one.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(one_, one);
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    return T(1);
-  }
+inline constexpr auto one = functor<one_t>;
 
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto one_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(one(as<T>()))
-  {
-    return one(as<T>());
-  }
-}
+// Required for if_else optimisation detections
+using callable_one_ = tag_t<one>;
 }

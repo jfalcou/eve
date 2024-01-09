@@ -7,19 +7,35 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/allbits.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct nan_t : constant_callable<nan_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    {
+      return allbits(eve::as<T>());
+   }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(nan_t, nan_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
 //!   @var nan
-//!   @brief Computes the IEEE NaN constant
+//!   @brief Computes the IEEE quiet NaN constant
 //!
 //!   **Defined in Header**
 //!
@@ -50,23 +66,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/nan.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(nan_, nan);
-
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), as<T> const& tgt) noexcept
-  {
-    return allbits(tgt);
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto nan_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(nan(as<T>()))
-  {
-    return nan(as<T>());
-  }
-}
+  inline constexpr auto nan = functor<nan_t>;
 }

@@ -7,18 +7,34 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/constant/ieee_constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
+#pragma once
 
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct logeps_t : constant_callable<logeps_t, Options, downward_option, upward_option>
+  {
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    {
+      using e_t = element_type_t<T>;
+
+      if constexpr(std::same_as<e_t, float>)
+        return T(-0x1.fe28020p+3f);
+      else
+        return T(-0x1.205966f2b4f11p+5);
+    }
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(logeps_t, logeps_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -55,25 +71,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/logeps.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(logeps_, logeps);
+  inline constexpr auto logeps = functor<logeps_t>;
 
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0XC17F1402U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0XC04205966F2B4F12ULL>();
-  }
-
-  template<floating_value T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto logeps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  {
-    if constexpr( std::is_same_v<D, downward_type> ) return logeps(as<T>());
-    else return ieee_constant<T>(-0x1.fe28020p+3f, -0x1.205966f2b4f11p+5);
-  }
-}
 }

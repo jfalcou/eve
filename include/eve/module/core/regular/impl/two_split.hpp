@@ -22,7 +22,7 @@ EVE_FORCEINLINE kumi::tuple<T, T>
 {
   if constexpr( has_native_abi_v<T> )
   {
-    T const c  = ieee_constant<T>(0x1.0p+13f, 0x1.0000000000000p+27) * a;
+    T const c  = ieee_cts<0x1.0p+13f, 0x1.0p+27>(as<T>()) * a;
     T const c1 = c - a;
     T       r0 = c - c1;
     return {r0, a - r0};
