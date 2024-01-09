@@ -45,13 +45,13 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
                               , reference.storage()
                               )};
 
-  auto [data0,idx0] = page<std::int8_t  , typename w_t::cardinal_type >();
-  auto [data1,idx1] = page<T            , typename w_t::cardinal_type >();
-  auto [data2,idx2] = page<double       , typename w_t::cardinal_type >();
+  auto [data0,idx0] = page<std::int8_t  , typename w8_t::cardinal_type >();
+  auto [data1,idx1] = page<T            , typename w8_t::cardinal_type >();
+  auto [data2,idx2] = page<double       , typename w8_t::cardinal_type >();
 
-  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0],typename w_t::cardinal_type{})
+  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
                               , &data1[idx1] - 1
-                              , eve::as_aligned(&data2[idx2],typename w_t::cardinal_type{})
+                              , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
                               );
 
 

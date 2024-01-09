@@ -23,7 +23,7 @@ template<arithmetic_scalar_value T, typename N, typename PtrTy>
 EVE_FORCEINLINE wide<T, N>
                 perform_load(logical<wide<T, N>> mask, as<wide<T, N>> tgt, PtrTy p)
 {
-  auto           zero_init = make(as<wide<T, N>> {}, static_cast<T>(0));
+  wide<T, N>     zero_init {0};
   constexpr auto c         = categorize<wide<T, N>>();
   if constexpr( match(c, category::size8_) ) return __riscv_vle8_tumu(mask, zero_init, p, N::value);
   if constexpr( match(c, category::size16_) )

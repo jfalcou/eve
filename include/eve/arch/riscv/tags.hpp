@@ -100,13 +100,13 @@ struct rvv_api_ : simd_api<rvv_, spy::rvv_>
 };
 
 //================================================================================================
-// SVE extensions tag objects
+// RISC-V extensions tag objects
 //================================================================================================
 inline constexpr rvv_     rvv     = {};
 inline constexpr rvv_api_ rvv_api = {};
 
 //================================================================================================
-// RISCV RVV ABI concept
+// RISC-V RVV ABI concept
 //================================================================================================
 template<typename T>
 concept rvv_abi = detail::is_one_of<T>(detail::types<riscv_rvv_dyn_> {});
