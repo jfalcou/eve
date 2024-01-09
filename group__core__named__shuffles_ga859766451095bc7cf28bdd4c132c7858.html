@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: Named Shuffles</title>
+<title>E.V.E: eve::slide_left</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__named__shuffles.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -120,42 +120,67 @@ $(document).ready(function(){initNavTree('group__core__named__shuffles.html','')
 </div>
 </div>
 
-<div class="header">
-  <div class="summary">
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">Named Shuffles<div class="ingroups"><a class="el" href="group__simd.html">EVE</a> &raquo; <a class="el" href="group__functions.html">Functions</a> &raquo; <a class="el" href="group__core.html">Core functions</a></div></div></div>
-</div><!--header-->
 <div class="contents">
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions that are just shuffles with a different api. </p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga5c7c0e57424cd75ff59fba019dc41f3c"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c">eve::reverse_in_subgroups</a> = detail::named_shuffle_1&lt;reverse_in_subgroups_t&gt; {}</td></tr>
-<tr class="memdesc:ga5c7c0e57424cd75ff59fba019dc41f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for reversing all subgroups in a register  <br /></td></tr>
-<tr class="separator:ga5c7c0e57424cd75ff59fba019dc41f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae93d09601f86249bbd239747c107cb69"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_gae93d09601f86249bbd239747c107cb69.html#gae93d09601f86249bbd239747c107cb69">eve::blend</a> = detail::named_shuffle_2&lt;blend_t&gt; {}</td></tr>
-<tr class="memdesc:gae93d09601f86249bbd239747c107cb69"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for mixing 2 registers together, without changing positions.  <br /></td></tr>
-<tr class="separator:gae93d09601f86249bbd239747c107cb69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga511d8b336d54331461e09e61373e37de"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_ga511d8b336d54331461e09e61373e37de.html#ga511d8b336d54331461e09e61373e37de">eve::broadcast_lane</a> = detail::named_shuffle_1&lt;broadcast_lane_t&gt; {}</td></tr>
-<tr class="memdesc:ga511d8b336d54331461e09e61373e37de"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for duplicating the lane across a register.  <br /></td></tr>
-<tr class="separator:ga511d8b336d54331461e09e61373e37de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga268e38294132060fb0908cfe9e794ee5"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5">eve::reverse</a> = detail::named_shuffle_1&lt;reverse_t&gt; {}</td></tr>
-<tr class="memdesc:ga268e38294132060fb0908cfe9e794ee5"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for reversing a register.  <br /></td></tr>
-<tr class="separator:ga268e38294132060fb0908cfe9e794ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga859766451095bc7cf28bdd4c132c7858"><td class="memItemLeft" align="right" valign="top">constexpr callable_slide_left_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858">eve::slide_left</a> = {}</td></tr>
-<tr class="memdesc:ga859766451095bc7cf28bdd4c132c7858"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffles for sliding two simd values together and selecting one register. Common names for this would also include "shift", "extract". Second value can be ommitted for an implicit zero.  <br /></td></tr>
-<tr class="separator:ga859766451095bc7cf28bdd4c132c7858"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__named__shuffles_gaa73e3ec48a859648ac298f5a73b5c6a5.html#gaa73e3ec48a859648ac298f5a73b5c6a5">eve::swap_adjacent</a> = detail::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td></tr>
-<tr class="memdesc:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1, 0, 3, 2]  <br /></td></tr>
-<tr class="separator:gaa73e3ec48a859648ac298f5a73b5c6a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<a id="ga859766451095bc7cf28bdd4c132c7858" name="ga859766451095bc7cf28bdd4c132c7858"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga859766451095bc7cf28bdd4c132c7858">&#9670;&#160;</a></span>slide_left</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::slide_left = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
 </table>
+</div><div class="memdoc">
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size() Shift * GroupSize &lt;= T::size() Shift &gt;= 0</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858">slide_left</a>(T x, eve::index&lt;S&gt;);  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858">slide_left</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, eve::index&lt;S&gt;);  <span class="comment">// (2)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858">slide_left</a>(T x, T y, eve::index&lt;S&gt;);  <span class="comment">// (3)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858">slide_left</a>(T x, T y, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, eve::index&lt;S&gt;);  <span class="comment">// (4)</span></div>
+<div class="ttc" id="agroup__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858_html_ga859766451095bc7cf28bdd4c132c7858"><div class="ttname"><a href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858">eve::slide_left</a></div><div class="ttdeci">constexpr callable_slide_left_ slide_left</div><div class="ttdoc">a named shuffles for sliding two simd values together and selecting one register. Common names for th...</div><div class="ttdef"><b>Definition:</b> slide_left.hpp:15</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition:</b> cardinals.hpp:39</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x, y - simd_values to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+<li><p class="startli">S - shift by how many elements to shift</p>
+<p class="startli">(2), (4) - call (1) (3) respectively, with S = G * S (1) - equivalent to calling <code><a class="el" href="group__core__named__shuffles_ga859766451095bc7cf28bdd4c132c7858.html#ga859766451095bc7cf28bdd4c132c7858" title="a named shuffles for sliding two simd values together and selecting one register. Common names for th...">eve::slide_left</a>(x, <a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">eve::zero(eve::as(x))</a>);</code> (3) - slide_left [abcd], [efgh], index&lt;1&gt; ==&gt; [bcde]</p>
+</li>
+</ul>
+<p><b>Return value</b> shuffled register</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// in progress</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->
