@@ -60,7 +60,8 @@ ldexp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, U b) noexcept
         f         = inc[test](f);
         b         = dec[test](b);
         b += maxexponent(eve::as<T>());
-        b <<= nbmantissabits(eve::as<T>());
+        auto nbm = nbmantissabits(eve::as<T>());
+        b <<= nbm;
         return a * bit_cast(i_t(b), as(T())) * f;
       }
       else return ldexp(a, b);

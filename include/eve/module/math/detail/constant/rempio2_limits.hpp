@@ -30,7 +30,7 @@ Rempio2_limit(D const&, as<T> const&) noexcept
     }
     else if constexpr( std::is_same_v<D, medium_type> )
     {
-      return Ieee_constant<T, 0x58C91073U, 0x42E6BCC41E900000ULL>(); // 1.76858e+15,  2.0e14
+      return ieee_constant<0x1.9220e60p+50f, 0x1.6bcc41e900000p+47>(eve::as<T>{}); // 1.76858e+15,  2.0e14
     }
     else { return valmax(eve::as<T>()); }
   }

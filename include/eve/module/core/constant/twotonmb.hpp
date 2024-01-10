@@ -7,17 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct twotonmb_t : constant_callable<twotonmb_t, Options, downward_option, upward_option>
+  {
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    {
+      using e_t = element_type_t<T>;
+
+      if constexpr(std::same_as<e_t, float>)
+        return T(0x1p+23f);
+      else
+        return T(0x1p+52);
+    }
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(twotonmb_t, twotonmb_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -54,26 +69,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/nbmantissabits.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(twotonmb_, twotonmb);
+ inline constexpr auto twotonmb = functor<twotonmb_t>;
 
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE auto twotonmb_(EVE_SUPPORTS(cpu_), eve::as<T> const& = {}) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) { return Constant<T, 0X4B000000U>(); }
-    else if constexpr( std::is_same_v<t_t, double> )
-    {
-      return Constant<T, 0X4330000000000000ULL>();
-    }
-  }
-
-  template<floating_value T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto twotonmb_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  {
-    return twotonmb(as<T>());
-  }
-}
 }

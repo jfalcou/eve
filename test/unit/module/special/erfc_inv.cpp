@@ -20,16 +20,16 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// TTS_CASE_TPL( "Check return types of erfc_inv"
-//             , eve::test::simd::ieee_reals
-//             )
-// <typename T>(tts::type<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
+TTS_CASE_TPL( "Check return types of erfc_inv"
+            , eve::test::simd::ieee_reals
+            )
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
 
-//   TTS_EXPR_IS( eve::erfc_inv(T())  , T);
-//   TTS_EXPR_IS( eve::erfc_inv(v_t()), v_t);
-// };
+  TTS_EXPR_IS( eve::erfc_inv(T())  , T);
+  TTS_EXPR_IS( eve::erfc_inv(v_t()), v_t);
+};
 
 //==================================================================================================
 // erfc_inv  tests

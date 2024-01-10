@@ -12,7 +12,7 @@
 namespace eve
 {
 //================================================================================================
-//! @addtogroup polynomial
+//! @addtogroup math
 //! @{
 //!   @var reverse_horner
 //!   @brief implement the horner scheme to evaluate polynomials with coefficients
@@ -27,7 +27,7 @@ namespace eve
 //!   **Defined in header**
 //!
 //!   @code
-//!   #include <eve/module/polynomial.hpp>
+//!   #include <eve/module/math.hpp>
 //!   @endcode
 //!
 //!   @groupheader{Callable Signatures}
@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/polynomial/regular/reverse_horner.cpp}
+//!  @godbolt{doc/math/regular/reverse_horner.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -83,4 +83,4 @@ namespace eve
 EVE_MAKE_CALLABLE(reverse_horner_, reverse_horner);
 }
 
-#include <eve/module/polynomial/regular/impl/reverse_horner.hpp>
+#include <eve/module/math/regular/impl/reverse_horner.hpp>

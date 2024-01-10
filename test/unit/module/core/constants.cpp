@@ -64,7 +64,7 @@ TTS_CASE_TPL("Check ieee754 constants", eve::test::simd::ieee_reals)
     TTS_EQUAL(eve::eps(as<T>()), T(2.2204460492503130e-16));
     TTS_EQUAL(eve::exponentmask(as<T>()), i_t(0x7ff0000000000000ULL));
     TTS_EQUAL(eve::maxexponentp1(as<T>()), i_t(1024));
-    TTS_EQUAL(eve::logeps(as<T>()), T(-36.043653389117153552));
+    TTS_EQUAL(eve::logeps(as<T>()), T(-36.043653389117156089696070315825181539926006986734));
     TTS_EQUAL(eve::mantissamask(as<T>()), i_t(0x800FFFFFFFFFFFFFULL));
     TTS_EQUAL(eve::oneosqrteps(as<T>()), T(67108864.0));
     TTS_EQUAL(eve::maxexponent(as<T>()), i_t(1023));

@@ -110,3 +110,4 @@
 #include <eve/module/math/decorator/math.hpp>
 #include <eve/module/math/regular/math.hpp>
 #include <eve/module/math/pedantic/math.hpp>
+#include <eve/module/math/numeric/math.hpp>

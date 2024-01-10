@@ -35,18 +35,15 @@ cbrt_(EVE_SUPPORTS(cpu_), T x) noexcept
     T u;
     if constexpr( std::is_same_v<vt_t, double> )
     {
-      u = horn<T,
-               0x3fd6b69cba168ff2ll,
-               0x3ff8218dde9028b4ll,
-               0xc000eb8277cd8d5dll,
-               0x40039350adad51ecll,
-               0xbffd5ae6cfa20f0cll,
-               0x3fe91e2a6fe7e984ll,
-               0xbfc29801e893366dll>(xm);
+      u = 
+      eve::reverse_horner(xm, T(0x1.6b69cba168ff2p-2), T(0x1.8218dde9028b4p+0), T(-0x1.0eb8277cd8d5dp+1), T(0x1.39350adad51ecp+1), T(-0x1.d5ae6cfa20f0cp+0), T(0x1.91e2a6fe7e984p-1), T(-0x1.29801e893366dp-3));
+      ;
     }
     else if constexpr( std::is_same_v<vt_t, float> )
     {
-      u = horn<T, 0x3efc3de2, 0x3f3293fa, 0xbe441925>(xm);
+      u = 
+      eve::reverse_horner(xm, T(0x1.f87bc4p-2f), T(0x1.6527f4p-1f), T(-0x1.88324ap-3f));
+      ;
     }
     auto t2 = sqr(u) * u;
     u *= fma(xm, T(2), t2) / fma(T(2), t2, xm);

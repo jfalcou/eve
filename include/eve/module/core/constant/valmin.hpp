@@ -7,15 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <limits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct valmin_t : constant_callable<valmin_t, Options, downward_option, upward_option>
+  {
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    {
+      using e_t = element_type_t<T>;
+      return T(std::numeric_limits<e_t>::lowest());
+    }
+
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(valmin_t, valmin_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -52,24 +65,8 @@ namespace eve
 //!  @godbolt{doc/core/constant/valmin.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(valmin_, valmin);
+  inline constexpr auto valmin = functor<valmin_t>;
 
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE auto valmin_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    return T(std::numeric_limits<t_t>::lowest());
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto valmin_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(valmin(as<T>()))
-  {
-    return valmin(as<T>());
-  }
-}
+// Required for if_else optimisation detections
+using callable_valmin_ = tag_t<valmin>;
 }

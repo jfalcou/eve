@@ -12,9 +12,9 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> sqrteps(as<wide_ft>())              = " << eve::sqrteps(eve::as<wide_ft>()) << std::endl
             << "-> sqrteps(as(wxf))                    = " << eve::sqrteps(eve::as(wxf))       << std::endl
-            << "-> upward(sqrteps)(as(wxf))            = " << eve::upward(eve::sqrteps)(eve::as(wxf))       << std::endl
+            << "-> sqrteps[upward](as(wxf))            = " << eve::sqrteps[eve::upward](eve::as(wxf))       << std::endl
             << "-> sqrt(double(eve::eps(as<float>()))) =  " << eve::sqrt(double(eve::eps(eve::as<float>()))) << std::endl
-            << "-> downward(sqrteps)(as(wxf))          = " << eve::downward(eve::sqrteps)(eve::as(wxf))    << std::endl;
+            << "-> sqrteps[downward](as(wxf))          = " << eve::sqrteps[eve::downward](eve::as(wxf))    << std::endl;
 
   double       xf;
 

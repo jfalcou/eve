@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
@@ -20,8 +21,8 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
-      T Log_2hi   = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-      T Log_2lo   = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+      T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+      T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
       using uiT   = as_integer_t<T, unsigned>;
       using iT    = as_integer_t<T, signed>;
       using elt_t = element_type_t<T>;
@@ -61,8 +62,12 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
         T s    = f / (2.0f + f);
         T z    = sqr(s);
         T w    = sqr(z);
-        T t1   = w * horn<T, 0x3eccce13u, 0x3e789e26u>(w);
-        T t2   = z * horn<T, 0x3f2aaaaau, 0x3e91e9eeu>(w);
+        T t1   = w *
+          eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
+          ;
+        T t2   = z *
+          eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
+          ;
         T R    = t2 + t1;
         T hfsq = half(eve::as<T>()) * sqr(f);
 
@@ -114,13 +119,12 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
         T s  = f / (2.0f + f);
         T z  = sqr(s);
         T w  = sqr(z);
-        T t1 = w * horn<T, 0x3fd999999997fa04ull, 0x3fcc71c51d8e78afull, 0x3fc39a09d078c69full>(w);
+        T t1 = w *
+          eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3));
         T t2 = z
-          * horn<T,
-          0x3fe5555555555593ull,
-          0x3fd2492494229359ull,
-          0x3fc7466496cb03deull,
-          0x3fc2f112df3e5244ull>(w);
+          *
+          eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
+                             , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
         T R    = t2 + t1;
         T hfsq = half(eve::as<T>()) * sqr(f);
 
@@ -143,8 +147,8 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
     auto x = a0;
     using uiT = as_integer_t<T, unsigned>;
     using iT  = as_integer_t<T, signed>;
-    T Log_2hi = Ieee_constant<T, 0x3f318000U, 0x3fe62e42fee00000ULL>();
-    T Log_2lo = Ieee_constant<T, 0xb95e8083U, 0x3dea39ef35793c76ULL>();
+    T Log_2hi = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+    T Log_2lo = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
     if constexpr( std::is_same_v<T, float> )
     {
       /* origin: FreeBSD /usr/src/lib/msun/src/e_logf.c */
@@ -183,8 +187,12 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
       T s    = f / (2.0f + f);
       T z    = sqr(s);
       T w    = sqr(z);
-      T t1   = w * horn<T, 0x3eccce13, 0x3e789e26>(w);
-      T t2   = z * horn<T, 0x3f2aaaaa, 0x3e91e9ee>(w);
+      T t1   = w *
+        eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
+        ;
+      T t2   = z *
+        eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
+        ;
       T R    = t2 + t1;
       T hfsq = 0.5f * sqr(f);
       T dk   = float32(k);
@@ -229,13 +237,10 @@ log_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a0) noexcept
       T s    = f / (2.0f + f);
       T z    = sqr(s);
       T w    = sqr(z);
-      T t1   = w * horn<T, 0x3fd999999997fa04ll, 0x3fcc71c51d8e78afll, 0x3fc39a09d078c69fll>(w);
-      T t2   = z
-        * horn<T,
-        0x3fe5555555555593ll,
-        0x3fd2492494229359ll,
-        0x3fc7466496cb03dell,
-        0x3fc2f112df3e5244ll>(w);
+      T t1   = w *
+        eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3));
+      T t2   = z*eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
+                                    , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
       T R  = t2 + t1;
       T dk = float64(k);
       return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));

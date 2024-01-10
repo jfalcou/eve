@@ -31,10 +31,7 @@ tan_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T a0) noexcept
     }
     else
     {
-      auto pi2_16 = Ieee_constant<T,
-                                  0X3F1DE9E7U,
-                                  0x3FE3BD3CC9BE45DEULL>(); // 0.61685027506808491367715568749226
-                                                            // but rounded upward
+      auto pi2_16 =  pi2o_16[upward](as<T>());
       a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits, a0);
     }
     return tancot_eval(a0);
@@ -50,9 +47,9 @@ tan_(EVE_SUPPORTS(cpu_), half_circle_type const&, T a0) noexcept
   {
     auto reduce = [](auto x)
     {
-      auto pio2_1 = Ieee_constant<T, 0X3FC90F80, 0X3FF921FB54400000LL>();
-      auto pio2_2 = Ieee_constant<T, 0X37354400, 0X3DD0B4611A600000LL>();
-      auto pio2_3 = Ieee_constant<T, 0X2E85A300, 0X3BA3198A2E000000LL>();
+      auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(eve::as<T>{});
+      auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(eve::as<T>{});
+      auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(eve::as<T>{});
       T    xr     = x - pio2_1;
       xr -= pio2_2;
       xr -= pio2_3;

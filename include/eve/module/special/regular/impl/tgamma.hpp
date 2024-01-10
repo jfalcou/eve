@@ -26,38 +26,18 @@ tgamma_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
     {
       if constexpr( std::is_same_v<elt_t, float> )
       {
-        return horn<T,
-                    0X3F800000U, //  9.999999757445841E-01
-                    0X3ED87799U, //  4.227874605370421E-01
-                    0X3ED2D411U, //  4.117741948434743E-01
-                    0X3DA82A34U, //  8.211174403261340E-02
-                    0X3D93AE7CU, //  7.211014349068177E-02
-                    0X3B91DB14U, //  4.451165155708328E-03
-                    0X3BA90C99U, //  5.158972571345137E-03
-                    0X3AD28B22U  //  1.606319369134976E-03
-                    >(x);
+        return  eve::reverse_horner(x, T(0x1.000000p+0f), T(0x1.b0ef32p-2f), T(0x1.a5a822p-2f), T(0x1.505468p-4f)
+                                   , T(0x1.275cf8p-4f), T(0x1.23b628p-8f),  T(0x1.521932p-8f), T(0x1.a51644p-10f));
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
-        return horn<T,
-                    0X3FF0000000000000ULL, // 9.99999999999999996796E-1
-                    0X3FDFA1373993E312ULL, // 4.94214826801497100753E-1
-                    0X3FCA8DA9DCAE7D31ULL, // 2.07448227648435975150E-1
-                    0X3FA863D918C423D3ULL, // 4.76367800457137231464E-2
-                    0X3F8557CDE9DB14B0ULL, // 1.04213797561761569935E-2
-                    0X3F5384E3E686BFABULL, // 1.19135147006586384913E-3
-                    0X3F24FCB839982153ULL  // 1.60119522476751861407E-4
-                    >(x)
-               / horn<T,
-                      0X3FF0000000000000ULL, //  1.00000000000000000320E00
-                      0X3FB24944C9CD3C51ULL, //  7.14304917030273074085E-2
-                      0XBFCE071A9D4287C2ULL, // -2.34591795718243348568E-1
-                      0X3FA25779E33FDE67ULL, //  3.58236398605498653373E-2
-                      0X3F8831ED5B1BB117ULL, //  1.18139785222060435552E-2
-                      0XBF7240E4E750B44AULL, // -4.45641913851797240494E-3
-                      0X3F41AE8A29152573ULL, //  5.39605580493303397842E-4
-                      0XBEF8487A8400D3AFULL  // -2.31581873324120129819E-5
-                      >(x);
+        return eve::reverse_horner(x, T(0x1.0000000000000p+0), T(0x1.fa1373993e312p-2), T(0x1.a8da9dcae7d31p-3)
+                                  , T(0x1.863d918c423d3p-5), T(0x1.557cde9db14b0p-7), T(0x1.384e3e686bfabp-10)
+                                  , T(0x1.4fcb839982153p-13))
+        /
+        eve::reverse_horner(x, T(0x1.0000000000000p+0), T(0x1.24944c9cd3c51p-4), T(-0x1.e071a9d4287c2p-3)
+                           , T(0x1.25779e33fde67p-5), T(0x1.831ed5b1bb117p-7), T(-0x1.240e4e750b44ap-8)
+                           , T(0x1.1ae8a29152573p-11), T(-0x1.8487a8400d3afp-16));
       }
     };
     if constexpr( scalar_value<T> )

@@ -8,13 +8,17 @@ using wide_dt = eve::wide<double>;
 
 int main()
 {
+  auto targetwf = eve::as<wide_ft>{};
+  auto targetwd = eve::as<wide_dt>{};
   std::cout << "---- simd" << std::setprecision(15) << std::endl
-            << "-> Ieee_constant<wide_ft, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>() " << eve::Ieee_constant<wide_ft, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>()<< std::endl
-            << "-> Ieee_constant<wide_dt, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>() " << eve::Ieee_constant<wide_dt, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>()<< std::endl;
+            << "-> ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1(targetwf) " << eve::ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetwf)<< std::endl
+            << "-> ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetwd) " << eve::ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetwd)<< std::endl;
 
+  auto targetf = eve::as<float>{};
+  auto targetd = eve::as<double>{};
   std::cout << "---- scalar" << std::endl
-            << "-> Ieee_constant<float, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>()   " << eve::Ieee_constant<float, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>()<< std::endl
-            << "-> Ieee_constant<double, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>()  " << eve::Ieee_constant<double, 0X3F1DE9E7U, 0x3FE3BD3CC9BE45DEULL>()<< std::endl;
+            << "-> ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetf)   " << eve::ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetf)<< std::endl
+            << "-> ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetd)  " << eve::ieee_constant<0x1.3bd3ce0p-1f, 0x1.3bd3cc9be45dep-1>(targetd) << std::endl;
 
   return 0;
 }

@@ -6,18 +6,32 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct mindenormal_t : constant_callable<mindenormal_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+
+      if      constexpr(std::integral<e_t>        ) return T(1);
+      else if constexpr(std::same_as<e_t, float>  ) return T( 0x1p-149);
+      else if constexpr(std::same_as<e_t, double> ) return T(0x0.0000000000001p-1022);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(mindenormal_t, mindenormal_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -47,6 +61,7 @@ namespace eve
 //!    **Return value**
 //!
 //!     The call `eve::mindenormal(as<T>())` is semantically equivalent to:
+//!       * `T(1)'            if eve::element_type_t<T> is integral
 //!       * `T(1.4013e-45f)`  if eve::element_type_t<T> is float
 //!       * `T(4.94066e-324)` if eve::element_type_t<T> is double
 //!
@@ -55,25 +70,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/mindenormal.cpp}
 //! @}
 //================================================================================================
-
-EVE_MAKE_CALLABLE(mindenormal_, mindenormal);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto mindenormal_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x1U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x1ULL>();
-  }
-
-  template<floating_value T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto mindenormal_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  {
-    return mindenormal(as<T>());
-  }
-}
+  inline constexpr auto mindenormal = functor<mindenormal_t>;
 }

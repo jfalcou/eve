@@ -7,16 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <type_traits>
-
 namespace eve
 {
+  template<typename Options>
+  struct mzero_t : constant_callable<mzero_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+
+           if constexpr(std::integral<e_t>        ) return T(0);
+      else if constexpr(std::same_as<e_t, float>  ) return T(-0.0f);
+      else if constexpr(std::same_as<e_t, double> ) return T(-0.0);
+   }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(mzero_t, mzero_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -26,7 +38,8 @@ namespace eve
 //!    For integral type there is no difference between eve::zero and eve::mzero,
 //!    but for floating ones the bit of sign differs.
 //!
-//!    However, eve::mzero always satisfies the equality predicate with eve::zero.
+//!     However, eve::mzero always satisfies the equality predicate with eve::zero
+//!     and `eve::mzero` satisfies the predicate `is_negative`, but not the predicate `is_ltz`.
 //!
 //!   **Defined in Header**
 //!
@@ -57,28 +70,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/mzero.cpp}
 //! @}
 //================================================================================================
+  inline constexpr auto mzero = functor<mzero_t>;
 
-
-EVE_MAKE_CALLABLE(mzero_, mzero);
-
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto mzero_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) { return T(-0.0f); }
-    else if constexpr( std::is_same_v<t_t, double> ) { return T(-0.0); }
-    else { return T(0); }
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto mzero_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(mzero(as<T>()))
-  {
-    return mzero(as<T>());
-  }
-}
 }
