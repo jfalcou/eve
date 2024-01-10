@@ -20,7 +20,7 @@ var searchData=
   ['replace_5fignored_17',['replace_ignored',['../group__core__logical_gafaa07222ff0f44384515607d9f7d43a7.html#gafaa07222ff0f44384515607d9f7d43a7',1,'eve']]],
   ['reverse_18',['reverse',['../group__views_gaac86f874e3f90c117f6495f0ea1b782a.html#gaac86f874e3f90c117f6495f0ea1b782a',1,'eve::algo::views::reverse()'],['../group__core__named__shuffles_ga268e38294132060fb0908cfe9e794ee5.html#ga268e38294132060fb0908cfe9e794ee5',1,'eve::reverse()'],['../group__algos_ga887770a88fdcec5759f14329062c4771.html#ga887770a88fdcec5759f14329062c4771',1,'eve::algo::reverse()']]],
   ['reverse_5fcopy_19',['reverse_copy',['../group__algos_gacabefd0775fc30272c8707c63e3b62a3.html#gacabefd0775fc30272c8707c63e3b62a3',1,'eve::algo']]],
-  ['reverse_5fhorner_20',['reverse_horner',['../group__polynomial_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe',1,'eve']]],
+  ['reverse_5fhorner_20',['reverse_horner',['../group__math_ga2ab58fb81bbfe2bae7b7cc8007b988fe.html#ga2ab58fb81bbfe2bae7b7cc8007b988fe',1,'eve']]],
   ['reverse_5fin_5fsubgroups_21',['reverse_in_subgroups',['../group__core__named__shuffles_ga5c7c0e57424cd75ff59fba019dc41f3c.html#ga5c7c0e57424cd75ff59fba019dc41f3c',1,'eve']]],
   ['rising_5ffactorial_22',['rising_factorial',['../group__special_gaa4054bfcccbced74c2d7e7c3e341cddd.html#gaa4054bfcccbced74c2d7e7c3e341cddd',1,'eve']]],
   ['rotate_23',['rotate',['../group__core_ga073de555026307d7265ba21c49940a7f.html#ga073de555026307d7265ba21c49940a7f',1,'eve']]],
