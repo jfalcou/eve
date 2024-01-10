@@ -60,9 +60,12 @@ namespace eve
     template<typename From, value T>
     EVE_FORCEINLINE constexpr auto as_value_(EVE_SUPPORTS(cpu_), From from, as<T> const& t) noexcept
     {
-      if constexpr( requires{ from(t);} ) return from(t);
-      else if constexpr( scalar_value<T> ) return static_cast<T>(from);
-      else return T(from);
+         if constexpr( requires { typename From::constant_callable_tag; } ) return from(t);//if constexpr( instance_of<From,functor> ) return from(t);
+    else if constexpr( scalar_value<T> ) return static_cast<T>(from);
+    else return T {from};
+   //  if constexpr( requires{ from(t);} ) return from(t);
+//       else if constexpr( scalar_value<T> ) return static_cast<T>(from);
+//       else return T(from);
     }
   }
 }
