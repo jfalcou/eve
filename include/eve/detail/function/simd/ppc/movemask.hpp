@@ -16,11 +16,11 @@ namespace eve::detail
   // Adapted from this completely unsuspecting thread:
   // https://stackoverflow.com/questions/33938584/on-powerpc-is-there-any-equivalent-of-intels-movemask-intrinsics
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE std::pair<std::uint64_t,fixed<1>>
-  movemask(logical<wide<T, N>> const &v) noexcept requires ppc_abi<abi_t<T, N>>
+  EVE_FORCEINLINE
+  std::pair<std::uint64_t,fixed<1>> movemask(logical<wide<T, N>> const &v) noexcept requires ppc_abi<abi_t<T, N>>
   {
     using vu8 = typename wide<T,N>::template rebind<std::uint8_t>;
-    auto mask = vu8([](auto i, auto c)
+    vu8 mask([](auto i, auto c)
     {
       constexpr auto spacing = sizeof(T)*8;
       // Any value above 128 means 0 so this always work without checking if i is above or below N
