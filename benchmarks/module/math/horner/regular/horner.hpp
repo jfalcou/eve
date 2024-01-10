@@ -6,6 +6,7 @@
 */
 //==================================================================================================
 #include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/wide.hpp>
 
@@ -22,7 +23,6 @@ int main()
     };
     return eve::horner(z, a);
   };
-
   auto lmin = EVE_VALUE(-1);
   auto lmax = EVE_VALUE(1);
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

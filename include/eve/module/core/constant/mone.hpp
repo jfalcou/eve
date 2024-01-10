@@ -7,20 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct mone_t : constant_callable<mone_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+    {
+      return T(-1);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(mone_t, mone_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
-//!   @var mone
+//!   @var mmone
 //!   @brief Computes the constant \f$-1\f$
 //!
 //!   **Defined in Header**
@@ -35,7 +47,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T mone(as<T> x) noexcept;
+//!      T mmone(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -45,30 +57,16 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::mone(as<T>())` is semantically equivalent to  `T(-1)`
+//!      The call `eve::mmone(as<T>())` is semantically equivalent to  `T(-1)`
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/mone.cpp}
+//!  @godbolt{doc/core/constant/mmone.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(mone_, mone);
+EVE_MAKE_CALLABLE(mmone_, mmone);
+inline constexpr auto mone = functor<mone_t>;
 
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    return T(-1);
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto mone_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(mone(as<T>()))
-  {
-    return mone(as<T>());
-  }
-}
+// Required for if_else optimisation detections
+using callable_mone_ = tag_t<mone>;
 }

@@ -9,7 +9,8 @@ int main()
 {
   std::cout << "---- simd" << '\n'
             << "<- as_value(pf, as<wide_ft>())      = " << eve::as_value(32.5, eve::as<wide_ft>()) << '\n'
-            << "<- as_value(valmax, as<wide_it>())  = " << eve::as_value(eve::valmax, eve::as<wide_it>()) << '\n';
+            << "<- as_value(valmax, as<wide_it>())  = " << eve::as_value(eve::valmax, eve::as<wide_it>()) << '\n'
+    ;
 
   double        xf = -62768.0f;
 

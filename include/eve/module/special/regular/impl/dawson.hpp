@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/detail/hz_device.hpp>
+#include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
@@ -28,119 +30,66 @@ dawson_(EVE_SUPPORTS(cpu_), T a0) noexcept
       if constexpr( std::is_same_v<elt_t, float> )
       {
         return x
-               * horn<T,
-                      0x3f800000,
-                      0xbdbbe665,
-                      0x3d2d1abc,
-                      0xba5edc97,
-                      0x39b8d18b,
-                      0x364e9480,
-                      0x357fdc17,
-                      0x32a70489,
-                      0x30697185,
-                      0x2d47fd98>(xx)
-               / horn<T,
-                      0x3f800000,
-                      0x3f132dde,
-                      0x3e22afee,
-                      0x3ce4ec9b,
-                      0x3b6497e8,
-                      0x39aaab31,
-                      0x37c306e7,
-                      0x35aacdae,
-                      0x335fe1b9,
-                      0x30cc991a,
-                      0x2dd36efb>(xx);
+               *
+               eve::reverse_horner(xx, T(0x1.000000p+0f), T(-0x1.77cccap-4f), T(0x1.5a3578p-5f)
+                                  , T(-0x1.bdb92ep-11f), T(0x1.71a316p-12f), T(0x1.9d2900p-19f)
+                                  , T(0x1.ffb82ep-21f), T(0x1.4e0912p-26f), T(0x1.d2e30ap-31f)
+                                  , T(0x1.8ffb30p-37f))
+
+               /
+               eve::reverse_horner(xx, T(0x1.000000p+0f), T(0x1.265bbcp-1f), T(0x1.455fdcp-3f)
+                                  , T(0x1.c9d936p-6f), T(0x1.c92fd0p-9f), T(0x1.555662p-12f)
+                                  , T(0x1.860dcep-16f), T(0x1.559b5cp-20f), T(0x1.bfc372p-25f)
+                                  , T(0x1.993234p-30f), T(0x1.a6ddf6p-36f))
+               ;
       }
       else
       {
         return x
-               * horn<T,
-                      0x3ff0000000000000ll, //(9.99999999999999994612E-1)
-                      0xbfb77ccca3261da7ll, //(-9.17480371773452345351E-2)
-                      0x3fa5a357714ced03ll, //(4.22618223005546594270E-2)
-                      0xbf4bdb92e4e9a921ll, //(-8.50149846724410912031E-4
-                      0x3f371a3163a27174ll, //(3.52513368520288738649E-4)
-                      0x3ec9d29007c3bd6all, //(3.07828309874913200438E-6)
-                      0x3eaffb82d857b833ll, //(9.53151741254484363489E-7)
-                      0x3e54e09113ca0ba0ll, //(1.94434204175553054283E-8)
-                      0x3e0d2e309db8f5fbll, //(8.49262267667473811108E-10)
-                      0x3da8ffb30f7d51f1ll  //(1.13681498971755972054E-11)
-                      >(xx)
-               / horn<T,
-                      0x3ff0000000000000ll, //(1.00000000000000000539E0)
-                      0x3fe265bbc0f09197ll, //(5.74918629489320327824E-1)
-                      0x3fc455fdbcb2a008ll, //(1.58874241960120565368E-1)
-                      0x3f9c9d9358f736f7ll, //(2.79448531198828973716E-2)
-                      0x3f6c92fcf5507532ll, //(3.48805814657162590916E-3)
-                      0x3f3555661ec43b62ll, //(3.25524741826057911661E-4)
-                      0x3ef860dcd4d604a3ll, //(2.32490249820789513991E-5)
-                      0x3eb559b5c414f013ll, //(1.27258478273186970203E-6)
-                      0x3e6bfc372910659cll, //(5.21265281010541664570E-8)
-                      0x3e1993234f10c1b4ll, //(1.48864681368493396752E-9)
-                      0x3dba6ddf536ed65all  //(2.40372073066762605484E-11
-                      >(xx);
+               *
+               eve::reverse_horner(xx, T(0x1.0000000000000p+0), T(-0x1.77ccca3261da7p-4), T(0x1.5a357714ced03p-5)
+                                  , T(-0x1.bdb92e4e9a921p-11), T(0x1.71a3163a27174p-12), T(0x1.9d29007c3bd6ap-19)
+                                  , T(0x1.ffb82d857b833p-21), T(0x1.4e09113ca0ba0p-26), T(0x1.d2e309db8f5fbp-31)
+                                  , T(0x1.8ffb30f7d51f1p-37))
+
+               /
+               eve::reverse_horner(xx, T(0x1.0000000000000p+0), T(0x1.265bbc0f09197p-1), T(0x1.455fdbcb2a008p-3)
+                                  , T(0x1.c9d9358f736f7p-6), T(0x1.c92fcf5507532p-9), T(0x1.555661ec43b62p-12)
+                                  , T(0x1.860dcd4d604a3p-16), T(0x1.559b5c414f013p-20), T(0x1.bfc372910659cp-25)
+                                  , T(0x1.993234f10c1b4p-30), T(0x1.a6ddf536ed65ap-36))
+               ;
       }
     };
     auto dawson2 = [](auto xx, auto rx, auto x)
     {
       if constexpr( std::is_same_v<elt_t, float> )
       {
-        auto num   = horn<T,
-                        0x2e1dfe15,
-                        0xb1251d8a,
-                        0x33c36c5f,
-                        0xb6100aef,
-                        0x3816d831,
-                        0xb9dde22a,
-                        0x3b6fff71,
-                        0xbcb32b13,
-                        0x3dc0d25d,
-                        0xbe7aa0e7,
-                        0x3f024ae3>(xx);
-        auto denom = horn1<T,
-                           0x2e9dfe10,
-                           0xb1a8d160,
-                           0x344b0b83,
-                           0xb698f761,
-                           0x38a3cafe,
-                           0xba7882fc,
-                           0x3c0af173,
-                           0xbd59d3f0,
-                           0x3e726344,
-                           0xbf21c042
-                           //        0x3f800000
-                           >(xx);
+        auto num   =
+        eve::reverse_horner(xx, T(0x1.3bfc2ap-35f), T(-0x1.4a3b14p-29f), T(0x1.86d8bep-24f), T(-0x1.2015dep-19f)
+                           , T(0x1.2db062p-15f), T(-0x1.bbc454p-12f), T(0x1.dffee2p-9f), T(-0x1.665626p-6f)
+                           , T(0x1.81a4bap-4f), T(-0x1.f541cep-3f), T(0x1.0495c6p-1f))
+        ;
+        auto denom =
+        eve::reverse_horner(xx, T(0x1.3bfc20p-34f), T(-0x1.51a2c0p-28f), T(0x1.961706p-23f), T(-0x1.31eec2p-18f)
+                           , T(0x1.4795fcp-14f), T(-0x1.f105f8p-11f), T(0x1.15e2e6p-7f), T(-0x1.b3a7e0p-5f)
+                           , T(0x1.e4c688p-3f), T(-0x1.438084p-1f), T(0x1.0p0))
+        ;
         return average(rx, xx * num / (denom * x));
       }
       else
       {
-        auto num   = horn<T,
-                        0x3dc3bfc2ac32b39ell, //(3.59233385440928410398E-11)
-                        0xbe24a3b14d9709f0ll, //(-2.40274520828250956942E-9)
-                        0x3e786d8be5016991ll, //(9.10010780076391431042E-8),
-                        0xbec2015dd001fa5bll, //(-2.14640351719968974225E-6)
-                        0x3f02db061d28d773ll, //(3.59641304793896631888E-5),
-                        0xbf3bbc454e5479acll, //(-4.23209114460388756528E-4)
-                        0x3f6dffee25eba9bdll, //(3.66207612329569181322E-3),
-                        0xbf966562633da983ll, //(-2.18711255142039025206E-2)
-                        0x3fb81a4b94e413c5ll, //(9.41512335303534411857E-2),
-                        0xbfcf541cdebcb905ll, //(-2.44754418142697847934E-1)
-                        0x3fe0495c52fe411ell  //(5.08955156417900903354E-1),
-                        >(xx);
-        auto denom = horn1<T,
-                           0x3dd3bfc202a6b560ll, //(7.18466403235734541950E-11)
-                           0xbe351a2c0f7cf15cll, //(-4.91324691331920606875E-9)
-                           0x3e8961705729c1cdll, //(1.89100358111421846170E-7),
-                           0xbed31eec145c9b53ll, //(-4.55875153252442634831E-6)
-                           0x3f14795fc069cc34ll, //(7.81025592944552338085E-5),
-                           0xbf4f105f8f05c7d8ll, //(-9.47996768486665330168E-4)
-                           0x3f815e2e53c1fb60ll, //(8.48041718586295374409E-3),
-                           0xbfab3a7e0ed1122bll, //(-5.31806367003223277662E-2)
-                           0x3fce4c6875173c3ell, //(2.36706788228248691528E-1),
-                           0xbfe438083f2d47c7ll  //(-6.31839869873368190192E-1)
-                           //        0x3ff0000000000000ll, //(1.00000000000000000000E0),
-                           >(xx);
+        auto num   =
+        eve::reverse_horner(xx, T(0x1.3bfc2ac32b39ep-35), T(-0x1.4a3b14d9709f0p-29), T(0x1.86d8be5016991p-24)
+                           , T(-0x1.2015dd001fa5bp-19), T(0x1.2db061d28d773p-15), T(-0x1.bbc454e5479acp-12)
+                           , T(0x1.dffee25eba9bdp-9), T(-0x1.66562633da983p-6), T(0x1.81a4b94e413c5p-4)
+                           , T(-0x1.f541cdebcb905p-3), T(0x1.0495c52fe411ep-1))
+        ;
+        auto denom =
+        eve::reverse_horner(xx, T(0x1.3bfc202a6b560p-34), T(-0x1.51a2c0f7cf15cp-28), T(0x1.961705729c1cdp-23)
+                           , T(-0x1.31eec145c9b53p-18), T(0x1.4795fc069cc34p-14), T(-0x1.f105f8f05c7d8p-11)
+                           , T(0x1.15e2e53c1fb60p-7), T(-0x1.b3a7e0ed1122bp-5), T(0x1.e4c6875173c3ep-3)
+                           , T(-0x1.438083f2d47c7p-1), T(0x1.0p0))
+        ;
         return average(rx, xx * num / (denom * x));
       }
     };
@@ -148,35 +97,32 @@ dawson_(EVE_SUPPORTS(cpu_), T a0) noexcept
     {
       if constexpr( std::is_same_v<elt_t, float> )
       {
-        auto num   = horn<T, 0xb9ff3ce5, 0x3c8708d6, 0xbe3101f1, 0x3f211590, 0xbf173118>(xx);
-        auto denom = horn1<T, 0xba7f3ce5, 0x3d0d0443, 0xbec9942c, 0x3fddc960, 0xc02caf51
-                           //          0x3f800000
-                           >(xx);
+        auto num   =
+        eve::reverse_horner(xx, T(-0x1.fe79cap-12f), T(0x1.0e11acp-6f), T(-0x1.6203e2p-3f)
+                           , T(0x1.422b20p-1f), T(-0x1.2e6230p-1f))
+        ;
+        auto denom =
+        eve::reverse_horner(xx, T(-0x1.fe79cap-11f), T(0x1.1a0886p-5f), T(-0x1.932858p-2f)
+                           , T(0x1.bb92c0p+0f), T(-0x1.595ea2p+1f), T(0x1.0p0))
+        ;
         return average(rx, xx * num / (denom * x));
       }
       else
       {
-        auto num   = horn<T,
-                        0xbf3fe79cad3d09fbll, //(-4.86827613020462700845E-4)
-                        0x3f90e11ab3d4d36bll, //(1.64837047825189632310E-2),
-                        0xbfc6203e2f0a174ell, //(-1.72858975380388136411E-1)
-                        0x3fe422b1f29fbcb6ll, //(6.29235242724368800674E-1),
-                        0xbfe2e622ffa7ef20ll  //(-5.90592860534773254987E-1)
-                        >(xx);
-        auto denom = horn1<T,
-                           0xbf4fe79cad3d0a8dll, //(-9.73655226040941223894E-4)
-                           0x3fa1a0885fe44f2dll, //(3.44278924041233391079E-2),
-                           0xbfd932857b438c94ll, //(-3.93708582281939493482E-1)
-                           0x3ffbb92c0388a954ll, //(1.73270799045947845857E0),
-                           0xc00595ea2e7576e2ll  //(-2.69820057197544900361E0),
-                           //        0x3ff0000000000000ll  //(1.00000000000000000000E0),
-                           >(xx);
-        return average(rx, xx * num / (denom * x));
+        auto num   =
+        eve::reverse_horner(xx, T(-0x1.fe79cad3d09fbp-12), T(0x1.0e11ab3d4d36bp-6), T(-0x1.6203e2f0a174ep-3)
+                           , T(0x1.422b1f29fbcb6p-1), T(-0x1.2e622ffa7ef20p-1))
+        ;
+        auto denom =
+        eve::reverse_horner(xx, T(-0x1.fe79cad3d0a8dp-11), T(0x1.1a0885fe44f2dp-5), T(-0x1.932857b438c94p-2)
+                           , T(0x1.bb92c0388a954p+0), T(-0x1.595ea2e7576e2p+1), T(0x1.0p0))
+        ;
+         return average(rx, xx * num / (denom * x));
       }
     };
     auto dawson4 = [](auto rx) { return rx * T(0.5); };
 
-    auto r       = nan(as<T>()); // nan case treated here
+    auto r       = nan(as<T>());
     auto notdone = is_not_nan(x);
     notdone      = next_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
     rx           = rec(x);

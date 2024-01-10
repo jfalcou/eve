@@ -10,8 +10,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/lambert.hpp>
-#include <eve/module/polynomial.hpp>
-
 
 namespace eve::detail
 {

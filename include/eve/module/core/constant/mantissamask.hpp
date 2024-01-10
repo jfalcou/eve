@@ -7,16 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-#include <eve/traits/as_integer.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct mantissamask_t : constant_callable<mantissamask_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+      using i_t = as_integer_t<T>;
+
+      if constexpr(std::same_as<e_t, float>  ) return i_t(0x807FFFFFU);
+      else if constexpr(std::same_as<e_t, double> ) return i_t(0x800FFFFFFFFFFFFFULL);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(mantissamask_t, mantissamask_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -56,25 +72,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/mantissamask.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(mantissamask_, mantissamask);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto mantissamask_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    using i_t = as_integer_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return i_t(0x807FFFFFU);
-    else if constexpr( std::is_same_v<t_t, double> ) return i_t(0x800FFFFFFFFFFFFFULL);
-  }
-
-  template<floating_value T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto mantissamask_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  {
-    return mantissamask(as<T>());
-  }
-}
+  inline constexpr auto mantissamask = functor<mantissamask_t>;
 }

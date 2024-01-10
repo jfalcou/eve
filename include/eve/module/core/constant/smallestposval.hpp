@@ -7,17 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct smallestposval_t : constant_callable<smallestposval_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+
+           if constexpr(std::integral<e_t>        ) return T(1);
+      else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-126);
+      else if constexpr(std::same_as<e_t, double> ) return T(0x1p-1022);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(smallestposval_t, smallestposval_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -56,30 +71,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/smallestposval.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(smallestposval_, smallestposval);
-
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE auto smallestposval_(EVE_SUPPORTS(cpu_), eve::as<T> const& = {}) noexcept
-  {
-    using t_t = element_type_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) { return Constant<T, 0X00800000U>(); }
-    else if constexpr( std::is_same_v<t_t, double> )
-    {
-      return Constant<T, 0X0010000000000000ULL>();
-    }
-    else if constexpr( std::is_integral_v<t_t> ) { return T(1); }
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto smallestposval_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(smallestposval(as<T>()))
-  {
-    return smallestposval(as<T>());
-  }
-}
+  inline constexpr auto smallestposval = functor<smallestposval_t>;
 }

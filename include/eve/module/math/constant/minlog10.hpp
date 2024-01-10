@@ -21,11 +21,11 @@ struct minlog10_t : constant_callable<minlog10_t, Options, downward_option, upwa
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      return Constant<T, 0xc217b818U>(); //T(-0x1.2f703p+5);
+      return T(-0x1.2f703p+5);
     }
     else
     {
-      return  Constant<T, 0xc0733a7146f72a42ULL>(); //T(-0x1.33a7146f72a42p+8);
+      return T(-0x1.33a7146f72a42p+8);
     }
   }
 

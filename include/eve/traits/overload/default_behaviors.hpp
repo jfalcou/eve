@@ -165,6 +165,7 @@ namespace eve
           >
   struct constant_callable : callable<Func, OptionsValues, conditional_option, Options...>
   {
+    using constant_callable_tag = void;
     template<typename O, typename T>
     constexpr auto behavior(auto arch, O const& opts, as<T> const& target) const
     {

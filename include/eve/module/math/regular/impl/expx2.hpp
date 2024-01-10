@@ -29,8 +29,8 @@ expx2_(EVE_SUPPORTS(cpu_), T a0) noexcept
       if( is_infinite(a0) ) return inf(as<T>());
     T       x       = eve::abs(a0);
     using u_t = underlying_type_t<T>;
-    const u_t Expx2c1 = Ieee_constant<u_t, 0x42000000U, 0x4060000000000000ull>();
-    const u_t Expx2c2 = Ieee_constant<u_t, 0x3d000000U, 0x3f80000000000000ull>();
+    const u_t Expx2c1 = ieee_constant<0x1.0p+5f, 0x1.0000000000000p+7>(eve::as<u_t>{});
+    const u_t Expx2c2 = ieee_constant<0x1.0p-5f, 0x1.0000000000000p-7>(eve::as<u_t>{});
     /* Represent x as an exact multiple of 1/32 plus a residual.  */
     T m = Expx2c1 * eve::floor(fma(Expx2c2, x, half(as<T>())));
     x -= m;

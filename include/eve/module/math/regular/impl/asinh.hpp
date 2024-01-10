@@ -14,6 +14,7 @@
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/log1p.hpp>
 #include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/horner.hpp>
 
 namespace eve::detail
 {
@@ -52,7 +53,7 @@ asinh_(EVE_SUPPORTS(cpu_), const T& a0) noexcept
       std::size_t nb        = eve::count_true(x_lt_half);
       if( nb > 0 )
       {
-        z = horn<T, 0x3f800000, 0xbe2aa9ad, 0x3d9949b1, 0xbd2ee581, 0x3ca4d6e6>(x2) * x;
+        z = eve::reverse_horner(x2, T(0x1.000000p+0f), T(-0x1.55535ap-3f), T(0x1.329362p-4f), T(-0x1.5dcb02p-5f), T(0x1.49adccp-6f))* x;
         if( nb >= cardinal_v<T> ) return bit_xor(z, bts);
       }
       auto case_1 = [](T const& x) { return x; };                                       // great x

@@ -20,7 +20,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core
 //! @{
-//! @var Ieee_constant
+//! @var ieee_constant
 //!
 //! @brief Callable object computing a floating constant from its scalar hexadecimal integral
 //! representations |
@@ -29,31 +29,35 @@ namespace eve
 //!
 //! | Member       | Effect                                                     |
 //! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | generates a floating constant from its scalar hexadecimal integral
-//! representations |
+//! | `operator()` | generates a floating constant                              |
 //!
 //! ---
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template <floating_ordered_value T BitsPatternfloat, BitsPatterndouble > T operator()() const
+//!  template <auto f, auto d, floating_ordered_value T> T operator()(as<T> target) const
 //!  noexcept;
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!
 //! **template Parameters**
 //!
-//!`BitsPatternfloat': hexadecimal integral representation of the float scalar constant
+//! `f':  float scalar constant
 //!
-//!`BitsPatterndouble': hexadecimal integral representation of the double scalar constant
+//!`'d': double scalar constant
+//!
+//!   ** Parameters**
+//!
+//!  'target': as<T>() where T is the chosen return type
 //!
 //! **Return value**
 //!
-//! the call `eve::ieee_constant(as<T>()) < T, BitsPatternfloat, BitsPatterndouble>`
+//! the call `eve::ieee_constant<f, d>(as<T>())`
 //! is semantically equivalent to :
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
 //!  using t_t = element_type_t<T>;
-//!  if constexpr(std::same_as<t_t, float>) return eve::constant<T, BitsPatternfloat>();
-//!  else                                   return eve::constant<T, BitsPatterndouble>();
+//!  if constexpr(std::same_as<t_t, float>) return T(f)
+//!  else if constexpr(std::same_as<t_t, double>)  return T(d);
+//!  else the result is UB
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //! ---
 //!
@@ -63,32 +67,18 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-template<floating_value T, auto BitsPatternfloat, auto BitsPatterndouble>
-EVE_FORCEINLINE auto Ieee_constant(eve::as<T> const& = {}) noexcept
-{
-  using t_t = element_type_t<T>;
 
-  if constexpr( std::is_same_v<t_t, float> )
+  namespace _
   {
-    if constexpr( sizeof(t_t) != sizeof(BitsPatternfloat) )
-    {
-      static_assert(
-          sizeof(t_t) == sizeof(BitsPatternfloat),
-          "[eve::ieeeconstant] floating_point case - BitsPatternfloat has not the correct size");
-      return T {};
-    }
-    else return static_cast<T>(bit_cast(BitsPatternfloat, as<t_t>()));
+    struct real32 { constexpr real32(auto v) : value(v) {} float  value; };
+    struct real64 { constexpr real64(auto v) : value(v) {} double value; };
   }
-  else // if constexpr(std::is_same_v<t_t, double>)
+
+  template<eve::_::real32 BF, eve::_::real64 BD,typename T>
+  auto ieee_constant(eve::as<T>)
   {
-    if constexpr( sizeof(t_t) != sizeof(BitsPatterndouble) )
-    {
-      static_assert(
-          sizeof(t_t) == sizeof(BitsPatterndouble),
-          "[eve::ieeeconstant] floating_point case - BitsPatterndouble has not the correct size");
-      return T {};
-    }
-    else return static_cast<T>(bit_cast(BitsPatterndouble, as<t_t>()));
+    using e_t = eve::element_type_t<T>;
+    if      constexpr(std::same_as<float,e_t>) return T(BF.value);
+    else if constexpr(std::same_as<double,e_t>) return T(BD.value);
   }
-}
 }

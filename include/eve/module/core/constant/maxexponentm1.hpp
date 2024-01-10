@@ -7,16 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-#include <eve/traits/as_integer.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct maxexponentm1_t : constant_callable<maxexponentm1_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+      using i_t = as_integer_t<T>;
+
+      if constexpr(std::same_as<e_t, float>  ) return  i_t(126);
+      else if constexpr(std::same_as<e_t, double> ) return  i_t(1022);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(maxexponentm1_t, maxexponentm1_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -35,7 +51,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      eve::as_integer<T> maxexponentm1(as<T> x) noexcept;
+//!      eve::as_integer<T> maxexponentm1m1(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -45,7 +61,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//! the call `eve::limitexponent(as<T>())` is semantically equivalent to
+//! the call `eve::maxexponentm1(as<T>())` is semantically equivalent to
 //!   - as_integer_t<T>(126) if eve::element_type_t<T> is float
 //!   - as_integer_t<T>(1022) if eve::element_type_t<T> is double
 //!
@@ -54,25 +70,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/maxexponentm1.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(maxexponentm1_, maxexponentm1);
-
-namespace detail
-{
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr auto maxexponentm1_(EVE_SUPPORTS(cpu_), as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    using i_t = as_integer_t<T>;
-
-    if constexpr( std::is_same_v<t_t, float> ) return i_t(126);
-    else if constexpr( std::is_same_v<t_t, double> ) return i_t(1022);
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto maxexponentm1_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  {
-    return maxexponentm1(as<T>());
-  }
-}
+inline constexpr auto maxexponentm1 = functor<maxexponentm1_t>;
 }

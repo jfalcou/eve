@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/detail/kumi.hpp>
+#include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
@@ -28,19 +30,17 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr( std::is_same_v<elt_t, float> )
       {
-        T y = horn<T, 0x3d2aaaa5, 0xbab60619, 0x37ccf5ce>(z);
+        T y =
+          eve::reverse_horner(z, T(0x1.55554ap-5f), T(-0x1.6c0c32p-10f), T(0x1.99eb9cp-16f))
+          ;
         return inc(fma(z, mhalf(eve::as<T>()), y * sqr(z)));
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
-        T y = horn<T,
-          0x3fe0000000000000ll,
-          0xbfa5555555555551ll,
-          0x3f56c16c16c15d47ll,
-          0xbefa01a019ddbcd9ll,
-          0x3e927e4f8e06d9a5ll,
-          0xbe21eea7c1e514d4ll,
-          0x3da8ff831ad9b219ll>(z);
+        T y =
+        eve::reverse_horner(z, T(0x1.0000000000000p-1), T(-0x1.5555555555551p-5), T(0x1.6c16c16c15d47p-10)
+                           , T(-0x1.a01a019ddbcd9p-16), T(0x1.27e4f8e06d9a5p-22)
+                           , T(-0x1.1eea7c1e514d4p-29), T(0x1.8ff831ad9b219p-37));
         return oneminus(y * z);
       }
     }
@@ -53,18 +53,16 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr( std::is_same_v<elt_t, float> )
       {
-        T y1 = horn<T, 0xbe2aaaa2, 0x3c08839d, 0xb94ca1f9>(z);
+        T y1 =
+          eve::reverse_horner(z, T(-0x1.555544p-3f), T(0x1.11073ap-7f), T(-0x1.9943f2p-13f))
+          ;
         return fma(y1 * z, x, x);
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
-        T y1 = horn<T,
-          0xbfc5555555555548ll,
-          0x3f8111111110f7d0ll,
-          0xbf2a01a019bfdf03ll,
-          0x3ec71de3567d4896ll,
-          0xbe5ae5e5a9291691ll,
-          0x3de5d8fd1fcf0ec1ll>(z);
+        T y1 =
+        eve::reverse_horner(z, T(-0x1.5555555555548p-3), T(0x1.111111110f7d0p-7), T(-0x1.a01a019bfdf03p-13)
+                           , T(0x1.71de3567d4896p-19), T(-0x1.ae5e5a9291691p-26), T(0x1.5d8fd1fcf0ec1p-33));
         return fma(y1 * z, x, x);
       }
     }
@@ -77,19 +75,17 @@ namespace eve
       T zz = eve::sqr(z);
       if constexpr( std::is_same_v<element_type_t<T>, float> )
       {
-        return fma(
-          horn<T, 0x3eaaaa6fu, 0x3e0896ddu, 0x3d5ac5c9u, 0x3cc821b5u, 0x3b4c779cu, 0x3c19c53bu>(zz),
-          zz * z,
-          z);
+        return fma(eve::reverse_horner(zz, T(0x1.5554dep-2f), T(0x1.112dbap-3f), T(0x1.b58b92p-5f)
+                                      , T(0x1.90436ap-6f), T(0x1.98ef38p-9f), T(0x1.338a76p-7f)),zz*z,z);
       }
       else if constexpr( std::is_same_v<element_type_t<T>, double> )
       {
-        T num = horn<T, 0xc1711fead3299176ull, 0x413199eca5fc9dddull, 0xc0c992d8d24f3f38ull>(zz);
-        T den = horn1<T,
-          0xc189afe03cbe5a31ull,
-          0x4177d98fc2ead8efull,
-          0xc13427bc582abc96ull,
-          0x40cab8a5eeb36572ull>(zz);
+        T num =
+          eve::reverse_horner(zz, T(-0x1.11fead3299176p+24), T(0x1.199eca5fc9dddp+20), T(-0x1.992d8d24f3f38p+13))
+          ;
+        T den =
+          eve::reverse_horner(zz, T(-0x1.9afe03cbe5a31p+25), T(0x1.7d98fc2ead8efp+24)
+                             , T(-0x1.427bc582abc96p+20), T(0x1.ab8a5eeb36572p+13), T(0x1.0p0));
         return fma(z, (zz * (num / den)), z);
       }
     }

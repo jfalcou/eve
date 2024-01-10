@@ -7,17 +7,38 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
 
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sqrteps_t : constant_callable<sqrteps_t, Options, downward_option, upward_option>
+  {
+    template<typename T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    {
+      using e_t = element_type_t<T>;
+
+      if constexpr(std::same_as<e_t, float>  )
+      {
+        if constexpr(Opts::contains(upward2))
+          return T(0x1.6a09e8p-12f);
+        else
+          return T(0x1.6a09e6p-12f);
+      }
+      else if constexpr(std::same_as<e_t, double> ) return T(0x1p-26);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(sqrteps_t, sqrteps_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -54,35 +75,5 @@ namespace eve
 //!  @godbolt{doc/core/constant/sqrteps.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sqrteps_, sqrteps);
-
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE auto sqrteps_(EVE_SUPPORTS(cpu_), eve::as<T> const&) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) { return Constant<T, 0x39B504F3U>(); }
-    else if constexpr( std::is_same_v<t_t, double> )
-    {
-      return Constant<T, 0x3E50000000000000ULL>();
-    }
-    else if constexpr( std::is_integral_v<t_t> ) { return T(1); }
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto sqrteps_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(sqrteps(as<T>()))
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> )
-    {
-      if constexpr( std::is_same_v<D, upward_type> ) return Constant<T, 0x39B504F4U>();
-      else return sqrteps(as<T>());
-    }
-    else return sqrteps(as<T>());
-  }
-}
+  inline constexpr auto sqrteps = functor<sqrteps_t>;
 }
