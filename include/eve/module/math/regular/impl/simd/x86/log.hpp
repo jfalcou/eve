@@ -21,8 +21,8 @@ log_(EVE_SUPPORTS(cpu_), plain_type const&, const T& a0) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    T Log_2hi   = ieee_cts<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
-    T Log_2lo   = ieee_cts<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
+    T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+    T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
     using elt_t = element_type_t<T>;
     if constexpr( std::is_same_v<elt_t, float> )
     {

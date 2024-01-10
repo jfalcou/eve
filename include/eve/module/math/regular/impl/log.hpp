@@ -21,8 +21,8 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> )
       {
-        T Log_2hi   = ieee_cts<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
-        T Log_2lo   = ieee_cts<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
+        T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+        T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
         using uiT   = as_integer_t<T, unsigned>;
         using iT    = as_integer_t<T, signed>;
         using elt_t = element_type_t<T>;
@@ -148,8 +148,8 @@ namespace eve::detail
     {
       using uiT = as_integer_t<T, unsigned>;
       using iT  = as_integer_t<T, signed>;
-      T Log_2hi = ieee_cts<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
-      T Log_2lo = ieee_cts<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
+      T Log_2hi = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
+      T Log_2lo = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
       auto x = a0;
       if constexpr( std::is_same_v<T, float> )
       {

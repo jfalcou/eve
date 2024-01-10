@@ -20,7 +20,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core
 //! @{
-//! @var ieee_cts
+//! @var ieee_constant
 //!
 //! @brief Callable object computing a floating constant from its scalar hexadecimal integral
 //! representations |
@@ -50,7 +50,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//! the call `eve::ieee_cts<f, d>(as<T>())`
+//! the call `eve::ieee_constant<f, d>(as<T>())`
 //! is semantically equivalent to :
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
@@ -88,7 +88,7 @@ namespace eve
   }
 
   template<eve::_::real32 BF, eve::_::real64 BD,typename T>
-  auto ieee_cts(eve::as<T>)
+  auto ieee_constant(eve::as<T>)
   {
     using e_t = eve::element_type_t<T>;
     if      constexpr(std::same_as<float,e_t>) return T(BF.value);

@@ -91,7 +91,7 @@ namespace eve::detail
         if constexpr( scalar_value<T> )
         {
           if( (is_infinite(a0)) ) return inf(as<T>());
-          const T Maxlog_abs_gamma = ieee_cts<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
+          const T Maxlog_abs_gamma = ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
           auto log_abs_gamma_pos = [Logsqrt2pi](T x)
             {
               if( x < 6.5f )
@@ -285,7 +285,7 @@ namespace eve::detail
         if constexpr( scalar_value<T> )
         {
           const T Maxlog_abs_gamma =
-            ieee_cts<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
+            ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
           auto log_abs_gamma_pos = [Logsqrt2pi](T x)
             {
               if( x < 13.0 )

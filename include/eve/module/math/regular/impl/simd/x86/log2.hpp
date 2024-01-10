@@ -152,8 +152,8 @@ namespace eve::detail
          */
 
         /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
-        T Invlog_2lo = ieee_cts<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(eve::as<T>{});
-        T Invlog_2hi = ieee_cts<0x1.7160000p+0f, 0x1.7154765200000p+0>(eve::as<T>{});
+        T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(eve::as<T>{});
+        T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(eve::as<T>{});
         T hi         = f - hfsq;
         hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
         T lo         = fma(s, hfsq + R, f - hi - hfsq);

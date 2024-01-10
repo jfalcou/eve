@@ -35,8 +35,8 @@ namespace eve::detail
           }
           else { return minlog10denormal(eve::as<T>()); }
         };
-      const T Log10_2hi   = ieee_cts<0x1.3400000p-2f, 0x1.3440000000000p-2>(eve::as<T>{});
-      const T Log10_2lo   = ieee_cts<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(eve::as<T>{});
+      const T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(eve::as<T>{});
+      const T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(eve::as<T>{});
       auto    xltminlog10 = x <= minlogval();
       auto    xgemaxlog10 = x >= maxlog10(eve::as(x));
       if constexpr( scalar_value<T> )

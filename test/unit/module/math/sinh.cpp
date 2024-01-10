@@ -30,7 +30,7 @@ TTS_CASE_TPL("Check return types of sinh", eve::test::simd::ieee_reals)
 auto maxi = []<typename T>(eve::as<T> const&)
 {
   using v_t = eve::element_type_t<T>;
-  v_t ovl   = eve::ieee_cts<0x1.6181480p+6f, 0x1.62e42fefa39efp+9>(eve::as<v_t>{}); // 88.376251220703125f,
+  v_t ovl   = eve::ieee_constant<0x1.6181480p+6f, 0x1.62e42fefa39efp+9>(eve::as<v_t>{}); // 88.376251220703125f,
                                                                              // 709.782712893384
   return T(ovl);
 };
