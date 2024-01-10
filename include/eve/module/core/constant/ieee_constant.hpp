@@ -67,19 +67,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-  template<floating_value T>
-  EVE_FORCEINLINE auto ieee_constant(float vf,  double vd, eve::as<T> const& = {}) noexcept
-  {
-    using elt_t = element_type_t<T>;
-    if constexpr( std::same_as<elt_t, float> )
-    {
-      return T(vf);
-    }
-    else if constexpr(std::same_as<elt_t, double>)
-    {
-       return T(vd);
-    }
-  }
 
   namespace _
   {
