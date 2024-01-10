@@ -13,17 +13,32 @@
 
 namespace eve
 {
+//   template<typename Options>
+//   struct zero_t;
+
+//   inline constexpr auto zero = functor<zero_t>;
+
+
   template<typename Options>
   struct zero_t : constant_callable<zero_t, Options, downward_option, upward_option>
   {
     template<typename T>
     static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
     {
-      return T(0);
+      if constexpr( kumi::product_type<T> )
+      {
+        // Can't just T{kumi::map} because that does not work for scalar product types
+        T res;
+        // This better inline.
+        kumi::for_each([](auto& m) { m = functor<zero_t>(as(m)); }, res);
+
+        return res;
+      }
+      else
+        return T(0);
     }
 
     template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(zero_t, zero_);
@@ -64,8 +79,8 @@ namespace eve
 //!  @godbolt{doc/core/constant/zero.cpp}
 //! @}
 //================================================================================================
-inline constexpr auto zero = functor<zero_t>;
+  inline constexpr auto zero = functor<zero_t>;
 
-// Required for if_else optimisation detections
-using callable_zero_ = tag_t<zero>;
+  // Required for if_else optimisation detections
+  using callable_zero_ = tag_t<zero>;
 }

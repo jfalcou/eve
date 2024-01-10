@@ -24,9 +24,9 @@ namespace eve
       using e_t = element_type_t<T>;
 
       if constexpr(std::same_as<e_t, float>)
-        return T(-0x1.fe28020p+3f);
+        return T(-0x1.fe2804p+3);
       else
-        return T(-0x1.205966f2b4f11p+5);
+        return T(-0x1.205966f2b4f12p+5);
     }
 
     template<floating_value T>

@@ -22,7 +22,7 @@ namespace eve
       using e_t = element_type_t<T>;
 
            if constexpr(std::integral<e_t>        ) return T(1);
-      else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-120);
+      else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-126);
       else if constexpr(std::same_as<e_t, double> ) return T(0x1p-1022);
     }
 

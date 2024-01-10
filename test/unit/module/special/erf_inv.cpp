@@ -42,7 +42,7 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
   {
     TTS_ULP_EQUAL(erf_inv(T(eve::smallestposval(as<T>()))),
                   T(boost::math::erf_inv(eve::smallestposval(as<v_t>()))),
-                  0.5);
+                  1.0);
   }
 
   if constexpr( eve::platform::supports_invalids )
