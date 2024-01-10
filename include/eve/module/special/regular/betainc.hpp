@@ -7,15 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct betainc_t : elementwise_callable<betainc_t, Options>
+{
+  template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
+  EVE_FORCEINLINE eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const  { return EVE_DISPATCH_CALL(a, b, c); }
+
+  EVE_CALLABLE_OBJECT(betainc_t, betainc_);
+};
+
 //================================================================================================
 //! @addtogroup special
 //! @{
-//!   @var betainc
-//!   @brief Computes the beta incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =
+//!   @var betaincinc
+//!   @brief Computes the betainc incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =
 //!   \frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
 //!
 //!   **Defined in header**
@@ -44,14 +55,14 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!   The value of the incomplete beta function is returned.
+//!   The value of the incomplete betainc function is returned.
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/special/regular/betainc.cpp}
+//!   @godbolt{doc/special/regular/betaincinc.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(betainc_, betainc);
+ inline constexpr auto betainc = functor<betainc_t>;
 }
 
 #include <eve/module/special/regular/impl/betainc.hpp>
