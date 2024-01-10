@@ -118,6 +118,7 @@ namespace detail
       if constexpr ( is_aggregated ) return top_bits<half_logical>::is_cheap;
 
       if ( x86_abi<abi_type> ) return true;
+      if ( ppc_abi<abi_type> ) return true;
 
       if ( arm_abi<abi_type> )
       {
