@@ -14,36 +14,55 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value U>
-EVE_FORCEINLINE auto
-beta_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
--> common_value_t<T, U>
-{
-  return arithmetic_call(beta, a0, a1);
+  template< typename T0, typename T1, callable_options O>
+  EVE_FORCEINLINE
+  eve::common_value_t<T0, T1> beta__(EVE_REQUIRES(cpu_), O const&, T0 const& a0,  T1 const & a1)
+  {
+    if constexpr(std::same_as<T0, T1>)
+    {
+      auto y    = a0 + a1;
+      auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
+      return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));
+    }
+    else
+    {
+      return arithmetic_call(beta, a0, a1);
+    }
+  }
 }
 
-template<floating_ordered_value T>
-EVE_FORCEINLINE T
-beta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept
-{
-  auto y    = a0 + a1;
-  auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
-  return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));
-}
+// namespace eve::detail
+// {
+// template<floating_ordered_value T, floating_ordered_value U>
+// EVE_FORCEINLINE auto
+// beta_(EVE_SUPPORTS(cpu_), T a0, U a1) noexcept
+// -> common_value_t<T, U>
+// {
+//   return arithmetic_call(beta, a0, a1);
+// }
 
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C,  typename T0, typename ... Ts>
-EVE_FORCEINLINE auto
-beta_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
--> decltype(if_else(cond, beta(t0, ts...), t0)){
-  return mask_op(cond, eve::beta, t0, ts ...);
-}
+// template<floating_ordered_value T>
+// EVE_FORCEINLINE T
+// beta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept
+// {
+//   auto y    = a0 + a1;
+//   auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
+//   return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));
+// }
 
-template<conditional_expr C, decorator D,  typename T0, typename  ... Ts>
-EVE_FORCEINLINE auto
-beta_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
--> decltype(if_else(cond, beta(t0, ts...), t0)){
-  return mask_op(cond, d(eve::beta), t0, ts ...);
-}
-}
+// // -----------------------------------------------------------------------------------------------
+// // Masked cases
+// template<conditional_expr C,  typename T0, typename ... Ts>
+// EVE_FORCEINLINE auto
+// beta_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
+// -> decltype(if_else(cond, beta(t0, ts...), t0)){
+//   return mask_op(cond, eve::beta, t0, ts ...);
+// }
+
+// template<conditional_expr C, decorator D,  typename T0, typename  ... Ts>
+// EVE_FORCEINLINE auto
+// beta_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
+// -> decltype(if_else(cond, beta(t0, ts...), t0)){
+//   return mask_op(cond, d(eve::beta), t0, ts ...);
+// }
+// }
