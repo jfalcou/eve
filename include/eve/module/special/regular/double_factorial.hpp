@@ -18,10 +18,8 @@ namespace eve
   {
     template<eve::unsigned_value T>
     EVE_FORCEINLINE
-    auto
-    //std::conditional_t<scalar_value<T>, double, as_wide_as<double, eve::cardinal_t<T>> >
-    //eve::as_wide_as<T, double> //auto //as_floating_point_t<T>
-    operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    as_wide_as_t<double, T >
+    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(double_factorial_t, double_factorial_);
   };

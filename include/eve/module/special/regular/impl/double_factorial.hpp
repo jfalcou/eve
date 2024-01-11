@@ -16,7 +16,7 @@ namespace eve::detail
 
   template<typename T, callable_options O>
   EVE_FORCEINLINE
-  auto //std::conditional_t<scalar_value<T>, double, as_wide_as<double, cardinal_t<T>> >
+  as_wide_as_t<double, T>
   //  eve::as_wide_as<T, double> //auto //eve::as_floating_point_t<T>
   double_factorial_(EVE_REQUIRES(cpu_), O const&, T i0) noexcept
   {

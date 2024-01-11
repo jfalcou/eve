@@ -14,9 +14,9 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
+  template<typename T, callable_options O>
   EVE_FORCEINLINE T
-  erf_inv_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  erf_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
