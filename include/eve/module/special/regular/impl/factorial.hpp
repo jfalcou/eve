@@ -15,7 +15,7 @@ namespace eve::detail
   template<integral_value T, callable_options O>
   EVE_FORCEINLINE
   as_wide_as_t<double, T>
-  factorial_(EVE_SUPPORTS(cpu_), T n) noexcept
+  factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
   {
     if constexpr(signed_integral_value<T>)
     {
@@ -211,7 +211,7 @@ namespace eve::detail
 
   template<floating_ordered_value T, callable_options O>
   EVE_FORCEINLINE
-  T factorial_(EVE_SUPPORTS(cpu_), T n) noexcept
+  T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
   {
     using elt_t = element_type_t<T>;
     EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");

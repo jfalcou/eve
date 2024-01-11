@@ -12,15 +12,15 @@
 
 namespace eve
 {
-template<typename Options>
-struct beta_t : elementwise_callable<beta_t, Options>
-{
-  template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
-  EVE_FORCEINLINE
-  eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept { return EVE_DISPATCH_CALL(a, b); }
+  template<typename Options>
+  struct beta_t : elementwise_callable<beta_t, Options>
+  {
+    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+    EVE_FORCEINLINE
+    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 
-  EVE_CALLABLE_OBJECT(beta_t, beta_);
-};
+    EVE_CALLABLE_OBJECT(beta_t, beta_);
+  };
 
 //================================================================================================
 //! @addtogroup special

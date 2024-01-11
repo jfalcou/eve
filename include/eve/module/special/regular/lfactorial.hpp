@@ -6,11 +6,27 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+ template<typename Options>
+  struct lfactorial_t : elementwise_callable<lfactorial_t, Options>
+  {
+    template<eve::integral_value T>
+    EVE_FORCEINLINE
+    as_wide_as_t<double, T >
+    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(lfactorial_t, lfactorial_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -45,14 +61,14 @@ namespace eve
 //!       [element type](eve::element_type) is always double to try to avoid overflow.
 //!     * If the entry is a [floating point value](eve::floating_point_value)
 //!       which must be a flint,  the result is of the same type as the entry.
-//!     * If `n` elements are not integer or flint the result is undefined.
+//!     * If `n` elements are nor integer nor flint the result is undefined.
 //!
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/special/regular/lfactorial.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(lfactorial_, lfactorial);
+inline constexpr auto lfactorial = functor<lfactorial_t>;
 }
 
 #include <eve/module/special/regular/impl/lfactorial.hpp>

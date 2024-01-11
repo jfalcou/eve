@@ -6,12 +6,21 @@
 */
 //==================================================================================================
 #pragma once
-
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct log_gamma_t : elementwise_callable<log_gamma_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(log_gamma_t, log_gamma_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -50,7 +59,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(log_gamma_, log_gamma);
+inline constexpr auto log_gamma = functor<log_gamma_t>;
 }
 
 #include <eve/module/special/regular/impl/log_gamma.hpp>
