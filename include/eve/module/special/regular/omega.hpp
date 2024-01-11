@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct omega_t : elementwise_callable<omega_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(omega_t, omega_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -47,7 +58,8 @@ namespace eve
 //!  @godbolt{doc/special/regular/omega.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(omega_, omega);
+inline constexpr auto omega = functor<omega_t>;
 }
+
 
 #include <eve/module/special/regular/impl/omega.hpp>
