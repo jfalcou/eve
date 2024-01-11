@@ -17,83 +17,64 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value U>
-auto
-gamma_p_inv_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
-->common_value_t<T, U>
-{
-  return arithmetic_call(gamma_p_inv, a, b);
-}
-
-template<floating_ordered_value T>
-T
-gamma_p_inv_(EVE_SUPPORTS(cpu_), T p, T k) noexcept requires has_native_abi_v<T>
-{
-  if constexpr( std::is_same_v<T, float> ) { return float32(gamma_p_inv(float64(p), float64(k))); }
-  p                 = if_else(is_ltz(p) || p > one(as(p)), allbits, p);
-  auto       iseqzp = is_eqz(p);
-  auto       iseq1p = p == one(as(p));
-  auto       x      = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), allbits));
-  logical<T> notdone(is_not_nan(p) && !iseqzp && !iseq1p);
-  auto       d   = rec(9 * k);
-  auto       omp = oneminus(p);
-  auto       y   = oneminus(d - sqrt_2(as(omp)) * erfc_inv(2 * omp) * eve::sqrt(d));
-
-  x       = if_else(notdone, k * sqr(y) * y, x);
-  auto x0 = x;
-  int  i  = 10;
-  if( eve::none(notdone) ) return x;
-  auto dgamma_p = [](auto x, auto k) { return exp(dec(k) * log(x) - x - log_abs_gamma(k)); };
-  while( i )
+  template<typename T, typename U, callable_options O>
+  eve::common_value_t<T, U>
+  gamma_p_inv_(EVE_REQUIRES(cpu_), O const&, T p, U k) noexcept
   {
-    auto dx = if_else(notdone, (gamma_p(x, k) - p) / dgamma_p(x, k), zero);
-    x -= dx;
-    if( i < 7 )
-      notdone = notdone && is_not_less(abs(dx), 4 * eps(as(x)) * max(eve::abs(x), one(as(x))));
-    if( eve::none(notdone) ) return x;
-    --i;
-  }
+    if constexpr(std::same_as<T, U>)
+    {
+      if constexpr( std::is_same_v<T, float> ) { return float32(gamma_p_inv(float64(p), float64(k))); }
+      p                 = if_else(is_ltz(p) || p > one(as(p)), allbits, p);
+      auto       iseqzp = is_eqz(p);
+      auto       iseq1p = p == one(as(p));
+      auto       x      = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), allbits));
+      logical<T> notdone(is_not_nan(p) && !iseqzp && !iseq1p);
+      auto       d   = rec(9 * k);
+      auto       omp = oneminus(p);
+      auto       y   = oneminus(d - sqrt_2(as(omp)) * erfc_inv(2 * omp) * eve::sqrt(d));
 
-  notdone  = notdone || is_ltz(y);
-  x        = if_else(notdone, eve::abs(x0), x);
-  auto xlo = if_else(notdone, eve::min(x / 2, zero(as(x))), x);
-  auto xhi = if_else(notdone, eve::min(x * 2, eve::valmax(as(x))), x);
-  auto inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
-  while( eve::any(inl) )
-  {
-    xlo = if_else(inl, eve::max(xlo / 2, zero(as(x))), xlo);
-    xhi = if_else(inl, eve::min(xhi * 2, eve::valmax(as(x))), xhi);
-    inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
-  }
-  auto xmed = average(xlo, xhi);
-  while( eve::any(notdone) )
-  {
-    auto gmp  = gamma_p(xmed, k);
-    auto test = (gmp < p);
-    xlo       = if_else(test, xmed, xlo);
-    xhi       = if_else(test, xhi, xmed);
-    notdone   = (ulpdist(xlo, xhi) > 1) && gmp != 0;
-    xmed      = average(xlo, xhi);
-  }
-  xmed = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), xmed));
-  return if_else(k == one(as(k)), -eve::log1p(-p), xmed);
-}
+      x       = if_else(notdone, k * sqr(y) * y, x);
+      auto x0 = x;
+      int  i  = 10;
+      if( eve::none(notdone) ) return x;
+      auto dgamma_p = [](auto x, auto k) { return exp(dec(k) * log(x) - x - log_abs_gamma(k)); };
+      while( i )
+      {
+        auto dx = if_else(notdone, (gamma_p(x, k) - p) / dgamma_p(x, k), zero);
+        x -= dx;
+        if( i < 7 )
+          notdone = notdone && is_not_less(abs(dx), 4 * eps(as(x)) * max(eve::abs(x), one(as(x))));
+        if( eve::none(notdone) ) return x;
+        --i;
+      }
 
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C, typename T0, typename ... Ts>
-EVE_FORCEINLINE auto
-gamma_p_inv_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
--> decltype(if_else(cond, gamma_p_inv(t0, ts...), t0))
-{
-  return mask_op(cond, eve::gamma_p_inv, t0, ts ...);
-}
-
-template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
-EVE_FORCEINLINE auto
-gamma_p_inv_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
--> decltype(if_else(cond, gamma_p_inv(t0, ts...), t0))
-{
-  return mask_op(cond, d(eve::gamma_p_inv), t0, ts ...);
-}
+      notdone  = notdone || is_ltz(y);
+      x        = if_else(notdone, eve::abs(x0), x);
+      auto xlo = if_else(notdone, eve::min(x / 2, zero(as(x))), x);
+      auto xhi = if_else(notdone, eve::min(x * 2, eve::valmax(as(x))), x);
+      auto inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
+      while( eve::any(inl) )
+      {
+        xlo = if_else(inl, eve::max(xlo / 2, zero(as(x))), xlo);
+        xhi = if_else(inl, eve::min(xhi * 2, eve::valmax(as(x))), xhi);
+        inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
+      }
+      auto xmed = average(xlo, xhi);
+      while( eve::any(notdone) )
+      {
+        auto gmp  = gamma_p(xmed, k);
+        auto test = (gmp < p);
+        xlo       = if_else(test, xmed, xlo);
+        xhi       = if_else(test, xhi, xmed);
+        notdone   = (ulpdist(xlo, xhi) > 1) && gmp != 0;
+        xmed      = average(xlo, xhi);
+      }
+      xmed = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), xmed));
+      return if_else(k == one(as(k)), -eve::log1p(-p), xmed);
+    }
+    else
+    {
+      return arithmetic_call(gamma_p, p, k);
+    }
+  }
 }

@@ -12,36 +12,18 @@
 
 namespace eve::detail
 {
-template<floating_value T, floating_value U>
-EVE_FORCEINLINE auto
-lbeta_(EVE_SUPPORTS(cpu_), T a, U b) noexcept
--> common_value_t<T, U>
-{
-  return arithmetic_call(lbeta, a, b);
-}
-
-template<floating_ordered_value T>
-EVE_FORCEINLINE T
-lbeta_(EVE_SUPPORTS(cpu_), T a0, T a1) noexcept requires(has_native_abi_v<T>)
-{
-  auto y = a0 + a1;
-  return log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y);
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C, typename T0, typename ... Ts>
-EVE_FORCEINLINE auto
-lbeta_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
--> decltype(if_else(cond, lbeta(t0, ts...), t0))
-{
-  return mask_op(cond, eve::lbeta, t0, ts ...);
-}
-
-template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
-EVE_FORCEINLINE auto
-lbeta_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
-{
-  return mask_op(cond, d(eve::lbeta), t0, ts ...);
-}
+  template< typename T0, typename T1, callable_options O>
+  EVE_FORCEINLINE
+  eve::common_value_t<T0, T1> lbeta_(EVE_REQUIRES(cpu_), O const&, T0 const& a0,  T1 const & a1)
+  {
+    if constexpr(std::same_as<T0, T1>)
+    {
+      auto y = a0 + a1;
+      return log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y);
+    }
+    else
+    {
+      return arithmetic_call(lbeta, a0, a1);
+    }
+  }
 }

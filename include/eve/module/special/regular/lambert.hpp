@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct lambert_t : elementwise_callable<lambert_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    kumi::tuple<T, T>
+    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(lambert_t, lambert_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -51,7 +64,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/lambert.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(lambert_, lambert);
+inline constexpr auto lambert = functor<lambert_t>;
 }
 
 #include <eve/module/special/regular/impl/lambert.hpp>
