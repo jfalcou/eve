@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct digamma_t : elementwise_callable<digamma_t, Options>
+{
+  template<eve::value T>
+  EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(digamma_t, digamma_);
+};
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -47,7 +58,8 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(digamma_, digamma);
+inline constexpr auto digamma = functor<digamma_t>;
 }
+
 
 #include <eve/module/special/regular/impl/digamma.hpp>
