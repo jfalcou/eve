@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct erfcx_t : elementwise_callable<erfcx_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(erfcx_t, erfcx_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -47,7 +58,7 @@ namespace eve
 //!  @godbolt{doc/special/regular/erfcx.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(erfcx_, erfcx);
+inline constexpr auto erfcx = functor<erfcx_t>;
 }
 
 #include <eve/module/special/regular/impl/erfcx.hpp>

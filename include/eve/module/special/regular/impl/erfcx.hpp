@@ -15,10 +15,9 @@
 namespace eve::detail
 {
 
-  template<floating_ordered_value T, decorator D>
-  EVE_FORCEINLINE constexpr T
-  erfcx_(EVE_SUPPORTS(cpu_), D const&, T x) noexcept
-  requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  template<floating_ordered_value T, callable_options O>
+  constexpr T
+  erfcx_(EVE_REQUIRES(cpu_), O const&, T x) 
   {
     /*
      * Based on: M. M. Shepherd and J. G. Laframboise, "Chebyshev Approximation of
@@ -102,21 +101,5 @@ namespace eve::detail
     r1      = if_else(is_nan(r1), inf(as<T>()), r1);
     r       = if_else(xpos, r, r1);
     return if_else(is_nan(x), eve::allbits, r);
-  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE T
-  erfcx_(EVE_SUPPORTS(cpu_), T x) noexcept
-  {
-    return erfcx(regular_type(), x);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  erfcx_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::erfcx, t);
   }
 }
