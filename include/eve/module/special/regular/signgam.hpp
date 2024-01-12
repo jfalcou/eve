@@ -7,10 +7,20 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct signgam_t : elementwise_callable<signgam_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(signgam_t, signgam_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -46,7 +56,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/signgam.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(signgam_, signgam);
+inline constexpr auto signgam = functor<signgam_t>;
 }
 
 #include <eve/module/special/regular/impl/signgam.hpp>
