@@ -16,7 +16,7 @@ namespace eve::detail
   namespace helpers
   {
     template<floating_ordered_value T>
-    inline T
+    EVE_FORCEINLINE T
     large_negative(T q)
     {
       T    w     = eve::log_abs_gamma(q);
@@ -78,9 +78,9 @@ namespace eve::detail
     }
   }
 
-  template<floating_ordered_value T>
+  template<typename T, callable_options O>
   constexpr T
-  log_abs_gamma_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  log_abs_gamma_(EVE_REQUIRES(cpu_), O const&, T a0)
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -404,21 +404,5 @@ namespace eve::detail
       }
     }
     else return apply_over(log_abs_gamma, a0);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-  template<conditional_expr C, typename ... Ts>
-  EVE_FORCEINLINE auto
-  log_abs_gamma_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
-  {
-    return mask_op(cond, eve::log_abs_gamma, ts ...);
-  }
-
-  template<conditional_expr C, decorator D, typename  ... Ts>
-  EVE_FORCEINLINE auto
-  log_abs_gamma_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
-  {
-    return mask_op(cond, d(eve::log_abs_gamma), ts ...);
   }
 }

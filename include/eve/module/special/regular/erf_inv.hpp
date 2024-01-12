@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct erf_inv_t : elementwise_callable<erf_inv_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(erf_inv_t, erf_inv_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -47,7 +58,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/erf_inv.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(erf_inv_, erf_inv);
+inline constexpr auto erf_inv = functor<erf_inv_t>;
 }
 
 #include <eve/module/special/regular/impl/erf_inv.hpp>

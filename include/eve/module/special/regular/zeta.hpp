@@ -6,10 +6,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct zeta_t : elementwise_callable<zeta_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(zeta_t, zeta_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -46,7 +57,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/zeta.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(zeta_, zeta);
+inline constexpr auto zeta = functor<zeta_t>;
 }
 
 #include <eve/module/special/regular/impl/zeta.hpp>

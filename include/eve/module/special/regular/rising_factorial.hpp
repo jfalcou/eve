@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct rising_factorial_t : elementwise_callable<rising_factorial_t, Options, raw_option, pedantic_option, regular_option>
+  {
+    template<eve::ordered_value I, eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    auto operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(rising_factorial_t, rising_factorial_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -71,7 +83,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(rising_factorial_, rising_factorial);
+  inline constexpr auto rising_factorial = functor<rising_factorial_t>;
 }
 
 #include <eve/module/special/regular/impl/rising_factorial.hpp>

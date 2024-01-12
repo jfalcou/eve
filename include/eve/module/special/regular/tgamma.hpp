@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct tgamma_t : elementwise_callable<tgamma_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(tgamma_t, tgamma_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -48,8 +59,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-
-EVE_MAKE_CALLABLE(tgamma_, tgamma);
+inline constexpr auto tgamma = functor<tgamma_t>;
 }
 
 #include <eve/module/special/regular/impl/tgamma.hpp>

@@ -6,10 +6,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct beta_t : elementwise_callable<beta_t, Options>
+  {
+    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+    EVE_FORCEINLINE
+    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(beta_t, beta_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -45,7 +57,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(beta_, beta);
+  inline constexpr auto beta = functor<beta_t>;
 }
 
 #include <eve/module/special/regular/impl/beta.hpp>

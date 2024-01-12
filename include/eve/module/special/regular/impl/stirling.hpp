@@ -13,10 +13,9 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, decorator D>
-  EVE_FORCEINLINE constexpr T
-  stirling_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
-  requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
+  template<typename T, callable_options O>
+  constexpr T
+  stirling_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
@@ -81,28 +80,5 @@ namespace eve::detail
       }
     }
     else return apply_over(stirling, a0);
-  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr T
-  stirling_(EVE_SUPPORTS(cpu_), T const& x) noexcept
-  {
-    return stirling(regular_type(), x);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-  template<conditional_expr C, typename ... Ts>
-  EVE_FORCEINLINE auto
-  stirling_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
-  {
-    return mask_op(cond, eve::stirling, ts ...);
-  }
-
-  template<conditional_expr C, decorator D, typename  ... Ts>
-  EVE_FORCEINLINE auto
-  stirling_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
-  {
-    return mask_op(cond, d(eve::stirling), ts ...);
   }
 }

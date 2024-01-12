@@ -6,11 +6,27 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct factorial_t : elementwise_callable<factorial_t, Options>
+  {
+    template<eve::integral_value T>
+    EVE_FORCEINLINE
+    as_wide_as_t<double, T >
+    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(factorial_t, factorial_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -28,14 +44,17 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value N >
-//!      eve::as_floating_point_value<N> factorial(N x) noexcept;
+//!      template< eve::integral_value N >
+//!      as_wide_as<N, double> factorial(N x) noexcept;
+//!
+//!      template< eve::floating_ordered_value T >
+//!      T factorial(N x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
+//!     * `n` :  must be of integral type or flint.
 //!
 //!   **Return value**
 //!
@@ -50,7 +69,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/factorial.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(factorial_, factorial);
+inline constexpr auto factorial = functor<factorial_t>;
 }
 
 #include <eve/module/special/regular/impl/factorial.hpp>
