@@ -108,13 +108,4 @@ namespace eve::detail
     }
     else return apply_over(erf_inv, a0);
   }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  erf_inv_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::erf_inv, t);
-  }
 }

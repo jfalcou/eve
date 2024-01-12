@@ -14,9 +14,9 @@
 namespace eve::detail
 {
 
-  template<floating_ordered_value T>
+  template<typename T>
   EVE_FORCEINLINE constexpr auto
-  lambert_serie_utility(T r) noexcept
+  lambert_serie_utility(T r)
   {
     using elt_t = element_type_t<T>;
     using A3 = kumi::result::generate_t<3, elt_t>;

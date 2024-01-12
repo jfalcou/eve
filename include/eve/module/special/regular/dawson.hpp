@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct dawson_t : elementwise_callable<dawson_t, Options>
   {
-    template<eve::value T>
+    template<eve::floating_ordered_value T>
     EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(dawson_t, dawson_);

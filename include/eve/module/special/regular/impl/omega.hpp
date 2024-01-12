@@ -13,8 +13,8 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+  template<typename T, callable_options O>
+  constexpr T
   omega_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )

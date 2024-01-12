@@ -43,7 +43,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x` :  [real argument](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!

@@ -15,7 +15,7 @@ namespace eve
   template<typename Options>
   struct stirling_t : elementwise_callable<stirling_t, Options>
   {
-    template<eve::value T>
+    template<eve::floating_ordered_value T>
     EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(stirling_t, stirling_);

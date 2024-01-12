@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct erf_inv_t : elementwise_callable<erf_inv_t, Options>
   {
-    template<eve::value T>
+    template<eve::floating_ordered_value T>
     EVE_FORCEINLINE T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(erf_inv_t, erf_inv_);

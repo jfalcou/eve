@@ -45,14 +45,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value N >
+//!      template< eve::ordered_value N >
 //!      auto lfactorial(N x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integer or flint argument](@ref eve::value).
+//!     * `n` :  [integer or flint argument](@ref eve::ordered_value).
 //!
 //!   **Return value**
 //!

@@ -16,7 +16,7 @@ namespace eve
 template<typename Options>
 struct exp_int_t : elementwise_callable<exp_int_t, Options, saturated_option>
 {
-  template<eve::floating_ordered_value T, eve::value I>
+  template<eve::floating_ordered_value T, eve::ordered_value I>
   EVE_FORCEINLINE  eve::as_wide_as_t<T, I>  operator()(I n, T v) const noexcept { return EVE_DISPATCH_CALL(n, v); }
 
   template<eve::floating_ordered_value T>

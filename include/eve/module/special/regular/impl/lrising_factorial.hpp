@@ -18,7 +18,7 @@ namespace eve::detail
   /////////////////////////////////////////////////////////////////////////////////////////
   //utilities
 
-  template<floating_ordered_value T>
+  template<typename T>
   EVE_FORCEINLINE auto
   inner_lrising_factorial(T a, T x) noexcept
   {

@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct rising_factorial_t : elementwise_callable<rising_factorial_t, Options, raw_option, pedantic_option, regular_option>
   {
-    template<eve::value I, eve::floating_ordered_value T>
+    template<eve::ordered_value I, eve::floating_ordered_value T>
     EVE_FORCEINLINE
     auto operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 

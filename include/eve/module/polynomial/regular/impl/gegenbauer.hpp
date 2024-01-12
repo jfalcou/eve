@@ -12,93 +12,84 @@
 
 namespace eve::detail
 {
-
-template<scalar_value I, floating_value T, floating_ordered_value U>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept requires compatible_values<T, U>
-{
-
-  using c_t   = common_compatible_t<T, U>;
-  using elt_t = element_type_t<c_t>;
-  auto p0     = one(as(x));
-  if( is_eqz(nn) ) return c_t(p0);
-
-  c_t y0(p0);
-  c_t y1(2 * lambda * x);
-
-  auto  yk    = y1;
-  elt_t k     = 2;
-  elt_t k_max = nn * inc(eps(as(elt_t())));
-  c_t   gamma(2 * dec(lambda));
-  auto  test = k < k_max;
-  while( test )
+  template<typename  I, typename L, typename T, callable_options O>
+  auto
+  gegenbauer_(EVE_REQUIRES(cpu_), O const&, I n, L lambda, T x)
   {
-    yk = if_else(test, fms((2 + gamma / k) * x, y1, inc(gamma / k) * y0), yk);
-    y0 = y1;
-    y1 = yk;
-    ++k;
-    test = k < k_max;
-  }
-  return yk;
-}
-
-template<simd_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
-requires(scalar_value<T>)
-{
-  auto n =  T(nn);
-  using f_t = as_wide_t<T, cardinal_t<I>>;
-  return gegenbauer(n, f_t(x));
-}
-
-template<simd_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T lambda, T x) noexcept
-requires(simd_value<T>)
-{
-  if( has_native_abi_v<T> )
-  {
-    using elt_t = element_type_t<T>;
-    T    y0     = one(as(x));
-    auto iseqzn = is_eqz(nn);
-    if( eve::all(iseqzn) ) return y0;
-    auto n  = convert(nn, as(elt_t()));
-    T    y1 = 2 * lambda * x;
-
-    T    yk = y1;
-    T    k(2);
-    auto k_max = n * inc(eps(as(elt_t())));
-    T    gamma = 2 * dec(lambda);
-    auto test  = k < k_max;
-    while( eve::any(test) )
+    if constexpr(simd_value<T> != simd_value<L>)
     {
-      yk   = if_else(test, fms((2 + gamma / k) * x, y1, inc(gamma / k) * y0), yk);
-      y0   = y1;
-      y1   = yk;
-      k    = inc(k);
-      test = k < k_max;
+      using l_t = as_wide_as<L, T>;
+      using t_t = as_wide_as<T, L>;
+      if constexpr(scalar_value<I>)
+      {
+        l_t wl(lambda);
+        t_t wt(x);
+        return gegenbauer(n, wl, wt);
+      }
+      else if constexpr(simd_value<I>)
+      {
+        using wl_t = as_wide_as<l_t, I>;
+        using wt_t = as_wide_as<t_t, I>;
+        return gegenbauer(n, wl_t(lambda), wt_t(x));
+      }
     }
-    return if_else(iseqzn, one, yk);
-  }
-  else return apply_over(gegenbauer, nn, lambda, x);
-}
+    else
+    {
+      if constexpr(scalar_value<I>)
+      {
+        if( has_native_abi_v<T> )
+        {
+          using elt_t = element_type_t<L>;
+          auto p0     = one(as(x));
+          if( is_eqz(n) ) return p0;
 
-template<simd_value I, floating_value T, floating_ordered_value U>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_),
-            I nn,
-            U lambda,
-            T x) noexcept requires compatible_values<T, U>
-{
-  using e_t = eve::element_type_t<T>;
-    auto n = convert(nn, eve::as<e_t>());
-  using v_t = common_value_t<T, U>;
-  if constexpr( scalar_value<v_t> && simd_value<I> )
-  {
-    using w_t = as_wide_t<v_t, cardinal_t<I>>;
-    return gegenbauer(n, w_t(lambda), w_t(x));
+          auto y0(p0);
+          auto y1(2 * lambda * x);
+
+          auto  yk    = y1;
+          elt_t k(2);
+          elt_t k_max = n * inc(eps(as(elt_t())));
+          auto   gamma(2 * dec(lambda));
+          auto  test = k < k_max;
+          while( test )
+          {
+            yk = if_else(test, fms((2 + gamma / k) * x, y1, inc(gamma / k) * y0), yk);
+            y0 = y1;
+            y1 = yk;
+            ++k;
+            test = k < k_max;
+          }
+          return yk;
+        }
+        else return apply_over(gegenbauer, n, lambda, x);
+      }
+      else // I simd
+      {
+        if( has_native_abi_v<I> )
+        {
+          using elt_t  = element_type_t<L>;
+          auto  y0     = one(as(x));
+          auto  iseqzn = is_eqz(n);
+          if( eve::all(iseqzn) ) return y0;
+          auto  y1 = 2 * lambda * x;
+
+          auto  yk = y1;
+          L     k(2);
+          auto  k_max = convert(n, as(elt_t())) * inc(eps(as(elt_t())));
+          auto  gamma = 2 * dec(lambda);
+          auto  test  = k < k_max;
+          while( eve::any(test) )
+          {
+            yk   = if_else(test, fms((2 + gamma / k) * x, y1, inc(gamma / k) * y0), yk);
+            y0   = y1;
+            y1   = yk;
+            k    = inc(k);
+            test = k < k_max;
+          }
+          return if_else(iseqzn, one, yk);
+        }
+        else return apply_over(gegenbauer, n, lambda, x);
+      }
+    }
   }
-  else return gegenbauer(n, v_t(lambda), v_t(x));
-}
 }

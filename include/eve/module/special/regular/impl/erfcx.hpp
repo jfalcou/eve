@@ -15,7 +15,7 @@
 namespace eve::detail
 {
 
-  template<floating_ordered_value T, callable_options O>
+  template<typename T, callable_options O>
   constexpr T
   erfcx_(EVE_REQUIRES(cpu_), O const&, T x) 
   {
