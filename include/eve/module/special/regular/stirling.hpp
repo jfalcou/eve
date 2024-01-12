@@ -6,10 +6,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct stirling_t : elementwise_callable<stirling_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(stirling_t, stirling_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -50,7 +61,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/stirling.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(stirling_, stirling);
+inline constexpr auto stirling = functor<stirling_t>;
 }
 
 #include <eve/module/special/regular/impl/stirling.hpp>

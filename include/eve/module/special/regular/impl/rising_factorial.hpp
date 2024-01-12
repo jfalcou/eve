@@ -17,78 +17,49 @@
 
 namespace eve::detail
 {
-template<ordered_value I, floating_ordered_value T, decorator D>
-EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), D const & d, I n, T x) noexcept
-{
-  if constexpr( integral_simd_value<I> )
+  template<typename I, typename T, callable_options O>
+  EVE_FORCEINLINE as_wide_as_t<T, I>
+  rising_factorial_(EVE_REQUIRES(cpu_), O const& d, I a, T x) noexcept
   {
-    using elt_t = element_type_t<T>;
-    using r_t   = as_wide_t<elt_t, cardinal_t<I>>;
-    auto nn     = convert(n, as(elt_t()));
-    return d(rising_factorial)(nn, r_t(x));
+    // Integral first parameter
+    if constexpr(integral_value<I> )
+    {
+      if constexpr( integral_simd_value<I> )
+      {
+        using elt_t = element_type_t<T>;
+        using r_t   = as_wide_t<elt_t, cardinal_t<I>>;
+        auto aa     = convert(a, as(elt_t()));
+        return rising_factorial[d](aa, r_t(x));
+      }
+      else if constexpr( integral_scalar_value<I> )
+      {
+        return rising_factorial[d](T(a), x);
+      }
+    }
+    else
+    {
+      if constexpr( has_native_abi_v<T> )
+      {
+        if constexpr(O::contains(raw2))
+        {
+          // raw direct computation not matter why. nan if a+x or x is non positive
+          return eve::tgamma(x + a) / tgamma(a);
+        }
+        else if constexpr(O::contains(pedantic2))
+        {
+          auto sga   = if_else(is_flint(a), one, signgam(a));
+          auto sgapx = if_else(is_flint(a + x), one, signgam(a + x));
+          return eve::exp(lrising_factorial[pedantic](a, x))*(sga * sgapx);
+        }
+        else if constexpr(O::contains(regular2))
+        {
+          // regular  nan if a+x or x is nnegative,  better computation than raw
+          return eve::exp(lrising_factorial(a, x));
+        }
+        else return eve::exp(lrising_factorial[regular](a, x));
+      }
+      else
+        return apply_over(regular(rising_factorial[d]), a, x);
+    }
   }
-  else if constexpr( integral_scalar_value<I> ) { return d(rising_factorial)(T(n), x); }
-  else
-  {
-    using r_t = common_value_t<I, T>;
-    return d(rising_factorial)(r_t(n), r_t(x));
-  }
-}
-
-// regular  nan if a+x or x is nnegative,  better computation than raw
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_)
-                 , T a
-                 , T x) noexcept
-{
-  if constexpr( has_native_abi_v<T> )
-  {
-    auto lrn = lrising_factorial(a, x);
-    return eve::exp(lrn);
-  }
-  else return apply_over(rising_factorial, a, x);
-}
-
-// regular wrapping : no decorator
-template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), I a, T x) noexcept
-{
-  if constexpr( std::is_integral_v<element_type_t<I>> )
-    return regular(rising_factorial)(convert(a, as(element_type_t<T>())), x);
-  else
-  {
-    using r_t = common_value_t<T, I>;
-    return rising_factorial(r_t(a), r_t(x));
-  }
-}
-
-// raw
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), raw_type const&, T a, T x) noexcept
-{
-  if constexpr( has_native_abi_v<T> ) { return eve::tgamma(x + a) / tgamma(a); }
-  else return apply_over(regular_type()(rising_factorial), a, x);
-}
-
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C, typename T0, typename ... Ts>
-EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, T0 t0, Ts ... ts) noexcept
--> decltype(if_else(cond, rising_factorial(t0, ts...), t0))
-{
-  return mask_op(cond, eve::rising_factorial, t0, ts ...);
-}
-
-template<conditional_expr C, decorator D, typename T0, typename  ... Ts>
-EVE_FORCEINLINE auto
-rising_factorial_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, T0 t0, Ts ... ts) noexcept
-{
-  return mask_op(cond, d(eve::rising_factorial), t0, ts ...);
-}
 }

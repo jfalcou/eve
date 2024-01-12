@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
+{
+  template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+  EVE_FORCEINLINE
+  eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept { return EVE_DISPATCH_CALL(a, b); }
+
+  EVE_CALLABLE_OBJECT(gamma_p_t, gamma_p_);
+};
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -28,8 +40,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T  gamma_p(T x) noexcept;
+//!      template< eve::floating_ordered_value T0,  floating_ordered_value T1>
+//!      T  gamma_p(T1 x, T2 y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -47,7 +59,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/gamma_p.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(gamma_p_, gamma_p);
+  inline constexpr auto gamma_p = functor<gamma_p_t>;
 }
 
 #include <eve/module/special/regular/impl/gamma_p.hpp>

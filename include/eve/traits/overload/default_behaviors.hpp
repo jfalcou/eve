@@ -56,7 +56,7 @@ namespace eve
     }
 
     protected:
-    constexpr Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>>(*this); }
+    constexpr Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>const&>(*this); }
   };
 
   //====================================================================================================================

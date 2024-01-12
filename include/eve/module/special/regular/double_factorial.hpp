@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct double_factorial_t : elementwise_callable<double_factorial_t, Options>
+  {
+    template<eve::unsigned_value T>
+    EVE_FORCEINLINE
+    as_wide_as_t<double, T >
+    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(double_factorial_t, double_factorial_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -49,7 +62,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/double_factorial.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(double_factorial_, double_factorial);
+inline constexpr auto double_factorial = functor<double_factorial_t>;
 }
 
 #include <eve/module/special/regular/impl/double_factorial.hpp>

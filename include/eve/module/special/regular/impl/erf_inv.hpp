@@ -14,9 +14,9 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
+  template<typename T, callable_options O>
   EVE_FORCEINLINE T
-  erf_inv_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  erf_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
@@ -107,14 +107,5 @@ namespace eve::detail
       }
     }
     else return apply_over(erf_inv, a0);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  erf_inv_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::erf_inv, t);
   }
 }

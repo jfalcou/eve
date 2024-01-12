@@ -13,9 +13,9 @@
 
 namespace eve::detail
 {
-template<ordered_value T>
-EVE_FORCEINLINE auto
-lfactorial_(EVE_SUPPORTS(cpu_), T n) noexcept
+template<typename T, callable_options O>
+EVE_FORCEINLINE decltype(eve::factorial(T()))
+lfactorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
 {
   EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");
   EVE_ASSERT(eve::all(is_gez(n)), "lfactorial : some entry elements are not positive");
