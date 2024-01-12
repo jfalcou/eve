@@ -7,23 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
-#include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  template<typename Options>
-  struct gegenbauer_t : elementwise_callable<gegenbauer_t, Options>
-  {
-    template<integral_value I, floating_ordered_value T0, value T1>
-    EVE_FORCEINLINE
-    as_wide_as < common_value_t<T0, T1>, I>
-    operator()(I n, T0 a, T1 b) const noexcept { return EVE_DISPATCH_CALL(n, a, b); }
-
-    EVE_CALLABLE_OBJECT(gegenbauer_t, gegenbauer_);
-  };
-
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -73,8 +60,7 @@ namespace eve
 //!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
 //! @}
 //================================================================================================
-  inline constexpr auto gegenbauer = functor<gegenbauer_t>;
+EVE_MAKE_CALLABLE(gegenbauer_, gegenbauer);
 }
-
 
 #include <eve/module/polynomial/regular/impl/gegenbauer.hpp>
