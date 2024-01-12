@@ -58,7 +58,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/erf_inv.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(erf_inv_, erf_inv);
+inline constexpr auto erf_inv = functor<erf_inv_t>;
 }
 
 #include <eve/module/special/regular/impl/erf_inv.hpp>

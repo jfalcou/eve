@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct erfc_t : elementwise_callable<erfc_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(erfc_t, erfc_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -52,7 +63,7 @@ namespace eve
 //!   @godbolt{doc/special/regular/erf.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(erfc_, erfc);
+inline constexpr auto erfc = functor<erfc_t>;
 }
 
 #include <eve/module/special/regular/impl/erfc.hpp>

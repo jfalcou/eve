@@ -57,7 +57,7 @@ namespace eve
 //!      * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!      * If the argument is Nan, nan returned.
 //!
-//!   @groupheader{Example}VE_MAKE_CALLABLE(erf_, erf);
+//!   @groupheader{Example}
 //!
 //!   @godbolt{doc/special/regular/erf.cpp}
 //!

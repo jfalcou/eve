@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct betainc_inv_t : elementwise_callable<betainc_inv_t, Options>
+  {
+    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
+    EVE_FORCEINLINE
+    eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept { return EVE_DISPATCH_CALL(a, b, c); }
+
+    EVE_CALLABLE_OBJECT(betainc_inv_t, betainc_inv_);
+  };
+
 //================================================================================================
 //! @addtogroup special
 //! @{
@@ -51,7 +63,8 @@ namespace eve
 //!   @godbolt{doc/special/regular/betainc_inv.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(betainc_inv_, betainc_inv);
+  inline constexpr auto betainc_inv = functor<betainc_inv_t>;
 }
+
 
 #include <eve/module/special/regular/impl/betainc_inv.hpp>

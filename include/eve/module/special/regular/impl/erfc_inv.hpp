@@ -9,14 +9,12 @@
 
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/math/regular/horner.hpp>
-#include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE T
-  erfc_inv_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  template<typename T, callable_options O>
+  T erfc_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     using elt_t = element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
@@ -48,8 +46,8 @@ namespace eve::detail
                                  , T(0x1.4c58aep-8f), T(0x1.7515dcp-9f))
 
               /
-                   eve::reverse_horner(w, T(0x1.5e8044p-7f), T(-0x1.bb0154p-7f), T(0x1.5204bep-8f)
-                                      , T(0x1.74e782p-9f), T(0x1.2c6364p-27f))
+              eve::reverse_horner(w, T(0x1.5e8044p-7f), T(-0x1.bb0154p-7f), T(0x1.5204bep-8f)
+                                 , T(0x1.74e782p-9f), T(0x1.2c6364p-27f))
               ;
               return copysign(h, a00);
             };
@@ -98,7 +96,7 @@ namespace eve::detail
                                    , T(0x1.05ac6a8fba182p-27), T(-0x1.0468fb24e2f5fp-28), T(0x1.9e6bf2dda45e3p-30)
                                    , T(-0x1.18feec0e38727p-32), T(-0x1.dcec3a7785389p-36))
                 ;
-          };
+              };
             notdone = last_interval(br_wge16, notdone, r, w);
           }
         }
@@ -106,14 +104,5 @@ namespace eve::detail
       return if_else(w == inf(as(a0)), copysign(w, a00), a00 * r);
     }
     else return apply_over(erfc_inv, a0);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  erfc_inv_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::erfc_inv, t);
   }
 }
