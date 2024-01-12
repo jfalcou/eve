@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::lrising_factorial = {}</td>
+          <td class="memname">eve::lrising_factorial = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;lrising_factorial_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::<span class="keywordtype">float</span>ing_ordered_value U &gt;</div>
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">lrising_factorial</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_gaeb60c975e2f10b34b282682ee10bc687_html_gaeb60c975e2f10b34b282682ee10bc687"><div class="ttname"><a href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a></div><div class="ttdeci">constexpr callable_lrising_factorial_ lrising_factorial</div><div class="ttdoc">Computes the natural logarithm of the Rising Factorial function i.e. .</div><div class="ttdef"><b>Definition:</b> lrising_factorial.hpp:73</div></div>
+<div class="ttc" id="agroup__special_gaeb60c975e2f10b34b282682ee10bc687_html_gaeb60c975e2f10b34b282682ee10bc687"><div class="ttname"><a href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a></div><div class="ttdeci">constexpr auto lrising_factorial</div><div class="ttdoc">Computes the natural logarithm of the Rising Factorial function i.e. .</div><div class="ttdef"><b>Definition:</b> lrising_factorial.hpp:85</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <p><code>a</code>, <code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">strictly positive real floating argument</a>.</p>
@@ -200,7 +200,7 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(17) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- n                                   = &quot;</span> &lt;&lt; n &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- x                                   = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; raw(lrising_factorial(n, x))   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>(<a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a>)(n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; raw(lrising_factorial(n, x))   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>](n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
@@ -224,7 +224,7 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(17) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- n                                   = &quot;</span> &lt;&lt; n &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- x                                   = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; pedantic(lrising_factorial(n, x))   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a>)(n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; pedantic(lrising_factorial(n, x))   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">   <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>

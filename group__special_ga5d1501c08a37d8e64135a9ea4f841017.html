@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__special_ga5d1501c08a37d8e64135a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::lfactorial = {}</td>
+          <td class="memname">eve::lfactorial = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;lfactorial_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,20 +145,20 @@ $(document).ready(function(){initNavTree('group__special_ga5d1501c08a37d8e64135a
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value N &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::ordered_value N &gt;</div>
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">lfactorial</a>(N x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_ga5d1501c08a37d8e64135a9ea4f841017_html_ga5d1501c08a37d8e64135a9ea4f841017"><div class="ttname"><a href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a></div><div class="ttdeci">constexpr callable_lfactorial_ lfactorial</div><div class="ttdoc">Computes the natural logarithm of the factorial of unsigned integer values .</div><div class="ttdef"><b>Definition:</b> lfactorial.hpp:55</div></div>
+<div class="ttc" id="agroup__special_ga5d1501c08a37d8e64135a9ea4f841017_html_ga5d1501c08a37d8e64135a9ea4f841017"><div class="ttname"><a href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a></div><div class="ttdeci">constexpr auto lfactorial</div><div class="ttdoc">Computes the natural logarithm of the factorial of unsigned integer values .</div><div class="ttdef"><b>Definition:</b> lfactorial.hpp:71</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>n</code> : <a class="el" href="concepteve_1_1value.html">integer or flint argument</a>.</li>
+<li><code>n</code> : <a class="el" href="concepteve_1_1ordered__value.html">integer or flint argument</a>.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>The value of \( \log n!\) is returned with the following considerations:</p><ul>
 <li>If the entry is an [integral value](<a class="el" href="concepteve_1_1integral__value.html">eve::integral_value</a>), the result [element type](<a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>) is always double to try to avoid overflow.</li>
 <li>If the entry is a [floating point value](eve::floating_point_value) which must be a flint, the result is of the same type as the entry.</li>
-<li>If <code>n</code> elements are not integer or flint the result is undefined.</li>
+<li>If <code>n</code> elements are nor integer nor flint the result is undefined.</li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>

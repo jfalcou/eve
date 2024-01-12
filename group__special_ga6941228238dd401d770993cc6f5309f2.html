@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__special_ga6941228238dd401d77099
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::factorial = {}</td>
+          <td class="memname">eve::factorial = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;factorial_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,14 +145,17 @@ $(document).ready(function(){initNavTree('group__special_ga6941228238dd401d77099
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value N &gt;</div>
-<div class="line">   eve::as_floating_point_value&lt;N&gt; <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a>(N x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N &gt;</div>
+<div class="line">   as_wide_as&lt;N, double&gt; <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a>(N x) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a>(N x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_ga6941228238dd401d770993cc6f5309f2_html_ga6941228238dd401d770993cc6f5309f2"><div class="ttname"><a href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">eve::factorial</a></div><div class="ttdeci">constexpr callable_factorial_ factorial</div><div class="ttdoc">Computes .</div><div class="ttdef"><b>Definition:</b> factorial.hpp:53</div></div>
+<div class="ttc" id="agroup__special_ga6941228238dd401d770993cc6f5309f2_html_ga6941228238dd401d770993cc6f5309f2"><div class="ttname"><a href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">eve::factorial</a></div><div class="ttdeci">constexpr auto factorial</div><div class="ttdoc">Computes .</div><div class="ttdef"><b>Definition:</b> factorial.hpp:72</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>n</code> : <a class="el" href="concepteve_1_1unsigned__value.html">unsigned argument</a>.</li>
+<li><code>n</code> : must be of integral type or flint.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>The value of \( n!\) is returned.</p>
