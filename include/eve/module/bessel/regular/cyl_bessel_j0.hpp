@@ -7,10 +7,18 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
 namespace eve
 {
+  template<typename Options>
+  struct cyl_bessel_j0_t : elementwise_callable<cyl_bessel_j0_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    eve::common_value_t<T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(cyl_bessel_j0_t, cyl_bessel_j0_);
+  };
+
   //================================================================================================
   //! @addtogroup bessel
   //! @{
@@ -51,7 +59,7 @@ namespace eve
   //!   @godbolt{doc/bessel/regular/cyl_bessel_j0.cpp}
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(cyl_bessel_j0_, cyl_bessel_j0);
+  inline constexpr auto cyl_bessel_j0 = functor<cyl_bessel_j0_t>;
 }
 
 #include <eve/module/bessel/regular/impl/cyl_bessel_j0.hpp>

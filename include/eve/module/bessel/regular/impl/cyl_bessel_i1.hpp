@@ -13,9 +13,8 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, callable_options O>
-  EVE_FORCEINLINE T
-  cyl_bessel_i1_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+  template<typename T, callable_options O>
+  T  cyl_bessel_i1_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     using elt_t = element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
