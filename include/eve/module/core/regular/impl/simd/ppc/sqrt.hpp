@@ -24,7 +24,8 @@ sqrt_(EVE_SUPPORTS(vmx_), wide<T, N> const& v0) noexcept requires ppc_abi<abi_t<
 {
   if constexpr( std::is_floating_point_v<T> )
   {
-    if constexpr( current_api == vmx )
+    if constexpr( current_api >= vsx ) return vec_sqrt(v0.storage());
+    else
     {
       auto that = if_else(v0, v0 * rsqrt(v0), v0);
       if constexpr( platform::supports_invalids )
@@ -33,7 +34,6 @@ sqrt_(EVE_SUPPORTS(vmx_), wide<T, N> const& v0) noexcept requires ppc_abi<abi_t<
       }
       else { return that; }
     }
-    else { return vec_sqrt(v0.storage()); }
   }
 }
 
@@ -45,8 +45,8 @@ EVE_FORCEINLINE wide<T, N>
 {
   if constexpr( std::is_floating_point_v<T> )
   {
-    if constexpr( current_api == vmx ) { return if_else(v0, v0 * raw(rsqrt)(v0), eve::zero); }
-    else { return vec_sqrt(v0.storage()); }
+    if constexpr( current_api >= vsx )  return vec_sqrt(v0.storage());
+    else                                return if_else(v0, v0 * raw(rsqrt)(v0), eve::zero);
   }
 }
 }
