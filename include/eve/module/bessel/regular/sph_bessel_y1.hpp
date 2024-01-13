@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sph_bessel_y1_t : elementwise_callable<sph_bessel_y1_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    eve::common_value_t<T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(sph_bessel_y1_t, sph_bessel_y1_);
+  };
+
   //================================================================================================
   //! @addtogroup bessel
   //! @{
@@ -50,7 +63,14 @@ namespace eve
   //!   @godbolt{doc/bessel/regular/sph_bessel_y1.cpp}
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(sph_bessel_y1_, sph_bessel_y1);
-}
+  inline constexpr auto sph_bessel_y1 = functor<sph_bessel_y1_t>;
 
-#include <eve/module/bessel/regular/impl/sph_bessel_y1.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    T sph_bessel_y1_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    {
+      return if_else(x == inf(as(x)), zero, -cos(x)/sqr(x)-sinc(x));
+    }
+  }
+}

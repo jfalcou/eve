@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sph_bessel_jn_t : elementwise_callable<sph_bessel_jn_t, Options>
+  {
+    template<eve::ordered_value N, eve::floating_ordered_value T>
+    as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
+
+    EVE_CALLABLE_OBJECT(sph_bessel_jn_t, sph_bessel_jn_);
+  };
+
   //================================================================================================
   //! @addtogroup bessel
   //! @{
@@ -53,7 +64,21 @@ namespace eve
   //!   @godbolt{doc/bessel/regular/sph_bessel_jn.cpp}
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(sph_bessel_jn_, sph_bessel_jn);
-}
+  inline constexpr auto sph_bessel_jn = functor<sph_bessel_jn_t>;
 
-#include <eve/module/bessel/regular/impl/sph_bessel_jn.hpp>
+  namespace detail
+  {
+    template<value I, floating_value T, callable_options O>
+    EVE_FORCEINLINE auto
+    sph_bessel_jn_(EVE_REQUIRES(cpu_), O const&, I n, T x) noexcept
+    {
+      EVE_ASSERT(all(is_gez(n) && is_flint(n)), "sph_bessel_jn : some orders are non integral positive");
+      EVE_ASSERT(all(is_nltz(x)), "sph_bessel_jn : some x are negative");
+      using elt_t = element_type_t<T>;
+      if constexpr( integral_value<I> ) return sph_bessel_jn(convert(n, as<elt_t>()), x);
+      else return if_else(abs(x) < eps(as(x)),
+                          if_else(is_eqz(n), one(as(x)), zero),
+                          cyl_bessel_jn(n + half(as(n)), x) * rsqrt(2 * x * inv_pi(as(x))));
+    }
+  }
+}
