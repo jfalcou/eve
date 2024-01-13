@@ -20,16 +20,12 @@ store_(EVE_SUPPORTS(vmx_),
 {
   if constexpr( !std::is_pointer_v<Ptr> )
   {
-    if constexpr( current_api == eve::vmx ) vec_st(value.storage(), 0, ptr.get());
-    else store(value, ptr.get());
+    if constexpr( current_api >= eve::vsx ) store(value, ptr.get());
+    else                                    vec_st(value.storage(), 0, ptr.get());
   }
   else if constexpr( N::value * sizeof(T) == ppc_::bytes )
   {
-    if constexpr( current_api >= eve::vmx )
-    {
-      *((typename wide<T, N>::storage_type *)(ptr)) = value;
-    }
-    else if constexpr( current_api >= eve::vsx )
+    if constexpr( current_api >= eve::vsx )
     {
       // 64bits integrals are not supported by vec_vsx_st on some compilers
       if constexpr( sizeof(T) == 8 && std::is_integral_v<T> )
@@ -38,7 +34,11 @@ store_(EVE_SUPPORTS(vmx_),
       }
       else { vec_vsx_st(value.storage(), 0, ptr); }
     }
+    else
+    {
+      *((typename wide<T, N>::storage_type *)(ptr)) = value;
+    }
   }
-  else { memcpy(ptr, (T const *)(&value), N::value * sizeof(T)); }
+  else memcpy(ptr, (T const *)(&value), N::value * sizeof(T));
 }
 }
