@@ -14,9 +14,8 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE T
-  cyl_bessel_j0_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  template<typename T, callable_options O>
+  T cyl_bessel_j0_(EVE_REQUIRES(cpu_), O const&, T a0)
   {
     using elt_t = element_type_t<T>;
     if constexpr( has_native_abi_v<T> )
@@ -233,21 +232,5 @@ namespace eve::detail
       }
     }
     else return apply_over(cyl_bessel_j0, a0);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-  template<conditional_expr C, typename ... Ts>
-  EVE_FORCEINLINE auto
-  cyl_bessel_j0_(EVE_SUPPORTS(cpu_), C const& cond, Ts ... ts) noexcept
-  {
-    return mask_op(cond, eve::cyl_bessel_j0, ts ...);
-  }
-
-  template<conditional_expr C, decorator D, typename  ... Ts>
-  EVE_FORCEINLINE auto
-  cyl_bessel_j0_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, Ts ... ts) noexcept
-  {
-    return mask_op(cond, d(eve::cyl_bessel_j0), ts ...);
   }
 }
