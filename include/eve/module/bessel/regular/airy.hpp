@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct airy_t : elementwise_callable<airy_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE
+    auto operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(airy_t, airy_);
+  };
 
 //================================================================================================
 //! @addtogroup bessel
@@ -49,8 +60,8 @@ namespace eve
 //!
 //!  @godbolt{doc/bessel/regular/airy.cpp}
 //! @}
-
-  EVE_MAKE_CALLABLE(airy_, airy);
+//================================================================================================
+  inline constexpr auto airy = functor<airy_t>;
 }
 
 #include <eve/module/bessel/regular/impl/airy.hpp>
