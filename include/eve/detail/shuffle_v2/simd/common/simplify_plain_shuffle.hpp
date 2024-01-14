@@ -8,57 +8,16 @@
 #pragma once
 
 #include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/detail/shuffle_v2/idxm.hpp>
 
 namespace eve::detail
 {
-template<std::size_t N>
-constexpr auto
-upscale_pattern_impl(std::array<std::ptrdiff_t, N> p)
-    -> std::optional<std::array<std::ptrdiff_t, N / 2>>
-{
-  if( N == 1 ) return std::nullopt;
-
-  std::array<std::ptrdiff_t, N / 2> res {};
-
-  for( int i = 0; i != N / 2; i += 1 )
-  {
-    int            i2 = i + i;
-    std::ptrdiff_t i0 = p[i2];
-    std::ptrdiff_t i1 = p[i2 + 1];
-
-    if( i0 == na_ || i1 == na_ )
-    {
-      if( i0 == i1 || i0 == we_ || i1 == we_ )
-      {
-        res[i] = na_;
-        continue;
-      }
-      return std::nullopt;
-    }
-
-    if( i0 == we_ && i1 == we_ )
-    {
-      res[i] = we_;
-      continue;
-    }
-
-    if( i0 == we_ ) i0 = i1 - 1;
-    if( i1 == we_ ) i1 = i0 + 1;
-
-    if( i0 + 1 != i1 || i0 % 2 != 0 ) { return std::nullopt; }
-
-    res[i] = i0 / 2;
-  }
-
-  return res;
-}
 
 template<std::ptrdiff_t... I>
 constexpr auto
 upscale_pattern(pattern_t<I...> p)
 {
-  constexpr std::array    p_arr {I...};
-  constexpr std::optional attempt = upscale_pattern_impl(p_arr);
+  constexpr std::optional attempt = idxm::upscale_pattern(std::array{I...});
   if constexpr( !attempt ) return p;
   else return idxm::to_pattern<*attempt>();
 }

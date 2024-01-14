@@ -133,6 +133,57 @@ is_just_setting_one_lane(std::span<const std::ptrdiff_t> idxs)
   return std::array {pos - f, *pos};
 }
 
+template<std::size_t N>
+constexpr auto
+upscale_pattern(std::span<const std::ptrdiff_t, N> idxs)
+{
+  if constexpr( N == 1 ) return std::optional<std::array<std::ptrdiff_t, 1>> {};
+  else
+  {
+    using res_t = std::optional<std::array<std::ptrdiff_t, N / 2>>;
+    std::array<std::ptrdiff_t, N / 2> res {};
+
+    for( int i = 0; i != N / 2; i += 1 )
+    {
+      int            i2 = i + i;
+      std::ptrdiff_t i0 = idxs[i2];
+      std::ptrdiff_t i1 = idxs[i2 + 1];
+
+      if( i0 == na_ || i1 == na_ )
+      {
+        if( i0 == i1 || i0 == we_ || i1 == we_ )
+        {
+          res[i] = na_;
+          continue;
+        }
+        return res_t{};
+      }
+
+      if( i0 == we_ && i1 == we_ )
+      {
+        res[i] = we_;
+        continue;
+      }
+
+      if( i0 == we_ ) i0 = i1 - 1;
+      if( i1 == we_ ) i1 = i0 + 1;
+
+      if( i0 + 1 != i1 || i0 % 2 != 0 ) return res_t{};
+
+      res[i] = i0 / 2;
+    }
+
+    return res_t{res};
+  }
+}
+
+template<std::size_t N>
+constexpr auto
+upscale_pattern(const std::array<std::ptrdiff_t, N>& idxs)
+{
+  return upscale_pattern(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
 template<auto arr>
 constexpr auto
 to_pattern()
@@ -237,7 +288,14 @@ shuffle_halves_independetly(const std::array<std::ptrdiff_t, N>& p)
 }
 
 // works for 2 registers too
+constexpr std::optional<std::array<std::ptrdiff_t, 1>>
+is_repeating_pattern(const std::array<std::ptrdiff_t, 1>)
+{
+  return std::nullopt;
+}
+
 template<std::size_t N>
+requires(N > 1)
 constexpr std::optional<std::array<std::ptrdiff_t, N / 2>>
 is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
 {
@@ -250,8 +308,8 @@ is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
     std::ptrdiff_t y = p[i + (std::size_t)half];
 
     // even havles for x, odd for y
-    if (0 <= x && (x / half) % 2) return std::nullopt;
-    if (0 <= y && (y / half) % 2 == 0) return std::nullopt;
+    if( 0 <= x && (x / half) % 2 ) return std::nullopt;
+    if( 0 <= y && (y / half) % 2 == 0 ) return std::nullopt;
 
     if( y > 0 ) y -= half;
 
@@ -791,6 +849,39 @@ is_slide_right(std::span<const std::ptrdiff_t> idxs)
   return (m - idxs.data()) - *m;
 }
 
+template<std::size_t N>
+constexpr std::optional<std::array<std::ptrdiff_t, N>>
+slide_as_slide2_with_0(std::span<const std::ptrdiff_t, N> idxs)
+{
+  if( const auto s = is_slide_left(idxs) )
+  {
+    std::array<std::ptrdiff_t, N> res = {};
+
+    for( std::ptrdiff_t i = 0; i != N; ++i ) { res[i] = i + *s; }
+
+    return res;
+  }
+
+  if( const auto s = is_slide_right(idxs) )
+  {
+    std::array<std::ptrdiff_t, N> res = {};
+
+    for( std::ptrdiff_t i = 0; i != *s; ++i ) { res[i] = i + 2 * N - *s; }
+    for( std::ptrdiff_t i = *s; i != N; ++i ) { res[i] = i - *s; }
+
+    return res;
+  }
+
+  return std::nullopt;
+}
+
+template<std::size_t N>
+constexpr auto
+slide_as_slide2_with_0(const std::array<std::ptrdiff_t, N>& idxs)
+{
+  return slide_as_slide2_with_0(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
 constexpr bool
 is_reverse(std::span<const std::ptrdiff_t> idxs)
 {
@@ -866,16 +957,9 @@ split_to_groups(const std::array<std::ptrdiff_t, N>& idxs)
   return split_to_groups<G>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
-/*
- * First shuffle big groups, then shuffle withing groups
- *
- * Big big questions about the order of small/big shuffle
- * and when to do zeroes.
- * Case by case we'll see.
- */
 template<std::size_t G, std::size_t N>
 constexpr auto
-put_bigger_groups_in_position(std::span<const std::ptrdiff_t, N> idxs)
+first_groups_then_in_groups(std::span<const std::ptrdiff_t, N> idxs)
 {
   if constexpr( G == 0 || G > N )
   {
@@ -946,9 +1030,112 @@ put_bigger_groups_in_position(std::span<const std::ptrdiff_t, N> idxs)
 
 template<std::size_t G, std::size_t N>
 constexpr auto
-put_bigger_groups_in_position(const std::array<std::ptrdiff_t, N>& idxs)
+first_in_groups_then_groups(std::span<const std::ptrdiff_t, N> idxs)
 {
-  return put_bigger_groups_in_position<G>(std::span<const std::ptrdiff_t, N>(idxs));
+  constexpr std::size_t group_count = N / G;
+
+  using group_pattern_t   = std::array<std::ptrdiff_t, group_count>;
+  using withing_pattern_t = std::array<std::ptrdiff_t, N>;
+
+  std::optional<kumi::tuple<withing_pattern_t, group_pattern_t>> res;
+
+  group_pattern_t groups_pattern = {};
+
+  // computing group pattern
+  for( std::size_t i = 0; i != group_count; ++i )
+  {
+    const std::size_t group_start = i * G;
+    const std::size_t group_end   = (i + 1) * G;
+
+    std::ptrdiff_t group_index = we_;
+
+    for( std::size_t j = group_start; j != group_end; ++j )
+    {
+      // group can still be entierly we_ or na_
+      if( idxs[j] < 0 )
+      {
+        group_index = std::max(idxs[j], group_index);
+        continue;
+      }
+      std::ptrdiff_t cur = idxs[j] / G;
+      if( cur == group_index || group_index < 0 )
+      {
+        group_index = cur;
+        continue;
+      }
+      // group has elements from 2 different groups
+      return res;
+    }
+    groups_pattern[i] = group_index;
+  }
+
+  withing_pattern_t within_groups_pattern = {};
+  within_groups_pattern.fill(we_);
+
+  for( std::ptrdiff_t i = 0; i != group_count; ++i )
+  {
+    // group shuffle will do it
+    if( groups_pattern[i] < 0 ) continue;
+
+    const std::ptrdiff_t group_start          = i * G;
+    const std::ptrdiff_t original_group_start = groups_pattern[i] * G;
+
+    for( std::size_t within_group = 0; within_group != G; ++within_group )
+    {
+      std::ptrdiff_t new_idx = group_start + within_group;
+      std::ptrdiff_t old_idx = original_group_start + within_group;
+      if( idxs[new_idx] == we_ ) continue;
+
+      if( within_groups_pattern[old_idx] == we_ || within_groups_pattern[old_idx] == idxs[new_idx] )
+      {
+        within_groups_pattern[old_idx] = idxs[new_idx];
+        continue;
+      }
+      // 2 values for one position
+      return res;
+    }
+  }
+  res = kumi::tuple {within_groups_pattern, groups_pattern};
+  return res;
+}
+
+template<std::size_t G, std::size_t N>
+constexpr auto
+group_within_group(std::span<const std::ptrdiff_t, N> idxs)
+{
+  using shuff_t = std::array<std::ptrdiff_t, N>;
+  using res_t   = std::optional<kumi::tuple<shuff_t, shuff_t>>;
+  if constexpr( G == 0 || G > N ) return res_t {};
+  else
+  {
+    // not supported so far
+    if( !are_below_ignoring_specials(idxs, N) ) return res_t {};
+
+    // groups/in groups is strictly more powerful
+    // but in groups/groups can result in cheaper 0s.
+    // originally doing in_groups/groups was motivated
+    // by shift on avx2.
+    //
+    // This whole funciton a bit questionable,
+    // and is likely to need revisions at some point.
+    if( auto r = first_in_groups_then_groups<G>(idxs) )
+    {
+      return res_t {kumi::tuple {get<0>(*r), expand_group<G>(get<1>(*r))}};
+    }
+    if( auto r = first_groups_then_in_groups<G>(idxs) )
+    {
+      return res_t {kumi::tuple {expand_group<G>(get<0>(*r)), get<1>(*r)}};
+    }
+
+    return res_t {};
+  }
+}
+
+template<std::size_t G, std::size_t N>
+constexpr auto
+group_within_group(const std::array<std::ptrdiff_t, N>& idxs)
+{
+  return group_within_group<G>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
 constexpr auto

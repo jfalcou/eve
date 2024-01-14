@@ -14,15 +14,20 @@ template<std::ptrdiff_t ToTry, typename P>
 constexpr bool
 shuffle_l_fallback_try_sse2_group_plus_u8(P)
 {
-  constexpr auto group_within = P::shuffle_n_first(eve::lane<ToTry>);
+  constexpr auto p0p1 = P::shuffle_NinN(eve::lane<ToTry>);
 
-  if constexpr( !group_within ) return false;
+  if constexpr( !p0p1 ) return false;
   else
   {
-    constexpr auto most_repeated = idxm::most_repeated_pattern_a<get<1>(*group_within)>;
+    // We split into shuffle big registers and then shuffle u8s internally.
+    // This is limited by what u8 shuffles we can do: rotate and slide.
+    constexpr auto p0 = get<0>(*p0p1);
+    constexpr auto p1 = get<1>(*p0p1);
+    constexpr auto u8pattern = idxm::upscale_pattern(p0) ? p1 : p0; // u8 pattern can't be upscaled
+    constexpr auto most_repeated = idxm::most_repeated_pattern_a<u8pattern>;
 
-    if (idxm::is_rotate(most_repeated)) return true;
-    if (idxm::is_slide_left(most_repeated)) return true;
+    if( idxm::is_rotate(most_repeated) ) return true;
+    if( idxm::is_slide_left(most_repeated) ) return true;
     return false;
   }
 }
@@ -31,24 +36,31 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
 {
-  constexpr auto match = []()
-  {
-    if ( shuffle_l_fallback_try_sse2_group_plus_u8<8>(P {}) ) return 8;
-    if ( shuffle_l_fallback_try_sse2_group_plus_u8<4>(P{}) ) return 4;
-    if ( shuffle_l_fallback_try_sse2_group_plus_u8<2>(P{}) ) return 2;
-    return -1;
-  }();
+  constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
 
-  if constexpr( match == -1 ) return kumi::tuple {no_matching_shuffle, eve::index<-1>};
+  // There should be code for sizeof(T) == 2 but we don't have it yet.
+  if constexpr( sizeof(T) > 1 ) return no;
   else
   {
-    constexpr auto groups_within = *P::shuffle_n_first(eve::lane<match>);
-    constexpr auto groups_p = idxm::to_pattern<get<0>(groups_within)>();
-    constexpr auto within_p = idxm::to_pattern<get<1>(groups_within)>();
+    constexpr auto match = []()
+    {
+      if( shuffle_l_fallback_try_sse2_group_plus_u8<8>(P {}) ) return 8;
+      if( shuffle_l_fallback_try_sse2_group_plus_u8<4>(P {}) ) return 4;
+      if( shuffle_l_fallback_try_sse2_group_plus_u8<2>(P {}) ) return 2;
+      return -1;
+    }();
 
-    auto [groups, groups_l] = shuffle_v2_core(x, eve::lane<match>, groups_p);
-    auto [res, within_l]    = shuffle_v2_core(groups, g, within_p);
-    return kumi::tuple {res, idxm::add_shuffle_levels(groups_l, within_l)};
+    if constexpr( match == -1 ) return kumi::tuple {no_matching_shuffle, eve::index<-1>};
+    else
+    {
+      constexpr auto p0p1 = *P::shuffle_NinN(eve::lane<match>);
+      constexpr auto p0   = get<0>(p0p1);
+      constexpr auto p1   = get<1>(p0p1);
+      auto [r0, l0]       = shuffle_v2_core(x, g, idxm::to_pattern<p0>());
+      auto [r1, l1]       = shuffle_v2_core(r0, g, idxm::to_pattern<p1>());
+
+      return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
+    }
   }
 }
 
