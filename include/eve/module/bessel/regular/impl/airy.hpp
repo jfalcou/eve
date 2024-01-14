@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, callable_options O>
+  template<typename T, typename O>
   kumi::tuple<T, T> airy_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     using elt_t   = element_type_t<T>;
