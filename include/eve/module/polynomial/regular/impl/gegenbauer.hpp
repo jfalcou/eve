@@ -13,11 +13,10 @@
 namespace eve::detail
 {
 
-template<scalar_value I, floating_value T, floating_ordered_value U>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept requires compatible_values<T, U>
+template<scalar_value I, floating_value T, floating_ordered_value U, callable_options O>
+EVE_FORCEINLINE common_value_t<T, U>
+gegenbauer_(EVE_REQUIRES(cpu_), O const&, I nn, U lambda, T x)
 {
-
   using c_t   = common_compatible_t<T, U>;
   using elt_t = element_type_t<c_t>;
   auto p0     = one(as(x));
@@ -42,19 +41,19 @@ gegenbauer_(EVE_SUPPORTS(cpu_), I nn, U lambda, T x) noexcept requires compatibl
   return yk;
 }
 
-template<simd_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T x) noexcept
-requires(scalar_value<T>)
-{
-  auto n =  T(nn);
-  using f_t = as_wide_t<T, cardinal_t<I>>;
-  return gegenbauer(n, f_t(x));
-}
+// template<simd_value I, floating_ordered_value T, callable_options O>
+// EVE_FORCEINLINE auto
+// gegenbauer_(EVE_REQUIRES(cpu_), O const&, I nn, T x) noexcept
+// requires(scalar_value<T>)
+// {
+//   auto n =  T(nn);
+//   using f_t = as_wide_t<T, cardinal_t<I>>;
+//   return gegenbauer(n, f_t(x));
+// }
 
-template<simd_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_), I nn, T lambda, T x) noexcept
+template<simd_value I, floating_ordered_value T, callable_options O>
+EVE_FORCEINLINE as_wide_t<T, I>
+gegenbauer_(EVE_REQUIRES(cpu_), O const&, I nn, T lambda, T x) noexcept
 requires(simd_value<T>)
 {
   if( has_native_abi_v<T> )
@@ -84,12 +83,12 @@ requires(simd_value<T>)
   else return apply_over(gegenbauer, nn, lambda, x);
 }
 
-template<simd_value I, floating_value T, floating_ordered_value U>
-EVE_FORCEINLINE auto
-gegenbauer_(EVE_SUPPORTS(cpu_),
+template<simd_value I, floating_ordered_value T, floating_ordered_value U, callable_options O>
+EVE_FORCEINLINE common_value_t<T, U>
+gegenbauer_(EVE_REQUIRES(cpu_), O const&,
             I nn,
             U lambda,
-            T x) noexcept requires compatible_values<T, U>
+            T x)
 {
   using e_t = eve::element_type_t<T>;
     auto n = convert(nn, eve::as<e_t>());

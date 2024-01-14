@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct hermite_t : elementwise_callable<hermite_t, Options, successor_option>
+  {
+    template<eve::value T0, eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b...);
+    }
+
+    EVE_CALLABLE_OBJECT(hermite_t, hermite_);
+  };
+
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -72,7 +87,7 @@ namespace eve
 //!     @godbolt{doc/polynomial/successor/hermite.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(hermite_, hermite);
+  inline constexpr auto hermite = functor<hermite_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/hermite.hpp>
