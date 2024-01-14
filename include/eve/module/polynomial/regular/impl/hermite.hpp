@@ -8,23 +8,24 @@
 #pragma once
 
 #include <eve/module/core.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
-  // Recurrence relation for hermite polynomials:
- //  template<value N, floating_value T, callable_options O> //successor
-//   EVE_FORCEINLINE T
-//   hermite_(EVE_REQUIRES(cpu_), O const&, N n, T x, T hn, T hnm1) noexcept
-//   {
-//     auto z = fms(x, hn, T(n) * hnm1);
-//     return z + z;
-//   }
+  //Recurrence relation for hermite polynomials:
+  template<value N, floating_value T, callable_options O> //successor
+  EVE_FORCEINLINE auto
+  hermite_(EVE_REQUIRES(cpu_), O const&, N n, T x, T hn, T hnm1) noexcept
+  {
+    auto z = fms(x, hn, T(n) * hnm1);
+    return z + z;
+  }
 
   template<scalar_value I, scalar_value T, callable_options O>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE auto
   hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
-    std::cout << "scalar scalar" << std::endl;
+//    std::cout << "scalar scalar" << std::endl;
       auto p0 = one(as(x));
       if( is_eqz(n) ) return p0;
       auto p1 = x + x;
@@ -39,10 +40,10 @@ namespace eve::detail
   }
 
  template<scalar_value I, simd_value T, callable_options O>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE auto
   hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
-    std::cout << "scalar simd" << std::endl;
+//    std::cout << "scalar simd" << std::endl;
     if constexpr( has_native_abi_v<T> )
     {
       T p0 = one(as(x));
@@ -50,15 +51,15 @@ namespace eve::detail
       T p1 = x + x;
       I c  = one(as(n));
 
-      auto succ = [](auto n, auto x, auto hn, auto hnm1)
-        {
-          auto z = fms(x, hn, T(n) * hnm1);
-          return z + z;
-        };
+ //      auto succ = [](auto n, auto x, auto hn, auto hnm1)
+//         {
+//           auto z = fms(x, hn, T(n) * hnm1);
+//           return z + z;
+//         };
       while( c < n )
       {
         std::swap(p0, p1);
-        p1 = /*hermite[successor]*/succ(c, x, p0, p1);
+        p1 = hermite[successor](c, x, p0, p1);
         ++c;
       }
       return p1;
@@ -67,7 +68,7 @@ namespace eve::detail
   }
 
   template<integral_simd_value I, scalar_value T, callable_options O>
-  EVE_FORCEINLINE  as_wide_t<T, I>
+  auto //EVE_FORCEINLINE as_wide_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I nn, T x)
   requires(scalar_value<T>)
   {
@@ -76,10 +77,10 @@ namespace eve::detail
   }
 
   template<simd_value I, simd_value T, callable_options O>
-  EVE_FORCEINLINE as_wide_t<T, I>
+  auto //EVE_FORCEINLINE as_wide_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I nn, T x)
   {
-    std::cout << "simd simd" << std::endl;
+//    std::cout << "simd simd" << std::endl;
     using elt_t = element_type_t<T>;
     auto p0     = one(as(x));
     auto iseqzn = is_eqz(nn);
@@ -111,7 +112,7 @@ namespace eve::detail
   }
 
   template<int N, floating_value T, callable_options O>
-  EVE_FORCEINLINE T
+  auto //EVE_FORCEINLINE T
   hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x) noexcept
   {
     if constexpr( N < 0 ) return zero(as(x));

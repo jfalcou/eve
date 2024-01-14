@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <iostream>
+
 namespace eve::detail
 {
 
@@ -120,8 +120,8 @@ namespace eve::detail
       using elt_t = element_type_t<T>;
       auto p0     = one(as(x));
       auto iseqzn = is_eqz(nn);
-      if( eve::all(iseqzn) ) [[unlikely]] { return p0; }
-      else [[likely]]
+      if( eve::all(iseqzn) )  { return p0; }
+      else
       {
         auto m  = convert(mm, as<elt_t>());
         auto p1 = inc(m) - x;

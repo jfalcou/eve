@@ -16,11 +16,23 @@ namespace eve
   template<typename Options>
   struct hermite_t : elementwise_callable<hermite_t, Options, successor_option>
   {
-    template<eve::value T0, eve::floating_ordered_value ...Ts>
+    template<eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(b...);
+    }
+    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
     EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(a, b...);
+    }
+    template<eve::integral_value T0, eve::integral_value T1, eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b, c...);
     }
 
     EVE_CALLABLE_OBJECT(hermite_t, hermite_);
