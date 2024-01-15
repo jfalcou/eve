@@ -7,6 +7,7 @@
 //======================================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/associated.hpp>
 #include <eve/module/core/decorator/compensated.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/fuzzy.hpp>
@@ -31,6 +32,7 @@
 namespace eve
 {
   struct almost_mode      {};
+  struct associated_mode  {};
   struct compensated_mode {};
   struct definitely_mode  {};
   struct downward_mode    {};
@@ -54,6 +56,7 @@ namespace eve
   struct upward_mode      {};
 
   [[maybe_unused]] inline constexpr auto almost2      = ::rbr::flag( almost_mode{}      );
+  [[maybe_unused]] inline constexpr auto associated2  = ::rbr::flag( associated_mode{}  );
   [[maybe_unused]] inline constexpr auto compensated2 = ::rbr::flag( compensated_mode{} );
   [[maybe_unused]] inline constexpr auto definitely2  = ::rbr::flag( definitely_mode{}  );
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
@@ -77,6 +80,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
   struct almost_option       : detail::exact_option<almost2>      {};
+  struct associated_option   : detail::exact_option<associated2>  {};
   struct compensated_option  : detail::exact_option<compensated2> {};
   struct definitely_option   : detail::exact_option<definitely2>  {};
   struct downward_option     : detail::exact_option<downward2>    {};
@@ -103,6 +107,7 @@ namespace eve
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(almost_type       const&) { return almost2;       }
+  inline constexpr auto as_option(associated_type   const&) { return associated2;   }
   inline constexpr auto as_option(compensated_type  const&) { return compensated2;  }
   inline constexpr auto as_option(definitely_type   const&) { return definitely2;   }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }

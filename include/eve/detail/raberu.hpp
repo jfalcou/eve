@@ -727,7 +727,7 @@ namespace rbr
     static constexpr auto contains([[maybe_unused]] Key const& kw) noexcept
     {
       using found = decltype((std::declval<base>())(Key{}));
-      return std::bool_constant<!stdfix::same_as<found, unknown_key> >{};
+      return !stdfix::same_as<found, unknown_key>;
     }
 
     //==============================================================================================

@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct laguerre_t : elementwise_callable<laguerre_t, Options, successor_option>
+  struct laguerre_t : elementwise_callable<laguerre_t, Options, associated_option, successor_option>
   {
     template<eve::floating_ordered_value ...Ts>
     EVE_FORCEINLINE
@@ -65,7 +65,7 @@ namespace eve
 //!      eve::as_wide_as<T, N> laguerre(N n, T x) noexcept;                               //1
 //!
 //!     template< eve::integral_value N, eve::integral_value M, eve::floating_ordered_value T >
-//!      eve::as_wide_as<T, N> laguerre(N n, M m, T x) noexcept;                          //2
+//!      eve::as_wide_as<T, N> laguerre[associated](N n, M m, T x) noexcept;                          //2
 //!   }
 //!   @endcode
 //!
@@ -76,7 +76,7 @@ namespace eve
 //!
 //!     * `n`, `m` :  [integral positive arguments](@ref eve::integral_value).
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!
 //!    **Return value**
 //!
@@ -86,16 +86,16 @@ namespace eve
 //!
 //!   @godbolt{doc/polynomial/regular/laguerre.cpp}
 //!
-//!   @groupheader{Semantic Modifiers}
+//!   @groupheader{Other Semantic Modifier}
 //!
 //!   * eve::successor
 //!
-//!     The expression `successor(laguerre)(n, x, ln, lnm1)` implements the three term
+//!     The expression `laguerre[successor](n, x, ln, lnm1)` implements the three term
 //!     recurrence relation for the Laguerre polynomials,
 //!     \f$\displaystyle \mbox{L}_{n+1} =
 //!     \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\f$
 //!
-//!     The expression `successor(laguerre)(n, m, x, ln, lnmm1)` implements the three term
+//!     The expression `laguerre[associated][successor](n, m, x, ln, lnmm1)` implements the three term
 //!     recurrence relation for the associated Laguerre polynomials,
 //!     \f$\displaystyle \mbox{L}_{n+1}^m =
 //!     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$
