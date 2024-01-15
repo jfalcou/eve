@@ -21,81 +21,59 @@ namespace eve::detail
     return z + z;
   }
 
-  template<scalar_value I, scalar_value T, callable_options O>
+  template<typename I, typename T, callable_options O>
   EVE_FORCEINLINE as_wide_as_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
-//    std::cout << "scalar scalar" << std::endl;
-      auto p0 = one(as(x));
-      if( is_eqz(n) ) return p0;
-      auto p1 = x + x;
-      auto c  = one(as(n));
-      while( c < n )
-      {
-        std::swap(p0, p1);
-        p1 = hermite[successor](c, x, p0, p1);
-        ++c;
-      }
-      return p1;
-  }
-
- template<scalar_value I, simd_value T, callable_options O>
-  EVE_FORCEINLINE as_wide_as_t<T, I>
-  hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
-  {
-//    std::cout << "scalar simd" << std::endl;
-    if constexpr( has_native_abi_v<T> )
+    if constexpr(scalar_value<I>)
     {
-      T p0 = one(as(x));
-      if( is_eqz(n) ) return p0;
-      T p1 = x + x;
-      I c  = one(as(n));
-      while( c < n )
+      if constexpr( has_native_abi_v<T> )
       {
-        std::swap(p0, p1);
-        p1 = hermite[successor](c, x, p0, p1);
-        ++c;
+        T p0 = one(as(x));
+        if( is_eqz(n) ) return p0;
+        T p1 = x + x;
+        I c  = one(as(n));
+        while( c < n )
+        {
+          std::swap(p0, p1);
+          p1 = hermite[successor](c, x, p0, p1);
+          ++c;
+        }
+        return p1;
       }
-      return p1;
+      else return apply_over(hermite, n, x);
     }
-    else return apply_over(hermite, n, x);
-  }
-
-  template<integral_simd_value I, scalar_value T, callable_options O>
-  wide<T, cardinal_t<I>>//auto //EVE_FORCEINLINE as_wide_t<T, I>
-  hermite_(EVE_REQUIRES(cpu_), O const&, I nn, T x)
-  requires(scalar_value<T>)
-  {
-    using f_t =  wide<T, cardinal_t<I>>; //as_wide_as_t<T, I>;
-    return hermite(nn, f_t(x));
-  }
-
-  template<simd_value I, simd_value T, callable_options O>
-  T//auto //EVE_FORCEINLINE as_wide_t<T, I>
-  hermite_(EVE_REQUIRES(cpu_), O const&, I nn, T x)
-  {
-//    std::cout << "simd simd" << std::endl;
-    using elt_t = element_type_t<T>;
-    auto p0     = one(as(x));
-    auto iseqzn = is_eqz(nn);
-    if( eve::all(iseqzn) ) return p0;
-    auto p1   = add[!iseqzn](x, x);
-    auto n    = convert(nn, as<elt_t>());
-    auto c    = one(as(n));
-    auto test = c < n;
-    while( eve::any(test) )
+    else if constexpr(simd_value<I>)
     {
-      eve::swap_if(test, p0, p1);
-      p1   = if_else(test, hermite[successor](c, x, p0, p1), p1);
-      c    = inc[test](c);
-      test = c < n;
+      if constexpr(scalar_value<T>)
+      {
+        using f_t =  wide<T, cardinal_t<I>>; //as_wide_as_t<T, I>;
+        return hermite(n, f_t(x));
+      }
+      else if constexpr(simd_value<T>)
+      {
+        using elt_t = element_type_t<T>;
+        auto p0     = one(as(x));
+        auto iseqzn = is_eqz(n);
+        if( eve::all(iseqzn) ) return p0;
+        auto p1   = add[!iseqzn](x, x);
+        auto nn    = convert(n, as<elt_t>());
+        auto c    = one(as(nn));
+        auto test = c < nn;
+        while( eve::any(test) )
+        {
+          eve::swap_if(test, p0, p1);
+          p1   = if_else(test, hermite[successor](c, x, p0, p1), p1);
+          c    = inc[test](c);
+          test = c < nn;
+        }
+        return if_else(iseqzn, one, p1);
+      }
     }
-    return if_else(iseqzn, one, p1);
   }
 
   template<int N, floating_value T, callable_options O>
-  T//auto //EVE_FORCEINLINE T
-  hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x) noexcept
+  T hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x) noexcept
   {
     if constexpr( N < 0 ) return zero(as(x));
     else if constexpr( N == 0 ) return one(as(x));
