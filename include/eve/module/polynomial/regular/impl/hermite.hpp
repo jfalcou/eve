@@ -14,7 +14,7 @@ namespace eve::detail
 {
   //Recurrence relation for hermite polynomials:
   template<value N, floating_value T, callable_options O> //successor
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE as_wide_as_t<T, N>
   hermite_(EVE_REQUIRES(cpu_), O const&, N n, T x, T hn, T hnm1) noexcept
   {
     auto z = fms(x, hn, T(n) * hnm1);
@@ -22,7 +22,7 @@ namespace eve::detail
   }
 
   template<scalar_value I, scalar_value T, callable_options O>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE as_wide_as_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
 //    std::cout << "scalar scalar" << std::endl;
@@ -40,7 +40,7 @@ namespace eve::detail
   }
 
  template<scalar_value I, simd_value T, callable_options O>
-  EVE_FORCEINLINE auto
+  EVE_FORCEINLINE as_wide_as_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
 //    std::cout << "scalar simd" << std::endl;
@@ -50,12 +50,6 @@ namespace eve::detail
       if( is_eqz(n) ) return p0;
       T p1 = x + x;
       I c  = one(as(n));
-
- //      auto succ = [](auto n, auto x, auto hn, auto hnm1)
-//         {
-//           auto z = fms(x, hn, T(n) * hnm1);
-//           return z + z;
-//         };
       while( c < n )
       {
         std::swap(p0, p1);
@@ -68,7 +62,7 @@ namespace eve::detail
   }
 
   template<integral_simd_value I, scalar_value T, callable_options O>
-  auto //EVE_FORCEINLINE as_wide_t<T, I>
+  wide<T, cardinal_t<I>>//auto //EVE_FORCEINLINE as_wide_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I nn, T x)
   requires(scalar_value<T>)
   {
@@ -77,7 +71,7 @@ namespace eve::detail
   }
 
   template<simd_value I, simd_value T, callable_options O>
-  auto //EVE_FORCEINLINE as_wide_t<T, I>
+  T//auto //EVE_FORCEINLINE as_wide_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I nn, T x)
   {
 //    std::cout << "simd simd" << std::endl;
@@ -89,22 +83,10 @@ namespace eve::detail
     auto n    = convert(nn, as<elt_t>());
     auto c    = one(as(n));
     auto test = c < n;
-    auto swap = [](auto cond, auto& a, auto& b) { // TODO Conditionnal swap with shuffles
-      auto c = a;
-      a      = if_else(cond, b, a);
-      b      = if_else(cond, c, b);
-    };
-
-    auto succ = [](auto n, auto x, auto hn, auto hnm1)
-      {
-        auto z = fms(x, hn, T(n) * hnm1);
-        return z + z;
-      };
-
     while( eve::any(test) )
     {
-      swap(test, p0, p1);
-      p1   = if_else(test, /*hermite[successor]*/succ(c, x, p0, p1), p1);
+      eve::swap_if(test, p0, p1);
+      p1   = if_else(test, hermite[successor](c, x, p0, p1), p1);
       c    = inc[test](c);
       test = c < n;
     }
@@ -112,7 +94,7 @@ namespace eve::detail
   }
 
   template<int N, floating_value T, callable_options O>
-  auto //EVE_FORCEINLINE T
+  T//auto //EVE_FORCEINLINE T
   hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x) noexcept
   {
     if constexpr( N < 0 ) return zero(as(x));
