@@ -84,7 +84,7 @@ namespace eve::detail
   template< typename N, typename L, typename T, callable_options O> //successor associated option
   EVE_FORCEINLINE T
   laguerre_(EVE_REQUIRES(cpu_), O const&, N n, L l, T x, T pl, T plm1)
-   requires(O::contains(successor2))
+    requires(O::contains(successor2) && O::contains(associated2))
   {
     auto np1 = inc(n);
     auto npl = n + l;
@@ -99,7 +99,6 @@ namespace eve::detail
   {
     if constexpr(integral_scalar_value<M> && integral_scalar_value<N>)
     {
-      // Special cases:
       if( mm == 0 ) return laguerre(nn, x);
       auto p0 = one(as(x));
       if( nn == 0 ) return p0;
@@ -118,8 +117,8 @@ namespace eve::detail
     {
       using r_t = as_wide_as_t<T, common_value_t<M, N>>;
       auto iseqzm = is_eqz(mm);
-      if( eve::all(iseqzm) ) [[unlikely]] { return laguerre(nn, x); }
-      else [[likely]]
+      if( eve::all(iseqzm) ) { return laguerre(nn, x); }
+      else
       {
         using elt_t = element_type_t<T>;
         auto p0     = one(as<r_t>());

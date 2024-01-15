@@ -6,11 +6,37 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct jacobi_t : elementwise_callable<jacobi_t, Options>
+  {
+    template<eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(b...);
+    }
+    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b...);
+    }
+ //    template<eve::integral_value T0, eve::integral_value T1, eve::floating_ordered_value ...Ts>
+//     EVE_FORCEINLINE
+//     as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
+//     {
+//       return EVE_DISPATCH_CALL(a, b, c...);
+//     }
+
+    EVE_CALLABLE_OBJECT(jacobi_t, jacobi_);
+  };
+
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -63,7 +89,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(jacobi_, jacobi);
+ inline constexpr auto jacobi = functor<jacobi_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/jacobi.hpp>
