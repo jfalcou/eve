@@ -15,13 +15,13 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- xd                      = " << xd << '\n'
             << "<- n                       = " << n  << '\n'
-            << "-> sph(legendre)(n, z, xd) = " << eve::sph(eve::legendre)(n, z, xd) << '\n';
+            << "-> legendre[spherical](n, z, xd) = " << eve::legendre[eve::spherical](n, z, xd) << '\n';
 
   double xs = 0.1;
 
   std::cout << "---- scalar" << '\n'
             << "<- xs               = " << xs << '\n'
-            << "-> eve::sph(eve::legendre)(4, xs)   = " << eve::sph(eve::legendre)(4, 0, xs) << '\n';
+            << "-> eve::legendre[spherical](4, xs)   = " << eve::legendre[eve::spherical](4, 0, xs) << '\n';
 
   return 0;
 }

@@ -93,7 +93,7 @@ namespace eve::detail
 
  // associated laguerre polynomials
   template<typename M, typename N, typename T, callable_options O>
-  EVE_FORCEINLINE as_wide_as_t<T, common_value_t<M, N>>
+  as_wide_as_t<T, common_value_t<M, N>>
   laguerre_(EVE_REQUIRES(cpu_), O const&, N nn, M mm, T x)
     requires(O::contains(associated2))
   {
