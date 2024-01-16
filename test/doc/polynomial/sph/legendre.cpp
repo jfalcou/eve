@@ -17,11 +17,11 @@ int main()
             << "<- n                       = " << n  << '\n'
             << "-> legendre[spherical](n, z, xd) = " << eve::legendre[eve::spherical](n, z, xd) << '\n';
 
-  double xs = 0.1;
+//  double xs = 0.1;
 
-  std::cout << "---- scalar" << '\n'
-            << "<- xs               = " << xs << '\n'
-            << "-> eve::legendre[spherical](4, xs)   = " << eve::legendre[eve::spherical](4, 0, xs) << '\n';
+//   std::cout << "---- scalar" << '\n'
+//             << "<- xs               = " << xs << '\n'
+//             << "-> eve::legendre[spherical](4,0,xs)   = " << eve::legendre[eve::spherical](4, 0.0, xs) << '\n';
 
   return 0;
 }

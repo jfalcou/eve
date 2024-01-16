@@ -70,44 +70,49 @@ namespace eve::detail
         using r_t = as_wide_as_t<T, L>;
         return legendre_(EVE_TARGETS(cpu_), o, l, r_t(x));
       }
-       else if constexpr( has_native_abi_v<T> )
-       {
-        if constexpr(O::contains(p_kind2) || O::contains(q_kind2))
+      else
+      {
+        if constexpr( has_native_abi_v<T> )
         {
-          using elt_t = element_type_t<T>;
-          auto p0     = one(as(x));
-          T    p00;
-          auto iseqzn       = is_eqz(l);
-          auto p1           = x;
-          auto out_of_range = eve::abs(x) > one(as(x));
+          if constexpr(O::contains(p_kind2) || O::contains(q_kind2))
+          {
+            auto xx = r_t(x);
+            using elt_t = element_type_t<T>;
+            auto p0     = one(as(xx));
+            r_t    p00;
+            auto iseqzn       = is_eqz(l);
+            auto p1           = xx;
+            auto out_of_range = eve::abs(xx) > one(as(xx));
 
-          if constexpr(O::contains(p_kind2))
-          {
-            if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, p0);
+            if constexpr(O::contains(p_kind2))
+            {
+              if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, p0);
+            }
+            else if constexpr(O::contains(q_kind2))
+            {
+              p0  = atanh(xx);
+              p00 = p0;
+              if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, r_t(p0));
+              p1 = fms(x, p0, one(as(xx)));
+            }
+            auto n    = convert(l, as<elt_t>());
+            auto c    = one(as(n));
+            auto test = c < n;
+            while( eve::any(test) )
+            {
+              auto p = p0;
+              p0     = p1;
+              p1     = if_else(test, legendre[successor](c, xx, p0, p), p1);
+              c      = inc(c);
+              test   = c < n;
+            }
+            if constexpr(O::contains(p_kind2))
+              p1 = if_else(iseqzn, one, p1);
+            else if constexpr(O::contains(q_kind2) )
+              p1 = if_else(iseqzn, p00, p1);
+            return if_else(out_of_range, allbits, p1);
           }
-          else if constexpr(O::contains(q_kind2))
-          {
-            p0  = atanh(x);
-            p00 = p0;
-            if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, r_t(p0));
-            p1 = fms(x, p0, one(as(x)));
-          }
-          auto n    = convert(l, as<elt_t>());
-          auto c    = one(as(n));
-          auto test = c < n;
-          while( eve::any(test) )
-          {
-            auto p = p0;
-            p0     = p1;
-            p1     = if_else(test, legendre[successor](c, x, p0, p), p1);
-            c      = inc(c);
-            test   = c < n;
-          }
-          if constexpr(O::contains(p_kind2))
-            p1 = if_else(iseqzn, one, p1);
-          else if constexpr(O::contains(q_kind2) )
-            p1 = if_else(iseqzn, p00, p1);
-          return if_else(out_of_range, allbits, p1);
+          else return apply_over(legendre[p_kind], l, r_t(x));
         }
         else
         {
@@ -117,7 +122,6 @@ namespace eve::detail
             return apply_over(legendre[q_kind], l, r_t(x));
         }
       }
-       else return apply_over(legendre[p_kind], l, r_t(x));
     }
 //    using r_t = as_wide_as_t<T, L>;
 //     return r_t(x);
@@ -127,7 +131,7 @@ namespace eve::detail
   // associated legendre p polynomials
 
   // Recurrence relation for associated p legendre polynomials
-  template<ordered_value L, ordered_value M, floating_value T, callable_options O>
+  template<typename L, typename M, typename T, callable_options O>
   EVE_FORCEINLINE T
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x, T pl, T plm1)
     requires(O::contains(successor2)&& O::contains(associated2))
@@ -136,14 +140,25 @@ namespace eve::detail
     return fms((lp1 + l) * x, pl, (l + m) * plm1) / (lp1 - m);
   }
 
-  template<ordered_value L, ordered_value M, floating_value T, callable_options O>
+  template<typename L, typename M, typename T, callable_options O>
   as_wide_as_t<T, common_value_t<M, L>>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
-    requires(O::contains(associated2))
+    requires(O::contains(associated2)||O::contains(condon_shortley2)||O::contains(spherical2))
   {
     EVE_ASSERT(l >= 0 && is_flint(l), "legendre(l, m, x): l is negative or not integral");
     EVE_ASSERT(m >= 0 && is_flint(l), "legendre(l, m, x): m is negative or not integral");
-    if constexpr(O::contains(condon_shortley2))
+    if constexpr(O::contains(spherical2))
+    {
+      auto ll   = convert(l, as_element(x));
+      auto mm   = convert(m, as_element(x));
+      using r_t = eve::common_value_t<T, decltype(ll), decltype(mm)>;
+      r_t p0(x);
+      p0 = eve::legendre[associated](l, m, eve::cos(p0));
+      p0 *= sqrt(((2 * ll + 1) / (4 * pi(as(x))))
+                 * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
+      return if_else(is_odd(m), -p0, p0);
+    }
+    else if constexpr(O::contains(condon_shortley2))
     {
       auto p0 = legendre[associated2](l, m, x);
       return if_else(is_odd(m), -p0, p0);
@@ -230,96 +245,5 @@ namespace eve::detail
       }
       else return apply_over(legendre[associated], l, m, x);
     }
-  }
-
-  template<ordered_value M, ordered_value L, floating_value T, callable_options O>
-  EVE_FORCEINLINE auto legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
-  requires(simd_value<M> && simd_value<L>)
-  {
-    EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, m, x): l is negative or not integral");
-    EVE_ASSERT(eve::all(m >= 0 && is_flint(l)), "legendre(l, m, x): m is negative or not integral");
-    if( has_native_abi_v<T> )
-    {
-      auto iseqzm = is_eqz(m);
-      if( eve::all(iseqzm) ) [[unlikely]] { return legendre(l, x); }
-      else [[likely]]
-      {
-        auto lpos    = is_gez(l);
-        auto mpos    = is_gez(m);
-        auto mlel    = m <= l;
-        auto inrange = eve::abs(x) <= one(as(x));
-        auto notdone = inrange && lpos && mpos;
-        auto r       = if_else(notdone, zero, nan(as(x)));
-        notdone      = notdone && mlel;
-
-        if( eve::any(notdone) )
-        {
-          auto mz_case = [](auto l, auto x) { //(m == 0);
-            return legendre(l, x);
-          };
-
-          auto regular_case = [](auto ll, auto mm, auto x, auto notdone) { // other cases
-            using elt_t          = element_type_t<T>;
-            auto l               = convert(ll, as<elt_t>());
-            auto m               = convert(mm, as<elt_t>());
-            using r_t            = decltype(x * l * m);
-            auto sin_theta_power = eve::pow1p(-sqr(x), eve::abs(m) / 2);
-
-            r_t p0 = convert(eve::double_factorial(uint_(eve::max(2 * mm - 1, zero(as(mm))))),
-                             as<elt_t>())
-                     * sin_theta_power;
-            auto p00  = p0;
-            auto p1   = x * (2 * m + 1) * p0;
-            auto n    = if_else(notdone, inc(m), inc(l));
-            auto test = (n < l);
-            while( eve::any(test) )
-            {
-              auto p = p0;
-              p0     = p1;
-              p1     = if_else(test, successor(legendre)(n, m, x, p0, p), p1);
-              n      = inc(n);
-              test   = n < l;
-            }
-            return if_else(m == l, p00, p1);
-          };
-          auto mz = (m == 0);
-          notdone = next_interval(mz_case, notdone, mz, r, l, x);
-          if( eve::any(notdone) )
-          {
-            notdone = last_interval(regular_case, notdone, r, l, m, x, notdone);
-          }
-        }
-        return r;
-      }
-    }
-    else return apply_over(legendre, l, m, x);
-  }
-
-  template<typename M,typename L, typename T, callable_options O>
-  EVE_FORCEINLINE auto
-  legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
-    requires(O::contains(condon_shortley2))
-  {
-    auto p0 = legendre[associated](l, m, x);
-    return if_else(is_odd(m), -p0, p0);
-  }
-
-  template<typename M, typename L, typename T, callable_options O>
-  EVE_FORCEINLINE auto legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T theta)
-    requires(O::contains(spherical2))
-  {
-    EVE_ASSERT(eve::all(l >= 0 && is_flint(l)),
-               "sph(legendre)(l, m, theta): l is negative or not integral");
-    EVE_ASSERT(eve::all(m >= 0 && is_flint(m)),
-               "sph(legendre)(l, m, theta): m is negative or not integral");
-    EVE_ASSERT(eve::all(m <= l), "sph(legendre)(l, m, theta): some m are greater than l");
-    auto ll   = convert(l, as_element(theta));
-    auto mm   = convert(m, as_element(theta));
-    using r_t = eve::common_value_t<T, decltype(ll), decltype(mm)>;
-    r_t p0(theta);
-    p0 = eve::legendre[associated](l, m, eve::cos(p0));
-    p0 *= sqrt(((2 * ll + 1) / (4 * pi(as(theta))))
-               * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
-    return if_else(is_odd(m), -p0, p0);
   }
 }
