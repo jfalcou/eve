@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct tchebytchev_t : elementwise_callable<tchebytchev_t, Options, successor_option, kind_1_option, kind_2_option>
+  {
+    template<eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(b...);
+    }
+    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b...);
+    }
+
+    EVE_CALLABLE_OBJECT(tchebytchev_t, tchebytchev_);
+  };
+
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -76,7 +97,7 @@ namespace eve
 //!     @godbolt{doc/polynomial/successor/tchebytchev.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(tchebytchev_, tchebytchev);
+  inline constexpr auto tchebytchev = functor<tchebytchev_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/tchebytchev.hpp>
