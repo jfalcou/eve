@@ -17,7 +17,7 @@ template<typename Options>
 struct fibonacci_t : elementwise_callable<fibonacci_t, Options, saturated_option>
 {
   template<eve::unsigned_value N, floating_ordered_value T0,  floating_ordered_value T1>
-  EVE_FORCEINLINE auto //as_wide_as_t<common_value_t<T0, T1>, N>
+  EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N>
   operator()(N n, T0 t0, T1 t1) const  { return EVE_DISPATCH_CALL(n, t0, t1); }
 
   EVE_CALLABLE_OBJECT(fibonacci_t, fibonacci_);
