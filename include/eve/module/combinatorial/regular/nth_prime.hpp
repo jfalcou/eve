@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct nth_prime_t : elementwise_callable<nth_prime_t, Options/*, upgrade_converter_option*/>
+  {
+    template<eve::unsigned_value T>
+    EVE_FORCEINLINE
+    T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(nth_prime_t, nth_prime_);
+  };
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -65,16 +77,8 @@ namespace eve
 //!      @godbolt{doc/combinatorial/conversion/nth_prime.cpp}
 //! @}
 //================================================================================================
+inline constexpr auto nth_prime = functor<nth_prime_t>;
 
-namespace tag
-{
-  struct nth_prime_;
-}
-
-template<> struct supports_optimized_conversion<tag::nth_prime_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(nth_prime_, nth_prime);
 }
 
 #include <eve/module/combinatorial/regular/impl/nth_prime.hpp>

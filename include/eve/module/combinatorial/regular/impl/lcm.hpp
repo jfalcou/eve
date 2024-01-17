@@ -14,54 +14,50 @@
 
 namespace eve::detail
 {
-// -----------------------------------------------------------------------------------------------
-// regular case
-template<integral_value T, integral_value U>
-EVE_FORCEINLINE auto
-lcm_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
-->common_value_t<T, U>
-{
-  return arithmetic_call(lcm, a, b);
-}
 
-template<ordered_value T>
-T
-lcm_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
-{
-  if constexpr( has_native_abi_v<T> )
+  template<typename T, typename U, callable_options O>
+  common_value_t<T, U>
+  lcm_(EVE_REQUIRES(cpu_), O const& o, T a, U b) noexcept
   {
-    EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
-    a = abs(a);
-    b = abs(b);
-    if constexpr( scalar_value<T> )
+    if constexpr(!std::same_as<T, U>)
     {
-      if( !b || !a ) return T(0);
-      return b / gcd(a, b) * a;
+      using c_t =  common_value_t<T, U>;
+      return lcm_(EVE_TARGETS(cpu_), o, c_t(a), c_t(b)); ;
     }
-    else { return a * (b / gcd(a, if_else(b, b, eve::one))); }
+    else if constexpr( has_native_abi_v<T> )
+    {
+      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
+      a = abs(a);
+      b = abs(b);
+      if constexpr( scalar_value<T> )
+      {
+        if( !b || !a ) return T(0);
+        return b / gcd(a, b) * a;
+      }
+      else { return a * (b / gcd(a, if_else(b, b, eve::one))); }
+    }
+    else return apply_over(lcm, a, b);
   }
-  else return apply_over(lcm, a, b);
-}
 
 // -----------------------------------------------------------------------------------------------
-// decorated case
+// decorated case TO DO LATER the decorator is not supported yet
 
-template<value T>
-auto
-lcm_(EVE_SUPPORTS(cpu_), upgrade_converter const&, T a, T b) noexcept
-{
-  using up_t   = upgrade_t<T>;
-  using fup_t  = upgrade_t<as_floating_point_t<T>>;
-  using efup_t = element_type_t<fup_t>;
-  if constexpr( std::is_same_v<efup_t, float> )
-  {
-    auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
-    return convert(r, as_element<up_t>());
-  }
-  else // double element
-  {
-    auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
-    return convert(r, as_element<up_t>());
-  }
-}
+// template<value T>
+// auto
+// lcm_(EVE_REQUIRES(cpu_), upgrade_converter const&, T a, T b) noexcept
+// {
+//   using up_t   = upgrade_t<T>;
+//   using fup_t  = upgrade_t<as_floating_point_t<T>>;
+//   using efup_t = element_type_t<fup_t>;
+//   if constexpr( std::is_same_v<efup_t, float> )
+//   {
+//     auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
+//     return convert(r, as_element<up_t>());
+//   }
+//   else // double element
+//   {
+//     auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
+//     return convert(r, as_element<up_t>());
+//   }
+// }
 }

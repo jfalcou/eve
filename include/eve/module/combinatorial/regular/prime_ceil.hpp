@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct prime_ceil_t : elementwise_callable<prime_ceil_t, Options>
+  {
+    template<eve::unsigned_value T>
+    EVE_FORCEINLINE
+    T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(prime_ceil_t, prime_ceil_);
+  };
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -57,15 +69,7 @@ namespace eve
 //!    @godbolt{doc/combinatorial/conversion/prime_ceil.cpp}
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct prime_ceil_;
-}
-
-template<> struct supports_optimized_conversion<tag::prime_ceil_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(prime_ceil_, prime_ceil);
+inline constexpr auto prime_ceil = functor<prime_ceil_t>;
 }
 
 #include <eve/module/combinatorial/regular/impl/prime_ceil.hpp>
