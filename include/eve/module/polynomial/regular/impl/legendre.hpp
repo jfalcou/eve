@@ -145,8 +145,8 @@ namespace eve::detail
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
     requires(O::contains(associated2)||O::contains(condon_shortley2)||O::contains(spherical2))
   {
-    EVE_ASSERT(l >= 0 && is_flint(l), "legendre(l, m, x): l is negative or not integral");
-    EVE_ASSERT(m >= 0 && is_flint(l), "legendre(l, m, x): m is negative or not integral");
+    EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, m, x): l is negative or not integral");
+    EVE_ASSERT(eve::all(m >= 0 && is_flint(l)), "legendre(l, m, x): m is negative or not integral");
     if constexpr(O::contains(spherical2))
     {
       auto ll   = convert(l, as_element(x));
