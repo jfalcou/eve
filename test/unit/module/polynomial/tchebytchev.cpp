@@ -59,18 +59,18 @@ TTS_CASE_WITH("Check behavior of tchebytchev on wide",
   }
 };
 
-// TTS_CASE_WITH("Check behavior of successor(tchebytchev)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::between(-1.0, 1.0)))
-// <typename T>(T const& a0)
-// {
-//   auto t3 = eve::tchebytchev(3, a0);
-//   auto t4 = eve::tchebytchev(4, a0);
-//   auto t5 = eve::tchebytchev(5, a0);
-//   TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, t4, t3), t5, 64);
-//   using eve::kind_2;
-//   auto u3 = eve::tchebytchev[kind_2](3, a0);
-//   auto u4 = eve::tchebytchev[kind_2](4, a0);
-//   auto u5 = eve::tchebytchev[kind_2](5, a0);
-//   TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, u4, u3), u5, 300);
-// };
+TTS_CASE_WITH("Check behavior of successor(tchebytchev)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::between(-1.0, 1.0)))
+<typename T>(T const& a0)
+{
+  auto t3 = eve::tchebytchev(3, a0);
+  auto t4 = eve::tchebytchev(4, a0);
+  auto t5 = eve::tchebytchev(5, a0);
+  TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, t4, t3), t5, 64);
+  using eve::kind_2;
+  auto u3 = eve::tchebytchev[kind_2](3, a0);
+  auto u4 = eve::tchebytchev[kind_2](4, a0);
+  auto u5 = eve::tchebytchev[kind_2](5, a0);
+  TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, u4, u3), u5, 300);
+};
