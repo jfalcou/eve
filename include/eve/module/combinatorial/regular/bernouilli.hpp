@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bernouilli_t : elementwise_callable<bernouilli_t, Options, saturated_option>
+  struct bernouilli_t : elementwise_callable<bernouilli_t, Options>
   {
     template<eve::unsigned_value T>
     EVE_FORCEINLINE

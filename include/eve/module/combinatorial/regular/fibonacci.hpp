@@ -14,7 +14,7 @@
 namespace eve
 {
 template<typename Options>
-struct fibonacci_t : elementwise_callable<fibonacci_t, Options, saturated_option>
+struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 {
   template<eve::unsigned_value N, floating_ordered_value T0,  floating_ordered_value T1>
   EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N>
