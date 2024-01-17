@@ -38,26 +38,4 @@ namespace eve::detail
     }
     else return apply_over(lcm, a, b);
   }
-
-// -----------------------------------------------------------------------------------------------
-// decorated case TO DO LATER the decorator is not supported yet
-
-// template<value T>
-// auto
-// lcm_(EVE_REQUIRES(cpu_), upgrade_converter const&, T a, T b) noexcept
-// {
-//   using up_t   = upgrade_t<T>;
-//   using fup_t  = upgrade_t<as_floating_point_t<T>>;
-//   using efup_t = element_type_t<fup_t>;
-//   if constexpr( std::is_same_v<efup_t, float> )
-//   {
-//     auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
-//     return convert(r, as_element<up_t>());
-//   }
-//   else // double element
-//   {
-//     auto r = lcm(to_<fup_t>(a), to_<fup_t>(b));
-//     return convert(r, as_element<up_t>());
-//   }
-// }
 }
