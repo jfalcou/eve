@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
