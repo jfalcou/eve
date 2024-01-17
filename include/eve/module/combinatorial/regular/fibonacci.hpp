@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct fibonacci_t : elementwise_callable<fibonacci_t, Options, saturated_option>
+{
+  template<eve::unsigned_value N, floating_ordered_value T0,  floating_ordered_value T1>
+  EVE_FORCEINLINE auto //as_wide_as_t<common_value_t<T0, T1>, N>
+  operator()(N n, T0 t0, T1 t1) const  { return EVE_DISPATCH_CALL(n, t0, t1); }
+
+  EVE_CALLABLE_OBJECT(fibonacci_t, fibonacci_);
+};
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -57,7 +69,8 @@ namespace eve
 //!  @godbolt{doc/combinatorial/regular/fibonacci.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fibonacci_, fibonacci);
+inline constexpr auto fibonacci = functor<fibonacci_t>;
+
 }
 
 #include <eve/module/combinatorial/regular/impl/fibonacci.hpp>
