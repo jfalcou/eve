@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct ellint_rc_t : elementwise_callable<ellint_rc_t, Options>
+  {
+    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+    EVE_FORCEINLINE
+    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(ellint_rc_t, ellint_rc_);
+  };
+
 //================================================================================================
 //! @addtogroup elliptic
 //! @{
@@ -49,7 +61,7 @@ namespace eve
 //!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(ellint_rc_, ellint_rc);
+  inline constexpr auto ellint_rc = functor<ellint_rc_t>;
 }
 
 #include <eve/module/elliptic/regular/impl/ellint_rc.hpp>

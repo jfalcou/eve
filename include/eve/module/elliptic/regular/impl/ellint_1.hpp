@@ -17,7 +17,7 @@ namespace eve::detail
 
   template<floating_ordered_value T, callable_options O>
   EVE_FORCEINLINE T
-  ellint_1_(EVE_REQUIRES(cpu_), O const&, T x)
+  ellint_1_(EVE_REQUIRES(cpu_), O const& o, T x)
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -36,12 +36,12 @@ namespace eve::detail
       }
       return pio_2(as(x)) / b;
     }
-    else return apply_over(ellint_1, x);
+    else return apply_over(ellint_1[o], x);
   }
 
   template<floating_ordered_value T, floating_ordered_value U, callable_options O>
   EVE_FORCEINLINE common_value_t<T, U>
-  ellint_1_(EVE_REQUIRES(cpu_), O const&, T phi0, U x)
+  ellint_1_(EVE_REQUIRES(cpu_), O const& o, T phi0, U x)
   {
     if constexpr(std::same_as<T, U>)
     {
@@ -81,7 +81,7 @@ namespace eve::detail
     }
     else
     {
-      return arithmetic_call(ellint_1, phi0, x);
+      return arithmetic_call(ellint_1[o], phi0, x);
     }
   }
 }

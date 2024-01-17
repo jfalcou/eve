@@ -18,7 +18,7 @@ namespace eve::detail
 
   template<typename T, callable_options O>
   EVE_FORCEINLINE T
-  ellint_2_(EVE_REQUIRES(cpu_), O const&, T k)
+  ellint_2_(EVE_REQUIRES(cpu_), O const& o, T k)
   {
     if constexpr( has_native_abi_v<T> )
     {
@@ -26,12 +26,12 @@ namespace eve::detail
       auto r  = 2 * ellint_rg(zero(as(k)), oneminus(k2), one(as(k)));
       return if_else(k2 == one(as(k)), one, r);
     }
-    else return apply_over(ellint_2, k);
+    else return apply_over(ellint_2[o], k);
   }
 
   template<typename T, typename U, callable_options O>
   common_value_t<T, U>
-  ellint_2_(EVE_REQUIRES(cpu_), O const&, T phi0, U x)
+  ellint_2_(EVE_REQUIRES(cpu_), O const& o, T phi0, U x)
   {
     if constexpr(std::same_as<T, U>)
     {
@@ -72,7 +72,7 @@ namespace eve::detail
     }
     else
     {
-      return arithmetic_call(ellint_2,  phi0, x);
+      return arithmetic_call(ellint_2[o],  phi0, x);
     }
   }
 }
