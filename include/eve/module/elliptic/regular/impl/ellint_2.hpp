@@ -17,7 +17,7 @@ namespace eve::detail
 {
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE T
+  constexpr EVE_FORCEINLINE T
   ellint_2_(EVE_REQUIRES(cpu_), O const& o, T k)
   {
     if constexpr( has_native_abi_v<T> )
@@ -30,7 +30,7 @@ namespace eve::detail
   }
 
   template<typename T, typename U, callable_options O>
-  common_value_t<T, U>
+  constexpr common_value_t<T, U>
   ellint_2_(EVE_REQUIRES(cpu_), O const& o, T phi0, U x)
   {
     if constexpr(std::same_as<T, U>)

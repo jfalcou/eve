@@ -17,7 +17,7 @@ namespace eve
   struct ellint_rg_t : elementwise_callable<ellint_rg_t, Options, raw_option>
   {
      template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
-    EVE_FORCEINLINE
+    constexpr EVE_FORCEINLINE
     eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept { return EVE_DISPATCH_CALL(a, b, c); }
 
     EVE_CALLABLE_OBJECT(ellint_rg_t, ellint_rg_);

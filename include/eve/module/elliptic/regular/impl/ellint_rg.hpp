@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<typename T, typename U, typename V, callable_options O>
-  common_value_t<T, U, V>
+  constexpr common_value_t<T, U, V>
   ellint_rg_(EVE_REQUIRES(cpu_), O const& o, T x, U y, V z)
   {
     if constexpr(O::contains(raw2))

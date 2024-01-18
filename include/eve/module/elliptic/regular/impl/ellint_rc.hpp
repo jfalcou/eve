@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE common_value_t<T, U>
+  constexpr common_value_t<T, U>
   ellint_rc_(EVE_REQUIRES(cpu_), O const& o, T x, U y)
   {
     if constexpr(std::same_as<T, U>)

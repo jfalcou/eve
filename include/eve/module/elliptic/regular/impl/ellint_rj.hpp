@@ -18,8 +18,8 @@
 namespace eve::detail
 {
   template<typename T, typename U, typename V, typename W, callable_options O >
-  EVE_FORCEINLINE common_value_t<T, U, V, W>
-  ellint_rj_(EVE_REQUIRES(cpu_), O const& o, T x, U y, V z, W p) noexcept
+  constexpr common_value_t<T, U, V, W>
+  ellint_rj_(EVE_REQUIRES(cpu_), O const& o, T x, U y, V z, W p)
   {
     if constexpr(std::same_as<T, U> && std::same_as<T, V> && std::same_as<T, W>)
     {
