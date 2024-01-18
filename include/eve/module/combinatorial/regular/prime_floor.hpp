@@ -17,8 +17,8 @@ namespace eve
   struct prime_floor_t : elementwise_callable<prime_floor_t, Options>
   {
     template<eve::unsigned_value T>
-    EVE_FORCEINLINE
-    T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE
+    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(prime_floor_t, prime_floor_);
   };
@@ -41,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      N prime_floor(N n) noexcept;
+//!      N prime_floor(N n) ;
 //!   }
 //!   @endcode
 //!

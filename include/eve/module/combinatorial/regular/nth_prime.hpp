@@ -17,8 +17,8 @@ namespace eve
   struct nth_prime_t : elementwise_callable<nth_prime_t, Options/*, upgrade_converter_option*/>
   {
     template<eve::unsigned_value T>
-    EVE_FORCEINLINE
-    T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE
+    T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(nth_prime_t, nth_prime_);
   };
@@ -41,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      eve::as_wide_as< double, N > nth_prime(N n) noexcept;
+//!      eve::as_wide_as< double, N > nth_prime(N n) ;
 //!   }
 //!   @endcode
 //!

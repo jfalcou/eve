@@ -18,8 +18,8 @@ namespace eve
   struct lcm_t : elementwise_callable<lcm_t, Options/*, upgrade_converter_option*/>
   {
     template<eve::value T, eve::value U>
-    EVE_FORCEINLINE
-    common_value_t<T, U> operator()(T v, U w) const  { return EVE_DISPATCH_CALL(v, w); }
+    constexpr EVE_FORCEINLINE
+    common_value_t<T, U> operator()(T v, U w) const noexcept { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(lcm_t, lcm_);
   };
@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      T lcm(T p, U n) noexcept;
+//!      T lcm(T p, U n) ;
 //!   }
 //!   @endcode
 //!

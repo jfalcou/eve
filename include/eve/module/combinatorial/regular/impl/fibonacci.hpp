@@ -13,8 +13,8 @@
 namespace eve::detail
 {
   template<typename N, typename T, typename U, callable_options O>
-  EVE_FORCEINLINE auto
-  fibonacci_(EVE_REQUIRES(cpu_), O const&, N n, T a, U b) 
+  constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T, U>, N>
+  fibonacci_(EVE_REQUIRES(cpu_), O const&, N n, T a, U b)
   {
     using c_t    = as_wide_as_t<common_value_t<T, U>, N>;
     using elt_t  = element_type_t<c_t>;

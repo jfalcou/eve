@@ -13,7 +13,7 @@
 namespace eve::detail
 {
   template<unsigned_value T, callable_options O>
-  EVE_FORCEINLINE T
+  constexpr EVE_FORCEINLINE T
   prime_floor_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
   {
     using elt_t = element_type_t<T>;

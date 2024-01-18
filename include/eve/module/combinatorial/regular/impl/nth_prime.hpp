@@ -14,8 +14,8 @@
 namespace eve::detail
 {
   template<unsigned_value T, callable_options O>
-  EVE_FORCEINLINE T
-  nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn) noexcept
+  constexpr EVE_FORCEINLINE T
+  nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn)
   {
     // clang-format off
     // This is basically three big tables which together

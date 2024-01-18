@@ -17,7 +17,7 @@ template<typename Options>
 struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 {
   template<eve::ordered_value T, ordered_value U>
-  EVE_FORCEINLINE common_value_t<T, U>
+  constexpr EVE_FORCEINLINE common_value_t<T, U>
   operator()(T v, U w) const noexcept { return EVE_DISPATCH_CALL(v, w); }
 
   EVE_CALLABLE_OBJECT(gcd_t, gcd_);
@@ -41,7 +41,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      common_value_t<T, U> gcd(T p, U n) noexcept;
+//!      common_value_t<T, U> gcd(T p, U n) ;
 //!   }
 //!   @endcode
 //!

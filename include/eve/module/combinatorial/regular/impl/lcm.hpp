@@ -16,8 +16,8 @@ namespace eve::detail
 {
 
   template<typename T, typename U, callable_options O>
-  common_value_t<T, U>
-  lcm_(EVE_REQUIRES(cpu_), O const& o, T a, U b) noexcept
+  constexpr common_value_t<T, U>
+  lcm_(EVE_REQUIRES(cpu_), O const& o, T a, U b) 
   {
     if constexpr(!std::same_as<T, U>)
     {

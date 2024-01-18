@@ -15,8 +15,8 @@ namespace eve::detail
 {
 
   template<unsigned_value T, callable_options O>
-  EVE_FORCEINLINE auto
-  bernouilli_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+  constexpr EVE_FORCEINLINE auto
+  bernouilli_(EVE_REQUIRES(cpu_), O const&, T n)
   {
     constexpr std::array<double, 130> dbernouilli_b2ns = {
       {+1.00000000000000000000000000000000000000000,
