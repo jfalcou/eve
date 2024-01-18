@@ -14,8 +14,8 @@ namespace eve::detail
 
 // Recurrence relation for Laguerre polynomials:
   template<ordered_value N, floating_value T, callable_options O>
-  EVE_FORCEINLINE T
-  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, T x, T Ln, T Lnm1) 
+  constexpr EVE_FORCEINLINE T
+  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, T x, T Ln, T Lnm1)
    requires(O::contains(successor2))
   {
     auto np1 = inc(n);
@@ -24,8 +24,8 @@ namespace eve::detail
 
   //  Laguerre polynomials:
   template<typename I, typename T, callable_options O>
-  EVE_FORCEINLINE auto
-  laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x) 
+  constexpr auto
+  laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
     if constexpr(scalar_value<I>)
     {
@@ -82,7 +82,7 @@ namespace eve::detail
 
   // Recurrence relation for Laguerre associated polynomials:
   template< typename N, typename L, typename T, callable_options O> //successor associated option
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   laguerre_(EVE_REQUIRES(cpu_), O const&, N n, L l, T x, T pl, T plm1)
     requires(O::contains(successor2) && O::contains(associated2))
   {
@@ -93,7 +93,7 @@ namespace eve::detail
 
  // associated laguerre polynomials
   template<typename M, typename N, typename T, callable_options O>
-  as_wide_as_t<T, common_value_t<M, N>>
+  constexpr as_wide_as_t<T, common_value_t<M, N>>
   laguerre_(EVE_REQUIRES(cpu_), O const&, N nn, M mm, T x)
     requires(O::contains(associated2))
   {

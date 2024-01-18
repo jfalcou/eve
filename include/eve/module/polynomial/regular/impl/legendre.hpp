@@ -16,7 +16,7 @@ namespace eve::detail
 {
   // Recurrence relation for legendre polynomials of all kinds
   template<typename L, typename T, callable_options O>
-  EVE_FORCEINLINE as_wide_as_t<T, L>
+  constexpr EVE_FORCEINLINE as_wide_as_t<T, L>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, T x, T pl, T plm1)
     requires(O::contains(successor2))
   {
@@ -29,7 +29,7 @@ namespace eve::detail
   // basic legendre (legendre_p)
   template<ordered_value L, floating_value T, callable_options O>
   as_wide_as_t<T, L>
-  legendre_(EVE_REQUIRES(cpu_), O const& o, L l, T x)
+  constexpr legendre_(EVE_REQUIRES(cpu_), O const& o, L l, T x)
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, x): l is negative or not integral");
     using r_t = as_wide_as_t<T, L>;
@@ -123,8 +123,6 @@ namespace eve::detail
         }
       }
     }
-//    using r_t = as_wide_as_t<T, L>;
-//     return r_t(x);
   }
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +130,7 @@ namespace eve::detail
 
   // Recurrence relation for associated p legendre polynomials
   template<typename L, typename M, typename T, callable_options O>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x, T pl, T plm1)
     requires(O::contains(successor2)&& O::contains(associated2))
   {
@@ -141,7 +139,7 @@ namespace eve::detail
   }
 
   template<typename L, typename M, typename T, callable_options O>
-  as_wide_as_t<T, common_value_t<M, L>>
+  constexpr as_wide_as_t<T, common_value_t<M, L>>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
     requires(O::contains(associated2)||O::contains(condon_shortley2)||O::contains(spherical2))
   {
