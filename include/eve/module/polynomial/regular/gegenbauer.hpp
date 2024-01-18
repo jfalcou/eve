@@ -17,21 +17,17 @@ namespace eve
   struct gegenbauer_t : elementwise_callable<gegenbauer_t, Options>
   {
     template<eve::floating_ordered_value ...Ts>
-    EVE_FORCEINLINE
+    constexpr EVE_FORCEINLINE
     eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(b...);
     }
     template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
-    EVE_FORCEINLINE
+    constexpr EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(a, b...);
     }
-//       template<ordered_value I, ordered_value T0, ordered_value T1>
-//     EVE_FORCEINLINE
-//     as_wide_as_t < common_value_t<T0, T1>, I>
-//     operator()(I n, T0 a, T1 b) const noexcept { return EVE_DISPATCH_CALL(n, a, b); }
 
     EVE_CALLABLE_OBJECT(gegenbauer_t, gegenbauer_);
   };

@@ -17,7 +17,7 @@ namespace eve::detail
   template<typename T, callable_options O>
   requires(O::contains(successor2))
     EVE_FORCEINLINE T
-  tchebytchev_(EVE_REQUIRES(cpu_),  O const& , T x, T tn, T tnm1) noexcept
+  tchebytchev_(EVE_REQUIRES(cpu_),  O const& , T x, T tn, T tnm1) 
   {
     return fms(x + x, tn, tnm1);
   }
@@ -25,7 +25,7 @@ namespace eve::detail
   //  Tchebytchev bases of first and second kind:
   template<typename I, typename T, callable_options O>
   EVE_FORCEINLINE as_wide_as_t<T, I>
-  tchebytchev_(EVE_REQUIRES(cpu_),  O const& o, I n, T x) noexcept
+  tchebytchev_(EVE_REQUIRES(cpu_),  O const& o, I n, T x) 
   {
     EVE_ASSERT(eve::all(is_gez(n)), "n  not positive");
     EVE_ASSERT(eve::all(is_flint(n)), "n  not flint");

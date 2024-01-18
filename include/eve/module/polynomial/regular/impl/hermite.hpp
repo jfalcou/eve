@@ -14,7 +14,7 @@ namespace eve::detail
   //Recurrence relation for hermite polynomials:
   template<value N, floating_value T, callable_options O> //successor
   EVE_FORCEINLINE as_wide_as_t<T, N>
-  hermite_(EVE_REQUIRES(cpu_), O const&, N n, T x, T hn, T hnm1) noexcept
+  hermite_(EVE_REQUIRES(cpu_), O const&, N n, T x, T hn, T hnm1) 
   {
     auto z = fms(x, hn, T(n) * hnm1);
     return z + z;
@@ -72,7 +72,7 @@ namespace eve::detail
   }
 
   template<int N, floating_value T, callable_options O>
-  T hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x) noexcept
+  T hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x) 
   {
     if constexpr( N < 0 ) return zero(as(x));
     else if constexpr( N == 0 ) return one(as(x));

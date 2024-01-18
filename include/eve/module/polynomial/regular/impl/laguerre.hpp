@@ -15,7 +15,7 @@ namespace eve::detail
 // Recurrence relation for Laguerre polynomials:
   template<ordered_value N, floating_value T, callable_options O>
   EVE_FORCEINLINE T
-  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, T x, T Ln, T Lnm1) noexcept
+  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, T x, T Ln, T Lnm1) 
    requires(O::contains(successor2))
   {
     auto np1 = inc(n);
@@ -25,7 +25,7 @@ namespace eve::detail
   //  Laguerre polynomials:
   template<typename I, typename T, callable_options O>
   EVE_FORCEINLINE auto
-  laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x) noexcept
+  laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x) 
   {
     if constexpr(scalar_value<I>)
     {

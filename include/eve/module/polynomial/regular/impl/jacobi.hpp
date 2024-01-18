@@ -14,7 +14,7 @@ namespace eve::detail
 
   template<typename I,typename T, typename U,typename V, callable_options O>
   EVE_FORCEINLINE as_wide_as_t<common_value_t<T, U, V>, I>
-  jacobi_(EVE_REQUIRES(cpu_), O const&, I n, U alpha, V beta, T x) noexcept
+  jacobi_(EVE_REQUIRES(cpu_), O const&, I n, U alpha, V beta, T x) 
   {
     if constexpr(scalar_value<I>)
     {
