@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct lcm_t : elementwise_callable<lcm_t, Options/*, upgrade_converter_option*/>
+  {
+    template<eve::value T, eve::value U>
+    constexpr EVE_FORCEINLINE
+    common_value_t<T, U> operator()(T v, U w) const noexcept { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(lcm_t, lcm_);
+  };
+
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -29,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      T lcm(T p, U n) noexcept;
+//!      constexpr T lcm(T p, U n) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -64,15 +78,8 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-namespace tag
-{
-  struct lcm_;
-}
+  inline constexpr auto lcm = functor<lcm_t>;
 
-template<> struct supports_optimized_conversion<tag::lcm_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(lcm_, lcm);
 }
 
 #include <eve/module/combinatorial/regular/impl/lcm.hpp>
