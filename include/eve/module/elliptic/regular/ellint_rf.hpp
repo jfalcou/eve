@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct ellint_rf_t : elementwise_callable<ellint_rf_t, Options, raw_option>
+  {
+     template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
+    constexpr EVE_FORCEINLINE
+    eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept { return EVE_DISPATCH_CALL(a, b, c); }
+
+    EVE_CALLABLE_OBJECT(ellint_rf_t, ellint_rf_);
+  };
+
   //================================================================================================
   //! @addtogroup elliptic
   //! @{
@@ -34,7 +46,7 @@ namespace eve
   //!      template< eve::floating_ordered_value T
   //!              , eve::floating_ordered_value U
   //!              , eve::floating_ordered_value V >
-  //!      eve::common_value_t<T, U, V> ellint_rf(T x, U y, V z) noexcept;
+  //!      constexpr eve::common_value_t<T, U, V> ellint_rf(T x, U y, V z) noexcept;
   //!   }
   //!   @endcode
   //!
@@ -53,7 +65,7 @@ namespace eve
   //!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
   //! @}
   //================================================================================================
-  EVE_MAKE_CALLABLE(ellint_rf_, ellint_rf);
+  inline constexpr auto ellint_rf = functor<ellint_rf_t>;
 }
 
 #include <eve/module/elliptic/regular/impl/ellint_rf.hpp>
