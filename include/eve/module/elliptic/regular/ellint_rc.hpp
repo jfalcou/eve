@@ -42,7 +42,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
+//!      constexpr template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
 //!      eve::common_value_t<T, U> ellint_rc(T x, U y) noexcept;
 //!   }
 //!   @endcode

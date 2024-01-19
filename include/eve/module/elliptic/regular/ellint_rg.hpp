@@ -47,7 +47,7 @@ namespace eve
 //!      template< eve::floating_ordered_value T
 //!              , eve::floating_ordered_value U
 //!              , eve::floating_ordered_value V >
-//!      eve::common_value_t<T, U, V> ellint_rg(T x, U y, V z) noexcept;
+//!      constexpr eve::common_value_t<T, U, V> ellint_rg(T x, U y, V z) noexcept;
 //!   }
 //!   @endcode
 //!

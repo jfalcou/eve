@@ -53,10 +53,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_ordered_value T >
-//!      T ellint_2(T k) noexcept;                                                //1
+//!      constexpr T ellint_2(T k) noexcept;                                       //1
 //!
 //!      template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
-//!      eve::common_value_t<T, U> ellint_2(T phi, U k) noexcept;        //2
+//!      constexpr eve::common_value_t<T, U> ellint_2(T phi, U k) noexcept;        //2
 //!   }
 //!   @endcode
 //!
