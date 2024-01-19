@@ -19,6 +19,7 @@ template<typename Options>
 struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternative_option>
 {
   template<simd_value T, integral_simd_value Idx, simd_compatible_ptr<T> Ptr>
+  requires(T::size() == Idx::size())
   EVE_FORCEINLINE void operator()(T const& v, Ptr ptr, Idx const& idx) const noexcept { EVE_DISPATCH_CALL(v,ptr,idx); }
 
   EVE_CALLABLE_OBJECT(scatter_t, scatter_);
@@ -52,6 +53,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 //!   namespace eve
 //!   {
 //!     template<simd_value T, integral_simd_value Idx, simd_compatible_ptr<T> Ptr>
+//!     requires(T::size() == Idx::size())
 //!     void scatter(T const& v, Ptr ptr, Idx const& idx) noexcept;
 //!   }
 //!   @endcode
@@ -72,3 +74,7 @@ inline constexpr auto scatter = functor<scatter_t>;
 }
 
 #include <eve/module/core/regular/impl/scatter.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/scatter.hpp>
+#endif
