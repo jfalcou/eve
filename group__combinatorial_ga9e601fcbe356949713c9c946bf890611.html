@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga9e601fcbe356949
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::lcm = {}</td>
+          <td class="memname">eve::lcm = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;lcm_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -146,9 +146,9 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga9e601fcbe356949
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="keyword">template</span>&lt; eve::ordered_value T,  eve::ordered_value U &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">lcm</a>(T p, U n) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">constexpr</span> T <a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">lcm</a>(T p, U n) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__combinatorial_ga9e601fcbe356949713c9c946bf890611_html_ga9e601fcbe356949713c9c946bf890611"><div class="ttname"><a href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a></div><div class="ttdeci">constexpr callable_lcm_ lcm</div><div class="ttdoc">Computes the least common multiple of the inputs.</div><div class="ttdef"><b>Definition:</b> lcm.hpp:75</div></div>
+<div class="ttc" id="agroup__combinatorial_ga9e601fcbe356949713c9c946bf890611_html_ga9e601fcbe356949713c9c946bf890611"><div class="ttname"><a href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a></div><div class="ttdeci">constexpr auto lcm</div><div class="ttdoc">Computes the least common multiple of the inputs.</div><div class="ttdef"><b>Definition:</b> lcm.hpp:81</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <p><code>p</code>, <code>n</code>: <a class="el" href="concepteve_1_1value.html">ordered arguments</a>.</p>
@@ -185,28 +185,7 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga9e601fcbe356949
 <ul>
 <li><p class="startli">Optimized Conversion Call If the input types are integral, the result is susceptible to overflow, but will never be greater than the product of the two input values which will be representable in the upgraded integral type. The call <code><a class="el" href="group__core__conversions_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252" title="convert a eve::value to the upgraded base type.">upgrade_(lcm)</a>(a,b)</code> returns a correct result in the upgraded type if the upgraded type is available.</p>
 <p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span></div>
-<div class="line">main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  w_t pi8 = {93, 25, 32, 37}, qi8 = {42, 10, 27, 102};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi8                        = &quot;</span> &lt;&lt; pi8 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi8                        = &quot;</span> &lt;&lt; qi8 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lcm(pi8, qi8)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a>(pi8, qi8)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;// incorrect due to overflow\n&quot;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; upgrade_(lcm)(pi8, qi8))    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__conversions_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">eve::upgrade_</a>(<a class="code hl_variable" href="group__combinatorial_ga9e601fcbe356949713c9c946bf890611.html#ga9e601fcbe356949713c9c946bf890611">eve::lcm</a>)(pi8, qi8) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__conversions_gaab615cc960ad89710ead478748d6b252_html_gaab615cc960ad89710ead478748d6b252"><div class="ttname"><a href="group__core__conversions_gaab615cc960ad89710ead478748d6b252.html#gaab615cc960ad89710ead478748d6b252">eve::upgrade_</a></div><div class="ttdeci">constexpr upgrade_converter const upgrade_</div><div class="ttdoc">convert a eve::value to the upgraded base type.</div><div class="ttdef"><b>Definition:</b> converter.hpp:740</div></div>
-</div><!-- fragment --> </li>
+<div class="fragment"></div><!-- fragment --> </li>
 </ul>
 
 </div>
