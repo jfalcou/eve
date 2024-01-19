@@ -24,16 +24,9 @@ namespace eve::detail
     {
       if constexpr(std::same_as<T, U> && std::same_as<T, V>)
       {
-        auto cond_swap = [](auto cond, auto& a, auto& b)
-          {
-            auto aa = if_else(cond, a, b);
-            auto bb = if_else(cond, b, a);
-            a       = aa;
-            b       = bb;
-          };
-        cond_swap(x < y, x, y);
-        cond_swap(x < z, x, z);
-        cond_swap(y > z, y, z);
+        swap_if(x < y, x, y);
+        swap_if(x < z, x, z);
+        swap_if(y > z, y, z);
         // now all(x >= z) and all(z >= y)
         return (z * ellint_rf(x, y, z) - (x - z) * (y - z) *
                 ellint_rd(x, y, z) / 3 + sqrt(x * y / z))
