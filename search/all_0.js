@@ -59,12 +59,13 @@ var searchData=
   ['asind_56',['asind',['../group__math__invtrig_ga2d341ed325943bd79fa090d9eba75d9c.html#ga2d341ed325943bd79fa090d9eba75d9c',1,'eve']]],
   ['asinh_57',['asinh',['../group__math__invhyper_gafdd0b4e5414191db4ce95026fdd4efad.html#gafdd0b4e5414191db4ce95026fdd4efad',1,'eve']]],
   ['asinpi_58',['asinpi',['../group__math__invtrig_gac0eea7b91e7d3786328d605b19a44d1d.html#gac0eea7b91e7d3786328d605b19a44d1d',1,'eve']]],
-  ['atan_59',['atan',['../group__math__invtrig_gaa4962fd095ca6aa9191e290f27d7f16d.html#gaa4962fd095ca6aa9191e290f27d7f16d',1,'eve']]],
-  ['atan2_60',['atan2',['../group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354',1,'eve']]],
-  ['atan2d_61',['atan2d',['../group__math__invtrig_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc',1,'eve']]],
-  ['atan2pi_62',['atan2pi',['../group__math__invtrig_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c',1,'eve']]],
-  ['atand_63',['atand',['../group__math__invtrig_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0',1,'eve']]],
-  ['atanh_64',['atanh',['../group__math__invhyper_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256',1,'eve']]],
-  ['atanpi_65',['atanpi',['../group__math__invtrig_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb',1,'eve']]],
-  ['average_66',['average',['../group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e',1,'eve']]]
+  ['associated_59',['associated',['../group__core__decorators_gaa014e2fd932c0593d69ce0a16b7a1cd9.html#gaa014e2fd932c0593d69ce0a16b7a1cd9',1,'eve']]],
+  ['atan_60',['atan',['../group__math__invtrig_gaa4962fd095ca6aa9191e290f27d7f16d.html#gaa4962fd095ca6aa9191e290f27d7f16d',1,'eve']]],
+  ['atan2_61',['atan2',['../group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354',1,'eve']]],
+  ['atan2d_62',['atan2d',['../group__math__invtrig_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc',1,'eve']]],
+  ['atan2pi_63',['atan2pi',['../group__math__invtrig_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c',1,'eve']]],
+  ['atand_64',['atand',['../group__math__invtrig_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0',1,'eve']]],
+  ['atanh_65',['atanh',['../group__math__invhyper_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256',1,'eve']]],
+  ['atanpi_66',['atanpi',['../group__math__invtrig_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb',1,'eve']]],
+  ['average_67',['average',['../group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e',1,'eve']]]
 ];

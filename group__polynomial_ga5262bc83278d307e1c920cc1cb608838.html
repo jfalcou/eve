@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::tchebytchev = {}</td>
+          <td class="memname">eve::tchebytchev = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;tchebytchev_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -150,9 +150,9 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
-<div class="line">   eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">tchebytchev</a>(N n, T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">tchebytchev</a>(N n, T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga5262bc83278d307e1c920cc1cb608838_html_ga5262bc83278d307e1c920cc1cb608838"><div class="ttname"><a href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a></div><div class="ttdeci">constexpr callable_tchebytchev_ tchebytchev</div><div class="ttdoc">Computes the value of the Tchebytchev polynomial of order n at x:</div><div class="ttdef"><b>Definition:</b> tchebytchev.hpp:79</div></div>
+<div class="ttc" id="agroup__polynomial_ga5262bc83278d307e1c920cc1cb608838_html_ga5262bc83278d307e1c920cc1cb608838"><div class="ttname"><a href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a></div><div class="ttdeci">constexpr auto tchebytchev</div><div class="ttdoc">Computes the value of the Tchebytchev polynomial of order n at x:</div><div class="ttdef"><b>Definition:</b> tchebytchev.hpp:100</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -184,7 +184,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(3, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, 2.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, x)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            </div>
+<div class="line"> </div>
 <div class="line">    ;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> xs = 3.0;</div>
@@ -219,10 +219,10 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                              = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                               = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                               = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(n, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(3, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(n, 2.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(n, x)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](n, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>[<a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](3, xd)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>[<a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>](3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](n, 2.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>[<a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>](n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](n, x)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>[<a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>](n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line"> </div>
 <div class="line">    ;</div>
 <div class="line"> </div>
@@ -230,7 +230,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs                              = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; kind_2(tchebytchev)(4, xs)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(4, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](4, xs)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>[<a class="code hl_variable" href="group__polynomial_gad08a257dca4c3f388a56941c57cebbed.html#gad08a257dca4c3f388a56941c57cebbed">eve::kind_2</a>](4, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
@@ -264,7 +264,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga5262bc83278d307e1c
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[1]          = &quot;</span> &lt;&lt;  t[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
 <div class="line">  {</div>
-<div class="line">    t[i] = <a class="code hl_variable" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a>(<a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>)(xd, t[i-1], t[i-2]);</div>
+<div class="line">    t[i] = <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>[<a class="code hl_variable" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a>](xd, t[i-1], t[i-2]);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  t[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga5262bc83278d307e1c920cc1cb608838.html#ga5262bc83278d307e1c920cc1cb608838">eve::tchebytchev</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> }</div>
