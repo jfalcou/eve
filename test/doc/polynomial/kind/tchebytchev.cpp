@@ -16,10 +16,10 @@ int main()
             << "<- xd                              = " << xd << '\n'
             << "<- n                               = " << n  << '\n'
             << "<- x                               = " << x  << '\n'
-            << "-> kind_2(tchebytchev)(n, xd)      = " << eve::kind_2(eve::tchebytchev)(n, xd) << '\n'
-            << "-> kind_2(tchebytchev)(3, xd)      = " << eve::kind_2(eve::tchebytchev)(3, xd) << '\n'
-            << "-> kind_2(tchebytchev)(n, 2.0)     = " << eve::kind_2(eve::tchebytchev)(n, 2.0) << '\n'
-            << "-> kind_2(tchebytchev)(n, x)       = " << eve::kind_2(eve::tchebytchev)(n, x)   << '\n'
+            << "-> tchebytchev[kind_2](n, xd)      = " << eve::tchebytchev[eve::kind_2](n, xd) << '\n'
+            << "-> tchebytchev[kind_2](3, xd)      = " << eve::tchebytchev[eve::kind_2](3, xd) << '\n'
+            << "-> tchebytchev[kind_2](n, 2.0)     = " << eve::tchebytchev[eve::kind_2](n, 2.0) << '\n'
+            << "-> tchebytchev[kind_2](n, x)       = " << eve::tchebytchev[eve::kind_2](n, x)   << '\n'
 
     ;
 
@@ -27,7 +27,7 @@ int main()
 
   std::cout << "---- scalar" << '\n'
             << "<- xs                              = " << xs << '\n'
-            << "-> kind_2(tchebytchev)(4, xs)       = " << eve::kind_2(eve::tchebytchev)(4, xs) << '\n';
+            << "-> tchebytchev[kind_2](4, xs)       = " << eve::tchebytchev[eve::kind_2](4, xs) << '\n';
 
   return 0;
 }

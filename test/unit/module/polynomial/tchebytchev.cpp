@@ -26,16 +26,16 @@ TTS_CASE_TPL("Check return types of tchebytchev on wide", eve::test::simd::ieee_
   TTS_EXPR_IS(eve::tchebytchev(wi_t(), v_t()), T);
 
   using eve::kind_1;
-  TTS_EXPR_IS(kind_1(eve::tchebytchev)(i_t(), T()), T);
-  TTS_EXPR_IS(kind_1(eve::tchebytchev)(wi_t(), T()), T);
-  TTS_EXPR_IS(kind_1(eve::tchebytchev)(i_t(), v_t()), v_t);
-  TTS_EXPR_IS(kind_1(eve::tchebytchev)(wi_t(), v_t()), T);
+  TTS_EXPR_IS(eve::tchebytchev[kind_1](i_t(), T()), T);
+  TTS_EXPR_IS(eve::tchebytchev[kind_1](wi_t(), T()), T);
+  TTS_EXPR_IS(eve::tchebytchev[kind_1](i_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::tchebytchev[kind_1](wi_t(), v_t()), T);
 
   using eve::kind_2;
-  TTS_EXPR_IS(kind_2(eve::tchebytchev)(i_t(), T()), T);
-  TTS_EXPR_IS(kind_2(eve::tchebytchev)(wi_t(), T()), T);
-  TTS_EXPR_IS(kind_2(eve::tchebytchev)(i_t(), v_t()), v_t);
-  TTS_EXPR_IS(kind_2(eve::tchebytchev)(wi_t(), v_t()), T);
+  TTS_EXPR_IS(eve::tchebytchev[kind_2](i_t(), T()), T);
+  TTS_EXPR_IS(eve::tchebytchev[kind_2](wi_t(), T()), T);
+  TTS_EXPR_IS(eve::tchebytchev[kind_2](i_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::tchebytchev[kind_2](wi_t(), v_t()), T);
 };
 
 //==================================================================================================
@@ -51,6 +51,7 @@ TTS_CASE_WITH("Check behavior of tchebytchev on wide",
   auto eve__tchebytchev = [](uint32_t n, auto x) { return eve::tchebytchev(n, x); };
   for( unsigned int n = 0; n < 6; ++n )
   {
+    std::cout << "n " << n << std::endl;
     auto boost_tchebytchev = [&](auto i, auto e)
     { return boost::math::chebyshev_t((unsigned int)i, e); };
     TTS_ULP_EQUAL(eve__tchebytchev(n, a0), map(boost_tchebytchev, n, a0), 320);
@@ -66,10 +67,10 @@ TTS_CASE_WITH("Check behavior of successor(tchebytchev)",
   auto t3 = eve::tchebytchev(3, a0);
   auto t4 = eve::tchebytchev(4, a0);
   auto t5 = eve::tchebytchev(5, a0);
-  TTS_ULP_EQUAL(eve::successor(eve::tchebytchev)(a0, t4, t3), t5, 64);
+  TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, t4, t3), t5, 64);
   using eve::kind_2;
-  auto u3 = kind_2(eve::tchebytchev)(3, a0);
-  auto u4 = kind_2(eve::tchebytchev)(4, a0);
-  auto u5 = kind_2(eve::tchebytchev)(5, a0);
-  TTS_ULP_EQUAL(eve::successor(eve::tchebytchev)(a0, u4, u3), u5, 300);
+  auto u3 = eve::tchebytchev[kind_2](3, a0);
+  auto u4 = eve::tchebytchev[kind_2](4, a0);
+  auto u5 = eve::tchebytchev[kind_2](5, a0);
+  TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, u4, u3), u5, 300);
 };

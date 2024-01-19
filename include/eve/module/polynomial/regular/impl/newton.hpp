@@ -17,7 +17,7 @@ namespace eve::detail
 
   template<value T0, std::input_iterator IT0, std::input_iterator IT1>
   EVE_FORCEINLINE constexpr auto
-  newton_(EVE_SUPPORTS(cpu_), T0 xx, IT0 const& firstc, IT0 const& lastc, IT1 const& firstn) noexcept
+  newton_(EVE_SUPPORTS(cpu_), T0 xx, IT0 const& firstc, IT0 const& lastc, IT1 const& firstn) 
 
   {
     return detail::newton_impl(regular_type(), xx, firstc, lastc, firstn);
@@ -28,7 +28,7 @@ namespace eve::detail
 //================================================================================================
   template<value T0, range R1, range R2>
   EVE_FORCEINLINE constexpr auto
-  newton_(EVE_SUPPORTS(cpu_), T0 xx, R1 const& rc, R2 const& rn) noexcept
+  newton_(EVE_SUPPORTS(cpu_), T0 xx, R1 const& rc, R2 const& rn) 
   {
     return detail::newton_impl(regular_type(), xx, rc, rn);
   }
@@ -39,7 +39,7 @@ namespace eve::detail
   template<value T0, value ...Coefs ,value... Nodes >
   EVE_FORCEINLINE constexpr auto
   newton_(EVE_SUPPORTS(cpu_), T0 xx,  kumi::tuple<Coefs...> const& cs
-         , kumi::tuple<Nodes...> const& ns) noexcept
+         , kumi::tuple<Nodes...> const& ns) 
   {
     EVE_ASSERT((kumi::size_v<decltype(cs)> == 0 && kumi::size_v<decltype(ns)> == 0)||
                (kumi::size_v<decltype(cs)> ==  kumi::size_v<decltype(ns)>+1), "nodes andcoefs have incompatible sizes");
@@ -73,7 +73,7 @@ namespace eve::detail
   template<decorator D, value T0, value ...Coefs ,value... Nodes>
   EVE_FORCEINLINE constexpr auto
   newton_(EVE_SUPPORTS(cpu_), D const& d, T0 xx,  kumi::tuple<Coefs...> const& cs
-         , kumi::tuple<Nodes...> const& ns) noexcept
+         , kumi::tuple<Nodes...> const& ns) 
   {
     if constexpr(kumi::size_v<decltype(cs)> == 0)  return zero(as(xx));
     else

@@ -15,13 +15,13 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- xd                      = " << xd << '\n'
             << "<- n                       = " << n  << '\n'
-            << "-> condon_shortey(legendre)(n, z, xd) = " << eve::condon_shortey(eve::legendre)(n, z, xd) << '\n';
+            << "-> legendre[eve::condon_shortley](n, z, xd) = " << eve::legendre[eve::condon_shortley](n, z, xd) << '\n';
 
   double xs = 0.1;
 
   std::cout << "---- scalar" << '\n'
             << "<- xs               = " << xs << '\n'
-            << "-> eve::condon_shortey(eve::legendre)(4, xs)   = " << eve::condon_shortey(eve::legendre)(4, 0, xs) << '\n';
+            << "-> eve::legendre[eve::condon_shortley](4, xs)   = " << eve::legendre[eve::condon_shortley](4, 0, xs) << '\n';
 
   return 0;
 }

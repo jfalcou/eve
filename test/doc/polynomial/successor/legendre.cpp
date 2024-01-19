@@ -22,7 +22,7 @@ int main()
   std::cout << "-> h[1]          = " <<  h[1] << '\n';
    for(int i = 2; i <= 7; ++i)
   {
-    h[i] = eve::successor(eve::legendre)(i-1, xd, h[i-1], h[i-2]);
+    h[i] = eve::legendre[eve::successor](i-1, xd, h[i-1], h[i-2]);
     std::cout << "-> h[" << i << "]           = " <<  h[i] << '\n';
     std::cout << "-> legendre(" << i << ", xd) = " << eve::legendre(i, xd)   << '\n';
  }
