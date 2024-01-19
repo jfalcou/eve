@@ -64,10 +64,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value N, eve::floating_ordered_value T >
-//!     eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
+//!     constexpr eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
 //!
 //!     template< eve::integral_value N, eve::integral_value M, eve::floating_ordered_value T >
-//!     eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
+//!     constexpr eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
 //!   }
 //!   @endcode
 //!

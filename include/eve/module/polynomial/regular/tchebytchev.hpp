@@ -53,7 +53,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value N, eve::floating_ordered_value T >
-//!      eve::as_wide_as<T, N> tchebytchev(N n, T x) noexcept;
+//!     constexpr eve::as_wide_as<T, N> tchebytchev(N n, T x) noexcept;
 //!   }
 //!   @endcode
 //!

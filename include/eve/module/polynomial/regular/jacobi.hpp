@@ -27,13 +27,6 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(a, b...);
     }
- //    template<eve::integral_value T0, eve::integral_value T1, eve::floating_ordered_value ...Ts>
-//     constexpr EVE_FORCEINLINE
-//     as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(a, b, c...);
-//     }
-
     EVE_CALLABLE_OBJECT(jacobi_t, jacobi_);
   };
 
@@ -66,7 +59,7 @@ namespace eve
 //!             , eve::floating_ordered_value T
 //!             , eve::floating_ordered_value A
 //!             , eve::floating_ordered_value B>
-//!      eve::as_wide_as<common_value_t<T, A, B>, N>
+//!       constexpr eve::as_wide_as<common_value_t<T, A, B>, N>
 //!      jacobi(N n, T x, A alpha,  B beta) noexcept;
 //!   }
 //!   @endcode
