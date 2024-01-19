@@ -7,10 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct ellint_1_t : elementwise_callable<ellint_1_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE
+    T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+
+    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+    constexpr EVE_FORCEINLINE
+    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(ellint_1_t, ellint_1_);
+  };
+
+
 //================================================================================================
 //! @addtogroup elliptic
 //! @{
@@ -35,10 +52,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_ordered_value T >
-//!      T ellint_1(T k) noexcept;                                                //1
+//!      constexpr T ellint_1(T k) noexcept;                                       //1
 //!
 //!      template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
-//!      eve::common_value_t<T, U> ellint_1(T phi, U k) noexcept;        //2
+//!      constexpr eve::common_value_t<T, U> ellint_1(T phi, U k) noexcept;        //2
 //!   }
 //!   @endcode
 //!
@@ -63,7 +80,7 @@ namespace eve
 //!  @godbolt{doc/elliptic/regular/ellint_1.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(ellint_1_, ellint_1);
+  inline constexpr auto ellint_1 = functor<ellint_1_t>;
 }
 
 #include <eve/module/elliptic/regular/impl/ellint_1.hpp>
