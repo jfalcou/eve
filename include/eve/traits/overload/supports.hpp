@@ -260,6 +260,23 @@ namespace eve
       return options<decltype(new_opts)>{new_opts};
     }
   };
+
+  struct relative_conditional_no_alternative_option
+  {
+    template<relative_conditional_expr Opt>
+    EVE_FORCEINLINE constexpr auto process(auto const& base, Opt opt) const
+    requires( !Opt::has_alternative )
+    {
+      auto new_opts = rbr::merge(options{condition_key = opt}, base);
+      return options<decltype(new_opts)>{new_opts};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const
+    {
+      auto new_opts = rbr::merge(base, options{condition_key = ignore_none});
+      return options<decltype(new_opts)>{new_opts};
+    }
+  };
 }
 
 namespace eve::detail
