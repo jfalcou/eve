@@ -41,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      N prime_ceil(N n) ;
+//!      constexpr N prime_ceil(N n) noexcept;
 //!   }
 //!   @endcode
 //!

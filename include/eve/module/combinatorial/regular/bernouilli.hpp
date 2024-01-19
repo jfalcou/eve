@@ -41,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      eve::as_wide_as<double, N> bernouilli(N n) ;
+//!      constexpr eve::as_wide_as<double, N> bernouilli(N n) noexcept;
 //!   }
 //!   @endcode
 //!

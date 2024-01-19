@@ -50,7 +50,7 @@ struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N, eve::floating_ordered_value T, eve::floating_ordered_value U>
-//!      eve::common_value_t<T, U> fibonacci(N n, T x, U y)
+//!      constexpr eve::common_value_t<T, U> fibonacci(N n, T x, U y) noexcept
 //!   }
 //!   @endcode
 //!

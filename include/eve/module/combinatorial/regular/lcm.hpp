@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      T lcm(T p, U n) ;
+//!      constexpr T lcm(T p, U n) noexcept;
 //!   }
 //!   @endcode
 //!

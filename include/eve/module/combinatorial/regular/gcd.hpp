@@ -41,7 +41,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      common_value_t<T, U> gcd(T p, U n) ;
+//!      constexpr common_value_t<T, U> gcd(T p, U n) noexcept;
 //!   }
 //!   @endcode
 //!
