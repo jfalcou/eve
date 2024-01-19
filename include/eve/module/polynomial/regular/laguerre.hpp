@@ -7,10 +7,37 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct laguerre_t : elementwise_callable<laguerre_t, Options, associated_option, successor_option>
+  {
+    template<eve::floating_ordered_value ...Ts>
+    constexpr EVE_FORCEINLINE
+    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(b...);
+    }
+    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    constexpr EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b...);
+    }
+    template<eve::integral_value T0, eve::integral_value T1, eve::floating_ordered_value ...Ts>
+    constexpr EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b, c...);
+    }
+
+    EVE_CALLABLE_OBJECT(laguerre_t, laguerre_);
+  };
+
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -35,10 +62,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value N, eve::floating_ordered_value T >
-//!      eve::as_wide_as<T, N> laguerre(N n, T x) noexcept;                               //1
+//!     constexpr eve::as_wide_as<T, N> laguerre(N n, T x) noexcept;                               //1
 //!
 //!     template< eve::integral_value N, eve::integral_value M, eve::floating_ordered_value T >
-//!      eve::as_wide_as<T, N> laguerre(N n, M m, T x) noexcept;                          //2
+//!     constexpr eve::as_wide_as<T, N> laguerre[associated](N n, M m, T x) noexcept;                          //2
 //!   }
 //!   @endcode
 //!
@@ -49,7 +76,7 @@ namespace eve
 //!
 //!     * `n`, `m` :  [integral positive arguments](@ref eve::integral_value).
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!
 //!    **Return value**
 //!
@@ -59,16 +86,16 @@ namespace eve
 //!
 //!   @godbolt{doc/polynomial/regular/laguerre.cpp}
 //!
-//!   @groupheader{Semantic Modifiers}
+//!   @groupheader{Other Semantic Modifier}
 //!
 //!   * eve::successor
 //!
-//!     The expression `successor(laguerre)(n, x, ln, lnm1)` implements the three term
+//!     The expression `laguerre[successor](n, x, ln, lnm1)` implements the three term
 //!     recurrence relation for the Laguerre polynomials,
 //!     \f$\displaystyle \mbox{L}_{n+1} =
 //!     \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\f$
 //!
-//!     The expression `successor(laguerre)(n, m, x, ln, lnmm1)` implements the three term
+//!     The expression `laguerre[associated][successor](n, m, x, ln, lnmm1)` implements the three term
 //!     recurrence relation for the associated Laguerre polynomials,
 //!     \f$\displaystyle \mbox{L}_{n+1}^m =
 //!     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$
@@ -81,7 +108,7 @@ namespace eve
 //!     @godbolt{doc/polynomial/successor/laguerre.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(laguerre_, laguerre);
+ inline constexpr auto laguerre = functor<laguerre_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/laguerre.hpp>

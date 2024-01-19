@@ -22,7 +22,7 @@ int main()
   std::cout << "-> t[1]          = " <<  t[1] << '\n';
    for(int i = 2; i <= 7; ++i)
   {
-    t[i] = eve::successor(eve::tchebytchev)(xd, t[i-1], t[i-2]);
+    t[i] = eve::tchebytchev[eve::successor](xd, t[i-1], t[i-2]);
     std::cout << "-> t[" << i << "]           = " <<  t[i] << '\n';
     std::cout << "-> tchebytchev(" << i << ", xd) = " << eve::tchebytchev(i, xd)   << '\n';
  }

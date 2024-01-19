@@ -7,7 +7,9 @@
 //======================================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/associated.hpp>
 #include <eve/module/core/decorator/compensated.hpp>
+#include <eve/module/core/decorator/condon_shortley.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/fuzzy.hpp>
 #include <eve/module/core/decorator/kind.hpp>
@@ -21,6 +23,7 @@
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/decorator/sph.hpp>
+#include <eve/module/core/decorator/spherical.hpp>
 #include <eve/module/core/decorator/successor.hpp>
 
 //======================================================================================================================
@@ -31,7 +34,9 @@
 namespace eve
 {
   struct almost_mode      {};
+  struct associated_mode  {};
   struct compensated_mode {};
+  struct condon_shortley_mode {};
   struct definitely_mode  {};
   struct downward_mode    {};
   struct kind_1_mode      {};
@@ -54,7 +59,9 @@ namespace eve
   struct upward_mode      {};
 
   [[maybe_unused]] inline constexpr auto almost2      = ::rbr::flag( almost_mode{}      );
+  [[maybe_unused]] inline constexpr auto associated2  = ::rbr::flag( associated_mode{}  );
   [[maybe_unused]] inline constexpr auto compensated2 = ::rbr::flag( compensated_mode{} );
+  [[maybe_unused]] inline constexpr auto condon_shortley2  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto definitely2  = ::rbr::flag( definitely_mode{}  );
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}      );
@@ -69,7 +76,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}         );
   [[maybe_unused]] inline constexpr auto regular2     = ::rbr::flag( regular_mode{}     );
   [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{}   );
-  [[maybe_unused]] inline constexpr auto spherical    = ::rbr::flag( spherical_mode{}   );
+  [[maybe_unused]] inline constexpr auto spherical2   = ::rbr::flag( spherical_mode{}   );
   [[maybe_unused]] inline constexpr auto successor2   = ::rbr::flag( successor_mode{}   );
   [[maybe_unused]] inline constexpr auto to_nearest2  = ::rbr::flag( to_nearest_mode{}  );
   [[maybe_unused]] inline constexpr auto tolerant2    = ::rbr::flag( tolerant_mode{}    );
@@ -77,7 +84,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
   struct almost_option       : detail::exact_option<almost2>      {};
+  struct associated_option   : detail::exact_option<associated2>  {};
   struct compensated_option  : detail::exact_option<compensated2> {};
+  struct condon_shortley_option  : detail::exact_option<condon_shortley2> {};
   struct definitely_option   : detail::exact_option<definitely2>  {};
   struct downward_option     : detail::exact_option<downward2>    {};
   struct kind_1_option       : detail::exact_option<kind_12>      {};
@@ -92,7 +101,7 @@ namespace eve
   struct raw_option          : detail::exact_option<raw2>         {};
   struct regular_option      : detail::exact_option<regular2>     {};
   struct saturated_option    : detail::exact_option<saturated2>   {};
-  struct spherical_option    : detail::exact_option<spherical>    {};
+  struct spherical_option    : detail::exact_option<spherical2>   {};
   struct successor_option    : detail::exact_option<successor2>   {};
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
   struct tolerant_option     : detail::exact_option<tolerant2>    {};
@@ -103,7 +112,9 @@ namespace eve
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(almost_type       const&) { return almost2;       }
+  inline constexpr auto as_option(associated_type   const&) { return associated2;   }
   inline constexpr auto as_option(compensated_type  const&) { return compensated2;  }
+  inline constexpr auto as_option(condon_shortley_type const&) { return condon_shortley2;  }
   inline constexpr auto as_option(definitely_type   const&) { return definitely2;   }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
@@ -118,7 +129,7 @@ namespace eve
   inline constexpr auto as_option(raw_type          const&) { return raw2;          }
   inline constexpr auto as_option(regular_type      const&) { return regular2;      }
   inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }
-  inline constexpr auto as_option(sph_type          const&) { return spherical;     }
+  inline constexpr auto as_option(spherical_type    const&) { return spherical2;    }
   inline constexpr auto as_option(successor_type    const&) { return successor2;    }
   inline constexpr auto as_option(to_nearest_type   const&) { return to_nearest2;   }
   inline constexpr auto as_option(tolerant_type     const&) { return tolerant2;     }

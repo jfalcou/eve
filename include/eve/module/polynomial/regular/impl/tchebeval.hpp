@@ -17,7 +17,7 @@ namespace eve::detail
 //================================================================================================
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
-tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) noexcept
+tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) 
     requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
 {
   return detail::tchebeval_impl(regular_type(), xx, r);
@@ -25,7 +25,7 @@ tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, R const& r) noexcept
 
 template<value T0, value T1, value T2, range R>
 EVE_FORCEINLINE constexpr auto
-tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, T1 a, T2 b, R const& r) noexcept
+tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, T1 a, T2 b, R const& r) 
     requires(compatible_values<T0, typename R::value_type> && (!simd_value<R>))
 {
   return detail::tchebeval_impl(regular_type(), xx, a, b, r);
@@ -37,7 +37,7 @@ tchebeval_(EVE_SUPPORTS(cpu_), T0 xx, T1 a, T2 b, R const& r) noexcept
 
 template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
-tchebeval_(EVE_SUPPORTS(cpu_), T0 x, Ts... args) noexcept
+tchebeval_(EVE_SUPPORTS(cpu_), T0 x, Ts... args) 
 {
   return tchebeval_impl(regular_type(), x, args...);
 }

@@ -29,7 +29,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xs                     = " << xs << '\n'
             << "<- ll                     = " << ll  << '\n'
-            << "-> gegenbauer(4, ll, xs)  = " << eve::gegenbauer(4, ll, xs) << '\n';
+            << "-> gegenbauer(4, ll, xs)  = " << eve::gegenbauer(4, ll, xs) << '\n'
+    ;
 
   return 0;
 }

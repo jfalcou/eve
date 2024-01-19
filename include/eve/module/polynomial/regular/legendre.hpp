@@ -7,10 +7,39 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct legendre_t : elementwise_callable<legendre_t, Options
+                                           , successor_option, p_kind_option, q_kind_option
+                                           , condon_shortley_option, associated_option, spherical_option>
+  {
+    template<eve::floating_ordered_value ...Ts>
+    constexpr EVE_FORCEINLINE
+    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(b...);
+    }
+    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    constexpr EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b...);
+    }
+    template<eve::integral_value T0, eve::integral_value T1, eve::floating_ordered_value ...Ts>
+    constexpr EVE_FORCEINLINE
+    as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b, c...);
+    }
+
+    EVE_CALLABLE_OBJECT(legendre_t, legendre_);
+  };
+
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -35,10 +64,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     template< eve::integral_value N, eve::floating_ordered_value T >
-//!     eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
+//!     constexpr eve::as_wide_as<T, N> legendre(N n, T x) noexcept;                               //1
 //!
 //!     template< eve::integral_value N, eve::integral_value M, eve::floating_ordered_value T >
-//!     eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
+//!     constexpr eve::as_wide_as<T, N> legendre(N n, M m, T x) noexcept;                          //2
 //!   }
 //!   @endcode
 //!
@@ -112,7 +141,7 @@ namespace eve
 //!       @godbolt{doc/polynomial/sph/legendre.cpp}
 //!@}
 //================================================================================================
-EVE_MAKE_CALLABLE(legendre_, legendre);
+  inline constexpr auto legendre = functor<legendre_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/legendre.hpp>

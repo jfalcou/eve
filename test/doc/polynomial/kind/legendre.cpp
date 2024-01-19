@@ -16,17 +16,17 @@ int main()
             << "<- xd                       = " << xd << '\n'
             << "<- n                        = " << n  << '\n'
             << "<- x                        = " << x  << '\n'
-            << "-> q_kind(legendre)(n, xd)   = " << eve::q_kind(eve::legendre)(n, xd) << '\n'
-            << "-> q_kind(legendre)(3, xd)   = " << eve::q_kind(eve::legendre)(3, xd) << '\n'
-            << "-> q_kind(legendre)(n, 0.5)  = " << eve::q_kind(eve::legendre)(n, 0.5) << '\n'
-            << "-> q_kind(legendre)(n, x)    = " << eve::q_kind(eve::legendre)(n, x)   << '\n'
+            << "-> legendre[eve::q_kind](n, xd)   = " << eve::legendre[eve::q_kind](n, xd) << '\n'
+            << "-> legendre[eve::q_kind](3, xd)   = " << eve::legendre[eve::q_kind](3, xd) << '\n'
+            << "-> legendre[eve::q_kind](n, 0.5)  = " << eve::legendre[eve::q_kind](n, 0.5) << '\n'
+            << "-> legendre[eve::q_kind](n, x)    = " << eve::legendre[eve::q_kind](n, x)   << '\n'
             ;
 
   double xs = 0.1;
 
   std::cout << "---- scalar" << '\n'
             << "<- xs               = " << xs << '\n'
-            << "-> eve::q_kind(eve::legendre)(4, xs)   = " << eve::q_kind(eve::legendre)(4, xs) << '\n';
+            << "-> eve::legendre[eve::q_kind](4, xs)   = " << eve::legendre[eve::q_kind](4, xs) << '\n';
 
   return 0;
 }
