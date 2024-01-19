@@ -14,11 +14,11 @@
 namespace eve::detail
 {
 
-template<unsigned_value T>
-EVE_FORCEINLINE auto
-bernouilli_(EVE_SUPPORTS(cpu_), T n) noexcept
-{
-  constexpr std::array<double, 130> dbernouilli_b2ns = {
+  template<unsigned_value T, callable_options O>
+  constexpr EVE_FORCEINLINE auto
+  bernouilli_(EVE_REQUIRES(cpu_), O const&, T n)
+  {
+    constexpr std::array<double, 130> dbernouilli_b2ns = {
       {+1.00000000000000000000000000000000000000000,
        +0.166666666666666666666666666666666666666667,
        -0.0333333333333333333333333333333333333333333,
@@ -149,30 +149,30 @@ bernouilli_(EVE_SUPPORTS(cpu_), T n) noexcept
        +4.80793212775015697668878704043264072227967e299,
        -7.95021250458852528538243631671158693036798e302,
        +1.33527841873546338750122832017820518292039e306}};
-  if constexpr( has_native_abi_v<T> )
-  {
-    if constexpr( scalar_value<T> )
+    if constexpr( has_native_abi_v<T> )
     {
-      if( n == one(as(n)) ) return -0.5; // mhalf(as<double>());
-      if( is_odd(n) ) return 0.0;
-      auto no2 = n / 2;
-      if constexpr( sizeof(T) == 1 ) return dbernouilli_b2ns[no2];
-      else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>());
+      if constexpr( scalar_value<T> )
+      {
+        if( n == one(as(n)) ) return -0.5; // mhalf(as<double>());
+        if( is_odd(n) ) return 0.0;
+        auto no2 = n / 2;
+        if constexpr( sizeof(T) == 1 ) return dbernouilli_b2ns[no2];
+        else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>());
+      }
+      else
+      {
+        auto no2    = n / 2;
+        auto even_n = is_even(n);
+        auto nlt130 = no2 < T(130);
+        auto test   = nlt130 && even_n;
+        auto nn     = if_else(test, no2, zero);
+        auto r      = gather(&dbernouilli_b2ns[0], nn);
+        r           = if_else(even_n, r, zero(as(r))); // TODO why zero is not good here ?
+        r           = if_else(n == one(as(n)), mhalf(as(r)), r);
+        if constexpr( sizeof(element_type_t<T>) == 1 ) return r;
+        return if_else(nlt130, r, inf(as(r)));
+      }
     }
-    else
-    {
-      auto no2    = n / 2;
-      auto even_n = is_even(n);
-      auto nlt130 = no2 < T(130);
-      auto test   = nlt130 && even_n;
-      auto nn     = if_else(test, no2, zero);
-      auto r      = gather(&dbernouilli_b2ns[0], nn);
-      r           = if_else(even_n, r, zero(as(r))); // TODO why zero is not good here ?
-      r           = if_else(n == one(as(n)), mhalf(as(r)), r);
-      if constexpr( sizeof(element_type_t<T>) == 1 ) return r;
-      return if_else(nlt130, r, inf(as(r)));
-    }
+    else return apply_over(bernouilli, n);
   }
-  else return apply_over(bernouilli, n);
-}
 }

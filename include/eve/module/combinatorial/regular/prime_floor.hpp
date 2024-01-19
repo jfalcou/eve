@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct prime_floor_t : elementwise_callable<prime_floor_t, Options>
+  {
+    template<eve::unsigned_value T>
+    constexpr EVE_FORCEINLINE
+    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(prime_floor_t, prime_floor_);
+  };
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -29,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      N prime_floor(N n) noexcept;
+//!      constexpr N prime_floor(N n) noexcept ;
 //!   }
 //!   @endcode
 //!
@@ -57,15 +69,7 @@ namespace eve
 //!    @godbolt{doc/combinatorial/conversion/prime_floor.cpp}
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct prime_floor_;
-}
-
-template<> struct supports_optimized_conversion<tag::prime_floor_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(prime_floor_, prime_floor);
+inline constexpr auto prime_floor = functor<prime_floor_t>;
 }
 
 #include <eve/module/combinatorial/regular/impl/prime_floor.hpp>

@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bernouilli_t : elementwise_callable<bernouilli_t, Options>
+  {
+    template<eve::unsigned_value T>
+    constexpr EVE_FORCEINLINE
+    as_wide_as_t<double, T> operator()(T v) const noexcept  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(bernouilli_t, bernouilli_);
+  };
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -29,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::unsigned_value N >
-//!      eve::as_wide_as<double, N> bernouilli(N n) noexcept;
+//!      constexpr eve::as_wide_as<double, N> bernouilli(N n) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -47,14 +59,7 @@ namespace eve
 //!  @godbolt{doc/combinatorial/regular/bernouilli.cpp}
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct bernouilli_;
-}
-template<> struct supports_conditional<tag::bernouilli_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(bernouilli_, bernouilli);
+inline constexpr auto bernouilli = functor<bernouilli_t>;
 }
 
 #include <eve/module/combinatorial/regular/impl/bernouilli.hpp>

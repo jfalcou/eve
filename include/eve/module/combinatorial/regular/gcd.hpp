@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
+{
+  template<eve::ordered_value T, ordered_value U>
+  constexpr EVE_FORCEINLINE common_value_t<T, U>
+  operator()(T v, U w) const noexcept { return EVE_DISPATCH_CALL(v, w); }
+
+  EVE_CALLABLE_OBJECT(gcd_t, gcd_);
+};
+
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -29,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      T gcd(T p, U n) noexcept;
+//!      constexpr common_value_t<T, U> gcd(T p, U n) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -53,12 +65,8 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct gcd_;
-}
+inline constexpr auto gcd = functor<gcd_t>;
 
-EVE_MAKE_CALLABLE(gcd_, gcd);
 }
 
 #include <eve/module/combinatorial/regular/impl/gcd.hpp>
