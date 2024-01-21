@@ -53,18 +53,59 @@ x86_permute2f128_one_reg_mask(std::span<const std::ptrdiff_t, 2> _idxs)
 constexpr int
 x86_blend_immediate_mask(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t g)
 {
-  int r = 0;
-  int s = std::ssize(idxs);
+  int r   = 0;
+  int s   = std::ssize(idxs);
   int pos = 0;
-  for(auto i : idxs )
+  for( auto i : idxs )
   {
-    for (int j = 0; j != g; ++j) {
+    for( int j = 0; j != g; ++j )
+    {
       // we_ < s
       if( i * g >= s ) { r |= 1 << pos; }
       ++pos;
     }
   }
   return r;
+}
+
+template<std::ptrdiff_t G, std::size_t N>
+constexpr auto
+x86_pshuvb_pattern(const std::array<std::ptrdiff_t, N>& idxs);
+
+template<std::ptrdiff_t G, std::size_t N>
+constexpr auto
+x86_pshuvb_pattern(std::span<const std::ptrdiff_t, N> idxs)
+{
+  if constexpr( G != 1 ) return x86_pshuvb_pattern<1>(expand_group<G>(idxs));
+  else
+  {
+    static_assert(N == 16 || N == 32 || N == 64);
+    using arr_t = std::array<std::ptrdiff_t, N>;
+    using res_t = std::optional<arr_t>;
+
+    arr_t res = {};
+    for( std::size_t i = 0; i != N; ++i )
+    {
+      std::ptrdiff_t lb = i / 16 * 16;
+      std::ptrdiff_t ub = lb + 16;
+      if( idxs[i] < 0 )
+      {
+        res[i] = 0xff;
+        continue;
+      }
+      if( idxs[i] < lb || idxs[i] > ub ) return res_t {};
+      res[i] = idxs[i] - lb;
+    }
+
+    return res_t {res};
+  }
+}
+
+template<std::ptrdiff_t G, std::size_t N>
+constexpr auto
+x86_pshuvb_pattern(const std::array<std::ptrdiff_t, N>& idxs)
+{
+  return x86_pshuvb_pattern<G>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
 }
