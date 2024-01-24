@@ -34,11 +34,10 @@ TTS_CASE("Slide left 1, example") {
 TTS_CASE("Explicit") {
   using w_i = eve::wide<std::uint32_t, eve::fixed<8>>;
   w_i x{1, 2, 3, 4, 5, 6, 7, 8};
-  constexpr auto na_ = eve::na_;
-  auto [y, l] = eve::shuffle_v2_core(x, eve::lane<4>, eve::pattern<0, na_>);
-  //auto y = eve::slide_left2(x, eve::index<4>);
-  //TTS_EQUAL(y, w_i({8, 0, 0, 0, 0, 0, 0, 0}));
-  TTS_EQUAL(l(), 2);
+  //constexpr auto na_ = eve::na_;
+  auto y = eve::slide_left2(x, eve::index<7>);
+  TTS_EQUAL(y, w_i({8, 0, 0, 0, 0, 0, 0, 0}));
+  //TTS_EQUAL(l(), 2);
 };
 #endif
 

@@ -192,11 +192,11 @@ TTS_CASE("is_repeating_pattern")
   no_test(std::array {na_, 0, we_, 3});
 
   // 2 registers  [0, 1, 2, 3] [4, 5, 6, 7]
-  yes_test(std::array{0, 4, 2, 6}, std::array{0, 4});
-  yes_test(std::array{1, 4, 3, 6}, std::array{1, 4});
-  yes_test(std::array{1, 4, 3, we_}, std::array{1, 4});
-  yes_test(std::array{1, we_, 3, 6}, std::array{1, 4});
-  yes_test(std::array{na_, 4, na_, 6}, std::array{na_, 4});
+  yes_test(std::array {0, 4, 2, 6}, std::array {0, 4});
+  yes_test(std::array {1, 4, 3, 6}, std::array {1, 4});
+  yes_test(std::array {1, 4, 3, we_}, std::array {1, 4});
+  yes_test(std::array {1, we_, 3, 6}, std::array {1, 4});
+  yes_test(std::array {na_, 4, na_, 6}, std::array {na_, 4});
 
   no_test(std::array {0, 4, 2, 7});
   no_test(std::array {0, 3});
@@ -837,7 +837,8 @@ TTS_CASE("put bigger group in position")
   yes_test(std::array {3, 2, 0, 1}, eve::lane<2>, std::array {1, 0}, std::array {1, 0, 2, 3});
   yes_test(std::array {3, 2, na_, 1}, eve::lane<2>, std::array {1, 0}, std::array {1, 0, na_, 3});
   yes_test(std::array {3, 2, 3, 2}, eve::lane<2>, std::array {1, 1}, std::array {1, 0, 3, 2});
-  yes_test(std::array {3, 2, na_, na_}, eve::lane<2>, std::array {1, we_}, std::array {1, 0, na_, na_});
+  yes_test(
+      std::array {3, 2, na_, na_}, eve::lane<2>, std::array {1, we_}, std::array {1, 0, na_, na_});
   yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {0}, std::array {3, 2, 0, 1});
   yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {0}, std::array {3, 2, 0, 1});
   yes_test(std::array {3, 2, 0, 1}, eve::lane<1>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
@@ -845,6 +846,10 @@ TTS_CASE("put bigger group in position")
            eve::lane<2>,
            std::array {1, 3, 3, 0},
            std::array {1, 0, 2, 3, 4, 5, 6, 7});
+  yes_test(std::array {7, na_, na_, na_, na_, na_, na_, na_},
+           eve::lane<4>,
+           std::array {1, we_},
+           std::array {3, na_, na_, na_, na_, na_, na_, na_});
 
   no_test(std::array {3, 0, 0, 1}, eve::lane<2>);
 };

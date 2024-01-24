@@ -42,7 +42,7 @@ shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
   if constexpr( P::reg_size < 32 ) return no;
   // there is nothing we can do for shorts on avx
   else if constexpr( P::reg_size == 32 && P::g_size <= 2 && current_api == avx ) return no;
-  else if constexpr( P::has_zeroes && current_api <= avx2 ) return no;
+  else if constexpr( P::has_zeroes && current_api < avx2 ) return no;
   else if constexpr( !P::shuffle_16_first ) return no;
   else
   {
