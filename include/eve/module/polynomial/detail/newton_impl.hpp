@@ -37,7 +37,7 @@ newton_impl(D const& d, T0 xx, IT1 const& firstc, IT1 const& lastc, IT2 const& f
     auto curn = firstn;
     advance(curc, 1);
     advance(curn, 1);
-    auto dfma = d(fma);
+    auto dfma = fma[d];
     r_t  that(dfma(*firstc, sub(x, *firstn), *curc));
     auto step = [&](auto that, auto argc, auto argn) { return dfma(that, sub(x, argn), argc); };
     for( advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1) )
@@ -72,7 +72,7 @@ newton_impl(D const& d, T0 xx, R1 const& rc, R2 rn) noexcept
       auto curc   = firstc;
       advance(curc, 1);
       advance(curn, 1);
-      auto dfma = d(fma);
+      auto dfma = fma[d];
       r_t  that(dfma(*firstc, sub(x, *firstn), *curc));
       auto step = [&](auto that, auto argc, auto argn) { return dfma( that, sub(x, argn), argc); };
       for( advance(curc, 1); curc != lastc; advance(curc, 1), advance(curn, 1) )

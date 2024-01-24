@@ -17,9 +17,9 @@ namespace eve::detail
 template<value T0, std::input_iterator IT>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, IT const& first, IT const& last) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, first, last))
+-> decltype(detail::horner_impl(pedantic, xx, first, last))
 {
-  return detail::horner_impl(numeric_type(), xx, first, last);
+  return detail::horner_impl(pedantic, xx, first, last);
 }
 
 //================================================================================================
@@ -34,9 +34,9 @@ horner_(EVE_SUPPORTS(cpu_),
         callable_one_ const&,
         IT const& first,
         IT const& last) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, one, first, last))
+-> decltype(detail::horner_impl(pedantic, xx, one, first, last))
 {
-  return detail::horner_impl(numeric_type(), xx, one, first, last);
+  return detail::horner_impl(pedantic, xx, one, first, last);
 }
 
 //================================================================================================
@@ -45,9 +45,9 @@ horner_(EVE_SUPPORTS(cpu_),
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, r))
+-> decltype(detail::horner_impl(pedantic, xx, r))
 {
-  return detail::horner_impl(numeric_type(), xx, r);
+  return detail::horner_impl(pedantic, xx, r);
 }
 
 //================================================================================================
@@ -56,9 +56,9 @@ horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, R const& r) noexcept
 template<value T0, range R>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 xx, callable_one_ const&, R const& r) noexcept
--> decltype(detail::horner_impl(numeric_type(), xx, one, r))
+-> decltype(detail::horner_impl(pedantic, xx, one, r))
 {
-  return detail::horner_impl(numeric_type(), xx, one, r);
+  return detail::horner_impl(pedantic, xx, one, r);
 }
 
 //================================================================================================
@@ -68,7 +68,7 @@ template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, Ts... args) noexcept
 {
-  return horner_impl(numeric_type(), x, args...);
+  return horner_impl(pedantic, x, args...);
 }
 
 //================================================================================================
@@ -79,13 +79,13 @@ template<value T0, value... Ts>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const&, T0 x, callable_one_ const&, Ts... args) noexcept
 {
-  return horner_impl(numeric_type(), x, one, args...);
+  return horner_impl(pedantic, x, one, args...);
 }
 
 template<value T0, kumi::product_type Ts>
 EVE_FORCEINLINE constexpr auto
 horner_(EVE_SUPPORTS(cpu_), numeric_type const &, T0 x, Ts tup) noexcept
 {
-  return kumi::apply( [&](auto... m) { return  horner_impl(numeric_type(), x, m...); }, tup);
+  return kumi::apply( [&](auto... m) { return  horner_impl(pedantic, x, m...); }, tup);
 }
 }

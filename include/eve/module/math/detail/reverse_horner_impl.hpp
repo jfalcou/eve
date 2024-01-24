@@ -60,7 +60,7 @@ namespace eve::detail
     else if( std::distance(cur, first) == 1 ) return r_t(*cur);
     else
     {
-      auto dfma = d(fma);
+      auto dfma = fma[d];
       auto that = r_t(0);
       auto step = [&](auto that, auto arg) { return dfma(x, that, arg); };
       for(; cur != first; ++cur ) that = step(that, *cur);

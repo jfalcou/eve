@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/pedantic/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/all.hpp>
 
 #include <type_traits>
@@ -32,6 +32,6 @@ EVE_FORCEINLINE T
 fam_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& c) noexcept requires
     has_native_abi_v<T>
 {
-  return pedantic(fma)(b, c, a);
+  return fma[pedantic](b, c, a);
 }
 }

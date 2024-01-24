@@ -13,7 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
-#include <eve/module/core/numeric/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/all.hpp>
 
 #include <type_traits>
@@ -33,6 +33,6 @@ EVE_FORCEINLINE T
 fnma_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& c) noexcept requires
     has_native_abi_v<T>
 {
-  return numeric(fma)(T(-a), b, c);
+  return fma[pedantic](T(-a), b, c);
 }
 }

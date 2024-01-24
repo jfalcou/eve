@@ -7,6 +7,7 @@
 //======================================================================================================================
 #pragma once
 
+#include "eve/traits/overload/supports.hpp"
 #include <eve/concept/value.hpp>
 #include <eve/detail/skeleton.hpp>  // TEMPORARY
 #include <eve/detail/overload.hpp>  // TEMPORARY
@@ -35,7 +36,8 @@ namespace eve
       return  Func<O>{opts};
     }
 
-    template<typename T> EVE_FORCEINLINE constexpr auto operator[](T t) const requires( requires(base const& b) { b[t];} )
+    template<typename T>
+    EVE_FORCEINLINE constexpr auto operator[](T t) const requires( requires(base const& b) { b[t];} )
     {
       auto new_traits = base::operator[](t);
       return  Func<decltype(new_traits)>{new_traits};
@@ -47,7 +49,7 @@ namespace eve
       return (*this)[as_option(t)];
     }
 
-    template<typename T> void operator[](T t) const
+    template<typename T> EVE_FORCEINLINE void operator[](T const& t) const
     // This requires is also TEMPORARY
     requires( !callable_options<T> && !requires(base const& b) { b[t];} && !decorator<T>) =delete;
 
@@ -58,7 +60,8 @@ namespace eve
     }
 
     protected:
-    constexpr Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>const&>(*this); }
+    EVE_FORCEINLINE constexpr
+    Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>const&>(*this); }
   };
 
   //====================================================================================================================
@@ -99,37 +102,35 @@ namespace eve
     EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     requires(!match_option<condition_key,O,ignore_none_>)
     {
-        // Grab the condition and drop it from the callable
-        auto cond     = opts[condition_key];
-        auto drop     =  rbr::drop(condition_key, opts);
-        auto rmv_cond = options<decltype(drop)>{drop};
+      // Grab the condition and drop it from the callable
+      auto[cond, rmv_cond] = opts.extract(condition_key);
+      using cond_t =  decltype(cond);
+      [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
 
-        [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
+      // Check that the mask and the value are of same kind if simd
+      constexpr bool compatible_mask = !(   simd_value<decltype(cond.mask(as(x0)))>
+                                        &&  scalar_value<decltype(f(x0,xs...))>
+                                        );
+      static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
 
-        // Check that the mask and the value are of same kind if simd
-        constexpr bool compatible_mask = !(   simd_value<decltype(cond.mask(as(x0)))>
-                                          &&  scalar_value<decltype(f(x0,xs...))>
-                                          );
-        static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
+      // Shush any other cascading errors
+      if constexpr(!compatible_mask) return ignore{};
+      // Or proceed to find the proper way to handle this masked call
+      else
+      {
+        // Check if func_(arch, cond, opts, ...) exists
+        constexpr bool supports_mask  = requires(cond_t c){ func_t::deferred_call(arch, c, opts, x0, xs...); };
 
-        // Shush any other cascading errors
-        if constexpr(!compatible_mask) return ignore{};
-        // Or proceed to find the proper way to handle this masked call
+        // If the conditional call is supported, call it
+        // Note that as we pruned out ignore_none earlier, the only special cases inside this call is ignore_all
+        if      constexpr( supports_mask ) return func_t::deferred_call(arch, cond, opts, x0, xs...);
         else
         {
-          // Check if func_(arch, cond, opts, ...) exists
-          constexpr bool supports_mask  = requires{ func_t::deferred_call(arch, cond, opts, x0, xs...); };
-
-          // If the conditional call is supported, call it
-          // Note that as we pruned out ignore_none earlier, the only special cases inside this call is ignore_all
-          if      constexpr( supports_mask ) return func_t::deferred_call(arch, cond, opts, x0, xs...);
-          else
-          {
-            // if not, call the non-masked version then mask piecewise
-            return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
-          }
+          // if not, call the non-masked version then mask piecewise
+          return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
         }
       }
+    }
   };
 
 
