@@ -59,7 +59,7 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
   using eve::fma;
   using eve::detail::map;
   TTS_IEEE_EQUAL(eve::pedantic(fam)(-eve::one(eve::as<T>()), a0, a1),
-                 eve::pedantic(fma)(a0, a1, -eve::one(eve::as<T>())));
+                 fma[eve::pedantic](a0, a1, -eve::one(eve::as<T>())));
 };
 
 //==================================================================================================
@@ -117,8 +117,8 @@ TTS_CASE_WITH("Check behavior of fam on all types full range",
   using eve::detail::map;
 
   TTS_ULP_EQUAL(fam(a0, a1, a2), fma(a1, a2, a0), 10.5);
-  TTS_IEEE_EQUAL(eve::pedantic(fam)(a0, a1, a2), eve::pedantic(fma)(a1, a2, a0));
-  TTS_IEEE_EQUAL(eve::numeric(fam)(a0, a1, a2), eve::pedantic(fma)(a1, a2, a0));
+  TTS_IEEE_EQUAL(eve::pedantic(fam)(a0, a1, a2), fma[eve::pedantic](a1, a2, a0));
+  TTS_IEEE_EQUAL(eve::numeric(fam)(a0, a1, a2), fma[eve::pedantic](a1, a2, a0));
 };
 
 //==================================================================================================

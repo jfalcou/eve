@@ -7,6 +7,7 @@
 //======================================================================================================================
 #pragma once
 
+#include "eve/detail/raberu.hpp"
 #include <eve/logical.hpp>
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
@@ -41,6 +42,21 @@ namespace eve
 
     template <typename... Options>
     constexpr EVE_FORCEINLINE explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
+
+    template<rbr::concepts::keyword Ks>
+    constexpr EVE_FORCEINLINE auto drop(Ks const& kws) const noexcept
+    {
+      auto dropped =  rbr::drop(kws, *this);
+      return options<decltype(dropped)>{dropped};
+    }
+
+    template<rbr::concepts::keyword Ks>
+    constexpr EVE_FORCEINLINE auto extract(Ks const& kws) const noexcept
+    {
+      auto    value   = (*this)[kws];
+      auto    dropped =  rbr::drop(kws, *this);
+      return  kumi::tuple{value, options<decltype(dropped)>{dropped}};
+    }
   };
 
   template <rbr::concepts::option ... Options>
@@ -119,14 +135,14 @@ namespace eve
     //! @return A new @callable with the options `o` set.
     //==================================================================================================================
     template<typename O>
-    constexpr auto operator[](O o) const
+    EVE_FORCEINLINE constexpr auto operator[](O o) const
     requires( requires(OptionsValues const& ov) { this->process(ov,o);} )
     {
       return process(static_cast<OptionsValues const&>(*this), o);
     }
 
     /// Retrieves the current options' state, including processed default
-    constexpr auto options() const
+    EVE_FORCEINLINE constexpr auto options() const
     {
       return kumi::fold_left( [&](auto acc, auto const& m) { return m.default_to(acc); }
                             , kumi::tuple<Options...>{}

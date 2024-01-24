@@ -1,18 +1,37 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
+
+#include "eve/traits/common_type.hpp"
+#include "eve/traits/common_value.hpp"
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
-//================================================================================================
+template<typename Options>
+struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_option, regular_option>
+{
+  template<eve::value T,eve::value U,eve::value V>
+  requires(Options::contains(promote2))
+  constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+  template<eve::value T,eve::value U,eve::value V>
+  requires(!Options::contains(promote2))
+  constexpr EVE_FORCEINLINE
+  common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+  EVE_CALLABLE_OBJECT(fma_t, fma_);
+};
+
+//======================================================================================================================
 //! @addtogroup core_fma_family
 //! @{
 //!   @var fma
@@ -45,7 +64,7 @@ namespace eve
 //!
 //!    The value of `x*y+z` as if calculated to infinite precision
 //!    and rounded once is returned,  but only if the hardware is in capacity
-//!    to do it at reasonnable cost.
+//!    to do it at reasonable cost.
 //!
 //!    @note
 //!       This `fma` implementation provides those properties for all
@@ -64,22 +83,17 @@ namespace eve
 //!     version of `fma` which is
 //!     equivalent to `if_else(mask, fma(x, ...), x)`
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/core/masked/fma.cpp}
+//!     @godbolt{doc/core/masked/fma.cpp}
 //!
-//!   * eve::pedantic, eve::numeric
+//!   * eve::pedantic
 //!
-//!       * The call `pedantic(fma)(x,y,z)` ensures the one rounding property.
-//!       This can be very expensive if the system has no hardware capability.
-//!
-//!       * The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties.
-//!        This can be very expensive if the system has no hardware capability.
-//!
-//!       * see the above regular example.
+//!     The call `fma[pedantic](x,y,z)` ensures the full compliance to fma properties.
+//!     This can be very expensive if the system has no hardware capability.
 //! @}
-//================================================================================================
-EVE_MAKE_CALLABLE(fma_, fma);
+//======================================================================================================================
+inline constexpr auto fma = functor<fma_t>;
 }
 
 #include <eve/module/core/regular/impl/fma.hpp>

@@ -15,13 +15,16 @@ namespace eve
 //================================================================================================
 //================================================================================================
 // Function decorators mark-up used in function overloads
-struct regular_type : decorator_
+struct regular_
 {
   template<typename Function> constexpr EVE_FORCEINLINE auto operator()(Function f) const noexcept
   {
-    return [f](auto&&...args) { return f(EVE_FWD(args)...); };
+    return f;
   }
 };
+
+
+using regular_type = decorated<regular_()>;
 
 //================================================================================================
 //! @addtogroup core_decorators

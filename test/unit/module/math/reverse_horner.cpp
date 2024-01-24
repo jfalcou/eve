@@ -55,13 +55,13 @@ TTS_CASE_WITH("Check behavior of reverse_horner on wide",
 
   TTS_EQUAL(pedantic(reverse_horner)(a0, 0), T(0));
   TTS_EQUAL(pedantic(reverse_horner)(a0, 1), T(1));
-  TTS_EQUAL(pedantic(reverse_horner)(a0, 2, 1), pedantic(fma)(a0, 1, 2));
-  TTS_EQUAL(pedantic(reverse_horner)(a0, 3, 2, 1), pedantic(fma)(a0, pedantic(fma)(a0, 1, 2), 3));
+  TTS_EQUAL(pedantic(reverse_horner)(a0, 2, 1), fma[pedantic](a0, 1, 2));
+  TTS_EQUAL(pedantic(reverse_horner)(a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
 
 //   TTS_EQUAL(numeric(reverse_horner)(a0, 0), T(0));
 //   TTS_EQUAL(numeric(reverse_horner)(a0, 1), T(1));
-//   TTS_EQUAL(numeric(reverse_horner)(a0, 2, 1), numeric(fma)(a0, 1, 2));
-//   TTS_EQUAL(numeric(reverse_horner)(a0, 3, 2, 1), numeric(fma)(a0, numeric(fma)(a0, 1, 2), 3));
+//   TTS_EQUAL(numeric(reverse_horner)(a0, 2, 1), fma[pedantic](a0, 1, 2));
+//   TTS_EQUAL(numeric(reverse_horner)(a0, 3, 2, 1), fma[pedantic](a0, fma[pedantic](a0, 1, 2), 3));
 
 
 //   {

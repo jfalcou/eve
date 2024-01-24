@@ -11,7 +11,6 @@
 #include <eve/module/core/numeric/absmin.hpp>
 #include <eve/module/core/numeric/fam.hpp>
 #include <eve/module/core/numeric/fanm.hpp>
-#include <eve/module/core/numeric/fma.hpp>
 #include <eve/module/core/numeric/fms.hpp>
 #include <eve/module/core/numeric/fnma.hpp>
 #include <eve/module/core/numeric/fnms.hpp>
