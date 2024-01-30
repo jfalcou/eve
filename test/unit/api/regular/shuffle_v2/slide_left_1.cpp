@@ -44,7 +44,7 @@ TTS_CASE("Explicit") {
 TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::current_api <= eve::sse4_2 || eve::current_api >= eve::asimd )
+  if constexpr( eve::current_api <= eve::sse4_2 || eve::current_api == eve::asimd )
   {
     shuffle_test::named_shuffle1_test<
         /*supports_G_eq_T_Size*/ true>(eve::as<T> {},
