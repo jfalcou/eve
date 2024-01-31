@@ -77,6 +77,7 @@ shuffle_l3_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
   requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
+  else if constexpr ( auto r = shuffle_l3_slide_with_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l3_neon_tbl(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else return no_matching_shuffle_t {};
 }

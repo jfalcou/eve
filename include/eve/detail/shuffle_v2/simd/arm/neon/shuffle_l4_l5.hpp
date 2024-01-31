@@ -19,13 +19,13 @@ shuffle_l4_l5_neon_reverse(P, fixed<G> g, wide<T, N> x)
     return kumi::tuple {no_matching_shuffle, eve::index<-1>};
   else
   {
-    // swap havles and reverse halves
-    x = shuffle_l<2>(x, eve::lane<8 / sizeof(T)>, eve::pattern<1, 0>);
+    // swap havles + reverse halves is already computed
+    constexpr auto p0 = get<0>(*P::shuffle_8in8);
+    constexpr auto p1 = get<1>(*P::shuffle_8in8);
+    auto [r0, l0] = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
+    auto [r1, l1] = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
 
-    // halve reverse is already computed
-    constexpr auto within8 = get<1>(*P::shuffle_8_first);
-    x                      = shuffle_l<2>(x, eve::lane<G>, idxm::to_pattern<within8>());
-    return kumi::tuple {x, eve::index<4>};
+    return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
   }
 }
 

@@ -34,17 +34,17 @@ TTS_CASE("Slide left 1, example") {
 TTS_CASE("Explicit") {
   using w_i = eve::wide<std::uint32_t, eve::fixed<8>>;
   w_i x{1, 2, 3, 4, 5, 6, 7, 8};
-  //constexpr auto na_ = eve::na_;
-  auto y = eve::slide_left2(x, eve::index<7>);
+  constexpr auto na_ = eve::na_;
+  auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<7, na_, na_, na_, na_, na_, na_, na_>);
   TTS_EQUAL(y, w_i({8, 0, 0, 0, 0, 0, 0, 0}));
-  //TTS_EQUAL(l(), 2);
+  TTS_EQUAL(l(), 4);
 };
 #endif
 
 TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if constexpr( eve::current_api <= eve::sse4_2 )
+  if constexpr( eve::current_api <= eve::sse4_2 || eve::current_api == eve::asimd )
   {
     shuffle_test::named_shuffle1_test<
         /*supports_G_eq_T_Size*/ true>(eve::as<T> {},

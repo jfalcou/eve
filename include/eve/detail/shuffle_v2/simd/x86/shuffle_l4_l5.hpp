@@ -43,15 +43,15 @@ shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
   // there is nothing we can do for shorts on avx
   else if constexpr( P::reg_size == 32 && P::g_size <= 2 && current_api == avx ) return no;
   else if constexpr( P::has_zeroes && current_api < avx2 ) return no;
-  else if constexpr( !P::shuffle_16_first ) return no;
+  else if constexpr( !P::shuffle_16in16 ) return no;
   else
   {
-    constexpr auto shuffle16x2 = get<0>(*P::shuffle_16_first);
-    constexpr auto within16    = get<1>(*P::shuffle_16_first);
+    constexpr auto p0 = get<0>(*P::shuffle_16in16);
+    constexpr auto p1 = get<1>(*P::shuffle_16in16);
+    auto [r0, l0] = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
+    auto [r1, l1] = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
 
-    x            = shuffle_l<2>(x, eve::lane<16 / sizeof(T)>, idxm::to_pattern<shuffle16x2>());
-    auto [x_, l] = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<within16>());
-    return kumi::tuple {x_, idxm::add_shuffle_levels(l, eve::index<2>)};
+    return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
   }
 }
 
