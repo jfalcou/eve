@@ -78,10 +78,11 @@ struct slide_left_impl_t
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
   static constexpr auto level(eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
   {
+    const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
     constexpr std::ptrdiff_t S = G * S_;
+
     if constexpr( S == 0 ) return 0;
     else if constexpr ( S == T::size() ) return 1;
-    else if constexpr ( current_api >= neon ) return 3;
     else if constexpr( eve::has_aggregated_abi_v<T> )
     {
       using half_t = decltype(T {}.slice(lower_));
@@ -94,8 +95,21 @@ struct slide_left_impl_t
         auto just_second = level(eve::as<half_t>{}, g, s);
         return std::max(halves_together, just_second);
       }
+    } else if constexpr ( current_api >= neon ) {
+      if (reg_size <= 8) return 2;
+      return 3;
+    } else {
+      if (current_api >= avx512 && reg_size == 64) {
+        if (S % 4 == 0) return 3;
+        return 5;
+      }
+      if (current_api >= avx2 && reg_size == 32) {
+        if (S % 8 == 0) return 2;
+        if (S % 4 == 0) return 3;
+        return 4;
+      }
+      return 2;
     }
-    else { return 2; }
   }
 
   // Two args
@@ -105,6 +119,7 @@ struct slide_left_impl_t
   {
     constexpr std::ptrdiff_t S = S_ * G;
     constexpr bool is_shift_by_8 = (S * sizeof(element_type_t<T>) % 8) == 0;
+
     if constexpr( S == 0 || S == T::size() ) return 0;
     if constexpr ( current_api >= neon ) return 2;
 

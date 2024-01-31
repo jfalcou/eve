@@ -66,18 +66,18 @@ struct expanded_pattern_t : pattern_t<I...>
   static constexpr auto repeated_16 = idxm::repeated_pattern_of_size<16 / g_size, I...>;
   static constexpr auto repeated_32 = idxm::repeated_pattern_of_size<32 / g_size, I...>;
 
-  static constexpr auto shuffle_16_first = idxm::put_bigger_groups_in_position<16 / g_size>(idxs);
-  static constexpr auto shuffle_8_first = idxm::put_bigger_groups_in_position<8 / g_size>(idxs);
-  static constexpr auto shuffle_4_first = idxm::put_bigger_groups_in_position<4 / g_size>(idxs);
-  static constexpr auto shuffle_2_first = idxm::put_bigger_groups_in_position<2 / g_size>(idxs);
+  static constexpr auto shuffle_16in16 = idxm::group_within_group<16 / g_size>(idxs);
+  static constexpr auto shuffle_8in8 = idxm::group_within_group<8 / g_size>(idxs);
+  static constexpr auto shuffle_4in4 = idxm::group_within_group<4 / g_size>(idxs);
+  static constexpr auto shuffle_2in2 = idxm::group_within_group<2 / g_size>(idxs);
 
-  template <std::ptrdiff_t FirstSize>
-  static constexpr auto shuffle_n_first(eve::fixed<FirstSize>)
+  template <std::ptrdiff_t N>
+  static constexpr auto shuffle_NinN(eve::fixed<N>)
   {
-    if constexpr (FirstSize == 16) return shuffle_16_first;
-    if constexpr (FirstSize == 8) return shuffle_8_first;
-    if constexpr (FirstSize == 4) return shuffle_4_first;
-    if constexpr (FirstSize == 2) return shuffle_2_first;
+    if constexpr (N == 16) return shuffle_16in16;
+    if constexpr (N == 8) return shuffle_8in8;
+    if constexpr (N == 4) return shuffle_4in4;
+    if constexpr (N == 2) return shuffle_2in2;
   }
 
 

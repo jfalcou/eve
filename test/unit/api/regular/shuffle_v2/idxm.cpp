@@ -39,6 +39,39 @@ TTS_CASE("are_below_ignoring_specials")
   test(std::array {we_, we_}, 1, true);
 };
 
+TTS_CASE("upscale_pattern") {
+  auto yes_test = [](auto _in, auto _expected)
+  {
+    auto in     = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+
+    auto actual = eve::detail::idxm::upscale_pattern(in);
+    TTS_EXPECT(actual);
+
+    TTS_EQUAL(expected, *actual) << tts::as_string(in);
+  };
+
+  auto no_test = [](auto _in)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::upscale_pattern(in);
+
+    TTS_EXPECT_NOT(actual);
+  };
+
+  yes_test(std::array{0, 1, 2, 3}, std::array{0, 1});
+  yes_test(std::array{2, 3, 0, 1}, std::array{1, 0});
+  yes_test(std::array{2, 3, 2, 3}, std::array{1, 1});
+  yes_test(std::array{2, 3, we_, 1}, std::array{1, 0});
+  yes_test(std::array{2, 3, na_, na_}, std::array{1, na_});
+  yes_test(std::array{2, 3, we_, we_}, std::array{1, we_});
+
+  no_test(std::array{na_, 1, 2, 3});
+  no_test(std::array{1, 0, 2, 3});
+  no_test(std::array{0, 1, 3, 2});
+};
+
+
 TTS_CASE("to_pattern")
 {
   constexpr auto arr    = to_idxs(std::array {0, 1, we_, na_});
@@ -747,6 +780,34 @@ TTS_CASE("is_slide_right")
   test(std::array {na_, na_, 1, 2}, -1);
 };
 
+TTS_CASE("slide_as_slide2_with_0")
+{
+  auto yes_test = [](auto _in, auto _expected)
+  {
+    auto in     = to_idxs(_in);
+    auto expected = to_idxs(_expected);
+    auto actual = eve::detail::idxm::slide_as_slide2_with_0(in);
+    TTS_EXPECT(actual) << tts::as_string(in);
+    TTS_EQUAL(expected, *actual) << tts::as_string(in);
+  };
+
+  auto no_test = [](auto _in)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::slide_as_slide2_with_0(in);
+
+    TTS_EXPECT_NOT(actual);
+  };
+
+  yes_test(std::array {0, 1, 2, 3}, std::array{0, 1, 2, 3});
+  yes_test(std::array {1, 2, 3, na_}, std::array{1, 2, 3, 4});
+  yes_test(std::array {na_, 0, 1, 2}, std::array{7, 0, 1, 2});
+  yes_test(std::array {na_, na_, 0, 1}, std::array{6, 7, 0, 1});
+
+  no_test(std::array {na_, na_, 1, 2});
+  no_test(std::array {1, 2, na_, na_});
+};
+
 TTS_CASE("is_reverse")
 {
   auto test = [](auto _in, bool expected)
@@ -812,44 +873,58 @@ TTS_CASE("add shuffle levels")
   TTS_EQUAL(7, add(eve::index<4>, eve::index<3>, eve::index<1>));
 };
 
-TTS_CASE("put bigger group in position")
-{
-  auto yes_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _groups, auto _within)
+TTS_CASE("group_within_group") {
+  auto yes_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _s0, auto _s1)
   {
     auto in     = to_idxs(_in);
-    auto groups = to_idxs(_groups);
-    auto within = to_idxs(_within);
+    auto s0 = to_idxs(_s0);
+    auto s1 = to_idxs(_s1);
 
-    auto [actual_groups, actual_within] = *eve::detail::idxm::put_bigger_groups_in_position<G>(in);
+    auto [actual_s0, actual_s1] = *eve::detail::idxm::group_within_group<G>(in);
 
-    TTS_EQUAL(groups, actual_groups);
-    TTS_EQUAL(within, actual_within);
+    TTS_EQUAL(actual_s0, s0);
+    TTS_EQUAL(actual_s1, s1);
   };
 
   auto no_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>)
   {
     auto in     = to_idxs(_in);
-    auto actual = eve::detail::idxm::put_bigger_groups_in_position<G>(in);
+    auto actual = eve::detail::idxm::group_within_group<G>(in);
 
     TTS_EXPECT_NOT(actual);
   };
 
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<2>, std::array {1, 0}, std::array {1, 0, 2, 3});
-  yes_test(std::array {3, 2, na_, 1}, eve::lane<2>, std::array {1, 0}, std::array {1, 0, na_, 3});
-  yes_test(std::array {3, 2, 3, 2}, eve::lane<2>, std::array {1, 1}, std::array {1, 0, 3, 2});
-  yes_test(
-      std::array {3, 2, na_, na_}, eve::lane<2>, std::array {1, we_}, std::array {1, 0, na_, na_});
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {0}, std::array {3, 2, 0, 1});
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {0}, std::array {3, 2, 0, 1});
-  yes_test(std::array {3, 2, 0, 1}, eve::lane<1>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
+  // in group then group
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<2>, std::array {0, 1, 3, 2}, std::array {2, 3, 0, 1});
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
+  yes_test(std::array {3, 2, 0, 1}, eve::lane<1>, std::array {0, 1, 2, 3}, std::array {3, 2, 0, 1});
+  yes_test(std::array {3, 2, na_, 1}, eve::lane<2>, std::array {na_, 1, 3, 2}, std::array {2, 3, 0, 1});
+  yes_test(std::array {3, 2, na_, na_}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, na_, na_});
+  yes_test(std::array {3, 2, we_, we_}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, we_, we_});
+  yes_test(std::array {3, 2, 3, 2}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, 2, 3});
   yes_test(std::array {3, 2, 6, 7, 6, 7, 0, 1},
            eve::lane<2>,
-           std::array {1, 3, 3, 0},
-           std::array {1, 0, 2, 3, 4, 5, 6, 7});
+           std::array {0, 1, 3, 2, we_, we_, 6, 7},
+           std::array {2, 3, 6, 7, 6, 7, 0, 1});
   yes_test(std::array {7, na_, na_, na_, na_, na_, na_, na_},
            eve::lane<4>,
-           std::array {1, we_},
-           std::array {3, na_, na_, na_, na_, na_, na_, na_});
+           std::array {we_, we_, we_, we_, 7, na_, na_, na_},
+           std::array {4, 5, 6, 7, na_, na_, na_, na_});
+  yes_test(
+    std::array{1, 1, 2, 3, 4, 5, 6, 7, 8},
+    eve::lane<1>,
+    std::array{-2, 1, 2, 3, 4, 5, 6, 7, 8},
+    std::array{1, 1, 2, 3, 4, 5, 6, 7, 8}
+  );
+
+  // group then in group
+  yes_test(std::array {3, 2, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, 0, 2, 3});
+  yes_test(std::array {3, we_, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, we_, 2, 3});
+  yes_test(std::array {3, we_, na_, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, we_, na_, 3});
+  yes_test(std::array {6, na_, na_, na_, 7, na_, na_, na_},
+           eve::lane<4>,
+           std::array {4, 5, 6, 7, 4, 5, 6, 7},
+           std::array {2, na_, na_, na_, 7, na_, na_, na_});
 
   no_test(std::array {3, 0, 0, 1}, eve::lane<2>);
 };
