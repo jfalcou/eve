@@ -121,7 +121,7 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
-  // here using idxs, not idxs2match, no zeroing blend on sve
+  // NOTE: no zeroing blend on sve
   if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle;
   else
   {

@@ -99,7 +99,10 @@ struct slide_left_impl_t
       if (reg_size <= 8) return 2;
       return 3;
     } else {
-      if (current_api >= avx512 && reg_size == 64) {
+      if (current_api >= avx512) {
+        if ( S % 8 == 0 && reg_size <= 32 ) return 2;
+        if ( S % 4 == 0 && reg_size <= 16 ) return 2;
+        if ( reg_size <= 16 ) return 3;
         if (S % 4 == 0) return 3;
         return 5;
       }

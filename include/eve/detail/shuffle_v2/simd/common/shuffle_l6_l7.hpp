@@ -35,7 +35,7 @@ shuffle_l6_l7_(EVE_SUPPORTS(cpu_), P p, fixed<G> g, T x, T y)
   {
     return r;
   }
-  else return no_matching_shuffle;
+  else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
 }
