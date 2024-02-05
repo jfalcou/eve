@@ -49,7 +49,7 @@ namespace eve::algo
   //!
   //!  @brief same as;
   //!  @code{.cpp}
-  //!  eve::algo::tranform_to(eve::views::zip(r, r), op)
+  //!  eve::algo::transform_to(eve::views::zip(r, r), op)
   //!  @endcode
   //!  but slightly more efficient
   //!
