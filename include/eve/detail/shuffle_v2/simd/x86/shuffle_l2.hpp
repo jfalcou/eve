@@ -79,10 +79,10 @@ shuffle_l2_x86_within_128_4_shorts(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128_4x32(P, fixed<G>, wide<T, N> x)
+shuffle_l2_x86_within_128_4x32(P p, fixed<G> g, wide<T, N> x)
 {
-  if constexpr( sizeof(T) * G < 4 || P::has_zeroes ) return no_matching_shuffle;
-  else
+  if constexpr( sizeof(T) * G < 4 ) return no_matching_shuffle;
+  else if constexpr ( !P::has_zeroes )
   {
     constexpr int m = idxm::x86_mm_shuffle_4(*P::repeated_16);
 
@@ -94,6 +94,16 @@ shuffle_l2_x86_within_128_4x32(P, fixed<G>, wide<T, N> x)
     }
     else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_epi32(x, m);
     else return _mm512_shuffle_epi32(x, m);
+  }
+  else if constexpr (current_api < avx512 ) return no_matching_shuffle;
+  else
+  {
+    constexpr int m = idxm::x86_mm_shuffle_4(*P::repeated_16);
+    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+
+    if constexpr ( P::reg_size == 16 ) return _mm_maskz_shuffle_epi32(mask, x, m);
+    else if constexpr ( P::reg_size == 32 ) return _mm256_maskz_shuffle_epi32(mask, x, m);
+    else return _mm512_maskz_shuffle_epi32(mask, x, m);
   }
 }
 
@@ -155,7 +165,7 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 {
-  constexpr auto pos = eve::detail::idxm::is_just_setting_one_zero(P::idxs2match);
+  constexpr auto pos = eve::detail::idxm::is_just_setting_one_zero(P::idxs);
   if constexpr( !pos ) return no_matching_shuffle;
   else if constexpr( P::reg_size == 16 )
   {
@@ -174,9 +184,10 @@ shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_256_permute4x64(P, fixed<G>, wide<T, N> x)
+shuffle_l2_x86_within_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
 {
-  if constexpr( P::g_size < 8 || P::has_zeroes ) return no_matching_shuffle;
+  if constexpr( P::g_size < 8 ) return no_matching_shuffle;
+  else if constexpr ( P::has_zeroes && current_api < avx512 ) return no_matching_shuffle;
   // Within lane is faster so prefer it
   else if constexpr( idxm::shuffle_within_halves(*P::repeated_32) )
   {
@@ -184,15 +195,28 @@ shuffle_l2_x86_within_256_permute4x64(P, fixed<G>, wide<T, N> x)
 
     auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
 
-    if constexpr( P::reg_size == 32 ) return _mm256_permute_pd(x_f64, mm);
-    else return _mm512_permute_pd(x_f64, mm);
+    if constexpr (!P::has_zeroes) {
+       if constexpr( P::reg_size == 32 ) return _mm256_permute_pd(x_f64, mm);
+       else return _mm512_permute_pd(x_f64, mm);
+    } else {
+      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+      if constexpr( P::reg_size == 32 ) return _mm256_maskz_permute_pd(mask, x_f64, mm);
+      else return _mm256_maskz_permute_pd(mask, x_f64, mm);
+    }
   }
   else if constexpr( current_api > avx )
   {
     constexpr int mm = idxm::x86_mm_shuffle_4(*P::repeated_32);
 
-    if constexpr( P::reg_size == 32 ) return _mm256_permute4x64_epi64(x, mm);
-    else return _mm512_permutex_epi64(x, mm);
+    if constexpr (!P::has_zeroes) {
+      if constexpr( P::reg_size == 32 ) return _mm256_permute4x64_epi64(x, mm);
+      else return _mm512_permutex_epi64(x, mm);
+    } else {
+      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+
+      if constexpr( P::reg_size == 32 ) return _mm256_maskz_permutex_epi64(mask, x, mm);
+      else return _mm512_maskz_permutex_epi64(mask, x, mm);
+    }
   }
   else return no_matching_shuffle;
 }
@@ -230,9 +254,8 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
     if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, x, mm);
     else
     {
-      // avx512 masks don't count
-      return _mm512_maskz_shuffle_i64x2(
-          is_na_or_we_mask(p, g, eve::as<logical<wide<T, N>>> {}).storage(), x, x, mm);
+      auto mask =  is_na_or_we_logical_mask(p, g, as(x)).storage();
+      return _mm512_maskz_shuffle_i64x2(mask, x, x, mm);
     }
   }
 }
@@ -289,7 +312,7 @@ shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   // https://stackoverflow.com/questions/76552874/how-should-i-chose-between-mm-move-sd-mm-shuffle-pd-mm-blend-pd
   //
 
-  // here using idxs, not idxs2match, no zeroing blend on avx512
+  // NOTE: no zeroing blend on avx512
   if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle;
   else if constexpr( P::reg_size <= 32 && P::g_size >= 4 )
   {
@@ -325,25 +348,22 @@ shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128x2_shuffle_pd(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_x86_within_128x2_shuffle_pd(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( sizeof(T) < 8 ) return no_matching_shuffle;
   else
   {
     // half from x, half from y
-    // No w/e or zeroes are possible here
+    // No w/e or zeroes are possible here, because it wouldn't be 2 registers.
+    // (repeating with 16 bytes 8 byte element).
+    static_assert(!P::has_zeroes, "verifyig assumption");
     auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
     auto y_f64 = bit_cast(y, eve::as<eve::wide<double, N>> {});
 
-    constexpr int mm = _MM_SHUFFLE2(P::idxs2match[1] - 2, P::idxs2match[0]);
+    constexpr int mm = _MM_SHUFFLE2(P::idxs[1] - 2, P::idxs[0]);
     if constexpr( P::reg_size == 16 ) return _mm_shuffle_pd(x_f64, y_f64, mm);
     else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_pd(x_f64, y_f64, mm);
-    else if constexpr( !P::has_zeroes ) return _mm512_shuffle_pd(x_f64, y_f64, mm);
-    else
-    {
-      auto zero_mask = is_na_or_we_mask(p, g, eve::as<logical<wide<T, N>>> {});
-      return _mm512_maskz_shuffle_pd(zero_mask.storage(), x_f64, y_f64, mm);
-    }
+    else return _mm512_shuffle_pd(x_f64, y_f64, mm);
   }
 }
 

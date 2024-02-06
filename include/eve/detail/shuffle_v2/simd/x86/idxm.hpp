@@ -26,6 +26,12 @@ x86_shuffle_4_in_lane(std::span<const std::ptrdiff_t, 4> idxs)
 }
 
 constexpr int
+x86_shuffle_4_in_lane(std::span<const std::ptrdiff_t, 2> idxs)
+{
+  return x86_shuffle_4_in_lane(expand_group<2>(idxs));
+}
+
+constexpr int
 x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 2> _idxs)
 {
   std::array<std::ptrdiff_t, 2> idxs = replace_na(replace_we(_idxs, 0), 0);

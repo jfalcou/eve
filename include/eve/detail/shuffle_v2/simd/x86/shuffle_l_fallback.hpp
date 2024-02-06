@@ -50,7 +50,7 @@ shuffle_l_fallback_sse2_uN_u8(P, fixed<G> g, wide<T, N> x)
       return -1;
     }();
 
-    if constexpr( match == -1 ) return kumi::tuple {no_matching_shuffle, eve::index<-1>};
+    if constexpr( match == -1 ) return no;
     else
     {
       constexpr auto p0p1 = *P::shuffle_NinN(eve::lane<match>);
@@ -76,7 +76,7 @@ requires std::same_as<abi_t<T, N>, x86_128_> && (P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else return no_matching_shuffle;
+  else return kumi::tuple{no_matching_shuffle, eve::index<-1>};
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
