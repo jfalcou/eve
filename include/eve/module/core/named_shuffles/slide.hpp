@@ -76,39 +76,58 @@ struct slide_left_impl_t
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
-  static constexpr auto level(eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
+  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
   {
-    const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
-    constexpr std::ptrdiff_t S = G * S_;
+    using abi_t = typename T::abi_type;
+    const std::size_t        reg_size      = sizeof(element_type_t<T>) * T::size();
+    constexpr std::ptrdiff_t S             = G * S_;
+    constexpr bool           is_shift_by_8 = (S * sizeof(element_type_t<T>) % 8) == 0;
+    constexpr bool           is_shift_by_4 = (S * sizeof(element_type_t<T>) % 4) == 0;
+    constexpr bool           is_shift_by_2 = (S * sizeof(element_type_t<T>) % 2) == 0;
 
     if constexpr( S == 0 ) return 0;
-    else if constexpr ( S == T::size() ) return 1;
+    else if constexpr( S == T::size() ) return 1;
     else if constexpr( eve::has_aggregated_abi_v<T> )
     {
       using half_t = decltype(T {}.slice(lower_));
-      // When combining halves, always taking just max. Even if that might not report
-      // the mask required for one of the halves.
-      if constexpr (S > T::size() / 2) {
+      if constexpr( S > T::size() / 2 )
+      {
+        // just second is shifted
         return level(eve::as<half_t> {}, eve::lane<1>, eve::index<S - T::size() / 2>);
-      } else {
+      }
+      else
+      {
+        // When combining halves, always taking just max. Even if that might not report
+        // the mask required for one of the halves.
         auto halves_together = level(eve::as<half_t> {}, eve::as<half_t> {}, g, s);
-        auto just_second = level(eve::as<half_t>{}, g, s);
+        auto just_second     = level(eve::as<half_t> {}, g, s);
         return std::max(halves_together, just_second);
       }
-    } else if constexpr ( current_api >= neon ) {
-      if (reg_size <= 8) return 2;
+    }
+    else if constexpr ( logical_simd_value<T> && !abi_t::is_wide_logical )
+    {
+      auto mask = detail::mask_type(tgt);
+      return level(mask, g, s) + 4;
+    }
+    else if constexpr( current_api >= neon || current_api >= sve )
+    {
+      if( reg_size <= 8 ) return 2;
       return 3;
-    } else {
-      if (current_api >= avx512) {
-        if ( S % 8 == 0 && reg_size <= 32 ) return 2;
-        if ( S % 4 == 0 && reg_size <= 16 ) return 2;
-        if ( reg_size <= 16 ) return 3;
-        if (S % 4 == 0) return 3;
+    }
+    else
+    {
+      if( current_api >= avx512 )
+      {
+        if( is_shift_by_4 ) return 2;
+        if( reg_size <= 16 ) return 2;
+        if( is_shift_by_2 ) return 3;
         return 5;
       }
-      if (current_api >= avx2 && reg_size == 32) {
-        if (S % 8 == 0) return 2;
-        if (S % 4 == 0) return 3;
+      if( reg_size <= 8 ) return 2;
+      if( current_api >= avx2 && reg_size == 32 )
+      {
+        if( is_shift_by_8 ) return 2;
+        if( is_shift_by_4 ) return 3;
         return 4;
       }
       return 2;
@@ -118,15 +137,29 @@ struct slide_left_impl_t
   // Two args
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
-  static constexpr auto level(eve::as<T>, eve::as<T>, eve::fixed<G>, eve::index_t<S_>)
+  static constexpr std::ptrdiff_t
+  level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
   {
-    constexpr std::ptrdiff_t S = S_ * G;
-    constexpr bool is_shift_by_8 = (S * sizeof(element_type_t<T>) % 8) == 0;
+    using abi_t = typename T::abi_type;
+    constexpr std::ptrdiff_t S             = S_ * G;
+    constexpr bool           is_shift_by_8 = (S * sizeof(element_type_t<T>) % 8) == 0;
+    constexpr bool           is_shift_by_4 = (S * sizeof(element_type_t<T>) % 4) == 0;
+    constexpr bool           is_shift_by_2 = (S * sizeof(element_type_t<T>) % 2) == 0;
 
     if constexpr( S == 0 || S == T::size() ) return 0;
-    if constexpr ( current_api >= neon ) return 2;
+    if constexpr ( logical_simd_value<T> && !abi_t::is_wide_logical )
+    {
+      auto mask = detail::mask_type(tgt);
+      return level(mask, mask, g, s) + 6;
+    }
+    if constexpr( current_api >= neon || current_api >= sve ) return 2;
+    if( current_api >= avx512 )
+    {
+      if( is_shift_by_4 ) return 2;
+      if( is_shift_by_2 ) return 3;
+    }
 
-    if (current_api >= sse4_2) return 2;
+    if( current_api >= sse4_2 ) return 2;
     // sse2
     return is_shift_by_8 ? 2 : 6;
   }

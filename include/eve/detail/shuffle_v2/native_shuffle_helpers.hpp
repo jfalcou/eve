@@ -56,6 +56,7 @@ template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
 struct expanded_pattern_t : pattern_t<I...>
 {
   static constexpr std::array idxs = {I...};
+  static constexpr std::array idxs_no_na = idxm::replace_na(idxs, we_);
 
   static constexpr std::ptrdiff_t e_t_size     = (int)sizeof(eve::element_type_t<T>);
   static constexpr std::ptrdiff_t g_size       = e_t_size * G;
