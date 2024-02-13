@@ -104,7 +104,7 @@ struct broadcast_lane_t
     if (reg_size == 64)
     {
       if (g_size >= 16) return 2;
-      if (g_size >= 4) return 3;
+      if (g_size >= 2) return 3;
       return 4;
     }
 
@@ -114,6 +114,7 @@ struct broadcast_lane_t
       if (current_api == avx) return 4;
       if (g_size >= 8) return 2;
       if (g_size >= 4) return 3;
+      if (g_size >= 2 && current_api == avx512) return 3;
       return 4;
     }
 
