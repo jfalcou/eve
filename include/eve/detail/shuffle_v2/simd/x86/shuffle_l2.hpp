@@ -420,7 +420,7 @@ shuffle_l2_x86_within_128x2_alignr(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   else if constexpr( current_api < ssse3 ) return no_matching_shuffle;
   else
   {
-    constexpr auto starts_from = idxm::is_in_order(*P::repeated_16);
+    constexpr auto starts_from = idxm::is_slide_left_2(*P::repeated_16, P::reg_groups);
 
     if constexpr( !starts_from ) return no_matching_shuffle;
     else

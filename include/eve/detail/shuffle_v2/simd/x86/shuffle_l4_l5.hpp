@@ -48,11 +48,32 @@ shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
   {
     constexpr auto p0 = get<0>(*P::shuffle_16in16);
     constexpr auto p1 = get<1>(*P::shuffle_16in16);
-    auto [r0, l0] = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
-    auto [r1, l1] = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
+    auto [r0, l0]     = shuffle_v2_core(x, eve::lane<G>, idxm::to_pattern<p0>());
+    auto [r1, l1]     = shuffle_v2_core(r0, eve::lane<G>, idxm::to_pattern<p1>());
 
     return kumi::tuple {r1, idxm::add_shuffle_levels(l0, l1)};
   }
+}
+
+template<typename P, typename T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l4_l5_x86_slide_less_than_16(P, fixed<G>, wide<T, N> x)
+{
+  constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
+  // Coudn't figure out how to generalize well
+  // only slide left for now
+  // No masking 0s on avx512
+  if constexpr( current_api < avx2 ) return no;
+  else if constexpr ( constexpr auto slide = idxm::is_slide_left(P::idxs) )
+  {
+    static_assert(G == 1, "verifying assumptions");
+    constexpr auto alignr_p = idxm::slide_2_left_in_16_pattern<N::value>(P::g_size, *slide);
+
+    wide<T, N> y = shuffle_l<2>(x, lane<16 / sizeof(T)>, pattern<1, na_>);
+
+    return kumi::tuple{shuffle_l<2>(x, y, idxm::to_pattern<alignr_p>()), index<4>};
+  }
+  else return no;
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
@@ -65,11 +86,17 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x); matched_shuffle<decltype(get<0>(r))> )
+  else if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x);
+                     matched_shuffle<decltype(get<0>(r))> )
   {
     return r;
   }
   else if constexpr( auto r = shuffle_l4_l5_x86_put_u64x2_in_position(p, g, x);
+                     matched_shuffle<decltype(get<0>(r))> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l4_l5_x86_slide_less_than_16(p, g, x);
                      matched_shuffle<decltype(get<0>(r))> )
   {
     return r;
@@ -82,11 +109,12 @@ EVE_FORCEINLINE auto
 shuffle_l4_l5_(EVE_SUPPORTS(avx512_), P p, fixed<G> g, logical<wide<T, N>> x)
 requires(P::out_reg_size == P::reg_size)
 {
- if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x); matched_shuffle<decltype(get<0>(r))> )
- {
-  return r;
- }
- else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
+  if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x);
+                matched_shuffle<decltype(get<0>(r))> )
+  {
+    return r;
+  }
+  else return kumi::tuple {no_matching_shuffle, eve::index<-1>};
 }
 
 }
