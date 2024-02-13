@@ -114,6 +114,7 @@ struct reverse_in_subgroups_t
     if (sub_size == 32) {
       if (g_size == 8) return 2;
       if (g_size == 4) return 3;
+      if (g_size == 2 && current_api >= avx512) return 3;
       return 5;
     }
 

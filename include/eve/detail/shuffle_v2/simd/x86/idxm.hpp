@@ -114,4 +114,22 @@ x86_pshuvb_pattern(const std::array<std::ptrdiff_t, N>& idxs)
   return x86_pshuvb_pattern<G>(std::span<const std::ptrdiff_t, N>(idxs));
 }
 
+template<std::size_t N>
+constexpr std::optional<int>
+mm512_shuffle_i64x2_idx(std::array<std::ptrdiff_t, N> idxs) {
+  if constexpr (N == 2) return mm512_shuffle_i64x2_idx(expand_group<2>(idxs));
+  else if constexpr ( N > 4 ) {
+    auto upscaled = upscale_pattern(idxs);
+    if (upscaled) return mm512_shuffle_i64x2_idx(*upscaled);
+    else return std::nullopt;
+  } else {
+    if (idxs[0] >= 4 || idxs[1] >= 4) return std::nullopt;
+    if (idxs[2] < 4 || idxs[3] < 4) return std::nullopt;
+    idxs[2]-=4;
+    idxs[3]-=4;
+    return idxs[0] | (idxs[1] << 2) | (idxs[2] << 4) | (idxs[3] << 6);
+  }
+
+}
+
 }

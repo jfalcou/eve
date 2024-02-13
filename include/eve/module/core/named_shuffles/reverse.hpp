@@ -104,6 +104,7 @@ struct reverse_t
       if( g_size >= 16 ) return 2;
       if( g_size >= 8 ) return reg_size == 64 ? 3 : 2;
       if( g_size >= 4 ) return 3;
+      if( g_size == 2 && current_api >= avx512 ) return 3;
       return 5;
     }
 
@@ -111,6 +112,7 @@ struct reverse_t
     {
       if( g_size >= 16 ) return 2;
       if( g_size >= 4 ) return 4;
+      if( g_size == 2 && current_api >= avx512 ) return 3;
       return 9;
     }
 

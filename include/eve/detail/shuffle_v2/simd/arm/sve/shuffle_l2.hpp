@@ -18,7 +18,7 @@ shuffle_l2_svdup(P, eve::fixed<G>, eve::wide<T, N> x)
 {
   constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
 
-  if constexpr( !lane || G > 1) return no_matching_shuffle;
+  if constexpr( !lane || G > 1 ) return no_matching_shuffle;
   else
   {
     constexpr std::ptrdiff_t m = *lane;
@@ -99,7 +99,11 @@ template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 {
-  if constexpr( auto r = shuffle_l2_svdup(p, g, x); matched_shuffle<decltype(r)> ) return r;
+  if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_svdup(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l2_svrev(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l2_svrevbhw(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else if constexpr( auto r = shuffle_l2_svext_self(p, g, x); matched_shuffle<decltype(r)> )
@@ -132,10 +136,28 @@ shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
+shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  constexpr auto starts_from = idxm::is_in_order(P::idxs);
+  if constexpr( !starts_from ) return no_matching_shuffle_t {};
+  else
+  {
+    constexpr std::uint64_t m = *starts_from * G;
+    x                         = svext(x, y, m);
+    return x;
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_sve_blend(p, g, x, y); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_sve_ext_2(p, g, x, y); matched_shuffle<decltype(r)> )
   {
     return r;
   }
