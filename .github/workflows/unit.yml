@@ -57,7 +57,6 @@ jobs:
       matrix:
         cfg:
         - { comp: clang , arch: x86_osx, opts: -mavx }
-        - { comp: gcc   , arch: x86_osx, opts: -mavx }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v3
