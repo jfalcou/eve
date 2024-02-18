@@ -231,6 +231,9 @@ jobs:
   ##################################################################################################
   avx512:
     runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
     strategy:
       fail-fast: false
       matrix:
