@@ -30,7 +30,7 @@ jobs:
         - { comp: gcc  , arch: aarch64, opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
 
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |

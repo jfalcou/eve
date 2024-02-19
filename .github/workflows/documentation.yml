@@ -32,7 +32,7 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: -msse2    , pch: OFF}
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
 
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |

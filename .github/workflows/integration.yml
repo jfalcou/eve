@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Install EVE from checkout
         run: |
           mkdir build && cd build
@@ -52,7 +52,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Compile using CPM
         run: |
           git config --global --add safe.directory $PWD
@@ -73,7 +73,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Compile using FetchContent
         run: |
           git config --global --add safe.directory  $PWD
@@ -90,7 +90,7 @@ jobs:
       image: ghcr.io/jfalcou/compilers:v6
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Prepare EVE repository for branch ${{ github.head_ref }}
         run: |
           git config --global --add safe.directory $PWD
