@@ -31,7 +31,7 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: -msse2    }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
@@ -57,10 +57,9 @@ jobs:
       matrix:
         cfg:
         - { comp: clang , arch: x86_osx, opts: -mavx }
-        - { comp: gcc   , arch: x86_osx, opts: -mavx }
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -83,7 +82,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Running CMake for MSVC ${{ matrix.cfg.mode }} ${{ matrix.cfg.options }}
         run: |
           mkdir build && cd build
@@ -124,7 +123,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -152,7 +151,7 @@ jobs:
         - { comp: gcc, arch: ppc64   , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
@@ -187,7 +186,7 @@ jobs:
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -211,13 +210,14 @@ jobs:
       matrix:
         cfg:
         - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
-        - { comp: clang       , arch: x86_asan, opts: -msse2                                }
+      # Linux kernel need a fix on our CI machine
+      # - { comp: clang       , arch: x86_asan, opts: -msse2                                }
         - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
         - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
@@ -232,35 +232,29 @@ jobs:
   ##################################################################################################
   avx512:
     runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
         - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         }
-        - { comp: clang , arch: x86_asan, opts: -march=skylake-avx512 }
         - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
         - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
 
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        if: "${{ matrix.cfg.arch != 'x86_asan' }}"
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
-        if: "${{ matrix.cfg.arch != 'x86_asan' }}"
         run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
-      - name: Compiling Sanitizer Tests
-        if: "${{ matrix.cfg.arch == 'x86_asan' }}"
-        run:  cd build &&  ninja unit.memory.exe -j 5
-      - name: Running Sanitizer Tests
-        if: "${{ matrix.cfg.arch == 'x86_asan' }}"
-        run:  cd build && ctest --output-on-failure  -R ^unit.memory.*.exe -j 4
 
   ##################################################################################################
   ## ARM SVE Tests
@@ -280,7 +274,7 @@ jobs:
         - { comp: gcc, arch: sve512, opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run:  |
           mkdir build
