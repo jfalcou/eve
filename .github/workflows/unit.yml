@@ -210,7 +210,8 @@ jobs:
       matrix:
         cfg:
         - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
-        - { comp: clang       , arch: x86_asan, opts: -msse2                                }
+      # Linux kernel need a fix on our CI machine
+      # - { comp: clang       , arch: x86_asan, opts: -msse2                                }
         - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
         - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
@@ -233,6 +234,7 @@ jobs:
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
     strategy:
       fail-fast: false
       matrix:
