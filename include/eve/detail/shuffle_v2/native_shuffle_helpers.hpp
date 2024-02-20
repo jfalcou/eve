@@ -61,6 +61,7 @@ struct expanded_pattern_t : pattern_t<I...>
   static constexpr std::ptrdiff_t e_t_size     = (int)sizeof(eve::element_type_t<T>);
   static constexpr std::ptrdiff_t g_size       = e_t_size * G;
   static constexpr std::ptrdiff_t reg_size     = T::size() * e_t_size;
+  static constexpr std::ptrdiff_t reg_groups   = T::size() / G;
   static constexpr std::ptrdiff_t out_reg_size = idxs.size() * g_size;
 
   static constexpr bool has_zeroes = idxm::has_zeroes(idxs);

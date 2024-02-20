@@ -28,7 +28,7 @@ shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
   else if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
   else
   {
-    constexpr auto pshuvb_pattern = idxm::x86_pshuvb_pattern<G * sizeof(T)>(P::idxs);
+    constexpr auto pshuvb_pattern = idxm::x86_pshuvb_pattern<P::g_size>(P::idxs);
     if constexpr( !pshuvb_pattern ) return no_matching_shuffle;
     else
     {

@@ -75,8 +75,7 @@ x86_blend_immediate_mask(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t g)
 }
 
 template<std::ptrdiff_t G, std::size_t N>
-constexpr auto
-x86_pshuvb_pattern(const std::array<std::ptrdiff_t, N>& idxs);
+constexpr auto x86_pshuvb_pattern(const std::array<std::ptrdiff_t, N>& idxs);
 
 template<std::ptrdiff_t G, std::size_t N>
 constexpr auto
@@ -88,6 +87,8 @@ x86_pshuvb_pattern(std::span<const std::ptrdiff_t, N> idxs)
     static_assert(N == 16 || N == 32 || N == 64);
     using arr_t = std::array<std::ptrdiff_t, N>;
     using res_t = std::optional<arr_t>;
+
+    if( !shuffle_within_n(idxs, 16) ) return res_t {};
 
     arr_t res = {};
     for( std::size_t i = 0; i != N; ++i )
@@ -116,20 +117,49 @@ x86_pshuvb_pattern(const std::array<std::ptrdiff_t, N>& idxs)
 
 template<std::size_t N>
 constexpr std::optional<int>
-mm512_shuffle_i64x2_idx(std::array<std::ptrdiff_t, N> idxs) {
-  if constexpr (N == 2) return mm512_shuffle_i64x2_idx(expand_group<2>(idxs));
-  else if constexpr ( N > 4 ) {
+mm512_shuffle_i64x2_idx(std::array<std::ptrdiff_t, N> idxs)
+{
+  if constexpr( N == 2 ) return mm512_shuffle_i64x2_idx(expand_group<2>(idxs));
+  else if constexpr( N > 4 )
+  {
     auto upscaled = upscale_pattern(idxs);
-    if (upscaled) return mm512_shuffle_i64x2_idx(*upscaled);
+    if( upscaled ) return mm512_shuffle_i64x2_idx(*upscaled);
     else return std::nullopt;
-  } else {
-    if (idxs[0] >= 4 || idxs[1] >= 4) return std::nullopt;
-    if (idxs[2] < 4 || idxs[3] < 4) return std::nullopt;
-    idxs[2]-=4;
-    idxs[3]-=4;
+  }
+  else
+  {
+    if( idxs[0] >= 4 || idxs[1] >= 4 ) return std::nullopt;
+    if( idxs[2] < 4 || idxs[3] < 4 ) return std::nullopt;
+    idxs[2] -= 4;
+    idxs[3] -= 4;
     return idxs[0] | (idxs[1] << 2) | (idxs[2] << 4) | (idxs[3] << 6);
   }
+}
 
+template<std::size_t N>
+constexpr auto
+slide_2_left_in_16_pattern(std::ptrdiff_t g_size, std::ptrdiff_t slide)
+{
+  std::ptrdiff_t                n16 = 16 / g_size;
+  std::array<std::ptrdiff_t, N> res = {};
+
+  for( std::ptrdiff_t i = 0; i != N; i += n16 )
+  {
+    for( std::ptrdiff_t j = 0; j != n16; ++j )
+    {
+      std::ptrdiff_t full = i + j;
+      if( j < (n16 - slide) ) res[full] = full + slide;
+      else res[full] = full + N - (n16 - slide);
+    }
+  }
+  return res;
+}
+
+template<std::size_t N>
+constexpr auto
+slide_by_16_then_alignr(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t g_size)
+{
+  return slide_by_16_then_alignr(std::span<const std::ptrdiff_t, N>(idxs), g_size);
 }
 
 }

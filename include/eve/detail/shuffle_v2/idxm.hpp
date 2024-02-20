@@ -246,24 +246,28 @@ fix_indexes_to_fundamental(const std::array<std::ptrdiff_t, PatternSize>& p,
 }
 
 constexpr bool
-shuffle_within_halves(std::span<const std::ptrdiff_t> idxs)
+shuffle_within_n(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t n)
 {
   const std::ptrdiff_t ssize = std::ssize(idxs);
-  const std::ptrdiff_t half  = ssize / 2;
+  if (ssize % n) return false;
 
-  if( ssize % 2 ) return false;
-
-  for( std::ptrdiff_t i = 0; i != half; ++i )
-  {
-    if( idxs[i] >= half ) return false;
-  }
-
-  for( std::ptrdiff_t i = half; i != ssize; ++i )
-  {
-    if( 0 <= idxs[i] && idxs[i] < half ) return false;
+  for (std::ptrdiff_t part = 0; part != ssize; part += n) {
+    std::ptrdiff_t ub = part + n;
+    for (std::ptrdiff_t i = part; i != ub; ++i) {
+      std::ptrdiff_t x = idxs[i];
+      if (x < 0) continue;
+      if (x < part) return false;
+      if (x >= ub) return false;
+    }
   }
 
   return true;
+}
+
+constexpr bool
+shuffle_within_halves(std::span<const std::ptrdiff_t> idxs)
+{
+  return shuffle_within_n(idxs, std::ssize(idxs) / 2);
 }
 
 template<std::size_t N>
@@ -847,6 +851,33 @@ is_slide_right(std::span<const std::ptrdiff_t> idxs)
   if( *m > (m - f) ) return std::nullopt;
 
   return (m - idxs.data()) - *m;
+}
+
+constexpr std::optional<std::ptrdiff_t>
+is_slide_left_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups)
+{
+  if (idxs.empty()) return std::nullopt;
+  const auto *f = idxs.data();
+  const auto *l = idxs.data() + idxs.size();
+  const auto *start2 = l;
+
+  while (*--start2 == we_);
+
+  std::ptrdiff_t slide = 0;
+
+  // start2 is not l by construction
+  if (*start2 >= reg_groups) {
+    slide = l - start2 + (*start2 - reg_groups);
+  } else {
+    start2 = l;
+    slide = 0;
+  }
+
+  start2 = l - slide;
+
+  if (!is_in_order_from({start2, l}, reg_groups)) return std::nullopt;
+  if (!is_in_order_from({f, start2}, slide)) return std::nullopt;
+  return slide;
 }
 
 template<std::size_t N>
