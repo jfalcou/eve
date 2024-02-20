@@ -156,6 +156,8 @@ TTS_CASE("shuffle_within_halves")
     auto in     = to_idxs(_in);
     bool actual = eve::detail::idxm::shuffle_within_halves(in);
     TTS_EQUAL(expected, actual) << tts::as_string(in);
+    actual = eve::detail::idxm::shuffle_within_n(in, std::ssize(in) / 2);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
   };
 
   test(std::array {0, 1, we_, we_}, true);
@@ -164,6 +166,23 @@ TTS_CASE("shuffle_within_halves")
   test(std::array {1, we_, 3, na_}, true);
   test(std::array {we_, we_, we_, 0}, false);
   test(std::array {3, we_, we_, we_}, false);
+};
+
+TTS_CASE("shuffle_within_n")
+{
+  auto test = [](auto _in, std::ptrdiff_t n, bool expected)
+  {
+    auto in     = to_idxs(_in);
+    bool actual = eve::detail::idxm::shuffle_within_n(in, n);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {0, 1, 3, 2, 5, 4, 7, 6}, 2, true);
+  test(std::array {0, we_, 3, na_, 5, na_, 7, 6}, 2, true);
+  test(std::array {0, 3, 1, 2, 5, 4, 7, 6}, 2, false);
+  test(std::array {0, 1, 3, 2, 5, 4, 7, 0}, 2, false);
+  test(std::array {0, 1, 3, 2, 5, 4, 7, na_}, 2, true);
+  test(std::array {1, 2, 3, 4, 5, 6, 7, na_}, 4, false);
 };
 
 TTS_CASE("shuffle_halves_independetly")
@@ -779,6 +798,32 @@ TTS_CASE("is_slide_right")
   test(std::array {na_, we_, we_, 2}, 1);
   test(std::array {na_, na_, 1, 2}, -1);
 };
+
+TTS_CASE("is_slide_left2")
+{
+  auto test = [](auto _in, int reg_groups, int expected)
+  {
+    auto in     = to_idxs(_in);
+    auto actual = eve::detail::idxm::is_slide_left_2(in, reg_groups).value_or(-1);
+    TTS_EQUAL(expected, actual) << tts::as_string(in);
+  };
+
+  test(std::array {0, 1, 2, 3}, 4, 0); // not slide 2, result is unimportant
+  test(std::array {1, 2, 3, 4}, 4, 1);
+  test(std::array {1, 2, 3, 16}, 16, 1);
+  test(std::array {1, we_, 3, 4}, 4, 1);
+  test(std::array {1, we_, 3, 16}, 16, 1);
+  test(std::array {2, 3, 4, we_}, 4, 2);
+  test(std::array {2, 3, 16, we_}, 16, 2);
+  // {2, 3, we_, we_} - is not an important case because it's not slide2 at all.
+  test(std::array {2, 3, we_, 17}, 16, 2);
+  test(std::array {3, 4, 5, 6}, 4, 3);
+  test(std::array {4, 5, 6, 7}, 4, 4);
+  test(std::array {1, 2, na_, 4}, 4, -1);
+  test(std::array {1, 2, 3, na_}, 4, -1);
+  test(std::array {2, we_, 3, 16}, 16, -1);
+};
+
 
 TTS_CASE("slide_as_slide2_with_0")
 {
