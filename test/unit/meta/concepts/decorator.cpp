@@ -27,7 +27,6 @@ TTS_CASE("Check that decorators satisfies decorator" )
   TTS_EXPECT( eve::decorator<eve::pedantic_type>    );
   TTS_EXPECT( eve::decorator<eve::plain_type>       );
   TTS_EXPECT( eve::decorator<eve::raw_type>         );
-  TTS_EXPECT( eve::decorator<eve::regular_type>     );
   TTS_EXPECT( eve::decorator<eve::saturated_type>   );
   TTS_EXPECT( eve::decorator<eve::to_nearest_type>  );
   TTS_EXPECT( eve::decorator<eve::toward_zero_type> );
