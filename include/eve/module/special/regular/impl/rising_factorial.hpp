@@ -51,15 +51,13 @@ namespace eve::detail
           auto sgapx = if_else(is_flint(a + x), one, signgam(a + x));
           return eve::exp(lrising_factorial[pedantic](a, x))*(sga * sgapx);
         }
-        else if constexpr(O::contains(regular2))
+        else
         {
           // regular  nan if a+x or x is nnegative,  better computation than raw
           return eve::exp(lrising_factorial(a, x));
         }
-        else return eve::exp(lrising_factorial[regular](a, x));
       }
-      else
-        return apply_over(regular(rising_factorial[d]), a, x);
+      else  return apply_over(rising_factorial[d], a, x);
     }
   }
 }
