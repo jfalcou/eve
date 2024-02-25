@@ -1,16 +1,28 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/acos.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct acosd_t : elementwise_callable<acosd_t, Options, raw_option>
+{
+  template<eve::floating_ordered_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(acosd_t, acosd_);
+};
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -54,8 +66,15 @@ namespace eve
 //!  @godbolt{doc/math/regular/acosd.cpp}
 //!  @}
 //================================================================================================
+inline constexpr auto acosd = functor<acosd_t>;
 
-EVE_MAKE_CALLABLE(acosd_, acosd);
+namespace detail
+{
+  template<typename T, callable_options O>
+  constexpr EVE_FORCEINLINE T acosd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+  {
+    if constexpr( has_native_abi_v<T> ) return radindeg(acos[o](a0));
+    else                                return apply_over(acosd[o], a0);
+  }
 }
-
-#include <eve/module/math/regular/impl/acosd.hpp>
+}

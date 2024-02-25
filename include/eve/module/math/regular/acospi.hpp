@@ -1,16 +1,28 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/acos.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
+{
+  template<eve::floating_ordered_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(acospi_t, acospi_);
+};
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -30,7 +42,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acospi(T x) noexcept;
+//!    template< eve::floating_ordered_value T > T acospi(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -55,8 +67,15 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
+inline constexpr auto acospi = functor<acospi_t>;
 
-EVE_MAKE_CALLABLE(acospi_, acospi);
+namespace detail
+{
+  template<typename T, callable_options O>
+  constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+  {
+    if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));
+    else                                return apply_over(acospi[o], a0);
+  }
 }
-
-#include <eve/module/math/regular/impl/acospi.hpp>
+}
