@@ -71,7 +71,7 @@ template<class T> struct bessel_j_small_z_series_term
     mult *= -mult;
     term = 1;
   }
-  constexpr inline T operator()()
+  constexpr T operator()()
   {
     T r = term;
     ++N;
