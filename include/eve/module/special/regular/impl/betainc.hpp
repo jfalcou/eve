@@ -16,7 +16,7 @@
 namespace eve::detail
 {
   template< typename T0, typename T1, typename T2, callable_options O>
-  EVE_FORCEINLINE
+  constexpr EVE_FORCEINLINE
   eve::common_value_t<T0, T1> betainc_(EVE_REQUIRES(cpu_), O const&
                                      , T0 const& x, T1 const & a, T2 const & b)
   {

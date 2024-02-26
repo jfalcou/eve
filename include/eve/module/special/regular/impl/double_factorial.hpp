@@ -15,7 +15,7 @@ namespace eve::detail
 {
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE
+  constexpr EVE_FORCEINLINE
   as_wide_as_t<double, T>
   double_factorial_(EVE_REQUIRES(cpu_), O const&, T i0) noexcept
   {

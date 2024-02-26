@@ -13,7 +13,7 @@ namespace eve::detail
 {
 
   template<integral_value T, callable_options O>
-  EVE_FORCEINLINE
+  constexpr EVE_FORCEINLINE
   as_wide_as_t<double, T>
   factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
   {
@@ -210,7 +210,7 @@ namespace eve::detail
   }
 
   template<floating_ordered_value T, callable_options O>
-  EVE_FORCEINLINE
+  constexpr EVE_FORCEINLINE
   T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
   {
     using elt_t = element_type_t<T>;

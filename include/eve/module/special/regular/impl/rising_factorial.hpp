@@ -18,7 +18,7 @@
 namespace eve::detail
 {
   template<typename I, typename T, callable_options O>
-  EVE_FORCEINLINE as_wide_as_t<T, I>
+  constexpr EVE_FORCEINLINE as_wide_as_t<T, I>
   rising_factorial_(EVE_REQUIRES(cpu_), O const& d, I a, T x) noexcept
   {
     // Integral first parameter
