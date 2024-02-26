@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-  template<floating_ordered_value I, floating_ordered_value T, callable_options O>
+  template<floating_ordered_value I, floating_ordered_value T, callable_options O> constexpr
   as_wide_as_t<T, I>
   cyl_bessel_kn_(EVE_REQUIRES(cpu_), O const&, I nu, T x)
   requires(scalar_value<I> && simd_value<T>)
@@ -26,7 +26,7 @@ namespace eve::detail
     else return apply_over(cyl_bessel_kn, nu, x);
   }
 
-  template<floating_ordered_value T, callable_options O>
+  template<floating_ordered_value T, callable_options O> constexpr
   T  cyl_bessel_kn_(EVE_REQUIRES(cpu_), O const&, T nu, T x)
   {
     if constexpr( scalar_value<T> )
@@ -52,7 +52,7 @@ namespace eve::detail
     }
   }
 
-  template<integral_value I, floating_ordered_value T, callable_options O>
+  template<integral_value I, floating_ordered_value T, callable_options O> constexpr
   as_wide_as_t<T, I>
   cyl_bessel_kn_(EVE_REQUIRES(cpu_), O const&, I nu, T x)
   {

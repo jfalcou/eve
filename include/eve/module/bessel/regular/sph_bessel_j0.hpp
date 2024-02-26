@@ -18,7 +18,7 @@ namespace eve
   struct sph_bessel_j0_t : elementwise_callable<sph_bessel_j0_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     eve::common_value_t<T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(sph_bessel_j0_t, sph_bessel_j0_);
@@ -67,7 +67,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE T sph_bessel_j0_(EVE_REQUIRES(cpu_), O const&, T x)
+    EVE_FORCEINLINE constexpr T sph_bessel_j0_(EVE_REQUIRES(cpu_), O const&, T x)
     {
        return sinc(x);
     }

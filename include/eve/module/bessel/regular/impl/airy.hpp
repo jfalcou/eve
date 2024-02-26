@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename O>
+  template<typename T, typename O> constexpr
   kumi::tuple<T, T> airy_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     using elt_t   = element_type_t<T>;

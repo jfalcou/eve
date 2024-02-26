@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-  template<typename I, typename T, callable_options O>
+  template<typename I, typename T, callable_options O> constexpr
   EVE_FORCEINLINE as_wide_as_t<T, I>
   cyl_bessel_in_(EVE_REQUIRES(cpu_), O const&, I nu, T x)
   {

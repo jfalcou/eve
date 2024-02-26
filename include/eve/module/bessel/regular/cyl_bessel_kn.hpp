@@ -17,7 +17,8 @@ namespace eve
   struct cyl_bessel_kn_t : elementwise_callable<cyl_bessel_kn_t, Options>
   {
     template<eve::ordered_value N, eve::floating_ordered_value T>
-     as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
+    EVE_FORCEINLINE constexpr
+    as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
 
     EVE_CALLABLE_OBJECT(cyl_bessel_kn_t, cyl_bessel_kn_);
   };

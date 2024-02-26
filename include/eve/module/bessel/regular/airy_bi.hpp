@@ -17,7 +17,7 @@ namespace eve
   struct airy_bi_t : elementwise_callable<airy_bi_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(airy_bi_t, airy_bi_);
