@@ -27,7 +27,7 @@ namespace eve::detail
 /////////////////////////////////////////////////////////////////////////
 // bessel_i
 template<floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_i(T n, T x) noexcept
 {
   auto br_small = [](auto n, auto x) { return bessel_i_small_z_series(n, x); };

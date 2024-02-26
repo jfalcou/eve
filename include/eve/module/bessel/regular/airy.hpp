@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::floating_ordered_value T>
     EVE_FORCEINLINE constexpr
-    auto operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    kumi::tuple<T, T > operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(airy_t, airy_);
   };

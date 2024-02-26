@@ -70,7 +70,7 @@ namespace eve
   namespace detail
   {
     template<value I, floating_value T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, I>
     sph_bessel_jn_(EVE_REQUIRES(cpu_), O const&, I n, T x) noexcept
     {
       EVE_ASSERT(all(is_gez(n) && is_flint(n)), "sph_bessel_jn : some orders are non integral positive");

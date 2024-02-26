@@ -36,7 +36,7 @@ namespace eve::detail
  *   @param  Kpnu  The output derivative of the irregular
  *                   modified Bessel function.
  */
-template<floating_ordered_value T>
+template<floating_ordered_value T> constexpr
 auto
 kernel_bessel_ik(T nu, T x) noexcept
 requires(simd_value<T>)
@@ -243,7 +243,7 @@ requires(simd_value<T>)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-template<floating_ordered_value T>
+template<floating_ordered_value T> constexpr
 auto
 kernel_bessel_ik(T nu, T x) noexcept
 requires(scalar_value<T>)
