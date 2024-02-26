@@ -16,12 +16,12 @@ namespace eve
   struct factorial_t : elementwise_callable<factorial_t, Options>
   {
     template<eve::integral_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     as_wide_as_t<double, T >
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(factorial_t, factorial_);

@@ -27,7 +27,7 @@ namespace eve::detail
 // computes erf(a0) for double or double vectors
 // x is a0, y is abs(a0) and 0 <= abs(a0) <= 0.46875
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   kernel1_erf1(const T& x, const T& ysq) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
     T tmp = x
@@ -43,7 +43,7 @@ namespace eve::detail
 // computes erf(x) for double or double vectors
 //  0.46875 <= abs(a0) <= 4.0
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   kernel1_erf2(const T&, const T& y) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
     return
@@ -56,7 +56,7 @@ namespace eve::detail
 
 // finalize for erf and erfc
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel1_finalize2(T& res, const T& y) noexcept
   {
     // Find a multiple of 1/16 that is within 1/16 of x.
@@ -69,7 +69,7 @@ namespace eve::detail
 // computes erf(x) for double or double vectors
 // 4 < abs(x)
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel1_erf3(const T&, const T& y) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
     T Invsqrtpi = T(0.564189583547756286948079451561);
@@ -89,7 +89,7 @@ namespace eve::detail
 
 //  finalize for erfcx if x < 0
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel1_finalize3(T res, const T& x) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
     // Find a multiple of 1/16 that is within 1/16 of x.
@@ -111,7 +111,7 @@ namespace eve::detail
 // computes erf(a0)/a0 for float or float vectors
 // xx is sqr(a0) and 0 <= abs(x) <= 2/3
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel_erf1(const T& xx) noexcept requires(std::same_as<element_type_t<T>, float>)
   {
     return
@@ -122,7 +122,7 @@ namespace eve::detail
 // computes erfc(x)*exp(sqr(x)) for float or float vectors
 // x >=  2/3
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel_erfc2(const T& z) noexcept requires(std::same_as<element_type_t<T>, float>)
   {
     // approximation of erfc(z1./(1-z1))).*exp((z1./(1-z1)).^2) (z1 =  z+0.4) on [0 0.5]
@@ -138,7 +138,7 @@ namespace eve::detail
 // computes erfc(x)*exp(sqr(x)) for float or float vectors
 // x >=  2/3
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel_erfc3(const T& z) noexcept requires(std::same_as<element_type_t<T>, float>)
   {
     // approximation of erfc(z./(1-z))./(1-z) on [0 0.4]
@@ -154,7 +154,7 @@ namespace eve::detail
 // computes erf(a0)/a0 for double or double vectors
 // xx is sqr(a0) and 0 <= abs(a0) <= 0.65
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE  constexpr T
   kernel_erf1(const T& xx) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
     return
@@ -168,14 +168,14 @@ namespace eve::detail
 // computes erfc(x)*exp(x*x) for double or double vectors
 // 0.65 <= abs(x) <= 2.2
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   kernel_erfc2(const T& x) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
     return
       eve::reverse_horner(x, T(0x1.ffffffbbb552bp-1), T(0x1.54dfe9b258a60p+0), T(0x1.c1986509e687bp-1), T(0x1.53dd7a67c7e9fp-2), T(0x1.2488a6b5cb5e5p-4), T(0x1.cf4cfe0aacbb4p-8), T(0x0.0p+0f))
 
       /
-      
+
       eve::reverse_horner(x, T(0x1.0000000000000p+0), T(0x1.3adeae79b9708p+1), T(0x1.53b1052dca8bdp+1), T(0x1.9e677c2777c3cp+0), T(0x1.307622fcff772p-1), T(0x1.033c113a7deeep-3), T(0x1.9a996639b0d00p-7))
       ;
   }
@@ -183,13 +183,13 @@ namespace eve::detail
 // computes erfc(x)*exp(x*x) for double or double vectors
 // 2.2 <= abs(x) <= 6
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   kernel_erfc3(const T& x) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
-    return 
+    return
     eve::reverse_horner(x, T(0x1.fff5a9e697ae2p-1), T(0x1.9fa202deb88e5p+0), T(0x1.44744306832aep+0), T(0x1.29be1cff90d94p-1), T(0x1.42210f88b9d43p-3), T(0x1.71d0907ea7a92p-6), T(0x0.0p+0f))
-    
-      / 
+
+      /
       eve::reverse_horner(x, T(0x1.0000000000000p+0), T(0x1.602f24bf3fdb6p+1), T(0x1.afd487397568fp+1), T(0x1.315ffdfd5ce91p+1), T(0x1.0cfd4cb6cde9fp+0), T(0x1.1d7ab774bb837p-2), T(0x1.47bd61bbb3843p-5))
       ;
   }
@@ -197,10 +197,10 @@ namespace eve::detail
 // computes erfc(rx)*exp(rx*rx) for double or double vectors
 // x >=  6 rx = 1/x
   template<floating_ordered_value T>
-  EVE_FORCEINLINE T
+  EVE_FORCEINLINE constexpr T
   erfc4(const T& rx) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
-    return 
+    return
     eve::reverse_horner(rx, T(-0x1.e4ad1ec7d0000p-56), T(0x1.20dd750429a16p-1), T(0x1.60000e984b501p-36), T(-0x1.20dd753ae5dfdp-2), T(0x1.07e71e046a820p-22), T(0x1.b1494cac06d39p-2), T(0x1.4a451701654f1p-12), T(-0x1.105e6b8ef1a63p+0), T(0x1.505a857e9ccc8p-4), T(0x1.74fbabc514212p+1), T(0x1.5ac7631f7ac4fp+2), T(-0x1.57e03041e9d8bp+5), T(0x1.5803d26c4ec4fp+6), T(-0x1.05fce04ec4ec5p+6))
     ;
   }
