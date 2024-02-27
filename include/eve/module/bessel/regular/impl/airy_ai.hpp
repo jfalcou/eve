@@ -14,12 +14,12 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<typename T, callable_options O> constexpr
   T  airy_ai_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
   {
     using elt_t = element_type_t<T>;
     auto ax     = eve::abs(x);
-    T    rac    = eve::sqrt(ax);
+    T    rac    = eve::sqrt(ax); 
     T    p      = (ax * rac * 2) / 3;
     T    v      = T(1.0 / 3);
     auto br_0   = [v, p, rac]()

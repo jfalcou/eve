@@ -18,7 +18,7 @@ namespace eve
   struct sph_bessel_y0_t : elementwise_callable<sph_bessel_y0_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     eve::common_value_t<T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(sph_bessel_y0_t, sph_bessel_y0_);

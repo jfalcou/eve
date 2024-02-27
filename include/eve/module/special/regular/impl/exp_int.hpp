@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const&, T x)
+  constexpr  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     return exp_int(T(1), x);
   }

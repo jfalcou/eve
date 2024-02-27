@@ -30,8 +30,8 @@ namespace eve::detail
 // large values routines
 ///////////////////////////////////////////////////////////////////////////////
 
-template<floating_ordered_value T>
-EVE_FORCEINLINE T
+template<floating_ordered_value T> 
+EVE_FORCEINLINE constexpr T
 asymptotic_bessel_amplitude(T v, T x) noexcept
 {
   // Calculate the amplitude of J(v, x) and Y(v, x) for large
@@ -50,7 +50,7 @@ asymptotic_bessel_amplitude(T v, T x) noexcept
 }
 
 template<floating_ordered_value T>
-EVE_FORCEINLINE T
+EVE_FORCEINLINE  constexpr T
 asymptotic_bessel_phase_mx(T v, T x) noexcept
 {
   //
@@ -76,7 +76,7 @@ asymptotic_bessel_phase_mx(T v, T x) noexcept
 }
 
 template<class T>
-EVE_FORCEINLINE T
+EVE_FORCEINLINE  constexpr T
 asymptotic_bessel_y_large_x_2(T v, T x) noexcept
 {
   // See A&S 9.2.19.
@@ -96,7 +96,7 @@ asymptotic_bessel_y_large_x_2(T v, T x) noexcept
 }
 
 template<ordered_value T>
-EVE_FORCEINLINE T
+EVE_FORCEINLINE  constexpr T
 asymptotic_bessel_j_large_x_2(T v, T x) noexcept
 {
   // See A&S 9.2.19.
@@ -117,7 +117,7 @@ asymptotic_bessel_j_large_x_2(T v, T x) noexcept
 }
 
 template<ordered_value N, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 asymptotic_bessel_large_x_limit(N v, T x) noexcept
 {
   //

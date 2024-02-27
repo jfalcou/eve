@@ -29,14 +29,14 @@ namespace eve::detail
 {
 
 template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_large(I n, T x) noexcept
 {
   return asymptotic_bessel_y_large_x_2(T(n), x);
 }
 
 template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_int_forward(I n, T x, T y0, T y1) noexcept
 {
   auto prev    = y0; // cyl_bessel_y0(x);
@@ -70,7 +70,7 @@ kernel_bessel_y_int_forward(I n, T x, T y0, T y1) noexcept
 }
 
 template<integral_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_int_forward(I nn, T x, T y0, T y1) noexcept
 {
   if constexpr( simd_value<I> )
@@ -79,7 +79,7 @@ kernel_bessel_y_int_forward(I nn, T x, T y0, T y1) noexcept
 }
 
 template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_medium(I n, T x) noexcept
 {
   auto [j, jp, y, yp] = bessel_jy(T(n), x);
@@ -142,7 +142,7 @@ kernel_bessel_yn_small_x(T n, T x)
 /////////////////////////////////////////////////////////////////////////
 // bessel_y of integer order
 template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_int_pos(I n, T x) noexcept
 {
   EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_y_int_pos : somme n are not floating integer");
@@ -212,7 +212,7 @@ kernel_bessel_y_int_pos(I n, T x) noexcept
 }
 
 template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_int(I n, T x) noexcept
 {
   x           = if_else(is_ltz(x), nan(as(x)), x);
@@ -223,7 +223,7 @@ kernel_bessel_y_int(I n, T x) noexcept
 }
 
 template<floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_flt(T n, T x) noexcept
 {
   EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_y_flt : some nu are floating integers");

@@ -14,7 +14,7 @@
 namespace eve::detail
 {
 template<typename T, callable_options O>
-EVE_FORCEINLINE decltype(eve::factorial(T()))
+constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
 lfactorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
 {
   EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");

@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<typename T, callable_options O> constexpr
   T airy_bi_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     using elt_t   = element_type_t<T>;

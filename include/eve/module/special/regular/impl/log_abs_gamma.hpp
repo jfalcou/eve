@@ -16,7 +16,7 @@ namespace eve::detail
   namespace helpers
   {
     template<floating_ordered_value T>
-    EVE_FORCEINLINE T
+    constexpr EVE_FORCEINLINE T
     large_negative(T q)
     {
       T    w     = eve::log_abs_gamma(q);
@@ -30,7 +30,7 @@ namespace eve::detail
     }
 
     template<floating_ordered_value T>
-    EVE_FORCEINLINE T
+    constexpr EVE_FORCEINLINE T
     log_abs_gammaB(T x) noexcept
     {
       // log gamma(x+2), -.5 < x < .5
@@ -39,7 +39,7 @@ namespace eve::detail
                            , T(-0x1.e2c9fap-8f), T(0x1.775106p-9f), T(-0x1.57d562p-10f), T(0x1.3d7728p-11f));
     }
     template<floating_ordered_value T>
-    EVE_FORCEINLINE T
+    constexpr EVE_FORCEINLINE T
     log_abs_gammaC(T x) noexcept
     {
       // log gamma(x+1), -.25 < x < .25
@@ -48,14 +48,14 @@ namespace eve::detail
                            , T(-0x1.a7809ep-3f), T(0x1.5a9b56p-3f), T(-0x1.45a652p-3f), T(0x1.18789ep-3f));
     }
     template<floating_ordered_value T>
-    EVE_FORCEINLINE T
+    constexpr EVE_FORCEINLINE T
     log_abs_gamma2(T p) noexcept
     {
       return  eve::reverse_horner(p, T(0x1.555528p-4f), T(-0x1.6b0e02p-9f), T(0x1.63fad2p-11f));
     }
 
     template<floating_ordered_value T>
-    EVE_FORCEINLINE T
+    constexpr EVE_FORCEINLINE T
     log_abs_gamma1(T x) noexcept
     {
       return eve::reverse_horner(x, T(-0x1.a0c675418055ep+19), T(-0x1.a45890219f20bp+20), T(-0x1.1bc82f994db51p+20)
@@ -68,7 +68,7 @@ namespace eve::detail
     }
 
     template<floating_ordered_value T>
-    EVE_FORCEINLINE T
+    constexpr EVE_FORCEINLINE T
     log_abs_gammaA(const T& p) noexcept
     {
       return
