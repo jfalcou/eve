@@ -16,7 +16,7 @@ namespace eve::detail
 {
 
 template<ordered_value I, floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, I a, T x) noexcept
 {
   if constexpr( std::is_integral_v<element_type_t<I>> )
@@ -29,7 +29,7 @@ rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, I a, T x) noexcept
 }
 
 template<floating_ordered_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 rising_factorial_(EVE_SUPPORTS(cpu_), pedantic_type const&, T a, T x) noexcept
 {
   if constexpr( has_native_abi_v<T> )

@@ -12,7 +12,7 @@
 namespace eve::detail
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+  constexpr EVE_FORCEINLINE T
   signgam_(EVE_REQUIRES(cpu_), O const &, T a0)
   {
     if constexpr( has_native_abi_v<T> )

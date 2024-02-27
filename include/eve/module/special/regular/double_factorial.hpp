@@ -17,7 +17,7 @@ namespace eve
   struct double_factorial_t : elementwise_callable<double_factorial_t, Options>
   {
     template<eve::unsigned_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     as_wide_as_t<double, T >
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 

@@ -17,7 +17,7 @@ namespace eve
   struct lambert_t : elementwise_callable<lambert_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE
+    EVE_FORCEINLINE constexpr
     kumi::tuple<T, T>
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 

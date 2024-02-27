@@ -19,7 +19,7 @@ namespace eve::detail
   //utilities
 
   template<typename T>
-  EVE_FORCEINLINE auto
+  constexpr EVE_FORCEINLINE auto
   inner_lrising_factorial(T a, T x) noexcept
   {
     // Assumes a>0 and a+x>0.
