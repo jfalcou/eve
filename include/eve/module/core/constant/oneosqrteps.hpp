@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct oneosqrteps_t : constant_callable<oneosqrteps_t, Options, downward_option, upward_option>
   {
-    template<typename T, typename Opts>
+    template<floating_value T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&,  Opts const&)
     {
       using e_t = element_type_t<T>;
@@ -30,7 +30,7 @@ namespace eve
       else if constexpr(std::same_as<e_t, double> ) return T(0x1p+26);
     }
 
-    template<typename T>
+    template<floating_value T>
     requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 

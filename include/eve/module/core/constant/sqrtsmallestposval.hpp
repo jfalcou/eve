@@ -63,7 +63,7 @@ namespace detail
 {
   template<typename T>
   requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr auto sqrtsmallestposval_(EVE_SUPPORTS(cpu_),
+  EVE_FORCEINLINE constexpr T sqrtsmallestposval_(EVE_SUPPORTS(cpu_),
                                                      eve::as<T> const& = {}) noexcept
   {
     using t_t = element_type_t<T>;

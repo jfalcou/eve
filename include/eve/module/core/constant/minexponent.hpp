@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct minexponent_t : constant_callable<minexponent_t, Options, downward_option, upward_option>
   {
-    template<typename T>
+    template<floating_value T>
     static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
@@ -26,7 +26,7 @@ namespace eve
       else if constexpr(std::same_as<e_t, double> ) return  i_t(-1022);
     }
 
-    template<typename T>
+    template<floating_value T>
     requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
