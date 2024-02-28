@@ -26,9 +26,9 @@ namespace eve
       else if constexpr(std::same_as<e_t, double> ) return  i_t(-1022);
     }
 
-    template<floating_value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<typename T>
+    requires(floating_scalar_value<element_type_t<T>>)
+    EVE_FORCEINLINE constexpr as_integer_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(minexponent_t, minexponent_);
   };

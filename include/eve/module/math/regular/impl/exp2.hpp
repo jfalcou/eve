@@ -57,7 +57,7 @@ namespace eve::detail
         T    c = fnma(t, h, x); // x-h*t
         x      = oneminus(((-(x * c) / (T(2) - c)) - x));
       }
-      auto z = pedantic(ldexp)(x, k);
+      auto z = ldexp[pedantic](x, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog2, eve::zero, z);

@@ -1,19 +1,37 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
+#include "eve/traits/cardinal.hpp"
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct ldexp_t : elementwise_callable<ldexp_t, Options, pedantic_option>
+{
+  template<eve::floating_ordered_value T, eve::value U>
+  EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
+  {
+    if constexpr( std::floating_point<element_type_t<T>> )
+    {
+      EVE_ASSERT(eve::all(is_flint(n)), "[eve::ldexp] - Argument 2 is a non-integral floating value.");
+    }
+
+    return EVE_DISPATCH_CALL(x,n);
+  }
+
+  EVE_CALLABLE_OBJECT(ldexp_t, ldexp_);
+};
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -54,32 +72,17 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve::ldexp[mask](x, ...)` provides a masked
-//!     version of `ldexp` which is
-//!     equivalent to `if_else(mask, ldexp(x, ...), x)`
+//!     The call `eve::ldexp[mask](x, n)` computes a value equivalent to `if_else(mask, ldexp(x, n), x)`
 //!
-//!      **Example**
+//!     **Example**
+//!     @godbolt{doc/core/masked/ldexp.cpp}
 //!
-//!        @godbolt{doc/core/masked/ldexp.cpp}
+//!   * eve::pedantic
 //!
+//!     The call `eve::ldexp[pedantic](x,n)` computes `eve::ldexp` but takes extra care to handling limit values.
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct ldexp_;
-}
-
-namespace detail
-{
-  template<typename T, typename U>
-  EVE_FORCEINLINE void check(EVE_SUPPORTS(eve::tag::ldexp_), T const&, [[maybe_unused]] U const& b)
-  {
-    if constexpr( std::is_floating_point_v<element_type_t<U>> )
-      EVE_ASSERT(eve::all(is_flint(b)), "[eve::ldexp] argument 2 is floating but not a flint");
-  }
-}
-
-EVE_MAKE_CALLABLE(ldexp_, ldexp);
+inline constexpr auto ldexp = functor<ldexp_t>;
 }
 
 #include <eve/module/core/regular/impl/ldexp.hpp>

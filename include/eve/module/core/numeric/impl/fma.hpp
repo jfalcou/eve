@@ -14,7 +14,6 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/pedantic/ldexp.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/exponent.hpp>
 #include <eve/module/core/regular/max.hpp>

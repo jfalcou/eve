@@ -14,12 +14,12 @@
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/pedantic/ifrexp.hpp>
-#include <eve/module/core/pedantic/ldexp.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
@@ -78,7 +78,7 @@ rsqrt_x86_pedantic(Pack const& x) noexcept
     nn             = dec[tst](nn);
     a00            = mul[tst](a00, 2);
     auto a0        = rsqrt_x86(a00);
-    return if_else(is_eqz(x), inf(eve::as(x)), pedantic(ldexp)(a0, -nn / 2));
+    return if_else(is_eqz(x), inf(eve::as(x)), ldexp[pedantic](a0, -nn / 2));
   }
   else { return rsqrt_x86(x); }
 }
