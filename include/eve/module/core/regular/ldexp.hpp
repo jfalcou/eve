@@ -12,6 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
 
 namespace eve
@@ -22,12 +23,7 @@ struct ldexp_t : elementwise_callable<ldexp_t, Options, pedantic_option>
   template<eve::floating_ordered_value T, eve::value U>
   EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
   {
-    if constexpr( std::floating_point<element_type_t<T>> )
-    {
-      EVE_ASSERT(eve::all(is_flint(n)), "[eve::ldexp] - Argument 2 is a non-integral floating value.");
-    }
-
-    return EVE_DISPATCH_CALL(x,n);
+    return EVE_DISPATCH_CALL(x,trunc(n));
   }
 
   EVE_CALLABLE_OBJECT(ldexp_t, ldexp_);
