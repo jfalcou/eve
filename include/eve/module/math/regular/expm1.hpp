@@ -18,7 +18,7 @@
 namespace eve
 {
 template<typename Options>
-struct expm1_t : elementwise_callable<expm1_t, Options>
+struct expm1_t : elementwise_callable<expm1_t, Options, pedantic_option>
 {
   template<eve::floating_ordered_value T>
   EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -72,9 +72,13 @@ struct expm1_t : elementwise_callable<expm1_t, Options>
 //!     The call `eve::expm1[mask](x)` provides a masked version of `eve::expm1` which is
 //!     equivalent to `if_else (mask, expm1(x), x)`.
 //!
-//!      **Example**
+//!     **Example**
 //!
-//!        @godbolt{doc/math/masked/expm1.cpp}
+//!     @godbolt{doc/math/masked/expm1.cpp}
+//!
+//!   * eve::pedantic
+//!
+//!     The call `eve::expm1[eve::pedantic](x)` computes `eve::expm1(x)` with additional care for denormals.
 //!  @}
 //======================================================================================================================
 inline constexpr auto expm1 = functor<expm1_t>;
