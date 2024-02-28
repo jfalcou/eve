@@ -7,20 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/constant/constant.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
-#include <eve/module/core/regular/floor.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/sqrt.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sqrtsmallestposval_t : constant_callable<sqrtsmallestposval_t, Options, downward_option, upward_option>
+  {
+    template<typename T>
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    {
+      using e_t = element_type_t<T>;
+
+           if constexpr(std::integral<e_t>        ) return T(1);
+      else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-63);
+      else if constexpr(std::same_as<e_t, double> ) return T(0x1p-511);
+    }
+
+    template<typename T>
+    requires(plain_scalar_value<element_type_t<T>>)
+      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(sqrtsmallestposval_t, sqrtsmallestposval_);
+  };
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
@@ -57,28 +69,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/sqrtsmallestposval.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sqrtsmallestposval_, sqrtsmallestposval);
+inline constexpr auto sqrtsmallestposval = functor<sqrtsmallestposval_t>;
 
-namespace detail
-{
-  template<typename T>
-  requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE constexpr T sqrtsmallestposval_(EVE_SUPPORTS(cpu_),
-                                                     eve::as<T> const& = {}) noexcept
-  {
-    using t_t = element_type_t<T>;
-    if constexpr( std::is_same_v<t_t, float> ) return Constant<T, 0x20000000U>();
-    else if constexpr( std::is_same_v<t_t, double> ) return Constant<T, 0x2000000000000000ULL>();
-    else return T(1);
-  }
-
-  template<typename T, typename D>
-  requires(is_one_of<D>(types<upward_type, downward_type> {}))
-  EVE_FORCEINLINE constexpr auto
-  sqrtsmallestposval_(EVE_SUPPORTS(cpu_), D const&, as<T> const&) noexcept
-  -> decltype(sqrtsmallestposval(as<T>()))
-  {
-    return sqrtsmallestposval(as<T>());
-  }
-}
 }
