@@ -61,7 +61,7 @@ constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
           auto f    = if_else(denormal, smallestposval(as_element<T>()), eve::one);
           f  = inc[test](f);
 
-          return a * convert(v, as_element<T>{}) * f;
+          return a * bit_cast(v, as<T>{}) * f;
         }
         else return ldexp(a, b);
       }

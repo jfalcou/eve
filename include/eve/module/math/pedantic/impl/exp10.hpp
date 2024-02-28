@@ -61,7 +61,7 @@ exp10_(EVE_SUPPORTS(cpu_), pedantic_type const&, T x) noexcept
                                        , T(0x1.545fdce51ca08p+6), T(0x1.0p0)) - px);
       c = inc(x2 + x2);
     }
-    auto z = D()(ldexp)(c, k);
+    auto z = ldexp[pedantic](c, k);
     if constexpr( simd_value<T> )
     {
       z = if_else(xltminlog10, eve::zero, z);
