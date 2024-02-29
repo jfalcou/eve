@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include "eve/module/core/decorator/saturated.hpp"
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/detail/function/conditional.hpp>
