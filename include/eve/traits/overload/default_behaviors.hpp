@@ -50,7 +50,8 @@ namespace eve
     // This requires is also TEMPORARY
     requires( !callable_options<T> && !requires(base const& b) { b[t];} && !decorator<T>) =delete;
 
-    template<typename... Args> constexpr auto behavior(auto arch, Args&&... args) const
+    template<typename... Args>
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, Args&&... args) const
     {
       return Func<OptionsValues>::deferred_call(arch, EVE_FWD(args)...);
     }
@@ -72,7 +73,7 @@ namespace eve
     struct ignore { template<typename T> operator T() { return T{}; } };
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     requires(match_option<condition_key,O,ignore_none_>)
     {
       constexpr bool supports_call = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
@@ -94,7 +95,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     requires(!match_option<condition_key,O,ignore_none_>)
     {
         // Grab the condition and drop it from the callable
@@ -167,7 +168,7 @@ namespace eve
   {
     using constant_callable_tag = void;
     template<typename O, typename T>
-    constexpr auto behavior(auto arch, O const& opts, as<T> const& target) const
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, as<T> const& target) const
     {
       using func_t                =  Func<OptionsValues>;
       if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )

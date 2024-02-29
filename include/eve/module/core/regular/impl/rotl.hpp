@@ -1,97 +1,39 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/module/core/regular/converter.hpp>
-
-#include <type_traits>
+#include <eve/detail/has_abi.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-template<unsigned_scalar_value T, integral_scalar_value U>
-[[nodiscard]] EVE_FORCEINLINE auto
-rotl_(EVE_SUPPORTS(cpu_), T a0, U nn) noexcept
-{
-  if( nn == 0 ) return a0;
-  constexpr U width = sizeof(T) * 8 - 1;
-  int         n     = nn & width;
-  if( n > 0 ) { a0 = (a0 << n) | (a0 >> (-n & width)); }
-  else
+  template<typename T, typename S, callable_options O>
+  constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotl_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
   {
-    n  = -n; // this is to allow the compiler to produce a ror instruction
-    a0 = (a0 >> n) | (a0 << (-n & width));
-  }
-  return a0;
-}
-
-template<unsigned_simd_value T, integral_scalar_value U>
-[[nodiscard]] EVE_FORCEINLINE auto
-rotl_(EVE_SUPPORTS(cpu_), T a0, U nn) noexcept
-{
-  if( nn == 0 ) return a0;
-  if constexpr( has_native_abi_v<T> )
-  {
-    using elt_t       = element_type_t<T>;
-    constexpr U width = sizeof(elt_t) * 8 - 1;
-    int         n     = nn & width;
-    if( n > 0 ) { a0 = (a0 << n) | (a0 >> (-n & width)); }
-    else
+    if constexpr(scalar_value<S>)
     {
-      n  = -n; // this is to allow the compiler to produce a ror instruction
-      a0 = (a0 >> n) | (a0 << (-n & width));
+      constexpr S width = sizeof(element_type_t<T>) * 8 - 1;
+      int         n     = s & width;
+
+      if( n >= 0 ) return (v << n) | (v >> (-n & width));
+      else         return rotl_(EVE_TARGETS(cpu_),o,v,-s);
     }
-    return a0;
+    else if constexpr( scalar_value<T> )                            return rotl[o](as_wide_as_t<T,S>(v), s);
+    else if constexpr( has_native_abi_v<T> && has_native_abi_v<S>)  return map(rotl[o], v, s);
+    else                                                            return apply_over(rotl[o], v, s);
   }
-  else { return apply_over(rotl, a0, nn); }
-}
 
-template<unsigned_scalar_value T, integral_simd_value U>
-EVE_FORCEINLINE auto
-rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
-{
-  if constexpr( has_native_abi_v<U> )
+  template<typename T, auto S, callable_options O>
+  constexpr EVE_FORCEINLINE T rotl_(EVE_REQUIRES(cpu_), O const& o, T v, index_t<S>)
   {
-    using r_t = wide<T, cardinal_t<U>>;
-    return rotl(r_t(a0), n);
+    return rotl[o](v,S);
   }
-  else { return apply_over(rotl, a0, n); }
-}
-
-template<unsigned_simd_value T, integral_simd_value U>
-[[nodiscard]] EVE_FORCEINLINE auto
-rotl_(EVE_SUPPORTS(cpu_), T a0, U n) noexcept
-{
-  if constexpr( has_emulated_abi_v<T> || has_emulated_abi_v<U> ) { return map(rotl, a0, n); }
-  else if constexpr( has_aggregated_abi_v<T> || has_aggregated_abi_v<U> )
-  {
-    if constexpr( std::is_same_v<T, U> ) { return aggregate(rotl, a0, n); }
-    else
-    {
-      using elt_t = element_type_t<T>;
-      using elt_u = element_type_t<U>;
-      using i_t   = std::conditional_t<std::is_signed_v<elt_u>, as_integer_t<elt_t, signed>, elt_t>;
-      return aggregate(rotl, a0, to_<i_t>(n));
-    }
-  }
-  else // if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
-  {
-    return map(eve::rotl, a0, n);
-  }
-}
-
-template<conditional_expr C, unsigned_value T0, integral_value T1>
-auto
-rotl_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1)
-{
-  return mask_op(cond, eve::rotl, a0, a1);
-}
 }

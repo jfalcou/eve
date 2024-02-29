@@ -1,19 +1,17 @@
-//==================================================================================================
+//======================================================================================================================
 /**
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 **/
-//==================================================================================================
+//======================================================================================================================
 #include "test.hpp"
-
 #include <eve/module/core.hpp>
-
 #include <bit>
 
-//==================================================================================================
+//======================================================================================================================
 // Types tests
-//==================================================================================================
+//======================================================================================================================
 TTS_CASE_TPL("Check return types of rotl", eve::test::simd::unsigned_integers)
 <typename T>(tts::type<T>)
 {
@@ -38,9 +36,9 @@ TTS_CASE_TPL("Check return types of rotl", eve::test::simd::unsigned_integers)
 
 auto maxi = []<typename T>(eve::as<T> const&) { return sizeof(eve::element_type_t<T>) * 8 - 1; };
 
-//==================================================================================================
+//======================================================================================================================
 //== rotl  tests
-//==================================================================================================
+//======================================================================================================================
 TTS_CASE_WITH("Check behavior of rotl on wide",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
@@ -49,7 +47,9 @@ TTS_CASE_WITH("Check behavior of rotl on wide",
 {
   using eve::rotl;
   TTS_EQUAL(rotl(a0, 0u), a0);
+  TTS_EQUAL(rotl(a0, eve::index<0>), a0);
   TTS_EQUAL(rotl(a0, 1u), map([](auto e) { return std::rotl(e, 1u); }, a0));
+  TTS_EQUAL(rotl(a0, eve::index<4>), map([](auto e) { return std::rotl(e, 4u); }, a0));
   using v_t = eve::element_type_t<T>;
   a0        = eve::one(eve::as(a0));
   a1        = eve::iota(eve::as(a0));
@@ -59,17 +59,14 @@ TTS_CASE_WITH("Check behavior of rotl on wide",
   TTS_EQUAL(rotl(a0, ua1), map([](auto e, auto f) -> v_t { return std::rotl(e, f); }, a0, ua1));
 };
 
-
-//==================================================================================================
+//======================================================================================================================
 // Tests for masked rotl
-//==================================================================================================
+//======================================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::rotl)(eve::wide)",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
+<typename T, typename M>(T const& a0,M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::rotl[mask](a0, 2),
-            eve::if_else(mask, eve::rotl(a0, 2), a0));
+  TTS_IEEE_EQUAL(eve::rotl[mask](a0, 2),eve::if_else(mask, eve::rotl(a0, 2), a0));
 };
