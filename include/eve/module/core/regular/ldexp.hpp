@@ -21,7 +21,7 @@ template<typename Options>
 struct ldexp_t : elementwise_callable<ldexp_t, Options, pedantic_option>
 {
   template<eve::floating_ordered_value T, eve::value U>
-  EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
+  constexpr EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
   {
     return EVE_DISPATCH_CALL(x,trunc(n));
   }
