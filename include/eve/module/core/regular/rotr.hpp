@@ -7,7 +7,6 @@
 //======================================================================================================================
 #pragma once
 
-#include "eve/traits/as_integer.hpp"
 #include <eve/arch.hpp>
 #include <eve/assert.hpp>
 #include <eve/traits/overload.hpp>
