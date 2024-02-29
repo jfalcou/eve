@@ -69,7 +69,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!  @groupheader{Semantic Modifiers}
 //!
 //!  * eve::raw
-//!     The call `acos[raw](x)` uses a faster implementation for which can be slightly less accurate near 1.
+//!     The call `acos[raw](x)` uses a faster implementation which can be slightly less accurate near 1.
 //!  @}
 //======================================================================================================================
 inline constexpr auto acos = functor<acos_t>;
