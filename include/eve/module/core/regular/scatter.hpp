@@ -26,7 +26,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 };
 
 //======================================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_simd
 //! @{
 //!   @var scatter
 //!   @brief Store a SIMD register to memory using scattered indexes

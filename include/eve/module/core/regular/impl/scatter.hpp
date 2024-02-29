@@ -18,9 +18,9 @@ namespace eve::detail
   template<typename T, typename Idx, typename Ptr, callable_options O>
   EVE_FORCEINLINE void scatter_(EVE_REQUIRES(cpu_), O const& o, T const& v, Ptr p, Idx const& idx)
   {
-    // Aggregate can be optimised if p is sort of random access and there is no mask
+    // Aggregate can be optimised if there is no mask
     // Mask would require slice on ignore_*** which we don't do atm
-    if constexpr(has_aggregated_abi_v<T> && requires{ p + 1; } && !O::contains(condition_key))
+    if constexpr(has_aggregated_abi_v<T> && !O::contains(condition_key))
     {
       // slice and scatter both parts;
       auto[lv,hv] = v.slice();
