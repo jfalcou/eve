@@ -12,6 +12,15 @@
 
 namespace eve
 {
+  template<typename Options>
+  struct log_abs_t : elementwise_callable<log_abs_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(log_abs_t, log_abs_);
+  };
+
 //================================================================================================
 //! @addtogroup math_log
 //! @{
@@ -49,7 +58,7 @@ namespace eve
 //!  @godbolt{doc/math/regular/log_abs.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(log_abs_, log_abs);
+inline constexpr auto log_abs = functor<log_abs_t>;
 }
 
 #include <eve/module/math/regular/impl/log_abs.hpp>

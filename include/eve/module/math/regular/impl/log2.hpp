@@ -14,9 +14,9 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, decorator D>
+  template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  log2_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
+  log2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -213,7 +213,7 @@ namespace eve::detail
           return if_else(is_ngez(a0), eve::allbits, zz);
         }
       }
-      else return apply_over(D()(log2), a0);
+      else return apply_over(log2, a0);
     }
     else //scalar case
     {
@@ -376,21 +376,5 @@ namespace eve::detail
         return val_lo + val_hi;
       }
     }
-  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr T
-  log2_(EVE_SUPPORTS(cpu_), T const& x) noexcept
-  {
-    return log2(regular_type(), x);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  log2_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::log2, t);
   }
 }

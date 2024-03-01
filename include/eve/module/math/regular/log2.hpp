@@ -12,6 +12,16 @@
 
 namespace eve
 {
+
+  template<typename Options>
+  struct log2_t : elementwise_callable<log2_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(log2_t, log2_);
+  };
+
 //================================================================================================
 //! @addtogroup math_log
 //! @{
@@ -64,15 +74,7 @@ namespace eve
 //!        @godbolt{doc/math/masked/log2.cpp}
 //!  @}
 //================================================================================================
-namespace tag
-{
-  struct log2_;
-}
-
-template<> struct supports_optimized_conversion<tag::log2_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(log2_, log2);
+inline constexpr auto log2 = functor<log2_t>;
 }
 
 #include <eve/module/math/regular/impl/log2.hpp>

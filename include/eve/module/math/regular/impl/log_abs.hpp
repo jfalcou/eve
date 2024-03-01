@@ -12,37 +12,10 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, decorator D>
-EVE_FORCEINLINE constexpr T
-log_abs_(EVE_SUPPORTS(cpu_), D const&, T x) noexcept
-    requires(is_one_of<D>(types<regular_type, pedantic_type> {}))
-{
-  return D()(eve::log(eve::abs(x)));
-}
-
-template<floating_ordered_value T>
-EVE_FORCEINLINE constexpr T
-log_abs_(EVE_SUPPORTS(cpu_), T x) noexcept
-{
-  return log(eve::abs(x));
-  ;
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked cases
-template<conditional_expr C, value U>
-EVE_FORCEINLINE auto
-log_abs_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-requires(std::same_as<U, decltype(eve::abs(t))>)
-{
-  return mask_op(cond, eve::log_abs, t);
-}
-
-template<conditional_expr C, decorator D, value U>
-EVE_FORCEINLINE auto
-log_abs_(EVE_SUPPORTS(cpu_), C const& cond, D const & d, U const& t) noexcept
-requires(std::same_as<U, decltype(d(log_abs)(t))>)
-{
-  return mask_op(cond, d(eve::log_abs), t);
-}
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr decltype(eve::abs(T()))
+  log_abs_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+  {
+    return eve::log(eve::abs(x));
+  }
 }

@@ -9,13 +9,12 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, decorator D>
+  template<typename T, callable_options O>
   constexpr auto
-  log1p_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
+  log1p_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -156,7 +155,7 @@ namespace eve::detail
           }
         }
       }
-      else return apply_over(D()(log1p), a0);
+      else return apply_over(log1p, a0);
     }
     else  // scalar case
     {
@@ -295,21 +294,5 @@ namespace eve::detail
         return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
       }
     }
-  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr T
-  log1p_(EVE_SUPPORTS(cpu_), T const& x) noexcept
-  {
-    return log1p(regular_type(), x);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  log1p_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::log1p, t);
   }
 }

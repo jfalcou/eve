@@ -13,9 +13,9 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
+  template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  log10_(EVE_SUPPORTS(cpu_), T a0) noexcept
+  log10_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -324,14 +324,5 @@ namespace eve::detail
         return val_lo + val_hi;
       }
     }
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  log10_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::log10, t);
   }
 }
