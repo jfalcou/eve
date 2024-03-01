@@ -10,7 +10,25 @@
 #include <eve/detail/overload.hpp>
 
 namespace eve
-{
+{ template<typename Options>
+  struct logspace_sub_t : elementwise_callable<logspace_sub_t, Options>
+  {
+    template<eve::floating_ordered_value T, floating_ordered_value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
+
+    template<eve::floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr auto operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+
+
+    EVE_CALLABLE_OBJECT(logspace_sub_t, logspace_sub_);
+  };
+
 //================================================================================================
 //! @addtogroup math_log
 //! @{
@@ -51,7 +69,7 @@ namespace eve
 //!  @godbolt{doc/math/regular/logspace_sub.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(logspace_sub_, logspace_sub);
+inline constexpr auto logspace_sub = functor<logspace_sub_t>;
 }
 
 #include <eve/module/math/regular/impl/logspace_sub.hpp>
