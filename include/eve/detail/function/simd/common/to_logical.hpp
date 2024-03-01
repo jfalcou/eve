@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include "eve/traits/element_type.hpp"
 #include <eve/detail/abi.hpp>
 #include <eve/detail/is_native.hpp>
 #include <eve/forward.hpp>
