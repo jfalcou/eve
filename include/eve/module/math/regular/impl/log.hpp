@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
+#include <eve/module/math/constant/invsqrt_2.hpp>
 
 namespace eve::detail
 {
@@ -19,6 +19,9 @@ namespace eve::detail
   {
     if constexpr(simd_value<T>)
     {
+      using iT    = as_integer_t<T, signed>;
+      constexpr bool is_avx = current_api == avx;
+      using TT =  std::conditional_t<is_avx, T, iT >;
       if constexpr( has_native_abi_v<T> )
       {
         T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
@@ -39,8 +42,9 @@ namespace eve::detail
            * is preserved.
            * ====================================================
            */
-          auto          x = a0;
-          iT         k(0);
+          auto       x = a0;
+          T          f(0);
+          TT         k(0);
           auto       isnez = is_nez(a0);
           logical<T> test;
           if constexpr( eve::platform::supports_denormals )
@@ -48,26 +52,33 @@ namespace eve::detail
             test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
             if( eve::any(test) )
             {
-              k = sub[test](k, iT(23));
+              k = sub[test](k, TT(23));
               x = if_else(test, x * T(8388608ul), x);
             }
           }
-          uiT ix = bit_cast(x, as<uiT>());
-          /* reduce x into [sqrt(2)/2, sqrt(2)] */
-          ix += 0x3f800000 - 0x3f3504f3;
-          k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
-          ix     = (ix & 0x007fffff) + 0x3f3504f3;
-          x      = bit_cast(ix, as<T>());
-          T f    = dec(x);
+          if constexpr(is_avx)
+          {
+            auto [xx, kk]     = eve::frexp(x);
+            x = xx;
+            auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+            k += dec[x_lt_sqrthf](kk);
+            f = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
+          }
+          else
+          {
+            uiT ix = bit_cast(x, as<uiT>());
+            /* reduce x into [sqrt(2)/2, sqrt(2)] */
+            ix += 0x3f800000 - 0x3f3504f3;
+            k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
+            ix     = (ix & 0x007fffff) + 0x3f3504f3;
+            x      = bit_cast(ix, as<T>());
+            f    = dec(x);
+          }
           T s    = f / (2.0f + f);
           T z    = sqr(s);
           T w    = sqr(z);
-          T t1   = w *
-            eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
-            ;
-          T t2   = z *
-            eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
-            ;
+          T t1   = w * eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f));
+          T t2   = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
           T R    = t2 + t1;
           T hfsq = half(eve::as<T>()) * sqr(f);
 
@@ -76,10 +87,11 @@ namespace eve::detail
           T zz;
           if constexpr( eve::platform::supports_infinites )
           {
-            zz = if_else(
-              isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+            zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
           }
-          else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+          else {
+            zz = if_else(isnez, r, minf(eve::as<T>()));
+          }
           return if_else(is_ngez(a0), eve::allbits, zz);
         }
         else // if constexpr(std::is_same_v<elt_t, double>)
@@ -95,8 +107,9 @@ namespace eve::detail
            * is preserved.
            * ====================================================
            */
-          auto          x = a0;
-          iT         k(0);
+          auto       x = a0;
+          T f(0);
+          TT         k(0);
           auto       isnez = is_nez(a0);
           logical<T> test;
           if constexpr( eve::platform::supports_denormals )
@@ -104,18 +117,28 @@ namespace eve::detail
             test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
             if( eve::any(test) )
             {
-              k = sub[test](k, iT(54));
+              k = sub[test](k, TT(54));
               x = if_else(test, x * T(18014398509481984ull), x);
             }
           }
-          /* reduce x into [sqrt(2)/2, sqrt(2)] */
-          uiT hx = bit_cast(x, as<uiT>()) >> 32;
-          hx += 0x3ff00000 - 0x3fe6a09e;
-          k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
-          hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
-          x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
-
-          T f  = dec(x);
+          if constexpr(is_avx)
+          {
+            auto [xx, kk]     = eve::frexp(x);
+            x = xx;
+            auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+            k += dec[x_lt_sqrthf](kk);
+            f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
+           }
+          else
+          {
+            /* reduce x into [sqrt(2)/2, sqrt(2)] */
+            uiT hx = bit_cast(x, as<uiT>()) >> 32;
+            hx += 0x3ff00000 - 0x3fe6a09e;
+            k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
+            hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
+            x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
+            f  = dec(x);
+          }
           T s  = f / (2.0f + f);
           T z  = sqr(s);
           T w  = sqr(z);

@@ -95,6 +95,6 @@ template<> struct supports_optimized_conversion<tag::log_> : std::true_type
 
 #include <eve/module/math/regular/impl/log.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/math/regular/impl/simd/x86/log.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/math/regular/impl/simd/x86/log.hpp>
+// #endif
