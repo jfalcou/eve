@@ -69,7 +69,3 @@ EVE_MAKE_CALLABLE(log1p_, log1p);
 }
 
 #include <eve/module/math/regular/impl/log1p.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/math/regular/impl/simd/x86/log1p.hpp>
-#endif
