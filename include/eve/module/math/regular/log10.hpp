@@ -71,14 +71,7 @@ namespace tag
   struct log10_;
 }
 
-template<> struct supports_optimized_conversion<tag::log10_> : std::true_type
-{};
-
 EVE_MAKE_CALLABLE(log10_, log10);
 }
 
 #include <eve/module/math/regular/impl/log10.hpp>
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/math/regular/impl/simd/x86/log10.hpp>
-#endif
