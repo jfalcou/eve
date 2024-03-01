@@ -27,7 +27,7 @@ jobs:
         cfg:
         - { comp: clang, arch: x86    , opts: -msse2    , pch: ON}
         - { comp: clang, arch: x86    , opts: -mavx2    , pch: ON}
-        - { comp: gcc  , arch: aarch64, opts: -Wno-psabi, pch: ON}
+        - { comp: clang, arch: aarch64, opts: -Wno-psabi, pch: ON}
         - { comp: clang, arch: x86    , opts: -msse2    , pch: OFF}
         - { comp: gcc  , arch: x86    , opts: -msse2    , pch: OFF}
     steps:
