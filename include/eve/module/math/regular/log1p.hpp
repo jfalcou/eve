@@ -17,7 +17,7 @@ namespace eve
   struct log1p_t : elementwise_callable<log1p_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(log1p_t, log1p_);
   };

@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct oneosqrteps_t : constant_callable<oneosqrteps_t, Options, downward_option, upward_option>
   {
-    template<floating_value T, typename Opts>
+    template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&,  Opts const&)
     {
       using e_t = element_type_t<T>;

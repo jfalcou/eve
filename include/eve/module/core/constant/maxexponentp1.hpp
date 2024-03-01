@@ -7,16 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
-//==================================================================================================
-/*
-  EVE - Expressive Vector Engine
-  Copyright : EVE Project Contributors
-  SPDX-License-Identifier: BSL-1.0
-*/
-//==================================================================================================
-#pragma once
-
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>

@@ -16,7 +16,7 @@ namespace eve
   struct log_abs_t : elementwise_callable<log_abs_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(log_abs_t, log_abs_);
   };
@@ -59,6 +59,14 @@ namespace eve
 //!  @}
 //================================================================================================
 inline constexpr auto log_abs = functor<log_abs_t>;
-}
 
-#include <eve/module/math/regular/impl/log_abs.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+      log_abs_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    {
+      return eve::log(eve::abs(x));
+    }
+  }
+}

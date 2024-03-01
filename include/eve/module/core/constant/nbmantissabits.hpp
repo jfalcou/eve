@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct nbmantissabits_t : constant_callable<nbmantissabits_t, Options, downward_option, upward_option>
   {
-    template<floating_value T>
+    template<typename T>
     static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
