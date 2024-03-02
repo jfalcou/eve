@@ -40,17 +40,17 @@ namespace eve::detail
         }
         else { return arithmetic_call(logspace_sub, a0, a1); }
       }
-      else
-      {
-        r_t  that(logspace_sub(a0, a1));
-        auto lsub = [](auto that, auto next) -> r_t
-          {
-            that = logspace_sub(that, next);
-            return that;
-          };
-        ((that = lsub(that, args)), ...);
-        return that;
-      }
+    }
+    else
+    {
+      r_t  that(logspace_sub(a0, a1));
+      auto lsub = [](auto that, auto next) -> r_t
+        {
+          that = logspace_sub(that, next);
+          return that;
+        };
+      ((that = lsub(that, args)), ...);
+      return that;
     }
   }
 
