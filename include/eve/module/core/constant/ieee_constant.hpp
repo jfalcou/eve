@@ -74,8 +74,8 @@ namespace eve
     struct real64 { constexpr real64(auto v) : value(v) {} double value; };
   }
 
-  template<eve::_::real32 BF, eve::_::real64 BD,typename T>
-  auto ieee_constant(eve::as<T>)
+  template<eve::_::real32 BF, eve::_::real64 BD, floating_value T>
+  T ieee_constant(eve::as<T>)
   {
     using e_t = eve::element_type_t<T>;
     if      constexpr(std::same_as<float,e_t>) return T(BF.value);

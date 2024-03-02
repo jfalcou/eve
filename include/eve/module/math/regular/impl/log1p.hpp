@@ -9,13 +9,12 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/horner.hpp>
-#include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, decorator D>
+  template<typename T, callable_options O>
   constexpr auto
-  log1p_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
+  log1p_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -26,29 +25,42 @@ namespace eve::detail
         using iT            = as_integer_t<T, signed>;
         const elt_t Log_2hi = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<elt_t>{});
         const elt_t Log_2lo = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<elt_t>{});
-        T           uf      = inc(a0);
-        auto        isnez   = is_nez(uf);
-        if constexpr( std::is_same_v<elt_t, float> )
+        constexpr bool is_avx = current_api == avx;
+        if constexpr(is_avx)
         {
-          uiT iu = bit_cast(uf, as<uiT>());
-          iu += 0x3f800000 - 0x3f3504f3;
-          iT k = bit_cast(iu >> 23, as<iT>()) - 0x7f;
+          T    uf          = inc(a0);
+          auto isnez       = is_nez(uf);
+          auto [x, k]      = frexp(uf);
+          auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+          /* reduce x into [sqrt(2)/2, sqrt(2)] */
+          k   = dec[x_lt_sqrthf](k);
+          T f = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
           /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
-          T c = if_else(k < 25, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
-          if( eve::any(eve::is_nez(c)) ) c /= uf;
-          /* reduce a0 into [sqrt(2)/2, sqrt(2)] */
-          iu     = (iu & 0x007fffff) + 0x3f3504f3;
-          T f    = dec(bit_cast(iu, as<T>()));
+          T c    = if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)) / uf;
+          T hfsq = half(eve::as<T>()) * sqr(f);
           T s    = f / (2.0f + f);
           T z    = sqr(s);
           T w    = sqr(z);
-          T R    = fma(w,
-                       eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
-                      , z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
-                      );
-          T hfsq = half(eve::as<T>()) * sqr(f);
-          T dk   = float32(k);
-          T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
+          T t1, t2;
+          if constexpr( std::is_same_v<element_type_t<T>, float> )
+          {
+            t1 = w *
+              eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
+              ;
+            t2 = z *
+              eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
+              ;
+          }
+          else if constexpr( std::is_same_v<element_type_t<T>, double> )
+          {
+            t1 = w *
+              eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3))
+              ;
+            t2 = z*eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
+                                      , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
+          }
+          T R = t2 + t1;
+          T r = fma(k, Log_2hi, ((fma(s, (hfsq + R), k * Log_2lo + c) - hfsq) + f));
           T zz;
           if constexpr( eve::platform::supports_infinites )
           {
@@ -58,57 +70,92 @@ namespace eve::detail
           else { zz = if_else(isnez, r, minf(eve::as<T>())); }
           return if_else(is_ngez(uf), eve::allbits, zz);
         }
-        else if constexpr( std::is_same_v<elt_t, double> )
+        else
         {
-          /* origin: FreeBSD /usr/src/lib/msun/src/e_log1pf.c */
-          /*
-           * ====================================================
-           * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
-           *
-           * Developed at SunPro, a Sun Microsystems, Inc. business.
-           * Permission to use, copy, modify, and distribute this
-           * software is freely granted, provided that this notice
-           * is preserved.
-           * ====================================================
-           */
-          /* reduce x into [sqrt(2)/2, sqrt(2)] */
-          uiT hu = bit_cast(uf, as<uiT>()) >> 32;
-          hu += 0x3ff00000 - 0x3fe6a09e;
-          iT k = bit_cast(hu >> 20, as<iT>()) - 0x3ff;
-          /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
-          T c = if_else(k < 54, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
-          if( eve::any(eve::is_nez(c)) ) c /= uf;
-          hu  = (hu & 0x000fffffull) + 0x3fe6a09e;
-          T f = bit_cast(bit_cast(hu << 32, as<uiT>()) | ((bit_cast(uf, as<uiT>()) & 0xffffffffull)),
-                         as<T>());
-          f   = dec(f);
-
-          T hfsq = half(eve::as<T>()) * sqr(f);
-          T s    = f / (2.0 + f);
-          T z    = sqr(s);
-          T w    = sqr(z);
-          T t1   = w *
-            eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3))
-            ;
-          T t2   = z
-            *
-            eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
-                               , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3))
-            ;
-          T R  = t2 + t1;
-          T dk = float64(k);
-          T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
-          T zz;
-          if constexpr( eve::platform::supports_infinites )
+          T           uf      = inc(a0);
+          auto        isnez   = is_nez(uf);
+          if constexpr( std::is_same_v<elt_t, float> )
           {
-            zz = if_else(
-              isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+            uiT iu = bit_cast(uf, as<uiT>());
+            iu += 0x3f800000 - 0x3f3504f3;
+            iT k = bit_cast(iu >> 23, as<iT>()) - 0x7f;
+            /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
+            T c = if_else(k < 25, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
+            if( eve::any(eve::is_nez(c)) ) c /= uf;
+            /* reduce a0 into [sqrt(2)/2, sqrt(2)] */
+            iu     = (iu & 0x007fffff) + 0x3f3504f3;
+            T f    = dec(bit_cast(iu, as<T>()));
+            T s    = f / (2.0f + f);
+            T z    = sqr(s);
+            T w    = sqr(z);
+            T R    = fma(w,
+                         eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
+                        , z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
+                        );
+            T hfsq = half(eve::as<T>()) * sqr(f);
+            T dk   = float32(k);
+            T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
+            T zz;
+            if constexpr( eve::platform::supports_infinites )
+            {
+              zz = if_else(
+                isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+            }
+            else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+            return if_else(is_ngez(uf), eve::allbits, zz);
           }
-          else { zz = if_else(isnez, r, minf(eve::as<T>())); }
-          return if_else(is_ngez(uf), eve::allbits, zz);
+          else if constexpr( std::is_same_v<elt_t, double> )
+          {
+            /* origin: FreeBSD /usr/src/lib/msun/src/e_log1pf.c */
+            /*
+             * ====================================================
+             * Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+             *
+             * Developed at SunPro, a Sun Microsystems, Inc. business.
+             * Permission to use, copy, modify, and distribute this
+             * software is freely granted, provided that this notice
+             * is preserved.
+             * ====================================================
+             */
+            /* reduce x into [sqrt(2)/2, sqrt(2)] */
+            uiT hu = bit_cast(uf, as<uiT>()) >> 32;
+            hu += 0x3ff00000 - 0x3fe6a09e;
+            iT k = bit_cast(hu >> 20, as<iT>()) - 0x3ff;
+            /* correction term ~ log(1+x)-log(u), avoid underflow in c/u */
+            T c = if_else(k < 54, if_else(k >= 2, oneminus(uf - a0), a0 - dec(uf)), zero);
+            if( eve::any(eve::is_nez(c)) ) c /= uf;
+            hu  = (hu & 0x000fffffull) + 0x3fe6a09e;
+            T f = bit_cast(bit_cast(hu << 32, as<uiT>()) | ((bit_cast(uf, as<uiT>()) & 0xffffffffull)),
+                           as<T>());
+            f   = dec(f);
+
+            T hfsq = half(eve::as<T>()) * sqr(f);
+            T s    = f / (2.0 + f);
+            T z    = sqr(s);
+            T w    = sqr(z);
+            T t1   = w *
+              eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3))
+              ;
+            T t2   = z
+              *
+              eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
+                                 , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3))
+              ;
+            T R  = t2 + t1;
+            T dk = float64(k);
+            T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
+            T zz;
+            if constexpr( eve::platform::supports_infinites )
+            {
+              zz = if_else(
+                isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+            }
+            else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+            return if_else(is_ngez(uf), eve::allbits, zz);
+          }
         }
       }
-      else return apply_over(D()(log1p), a0);
+      else return apply_over(log1p, a0);
     }
     else  // scalar case
     {
@@ -247,21 +294,5 @@ namespace eve::detail
         return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo + c) - hfsq) + f));
       }
     }
-  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr T
-  log1p_(EVE_SUPPORTS(cpu_), T const& x) noexcept
-  {
-    return log1p(regular_type(), x);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  log1p_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::log1p, t);
   }
 }

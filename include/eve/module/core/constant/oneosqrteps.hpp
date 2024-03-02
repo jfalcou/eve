@@ -30,7 +30,7 @@ namespace eve
       else if constexpr(std::same_as<e_t, double> ) return T(0x1p+26);
     }
 
-    template<typename T>
+    template<floating_value T>
     requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 

@@ -14,9 +14,9 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, decorator D>
+  template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  log2_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
+  log2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -24,6 +24,8 @@ namespace eve::detail
       {
         using uiT   = as_integer_t<T, unsigned>;
         using iT    = as_integer_t<T, signed>;
+        constexpr bool is_avx = current_api == avx;
+        using TT =  std::conditional_t<is_avx, T, iT >;
         using elt_t = element_type_t<T>;
         if constexpr( std::is_same_v<elt_t, float> )
         {
@@ -39,7 +41,8 @@ namespace eve::detail
            * ====================================================
            */
           T          x = a0;
-          iT         k(0);
+          T          f(0);
+          TT         k(0);
           auto       isnez = is_nez(a0);
           logical<T> test;
           if constexpr( eve::platform::supports_denormals )
@@ -47,26 +50,33 @@ namespace eve::detail
             test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
             if( eve::any(test) )
             {
-              k = sub[test](k, iT(25));
+              k = sub[test](k, TT(25));
               x = if_else(test, x * T(33554432ul), x);
             }
           }
-          uiT ix = bit_cast(x, as<uiT>());
-          /* reduce x into [sqrt(2)/2, sqrt(2)] */
-          ix += 0x3f800000 - 0x3f3504f3;
-          k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
-          ix     = (ix & 0x007fffff) + 0x3f3504f3;
-          x      = bit_cast(ix, as<T>());
-          T f    = dec(x);
+          if constexpr(is_avx)
+          {
+            auto [xx, kk]     = eve::frexp(x);
+            x = xx;
+            auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+            k += dec[x_lt_sqrthf](kk);
+            f = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
+          }
+          else
+          {
+            uiT ix = bit_cast(x, as<uiT>());
+            /* reduce x into [sqrt(2)/2, sqrt(2)] */
+            ix += 0x3f800000 - 0x3f3504f3;
+            k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
+            ix = (ix & 0x007fffff) + 0x3f3504f3;
+            x  = bit_cast(ix, as<T>());
+            f  = dec(x);
+          }
           T s    = f / (2.0f + f);
           T z    = sqr(s);
           T w    = sqr(z);
-          T t1   = w *
-            eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f))
-            ;
-          T t2   = z *
-            eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
-            ;
+          T t1   = w * eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f));
+          T t2   = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
           T R    = t2 + t1;
           T hfsq = half(eve::as<T>()) * sqr(f);
 
@@ -105,7 +115,8 @@ namespace eve::detail
            * ====================================================
            */
           T          x = a0;
-          iT         k(0);
+          TT         k(0);
+          T f(0);
           auto       isnez = is_nez(a0);
           logical<T> test;
           if constexpr( eve::platform::supports_denormals )
@@ -113,28 +124,34 @@ namespace eve::detail
             test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
             if( eve::any(test) )
             {
-              k = sub[test](k, iT(54));
+              k = sub[test](k, TT(54));
               x = if_else(test, x * T(18014398509481984ull), x);
             }
           }
-          /* reduce x into [sqrt(2)/2, sqrt(2)] */
-          uiT hx = bit_cast(x, as<uiT>()) >> 32;
-          hx += 0x3ff00000 - 0x3fe6a09e;
-          k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
-          hx = ((hx & 0x000fffffull)) + 0x3fe6a09e;
-          x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
-
-          T f  = dec(x);
+          if constexpr(is_avx)
+          {
+            auto [xx, kk]     = eve::frexp(x);
+            x = xx;
+            auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+            k += dec[x_lt_sqrthf](kk);
+            f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
+          }
+          else
+          {
+            /* reduce x into [sqrt(2)/2, sqrt(2)] */
+            uiT hx = bit_cast(x, as<uiT>()) >> 32;
+            hx += 0x3ff00000 - 0x3fe6a09e;
+            k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
+            hx = ((hx & 0x000fffffull)) + 0x3fe6a09e;
+            x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
+            f  = dec(x);
+          }
           T s  = f / (2.0f + f);
           T z  = sqr(s);
           T w  = sqr(z);
-          T t1 = w *
-            eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3));
-          T t2 = z
-            *
-            eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
-                               , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3))
-            ;
+          T t1 = w * eve::reverse_horner(w, T(0x1.999999997fa04p-2), T(0x1.c71c51d8e78afp-3), T(0x1.39a09d078c69fp-3));
+          T t2 = z * eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
+                                        , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
           T R    = t2 + t1;
           T hfsq = half(eve::as<T>()) * sqr(f);
           //        return -(hfsq-(s*(hfsq+R))-f)*Invlog_2<T>()+dk;  // fast ?
@@ -196,7 +213,7 @@ namespace eve::detail
           return if_else(is_ngez(a0), eve::allbits, zz);
         }
       }
-      else return apply_over(D()(log2), a0);
+      else return apply_over(log2, a0);
     }
     else //scalar case
     {
@@ -359,21 +376,5 @@ namespace eve::detail
         return val_lo + val_hi;
       }
     }
-  }
-
-  template<floating_ordered_value T>
-  EVE_FORCEINLINE constexpr T
-  log2_(EVE_SUPPORTS(cpu_), T const& x) noexcept
-  {
-    return log2(regular_type(), x);
-  }
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-  template<conditional_expr C, value U>
-  EVE_FORCEINLINE auto
-  log2_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-  {
-    return mask_op(cond, eve::log2, t);
   }
 }

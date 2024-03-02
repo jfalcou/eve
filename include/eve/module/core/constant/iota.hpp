@@ -20,7 +20,7 @@ template <typename Options>
 struct iota_t : callable<iota_t, Options, conditional_option>
 {
   template <eve::arithmetic_simd_value T>
-  EVE_FORCEINLINE T operator()(as<T> tgt) const { return EVE_DISPATCH_CALL(tgt); }
+  EVE_FORCEINLINE constexpr T operator()(as<T> tgt) const { return EVE_DISPATCH_CALL(tgt); }
   EVE_CALLABLE_OBJECT(iota_t, iota_);
 };
 
