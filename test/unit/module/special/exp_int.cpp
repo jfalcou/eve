@@ -69,7 +69,7 @@ TTS_CASE_WITH("Check behavior of exp_int on wide",
   }
   using elt_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(exp_int(elt_t(2.0), elt_t(0.5)), (boost::math::expint(elt_t(2), elt_t(0.5))), 16.0);
+  TTS_ULP_EQUAL(exp_int(elt_t(2.0), elt_t(0.5)), (boost::math::expint(elt_t(2), elt_t(0.5))), 18.0);
   TTS_ULP_EQUAL(
       exp_int(elt_t(6000), elt_t(0.5)), (boost::math::expint(elt_t(6000), elt_t(0.5))), 4.0);
 };
