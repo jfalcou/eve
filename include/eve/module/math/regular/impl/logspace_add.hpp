@@ -27,7 +27,8 @@ namespace eve::detail
         {
           auto tmp = -eve::abs(a0 - a1);
           auto r   = eve::max(a0, a1) + eve::log1p(eve::exp(tmp));
-          if constexpr( eve::platform::supports_invalids ) r = if_else(is_nan(tmp), a0 + a1, r);
+          if constexpr( eve::platform::supports_invalids )
+            r = if_else(is_nan(tmp), a0 + a1, r);
           return r;
         }
         else { return arithmetic_call(logspace_add, a0, a1); }

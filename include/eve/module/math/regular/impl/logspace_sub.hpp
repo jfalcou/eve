@@ -31,9 +31,12 @@ namespace eve::detail
         {
           auto x    = a1 -a0;
           auto test = x > -log_2(as(x));
-          if( eve::all(test) ) return a0 + eve::log(-expm1(x));
-          else if( eve::any(test) ) return a0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
-          else return a0 + log1p(-exp(x));
+          if( eve::all(test) )
+            return a0 + eve::log(-expm1(x));
+          else if( eve::any(test) )
+            return a0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
+          else
+            return a0 + log1p(-exp(x));
         }
         else { return arithmetic_call(logspace_sub, a0, a1); }
       }
