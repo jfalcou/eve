@@ -23,7 +23,7 @@ namespace eve
       return allbits(eve::as<T>());
    }
 
-    template<typename T>
+    template<eve::value T>
     requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 

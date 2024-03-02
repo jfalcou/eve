@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct mhalf_t : constant_callable<mhalf_t, Options, downward_option, upward_option>
   {
-    template<typename T>
+    template<floating_value T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
@@ -25,7 +25,7 @@ namespace eve
       else if constexpr(std::same_as<e_t, double> ) return T(-0x1p-1f);
     }
 
-    template<typename T>
+    template<floating_value T>
     requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 

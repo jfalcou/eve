@@ -20,11 +20,10 @@ namespace eve
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
-
       return T(-std::numeric_limits<e_t>::infinity());
-   }
+    }
 
-    template<typename T>
+    template<floating_value T>
     requires(plain_scalar_value<element_type_t<T>>)
       EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 

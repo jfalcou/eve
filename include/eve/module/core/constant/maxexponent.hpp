@@ -16,8 +16,8 @@ namespace eve
   template<typename Options>
   struct maxexponent_t : constant_callable<maxexponent_t, Options, downward_option, upward_option>
   {
-    template<typename T>
-    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
+    template<floating_value T>
+    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;
