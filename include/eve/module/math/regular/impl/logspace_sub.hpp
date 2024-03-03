@@ -26,14 +26,16 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T0> )
       {
-        auto x    = a1 -a0;
+        auto r0 = r_t(a0);
+        auto r1 = r_t(a1);
+        auto x    = r1-r0;
         auto test = x > -log_2(as(x));
         if( eve::all(test) )
-          return a0 + eve::log(-expm1(x));
+          return r0 + eve::log(-expm1(x));
         else if( eve::any(test) )
-          return a0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
+          return r0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
         else
-          return a0 + log1p(-exp(x));
+          return r0 + log1p(-exp(x));
       }
       else return arithmetic_call(logspace_sub, r_t(a0), r_t(a1));
     }
