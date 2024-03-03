@@ -17,7 +17,6 @@
 
 namespace eve::detail
 {
-
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   logspace_sub_(EVE_REQUIRES(cpu_), O const &, T0 a0, T1 a1, Ts... args) noexcept
@@ -59,7 +58,7 @@ namespace eve::detail
   //================================================================================================
   template<kumi::non_empty_product_type Ts, callable_options O>
   auto
-  logspace_sub_(EVE_REQUIRES(cpu_), O const &, Ts tup) noexcept
+  logspace_sub_(EVE_REQUIRES(cpu_), O const &, Ts const& tup) noexcept
   {
     if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
     else return kumi::apply( [&](auto... m) { return logspace_sub(m...); }, tup);

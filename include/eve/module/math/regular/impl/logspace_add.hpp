@@ -52,7 +52,7 @@ namespace eve::detail
   //================================================================================================
   template<kumi::non_empty_product_type Ts, callable_options O>
   auto
-  logspace_add_(EVE_REQUIRES(cpu_), O const &, Ts tup) noexcept
+  logspace_add_(EVE_REQUIRES(cpu_), O const &, Ts const& tup) noexcept
   {
     if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
     else return kumi::apply( [&](auto... m) { return logspace_add(m...); }, tup);

@@ -22,9 +22,9 @@ namespace eve
       return EVE_DISPATCH_CALL(t0,  t1, ts...);
     }
 
-    template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr auto operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
-
+    template<kumi::non_empty_product_type Tuple>
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tuple>
+    operator()(Tuple const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(logspace_sub_t, logspace_sub_);
   };
