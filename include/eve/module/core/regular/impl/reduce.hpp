@@ -33,7 +33,7 @@ find_reduction(Callable f, Option = 0) noexcept
   if constexpr( std::same_as<Callable, callable_plus_> ) return eve::detail::sum;
   else if constexpr( std::same_as<Callable, callable_add_> ) return eve::detail::sum;
   else if constexpr( std::same_as<Callable, callable_min_> ) return eve::minimum;
-  else if constexpr( std::same_as<Callable, callable_max_> ) return eve::maximum;
+  else if constexpr( std::same_as<Callable,decltype(max)> ) return eve::maximum;
   else if constexpr( std::same_as<Callable, callable_logical_and_> ) return eve::all;
   else if constexpr( std::same_as<Callable, callable_logical_or_> ) return eve::any;
   else if constexpr( std::same_as<Option, splat_type> )

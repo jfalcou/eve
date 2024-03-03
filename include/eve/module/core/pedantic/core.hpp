@@ -23,7 +23,7 @@
 #include <eve/module/core/pedantic/is_not_flint.hpp>
 #include <eve/module/core/pedantic/lerp.hpp>
 #include <eve/module/core/pedantic/manhattan.hpp>
-#include <eve/module/core/pedantic/max.hpp>
+//#include <eve/module/core/pedantic/max.hpp>
 #include <eve/module/core/pedantic/maxabs.hpp>
 #include <eve/module/core/pedantic/maxmag.hpp>
 #include <eve/module/core/pedantic/min.hpp>

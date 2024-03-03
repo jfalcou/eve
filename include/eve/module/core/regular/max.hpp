@@ -12,6 +12,27 @@
 
 namespace eve
 {
+  template<typename Options>
+  struct max_t : elementwise_callable<max_t, Options, pedantic_option, numeric_option>
+  {
+    template<eve::floating_ordered_value T, floating_ordered_value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
+
+    template<eve::floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr auto operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+
+    template<typename Callable>
+    EVE_FORCEINLINE constexpr auto operator()(Callable f) const noexcept { return EVE_DISPATCH_CALL(f); }
+
+    EVE_CALLABLE_OBJECT(max_t, max_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -82,7 +103,7 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/max.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(max_, max);
+inline constexpr auto max = functor<max_t>;
 }
 
 #include <eve/module/core/regular/impl/max.hpp>

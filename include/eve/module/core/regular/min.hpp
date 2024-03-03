@@ -12,6 +12,28 @@
 
 namespace eve
 {
+  template<typename Options>
+  struct min_t : elementwise_callable<min_t, Options, pedantic_option, numeric_option>
+  {
+    template<eve::floating_ordered_value T, floating_ordered_value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
+
+    template<eve::floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr auto operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+
+    template<typename Callable>
+    EVE_FORCEINLINE constexpr auto operator()(Callable f) const noexcept { return EVE_DISPATCH_CALL(f); }
+
+    EVE_CALLABLE_OBJECT(min_t, min_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -81,8 +103,9 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/min.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(min_, min);
+inline constexpr auto min = functor<min_t>;
 }
+
 
 #include <eve/module/core/regular/impl/min.hpp>
 
@@ -101,4 +124,3 @@ EVE_MAKE_CALLABLE(min_, min);
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/min.hpp>
 #endif
-
