@@ -26,7 +26,7 @@ namespace eve::detail
   T0 find_common_value();
 
   template<typename, typename... Ts>
-  struct common_value_impl;
+  struct common_value_impl {};
 
   template<typename... Ts>
   struct common_value_impl<std::void_t<decltype(detail::find_common_value<Ts...>())>, Ts...>
@@ -48,6 +48,10 @@ namespace eve
   /// Computes the SIMD-compatible common type between all `Ts`.
   template<typename... Ts>
   using common_value_t = typename eve::detail::common_value_impl<void, Ts...>::type;
+
+  template<typename... Ts>
+  struct common_value : eve::detail::common_value_impl<void, Ts...>
+  {};
 
   template<typename... Ts>
   using common_logical_t = as_logical_t<common_value_t<Ts...>>;
