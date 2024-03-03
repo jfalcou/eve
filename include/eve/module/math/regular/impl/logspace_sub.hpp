@@ -24,21 +24,18 @@ namespace eve::detail
     using r_t = common_value_t<T0, T1, Ts...>;
     if constexpr(sizeof...(Ts) == 0)
     {
-      if constexpr(std::same_as<T0, T1>)
+      if constexpr( has_native_abi_v<T0> )
       {
-        if constexpr( has_native_abi_v<T0> )
-        {
-          auto x    = a1 -a0;
-          auto test = x > -log_2(as(x));
-          if( eve::all(test) )
-            return a0 + eve::log(-expm1(x));
-          else if( eve::any(test) )
-            return a0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
-          else
-            return a0 + log1p(-exp(x));
-        }
-        else { return arithmetic_call(logspace_sub, a0, a1); }
+        auto x    = a1 -a0;
+        auto test = x > -log_2(as(x));
+        if( eve::all(test) )
+          return a0 + eve::log(-expm1(x));
+        else if( eve::any(test) )
+          return a0+ if_else(test, log(-expm1(x)), log1p(-exp(x)));
+        else
+          return a0 + log1p(-exp(x));
       }
+      else return arithmetic_call(logspace_sub, r_t(a0), r_t(a1));
     }
     else
     {
