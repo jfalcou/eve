@@ -1843,5 +1843,28 @@ namespace kumi
     using zip_t = typename zip<T0,Ts...>::type;
   }
 }
+namespace kumi
+{
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          , typename Seq = std::make_index_sequence<size<Tuple>::value>
+          >
+  struct apply_traits;
+
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          , std::size_t... Is
+          >
+  requires( requires {typename Traits<element_t<Is,Tuple>...>::type;})
+  struct  apply_traits<Traits, Tuple, std::index_sequence<Is...>>
+  {
+    using type = typename Traits<element_t<Is,Tuple>...>::type;
+  };
+
+  template< template<typename...> typename Traits
+          , product_type Tuple
+          >
+  using apply_traits_t = typename apply_traits<Traits, Tuple>::type;
+}
 #undef KUMI_FWD
 #endif
