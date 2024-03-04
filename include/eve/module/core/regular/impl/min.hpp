@@ -36,24 +36,24 @@ namespace eve::detail
         {
           if constexpr( eve::platform::supports_invalids )
           {
-            if constexpr( scalar_value<T0> )
+            if constexpr(is_scalar)
             {
-              if( is_eqz(a0) && is_eqz(a1) ) return bit_and(a0, a1);
+              if( is_eqz(a0) && is_eqz(a1) ) return bit_or(a0, a1);
               return is_unordered(a0, a1) ? a0 : eve::min(a0, a1);
             }
             else
             {
               auto tmp = if_else(is_unordered(a0, a1), a0, eve::min(a0, a1));
-              return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
+              return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), tmp);
             }
           }
           else
           {
             if constexpr(is_scalar)
             {
-              return (is_eqz(a0) && is_eqz(a1) ? bit_and(a0, a1) : eve::min(a0, a1));
+              return (is_eqz(a0) && is_eqz(a1) ? bit_or(a0, a1) : eve::min(a0, a1));
             }
-            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), eve::min(a0, a1)); }
+            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1)); }
           }
         }
         else if  constexpr(O::contains(numeric2))  // numeric
@@ -62,22 +62,22 @@ namespace eve::detail
           {
             if constexpr(is_scalar)
             {
-              if( is_eqz(a0) && is_eqz(a1) ) return bit_and(a0, a1);
+              if( is_eqz(a0) && is_eqz(a1) ) return bit_or(a0, a1);
               return is_nan(a0) ? a1 : is_nan(a1) ? a0 : min(a0, a1);
             }
             else
             {
               auto tmp = if_else(is_nan(a0), a1, if_else(is_nan(a1), a0, min(a0, a1)));
-              return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
+              return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), tmp);
             }
           }
           else
           {
             if constexpr(is_scalar)
             {
-              return (is_eqz(a0) && is_eqz(a1) ? bit_and(a0, a1) : eve::min(a0, a1));
+              return (is_eqz(a0) && is_eqz(a1) ? bit_or(a0, a1) : eve::min(a0, a1));
             }
-            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), eve::min(a0, a1)); }
+            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1)); }
           }
         }
         else
@@ -125,27 +125,8 @@ namespace eve::detail
     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max[o];
     else
     {
-      return [f]<typename T0, typename T1, typename... Ts >(T0 x, T1 y){
-        return eve::if_else(f(x, y), x, y); };
+      return [f](auto x, auto y){
+        return eve::if_else(f(y, x), y, x); };
     };
   }
-
-//   template<typename Callable, callable_options O>
-//   EVE_FORCEINLINE constexpr auto
-//   min_(EVE_REQUIRES(cpu_), O const & o, Callable f) noexcept
-//   {
-//     if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::min[o];
-//     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max[o];
-//     else
-//     {
-//       return [f]<typename T0, typename T1, typename... Ts >(T0 a0, T1 a1, Ts... args){
-//         auto pred = [f](auto x,  auto y){ return eve::if_else(f(x, y), x, y); };
-//         using r_t = common_value_t<T0, T1, Ts...>;
-//         r_t that(pred(r_t(a0), r_t(a1)));
-//         ((that = pred(that, r_t(args))), ...);
-//         return that;
-//       };
-//     }
-//   }
-
 }
