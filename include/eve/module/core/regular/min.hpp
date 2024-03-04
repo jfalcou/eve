@@ -15,17 +15,18 @@ namespace eve
   template<typename Options>
   struct min_t : elementwise_callable<min_t, Options, pedantic_option, numeric_option>
   {
-    template<eve::floating_ordered_value T, floating_ordered_value U>
+    template<eve::ordered_value T, ordered_value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
 
-    template<eve::floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
+    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0,  t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr auto operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup> operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
     EVE_FORCEINLINE constexpr auto operator()(Callable f) const noexcept { return EVE_DISPATCH_CALL(f); }
@@ -109,18 +110,18 @@ inline constexpr auto min = functor<min_t>;
 
 #include <eve/module/core/regular/impl/min.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/min.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/core/regular/impl/simd/x86/min.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/min.hpp>
-#endif
+// #if defined(EVE_INCLUDE_POWERPC_HEADER)
+// #  include <eve/module/core/regular/impl/simd/ppc/min.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/min.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/neon/min.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/min.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/min.hpp>
+// #endif

@@ -19,97 +19,133 @@
 
 namespace eve::detail
 {
-// -----------------------------------------------------------------------------------------------
-// Regular
-template<ordered_value T, ordered_value U>
-EVE_FORCEINLINE auto
-min_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
--> common_value_t<T, U>
-{
-  return arithmetic_call(min, a, b);
-}
 
-template<ordered_value T>
-EVE_FORCEINLINE T
-min_(EVE_SUPPORTS(cpu_), T const& a0, T const& a1) noexcept
-{
-  if constexpr(scalar_value<T>)
-    return a0 < a1 ? a0 : a1;
-  else
-    return if_else(a0 < a1, a0, a1);
-}
+  template<typename T0, typename T1, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+  min_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+  {
+    using r_t = common_value_t<T0, T1, Ts...>;
+    if constexpr(sizeof...(Ts) == 0) // 2 parameters
+    {
+      if constexpr( has_native_abi_v<T0> )
+      {
+       constexpr bool is_scalar = scalar_value<r_t>;
+        auto a0 = r_t(r0);
+        auto a1 = r_t(r1);
+        if constexpr(O::contains(pedantic2)) //pedantic
+        {
+          if constexpr( eve::platform::supports_invalids )
+          {
+            if constexpr( scalar_value<T0> )
+            {
+              if( is_eqz(a0) && is_eqz(a1) ) return bit_and(a0, a1);
+              return is_unordered(a0, a1) ? a0 : eve::min(a0, a1);
+            }
+            else
+            {
+              auto tmp = if_else(is_unordered(a0, a1), a0, eve::min(a0, a1));
+              return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
+            }
+          }
+          else
+          {
+            if constexpr(is_scalar)
+            {
+              return (is_eqz(a0) && is_eqz(a1) ? bit_and(a0, a1) : eve::min(a0, a1));
+            }
+            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), eve::min(a0, a1)); }
+          }
+        }
+        else if  constexpr(O::contains(numeric2))  // numeric
+        {
+          if constexpr( eve::platform::supports_invalids )
+          {
+            if constexpr(is_scalar)
+            {
+              if( is_eqz(a0) && is_eqz(a1) ) return bit_and(a0, a1);
+              return is_nan(a0) ? a1 : is_nan(a1) ? a0 : min(a0, a1);
+            }
+            else
+            {
+              auto tmp = if_else(is_nan(a0), a1, if_else(is_nan(a1), a0, min(a0, a1)));
+              return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), tmp);
+            }
+          }
+          else
+          {
+            if constexpr(is_scalar)
+            {
+              return (is_eqz(a0) && is_eqz(a1) ? bit_and(a0, a1) : eve::min(a0, a1));
+            }
+            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_and(a0, a1), eve::min(a0, a1)); }
+          }
+        }
+        else
+        {
+          if constexpr(is_scalar)
+            return a0 < a1 ? a1 : a0;
+          else
+            return if_else(a0 < a1, a0, a1);
+        }
+      }
+      else
+        return arithmetic_call(min[o],  r_t(r0), r_t(r1));
+    }
+    else // N > 2 parameters
+    {
+      auto m = min[o];
+      r_t that(m(r_t(r0), r_t(r1)));
+      ((that = m(that, r_t(rs))), ...);
+      return that;
+    }
+  }
 
-//================================================================================================
-// Masked case
-//================================================================================================
-template<conditional_expr C, ordered_value U, ordered_value V>
-EVE_FORCEINLINE auto
-min_(EVE_SUPPORTS(cpu_),
-     C const& cond,
-     U const& t,
-     V const& f) noexcept  -> common_value_t<V, U>
-{
-  return mask_op(cond, eve::min, t, f);
-}
+  //================================================================================================
+  // tuples
+  //================================================================================================
+  template<kumi::non_empty_product_type Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto  min_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  {
+    if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
+    else
+    {
+      auto m = eve::min[o];
+      return kumi::apply( [&](auto... a) { return eve::min(a...); }, tup);
+    }
+  }
 
-//================================================================================================
-// N parameters
-//================================================================================================
-template<ordered_value T0, ordered_value T1, ordered_value... Ts>
-auto
-min_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
--> common_value_t<T0, T1, Ts...>
-{
-  using r_t = common_value_t<T0, T1, Ts...>;
-  r_t that(min(r_t(a0), r_t(a1)));
-  ((that = min(that, r_t(args))), ...);
-  return that;
-}
+  //================================================================================================
+  // Predicate case
+  //================================================================================================
+  template<typename Callable, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  min_(EVE_REQUIRES(cpu_), O const & o, Callable f) noexcept
+  {
+    if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::min[o];
+    else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max[o];
+    else
+    {
+      return [f]<typename T0, typename T1, typename... Ts >(T0 x, T1 y){
+        return eve::if_else(f(x, y), x, y); };
+    };
+  }
 
-template<decorator D,  ordered_value... Ts>
-auto
-min_(EVE_SUPPORTS(cpu_), D const &, Ts... args)
-{
-  return min(args...);
-}
-
-//================================================================================================
-// N parameters masked
-//================================================================================================
-template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
-auto min_(EVE_SUPPORTS(cpu_), C const & cond, T0 a0, T1 a1, Ts... args) noexcept
-{
-  return mask_op(cond, eve::min, a0, a1, args...);
-}
-//================================================================================================
-// tuples
-//================================================================================================
-template<kumi::non_empty_product_type Ts>
-auto
-min_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return kumi::apply( [&](auto... m) { return min(m...); }, tup);
-}
-
-template<decorator D, kumi::non_empty_product_type Ts>
-auto
-min_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return kumi::apply( [&](auto... m) { return d(min)(m...); }, tup);
-}
-
-//================================================================================================
-// Predicate case
-//================================================================================================
-template<typename Callable>
-EVE_FORCEINLINE auto
-min_(EVE_SUPPORTS(cpu_), Callable f)
-{
-  if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::min;
-  else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max;
-  else return [f](auto x, auto y) { return if_else(f(y, x), y, x); };
-}
+//   template<typename Callable, callable_options O>
+//   EVE_FORCEINLINE constexpr auto
+//   min_(EVE_REQUIRES(cpu_), O const & o, Callable f) noexcept
+//   {
+//     if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::min[o];
+//     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max[o];
+//     else
+//     {
+//       return [f]<typename T0, typename T1, typename... Ts >(T0 a0, T1 a1, Ts... args){
+//         auto pred = [f](auto x,  auto y){ return eve::if_else(f(x, y), x, y); };
+//         using r_t = common_value_t<T0, T1, Ts...>;
+//         r_t that(pred(r_t(a0), r_t(a1)));
+//         ((that = pred(that, r_t(args))), ...);
+//         return that;
+//       };
+//     }
+//   }
 
 }
