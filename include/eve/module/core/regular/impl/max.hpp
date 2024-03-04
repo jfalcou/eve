@@ -154,32 +154,11 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   max_(EVE_REQUIRES(cpu_), O const & o, const Callable f) noexcept
   {
-    std::cout << " =================== " << pipo::typename_ < Callable >  << std::endl;
-    std::cout << " =================== " << pipo::typename_ < decltype(eve::is_less) >  << std::endl;
-    if constexpr( std::same_as<Callable, decltype(eve::is_less)> ) return eve::max;
-    else if constexpr( std::same_as<Callable, decltype(eve::is_greater)> ) return eve::min;
+    if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_less)>> ) return eve::max;
+    else if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_greater)>> ) return eve::min;
     else
     {
-      return [f]<typename T0, typename T1, typename... Ts >(T0 x, T1 y){
-        return eve::if_else(f(x, y), x, y); };
+      return [f](auto x, auto y){ return eve::if_else(f(y, x), x, y); };
     };
   }
-
-//   template<typename Callable, callable_options O>
-//   EVE_FORCEINLINE constexpr auto
-//   max_(EVE_REQUIRES(cpu_), O const & o, Callable f) noexcept
-//   {
-//     if constexpr( std::same_as<Callable, decltype(is_less)> ) return eve::max[o];
-//     else if constexpr( std::same_as<Callable, decltype(is_greater)> ) return eve::min[o];
-//     else
-//     {
-//       return [f]<typename T0, typename T1, typename... Ts >(T0 a0, T1 a1, Ts... args){
-//         auto pred = [f](auto x,  auto y){ return eve::if_else(f(x, y), x, y); };
-//         using r_t = common_value_t<T0, T1, Ts...>;
-//         r_t that(pred(r_t(a0), r_t(a1)));
-//         ((that = pred(that, r_t(args))), ...);
-//         return that;
-//       };
-//     }
-//   }
 }

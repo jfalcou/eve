@@ -90,16 +90,16 @@ TTS_CASE_WITH("Check predicate version of max",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmin),
                             tts::randoms(eve::valmin, eve::valmin)))
-<typename T>(T const& , T const& )
+<typename T>(T const& a0, T const& a1)
 {
-//   TTS_EXPR_IS(eve::max(eve::is_less), decltype(eve::max));
-//   TTS_EQUAL(eve::max(eve::is_less)(a0, a1), eve::max(a0, a1));
+//  TTS_EXPR_IS(eve::max(eve::is_less), decltype(eve::max));
+  TTS_EQUAL(eve::max(eve::is_less)(a0, a1), eve::max(a0, a1));
 
-//   TTS_EXPR_IS(eve::max(eve::is_greater), decltype(eve::min));
-//   TTS_EQUAL(eve::max(eve::is_greater)(a0, a1), eve::min(a0, a1));
+//  TTS_EXPR_IS(eve::max(eve::is_greater), decltype(eve::min));
+  TTS_EQUAL(eve::max(eve::is_greater)(a0, a1), eve::min(a0, a1));
 
-//   auto pred = [](auto a, auto b) { return eve::abs(a) < eve::abs(b); };
-//   TTS_EQUAL(eve::max(pred)(a0, a1), eve::if_else(pred(a0, a1), a1, a0));
+  auto pred = [](auto a, auto b) { return eve::abs(a) < eve::abs(b); };
+  TTS_EQUAL(eve::max(pred)(a0, a1), eve::if_else(pred(a0, a1), a1, a0));
 
   // Check for stability a la Stepanov
   using e_t = eve::element_type_t<T>;
