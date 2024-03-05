@@ -127,7 +127,7 @@ namespace eve::detail
   //================================================================================================
   template<typename Callable, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  max_(EVE_REQUIRES(cpu_), O const & o, const Callable f) noexcept
+  max_(EVE_REQUIRES(cpu_), O const & o, Callable const & f) noexcept
   {
     if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_less)>> ) return eve::max;
     else if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_greater)>> ) return eve::min;

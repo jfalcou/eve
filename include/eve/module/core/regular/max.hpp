@@ -30,7 +30,8 @@ namespace eve
     operator()(Tup const & t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
-    EVE_FORCEINLINE constexpr auto operator()(Callable f) const noexcept { return EVE_DISPATCH_CALL(f); }
+    requires(!kumi::product_type<Callable> && !eve::ordered_value<Callable>)
+    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
 
     EVE_CALLABLE_OBJECT(max_t, max_);
   };
