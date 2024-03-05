@@ -57,6 +57,8 @@ TTS_CASE_WITH("Check behavior of max on all types full range",
   TTS_ULP_EQUAL(max[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(max[t](a0, a1), eve::if_else(t, max(a0, a1), a0));
+
+   TTS_ULP_EQUAL(max(kumi::tuple{a0, a1, a2}), max((a0), (a1), (a2)), 2);
 };
 
 TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals)

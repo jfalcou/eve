@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/numeric/absmax.hpp>
-#include <eve/module/core/numeric/absmin.hpp>
+//#include <eve/module/core/numeric/absmax.hpp>
+//#include <eve/module/core/numeric/absmin.hpp>
 #include <eve/module/core/numeric/fam.hpp>
 #include <eve/module/core/numeric/fanm.hpp>
 #include <eve/module/core/numeric/fma.hpp>

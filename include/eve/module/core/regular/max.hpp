@@ -27,7 +27,7 @@ namespace eve
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const & t) const noexcept { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
     EVE_FORCEINLINE constexpr auto operator()(Callable f) const noexcept { return EVE_DISPATCH_CALL(f); }

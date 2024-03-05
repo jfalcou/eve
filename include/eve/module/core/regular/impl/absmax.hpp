@@ -14,93 +14,128 @@
 
 namespace eve::detail
 {
-template<ordered_value T, ordered_value U>
-EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
--> decltype(eve::abs(eve::max(a, b)))
-{
-  return arithmetic_call(absmax, a, b);
-}
+  template<typename T0, typename T1, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+  absmax_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+  {
+    auto tmp1 =  rbr::drop(saturated2, o);
+    auto omax = options<decltype(tmp1)>{tmp1};
 
-template<ordered_value T>
-EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
--> decltype(eve::abs(a))
-{
-  if constexpr(has_native_abi_v<T>)
-    return eve::abs(eve::max(a, b));
-  else
-    return apply_over(absmax, a, b);
-}
+    auto tmp2 =  rbr::drop(pedantic2, o);
+    auto oabs1 = options<decltype(tmp2)>{tmp2};
+    auto tmp3 =  rbr::drop(numeric2, oabs1);
+    auto oabs = options<decltype(tmp3)>{tmp3};
 
-//================================================================================================
-// Masked case
-//================================================================================================
-template<decorator D, conditional_expr C, ordered_value U, ordered_value V>
-EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
--> decltype(absmax(t, f))
-{
-  return mask_op(cond, D()(eve::absmax), t, f);
-}
 
-template<conditional_expr C, ordered_value U, ordered_value V>
-EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_),
-        C const& cond,
-        U const& t,
-        V const& f) noexcept
--> decltype(absmax(t, f))
-{
-  return mask_op(cond, eve::absmax, t, f);
-}
+     return eve::abs[oabs](eve::max[omax](r0, r1, rs...));
+  }
 
-//================================================================================================
-// N parameters
-//================================================================================================
-template<ordered_value T0, ordered_value T1, ordered_value... Ts>
-auto
-absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
--> decltype(eve::abs(eve::max(a0, a1, args...)))
-{
-  return eve::abs(eve::max(a0, a1, args...));
-}
+  //================================================================================================
+  // tuples
+  //================================================================================================
+  template<kumi::non_empty_product_type Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  absmax_(EVE_REQUIRES(cpu_), O const & , Ts tup) noexcept
+  {
+//     auto tmp1 =  rbr::drop(saturated2, o);
+//     auto omax = options<decltype(tmp1)>{tmp1};
+
+//     auto tmp2 =  rbr::drop(pedantic2, o);
+//     auto oabs1 = options<decltype(tmp2)>{tmp2};
+//     auto tmp3 =  rbr::drop(numeric2, oabs1);
+//     auto oabs = options<decltype(tmp3)>{tmp3};
+
+//     return eve::abs[oabs](eve::max[omax](tup));
+    return /*eve::abs*/(eve::max(tup));
+  }
+
+// template<ordered_value T, ordered_value U>
+// EVE_FORCEINLINE auto
+// absmax_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+// -> decltype(eve::abs(eve::max(a, b)))
+// {
+//   return arithmetic_call(absmax, a, b);
+// }
+
+// template<ordered_value T>
+// EVE_FORCEINLINE auto
+// absmax_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
+// -> decltype(eve::abs(a))
+// {
+//   if constexpr(has_native_abi_v<T>)
+//     return eve::abs(eve::max(a, b));
+//   else
+//     return apply_over(absmax, a, b);
+// }
+
+// //================================================================================================
+// // Masked case
+// //================================================================================================
+// template<decorator D, conditional_expr C, ordered_value U, ordered_value V>
+// EVE_FORCEINLINE auto
+// absmax_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
+// -> decltype(absmax(t, f))
+// {
+//   return mask_op(cond, D()(eve::absmax), t, f);
+// }
+
+// template<conditional_expr C, ordered_value U, ordered_value V>
+// EVE_FORCEINLINE auto
+// absmax_(EVE_SUPPORTS(cpu_),
+//         C const& cond,
+//         U const& t,
+//         V const& f) noexcept
+// -> decltype(absmax(t, f))
+// {
+//   return mask_op(cond, eve::absmax, t, f);
+// }
+
+// //================================================================================================
+// // N parameters
+// //================================================================================================
+// template<ordered_value T0, ordered_value T1, ordered_value... Ts>
+// auto
+// absmax_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
+// -> decltype(eve::abs(eve::max(a0, a1, args...)))
+// {
+//   return eve::abs(eve::max(a0, a1, args...));
+// }
 
 //================================================================================================
 // tuples
 //================================================================================================
-template<kumi::non_empty_product_type Ts>
-auto
-absmax_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
-  else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
-}
+// template<kumi::non_empty_product_type Ts>
+// auto
+// absmax_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
+// {
+//   if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+//   else return eve::abs(kumi::apply( [&](auto... m) { return max(m...); }, tup));
+// }
 
-template<decorator D, kumi::non_empty_product_type Ts>
-auto
-absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
-{
-  if constexpr(std::same_as<D,saturated_type>)
-  {
-    if constexpr( kumi::size_v<Ts> == 1) return eve::abs[d](get<0>(tup));
-    else return eve::abs[d](kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
-  }
-  else
-  {
-    if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
-    else return eve::abs(kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
-  }
-}
+// template<decorator D, kumi::non_empty_product_type Ts>
+// auto
+// absmax_(EVE_SUPPORTS(cpu_), D const & d, Ts tup)
+// {
+//   if constexpr(std::same_as<D,saturated_type>)
+//   {
+//     if constexpr( kumi::size_v<Ts> == 1) return eve::abs[d](get<0>(tup));
+//     else return eve::abs[d](kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+//   }
+//   else
+//   {
+//     if constexpr( kumi::size_v<Ts> == 1) return eve::abs(get<0>(tup));
+//     else return eve::abs(kumi::apply( [&](auto... m) { return d(max)(m...); }, tup));
+//   }
+// }
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
-template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
-EVE_FORCEINLINE auto
-absmax_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
--> decltype(absmax(a0, a1, args...))
-{
-  return mask_op(cond, eve::absmax, a0, a1, args...);
-}
+// template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts>
+// EVE_FORCEINLINE auto
+// absmax_(EVE_SUPPORTS(cpu_), C const& cond, T0 a0, T1 a1, Ts... args) noexcept
+// -> decltype(absmax(a0, a1, args...))
+// {
+//   return mask_op(cond, eve::absmax, a0, a1, args...);
+// }
 
 }
