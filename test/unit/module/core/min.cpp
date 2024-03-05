@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of min on all types full range",
   auto m    = [](auto a, auto b, auto c) -> v_t { return std::min(std::min(a, b), c); };
   TTS_ULP_EQUAL(min((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(min[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(min[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min[eve::numeric2]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(min[t](a0, a1), eve::if_else(t, min(a0, a1), a0));
 };
@@ -62,27 +62,27 @@ TTS_CASE_TPL("Check values of min", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL(eve::min[eve::pedantic2](eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::min[eve::pedantic2](eve::nan(eve::as<v_t>()), T(1)), eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::min[eve::pedantic2](eve::nan(eve::as<T>()), v_t(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::min[eve::pedantic](eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::min[eve::pedantic](eve::nan(eve::as<v_t>()), T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::min[eve::pedantic](eve::nan(eve::as<T>()), v_t(1)), eve::nan(eve::as<T>()));
 
-  TTS_IEEE_EQUAL(eve::min[eve::pedantic2](T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::min[eve::pedantic2](v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::min[eve::pedantic2](T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::pedantic](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::pedantic](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::pedantic](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::pedantic2](T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::pedantic2](T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::pedantic](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::pedantic](T(0), T(-0.)))));
 
-  TTS_IEEE_EQUAL(eve::min[eve::numeric2]((eve::nan(eve::as<T>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::min[eve::numeric2]((eve::nan(eve::as<v_t>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::min[eve::numeric2]((eve::nan(eve::as<T>())), v_t(1)), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(1));
 
-  TTS_IEEE_EQUAL(eve::min[eve::numeric2](T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::min[eve::numeric2](v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::min[eve::numeric2](T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::numeric](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::min[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::numeric2](T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::numeric2](T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::numeric](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::min[eve::numeric](T(0), T(-0.)))));
 };
 
 TTS_CASE_WITH("Check predicate version of min",

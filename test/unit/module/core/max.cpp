@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of max on all types full range",
   auto m    = [](auto a, auto b, auto c) -> v_t { return std::max(std::max(a, b), c); };
   TTS_ULP_EQUAL(max((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(max[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-//  TTS_ULP_EQUAL(max[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(max[t](a0, a1), eve::if_else(t, max(a0, a1), a0));
 };
@@ -74,16 +74,16 @@ TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals)
   TTS_EXPECT(eve::all(eve::is_positive(eve::max[eve::pedantic](T(-0.), T(0)))));
   TTS_EXPECT(eve::all(eve::is_positive(eve::max[eve::pedantic](T(0), T(-0.)))));
 
-//   TTS_IEEE_EQUAL(eve::max[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(1));
-//   TTS_IEEE_EQUAL(eve::max[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(1));
-//   TTS_IEEE_EQUAL(eve::max[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(1));
+  TTS_IEEE_EQUAL(eve::max[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::max[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::max[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(1));
 
-//   TTS_IEEE_EQUAL(eve::max[eve::numeric](T(1), eve::nan(eve::as<T>())), T(1));
-//   TTS_IEEE_EQUAL(eve::max[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(1));
-//   TTS_IEEE_EQUAL(eve::max[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::max[eve::numeric](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::max[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::max[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-//   TTS_EXPECT(eve::all(eve::is_positive(eve::max[eve::numeric](T(-0.), T(0)))));
-//   TTS_EXPECT(eve::all(eve::is_positive(eve::max[eve::numeric](T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::max[eve::numeric](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::max[eve::numeric](T(0), T(-0.)))));
 };
 
 TTS_CASE_WITH("Check predicate version of max",
