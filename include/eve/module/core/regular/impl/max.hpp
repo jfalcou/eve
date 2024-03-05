@@ -20,36 +20,40 @@
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/min.hpp>
-#include <iostream>
+#include <eve/module/core/decorator/numeric.hpp>
+#include <eve/module/core/decorator/pedantic.hpp>
 
-#include <string_view>
-#include <string>
-namespace pipo
-{
-  namespace detail
-  {
-    template<typename T> struct typename_impl
-    {
-      static auto value() noexcept
-      {
-#if defined(_MSC_VER )
-        std::string_view data(__FUNCSIG__);
-        auto i = data.find('<') + 1,
-          j = data.find(">::value");
-        auto name = data.substr(i, j - i);
-#else
-        std::string_view data(__PRETTY_FUNCTION__);
-        auto i = data.find('=') + 2,
-          j = data.find_last_of(']');
-        auto name = data.substr(i, j - i);
-#endif
-        return std::string(name.data(), name.size());
-      }
-    };
-  }
-  template<typename T> inline auto const typename_ = detail::typename_impl<T>::value();
-  template<typename T> constexpr auto name(T const&){ return typename_<T>; }
-}
+
+// #include <iostream>
+
+// #include <string_view>
+// #include <string>
+// namespace pipo
+// {
+//   namespace detail
+//   {
+//     template<typename T> struct typename_impl
+//     {
+//       static auto value() noexcept
+//       {
+// #if defined(_MSC_VER )
+//         std::string_view data(__FUNCSIG__);
+//         auto i = data.find('<') + 1,
+//           j = data.find(">::value");
+//         auto name = data.substr(i, j - i);
+// #else
+//         std::string_view data(__PRETTY_FUNCTION__);
+//         auto i = data.find('=') + 2,
+//           j = data.find_last_of(']');
+//         auto name = data.substr(i, j - i);
+// #endif
+//         return std::string(name.data(), name.size());
+//       }
+//     };
+//   }
+//   template<typename T> inline auto const typename_ = detail::typename_impl<T>::value();
+//   template<typename T> constexpr auto name(T const&){ return typename_<T>; }
+// }
 
 namespace eve::detail
 {
@@ -65,9 +69,12 @@ namespace eve::detail
         constexpr bool is_scalar = scalar_value<r_t>;
         auto a0 = r_t(r0);
         auto a1 = r_t(r1);
+
         if constexpr(O::contains(pedantic2)) //pedantic
         {
-          if constexpr( eve::platform::supports_invalids )
+          if constexpr( integral_value<r_t> )
+            return max(a0, a1);
+          else if constexpr( eve::platform::supports_invalids )
           {
             if constexpr(is_scalar)
             {
@@ -91,7 +98,9 @@ namespace eve::detail
         }
         else if  constexpr(O::contains(numeric2))  // numeric
         {
-          if constexpr( eve::platform::supports_invalids )
+          if constexpr( integral_value<r_t> )
+            return max(a0, a1);
+          else if constexpr( eve::platform::supports_invalids )
           {
             if constexpr(is_scalar)
             {
@@ -137,7 +146,7 @@ namespace eve::detail
   // tuples
   //================================================================================================
   template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto  max_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  EVE_FORCEINLINE constexpr auto max_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
   {
     if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
     else

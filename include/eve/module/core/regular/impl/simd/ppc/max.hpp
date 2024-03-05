@@ -14,12 +14,16 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N>
                 max_(EVE_SUPPORTS(vmx_),
+                     O const& opts,
                      wide<T, N> const                &v0,
                      wide<T, N> const                &v1) noexcept requires ppc_abi<abi_t<T, N>>
 {
-  return vec_max(v0.storage(), v1.storage());
+   if constexpr(O::contains(numeric2) || O::contains(pedantic2))
+      return max_(EVE_TARGETS(cpu_), opts, v0, v1);
+    else
+      return vec_max(v0.storage(), v1.storage());
 }
 }
