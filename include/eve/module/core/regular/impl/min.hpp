@@ -83,7 +83,7 @@ namespace eve::detail
         else
         {
           if constexpr(is_scalar)
-            return a0 < a1 ? a1 : a0;
+            return a0 < a1 ? a0: a1;
           else
             return if_else(a0 < a1, a0, a1);
         }

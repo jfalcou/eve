@@ -26,8 +26,6 @@
 #include <eve/module/core/pedantic/minabs.hpp>
 #include <eve/module/core/pedantic/minmag.hpp>
 #include <eve/module/core/pedantic/modf.hpp>
-#include <eve/module/core/pedantic/negabsmax.hpp>
-#include <eve/module/core/pedantic/negabsmin.hpp>
 #include <eve/module/core/pedantic/negatenz.hpp>
 #include <eve/module/core/pedantic/negmaxabs.hpp>
 #include <eve/module/core/pedantic/negminabs.hpp>

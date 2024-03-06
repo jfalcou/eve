@@ -20,8 +20,6 @@
 #include <eve/module/core/saturated/minmag.hpp>
 #include <eve/module/core/saturated/minus.hpp>
 #include <eve/module/core/saturated/mul.hpp>
-#include <eve/module/core/saturated/negabsmax.hpp>
-#include <eve/module/core/saturated/negabsmin.hpp>
 #include <eve/module/core/saturated/negmaxabs.hpp>
 #include <eve/module/core/saturated/negminabs.hpp>
 #include <eve/module/core/saturated/oneminus.hpp>

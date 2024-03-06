@@ -22,7 +22,5 @@
 #include <eve/module/core/numeric/maxmag.hpp>
 #include <eve/module/core/numeric/minabs.hpp>
 #include <eve/module/core/numeric/minmag.hpp>
-#include <eve/module/core/numeric/negabsmax.hpp>
-#include <eve/module/core/numeric/negabsmin.hpp>
 #include <eve/module/core/numeric/negmaxabs.hpp>
 #include <eve/module/core/numeric/negminabs.hpp>
