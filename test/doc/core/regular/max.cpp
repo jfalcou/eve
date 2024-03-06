@@ -29,15 +29,15 @@ int main()
             << "<- yf                     = " << yf << '\n'
             << "-> max(xf, yf) =          = " << eve::max(xf, yf) << '\n';
 
-  auto k = kumi::tuple{pf, qf, pf+qf, 1.0f};
-  std::cout << "---- multi parameters" << '\n'
-            << " -> max(k)                                = " << eve::max(k) << '\n'
-            << " -> max(kumi::tuple{pf, pf, 1.0f})        = " << eve::max( kumi::tuple{pf, qf, 1.0f}) << '\n'
-            << " -> max(kumi::tuple{1.0f, pf, pf})        = " << eve::max( kumi::tuple{1.0f, pf, qf}) << '\n'
-            << " -> max[numeric](kumi::tuple{1.0f, pf, qf)= " << eve::max[eve::numeric2]( kumi::tuple{1.0f, pf,qf}) << '\n'
-            << " -> max(kumi::tuple{pf, 1.0f)             = " << eve::max( kumi::tuple{pf, 1.0f}) << '\n'
-            << " -> max(kumi::tuple{1.0f, pf)             = " << eve::max( kumi::tuple{1.0f, pf}) << '\n'
-            << " -> max[numeric](kumi::tuple{1.0f, pf)    = " << eve::max[eve::numeric2]( kumi::tuple{1.0f, pf}) << '\n'
-            << " -> max(eve::is_greater)(pf, qf)          = " << eve::max(eve::is_greater)(pf, qf) << '\n';
+//   auto k = kumi::tuple{pf, qf, pf+qf, 1.0f};
+//   std::cout << "---- multi parameters" << '\n'
+//             << " -> max(k)                                = " << eve::max(k) << '\n'
+//             << " -> max(kumi::tuple{pf, pf, 1.0f})        = " << eve::max( kumi::tuple{pf, qf, 1.0f}) << '\n'
+//             << " -> max(kumi::tuple{1.0f, pf, pf})        = " << eve::max( kumi::tuple{1.0f, pf, qf}) << '\n'
+//             << " -> max[numeric](kumi::tuple{1.0f, pf, qf)= " << eve::max[eve::numeric2]( kumi::tuple{1.0f, pf,qf}) << '\n'
+//             << " -> max(kumi::tuple{pf, 1.0f)             = " << eve::max( kumi::tuple{pf, 1.0f}) << '\n'
+//             << " -> max(kumi::tuple{1.0f, pf)             = " << eve::max( kumi::tuple{1.0f, pf}) << '\n'
+//             << " -> max[numeric](kumi::tuple{1.0f, pf)    = " << eve::max[eve::numeric2]( kumi::tuple{1.0f, pf}) << '\n'
+//             << " -> max(eve::is_greater)(pf, qf)          = " << eve::max(eve::is_greater)(pf, qf) << '\n';
   return 0;
 }
