@@ -22,9 +22,8 @@ namespace eve
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(absmin_t, absmin_);
   };

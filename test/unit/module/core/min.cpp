@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of min on all types full range",
   auto m    = [](auto a, auto b, auto c) -> v_t { return std::min(std::min(a, b), c); };
   TTS_ULP_EQUAL(min((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(min[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(min[eve::numeric2]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(min[t](a0, a1), eve::if_else(t, min(a0, a1), a0));
 };

@@ -41,6 +41,20 @@ namespace eve
 
     template <typename... Options>
     constexpr EVE_FORCEINLINE explicit options(rbr::settings<Options...> const& opts) : Settings(opts) {}
+
+    template <rbr::concepts::keyword K>
+    constexpr EVE_FORCEINLINE auto drop(K const& k) const noexcept
+    {
+      auto dropped = rbr::drop(k, *this);
+      return options<decltype(dropped)>{dropped};
+    }
+
+    template <rbr::concepts::keyword K0, rbr::concepts::keyword... Ks>
+    constexpr EVE_FORCEINLINE auto drop(K0 const& k0, Ks const&... ks) const noexcept
+    {
+      auto dropped = rbr::drop(k0, *this);
+      return options<decltype(dropped)>{dropped}.drop(ks...);
+    }
   };
 
   template <rbr::concepts::option ... Options>

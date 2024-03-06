@@ -65,7 +65,7 @@ TTS_CASE_WITH("Check behavior of absmin on all types full range",
   TTS_ULP_EQUAL(eve::absmin[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::absmin[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::absmin[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::absmin[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::absmin[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::absmin[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);

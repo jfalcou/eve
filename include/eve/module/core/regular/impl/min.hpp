@@ -105,14 +105,9 @@ namespace eve::detail
   // tuples
   //================================================================================================
   template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto  min_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  EVE_FORCEINLINE constexpr auto  min_(EVE_REQUIRES(cpu_), O const & o, Ts const& tup) noexcept
   {
-    if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-    else
-    {
-      auto m = eve::min[o];
-      return kumi::apply( [&](auto... a) { return eve::min(a...); }, tup);
-    }
+    return kumi::apply( [&](auto... a) { return eve::min[o](a...); }, tup);
   }
 
   //================================================================================================
@@ -120,9 +115,9 @@ namespace eve::detail
   //================================================================================================
   template<typename Callable, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  min_(EVE_REQUIRES(cpu_), O const & o, Callable f) noexcept
+  min_(EVE_REQUIRES(cpu_), O const & o, Callable const& f) noexcept
   {
-    if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::min[o];
+    if      constexpr( std::same_as<Callable, callable_is_less_>    ) return eve::min[o];
     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max[o];
     else
     {

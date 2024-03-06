@@ -38,8 +38,7 @@ namespace eve::detail
 
         if constexpr(O::contains(pedantic2)) //pedantic
         {
-          if constexpr( integral_value<r_t> )
-            return max(a0, a1);
+          if      constexpr( integral_value<r_t> ) return max(a0, a1);
           else if constexpr( eve::platform::supports_invalids )
           {
             if constexpr(is_scalar)
@@ -64,8 +63,7 @@ namespace eve::detail
         }
         else if  constexpr(O::contains(numeric2))  // numeric
         {
-          if constexpr( integral_value<r_t> )
-            return max(a0, a1);
+          if      constexpr( integral_value<r_t> )  return max(a0, a1);
           else if constexpr( eve::platform::supports_invalids )
           {
             if constexpr(is_scalar)
@@ -90,10 +88,8 @@ namespace eve::detail
         }
         else
         {
-          if constexpr(is_scalar)
-            return a0 < a1 ? a1 : a0;
-          else
-            return if_else(a0 < a1, a1, a0);
+          if constexpr(is_scalar) return a0 < a1 ? a1 : a0;
+          else                    return if_else(a0 < a1, a1, a0);
         }
       }
       else
@@ -112,8 +108,7 @@ namespace eve::detail
   // tuples
   //================================================================================================
   template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto max_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
-  //  requires (kumi::size_v<Ts> >=  2)
+  EVE_FORCEINLINE constexpr auto max_(EVE_REQUIRES(cpu_), O const & o, Ts const& tup) noexcept
   {
     return kumi::apply( [&](auto... a) { return eve::max[o](a...); }, tup);
   }
@@ -125,7 +120,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   max_(EVE_REQUIRES(cpu_), O const & o, Callable const & f) noexcept
   {
-    if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_less)>> ) return eve::max;
+    if      constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_less)>>    ) return eve::max;
     else if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_greater)>> ) return eve::min;
     else
     {
