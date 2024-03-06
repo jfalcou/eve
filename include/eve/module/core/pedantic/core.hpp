@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-// #include <eve/module/core/pedantic/absmax.hpp>
-// #include <eve/module/core/pedantic/absmin.hpp>
 #include <eve/module/core/pedantic/diff_of_prod.hpp>
 #include <eve/module/core/pedantic/fam.hpp>
 #include <eve/module/core/pedantic/fanm.hpp>

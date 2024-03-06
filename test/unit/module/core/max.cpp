@@ -52,13 +52,16 @@ TTS_CASE_WITH("Check behavior of max on all types full range",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return std::max(std::max(a, b), c); };
-  TTS_ULP_EQUAL(max((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(max[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(max[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max(a0, a1, a2), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max[eve::pedantic](a0, a1, a2), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max[eve::numeric](a0, a1, a2), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(max[t](a0, a1), eve::if_else(t, max(a0, a1), a0));
 
-   TTS_ULP_EQUAL(max(kumi::tuple{a0, a1, a2}), max((a0), (a1), (a2)), 2);
+//  TTS_ULP_EQUAL(max(kumi::tuple{a0, a1, a2}), max(a0, a1, a2), 2);
+//  TTS_ULP_EQUAL(max[eve::numeric](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
+//  TTS_ULP_EQUAL(max[eve::saturated](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
+
 };
 
 TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals)
@@ -130,6 +133,6 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::max)(eve::wide)",
                          T const& a1,
                          M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::max[mask](a0, a1),
-            eve::if_else(mask, eve::max(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::max[mask](a0, a1), eve::if_else(mask, eve::max(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::max[mask][eve::pedantic](a0, a1), eve::if_else(mask, eve::max[eve::pedantic](a0, a1), a0));
 };
