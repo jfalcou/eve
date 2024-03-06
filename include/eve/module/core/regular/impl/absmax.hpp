@@ -36,6 +36,7 @@ namespace eve::detail
   template<kumi::non_empty_product_type Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto
   absmax_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  //  requires (kumi::size_v<Ts> >=  2)
   {
     auto tmp1 =  rbr::drop(saturated2, o);
     auto omax = options<decltype(tmp1)>{tmp1};

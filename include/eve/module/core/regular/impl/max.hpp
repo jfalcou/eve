@@ -113,13 +113,9 @@ namespace eve::detail
   //================================================================================================
   template<kumi::non_empty_product_type Ts, callable_options O>
   EVE_FORCEINLINE constexpr auto max_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  //  requires (kumi::size_v<Ts> >=  2)
   {
-    if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-    else
-    {
-      auto m = eve::max[o];
-      return kumi::apply( [&](auto... a) { return eve::max(a...); }, tup);
-    }
+    return kumi::apply( [&](auto... a) { return eve::max[o](a...); }, tup);
   }
 
   //================================================================================================
