@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct min_t : elementwise_callable<min_t, Options, pedantic_option, numeric_option>
+  struct min_t : tuple_callable<min_t, Options, pedantic_option, numeric_option>
   {
     template<eve::ordered_value T, ordered_value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }

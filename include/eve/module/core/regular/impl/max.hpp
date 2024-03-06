@@ -105,15 +105,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // tuples
-  //================================================================================================
-  template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto max_(EVE_REQUIRES(cpu_), O const & o, Ts const& tup) noexcept
-  {
-    return kumi::apply( [&](auto... a) { return eve::max[o](a...); }, tup);
-  }
-
-  //================================================================================================
   // Predicate case
   //================================================================================================
   template<typename Callable, callable_options O>
