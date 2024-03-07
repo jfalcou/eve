@@ -14,14 +14,8 @@
 #include <eve/module/core/saturated/dist.hpp>
 #include <eve/module/core/saturated/div.hpp>
 #include <eve/module/core/saturated/inc.hpp>
-#include <eve/module/core/saturated/maxabs.hpp>
-#include <eve/module/core/saturated/maxmag.hpp>
-#include <eve/module/core/saturated/minabs.hpp>
-#include <eve/module/core/saturated/minmag.hpp>
 #include <eve/module/core/saturated/minus.hpp>
 #include <eve/module/core/saturated/mul.hpp>
-#include <eve/module/core/saturated/negmaxabs.hpp>
-#include <eve/module/core/saturated/negminabs.hpp>
 #include <eve/module/core/saturated/oneminus.hpp>
 #include <eve/module/core/saturated/plus.hpp>
 #include <eve/module/core/saturated/sqr.hpp>

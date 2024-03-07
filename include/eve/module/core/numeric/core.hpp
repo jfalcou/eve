@@ -18,9 +18,3 @@
 #include <eve/module/core/numeric/is_equal.hpp>
 #include <eve/module/core/numeric/is_not_equal.hpp>
 #include <eve/module/core/numeric/lerp.hpp>
-#include <eve/module/core/numeric/maxabs.hpp>
-#include <eve/module/core/numeric/maxmag.hpp>
-#include <eve/module/core/numeric/minabs.hpp>
-#include <eve/module/core/numeric/minmag.hpp>
-#include <eve/module/core/numeric/negmaxabs.hpp>
-#include <eve/module/core/numeric/negminabs.hpp>

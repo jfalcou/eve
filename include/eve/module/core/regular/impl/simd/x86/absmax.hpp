@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> absmax_(EVE_SUPPORTS(avx512_),
+  EVE_FORCEINLINE wide<T, N> absmax_(EVE_REQUIRES(avx512_),
                                      O          const & opts,
                                      wide<T, N> const & v0,
                                      wide<T, N> const & v1) noexcept
@@ -44,7 +44,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> absmax_(EVE_SUPPORTS(avx512_),
+  EVE_FORCEINLINE wide<T, N> absmax_(EVE_REQUIRES(avx512_),
                                      C          const &cx,
                                      O          const &opts,
                                      wide<T, N> const &v,

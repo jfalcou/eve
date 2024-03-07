@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/regular/max.hpp>
@@ -22,83 +21,55 @@
 
 namespace eve::detail
 {
-template<value T, value U>
-EVE_FORCEINLINE auto
-maxmag_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
--> common_value_t<T, U>
-{
-  return arithmetic_call(maxmag, a, b);
-}
 
-template<value T>
-EVE_FORCEINLINE auto
-maxmag_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  auto aa = eve::abs(a);
-  auto bb = eve::abs(b);
-  if constexpr( simd_value<T> )
+  template<typename T0, typename T1, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+  maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
   {
-    auto tmp = if_else(is_not_greater_equal(aa, bb), b, eve::max(a, b));
-    return if_else(is_not_greater_equal(bb, aa), a, tmp);
+    using r_t = common_value_t<T0, T1, Ts...>;
+    auto maxo = max[o.drop(saturated2)];
+    auto abso =  abs[saturated];
+    if constexpr(sizeof...(Ts) == 0) // 2 parameters
+    {
+      if constexpr(O::contains(numeric2))
+      {
+        auto aaa = if_else(is_nan(a), b, a);
+        auto bbb = if_else(is_nan(b), a, b);
+        return eve::maxmag[pedantic2](aaa, bbb);
+      }
+      if constexpr( has_native_abi_v<r_t> )
+      {
+        auto ra = r_t(a);
+        auto rb = r_t(b);
+        constexpr bool is_scalar = scalar_value<r_t>;
+        auto aa = abso(ra);
+        auto bb = abso(rb);
+        if constexpr(is_scalar)
+        {
+          return aa < bb ? rb : bb < aa ? ra : maxo(ra, rb);
+        }
+        else
+        {
+          auto tmp = if_else(is_not_greater_equal(aa, bb), rb, maxo(ra, rb));
+          return if_else(is_not_greater_equal(bb, aa), ra, tmp);
+        }
+      }
+      else
+        return arithmetic_call(maxmag[o], r_t(a), r_t(b));
+    }
+    else // N > 2 parameters
+    {
+      r_t that(maxmag[o](r_t(a), r_t(b)));
+      ((that = eve::maxmag[o](that, r_t(cs))), ...);
+      return that;
+    }
   }
-  else { return aa < bb ? b : bb < aa ? a : eve::max(a, b); }
-}
 
-//================================================================================================
-// Masked case
-//================================================================================================
-template<conditional_expr C, value U, value... V>
-EVE_FORCEINLINE auto
-maxmag_(EVE_SUPPORTS(cpu_),
-        C const& cond,
-        U  t,
-        V ...f) noexcept
-{
-  return mask_op(cond, eve::maxmag, t, f...);
-}
 
-//================================================================================================
-// N parameters
-//================================================================================================
-template<decorator D, value T0, value T1, value... Ts>
-auto
-maxmag_(EVE_SUPPORTS(cpu_), D const&, T0 a0, T1 a1, Ts... args) noexcept
--> common_value_t<T0, T1, Ts...>
-{
-  using r_t = common_value_t<T0, T1, Ts...>;
-  r_t that(D()(maxmag)(r_t(a0), r_t(a1)));
-  ((that = D()(maxmag)(that, r_t(args))), ...);
-  return that;
-}
-
-template<value T0, value T1, value... Ts>
-auto
-maxmag_(EVE_SUPPORTS(cpu_), T0 a0, T1 a1, Ts... args) noexcept
--> common_value_t<T0, T1, Ts...>
-{
-  using r_t = common_value_t<T0, T1, Ts...>;
-  r_t that(maxmag(r_t(a0), r_t(a1)));
-  ((that = maxmag(that, r_t(args))), ...);
-  return that;
-}
-
-//================================================================================================
-// tuples
-//================================================================================================
-template<kumi::non_empty_product_type Ts>
-auto
-maxmag_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return kumi::apply( [&](auto... m) { return maxmag(m...); }, tup);
-}
-
-template<decorator D, kumi::non_empty_product_type Ts>
-auto
-maxmag_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return kumi::apply( [&](auto... m) { return d(maxmag)(m...); }, tup);
-}
+  template<kumi::non_empty_product_type Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto maxmag_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  {
+    return kumi::apply( [&](auto... a) { return eve::maxmag[o](a...); }, tup);
+  }
 
 }

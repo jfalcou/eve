@@ -9,9 +9,29 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct maxabs_t : elementwise_callable<maxabs_t, Options, numeric_option, pedantic_option, saturated_option>
+  {
+    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr  kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup t) const noexcept  requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(maxabs_t, maxabs_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -81,10 +101,25 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/maxabs.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(maxabs_, maxabs);
+inline constexpr auto maxabs = functor<maxabs_t>;
 }
 
-#include <eve/module/core/regular/impl/maxabs.hpp>
+namespace eve::detail
+{
+  template<typename T0, typename T1, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+  maxabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
+  {
+    auto abso = abs[o.drop(pedantic2,numeric2)];
+    return eve::max[o.drop(saturated2)](abso(a0), abso(a1), abso(as)...);
+  }
+
+  template<kumi::non_empty_product_type Ts, callable_options O>
+  EVE_FORCEINLINE constexpr auto maxabs_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
+  {
+    return kumi::apply( [&](auto... a) { return eve::maxabs[o](a...); }, tup);
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/maxabs.hpp>

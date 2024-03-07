@@ -21,14 +21,8 @@
 #include <eve/module/core/pedantic/is_not_flint.hpp>
 #include <eve/module/core/pedantic/lerp.hpp>
 #include <eve/module/core/pedantic/manhattan.hpp>
-#include <eve/module/core/pedantic/maxabs.hpp>
-#include <eve/module/core/pedantic/maxmag.hpp>
-#include <eve/module/core/pedantic/minabs.hpp>
-#include <eve/module/core/pedantic/minmag.hpp>
 #include <eve/module/core/pedantic/modf.hpp>
 #include <eve/module/core/pedantic/negatenz.hpp>
-#include <eve/module/core/pedantic/negmaxabs.hpp>
-#include <eve/module/core/pedantic/negminabs.hpp>
 #include <eve/module/core/pedantic/next.hpp>
 #include <eve/module/core/pedantic/nextafter.hpp>
 #include <eve/module/core/pedantic/prev.hpp>
