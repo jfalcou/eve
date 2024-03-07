@@ -30,7 +30,7 @@ lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts..
     {
       if( eve::all(p == P(2)) ) return pedantic(hypot)(a0, a1, args...);
       else if( eve::all(p == P(1)) ) return pedantic(manhattan)(a0, a1, args...);
-      else if( eve::all(p == eve::inf(as(p))) ) return numeric(maxabs)(a0, a1, args...);
+      else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric2](a0, a1, args...);
       else
       {
         auto rp = r_t(p);
@@ -39,7 +39,7 @@ lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts..
         r_t that = add(f(a0), f(a1), f(args)...);
         auto r = ldexp[pedantic](pow_abs(that, rec(rp)), -e);
         auto isinfp = is_infinite(rp);
-        auto rinf = numeric(maxabs)(a0, a1, args...);
+        auto rinf = maxabs[numeric](a0, a1, args...);
         return if_else(isinfp || is_infinite(rinf), rinf, r);
       }
     }
