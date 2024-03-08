@@ -77,7 +77,7 @@ namespace eve::detail
 {
   template<eve::floating_ordered_value T, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  cbrt_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
+  cbrt_(EVE_REQUIRES(cpu_), O const & , T x) noexcept
   {
     if constexpr( has_native_abi_v<T> )
     {
