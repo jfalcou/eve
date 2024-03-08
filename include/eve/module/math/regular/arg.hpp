@@ -8,9 +8,22 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/constant/pi.hpp>
+
 
 namespace eve
 {
+
+  template<typename Options>
+  struct arg_t : elementwise_callable<arg_t, Options, pedantic_option>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(arg_t, arg_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -48,7 +61,25 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(arg_, arg);
+inline constexpr auto arg = functor<arg_t>;
 }
 
-#include <eve/module/math/regular/impl/arg.hpp>
+
+namespace eve::detail
+{
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  arg_(EVE_REQUIRES(cpu_), O const & o, T a) noexcept
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
+      if constexpr( platform::supports_nans && O::contains(pedantic2))
+        return if_else(is_nan(a), eve::allbits, z);
+      else
+        return z;
+    }
+    else
+      return apply_over(arg[o], a);
+  }
+}
