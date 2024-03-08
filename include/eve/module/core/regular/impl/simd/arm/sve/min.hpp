@@ -16,7 +16,7 @@ namespace eve::detail
 {
   template<scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  min_(EVE_SUPPORTS(sve_), O const& opts, wide<T, N> const& a, wide<T, N> const& b) noexcept
+  min_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> const& a, wide<T, N> const& b) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))

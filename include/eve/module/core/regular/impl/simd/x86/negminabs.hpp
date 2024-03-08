@@ -16,7 +16,7 @@ namespace eve::detail
 {
 template<floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
-                negminabs_(EVE_SUPPORTS(avx512_),
+                negminabs_(EVE_REQUIRES(avx512_),
                            wide<T, N> const                &v0,
                            wide<T, N> const                &v1) noexcept requires x86_abi<abi_t<T, N>>
 {
@@ -37,7 +37,7 @@ EVE_FORCEINLINE wide<T, N>
 // Masked case
 template<conditional_expr C, floating_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N>
-                negminabs_(EVE_SUPPORTS(avx512_),
+                negminabs_(EVE_REQUIRES(avx512_),
                            C const                         &cx,
                            wide<T, N> const                &v,
                            wide<T, N> const                &w) noexcept requires x86_abi<abi_t<T, N>>

@@ -26,7 +26,7 @@ namespace eve::detail
 
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  min_(EVE_SUPPORTS(sse2_), O const& opts, wide<T, N> v0, wide<T, N> v1) noexcept
+  min_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v0, wide<T, N> v1) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
@@ -112,7 +112,7 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  min_(EVE_SUPPORTS(sse2_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
+  min_(EVE_REQUIRES(sse2_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
   -> wide<T, N>
   requires x86_abi<abi_t<T, N>>
   {
