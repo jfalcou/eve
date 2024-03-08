@@ -64,12 +64,4 @@ namespace eve::detail
       return that;
     }
   }
-
-
-  template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto maxmag_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
-  {
-    return kumi::apply( [&](auto... a) { return eve::maxmag[o](a...); }, tup);
-  }
-
 }

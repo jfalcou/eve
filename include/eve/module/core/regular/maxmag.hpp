@@ -14,7 +14,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct maxmag_t : elementwise_callable<maxmag_t, Options, numeric_option, pedantic_option, saturated_option>
+  struct maxmag_t : tuple_callable<maxmag_t, Options, numeric_option, pedantic_option, saturated_option>
   {
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept

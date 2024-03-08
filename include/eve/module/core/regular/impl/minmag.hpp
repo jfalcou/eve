@@ -22,7 +22,6 @@
 namespace eve::detail
 {
 
-
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   minmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
@@ -64,12 +63,5 @@ namespace eve::detail
       ((that = eve::minmag[o](that, r_t(cs))), ...);
       return that;
     }
-  }
-
-
-  template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto minmag_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
-  {
-    return kumi::apply( [&](auto... a) { return eve::minmag[o](a...); }, tup);
   }
 }

@@ -29,15 +29,4 @@ namespace eve::detail
     else
       return minus(absmin[o](r0, r1, rs...));
   }
-
-  //================================================================================================
-  // tuples
-  //================================================================================================
-  template<kumi::non_empty_product_type Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  negabsmin_(EVE_REQUIRES(cpu_), O const & o, Ts tup) noexcept
-  //  requires (kumi::size_v<Ts> >=  2)
-  {
-    return kumi::apply( [&](auto... a) { return eve::negabsmin[o](a...); }, tup);
-  }
 }

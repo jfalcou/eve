@@ -14,6 +14,8 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/max.hpp>
@@ -112,8 +114,7 @@ namespace eve::detail
     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max[o];
     else
     {
-      return [f](auto x, auto y){
-        return eve::if_else(f(y, x), y, x); };
+      return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
     };
   }
 }
