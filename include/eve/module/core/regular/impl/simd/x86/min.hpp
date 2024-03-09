@@ -116,7 +116,8 @@ namespace eve::detail
   -> wide<T, N>
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric2) || O::contains(pedantic2)) return min_(EVE_TARGETS(cpu_), opts, v, w);
+    if constexpr(O::contains(numeric2) || O::contains(pedantic2))
+      return min_(EVE_TARGETS(cpu_), opts, v, w);
     else
     {
       constexpr auto c    = categorize<wide<T, N>>();

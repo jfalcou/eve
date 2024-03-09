@@ -30,9 +30,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-    {
       return max_(EVE_TARGETS(cpu_), opts, v0, v1);
-    }
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -118,9 +116,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-    {
       return max_(EVE_TARGETS(cpu_), cx, opts, v, w);
-    }
     else
     {
       constexpr auto c    = categorize<wide<T, N>>();
