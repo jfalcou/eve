@@ -35,9 +35,9 @@ lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts..
       {
         auto rp = r_t(p);
         auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
-        auto f = [&](auto a){return pow_abs(pedantic(ldexp)(r_t(a), e), rp); };
+        auto f = [&](auto a){return pow_abs(ldexp[pedantic](r_t(a), e), rp); };
         r_t that = add(f(a0), f(a1), f(args)...);
-        auto r = pedantic(ldexp)(pow_abs(that, rec(rp)), -e);
+        auto r = ldexp[pedantic](pow_abs(that, rec(rp)), -e);
         auto isinfp = is_infinite(rp);
         auto rinf = numeric(maxabs)(a0, a1, args...);
         return if_else(isinfp || is_infinite(rinf), rinf, r);

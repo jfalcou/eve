@@ -44,7 +44,7 @@ exp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T x) noexcept
     if constexpr( std::is_same_v<elt_t, float> )
     {
       x      = fnma(c, Log_2lo, x);
-      auto y = 
+      auto y =
       eve::reverse_horner(x, T(0x1.000000p-1f), T(0x1.55534ap-3f), T(0x1.5552aep-5f), T(0x1.131b16p-7f), T(0x1.6ef19ep-10f))
       ;
       c      = inc(fma(y, sqr(x), x));
@@ -56,13 +56,13 @@ exp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T x) noexcept
       x       = hi - lo;
       auto t  = sqr(x);
       c       = fnma(t,
-               
+
                eve::reverse_horner(t, T(0x1.555555555553ep-3), T(-0x1.6c16c16bebd93p-9), T(0x1.1566aaf25de2cp-14), T(-0x1.bbd41c5d26bf1p-20), T(0x1.6376972bea4d0p-25))
                ,
                x); // x-h*t
       c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
     }
-    auto z = pedantic(ldexp)(c, k);
+    auto z = ldexp[pedantic](c, k);
     if constexpr( simd_value<T> )
     {
       z = if_else(xltminlog, eve::zero, z);

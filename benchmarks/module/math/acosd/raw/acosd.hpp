@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acosd) , xp, std__acosd , arg0);
-  run<EVE_VALUE>(EVE_NAME(raw(eve::acosd)) , xp, eve::raw(eve::acosd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(raw(eve::acosd)) , xp, eve::raw(eve::acosd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(eve::acosd[eve::raw]) , xp, eve::acosd[eve::raw]) , arg0);
+  run<EVE_TYPE> (EVE_NAME(eve::acosd[eve::raw]) , xp, eve::acosd[eve::raw]) , arg0);
 
 }

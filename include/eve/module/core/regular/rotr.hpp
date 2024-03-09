@@ -1,44 +1,68 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
 #include <eve/arch.hpp>
 #include <eve/assert.hpp>
+#include <eve/traits/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/abs.hpp>
-
-#include <type_traits>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/rotl.hpp>
 
 namespace eve
 {
-namespace tag
-{
-  struct rotr_;
+  template<typename Options>
+  struct rotr_t : elementwise_callable<rotr_t, Options>
+  {
+    template<eve::integral_value T, eve::integral_value S>
+    requires(unsigned_scalar_value<element_type_t<T>>)
+    constexpr EVE_FORCEINLINE as_wide_as_t<T,S> operator()(T v, S s) const
+    {
+      constexpr int l [[maybe_unused]] = sizeof(element_type_t<T>) * 8;
+      EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(s))
+                , "[eve::rotr] Rotating by "  << s << " is out of the range ]" << -l << ", " << l << "[."
+                );
+
+      return EVE_DISPATCH_CALL(v,s);
+    }
+
+    template<eve::integral_value T, auto S>
+    requires(unsigned_scalar_value<element_type_t<T>>)
+    constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
+    {
+      constexpr int l = sizeof(element_type_t<T>) * 8;
+      static_assert(eve::abs(S) < l, "[eve::rotr] Rotation is out of range.");
+
+      return EVE_DISPATCH_CALL(v,s);
+    }
+
+    EVE_CALLABLE_OBJECT(rotr_t, rotr_);
+  };
+
+  inline constexpr auto rotr = functor<rotr_t>;
 }
 
-namespace detail
+
+namespace eve::detail
 {
-  template<typename T, integral_value S>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(regular_type, eve::tag::rotr_), T const&, [[maybe_unused]] S const& s)
+  template<typename T, typename S, callable_options O>
+  constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotr_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
   {
-    constexpr int l [[maybe_unused]] = sizeof(element_type_t<T>) * 8;
-    EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
-               "[eve::rotr] Rotating by " << s << " is out of the range ]" << -l << ", " << l
-                                          << "[.");
+    using s_t = as_wide_as_t<as_integer_t<S,signed>, S>;
+    return rotl_(EVE_TARGETS(cpu_),o,v,bit_cast(-s,as<s_t>{}));
+  }
+
+  template<typename T, auto S, callable_options O>
+  constexpr EVE_FORCEINLINE T rotr_(EVE_REQUIRES(cpu_), O const& o, T v, index_t<S>)
+  {
+    return rotl_(EVE_TARGETS(cpu_),o,v,index<-S>);
   }
 }
-
-EVE_MAKE_CALLABLE(rotr_, rotr);
-}
-
-#include <eve/module/core/regular/impl/rotr.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/rotr.hpp>

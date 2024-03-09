@@ -80,7 +80,7 @@ namespace eve::detail
   /////////////////////////////////////////////////////////////////////////////////////////
 
   template<typename I, typename T, callable_options O>
-  as_wide_as_t<T, I> lrising_factorial_(EVE_REQUIRES(cpu_), O const& d, I a, T x) noexcept
+  constexpr as_wide_as_t<T, I> lrising_factorial_(EVE_REQUIRES(cpu_), O const& d, I a, T x) noexcept
   {
     // Integral first parameter
     if constexpr(integral_value<I> )
@@ -101,22 +101,7 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> )
       {
-        if constexpr(O::contains(regular2))
-        {
-          // regular  nan if a+x or x is negative,  better computation than raw
-          auto lr0   = []() { return zero(as(T())); };
-          auto lrpos = [](auto a, auto x) { return inner_lrising_factorial(a, x); };
-
-          auto r       = nan(as(a));
-          auto notdone = is_nltz(x) || is_nltz(a + x);
-          if( eve::any(notdone) )
-          {
-            notdone = next_interval(lr0, notdone, is_eqz(x), r);
-            if( eve::any(notdone) ) { notdone = last_interval(lrpos, notdone, r, a, x); }
-          }
-          return r;
-        }
-        else if constexpr(O::contains(raw2))
+        if constexpr(O::contains(raw2))
         {
           // raw direct computation not matter why. nan if a+x or x is non positive
           auto notdone = is_nlez(x) && is_nlez(a + x);
@@ -192,10 +177,23 @@ namespace eve::detail
           }
           return r;
         }
-        else return lrising_factorial[regular](a, x);
+        else
+        {
+          // regular  nan if a+x or x is negative,  better computation than raw
+          auto lr0   = []() { return zero(as(T())); };
+          auto lrpos = [](auto a, auto x) { return inner_lrising_factorial(a, x); };
+
+          auto r       = nan(as(a));
+          auto notdone = is_nltz(x) || is_nltz(a + x);
+          if( eve::any(notdone) )
+          {
+            notdone = next_interval(lr0, notdone, is_eqz(x), r);
+            if( eve::any(notdone) ) { notdone = last_interval(lrpos, notdone, r, a, x); }
+          }
+          return r;
+        }
       }
-      else
-        return apply_over(regular(lrising_factorial[d]), a, x);
+      else return apply_over(lrising_factorial[d], a, x);
     }
   }
 }

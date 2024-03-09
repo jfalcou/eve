@@ -1,16 +1,28 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/acos.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct asec_t : elementwise_callable<asec_t, Options, raw_option>
+{
+  template<eve::floating_ordered_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(asec_t, asec_);
+};
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -53,17 +65,21 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/asec.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!  * eve::raw
+//!     The call `asec[raw](x)` uses a faster implementation which can be slightly less accurate near 1.
 //!  @}
 //================================================================================================
-namespace tag
+inline constexpr auto asec = functor<asec_t>;
+
+namespace detail
 {
-  struct asec_;
+  template<typename T, callable_options O>
+  constexpr EVE_FORCEINLINE T asec_(EVE_REQUIRES(cpu_), O const& o, T const& a)
+  {
+    return acos[o](rec(a));
+  }
 }
-
-template<> struct supports_optimized_conversion<tag::asec_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(asec_, asec);
 }
-
-#include <eve/module/math/regular/impl/asec.hpp>

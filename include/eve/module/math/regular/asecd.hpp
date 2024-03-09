@@ -1,16 +1,29 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/acos.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct asecd_t : elementwise_callable<asecd_t, Options, raw_option>
+{
+  template<eve::floating_ordered_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(asecd_t, asecd_);
+};
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -57,10 +70,21 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/math/regular/asecd.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!  * eve::raw
+//!     The call `asecd[raw](x)` uses a faster implementation which can be slightly less accurate near 1.
 //!  @}
 //================================================================================================
+inline constexpr auto asecd = functor<asecd_t>;
 
-EVE_MAKE_CALLABLE(asecd_, asecd);
+namespace detail
+{
+  template<typename T, callable_options O>
+  constexpr EVE_FORCEINLINE T asecd_(EVE_REQUIRES(cpu_), O const& o, T const& a)
+  {
+    return radindeg(asec[o](a));
+  }
 }
-
-#include <eve/module/math/regular/impl/asecd.hpp>
+}
