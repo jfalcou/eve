@@ -22,7 +22,6 @@
 
 namespace eve::detail
 {
-
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   min_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
@@ -32,7 +31,7 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T0> )
       {
-       constexpr bool is_scalar = scalar_value<r_t>;
+        constexpr bool is_scalar = scalar_value<r_t>;
         auto a0 = r_t(r0);
         auto a1 = r_t(r1);
         if constexpr(O::contains(pedantic2)) //pedantic
@@ -52,11 +51,8 @@ namespace eve::detail
           }
           else
           {
-            if constexpr(is_scalar)
-            {
-              return (is_eqz(a0) && is_eqz(a1) ? bit_or(a0, a1) : eve::min(a0, a1));
-            }
-            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1)); }
+            if constexpr(is_scalar) return (is_eqz(a0) && is_eqz(a1) ? bit_or(a0, a1) : eve::min(a0, a1));
+            else                    return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1));
           }
         }
         else if  constexpr(O::contains(numeric2))  // numeric
@@ -76,23 +72,17 @@ namespace eve::detail
           }
           else
           {
-            if constexpr(is_scalar)
-            {
-              return (is_eqz(a0) && is_eqz(a1) ? bit_or(a0, a1) : eve::min(a0, a1));
-            }
-            else { return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1)); }
+            if constexpr(is_scalar) return (is_eqz(a0) && is_eqz(a1) ? bit_or(a0, a1) : eve::min(a0, a1));
+            else                    return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1));
           }
         }
         else
         {
-          if constexpr(is_scalar)
-            return a0 < a1 ? a0: a1;
-          else
-            return if_else(a0 < a1, a0, a1);
+          if constexpr(is_scalar) return a0 < a1 ? a0: a1;
+          else                    return if_else(a0 < a1, a0, a1);
         }
       }
-      else
-        return arithmetic_call(min[o],  r_t(r0), r_t(r1));
+      else return arithmetic_call(min[o],  r_t(r0), r_t(r1));
     }
     else // N > 2 parameters
     {
@@ -112,9 +102,6 @@ namespace eve::detail
   {
     if      constexpr( std::same_as<Callable, callable_is_less_>    ) return eve::min;
     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max;
-    else
-    {
-      return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
-    };
+    else    return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
   }
 }

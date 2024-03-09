@@ -111,8 +111,8 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   max_(EVE_REQUIRES(cpu_), O const &, Callable const & f) noexcept
   {
-    if      constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_less)>>    ) return eve::max;
-    else if constexpr( std::same_as<Callable, std::remove_const<decltype(eve::is_greater)>> ) return eve::min;
+    if      constexpr( std::same_as<Callable, eve::callable_is_less_>    ) return eve::max;
+    else if constexpr( std::same_as<Callable, eve::callable_is_greater_> ) return eve::min;
     else
     {
       return [f](auto x, auto y){ return eve::if_else(f(y, x), x, y); };

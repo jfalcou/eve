@@ -38,24 +38,23 @@ TTS_CASE_TPL("Check return types of min", eve::test::simd::all_types)
 //==================================================================================================
 // min tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of min on all types full range",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmin),
-                            tts::randoms(eve::valmin, eve::valmin),
-                            tts::randoms(eve::valmin, eve::valmin),
-                            tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
+TTS_CASE_WITH ( "Check behavior of min on all types full range"
+              , eve::test::simd::all_types
+              , tts::generate ( tts::randoms(eve::valmin, eve::valmin)
+                              , tts::randoms(eve::valmin, eve::valmin)
+                              , tts::randoms(eve::valmin, eve::valmin)
+                              )
+              )
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::abs;
   using eve::min;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return std::min(std::min(a, b), c); };
-  TTS_ULP_EQUAL(min((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(min[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(min[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-
-  TTS_IEEE_EQUAL(min[t](a0, a1), eve::if_else(t, min(a0, a1), a0));
+  TTS_ULP_EQUAL(min(a0, a1, a2), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min[eve::pedantic](a0, a1, a2), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min[eve::numeric](a0, a1, a2), map(m, a0, a1, a2), 2);
 };
 
 TTS_CASE_TPL("Check values of min", eve::test::simd::ieee_reals)
@@ -91,10 +90,10 @@ TTS_CASE_WITH("Check predicate version of min",
                             tts::randoms(eve::valmin, eve::valmin)))
 <typename T>(T const& a0, T const& a1)
 {
-//  TTS_EXPR_IS(eve::min(eve::is_less), eve::callable_min_);
+  TTS_EXPR_IS(eve::min(eve::is_less), std::remove_cvref_t<decltype(eve::min)>);
   TTS_EQUAL(eve::min(eve::is_less)(a0, a1), eve::min(a0, a1));
 
-//  TTS_EXPR_IS(eve::min(eve::is_greater), eve::callable_max_);
+  TTS_EXPR_IS(eve::min(eve::is_greater), std::remove_cvref_t<decltype(eve::max)>);
   TTS_EQUAL(eve::min(eve::is_greater)(a0, a1), eve::max(a0, a1));
 
   auto pred = [](auto a, auto b) { return eve::abs(a) < eve::abs(b); };
@@ -123,10 +122,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::min)(eve::wide)",
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         T const& a1,
-                         M const& mask)
+<typename T, typename M>(T const& a0,T const& a1,M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::min[mask](a0, a1),
-            eve::if_else(mask, eve::min(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::min[mask](a0, a1), eve::if_else(mask, eve::min(a0, a1), a0));
 };

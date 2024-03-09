@@ -112,41 +112,35 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  min_(EVE_REQUIRES(sse2_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
+  min_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
   -> wide<T, N>
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-      return min_(EVE_TARGETS(cpu_), opts, v, w);
+    if constexpr(O::contains(numeric2) || O::contains(pedantic2)) return min_(EVE_TARGETS(cpu_), opts, v, w);
     else
     {
-      constexpr auto c = categorize<wide<T, N>>();
+      constexpr auto c    = categorize<wide<T, N>>();
+      auto           src  = alternative(cx, v, as<wide<T, N>> {});
+      auto           m    = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-      if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
-      {
-        return min_(EVE_TARGETS(cpu_), opts, v, w);
-      }
-      else
-      {
-        auto src = alternative(cx, v, as<wide<T, N>> {});
-        auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
-        if constexpr( c == category::float32x16 ) return _mm512_mask_min_ps(src, m, v, w);
-        else if constexpr( c == category::float64x8 ) return _mm512_mask_min_pd(src, m, v, w);
-        else if constexpr( c == category::int8x64 ) return _mm512_mask_min_epi8(src, m, v, w);
-        else if constexpr( c == category::int8x32 ) return _mm256_mask_min_epi8(src, m, v, w);
-        else if constexpr( c == category::int8x16 ) return _mm_mask_min_epi8(src, m, v, w);
-        else if constexpr( c == category::int16x32 ) return _mm512_mask_min_epi16(src, m, v, w);
-        else if constexpr( c == category::int16x16 ) return _mm256_mask_min_epi16(src, m, v, w);
-        else if constexpr( c == category::int16x8 ) return _mm_mask_min_epi16(src, m, v, w);
-        else if constexpr( c == category::int32x16 ) return _mm512_mask_min_epi32(src, m, v, w);
-        else if constexpr( c == category::int32x8 ) return _mm256_mask_min_epi32(src, m, v, w);
-        else if constexpr( c == category::int32x4 ) return _mm_mask_min_epi32(src, m, v, w);
-        else if constexpr( c == category::int64x8 ) return _mm512_mask_min_epi64(src, m, v, w);
-        else if constexpr( c == category::int64x4 ) return _mm256_mask_min_epi64(src, m, v, w);
-        else if constexpr( c == category::int64x2 ) return _mm_mask_min_epi64(src, m, v, w);
-        else return min_(EVE_TARGETS(cpu_), cx, v, w);
-      }
+      if      constexpr( c == category::float32x16) return _mm512_mask_min_ps   (src, m, v, w);
+      if      constexpr( c == category::float32x8 ) return _mm256_mask_min_ps   (src, m, v, w);
+      if      constexpr( c == category::float32x4 ) return _mm_mask_min_ps      (src, m, v, w);
+      else if constexpr( c == category::float64x8 ) return _mm512_mask_min_pd   (src, m, v, w);
+      else if constexpr( c == category::float64x4 ) return _mm256_mask_min_pd   (src, m, v, w);
+      else if constexpr( c == category::float64x2 ) return _mm_mask_min_pd      (src, m, v, w);
+      else if constexpr( c == category::int8x64   ) return _mm512_mask_min_epi8 (src, m, v, w);
+      else if constexpr( c == category::int8x32   ) return _mm256_mask_min_epi8 (src, m, v, w);
+      else if constexpr( c == category::int8x16   ) return _mm_mask_min_epi8    (src, m, v, w);
+      else if constexpr( c == category::int16x32  ) return _mm512_mask_min_epi16(src, m, v, w);
+      else if constexpr( c == category::int16x16  ) return _mm256_mask_min_epi16(src, m, v, w);
+      else if constexpr( c == category::int16x8   ) return _mm_mask_min_epi16   (src, m, v, w);
+      else if constexpr( c == category::int32x16  ) return _mm512_mask_min_epi32(src, m, v, w);
+      else if constexpr( c == category::int32x8   ) return _mm256_mask_min_epi32(src, m, v, w);
+      else if constexpr( c == category::int32x4   ) return _mm_mask_min_epi32   (src, m, v, w);
+      else if constexpr( c == category::int64x8   ) return _mm512_mask_min_epi64(src, m, v, w);
+      else if constexpr( c == category::int64x4   ) return _mm256_mask_min_epi64(src, m, v, w);
+      else if constexpr( c == category::int64x2   ) return _mm_mask_min_epi64   (src, m, v, w);
     }
   }
 }

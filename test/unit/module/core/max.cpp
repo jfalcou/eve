@@ -43,9 +43,9 @@ TTS_CASE_WITH("Check behavior of max on all types full range",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
+                            tts::randoms(eve::valmin, eve::valmax)
+              ))
+<typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::abs;
   using eve::max;
@@ -56,11 +56,9 @@ TTS_CASE_WITH("Check behavior of max on all types full range",
   TTS_ULP_EQUAL(max[eve::pedantic](a0, a1, a2), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(max[eve::numeric](a0, a1, a2), map(m, a0, a1, a2), 2);
 
-  TTS_IEEE_EQUAL(max[t](a0, a1), eve::if_else(t, max(a0, a1), a0));
-
- TTS_ULP_EQUAL(max(kumi::tuple{a0, a1, a2}), max(a0, a1, a2), 2);
- TTS_ULP_EQUAL(max[eve::numeric](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
- TTS_ULP_EQUAL(max[eve::pedantic](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max(kumi::tuple{a0, a1, a2}), max(a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max[eve::numeric](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(max[eve::pedantic](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
 };
 
 TTS_CASE_TPL("Check values of max", eve::test::simd::ieee_reals)
@@ -96,10 +94,10 @@ TTS_CASE_WITH("Check predicate version of max",
                             tts::randoms(eve::valmin, eve::valmin)))
 <typename T>(T const& a0, T const& a1)
 {
-//  TTS_EXPR_IS(eve::max(eve::is_less), decltype(eve::max));
+  TTS_EXPR_IS(eve::max(eve::is_less), std::remove_cvref_t<decltype(eve::max)>);
   TTS_EQUAL(eve::max(eve::is_less)(a0, a1), eve::max(a0, a1));
 
-//  TTS_EXPR_IS(eve::max(eve::is_greater), decltype(eve::min));
+ TTS_EXPR_IS(eve::max(eve::is_greater), std::remove_cvref_t<decltype(eve::min)>);
   TTS_EQUAL(eve::max(eve::is_greater)(a0, a1), eve::min(a0, a1));
 
   auto pred = [](auto a, auto b) { return eve::abs(a) < eve::abs(b); };
