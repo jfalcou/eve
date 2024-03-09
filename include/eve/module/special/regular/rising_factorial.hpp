@@ -14,11 +14,10 @@
 namespace eve
 {
   template<typename Options>
-  struct rising_factorial_t : elementwise_callable<rising_factorial_t, Options, raw_option, pedantic_option, regular_option>
+  struct rising_factorial_t : elementwise_callable<rising_factorial_t, Options, raw_option, pedantic_option>
   {
-    template<eve::ordered_value I, eve::floating_ordered_value T>
-    EVE_FORCEINLINE constexpr
-    auto operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+    template<ordered_value I, floating_ordered_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(rising_factorial_t, rising_factorial_);
   };

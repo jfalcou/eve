@@ -19,7 +19,7 @@ TTS_CASE_TPL("Random check for eve::acosd", eve::test::simd::ieee_reals)
   auto std_acosd = [](auto e) { return eve::radindeg(std::acos(e)); };
   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_acosd, eve::acosd );
   auto vmaxr = e_t(0.9);
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmaxr),  std_acosd, eve::raw(eve::acosd) );
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmaxr),  std_acosd, eve::acosd[eve::raw] );
 
 
 };

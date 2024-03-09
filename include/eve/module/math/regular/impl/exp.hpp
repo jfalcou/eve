@@ -73,7 +73,7 @@ namespace eve::detail
                                           , T(-0x1.bbd41c5d26bf1p-20), T(0x1.6376972bea4d0p-25)), x); // x-h*t
         c       = oneminus((((lo - (x * c) / (T(2) - c)) - hi)));
       }
-      auto z = pedantic(ldexp)(c, k);
+      auto z = ldexp[pedantic](c, k);
       if constexpr( simd_value<T> )
       {
         z = if_else(xltminlog, eve::zero, z);
