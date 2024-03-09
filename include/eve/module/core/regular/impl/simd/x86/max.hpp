@@ -119,7 +119,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
     {
-      return max_(EVE_TARGETS(cpu_), opts, v, w);
+      return max_(EVE_TARGETS(cpu_), cx, opts, v, w);
     }
     else
     {
