@@ -19,7 +19,6 @@ TTS_CASE_TPL("Check return types of minmax", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::minmax(v_t(), T()  ), (kumi::tuple<T,T>)     );
   TTS_EXPR_IS(eve::minmax(v_t(), v_t()), (kumi::tuple<v_t,v_t>) );
 };
-
 //==================================================================================================
 // minmax tests
 //==================================================================================================
@@ -31,11 +30,12 @@ TTS_CASE_WITH("Check behavior of minmax on all types full range",
 <typename T, typename M>(T const& a0, T const& a1, M const& m)
 {
   auto[mn , mx] = eve::minmax(a0,a1);
+  TTS_EQUAL(mn, eve::min(a0,a1));
+  TTS_EQUAL(mx, eve::max(a0,a1));
+
   auto[mmn,mmx] = eve::minmax[m](a0,a1);
-  TTS_IEEE_EQUAL (mn , eve::min(a0,a1)    );
-  TTS_IEEE_EQUAL (mx , eve::max(a0,a1)    );
-  TTS_IEEE_EQUAL (mmn, eve::min[m](a0,a1) );
-  TTS_IEEE_EQUAL (mmx, eve::max[m](a0,a1) );
+  TTS_EQUAL(mmn, eve::min[m](a0,a1) );
+  TTS_EQUAL(mmx, eve::max[m](a0,a1) );
 };
 
 TTS_CASE_WITH ( "Check predicate version of minmax",

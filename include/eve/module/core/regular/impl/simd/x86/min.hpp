@@ -142,6 +142,7 @@ namespace eve::detail
       else if constexpr( c == category::int64x8   ) return _mm512_mask_min_epi64(src, m, v, w);
       else if constexpr( c == category::int64x4   ) return _mm256_mask_min_epi64(src, m, v, w);
       else if constexpr( c == category::int64x2   ) return _mm_mask_min_epi64   (src, m, v, w);
+      else return min_(EVE_TARGETS(cpu_), opts, v, w);
     }
   }
 }
