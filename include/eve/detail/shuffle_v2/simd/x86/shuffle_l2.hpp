@@ -250,7 +250,7 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
   if constexpr( P::g_size < 16 ) return no_matching_shuffle;
   else if constexpr( P::reg_size == 32 )
   {
-    constexpr int mm = idxm::x86_permute2f128_one_reg_mask(P::idxs);
+    constexpr int mm = idxm::x86_permute2f128_mask(P::idxs);
     return _mm256_permute2f128_si256(x, x, mm);
   }
   else
@@ -455,8 +455,22 @@ shuffle_l2_x86_within_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
+shuffle_l2_x86_permute2f128(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( P::g_size != 16 || P::reg_size != 32 ) return no_matching_shuffle;
+  else
+  {
+    static_assert(!P::has_zeroes, "sanity check, no 0s/we or it's not two register");
+    constexpr int m = idxm::x86_permute2f128_mask(P::idxs);
+    return _mm256_permute2f128_si256(x, y, m);
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
 shuffle_l2_x86_shuffle_i32x4(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 {
+  // the _mm256_maskz_shuffle_i32x4 is not supported yet.
   if constexpr( sizeof(T) < 4 || P::reg_size < 64 ) return no_matching_shuffle;
   else if constexpr( constexpr auto m = idxm::mm512_shuffle_i64x2_idx(P::idxs_no_na); !m )
   {
@@ -473,6 +487,22 @@ shuffle_l2_x86_shuffle_i32x4(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
       else return _mm512_maskz_shuffle_i64x2(mask, x, y, mm);
     }
   }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_x86_shuffle_128_2regs(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( auto r = shuffle_l2_x86_permute2f128(p, g, x, y); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_shuffle_i32x4(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else return no_matching_shuffle;
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
@@ -542,12 +572,13 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_shuffle_i32x4(p, g, x, y);
+  else if constexpr( auto r = shuffle_l2_x86_shuffle_128_2regs(p, g, x, y);
                      matched_shuffle<decltype(r)> )
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_alignr_epi32(p, g, x, y); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r = shuffle_l2_x86_alignr_epi32(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
   {
     return r;
   }
