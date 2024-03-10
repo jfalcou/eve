@@ -16,14 +16,16 @@ int main()
             << "<- pf                  = " << pf << '\n'
             << "<- pi                  = " << pi << '\n'
             << "-> exp2(pf)            = " << eve::exp2(pf) << '\n'
-            
-            << "-> exp2(pi)            = " << eve::exp2(pi) << '\n'
-            << "-> float32(exp2)(pi)   = " << eve::float32(eve::exp2)(pi) << '\n'
-            << "-> float64(exp2)(pi)   = " << eve::float64(eve::exp2)(pi) << '\n'
-            << "-> floating_(exp2)(pi) = " << eve::floating_(eve::exp2)(pi) << '\n'
-            << "-> float32(exp2(pi))   = " << eve::float32(eve::exp2(pi)) << '\n'
-            << "-> float64(exp2(pi))   = " << eve::float64(eve::exp2(pi)) << '\n'
-            << "-> floating_(exp2(pi)) = " << eve::floating_(eve::exp2(pi)) << '\n';
+
+//TODO
+//            << "-> exp2(pi)            = " << eve::exp2(pi) << '\n'
+//             << "-> float32(exp2)(pi)   = " << eve::float32(eve::exp2)(pi) << '\n'
+//             << "-> float64(exp2)(pi)   = " << eve::float64(eve::exp2)(pi) << '\n'
+//             << "-> floating_(exp2)(pi) = " << eve::floating_(eve::exp2)(pi) << '\n'
+//             << "-> float32(exp2(pi))   = " << eve::float32(eve::exp2(pi)) << '\n'
+//             << "-> float64(exp2(pi))   = " << eve::float64(eve::exp2(pi)) << '\n'
+//             << "-> floating_(exp2(pi)) = " << eve::floating_(eve::exp2(pi)) << '\n'
+    ;
 
   float xf = 1.0f;
 

@@ -35,7 +35,7 @@ namespace eve::detail
       auto xgemaxlog2 = x >= maxlog2(eve::as(x));
       if constexpr( scalar_value<T> )
       {
-        if( is_nan(x)  ) return nan(x);
+        if( is_nan(x)  ) return nan(eve::as(x));
         if( xgemaxlog2 ) return inf(eve::as(x));
         if( xltminlog2 ) return zero(eve::as(x));
       }
