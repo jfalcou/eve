@@ -9,9 +9,20 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/expx2.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct expmx2_t : elementwise_callable<expmx2_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(expmx2_t, expmx2_);
+  };
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -63,7 +74,18 @@ namespace eve
 //!        @godbolt{doc/math/masked/expmx2.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(expmx2_, expmx2);
-}
+  inline constexpr auto expmx2 = functor<expmx2_t>;
 
-#include <eve/module/math/regular/impl/expmx2.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    expmx2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    {
+      if constexpr( has_native_abi_v<T> )
+        return rec(eve::expx2(a0));
+      else
+        return apply_over(expmx2, a0);
+    }
+  }
+}
