@@ -132,6 +132,7 @@ namespace eve
         auto z = ldexp[pedantic](x, k);
         if constexpr( simd_value<T> )
         {
+          z = if_else(is_nan(x),  x, z);
           z = if_else(xltminlog2, eve::zero, z);
           z = if_else(xgemaxlog2, inf(eve::as(x)), z);
         }

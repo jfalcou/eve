@@ -150,6 +150,7 @@ namespace detail
       // SIMD value fixes
       if constexpr( simd_value<T> )
       {
+        z = if_else(is_nan(x), x, z);
         z = if_else(xltminlog10, zero, z);
         z = if_else(xgemaxlog10, inf(as(x)), z);
       }
