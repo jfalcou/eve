@@ -28,7 +28,7 @@ namespace eve::detail
   {
     using r_t = common_value_t<T0, T1, Ts...>;
     auto mino = min[o.drop(saturated2)];
-    auto abso =  abs[saturated];
+    auto abso = abs[saturated];
     if constexpr(sizeof...(Ts) == 0) // 2 parameters
     {
       if constexpr(O::contains(numeric2))
@@ -54,8 +54,7 @@ namespace eve::detail
           return if_else(is_not_less_equal(bb, aa), ra, tmp);
         }
       }
-      else
-        return arithmetic_call(minmag[o], r_t(a), r_t(b));
+      else return arithmetic_call(minmag[o], r_t(a), r_t(b));
     }
     else // N > 2 parameters
     {

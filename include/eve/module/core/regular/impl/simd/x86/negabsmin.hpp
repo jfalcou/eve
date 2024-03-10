@@ -22,7 +22,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2) || O::contains(saturated2))
-      return absmax_(EVE_TARGETS(cpu_), opts, v0, v1);
+      return negabsmin_(EVE_TARGETS(cpu_), opts, v0, v1);
     else
     {
       constexpr auto cat  = categorize<wide<T, N>>();

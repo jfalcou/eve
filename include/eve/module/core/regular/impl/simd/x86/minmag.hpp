@@ -26,15 +26,16 @@ namespace eve::detail
     {
       constexpr auto cat  = categorize<wide<T, N>>();
       constexpr auto ctrl = range_ctrl::absolute_min | range_ctrl::sign_from_cmp;
+
       // float
-      if constexpr( cat == category::float32x4 ) return _mm_range_ps(v0, v1, ctrl);
+      if      constexpr( cat == category::float32x4 ) return _mm_range_ps(v0, v1, ctrl);
       else if constexpr( cat == category::float32x8 ) return _mm256_range_ps(v0, v1, ctrl);
-      else if constexpr( cat == category::float32x16 ) return _mm512_range_ps(v0, v1, ctrl);
+      else if constexpr( cat == category::float32x16) return _mm512_range_ps(v0, v1, ctrl);
       // double
       else if constexpr( cat == category::float64x2 ) return _mm_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x4 ) return _mm256_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x8 ) return _mm512_range_pd(v0, v1, ctrl);
-      else return minmag_(EVE_RETARGET(cpu_), v0, v1);
+      else                                            return minmag_(EVE_TARGETS(cpu_), v0, v1);
     }
   }
 
@@ -52,14 +53,18 @@ namespace eve::detail
       return minmag_(EVE_TARGETS(cpu_), opts, v, w);
     else
     {
-      constexpr auto c = categorize<wide<T, N>>();
+      constexpr auto c    = categorize<wide<T, N>>();
       auto           src  = alternative(cx, v, as<wide<T, N>> {});
       auto           m    = expand_mask(cx, as<wide<T, N>> {}).storage().value;
       constexpr auto ctrl = range_ctrl::absolute_min | range_ctrl::sign_from_cmp;
 
-      if constexpr( c == category::float32x16 ) return _mm512_mask_range_ps(src, m, v, w, ctrl);
+      if      constexpr( c == category::float32x16) return _mm512_mask_range_ps(src, m, v, w, ctrl);
+      else if constexpr( c == category::float32x8)  return _mm256_mask_range_ps(src, m, v, w, ctrl);
+      else if constexpr( c == category::float32x4)  return _mm_mask_range_ps   (src, m, v, w, ctrl);
       else if constexpr( c == category::float64x8 ) return _mm512_mask_range_pd(src, m, v, w, ctrl);
-      else return minmag_(EVE_TARGETS(cpu_), opts, v, w);
+      else if constexpr( c == category::float64x4 ) return _mm256_mask_range_pd(src, m, v, w, ctrl);
+      else if constexpr( c == category::float64x2 ) return _mm_mask_range_pd   (src, m, v, w, ctrl);
+      else                                          return minmag_(EVE_TARGETS(cpu_), opts, v, w);
     }
   }
 }
