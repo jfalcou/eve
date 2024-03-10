@@ -147,7 +147,7 @@ namespace eve
 
 //   template<integral_value T, typename D>
 //   EVE_FORCEINLINE constexpr auto
-//   exp2_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
+//   exp2_(EVE_REQUIRES(cpu_), D const&, T xx) noexcept
 //   requires(is_one_of<D>(types<converter_type<float>,
 //                         converter_type<double>,
 //                         floating_converter,
