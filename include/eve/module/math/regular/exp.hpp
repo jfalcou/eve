@@ -103,12 +103,17 @@ namespace eve
     exp_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
     {
       auto isnan = is_nan(x);
+      auto    minlogval = []() {
+        if constexpr(O::contains(pedantic2) && eve::platform::supports_denormals)
+        return minlogdenormal(eve::as<T>());
+        else
+          return minlog(eve::as<T>());
+      };
       if constexpr( scalar_value<T> )
       {
         if constexpr( has_emulated_abi_v<wide<T>> )
         {
-          return (x <= eve::minlog(as(x))) ? T(0)
-            : ((x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x));
+          return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x);
         }
         else
         {
@@ -119,12 +124,6 @@ namespace eve
       else if constexpr( has_native_abi_v<T> )
       {
         using elt_t       = element_type_t<T>;
-        auto    minlogval = []() {
-          if constexpr(O::contains(pedantic2) && eve::platform::supports_denormals)
-            return minlogdenormal(eve::as<T>());
-          else
-            return minlog(eve::as<T>());
-        };
         const T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
         const T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
         const T Invlog_2  = ieee_constant<0x1.7154760p+0f, 0x1.71547652b82fep+0>(eve::as<T>{});
@@ -132,7 +131,7 @@ namespace eve
         auto    xgemaxlog = x >= maxlog(eve::as(x));
         if constexpr( scalar_value<T> )
         {
-          if( isnan ) return nan(as(x));
+          if( isnan ) return x;
           if( xgemaxlog ) return inf(eve::as(x));
           if( xltminlog ) return zero(eve::as(x));
         }
