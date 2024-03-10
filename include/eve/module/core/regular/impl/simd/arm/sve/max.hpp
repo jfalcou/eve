@@ -9,8 +9,9 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
@@ -20,7 +21,7 @@ namespace eve::detail
   requires sve_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-      return max_(EVE_TARGETS(cpu_), opts, v0, v1);
+      return max_(EVE_TARGETS(cpu_), opts, a, b);
     else
       return svmax_z(sve_true<T>(),a,b);
   }
