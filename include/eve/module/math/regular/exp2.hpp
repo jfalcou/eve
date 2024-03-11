@@ -21,7 +21,7 @@ namespace eve
     {
       if constexpr(eve::integral_value<T>)
       {
-        using v_t = eve::element_type_t<T>;
+        using vt_t = eve::element_type_t<T>;
         EVE_ASSERT(eve::all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
         EVE_ASSERT(eve::all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
       }
