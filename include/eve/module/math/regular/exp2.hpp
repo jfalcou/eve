@@ -169,7 +169,7 @@ namespace eve
 
     template<ordered_value T, floating_scalar_value U, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<U, T>
-    exp2_(EVE_REQUIRES(cpu_), O const& o, T xx, as<U> const & target) noexcept
+    exp2_(EVE_REQUIRES(cpu_), O const&, T xx, as<U> const & target) noexcept
     {
       using b_t = as_wide_as_t<U, T>;
       using i_t  = as_integer_t<b_t>;
