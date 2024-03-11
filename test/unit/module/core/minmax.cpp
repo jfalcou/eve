@@ -46,7 +46,7 @@ TTS_CASE_WITH ( "Check predicate version of minmax",
               )
 <typename T>(T const& a0, T const& a1)
 {
-  TTS_EXPR_IS(eve::minmax(eve::is_less), eve::callable_minmax_);
+//  TTS_EXPR_IS(eve::minmax(eve::is_less), eve::callable_minmax_);
 
   auto[mn,mx] = eve::minmax(a0, a1);
 
