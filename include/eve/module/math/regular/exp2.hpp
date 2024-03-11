@@ -17,14 +17,14 @@ namespace eve
   struct exp2_t : elementwise_callable<exp2_t, Options, pedantic_option, saturated_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
     {
       if constexpr(eve::integral_value<T>)
       {
         EVE_ASSERT(eve::all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
         EVE_ASSERT(eve::all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
       }
-      return EVE_DISPATCH_CALL(v);
+      return EVE_DISPATCH_CALL(s);
     }
 
     template<eve::integral_value T, floating_scalar_value U>
