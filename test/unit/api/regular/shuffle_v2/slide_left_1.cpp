@@ -36,10 +36,10 @@ TTS_CASE("Slide left 1, example") {
 #if 0
 TTS_CASE("Explicit") {
   // constexpr auto na_ = eve::na_;
-  using w_i = eve::wide<std::uint64_t, eve::fixed<8>>;
+  using w_i = eve::wide<std::uint32_t, eve::fixed<16>>;
   w_i x {[](int i, int) { return i + 1; }};
-  auto [y, l] = eve::shuffle_v2_core(x, [](int i, int) { return i == 3 ? eve::na_ : i + 1; });
-  TTS_EQUAL(l(), 3);
+  auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1>);
+  TTS_EQUAL(l(), 4);
   (void)y;
 #if 0
   TTS_EQUAL(y, w_i({2, 0}));
@@ -54,11 +54,12 @@ TTS_CASE("Explicit") {
 };
 #endif
 
-
 TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
+  static constexpr std::ptrdiff_t reg_size = sizeof(eve::element_type_t<T>) * T::size();
   if constexpr( eve::current_api <= eve::sse4_2 || eve::current_api == eve::asimd ||
+    ( eve::current_api >= eve::avx2 && reg_size <= 32 ) ||
     ( eve::current_api >= eve::avx512 && sizeof(eve::element_type_t<T>) >= 2 ) ||
     ( eve::current_api >= eve::sve) )
   {

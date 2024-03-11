@@ -78,12 +78,12 @@ struct slide_left_impl_t
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
   static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
   {
-    using abi_t = typename T::abi_type;
-    const std::size_t        reg_size      = sizeof(element_type_t<T>) * T::size();
-    constexpr std::ptrdiff_t S             = G * S_;
-    constexpr bool           is_shift_by_8 = (S * sizeof(element_type_t<T>) % 8) == 0;
-    constexpr bool           is_shift_by_4 = (S * sizeof(element_type_t<T>) % 4) == 0;
-    constexpr bool           is_shift_by_2 = (S * sizeof(element_type_t<T>) % 2) == 0;
+    using abi_t                             = typename T::abi_type;
+    const std::size_t        reg_size       = sizeof(element_type_t<T>) * T::size();
+    constexpr std::ptrdiff_t S              = G * S_;
+    constexpr bool           is_shift_by_16 = (S * sizeof(element_type_t<T>) % 16) == 0;
+    constexpr bool           is_shift_by_4  = (S * sizeof(element_type_t<T>) % 4) == 0;
+    constexpr bool           is_shift_by_2  = (S * sizeof(element_type_t<T>) % 2) == 0;
 
     if constexpr( S == 0 ) return 0;
     else if constexpr( S == T::size() ) return 1;
@@ -104,7 +104,7 @@ struct slide_left_impl_t
         return std::max(halves_together, just_second);
       }
     }
-    else if constexpr ( logical_simd_value<T> && !abi_t::is_wide_logical )
+    else if constexpr( logical_simd_value<T> && !abi_t::is_wide_logical )
     {
       auto mask = detail::mask_type(tgt);
       return level(mask, g, s) + 4;
@@ -116,20 +116,16 @@ struct slide_left_impl_t
     }
     else
     {
+      if( reg_size <= 8 ) return 2;
       if( current_api >= avx512 )
       {
         if( is_shift_by_4 ) return 2;
         if( reg_size <= 16 ) return 2;
         if( is_shift_by_2 ) return 3;
-        return 5;
+        if (reg_size == 64) return 5; // this is not yet done
       }
-      if( reg_size <= 8 ) return 2;
-      if( current_api >= avx2 && reg_size == 32 )
-      {
-        if( is_shift_by_8 ) return 2;
-        if( is_shift_by_4 ) return 3;
-        return 4;
-      }
+      if( reg_size == 32 && is_shift_by_16 ) return 2;
+      if( current_api >= avx2 && reg_size == 32 ) { return 4; }
       return 2;
     }
   }
@@ -140,14 +136,17 @@ struct slide_left_impl_t
   static constexpr std::ptrdiff_t
   level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
   {
-    using abi_t = typename T::abi_type;
-    constexpr std::ptrdiff_t S             = S_ * G;
-    constexpr bool           is_shift_by_8 = (S * sizeof(element_type_t<T>) % 8) == 0;
-    constexpr bool           is_shift_by_4 = (S * sizeof(element_type_t<T>) % 4) == 0;
-    constexpr bool           is_shift_by_2 = (S * sizeof(element_type_t<T>) % 2) == 0;
+    using abi_t                       = typename T::abi_type;
+    constexpr std::ptrdiff_t S        = S_ * G;
+    const std::size_t        reg_size = sizeof(element_type_t<T>) * T::size();
+
+    constexpr bool is_shift_by_16 = (S * sizeof(element_type_t<T>) % 16) == 0;
+    constexpr bool is_shift_by_8  = (S * sizeof(element_type_t<T>) % 8) == 0;
+    constexpr bool is_shift_by_4  = (S * sizeof(element_type_t<T>) % 4) == 0;
+    constexpr bool is_shift_by_2  = (S * sizeof(element_type_t<T>) % 2) == 0;
 
     if constexpr( S == 0 || S == T::size() ) return 0;
-    if constexpr ( logical_simd_value<T> && !abi_t::is_wide_logical )
+    if constexpr( logical_simd_value<T> && !abi_t::is_wide_logical )
     {
       auto mask = detail::mask_type(tgt);
       return level(mask, mask, g, s) + 6;
@@ -158,6 +157,8 @@ struct slide_left_impl_t
       if( is_shift_by_4 ) return 2;
       if( is_shift_by_2 ) return 3;
     }
+    if( is_shift_by_16 && reg_size == 32 ) return 2;
+    if( current_api >= avx2 && reg_size == 32 ) return 4;
 
     if( current_api >= sse4_2 ) return 2;
     // sse2
