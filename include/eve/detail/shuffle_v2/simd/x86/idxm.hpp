@@ -48,9 +48,9 @@ x86_mm_shuffle_4(std::span<const std::ptrdiff_t, 4> _idxs)
 }
 
 constexpr int
-x86_permute2f128_one_reg_mask(std::span<const std::ptrdiff_t, 2> _idxs)
+x86_permute2f128_mask(std::span<const std::ptrdiff_t, 2> _idxs)
 {
-  auto idxs = replace_we(_idxs, 0);
+  auto idxs = replace_we(_idxs, na_);
   if( idxs[0] == na_ ) idxs[0] = 0xf;
   if( idxs[1] == na_ ) idxs[1] = 0xf;
   return idxs[0] | idxs[1] << 4;
@@ -153,13 +153,6 @@ slide_2_left_in_16_pattern(std::ptrdiff_t g_size, std::ptrdiff_t slide)
     }
   }
   return res;
-}
-
-template<std::size_t N>
-constexpr auto
-slide_by_16_then_alignr(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t g_size)
-{
-  return slide_by_16_then_alignr(std::span<const std::ptrdiff_t, N>(idxs), g_size);
 }
 
 }
