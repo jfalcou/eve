@@ -122,7 +122,7 @@ inline constexpr auto minmax = functor<minmax_t>;
     minmax_(EVE_REQUIRES(cpu_), O const & , T0 v0, T1 v1, Ts... vs) noexcept
     -> decltype(kumi::tuple {eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)})
     {
-      if constexpr( prefer_min_max<common_value_t<T0,T1,Ts...>>() )
+      if constexpr( prefer_min_max<common_value_t<T0,T1,Ts...>>()  || sizeof...(Ts) > 0)
       {
         return kumi::tuple {eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)};
       }
@@ -131,7 +131,7 @@ inline constexpr auto minmax = functor<minmax_t>;
         // If there is no native min/max, we compute the check once
         // We use > cause it is more often optimized than <
         auto check = v0 > v1;
-        return kumi::tuple {if_else(check, v1, v0, vs...), if_else(check, v0, v1, vs...)};
+        return kumi::tuple {if_else(check, v1, v0), if_else(check, v0, v1)};
       }
     }
 
