@@ -14,5 +14,6 @@
 #include <eve/arch/ppc/as_register.hpp>
 #include <eve/arch/arm/sve/as_register.hpp>
 #include <eve/arch/arm/neon/as_register.hpp>
+#include <eve/arch/riscv/as_register.hpp>
 #endif
 

@@ -75,3 +75,7 @@ EVE_MAKE_CALLABLE(bit_and_, bit_and);
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/bit_and.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/bit_and.hpp>
+#endif

@@ -102,3 +102,6 @@ EVE_MAKE_CALLABLE(max_, max);
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/max.hpp>
 #endif
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/max.hpp>
+#endif

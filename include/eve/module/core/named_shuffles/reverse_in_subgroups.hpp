@@ -92,6 +92,7 @@ struct reverse_in_subgroups_t
       using half_t = decltype(T {}.slice(lower_));
       return level(as<half_t> {}, g, sub_g);
     }
+    if( current_api == rvv ) return logical_simd_value<T> ? 6 : 2;
 
     if( current_api >= sve )
     {

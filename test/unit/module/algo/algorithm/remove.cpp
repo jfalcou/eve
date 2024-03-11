@@ -40,7 +40,7 @@ TTS_CASE_TPL("Check remove aligned_ptr", algo_test::selected_types)
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  alignas(64) std::array<e_t, 23> data;
+  alignas(128) std::array<e_t, 23> data;
   const e_t keep{5};
   const e_t drop{1};
 

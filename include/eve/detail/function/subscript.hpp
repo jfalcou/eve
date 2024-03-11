@@ -18,3 +18,7 @@
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/subscript.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/detail/function/simd/riscv/subscript.hpp>
+#endif

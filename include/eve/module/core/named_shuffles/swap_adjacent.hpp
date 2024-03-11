@@ -72,6 +72,8 @@ struct swap_adjacent_t
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
     const std::size_t fund_size = eve::fundamental_cardinal_v<std::uint8_t>;
 
+    if( current_api == rvv ) return logical_simd_value<T> ? 6 : 2;
+
     if( current_api >= sve )
     {
       if( arithmetic_simd_value<T> )

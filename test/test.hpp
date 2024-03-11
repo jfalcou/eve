@@ -158,6 +158,9 @@ namespace eve::test
         case 128: return {0,6,5,0,4,0,0,0,3};
         case 256: return {0,7,6,0,5,0,0,0,4};
         case 512: return {0,8,7,0,6,0,0,0,5};
+      case 1024:  return {0,6,5,0,4,0,0,0,3};
+      // Unfortunately, this is too long on simulation
+      //case 1024:  return {0,9,8,0,7,0,0,0,6};
         default : return {};
       };
     };
@@ -275,13 +278,14 @@ namespace tts
   template<eve::simd_value W> auto poison(W data)
   {
     using v_t = eve::element_type_t<W>;
+    using c_t  = eve::cardinal_t<W>;
 
     // Add garbage at the end of sub-native registers
     // For emulated type, there is no such gap so we don't do anything
     if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !eve::has_emulated_abi_v<W> )
     {
       using p_t   = eve::as_arithmetic_t<eve::as_integer_t<v_t, unsigned>>;
-      using ftype = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+      using ftype = eve::as_wide_t<v_t, c_t>;
 
       ftype these(data.storage());
 

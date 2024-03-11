@@ -105,3 +105,8 @@ EVE_MAKE_CALLABLE(shl_, shl);
 }
 
 #include <eve/module/core/regular/impl/shl.hpp>
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+
+#include <eve/module/core/regular/impl/simd/riscv/shl.hpp>
+#endif

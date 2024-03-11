@@ -104,3 +104,7 @@ inline constexpr auto abs = functor<abs_t>;
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/abs.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/abs.hpp>
+#endif

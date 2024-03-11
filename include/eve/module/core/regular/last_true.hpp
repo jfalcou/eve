@@ -20,3 +20,7 @@ EVE_MAKE_CALLABLE(last_true_, last_true);
 #if defined(EVE_INCLUDE_ARM_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/last_true.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/last_true.hpp>
+#endif

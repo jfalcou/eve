@@ -14,6 +14,7 @@ namespace spy::detail
                     , x86_ = 10, amd64_ = 11
                     , ppc_ = 20, arm_ = 30
                     , wasm_ = 40
+                    , riscv_ = 50
                     };
   template<archs Arch> struct arch_info
   {
@@ -33,6 +34,7 @@ namespace spy::detail
     if(Arch == archs::ppc_  ) return os << "PowerPC";
     if(Arch == archs::arm_  ) return os << "ARM";
     if(Arch == archs::wasm_ ) return os << "WebAssembly";
+    if(Arch == archs::riscv_) return os << "RISCV";
     return os << "Undefined Architecture";
   }
 }
@@ -58,6 +60,9 @@ namespace spy
 #elif defined(__wasm__)
   using arch_type = detail::arch_info<detail::archs::wasm_>;
   #define SPY_ARCH_IS_WASM
+#elif defined(__riscv)
+  #define SPY_ARCH_IS_RISCV
+  using arch_type = detail::arch_info<detail::archs::riscv_>;
 #else
   #define SPY_ARCH_IS_UNKNOWN
   using arch_type = detail::arch_info<detail::archs::undefined_>;
@@ -79,6 +84,7 @@ namespace spy
   constexpr inline auto ppc_    = detail::arch_info<detail::archs::ppc_>{};
   constexpr inline auto arm_    = detail::arch_info<detail::archs::arm_>{};
   constexpr inline auto wasm_   = detail::arch_info<detail::archs::wasm_>{};
+  constexpr inline auto riscv_  = detail::arch_info<detail::archs::riscv_>{};
 }
 #include <ostream>
 namespace spy::detail
@@ -808,6 +814,11 @@ namespace avx512
 #   endif
 # endif
 #endif
+#if !defined(SPY_SIMD_DETECTED) && defined(__riscv) && defined(__riscv_vector)
+#  define SPY_SIMD_DETECTED ::spy::detail::simd_version::rvv_
+#  define SPY_SIMD_IS_RISCV_FLEXIBLE
+#  define SPY_SIMD_VENDOR ::spy::detail::simd_isa::riscv_
+#endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__aarch64__)
 #  define SPY_SIMD_IS_ARM_ASIMD
 #  define SPY_SIMD_DETECTED ::spy::detail::simd_version::asimd_
@@ -872,7 +883,7 @@ namespace avx512
 #endif
 namespace spy::detail
 {
-  enum class simd_isa { undefined_ = -1, x86_ = 1000, ppc_ = 2000, arm_ = 3000, wasm_ = 4000 };
+  enum class simd_isa { undefined_ = -1, x86_ = 1000, ppc_ = 2000, arm_ = 3000, wasm_ = 4000, riscv_ = 5000 };
   enum class simd_version { undefined_  = -1
                           , sse1_       = 1110, sse2_  = 1120, sse3_ = 1130, ssse3_ = 1131
                           , sse41_      = 1141, sse42_ = 1142
@@ -886,6 +897,7 @@ namespace spy::detail
                           , neon_       = 4001, asimd_    = 4002
                           , sve_        = 5000, fixed_sve_  = 5100
                           , simd128_    = 6000
+                          , rvv_        = 7000
                           };
   template<simd_isa InsSetArch = simd_isa::undefined_, simd_version Version = simd_version::undefined_>
   struct simd_info
@@ -905,6 +917,14 @@ namespace spy::detail
       {
 #if defined(__ARM_FEATURE_SVE_BITS)
         return __ARM_FEATURE_SVE_BITS;
+#else
+        return -1;
+#endif
+      }
+      else if constexpr (Version == simd_version::rvv_        )
+      {
+#if defined(__riscv_v_fixed_vlen)
+        return __riscv_v_fixed_vlen;
 #else
         return -1;
 #endif
@@ -939,6 +959,7 @@ namespace spy::detail
       else  if constexpr ( Version == simd_version::fixed_sve_) os  << "ARM SVE ("
                                                                     << simd_info::width
                                                                     << " bits)";
+      else  if constexpr ( Version == simd_version::rvv_)       os << "RISCV SVE (dyn. bits)";
       else return os << "Undefined SIMD instructions set";
       if constexpr (spy::supports::fma_)     os << " (with FMA3 support)";
       if constexpr (spy::supports::fma4_)    os << " (with FMA4 support)";
@@ -1027,6 +1048,9 @@ namespace spy
   constexpr inline auto asimd_      = arm_simd_info<detail::simd_version::asimd_>{};
   constexpr inline auto sve_        = arm_simd_info<detail::simd_version::sve_>{};
   constexpr inline auto fixed_sve_  = arm_simd_info<detail::simd_version::fixed_sve_>{};
+  template<detail::simd_version V>
+  using riscv_simd_info = detail::simd_info<detail::simd_isa::riscv_, V>;
+  constexpr inline auto rvv_        = riscv_simd_info<detail::simd_version::rvv_>{};
 }
 #include <cstddef>
 namespace spy::detail
