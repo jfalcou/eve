@@ -131,6 +131,21 @@ namespace eve::detail
     }
   }
 
+  // AGGREGATE Helper for fusing tuple
+  template<typename... T> struct combiner
+  {
+    using type = kumi::tuple<typename T::template rescale<typename T::cardinal_type::combined_type>...>;
+  };
+
+  template<typename T>
+  auto tuple_combiner(T const& lo, T const& hi)
+  {
+    using out_t = kumi::apply_traits_t<combiner,T>;
+    return kumi::map_index([](auto i, auto const& l, auto const& h) { return kumi::element_t<i,out_t>{l,h}; }
+                          , lo, hi
+                          );
+  }
+
   // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
   template<std::size_t I> struct aggregate_step
   {
@@ -190,35 +205,43 @@ namespace eve::detail
   {
     using wide_t = typename wide_result<Func, Ts...>::type;
 
-    // Full sliceable case
-    if constexpr( is_fully_sliceable<wide_t,std::decay_t<Ts>...>() )
+    if constexpr(kumi::product_type<wide_t>)
     {
-      wide_t that;
-
-      // If everything can be sliced in equal sub-parts, we save compile-time and
-      // simplify debugging by iterating over all smallest sub-parts
-      detail::apply<replication<wide_t>()>
-      ( [&]<typename... I>(I const&...)
-        {
-          ( ( aggregate_step<I::value>::perform ( EVE_FWD(f)
-                                                , that.storage()
-                                                , EVE_FWD(ts)...
-                                                )
-            ),...
-          );
-        }
-      );
-
-      return that;
+      return tuple_combiner( EVE_FWD(f)(lower(EVE_FWD(ts))...), EVE_FWD(f)(upper(EVE_FWD(ts))...));
     }
-    // Recursive case
     else
     {
-      // We end up there if we have a difference of # of replications inside
-      // This happens in conversions context or when we call a function on a
-      // AVX/AVX2 type with no implementation.
-      return wide_t{EVE_FWD(f)(lower(EVE_FWD(ts))...),
-                    EVE_FWD(f)(upper(EVE_FWD(ts))...)};
+      // Full sliceable case
+      if constexpr( is_fully_sliceable<wide_t,std::decay_t<Ts>...>() )
+      {
+        wide_t that;
+
+        // If everything can be sliced in equal sub-parts, we save compile-time and
+        // simplify debugging by iterating over all smallest sub-parts
+        detail::apply<replication<wide_t>()>
+        ( [&]<typename... I>(I const&...)
+          {
+            ( ( aggregate_step<I::value>::perform ( EVE_FWD(f)
+                                                  , that.storage()
+                                                  , EVE_FWD(ts)...
+                                                  )
+              ),...
+            );
+          }
+        );
+
+        return that;
+      }
+      // Recursive case
+      else
+      {
+        // We end up there if we have a difference of # of replications inside
+        // This happens in conversions context or when we call a function on a
+        // AVX/AVX2 type with no implementation.
+        return wide_t{EVE_FWD(f)(lower(EVE_FWD(ts))...),
+                      EVE_FWD(f)(upper(EVE_FWD(ts))...)};
+      }
     }
+
   }
 }

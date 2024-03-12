@@ -73,25 +73,25 @@ namespace eve
     struct ignore { template<typename T> operator T() { return T{}; } };
 
     template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    {
+      constexpr bool has_implementation = requires{func_t::deferred_call(arch, opts, x0, xs...); };
+      constexpr bool any_aggregated     = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
+      constexpr bool any_emulated       = (has_emulated_abi_v<T>   || ... || has_emulated_abi_v<Ts>  );
+
+      if      constexpr(any_aggregated    ) return aggregate(this->derived(), x0, xs...);
+      else if constexpr(any_emulated      ) return map(this->derived(), x0, xs...);
+      else if constexpr(has_implementation) return func_t::deferred_call(arch, opts, x0, xs...);
+      else                                  return ignore{};
+    }
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     requires(match_option<condition_key,O,ignore_none_>)
     {
-      constexpr bool supports_call = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
-      constexpr bool any_simd     = (simd_value<T> || ... || simd_value<Ts>);
-
-      // If a deferred call is present, let's call it
-      if      constexpr( supports_call )  return func_t::deferred_call(arch, opts, x0, xs...);
-      else if constexpr( any_simd )
-      {
-        // if not, try to slice/aggregate from smaller wides or to map the scalar version
-        if constexpr((has_aggregated_abi_v<Ts> || ...)) return aggregate(this->derived(), x0, xs...);
-        else                                            return map(this->derived(), x0, xs...);
-      }
-      else
-      {
-        static_assert(any_simd, "[EVE] - Missing scalar implementation for current callable");
-        return ignore{};
-      }
+      constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
+      static_assert(supports_call, "[EVE] - Missing implementation for current callable");
+      return adapt_call(arch,opts,x0,xs...);
     }
 
     template<callable_options O, typename T, typename... Ts>
