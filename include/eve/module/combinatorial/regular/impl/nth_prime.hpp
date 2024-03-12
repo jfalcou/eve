@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<unsigned_value T, callable_options O>
   constexpr EVE_FORCEINLINE T
-  nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn)
+  nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn) noexcept
   {
     // clang-format off
     // This is basically three big tables which together
@@ -1225,20 +1225,18 @@ namespace eve::detail
     else return apply_over(nth_prime, nn);
   }
 
-// TODO LATER
-// template<unsigned_value T, unsigned_scalar_value D>
-// EVE_FORCEINLINE constexpr auto
-// nth_prime_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
-// {
-//   return nth_prime(d(n));
-// }
+  template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
+  constexpr EVE_FORCEINLINE auto
+  nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+  {
+    return nth_prime(convert(n, target));
+  }
 
-// template<unsigned_value T, floating_scalar_value D>
-// EVE_FORCEINLINE constexpr auto
-// nth_prime_(EVE_SUPPORTS(cpu_), converter_type<D> d, T n) noexcept
-// {
-//   auto nn = uint32(n);
-//   auto r  = d(nth_prime(nn));
-//   return if_else(is_eqz(r), allbits, r);
-// }
+  template<unsigned_value T,  floating_scalar_value U, callable_options O>
+  constexpr EVE_FORCEINLINE auto
+  nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+  {
+    auto r = convert(nth_prime(uint32(n)), target);
+    return if_else(is_eqz(r), allbits, r);
+  }
 }

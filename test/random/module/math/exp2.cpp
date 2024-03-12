@@ -10,7 +10,7 @@
 
 #include <cmath>
 
-TTS_CASE_TPL("Random check for eve::exp2", eve::test::simd::ieee_reals) //all_types) TODO
+TTS_CASE_TPL("Random check for eve::exp2", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
