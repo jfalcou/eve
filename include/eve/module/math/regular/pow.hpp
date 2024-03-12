@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/exp.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct pow_t : elementwise_callable<pow_t, Options, raw_option>
+  {
+    template<eve::value T, eve::value U>
+    EVE_FORCEINLINE T operator()(T v, U w) const  { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(pow_t, pow_);
+  };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -84,15 +97,112 @@ namespace eve
 //!     @godbolt{doc/math/masked/pow.cpp}
 //!  @}
 //================================================================================================
-namespace tag
-{
-  struct pow_;
+  inline constexpr auto pow = functor<pow_t>;
+
+  namespace detail
+  {
+    template<typename T,  typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    {
+      using r_t = common_value_t<T, U>;
+      auto constexpr isscalar = scalar_value<r_t>;
+      if constexpr(O::contains(raw2))
+      {
+        if constexpr( has_native_abi_v<T> )
+        {
+          if constexpr( floating_value<r_t> )
+            return exp(a1*log(a0));
+          else
+            return pow(a0, a1);
+        }
+        else return apply_over(pow[raw2], a0, a1);
+      }
+      else
+      {
+        if constexpr( has_native_abi_v<r_t> )
+        {
+          if constexpr(floating_value<T> && floating_value<U>)
+          {
+            if constexpr( scalar_value<T> )
+              if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
+            auto nega = is_negative(a0);
+            r_t  z  = pow_abs(a0, a1);
+            return minus[is_odd(a1) && nega](z);
+          }
+          else if constexpr(integral_value<U>)
+          {
+            if constexpr(scalar_value<U>)
+            {
+              if constexpr(integral_scalar_value<T>)
+              {
+                if( a0 == T(1)) return r_t(a0);
+                if( a1 >= U(sizeof(r_t) * 8 - 1 - (std::is_signed_v<r_t>)) || a1 < 0 ) return r_t(0);
+                constexpr uint8_t highest_bit_set[] = {
+                  0, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5,
+                  5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
+                  6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // anything past 63 is a guaranteed overflow with  a0 > 1
+                r_t result(1);
+                auto step =  [&](){if ( a1 & 1 ) result *= a0; a1 >>= 1; a0 *= a0; };
+                switch( highest_bit_set[a1] ) {
+                case 6: step(); [[fallthrough]];
+                case 5: step(); [[fallthrough]];
+                case 4: step(); [[fallthrough]];
+                case 3: step(); [[fallthrough]];
+                case 2: step(); [[fallthrough]];
+                case 1: step(); [[fallthrough]];
+                default: return result;
+                }
+              }
+              if constexpr( std::is_unsigned_v<U> )
+              {
+                T base = a0;
+                U expo = a1;
+
+                auto result = one(as(a0));
+                while( expo )
+                {
+                  if( is_odd(expo) ) result *= base;
+                  expo >>= 1;
+                  base = sqr(base);
+                }
+                return result;
+              }
+              else
+              {
+                using u_t = as_integer_t<U, unsigned>;
+                T tmp     = pow(a0, u_t(eve::abs(a1)));
+                return if_else(is_ltz(a1), rec(tmp), tmp);
+              }
+            }
+            else // simd case
+            {
+              if constexpr( unsigned_value<U> )
+              {
+                T base = a0;
+                U expo = a1;
+
+                auto result = one(as(a0));
+                while( eve::any(to_logical(expo)) )
+                {
+                  result *= if_else(is_odd(expo), base, one(as(a0)));
+                  expo = (expo >> 1);
+                  base = sqr(base);
+                }
+                return result;
+              }
+              else
+              {
+                using u_t = as_integer_t<U, unsigned>;
+                T tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+                return if_else(is_ltz(a1), rec(tmp), tmp);
+              }
+            }
+          }
+        }
+        else
+          return apply_over(pow[o], a0, a1);
+      }
+    }
+  }
 }
-
-template<> struct supports_optimized_conversion<tag::pow_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(pow_, pow);
-}
-
-#include <eve/module/math/regular/impl/pow.hpp>
