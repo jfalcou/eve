@@ -14,7 +14,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
-            << "-> pedantic(maxabs)(pf, qf)  = " << eve::pedantic(eve::maxabs)(pf, qf) << '\n'
-            << "-> numeric(maxabs)(pf, qf)   = " << eve::numeric(eve::maxabs)(pf, qf) << '\n';
+            << "-> maxabs[pedantic}(pf, qf)  = " << eve::maxabs[eve::pedantic](pf, qf) << '\n'
+            << "-> maxabs[numeric](pf, qf)   = " << eve::maxabs[eve::numeric](pf, qf) << '\n';
    return 0;
 }

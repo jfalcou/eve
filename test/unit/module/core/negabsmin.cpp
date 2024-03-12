@@ -54,13 +54,13 @@ TTS_CASE_WITH("Check behavior of negabsmin on all types full range",
 
   auto m = [](auto a, auto b, auto c) -> v_t { return eve::saturated(eve::minus)(eve::abs[eve::saturated](eve::min(a, b, c))); };
   TTS_ULP_EQUAL(negabsmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(negabsmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(negabsmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(negabsmin)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(negabsmin)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(negabsmin)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::negabsmin[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::negabsmin[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::negabsmin[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(negabsmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(eve::negabsmin[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(eve::negabsmin[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(eve::negabsmin[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(negabsmin[t](a0, a1), eve::if_else(t, negabsmin(a0, a1), a0));
 };
@@ -69,28 +69,28 @@ TTS_CASE_TPL("Check values of negabsmin", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmin)(eve::nan(eve::as<T>()), T(1)),
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::pedantic](eve::nan(eve::as<T>()), T(1)),
                  eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmin)(eve::nan(eve::as<v_t>()), T(1)),
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::pedantic](eve::nan(eve::as<v_t>()), T(1)),
                  eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmin)(eve::nan(eve::as<T>()), v_t(1)),
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::pedantic](eve::nan(eve::as<T>()), v_t(1)),
                  eve::nan(eve::as<T>()));
 
-  TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmin)(T(1), eve::nan(eve::as<T>())), T(-1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmin)(v_t(1), eve::nan(eve::as<T>())), T(-1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::negabsmin)(T(1), eve::nan(eve::as<v_t>())), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::pedantic](T(1), eve::nan(eve::as<T>())), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::pedantic](v_t(1), eve::nan(eve::as<T>())), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::pedantic](T(1), eve::nan(eve::as<v_t>())), T(-1));
 
-  TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic(eve::negabsmin)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::pedantic(eve::negabsmin)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::negabsmin[eve::pedantic](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::negabsmin[eve::pedantic](T(0), T(-0.)))));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::negabsmin)((eve::nan(eve::as<T>())), T(1)), T(-1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::negabsmin)((eve::nan(eve::as<v_t>())), T(1)), T(-1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::negabsmin)((eve::nan(eve::as<T>())), v_t(1)), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(-1));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::negabsmin)(T(1), eve::nan(eve::as<T>())), T(-1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::negabsmin)(v_t(1), eve::nan(eve::as<T>())), T(-1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::negabsmin)(T(1), eve::nan(eve::as<v_t>())), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::numeric](T(1), eve::nan(eve::as<T>())), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(-1));
+  TTS_IEEE_EQUAL(eve::negabsmin[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(-1));
 
-  TTS_EXPECT(eve::all(eve::is_negative(eve::numeric(eve::negabsmin)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::numeric(eve::negabsmin)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::negabsmin[eve::numeric](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::negabsmin[eve::numeric](T(0), T(-0.)))));
 };

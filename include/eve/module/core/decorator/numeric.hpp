@@ -50,5 +50,5 @@ using numeric_type = decorated<numeric_()>;
 //!
 //!  @}
 //================================================================================================
-inline constexpr numeric_type const numeric = {};
+[[maybe_unused]] inline constexpr numeric_type const numeric = {};
 }

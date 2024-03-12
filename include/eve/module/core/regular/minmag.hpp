@@ -8,10 +8,28 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct minmag_t : tuple_callable<minmag_t, Options, numeric_option, pedantic_option, saturated_option>
+  {
+    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup t) const noexcept { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(minmag_t, minmag_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -82,7 +100,7 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/minmag.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(minmag_, minmag);
+inline constexpr auto minmag = functor<minmag_t>;
 }
 
 #include <eve/module/core/regular/impl/minmag.hpp>

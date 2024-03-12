@@ -15,8 +15,9 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> negminabs(pf, qf)            = " << eve::negminabs(pf, qf) << '\n'
-            << "-> pedantic(negminabs)(pf, qf) = " << eve::pedantic(eve::negminabs)(pf, qf) << '\n'
-            << "-> numeric(negminabs)(pf, qf)  = " << eve::numeric(eve::negminabs)(pf, qf) << '\n';
+            << "-> negminabs[pedantic}(pf, qf)  = " << eve::negminabs[eve::pedantic](pf, qf) << '\n'
+            << "-> negminabs[numeric](pf, qf)   = " << eve::negminabs[eve::numeric](pf, qf) << '\n';
+
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -25,7 +26,8 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> negminabs(xf, yf)            = " << eve::negminabs(xf, yf) << '\n'
-            << "-> pedantic(negminabs)(xf, yf) = " << eve::pedantic(eve::negminabs)(xf, yf) << '\n'
-            << "-> numeric(negminabs)(xf, yf)  = " << eve::numeric(eve::negminabs)(xf, yf) << '\n';
+            << "-> negminabs[pedantic}(xf, yf)  = " << eve::negminabs[eve::pedantic](xf, yf) << '\n'
+            << "-> negminabs[numeric](xf, yf)   = " << eve::negminabs[eve::numeric](xf, yf) << '\n';
+
    return 0;
 }

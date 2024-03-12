@@ -61,14 +61,14 @@ TTS_CASE_WITH("Check behavior of absmin on all types full range",
   using v_t = eve::element_type_t<T>;
 
   auto m = [](auto a, auto b, auto c) -> v_t { return eve::abs(eve::min(a, b, c)); };
-  TTS_ULP_EQUAL(absmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(absmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(absmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(absmin)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(absmin)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(absmin)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(absmin)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+   TTS_ULP_EQUAL(absmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2) << a0 << " --- " << a1 << " --- " << a2 << '\n';
+  TTS_ULP_EQUAL(eve::absmin[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::absmin[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(absmin[t](a0, a1), eve::if_else(t, absmin(a0, a1), a0));
 };
@@ -77,34 +77,34 @@ TTS_CASE_TPL("Check values of absmin", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL(eve::pedantic(eve::absmin)(eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::absmin)(eve::nan(eve::as<v_t>()), T(1)),
+  TTS_IEEE_EQUAL(eve::absmin[eve::pedantic](eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::absmin[eve::pedantic](eve::nan(eve::as<v_t>()), T(1)),
                  eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::absmin)(eve::nan(eve::as<T>()), v_t(1)),
+  TTS_IEEE_EQUAL(eve::absmin[eve::pedantic](eve::nan(eve::as<T>()), v_t(1)),
                  eve::nan(eve::as<T>()));
 
-  TTS_IEEE_EQUAL(eve::pedantic(eve::absmin)(T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::absmin)(v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::absmin)(T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::pedantic](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::pedantic](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::pedantic](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::absmin)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::absmin)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::absmin[eve::pedantic](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::absmin[eve::pedantic](T(0), T(-0.)))));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::absmin)((eve::nan(eve::as<T>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::absmin)((eve::nan(eve::as<v_t>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::absmin)((eve::nan(eve::as<T>())), v_t(1)), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(1));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::absmin)(T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::absmin)(v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::absmin)(T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::numeric](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::absmin[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::absmin)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::absmin)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::absmin[eve::numeric](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::absmin[eve::numeric](T(0), T(-0.)))));
 };
 
 
 //==================================================================================================
-// Tests for masked absmin
+//==  Tests for masked absmin
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::absmin)(eve::wide)",
               eve::test::simd::ieee_reals,
