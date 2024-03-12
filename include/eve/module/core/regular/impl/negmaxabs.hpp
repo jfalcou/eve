@@ -7,47 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/concept/value.hpp>
 #include <eve/module/core/regular/maxabs.hpp>
 #include <eve/module/core/regular/minus.hpp>
+#include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
-
-template<value  ...Ts>
-EVE_FORCEINLINE auto
-negmaxabs_(EVE_SUPPORTS(cpu_), Ts... args) noexcept
--> decltype(minus(maxabs(args...)))
-{
-  return minus(maxabs(args...));
-}
-
-template<conditional_expr C, value T0, value  ...Ts>
-EVE_FORCEINLINE auto
-negmaxabs_(EVE_SUPPORTS(cpu_), C const & c, T0 t0, Ts... args) noexcept
--> decltype(if_else(c, negmaxabs(t0, args...), t0))
-{
-  return minus[c](maxabs[c](t0, args...));
-}
-
-//================================================================================================
-// tuples
-//================================================================================================
-template<kumi::non_empty_product_type Ts>
-auto
-negmaxabs_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return minus(abs(get<0>(tup)));
-  else return kumi::apply( [&](auto... m) { return negmaxabs(m...); }, tup);
-}
-
-
-template<decorator D, kumi::non_empty_product_type Ts>
-auto
-negmaxabs_(EVE_SUPPORTS(cpu_), D const & d , Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return minus(abs(get<0>(tup)));
-  else return minus(kumi::apply( [&](auto... m) { return d(maxabs)(m...); }, tup));
-}
-
+  template<typename T0, typename T1, typename... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+  negmaxabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
+  {
+    return eve::minus(maxabs[o](a0, a1, as...));
+  }
 }

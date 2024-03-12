@@ -16,7 +16,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                     = " << pf << '\n'
             << "<- qf                     = " << qf << '\n'
-            << "-> pedantic(min)(pf, qf)  = " << eve::pedantic(eve::min)(pf, qf) << '\n'
-            << "-> numeric(min)(pf, qf)   = " << eve::numeric(eve::min)(pf, qf) << '\n';
+            << "-> min[pedantic](pf, qf)  = " << eve::min[eve::pedantic](pf, qf) << '\n'
+            << "-> min[numeric](pf, qf)   = " << eve::min[eve::numeric](pf, qf) << '\n';
   return 0;
 }

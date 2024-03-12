@@ -15,8 +15,8 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> negabsmin(pf, qf)            = " << eve::negabsmin(pf, qf) << '\n'
-            << "-> pedantic(negabsmin)(pf, qf) = " << eve::pedantic(eve::negabsmin)(pf, qf) << '\n'
-            << "-> numeric(negabsmin)(pf, qf)  = " << eve::numeric(eve::negabsmin)(pf, qf) << '\n';
+            << "-> negabsmin[pedantic](pf, qf) = " << eve::negabsmin[eve::pedantic](pf, qf) << '\n'
+            << "-> negabsmin[numeric](pf, qf)  = " << eve::negabsmin[eve::numeric](pf, qf) << '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -25,7 +25,8 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> negabsmin(xf, yf)            = " << eve::negabsmin(xf, yf) << '\n'
-            << "-> pedantic(negabsmin)(xf, yf) = " << eve::pedantic(eve::negabsmin)(xf, yf) << '\n'
-            << "-> numeric(negabsmin)(xf, yf)  = " << eve::numeric(eve::negabsmin)(xf, yf) << '\n';
+            << "-> negabsmin[pedantic](xf, yf) = " << eve::negabsmin[eve::pedantic](xf, yf) << '\n'
+            << "-> negabsmin[numeric](xf, yf)  = " << eve::negabsmin[eve::numeric](xf, yf) << '\n';
+
    return 0;
 }

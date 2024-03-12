@@ -120,7 +120,7 @@ namespace eve
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
   inline constexpr auto as_option(kind_2_type       const&) { return kind_22;       }
   inline constexpr auto as_option(musl_type         const&) { return musl2;         }
-  inline constexpr auto as_option(numeric_type      const&) { return numeric;       }
+  inline constexpr auto as_option(numeric_type      const&) { return numeric2;      }
   inline constexpr auto as_option(p_kind_type       const&) { return p_kind2;       }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
   inline constexpr auto as_option(plain_type        const&) { return plain2;        }

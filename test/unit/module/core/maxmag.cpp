@@ -61,13 +61,13 @@ TTS_CASE_WITH("Check behavior of maxmag on all types full range",
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return maxmag(maxmag(b, c), a); };
   TTS_ULP_EQUAL(maxmag((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(maxmag)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(maxmag(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(maxmag)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(maxmag)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(maxmag)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+ TTS_ULP_EQUAL(maxmag(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(maxmag[t](a0, a1), eve::if_else(t, maxmag(a0, a1), a0));
 };
@@ -76,34 +76,34 @@ TTS_CASE_TPL("Check values of maxmag", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxmag)(eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxmag)(eve::nan(eve::as<v_t>()), T(1)),
+  TTS_IEEE_EQUAL(eve::maxmag[eve::pedantic](eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::pedantic](eve::nan(eve::as<v_t>()), T(1)),
                  eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxmag)(eve::nan(eve::as<T>()), v_t(1)),
+  TTS_IEEE_EQUAL(eve::maxmag[eve::pedantic](eve::nan(eve::as<T>()), v_t(1)),
                  eve::nan(eve::as<T>()));
 
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxmag)(T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxmag)(v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxmag)(T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::pedantic](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::pedantic](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::pedantic](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::maxmag)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::maxmag)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxmag[eve::pedantic](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxmag[eve::pedantic](T(0), T(-0.)))));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxmag)((eve::nan(eve::as<T>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxmag)((eve::nan(eve::as<v_t>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxmag)((eve::nan(eve::as<T>())), v_t(1)), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(1));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxmag)(T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxmag)(v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxmag)(T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::numeric](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxmag[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::maxmag)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::maxmag)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxmag[eve::numeric](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxmag[eve::numeric](T(0), T(-0.)))));
 };
 
 
 //==================================================================================================
-// Tests for masked maxmag
+//==  Tests for masked maxmag
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::maxmag)(eve::wide)",
               eve::test::simd::ieee_reals,

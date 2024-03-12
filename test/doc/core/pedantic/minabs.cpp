@@ -14,7 +14,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
-            << "-> pedantic(minabs)(pf, qf)  = " << eve::pedantic(eve::minabs)(pf, qf) << '\n'
-            << "-> numeric(minabs)(pf, qf)   = " << eve::numeric(eve::minabs)(pf, qf) << '\n';
+            << "-> minabs[pedantic}(pf, qf)  = " << eve::minabs[eve::pedantic](pf, qf) << '\n'
+            << "-> minabs[numeric](pf, qf)   = " << eve::minabs[eve::numeric](pf, qf) << '\n';
+
    return 0;
 }

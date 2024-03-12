@@ -14,7 +14,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
-            << "-> pedantic(minmag)(pf, qf) = " << eve::pedantic(eve::minmag)(pf, qf) << '\n'
-            << "-> numeric(minmag)(pf, qf)  = " << eve::numeric(eve::minmag)(pf, qf) << '\n';
+            << "-> minmag[pedantic}(pf, qf)  = " << eve::minmag[eve::pedantic](pf, qf) << '\n'
+            << "-> minmag[numeric](pf, qf)   = " << eve::minmag[eve::numeric](pf, qf) << '\n';
+
    return 0;
 }

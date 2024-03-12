@@ -15,9 +15,8 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> absmin(pf, qf)            = " << eve::absmin(pf, qf) << '\n'
-            << "-> pedantic(absmin)(pf, qf)  = " << eve::pedantic(eve::absmin)(pf, qf) << '\n'
-            
-            << "-> numeric(absmin)(pf, qf)   = " << eve::numeric(eve::absmin)(pf, qf) << '\n';
+            << "-> absmin[pedantic](pf, qf)  = " << eve::absmin[eve::pedantic](pf, qf) << '\n'
+            << "-> absmin[numeric](pf, qf)   = " << eve::absmin[eve::numeric](pf, qf) << '\n';
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -26,7 +25,7 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> absmin(xf, yf)            = " << eve::absmin(xf, yf) << '\n'
-            << "-> pedantic(absmin)(xf, yf)  = " << eve::pedantic(eve::absmin)(xf, yf) << '\n'
-            << "-> numeric(absmin)(xf, yf)   = " << eve::numeric(eve::absmin)(xf, yf) << '\n';
+            << "-> absmin[pedantic](xf, yf)  = " << eve::absmin[eve::pedantic](xf, yf) << '\n'
+            << "-> absmin[numeric](xf, yf)   = " << eve::absmin[eve::numeric](xf, yf) << '\n';
    return 0;
 }

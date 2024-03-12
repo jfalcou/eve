@@ -15,8 +15,9 @@ int main()
             << "<- pf                        = " << pf << '\n'
             << "<- qf                        = " << qf << '\n'
             << "-> negmaxabs(pf, qf)            = " << eve::negmaxabs(pf, qf) << '\n'
-            << "-> pedantic(negmaxabs)(pf, qf) = " << eve::pedantic(eve::negmaxabs)(pf, qf) << '\n'
-            << "-> numeric(negmaxabs)(pf, qf)  = " << eve::numeric(eve::negmaxabs)(pf, qf) << '\n';
+            << "-> negmaxabs[pedantic}(pf, qf)  = " << eve::negmaxabs[eve::pedantic](pf, qf) << '\n'
+            << "-> negmaxabs[numeric](pf, qf)   = " << eve::negmaxabs[eve::numeric](pf, qf) << '\n';
+
 
   float xf = -4.0f;
   float yf = 1.0f;
@@ -25,7 +26,8 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> negmaxabs(xf, yf)            = " << eve::negmaxabs(xf, yf) << '\n'
-            << "-> pedantic(negmaxabs)(xf, yf) = " << eve::pedantic(eve::negmaxabs)(xf, yf) << '\n'
-            << "-> numeric(negmaxabs)(xf, yf)  = " << eve::numeric(eve::negmaxabs)(xf, yf) << '\n';
+            << "-> negmaxabs[pedantic}(xf, yf)  = " << eve::negmaxabs[eve::pedantic](xf, yf) << '\n'
+            << "-> negmaxabs[numeric](xf, yf)   = " << eve::negmaxabs[eve::numeric](xf, yf) << '\n';
+
    return 0;
 }

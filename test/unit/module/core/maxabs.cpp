@@ -62,13 +62,13 @@ TTS_CASE_WITH("Check behavior of maxabs on all types full range",
   auto m    = [](auto a, auto b, auto c) -> v_t
   { return eve::max(eve::abs(a), eve::abs(b), eve::abs(c)); };
   TTS_ULP_EQUAL(maxabs((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(maxabs)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxabs[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxabs[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxabs[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(maxabs(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(maxabs)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::numeric(maxabs)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::saturated(maxabs)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxabs[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxabs[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxabs[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(maxabs[t](a0, a1), eve::if_else(t, maxabs(a0, a1), a0));
 };
@@ -77,29 +77,27 @@ TTS_CASE_TPL("Check values of maxabs", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(eve::nan(eve::as<v_t>()), T(1)),
-                 eve::nan(eve::as<T>()));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(eve::nan(eve::as<T>()), v_t(1)),
-                 eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::pedantic](eve::nan(eve::as<T>()), T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::pedantic](eve::nan(eve::as<v_t>()), T(1)), eve::nan(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::pedantic](eve::nan(eve::as<T>()), v_t(1)), eve::nan(eve::as<T>()));
 
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::pedantic(eve::maxabs)(T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::pedantic](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::pedantic](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::pedantic](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::maxabs)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::pedantic(eve::maxabs)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxabs[eve::pedantic](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxabs[eve::pedantic](T(0), T(-0.)))));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxabs)((eve::nan(eve::as<T>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxabs)((eve::nan(eve::as<v_t>())), T(1)), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxabs)((eve::nan(eve::as<T>())), v_t(1)), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::numeric]((eve::nan(eve::as<T>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::numeric]((eve::nan(eve::as<v_t>())), T(1)), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::numeric]((eve::nan(eve::as<T>())), v_t(1)), T(1));
 
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxabs)(T(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxabs)(v_t(1), eve::nan(eve::as<T>())), T(1));
-  TTS_IEEE_EQUAL(eve::numeric(eve::maxabs)(T(1), eve::nan(eve::as<v_t>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::numeric](T(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::numeric](v_t(1), eve::nan(eve::as<T>())), T(1));
+  TTS_IEEE_EQUAL(eve::maxabs[eve::numeric](T(1), eve::nan(eve::as<v_t>())), T(1));
 
-  TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::maxabs)(T(-0.), T(0)))));
-  TTS_EXPECT(eve::all(eve::is_positive(eve::numeric(eve::maxabs)(T(0), T(-0.)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxabs[eve::numeric](T(-0.), T(0)))));
+  TTS_EXPECT(eve::all(eve::is_positive(eve::maxabs[eve::numeric](T(0), T(-0.)))));
 };
 
 
