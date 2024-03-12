@@ -93,10 +93,12 @@ namespace detail
 
       // Adapt lower bound depending on options
       auto minlogval = [&]()
-      {
-        if constexpr((!eve::platform::supports_denormals) || !O::contains(pedantic2)) return minlog10(as(x));
-        else                                                                          return minlog10denormal(as(x));
-      };
+        {
+          if constexpr((eve::platform::supports_denormals) && O::contains(pedantic2))
+            return minlog10denormal(as(x));
+          else
+            return minlog10(as(x));
+        };
 
       const T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(as(x));
       const T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(as(x));
@@ -106,6 +108,7 @@ namespace detail
       // Scalar early returns
       if constexpr( scalar_value<T> )
       {
+        if( is_nan(x)   ) return nan(as(x));
         if( xgemaxlog10 ) return inf(as(x));
         if( xltminlog10 ) return zero(as(x));
       }
@@ -147,6 +150,7 @@ namespace detail
       // SIMD value fixes
       if constexpr( simd_value<T> )
       {
+        z = if_else(is_nan(x), x, z);
         z = if_else(xltminlog10, zero, z);
         z = if_else(xgemaxlog10, inf(as(x)), z);
       }

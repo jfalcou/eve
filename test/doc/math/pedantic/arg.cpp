@@ -11,6 +11,6 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pf            = " << pf << '\n'
-    << "-> eve::arg(pf)  = " << eve::arg(pf) << '\n';
+    << "-> eve::arg[pedantic](pf)  = " << eve::arg[eve::pedantic](pf) << '\n';
   return 0;
 }

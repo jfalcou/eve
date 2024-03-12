@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct deginrad_t : elementwise_callable<deginrad_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(deginrad_t, deginrad_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -47,8 +58,21 @@ namespace eve
 //!  @godbolt{doc/math/regular/deginrad.cpp}
 //!  @}
 //================================================================================================
-
-EVE_MAKE_CALLABLE(deginrad_, deginrad);
+inline constexpr auto deginrad = functor<deginrad_t>;
 }
 
-#include <eve/module/math/regular/impl/deginrad.hpp>
+namespace eve::detail
+{
+  template<floating_ordered_value T, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  deginrad_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+  {
+    if constexpr( has_native_abi_v<T> )
+    {
+      auto ridh = ieee_constant<0x1.1de0000p-6f, 0x1.1df46a0000000p-6>(eve::as<T>{});
+      auto ridl = ieee_constant<0x1.46a2520p-18f, 0x1.294e9c8ae0ec6p-33>(eve::as<T>{});
+      return fma(a, ridl, a * ridh);
+    }
+    else return apply_over(deginrad, a);
+  }
+}
