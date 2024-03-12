@@ -138,7 +138,7 @@ namespace eve::detail
   };
 
   template<typename T>
-  auto tuple_combiner(T const& lo, T const& hi)
+  EVE_FORCEINLINE auto tuple_combiner(T const& lo, T const& hi)
   {
     using out_t = kumi::apply_traits_t<combiner,T>;
     return kumi::map_index([](auto i, auto const& l, auto const& h) { return kumi::element_t<i,out_t>{l,h}; }
@@ -203,14 +203,16 @@ namespace eve::detail
   template<typename Func, typename... Ts>
   EVE_FORCEINLINE auto aggregate(Func &&f, Ts &&... ts)
   {
-    using wide_t = typename wide_result<Func, Ts...>::type;
+    using half_t = decltype(EVE_FWD(f)(lower(EVE_FWD(ts))...));
 
-    if constexpr(kumi::product_type<wide_t>)
+    if constexpr(kumi::product_type<half_t>)
     {
       return tuple_combiner( EVE_FWD(f)(lower(EVE_FWD(ts))...), EVE_FWD(f)(upper(EVE_FWD(ts))...));
     }
     else
     {
+      using wide_t = typename half_t::template rescale<typename half_t::cardinal_type::combined_type>;
+
       // Full sliceable case
       if constexpr( is_fully_sliceable<wide_t,std::decay_t<Ts>...>() )
       {
@@ -221,10 +223,7 @@ namespace eve::detail
         detail::apply<replication<wide_t>()>
         ( [&]<typename... I>(I const&...)
           {
-            ( ( aggregate_step<I::value>::perform ( EVE_FWD(f)
-                                                  , that.storage()
-                                                  , EVE_FWD(ts)...
-                                                  )
+            ( ( aggregate_step<I::value>::perform(EVE_FWD(f), that.storage(), EVE_FWD(ts)...)
               ),...
             );
           }
@@ -238,8 +237,7 @@ namespace eve::detail
         // We end up there if we have a difference of # of replications inside
         // This happens in conversions context or when we call a function on a
         // AVX/AVX2 type with no implementation.
-        return wide_t{EVE_FWD(f)(lower(EVE_FWD(ts))...),
-                      EVE_FWD(f)(upper(EVE_FWD(ts))...)};
+        return wide_t{EVE_FWD(f)(lower(EVE_FWD(ts))...),EVE_FWD(f)(upper(EVE_FWD(ts))...)};
       }
     }
 
