@@ -17,14 +17,14 @@ TTS_CASE_TPL("Check return types of eve::prime_ceil", eve::test::simd::unsigned_
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
-//  using f_t = eve::wide<float, eve::cardinal_t<T>>;
-//  using d_t = eve::wide<double, eve::cardinal_t<T>>;
+  using f_t = eve::as_wide_as_t<float, T>;
+  using d_t = eve::as_wide_as_t<double, T>;
   TTS_EXPR_IS(eve::prime_ceil(T()), T);
   TTS_EXPR_IS(eve::prime_ceil(v_t()), v_t);
-//   TTS_EXPR_IS(eve::float32(eve::prime_ceil)(T()), f_t);
-//   TTS_EXPR_IS(eve::float32(eve::prime_ceil)(v_t()), float);
-//   TTS_EXPR_IS(eve::float64(eve::prime_ceil)(T()), d_t);
-//   TTS_EXPR_IS(eve::float64(eve::prime_ceil)(v_t()), double);
+  TTS_EXPR_IS(eve::prime_ceil(T(), eve::as<float >()), f_t);
+  TTS_EXPR_IS(eve::prime_ceil(v_t(), eve::as<float >()), float);
+  TTS_EXPR_IS(eve::prime_ceil(T(), eve::as<double >()), d_t);
+  TTS_EXPR_IS(eve::prime_ceil(v_t(), eve::as<double >()), double);
 };
 
 //==================================================================================================
