@@ -8,10 +8,8 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/min.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
@@ -104,16 +102,7 @@ namespace eve
 inline constexpr auto minabs = functor<minabs_t>;
 }
 
-namespace eve::detail
-{
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  minabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
-  {
-    auto abso = abs[o.drop(pedantic2,numeric2)];
-    return eve::min[o.drop(saturated2)](abso(a0), abso(a1), abso(as)...);
-  }
-}
+#include <eve/module/core/regular/impl/minabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/minabs.hpp>

@@ -7,17 +7,16 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/maxabs.hpp>
+#include <eve/module/core/regular/minus.hpp>
 #include <eve/concept/value.hpp>
 
 namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  maxabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
+  negmaxabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
   {
-    auto abso = abs[o.drop(pedantic2,numeric2)];
-    return eve::max[o.drop(saturated2)](abso(a0), abso(a1), abso(as)...);
+    return eve::minus(maxabs[o](a0, a1, as...));
   }
 }

@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/concept/value.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
@@ -95,15 +93,7 @@ namespace eve
 inline constexpr auto absmax = functor<absmax_t>;
 }
 
-namespace eve::detail
-{
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  absmax_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
-  {
-    return eve::abs[o.drop(pedantic2,numeric2)](eve::max[o.drop(saturated2)](r0, r1, rs...));
-  }
-}
+#include <eve/module/core/regular/impl/absmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/absmax.hpp>

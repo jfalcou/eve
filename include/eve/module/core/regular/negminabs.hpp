@@ -7,13 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/minus.hpp>
-#include <eve/module/core/regular/minabs.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
-
   template<typename Options>
   struct negminabs_t : tuple_callable<negminabs_t, Options, numeric_option, pedantic_option, saturated_option>
   {
@@ -90,15 +89,7 @@ namespace eve
 inline constexpr auto negminabs = functor<negminabs_t>;
 }
 
-namespace eve::detail
-{
-  template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  negminabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
-  {
-    return eve::minus(minabs[o](a0, a1, as...));
-  }
-}
+#include <eve/module/core/regular/impl/negminabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/negminabs.hpp>

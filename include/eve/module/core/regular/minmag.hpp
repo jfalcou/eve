@@ -8,12 +8,11 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
-
-
   template<typename Options>
   struct minmag_t : tuple_callable<minmag_t, Options, numeric_option, pedantic_option, saturated_option>
   {

@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/arch/platform.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
@@ -19,7 +19,6 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct minmax_t : tuple_callable<minmax_t, Options, pedantic_option, numeric_option>
   {
