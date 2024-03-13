@@ -14,11 +14,23 @@
 namespace eve
 {
   template<typename Options>
-  struct nth_prime_t : elementwise_callable<nth_prime_t, Options/*, upgrade_converter_option*/>
+  struct nth_prime_t : elementwise_callable<nth_prime_t, Options>
   {
     template<eve::unsigned_value T>
     constexpr EVE_FORCEINLINE
     T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::integral_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    {
+      return EVE_DISPATCH_CALL(v, target);
+    }
+
+    template<eve::integral_value T, unsigned_scalar_value U>
+    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    {
+      return EVE_DISPATCH_CALL(v, target);
+    }
 
     EVE_CALLABLE_OBJECT(nth_prime_t, nth_prime_);
   };

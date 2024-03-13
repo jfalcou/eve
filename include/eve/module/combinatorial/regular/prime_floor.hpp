@@ -20,6 +20,18 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
+    template<eve::integral_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    {
+      return EVE_DISPATCH_CALL(v, target);
+    }
+
+    template<eve::integral_value T, unsigned_scalar_value U>
+    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    {
+      return EVE_DISPATCH_CALL(v, target);
+    }
+
     EVE_CALLABLE_OBJECT(prime_floor_t, prime_floor_);
   };
 
@@ -69,7 +81,52 @@ namespace eve
 //!    @godbolt{doc/combinatorial/conversion/prime_floor.cpp}
 //! @}
 //================================================================================================
-inline constexpr auto prime_floor = functor<prime_floor_t>;
-}
+  inline constexpr auto prime_floor = functor<prime_floor_t>;
 
-#include <eve/module/combinatorial/regular/impl/prime_floor.hpp>
+  namespace detail
+  {
+    template<unsigned_value T, callable_options O>
+    constexpr EVE_FORCEINLINE T
+    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+    {
+      using elt_t = element_type_t<T>;
+      if constexpr( has_native_abi_v<T> )
+      {
+        auto constexpr maxi =
+          (sizeof(elt_t) == 1) ? (53u) : ((sizeof(elt_t) == 2) ? (6541u) : (10000u));
+        auto constexpr next =
+          (sizeof(elt_t) == 1) ? (255u) : ((sizeof(elt_t) == 2) ? (65535u) : (104742u));
+        auto first = T(0);
+        auto last  = T(maxi);
+        while( eve::any(inc(first) < last) )
+        {
+          auto mid  = average(first, last);
+          auto pmid = convert(nth_prime(mid), as<elt_t>());
+          auto test = pmid <= n;
+          first     = if_else(test, mid, first);
+          last      = if_else(test, last, mid);
+        }
+        auto z = nth_prime(first);
+        z      = if_else(
+          (((last == T(maxi)) && (n < T(next))) || (first < T(maxi - 1))) && (n >= 2), z, zero);
+        return z;
+      }
+      else return apply_over(prime_floor, n);
+    }
+
+    template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
+    constexpr EVE_FORCEINLINE auto
+    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+    {
+      return convert(prime_floor(uint32(n)), target);
+    }
+
+    template<unsigned_value T,  floating_scalar_value U, callable_options O>
+    constexpr EVE_FORCEINLINE auto
+    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+    {
+      auto r = convert(prime_floor(uint32(n)), target);
+      return if_else(is_eqz(r), allbits, r);
+    }
+  }
+}

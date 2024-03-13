@@ -11,9 +11,11 @@ main()
   w32_t pi32  = {2, 6, 6542, 15, 1, 200000, 10000, 1000};
 
   std::cout << "---- simd" << '\n'
-            << " <- pi32              = " << pi32 << '\n'
-            << " -> prime_floor(pi32) = " << eve::prime_floor(pi32)
-            << " // note 0 meaning out of implemented range\n";
+            << " <- pi32                           = " << pi32 << '\n'
+            << " -> prime_floor(pi32)              = " << eve::prime_floor(pi32)
+            << " // note 0 meaning out of implemented range\n"
+            << " -> prime_floor(pi32, as<float>()) = " <<  eve::prime_floor(pi32, eve::as<float>())
+            << " // note nan meaning out of implemented range\n" << '\n';
 
   std::uint32_t xi = 18;
   std::cout << "---- scalar" << '\n'
