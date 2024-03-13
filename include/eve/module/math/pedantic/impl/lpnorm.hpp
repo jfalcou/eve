@@ -28,7 +28,7 @@ lpnorm_(EVE_SUPPORTS(cpu_), pedantic_type const&, const P& p, T0 a0, T1 a1, Ts..
 
     if constexpr( has_native_abi_v<r_t> )
     {
-      if( eve::all(p == P(2)) ) return pedantic(hypot)(a0, a1, args...);
+      if( eve::all(p == P(2)) ) return hypot[pedantic2](a0, a1, args...);
       else if( eve::all(p == P(1)) ) return pedantic(manhattan)(a0, a1, args...);
       else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric2](a0, a1, args...);
       else
