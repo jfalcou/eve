@@ -17,7 +17,7 @@ namespace eve
   template<typename Options>
   struct nthroot_t : elementwise_callable<nthroot_t, Options, raw_option>
   {
-    template<eve::floating_scalar_value T, eve::integral_value U>
+    template<eve::floating_value T, eve::integral_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
