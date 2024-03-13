@@ -68,7 +68,7 @@ namespace eve
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    quadrant_(EVE_REQUIRES(cpu_), O const & o, T a) noexcept
+    quadrant_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     {
       if constexpr( has_native_abi_v<T> )
       {
