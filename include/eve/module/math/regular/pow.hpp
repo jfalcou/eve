@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
@@ -209,10 +210,10 @@ namespace eve
             r_t base = a0;
             U expo = a1;
 
-            auto result = one(as(a0));
+            r_t result(1);
             while( eve::any(to_logical(expo)) )
             {
-              result *= if_else(is_odd(expo), base, one(as(a0)));
+              result *= if_else(is_odd(expo), base, one);
               expo = (expo >> 1);
               base = sqr(base);
             }

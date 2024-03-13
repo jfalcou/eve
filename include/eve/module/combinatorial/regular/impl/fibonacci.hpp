@@ -18,7 +18,7 @@ namespace eve::detail
   {
     using c_t    = as_wide_as_t<common_value_t<T, U>, N>;
     using elt_t  = element_type_t<c_t>;
-    using eli_t  = as_integer_t<elt_t, unsigned>;
+    //   using eli_t  = as_integer_t<elt_t, unsigned>;
     auto gold    = c_t(1.61803398874989484820458683436563811772030917980575);
     auto goldbar = c_t(-0.61803398874989484820458683436563811772030917980575);
     constexpr elt_t oneosqrt5 = 0.4472135954999579392818347337462552470881236719223;
@@ -26,7 +26,7 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> &&  has_native_abi_v<N>)
       {
-        auto nm1 = to_<eli_t>((n));
+        auto nm1 = to_<elt_t>((n));
         auto c2  = fms(gold, a, b) * oneosqrt5;
         auto c1  = a - c2;
         auto f   = fma(c1, eve::pow(gold, nm1), c2 * eve::pow(goldbar, nm1));
