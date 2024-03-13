@@ -6,10 +6,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct quadrant_t : elementwise_callable<quadrant_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(quadrant_t, quadrant_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -28,7 +41,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
+//!      template< eve::value T >
 //!      T quadrant(T n) noexcept;
 //!   }
 //!   @endcode
@@ -48,15 +61,26 @@ namespace eve
 //!  @godbolt{doc/math/regular/quadrant.cpp}
 //!  @}
 //================================================================================================
+  inline constexpr auto quadrant = functor<quadrant_t>;
 
-namespace tag
-{
-  struct quadrant_;
+  namespace detail
+  {
+
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    quadrant_(EVE_REQUIRES(cpu_), O const & o, T a) noexcept
+    {
+      if constexpr( has_native_abi_v<T> )
+      {
+        if constexpr( floating_value<T> )
+        {
+          T b = a * T(0.25);
+          return (b - floor(b)) * T(4);
+        }
+        else
+          return (a & T(3));
+      }
+      else return apply_over(quadrant, a);
+    }
+  }
 }
-template<> struct supports_conditional<tag::quadrant_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(quadrant_, quadrant);
-}
-
-#include <eve/module/math/regular/impl/quadrant.hpp>
