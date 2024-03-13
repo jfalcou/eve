@@ -156,7 +156,7 @@ namespace eve
           z = if_else(is_nan(x) && is_nan(y), allbits, z);
           return z;
         }
-        else return apply_over(pow_abs, x, y);
+        else return apply_over(pow_abs[o], x, y);
       }
     }
   }
