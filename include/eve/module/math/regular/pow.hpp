@@ -114,7 +114,7 @@ namespace eve
     pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
       using r_t = eve::wide<T, fixed<1>>;
-      return pow(r_t(a0), a1).get(0);
+      return pow[o](r_t(a0), a1).get(0);
     }
 
     template<typename T,  typename U, callable_options O>
