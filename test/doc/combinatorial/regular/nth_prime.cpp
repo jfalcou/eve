@@ -12,8 +12,9 @@ main()
   std::cout << "---- simd" << '\n'
             << " <- pi16              = " << pi16 << '\n'
             << " -> nth_prime(pi16)   = " << eve::nth_prime(pi16)
-            << " // note the 0 outputs meaning overflow or out of range\n";
-
+            << " // note the 0 outputs meaning overflow or out of range\n"
+            << " -> nth_prime(pi16, as<float>())  " <<  eve::nth_prime(pi16, eve::as<float>());
+  ::
   std::uint16_t xi = 18;
   std::cout << "---- scalar" << '\n'
             << " xi                   = " << xi << '\n'
