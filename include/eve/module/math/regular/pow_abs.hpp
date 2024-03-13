@@ -136,7 +136,7 @@ namespace eve
           auto large             = (yi > r_t(largelimit));
           yi                     = if_else(large, eve::one, yi);
 
-          auto russian = [](T base, i_t expo){
+          auto russian = [](auto base, auto expo){
             r_t result(1);
             while( eve::any(is_nez(expo)) )
             {
