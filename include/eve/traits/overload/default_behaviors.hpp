@@ -73,16 +73,17 @@ namespace eve
     struct ignore { template<typename T> operator T() { return T{}; } };
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE auto adapt_call(auto arch, O const& o, T x,  Ts const&... xs) const
     {
-      constexpr bool has_implementation = requires{func_t::deferred_call(arch, opts, x0, xs...); };
-      constexpr bool any_aggregated     = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
-      constexpr bool any_emulated       = (has_emulated_abi_v<T>   || ... || has_emulated_abi_v<Ts>  );
+      constexpr bool has_regular_implementation     = requires{ func_t::deferred_call(arch, o, x, xs...); };
+      constexpr bool has_emulated_implementation    = requires{ map(this->derived(), x, xs...); };
+      constexpr bool any_emulated                   = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
+      constexpr bool any_aggregated                 = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
 
-      if      constexpr(any_aggregated    ) return aggregate(this->derived(), x0, xs...);
-      else if constexpr(any_emulated      ) return map(this->derived(), x0, xs...);
-      else if constexpr(has_implementation) return func_t::deferred_call(arch, opts, x0, xs...);
-      else                                  return ignore{};
+      if      constexpr(any_aggregated)                               return aggregate(this->derived(), x, xs...);
+      else if constexpr(any_emulated && has_emulated_implementation ) return map      (this->derived(), x, xs...);
+      else if constexpr(has_regular_implementation)                   return func_t::deferred_call(arch, o, x, xs...);
+      else                                                            return ignore{};
     }
 
     template<callable_options O, typename T, typename... Ts>

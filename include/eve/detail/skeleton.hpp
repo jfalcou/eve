@@ -54,7 +54,11 @@ namespace eve::detail
 
   // Compute a transformed wide type
   template<typename F, typename... Ts>
-  struct wide_result
+  struct wide_result;
+
+  template<typename F, typename... Ts>
+  requires requires { std::declval<F>()(at(std::declval<Ts>(), 0)...); }
+  struct wide_result<F,Ts...>
   {
     template<typename T>
     static constexpr std::ptrdiff_t card() noexcept
@@ -104,7 +108,7 @@ namespace eve::detail
   };
 
   template<typename Fn, typename... Ts>
-  EVE_FORCEINLINE decltype(auto) map(Fn &&f, Ts &&... ts) noexcept
+  EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
