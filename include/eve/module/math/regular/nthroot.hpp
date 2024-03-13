@@ -113,6 +113,8 @@ namespace eve
           return if_else(is_ltz(n), rec(y), y);
         }
       }
+      else
+        return apply_over(nthroot[o], x, n);
     }
   }
 }
