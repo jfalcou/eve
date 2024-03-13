@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve
 {
@@ -142,7 +143,7 @@ namespace eve
               if constexpr( scalar_value<T> )
                 if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
               auto nega = is_negative(a0);
-              r_t  z  = pow_abs(a0, a1);
+              r_t  z  = eve::pow_abs(a0, a1);
               return minus[is_odd(a1) && nega](z);
             }
           }

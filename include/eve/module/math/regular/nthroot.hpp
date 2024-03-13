@@ -7,10 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct nthroot_t : elementwise_callable<nthroot_t, Options, raw_option>
+  {
+    template<eve::floating_scalar_value T, eve::integral_value U>
+    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    template<eve::value T, eve::value U>
+    EVE_FORCEINLINE  constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(nthroot_t, nthroot_);
+  };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -54,7 +71,48 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(nthroot_, nthroot);
-}
+  inline constexpr auto nthroot = functor<nthroot_t>;
 
-#include <eve/module/math/regular/impl/nthroot.hpp>
+  namespace detail
+  {
+
+    template<floating_value T,  integral_value U, callable_options O>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, U>
+    nthroot_(EVE_REQUIRES(cpu_), O const & o, T x, U n) noexcept
+    {
+      using elt_t = element_type_t<T>;
+      return nthroot[o](x,convert(n, as<elt_t>()));
+    }
+
+
+    template<typename T,  typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    nthroot_(EVE_REQUIRES(cpu_), O const & o, T x, U n) noexcept
+    {
+      if constexpr( has_native_abi_v<T> )
+      {
+        if constexpr( O::contains(raw2))
+        {
+          auto r      = pow(abs(x), rec(n));
+          auto islezx = is_lez(x);
+          if( none(islezx) ) return r;
+          else
+            return if_else(is_eqz(x),
+                           if_else(is_ltz(n), inf(as(x)), zero),
+                           if_else(islezx && !is_odd(n), allbits, r * sign(x)));
+        }
+        else
+        {
+          auto an   = eve::abs(n);
+          auto ax   = eve::abs(x);
+          auto y    = nthroot[raw](ax, an);
+          auto p    = pow(y, an);
+          auto yinc = -((p-ax)/(an*p))*y;
+          y         = add[is_nez(y) && is_finite(x)](y, yinc);
+          y         = if_else(is_negative(x) && is_even(an), allbits, y*sign(x));
+          return if_else(is_ltz(n), rec(y), y);
+        }
+      }
+    }
+  }
+}
