@@ -8,12 +8,8 @@
 #include "test.hpp"
 
 #include <eve/module/bessel.hpp>
-#if defined(__cpp_lib_math_special_functions)
-#define NAMESPACE std
-#else
-#include <boost/math/special_functions/bessel.hpp>
-#define NAMESPACE boost::math
-#endif
+#include <cmath>
+
 
 //==================================================================================================
 //== Types tests
@@ -43,7 +39,7 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
   using v_t               = eve::element_type_t<T>;
   auto eve__sph_bessel_yn = [](auto n, auto x) { return eve::sph_bessel_yn(n, x); };
   auto std__sph_bessel_yn = [](auto n, auto x) -> v_t
-  { return NAMESPACE::sph_neumann(unsigned(n), double(x)); };
+  { return std::sph_neumann(unsigned(n), double(x)); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__sph_bessel_yn(2, eve::inf(eve::as<v_t>())), v_t(0), 0);

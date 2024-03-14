@@ -85,9 +85,9 @@ add_dependencies(unit.exe unit.combinatorial.exe )
 glob_unit("unit" ${unit_root} "module/combinatorial/*.cpp" )
 
 if(EVE_USE_BOOST)
-# add_custom_target(unit.bessel.exe         )
-# add_dependencies(unit.exe unit.bessel.exe )
-# glob_unit("unit" ${unit_root} "module/bessel/*.cpp" )
+add_custom_target(unit.bessel.exe         )
+add_dependencies(unit.exe unit.bessel.exe )
+glob_unit("unit" ${unit_root} "module/bessel/*.cpp" )
 
 add_custom_target(unit.elliptic.exe         )
 add_dependencies(unit.exe unit.elliptic.exe )

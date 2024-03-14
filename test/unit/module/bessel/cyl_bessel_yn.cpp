@@ -8,12 +8,8 @@
 #include "test.hpp"
 
 #include <eve/module/bessel.hpp>
-#if defined(__cpp_lib_math_special_functions)
-#define NAMESPACE std
-#else
-#include <boost/math/special_functions/bessel.hpp>
-#define NAMESPACE boost::math
-#endif
+#include <cmath>
+
 
 
 //==================================================================================================
@@ -44,7 +40,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_yn = [](auto n, auto x) { return eve::cyl_bessel_yn(n, x); };
-  auto std__cyl_bessel_yn = [](auto n, auto x) -> v_t { return NAMESPACE::cyl_neumann(n, x); };
+  auto std__cyl_bessel_yn = [](auto n, auto x) -> v_t { return std::cyl_neumann(n, x); };
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve__cyl_bessel_yn(0, eve::minf(eve::as<v_t>())), eve::nan(eve::as<v_t>()), 0);
@@ -144,7 +140,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with non integral order",
   using v_t = eve::element_type_t<T>;
 
   auto eve__cyl_bessel_yn = [](auto n, auto x) { return eve::cyl_bessel_yn(n, x); };
-  auto std__cyl_bessel_yn = [](auto n, auto x) -> v_t { return NAMESPACE::cyl_neumann(n, x); };
+  auto std__cyl_bessel_yn = [](auto n, auto x) -> v_t { return std::cyl_neumann(n, x); };
 
   if constexpr( eve::platform::supports_invalids )
   {
