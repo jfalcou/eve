@@ -127,7 +127,7 @@ namespace eve
 
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
     EVE_FORCEINLINE constexpr T
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t = eve::wide<T, fixed<1>>;
       return pow(r_t(a0), a1).get(0);
@@ -159,7 +159,7 @@ namespace eve
 
     template<integral_scalar_value T,  integral_scalar_value U, callable_options O> //4
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t = common_value_t<T, U>;
       if( a0 == r_t(1)) return r_t(a0);
@@ -203,7 +203,7 @@ namespace eve
       else //U integral signed scalar
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow(r_t(a0), u_t(eve::abs(a1)));
+        r_t tmp     = pow[o](r_t(a0), u_t(eve::abs(a1)));
         return if_else(is_ltz(a1), rec(tmp), tmp);
       }
     }
@@ -230,7 +230,7 @@ namespace eve
       else
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+        r_t tmp     = pow[o](a0, bit_cast(eve::abs(a1), as<u_t>()));
         return if_else(is_ltz(a1), rec(tmp), tmp);
       }
     }
@@ -257,7 +257,7 @@ namespace eve
       else
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+        r_t tmp     = pow[o](a0, bit_cast(eve::abs(a1), as<u_t>()));
         return if_else(is_ltz(a1), rec(tmp), tmp);
       }
     }
