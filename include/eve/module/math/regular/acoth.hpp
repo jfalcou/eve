@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/atanh.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct acoth_t : elementwise_callable<acoth_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(acoth_t, acoth_);
+};
+
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
@@ -29,7 +42,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acoth(T x) noexcept; 
+//!      template< eve::floating_value T > T acoth(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -53,14 +66,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/acoth.cpp}
 //!  @}
 //================================================================================================
-namespace tag
-{
-  struct acoth_;
-}
+  inline constexpr auto acoth = functor<acoth_t>;
 
-template<> struct supports_optimized_conversion<tag::acoth_> : std::true_type
-{};
-EVE_MAKE_CALLABLE(acoth_, acoth);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acoth_(EVE_REQUIRES(cpu_), O const&, T const& x)
+    {
+      return eve::atanh(rec(x));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/acoth.hpp>

@@ -19,7 +19,7 @@
 namespace eve
 {
   template<typename Options>
-  struct acosh_t : elementwise_callable<acosh_t, Options, raw_option>
+  struct acosh_t : elementwise_callable<acosh_t, Options>
   {
     template<eve::floating_ordered_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
