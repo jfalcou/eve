@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/atan2.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct atan2pi_t : elementwise_callable<atan2pi_t, Options, pedantic_option>
+  {
+    template<eve::floating_ordered_value T, eve::floating_ordered_value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(atan2pi_t, atan2pi_);
+  };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -81,8 +96,15 @@ namespace eve
 //!       *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac12\f$  is returned
 //!  @}
 //================================================================================================
+  inline constexpr auto atan2pi = functor<atan2pi_t>;
 
-EVE_MAKE_CALLABLE(atan2pi_, atan2pi);
+  namespace detail
+  {
+    template<typename T, typename U, callable_options O>
+    constexpr EVE_FORCEINLINE common_value_t<T, U>
+    atan2pi_(EVE_REQUIRES(cpu_), O const& o, T const& a0, const U a1) noexcept
+    {
+      return radinpi(atan2[o](a0, a1));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/atan2pi.hpp>
