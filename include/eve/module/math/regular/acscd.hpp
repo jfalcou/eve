@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/acsc.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct acscd_t : elementwise_callable<acscd_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(acscd_t, acscd_);
+};
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -55,8 +69,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/acscd.cpp}
 //!  @}
 //================================================================================================
+  inline constexpr auto acscd = functor<acscd_t>;
 
-EVE_MAKE_CALLABLE(acscd_, acscd);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acscd_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    {
+      return radindeg(acsc(a));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/acscd.hpp>
