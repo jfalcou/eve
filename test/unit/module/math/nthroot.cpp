@@ -73,7 +73,7 @@ TTS_CASE_TPL("Check return types of nthroot", eve::test::simd::ieee_reals)
 
 
 //==================================================================================================
-// Tests for masked nthroot
+//===  Tests for masked nthroot
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::nthroot)(eve::wide)",
               eve::test::simd::ieee_reals,

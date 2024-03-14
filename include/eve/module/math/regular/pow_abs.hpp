@@ -7,10 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option>
+  {
+    template<eve::floating_scalar_value T, eve::integral_scalar_value U>
+    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    template<eve::value T, eve::value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(pow_abs_t, pow_abs_);
+  };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -78,7 +95,69 @@ namespace eve
 //!        @godbolt{doc/math/masked/pow_abs.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(pow_abs_, pow_abs);
-}
+  inline constexpr auto pow_abs = functor<pow_abs_t>;
 
-#include <eve/module/math/regular/impl/pow_abs.hpp>
+  namespace detail
+  {
+
+    template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    {
+      return pow_abs[o](a0, T(a1));
+    }
+
+    template<typename T,  typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
+    {
+      using r_t = common_value_t<T, U>;
+      auto x =  r_t(a);
+      auto y =  r_t(b);
+      if constexpr( scalar_value<r_t> )
+        return std::pow(eve::abs(x), y);
+      else
+      {
+        if constexpr( has_native_abi_v<T> )
+        {
+          using i_t              = as_integer_t<r_t, unsigned>;
+          using eli_t            = element_type_t<i_t>;
+          auto        iseqzx     = is_eqz(x);
+          auto        ylt0       = y < zero(as(y));
+          auto        ax         = eve::abs(x);
+          auto        ax_is1     = ax == eve::one(as(x));
+          eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
+          auto [yf, yi]          = eve::modf(eve::abs(y));
+          auto test              = yf > r_t(0.5);
+          yf                     = dec[test](yf);
+          auto z                 = eve::exp(yf*eve::log(ax));
+          yi                     = inc[test](yi);
+          yi                     = if_else(ax_is1, eve::one, yi);
+          auto large             = (yi > r_t(largelimit));
+          yi                     = if_else(large, eve::one, yi);
+
+          auto russian = [](auto base, auto expo){
+            r_t result(1);
+            while( eve::any(is_nez(expo)) )
+            {
+              result *= if_else(is_odd(expo), base, T(1));
+              expo = (expo >> 1);
+              base = sqr(base);
+            }
+            return result;
+          };
+          z *= russian(ax, uint_(yi));
+          z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
+          z = if_else(iseqzx && ylt0, zero, z);
+          z = if_else(is_infinite(ax), inf(as(x)), z);
+          z = if_else(ylt0, rec(z), z);
+          z = if_else(ax_is1 || is_eqz(y), one, z);
+          z = if_else(iseqzx && is_gtz(y), zero, z);
+          z = if_else(is_nan(x) && is_nan(y), allbits, z);
+          return z;
+        }
+        else return apply_over(pow_abs[o], x, y);
+      }
+    }
+  }
+}

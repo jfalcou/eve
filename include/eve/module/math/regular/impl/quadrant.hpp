@@ -23,7 +23,8 @@ quadrant_(EVE_SUPPORTS(cpu_), T const& a) noexcept
       T b = a * T(0.25);
       return (b - floor(b)) * T(4);
     }
-    else if constexpr( integral_value<T> ) return (a & T(3));
+    else
+      return (a & T(3));
   }
   else return apply_over(quadrant, a);
 }
