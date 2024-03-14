@@ -208,11 +208,11 @@ namespace eve
       }
     }
 
-    template < typename T, typename U>
-    EVE_FORCEINLINE constexpr auto
-    russian(T a0, U a1) noexcept
+    template<floating_value T,  integral_simd_value U, callable_options O>  //6
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, U >
+    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
-      using r_t =  std::conditional_t<integral_value<T>, common_value_t<T, U>, as_wide_as_t<T, U >>;
+      using r_t =   as_wide_as_t<T, U >;
       if constexpr( unsigned_value<U> )
       {
         r_t base = a0;
@@ -235,18 +235,31 @@ namespace eve
       }
     }
 
-    template<floating_value T,  integral_simd_value U, callable_options O>  //6
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, U >
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
-    {
-      return russian(a0, a1);
-    }
-
     template<integral_simd_value T,  integral_value U, callable_options O>  //7
     EVE_FORCEINLINE constexpr common_value_t<T, U >
     pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
-      return russian(a0, a1);
+      using r_t =  common_value_t<T, U>;
+      if constexpr( unsigned_value<U> )
+      {
+        r_t base = a0;
+        U expo = a1;
+
+        r_t result = one(as<r_t>());
+        while( eve::any(to_logical(expo)) )
+        {
+          result *= if_else(is_odd(expo), base, one);
+          expo = (expo >> 1);
+          base = sqr(base);
+        }
+        return result;
+      }
+      else
+      {
+        using u_t = as_integer_t<U, unsigned>;
+        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+        return if_else(is_ltz(a1), rec(tmp), tmp);
+      }
     }
   }
 }
