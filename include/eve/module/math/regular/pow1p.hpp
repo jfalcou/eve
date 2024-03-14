@@ -7,10 +7,29 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/pow.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct pow1p_t : elementwise_callable<pow1p_t, Options, raw_option>
+  {
+    template<eve::floating_scalar_value T, eve::integral_scalar_value U>
+    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    template<eve::value T, eve::value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(pow1p_t, pow1p_);
+  };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -59,15 +78,37 @@ namespace eve
 //!        @godbolt{doc/math/masked/pow1p.cpp}
 //!  @}
 //================================================================================================
-namespace tag
-{
-  struct pow1p_;
+  inline constexpr auto pow1p = functor<pow1p_t>;
+
+  namespace detail
+  {
+
+    template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    pow1p_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    {
+      return pow1p[o](a0, T(a1));
+    }
+
+    template<typename T,  typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    pow1p_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
+    {
+      if constexpr(O::contains(raw2) || integral_value<U>)
+         return pow[o](inc(a), b);
+       else
+       {
+         using r_t =  common_value_t<T, U>;
+         if constexpr(has_native_abi_v<r_t>)
+         {
+           auto x =  r_t(a);
+           auto y =  r_t(b);
+           auto incx = inc(x);
+           return if_else(abs(x) > half(as(x)), pow[o](incx, y), exp(y*log1p(x)));
+         }
+         else
+           return arithmetic_call(pow1p[o], a, b);
+       }
+    }
+  }
 }
-
-template<> struct supports_optimized_conversion<tag::pow1p_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(pow1p_, pow1p);
-}
-
-#include <eve/module/math/regular/impl/pow1p.hpp>

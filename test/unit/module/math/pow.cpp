@@ -23,6 +23,8 @@ TTS_CASE_TPL("Check return types of pow", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::pow(T(), T()), T);
   TTS_EXPR_IS(eve::pow(v_t(), v_t()), v_t);
   TTS_EXPR_IS(eve::pow(T(), v_t()), T);
+  TTS_EXPR_IS(eve::pow(T(), int()), T);
+  TTS_EXPR_IS(eve::pow(v_t(), int()), v_t);
 };
 
 //==================================================================================================
@@ -77,6 +79,7 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
   TTS_EQUAL(eve::pow(T(2), -3), T(1 / 8.0));
   TTS_EQUAL(eve::pow(T(2), 3), T(8));
   TTS_EQUAL(eve::pow(T(2), 3u), T(8));
+  TTS_EQUAL(eve::pow(2, 3), (8));
 
   if constexpr( !eve::scalar_value<T> )
   {

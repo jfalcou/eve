@@ -14,9 +14,9 @@ int main()
   std::cout << "---- simd" << std::setprecision(10) << '\n'
             << "<- pf                       = " << pf << '\n'
             << "<- qf                       = " << qf << '\n'
-            << "-> pedantic(hypot)(pf, qf)  = " << eve::pedantic(eve::hypot)(pf, qf) << '\n';
+            << "-> hypot[pedantic](pf, qf)  = " << eve::hypot[eve::pedantic](pf, qf) << '\n';
 
 
-  std::cout << eve::pedantic(eve::hypot)(5.0, 1.0e-305) << std::endl;
+  std::cout << eve::hypot[eve::pedantic](5.0, 1.0e-305) << std::endl;
   return 0;
 }
