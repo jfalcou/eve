@@ -263,10 +263,3 @@ namespace eve
     }
   }
 }
-
-// T                             U              num
-// floating si/sc               floating si/sc   3
-// floating si/sc               integral sc      5
-// floating si/sc               integral si      6
-// integral sc                  integral sc      4
-// integral si                  integral si/sc   7
