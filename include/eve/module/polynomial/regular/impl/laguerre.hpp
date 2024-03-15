@@ -81,14 +81,17 @@ namespace eve::detail
   }
 
   // Recurrence relation for Laguerre associated polynomials:
-  template< typename N, typename L, typename T, callable_options O> //successor associated option
-  EVE_FORCEINLINE constexpr T
-  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, L l, T x, T pl, T plm1)
+  template< typename N, typename L, typename T0, typename T1, typename T2, callable_options O> //successor associated option
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1, T2>
+  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, L l, T0 x, T1 pl, T2 plm1)
     requires(O::contains(successor2) && O::contains(associated2))
   {
-    auto np1 = inc(n);
-    auto npl = n + l;
-    return ((np1 + npl - x) * pl - npl * plm1) / np1;
+    using t_t = common_value_t<T0, T1, T2>;
+    using e_t = element_type_t<t_t>;
+
+    auto np1 = convert(inc(n), as<e_t>());
+    auto npl = convert(n + l, as<e_t>());
+    return ((np1 + npl - r_t(x)) * r_t(pl) - npl * r_t(plm1)) / np1;
   }
 
  // associated laguerre polynomials
