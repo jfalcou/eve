@@ -21,7 +21,7 @@ TTS_CASE("Implement basic make function for wide<int>")
   eve::wide<int> x {[](int i, int) { return i; }};
 
   (void)x;
-  TTS_PASS();
+  TTS_PASS("Test passed.");
 };
 
 TTS_CASE("Implement get function for wide")
@@ -118,7 +118,7 @@ TTS_CASE("Slice, wide<int>")
 TTS_CASE_TPL("Slice all wides", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if constexpr( T::size() == 1 ) { TTS_PASS(); }
+  if constexpr( T::size() == 1 ) { TTS_PASS("Test passed"); }
   else
   {
     using e_t = eve::element_type_t<T>;
