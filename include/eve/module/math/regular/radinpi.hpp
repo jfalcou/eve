@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct radinpi_t : elementwise_callable<radinpi_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(radinpi_t, radinpi_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -48,7 +61,18 @@ namespace eve
 //!  @godbolt{doc/math/regular/radinpi.cpp}
 //!  @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(radinpi_, radinpi);
-}
+  inline constexpr auto radinpi = functor<radinpi_t>;
 
-#include <eve/module/math/regular/impl/radinpi.hpp>
+  namespace detail
+  {
+    template<floating_ordered_value T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      if constexpr( has_native_abi_v<T> )
+        return inv_pi(eve::as(a)) * a;
+      else
+        return apply_over(radinpi, a);
+    }
+  }
+}

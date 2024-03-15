@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/detail/generic/atan_kernel.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct acot_t : elementwise_callable<acot_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(acot_t, acot_);
+};
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -53,8 +66,20 @@ namespace eve
 //!  @godbolt{doc/math/regular/acot.cpp}
 //!  @}
 //================================================================================================
+  inline constexpr auto acot = functor<acot_t>;
 
-EVE_MAKE_CALLABLE(acot_, acot);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acot_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    {
+      if constexpr( has_native_abi_v<T> )
+      {
+        auto x = eve::abs(a);
+        return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
+      }
+      else
+        return apply_over(acot, a);
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/acot.hpp>

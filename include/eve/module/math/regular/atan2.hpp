@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/constant/pi.hpp>
+#include <eve/module/math/detail/generic/atan_kernel.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct atan2_t : elementwise_callable<atan2_t, Options, pedantic_option>
+  {
+    template<eve::floating_ordered_value T, eve::floating_ordered_value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T v, U w) const noexcept
+    { return EVE_DISPATCH_CALL(v, w); }
+
+    EVE_CALLABLE_OBJECT(atan2_t, atan2_);
+};
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -81,8 +96,56 @@ namespace eve
 //!       *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
 //!  @}
 //================================================================================================
+  inline constexpr auto atan2 = functor<atan2_t>;
 
-EVE_MAKE_CALLABLE(atan2_, atan2);
+  namespace detail
+  {
+    template<typename T, typename U, callable_options O>
+    constexpr EVE_FORCEINLINE common_value_t<T, U>
+    atan2_(EVE_REQUIRES(cpu_), O const&, T const& a0, const U a1) noexcept
+    {
+      using r_t = common_value_t<T, U>;
+      r_t a00(a0);
+      r_t a10(a1);
+      if constexpr(O::contains(pedantic2))
+      {
+        if constexpr(scalar_value<r_t> && platform::supports_nans)
+        {
+          if (is_unordered(a00, a10)) return nan(eve::as(a00));
+        }
+         auto test1 =  eve::is_infinite(a00) && eve::is_infinite(a10);
+        if constexpr(platform::supports_infinites)
+        {
+          a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a00)), a00), a00);
+          a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a00)), a10), a10);
+        }
+
+        r_t q = eve::abs(a00/a10);
+        r_t z = atan_kernel(q, rec(q));
+        r_t sgn = signnz(a00);
+        if constexpr(scalar_value<r_t>)
+        {
+          z = (is_positive(a10)? z: pi(eve::as<r_t>())-z)*sgn;
+          return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero) : z;
+        }
+        else
+        {
+          z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as(a0))-z)*sgn;
+          z = eve::if_else( eve::is_eqz(a00),
+                            eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a00))*sgn, eve::zero),
+                            z);
+          if constexpr(platform::supports_nans)
+            return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
+          else
+            return z;
+        }
+      }
+      else
+      {
+        auto q = eve::abs(a00/a10);
+        auto z = detail::atan_kernel(q, eve::rec(q));
+        return if_else(is_positive(a10), z, (pi(eve::as(a00)) - z))*signnz(a00);
+      }
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/atan2.hpp>
