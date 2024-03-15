@@ -16,10 +16,6 @@ namespace eve
   template<typename Options>
   struct significants_t : elementwise_callable<significants_t, Options>
   {
-//     template<floating_scalar_value T0, scalar_value T1>
-//     EVE_FORCEINLINE constexpr common_value_t<T0> operator()(T0 t0, T1 t1) const noexcept
-//     { return EVE_DISPATCH_CALL(t0, t1); }
-
     template<floating_value T0, value T1>
     EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
     { return EVE_DISPATCH_CALL(t0, t1); }
