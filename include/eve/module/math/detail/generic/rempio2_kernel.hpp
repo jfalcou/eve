@@ -18,7 +18,7 @@ namespace eve::detail
 {
 // up to 255*pi/4 ~200
 template<floating_ordered_value T>
-EVE_FORCEINLINE kumi::tuple<T, T, T>
+EVE_FORCEINLINE auto
                 rempio2_half_circle(T const                &xx) noexcept
 {
   using elt_t = element_type_t<T>;
@@ -35,14 +35,14 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     auto                a   = y - da;
     da                      = (y - a) - da;
 
-    return {n, a, da};
+    return kumi::make_tuple(n, a, da);
   }
   else if constexpr( std::is_same_v<elt_t, float> )
   {
     auto x   = float64(xx);
     auto n   = nearest(x * two_o_pi(eve::as<double>()));
     auto dxr = fma(n, -pio_2(eve::as<double>()), x);
-    return {quadrant(float32(n)), float32(dxr), T(0.0f)};
+    return  kumi::make_tuple(quadrant(float32(n)), float32(dxr), T(0.0f));
   }
 }
 
@@ -137,11 +137,11 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
                 rempio2_big(T xx) noexcept
 {
   using elt_t = element_type_t<T>;
-  if( eve::all(xx < Rempio2_limit(quarter_circle_type(), as(xx))) ) { return {T(0), xx, T(0)}; }
-  auto xlerfl = (xx <= Rempio2_limit(half_circle_type(), as<elt_t>()));
+  if( eve::all(xx < Rempio2_limit[quarter_circle2](as(xx))) ) { return {T(0), xx, T(0)}; }
+  auto xlerfl = (xx <= Rempio2_limit[half_circle2](as<elt_t>()));
   if( eve::all(xlerfl) ) { return rempio2_half_circle(xx); }
-  if( eve::all(xx < Rempio2_limit(full_circle_type(), as(xx))) ) { return rempio2_full_circle(xx); }
-  if( eve::all(xx < Rempio2_limit(medium_type(), as(xx))) ) { return rempio2_medium(xx); }
+  if( eve::all(xx < Rempio2_limit[full_circle2](as(xx))) ) { return rempio2_full_circle(xx); }
+  if( eve::all(xx < Rempio2_limit[medium2](as(xx))) ) { return rempio2_medium(xx); }
   if constexpr( std::is_same_v<elt_t, double> )
   {
     using i32_tl = struct
@@ -272,9 +272,9 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     s      = b + bb;
     t      = (b - s) + bb;
     s      = if_else(is_not_finite(x), eve::allbits, s);
-    s      = if_else(xx < Rempio2_limit(quarter_circle_type(), as(xx)), xx, s);
-    t      = if_else(xx < Rempio2_limit(quarter_circle_type(), as(xx)), T(0), t);
-    auto q = if_else(xx < Rempio2_limit(quarter_circle_type(), as(xx)), T(0), quadrant(sum));
+    s      = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), xx, s);
+    t      = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), T(0), t);
+    auto q = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), T(0), quadrant(sum));
     return {q, s, t};
   }
   else if constexpr( std::is_same_v<elt_t, float> )
@@ -328,7 +328,7 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     auto br   = if_else(xlerfl, sr, sr1);
     auto dbr  = if_else(xlerfl, dsr, dsr1);
     br        = if_else(is_not_finite(xx), eve::allbits, br);
-    auto test = xx <= Rempio2_limit(full_circle_type(), as(xx));
+    auto test = xx <= Rempio2_limit[full_circle2](as(xx));
     return {if_else(test, sn, bn), if_else(test, sr, br), if_else(test, dsr, dbr)};
   }
 }

@@ -108,7 +108,7 @@ cos_(EVE_SUPPORTS(cpu_), half_circle_type const&, T a0) noexcept
 template<decorator D, floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 cos_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
-    requires(is_one_of<D>(types<full_circle_type, medium_type, big_type> {}))
+    requires(is_one_of<D>(types<full_circle_type, medium_type,big_type> {}))
 {
   if constexpr( has_native_abi_v<T> )
   {
