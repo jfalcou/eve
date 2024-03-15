@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/atan.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct atanpi_t : elementwise_callable<atanpi_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    
+    EVE_CALLABLE_OBJECT(atanpi_t, atanpi_);
+  };
+  
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -55,9 +69,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/atanpi.cpp}
 //!  @}
 //================================================================================================
+ inline constexpr auto atanpi = functor<atanpi_t>;
 
-
-EVE_MAKE_CALLABLE(atanpi_, atanpi);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T atanpi_(EVE_REQUIRES(cpu_), O const& , T const& a)
+    {
+      return radinpi(atan(a));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/atanpi.hpp>

@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/detail/generic/atan_kernel.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct atan_t : elementwise_callable<atan_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(atan_t, atan_);
+  };
+
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -57,9 +71,15 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
+ inline constexpr auto atan = functor<atan_t>;
 
-
-EVE_MAKE_CALLABLE(atan_, atan);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& , T const& a)
+    {
+      T x = eve::abs(a);
+      return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/atan.hpp>

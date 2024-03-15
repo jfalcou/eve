@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/asin.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct asind_t : elementwise_callable<asind_t, Options, raw_option>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(asind_t, asind_);
+  };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -54,8 +67,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/asind.cpp}
 //!  @}
 //================================================================================================
+  inline constexpr auto asind = functor<asind_t>;
 
-EVE_MAKE_CALLABLE(asind_, asind);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T asind_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    {
+      return radindeg(asin(a0));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/asind.hpp>

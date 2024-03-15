@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/asin.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct asinpi_t : elementwise_callable<asinpi_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(asinpi_t, asinpi_);
+  };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -52,8 +65,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/asinpi.cpp}
 //!  @}
 //================================================================================================
+  inline constexpr auto asinpi = functor<asinpi_t>;
 
-EVE_MAKE_CALLABLE(asinpi_, asinpi);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T asinpi_(EVE_REQUIRES(cpu_), O const& , T const& a0)
+    {
+      return radinpi(asin(a0));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/asinpi.hpp>

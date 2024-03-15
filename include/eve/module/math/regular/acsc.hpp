@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/asin.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct acsc_t : elementwise_callable<acsc_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(acsc_t, acsc_);
+};
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -54,15 +67,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/acsc.cpp}
 //!  @}
 //================================================================================================
-namespace tag
-{
-  struct acsc_;
+  inline constexpr auto acsc = functor<acsc_t>;
+
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acsc_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    {
+      return eve::asin(rec(a));
+    }
+  }
 }
-
-template<> struct supports_optimized_conversion<tag::acsc_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(acsc_, acsc);
-}
-
-#include <eve/module/math/regular/impl/acsc.hpp>

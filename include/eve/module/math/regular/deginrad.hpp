@@ -7,8 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/detail/overload.hpp>
 
 namespace eve
 {
@@ -58,21 +60,21 @@ namespace eve
 //!  @godbolt{doc/math/regular/deginrad.cpp}
 //!  @}
 //================================================================================================
-inline constexpr auto deginrad = functor<deginrad_t>;
-}
+  inline constexpr auto deginrad = functor<deginrad_t>;
 
-namespace eve::detail
-{
-  template<floating_ordered_value T, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  deginrad_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+  namespace detail
   {
-    if constexpr( has_native_abi_v<T> )
+    template<floating_ordered_value T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    deginrad_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      auto ridh = ieee_constant<0x1.1de0000p-6f, 0x1.1df46a0000000p-6>(eve::as<T>{});
-      auto ridl = ieee_constant<0x1.46a2520p-18f, 0x1.294e9c8ae0ec6p-33>(eve::as<T>{});
-      return fma(a, ridl, a * ridh);
+      if constexpr( has_native_abi_v<T> )
+      {
+        auto ridh = ieee_constant<0x1.1de0000p-6f, 0x1.1df46a0000000p-6>(eve::as<T>{});
+        auto ridl = ieee_constant<0x1.46a2520p-18f, 0x1.294e9c8ae0ec6p-33>(eve::as<T>{});
+        return fma(a, ridl, a * ridh);
+      }
+      else return apply_over(deginrad, a);
     }
-    else return apply_over(deginrad, a);
   }
 }

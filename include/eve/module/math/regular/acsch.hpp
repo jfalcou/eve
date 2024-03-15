@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/asinh.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct acsch_t : elementwise_callable<acsch_t, Options>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(acsch_t, acsch_);
+};
+
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
@@ -54,7 +67,14 @@ namespace eve
 //!  @godbolt{doc/math/regular/acsch.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(acsch_, acsch);
-}
+  inline constexpr auto acsch = functor<acsch_t>;
 
-#include <eve/module/math/regular/impl/acsch.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acsch_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    {
+      return asinh(rec(a));
+    }
+  }
+}
