@@ -10,10 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-<<<<<<< HEAD
-#include <eve/module/core.hpp>
-=======
->>>>>>> feda56e56 (Remove appyl_over+has_native_abi from selected functions as test)
 
 namespace eve
 {
