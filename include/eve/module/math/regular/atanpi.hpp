@@ -21,10 +21,10 @@ namespace eve
   {
     template<eve::floating_ordered_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
-    
+
     EVE_CALLABLE_OBJECT(atanpi_t, atanpi_);
   };
-  
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
