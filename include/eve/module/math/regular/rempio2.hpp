@@ -72,12 +72,14 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto//kumi::tuple<eve::as_integer<T>, T, T>
+    constexpr EVE_FORCEINLINE auto// kumi::tuple<eve::as_integer_t<T>, T, T>
     rempio2_(EVE_REQUIRES(cpu_), O const& o, T const& x) noexcept
     {
       EVE_ASSERT(eve::all(is_gez(x)), "x must be positive here");
       if constexpr( has_native_abi_v<T> )
       {
+        if constexpr( O::contains(quarter_circle2))
+          return rempio2_half_circle(x);
         if constexpr( O::contains(half_circle2))
           return rempio2_half_circle(x);
         if constexpr( O::contains(full_circle2))
@@ -88,16 +90,17 @@ namespace eve
           return rempio2_big(x);
         else
         {
-          if( eve::all(x <= Rempio2_limit(quarter_circle2, as(x))) )
-            return  kumi::make_tuple(T(0), x, T(0));
-          else if( eve::all(x <= Rempio2_limit(full_circle2, as(x))) )
-            return rempio2[full_circle2](x);
-          else if( eve::all(x <= Rempio2_limit(half_circle2, as(x))) )
-            return rempio2[half_circle2](x);
-          else if( eve::all(x <= Rempio2_limit(medium2, as(x))) )
-            return rempio2[medium2](x);
-          else
-            return rempio2[big2](x);
+//           using i_t = eve::as_integer_t<T>;
+//           if( eve::all(x <= Rempio2_limit[quarter_circle2](as(x))))
+//             return  kumi::make_tuple(i_t(0), x, T(0));
+//           else if( eve::all(x <= Rempio2_limit[half_circle2](as(x))))
+//             return rempio_half_circle(x);
+//           else if( eve::all(x <= Rempio2_limit[full_circle2](as(x))))
+//             return rempio2_full_circle(x);
+//           else if( eve::all(x <= Rempio2_limit[medium2](as(x))))
+//             return rempio2_medium(x);
+//           else
+            return rempio2_big(x);
         }
       }
       else return apply_over3(rempio2[o], x);

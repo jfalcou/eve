@@ -95,7 +95,7 @@ namespace eve
       }
       else if constexpr(O::contains(half_circle2))
       {
-        T    x        = eve::abs(a0);
+        T    x         = eve::abs(a0);
         auto xnlepio2 = is_not_less_equal(x, pio_2(eve::as<T>()));
         if constexpr( scalar_value<T> )
           if( xnlepio2 ) return nan(eve::as<T>());
@@ -121,28 +121,28 @@ namespace eve
           else
             return cos_eval(sqr(x));
         }
-      }
-      else if constexpr(O::contains(big2))
-      {
-        auto x       = abs(a0);
-        auto xnlelim = is_not_less_equal(x, Rempio2_limit[big2](as(a0)));
-        if constexpr( scalar_value<T> )
+        else
         {
-          if( xnlelim ) return nan(eve::as<T>());
+          using elt_t   = element_type_t<T>;
+          auto n        = binarize(is_not_less_equal(x, pio_4(eve::as(x))));
+          auto sign_bit = binarize(is_nez(n), signmask(eve::as<elt_t>()));
+          auto xr       = reduce(x);
+          xr            = if_else(n, xr, x);
+          auto z        = sqr(xr);
+          auto se       = bit_xor(sin_eval(z, xr), sign_bit);
+          auto ce       = cos_eval(z);
+          auto z1       = if_else(n, se, ce);
+          return if_else(xnlepio2, eve::allbits, z1);
         }
-        else x = if_else(xnlelim, allbits, x);
-        auto [fn, xr, dxr] = rempio2[o](x);
-        return cos_finalize(fn, xr, dxr);
       }
       else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
       {
         auto x       = abs(a0);
         auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
         if constexpr( scalar_value<T> )
-        {
           if( xnlelim ) return nan(eve::as<T>());
-        }
-        else x = if_else(xnlelim, allbits, x);
+        else
+          x = if_else(xnlelim, allbits, x);
         auto [fn, xr, dxr] = rempio2[o](x);
         return cos_finalize(fn, xr, dxr);
       }
@@ -157,7 +157,8 @@ namespace eve
           return cos[full_circle2](a0);
         else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))
           return cos[medium2](a0);
-        else return cos[big2](a0);
+        else
+          return cos[big2](a0);
       }
     }
   }
