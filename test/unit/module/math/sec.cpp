@@ -27,14 +27,14 @@ TTS_CASE_TPL("Check return types of sec", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sec  tests
 //==================================================================================================
-auto mquarter_c = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_4(tgt); };
-auto quarter_c  = []<typename T>(eve::as<T> const &tgt) { return eve::pio_4(tgt); };
-auto mhalf_c    = []<typename T>(eve::as<T> const   &tgt) { return -eve::pio_2(tgt); };
-auto half_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pio_2(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const      &tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto mquarter_c = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_4(tgt); };
+auto quarter_c  = []<typename T>(eve::as<T> const&tgt) { return eve::pio_4(tgt); };
+auto mhalf_c    = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_2(tgt); };
+auto half_c     = []<typename T>(eve::as<T> const&tgt) { return eve::pio_2(tgt); };
+auto mmed       = []<typename T>(eve::as<T> const&tgt)
+{ return -eve::Rempio2_limit[eve::medium2](tgt); };
 auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+{ return eve::Rempio2_limit[eve::medium2](tgt); };
 
 TTS_CASE_WITH("Check behavior of sec on wide",
               eve::test::simd::ieee_reals,
@@ -49,9 +49,9 @@ TTS_CASE_WITH("Check behavior of sec on wide",
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1 / std::cos(e); };
-  TTS_ULP_EQUAL(eve::quarter_circle(sec)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(sec)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(sec)(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(sec[eve::quarter_circle2](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(sec[eve::half_circle2   ](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(sec[eve::half_circle2   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(sec(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(sec(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(sec(a2), map(ref, a2), 2);
@@ -66,7 +66,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sec)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::sec[mask](a0),

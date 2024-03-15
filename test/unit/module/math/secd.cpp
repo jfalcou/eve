@@ -41,9 +41,9 @@ TTS_CASE_WITH("Check behavior of secd on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1.0l / eve::cospi(double(e / 180.0l)); };
 
-  TTS_ULP_EQUAL(eve::quarter_circle(secd)(a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(eve::half_circle(secd)(a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(eve::half_circle(secd)(a1), map(ref, a1), 4);
+  TTS_ULP_EQUAL(secd[eve::quarter_circle](a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd[eve::half_circle   ](a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd[eve::half_circle   ](a1), map(ref, a1), 4);
   TTS_ULP_EQUAL(secd(a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(secd(a1), map(ref, a1), 4);
   TTS_ULP_EQUAL(secd(a2), map(ref, a2), 512);
