@@ -78,7 +78,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T acosh_(EVE_REQUIRES(cpu_), O const&o, T const& x)
+    constexpr EVE_FORCEINLINE T acosh_(EVE_REQUIRES(cpu_), O const&, T const& x)
     {
       const T    t    = dec(x);
       auto const test = is_greater(t, inv_2eps(eve::as<T>()));
