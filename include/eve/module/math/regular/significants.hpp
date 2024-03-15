@@ -90,7 +90,6 @@ namespace eve
         EVE_ASSERT(eve::all(is_gez(n)), "some n are not positive");
         if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
         {
-          using elt_t = element_type_t<T>;
           auto e      = floor(inc(log10(eve::abs(a)) - n));
           auto factor = exp10(abs(e));
           auto tmp    = if_else(is_gez(e), nearest(a / factor) * factor, nearest(a * factor) / factor);
