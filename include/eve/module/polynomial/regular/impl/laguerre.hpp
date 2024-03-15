@@ -84,10 +84,10 @@ namespace eve::detail
   template< typename N, typename L, typename T0, typename T1, typename T2, callable_options O> //successor associated option
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, T2>
   laguerre_(EVE_REQUIRES(cpu_), O const&, N n, L l, T0 x, T1 pl, T2 plm1)
-    requires(O::contains(successor2) && O::contains(associated2))
+  requires(O::contains(successor2) && O::contains(associated2))
   {
-    using t_t = common_value_t<T0, T1, T2>;
-    using e_t = element_type_t<t_t>;
+    using r_t = common_value_t<T0, T1, T2>;
+    using e_t = element_type_t<r_t>;
 
     auto np1 = convert(inc(n), as<e_t>());
     auto npl = convert(n + l, as<e_t>());
