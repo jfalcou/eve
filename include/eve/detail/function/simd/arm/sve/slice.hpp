@@ -31,7 +31,8 @@ EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
   if constexpr( !Slice::value ) return a.storage();
   else
   {
-    return svcmpne(sve_true<T>(), a.bits().slice(Slice{}), 0);
+    using type = typename logical<T>::bits_type;
+    return svcmpne(sve_true<T>(), a.bits().slice(Slice{}), type{0});
   }
 }
 
