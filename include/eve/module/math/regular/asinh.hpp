@@ -91,7 +91,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T asinh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    constexpr EVE_FORCEINLINE T asinh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       using vt_t = element_type_t<T>;
       T x        = eve::abs(a0);

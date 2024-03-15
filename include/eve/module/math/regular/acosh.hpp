@@ -78,26 +78,21 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T acosh_(EVE_REQUIRES(cpu_), O const& o, T const& x)
+    constexpr EVE_FORCEINLINE T acosh_(EVE_REQUIRES(cpu_), O const&o, T const& x)
     {
-      if constexpr( has_native_abi_v<T> )
-      {
-        const T    t    = dec(x);
-        auto const test = is_greater(t, inv_2eps(eve::as<T>()));
+      const T    t    = dec(x);
+      auto const test = is_greater(t, inv_2eps(eve::as<T>()));
 
-        if constexpr( simd_value<T> )
-        {
-          const T z = if_else(test, x, t + sqrt(fma(t, t, t + t)));
-          return add[test](log1p(z), log_2(eve::as<T>()));
-        }
-        else if constexpr( scalar_value<T> )
-        {
-          if( test ) { return eve::log(t) + log_2(eve::as<T>()); }
-          else { return eve::log1p(t + eve::sqrt(fma(t, t, t + t))); }
-        }
+      if constexpr( simd_value<T> )
+      {
+        const T z = if_else(test, x, t + sqrt(fma(t, t, t + t)));
+        return add[test](log1p(z), log_2(eve::as<T>()));
       }
-      else
-        return apply_over(acosh, x);
+      else if constexpr( scalar_value<T> )
+      {
+        if( test ) { return eve::log(t) + log_2(eve::as<T>()); }
+        else { return eve::log1p(t + eve::sqrt(fma(t, t, t + t))); }
+      }
     }
   }
 }
