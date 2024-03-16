@@ -138,7 +138,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
     if constexpr( static_bits_size <= 64 ) return o << x.as_int();
     else
     {
-      auto [l, h] = slice();
+      auto [l, h] = x.slice();
       return o << '[' << l << ", " << h << ']';
     }
   }
