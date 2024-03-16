@@ -16,9 +16,9 @@ namespace eve
   template<typename Options>
   struct airy_t : elementwise_callable<airy_t, Options>
   {
-    template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE constexpr
-    kumi::tuple<T, T > operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<eve::floating_value T>
+    EVE_FORCEINLINE constexpr as_wide_as_t<kumi::tuple<element_type_t<T>,element_type_t<T>>,T>
+    operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(airy_t, airy_);
   };
