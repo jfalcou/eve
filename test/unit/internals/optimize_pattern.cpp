@@ -129,9 +129,9 @@ TTS_CASE("Check broadcast patterns get optimized")
                  , std::integer_sequence<std::ptrdiff_t,Q...>
                  )
     {
-      auto val = [](auto,auto i) { return i; };
       auto f = [&](auto i)
       {
+        auto val = [](auto,auto i) { return i; };
         TTS_EXPR_IS ( (find_optimized_shuffle_pattern< sizeof...(Q), val(Q,i)... >())
                     , (bound< callable_broadcast_
                             , eve::index_t<i>
