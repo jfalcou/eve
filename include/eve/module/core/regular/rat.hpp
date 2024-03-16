@@ -19,7 +19,7 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/rec.hpp>
-#include <eve/module/core/regular/round.hpp>
+#include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/zip.hpp>
 
@@ -100,7 +100,7 @@ namespace detail
     if constexpr(scalar_value<r_t>)
     {
       if( is_infinite(x) || is_eqz(x) ) return zip(sign(x), r_t{0});
-      auto n     = round(x);
+      auto n     = nearest(x);
       auto d     = one(as(x));
       auto frac  = x - n;
       auto lastn = one(as(x));
@@ -109,7 +109,7 @@ namespace detail
       while( abs(x - n / d) >= tol )
       {
         auto flip   = rec(frac);
-        auto step   = round(flip);
+        auto step   = nearest(flip);
         frac        = flip - step;
         auto savedn = n;
         auto savedd = d;
