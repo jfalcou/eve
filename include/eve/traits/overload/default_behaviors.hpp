@@ -29,19 +29,19 @@ namespace eve
   {
     using base = decorated_with<OptionsValues, Options...>;
 
-    template<callable_options O> constexpr auto operator[](O const& opts) const
+    template<callable_options O> EVE_FORCEINLINE constexpr auto operator[](O const& opts) const
     {
       return  Func<O>{opts};
     }
 
-    template<typename T> constexpr auto operator[](T t) const requires( requires(base const& b) { b[t];} )
+    template<typename T> EVE_FORCEINLINE constexpr auto operator[](T t) const requires( requires(base const& b) { b[t];} )
     {
       auto new_traits = base::operator[](t);
       return  Func<decltype(new_traits)>{new_traits};
     }
 
     // TEMPORARY - Map old decorator to the new ones
-    template<typename T> auto operator[](T const& t) const requires(decorator<T>)
+    template<typename T> EVE_FORCEINLINE auto operator[](T const& t) const requires(decorator<T>)
     {
       return (*this)[as_option(t)];
     }
@@ -73,7 +73,7 @@ namespace eve
     struct ignore { template<typename T> operator T() { return T{}; } };
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     requires(match_option<condition_key,O,ignore_none_>)
     {
       constexpr bool supports_call = requires{ func_t::deferred_call(arch, opts, x0, xs...); };
@@ -95,7 +95,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
     requires(!match_option<condition_key,O,ignore_none_>)
     {
         // Grab the condition and drop it from the callable
@@ -192,7 +192,7 @@ namespace eve
   {
     using constant_callable_tag = void;
     template<typename O, typename T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, as<T> const& target) const
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> const& target) const
     {
       using func_t                =  Func<OptionsValues>;
       if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )
