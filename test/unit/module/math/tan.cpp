@@ -34,9 +34,9 @@ auto half_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pio_2(t
 auto mfull_c    = []<typename T>(eve::as<T> const   &tgt) { return -eve::pi(tgt); };
 auto full_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pi(tgt); };
 auto mmed       = []<typename T>(eve::as<T> const      &tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+{ return -eve::Rempio2_limit[eve::medium2](tgt); };
 auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+{ return eve::Rempio2_limit[eve::medium2](tgt); };
 
 TTS_CASE_WITH("Check behavior of tan on wide",
               eve::test::simd::ieee_reals,
@@ -52,12 +52,12 @@ TTS_CASE_WITH("Check behavior of tan on wide",
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return std::tan(double(e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(tan)(a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(eve::half_circle(tan)(a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(eve::half_circle(tan)(a1), map(ref, a1), 4);
-  TTS_ULP_EQUAL(eve::full_circle(tan)(a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(eve::full_circle(tan)(a1), map(ref, a1), 4);
-  TTS_ULP_EQUAL(eve::full_circle(tan)(a2), map(ref, a2), 4);
+  TTS_ULP_EQUAL(tan[eve::quarter_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(tan[eve::half_circle   ](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(tan[eve::half_circle   ](a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(tan[eve::full_circle   ](a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(tan[eve::full_circle   ](a1), map(ref, a1), 4);
+  TTS_ULP_EQUAL(tan[eve::full_circle   ](a2), map(ref, a2), 4);
   TTS_ULP_EQUAL(tan(a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(tan(a1), map(ref, a1), 4);
   TTS_ULP_EQUAL(tan(a2), map(ref, a2), 4);
@@ -73,7 +73,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::tan)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::tan[mask](a0),
