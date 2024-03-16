@@ -4,7 +4,7 @@ var searchData=
   ['saturated_1',['saturated',['../group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e',1,'eve']]],
   ['scalar_5ftype_2',['scalar_type',['../structeve_1_1top__bits.html#a46b500a7f5599d078b9c1069f400aa56',1,'eve::top_bits']]],
   ['scan_3',['scan',['../group__core__simd_ga999433dcb57f95f8d149d92e68c071f0.html#ga999433dcb57f95f8d149d92e68c071f0',1,'eve']]],
-  ['scatter_4',['scatter',['../group__core__arithmetic_ga1a37b296b3bc64c292dc1f2641ef003d.html#ga1a37b296b3bc64c292dc1f2641ef003d',1,'eve']]],
+  ['scatter_4',['scatter',['../group__core__simd_ga1a37b296b3bc64c292dc1f2641ef003d.html#ga1a37b296b3bc64c292dc1f2641ef003d',1,'eve']]],
   ['sec_5',['sec',['../group__math__trig_ga9016964468b90f782aa01ba4be5e44ed.html#ga9016964468b90f782aa01ba4be5e44ed',1,'eve']]],
   ['secd_6',['secd',['../group__math__trig_ga9d321e65637ca035df92af12c1dcc5eb.html#ga9d321e65637ca035df92af12c1dcc5eb',1,'eve']]],
   ['sech_7',['sech',['../group__math__hyper_ga4fe32d4bfda35b6d2196488cb036f185.html#ga4fe32d4bfda35b6d2196488cb036f185',1,'eve']]],
