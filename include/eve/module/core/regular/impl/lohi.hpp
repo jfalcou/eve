@@ -12,9 +12,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/regular/shuffle.hpp>
-
-#include <bit>
 
 namespace eve::detail
 {

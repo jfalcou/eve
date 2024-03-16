@@ -16,18 +16,12 @@ TTS_CASE_TPL("Check return types of lohi", eve::test::simd::integers)
   using elt_t  = eve::element_type_t<T>;
   using sui_t  = eve::as_integer_t<elt_t, unsigned>;
   using sdui_t = eve::detail::downgrade_t<sui_t>;
-  if constexpr( eve::simd_value<T> )
-  {
-    using wdui_t = eve::wide<sdui_t, eve::cardinal_t<T>>;
-    using typ    = kumi::tuple<wdui_t, wdui_t>;
-    TTS_EXPR_IS((eve::lohi(T())), typ);
-  }
-  else
-  {
-    using wdui_t = sdui_t;
-    using typ    = kumi::tuple<wdui_t, wdui_t>;
-    TTS_EXPR_IS((eve::lohi(T())), typ);
-  }
+  using v_t    = eve::as_wide_as_t<sdui_t,T>;
+  using vt_t   = eve::result_t<eve::zip,v_t,v_t>;
+  using t_t    = eve::result_t<eve::zip,sdui_t,sdui_t>;
+
+  TTS_EXPR_IS(eve::lohi(T{})    , vt_t);
+  TTS_EXPR_IS(eve::lohi(elt_t{}), t_t);
 };
 
 //==================================================================================================
