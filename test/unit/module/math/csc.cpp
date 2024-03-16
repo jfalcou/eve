@@ -27,14 +27,13 @@ TTS_CASE_TPL("Check return types of csc", eve::test::simd::ieee_reals)
 //==================================================================================================
 // csc  tests
 //==================================================================================================
-auto mquarter_c = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_4(tgt); };
-auto quarter_c  = []<typename T>(eve::as<T> const &tgt) { return eve::pio_4(tgt); };
-auto mhalf_c    = []<typename T>(eve::as<T> const   &tgt) { return -eve::pio_2(tgt); };
-auto half_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pio_2(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const      &tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto mquarter_c = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_4(tgt); };
+auto quarter_c  = []<typename T>(eve::as<T> const&tgt) { return eve::pio_4(tgt); };
+auto mhalf_c    = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_2(tgt); };
+auto half_c     = []<typename T>(eve::as<T> const&tgt) { return eve::pio_2(tgt); };
+auto mmed       = []<typename T>(eve::as<T> const&tgt) { return -eve::Rempio2_limit[eve::medium2](tgt); };
+auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve::medium2](tgt); };
+
 
 TTS_CASE_WITH("Check behavior of csc on wide",
               eve::test::simd::ieee_reals,
@@ -49,9 +48,9 @@ TTS_CASE_WITH("Check behavior of csc on wide",
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1.0 / std::sin(double(e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(csc)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(csc)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(csc)(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(csc[eve::quarter_circle2](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc[eve::half_circle2   ](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc[eve::half_circle2   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(csc(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a2), map(ref, a2), 2);
@@ -66,7 +65,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::csc)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::csc[mask](a0),

@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct secd_t : elementwise_callable<sec_t, Options, quarter_circle_option, half_circle_option,
+  struct secd_t : elementwise_callable<secd_t, Options, quarter_circle_option, half_circle_option,
                                        full_circle_option, medium_option, big_option>
   {
     template<eve::floating_ordered_value T>
@@ -83,24 +83,18 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T secd_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
     {
-//       std::cout << "in a0 " << a0 << std::endl;
-//       if constexpr( O::contains(quarter_circle2) )
-//       {
-//         std::cout << "icitte cosd quarter_circle2 " << eve::cosd[o](a0) << std::endl;
-//         return eve::rec(eve::cosd[o](a0));
-//       }
-//       else
-//       {
-//         std::cout << "icitte cosd " << eve::cosd[o](a0) << std::endl;
-//         auto a0_180 = div_180(a0);
-//         auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as(a0_180)));
-//         if constexpr( scalar_value<T> ) // early return for nans in scalar case
-//         {
-//           if( test ) return nan(eve::as<T>());
-//         }
-//         return if_else(test, eve::allbits, rec(cosd[o](a0)));
-//       }
-      return a0;
+      if constexpr( O::contains(quarter_circle2) )
+        return eve::rec(eve::cosd[o](a0));
+      else
+      {
+        auto a0_180 = div_180(a0);
+        auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as(a0_180)));
+        if constexpr( scalar_value<T> ) // early return for nans in scalar case
+        {
+          if( test ) return nan(eve::as<T>());
+        }
+        return if_else(test, eve::allbits, rec(cosd[o](a0)));
+      }
     }
   }
 }

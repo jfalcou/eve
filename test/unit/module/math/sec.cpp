@@ -31,10 +31,8 @@ auto mquarter_c = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_4(tgt)
 auto quarter_c  = []<typename T>(eve::as<T> const&tgt) { return eve::pio_4(tgt); };
 auto mhalf_c    = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_2(tgt); };
 auto half_c     = []<typename T>(eve::as<T> const&tgt) { return eve::pio_2(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const&tgt)
-{ return -eve::Rempio2_limit[eve::medium2](tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::Rempio2_limit[eve::medium2](tgt); };
+auto mmed       = []<typename T>(eve::as<T> const&tgt) { return -eve::Rempio2_limit[eve::medium2](tgt); };
+auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve::medium2](tgt); };
 
 TTS_CASE_WITH("Check behavior of sec on wide",
               eve::test::simd::ieee_reals,

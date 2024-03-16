@@ -22,7 +22,7 @@ template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr auto
 sinpi_(EVE_SUPPORTS(cpu_), quarter_circle_type const&, T x) noexcept
 {
-  if constexpr( has_native_abi_v<T> ) { return eve::quarter_circle(sin)(x * pi(eve::as<T>())); }
+  if constexpr( has_native_abi_v<T> ) { return sineve::quarter_circle()(x * pi(eve::as<T>())); }
   else return apply_over(quarter_circle(sinpi), x);
 }
 
