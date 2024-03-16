@@ -10,16 +10,16 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct lambert_t : elementwise_callable<lambert_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
-    kumi::tuple<T, T>
-    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    eve::result_t<zip, T, T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(lambert_t, lambert_);
   };
@@ -41,18 +41,18 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      kumi::tuple<T, T> lambert(T x) noexcept;
+//!      template< eve::floating_value T >
+//!      eve::result_t<zip, T, T> lambert(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!
-//!   A tuple of the two branch values of the Lambert functionis returned with the following
+//!   A tuple of the two branch values of the Lambert function is returned with the following
 //!   considerations:
 //!
 //!     * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values

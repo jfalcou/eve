@@ -12,9 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf             = " << pf << '\n'
             << "-> w0             = " << w0 << '\n'
-            << "-> wm1            = " << wm1<< '\n'
-            ;
-
+            << "-> wm1            = " << wm1<< '\n';
 
   float        xf = -0.2f;
   auto [sw0, swm1] = eve::lambert(xf);
@@ -23,5 +21,6 @@ int main()
             << "<- xf              = " << xf << '\n'
             << "-> sw0             = " << sw0 << '\n'
             << "-> swm1            = " << swm1<< '\n';
+
   return 0;
 }
