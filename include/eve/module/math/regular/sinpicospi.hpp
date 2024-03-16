@@ -86,13 +86,11 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle2))
       {
-        std::cout << "quarter_circle2" << std::endl;
         if constexpr( has_native_abi_v<T> ) { return sincos[eve::quarter_circle](a0 * pi(eve::as<T>())); }
         else return apply_over2(sinpicospi[quarter_circle2], a0);
       }
       else if constexpr(/*O::contains(half_circle2) || O::contains(full_circle2) || O::contains(medium2) ||*/ O::contains(big2) )
       {
-        std::cout << "other" << std::endl;
         if constexpr( has_native_abi_v<T> )
         {
           if constexpr( scalar_value<T> )
@@ -118,7 +116,6 @@ namespace eve
       }
       else
       {
-        std::cout << "no opt" << std::endl;
         if constexpr( has_native_abi_v<T> )
         {
           auto x = abs(a0);

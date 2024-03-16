@@ -23,7 +23,8 @@
 namespace eve
 {
   template<typename Options>
-  struct sindcosd_t : elementwise_callable<sindcosd_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
+  struct sindcosd_t : elementwise_callable<sindcosd_t, Options, quarter_circle_option, half_circle_option,
+                                           full_circle_option, medium_option, big_option>
   {
     template<eve::floating_ordered_value T>
     constexpr EVE_FORCEINLINE kumi::tuple<T, T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -83,13 +84,12 @@ namespace eve
     constexpr EVE_FORCEINLINE kumi::tuple<T, T>
     sindcosd_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      auto x       = abs(a0);
       if constexpr(O::contains(quarter_circle2))
       {
-        if constexpr( has_native_abi_v<T> ) { return sinpicospi[eve::quarter_circle](div_180(x)); }
-        else return apply_over2(sindcosd[quarter_circle2], x);
+        if constexpr( has_native_abi_v<T> ) { return sinpicospi[eve::quarter_circle](div_180(a0)); }
+        else return apply_over2(sindcosd[quarter_circle2], a0);
       }
-      else if constexpr(O::contains(half_circle2) || O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
+      else if constexpr(O::contains(big2) )
       {
         if constexpr( has_native_abi_v<T> )
         {
@@ -106,8 +106,8 @@ namespace eve
       {
         if constexpr( has_native_abi_v<T> )
         {
-          if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )
-            return sincos[quarter_circle2](a0);
+          if( eve::all(eve::abs(a0) <= T(45)) )
+            return sindcosd[quarter_circle2](a0);
           else
             return sindcosd[big2](a0);
         }

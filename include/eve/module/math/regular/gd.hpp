@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/atan.hpp>
+#include <eve/module/math/regular/tanh.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct gd_t : elementwise_callable<gd_t, Options>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(gd_t, gd_);
+  };
+
 //================================================================================================
 //! @addtogroup math_hyper
 //! @{
@@ -54,7 +68,14 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(gd_, gd);
-}
+  inline constexpr auto gd = functor<gd_t>;
 
-#include <eve/module/math/regular/impl/gd.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T gd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    {
+      return 2*atan(tanh(a0*half(as(a0))));
+    }
+  }
+}
