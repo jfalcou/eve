@@ -15,6 +15,7 @@
 #include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/regular/cospi.hpp>
 #include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/detail/generic/rem180.hpp>
 
 namespace eve
 {
@@ -77,7 +78,7 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
- inline constexpr auto cosd = functor<cosd_t>;
+  inline constexpr auto cosd = functor<cosd_t>;
 
   namespace detail
   {
