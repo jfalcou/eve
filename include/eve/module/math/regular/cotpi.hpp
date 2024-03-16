@@ -84,7 +84,6 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cotpi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      auto x = abs(a0);
       if constexpr(O::contains(quarter_circle2))
       {
         if constexpr( scalar_value<T> )
@@ -122,7 +121,7 @@ namespace eve
       }
       else
       {
-        if( eve::all(eve::abs(x) <= T(0.25)) )
+        if( eve::all(eve::abs(a0) <= T(0.25)) )
           return cotpi[quarter_circle2](a0);
         else return cotpi[big2](a0);
       }

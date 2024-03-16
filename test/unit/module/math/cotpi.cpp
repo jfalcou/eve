@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
   };
   TTS_ULP_EQUAL(cotpi[eve::quarter_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi[eve::half_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotpi[eve::half_circle2](a1), map(ref, a0), 2);
+  TTS_ULP_EQUAL(cotpi[eve::half_circle2](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(cotpi(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cotpi(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(cotpi(a2), map(ref, a2), 2);
