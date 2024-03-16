@@ -134,7 +134,7 @@ jobs:
         run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
-  ## Phase 2 - Non-X86 - Requires gcc and qemu
+  ## Phase 2 - Non-X86 - Requires clang and qemu
   ##################################################################################################
   other-arch:
     needs: x86-clang
@@ -146,9 +146,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: gcc, arch: aarch64 , opts: -Wno-psabi}
-        - { comp: gcc, arch: arm     , opts: -Wno-psabi}
-        - { comp: gcc, arch: ppc64   , opts: -Wno-psabi}
+        - { comp: clang, arch: aarch64 , opts: -Wno-psabi}
+        - { comp: clang, arch: arm     , opts: -Wno-psabi}
+        - { comp: gcc  , arch: ppc64   , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
