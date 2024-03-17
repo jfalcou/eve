@@ -1,16 +1,34 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/zip.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct two_add_t : elementwise_callable<two_add_t, Options>
+{
+  template<eve::floating_value T, eve::floating_value U>
+  constexpr EVE_FORCEINLINE
+  eve::result_t<zip,common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
+  {
+    return EVE_DISPATCH_CALL(a,b);
+  }
+
+  EVE_CALLABLE_OBJECT(two_add_t, two_add_);
+};
+
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
@@ -30,7 +48,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T, eve::floating_value U  >
-//!      kumi::tuple<T, T> two_add(T x, U y) noexcept;
+//!      auto two_add(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -54,14 +72,21 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
+
+inline constexpr auto two_add = functor<two_add_t>;
+
+namespace detail
 {
-  struct two_add_;
-}
-template<> struct supports_conditional<tag::two_add_> : std::false_type
-{};
+  template<typename T, typename U, callable_options O>
+  constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(cpu_), O const&, T a, U b)
+  {
+    auto r0 = a + b;
+    auto z  = r0 - a;
+    auto r1 = a - (r0 - z) + (b - z);
 
-EVE_MAKE_CALLABLE(two_add_, two_add);
-}
+    if constexpr( eve::platform::supports_infinites )
+      r1 = if_else(is_infinite(r0), eve::zero, r1);
 
-#include <eve/module/core/regular/impl/two_add.hpp>
+    return eve::zip(r0, r1);
+  }
+}}
