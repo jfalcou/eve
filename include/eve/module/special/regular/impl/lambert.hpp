@@ -88,7 +88,7 @@ namespace eve::detail
       if( eve::any(notdone) ) { notdone = last_interval(lambert0_other, q >= T(1.0e-3), r, x, q); }
     }
     auto positivex = is_positive(x);
-    if( eve::all(positivex) ) return kumi::make_tuple(r, r);
+    if( eve::all(positivex) ) return eve::zip(r, r);
     auto r1 = if_else(positivex, r, lambert1(x, q, positivex));
     return eve::zip(r, r1);
   }
