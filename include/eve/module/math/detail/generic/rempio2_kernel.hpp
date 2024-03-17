@@ -45,7 +45,6 @@ EVE_FORCEINLINE auto  rempio2_half_circle(T const                &xx) noexcept
   }
   else if constexpr( std::is_same_v<elt_t, float> )
   {
-//    using i_t =  as_integer_t<T>;
     auto x   = float64(xx);
     auto n   = nearest(x * two_o_pi(eve::as<double>()));
     auto dxr = fma(n, -pio_2(eve::as<double>()), x);
