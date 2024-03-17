@@ -95,45 +95,42 @@ namespace eve
       {
         if( is_eqz(a0) ) return a0;
       }
+      T x = eve::abs(a0);
+
+      if constexpr( scalar_value<T> )
+      {
+        T h = (a0 > T(0)) ? T(1) : T(-1);
+        if( x >= maxlog(as<T>()) )
+        {
+          T w = exp(x * half(eve::as<T>()));
+          T t = half(eve::as<T>()) * w;
+          t *= w;
+          return t * h;
+        }
+        h *= half(eve::as<T>());
+        T t    = expm1(x);
+        T inct = inc(t);
+        T u    = t / inct;
+        T s    = h * (fnma(t, u, t) + t);
+        return s;
+      }
       else
       {
-        T x = eve::abs(a0);
+        auto h    = if_else(is_gtz(a0), one(eve::as<T>()), mone);
+        auto t    = expm1(x);
+        auto inct = inc(t);
+        auto u    = t / inct;
+        auto z    = fnma(t, u, t);
+        auto s    = half(eve::as<T>()) * h * (z + t);
 
-        if constexpr( scalar_value<T> )
-        {
-          T h = (a0 > T(0)) ? T(1) : T(-1);
-          if( x >= maxlog(as<T>()) )
-          {
-            T w = exp(x * half(eve::as<T>()));
-            T t = half(eve::as<T>()) * w;
-            t *= w;
-            return t * h;
-          }
-          h *= half(eve::as<T>());
-          T t    = expm1(x);
-          T inct = inc(t);
-          T u    = t / inct;
-          T s    = h * (fnma(t, u, t) + t);
-          return s;
-        }
-        else
-        {
-          auto h    = if_else(is_gtz(a0), one(eve::as<T>()), mone);
-          auto t    = expm1(x);
-          auto inct = inc(t);
-          auto u    = t / inct;
-          auto z    = fnma(t, u, t);
-          auto s    = half(eve::as<T>()) * h * (z + t);
+        s         = if_else(is_eqz(a0), a0, s);
+        auto test = x < maxlog(as<T>());
+        if( eve::all(test) ) return s;
+        auto w = exp(x * half(eve::as<T>()));
+        t      = half(eve::as<T>()) * w;
+        t *= w;
 
-          s         = if_else(is_eqz(a0), a0, s);
-          auto test = x < maxlog(as<T>());
-          if( eve::all(test) ) return s;
-          auto w = exp(x * half(eve::as<T>()));
-          t      = half(eve::as<T>()) * w;
-          t *= w;
-
-          return if_else(test, s, t * h);
-        }
+        return if_else(test, s, t * h);
       }
     }
   }
