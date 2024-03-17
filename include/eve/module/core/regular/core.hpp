@@ -182,7 +182,6 @@
 #include <eve/module/core/regular/reldist.hpp>
 #include <eve/module/core/regular/rem.hpp>
 #include <eve/module/core/regular/remainder.hpp>
-#include <eve/module/core/regular/remdiv.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/rotate.hpp>
 #include <eve/module/core/regular/rotl.hpp>

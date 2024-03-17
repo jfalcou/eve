@@ -26,7 +26,6 @@
 #include <eve/module/core/pedantic/nextafter.hpp>
 #include <eve/module/core/pedantic/prev.hpp>
 #include <eve/module/core/pedantic/rem.hpp>
-#include <eve/module/core/pedantic/remdiv.hpp>
 #include <eve/module/core/pedantic/rsqrt.hpp>
 #include <eve/module/core/pedantic/signnz.hpp>
 #include <eve/module/core/pedantic/sum_of_prod.hpp>
