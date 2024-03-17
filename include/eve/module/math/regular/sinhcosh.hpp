@@ -76,7 +76,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE kumi::tuple<T, T>
-    sinhcosh_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
+    sinhcosh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr( has_native_abi_v<T> )
       {

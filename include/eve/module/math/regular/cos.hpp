@@ -140,7 +140,9 @@ namespace eve
         auto x       = abs(a0);
         auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
         if constexpr( scalar_value<T> )
+        {
           if( xnlelim ) return nan(eve::as<T>());
+        }
         else
           x = if_else(xnlelim, allbits, x);
         auto [fn, xr, dxr] = rempio2[o](x);

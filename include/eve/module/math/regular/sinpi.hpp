@@ -80,7 +80,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T sinpi_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
+    constexpr EVE_FORCEINLINE T sinpi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
                    ||  O::contains(medium2) || O::contains(big2))
