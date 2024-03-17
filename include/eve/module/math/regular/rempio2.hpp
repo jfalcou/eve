@@ -22,7 +22,7 @@ namespace eve
                                           , full_circle_option, medium_option, big_option>
   {
     template<eve::floating_ordered_value T>
-    constexpr EVE_FORCEINLINE auto //kumi::tuple<eve::as_integer<T>, T, T>
+    constexpr EVE_FORCEINLINE auto 
     operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
@@ -92,7 +92,7 @@ namespace eve
           if( eve::all(x <= Rempio2_limit[quarter_circle2](as(x))))
             return  kumi::make_tuple(T(0), x, T(0));
           else if( eve::all(x <= Rempio2_limit[half_circle2](as(x))))
-            return rempio_half_circle(x);
+            return rempio2_half_circle(x);
           else if( eve::all(x <= Rempio2_limit[full_circle2](as(x))))
             return rempio2_full_circle(x);
           else if( eve::all(x <= Rempio2_limit[medium2](as(x))))
