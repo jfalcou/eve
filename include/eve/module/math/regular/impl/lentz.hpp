@@ -31,8 +31,8 @@ namespace eve::detail
   // Note that the first a0 returned by generator Gen is discarded.
   //
 
-  template <typename Gen, typename U>
-  EVE_FORCEINLINE constexpr auto lentz_b_(EVE_SUPPORTS(cpu_), Gen g, const U& eps, size_t max_terms)
+  template <typename Gen, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr auto lentz_b_(EVE_REQUIRES(cpu_), O const &, Gen g, const U& eps, size_t max_terms)
     noexcept
   {
     using eve::abs;
@@ -90,8 +90,8 @@ namespace eve::detail
   // Note that the first a0 and b0 returned by generator Gen are both used.
   //
 
-  template <typename Gen, typename U>
-  EVE_FORCEINLINE auto lentz_a_(EVE_SUPPORTS(cpu_), Gen g, const U& eps, size_t max_terms)  noexcept
+  template <typename Gen, typename U, callable_options O>
+  EVE_FORCEINLINE auto lentz_a_(EVE_REQUIRES(cpu_), O const &, Gen g, const U& eps, size_t max_terms)  noexcept
   {
     using eve::abs;
     auto v = g();
