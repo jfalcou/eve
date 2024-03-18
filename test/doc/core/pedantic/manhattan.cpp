@@ -10,8 +10,8 @@ int main()
   wide_ft qf = {-4   , 3   , -2   , eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                     = " << pf << '\n'
-            << "<- qf                     = " << qf << '\n'
-            << "-> pedantic(manhattan)(pf, qf) = " <<  eve::pedantic(eve::manhattan)(pf, qf) << '\n';
+            << "<- pf                          = " << pf << '\n'
+            << "<- qf                          = " << qf << '\n'
+            << "-> manhattan[pedantic](pf, qf) = " <<  eve::manhattan[eve::pedantic](pf, qf) << '\n';
   return 0;
 }
