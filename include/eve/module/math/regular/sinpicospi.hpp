@@ -88,43 +88,34 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle2))
       {
-        if constexpr( has_native_abi_v<T> ) { return sincos[eve::quarter_circle](a0 * pi(eve::as<T>())); }
-        else return apply_over2(sinpicospi[quarter_circle2], a0);
+        return sincos[eve::quarter_circle](a0 * pi(eve::as<T>()));
       }
       else if constexpr( O::contains(big2) )
       {
-        if constexpr( has_native_abi_v<T> )
+        if constexpr( scalar_value<T> )
         {
-          if constexpr( scalar_value<T> )
-          {
-            if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
-          }
-          T x = abs(a0);
-          if constexpr( scalar_value<T> )
-          {
-            if( x > maxflint(eve::as<T>()) ) return eve::zip(T(0), T(1));
-          }
-          else
-          {
-            auto invalid = is_not_finite(x);
-            x            = if_else(x > maxflint(eve::as(x)), eve::zero, x);
-            x            = if_else(invalid, eve::allbits, x);
-          }
-          auto [fn, xr, dxr] = rem2(x);
-          auto [s, c]        = sincos_finalize(bitofsign(a0), fn, xr, dxr);
-          return eve::zip(s, c);
+          if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
         }
-        else return apply_over2(sinpicospi[o], a0);
+        T x = abs(a0);
+        if constexpr( scalar_value<T> )
+        {
+          if( x > maxflint(eve::as<T>()) ) return eve::zip(T(0), T(1));
+        }
+        else
+        {
+          auto invalid = is_not_finite(x);
+          x            = if_else(x > maxflint(eve::as(x)), eve::zero, x);
+          x            = if_else(invalid, eve::allbits, x);
+        }
+        auto [fn, xr, dxr] = rem2(x);
+        auto [s, c]        = sincos_finalize(bitofsign(a0), fn, xr, dxr);
+        return eve::zip(s, c);
       }
       else
       {
-        if constexpr( has_native_abi_v<T> )
-        {
-          auto x = abs(a0);
-          if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle2](a0);
-          else  return sinpicospi[big2](a0);
-        }
-        else return apply_over2(sinpicospi[o], a0);
+        auto x = abs(a0);
+        if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle2](a0);
+        else  return sinpicospi[big2](a0);
       }
     }
   }

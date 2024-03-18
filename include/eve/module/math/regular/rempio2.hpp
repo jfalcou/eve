@@ -22,7 +22,7 @@ namespace eve
                                           , full_circle_option, medium_option, big_option>
   {
     template<eve::floating_ordered_value T>
-    constexpr EVE_FORCEINLINE auto 
+    constexpr EVE_FORCEINLINE auto
     operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
@@ -75,33 +75,19 @@ namespace eve
     constexpr EVE_FORCEINLINE auto
     rempio2_(EVE_REQUIRES(cpu_), O const& o, T const& x) noexcept
     {
-      if constexpr( has_native_abi_v<T> )
+      if      constexpr( O::contains(quarter_circle2))  return rempio2_half_circle(x);
+      else if constexpr( O::contains(half_circle2))     return rempio2_half_circle(x);
+      else if constexpr( O::contains(full_circle2))     return rempio2_full_circle(x);
+      else if constexpr( O::contains(medium2))          return rempio2_medium(x);
+      else if constexpr( O::contains(big2))             return rempio2_big(x);
+      else
       {
-        if constexpr( O::contains(quarter_circle2))
-          return rempio2_half_circle(x);
-        if constexpr( O::contains(half_circle2))
-          return rempio2_half_circle(x);
-        if constexpr( O::contains(full_circle2))
-          return rempio2_full_circle(x);
-        else if constexpr( O::contains(medium2))
-          return rempio2_medium(x);
-        else if constexpr( O::contains(big2))
-          return rempio2_big(x);
-        else
-        {
-          if( eve::all(x <= Rempio2_limit[quarter_circle2](as(x))))
-            return  kumi::make_tuple(T(0), x, T(0));
-          else if( eve::all(x <= Rempio2_limit[half_circle2](as(x))))
-            return rempio2_half_circle(x);
-          else if( eve::all(x <= Rempio2_limit[full_circle2](as(x))))
-            return rempio2_full_circle(x);
-          else if( eve::all(x <= Rempio2_limit[medium2](as(x))))
-            return rempio2_medium(x);
-          else
-            return rempio2_big(x);
-        }
+        if( eve::all(x <= Rempio2_limit[quarter_circle2](as(x))))   return  kumi::make_tuple(T(0), x, T(0));
+        else if( eve::all(x <= Rempio2_limit[half_circle2](as(x)))) return rempio2_half_circle(x);
+        else if( eve::all(x <= Rempio2_limit[full_circle2](as(x)))) return rempio2_full_circle(x);
+        else if( eve::all(x <= Rempio2_limit[medium2](as(x))))      return rempio2_medium(x);
+        else                                                        return rempio2_big(x);
       }
-      else return apply_over3(rempio2[o], x);
     }
   }
 }

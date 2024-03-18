@@ -88,31 +88,22 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle2))
       {
-        if constexpr( has_native_abi_v<T> ) { return sinpicospi[eve::quarter_circle](div_180(a0)); }
-        else return apply_over2(sindcosd[quarter_circle2], a0);
+        return sinpicospi[eve::quarter_circle](div_180(a0));
       }
       else if constexpr(O::contains(big2) )
       {
-        if constexpr( has_native_abi_v<T> )
-        {
-          if constexpr( scalar_value<T> )
-            if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
-          auto x             = eve::abs(a0);
-          x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
-          auto [fn, xr, dxr] = rem180(x);
-          auto[s,c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
-          return eve::zip(s,c);
-        }
-        else return apply_over2(sindcosd[o], a0);
+        if constexpr( scalar_value<T> )
+          if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
+        auto x             = eve::abs(a0);
+        x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+        auto [fn, xr, dxr] = rem180(x);
+        auto[s,c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
+        return eve::zip(s,c);
       }
       else
       {
-        if constexpr( has_native_abi_v<T> )
-        {
-          if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle2](a0);
-          else                                  return sindcosd[big2](a0);
-        }
-        else return apply_over2(sindcosd, a0);
+        if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle2](a0);
+        else                                  return sindcosd[big2](a0);
       }
     }
   }
