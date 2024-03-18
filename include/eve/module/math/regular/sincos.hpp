@@ -22,10 +22,13 @@
 namespace eve
 {
   template<typename Options>
-  struct sincos_t : elementwise_callable<sincos_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
+  struct sincos_t : elementwise_callable<sincos_t, Options
+                                        , quarter_circle_option, half_circle_option
+                                        , full_circle_option, medium_option, big_option
+                                        >
   {
     template<eve::floating_ordered_value T>
-    constexpr EVE_FORCEINLINE kumi::tuple<T, T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE eve::result_t<zip,T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sincos_t, sincos_);
   };
@@ -78,29 +81,24 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE kumi::tuple<T, T>
-    sincos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
+    constexpr EVE_FORCEINLINE auto sincos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
       auto x       = abs(a0);
       if constexpr(O::contains(quarter_circle2))
       {
-        if constexpr( has_native_abi_v<T> )
+        auto pi2_16 = pi2o_16[upward](as<T>());
+        auto x2          = sqr(a0);
+        auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
+        if constexpr( scalar_value<T> )
         {
-          auto pi2_16 = pi2o_16[upward](as<T>());
-          auto x2          = sqr(a0);
-          auto x2nlepi2_16 = is_not_less_equal(x2, pi2_16);
-          if constexpr( scalar_value<T> )
-          {
-            return (x2nlepi2_16) ? kumi::tuple<T, T> {nan(eve::as<T>()), nan(eve::as<T>())}
-            : kumi::tuple<T, T> {sin_eval(x2, a0), cos_eval(x2)};
-          }
-          else
-          {
-            x2 = if_else(x2nlepi2_16, eve::allbits, x2);
-            return {sin_eval(x2, a0), cos_eval(x2)};
-          }
+          return  (x2nlepi2_16) ? eve::zip(nan(eve::as<T>()), nan(eve::as<T>()))
+                                : eve::zip(sin_eval(x2, a0), cos_eval(x2));
         }
-        else return apply_over2(sincos[quarter_circle2], a0);
+        else
+        {
+          x2 = if_else(x2nlepi2_16, eve::allbits, x2);
+          return eve::zip(sin_eval(x2, a0), cos_eval(x2));
+        }
       }
       else if constexpr(O::contains(half_circle2))
       {
@@ -122,18 +120,19 @@ namespace eve
           {
             using i_t = as_integer_t<T, signed>;
 
-            if( is_less_equal(x, eps(as<T>())) ) return {a0, one(eve::as<T>())};
-            if( is_not_less_equal(x, pio_2(eve::as<T>())) ) return {nan(eve::as<T>()), nan(eve::as<T>())};
+            if( is_less_equal(x, eps(as<T>())) ) return eve::zip(a0, one(eve::as<T>()));
+            if( is_not_less_equal(x, pio_2(eve::as<T>())) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
 
             i_t n = x > pio_4(eve::as<T>());
 
             if( n )
             {
               auto xr = reduce(x);
-              return {bit_xor(bitofsign(a0), cos_eval(sqr(xr))),
-                  bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T) * 8 - 1))};
+              return eve::zip ( bit_xor(bitofsign(a0), cos_eval(sqr(xr)))
+                              , bit_xor(sin_eval(sqr(xr), xr), n << (sizeof(T) * 8 - 1))
+                              );
             }
-            else { return {sin_eval(sqr(x), a0), cos_eval(sqr(x))}; }
+            else return eve::zip(sin_eval(sqr(x), a0), cos_eval(sqr(x)));
           }
           else
           {
@@ -142,10 +141,10 @@ namespace eve
             auto n      = binarize(test);
             auto xr     = if_else(test, reduce(x), x);
             auto [s, c] = sincos_finalize(a0, n, xr, T(0));
-            return {s, c};
+            return eve::zip(s, c);
           }
         }
-        else { return apply_over2(sincos[half_circle2], a0); }
+        else return apply_over2(sincos[half_circle2], a0);
       }
       else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
       {
@@ -154,29 +153,24 @@ namespace eve
           auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
           if constexpr( scalar_value<T> )
           {
-            if( xnlelim ) return {nan(eve::as<T>()), nan(eve::as<T>())};
+            if( xnlelim ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
           }
           else x = if_else(xnlelim, allbits, x);
           auto [fn, xr, dxr] = rempio2[o](x);
           auto [s, c]        = sincos_finalize(bitofsign(a0), fn, xr, dxr);
-          return {s, c};
+          return eve::zip(s, c);
         }
-        else { return apply_over2(sincos[o], a0); }
+        else return apply_over2(sincos[o], a0);
       }
       else
       {
         if constexpr( has_native_abi_v<T> )
         {
-         if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )
-          return sincos[quarter_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle2](as(a0))))
-          return sincos[half_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle2](as(a0))))
-          return sincos[full_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))
-          return sincos[medium2](a0);
-        else
-          return sincos[big2](a0);
+         if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )  return sincos[quarter_circle2](a0);
+        else if( eve::all(x <= Rempio2_limit[half_circle2](as(a0))))  return sincos[half_circle2](a0);
+        else if( eve::all(x <= Rempio2_limit[full_circle2](as(a0))))  return sincos[full_circle2](a0);
+        else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))       return sincos[medium2](a0);
+        else                                                          return sincos[big2](a0);
         }
         else return apply_over2(sincos, a0);
       }

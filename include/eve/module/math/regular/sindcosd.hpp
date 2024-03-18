@@ -23,11 +23,13 @@
 namespace eve
 {
   template<typename Options>
-  struct sindcosd_t : elementwise_callable<sindcosd_t, Options, quarter_circle_option, half_circle_option,
-                                           full_circle_option, medium_option, big_option>
+  struct sindcosd_t : elementwise_callable< sindcosd_t, Options
+                                          , quarter_circle_option, half_circle_option
+                                          , full_circle_option, medium_option, big_option
+                                          >
   {
     template<eve::floating_ordered_value T>
-    constexpr EVE_FORCEINLINE kumi::tuple<T, T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE eve::result_t<zip,T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sindcosd_t, sindcosd_);
   };
@@ -81,7 +83,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE kumi::tuple<T, T>
+    constexpr EVE_FORCEINLINE auto
     sindcosd_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
       if constexpr(O::contains(quarter_circle2))
@@ -94,11 +96,12 @@ namespace eve
         if constexpr( has_native_abi_v<T> )
         {
           if constexpr( scalar_value<T> )
-            if( is_not_finite(a0) ) return {nan(eve::as<T>()), nan(eve::as<T>())};
+            if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
           auto x             = eve::abs(a0);
           x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
           auto [fn, xr, dxr] = rem180(x);
-          return sincos_finalize(bitofsign(a0), fn, xr, dxr);
+          auto[s,c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
+          return eve::zip(s,c);
         }
         else return apply_over2(sindcosd[o], a0);
       }
@@ -106,10 +109,8 @@ namespace eve
       {
         if constexpr( has_native_abi_v<T> )
         {
-          if( eve::all(eve::abs(a0) <= T(45)) )
-            return sindcosd[quarter_circle2](a0);
-          else
-            return sindcosd[big2](a0);
+          if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle2](a0);
+          else                                  return sindcosd[big2](a0);
         }
         else return apply_over2(sindcosd, a0);
       }
