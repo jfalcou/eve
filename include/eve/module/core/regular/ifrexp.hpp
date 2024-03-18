@@ -1,16 +1,27 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 namespace eve
 {
+template<typename Options>
+struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_option>
+{
+  template<eve::floating_value T>
+  constexpr EVE_FORCEINLINE eve::result_t<zip,T,eve::as_integer_t<T>>
+  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(ifrexp_t, ifrexp_);
+};
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -30,7 +41,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, eve::as_integer<T>> ifrexp(T x) noexcept;
+//!      kumi::tuple<T, eve::as_integer_t<T>> ifrexp(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -64,15 +75,7 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/ifrexp.cpp}
 //! @}
 //================================================================================================
-
-namespace tag
-{
-  struct ifrexp_;
-}
-template<> struct supports_conditional<tag::ifrexp_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(ifrexp_, ifrexp);
+inline constexpr auto ifrexp = functor<ifrexp_t>;
 }
 
 #include <eve/module/core/regular/impl/ifrexp.hpp>

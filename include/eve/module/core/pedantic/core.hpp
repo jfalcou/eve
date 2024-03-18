@@ -14,7 +14,6 @@
 #include <eve/module/core/pedantic/fms.hpp>
 #include <eve/module/core/pedantic/fnma.hpp>
 #include <eve/module/core/pedantic/fnms.hpp>
-#include <eve/module/core/pedantic/frexp.hpp>
 #include <eve/module/core/pedantic/fsm.hpp>
 #include <eve/module/core/pedantic/fsnm.hpp>
 #include <eve/module/core/pedantic/is_flint.hpp>

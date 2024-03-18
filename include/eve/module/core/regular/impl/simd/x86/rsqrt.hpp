@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/raw.hpp>
-#include <eve/module/core/pedantic/ifrexp.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/dec.hpp>
