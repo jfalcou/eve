@@ -17,15 +17,12 @@
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(cos_eval_, cos_eval);
-  EVE_MAKE_CALLABLE(sin_eval_, sin_eval);
-  EVE_MAKE_CALLABLE(tancot_eval_, tancot_eval);
 
   namespace detail
   {
     template<floating_ordered_value T>
     EVE_FORCEINLINE constexpr auto
-    cos_eval_(EVE_SUPPORTS(cpu_), T const& z) noexcept
+    cos_eval(T const& z) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr( std::is_same_v<elt_t, float> )
@@ -47,7 +44,7 @@ namespace eve
 
     template<floating_ordered_value T>
     EVE_FORCEINLINE constexpr auto
-    sin_eval_(EVE_SUPPORTS(cpu_), const T& z, const T& x) noexcept
+    sin_eval(const T& z, const T& x) noexcept
     {
       // here T is float or double and x positive
       using elt_t = element_type_t<T>;
@@ -69,7 +66,7 @@ namespace eve
 
     template<floating_ordered_value T>
     EVE_FORCEINLINE constexpr auto
-    tancot_eval_(EVE_SUPPORTS(cpu_), const T& z) noexcept
+    tancot_eval(const T& z) noexcept
     {
       // here T is float or double and z positive
       T zz = eve::sqr(z);
