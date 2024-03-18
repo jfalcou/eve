@@ -48,8 +48,11 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
       t         = if_else(test, nbmantissabits(eve::as<T>()), eve::zero);
       a0        = if_else(test, twotonmb(eve::as<T>()) * a0, a0);
     }
-    auto e     = bit_and(exponentmask(as<T>()), a0); // extract exp.
-    auto x     = bit_notand(exponentmask(as<T>()), a0);
+
+
+    auto emask = exponentmask(as<T>());
+    auto e     = bit_cast(bit_and(a0,emask),as(emask)); // extract exp.
+    auto x     = bit_notand(emask, a0);
     e          = bit_shr(e, nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>());
     auto r0    = bit_or(half(eve::as<T>()), x);
     auto test0 = is_nez(a0);
@@ -102,8 +105,9 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
     else
     {
       using elt_t = element_type_t<T>;
-      auto r1     = bit_and(exponentmask(as<T>()), a0);
-      auto x      = bit_notand(exponentmask(as<T>()), a0);
+      auto emask  = exponentmask(as<T>());
+      auto r1     = bit_cast(bit_and(a0,emask), as(emask));
+      auto x      = bit_notand(emask, a0);
       auto res    = eve::zip( bit_or(half(eve::as<T>()), x)
                             , bit_shr(r1, nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>())
                             );
