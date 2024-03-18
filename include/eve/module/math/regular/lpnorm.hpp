@@ -102,13 +102,15 @@ namespace eve::detail
         if (O::contains(pedantic2))
         {
           auto rp = r_t(p);
+          auto any_is_inf = is_infinite(r_t(a0)) || (is_infinite(r_t(a1)) || ... || is_infinite(r_t(args)));
           auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
           auto f = [&](auto a){return pow_abs(ldexp[o](r_t(a), e), rp); };
           r_t that = add(f(a0), f(a1), f(args)...);
           auto r = ldexp[pedantic](pow_abs(that, rec(rp)), -e);
           auto isinfp = is_infinite(rp);
-          auto rinf = maxabs(a0, a1, args...);
-          return if_else(isinfp || is_infinite(rinf), rinf, r);
+          auto rinf = maxabs(r_t(a0), r_t(a1), r_t(args)...);
+          r = if_else(isinfp, rinf, r);
+          return if_else(any_is_inf, inf(as<r_t>()), r);
         }
         else
         {
