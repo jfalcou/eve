@@ -20,7 +20,7 @@ TTS_CASE_TPL("Check return types of coshsinh", eve::test::simd::ieee_reals)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EXPR_IS(eve::sinhcosh(T()), (kumi::tuple<T, T>));
+  TTS_EXPR_IS(eve::sinhcosh(T()), (eve::wide<kumi::tuple<v_t,v_t>,typename T::cardinal_type>));
   TTS_EXPR_IS(eve::sinhcosh(v_t()), (kumi::tuple<v_t, v_t>));
 };
 
