@@ -103,7 +103,8 @@ namespace eve
       auto r = eve::add/*TODO[o]*/(abs(r_t(a0)), abs(r_t(a1)), abs(r_t(args))...);
       if constexpr(O::contains(pedantic2))
       {
-        auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1)) || (... || is_infinite(r_t(args)));
+        auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1));
+        inf_found =  (inf_found || ... || is_infinite(r_t(args)));
         return if_else(inf_found, inf(as(r)), r);
       }
       else
