@@ -20,7 +20,6 @@
 #include <eve/module/core/pedantic/is_flint.hpp>
 #include <eve/module/core/pedantic/is_not_flint.hpp>
 #include <eve/module/core/pedantic/lerp.hpp>
-#include <eve/module/core/pedantic/modf.hpp>
 #include <eve/module/core/pedantic/negatenz.hpp>
 #include <eve/module/core/pedantic/next.hpp>
 #include <eve/module/core/pedantic/nextafter.hpp>
