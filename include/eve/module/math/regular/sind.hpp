@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/sinpi.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sind_t : elementwise_callable<sind_t, Options, quarter_circle_option, half_circle_option,
+                                       full_circle_option, medium_option, big_option>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(sind_t, sind_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -60,8 +74,35 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
+  inline constexpr auto sind = functor<sind_t>;
 
-EVE_MAKE_CALLABLE(sind_, sind);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T sind_(EVE_REQUIRES(cpu_), O const& , T const& a0)
+    {
+      auto x = eve::abs(a0);
+      if constexpr(O::contains(quarter_circle2))
+      {
+       if( eve::all(eve::abs(x) <= T(45)) ) return  sinpi[eve::quarter_circle2](div_180(a0));
+        else return sind[big2](a0);
+      }
+      else if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
+                        ||  O::contains(medium2) || O::contains(big2))
+      {
+        if constexpr( scalar_value<T> )
+          if( is_not_finite(a0) ) return nan(eve::as<T>());
+         x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+        auto [fn, xr, dxr] = rem180(x);
+        return sin_finalize(bitofsign(a0), fn, xr, dxr);
+      }
+      else
+      {
+        if( eve::all(eve::abs(x) <= T(45)) )
+          return sind[quarter_circle2](a0);
+        else
+          return sind[big2](a0);
+      }
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/sind.hpp>

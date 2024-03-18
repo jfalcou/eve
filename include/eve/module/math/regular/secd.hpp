@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/cospi.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct secd_t : elementwise_callable<secd_t, Options, quarter_circle_option, half_circle_option,
+                                       full_circle_option, medium_option, big_option>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(secd_t, secd_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -61,7 +76,25 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(secd_, secd);
-}
+  inline constexpr auto secd = functor<secd_t>;
 
-#include <eve/module/math/regular/impl/secd.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T secd_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
+    {
+      if constexpr( O::contains(quarter_circle2) )
+        return eve::rec(eve::cosd[o](a0));
+      else
+      {
+        auto a0_180 = div_180(a0);
+        auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as(a0_180)));
+        if constexpr( scalar_value<T> ) // early return for nans in scalar case
+        {
+          if( test ) return nan(eve::as<T>());
+        }
+        return if_else(test, eve::allbits, rec(cosd[o](a0)));
+      }
+    }
+  }
+}

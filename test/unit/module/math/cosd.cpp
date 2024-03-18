@@ -43,9 +43,9 @@ TTS_CASE_WITH("Check behavior of cosd on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return eve::cospi(double(e / 180.0l)); };
 
-  TTS_ULP_EQUAL(eve::quarter_circle(cosd)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cosd)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cosd)(a1), map(ref, a1), 30);
+  TTS_ULP_EQUAL(cosd[eve::quarter_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(cosd[eve::half_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(cosd[eve::half_circle](a1), map(ref, a1), 30);
   TTS_ULP_EQUAL(cosd(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cosd(a1), map(ref, a1), 30);
   TTS_ULP_EQUAL(cosd(a2), map(ref, a2), 420);

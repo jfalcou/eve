@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct coth_t : elementwise_callable<coth_t, Options>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(coth_t, coth_);
+  };
+
 //================================================================================================
 //! @addtogroup math_hyper
 //! @{
@@ -55,7 +68,17 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(coth_, coth);
-}
+  inline constexpr auto coth = functor<coth_t>;
 
-#include <eve/module/math/regular/impl/coth.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T coth_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    {
+      auto x = eve::abs(a0 + a0);
+      auto t = rec(expm1(x));
+      auto r = fma(T(2), t, T(1));
+      return copysign(r, a0);
+    }
+  }
+}

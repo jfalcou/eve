@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/constant/pi2o_16.hpp>
+#include <eve/module/math/constant/pio_2.hpp>
+#include <eve/module/math/constant/pio_4.hpp>
+#include <eve/module/math/decorator/trigo_tags.hpp>
+#include <eve/module/math/detail/constant/rempio2_limits.hpp>
+#include <eve/module/math/detail/generic/trig_finalize.hpp>
+#include <eve/module/math/regular/rempio2.hpp>
+#include <eve/module/math/regular/sinpicospi.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sindcosd_t : elementwise_callable<sindcosd_t, Options, quarter_circle_option, half_circle_option,
+                                           full_circle_option, medium_option, big_option>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE kumi::tuple<T, T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(sindcosd_t, sindcosd_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -55,15 +76,43 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
+ inline constexpr auto sindcosd = functor<sindcosd_t>;
 
-namespace tag
-{
-  struct sindcosd_;
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE kumi::tuple<T, T>
+    sindcosd_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
+    {
+      if constexpr(O::contains(quarter_circle2))
+      {
+        if constexpr( has_native_abi_v<T> ) { return sinpicospi[eve::quarter_circle](div_180(a0)); }
+        else return apply_over2(sindcosd[quarter_circle2], a0);
+      }
+      else if constexpr(O::contains(big2) )
+      {
+        if constexpr( has_native_abi_v<T> )
+        {
+          if constexpr( scalar_value<T> )
+            if( is_not_finite(a0) ) return {nan(eve::as<T>()), nan(eve::as<T>())};
+          auto x             = eve::abs(a0);
+          x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
+          auto [fn, xr, dxr] = rem180(x);
+          return sincos_finalize(bitofsign(a0), fn, xr, dxr);
+        }
+        else return apply_over2(sindcosd[o], a0);
+      }
+      else
+      {
+        if constexpr( has_native_abi_v<T> )
+        {
+          if( eve::all(eve::abs(a0) <= T(45)) )
+            return sindcosd[quarter_circle2](a0);
+          else
+            return sindcosd[big2](a0);
+        }
+        else return apply_over2(sindcosd, a0);
+      }
+    }
+  }
 }
-template<> struct supports_conditional<tag::sindcosd_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(sindcosd_, sindcosd);
-}
-
-#include <eve/module/math/regular/impl/sindcosd.hpp>

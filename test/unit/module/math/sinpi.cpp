@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check return types of sinpi", eve::test::simd::ieee_reals)
 // sinpi  tests
 //==================================================================================================
 auto mmed = [](auto const& tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
+{ return -eve::Rempio2_limit[eve::medium2]( tgt) * eve::inv_pi(tgt); };
 auto med = [](auto const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
+{ return eve::Rempio2_limit[eve::medium2]( tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of sinpi on wide",
               eve::test::simd::ieee_reals,
@@ -47,9 +47,8 @@ TTS_CASE_WITH("Check behavior of sinpi on wide",
   using v_t = eve::element_type_t<T>;
   long double  pi = 3.1415926535897932384626433832795028841971693993751l;
   auto ref  = [pi](auto e) -> v_t { return std::sin((pi*(long double)e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(sinpi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(sinpi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sinpi(a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(sinpi[eve::quarter_circle2](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(sinpi[eve::half_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(sinpi(a1), sinpi(eve::frac(a1)+eve::binarize(eve::is_odd(eve::trunc(a1)))), 2);
   TTS_ULP_EQUAL(sinpi(a2), sinpi(eve::frac(a2)+eve::binarize(eve::is_odd(eve::trunc(a2)))), 2);
 };
