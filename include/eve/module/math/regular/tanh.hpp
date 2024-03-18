@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct tanh_t : elementwise_callable<tanh_t, Options>
+  {
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(tanh_t, tanh_);
+  };
+
 //================================================================================================
 //! @addtogroup math_hyper
 //! @{
@@ -68,7 +81,33 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(tanh_, tanh);
-}
+  inline constexpr auto tanh = functor<tanh_t>;
 
-#include <eve/module/math/regular/impl/tanh.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T tanh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    {
+      if constexpr( scalar_value<T> )
+      {
+        if( is_eqz(a0) ) return a0;
+      }
+      auto x    = eve::abs(a0 + a0);
+      auto test = x > T(0.5493) * 2;
+      auto t    = expm1(x);
+      auto rt2  = rec(t + T(2));
+      if constexpr( scalar_value<T> )
+      {
+        auto r = test ? fnma(T(2), rt2, T(1)) : t * rt2;
+        return copysign(r, a0);
+      }
+      else if constexpr( simd_value<T> )
+      {
+        auto z1 = fnma(T(2), rt2, T(1));
+        auto z2 = t * rt2;
+        auto r  = if_else(test, z1, z2);
+        return copysign(r, a0);
+      }
+    }
+  }
+}

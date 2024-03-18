@@ -27,10 +27,10 @@ TTS_CASE_TPL("Check return types of tanpi", eve::test::simd::ieee_reals)
 //==================================================================================================
 // tanpi  tests
 //==================================================================================================
-auto mmed = []<typename T>(eve::as<T> const& tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
+auto mmed = [](auto const& tgt)
+{ return -eve::Rempio2_limit[eve::medium2]( tgt) * eve::inv_pi(tgt); };
+auto med = [](auto const& tgt)
+{ return eve::Rempio2_limit[eve::medium2]( tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of tanpi on wide",
               eve::test::simd::ieee_reals,
@@ -51,9 +51,9 @@ TTS_CASE_WITH("Check behavior of tanpi on wide",
     auto d = eve::cospi(e);
     return d ? eve::sinpi(e) / d : eve::nan(eve::as(e));
   };
-  TTS_ULP_EQUAL(eve::quarter_circle(tanpi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(tanpi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(tanpi)(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(tanpi[eve::quarter_circle2](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(tanpi[eve::half_circle2](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(tanpi[eve::half_circle2](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tanpi(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a2), map(ref, a2), 2);

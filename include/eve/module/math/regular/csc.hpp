@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/sin.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct csc_t : elementwise_callable<csc_t, Options, quarter_circle_option, half_circle_option,
+             full_circle_option, medium_option, big_option>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(csc_t, csc_);
+  };
+
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
@@ -61,8 +75,14 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
+  inline constexpr auto csc = functor<csc_t>;
 
-EVE_MAKE_CALLABLE(csc_, csc);
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T csc_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    {
+      return eve::rec(sin[o](a0));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/csc.hpp>

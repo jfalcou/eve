@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/constant/maxlog.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/expm1.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sinh_t : elementwise_callable<sinh_t, Options>
+  {
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(sinh_t, sinh_);
+  };
+
 //================================================================================================
 //! @addtogroup math_hyper
 //! @{
@@ -69,7 +84,54 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sinh_, sinh);
-}
+  inline constexpr auto sinh = functor<sinh_t>;
 
-#include <eve/module/math/regular/impl/sinh.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T sinh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    {
+      if constexpr( scalar_value<T> )
+      {
+        if( is_eqz(a0) ) return a0;
+      }
+      T x = eve::abs(a0);
+
+      if constexpr( scalar_value<T> )
+      {
+        T h = (a0 > T(0)) ? T(1) : T(-1);
+        if( x >= maxlog(as<T>()) )
+        {
+          T w = exp(x * half(eve::as<T>()));
+          T t = half(eve::as<T>()) * w;
+          t *= w;
+          return t * h;
+        }
+        h *= half(eve::as<T>());
+        T t    = expm1(x);
+        T inct = inc(t);
+        T u    = t / inct;
+        T s    = h * (fnma(t, u, t) + t);
+        return s;
+      }
+      else
+      {
+        auto h    = if_else(is_gtz(a0), one(eve::as<T>()), mone);
+        auto t    = expm1(x);
+        auto inct = inc(t);
+        auto u    = t / inct;
+        auto z    = fnma(t, u, t);
+        auto s    = half(eve::as<T>()) * h * (z + t);
+
+        s         = if_else(is_eqz(a0), a0, s);
+        auto test = x < maxlog(as<T>());
+        if( eve::all(test) ) return s;
+        auto w = exp(x * half(eve::as<T>()));
+        t      = half(eve::as<T>()) * w;
+        t *= w;
+
+        return if_else(test, s, t * h);
+      }
+    }
+  }
+}

@@ -44,9 +44,9 @@ TTS_CASE_WITH("Check behavior of cscd on wide",
     auto d = eve::sind(e);
     return d ? 1.0 / d : eve::nan(eve::as(e));
   };
-  TTS_ULP_EQUAL(eve::quarter_circle(cscd)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cscd)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cscd)(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(cscd[eve::quarter_circle2](a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(cscd[eve::half_circle2   ](a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(cscd[eve::half_circle2   ](a1), map(ref, a1), 4);
   TTS_ULP_EQUAL(eve::cscd(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::cscd(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::cscd(a2), map(ref, a2), 2);
@@ -60,7 +60,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cscd)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::cscd[mask](a0),

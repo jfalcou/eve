@@ -28,15 +28,13 @@ TTS_CASE_TPL("Check return types of cot", eve::test::simd::ieee_reals)
 // cot  tests
 //==================================================================================================
 auto mquarter_c = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_4(tgt); };
-auto quarter_c  = []<typename T>(eve::as<T> const &tgt) { return eve::pio_4(tgt); };
-auto mhalf_c    = []<typename T>(eve::as<T> const   &tgt) { return -eve::pio_2(tgt); };
-auto mfull_c    = []<typename T>(eve::as<T> const   &tgt) { return -eve::pi(tgt); };
-auto full_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pi(tgt); };
-auto half_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pio_2(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const      &tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt); };
+auto quarter_c  = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_4(tgt); };
+auto mhalf_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_2(tgt); };
+auto half_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_2(tgt); };
+auto mfull_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pi(tgt); };
+auto full_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pi(tgt); };
+auto mmed       = []<typename T>(eve::as<T> const& tgt) { return -eve::Rempio2_limit[eve::medium2](tgt); };
+auto med        = []<typename T>(eve::as<T> const& tgt) { return  eve::Rempio2_limit[eve::medium2](tgt); };
 
 TTS_CASE_WITH("Check behavior of cot on wide",
               eve::test::simd::ieee_reals,
@@ -52,12 +50,13 @@ TTS_CASE_WITH("Check behavior of cot on wide",
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1 / std::tan(double(e)); };
-  TTS_ULP_EQUAL(eve::quarter_circle(cot)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cot)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(cot)(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::full_circle(cot)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::full_circle(cot)(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(eve::full_circle(cot)(a2), map(ref, a2), 2);
+  TTS_ULP_EQUAL(cot[eve::quarter_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(cot[eve::half_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(cot[eve::half_circle](a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(cot[eve::full_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(cot[eve::full_circle](a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(cot[eve::full_circle](a2), map(ref, a2), 2);
+
   TTS_ULP_EQUAL(cot(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cot(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(cot(a2), map(ref, a2), 2);
@@ -76,7 +75,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::cot)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::cot[mask](a0),

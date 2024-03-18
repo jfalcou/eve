@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check return types of secpi", eve::test::simd::ieee_reals)
 // secpi  tests
 //==================================================================================================
 auto mmed = []<typename T>(eve::as<T> const& tgt)
-{ return -eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
+{ return -eve::Rempio2_limit[eve::medium2](tgt) * eve::inv_pi(tgt); };
 auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::detail::Rempio2_limit(eve::detail::medium_type(), tgt) * eve::inv_pi(tgt); };
+{ return eve::Rempio2_limit[eve::medium2](tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of secpi on wide",
               eve::test::simd::ieee_reals,
@@ -51,9 +51,9 @@ TTS_CASE_WITH("Check behavior of secpi on wide",
     auto c =eve::cospi(e);
     return c ? eve::rec(c) : eve::nan(eve::as(e));
   };
-  TTS_ULP_EQUAL(eve::quarter_circle(secpi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(secpi)(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(eve::half_circle(secpi)(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(secpi[eve::quarter_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(secpi[eve::half_circle   ](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(secpi[eve::half_circle   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(secpi(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(secpi(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(secpi(a2), map(ref, a2), 2);
