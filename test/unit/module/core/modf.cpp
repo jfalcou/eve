@@ -10,18 +10,18 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of modf", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of modf", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::modf(T())  , (eve::wide<kumi::tuple<v_t, v_t>>));
+  TTS_EXPR_IS(eve::modf(T())  , (eve::wide<kumi::tuple<v_t, v_t>, typename T::cardinal_type>));
   TTS_EXPR_IS(eve::modf(v_t()), (kumi::tuple<v_t, v_t>)           );
 };
 
 //==================================================================================================
 //== modf  tests
 //==================================================================================================
-TTS_CASE_TPL("Check behavior of modf on all types full range", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of modf on real types full range", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   {
@@ -29,23 +29,64 @@ TTS_CASE_TPL("Check behavior of modf on all types full range", eve::test::simd::
     TTS_EQUAL(p0, T(0.5));
     TTS_EQUAL(p1, T(1));
   }
-
-  if constexpr( eve::signed_value<T> )
   {
     auto [p0, p1] = eve::modf(T(-1.6));
     TTS_ULP_EQUAL(p0, T(-0.6), 0.5);
     TTS_EQUAL(p1, T(-1));
   }
   {
+    auto [p0, p1] = eve::modf(eve::inf(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p0, eve::nan(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p1, eve::inf(eve::as<T>{}));
+  }
+  {
+    auto [p0, p1] = eve::modf(eve::nan(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p0, eve::nan(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p1, eve::nan(eve::as<T>{}));
+  }
+  {
     auto [p0, p1] = eve::modf[eve::pedantic](T(1.5));
     TTS_EQUAL(p0, T(0.5));
     TTS_EQUAL(p1, T(1));
   }
-
-  if constexpr( eve::signed_value<T> )
   {
     auto [p0, p1] = eve::modf[eve::pedantic](T(-1.6));
     TTS_ULP_EQUAL(p0, T(-0.6), 0.5);
     TTS_EQUAL(p1, T(-1));
+  }
+  {
+    auto [p0, p1] = eve::modf[eve::pedantic](eve::inf(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p0, eve::zero(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p1, eve::inf(eve::as<T>{}));
+  }
+};
+
+TTS_CASE_TPL("Check behavior of modf on integer types full range", eve::test::simd::integers)
+<typename T>(tts::type<T>)
+{
+  {
+    auto [p0, p1] = eve::modf(T(15));
+    TTS_EQUAL(p0, T(0));
+    TTS_EQUAL(p1, T(15));
+  }
+
+  if constexpr(eve::signed_value<T>)
+  {
+    auto [p0, p1] = eve::modf(T(-16));
+    TTS_EQUAL(p0, T(0));
+    TTS_EQUAL(p1, T(-16));
+  }
+
+  {
+    auto [p0, p1] = eve::modf[eve::pedantic](T(15));
+    TTS_EQUAL(p0, T(0));
+    TTS_EQUAL(p1, T(15));
+  }
+
+  if constexpr(eve::signed_value<T>)
+  {
+    auto [p0, p1] = eve::modf[eve::pedantic](T(-16));
+    TTS_EQUAL(p0, T(0));
+    TTS_EQUAL(p1, T(-16));
   }
 };
