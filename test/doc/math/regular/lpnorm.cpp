@@ -18,22 +18,22 @@ int main()
               << "<- y                            = " << y  << '\n'
               << "<- z                            = " << z  << '\n'
               << "-> lpnorm(p, x, y, z)           = " << eve::lpnorm(p, x, y, z) << '\n'
-              << "-> pedantic(lpnorm)(p, x, y, z) = " << eve::pedantic(eve::lpnorm)(p, x, y, z) << '\n'
-              
-              
+              << "-> lpnorm[pedantic](p, x, y, z) = " << eve::lpnorm[eve::pedantic](p, x, y, z) << '\n'
+
+
               ;
 
   double        xf = 10.0;
   double        yf = 1.0;
   double        zf = 111.0;
-  double        pf = 2.0; //eve::inf(eve::as(xf));
+  double        pf = 2.0;
 
   std::cout << "---- scalar" << '\n'
             << "<- pf                               = " << pf << '\n'
             << "<- xf                               = " << xf << '\n'
             << "<- yf                               = " << yf << '\n'
             << "<- zf                               = " << zf << '\n'
-            << "-> lpnorm(p, xf, yf, zf)            = " << eve::lpnorm(pf, xf, yf, zf) << '\n'
-            << "-> pedantic(lpnorm)(p, xf, yf, zf)  = " << eve::pedantic(eve::lpnorm)(pf, xf, yf, zf) << '\n';
+            << "-> lpnorm(pf, xf, yf, zf)           = " << eve::lpnorm(pf, xf, yf, zf) << '\n'
+            << "-> lpnorm[pedantic](pf, xf, yf, zf) = " << eve::lpnorm[eve::pedantic](pf, xf, yf, zf) << '\n';
   return 0;
 }

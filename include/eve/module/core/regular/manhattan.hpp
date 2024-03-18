@@ -7,10 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct manhattan_t : tuple_callable<manhattan_t, Options, pedantic_option, saturated_option>
+  {
+    template<eve::value T0, eve::value T1, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept  requires(kumi::size_v<Tup> >= 2)  { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(manhattan_t, manhattan_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -69,7 +91,23 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/manhattan.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(manhattan_, manhattan);
-}
+  inline constexpr auto manhattan = functor<manhattan_t>;
 
-#include <eve/module/core/regular/impl/manhattan.hpp>
+  namespace detail
+  {
+    template<typename T0,typename T1, typename... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+    manhattan_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
+    {
+      using r_t = common_value_t<T0, T1, Ts...>;
+      auto r = eve::add/*TODO[o]*/(abs(r_t(a0)), abs(r_t(a1)), abs(r_t(args))...);
+      if constexpr(O::contains(pedantic2))
+      {
+        auto inf_found = is_infinite(a0) || is_infinite(a1) || (... || is_infinite(args));
+        return if_else(inf_found, inf(as(r)), r);
+      }
+      else
+        return r;
+    }
+  }
+}
