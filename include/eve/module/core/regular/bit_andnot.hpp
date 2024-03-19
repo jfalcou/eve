@@ -7,11 +7,31 @@
 //==================================================================================================
 #pragma once
 
+
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_andnot_t : tuple_callable<bit_andnot_t, Options, numeric_option, pedantic_option, saturated_option>
+  {
+    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T0, common_value_t<T0, T1, Ts...>>
+    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> &&...)
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    as_wide_as_t<kumi::member_t<0, Tup>, kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(bit_andnot_t, bit_andnot_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -63,7 +83,8 @@ namespace eve
 //!        @godbolt{doc/core/masked/bit_andnot.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_andnot_, bit_andnot);
+inline constexpr auto bit_andnot = functor<bit_andnot_t>;
+
 }
 
 #include <eve/module/core/regular/impl/bit_andnot.hpp>
