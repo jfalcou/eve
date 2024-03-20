@@ -52,29 +52,29 @@ namespace eve::detail
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-//   template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
-//   EVE_FORCEINLINE wide<T, N>  average_(EVE_REQUIRES(sse2_),
-//                                        C          const &cx,
-//                                        O          const &opts,
-//                                        wide<T, N> const &v,
-//                                        wide<T, N> const &w) noexcept
-//   requires x86_abi<abi_t<T, N>>
-//   {
-//     if constexpr( O::contains(upward2))
-//       return average_(EVE_TARGETS(cpu_), cx, opts, v, w);
-//     else
-//     {
-//       constexpr auto c = categorize<wide<T, N>>();
-//       auto src = alternative(cx, v, as<wide<T, N>> {});
-//       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+  template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N>  average_(EVE_REQUIRES(avx512_),
+                                       C          const &cx,
+                                       O          const &opts,
+                                       wide<T, N> const &v,
+                                       wide<T, N> const &w) noexcept
+  requires x86_abi<abi_t<T, N>>
+  {
+    if constexpr( O::contains(upward2))
+      return average_(EVE_TARGETS(cpu_), cx, opts, v, w);
+    else
+    {
+      constexpr auto c = categorize<wide<T, N>>();
+      auto src = alternative(cx, v, as<wide<T, N>> {});
+      auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-//       if constexpr( c == category::uint16x32 ) return _mm512_mask_avg_epu16(src, m, v, w);
-//       else if constexpr( c == category::uint16x16 ) return _mm256_mask_avg_epu16(src, m, v, w);
-//       else if constexpr( c == category::uint16x8 ) return _mm_mask_avg_epu16(src, m, v, w);
-//       else if constexpr( c == category::uint8x64 ) return _mm512_mask_avg_epu8(src, m, v, w);
-//       else if constexpr( c == category::uint8x32 ) return _mm256_mask_avg_epu8(src, m, v, w);
-//       else if constexpr( c == category::uint8x16 ) return _mm_mask_avg_epu8(src, m, v, w);
-//       else if constexpr( match(c, category::uint_) ) return if_else(cx, eve::average[opts](v, w), src);
-//     }
-//   }
+      if constexpr( c == category::uint16x32 ) return _mm512_mask_avg_epu16(src, m, v, w);
+      else if constexpr( c == category::uint16x16 ) return _mm256_mask_avg_epu16(src, m, v, w);
+      else if constexpr( c == category::uint16x8 ) return _mm_mask_avg_epu16(src, m, v, w);
+      else if constexpr( c == category::uint8x64 ) return _mm512_mask_avg_epu8(src, m, v, w);
+      else if constexpr( c == category::uint8x32 ) return _mm256_mask_avg_epu8(src, m, v, w);
+      else if constexpr( c == category::uint8x16 ) return _mm_mask_avg_epu8(src, m, v, w);
+      else if constexpr( match(c, category::uint_) ) return if_else(cx, eve::average[opts](v, w), src);
+    }
+  }
 }
