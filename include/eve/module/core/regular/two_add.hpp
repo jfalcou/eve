@@ -21,7 +21,7 @@ struct two_add_t : elementwise_callable<two_add_t, Options>
 {
   template<eve::floating_value T, eve::floating_value U>
   constexpr EVE_FORCEINLINE
-  eve::result_t<zip,common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
+  zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
   {
     return EVE_DISPATCH_CALL(a,b);
   }

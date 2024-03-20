@@ -22,7 +22,7 @@ struct lohi_t : elementwise_callable<lohi_t, Options>
   struct result
   {
     using base = as_wide_as_t<detail::downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
-    using type = eve::result_t<zip, base, base>;
+    using type = zipped<base, base>;
   };
 
   template<eve::value T>

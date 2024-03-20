@@ -24,7 +24,7 @@ namespace eve
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE
-    eve::result_t<zip,T,T,T> operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
+    zipped<T,T,T> operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(rempio2_t, rempio2_);
   };
@@ -48,7 +48,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<eve::as_integer<T>, T, T> rempio2(T x) noexcept;
+//!      zipped<T,T,T> rempio2(T x) noexcept;
 //!   }
 //!   @endcode
 //!

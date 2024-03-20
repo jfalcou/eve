@@ -10,14 +10,15 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/zip.hpp>
+
 namespace eve
 {
 template<typename Options>
 struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_option>
 {
   template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE eve::result_t<zip,T,eve::as_integer_t<T>>
-  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+  constexpr EVE_FORCEINLINE zipped<T,eve::as_integer_t<T>> operator()(T v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(ifrexp_t, ifrexp_);
 };
@@ -41,7 +42,7 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, eve::as_integer_t<T>> ifrexp(T x) noexcept;
+//!      eve::zipped<T,eve::as_integer_t<T>> ifrexp(T x) noexcept;
 //!   }
 //!   @endcode
 //!

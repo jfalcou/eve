@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -17,7 +18,7 @@ namespace eve
   struct airy_t : elementwise_callable<airy_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr eve::result_t<zip,T,T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    EVE_FORCEINLINE constexpr zipped<T,T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(airy_t, airy_);
   };
@@ -43,7 +44,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_ordered_value T >
-//!      kumi::tuple<T, T> airy(T x) noexcept;
+//!      eve::zipped<T,T> airy(T x) noexcept;
 //!   }
 //!   @endcode
 //!

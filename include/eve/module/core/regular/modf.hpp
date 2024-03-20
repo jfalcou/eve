@@ -22,7 +22,7 @@ namespace eve
   struct modf_t : elementwise_callable<modf_t, Options, pedantic_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr eve::result_t<zip,T,T> operator()(T a) const noexcept
+    EVE_FORCEINLINE constexpr zipped<T,T> operator()(T a) const noexcept
     {
       return EVE_DISPATCH_CALL(a);
     }
@@ -49,7 +49,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      kumi::tuple<T, T> modf(T x) noexcept;
+//!      zipped<T,T> modf(T x) noexcept;
 //!   }
 //!   @endcode
 //!

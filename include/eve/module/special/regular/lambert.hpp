@@ -19,7 +19,7 @@ namespace eve
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
-    eve::result_t<zip, T, T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    zipped<T,T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(lambert_t, lambert_);
   };
@@ -42,7 +42,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      eve::result_t<zip, T, T> lambert(T x) noexcept;
+//!      zipped<T,T> lambert(T x) noexcept;
 //!   }
 //!   @endcode
 //!

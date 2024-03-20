@@ -29,7 +29,7 @@ namespace eve
                                           >
   {
     template<eve::floating_ordered_value T>
-    constexpr EVE_FORCEINLINE eve::result_t<zip,T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sindcosd_t, sindcosd_);
   };
@@ -54,7 +54,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, T> sindcosd(T x) noexcept;
+//!      zipped<T,T> sindcosd(T x) noexcept;
 //!   }
 //!   @endcode
 //!

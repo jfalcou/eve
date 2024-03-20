@@ -28,7 +28,7 @@ namespace eve
                                           >
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE eve::result_t<zip,T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sinhcosh_t, sinhcosh_);
   };
@@ -53,7 +53,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, T> sinhcosh(T x) noexcept;
+//!      zipped<T,T> sinhcosh(T x) noexcept;
 //!   }
 //!   @endcode
 //!

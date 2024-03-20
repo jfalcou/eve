@@ -25,7 +25,7 @@ namespace eve
   {
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr
-    eve::result_t<zip,common_value_t<T0,T1,Ts...>,common_value_t<T0,T1,Ts...>>
+    zipped<common_value_t<T0,T1,Ts...>,common_value_t<T0,T1,Ts...>>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0,  t1, ts...);

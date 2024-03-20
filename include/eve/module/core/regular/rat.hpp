@@ -29,11 +29,11 @@ template<typename Options>
 struct rat_t : elementwise_callable<rat_t, Options>
 {
   template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE eve::result_t<zip,T,T>
+  constexpr EVE_FORCEINLINE zipped<T,T>
   operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
   template<eve::floating_value T, eve::floating_value U>
-  constexpr EVE_FORCEINLINE eve::result_t<zip,common_value_t<T,U>,common_value_t<T,U>>
+  constexpr EVE_FORCEINLINE zipped<common_value_t<T,U>,common_value_t<T,U>>
   operator()(T v, U t) const  { return EVE_DISPATCH_CALL(v, t); }
 
   EVE_CALLABLE_OBJECT(rat_t, rat_);
@@ -57,7 +57,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!   namespace eve
 //!   {
 //!      template<eve::floating_value T>
-//!      eve::result_t<zip, T, T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
+//!      eve::zipped<T,T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
 //!   }
 //!   @endcode
 //!
