@@ -10,6 +10,10 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf            = " << pf << '\n'
-            << "-> eve::inc[pf < 5.0f](pf)  = " << eve::inc[pf < 5.0f](pf) << '\n';
+            << "-> eve::inc[pf < 5.0f][pf > 5.0f](pf)   = " << eve::inc[pf < 5.0f][pf > 5.0f](pf) << '\n'
+            << "-> eve::inc[pf > 5.0f][pf < 5.0f](pf)   = " << eve::inc[pf < 5.0f][pf > 5.0f](pf) << '\n'
+            << "-> eve::inc[pf > 5.0f]           (pf)   = " << eve::inc           [pf > 5.0f](pf) << '\n'
+            << "-> eve::inc[pf < 5.0f]            (pf)  = " << eve::inc[pf < 5.0f]            (pf) << '\n'
+    ;
   return 0;
 }
