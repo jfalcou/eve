@@ -6,7 +6,7 @@
 
 int main()
 {
-  using w_t = eve::wide<double, eve::fixed<4>>;
+  using w_t = eve::wide<float, eve::fixed<4>>;
   w_t pi = {3, 2, 3, -3}, qi = {4, 2, 1, -100};
 
   std::cout << "---- simd" << '\n'

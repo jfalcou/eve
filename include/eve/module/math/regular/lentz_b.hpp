@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct lentz_b_t : elementwise_callable<lentz_b_t, Options>
+  {
+    template<typename G, eve::floating_scalar_value T>
+    constexpr EVE_FORCEINLINE auto operator()(G g, T eps, size_t m) const
+    { return EVE_DISPATCH_CALL(g, eps, m); }
+
+    EVE_CALLABLE_OBJECT(lentz_b_t, lentz_b_);
+  };
+
 //================================================================================================
 //! @addtogroup contfrac
 //! @{
@@ -66,7 +79,8 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(lentz_b_, lentz_b);
+inline constexpr auto lentz_b = functor<lentz_b_t>;
+
 }
 
 #include <eve/module/math/regular/impl/lentz.hpp>

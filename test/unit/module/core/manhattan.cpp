@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+  <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::abs;
   using eve::manhattan;
@@ -44,9 +44,9 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return abs(a) + abs(b) + abs(c); };
   TTS_ULP_EQUAL(manhattan((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(manhattan)((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(manhattan[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
   TTS_ULP_EQUAL(manhattan(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::pedantic(manhattan)(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(manhattan[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
 };
 
 
@@ -56,10 +56,12 @@ TTS_CASE_WITH("Check behavior of manhattan on all types full range",
 TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+  <typename T, typename M>(T const& a0,
+                           T const& a1,
+                           M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::manhattan[mask](a0),
-            eve::if_else(mask, eve::manhattan(a0), a0));
+  TTS_IEEE_EQUAL(eve::manhattan[mask](a0, a1),
+                 eve::if_else(mask, eve::manhattan(a0, a1), a0));
 };

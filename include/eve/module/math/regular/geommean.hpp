@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option>
+  {
+    template<eve::value T0, eve::value T1, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept  requires(kumi::size_v<Tup> >= 2)  { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(geommean_t, geommean_);
+  };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -31,7 +52,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<fvalue T, value ... Ts>
+//!      template<floating_value T, floating_value ... Ts>
 //!      auto geommean( T x, Ts ... args ) const noexcept
 //!   }
 //!   @endcode
@@ -63,8 +84,58 @@ namespace eve
 //!        @godbolt{doc/math/masked/geommean.cpp}
 //!  @}
 //================================================================================================
+ inline constexpr auto geommean = functor<geommean_t>;
 
-EVE_MAKE_CALLABLE(geommean_, geommean);
+  namespace detail
+  {
+    template<typename T0,typename T1, typename... Ts, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
+    geommean_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... args) noexcept
+    {
+
+      using r_t   = common_value_t<T0, T1, Ts...>;
+      using elt_t = element_type_t<r_t>;
+      constexpr std::uint64_t sz = sizeof...(Ts);
+      if constexpr(sz == 0)
+      {
+        auto a = r_t(a0);
+        auto b = r_t(a1);
+        if (O::contains(pedantic2))
+        {
+          auto m  = max(a, b);
+          auto im = if_else(is_nez(m), rec(m), m);
+          auto z  = min(a, b) * im;
+          return if_else(is_nltz(a) || is_nltz(b), sqrt(z) * m, allbits);
+        }
+        else
+        {
+          return if_else(is_nltz(sign(a)*sign(b)), sqrt(abs(a))*sqrt(abs(b)), allbits);
+        }
+      }
+      else
+      {
+        elt_t invn  = rec(elt_t(sizeof...(args) + 2u));
+        if (O::contains(pedantic2))
+        { //perhaps this is always more efficient TODO bench it
+          auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
+          auto p  = mul( r_t(ldexp[o](a0, e)), r_t(ldexp[o](a1, e)), r_t(ldexp[o](args, e))...);
+          auto sgn = sign(p);
+          p = pow_abs(p, invn);
+          p = ldexp[pedantic](p, -e);
+          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * p);
+        }
+        else
+        {
+          r_t   that(pow_abs(r_t(a0), invn) * pow_abs(r_t(a1), invn));
+          r_t   sgn  = sign(r_t(a0)) * sign(r_t(a1));
+          auto  next = [&](auto avg, auto x){
+            sgn *= sign(x);
+            return avg * pow_abs(r_t(x), invn);
+          };
+          ((that = next(that, args)), ...);
+          return if_else(eve::is_even(sz) && is_ltz(sgn), eve::allbits, sgn * that);
+        }
+      }
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/geommean.hpp>
