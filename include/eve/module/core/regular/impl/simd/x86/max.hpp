@@ -9,7 +9,6 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
@@ -112,7 +111,7 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  max_(EVE_SUPPORTS(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
+  max_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))

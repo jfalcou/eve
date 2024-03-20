@@ -35,7 +35,7 @@ namespace eve::detail
       else if constexpr( cat == category::float64x2 ) return _mm_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x4 ) return _mm256_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x8 ) return _mm512_range_pd(v0, v1, ctrl);
-      else return absmin_(EVE_RETARGET(cpu_), v0, v1);
+      else return absmin_(EVE_TARGETS(cpu_), opts, v0, v1);
     }
   }
 
