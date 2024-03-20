@@ -6,12 +6,31 @@
 */
 //==================================================================================================
 #pragma once
+#pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct average_t : elementwise_callable<average_t, Options, raw_option, upward_option, downward_option>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    template<eve::floating_value T0, floating_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+    operator()(T0 t0, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, ts...);
+    }
+
+    EVE_CALLABLE_OBJECT(average_t, average_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -53,8 +72,7 @@ namespace eve
 //!     * For more than two parameters only floating entries are allowed. No overflow occurs.
 //!
 //!     * If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the
-//!     result
-//!       is a rounded value at a distance guaranteed
+//!       result is a rounded value at a distance guaranteed
 //!       to be less than or equal to 0.5 of the average floating value, but may differ
 //!       by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
 //!       simd intrinsics to perform the operation, the scalar results may differ by one unit from
@@ -88,7 +106,8 @@ namespace eve
 //!        @godbolt{doc/core/raw/average.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(average_, average);
+  inline constexpr auto average = functor<average_t>;
+
 }
 
 #include <eve/module/core/regular/impl/average.hpp>
@@ -97,10 +116,10 @@ EVE_MAKE_CALLABLE(average_, average);
 #  include <eve/module/core/regular/impl/simd/x86/average.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/average.hpp>
-#endif
+// #if defined(EVE_INCLUDE_POWERPC_HEADER)
+// #  include <eve/module/core/regular/impl/simd/ppc/average.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/average.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/neon/average.hpp>
+// #endif
