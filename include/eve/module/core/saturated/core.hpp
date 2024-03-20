@@ -10,10 +10,8 @@
 
 #include <eve/module/core/saturated/add.hpp>
 #include <eve/module/core/saturated/convert.hpp>
-#include <eve/module/core/saturated/dec.hpp>
 #include <eve/module/core/saturated/dist.hpp>
 #include <eve/module/core/saturated/div.hpp>
-#include <eve/module/core/saturated/inc.hpp>
 #include <eve/module/core/saturated/minus.hpp>
 #include <eve/module/core/saturated/mul.hpp>
 #include <eve/module/core/saturated/oneminus.hpp>
