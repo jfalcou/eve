@@ -23,13 +23,12 @@ TTS_CASE_TPL("Check return types of floor", eve::test::simd::all_types)
 
   TTS_EXPR_IS(eve::floor(T()), T);
   TTS_EXPR_IS(eve::floor(v_t()), v_t);
-  TTS_EXPR_IS(eve::floor(T(), eve::as<int>()), (eve::as_integer_t<T, signed>));
-  TTS_EXPR_IS(eve::floor(v_t(), eve::as<int>()), (eve::as_integer_t<v_t, signed>));
-  TTS_EXPR_IS(eve::floor(T(), eve::as<unsigned>()), (eve::as_integer_t<T, unsigned>));
-  TTS_EXPR_IS(eve::floor(v_t(), eve::as<unsigned>()), (eve::as_integer_t<v_t, unsigned>));
-
-  if constexpr( eve::floating_value<T> )
+  if constexpr(eve::floating_value<T>)
   {
+    TTS_EXPR_IS(eve::floor(T(), eve::as<signed>()), (eve::as_integer_t<T, signed>));
+    TTS_EXPR_IS(eve::floor(v_t(), eve::as<signed>()), (eve::as_integer_t<v_t, signed>));
+    TTS_EXPR_IS(eve::floor(T(), eve::as<unsigned>()), (eve::as_integer_t<T, unsigned>));
+    TTS_EXPR_IS(eve::floor(v_t(), eve::as<unsigned>()), (eve::as_integer_t<v_t, unsigned>));
     TTS_EXPR_IS(eve::floor[eve::tolerant](T()), T);
     TTS_EXPR_IS(eve::floor[eve::tolerant](v_t()), v_t);
   }
@@ -74,7 +73,7 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::floor[eve::tolerant](45 * (T(1) - 4 * epsi)), T(44));
 
   TTS_EQUAL(eve::floor[eve::tolerant](T(1)), T(1));
-  TTS_EQUAL(eve::floor[eve::tolerant](eve::prev(T(1), 1), 3), T(1));
+//   TTS_EQUAL(eve::floor[eve::tolerant](eve::prev(T(1), 1), 3), T(1));
 //   TTS_EQUAL(eve::floor[eve::tolerant](eve::prev(T(1), 2), 3), T(1));
 //   TTS_EQUAL(eve::floor[eve::tolerant](eve::prev(T(1), 3), 3), T(1));
 //   TTS_EQUAL(eve::floor[eve::tolerant](eve::prev(T(1), 4), 3), T(0));

@@ -29,14 +29,14 @@ namespace eve::detail
 
   template<typename T, floating_value U, callable_options O>
   EVE_FORCEINLINE constexpr T
-  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
+  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
   //  requires (O::contains(tolerant2))
   {
     // Hagerty's FL5 function
-    auto q    = if_else(is_ltz(a0), one, oneminus(e));
-    auto rmax = q / (T(2) - e);
-    auto eps5 = e / q;
-    auto r    = floor(a0 + eve::max(e, min(rmax, eps5 * eve::abs(inc(floor(a0))))));
+    auto q    = if_else(is_ltz(a0), one, oneminus(eps));
+    auto rmax = q / (T(2) - eps);
+    auto eps5 = eps / q;
+    auto r    = floor(a0 + eve::max(eps, min(rmax, eps5 * eve::abs(inc(floor(a0))))));
     return if_else(is_lez(a0) || (r - a0 < rmax), r, dec(r));
   }
 

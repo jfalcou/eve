@@ -11,16 +11,34 @@
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/prev.hpp>
 
 namespace eve::detail
 {
+
+  template<typename T, floating_value U, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
+  //  requires (O::contains(tolerant2))
+  {
+    return -floor[tolerant2](-a0, eps);
+  }
+
+  template<typename T, integral_value U, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
+  //  requires (O::contains(tolerant2))
+  {
+    return ceil(prev(a0, e));
+  }
+
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
     if constexpr(O::contains(tolerant2))
     {
-      return ceil[tolerant2](a0, 3*eps(as(a0)));
+      return -floor[tolerant2](-a0, 3*eps(as(a0)));
     }
     else
     {
@@ -40,15 +58,6 @@ namespace eve::detail
       return int_(z);
     else
       return z;
-  }
-
-  template<typename T, scalar_value U, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
-  requires (O::contains(tolerant2))
-  {
-    return -floor[tolerant2](-a0, eps);
-
   }
 
 }

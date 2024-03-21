@@ -32,7 +32,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T operator()(T v, U u) const  noexcept
     { return EVE_DISPATCH_CALL(v, u); }
 
-    template<eve::floating_value T, integral_scalar_value U>
+    template<eve::floating_value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
     { return EVE_DISPATCH_CALL(v, target); }
 
