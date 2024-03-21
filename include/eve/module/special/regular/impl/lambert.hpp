@@ -13,10 +13,8 @@
 
 namespace eve::detail
 {
-
   template<typename T>
-  EVE_FORCEINLINE constexpr auto
-  lambert_serie_utility(T r)
+  EVE_FORCEINLINE constexpr auto lambert_serie_utility(T r)
   {
     using elt_t = element_type_t<T>;
     using A3 = kumi::result::generate_t<3, elt_t>;
@@ -36,9 +34,7 @@ namespace eve::detail
     }
     else
     {
-      return fam(mone(as(r))
-                , r
-                , eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
+      return fam(mone(as(r)), r, eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
     }
   }
 
@@ -47,62 +43,66 @@ namespace eve::detail
   lambert_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     auto halley = [](auto x, auto w_i, auto max_iters)
-      {
-        auto w = w_i;
-        for( int i = 0; i < max_iters; i++ )
-        {
-          T e = eve::exp(w);
-          T p = inc(w);
-          T t = fms(w, e, x);
-          t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
-          w -= t;
-          T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec(eve::abs(p) * e));
-          if( eve::all(eve::abs(t) < tol) ) break;
-        }
-        return w;
-      };
-
-    if constexpr( has_native_abi_v<T> )
     {
-      T    q              = x + T(0.367879441171442);
-      auto lambert0_small = [](auto q) { // branch 0 q <= 1.0e-3
-        return lambert_serie_utility(eve::sqrt(q));
-      };
-      auto lambert0_other = [&halley](auto x, auto q) { // branch 0 q <= 1.0e'3
-        auto p  = eve::sqrt(T(5.436563656918090) * q);
-        auto w1 = dec(p * (inc(p * fam(T(-1.0 / 3), p, T(1.0 / 72)))));
-        auto w2 = log(x);
-        w2 -= if_else(x > 3, zero, log(w2));
-        auto init = if_else(x < one(as(x)), w1, w2);
-        return halley(x, init, 10);
-      };
-      auto lambert1 = [&halley](auto x, auto q, auto positivex) { // branch 1 q > 0
-        T    r    = -eve::sqrt(q);
-        auto test = (x < T(-1.0e-6));
-        T    w1(0);
-        if( eve::any(test) ) w1 = lambert_serie_utility(r);
-        if( eve::all(test) && eve::all(q < T(3.0e-3)) ) return w1;
-        T l1 = log(-x);
-        T l2 = log(-l1);
-        T w2 = l1 - l2 + l2 / l1;
-        return if_else(is_eqz(x) && !positivex, minf(as(x)), halley(x, w2, 30));
-      };
-
-      auto r       = nan(as<T>());                // nan case treated here
-      r            = if_else(is_eqz(x), zero, r); // zero case treated here
-      r            = if_else(x == inf(as(x)), x, r);
-      auto notdone = is_nlez(q) && (q != inf(as(x)));
-      if( eve::any(notdone) )
+      auto w = w_i;
+      for( int i = 0; i < max_iters; i++ )
       {
-        notdone = next_interval(lambert0_small, notdone, q < T(1.0e-3), r, q);
-        if( eve::any(notdone) ) { notdone = last_interval(lambert0_other, q >= T(1.0e-3), r, x, q); }
+        T e = eve::exp(w);
+        T p = inc(w);
+        T t = fms(w, e, x);
+        t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
+        w -= t;
+        T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec(eve::abs(p) * e));
+        if( eve::all(eve::abs(t) < tol) ) break;
       }
-      auto positivex = is_positive(x);
-      if( eve::all(positivex) ) return kumi::make_tuple(r, r);
-      auto r1 = if_else(positivex, r, lambert1(x, q, positivex));
-      return kumi::make_tuple(r, r1);
-    }
-    else return apply_over2(lambert, x);
-  }
+      return w;
+    };
 
+    T q = x + T(0.367879441171442);
+
+    // branch 0 q <= 1.0e-3
+    auto lambert0_small = [](auto q) { return lambert_serie_utility(eve::sqrt(q)); };
+
+    // branch 0 q <= 1.0e'3
+    auto lambert0_other = [&halley](auto x, auto q)
+    {
+      auto p  = eve::sqrt(T(5.436563656918090) * q);
+      auto w1 = dec(p * (inc(p * fam(T(-1.0 / 3), p, T(1.0 / 72)))));
+      auto w2 = log(x);
+      w2 -= if_else(x > 3, zero, log(w2));
+      auto init = if_else(x < one(as(x)), w1, w2);
+      return halley(x, init, 10);
+    };
+
+    // branch 1 q > 0
+    auto lambert1 = [&halley](auto x, auto q, auto positivex)
+    {
+      T    r    = -eve::sqrt(q);
+      auto test = (x < T(-1.0e-6));
+      T    w1(0);
+      if( eve::any(test) ) w1 = lambert_serie_utility(r);
+      if( eve::all(test) && eve::all(q < T(3.0e-3)) ) return w1;
+      T l1 = log(-x);
+      T l2 = log(-l1);
+      T w2 = l1 - l2 + l2 / l1;
+      return if_else(is_eqz(x) && !positivex, minf(as(x)), halley(x, w2, 30));
+    };
+
+    auto r       = nan(as<T>());                // nan case treated here
+    r            = if_else(is_eqz(x), zero, r); // zero case treated here
+    r            = if_else(x == inf(as(x)), x, r);
+    auto notdone = is_nlez(q) && (q != inf(as(x)));
+
+    if( eve::any(notdone) )
+    {
+      notdone = next_interval(lambert0_small, notdone, q < T(1.0e-3), r, q);
+      if( eve::any(notdone) ) { notdone = last_interval(lambert0_other, q >= T(1.0e-3), r, x, q); }
+    }
+
+    auto positivex = is_positive(x);
+    if( eve::all(positivex) ) return kumi::make_tuple(r, r);
+
+    auto r1 = if_else(positivex, r, lambert1(x, q, positivex));
+    return kumi::make_tuple(r, r1);
+  }
 }

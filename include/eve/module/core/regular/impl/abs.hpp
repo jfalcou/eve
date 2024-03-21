@@ -27,28 +27,20 @@ namespace eve::detail
   {
     if constexpr(O::contains(saturated2))
     {
-      if constexpr( has_native_abi_v<T> )
-      {
-        if      constexpr( signed_integral_scalar_value<T>  )       return (   (v == valmin(eve::as(v)))
-                                                                             ? valmax(eve::as(v)) : eve::abs(v)
-                                                                           );
-        else if constexpr( signed_integral_simd_value<T>    )       return if_else ( v == valmin(eve::as(v))
-                                                                                   , valmax(eve::as(v)), eve::abs(v)
-                                                                                   );
-        else if constexpr( floating_value<T> || unsigned_value<T> ) return eve::abs(v);
-      }
-      else                                                          return apply_over(abs[saturated2], v);
+      if      constexpr( signed_integral_scalar_value<T>  ) return  ( (v == valmin(eve::as(v)))
+                                                                    ? valmax(eve::as(v)) : eve::abs(v)
+                                                                    );
+      else if constexpr( signed_integral_simd_value<T>    ) return if_else( v == valmin(eve::as(v))
+                                                                          , valmax(eve::as(v)), eve::abs(v)
+                                                                          );
+      else                                                  return eve::abs(v);
     }
     else
     {
-      if constexpr( has_native_abi_v<T> )
-      {
-        if      constexpr( floating_value<T> )                return bit_andnot(v, mzero(eve::as(v)));
-        else if constexpr( unsigned_value<T> )                return v;
-        else if constexpr( signed_integral_scalar_value<T> )  return v < T(0) ? -v : v;
-        else                                                  return eve::max(v, -v);
-      }
-      else                                                    return apply_over(eve::abs, v);
+      if      constexpr( floating_value<T> )                return bit_andnot(v, mzero(eve::as(v)));
+      else if constexpr( unsigned_value<T> )                return v;
+      else if constexpr( signed_integral_scalar_value<T> )  return v < T(0) ? -v : v;
+      else                                                  return eve::max(v, -v);
     }
   }
 }

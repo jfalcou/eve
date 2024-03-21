@@ -6,12 +6,9 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/bessel.hpp>
 
-#include <boost/math/special_functions/airy.hpp>
-
-TTS_CASE_TPL("Check return types of airy_ai", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of airy", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
