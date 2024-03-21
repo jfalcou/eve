@@ -23,13 +23,13 @@ TTS_CASE_TPL("Check return types of ceil", eve::test::simd::all_types)
 
   TTS_EXPR_IS(eve::ceil(T()), T);
   TTS_EXPR_IS(eve::ceil(v_t()), v_t);
-  TTS_EXPR_IS(eve::ceil(T(), eve::as<int>()), eve::as_integer_t<T>);
-  TTS_EXPR_IS(eve::ceil(v_t(), eve::as<int>()), eve::as_integer_t<v_t>);
-  TTS_EXPR_IS(eve::ceil(T(), eve::as<uint>()), (eve::as_integer_t<T, unsigned>));
-  TTS_EXPR_IS(eve::ceil(v_t(), eve::as<uint>()), (eve::as_integer_t<v_t, unsigned>));
 
   if constexpr( eve::floating_value<T> )
   {
+    TTS_EXPR_IS(eve::ceil(T(), eve::as<int>()), eve::as_integer_t<T>);
+    TTS_EXPR_IS(eve::ceil(v_t(), eve::as<int>()), eve::as_integer_t<v_t>);
+    TTS_EXPR_IS(eve::ceil(T(), eve::as<uint>()), (eve::as_integer_t<T, unsigned>));
+    TTS_EXPR_IS(eve::ceil(v_t(), eve::as<uint>()), (eve::as_integer_t<v_t, unsigned>));
     TTS_EXPR_IS(eve::ceil[eve::tolerant](T()), T);
     TTS_EXPR_IS(eve::ceil[eve::tolerant](v_t()), v_t);
   }
@@ -94,7 +94,7 @@ TTS_CASE_WITH("Check behavior of ceil(wide))",
 
     TTS_EQUAL(eve::ceil(a0, eve::as<int>()),
               wi_t([&](auto i, auto) { return i_t(std::ceil(a0.get(i))); }));
-    TTS_EQUAL(eve::ceil)(eve::abs(a0), eve::as<uint>()),
+    TTS_EQUAL(eve::ceil(eve::abs(a0), eve::as<uint>()),
               uwi_t([&](auto i, auto) { return ui_t(std::ceil(std::abs(a0.get(i)))); }));
   }
   else { TTS_EQUAL(eve::ceil(a0), a0); }

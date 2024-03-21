@@ -22,7 +22,7 @@ namespace eve
   struct dist_t : elementwise_callable<dist_t, Options, saturated_option,  pedantic_option>
   {
     template<value T,  value U>
-    EVE_FORCEINLINE constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const noexcept
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(dist_t, dist_);

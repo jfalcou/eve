@@ -16,7 +16,11 @@ namespace eve
   template<typename Options>
   struct ceil_t : elementwise_callable<ceil_t, Options, tolerant_option>
   {
-    template<eve::value T>
+    template<eve::integral_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return v; }
+
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
@@ -24,8 +28,8 @@ namespace eve
     constexpr EVE_FORCEINLINE as_integer_t<T, U> operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::value T, integral_scalar_value U>
-    constexpr EVE_FORCEINLINE T operator()(T v,  as<U> const & target) const  noexcept
+    template<eve::value T,  only_if<signed,unsigned> U>
+    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
     { return EVE_DISPATCH_CALL(v, target); }
 
     EVE_CALLABLE_OBJECT(ceil_t, ceil_);
