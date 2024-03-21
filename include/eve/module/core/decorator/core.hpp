@@ -54,7 +54,6 @@ namespace eve
   struct spherical_mode   {};
   struct successor_mode   {};
   struct to_nearest_mode  {};
-  struct tolerant_mode    {};
   struct toward_zero_mode {};
   struct upward_mode      {};
 
@@ -79,7 +78,6 @@ namespace eve
   [[maybe_unused]] inline constexpr auto spherical2   = ::rbr::flag( spherical_mode{}   );
   [[maybe_unused]] inline constexpr auto successor2   = ::rbr::flag( successor_mode{}   );
   [[maybe_unused]] inline constexpr auto to_nearest2  = ::rbr::flag( to_nearest_mode{}  );
-  [[maybe_unused]] inline constexpr auto tolerant2    = ::rbr::flag( tolerant_mode{}    );
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
@@ -104,7 +102,6 @@ namespace eve
   struct spherical_option    : detail::exact_option<spherical2>   {};
   struct successor_option    : detail::exact_option<successor2>   {};
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
-  struct tolerant_option     : detail::exact_option<tolerant2>    {};
   struct toward_zero_option  : detail::exact_option<toward_zero2> {};
   struct upward_option       : detail::exact_option<upward2>      {};
 
@@ -132,7 +129,20 @@ namespace eve
   inline constexpr auto as_option(spherical_type    const&) { return spherical2;    }
   inline constexpr auto as_option(successor_type    const&) { return successor2;    }
   inline constexpr auto as_option(to_nearest_type   const&) { return to_nearest2;   }
-  inline constexpr auto as_option(tolerant_type     const&) { return tolerant2;     }
   inline constexpr auto as_option(toward_zero_type  const&) { return toward_zero2;  }
   inline constexpr auto as_option(upward_type       const&) { return upward2;       }
+
+  // New tolerance option that carry a value
+  struct tolerant_mode    {};
+  struct default_tolerance
+  {
+    friend std::ostream& operator<<(std::ostream& os, default_tolerance const&) { return os << "3 * eps"; }
+  };
+
+  [[maybe_unused]] inline constexpr auto tolerance  = ::rbr::keyword( tolerant_mode{} );
+  [[maybe_unused]] inline constexpr auto tolerant2  = (tolerance = default_tolerance{});
+
+  struct tolerant_option : detail::exact_option<tolerance>    {};
+  inline constexpr auto as_option(tolerant_type const&) { return tolerant2; }
+
 }

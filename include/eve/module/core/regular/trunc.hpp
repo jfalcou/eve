@@ -105,7 +105,7 @@ namespace eve
 //!        @godbolt{doc/core/fuzzy/trunc.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(trunc_, trunc);
+  inline constexpr auto trunc = functor<trunc_t>;
 }
 
 #include <eve/module/core/regular/impl/trunc.hpp>

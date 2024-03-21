@@ -24,14 +24,14 @@ namespace eve::detail
   template<typename T, floating_value U, callable_options O>
   EVE_FORCEINLINE constexpr T
   trunc_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
-  //  requires (O::contains(tolerant2))
+  //  requires (O::contains(tolerance))
   {
-    return copysign(floor[tolerant2](eve::abs(a0), eps), a0);
+    return copysign(floor/*[tolerant2]*/(eve::abs(a0), eps), a0);
   }
   template<typename T, integral_value U, callable_options O>
   EVE_FORCEINLINE constexpr T
   trunc_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & n) noexcept
-  //  requires (O::contains(tolerant2))
+  //  requires (O::contains(tolerance))
   {
     return copysign(trunc(next(eve::abs(a0), n)), a0);
   }
@@ -49,9 +49,9 @@ namespace eve::detail
     {
       return rawtrunc(a0);
     }
-    else if constexpr(O::contains(tolerant2))
+    else if constexpr(O::contains(tolerance))
     {
-      return trunc[tolerant2](a0, 3*eps(as(a0)));
+      return trunc/*[tolerant2]*/(a0, 3*eps(as(a0)));
     }
     else
     {

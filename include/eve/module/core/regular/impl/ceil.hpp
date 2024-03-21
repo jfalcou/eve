@@ -15,19 +15,18 @@
 
 namespace eve::detail
 {
-
   template<typename T, floating_value U, callable_options O>
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
-  //  requires (O::contains(tolerant2))
+  //  requires (O::contains(tolerance))
   {
-    return -floor[tolerant2](-a0, eps);
+    return -floor/*[tolerant2]*/(-a0, eps);
   }
 
   template<typename T, integral_value U, callable_options O>
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
-  //  requires (O::contains(tolerant2))
+  //  requires (O::contains(tolerance))
   {
     return ceil(prev(a0, e));
   }
@@ -36,9 +35,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
-    if constexpr(O::contains(tolerant2))
+    if constexpr(O::contains(tolerance))
     {
-      return -floor[tolerant2](-a0, 3*eps(as(a0)));
+      return -floor/*[tolerant2]*/(-a0, 3*eps(as(a0)));
     }
     else
     {

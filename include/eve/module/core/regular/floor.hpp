@@ -16,23 +16,11 @@ namespace eve
   template<typename Options>
   struct floor_t : elementwise_callable<floor_t, Options, tolerant_option>
   {
-    template<eve::integral_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return v; }
-
-    template<eve::floating_value T>
+    template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::floating_value T, floating_value U >
-    constexpr EVE_FORCEINLINE T operator()(T v, U u) const  noexcept
-    { return EVE_DISPATCH_CALL(v, u); }
-
-    template<eve::floating_value T, integral_value U >
-    constexpr EVE_FORCEINLINE T operator()(T v, U u) const  noexcept
-    { return EVE_DISPATCH_CALL(v, u); }
-
-    template<eve::floating_value T, only_if<signed,unsigned>  U>
+    template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
     { return EVE_DISPATCH_CALL(v, target); }
 
