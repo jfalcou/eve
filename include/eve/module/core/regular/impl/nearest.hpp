@@ -20,44 +20,32 @@
 
 namespace eve::detail
 {
-template<typename T>
-EVE_FORCEINLINE constexpr auto
-nearest_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
-{
-  if constexpr( has_native_abi_v<T> )
+
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
-    if constexpr( integral_value<T> ) { return a0; }
-    else if constexpr( floating_value<T> )
-    {
-      auto s   = bitofsign(a0);
-      auto v   = bit_xor(a0, s);
-      auto t2n = twotonmb(eve::as(a0));
-      auto d0  = v + t2n;
-      auto d   = d0 - t2n;
-      if constexpr( scalar_value<T> ) { return bit_xor((v < t2n) ? d : v, s); }
-      else { return bit_xor(if_else(v < t2n, d, v), s); }
-    }
+    auto s   = bitofsign(a0);
+    auto v   = bit_xor(a0, s);
+    auto t2n = twotonmb(eve::as(a0));
+    auto d0  = v + t2n;
+    auto d   = d0 - t2n;
+    if constexpr( scalar_value<T> )
+      return bit_xor((v < t2n) ? d : v, s);
+    else
+      return bit_xor(if_else(v < t2n, d, v), s);
   }
-  else { return apply_over(nearest, a0); }
-}
 
-////////////////////////////////////////////////////////////////////////////////////
-// return integral types
-
-template<integral_value T, typename D>
-EVE_FORCEINLINE constexpr auto
-nearest_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
-    requires(is_one_of<D>(types<int_converter, uint_converter> {}))
-{
-  if constexpr( has_native_abi_v<T> ) { return D()(nearest(xx)); }
-  else { return apply_over(D()(nearest), xx); }
-}
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, value T>
-EVE_FORCEINLINE auto
-nearest_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
-{
-  return mask_op(cond, eve::nearest, a);
-}
+  template<typename T, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
+  {
+    auto z = nearest(a0);
+    if constexpr(unsigned_value<U>)
+      return uint_(z);
+    else if constexpr(signed_integral_value<U>)
+      return int_(z);
+    else
+      return z;
+  }
 }
