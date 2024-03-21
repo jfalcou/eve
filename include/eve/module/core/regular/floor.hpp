@@ -8,10 +8,37 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct floor_t : elementwise_callable<floor_t, Options, tolerant_option>
+  {
+    template<eve::integral_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return v; }
+
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::floating_value T, floating_value U >
+    constexpr EVE_FORCEINLINE T operator()(T v, U u) const  noexcept
+    { return EVE_DISPATCH_CALL(v, u); }
+
+    template<eve::floating_value T, integral_value U >
+    constexpr EVE_FORCEINLINE T operator()(T v, U u) const  noexcept
+    { return EVE_DISPATCH_CALL(v, u); }
+
+    template<eve::floating_value T, integral_scalar_value U>
+    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
+    { return EVE_DISPATCH_CALL(v, target); }
+
+    EVE_CALLABLE_OBJECT(floor_t, floor_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -76,23 +103,23 @@ namespace eve
 //!      @godbolt{doc/core/fuzzy/floor.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(floor_, floor);
+  inline constexpr auto floor = functor<floor_t>;
 }
 
 #include <eve/module/core/regular/impl/floor.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/floor.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/core/regular/impl/simd/x86/floor.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/floor.hpp>
-#endif
+// #if defined(EVE_INCLUDE_POWERPC_HEADER)
+// #  include <eve/module/core/regular/impl/simd/ppc/floor.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/floor.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/neon/floor.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/floor.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/floor.hpp>
+// #endif
