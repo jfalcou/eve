@@ -8,10 +8,29 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct nearest_t : elementwise_callable<nearest_t, Options>
+  {
+    template<eve::integral_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return v; }
+
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::floating_value T, only_if<signed,unsigned>  U>
+    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
+    { return EVE_DISPATCH_CALL(v, target); }
+
+    EVE_CALLABLE_OBJECT(nearest_t, nearest_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -65,23 +84,24 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(nearest_, nearest);
+  inline constexpr auto nearest = functor<nearest_t>;
 }
+
 
 #include <eve/module/core/regular/impl/nearest.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/nearest.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/core/regular/impl/simd/x86/nearest.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/nearest.hpp>
-#endif
+// #if defined(EVE_INCLUDE_POWERPC_HEADER)
+// #  include <eve/module/core/regular/impl/simd/ppc/nearest.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/nearest.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/neon/nearest.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/nearest.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/nearest.hpp>
+// #endif

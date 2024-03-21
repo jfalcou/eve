@@ -58,7 +58,14 @@ namespace eve::detail
     }
     else
     {
-      T z = eve::trunc(a0);
+      using elt_t = element_type_t<T>;
+      using i_t   = as_integer_t<elt_t>;
+      auto z = convert(convert(a0, as<i_t>()), as<elt_t>());
+      auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
+      if constexpr( scalar_value<T> )
+        z = already_integral ? a0 : z;
+      else if constexpr( simd_value<T> )
+        z = if_else(already_integral, a0, z);
       return dec[z > a0](z);
     }
   }
