@@ -9,9 +9,6 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
-
-#include <cmath>
-
 #include <boost/math/special_functions/lambert_w.hpp>
 
 //==================================================================================================
@@ -21,10 +18,10 @@ TTS_CASE_TPL("Check return types of lambert", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
-  using kT   = kumi::tuple<T, T>;
-  using kv_t = kumi::tuple<v_t, v_t>;
-  TTS_EXPR_IS(eve::lambert(T()), kT);
-  TTS_EXPR_IS(eve::lambert(v_t()), kv_t);
+  using t_t = decltype(eve::zip(std::declval<T>(),std::declval<T>()));
+
+  TTS_EXPR_IS(eve::lambert(T()), t_t);
+  TTS_EXPR_IS(eve::lambert(v_t()), (kumi::tuple<v_t, v_t>));
 };
 
 //==================================================================================================

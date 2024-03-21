@@ -95,6 +95,12 @@ namespace eve
 //!  @}
 //================================================================================================z
 EVE_MAKE_CALLABLE(zip_, zip);
+
+
+/// @brief Type helper to compute tuple-like result-type
+template<typename... Ts>
+using zipped = eve::result_t<zip,Ts...>;
+
 }
 
 namespace eve::detail

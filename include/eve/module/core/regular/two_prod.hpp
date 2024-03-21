@@ -1,16 +1,32 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/zip.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct two_prod_t : elementwise_callable<two_prod_t, Options>
+{
+  template<eve::floating_value T, eve::floating_value U>
+  constexpr EVE_FORCEINLINE
+  zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
+  {
+    return EVE_DISPATCH_CALL(a,b);
+  }
+
+  EVE_CALLABLE_OBJECT(two_prod_t, two_prod_);
+};
+
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
@@ -55,14 +71,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
+
+inline constexpr auto two_prod = functor<two_prod_t>;
+
+namespace detail
 {
-  struct two_prod_;
-}
-template<> struct supports_conditional<tag::two_prod_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(two_prod_, two_prod);
-}
-
-#include <eve/module/core/regular/impl/two_prod.hpp>
+  template<typename T, typename U, callable_options O>
+  constexpr EVE_FORCEINLINE auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, U b)
+  {
+    auto r0 = a * b;
+    return eve::zip(r0, numeric(fms)(a, b, r0));
+  }
+}}

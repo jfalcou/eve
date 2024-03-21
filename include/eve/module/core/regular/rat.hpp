@@ -1,16 +1,44 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/none.hpp>
+#include <eve/module/core/regular/rec.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/zip.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct rat_t : elementwise_callable<rat_t, Options>
+{
+  template<eve::floating_value T>
+  constexpr EVE_FORCEINLINE zipped<T,T>
+  operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+  template<eve::floating_value T, eve::floating_value U>
+  constexpr EVE_FORCEINLINE zipped<common_value_t<T,U>,common_value_t<T,U>>
+  operator()(T v, U t) const  { return EVE_DISPATCH_CALL(v, t); }
+
+  EVE_CALLABLE_OBJECT(rat_t, rat_);
+};
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -28,8 +56,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T>
-//!      kumi::tuple<T, T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
+//!      template<eve::floating_value T>
+//!      eve::zipped<T,T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -41,24 +69,89 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     A pair of values  with the same type as `x` containing the
-//!     [elementwise](@ref glossary_elementwise)
-//!     numerator and denominator of the rational number approximating `x`.
+//!     A tuple of values with the same type as `x` containing the
+//!     [elementwise](@ref glossary_elementwise) numerator and denominator of the rational
+//!     number approximating `x`.
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/regular/rat.cpp}
 //! @}
 //================================================================================================
+inline constexpr auto rat = functor<rat_t>;
 
-namespace tag
+namespace detail
 {
-  struct rat_;
-}
-template<> struct supports_conditional<tag::rat_> : std::false_type
-{};
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr auto rat_(EVE_REQUIRES(cpu_), O const& o, T const& x) noexcept
+  {
+    return rat[o](x, T(1.0e-6) * eve::abs(x));
+  }
 
-EVE_MAKE_CALLABLE(rat_, rat);
-}
+  template<typename T, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  rat_(EVE_REQUIRES(cpu_), O const&, T const& v, U const& t) noexcept
+  {
+    using r_t = common_value_t<T,U>;
 
-#include <eve/module/core/regular/impl/rat.hpp>
+    auto x    = r_t{v};
+    auto tol  = r_t{t};
+
+    if constexpr(scalar_value<r_t>)
+    {
+      if( is_infinite(x) || is_eqz(x) ) return zip(sign(x), r_t{0});
+      auto n     = nearest(x);
+      auto d     = one(as(x));
+      auto frac  = x - n;
+      auto lastn = one(as(x));
+      auto lastd = zero(as(x));
+
+      while( abs(x - n / d) >= tol )
+      {
+        auto flip   = rec(frac);
+        auto step   = nearest(flip);
+        frac        = flip - step;
+        auto savedn = n;
+        auto savedd = d;
+        n           = fma(n, step, lastn);
+        d           = fma(d, step, lastd);
+        lastn       = savedn;
+        lastd       = savedd;
+      }
+      n *= sign(d);
+      d = eve::abs(d);
+      return zip(n, d);
+    }
+    else
+    {
+      auto is_inf = is_infinite(x);
+      auto y      = if_else(is_inf, zero, x);
+      auto n      = nearest(y);
+      auto d      = one(as(y));
+      auto frac   = y - n;
+      auto lastn  = one(as(y));
+      auto lastd  = zero(as(y));
+
+      while( true )
+      {
+        auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
+        if( none(notdone) ) break;
+        auto flip   = if_else(notdone, rec(frac), frac);
+        auto step   = if_else(notdone, nearest(flip), zero);
+        frac        = flip - step;
+        auto savedn = n;
+        auto savedd = d;
+        n           = if_else(notdone, fma(n, step, lastn), n);
+        d           = if_else(notdone, fma(d, step, lastd), d);
+        lastn       = savedn;
+        lastd       = savedd;
+      }
+      n *= sign(d);
+      d = abs(d);
+      n = if_else(is_inf, sign(x), n);
+      d = if_else(is_inf, zero, d);
+      return zip(n, d);
+    }
+  }
+}
+}

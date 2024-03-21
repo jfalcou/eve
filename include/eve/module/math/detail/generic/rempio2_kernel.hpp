@@ -16,16 +16,15 @@
 
 namespace eve::detail
 {
-
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto  rempio2_quarter_circle(T const                &xx) noexcept
+template<floating_value T>
+EVE_FORCEINLINE auto rempio2_quarter_circle(T const &xx) noexcept
 {
-  return kumi::make_tuple(T(0), xx, T(0));
+  return eve::zip(T(0), xx, T(0));
 }
 
 // up to 255*pi/4 ~200
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto  rempio2_half_circle(T const                &xx) noexcept
+template<floating_value T>
+EVE_FORCEINLINE auto rempio2_half_circle(T const &xx) noexcept
 {
   using elt_t = element_type_t<T>;
   if constexpr( std::is_same_v<elt_t, double> )
@@ -41,22 +40,21 @@ EVE_FORCEINLINE auto  rempio2_half_circle(T const                &xx) noexcept
     auto                a   = y - da;
     da                      = (y - a) - da;
 
-    return kumi::make_tuple(n, a, da);
+    return eve::zip(n, a, da);
   }
   else if constexpr( std::is_same_v<elt_t, float> )
   {
     auto x   = float64(xx);
     auto n   = nearest(x * two_o_pi(eve::as<double>()));
     auto dxr = fma(n, -pio_2(eve::as<double>()), x);
-    return  kumi::make_tuple(quadrant(float32(n)), float32(dxr), T(0.0f));
+    return  eve::zip(quadrant(float32(n)), float32(dxr), T(0.0f));
   }
 }
 
 // double use   x < 281474976710656 (2.81476710656e+14)
 /* float use   x < 0x1.7d4998p+38 (4.09404e+11) */
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto
-rempio2_medium(T const& xx) noexcept
+template<floating_value T>
+EVE_FORCEINLINE auto rempio2_medium(T const& xx) noexcept
 {
   using elt_t             = element_type_t<T>;
   static const double mp1 = -0x1.921FB58000000p0;   /* -1.5707963407039642      */
@@ -77,7 +75,7 @@ rempio2_medium(T const& xx) noexcept
     auto a   = t + da;
     da       = (t - a) + da;
 
-    return kumi::make_tuple(n, a, da);
+    return eve::zip(n, a, da);
   }
   else if constexpr( std::is_same_v<elt_t, float> )
   {
@@ -100,15 +98,14 @@ rempio2_medium(T const& xx) noexcept
       auto [n1, fa1, dfa1] = rempio2_half_circle(fa);
       n                    = quadrant(n + n1);
 
-      return kumi::make_tuple(n, fa1, dfa1);
+      return eve::zip(n, fa1, dfa1);
     }
-    return kumi::make_tuple(n, fa, dfa);
+    return eve::zip(n, fa, dfa);
   }
 }
 
-template<floating_ordered_value T>
-EVE_FORCEINLINE kumi::tuple<T, T, T>
-                rempio2_full_circle(T const                &x) noexcept
+template<floating_value T>
+EVE_FORCEINLINE auto rempio2_full_circle(T const&x) noexcept
 {
   using elt_t = element_type_t<T>;
   using elt_t = element_type_t<T>;
@@ -125,7 +122,7 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     auto da = xn * mp3;
     auto a  = y - da;
     da      = (y - a) - da;
-    return {n, a, da};
+    return eve::zip(n, a, da);
   }
   else
   {
@@ -134,13 +131,12 @@ EVE_FORCEINLINE kumi::tuple<T, T, T>
     mp3     = -0x1.846988p-48f; /* -5.39030253e-15 // pio2_low */
     auto xn = nearest(x * two_o_pi(eve::as<elt_t>()));
     auto y  = fma(xn, mp3, fma(xn, mp2, fma(xn, mp1, x)));
-    return {quadrant(xn), y, zero(as(y))};
+    return eve::zip(quadrant(xn), y, zero(as(y)));
   }
 }
 
-template<floating_ordered_value T>
-EVE_FORCEINLINE constexpr kumi::tuple<T, T, T>
-                rempio2_big(T xx) noexcept
+template<floating_value T>
+EVE_FORCEINLINE constexpr auto rempio2_big(T xx) noexcept
 {
   using elt_t = element_type_t<T>;
   auto xlerfl = (xx <= Rempio2_limit[half_circle2](as(xx)));
@@ -282,7 +278,7 @@ EVE_FORCEINLINE constexpr kumi::tuple<T, T, T>
     s      = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), xx, s);
     t      = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), T(0), t);
     auto q = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), T(0), quadrant(sum));
-    return kumi::make_tuple(q, s, t);
+    return eve::zip(q, s, t);
   }
   else if constexpr( std::is_same_v<elt_t, float> )
   {
@@ -336,7 +332,7 @@ EVE_FORCEINLINE constexpr kumi::tuple<T, T, T>
     auto dbr  = if_else(xlerfl, dsr, dsr1);
     br        = if_else(is_not_finite(xx), eve::allbits, br);
     auto test = xx <= Rempio2_limit[full_circle2](as(xx));
-    return kumi::make_tuple(if_else(test, sn, bn), if_else(test, sr, br), if_else(test, dsr, dbr));
+    return eve::zip(if_else(test, sn, bn), if_else(test, sr, br), if_else(test, dsr, dbr));
   }
 }
 }

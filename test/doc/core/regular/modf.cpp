@@ -10,7 +10,7 @@ int main()
                 eve::nan(eve::as<float>()), 0.678f,   -0.678f};
 
   auto [m, e]    = eve::modf(pf);
-  auto [mp, ep]  = eve::pedantic(eve::modf)(pf);
+  auto [mp, ep]  = eve::modf[eve::pedantic](pf);
   std::cout << "---- simd" << '\n'
             << "<- pf                  = " << pf << '\n'
             << "-> modf(pf)            = [" << '\n'

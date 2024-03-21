@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/raw.hpp>
-#include <eve/module/core/pedantic/ifrexp.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/dec.hpp>
@@ -73,7 +73,7 @@ rsqrt_x86_pedantic(Pack const& x) noexcept
               double> && eve::any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > valmax(eve::as<float>()))) )
   // this is necessary because of the poor initialisation by float intrinsic
   {
-    auto [a00, nn] = pedantic(ifrexp)(x);
+    auto [a00, nn] = ifrexp[pedantic](x);
     auto tst       = is_odd(nn);
     nn             = dec[tst](nn);
     a00            = mul[tst](a00, 2);
