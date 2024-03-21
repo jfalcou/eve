@@ -26,47 +26,49 @@
 
 namespace eve::detail
 {
-
-  template<typename T, floating_value U, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
-  //  requires (O::contains(tolerant2))
-  {
-    // Hagerty's FL5 function
-    auto q    = if_else(is_ltz(a0), one, oneminus(eps));
-    auto rmax = q / (T(2) - eps);
-    auto eps5 = eps / q;
-    auto r    = floor(a0 + eve::max(eps, min(rmax, eps5 * eve::abs(inc(floor(a0))))));
-    return if_else(is_lez(a0) || (r - a0 < rmax), r, dec(r));
-  }
-
-  template<typename T, integral_value U, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
-  //  requires (O::contains(tolerant2))
-  {
-    return floor(next(a0, e));
-  }
-
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
+  floor_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
-    if constexpr(O::contains(tolerant2))
-    {
-      return floor[tolerant2](a0, 3*eps(as(a0)));
-    }
+    if constexpr(integral_value<T>) return a0;
     else
     {
-      using elt_t = element_type_t<T>;
-      using i_t   = as_integer_t<elt_t>;
-      auto z = convert(convert(a0, as<i_t>()), as<elt_t>());
-      auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
-      if constexpr( scalar_value<T> )
-        z = already_integral ? a0 : z;
-      else if constexpr( simd_value<T> )
-        z = if_else(already_integral, a0, z);
-      return dec[z > a0](z);
+      if constexpr(O::contains(tolerance))
+      {
+        auto tol = [&]<typename V>(V const& t)
+        {
+          if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as(a0));
+          else if constexpr(integral_value<V>)            return t;
+          else                                            return convert(t,as_element(a0));
+        }(o[tolerance]);
+
+        if constexpr(integral_value<decltype(tol)>)
+        {
+          return floor(next(a0, tol));
+        }
+        else
+        {
+          // Hagerty's FL5 function
+          auto q    = if_else(is_ltz(a0), one, oneminus(tol));
+          auto rmax = q / (T(2) - tol);
+          auto tol5 = tol / q;
+          auto r    = floor(a0 + eve::max(tol, min(rmax, tol5 * eve::abs(inc(floor(a0))))));
+          return if_else(is_lez(a0) || (r - a0 < rmax), r, dec(r));
+        }
+      }
+      else
+      {
+        using elt_t = element_type_t<T>;
+        using i_t   = as_integer_t<elt_t>;
+        auto z = convert(convert(a0, as<i_t>()), as<elt_t>());
+
+        auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
+
+        if constexpr( scalar_value<T> )     z = already_integral ? a0 : z;
+        else if constexpr( simd_value<T> )  z = if_else(already_integral, a0, z);
+
+        return dec[z > a0](z);
+      }
     }
   }
 
@@ -74,13 +76,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto
   floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
   {
-    auto z = floor(a0);
-    if constexpr(unsigned_value<U>)
-      return uint_(z);
-    else if constexpr(signed_integral_value<U>)
-      return int_(z);
-    else
-      return z;
+    if constexpr(integral_value<T>) return convert(a0, as_element<as_integer_t<T,U>>{});
+    else                            return convert(floor(a0), as_element<as_integer_t<T,U>>{});
   }
-
 }
