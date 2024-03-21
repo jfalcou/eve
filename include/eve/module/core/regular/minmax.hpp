@@ -15,6 +15,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/zip.hpp>
 #include <eve/traits.hpp>
 
 namespace eve
@@ -22,9 +23,9 @@ namespace eve
   template<typename Options>
   struct minmax_t : tuple_callable<minmax_t, Options, pedantic_option, numeric_option>
   {
-
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
-    EVE_FORCEINLINE constexpr kumi::tuple<common_value_t<T0, T1, Ts...>,common_value_t<T0, T1, Ts...>>
+    EVE_FORCEINLINE constexpr
+    zipped<common_value_t<T0,T1,Ts...>,common_value_t<T0,T1,Ts...>>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0,  t1, ts...);
@@ -32,9 +33,9 @@ namespace eve
 
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
-    kumi::tuple<kumi::apply_traits_t<eve::common_value,Tup>, kumi::apply_traits_t<eve::common_value,Tup>>
-    operator()(Tup const & t) const noexcept  requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
-
+    auto operator()(Tup const & t) const noexcept -> decltype(zip(min(t),max(t)))
+    requires(kumi::size_v<Tup> >= 2)
+    { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
     requires(!kumi::product_type<Callable> && !eve::ordered_value<Callable>)
@@ -119,18 +120,18 @@ inline constexpr auto minmax = functor<minmax_t>;
     template<ordered_value T0, ordered_value T1, ordered_value... Ts, callable_options O>
     EVE_FORCEINLINE auto
     minmax_(EVE_REQUIRES(cpu_), O const & , T0 v0, T1 v1, Ts... vs) noexcept
-    -> decltype(kumi::tuple {eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)})
+    -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
     {
       if constexpr( prefer_min_max<common_value_t<T0,T1,Ts...>>()  || sizeof...(Ts) > 0)
       {
-        return kumi::tuple {eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)};
+        return zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...));
       }
       else
       {
         // If there is no native min/max, we compute the check once
         // We use > cause it is more often optimized than <
         auto check = v0 > v1;
-        return kumi::tuple {if_else(check, v1, v0), if_else(check, v0, v1)};
+        return zip(if_else(check, v1, v0), if_else(check, v0, v1));
       }
     }
 
@@ -157,9 +158,9 @@ inline constexpr auto minmax = functor<minmax_t>;
     template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts, callable_options O>
     EVE_FORCEINLINE auto
     minmax_(EVE_REQUIRES(cpu_), C const& c, O const &, T0 v0, T1 v1, Ts... vs) noexcept
-    -> decltype(kumi::tuple {eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)})
+    -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))
     {
-      return kumi::tuple {eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)};
+      return zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...));
     }
   }
 }

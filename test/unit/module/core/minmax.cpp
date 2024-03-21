@@ -13,10 +13,11 @@ TTS_CASE_TPL("Check return types of minmax", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
+  using t_t = decltype(eve::zip(std::declval<T>(),std::declval<T>()));
 
-  TTS_EXPR_IS(eve::minmax(T()  , T()  ), (kumi::tuple<T,T>)     );
-  TTS_EXPR_IS(eve::minmax(T()  , v_t()), (kumi::tuple<T,T>)     );
-  TTS_EXPR_IS(eve::minmax(v_t(), T()  ), (kumi::tuple<T,T>)     );
+  TTS_EXPR_IS(eve::minmax(T()  , T()  ), t_t                    );
+  TTS_EXPR_IS(eve::minmax(T()  , v_t()), t_t                    );
+  TTS_EXPR_IS(eve::minmax(v_t(), T()  ), t_t                    );
   TTS_EXPR_IS(eve::minmax(v_t(), v_t()), (kumi::tuple<v_t,v_t>) );
 };
 //==================================================================================================

@@ -173,3 +173,9 @@ inline constexpr auto adl_helper = adl_helper_t {}                              
 
 // Register eve::detail as the deferred namespace by default
 namespace eve::detail { EVE_CALLABLE_NAMESPACE(); }
+
+namespace eve
+{
+  template<auto Func, typename... Ts>
+  using result_t = decltype(Func(std::declval<Ts>()...));
+}

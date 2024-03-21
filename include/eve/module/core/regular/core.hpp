@@ -174,8 +174,6 @@
 #include <eve/module/core/regular/plus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/prev.hpp>
-#include <eve/module/core/regular/quick_two_add.hpp>
-#include <eve/module/core/regular/quick_two_sub.hpp>
 #include <eve/module/core/regular/rat.hpp>
 #include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/regular/rec.hpp>
@@ -184,7 +182,6 @@
 #include <eve/module/core/regular/reldist.hpp>
 #include <eve/module/core/regular/rem.hpp>
 #include <eve/module/core/regular/remainder.hpp>
-#include <eve/module/core/regular/remdiv.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/rotate.hpp>
 #include <eve/module/core/regular/rotl.hpp>
@@ -219,8 +216,6 @@
 #include <eve/module/core/regular/try_each_group_position.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
-#include <eve/module/core/regular/two_sqr.hpp>
-#include <eve/module/core/regular/two_sub.hpp>
 #include <eve/module/core/regular/ulpdist.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/unsafe.hpp>

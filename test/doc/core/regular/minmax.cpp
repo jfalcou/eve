@@ -12,27 +12,27 @@ int main()
   wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, eve::nan(eve::as<float>()),
                 -0.0f, eve::nan(eve::as<float>()), -2.0f};
 
-
+  auto[mn,mx] = eve::minmax(pf, qf);
   std::cout << "---- simd" << '\n'
-            << "<- pf                     = " << pf << '\n'
-            << "<- qf                     = " << qf << '\n'
-            << "-> minmax(pf, qf)            = " << eve::minmax(pf, qf) << '\n';
+            << "<- pf               = " << pf << '\n'
+            << "<- qf               = " << qf << '\n'
+            << "-> minmax(pf, qf)   = " << mn << ", " << mx << '\n';
 
   float xf = 1.0f;
   float yf = eve::nan(eve::as<float>());
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf                     = " << xf << '\n'
-            << "<- yf                     = " << yf << '\n'
-            << "-> minmax(xf, yf) =          = " << eve::minmax(xf, yf) << '\n';
+            << "<- xf               = " << xf << '\n'
+            << "<- yf               = " << yf << '\n'
+            << "-> minmax(xf, yf)   = " << eve::minmax(xf, yf) << '\n';
 
   auto k = kumi::tuple{pf, qf, pf+qf, 1};
   std::cout << "---- multi parameters" << '\n'
-            << " -> minmax(k)                                = " << eve::minmax(k) << '\n'
-            << " -> minmax(kumi::tuple{pf, pf, 1})           = " << eve::minmax( kumi::tuple{pf, qf, 1}) << '\n'
-            << " -> minmax(kumi::tuple{1, pf, pf})           = " << eve::minmax( kumi::tuple{1, pf, qf}) << '\n'
-            << " -> minmax(kumi::tuple{pf, 1.0f)             = " << eve::minmax( kumi::tuple{pf, 1.0f}) << '\n'
-            << " -> minmax(kumi::tuple{1.0f, pf)             = " << eve::minmax( kumi::tuple{1.0f, pf}) << '\n';
+            << " -> minmax(k)                      = " << eve::minmax(k) << '\n'
+            << " -> minmax(kumi::tuple{pf, pf, 1}) = " << eve::minmax( kumi::tuple{pf, qf, 1}) << '\n'
+            << " -> minmax(kumi::tuple{1, pf, pf}) = " << eve::minmax( kumi::tuple{1, pf, qf}) << '\n'
+            << " -> minmax(kumi::tuple{pf, 1.0f)   = " << eve::minmax( kumi::tuple{pf, 1.0f}) << '\n'
+            << " -> minmax(kumi::tuple{1.0f, pf)   = " << eve::minmax( kumi::tuple{1.0f, pf}) << '\n';
 
   return 0;
 }

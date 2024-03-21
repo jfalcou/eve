@@ -7,10 +7,29 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/zip.hpp>
+#include <eve/arch/platform.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct modf_t : elementwise_callable<modf_t, Options, pedantic_option>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr zipped<T,T> operator()(T a) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a);
+    }
+
+    EVE_CALLABLE_OBJECT(modf_t, modf_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -30,7 +49,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      kumi::tuple<T, T> modf(T x) noexcept;
+//!      zipped<T,T> modf(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -61,14 +80,27 @@ namespace eve
 //! @}
 //================================================================================================
 
-namespace tag
+inline constexpr auto modf = functor<modf_t>;
+
+namespace detail
 {
-  struct modf_;
-}
-template<> struct supports_conditional<tag::modf_> : std::false_type
-{};
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr auto modf_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
+  {
+    if constexpr(floating_value<T>)
+    {
+      auto t = trunc(a);
 
-EVE_MAKE_CALLABLE(modf_, modf);
-}
-
-#include <eve/module/core/regular/impl/modf.hpp>
+      if constexpr(O::contains(pedantic2) && platform::supports_infinites)
+      {
+        auto f = if_else(is_infinite(a), eve::zero, a - t);
+        return eve::zip(f, t);
+      }
+      else
+      {
+        return eve::zip(a - t, t);
+      }
+    }
+    else return eve::zip(zero(eve::as(a)), a);
+  }
+}}

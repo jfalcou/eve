@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/logical_notand.hpp>
-#include <eve/detail/select_over.hpp>
 
 // This is a help for programming efiicient horizontal branching
 // see dawson .hpp for an example
@@ -38,7 +37,7 @@ namespace eve
     {
       if(eve::any(todo))
       {
-        r = detail::select_over(todo, f(ts...), r);
+        r = if_else(todo, f(ts...), r);
         return logical_notand(todo, notdone);
       };
     }
@@ -55,7 +54,7 @@ namespace eve
     }
     else
     {
-      if(eve::any(todo))  r = detail::select_over(todo, f(ts...), r);
+      if(eve::any(todo))  r = if_else(todo, f(ts...), r);
       return eve::false_(as(r));
     }
   }

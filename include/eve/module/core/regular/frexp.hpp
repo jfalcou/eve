@@ -1,16 +1,28 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_option>
+{
+  template<eve::floating_value T>
+  constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(frexp_t, frexp_);
+};
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -30,7 +42,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      kumi::tuple<T, T> frexp(T x) noexcept;
+//!      eve::zipped<T,T> frexp(T x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -63,15 +75,15 @@ namespace eve
 //!        @godbolt{doc/core/pedantic/frexp.cpp}
 //! @}
 //================================================================================================
+inline constexpr auto frexp = functor<frexp_t>;
 
-namespace tag
+namespace detail
 {
-  struct frexp_;
+template<typename T, callable_options O>
+EVE_FORCEINLINE constexpr auto frexp_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
+{
+  auto [m, e] = ifrexp[o](a0);
+  return eve::zip(m, convert(e,as_element<T>{}));
 }
-template<> struct supports_conditional<tag::frexp_> : std::false_type
-{};
 
-EVE_MAKE_CALLABLE(frexp_, frexp);
-}
-
-#include <eve/module/core/regular/impl/frexp.hpp>
+}}
