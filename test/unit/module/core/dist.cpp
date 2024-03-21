@@ -25,12 +25,12 @@ TTS_CASE_TPL("Check return types of dist", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::dist(int(), T()), T);
   TTS_EXPR_IS(eve::dist(v_t(), v_t()), v_t);
 
-  TTS_EXPR_IS(eve::saturated(eve::dist)(T(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::dist)(T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::dist)(v_t(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::dist)(T(), int()), T);
-  TTS_EXPR_IS(eve::saturated(eve::dist)(int(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::dist)(v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::dist[eve::saturated](T(), T()), T);
+  TTS_EXPR_IS(eve::dist[eve::saturated](T(), v_t()), T);
+  TTS_EXPR_IS(eve::dist[eve::saturated](v_t(), T()), T);
+  TTS_EXPR_IS(eve::dist[eve::saturated](T(), int()), T);
+  TTS_EXPR_IS(eve::dist[eve::saturated](int(), T()), T);
+  TTS_EXPR_IS(eve::dist[eve::saturated](v_t(), v_t()), v_t);
 };
 
 //==================================================================================================
@@ -45,7 +45,7 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
   using eve::dist;
   using eve::detail::map;
   TTS_ULP_EQUAL(dist(a0, a1), eve::max(a0, a1) - eve::min(a0, a1), 2);
-  TTS_ULP_EQUAL(eve::saturated(dist)(a0, a1), [](auto a, auto b){
+  TTS_ULP_EQUAL(dist[eve::saturated](a0, a1), [](auto a, auto b){
                   auto d = eve::dist(a, b);
                   if constexpr(eve::unsigned_value<T>) return d;
                   else  return eve::if_else(eve::is_ltz(d),  eve::valmax(eve::as<T>()),  d);
@@ -74,7 +74,7 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
   TTS_ULP_EQUAL(dist(a0, a1),
                 map([](auto e, auto f) -> v_t { return std::max(e, f) - std::min(f, e); }, a0, a1),
                 2);
-  TTS_ULP_EQUAL(eve::saturated(dist)(a0, a1),
+  TTS_ULP_EQUAL(dist[eve::saturated](a0, a1),
                 map(
                     [](auto e, auto f) -> v_t
                     {

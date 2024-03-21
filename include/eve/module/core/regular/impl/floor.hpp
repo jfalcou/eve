@@ -13,40 +13,67 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/is_lez.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/minus.hpp>
+#include <eve/module/core/regular/oneminus.hpp>
+#include <eve/module/core/regular/next.hpp>
 
 namespace eve::detail
 {
-template<ordered_value T>
-EVE_FORCEINLINE constexpr T
-floor_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
-{
-  if constexpr( integral_value<T> ) return a0;
-  else if constexpr( has_native_abi_v<T> )
+
+  template<typename T, floating_value U, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
+  //  requires (O::contains(tolerant2))
   {
-    T z = eve::trunc(a0);
-    return dec[z > a0](z);
+    // Hagerty's FL5 function
+    auto q    = if_else(is_ltz(a0), one, oneminus(e));
+    auto rmax = q / (T(2) - e);
+    auto eps5 = e / q;
+    auto r    = floor(a0 + eve::max(e, min(rmax, eps5 * eve::abs(inc(floor(a0))))));
+    return if_else(is_lez(a0) || (r - a0 < rmax), r, dec(r));
   }
-  else return apply_over(floor, a0);
-}
 
-////////////////////////////////////////////////////////////////////////////////////
-// return integral types
+  template<typename T, integral_value U, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
+  //  requires (O::contains(tolerant2))
+  {
+    return floor(next(a0, e));
+  }
 
-template<integral_value T, typename D>
-EVE_FORCEINLINE constexpr auto
-floor_(EVE_SUPPORTS(cpu_), D const&, T xx) noexcept
-    requires(is_one_of<D>(types<int_converter, uint_converter> {}))
-{
-  if constexpr( has_native_abi_v<T> ) { return D()(floor(xx)); }
-  else { return apply_over(D()(floor), xx); }
-}
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
+  {
+    if constexpr(O::contains(tolerant2))
+    {
+      return floor[tolerant2](a0, 3*eps(as(a0)));
+    }
+    else
+    {
+      T z = eve::trunc(a0);
+      return dec[z > a0](z);
+    }
+  }
 
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, value T>
-EVE_FORCEINLINE auto
-floor_(EVE_SUPPORTS(cpu_), C const& cond, T const& a) noexcept
-{
-  return mask_op(cond, eve::floor, a);
-}
+  template<typename T, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
+  {
+    auto z = floor(a0);
+    if constexpr(unsigned_value<U>)
+      return uint_(z);
+    else if constexpr(signed_integral_value<U>)
+      return int_(z);
+    else
+      return z;
+  }
+
 }

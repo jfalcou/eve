@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct conj_t : elementwise_callable<conj_t, Options>
+{
+  template<eve::floating_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(conj_t, conj_);
+};
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -58,7 +70,14 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-  EVE_MAKE_CALLABLE(conj_, conj);
-}
+  inline constexpr auto conj = functor<conj_t>;
 
-#include <eve/module/core/regular/impl/conj.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr T  conj_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    {
+      return v;
+    }
+  }
+}
