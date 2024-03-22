@@ -10,6 +10,7 @@
 #include <eve/arch/cpu/as_register.hpp>
 
 #if !defined(EVE_NO_SIMD)
+#include <eve/arch/wasm/as_register.hpp>
 #include <eve/arch/x86/as_register.hpp>
 #include <eve/arch/ppc/as_register.hpp>
 #include <eve/arch/arm/sve/as_register.hpp>
