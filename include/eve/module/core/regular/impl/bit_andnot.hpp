@@ -18,36 +18,71 @@
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <iostream>
+#include <string>
 
+namespace pipo
+{
+  template<typename T> struct typename_impl
+  {
+    static auto value() noexcept
+    {
+#if defined(_MSC_VER )
+      std::string_view data(__FUNCSIG__);
+      auto i = data.find('<') + 1,
+        j = data.find(">::value");
+      auto name = data.substr(i, j - i);
+#else
+      std::string_view data(__PRETTY_FUNCTION__);
+      auto i = data.find('=') + 2,
+        j = data.find_last_of(']');
+      auto name = data.substr(i, j - i);
+#endif
+      return std::string(name.data(), name.size());
+    }
+  };
+
+  template<typename T> inline auto const typename_ = typename_impl<T>::value();
+  template<typename T> constexpr auto name(T const&){ return typename_<T>; }
+}
 namespace eve::detail
 {
 
   template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr as_wide_as_t<T0, common_value_t<T0, T1, Ts...>>
+  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
   bit_andnot_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... args) noexcept
   {
-
-    using r_t = as_wide_as_t<T0, common_value_t<T0, T1, Ts...>>;
+    using r_t = bit_value_t<T0, T1, Ts...>;
     if constexpr(sizeof...(Ts) == 0)
     {
       if constexpr(scalar_value<r_t>)
       {
-        if constexpr( floating_value<T0> )
+        std::cout << "2" << std::endl;
+        if constexpr( floating_value<r_t> )
         {
           using b_t = as_integer_t<r_t>;
           return bit_cast(b_t(bit_cast(a, as<b_t>()) & ~bit_cast(b, as<b_t>())), as(a));
         }
-        else return T(a & ~b);
+        else return r_t(a & ~b);
+      }
+      else if constexpr(!std::same_as<T0, T1>)
+      {
+        std::cout << "3" << std::endl;
+        return bit_andnot(r_t(a), r_t(b));
       }
       else
       {
-        return arithmetic_call(bit_andnot, a, b); //never to be taken
+        std::cout << "4" << std::endl;
+        std::cout << pipo::name(a) << std::endl;
+        std::cout << pipo::name(b) << std::endl;
+        arithmetic_call(bit_andnot, a, b); //never to be taken
       }
     }
     else
     {
-      auto that = bit_andnot(r_t(a), b);
-      ((that = bit_andnot(that, args)), ...);
+      std::cout << "5" << std::endl;
+      auto that = bit_andnot(r_t(a), r_t(b));
+      ((that = bit_andnot(that, r_t(args))), ...);
       return that;
     }
   }

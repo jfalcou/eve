@@ -4,7 +4,7 @@
 
 int main()
 {
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
+  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
   w_t pi = {3, 2, 3, 4}, qi = {4, 1, 1, ~0};
   std::uint32_t z = 5;
   std::cout << "---- simd" << '\n'
@@ -12,11 +12,12 @@ int main()
             << " <- qi                 = " << qi << '\n'
             << " <- z                  = " << z  << '\n'
             << " -> bit_andnot(pi, qi) = " << eve::bit_andnot(pi, qi) << '\n'
-            << " -> bit_andnot(z,  qi) = " << eve::bit_andnot(z,  qi) << '\n'
-            << " -> bit_andnot(pi, z ) = " << eve::bit_andnot(pi, z) << '\n';
+            << " -> bit_andnot(qi, z ) = " << eve::bit_andnot(qi, z) << '\n'
+            << " -> bit_andnot(pi, z ) = " << eve::bit_andnot(pi, z) << '\n'
+    ;
 
   std::uint32_t mask = 1 >> 31;
-  float xi = -3.4565;
+  float xi = -3.4565f;
 
   std::cout << "---- scalar" << '\n'
             << " <- xi                   = " << xi << '\n'
