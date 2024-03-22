@@ -22,15 +22,15 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
-
+    
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::bit_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
-
+    
     EVE_CALLABLE_OBJECT(bit_andnot_t, bit_andnot_);
   };
-
+  
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -82,8 +82,7 @@ namespace eve
 //!        @godbolt{doc/core/masked/bit_andnot.cpp}
 //! @}
 //================================================================================================
-inline constexpr auto bit_andnot = functor<bit_andnot_t>;
-
+  inline constexpr auto bit_andnot = functor<bit_andnot_t>;
 }
 
 #include <eve/module/core/regular/impl/bit_andnot.hpp>

@@ -17,8 +17,6 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 
-
-
 namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
@@ -50,7 +48,7 @@ namespace eve::detail
     else
     {
       auto that = bit_and(r_t(b), r_t(args...));
-      return eve::bit_notand(a, that);
+      return eve::bit_notand(r_t(a), that);
     }
   }
 }
