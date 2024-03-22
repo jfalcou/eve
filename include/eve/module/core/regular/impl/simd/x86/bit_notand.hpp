@@ -20,10 +20,11 @@ namespace eve ::detail
 // -----------------------------------------------------------------------------------------------
 // 128 bits implementation
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                bit_notand_(EVE_SUPPORTS(sse2_),
-                            wide<T, N> const                &v0,
-                            wide<T, N> const                &v1) noexcept requires std::same_as<abi_t<T, N>, x86_128_>
+EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_SUPPORTS(sse2_),
+                                       O const          &,
+                                       wide<T, N> const &v0,
+                                       wide<T, N> const &v1) noexcept
+requires std::same_as<abi_t<T, N>, x86_128_>
 {
   if constexpr( std::is_same_v<T, float> ) return _mm_andnot_ps(v0, v1);
   else if constexpr( std::is_same_v<T, double> ) return _mm_andnot_pd(v0, v1);

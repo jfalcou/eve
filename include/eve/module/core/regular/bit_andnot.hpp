@@ -94,14 +94,14 @@ inline constexpr auto bit_andnot = functor<bit_andnot_t>;
 #  include <eve/module/core/regular/impl/simd/x86/bit_andnot.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/module/core/regular/impl/simd/ppc/bit_andnot.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/bit_andnot.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/neon/bit_andnot.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_andnot.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/bit_andnot.hpp>
-// #endif
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/bit_andnot.hpp>
+#endif
