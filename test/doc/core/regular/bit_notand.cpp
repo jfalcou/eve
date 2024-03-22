@@ -12,7 +12,7 @@ int main()
             << " <- qi                 = " << qi << '\n'
             << " <- z                  = " << z  << '\n'
             << " -> bit_notand(pi, qi) = " << eve::bit_notand(pi, qi) << '\n'
-            << " -> bit_notand(z,  qi) = " << eve::bit_notand(z,  qi) << '\n'
+            << " -> bit_notand(qi, z ) = " << eve::bit_notand(qi, z) << '\n'
             << " -> bit_notand(pi, z ) = " << eve::bit_notand(pi, z) << '\n';
 
   std::uint32_t mask = 1 >> 31;

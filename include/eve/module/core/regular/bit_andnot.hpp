@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/traits/bit_value.hpp>
@@ -20,7 +19,6 @@ namespace eve
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-    // requires bit_compatible_values<T0, T1> && (bit_compatible_values<T1, Ts> &&...)
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
