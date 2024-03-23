@@ -35,10 +35,10 @@ namespace eve::detail
         }
         else return r_t(~a) & r_t(b);
       }
-      else if constexpr(!std::same_as<T0, T1>)
-      {
-        return bit_notand(r_t(a), r_t(b));
-      }
+//       else if constexpr(!std::same_as<T0, T1>)
+//       {
+//         return bit_notand(r_t(a), r_t(b));
+//       }
       else
       {
         using b_t = as_integer_t<r_t>;
