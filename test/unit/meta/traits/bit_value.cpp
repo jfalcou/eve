@@ -45,12 +45,24 @@ TTS_CASE("Mixed scalar/SIMD bit_value")
   TTS_TYPE_IS((eve::bit_value_t<wide<std::uint8_t>, std::int8_t, eve::wide<double>>), wide<std::uint8_t>);
   TTS_TYPE_IS((eve::bit_value_t<wide<float>, wide<std::int64_t>, std::uint32_t>)    , wide<float>       );
   TTS_TYPE_IS((eve::bit_value_t<wide<std::int32_t>, float>)                         , wide<std::int32_t>);
+  TTS_TYPE_IS((eve::bit_value_t<float, wide<std::int32_t>>)                         , wide<float>);
 
-  [[maybe_unused]] double                   x = {};
-  TTS_EXPECT_NOT_COMPILES (x, { g(x); });
+  TTS_TYPE_IS((eve::bit_value_t<float, int, wide<std::int32_t>>)                    , wide<float>);
+  TTS_TYPE_IS((eve::bit_value_t<double, eve::wide<float,eve::fixed<2>>
+                                      , eve::wide<int,eve::fixed<2>>
+                                      , std::int64_t
+                                      , eve::wide<char,eve::fixed<8>>
+                                      >)
+              , (wide<double,eve::fixed<1>>)
+              );
+
+  [[maybe_unused]] double x = {};
+  TTS_EXPR_IS(g(x), (eve::wide<double,eve::fixed<2>>) );
+  TTS_EXPECT_COMPILES(x, { g(x); });
 
   [[maybe_unused]] eve::wide<std::int32_t>  y = {};
-  TTS_EXPECT_COMPILES     (y, { f(y); });
+  TTS_EXPR_IS(f(y), (eve::wide<std::int32_t,eve::fixed<4>>) );
+  TTS_EXPECT_COMPILES(y, { f(y); });
 
   [[maybe_unused]] eve::wide<std::int64_t>  z = {};
   TTS_EXPECT_NOT_COMPILES (z, { f(z); });
