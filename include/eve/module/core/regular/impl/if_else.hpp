@@ -24,6 +24,7 @@
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bit_ornot.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
+#include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/traits/common_compatible.hpp>
 
@@ -141,7 +142,13 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& u, Constant const& v) noexc
     {
       if constexpr( std::same_as<Constant, callable_one_> )
       {
-        return -bit_ornot(U(-u), bit_mask(mask));
+        if constexpr(scalar_value<U>)
+        {
+          using r_t = as_wide_as_t<U, decltype(bit_mask(mask))>;
+          return minus(bit_ornot(minus(r_t(u)), bit_mask(mask)));
+        }
+        else
+          return minus(bit_ornot(minus(u), bit_mask(mask)));
       }
       else if constexpr( std::same_as<Constant, callable_mone_> )
       {
