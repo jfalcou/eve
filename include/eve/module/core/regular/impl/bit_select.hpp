@@ -23,7 +23,6 @@ namespace eve::detail
   bit_select_(EVE_REQUIRES(cpu_), O const&, M m, T u, U v) noexcept
   {
     using c_t = common_value_t<T, U>;
-    using r_t = bit_value_t<c_t, M>;
     if constexpr(!std::same_as<T, U>)
       return bit_select(m, c_t(u), c_t(v));
     else
