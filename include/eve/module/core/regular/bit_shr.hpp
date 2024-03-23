@@ -21,7 +21,7 @@ namespace eve
     template<eve::value T, integral_value I >
     constexpr EVE_FORCEINLINE  as_wide_as_t<T, I> operator()(T v, I i) const
     {
-      EVE_ASSERT(assert_good_shift<T>(i),
+      EVE_ASSERT(detail::assert_good_shift<T>(i),
                  "[eve::bit_shr] Shifting by " << i << " is out of the range [0, "
                  << sizeof(element_type_t<T>) * 8 << "[.");
       return EVE_DISPATCH_CALL(v, i);
@@ -31,7 +31,7 @@ namespace eve
     //    requires(unsigned_scalar_value<element_type_t<T>>)
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<I> i) const
     {
-      EVE_ASSERT(assert_good_shift<T>(i),
+      EVE_ASSERT(detail::assert_good_shift<T>(i),
                  "[eve::bit_shr] Shifting by " << i << " is out of the range [0, "
                  << sizeof(element_type_t<T>) * 8 << "[.");
       return EVE_DISPATCH_CALL(v, i);
