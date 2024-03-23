@@ -9,14 +9,12 @@
 
 #include <eve/concept/range.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/slice.hpp>
-#include <eve/detail/has_abi.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/traits/cardinal.hpp>
-#include <algorithm>
 #include <type_traits>
+#include <algorithm>
 #include <utility>
 
 namespace eve::detail
@@ -32,24 +30,6 @@ namespace eve::detail
   constexpr decltype(auto) at(T &&t, std::size_t) noexcept requires(!has_indexed_get<T>)
   {
     return EVE_FWD(t);
-  }
-
-  // Subparts extraction
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto upper(T &&t) noexcept
-  {
-    using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return EVE_FWD(t).slice(upper_);
-    else                          return EVE_FWD(t);
-  }
-
-  // Lower values extraction
-  template<typename T>
-  EVE_FORCEINLINE constexpr auto lower(T &&t) noexcept
-  {
-    using u_t = std::remove_cvref_t<T>;
-    if constexpr(simd_value<u_t>) return EVE_FWD(t).slice(lower_);
-    else                          return EVE_FWD(t);
   }
 
   // Compute a transformed wide type
@@ -131,94 +111,21 @@ namespace eve::detail
     }
   }
 
-  // AGGREGATE skeleton used to emulate SIMD operations on aggregated wide
-  template<std::size_t I> struct aggregate_step
-  {
-    template<typename T>
-    static EVE_FORCEINLINE constexpr auto subpart(T &t) noexcept
-    {
-      if constexpr(simd_value<T>) return t.storage().template get<I>();
-      else                        return t;
-    }
-
-    template<typename T>
-    static EVE_FORCEINLINE constexpr auto subpart(T const &t) noexcept
-    {
-      if constexpr(simd_value<T>) return t.storage().template get<I>();
-      else                        return t;
-    }
-
-    // Not a lambda as we need force-inlining
-    template<typename Func, typename Out, typename... Ts>
-    static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts &... ts) -> decltype(auto)
-    {
-      dst.template get<I>() =  EVE_FWD(f)( subpart(ts)... );
-    }
-
-    template<typename Func, typename Out, typename... Ts>
-    static EVE_FORCEINLINE auto perform(Func &&f, Out& dst, Ts const&... ts) -> decltype(auto)
-    {
-      dst.template get<I>() =  EVE_FWD(f)( subpart(ts)... );
-    }
-  };
-
-  // Extract the # of registers used by a wide (0 if T is scalar)
-  template<typename T> constexpr auto replication() noexcept
-  {
-    if constexpr( scalar_value<T> )             return 0;
-    else if constexpr(has_aggregated_abi_v<T>)  return T::storage_type::replication;
-    else                                        return 1;
-  }
-
-  // Check if O o = f(I{}...) can be optimized as a non-recursive aggregate call
-  template<typename O, typename... I> constexpr bool is_fully_sliceable() noexcept
-  {
-    constexpr std::size_t reps[]  = { replication<std::decay_t<I>>()... };
-    constexpr auto              w = replication<O>();
-    bool r = true;
-
-    // If output is not aggregated, we need to go recursive
-    if(replication<O>() <= 1) return false;
-
-    // Check that every parts are sliceable
-    for(auto s : reps) r = r && (s == w || s == 0);
-    return r;
-  }
-
   template<typename Func, typename... Ts>
-  EVE_FORCEINLINE auto aggregate(Func &&f, Ts &&... ts)
+  EVE_FORCEINLINE auto aggregate(Func f, Ts... ts)
   {
+    // We use this function to turn every parameters into either a pair of slices
+    // or a pair of scalar so that the apply later down is more regular
+    auto slicer = []<typename T>(T t)
+    {
+      if constexpr(simd_value<T>) return t.slice(); else return kumi::make_tuple(t,t);
+    };
+
+    // Build the lists of all ready-to-aggregate values
+    auto parts = kumi::make_tuple(slicer(ts)...);
+
+    // Apply f on both side of the slices and re-combine
     using wide_t = typename wide_result<Func, Ts...>::type;
-
-    // Full sliceable case
-    if constexpr( is_fully_sliceable<wide_t,std::decay_t<Ts>...>() )
-    {
-      wide_t that;
-
-      // If everything can be sliced in equal sub-parts, we save compile-time and
-      // simplify debugging by iterating over all smallest sub-parts
-      detail::apply<replication<wide_t>()>
-      ( [&]<typename... I>(I const&...)
-        {
-          ( ( aggregate_step<I::value>::perform ( EVE_FWD(f)
-                                                , that.storage()
-                                                , EVE_FWD(ts)...
-                                                )
-            ),...
-          );
-        }
-      );
-
-      return that;
-    }
-    // Recursive case
-    else
-    {
-      // We end up there if we have a difference of # of replications inside
-      // This happens in conversions context or when we call a function on a
-      // AVX/AVX2 type with no implementation.
-      return wide_t{EVE_FWD(f)(lower(EVE_FWD(ts))...),
-                    EVE_FWD(f)(upper(EVE_FWD(ts))...)};
-    }
+    return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
   }
 }
