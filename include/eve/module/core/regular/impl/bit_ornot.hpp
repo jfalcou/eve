@@ -22,7 +22,7 @@ namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
-  bit_ornot_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... args) noexcept
+  bit_ornot_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
     if constexpr(sizeof...(Ts) == 0)
