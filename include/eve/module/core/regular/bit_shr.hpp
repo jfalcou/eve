@@ -8,12 +8,38 @@
 #pragma once
 
 #include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/assert.hpp>
 #include <eve/detail/assert_utils.hpp>
-#include <eve/detail/overload.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_shr_t : elementwise_callable<bit_shr_t, Options>
+  {
+    template<eve::value T, integral_value I >
+    constexpr EVE_FORCEINLINE  as_wide_as_t<T, I> operator()(T v, I i) const
+    {
+      EVE_ASSERT(assert_good_shift<T>(i),
+                 "[eve::bit_shr] Shifting by " << i << " is out of the range [0, "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+      return EVE_DISPATCH_CALL(v, i);
+    }
+
+    template<eve::integral_value T, auto I >
+    //    requires(unsigned_scalar_value<element_type_t<T>>)
+    constexpr EVE_FORCEINLINE T operator()(T v, index_t<I> i) const
+    {
+      EVE_ASSERT(assert_good_shift<T>(i),
+                 "[eve::bit_shr] Shifting by " << i << " is out of the range [0, "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+      return EVE_DISPATCH_CALL(v, i);
+    }
+
+    EVE_CALLABLE_OBJECT(bit_shr_t, bit_shr_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -73,35 +99,7 @@ namespace eve
 //!        @godbolt{doc/core/masked/bit_shr.cpp}
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct bit_shr_;
-}
-
-namespace detail
-{
-  template<typename T, typename S>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::bit_shr_), T const&,
-        [[maybe_unused]] S const& s)
-  {
-    EVE_ASSERT(assert_good_shift<T>(s),
-               "[eve::bit_shr] Shifting by " << s << " is out of the range [0, "
-                                             << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-
-  template<conditional_expr C, typename T, typename S>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::bit_shr_), C const& , T const&,
-        [[maybe_unused]] S const& s)
-  {
-    EVE_ASSERT(assert_good_shift<T>(s),
-               "[eve::bit_shr] Shifting by " << s << " is out of the range [0, "
-                                             << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-}
-
-EVE_MAKE_CALLABLE(bit_shr_, bit_shr);
+  inline constexpr auto bit_shr = functor<bit_shr_t>;
 }
 
 #include <eve/module/core/regular/impl/bit_shr.hpp>
