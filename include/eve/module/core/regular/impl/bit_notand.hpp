@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
-  bit_notand_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... args) noexcept
+  bit_notand_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
     if constexpr(sizeof...(Ts) == 0)
@@ -35,10 +35,6 @@ namespace eve::detail
         }
         else return r_t(~a) & r_t(b);
       }
-//       else if constexpr(!std::same_as<T0, T1>)
-//       {
-//         return bit_notand(r_t(a), r_t(b));
-//       }
       else
       {
         using b_t = as_integer_t<r_t>;
