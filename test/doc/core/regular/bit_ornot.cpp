@@ -12,7 +12,7 @@ int main()
             << " <- qi                = " << qi << '\n'
             << " <- z                 = " << z  << '\n'
             << " -> bit_ornot(pi, qi) = " << eve::bit_ornot(pi, qi) << '\n'
-            << " -> bit_ornot(z,  qi) = " << eve::bit_ornot(z,  qi) << '\n'
+            << " -> bit_ornot(qi, z ) = " << eve::bit_ornot(qi, z) << '\n'
             << " -> bit_ornot(pi, z ) = " << eve::bit_ornot(pi, z) << '\n';
 
   std::uint32_t mask = 1 >> 31;
