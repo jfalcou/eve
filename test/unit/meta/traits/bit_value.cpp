@@ -60,8 +60,8 @@ TTS_CASE("Mixed scalar/SIMD bit_value")
   TTS_EXPR_IS(g(x), (eve::wide<double,eve::fixed<2>>) );
   TTS_EXPECT_COMPILES(x, { g(x); });
 
-  [[maybe_unused]] eve::wide<std::int32_t>  y = {};
-  TTS_EXPR_IS(f(y), (eve::wide<std::int32_t>)); //,eve::fixed<4>>) ); //TODO Est-ce bien le bon correctif ?
+  [[maybe_unused]] eve::wide<std::int32_t,eve::fixed<4>>  y = {};
+  TTS_EXPR_IS(f(y), (eve::wide<std::int32_t,eve::fixed<4>>));
   TTS_EXPECT_COMPILES(y, { f(y); });
 
   [[maybe_unused]] eve::wide<std::int64_t>  z = {};
