@@ -34,7 +34,7 @@ namespace eve::detail
       using rb_t = std::conditional_t<scalar_value<T1>,element_type_t<b_t>,b_t>;
       auto ba = bit_cast(a, as<ra_t>{});
       auto bb = bit_cast(b, as<rb_t>{});
-      return bit_cast( bit_and(b_t(ba),bit_not(b_t(bb)) ), as(a));
+      return bit_cast( bit_and(b_t(ba),bit_not(b_t(bb)) ), as<r_t>());
     }
     else
     {
