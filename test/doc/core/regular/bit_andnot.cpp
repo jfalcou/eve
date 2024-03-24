@@ -16,7 +16,7 @@ int main()
             << " -> bit_andnot(pi, z ) = " << eve::bit_andnot(pi, z) << '\n'
     ;
 
-  std::uint32_t mask = 1 >> 31;
+  std::uint32_t mask = 1 << 31;
   float xi = -3.4565f;
 
   std::cout << "---- scalar" << '\n'
