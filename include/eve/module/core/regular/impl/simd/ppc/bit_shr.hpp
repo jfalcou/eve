@@ -21,7 +21,7 @@ namespace eve::detail
 {
 
   template<integral_scalar_value T, typename N, integral_scalar_value I, callable_options O>
-  EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(vmx_),
+  EVE_FORCEINLINE auto bit_shr_(EVE_REQUIRES(vmx_),
                                 O          const& ,
                                 wide<T, N> const& v0,
                                 wide<I, N> const& v1) noexcept
@@ -32,7 +32,7 @@ namespace eve::detail
   }
 
   template<integral_scalar_value T, typename N, integral_scalar_value I, callable_options O>
-  EVE_FORCEINLINE auto bit_shr_(EVE_SUPPORTS(vmx_),
+  EVE_FORCEINLINE auto bit_shr_(EVE_REQUIRES(vmx_),
                                 O          const& ,
                                 wide<T, N> const& v0,
                                 I                 v1) noexcept

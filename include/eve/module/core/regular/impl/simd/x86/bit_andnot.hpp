@@ -14,7 +14,6 @@
 #include <eve/module/core/regular/if_else.hpp>
 
 #include <type_traits>
-#include <iostream>
 
 namespace eve ::detail
 {

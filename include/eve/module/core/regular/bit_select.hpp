@@ -18,7 +18,7 @@ namespace eve
   struct bit_select_t : elementwise_callable<bit_select_t, Options>
   {
     template<eve::value M, value T, value U>
-    constexpr EVE_FORCEINLINE bit_value_t<common_value_t<T, U>, M>
+    constexpr EVE_FORCEINLINE bit_value_t<T, U, M>
     operator()(M m, T u, U v) const
     { return EVE_DISPATCH_CALL(m, u, v); }
 
