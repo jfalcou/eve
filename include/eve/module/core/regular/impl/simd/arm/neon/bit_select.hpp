@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_select_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE wide<T, N> bit_select_(EVE_REQUIRES(neon128_),
                                          O const          &,
                                          wide<T, N> const &m,
                                          wide<T, N> const &v0,
