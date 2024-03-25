@@ -94,7 +94,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_TARGETS(cpu_), other, as<T> {});
+      auto bit_other = bit_cast(other, as<T> {});
       return self_bitand(self, type {bit_other});
     }
     else
@@ -102,7 +102,7 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = T(self.get(I) & other.get(I))), ...); });
+        apply<N::value>([&](auto... I) { ((data[I] = bit_and(self.get(I), other.get(I))), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -125,7 +125,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_TARGETS(cpu_), other, as<T> {});
+      auto bit_other = bit_cast(other, as<T> {});
       return self_bitor(self, type {bit_other});
     }
     else
@@ -133,7 +133,7 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = T(self.get(I) | other.get(I))), ...); });
+        apply<N::value>([&](auto... I) { ((data[I] = bit_or(self.get(I), other.get(I))), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -156,7 +156,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_TARGETS(cpu_), other, as<T> {});
+      auto bit_other = bit_cast(other, as<T> {});
       return self_bitxor(self, type {bit_other});
     }
     else
@@ -164,7 +164,7 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = T(self.get(I) ^ other.get(I))), ...); });
+        apply<N::value>([&](auto... I) { ((data[I] = bit_xor(self.get(I), other.get(I))), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )

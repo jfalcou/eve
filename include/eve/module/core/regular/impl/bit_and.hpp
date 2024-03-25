@@ -21,7 +21,6 @@ namespace eve::detail
   bit_and_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
-    using b_t = as_integer_t<r_t>;
     auto that = bit_and(r_t(a), r_t(b));
     ((that = bit_and(that, r_t(args))), ...);
     return that;
