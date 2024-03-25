@@ -94,7 +94,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
+      auto bit_other = detail::bit_cast_(EVE_TARGETS(cpu_), other, as<T> {});
       return self_bitand(self, type {bit_other});
     }
     else
@@ -104,7 +104,7 @@ namespace eve::detail
         auto& data = self.storage();
 
         apply<N::value>([&](auto... I) {
-          ((data[I] = bit_and_(EVE_RETARGET(cpu_), self.get(I), other.get(I))), ...);
+          ((data[I] = bit_and_(EVE_TARGETS(cpu_), self.get(I), other.get(I))), ...);
         });
 
         return self;
@@ -129,7 +129,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
+      auto bit_other = detail::bit_cast_(EVE_TARGETS(cpu_), other, as<T> {});
       return self_bitor(self, type {bit_other});
     }
     else
@@ -139,7 +139,7 @@ namespace eve::detail
         auto& data = self.storage();
 
         apply<N::value>([&](auto... I) {
-          ((data[I] = bit_or_(EVE_RETARGET(cpu_), self.get(I), other.get(I))), ...);
+          ((data[I] = bit_or_(EVE_TARGETS(cpu_), self.get(I), other.get(I))), ...);
         });
 
         return self;
@@ -164,7 +164,7 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
+      auto bit_other = detail::bit_cast_(EVE_TARGETS(cpu_), other, as<T> {});
       return self_bitxor(self, type {bit_other});
     }
     else
@@ -174,7 +174,7 @@ namespace eve::detail
         auto& data = self.storage();
 
         apply<N::value>([&](auto... I) {
-          ((data[I] = bit_xor_(EVE_RETARGET(cpu_), self.get(I), other.get(I))), ...);
+          ((data[I] = bit_xor_(EVE_TARGETS(cpu_), self.get(I), other.get(I))), ...);
         });
 
         return self;
