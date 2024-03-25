@@ -101,7 +101,7 @@ namespace eve::detail
     using rb_t = std::conditional_t<scalar_value<U>,element_type_t<b_t>,b_t>;
     auto ba = bit_cast(a, as<ra_t>{});
     auto bb = bit_cast(b, as<rb_t>{});
-    return bit_cast( b_t(ba) & (b_t(bb) ), as<r_t>());
+    return bit_cast( b_t(b_t(ba) & (b_t(bb)) ), as<r_t>());
   }
 
   template<value T, value U, callable_options O>
@@ -117,7 +117,7 @@ namespace eve::detail
     using rb_t = std::conditional_t<scalar_value<U>,element_type_t<b_t>,b_t>;
     auto ba = bit_cast(a, as<ra_t>{});
     auto bb = bit_cast(b, as<rb_t>{});
-    return bit_cast( b_t(ba) | (b_t(bb) ), as<r_t>());
+    return bit_cast( b_t(b_t(ba) | (b_t(bb)) ), as<r_t>());
   }
 
   template<value T, value U, callable_options O>
@@ -133,6 +133,6 @@ namespace eve::detail
     using rb_t = std::conditional_t<scalar_value<U>,element_type_t<b_t>,b_t>;
     auto ba = bit_cast(a, as<ra_t>{});
     auto bb = bit_cast(b, as<rb_t>{});
-    return bit_cast( b_t(ba) ^ (b_t(bb) ), as<r_t>());
+    return bit_cast( b_t(b_t(ba) ^ (b_t(bb)) ), as<r_t>());
   }
 }
