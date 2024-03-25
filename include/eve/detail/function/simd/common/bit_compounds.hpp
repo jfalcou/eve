@@ -102,11 +102,7 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-
-        apply<N::value>([&](auto... I) {
-          ((data[I] = bit_and_(EVE_TARGETS(cpu_), self.get(I), other.get(I))), ...);
-        });
-
+        apply<N::value>([&](auto... I) { ((data[I] = T(self.get(I) & other.get(I))), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -137,11 +133,7 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-
-        apply<N::value>([&](auto... I) {
-          ((data[I] = bit_or_(EVE_TARGETS(cpu_), self.get(I), other.get(I))), ...);
-        });
-
+        apply<N::value>([&](auto... I) { ((data[I] = T(self.get(I) | other.get(I))), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -172,11 +164,7 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-
-        apply<N::value>([&](auto... I) {
-          ((data[I] = bit_xor_(EVE_TARGETS(cpu_), self.get(I), other.get(I))), ...);
-        });
-
+        apply<N::value>([&](auto... I) { ((data[I] = T(self.get(I) ^ other.get(I))), ...); });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
