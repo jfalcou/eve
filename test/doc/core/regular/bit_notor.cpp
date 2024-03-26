@@ -12,7 +12,7 @@ int main()
             << " <- qi                = " << qi << '\n'
             << " <- z                 = " << z  << '\n'
             << " -> bit_notor(pi, qi) = " << eve::bit_notor(pi, qi) << '\n'
-            << " -> bit_notor(z,  qi) = " << eve::bit_notor(z,  qi) << '\n'
+            << " -> bit_notor(qi, z)  = " << eve::bit_notor(qi,  z) << '\n'
             << " -> bit_notor(pi, z ) = " << eve::bit_notor(pi, z) << '\n';
 
   std::uint32_t mask = 1 >> 31;

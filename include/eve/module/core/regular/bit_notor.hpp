@@ -6,12 +6,30 @@
 */
 //==================================================================================================
 #pragma once
-
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/traits/bit_value.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_notor_t : tuple_callable<bit_notor_t, Options>
+  {
+    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
+    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::bit_value,Tup>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(bit_notor_t, bit_notor_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -63,8 +81,9 @@ namespace eve
 //!        @godbolt{doc/core/masked/bit_notor.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_notor_, bit_notor);
+  inline constexpr auto bit_notor = functor<bit_notor_t>;
 }
+
 
 #include <eve/module/core/regular/impl/bit_notor.hpp>
 

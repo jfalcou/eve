@@ -17,23 +17,11 @@
 
 namespace eve::detail
 {
-template<value T, value U, value V>
-EVE_FORCEINLINE auto
-bit_select_(EVE_SUPPORTS(cpu_),
-            T const& a,
-            U const& b,
-            V const& c) noexcept requires bit_compatible_values<T, U> && bit_compatible_values<T, V>
-{
-  return bit_call(bit_select, a, b, c);
-}
 
-template<ordered_value T>
-EVE_FORCEINLINE auto
-bit_select_(EVE_SUPPORTS(cpu_), T const& a, T const& b, T const& c) noexcept
-{
-  if constexpr(scalar_value<T>)
-    return bit_or(bit_and(b, a), bit_andnot(c, a));
-  else  // fallback never taken if proper intrinsics are at hand
-    return (b & a) | bit_andnot(c, a);
-}
+  template<typename T, typename U, typename M, callable_options O>
+  EVE_FORCEINLINE constexpr bit_value_t<T, U, M>
+  bit_select_(EVE_REQUIRES(cpu_), O const&, M m, T u, U v) noexcept
+  {
+    return bit_or(bit_and(u, m), bit_andnot(v, m));
+  }
 }

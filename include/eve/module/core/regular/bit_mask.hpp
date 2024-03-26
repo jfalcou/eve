@@ -6,11 +6,23 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_mask_t : elementwise_callable<bit_mask_t, Options>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE auto operator()(T v) const
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(bit_mask_t, bit_mask_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -62,7 +74,15 @@ namespace eve
 //!        @godbolt{doc/core/masked/bit_mask.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_mask_, bit_mask);
-}
+  inline constexpr auto bit_mask = functor<bit_mask_t>;
 
-#include <eve/module/core/regular/impl/bit_mask.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    bit_mask_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    {
+      return is_nez(v).mask();
+    }
+  }
+}

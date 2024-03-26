@@ -14,15 +14,15 @@
 
 namespace eve::detail
 {
-template<typename T, typename U, typename N>
-EVE_FORCEINLINE wide<T, N>
-                bit_select_(EVE_SUPPORTS(vmx_),
-                            wide<U, N> const                &m,
-                            wide<T, N> const                &v0,
-                            wide<T, N> const                &v1) noexcept requires ppc_abi<abi_t<T, N>>
-{
-  using i_t = wide<as_integer_t<T, unsigned>, N>;
+  template<typename T, typename U, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> bit_select_(EVE_REQUIRES(vmx_),
+                                         O const          &,
+                                         wide<U, N> const &m,
+                                         wide<T, N> const &v0,
+                                         wide<T, N> const &v1) noexcept requires ppc_abi<abi_t<T, N>>
+  {
+    using i_t = wide<as_integer_t<T, unsigned>, N>;
 
-  return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as<i_t>()).storage());
-}
+    return vec_sel(v1.storage(), v0.storage(), bit_cast(m, as<i_t>()).storage());
+  }
 }
