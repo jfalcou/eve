@@ -24,7 +24,7 @@ namespace eve::detail
     if constexpr( N::value  == expected_cardinal_v<T> )
     {
       that_t that;
-      that.storage().combine(l,h);
+      that.storage().assign_parts(l,h);
       return that;
     }
     else
@@ -44,7 +44,7 @@ namespace eve::detail
     if constexpr( N::value  == expected_cardinal_v<T> )
     {
       that_t that;
-      that.storage().combine(l,h);
+      that.storage().assign_parts(l,h);
       return that;
     }
     else

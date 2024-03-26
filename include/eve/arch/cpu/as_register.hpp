@@ -73,7 +73,7 @@ namespace eve
 
       std::array<value_type, replication> storage;
 
-      EVE_FORCEINLINE void combine(subvalue_type const& l, subvalue_type const& h)
+      EVE_FORCEINLINE void assign_parts(subvalue_type const& l, subvalue_type const& h)
       {
         std::array<subvalue_type,2> data{l,h};
 
@@ -82,7 +82,7 @@ namespace eve
         std::memcpy(dst, src, sizeof(*this));
       }
 
-      EVE_FORCEINLINE auto slices() const
+      EVE_FORCEINLINE auto slice() const
       {
         std::array<subvalue_type,2> data{};
 

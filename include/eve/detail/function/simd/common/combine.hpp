@@ -29,7 +29,7 @@ namespace eve::detail
     else if constexpr( has_aggregated_abi_v<that_t> )
     {
       that_t that;
-      that.storage().combine(l,h);
+      that.storage().assign_parts(l,h);
       return that;
     }
     else if constexpr( is_bundle_v<abi_t<T, N>> )
@@ -51,7 +51,7 @@ namespace eve::detail
     else if constexpr( has_aggregated_abi_v<that_t> )
     {
       that_t that;
-      that.storage().combine(l,h);
+      that.storage().assign_parts(l,h);
       return that;
     }
     else
