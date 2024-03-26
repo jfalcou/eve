@@ -7,10 +7,29 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct count_true_t : elementwise_callable<count_true_t, Options>
+  {
+    constexpr EVE_FORCEINLINE ptrdiff_t operator()(bool v) const  noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE ptrdiff_t operator()(logical<T> v) const  noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<logical_simd_value L>
+    constexpr EVE_FORCEINLINE ptrdiff_t operator()(top_bits<L> m) const  noexcept
+    { return EVE_DISPATCH_CALL(m); }
+
+    EVE_CALLABLE_OBJECT(count_true_t, count_true_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_reduction
 //! @{
@@ -63,7 +82,8 @@ namespace eve
 //!        @godbolt{doc/core/masked/count_true.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(count_true_, count_true);
+inline constexpr auto count_true = functor<count_true_t>;
+
 }
 
 #include <eve/module/core/regular/impl/count_true.hpp>
