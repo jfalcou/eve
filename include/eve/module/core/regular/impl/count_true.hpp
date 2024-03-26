@@ -16,35 +16,31 @@
 
 namespace eve::detail
 {
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(cpu_), bool v) noexcept
-{
-  return v ? 1 : 0;
-}
 
-template<value T>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(cpu_), logical<T> v) noexcept
-{
-  if constexpr( scalar_value<T> ) return v.value() ? 1 : 0;
-  else return count_true(eve::top_bits {v});
-}
-
-template<simd_value T, relative_conditional_expr C>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(cpu_), C cond, logical<T> v) noexcept
-{
-  return count_true(top_bits {v, cond});
-}
-
-template<logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_SUPPORTS(cpu_), top_bits<Logical> mmask) noexcept
-{
-  if constexpr( !top_bits<Logical>::is_aggregated )
+  template<callable_options O>
+  EVE_FORCEINLINE constexpr ptrdiff_t
+  count_true_(EVE_REQUIRES(cpu_), O const&, bool t) noexcept
   {
-    return std::popcount(mmask.as_int()) / top_bits<Logical>::bits_per_element;
+    return ptrdiff_t(t);
   }
-  else { return count_true(mmask.storage[0]) + count_true(mmask.storage[1]); }
-}
+
+  template<value T, callable_options O>
+  EVE_FORCEINLINE constexpr ptrdiff_t
+  count_true_(EVE_REQUIRES(cpu_), O const&, logical<T> t) noexcept
+  {
+    if constexpr( scalar_value<T> )
+      return  ptrdiff_t(t.value());
+    else
+      return count_true(eve::top_bits {t});
+  }
+
+  template<logical_simd_value L, callable_options O>
+  EVE_FORCEINLINE constexpr ptrdiff_t
+  count_true_(EVE_REQUIRES(cpu_), O const&,  top_bits<L> mmask) noexcept
+  {
+    if constexpr( !top_bits<L>::is_aggregated )
+      return std::popcount(mmask.as_int()) / top_bits<L>::bits_per_element;
+    else
+      return count_true(mmask.storage[0]) + count_true(mmask.storage[1]);
+  }
 }
