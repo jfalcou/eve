@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_notand_t : tuple_callable<bit_notand_t, Options, numeric_option, pedantic_option, saturated_option>
+  struct bit_notand_t : tuple_callable<bit_notand_t, Options>
   {
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>

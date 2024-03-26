@@ -17,8 +17,6 @@
 
 namespace eve ::detail
 {
-  // -----------------------------------------------------------------------------------------------
-  // 128 bits implementation
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> bit_andnot_(EVE_REQUIRES(sse2_),
                                          O const          &,

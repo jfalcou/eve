@@ -75,13 +75,6 @@ namespace eve
 //!  @}
 //================================================================================================
   inline constexpr auto bit_select = functor<bit_select_t>;
-namespace tag
-{
-  struct bit_select_;
-}
-template<> struct supports_conditional<tag::bit_select_> : std::false_type
-{};
-
 }
 
 #include <eve/module/core/regular/impl/bit_select.hpp>
