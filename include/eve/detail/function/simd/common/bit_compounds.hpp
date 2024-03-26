@@ -102,7 +102,12 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = bit_and(self.get(I), other.get(I))), ...); });
+        apply<N::value>([&](auto... I)
+        {
+          using i_t = as_integer_t<T>;
+          using t_t = as<i_t>;
+          ((data[I] = bit_cast( i_t(bit_cast(self.get(I),t_t{}) & bit_cast(other.get(I),t_t{})), as<T>{})), ...);
+        });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -133,7 +138,12 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = bit_or(self.get(I), other.get(I))), ...); });
+        apply<N::value>([&](auto... I)
+        {
+          using i_t = as_integer_t<T>;
+          using t_t = as<i_t>;
+          ((data[I] = bit_cast( i_t(bit_cast(self.get(I),t_t{}) | bit_cast(other.get(I),t_t{})), as<T>{})), ...);
+        });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -164,7 +174,12 @@ namespace eve::detail
       if constexpr( is_emulated_v<abi_t<T, N>> )
       {
         auto& data = self.storage();
-        apply<N::value>([&](auto... I) { ((data[I] = bit_xor(self.get(I), other.get(I))), ...); });
+        apply<N::value>([&](auto... I)
+        {
+          using i_t = as_integer_t<T>;
+          using t_t = as<i_t>;
+          ((data[I] = bit_cast( i_t(bit_cast(self.get(I),t_t{}) ^ bit_cast(other.get(I),t_t{})), as<T>{})), ...);
+        });
         return self;
       }
       else if constexpr( is_aggregated_v<abi_t<T, N>> )
