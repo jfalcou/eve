@@ -18,7 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sve_),
                                          O const         &,
                                          wide<T, N> const& v0,
-                                         wide<T, N> const& v1) noexcept -> wide<T, N>
+                                         wide<T, N> const& v1) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     using i_t = typename wide<T, N>::template rebind<as_integer_t<T>,N>;
