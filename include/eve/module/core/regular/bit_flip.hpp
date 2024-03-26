@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/all.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_flip_t : elementwise_callable<bit_flip_t, Options>
+  {
+    template<eve::value T, integral_value I>
+    constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
+    { return EVE_DISPATCH_CALL(v, i); }
+
+    EVE_CALLABLE_OBJECT(bit_flip_t, bit_flip_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -61,7 +77,17 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_flip_, bit_flip);
-}
+  inline constexpr auto bit_flip = functor<bit_flip_t>;
 
-#include <eve/module/core/regular/impl/bit_flip.hpp>
+  namespace detail
+  {
+    template<typename T, integral_value I, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    bit_flip_(EVE_REQUIRES(cpu_), O const&, T const& a, I const & i) noexcept
+    {
+      [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;
+      EVE_ASSERT(eve::all(i >= 0 && i < S8), "some index elements are out or range");
+      return bit_xor(a, bit_shl(one(as(a)), i));
+    }
+  }
+}

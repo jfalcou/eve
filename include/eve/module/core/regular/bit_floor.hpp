@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
+#include <eve/module/core/regular/bit_width.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_floor_t : elementwise_callable<bit_floor_t, Options>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(bit_floor_t, bit_floor_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -62,7 +83,34 @@ namespace eve
 //!        @godbolt{doc/core/masked/bit_floor.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_floor_, bit_floor);
-}
+  inline constexpr auto bit_floor = functor<bit_floor_t>;
 
-#include <eve/module/core/regular/impl/bit_floor.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    bit_floor_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    {
+      auto vlt1 = v < one(eve::as(v));
+      if constexpr( scalar_value<T> )
+        if( vlt1 ) return zero(eve::as(v));
+      if constexpr( floating_ordered_value<T> )
+      {
+        auto [m, e] = ifrexp(v);
+        e           = dec(e);
+        auto r      = eve::ldexp(one(eve::as(v)), e);
+        if constexpr( scalar_value<T> ) return r;
+        else return if_else(vlt1, eve::zero, r);
+      }
+      else if constexpr( signed_integral_value<T> )
+      {
+        auto uz = bit_floor(uint_(v));
+        return if_else(is_ltz(v), zero, to_<T>(uz));
+      }
+      else
+      {
+        return if_else(is_eqz(v), zero, T {1} << dec(bit_width(v)));
+      } 
+    }
+  }
+}

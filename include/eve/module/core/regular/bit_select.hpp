@@ -8,10 +8,23 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/bit_shl.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_select_t : elementwise_callable<bit_select_t, Options>
+  {
+    template<eve::value M, value T, value U>
+    constexpr EVE_FORCEINLINE bit_value_t<T, U, M>
+    operator()(M m, T u, U v) const
+    { return EVE_DISPATCH_CALL(m, u, v); }
+
+    EVE_CALLABLE_OBJECT(bit_select_t, bit_select_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -61,15 +74,7 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-
-namespace tag
-{
-  struct bit_select_;
-}
-template<> struct supports_conditional<tag::bit_select_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(bit_select_, bit_select);
+  inline constexpr auto bit_select = functor<bit_select_t>;
 }
 
 #include <eve/module/core/regular/impl/bit_select.hpp>

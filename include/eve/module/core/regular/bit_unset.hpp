@@ -7,10 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/bit_shl.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_unset_t : elementwise_callable<bit_unset_t, Options>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::value T, integral_scalar_value I >
+    constexpr EVE_FORCEINLINE T operator()(T v, I i) const
+    { return EVE_DISPATCH_CALL(v, i); }
+
+    EVE_CALLABLE_OBJECT(bit_unset_t, bit_unset_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -61,7 +78,17 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_unset_, bit_unset);
-}
+  inline constexpr auto bit_unset = functor<bit_unset_t>;
 
-#include <eve/module/core/regular/impl/bit_unset.hpp>
+  namespace detail
+  {
+    template<typename T, typename I, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    bit_unset_(EVE_REQUIRES(cpu_), O const&, T a, I i) noexcept
+    {
+      [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;
+      EVE_ASSERT(eve::all(i >= 0 && i < S8), "some index elements are out or range");
+      return bit_andnot(a, bit_shl(one(as(a)), i));
+    }
+  }
+}

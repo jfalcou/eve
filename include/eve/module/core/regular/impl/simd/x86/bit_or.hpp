@@ -17,23 +17,16 @@
 
 namespace eve ::detail
 {
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                bit_or_(EVE_SUPPORTS(sse2_),
-                        C const                         &cx,
-                        wide<T, N> const                &v0,
-                        wide<T, N> const                &v1) noexcept requires x86_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> bit_or_(EVE_REQUIRES(avx512_),
+                                     C const          &cx,
+                                     O const          &,
+                                     wide<T, N> const &v0,
+                                     wide<T, N> const &v1) noexcept requires x86_abi<abi_t<T, N>>
   {
-    return bit_or_(EVE_RETARGET(cpu_), cx, v0, v1);
-  }
-  else
-  {
+    constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v0, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
     if constexpr( c == category::float32x16 ) return _mm512_mask_or_ps(src, m, v0, v1);
@@ -54,5 +47,4 @@ EVE_FORCEINLINE wide<T, N>
     else if constexpr( c == category::uint32x4 ) return _mm_mask_or_epi32(src, m, v0, v1);
     else if constexpr( match(c, category::uint_) ) return if_else(cx, eve::bit_or(v0, v1), src);
   }
-}
 }

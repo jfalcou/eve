@@ -72,11 +72,12 @@ TTS_CASE_WITH("Check behavior of bit_andnot on floating types",
   using i_t = eve::as_integer_t<eve::element_type_t<T>, signed>;
   using v_t = eve::element_type_t<T>;
   TTS_IEEE_EQUAL(
-      bit_andnot(a0, a1),
-      map([](auto e, auto f) -> v_t
-          { return bit_cast(bit_cast(e, as(i_t())) & ~bit_cast(f, as(i_t())), as(v_t())); },
-          a0,
-          a1));
+    bit_andnot(a0, a1),
+    map([](auto e, auto f) -> v_t
+        { return bit_cast(bit_cast(e, as(i_t())) & ~bit_cast(f, as(i_t())), as(v_t())); },
+        a0,
+        a1));
+
   auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_IEEE_EQUAL(bit_andnot[test](a0, a1), eve::if_else(test, eve::bit_andnot(a0, a1), a0));
   TTS_IEEE_EQUAL(bit_andnot[test](a0, a1, a2),
