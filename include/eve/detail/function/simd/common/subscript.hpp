@@ -63,7 +63,7 @@ namespace eve::detail
 
       if constexpr( abi_t::is_wide_logical )
       {
-        auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage().segments[0]);
+        auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage());
         ptr[i] = v;
       }
       else

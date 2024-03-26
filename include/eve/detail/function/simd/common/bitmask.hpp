@@ -62,13 +62,9 @@ namespace eve::detail
       if constexpr( has_aggregated_abi_v<Wide> )
       {
         std::size_t res{0};
-
-        [&]<std::size_t... I>(std::index_sequence<I...> const&)
-        {
-          auto s = p.storage();
-          ((res |= ((s.template get<I>()).bitmap().to_ullong() << I*s.template get<I>().size())),...);
-        }(std::make_index_sequence<Wide::storage_type::replication>{});
-
+        kumi::for_each_index( [&](auto i, auto v) { res |= (v.bitmap().to_ullong() << i*v.size()); }
+                              , p.storage()
+                            );
         return std::bitset<Wide::size()>{res};
       }
       else

@@ -10,6 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/traits/product_type.hpp>
+#include <eve/detail/function/slice.hpp>
 
 namespace eve::detail
 {
