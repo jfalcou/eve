@@ -51,7 +51,7 @@ namespace eve::detail
   {
     using abi_t   = typename P::abi_type;
 
-    if constexpr( is_aggregated_v<abi_t> )  return a.storage().segments;
+    if constexpr( is_aggregated_v<abi_t> )  return a.storage().slice();
     else                                    return std::array{a.slice(lower_), a.slice(upper_)};
   }
 
@@ -75,7 +75,7 @@ namespace eve::detail
     }
     else if constexpr( is_aggregated_v<abi_t> )
     {
-      return a.storage().segments[Slice::value];
+      return a.storage().slice()[Slice::value];
     }
     else if constexpr( is_bundle_v<abi_t> )
     {
