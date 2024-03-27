@@ -7,13 +7,29 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/assert.hpp>
-#include <eve/detail/abi.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/all.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/swap_if.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct clamp_t : elementwise_callable<clamp_t, Options>
+  {
+    template<value T,  value U,  value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V>
+    operator()(T a, U lo, V hi) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, lo, hi);
+    }
+
+    EVE_CALLABLE_OBJECT(clamp_t, clamp_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -43,10 +59,10 @@ namespace eve
 //!     * `lo`, `hi`: [the boundary values](@ref eve::value) to clamp `x` to.
 //!
 //!    **Return value**
-//!
+//!       let l = min(lo, hi) and h =  max(lo, hi)
 //!       Each [element](@ref glossary_elementwise)  of the result contains:
-//!          *  `lo`, if `x` is less than `lo`.
-//!          *  `hi`, if `hi` is less than `x`.
+//!          *  `l`, if `x` is less than `l`.
+//!          *  `h`, if `h` is less than `x`.
 //!          *  otherwise `x`.
 //!
 //!  @groupheader{Example}
@@ -66,33 +82,20 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct clamp_;
-}
+  inline constexpr auto clamp = functor<clamp_t>;
 
-namespace detail
-{
-  template<typename X, typename L, typename H>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::clamp_),
-                             X const&,
-                             [[maybe_unused]] L const& lo,
-                             [[maybe_unused]] H const& hi)
+  namespace detail
   {
-    EVE_ASSERT(eve::all(eve::is_less(lo, hi)), "[eve::clamp] Unordered clamp boundaries");
-  }
-  template<conditional_expr C, typename X, typename L, typename H>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::clamp_),
-                             X const&,
-                             C const&,
-                             [[maybe_unused]] L const& lo,
-                             [[maybe_unused]] H const& hi)
-  {
-    EVE_ASSERT(eve::all(eve::is_less(lo, hi)), "[eve::clamp] Unordered clamp boundaries");
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U, V>
+    clamp_(EVE_REQUIRES(cpu_), O const &, T const &a, U const & lo,  V const & hi) noexcept
+    {
+      using r_t = common_value_t<T, U, V>;
+      auto l = r_t(lo);
+      auto h = r_t(hi);
+      auto aa = r_t(a);
+      swap_if(l > h, l, h);
+      return eve::min(eve::max(aa, l), h);
+    }
   }
 }
-EVE_MAKE_CALLABLE(clamp_, clamp);
-
-}
-
-#include <eve/module/core/regular/impl/clamp.hpp>

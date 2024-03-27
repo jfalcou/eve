@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/saturated/add.hpp>
-#include <eve/module/core/saturated/inc.hpp>
+#include <eve/module/core/regular/inc.hpp>
 
 namespace eve::detail
 {
@@ -32,7 +32,7 @@ next_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
       if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
       else return z;
     }
-    else if constexpr( integral_value<T> ) { return saturated(inc)(a); }
+    else if constexpr( integral_value<T> ) { return inc[saturated2](a); }
   }
   else { return apply_over(saturated(next), a); }
 }

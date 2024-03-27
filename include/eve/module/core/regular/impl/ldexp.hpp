@@ -16,6 +16,7 @@
 #include <eve/module/core/constant/minexponent.hpp>
 #include <eve/module/core/constant/nbmantissabits.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -24,7 +25,7 @@ template<typename T, floating_ordered_value U, callable_options O>
 constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)
 requires(std::same_as<element_type_t<T>, element_type_t<U>>)
 {
-  return ldexp[o](a, convert(b, as_element<as_integer_t<T>>{}));
+  return ldexp[o](a, convert(trunc(b), as_element<as_integer_t<T>>{}));
 }
 
 template<typename T, integral_value U, callable_options O>

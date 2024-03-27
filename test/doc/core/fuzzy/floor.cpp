@@ -7,13 +7,14 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, -1.3f, -1.5f, -1.7f, 2.0f, 2.3f, 2.5f, 2.7f};
-  pf -= 3*eve::eps(eve::as<float>());
+  float decr = -eve::eps(eve::as<float>());
+  wide_ft pf = {-1.0f+decr, -1.0f+3*decr, -1.0f+5*decr, -1.7f, 2.0f, 2.0f+2*decr, 2.0f+5*decr, 2.7f};
 
   std::cout << "---- simd"  << std::setprecision(8) << '\n'
-            << "<- pf                     = " << pf << '\n'
-            << "-> floor(pf)              = " << eve::floor(pf) << '\n'
-            << "-> tolerant(floor)(pf)    = " << eve::tolerant(eve::floor)(pf) << '\n'
-            << "-> tolerant(floor)(pf, 1) = " << eve::tolerant(eve::floor)(pf, 1) << '\n';
+            << "<- pf                            = " << pf << '\n'
+            << "-> floor(pf)                     = " << eve::floor(pf) << '\n'
+            << "-> floor[tolerant](pf)           = " << eve::floor[eve::tolerant](pf)           << '\n'
+            << "-> floor[tolerance = 2*decr](pf) = " << eve::floor[eve::tolerance = 2*decr](pf) << '\n'
+            << "-> floor[tolerance = 4](pf)      = " << eve::floor[eve::tolerance = 4](pf)      << '\n';
   return 0;
 }
