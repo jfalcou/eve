@@ -13,9 +13,9 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, relative_conditional_expr C, callable_options O>
+template<scalar_value T, typename N, relative_conditional_expr C>
 EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_REQUIRES(cpu_), C cond, O const&, logical<wide<T,N>> v) noexcept
+                count_true_(EVE_SUPPORTS(cpu_), C cond, logical<wide<T,N>> v) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   auto const m = cond.mask(as<wide<T,N>>{});
@@ -25,9 +25,9 @@ requires sve_abi<abi_t<T, N>>
   else  if constexpr(sizeof(T) == 8) return svcntp_b64(m,v);
 }
 
-template<scalar_value T, typename N, callable_options O>
+template<scalar_value T, typename N>
 EVE_FORCEINLINE std::ptrdiff_t
-                count_true_(EVE_REQUIRES(sve_), O const&, logical<wide<T,N>> v) noexcept
+                count_true_(EVE_SUPPORTS(sve_), logical<wide<T,N>> v) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   return count_true[ignore_none](v);

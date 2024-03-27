@@ -39,29 +39,28 @@ TTS_CASE_TPL("Check eve::count_true behavior", eve::test::simd::all_types)
   }
 };
 
-// TODO
-// TTS_CASE_TPL("Check eve::count_true behavior with ignore", eve::test::simd::all_types)
-// <typename T>(tts::type<T>)
-// {
-//   eve::logical<T> data(true);
-//   constexpr auto  cardinal = eve::cardinal_v<T>;
+TTS_CASE_TPL("Check eve::count_true behavior with ignore", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  eve::logical<T> data(true);
+  constexpr auto  cardinal = eve::cardinal_v<T>;
 
-//   TTS_EQUAL(eve::count_true[eve::ignore_none](data), cardinal);
-//   TTS_EQUAL(eve::count_true[eve::ignore_all](data), 0);
-//   TTS_EQUAL(eve::count_true[eve::ignore_first(cardinal - 1)](data), 1);
-//   TTS_EQUAL(eve::count_true[eve::keep_first(cardinal - 1)](data), cardinal - 1);
-//   TTS_EQUAL(eve::count_true[eve::ignore_last(cardinal - 1)](data), 1);
-//   TTS_EQUAL(eve::count_true[eve::keep_last(cardinal - 1)](data), cardinal - 1);
+  TTS_EQUAL(eve::count_true[eve::ignore_none](data), cardinal);
+  TTS_EQUAL(eve::count_true[eve::ignore_all](data), 0);
+  TTS_EQUAL(eve::count_true[eve::ignore_first(cardinal - 1)](data), 1);
+  TTS_EQUAL(eve::count_true[eve::keep_first(cardinal - 1)](data), cardinal - 1);
+  TTS_EQUAL(eve::count_true[eve::ignore_last(cardinal - 1)](data), 1);
+  TTS_EQUAL(eve::count_true[eve::keep_last(cardinal - 1)](data), cardinal - 1);
 
-//   if constexpr( cardinal >= 2 )
-//   {
-//     TTS_EQUAL(eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), cardinal - 2);
-//   }
-//   else
-//   {
-//     //   TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
-//   }
-// };
+  if constexpr( cardinal >= 2 )
+  {
+    TTS_EQUAL(eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), cardinal - 2);
+  }
+  else
+  {
+    //   TTS_EQUAL( eve::count_true[eve::ignore_first(1) && eve::ignore_last(1)](data), 0);
+  }
+};
 
 TTS_CASE_TPL("Check eve::count_true top_bits", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
