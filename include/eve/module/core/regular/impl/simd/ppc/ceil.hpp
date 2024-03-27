@@ -12,11 +12,19 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-ceil_(EVE_SUPPORTS(vmx_), wide<T, N> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
-{
-  if constexpr( floating_value<T> ) return vec_ceil(v0.storage());
-  else return v0;
-}
-}
+  template<arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(vmx_),
+                                   O const&,
+                                   wide<T, N> const& v0) noexcept
+  requires ppc_abi<abi_t<T, N>>
+  {
+    if constexpr(!O::contains(tolerance))
+    {
+      if constexpr( floating_value<T> )
+        return vec_ceil(v0.storage());
+      else return v0;
+    }
+    else
+      return ceil_(EVE_TARGETS(cpu_), cx, o, v);
+  }
+}  

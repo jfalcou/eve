@@ -16,20 +16,13 @@ namespace eve
   template<typename Options>
   struct ceil_t : elementwise_callable<ceil_t, Options, tolerant_option>
   {
-    template<eve::integral_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return v; }
-
-    template<eve::floating_value T>
+    template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::floating_value T, floating_value U >
-    constexpr EVE_FORCEINLINE as_integer_t<T, U> operator()(T v) const  noexcept
-    { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::value T,  only_if<signed,unsigned> U>
-    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
+    template<eve::value T, only_if<signed,unsigned>  U>
+    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
     { return EVE_DISPATCH_CALL(v, target); }
 
     EVE_CALLABLE_OBJECT(ceil_t, ceil_);
@@ -104,18 +97,18 @@ inline constexpr auto ceil = functor<ceil_t>;
 
 #include <eve/module/core/regular/impl/ceil.hpp>
 
-// #if defined(EVE_INCLUDE_X86_HEADER)
-// #  include <eve/module/core/regular/impl/simd/x86/ceil.hpp>
-// #endif
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/ceil.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/module/core/regular/impl/simd/ppc/ceil.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/ceil.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/neon/ceil.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/ceil.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/ceil.hpp>
-// #endif
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/ceil.hpp>
+#endif
