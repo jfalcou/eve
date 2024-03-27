@@ -19,20 +19,25 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(sse4_1_),
-                                    O           const& o,
+                                    O           const&,
                                     wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N>>();
-    
-    if constexpr( c == category::float64x8 ) return _mm512_roundscale_pd(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr( c == category::float32x16) return _mm512_roundscale_ps(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr( c == category::float64x4 ) return _mm256_round_pd(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr( c == category::float32x8 ) return _mm256_round_ps(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr( c == category::float64x2 ) return _mm_round_pd(a0, _MM_FROUND_TO_ZERO);
-    else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
+    if  constexpr(!O::contains(tolerance))
+    {
+      constexpr auto c = categorize<wide<T, N>>();
+
+      if constexpr( c == category::float64x8 ) return _mm512_roundscale_pd(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr( c == category::float32x16) return _mm512_roundscale_ps(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr( c == category::float64x4 ) return _mm256_round_pd(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr( c == category::float32x8 ) return _mm256_round_ps(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr( c == category::float64x2 ) return _mm_round_pd(a0, _MM_FROUND_TO_ZERO);
+      else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
+    }
+    else
+      return trunc_(EVE_TARGETS(cpu_), cx, o, v);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, typename T, typename N, callable_options O>
@@ -45,7 +50,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-    
+
     if constexpr( C::is_complete )
       return src;
     else if  constexpr(!O::contains(tolerance))
