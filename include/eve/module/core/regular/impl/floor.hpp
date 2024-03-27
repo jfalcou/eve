@@ -35,17 +35,14 @@ namespace eve::detail
     {
       if constexpr(O::contains(tolerance))
       {
-        auto tol = [&]<typename V>(V const& t)
-        {
+        auto tol = [&]<typename V>(V const& t){
           if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as(a0));
           else if constexpr(integral_value<V>)            return t;
           else                                            return convert(t,as_element(a0));
         }(o[tolerance]);
-
+        
         if constexpr(integral_value<decltype(tol)>)
-        {
           return floor(next(a0, tol));
-        }
         else
         {
           // Hagerty's FL5 function
@@ -64,8 +61,8 @@ namespace eve::detail
 
         auto already_integral = is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
 
-        if constexpr( scalar_value<T> )     z = already_integral ? a0 : z;
-        else if constexpr( simd_value<T> )  z = if_else(already_integral, a0, z);
+             if constexpr( scalar_value<T> ) z = already_integral ? a0 : z;
+        else if constexpr( simd_value<T> )   z = if_else(already_integral, a0, z);
 
         return dec[z > a0](z);
       }

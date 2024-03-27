@@ -15,48 +15,36 @@
 
 namespace eve::detail
 {
-  template<typename T, floating_value U, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & eps) noexcept
-  //  requires (O::contains(tolerance))
-  {
-    return -floor/*[tolerant2]*/(-a0, eps);
-  }
-
-  template<typename T, integral_value U, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, U const & e) noexcept
-  //  requires (O::contains(tolerance))
-  {
-    return ceil(prev(a0, e));
-  }
 
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
+  ceil_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
     if constexpr(O::contains(tolerance))
     {
-      return -floor/*[tolerant2]*/(-a0, 3*eps(as(a0)));
+      auto tol = [&]<typename V>(V const& t){
+        if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as(a0));
+        else if constexpr(integral_value<V>)            return t;
+        else                                            return convert(t,as_element(a0));
+      }(o[tolerance]);
+
+      if constexpr(integral_value<decltype(tol)>)
+        return ceil(prev(a0, tol));
+      else
+        return -floor[o](-a0);
     }
     else
-    {
-      T z = eve::trunc(a0);
-      return inc[z < a0](z);
-    }
+      return -floor(-a0);
   }
+
 
   template<typename T, typename U, callable_options O>
   EVE_FORCEINLINE constexpr auto
   ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
   {
-    auto z = ceil(a0);
-    if constexpr(unsigned_value<U>)
-      return uint_(z);
-    else if constexpr(signed_integral_value<U>)
-      return int_(z);
+    if constexpr(integral_value<T>)
+      return convert(a0, as_element<as_integer_t<T,U>>{});
     else
-      return z;
+      return convert(ceil(a0), as_element<as_integer_t<T,U>>{});
   }
-
 }
