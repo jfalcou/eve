@@ -13,12 +13,12 @@
 
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(neon128_),
-                                 O const&,
-                                 wide<T, N> const& v) noexcept
-requires arm_abi<abi_t<T, N>>
-{
+  template<floating_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(neon128_),
+                                   O const&,
+                                   wide<T, N> const& v) noexcept
+  requires arm_abi<abi_t<T, N>>
+  {
     if constexpr(!O::contains(tolerance))
     {
       constexpr auto cat = categorize<wide<T, N>>();
@@ -33,4 +33,5 @@ requires arm_abi<abi_t<T, N>>
     }
     else
       return ceil_(EVE_TARGETS(cpu_), cx, o, v);
-}
+  }
+}  

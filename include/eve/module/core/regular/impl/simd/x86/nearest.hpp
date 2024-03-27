@@ -15,9 +15,11 @@
 
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-nearest_(EVE_SUPPORTS(sse4_1_), wide<T, N> a0) noexcept requires x86_abi<abi_t<T, N>>
+template<floating_scalar_value T, typename N, callable_options O>
+EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(sse4_1_),
+                                    O           const& ,
+                                    wide<T, N> a0) noexcept
+requires x86_abi<abi_t<T, N>>
 {
   if constexpr( std::is_same_v<T, double> )
   {
@@ -37,25 +39,21 @@ nearest_(EVE_SUPPORTS(sse4_1_), wide<T, N> a0) noexcept requires x86_abi<abi_t<T
   }
 }
 
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                nearest_(EVE_SUPPORTS(sse2_),
-                         C const                         &cx,
-                         wide<T, N> const                &v) noexcept requires x86_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-  if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(avx512_),
+                                      C          const &cx,
+                                      O          const &,
+                                      wide<T, N> const &v) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    return nearest_(EVE_RETARGET(cpu_), cx, v);
-  }
-  else
-  {
+    constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
-    if constexpr( c == category::float32x16 )
+    if constexpr( C::is_complete)
+      return v;
+    else if constexpr( c == category::float32x16 )
       return _mm512_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float64x8 )
       return _mm512_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
@@ -69,5 +67,4 @@ EVE_FORCEINLINE wide<T, N>
       return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else
       return if_else(cx, v, src);}
-  }
 }

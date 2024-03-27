@@ -13,19 +13,20 @@
 
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-nearest_(EVE_SUPPORTS(neon128_), wide<T, N> const& v) noexcept requires arm_abi<abi_t<T, N>>
-{
-  constexpr auto cat = categorize<wide<T, N>>();
-
-  if constexpr( current_api >= asimd )
+  template<floating_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(neon128_),
+                                      O           const& o,
+                                      wide<T, N>  const& v) noexcept
+  requires arm_abi<abi_t<T, N>>
   {
-    if constexpr( cat == category::float64x1 ) return vrndn_f64(v);
-    else if constexpr( cat == category::float64x2 ) return vrndnq_f64(v);
-    else if constexpr( cat == category::float32x2 ) return vrndn_f32(v);
-    else if constexpr( cat == category::float32x4 ) return vrndnq_f32(v);
+    constexpr auto cat = categorize<wide<T, N>>();
+    if constexpr( current_api >= asimd )
+    {
+      if constexpr( cat == category::float64x1 ) return vrndn_f64(v);
+      else if constexpr( cat == category::float64x2 ) return vrndnq_f64(v);
+      else if constexpr( cat == category::float32x2 ) return vrndn_f32(v);
+      else if constexpr( cat == category::float32x4 ) return vrndnq_f32(v);
+    }
+    else return map(nearest, o, v);
   }
-  else return map(nearest, v);
-}
-}
+}}
