@@ -21,7 +21,7 @@ namespace eve::detail
   {
     return ceil[ignore_none][o](v);
   }
-
+  
   template<conditional_expr C,floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto ceil_(EVE_REQUIRES(sve_),
                              O const&,

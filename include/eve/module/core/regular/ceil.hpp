@@ -20,7 +20,6 @@ namespace eve
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
-
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
     { return EVE_DISPATCH_CALL(v, target); }
