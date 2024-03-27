@@ -10,6 +10,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pi                  = " << pi << '\n'
-            << "-> abs[pi > -2](pi)  = " << eve::abs[pi > -2](pi) << '\n';
+            << "-> abs[ignore_first(2)](pi) = " << eve::abs[eve::ignore_first(2)](pi) << '\n'
+            << "-> abs[pi > -2](pi)  = " << eve::abs[pi > -2](pi) << '\n'
+    ;
   return 0;
 }
