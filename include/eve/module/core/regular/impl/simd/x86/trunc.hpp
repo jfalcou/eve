@@ -35,7 +35,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
     }
     else
-      return trunc_(EVE_TARGETS(cpu_), o, v);
+      return trunc_(EVE_TARGETS(cpu_), o, a0);
   }
 
   // -----------------------------------------------------------------------------------------------
