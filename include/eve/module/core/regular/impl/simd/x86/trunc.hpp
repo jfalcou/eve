@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(sse4_1_),
-                                    O           const&,
+                                    O           const& o,
                                     wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -35,7 +35,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_TO_ZERO);
     }
     else
-      return trunc_(EVE_TARGETS(cpu_), cx, o, v);
+      return trunc_(EVE_TARGETS(cpu_), o, v);
   }
 
   // -----------------------------------------------------------------------------------------------
