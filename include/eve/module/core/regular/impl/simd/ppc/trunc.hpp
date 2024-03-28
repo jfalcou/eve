@@ -26,6 +26,6 @@ namespace eve::detail
         return vec_trunc(v0.storage());
     }
     else
-      return trunc_(EVE_TARGETS(cpu_), o, v);
+      return trunc_(EVE_TARGETS(cpu_), o, v0);
   }
 }
