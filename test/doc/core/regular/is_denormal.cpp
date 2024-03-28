@@ -12,7 +12,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf              = " << pf << '\n'
-            << "-> is_denormal(pf) = " << eve::is_denormal(pf) << '\n';
+            << "-> is_denormal(pf) = " << eve::is_denormal(pf) << '\n'
             << "-> is_denormal[pf > 0](pf) = " << eve::is_denormal[pf > 0](pf) << '\n';
 
   float xf = 1.0f;

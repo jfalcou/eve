@@ -16,7 +16,6 @@
 #include <eve/module/core/pedantic/fnms.hpp>
 #include <eve/module/core/pedantic/fsm.hpp>
 #include <eve/module/core/pedantic/fsnm.hpp>
-#include <eve/module/core/pedantic/is_flint.hpp>
 #include <eve/module/core/pedantic/is_not_flint.hpp>
 #include <eve/module/core/pedantic/lerp.hpp>
 #include <eve/module/core/pedantic/negatenz.hpp>
