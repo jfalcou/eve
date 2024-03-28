@@ -26,6 +26,6 @@ namespace eve::detail
         return v0;
     }
     else
-      return floor_(EVE_TARGETS(cpu_), o, v);
+      return floor_(EVE_TARGETS(cpu_), o, v0);
   }
 }
