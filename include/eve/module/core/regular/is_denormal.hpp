@@ -102,24 +102,3 @@ namespace eve
     }
   }
 }
-// // -----------------------------------------------------------------------------------------------
-// // logical masked case
-//     template<conditional_expr C, ordered_value U>
-//     EVE_FORCEINLINE auto
-//     is_denormal_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
-//     {
-//       return logical_mask_op(cond, is_denormal, u);
-//     }
-//   }
-
-// namespace detail
-// {
-//   // -----------------------------------------------------------------------------------------------
-//   // logical masked case
-//   template<conditional_expr C, value U, value V>
-//   EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
-//   {
-//     return logical_mask_op(cond, is_denormal, u);
-//   }
-// }
-// }
