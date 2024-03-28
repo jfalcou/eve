@@ -32,6 +32,6 @@ namespace eve::detail
       else return map(ceil, v);
     }
     else
-      return ceil_(EVE_TARGETS(cpu_), cx, o, v);
+      return ceil_(EVE_TARGETS(cpu_), o, v);
   }
-}  
+}

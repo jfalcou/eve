@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(neon128_),
-                                      O           const& o,
+                                      O           const&,
                                       wide<T, N>  const& v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
@@ -29,4 +29,4 @@ namespace eve::detail
     }
     else return map(nearest, o, v);
   }
-}}
+}

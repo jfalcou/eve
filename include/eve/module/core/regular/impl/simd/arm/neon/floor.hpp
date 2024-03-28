@@ -32,6 +32,6 @@ namespace eve::detail
       else return map(floor, v);
     }
     else
-      return floor_(EVE_TARGETS(cpu_), cx, o, v);
+      return floor_(EVE_TARGETS(cpu_), o, v);
   }
 }

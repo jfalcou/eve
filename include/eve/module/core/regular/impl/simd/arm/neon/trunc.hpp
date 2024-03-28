@@ -22,7 +22,7 @@ namespace eve::detail
     if  constexpr(!O::contains(tolerance))
     {
       constexpr auto cat = categorize<wide<T, N>>();
-      
+
       if constexpr( current_api >= asimd )
       {
         if constexpr( cat == category::float64x1 ) return vrnd_f64(v);
@@ -33,6 +33,6 @@ namespace eve::detail
       else return map(trunc, v);
     }
     else
-      return trunc_(EVE_TARGETS(cpu_), cx, o, v);
+      return trunc_(EVE_TARGETS(cpu_), o, v);
   }
 }
