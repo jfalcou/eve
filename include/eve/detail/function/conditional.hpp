@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/as.hpp>
+#include <eve/as_element.hpp>
 #include <eve/conditional.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/regular/convert.hpp>
@@ -23,7 +24,12 @@ namespace eve::detail
   EVE_FORCEINLINE auto alternative(C const& c, Arg a0, as<Target> const&)
   {
     if constexpr( C::has_alternative )  return Target{c.alternative};
-    else                                return a0;
+    else
+    {
+      if      constexpr(logical_value<Target>)    return false_(as<Target>());
+      else if constexpr(std::same_as<Arg,Target>) return a0;
+      else                                        return convert(a0, eve::as_element<Target>());
+    }
   }
 
   //================================================================================================
@@ -54,56 +60,6 @@ namespace eve::detail
     else                                                    return if_else( cond
                                                                           , f(a0,as...)
                                                                           , alternative(c,a0,eve::as<r_t>{})
-                                                                          );
-  }
-
-  //================================================================================================
-  // What's the logical alternative for this case ?
-  //================================================================================================
-  template<conditional_expr C, typename Target>
-  EVE_FORCEINLINE auto logical_alternative(C const& c, as<Target> const&)
-  {
-    if constexpr( C::has_alternative )  return Target{c.alternative};
-    else                                return false_(as<Target>());
-  }
-
-  //================================================================================================
-  // Handle the basic logical return type if/if_else cases
-  //================================================================================================
-  template<conditional_expr C, typename Op, typename Arg0, typename... Args>
-  EVE_FORCEINLINE auto logical_mask_op( C const& c
-                                      , [[maybe_unused]] Op f
-                                      , [[maybe_unused]] Arg0 const& a0
-                                      , [[maybe_unused]] Args const&... as
-                                      )
-  {
-    using r_t       = decltype(f(a0,as...));
-    auto const cond = c.mask(eve::as<r_t>());
-
-          if constexpr( C::is_complete && !C::is_inverted ) return logical_alternative(c,eve::as<r_t>{});
-    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
-    else                                                    return if_else( cond
-                                                                          , f(a0,as...)
-                                                                          , logical_alternative(c, eve::as<r_t>{})
-                                                                          );
-  }
-
-  template<conditional_expr C, typename Op, typename Arg0, typename... Args>
-  EVE_FORCEINLINE auto conv_mask_op( C const& c
-                              , [[maybe_unused]] Op f
-                              , [[maybe_unused]] Arg0 const& a0
-                              , [[maybe_unused]] Args const&... as
-                              )
-  {
-    using r_t       = decltype(f(a0,as...));
-    auto const cond = c.mask(eve::as<r_t>());
-    using sr_t = eve::element_type_t<r_t>;
-
-    if constexpr( C::is_complete && !C::is_inverted ) return convert(alternative(c,a0,eve::as<r_t>{}, eve::as<sr_t>()));
-    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
-    else                                                    return if_else( cond
-                                                                          , f(a0,as...)
-                                                                          , convert(alternative(c,a0,eve::as<r_t>{}), eve::as<sr_t>())
                                                                           );
   }
 }
