@@ -19,8 +19,8 @@ TTS_CASE_TPL("Check return types of eve::is_flint(simd)", eve::test::simd::all_t
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS(eve::is_flint(T()), logical<T>);
   TTS_EXPR_IS(eve::is_flint(v_t()), logical<v_t>);
-  TTS_EXPR_IS(eve::pedantic(eve::is_flint)(T()), logical<T>);
-  TTS_EXPR_IS(eve::pedantic(eve::is_flint)(v_t()), logical<v_t>);
+  TTS_EXPR_IS(eve::is_flint[eve::pedantic](T()), logical<T>);
+  TTS_EXPR_IS(eve::is_flint[eve::pedantic](v_t()), logical<v_t>);
 };
 
 //==================================================================================================
