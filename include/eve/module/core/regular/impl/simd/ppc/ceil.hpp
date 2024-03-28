@@ -14,7 +14,7 @@ namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(vmx_),
-                                   O const&,
+                                   O const& o,
                                    wide<T, N> const& v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
