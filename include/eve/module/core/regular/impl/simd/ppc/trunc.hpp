@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N>
+  template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(vmx_),
                                     O          const& o,
                                     wide<T, N> const& v0) noexcept
