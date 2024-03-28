@@ -34,6 +34,6 @@ namespace eve::detail
     else if  constexpr(!O::contains(tolerance))
       return svrintm_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
     else
-      return trunc_(EVE_TARGETS(cpu_), o, v);
+      return floor_(EVE_TARGETS(cpu_), o, v);
   }
 }

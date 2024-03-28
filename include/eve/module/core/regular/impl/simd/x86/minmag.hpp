@@ -21,7 +21,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2) || O::contains(saturated2))
-      return minmag_(EVE_TARGETS(cpu_), opts, v0, v1);
+      return minmag.behavior(cpu_{}, opts, v0, v1);
     else
     {
       constexpr auto cat  = categorize<wide<T, N>>();
@@ -35,7 +35,7 @@ namespace eve::detail
       else if constexpr( cat == category::float64x2 ) return _mm_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x4 ) return _mm256_range_pd(v0, v1, ctrl);
       else if constexpr( cat == category::float64x8 ) return _mm512_range_pd(v0, v1, ctrl);
-      else                                            return minmag_(EVE_TARGETS(cpu_), v0, v1);
+      else return minmag.behavior(cpu_{}, opts, v0, v1);
     }
   }
 
@@ -50,7 +50,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2) || O::contains(saturated2))
-      return minmag_(EVE_TARGETS(cpu_), opts, v, w);
+      return minmag.behavior(cpu_{}, opts, v, w);
     else
     {
       constexpr auto c    = categorize<wide<T, N>>();
@@ -64,7 +64,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_range_pd(src, m, v, w, ctrl);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_range_pd(src, m, v, w, ctrl);
       else if constexpr( c == category::float64x2 ) return _mm_mask_range_pd   (src, m, v, w, ctrl);
-      else                                          return minmag_(EVE_TARGETS(cpu_), opts, v, w);
+      else return minmag.behavior(cpu_{}, opts, v, w);
     }
   }
 }
