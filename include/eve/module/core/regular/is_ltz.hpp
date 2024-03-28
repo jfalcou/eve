@@ -7,10 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_ltz_t : elementwise_callable<is_ltz_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_ltz_t, is_ltz_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -59,8 +77,11 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_ltz_, is_ltz);
+  inline constexpr auto is_ltz = functor<is_ltz_t>;
 }
 
 #include <eve/module/core/regular/impl/is_ltz.hpp>
+
+#if defined(EVE_INCLUDE_X86_HEADER)
 #include <eve/module/core/regular/impl/simd/x86/is_ltz.hpp>
+#endif
