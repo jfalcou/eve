@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
@@ -115,7 +116,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-      return max_(EVE_TARGETS(cpu_), cx, opts, v, w);
+      return max_(EVE_TARGETS(cpu_), opts, v, w);
     else
     {
       constexpr auto c    = categorize<wide<T, N>>();
