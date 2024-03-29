@@ -38,7 +38,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return _mm_round_ps(a0, _MM_FROUND_FLOOR);
     }
     else
-      return floor_(EVE_TARGETS(cpu_), o, a0);
+      return floor.behavior(cpu_{}, o, a0);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -60,9 +60,9 @@ namespace eve::detail
       else if constexpr( match(c, category::integer_) ) return if_else(cx, v, src);
       else if constexpr( c == category::float32x16 )    return _mm512_mask_floor_ps(src, m, v);
       else if constexpr( c == category::float64x8 )     return _mm512_mask_floor_pd(src, m, v);
-      else if constexpr( match(c, category::float_) )   return floor_(EVE_TARGETS(cpu_), cx, o, v);
+      else if constexpr( match(c, category::float_) )   return floor.behavior(cpu_{}, o, v);
     }
     else
-      return floor_(EVE_TARGETS(cpu_), cx, o, v);
+      return floor.behavior(cpu_{}, o, v);
   }
 }
