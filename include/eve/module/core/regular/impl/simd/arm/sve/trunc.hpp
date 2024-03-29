@@ -22,7 +22,7 @@ namespace eve::detail
     return trunc[ignore_none][opts](v);
   }
 
-  template<conditional_expr C,floating_scalar_value T, typename N>
+  template<conditional_expr C,floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_SUPPORTS(sve_),
                                     C          const& cond,
                                     O          const& opts,
