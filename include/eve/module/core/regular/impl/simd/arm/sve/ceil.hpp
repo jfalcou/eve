@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> ceil_(EVE_SUPPORTS(sve_),
+  EVE_FORCEINLINE wide<T, N> ceil_(EVE_REQUIRES(sve_),
                                    O const& opts,
                                    wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
@@ -31,12 +31,10 @@ namespace eve::detail
   {
     if constexpr( C::is_complete)
       return alternative(cond, v,as(v));
+    else if constexpr(O::contains(tolerance))
+      return ceil.behavior(cpu_{}, opts, v);
     else
-    {
-      if constexpr(O::contains(tolerance))
-        return ceil.behavior(cpu_{}, opts, v);
-      else
-        return svrintp_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
+      return svrintp_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
     }
   }
 }
