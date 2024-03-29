@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/detail/has_abi.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/overload.hpp>  // TEMPORARY
 #include <eve/forward.hpp>
@@ -189,7 +190,7 @@ namespace eve
   struct elementwise_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
   {
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
-    using ignore = base_t::ignore;
+    using ignore = typename base_t::ignore;
     using func_t = typename base_t::func_t;
 
     template<callable_options O, typename T, typename... Ts>
