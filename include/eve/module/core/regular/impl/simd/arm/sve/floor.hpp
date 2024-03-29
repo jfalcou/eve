@@ -15,16 +15,16 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto floor_(EVE_REQUIRES(sve_),
-                              O const&,
+                              O const& opts,
                               wide<T, N> const& v) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
-    return floor[ignore_none][o](v);
+    return floor[ignore_none][opts](v);
   }
 
   template<conditional_expr C,floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> floor_(EVE_REQUIRES(sve_),
-                              O const& o,
+                              O const& opts,
                               C const& cond,
                               wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
@@ -34,6 +34,6 @@ namespace eve::detail
     else if  constexpr(!O::contains(tolerance))
       return svrintm_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
     else
-      return floor_(EVE_TARGETS(cpu_), o, v);
+      return floor.behavior(cpu_{}, opts, v);
   }
 }
