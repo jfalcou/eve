@@ -34,7 +34,7 @@ namespace eve::detail
         else if constexpr( std::same_as<abi_t<T, N>, x86_128_> )
           return _mm_avg_epu16(a, b);
         else
-          return average_(EVE_TARGETS(cpu_), opts, a, b);
+          return average.behavior(cpu_{}, opts, a, b);
       }
       if constexpr( sizeof(T) == 1 )
       {
@@ -44,9 +44,9 @@ namespace eve::detail
         else if constexpr( std::same_as<abi_t<T, N>, x86_128_> )
           return _mm_avg_epu8(a, b);
         else
-          return average_(EVE_TARGETS(cpu_), opts, a, b);
+          return average.behavior(cpu_{}, opts, a, b)
       }
-      else return average_(EVE_TARGETS(cpu_), opts, a, b);
+      else return average.behavior(cpu_{}, opts, a, b);
     }
   }
 
@@ -74,7 +74,7 @@ namespace eve::detail
       else if constexpr( c == category::uint8x64 ) return _mm512_mask_avg_epu8(src, m, v, w);
       else if constexpr( c == category::uint8x32 ) return _mm256_mask_avg_epu8(src, m, v, w);
       else if constexpr( c == category::uint8x16 ) return _mm_mask_avg_epu8(src, m, v, w);
-      else if constexpr( match(c, category::uint_) ) return if_else(cx, eve::average[opts](v, w), src);
+      else if constexpr( match(c, category::uint_) ) return average.behavior(cpu_{}, opts, v, w), src);
     }
   }
 }
