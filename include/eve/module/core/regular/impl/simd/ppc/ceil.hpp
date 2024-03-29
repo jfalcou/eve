@@ -25,6 +25,6 @@ namespace eve::detail
       else return v0;
     }
     else
-      return ceil_(EVE_TARGETS(cpu_), o, v);
+      return ceil_(EVE_TARGETS(cpu_), o, v0);
   }
 }
