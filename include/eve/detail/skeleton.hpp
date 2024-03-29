@@ -34,7 +34,11 @@ namespace eve::detail
 
   // Compute a transformed wide type
   template<typename F, typename... Ts>
-  struct wide_result
+  struct wide_result;
+
+  template<typename F, typename... Ts>
+  requires requires { std::declval<F>()(eve::detail::at(std::declval<Ts>(), 0)...); }
+  struct wide_result<F,Ts...>
   {
     template<typename T>
     static constexpr std::ptrdiff_t card() noexcept
@@ -79,12 +83,12 @@ namespace eve::detail
     template<typename Func, typename Idx, typename... Ts>
     EVE_FORCEINLINE auto operator()(Func &&fn, Idx const &i, Ts &&... vs) const noexcept
     {
-      return EVE_FWD(fn)(at(EVE_FWD(vs), i)...);
+      return EVE_FWD(fn)(eve::detail::at(EVE_FWD(vs), i)...);
     }
   };
 
   template<typename Fn, typename... Ts>
-  EVE_FORCEINLINE decltype(auto) map(Fn &&f, Ts &&... ts) noexcept
+  EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
@@ -125,7 +129,9 @@ namespace eve::detail
     auto parts = kumi::make_tuple(slicer(ts)...);
 
     // Apply f on both side of the slices and re-combine
-    using wide_t = typename wide_result<Func, Ts...>::type;
+    using half_result_t = decltype(f(get<0>(slicer(ts))...));
+    using wide_t = typename half_result_t::template rescale<typename half_result_t::cardinal_type::combined_type>;
+
     return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
   }
 }
