@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, callable_options O>
+  template<floating_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(sve_),
                                     O          const& opts,
                                     wide<T, N> const& v) noexcept
@@ -24,7 +24,7 @@ namespace eve::detail
     else                                   return trunc.behavior(cpu_{}, opts, v);
   }
 
-  template<conditional_expr C,typename T, typename N, callable_options O>
+  template<conditional_expr C,floating_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> trunc_(EVE_REQUIRES(sve_),
                                     C          const& cond,
                                     O          const& opts,
