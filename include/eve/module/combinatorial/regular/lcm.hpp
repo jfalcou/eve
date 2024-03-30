@@ -17,9 +17,8 @@
 
 namespace eve
 {
-
   template<typename Options>
-  struct lcm_t : elementwise_callable<lcm_t, Options/*, upgrade_converter_option*/>
+  struct lcm_t : elementwise_callable<lcm_t, Options>
   {
     template<eve::value T, eve::value U>
     constexpr EVE_FORCEINLINE
@@ -27,7 +26,6 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(lcm_t, lcm_);
   };
-
 
 //================================================================================================
 //! @addtogroup combinatorial
@@ -67,19 +65,6 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!     @godbolt{doc/combinatorial/regular/lcm.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Optimized Conversion Call
-//!     If the input types are integral, the result is susceptible to overflow,
-//!     but will never be greater than the product of the two input values which will be
-//!     representable in the upgraded integral type. The call `upgrade_(lcm)(a,b)` returns a correct
-//!     result in the upgraded type if the upgraded type is available.
-//!
-//!    **Example**
-//!
-//!    @godbolt{doc/combinatorial/conversion/lcm.cpp}
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto lcm = functor<lcm_t>;

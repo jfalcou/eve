@@ -17,9 +17,9 @@
 namespace eve
 {
 template<typename Options>
-struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
+struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 {
-  template<eve::unsigned_value N, floating_ordered_value T0,  floating_ordered_value T1>
+  template<eve::unsigned_value N, floating_value T0,  floating_value T1>
   constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N>
   operator()(N n, T0 t0, T1 t1) const noexcept { return EVE_DISPATCH_CALL(n, t0, t1); }
 
@@ -52,7 +52,7 @@ struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N, eve::floating_ordered_value T, eve::floating_ordered_value U>
+//!      template< eve::unsigned_value N, eve::floating_value T, eve::floating_value U>
 //!      constexpr eve::common_value_t<T, U> fibonacci(N n, T x, U y) noexcept
 //!   }
 //!   @endcode
@@ -61,7 +61,7 @@ struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 //!
 //!   `n`: [index](@ref eve::unsigned_value) of the value to be returned
 //!
-//!   `x`, `y`: [floating point arguments](@ref eve::floating_ordered_value) : \f$f_0\f$ and \f$f_1\f$.
+//!   `x`, `y`: [floating point arguments](@ref eve::floating_value) : \f$f_0\f$ and \f$f_1\f$.
 //!
 //!    **Return value**
 //!

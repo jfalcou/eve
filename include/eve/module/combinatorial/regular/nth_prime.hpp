@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct nth_prime_t : elementwise_callable<nth_prime_t, Options>
+  struct nth_prime_t : strict_elementwise_callable<nth_prime_t, Options>
   {
     template<eve::unsigned_value T>
     constexpr EVE_FORCEINLINE

@@ -150,9 +150,8 @@ namespace eve::detail
       }
       else
       {
-        wide<T, N> that;
-        apply<N::value>([&](auto... I) { (that.set(I, self.get(I) % other.get(I)), ...); });
-        return self = that;
+        apply<N::value>([&](auto... I) { (self.set(I, self.get(I) % other.get(I)), ...); });
+        return self;
       }
     }
   }
