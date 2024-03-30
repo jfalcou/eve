@@ -152,30 +152,26 @@ namespace eve::detail
       return br_large(x);               // x in (8, \infty)
     }
     else
-    {
-      if constexpr( has_native_abi_v<T> )
-      {
-        auto r       = nan(as(x));
-        auto notdone = is_nltz(x);
+  {
+      auto r       = nan(as(x));
+      auto notdone = is_nltz(x);
 
+      if( eve::any(notdone) )
+      {
+        notdone = next_interval(br_3, notdone, x <= T(3), r, x);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_3, notdone, x <= T(3), r, x);
+          notdone = next_interval(br_5, notdone, x <= T(5.5), r, x);
           if( eve::any(notdone) )
           {
-            notdone = next_interval(br_5, notdone, x <= T(5.5), r, x);
-            if( eve::any(notdone) )
-            {
-              notdone = next_interval(br_8, notdone, x <= T(8), r, x);
-              if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
-            }
+            notdone = next_interval(br_8, notdone, x <= T(8), r, x);
+            if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
           }
         }
-        r = if_else(is_eqz(x), minf(as(x)), r);
-        r = if_else(x == inf(as(x)), zero, r);
-        return r;
       }
-      else return apply_over(cyl_bessel_y0, x);
+      r = if_else(is_eqz(x), minf(as(x)), r);
+      r = if_else(x == inf(as(x)), zero, r);
+      return r;
     }
   }
 }

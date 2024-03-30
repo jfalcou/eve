@@ -43,8 +43,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      eve::zipped<T,T> airy(T x) noexcept;
+//!     template<eve::floating_value T> constexpr eve::zipped<T,T> airy(T x) noexcept;
 //!   }
 //!   @endcode
 //!

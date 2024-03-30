@@ -16,9 +16,8 @@ namespace eve
   template<typename Options>
   struct airy_bi_t : elementwise_callable<airy_bi_t, Options>
   {
-    template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE constexpr
-    T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<eve::floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(airy_bi_t, airy_bi_);
   };
@@ -44,25 +43,24 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_ordered_value T >
-  //!      T airy_bi(T x) noexcept;
+  //!     template<eve::floating_value T> constexpr T airy_bi(T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+  //!   * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!     The value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
-  //!     \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
-  //!     \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
-  //!     is returned.
+  //!   The value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
+  //!   \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
+  //!   \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
+  //!   is returned.
   //!
-  //!  @groupheader{Example}
+  //!   @groupheader{Example}
   //!
-  //!  @godbolt{doc/bessel/regular/airy_bi.cpp}
+  //!   @godbolt{doc/bessel/regular/airy_bi.cpp}
   //! @}
   //================================================================================================
   inline constexpr auto airy_bi = functor<airy_bi_t>;

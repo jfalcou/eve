@@ -14,9 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct sph_bessel_yn_t : elementwise_callable<sph_bessel_yn_t, Options>
+  struct sph_bessel_yn_t : strict_elementwise_callable<sph_bessel_yn_t, Options>
   {
-    template<eve::ordered_value N, eve::floating_ordered_value T>
+    template<eve::value N, eve::floating_value T>
     EVE_FORCEINLINE constexpr
     as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
 
@@ -43,16 +43,15 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::integral_value N, eve::floating_ordered_value T >
-  //!      T sph_bessel_yn(N n, T x) noexcept;
+  //!     template<eve::value N, eve::floating_value T >
+  //!     constexpr T sph_bessel_yn(N n, T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   order of the function. Order must be positive.
-  //!
-  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+  //!   * `n`: Order of the function. Order must be positive.
+  //!   * `x`: [Floating argument](@ref eve::floating_value).
   //!
   //!   **Return value**
   //!
@@ -69,16 +68,15 @@ namespace eve
 
   namespace detail
   {
-    template<value I, floating_value T, callable_options O>
+    template<typename I, typename T, callable_options O>
     EVE_FORCEINLINE constexpr  as_wide_as_t<T, I>
     sph_bessel_yn_(EVE_REQUIRES(cpu_), O const&, I n, T x) noexcept
     {
-      EVE_ASSERT(all(is_gez(n) && is_flint(n)),
-                 "sph_bessel_yn : some orders are non integral positive");
-      EVE_ASSERT(all(is_nltz(x)), "sph_bessel_yn : some x are negative");
+      EVE_ASSERT(all(is_gez(n) && is_flint(n)), "eve::sph_bessel_yn : some orders are non-integral positive");
+      EVE_ASSERT(all(is_nltz(x))              , "eve::sph_bessel_yn : some x are negative");
       using elt_t = element_type_t<T>;
       if constexpr( integral_value<I> ) return sph_bessel_yn(convert(n, as<elt_t>()), x);
-      else return cyl_bessel_yn(n + half(as(x)), x) * rsqrt(2 * x * inv_pi(as(x)));
+      else                              return cyl_bessel_yn(n + half(as(x)), x) * rsqrt(2 * x * inv_pi(as(x)));
     }
   }
 }

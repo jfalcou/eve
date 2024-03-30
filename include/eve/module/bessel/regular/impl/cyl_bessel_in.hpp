@@ -16,44 +16,40 @@ namespace eve::detail
   template<typename I, typename T, callable_options O> constexpr
   EVE_FORCEINLINE as_wide_as_t<T, I>
   cyl_bessel_in_(EVE_REQUIRES(cpu_), O const&, I nu, T x)
-  {
-    if constexpr( has_native_abi_v<T> && has_native_abi_v<I> )
+{
+    if constexpr( integral_value<I> )
     {
-      if constexpr( integral_value<I> )
+      if constexpr( simd_value<I> && scalar_value<T> )
       {
-        if constexpr( simd_value<I> && scalar_value<T> )
-        {
-          using c_t = wide<T, cardinal_t<I>>;
-          return cyl_bessel_in(convert(nu, as(x)), c_t(x));
-        }
-        else if constexpr( simd_value<I> && simd_value<T> )
-        {
-          using elt_t = element_type_t<T>;
-          auto tnu    = convert(nu, as(elt_t()));
-          return cyl_bessel_in(tnu, x);
-        }
-        else if constexpr( integral_scalar_value<I> )
-        {
-          return cyl_bessel_in(T(nu), x);
-        }
+        using c_t = wide<T, cardinal_t<I>>;
+        return cyl_bessel_in(convert(nu, as(x)), c_t(x));
       }
-      else // I is floating
+      else if constexpr( simd_value<I> && simd_value<T> )
       {
-        if constexpr( simd_value<I> && scalar_value<T> )
-        {
-          using c_t = wide<T, cardinal_t<I>>;
-          return cyl_bessel_in(nu, c_t(x));
-        }
-        else if constexpr( scalar_value<I> && simd_value<T> )
-        {
-          return cyl_bessel_in(T(nu), x);
-        }
-        else
-        {
-          return kernel_bessel_i(nu, x);
-        }
+        using elt_t = element_type_t<T>;
+        auto tnu    = convert(nu, as(elt_t()));
+        return cyl_bessel_in(tnu, x);
+      }
+      else if constexpr( integral_scalar_value<I> )
+      {
+        return cyl_bessel_in(T(nu), x);
       }
     }
-    else return apply_over(cyl_bessel_in, nu, x);
+    else // I is floating
+    {
+      if constexpr( simd_value<I> && scalar_value<T> )
+      {
+        using c_t = wide<T, cardinal_t<I>>;
+        return cyl_bessel_in(nu, c_t(x));
+      }
+      else if constexpr( scalar_value<I> && simd_value<T> )
+      {
+        return cyl_bessel_in(T(nu), x);
+      }
+      else
+      {
+        return kernel_bessel_i(nu, x);
+      }
+    }
   }
 }
