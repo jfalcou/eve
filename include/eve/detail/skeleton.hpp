@@ -60,6 +60,23 @@ namespace eve::detail
     using type = typename base::type;
   };
 
+  template<typename Out, typename... Bs>
+  EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
+  {
+    auto const inside = [&]<typename I>(I)
+    {
+      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
+    };
+
+    return detail::apply<kumi::size<Out>::value>( [&]( auto const&... I)
+    {
+      Out that;
+      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+      return that;
+    }
+    );
+  }
+
   // MAP skeleton used to emulate SIMD operations
   struct map_
   {
@@ -76,7 +93,19 @@ namespace eve::detail
   {
     using w_t = typename wide_result<Fn, Ts...>::type;
 
-    return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
+    if constexpr( kumi::product_type<element_type_t<w_t>> )
+    {
+      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
+              ( [&](auto... I)
+                {
+                  return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
+                }
+              );
+    }
+    else
+    {
+      return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
+    }
   }
 
   template<typename Func, typename... Ts>
