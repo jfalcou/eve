@@ -8,25 +8,10 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/detail/overload.hpp>
 
 namespace eve
 {
-  template<typename Options>
-  struct trunc_t : elementwise_callable<trunc_t, Options, tolerant_option, raw_option>
-  {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return EVE_DISPATCH_CALL(v); }
-
-    template<eve::value T, only_if<signed,unsigned>  U>
-    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
-    { return EVE_DISPATCH_CALL(v, target); }
-
-    EVE_CALLABLE_OBJECT(trunc_t, trunc_);
-  };
-
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -93,7 +78,7 @@ namespace eve
 //!        @godbolt{doc/core/fuzzy/trunc.cpp}
 //! @}
 //================================================================================================
-  inline constexpr auto trunc = functor<trunc_t>;
+EVE_MAKE_CALLABLE(trunc_, trunc);
 }
 
 #include <eve/module/core/regular/impl/trunc.hpp>
@@ -110,6 +95,7 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/arm/neon/trunc.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/trunc.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/trunc.hpp>
+// #endif
+//TODO restore
