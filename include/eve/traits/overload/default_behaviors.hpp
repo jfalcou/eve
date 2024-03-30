@@ -228,6 +228,29 @@ namespace eve
           , typename OptionsValues
           , typename... Options
           >
+  struct strict_tuple_callable : strict_elementwise_callable<Func, OptionsValues, Options...>
+  {
+    using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
+
+    template<callable_options O, kumi::product_type T>
+    constexpr auto behavior(auto arch, O const& opts, T const& x) const
+    {
+      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch,opts,a...); }, x);
+    }
+
+    template<callable_options O, typename T, typename... Ts>
+    constexpr auto behavior(auto arch, O const& opts, T const& x0,  Ts const&... xs) const
+    {
+      return base_t::behavior(arch,opts,x0,xs...);
+    }
+  };
+
+  //====================================================================================================================
+  //====================================================================================================================
+  template< template<typename> class Func
+          , typename OptionsValues
+          , typename... Options
+          >
   struct tuple_callable : elementwise_callable<Func, OptionsValues, Options...>
   {
     using base_t = elementwise_callable<Func, OptionsValues, Options...>;
