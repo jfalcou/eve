@@ -19,7 +19,7 @@ namespace eve::detail
                                    wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return ceil[ignore_none][opts](v);
+    return ceil_(adl_helper_t{}, sve_{}, ignore_none, opts, v);
   }
 
   template<conditional_expr C,floating_scalar_value T, typename N, callable_options O>
@@ -29,12 +29,11 @@ namespace eve::detail
                              wide<T, N> const& v) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
-    if constexpr( C::is_complete)
-      return alternative(cond, v,as(v));
-    else if constexpr(O::contains(tolerance))
-      return ceil.behavior(cpu_{}, opts, v);
-    else
-      return svrintp_m(alternative(cond, v, as(v)), cond.mask(as(v)), v);
+    auto alt = alternative(cond, v, as(v));
+
+    if      constexpr(C::is_complete && !C::is_inverted) return alt;
+    else if constexpr(!O::contains(tolerance))           return svrintp_m(alt, cond.mask(as(v)), v);
+    else                                                 return ceil.behavior(cpu_{}, opts, v);
     }
   }
 }
