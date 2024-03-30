@@ -110,6 +110,6 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/arm/neon/trunc.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/trunc.hpp>
-// #endif
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/trunc.hpp>
+#endif
