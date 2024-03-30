@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct rotr_t : elementwise_callable<rotr_t, Options>
+  struct rotr_t : strict_elementwise_callable<rotr_t, Options>
   {
     template<eve::integral_value T, eve::integral_value S>
     requires(unsigned_scalar_value<element_type_t<T>>)
