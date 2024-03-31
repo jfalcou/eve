@@ -6,10 +6,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/is_even.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_odd_t : elementwise_callable<is_odd_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_odd_t, is_odd_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -40,7 +60,7 @@ namespace eve
 //!
 //!     The call `is_odd(x)` is semantically  equivalent to:
 //!      @code
-//!      if constexpr(floating_value<T>)   return (x != dec(x)) && eve::is_even(dec(x));
+//!      if constexpr(floating_value<T>)   return (x != dec(x)) && eve::is_odd(dec(x));
 //!      else constexpr(integral_value<T>) return eve::is_nez (x & one(as(x));
 //!      @endcode
 //!
@@ -61,7 +81,23 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_odd_, is_odd);
-}
+  inline constexpr auto is_odd = functor<is_odd_t>;
 
-#include <eve/module/core/regular/impl/is_odd.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_odd_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      if constexpr( floating_value<T> )
+      {
+        auto da = dec(a);
+        return (a != da) && is_even(da);
+      }
+      else if constexpr( scalar_value<T> )
+        return (a & one(eve::as(a)));
+      else return
+        is_nez((a & one(eve::as(a))));
+    }
+  }
+}
