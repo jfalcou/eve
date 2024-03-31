@@ -6,10 +6,9 @@
 */
 //==================================================================================================
 #pragma once
+// #include <eve/module/core/regular/is_pow2.hpp>
 
-#include <eve/module/core/regular/is_pow2.hpp>
-
-namespace eve
-{
-EVE_ALIAS_CALLABLE(is_pow2_, has_single_bit);
-}
+// namespace eve
+// {
+//   inline constexpr auto has_single_bit = is_pow2;
+// }

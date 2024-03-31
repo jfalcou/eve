@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/true.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -85,7 +86,7 @@ namespace eve
     is_gtz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return true_(eve::as(a));
+        return is_nez(a);
       else
         return a > zero(eve::as(a));
     }

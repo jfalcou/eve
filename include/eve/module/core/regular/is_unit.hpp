@@ -7,10 +7,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/sqr_abs.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_unit_t : elementwise_callable<is_unit_t, Options, pedantic_option>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_unit_t, is_unit_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -59,18 +76,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_unit_, is_unit);
+  inline constexpr auto is_unit = functor<is_unit_t>;
 
-namespace detail
-{
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, value U, value V>
-  EVE_FORCEINLINE auto is_unit_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
+  namespace detail
   {
-    return logical_mask_op(cond, is_unit, u);
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE as_logical_t<T>
+    is_unit_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      return almost(is_equal)(sqr(a), one(as<T>()));
+    }
   }
 }
-}
-
-#include <eve/module/core/regular/impl/is_unit.hpp>
