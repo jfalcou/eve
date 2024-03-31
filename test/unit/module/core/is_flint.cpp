@@ -41,7 +41,7 @@ TTS_CASE_WITH("Check behavior of eve::is_flint(simd)",
   auto aa1  = eve::trunc(a1) / 2;
   TTS_EQUAL(eve::is_flint(aa0),
             map([](auto e) -> eve::logical<v_t> { return e == std::trunc(e); }, aa0));
-  TTS_EQUAL(eve::pedantic(eve::is_flint)(aa1),
+  TTS_EQUAL(eve::is_flint[eve::pedantic](aa1),
             map([](auto e) -> eve::logical<v_t>
                 { return (e == std::trunc(e)) && (e <= eve::maxflint(eve::as(e))); },
                 aa1));

@@ -85,7 +85,7 @@ namespace eve
     is_nltz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return is_nez(a);
+        return  true_(eve::as(a));
       else
       {
         if constexpr( scalar_value<T> )
@@ -93,7 +93,8 @@ namespace eve
           if      constexpr( integral_value<T> ) return is_gez(a);
           else if constexpr( floating_value<T> ) return is_gez(a) || is_nan(a);
         }
-        else return is_not_less(a, zero(eve::as(a)));
+        else
+          return is_not_less(a, zero(eve::as(a)));
       }
     }
   }

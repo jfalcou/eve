@@ -74,7 +74,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
- inline constexpr auto is_nez = functor<is_nez_t>;
+  inline constexpr auto is_nez = functor<is_nez_t>;
 
   namespace detail
   {

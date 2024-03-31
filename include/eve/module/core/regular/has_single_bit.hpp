@@ -6,9 +6,10 @@
 */
 //==================================================================================================
 #pragma once
-// #include <eve/module/core/regular/is_pow2.hpp>
 
-// namespace eve
-// {
-//   inline constexpr auto has_single_bit = is_pow2;
-// }
+#include <eve/module/core/regular/is_pow2.hpp>
+
+namespace eve
+{
+  inline constexpr auto has_single_bit = is_pow2;
+}

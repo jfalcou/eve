@@ -80,7 +80,8 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_not_nan_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return is_eqz(a-a);
+      if constexpr(integral_value<T>) return true_(eve::as(a));
+      else                            return a == a;
     }
   }
 }
