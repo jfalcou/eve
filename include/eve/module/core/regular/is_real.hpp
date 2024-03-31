@@ -78,7 +78,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_real_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_real_(EVE_REQUIRES(cpu_), O const &, T const&) noexcept
     {
       return true_(as<T>());
     }
