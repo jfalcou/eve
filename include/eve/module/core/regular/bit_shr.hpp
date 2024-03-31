@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_shr_t : elementwise_callable<bit_shr_t, Options>
+  struct bit_shr_t : strict_elementwise_callable<bit_shr_t, Options>
   {
     template<eve::value T, integral_value I >
     constexpr EVE_FORCEINLINE  as_wide_as_t<T, I> operator()(T v, I i) const
