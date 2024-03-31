@@ -10,9 +10,9 @@ int main()
                 eve::inf(eve::as<float>()), eve::maxflint(eve::as<float>())*2, eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                          = " << pf << '\n'
-            << "-> is_not_flint(pf)            = " << eve::is_not_flint(pf) << '\n'
-            << "-> pedantic(is_not_flint)(pf)  = " << eve::pedantic(eve::is_not_flint)(pf) << '\n'  ;
+            << "<- pf                               = " << pf << '\n'
+            << "-> is_not_flint(pf)                 = " << eve::is_not_flint(pf) << '\n'
+            << "-> is_not_flint[eve::pedantic](pf)  = " << eve::is_not_flint[eve::pedantic](pf) << '\n'  ;
 
   float xf = 1.0f;
 

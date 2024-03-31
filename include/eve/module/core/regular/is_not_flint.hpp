@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/frac.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_not_flint_t : elementwise_callable<is_not_flint_t, Options,  pedantic_option>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_not_flint_t, is_not_flint_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -63,7 +79,20 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_not_flint_, is_not_flint);
-}
+  inline constexpr auto is_not_flint = functor<is_not_flint_t>;
 
-#include <eve/module/core/regular/impl/is_not_flint.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_not_flint_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      if constexpr( integral_value<T> )
+        return false_(eve::as<T>());
+      else if (O::contains(pedantic2))
+        return is_nez(frac(a)) || (a > eve::maxflint(eve::as<T>()));
+      else
+        return is_nez(frac(a));
+    }
+  }
+}

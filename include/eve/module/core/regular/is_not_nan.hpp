@@ -7,10 +7,23 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_not_nan_t : elementwise_callable<is_not_nan_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_not_nan_t, is_not_nan_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -59,7 +72,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_not_nan_, is_not_nan);
-}
+  inline constexpr auto is_not_nan = functor<is_not_nan_t>;
 
-#include <eve/module/core/regular/impl/is_not_nan.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_not_nan_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      return is_eqz(a-a);
+    }
+  }
+}
