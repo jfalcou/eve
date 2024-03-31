@@ -10,11 +10,22 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/is_not_equal.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_nez_t : elementwise_callable<is_nez_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_nez_t, is_nez_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -63,24 +74,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_nez_, is_nez);
-}
+ inline constexpr auto is_nez = functor<is_nez_t>;
 
-namespace eve::detail
-{
-template<value T>
-EVE_FORCEINLINE constexpr auto
-is_nez_(EVE_SUPPORTS(cpu_), T const& a) noexcept
-{
-  return detail::to_logical(a);
-}
-
-// -----------------------------------------------------------------------------------------------
-// logical masked case
-template<conditional_expr C, value U>
-EVE_FORCEINLINE auto
-is_nez_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
-{
-  return is_not_equal[cond](u, zero(as(u)));
-}
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_nez_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      return detail::to_logical(a);
+    }
+  }
 }
