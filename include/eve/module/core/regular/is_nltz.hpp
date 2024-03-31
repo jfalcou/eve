@@ -86,7 +86,7 @@ namespace eve
     {
       if constexpr( unsigned_value<T> )
         return is_nez(a);
-      else if constexpr( has_native_abi_v<T> )
+      else
       {
         if constexpr( scalar_value<T> )
         {
