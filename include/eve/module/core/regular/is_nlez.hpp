@@ -76,7 +76,7 @@ namespace eve
 //!        @godbolt{doc/core/masked/is_nlez.cpp}
 //! @}
 //================================================================================================
- inline constexpr auto is_nlez = functor<is_nlez_t>;
+  inline constexpr auto is_nlez = functor<is_nlez_t>;
 
   namespace detail
   {
@@ -86,7 +86,7 @@ namespace eve
     {
       if constexpr( unsigned_value<T> )
         return is_nez(a);
-      else if constexpr( has_native_abi_v<T> )
+      else
       {
         if constexpr( scalar_value<T> )
         {
