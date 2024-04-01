@@ -8,11 +8,23 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/constant/true.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_real_t : elementwise_callable<is_real_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_real_t, is_real_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -60,7 +72,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_real_, is_real);
-}
+  inline constexpr auto is_real = functor<is_real_t>;
 
-#include <eve/module/core/regular/impl/is_real.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_real_(EVE_REQUIRES(cpu_), O const &, T const&) noexcept
+    {
+      return true_(as<T>());
+    }
+  }
+}

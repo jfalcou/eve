@@ -6,11 +6,26 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_nan_t : elementwise_callable<is_nan_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_nan_t, is_nan_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -65,7 +80,18 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_nan_, is_nan);
-}
+  inline constexpr auto is_nan = functor<is_nan_t>;
 
-#include <eve/module/core/regular/impl/is_nan.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_nan_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      if constexpr( is_logical_v<T> || integral_value<T>)
+        return false_(eve::as(a));
+      else
+        return a != a;
+    }
+  }
+}

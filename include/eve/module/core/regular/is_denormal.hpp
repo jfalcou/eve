@@ -6,10 +6,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/traits/bit_value.hpp>
+#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_denormal_t : elementwise_callable<is_denormal_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_denormal_t, is_denormal_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -65,18 +87,18 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_denormal_, is_denormal);
+  inline constexpr auto is_denormal = functor<is_denormal_t>;
 
-namespace detail
-{
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, value U, value V>
-  EVE_FORCEINLINE auto is_denormal_(EVE_SUPPORTS(cpu_), C const& cond, U const& u) noexcept
+  namespace detail
   {
-    return logical_mask_op(cond, is_denormal, u);
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_denormal_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      if constexpr( !floating_value<T> || !eve::platform::supports_denormals )
+        return false_(eve::as<T>());
+      else
+        return is_nez(a) && (eve::abs(a) < smallestposval(eve::as<T>()));
+    }
   }
 }
-}
-
-#include <eve/module/core/regular/impl/is_denormal.hpp>

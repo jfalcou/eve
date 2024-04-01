@@ -6,11 +6,33 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/constant/smallestposval.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_pow2_t : elementwise_callable<is_pow2_t, Options>
+  {
+    template<eve::integral_value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+    
+    EVE_CALLABLE_OBJECT(is_pow2_t, is_pow2_);
+  };
+  
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -28,7 +50,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::integral_value T >
 //!      eve::as_logical<T> is_pow2(T x) noexcept;
 //!   }
 //!   @endcode
@@ -58,7 +80,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_pow2_, is_pow2);
+  inline constexpr auto is_pow2 = functor<is_pow2_t>;
+  
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_pow2_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      return is_gtz(a) && is_eqz(a & dec(a));
+    }
+  }
 }
-
-#include <eve/module/core/regular/impl/is_pow2.hpp>

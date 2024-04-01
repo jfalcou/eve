@@ -11,5 +11,5 @@
 
 namespace eve
 {
-EVE_ALIAS_CALLABLE(is_pow2_, has_single_bit);
+  inline constexpr auto has_single_bit = is_pow2;
 }

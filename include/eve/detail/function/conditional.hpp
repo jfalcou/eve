@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/as.hpp>
+#include <eve/as_element.hpp>
 #include <eve/conditional.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/regular/convert.hpp>
@@ -23,7 +24,12 @@ namespace eve::detail
   EVE_FORCEINLINE auto alternative(C const& c, Arg a0, as<Target> const&)
   {
     if constexpr( C::has_alternative )  return Target{c.alternative};
-    else                                return a0;
+    else
+    {
+      if      constexpr(logical_value<Target>)    return false_(as<Target>());
+      else if constexpr(std::same_as<Arg,Target>) return a0;
+      else                                        return convert(a0, eve::as_element<Target>());
+    }
   }
 
   //================================================================================================

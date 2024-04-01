@@ -21,8 +21,8 @@ TTS_CASE_TPL("Check return types of eve::is_not_flint(simd)", eve::test::simd::a
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS(eve::is_not_flint(T()), logical<T>);
   TTS_EXPR_IS(eve::is_not_flint(v_t()), logical<v_t>);
-  TTS_EXPR_IS(eve::pedantic(eve::is_not_flint)(T()), logical<T>);
-  TTS_EXPR_IS(eve::pedantic(eve::is_not_flint)(v_t()), logical<v_t>);
+  TTS_EXPR_IS(eve::is_not_flint[eve::pedantic](T()), logical<T>);
+  TTS_EXPR_IS(eve::is_not_flint[eve::pedantic](v_t()), logical<v_t>);
 };
 
 //==================================================================================================
@@ -43,7 +43,7 @@ TTS_CASE_WITH("Check behavior of eve::is_not_flint(simd)",
   auto aa1  = eve::trunc(a1) / 2;
   TTS_EQUAL(eve::is_not_flint(aa0),
             map([](auto e) -> eve::logical<v_t> { return e != std::trunc(e); }, aa0));
-  TTS_EQUAL(eve::pedantic(eve::is_not_flint)(aa1),
+  TTS_EQUAL(eve::is_not_flint[eve::pedantic](aa1),
             map([](auto e) -> eve::logical<v_t>
                 { return (e != std::trunc(e)) || (e > eve::maxflint(eve::as(e))); },
                 aa1));

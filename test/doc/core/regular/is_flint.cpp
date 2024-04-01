@@ -11,7 +11,8 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                      = " << pf << '\n'
-            << "-> is_flint(pf)            = " << eve::is_flint(pf) << '\n';
+            << "-> is_flint(pf)            = " << eve::is_flint(pf) << '\n'
+            << "-> is_flint[pedantic](pf)  = " << eve::is_flint[eve::pedantic](pf) << '\n';
 
   float xf = 1.0f;
 
