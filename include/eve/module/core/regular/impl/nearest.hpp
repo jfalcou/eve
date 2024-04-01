@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/constant/twotonmb.hpp>
 
 namespace eve::detail
 {
