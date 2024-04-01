@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::integral_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return v; }
+    {  return EVE_DISPATCH_CALL(v); }
 
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept

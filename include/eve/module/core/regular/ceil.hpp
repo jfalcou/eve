@@ -108,6 +108,6 @@ inline constexpr auto ceil = functor<ceil_t>;
 #  include <eve/module/core/regular/impl/simd/arm/neon/ceil.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/ceil.hpp>
-// #endif
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/ceil.hpp>
+#endif

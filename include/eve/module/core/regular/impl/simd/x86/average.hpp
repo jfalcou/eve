@@ -22,7 +22,7 @@ namespace eve::detail
   {
     if constexpr( O::contains(upward2))
     {
-      return average_(EVE_TARGETS(cpu_), opts, a, b);
+      return average.behavior(cpu_{}, opts, a, b);
     }
     else
     {
@@ -61,7 +61,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr( O::contains(upward2))
-      return average_(EVE_TARGETS(cpu_), cx, opts, v, w);
+      return average.behavior(cpu_{}, cx, opts, v, w);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
