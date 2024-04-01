@@ -33,7 +33,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if      constexpr(O::contains(saturated2))          return abs_(EVE_TARGETS(cpu_), opts, v);
+    if      constexpr(O::contains(saturated2))          return abs.behavior(cpu_{}, opts, v);
     else if constexpr( match(c, category::unsigned_) )  return v;
     else                                                return svabs_z(sve_true<T>(),v);
   }

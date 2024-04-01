@@ -51,7 +51,6 @@ TTS_CASE_WITH("Check behavior of tchebytchev on wide",
   auto eve__tchebytchev = [](uint32_t n, auto x) { return eve::tchebytchev(n, x); };
   for( unsigned int n = 0; n < 6; ++n )
   {
-    std::cout << "n " << n << std::endl;
     auto boost_tchebytchev = [&](auto i, auto e)
     { return boost::math::chebyshev_t((unsigned int)i, e); };
     TTS_ULP_EQUAL(eve__tchebytchev(n, a0), map(boost_tchebytchev, n, a0), 320);

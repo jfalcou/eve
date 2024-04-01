@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(saturated2))
     {
-      return abs_(EVE_TARGETS(cpu_), opts, v);
+      return abs.behavior(cpu_{}, opts, v);
     }
     else
     {
@@ -54,7 +54,8 @@ namespace eve::detail
       else if constexpr( c == category::int16x32 ) return _mm512_abs_epi16(v);
       else if constexpr( c == category::int16x16 )
       {
-        if constexpr( current_api >= avx2 ) return _mm256_abs_epi16(v); else return aggregate(eve::abs, v);
+        if constexpr( current_api >= avx2 ) return _mm256_abs_epi16(v);
+        else return aggregate(eve::abs, v);
       }
       else if constexpr( c == category::int16x8 )
       {

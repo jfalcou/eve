@@ -37,13 +37,7 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::average(v_t(), v_t(), T()), T);
     TTS_EXPR_IS(eve::average(v_t(), T(), v_t()), T);
 
-    TTS_EXPR_IS(eve::average(T(), int(), T()), T);
-    TTS_EXPR_IS(eve::average(int(), T(), T()), T);
-    TTS_EXPR_IS(eve::average(T(), T(), int()), T);
-    TTS_EXPR_IS(eve::average(int(), v_t(), T()), T);
-    TTS_EXPR_IS(eve::average(int(), T(), v_t()), T);
-    TTS_EXPR_IS(eve::average(v_t(), int(), T()), T);
-    TTS_EXPR_IS(eve::average(v_t(), T(), int()), T);
+    TTS_EXPR_IS(eve::average(int(), int()), int);
     TTS_EXPR_IS(eve::average(v_t(), v_t(), v_t()), v_t);
   }
 };
@@ -61,8 +55,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
   using eve::average;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(
-      average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  TTS_ULP_EQUAL(average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(average(a0, a1, a2),
@@ -73,23 +66,14 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(-10, +10), tts::randoms(-10, +10), tts::randoms(-10, +10)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+              tts::generate(tts::randoms(-10, +10)
+                           , tts::randoms(-10, +10)))
+<typename T>(T const& a0, T const& a1)
 {
   using eve::average;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(
-      average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
-  if constexpr( eve::floating_value<T> )
-  {
-    TTS_ULP_EQUAL(average(a0, a1, a2),
-                  map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
-                  16);
-    TTS_ULP_EQUAL(average(kumi::tuple{a0, a1, a2}),
-                  map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
-                  16);
-  }
+  TTS_ULP_EQUAL(average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
 };
 
 //==================================================================================================
@@ -113,7 +97,7 @@ TTS_CASE_WITH("Check behavior of  average[cond](wide)",
 
 
 //==================================================================================================
-// Tests for masked average
+//=== Tests for masked average
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
               eve::test::simd::ieee_reals,
@@ -129,7 +113,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
 };
 
 //==================================================================================================
-// Tests for downward upward  average
+//===  Tests for downward upward  average
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::upward(eve::average)(eve::wide)",
               eve::test::simd::integers,
@@ -138,7 +122,7 @@ TTS_CASE_WITH("Check behavior of eve::upward(eve::average)(eve::wide)",
              )
 <typename T>(T const& a0, T const& a1)
 {
-  TTS_EQUAL(eve::downward(eve::average)(a0, a1), eve::average(a0, a1));
-  TTS_EXPECT(eve::all(eve::average(a0, a1) <= eve::upward(eve::average)(a0, a1)));
-  TTS_EXPECT(eve::all(eve::inc(eve::average(a0, a1)) >= eve::upward(eve::average)(a0, a1)));
+  TTS_EQUAL(eve::average[eve::downward](a0, a1), eve::average(a0, a1));
+  TTS_EXPECT(eve::all(eve::average(a0, a1) <= eve::average[eve::upward](a0, a1)));
+  TTS_EXPECT(eve::all(eve::inc(eve::average(a0, a1)) >=eve::average[eve::upward](a0, a1)));
 };

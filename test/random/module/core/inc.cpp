@@ -19,5 +19,5 @@ TTS_CASE_TPL("Random check for eve::inc", eve::test::simd::all_types)
   auto std_inc = [](auto e) -> e_t { return e+e_t(1); };
   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_inc, eve::inc );
   auto std_saturated_inc = [vmax](auto e) -> e_t { return e == vmax ? e :e+e_t(1); };
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_saturated_inc, eve::saturated(eve::inc) );
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_saturated_inc, eve::inc[eve::saturated] );
 };

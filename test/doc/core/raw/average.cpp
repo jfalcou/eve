@@ -14,7 +14,7 @@ int main()
             << " <- pi                       = " << pi << '\n'
             << " <- qi                       = " << qi << '\n'
             << " <- ri                       = " << ri << '\n'
-            << " -> raw(average)(pi, qi, ri) = " << eve::raw(eve::average)(pi, qi, ri) << '\n'
+            << " -> raw(average)(pi, qi, ri) = " << eve::average[eve::raw](pi, qi, ri) << '\n'
             << " -> average(pi, qi, ri)      = " << eve::average(pi, qi, ri) << '\n';
 
   return 0;

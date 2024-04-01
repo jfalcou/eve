@@ -30,13 +30,13 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-      return max_(EVE_TARGETS(cpu_), opts, v0, v1);
+      return max.behavior(cpu_{}, opts, v0, v1);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
 
       // 512
-      if constexpr( c == category::float64x8 ) return _mm512_max_pd(v0, v1);
+      if      constexpr( c == category::float64x8 ) return _mm512_max_pd(v0, v1);
       else if constexpr( c == category::float32x16 ) return _mm512_max_ps(v0, v1);
       else if constexpr( c == category::int64x8 ) return _mm512_max_epi64(v0, v1);
       else if constexpr( c == category::uint64x8 ) return _mm512_max_epu64(v0, v1);
@@ -112,11 +112,11 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  max_(EVE_SUPPORTS(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
+  max_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-      return max_(EVE_TARGETS(cpu_), cx, opts, v, w);
+      return max.behavior(cpu_{}, opts, v, w);
     else
     {
       constexpr auto c    = categorize<wide<T, N>>();
@@ -124,8 +124,8 @@ namespace eve::detail
       auto           m    = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
       if      constexpr( c == category::float32x16) return _mm512_mask_max_ps   (src, m, v, w);
-      if      constexpr( c == category::float32x8 ) return _mm256_mask_max_ps   (src, m, v, w);
-      if      constexpr( c == category::float32x4 ) return _mm_mask_max_ps      (src, m, v, w);
+      else if constexpr( c == category::float32x8 ) return _mm256_mask_max_ps   (src, m, v, w);
+      else if constexpr( c == category::float32x4 ) return _mm_mask_max_ps      (src, m, v, w);
       else if constexpr( c == category::float64x8 ) return _mm512_mask_max_pd   (src, m, v, w);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_max_pd   (src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_max_pd      (src, m, v, w);
@@ -141,7 +141,7 @@ namespace eve::detail
       else if constexpr( c == category::int64x8   ) return _mm512_mask_max_epi64(src, m, v, w);
       else if constexpr( c == category::int64x4   ) return _mm256_mask_max_epi64(src, m, v, w);
       else if constexpr( c == category::int64x2   ) return _mm_mask_max_epi64   (src, m, v, w);
-      else return max_(EVE_TARGETS(cpu_), opts, v, w);
+      else return max.behavior(cpu_{}, opts, v, w);
     }
   }
 }

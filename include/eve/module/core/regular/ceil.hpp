@@ -8,10 +8,25 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct ceil_t : elementwise_callable<ceil_t, Options, tolerant_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::value T, only_if<signed,unsigned>  U>
+    constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
+    { return EVE_DISPATCH_CALL(v, target); }
+
+    EVE_CALLABLE_OBJECT(ceil_t, ceil_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -76,7 +91,7 @@ namespace eve
 //!      @godbolt{doc/core/fuzzy/ceil.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(ceil_, ceil);
+inline constexpr auto ceil = functor<ceil_t>;
 }
 
 #include <eve/module/core/regular/impl/ceil.hpp>

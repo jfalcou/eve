@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct inc_t : elementwise_callable<inc_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(inc_t, inc_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -68,7 +80,17 @@ namespace eve
 //!        @godbolt{doc/core/saturated/inc.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(inc_, inc);
-}
+  inline constexpr auto inc = functor<inc_t>;
 
-#include <eve/module/core/regular/impl/inc.hpp>
+  namespace detail
+  {
+    template<value T, callable_options O>
+    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    {
+      if constexpr(integral_value<T> && O::contains(saturated2))
+        return if_else(a != valmax(eve::as(a)), inc(a),  a);
+      else
+        return a + one(eve::as(a));
+    }
+  }
+}

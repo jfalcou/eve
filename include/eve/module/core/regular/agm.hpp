@@ -7,10 +7,36 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/any.hpp>
+#include <eve/module/core/regular/average.hpp>
+#include <eve/module/core/regular/exponent.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_lez.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/sqrt.hpp>
 namespace eve
 {
+  template<typename Options>
+  struct agm_t : elementwise_callable<agm_t, Options>
+  {
+    template<eve::floating_value T,  floating_value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(agm_t, agm_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -58,7 +84,40 @@ namespace eve
 //!        @godbolt{doc/core/masked/agm.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(agm_, agm);
-}
+  inline constexpr auto agm = functor<agm_t>;
 
-#include <eve/module/core/regular/impl/agm.hpp>
+  namespace detail
+  {
+
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    agm_(EVE_REQUIRES(cpu_), O const &, T aa,  U bb) noexcept
+    {
+      using v_t = common_value_t<T, U>;
+      v_t a(aa);
+      v_t b(bb);
+      auto ex = exponent(average(a, b));
+      auto r     = nan(as<v_t>());
+      auto null = is_eqz(a)||is_eqz(b);
+      r = if_else(null, zero, r);
+      auto infi = is_infinite(a) || is_infinite(b);
+      r = if_else(infi, a+b, r);
+      auto unord = is_unordered(a, b);
+      auto done = is_lez(sign(a)*sign(b)) || unord || infi;
+      a = if_else(done,  zero, a);
+      b = if_else(done,  zero, b);
+      a =  ldexp(a, -ex);
+      b =  ldexp(b, -ex);
+      auto c  = average(a, -b);
+      while (eve::any(eve::abs(c) > v_t(2)*eps(as(c))))
+      {
+        auto an=average(a, b);
+        auto bn=sqrt(a*b);
+        c=average(a, -b);
+        a=an;
+        b=bn;
+      }
+      return if_else(done, r, ldexp(b, ex));
+    }
+  }
+}

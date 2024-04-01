@@ -21,10 +21,13 @@ TTS_CASE_TPL("Check return types of nearest", eve::test::simd::all_types)
 
   TTS_EXPR_IS(eve::nearest(T()), T);
   TTS_EXPR_IS(eve::nearest(v_t()), v_t);
-  TTS_EXPR_IS(eve::int_(eve::nearest)(T()), eve::as_integer_t<T>);
-  TTS_EXPR_IS(eve::int_(eve::nearest)(v_t()), eve::as_integer_t<v_t>);
-  TTS_EXPR_IS(eve::uint_(eve::nearest)(T()), (eve::as_integer_t<T, unsigned>));
-  TTS_EXPR_IS(eve::uint_(eve::nearest)(v_t()), (eve::as_integer_t<v_t, unsigned>));
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EXPR_IS(eve::nearest(T(), eve::as<signed>()), (eve::as_integer_t<T, signed>));
+    TTS_EXPR_IS(eve::nearest(v_t(), eve::as<signed>()), (eve::as_integer_t<v_t, signed>));
+    TTS_EXPR_IS(eve::nearest(T(), eve::as<unsigned>()), (eve::as_integer_t<T, unsigned>));
+    TTS_EXPR_IS(eve::nearest(v_t(), eve::as<unsigned>()), (eve::as_integer_t<v_t, unsigned>));
+  }
 };
 
 //==================================================================================================
@@ -43,9 +46,9 @@ TTS_CASE_WITH("Check behavior of nearest on wide",
   if constexpr( eve::floating_value<T> )
   {
     TTS_EQUAL(eve::nearest(a0), T([&](auto i, auto) { return v_t(std::nearbyint(a0.get(i))); }));
-    TTS_EQUAL(eve::int_(eve::nearest)(a0),
+    TTS_EQUAL(eve::nearest(a0, eve::as<signed>()),
               wi_t([&](auto i, auto) { return i_t(std::nearbyint(a0.get(i))); }));
-    TTS_EQUAL(eve::uint_(eve::nearest)(eve::abs(a0)),
+    TTS_EQUAL(eve::nearest(eve::abs(a0), eve::as<unsigned>()),
               uwi_t([&](auto i, auto) { return ui_t(std::nearbyint(std::abs(a0.get(i)))); }));
   }
   else { TTS_EQUAL(eve::nearest(a0), a0); }
