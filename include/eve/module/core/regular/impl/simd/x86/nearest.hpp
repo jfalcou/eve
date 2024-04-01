@@ -41,7 +41,7 @@ requires x86_abi<abi_t<T, N>>
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(avx512_),
                                       C          const &cx,
                                       O          const &,
@@ -65,6 +65,5 @@ requires x86_abi<abi_t<T, N>>
       return _mm_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_NEAREST_INT);
     else if constexpr( c == category::float64x2 )
       return _mm_mask_roundscale_pd(src, m, v, _MM_FROUND_TO_NEAREST_INT);
-    else
-      return if_else(cx, v, src);}
+  }
 }
