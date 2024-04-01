@@ -6,16 +6,15 @@
 int main()
 {
   using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 3};  
-  w_t qi = {4, 1, 1, eve::valmax(eve::as<float>())}; 
+  w_t pi = {3, 2, 3, 3};
+  w_t qi = {4, 1, 1, eve::valmax(eve::as<float>())};
   w_t ri = {4, 1, 1, eve::valmax(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
             << " <- pi                       = " << pi << '\n'
             << " <- qi                       = " << qi << '\n'
-            << " -> average(pi, qi)          = " << eve::average(pi, qi) << '\n'
-            << " -> raw(average)(pi, qi, ri) = " << eve::raw(eve::average)(pi, qi, ri) << '\n'
-            << " -> average(pi, qi, ri)      = " << eve::average(pi, qi, ri) << '\n';
+            << " -> average(pi, qi)          = " << eve::average(pi, qi) << '\n';
+//            << " -> average(pi, qi, ri)      = " << eve::average(pi, qi, ri) << '\n';
 
   std::uint32_t xi = 3, yi = 4;
 
@@ -29,7 +28,8 @@ int main()
   std::cout << "---- multi" << '\n'
             << " <- pf                               = " << pf << '\n'
             << " <- qf                               = " << qf << '\n'
-            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n';
+            << " -> average(pf, 0.0f, qf, pf, 11.0f) = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n'
+            << " -> raw(average)(pi, qi, ri)         = " << eve::average[eve::raw](pf, 0.0f, pf, qf, 11.0f) << '\n';
 
   std::cout << "---- multi parameters" << '\n';
   return 0;

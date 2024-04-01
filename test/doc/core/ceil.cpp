@@ -11,8 +11,8 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                              = " << pf << '\n'
             << "-> ceil(pf)                        = " << eve::ceil(pf) << '\n'
-            << "-> ceil[eve::tolerant]ceil(pf)     = " << eve::ceil[eve::tolerant2](pf) << '\n'
-            << "-> ceil[eve::tolerant]ceil(pf, 1)  = " << eve::ceil[eve::tolerant2](pf, 1) << '\n'
+            << "-> ceil[eve::tolerant]ceil(pf)     = " << eve::ceil[eve::tolerant](pf) << '\n'
+            << "-> ceil[eve::tolerant]ceil(pf, 1.0)= " << eve::ceil[eve::tolerance = 1](pf) << '\n'
             << "-> ceil[pf > -1.5f](pf)            = " << eve::ceil[pf > -1.5f](pf) << '\n';
   float xf = -32.768f;
 
