@@ -25,15 +25,20 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
-    auto s   = bitofsign(a0);
-    auto v   = bit_xor(a0, s);
-    auto t2n = twotonmb(eve::as(a0));
-    auto d0  = v + t2n;
-    auto d   = d0 - t2n;
-    if constexpr( scalar_value<T> )
-      return bit_xor((v < t2n) ? d : v, s);
+    if constexpr(integral_value<T>)
+      return a0;
     else
-      return bit_xor(if_else(v < t2n, d, v), s);
+    {
+      auto s   = bitofsign(a0);
+      auto v   = bit_xor(a0, s);
+      auto t2n = twotonmb(eve::as(a0));
+      auto d0  = v + t2n;
+      auto d   = d0 - t2n;
+      if constexpr( scalar_value<T> )
+        return bit_xor((v < t2n) ? d : v, s);
+      else
+        return bit_xor(if_else(v < t2n, d, v), s);
+    }
   }
 
   template<typename T, typename U, callable_options O>
