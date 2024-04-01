@@ -34,6 +34,5 @@ namespace eve::detail
     if      constexpr(C::is_complete && !C::is_inverted) return alt;
     else if constexpr(!O::contains(tolerance))           return svrintp_m(alt, cond.mask(as(v)), v);
     else                                                 return ceil.behavior(cpu_{}, opts, v);
-    }
   }
 }
