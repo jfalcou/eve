@@ -6,10 +6,27 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/constant/false.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_negative_t : elementwise_callable<is_negative_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_negative_t, is_negative_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -66,7 +83,33 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_negative_, is_negative);
-}
+ inline constexpr auto is_negative = functor<is_negative_t>;
 
-#include <eve/module/core/regular/impl/is_negative.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_negative_(EVE_REQUIRES(cpu_), O const &, T const& v) noexcept
+    {
+      if constexpr( unsigned_value<T> )
+        return false_(eve::as(v));
+      else
+      {
+        if constexpr( signed_integral_value<T> )
+          return is_ltz(v);
+        else if constexpr( simd_value<T> )
+        {
+          using elt_t = element_type_t<T>;
+          using swi_t = as_wide_t<eve::as_integer_t<elt_t, signed>, cardinal_t<T>>;
+          using lwi_t = as_logical_t<as_wide_t<elt_t, cardinal_t<T>>>;
+          return bit_cast(is_ltz(bit_cast(v, as<swi_t>())), as<lwi_t>());
+        }
+        else
+        {
+          using si_t = eve::as_integer_t<T, signed>;
+          return bit_cast(is_ltz(bit_cast(v, as<si_t> {})), as<as_logical_t<T>> {});
+        }
+      }
+    }
+  }
+}

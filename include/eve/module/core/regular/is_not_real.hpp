@@ -7,10 +7,27 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/value.hpp>
+#include <eve/detail/function/to_logical.hpp>
+#include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/constant/false.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_not_real_t : elementwise_callable<is_not_real_t, Options>
+  {
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(is_not_real_t, is_not_real_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -60,7 +77,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_not_real_, is_not_real);
-}
+ inline constexpr auto is_not_real = functor<is_not_real_t>;
 
-#include <eve/module/core/regular/impl/is_not_real.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_not_real_(EVE_REQUIRES(cpu_), O const &, T const&) noexcept
+    {
+      return false_(as<T>());
+    }
+  }
+}

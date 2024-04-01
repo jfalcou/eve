@@ -10,6 +10,7 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf         = " << pf << '\n'
+            << "-> is_eqz(pf) = " << eve::is_eqz(pf) << '\n'
             << "-> is_eqz[eve::is_positive(pf)](pf) = " << eve::is_eqz[eve::is_positive(pf)](pf) << '\n';
   return 0;
 }
