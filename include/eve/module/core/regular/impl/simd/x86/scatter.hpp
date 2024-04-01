@@ -25,9 +25,9 @@ namespace eve::detail
     constexpr auto  ci      = categorize<Idx>();
 
     // Unsupported value types go back to emulation
-    if      constexpr(sizeof(T) < 4)                    scatter_(EVE_TARGETS(cpu_), opts, v, ptr, idx);
+    if      constexpr(sizeof(T) < 4)                    scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // Singular scatter goes  back to emulation
-    if      constexpr(N::value == 1)                    scatter_(EVE_TARGETS(cpu_), opts, v, ptr, idx);
+    if      constexpr(N::value == 1)                    scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // Small indexes are converted to int32
     else if constexpr(sizeof(element_type_t<Idx>) < 4)  scatter[opts](v, ptr, convert(idx, as<std::int32_t>{}));
     // Do we need to aggregate ?
@@ -94,7 +94,7 @@ namespace eve::detail
         {
           if      constexpr(match(c, category::int64x2 , category::uint64x2 ))  _mm_mask_i32scatter_epi64 (ptr,m,idx,v,8);
           else if constexpr(c == category::float64x2  )                         _mm_mask_i32scatter_pd    (ptr,m,idx,v,8);
-          else scatter_(EVE_TARGETS(cpu_), opts, v, ptr, idx);
+          else scatter.behavior(cpu_{}, opts, v, ptr, idx);
         }
       }
     }
@@ -145,7 +145,7 @@ namespace eve::detail
       {
         if      constexpr(match(c, category::int64x2 , category::uint64x2 ))  _mm_i32scatter_epi64 (ptr,idx,v,8);
         else if constexpr(c == category::float64x2  )                         _mm_i32scatter_pd    (ptr,idx,v,8);
-        else scatter_(EVE_TARGETS(cpu_), opts, v, ptr, idx);
+        else scatter.behavior(cpu_{}, opts, v, ptr, idx);
       }
     }
   }

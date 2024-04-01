@@ -12,7 +12,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                       = " << pf << '\n'
             << "<- qf                       = " << qf << '\n'
-            << "-> saturated(dist)(pf, qf) = " << eve::saturated(eve::dist)(pf, qf)
+            << "-> dist[eve::saturated](pf, qf) = " << eve::dist[eve::saturated](pf, qf)
             << '\n';
   return 0;
 }

@@ -15,7 +15,7 @@ float mean(std::vector<float>  ary) {
 
 int main()
 {
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
+  using w_t = eve::wide<float, eve::fixed<4>>;
   w_t pi = {3, 2, 3, 3}, qi = {4, 1, 1, ~0};
 
   std::cout << "---- simd" << '\n'

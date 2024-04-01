@@ -17,7 +17,8 @@ template<typename Options>
 struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 {
   template<eve::value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(abs_t, abs_);
 };

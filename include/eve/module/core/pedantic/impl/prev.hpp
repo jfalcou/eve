@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/sub.hpp>
-#include <eve/module/core/saturated/dec.hpp>
+#include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/saturated/sub.hpp>
 
 #include <type_traits>
@@ -57,7 +57,7 @@ prev_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
                        if_else(test, if_else(is_eqz(a), mzero(eve::as(a)), bitfloating(nz)), z));
       }
     }
-    else if constexpr( integral_value<T> ) { return saturated(dec)(a); }
+    else if constexpr( integral_value<T> ) { return dec[saturated2](a); }
   }
   else { return apply_over(pedantic(prev), a); }
 }

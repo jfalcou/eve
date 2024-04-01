@@ -42,10 +42,6 @@ TTS_CASE_WITH("Check behavior of secd on wide",
 //  auto ref  = [](auto e) -> v_t { return 1.0l / eve::cospi(double(e / 180.0l)); };
   auto ref  = [](auto e) -> v_t { return 1.0 / eve::cosd(e); };
 
-  std::cout << eve::rec(eve::cosd[eve::quarter_circle](a0)) << std::endl;
-  std::cout << eve::rec(eve::cosd(a0)) << std::endl;
-  std::cout <<          eve::secd[eve::quarter_circle](a0) << std::endl;
-  std::cout <<          eve::secd(a0) << std::endl;
   TTS_ULP_EQUAL(secd[eve::quarter_circle2](a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(secd[eve::half_circle2   ](a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(secd[eve::half_circle2   ](a1), map(ref, a1), 4);

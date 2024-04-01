@@ -21,7 +21,7 @@ namespace eve::detail
   requires sve_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric2) || O::contains(pedantic2))
-      return min_(EVE_TARGETS(cpu_), opts, a, b);
+      return min.behavior(cpu_{}, opts, a, b);
     else
       return svmin_z(sve_true<T>(),a,b);
   }

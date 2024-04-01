@@ -25,7 +25,7 @@
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/saturated/add.hpp>
-#include <eve/module/core/saturated/inc.hpp>
+#include <eve/module/core/regular/inc.hpp>
 
 namespace eve::detail
 {
@@ -43,7 +43,7 @@ next_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a) noexcept
       if constexpr( scalar_value<T> ) { return test ? (z == 0 ? T(-0.) : bitfloating(pz)) : z; }
       else { return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z); }
     }
-    else if constexpr( integral_value<T> ) { return saturated(inc)(a); }
+    else if constexpr( integral_value<T> ) { return inc[saturated2](a); }
   }
   else { return apply_over(pedantic(next), a); }
 }

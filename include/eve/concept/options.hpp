@@ -26,4 +26,9 @@ namespace eve
   /// Checks if the type associated to a given Keyword in a Option pack is equal to Type
   template<auto Keyword, typename Opts,typename Type>
   concept match_option =  std::same_as<Type, rbr::result::fetch_t<Keyword,Opts>>;
+
+  /// Checks if the type is one of the Choices
+  template<typename T, typename... Choices>
+  concept only_if = detail::is_one_of<T>(detail::types<Choices...> {});
+
 }

@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
-#include <eve/module/core/saturated/dec.hpp>
+#include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/saturated/sub.hpp>
 
 namespace eve::detail
@@ -32,7 +32,7 @@ prev_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a) noexcept
       if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
       else return z;
     }
-    else if constexpr( integral_value<T> ) { return saturated(dec)(a); }
+    else if constexpr( integral_value<T> ) { return dec[saturated2](a); }
   }
   else { return apply_over(saturated(prev), a); }
 }

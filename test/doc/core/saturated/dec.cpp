@@ -10,6 +10,6 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << "<- pf                 = " << pf << '\n'
-            << "-> saturated(dec)(pf) = " << eve::saturated(eve::dec)(pf) << '\n';
+            << "-> dec[saturated](pf) = " << eve::dec[eve::saturated](pf) << '\n';
   return 0;
 }
