@@ -76,9 +76,6 @@ namespace eve
 //!     version of `bit_ceil` which is
 //!     equivalent to `if_else(mask, bit_ceil(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_ceil.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_ceil = functor<bit_ceil_t>;

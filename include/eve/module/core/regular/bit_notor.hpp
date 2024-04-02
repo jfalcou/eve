@@ -48,7 +48,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value Ts... >
-//!      T bit_notor(T x, Ts... xs) noexcept;
+//!      bit_value<T, Ts...> bit_notor(T x, Ts... xs) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -59,14 +59,16 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!     * For two parameters it computes the  bitwise NOTOR of the two parameters
-//!     * For more than two parameters the call is  semantically equivalent to to `bit_notor(a0,
-//!     bit_or(xs...))`
-//!     *  The value returned is in the type of the first parameter
+//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
+//        to this type and then:
+//!
+//!       * For two parameters it computes the  bitwise ANDNOT of the two parameters
+//!       * For more than two parameters the call is  semantically equivalent to to `bit_notand(a0,
+//!         bit_and(xs...))`
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_notor.cpp}
+//!  @godbolt{doc/core/bit_notor.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,9 +78,6 @@ namespace eve
 //!     version of `bit_notor` which is
 //!     equivalent to `if_else(mask, bit_notor(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_notor.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_notor = functor<bit_notor_t>;

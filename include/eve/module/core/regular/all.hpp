@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/all.cpp}
+//!  @godbolt{doc/core/all.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -58,10 +58,6 @@ namespace eve
 //!     The call `eve::all[mask](x)` provides a masked
 //!     version of `all` which is
 //!     equivalent to : all not masked elements are not zero.
-//!
-//!      **Example**
-//!
-//! @godbolt{doc/core/masked/all.cpp}
 //!
 //!  @}
 //================================================================================================

@@ -42,20 +42,20 @@ namespace eve
 //!    The value of the bit of sign is returned.
 //!
 //!    @note
-//!      * bitofsign does NOT return  a [logical value](@ref eve::value)
+//!      * bitofsign does NOT return a [logical value](@ref eve::value)
 //!
 //!      * In particular,  take care that for  [floating real values](@ref eve::value) bitofsign
-//!      does NOT return
-//!        a [logical value](@ref eve::value) that can be tested, but `mzero(as(x))` if `x` is
+//!        does NOT return a [logical value](@ref eve::value) that can be tested, but
+//!        `mzero(as(x))` if `x` is
 //!        negative and  `zero(as(x))` if `x` is positive, which both satisfy the eve::is_eqz
 //!        predicate.
 //!
 //!      * If you want to test if the bit of sign is set eve::is_negative is the right function to
-//!      call.
+//!        call.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bitofsign.cpp}
+//!  @godbolt{doc/core/bitofsign.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(bitofsign_, bitofsign);

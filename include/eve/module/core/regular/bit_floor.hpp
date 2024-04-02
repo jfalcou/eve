@@ -68,7 +68,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_floor.cpp}
+//!  @godbolt{doc/core/bit_floor.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -78,9 +78,6 @@ namespace eve
 //!     version of `bit_floor` which is
 //!     equivalent to `if_else(mask, bit_floor(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_floor.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_floor = functor<bit_floor_t>;
@@ -110,7 +107,7 @@ namespace eve
       else
       {
         return if_else(is_eqz(v), zero, T {1} << dec(bit_width(v)));
-      } 
+      }
     }
   }
 }

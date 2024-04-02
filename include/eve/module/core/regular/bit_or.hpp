@@ -67,8 +67,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The value of the bitwise OR of its arguments in the type of the first one
-//!      is returned.
+//!      The value of the bitwise OR of its arguments converted to the bit_value<T,  Ts...>
 //!
 //!    @note
 //!      Although the infix notation with `|` is supported for two parameters, the `|` operator on
@@ -77,7 +76,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_or.cpp}
+//!  @godbolt{doc/core/bit_or.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -87,9 +86,6 @@ namespace eve
 //!     version of `bit_or` which is
 //!     equivalent to `if_else(mask, bit_or(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_or.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_or = functor<bit_or_t>;

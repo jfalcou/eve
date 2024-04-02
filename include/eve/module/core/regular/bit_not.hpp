@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_not.cpp}
+//!  @godbolt{doc/core/bit_not.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -52,10 +52,6 @@ namespace eve
 //!     The call `eve::bit_not[mask](x, ...)` provides a masked
 //!     version of `bit_not` which is
 //!     equivalent to `if_else(mask, bit_not(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_not.cpp}
 //!
 //! @}
 //================================================================================================

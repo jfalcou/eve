@@ -52,32 +52,23 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/add.cpp}
+//!  @godbolt{doc/core/add.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
 //!     The call `eve::add[mask](x, ...)` provides a masked
-//!     version of `add` which is
-//!     equivalent to `if_else(mask, eve::add(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/add.cpp}
+//!     version of `add` which is equivalent to `if_else(mask, eve::add(x, ...), x)`
 //!
 //!   * eve::saturated
 //!
 //!     The call `eve::saturated(eve::add)(...)` computes
 //!     a saturated version of `eve::add`.
 //!
-//!     Take care that for signed integral
-//!     entries this kind of addition is not associative at all.
+//!     Take care that for signed integral entries this kind of addition is not associative at all.
 //!     This call perform saturated additions in reverse incoming order.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/add.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(add_, add);
