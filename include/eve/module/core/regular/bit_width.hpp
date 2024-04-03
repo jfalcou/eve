@@ -51,4 +51,4 @@ namespace eve
 EVE_MAKE_CALLABLE(bit_width_, bit_width);
 }
 
-#include <eve/module/core/impl/bit_width.hpp>
+#include <eve/module/core/regular/impl/bit_width.hpp>

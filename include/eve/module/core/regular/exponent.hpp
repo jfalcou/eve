@@ -56,8 +56,8 @@ namespace eve
 EVE_MAKE_CALLABLE(exponent_, exponent);
 }
 
-#include <eve/module/core/impl/exponent.hpp>
+#include <eve/module/core/regular/impl/exponent.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/exponent.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/exponent.hpp>
 #endif

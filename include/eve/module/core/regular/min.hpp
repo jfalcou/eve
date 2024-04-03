@@ -97,28 +97,25 @@ namespace eve
 //!        inputs is not a `Nan`, the corresponding
 //!        output element will not be a `Nan`.
 //!
-//!     **Example**
-//!
-//!        @godbolt{doc/core/pedantic/min.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto min = functor<min_t>;
 }
 
-#include <eve/module/core/impl/min.hpp>
+#include <eve/module/core/regular/impl/min.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/min.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/min.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/min.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/min.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/min.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/min.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/min.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/min.hpp>
 #endif

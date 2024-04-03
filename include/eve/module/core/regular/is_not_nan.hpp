@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/is_eqz.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 
 namespace eve
 {

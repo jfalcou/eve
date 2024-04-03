@@ -85,8 +85,8 @@ namespace eve
 inline constexpr auto negminabs = functor<negminabs_t>;
 }
 
-#include <eve/module/core/impl/negminabs.hpp>
+#include <eve/module/core/regular/impl/negminabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/negminabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/negminabs.hpp>
 #endif

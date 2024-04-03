@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/if_else.hpp>
-#include <eve/module/core/max.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/max.hpp>
 
 namespace eve
 {
@@ -72,8 +72,8 @@ EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/impl/is_not_greater.hpp>
+#include <eve/module/core/regular/impl/is_not_greater.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/is_not_greater.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_not_greater.hpp>
 #endif

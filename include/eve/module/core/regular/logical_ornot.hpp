@@ -62,4 +62,4 @@ template<> struct supports_conditional<tag::logical_ornot_> : std::false_type
 EVE_MAKE_CALLABLE(logical_ornot_, logical_ornot);
 }
 
-#include <eve/module/core/impl/logical_ornot.hpp>
+#include <eve/module/core/regular/impl/logical_ornot.hpp>

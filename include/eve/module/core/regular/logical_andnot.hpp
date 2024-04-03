@@ -60,4 +60,4 @@ template<> struct supports_conditional<tag::logical_andnot_> : std::false_type
 EVE_MAKE_CALLABLE(logical_andnot_, logical_andnot);
 }
 
-#include <eve/module/core/impl/logical_andnot.hpp>
+#include <eve/module/core/regular/impl/logical_andnot.hpp>

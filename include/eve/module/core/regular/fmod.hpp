@@ -21,4 +21,4 @@ namespace eve
 EVE_MAKE_CALLABLE(fmod_, fmod);
 }
 
-#include <eve/module/core/impl/fmod.hpp>
+#include <eve/module/core/regular/impl/fmod.hpp>

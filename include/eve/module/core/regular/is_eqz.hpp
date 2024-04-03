@@ -10,8 +10,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/is_equal.hpp>
-#include <eve/module/core/logical_not.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
+#include <eve/module/core/regular/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/is_eqz.cpp}
+//!  @godbolt{doc/core/regular/is_eqz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -74,7 +74,7 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto is_eqz = functor<is_eqz_t>;
-  
+
   namespace detail
   {
     template<typename T, callable_options O>

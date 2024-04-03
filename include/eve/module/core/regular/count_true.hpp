@@ -63,8 +63,8 @@ namespace eve
 EVE_MAKE_CALLABLE(count_true_, count_true);
 }
 
-#include <eve/module/core/impl/count_true.hpp>
+#include <eve/module/core/regular/impl/count_true.hpp>
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/count_true.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/count_true.hpp>
 #endif

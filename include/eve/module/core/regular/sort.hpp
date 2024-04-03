@@ -78,4 +78,4 @@ namespace eve
 EVE_MAKE_CALLABLE(sort_, sort);
 }
 
-#include <eve/module/core/impl/sort.hpp>
+#include <eve/module/core/regular/impl/sort.hpp>

@@ -60,4 +60,4 @@ namespace eve
 EVE_MAKE_CALLABLE(is_not_denormal_, is_not_denormal);
 }
 
-#include <eve/module/core/impl/is_not_denormal.hpp>
+#include <eve/module/core/regular/impl/is_not_denormal.hpp>

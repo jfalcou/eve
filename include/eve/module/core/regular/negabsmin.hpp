@@ -89,8 +89,8 @@ namespace eve
 inline constexpr auto negabsmin = functor<negabsmin_t>;
 }
 
-#include <eve/module/core/impl/negabsmin.hpp>
+#include <eve/module/core/regular/impl/negabsmin.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/negabsmin.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/negabsmin.hpp>
 #endif

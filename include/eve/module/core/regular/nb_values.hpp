@@ -50,4 +50,4 @@ namespace eve
 EVE_MAKE_CALLABLE(nb_values_, nb_values);
 }
 
-#include <eve/module/core/impl/nb_values.hpp>
+#include <eve/module/core/regular/impl/nb_values.hpp>

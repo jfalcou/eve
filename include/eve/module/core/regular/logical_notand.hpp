@@ -61,4 +61,4 @@ template<> struct supports_conditional<tag::logical_notand_> : std::false_type
 EVE_MAKE_CALLABLE(logical_notand_, logical_notand);
 }
 
-#include <eve/module/core/impl/logical_notand.hpp>
+#include <eve/module/core/regular/impl/logical_notand.hpp>

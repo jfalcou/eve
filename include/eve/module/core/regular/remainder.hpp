@@ -14,4 +14,4 @@ namespace eve
 EVE_MAKE_CALLABLE(remainder_, remainder);
 }
 
-#include <eve/module/core/impl/remainder.hpp>
+#include <eve/module/core/regular/impl/remainder.hpp>

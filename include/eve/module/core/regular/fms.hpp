@@ -77,8 +77,8 @@ namespace eve
 EVE_MAKE_CALLABLE(fms_, fms);
 }
 
-#include <eve/module/core/impl/fms.hpp>
+#include <eve/module/core/regular/impl/fms.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fms.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fms.hpp>
 #endif

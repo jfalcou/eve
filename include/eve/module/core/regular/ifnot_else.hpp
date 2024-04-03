@@ -58,4 +58,4 @@ template<> struct supports_conditional<tag::ifnot_else_> : std::false_type
 EVE_MAKE_CALLABLE(ifnot_else_, ifnot_else);
 }
 
-#include <eve/module/core/impl/ifnot_else.hpp>
+#include <eve/module/core/regular/impl/ifnot_else.hpp>

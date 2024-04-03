@@ -89,8 +89,8 @@ namespace eve
 inline constexpr auto negabsmax = functor<negabsmax_t>;
 }
 
-#include <eve/module/core/impl/negabsmax.hpp>
+#include <eve/module/core/regular/impl/negabsmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/negabsmax.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/negabsmax.hpp>
 #endif

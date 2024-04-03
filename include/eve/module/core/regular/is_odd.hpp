@@ -10,9 +10,9 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/is_even.hpp>
-#include <eve/module/core/dec.hpp>
-#include <eve/module/core/is_nez.hpp>
+#include <eve/module/core/regular/is_even.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve

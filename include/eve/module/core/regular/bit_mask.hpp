@@ -9,7 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/is_nez.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
 
 namespace eve
 {

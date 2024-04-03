@@ -77,12 +77,12 @@ namespace eve
 EVE_MAKE_CALLABLE(fsm_, fsm);
 }
 
-#include <eve/module/core/impl/fsm.hpp>
+#include <eve/module/core/regular/impl/fsm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fsm.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/fsm.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/fsm.hpp>
 #endif

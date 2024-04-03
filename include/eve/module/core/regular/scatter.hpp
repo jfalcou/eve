@@ -90,8 +90,8 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 inline constexpr auto scatter = functor<scatter_t>;
 }
 
-#include <eve/module/core/impl/scatter.hpp>
+#include <eve/module/core/regular/impl/scatter.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/scatter.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/scatter.hpp>
 #endif

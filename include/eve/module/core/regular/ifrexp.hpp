@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/zip.hpp>
+#include <eve/module/core/regular/zip.hpp>
 
 namespace eve
 {
@@ -76,4 +76,4 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 inline constexpr auto ifrexp = functor<ifrexp_t>;
 }
 
-#include <eve/module/core/impl/ifrexp.hpp>
+#include <eve/module/core/regular/impl/ifrexp.hpp>

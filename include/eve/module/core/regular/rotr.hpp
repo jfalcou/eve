@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/rotl.hpp>
+#include <eve/module/core/regular/rotl.hpp>
 
 namespace eve
 {
@@ -65,5 +65,5 @@ namespace eve::detail
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/rotr.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/rotr.hpp>
 #endif

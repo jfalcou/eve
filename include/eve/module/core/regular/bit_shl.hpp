@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/shl.hpp>
+#include <eve/module/core/regular/shl.hpp>
 
 namespace eve
 {

@@ -74,12 +74,12 @@ namespace eve
 EVE_MAKE_CALLABLE(add_, add);
 }
 
-#include <eve/module/core/impl/add.hpp>
+#include <eve/module/core/regular/impl/add.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/add.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/add.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/add.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/add.hpp>
 #endif

@@ -10,9 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/abs.hpp>
-#include <eve/module/core/max.hpp>
-#include <eve/module/core/is_infinite.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
 
 namespace eve
 {

@@ -95,8 +95,8 @@ namespace eve
 inline constexpr auto minabs = functor<minabs_t>;
 }
 
-#include <eve/module/core/impl/minabs.hpp>
+#include <eve/module/core/regular/impl/minabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/minabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/minabs.hpp>
 #endif

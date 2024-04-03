@@ -48,4 +48,4 @@ namespace eve
 EVE_MAKE_CALLABLE(reduce_, reduce);
 }
 
-#include <eve/module/core/impl/reduce.hpp>
+#include <eve/module/core/regular/impl/reduce.hpp>

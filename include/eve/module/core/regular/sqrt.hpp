@@ -75,20 +75,20 @@ EVE_MAKE_CALLABLE(sqrt_, sqrt);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/impl/sqrt.hpp>
+#include <eve/module/core/regular/impl/sqrt.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/sqrt.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/sqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/sqrt.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/sqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/sqrt.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/sqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/sqrt.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/sqrt.hpp>
 #endif

@@ -54,4 +54,4 @@ namespace eve
 EVE_MAKE_CALLABLE(lo_, lo);
 }
 
-#include <eve/module/core/impl/lo.hpp>
+#include <eve/module/core/regular/impl/lo.hpp>

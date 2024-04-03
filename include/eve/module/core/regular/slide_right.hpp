@@ -46,20 +46,20 @@ namespace detail
 }
 }
 
-#include <eve/module/core/impl/slide_right.hpp>
+#include <eve/module/core/regular/impl/slide_right.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/slide_right.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/slide_right.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/slide_right.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/slide_right.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/slide_right.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/slide_right.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/slide_right.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/slide_right.hpp>
 #endif

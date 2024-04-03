@@ -93,8 +93,8 @@ namespace eve
   inline constexpr auto bit_and = functor<bit_and_t>;
 }
 
-#include <eve/module/core/impl/bit_and.hpp>
+#include <eve/module/core/regular/impl/bit_and.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/bit_and.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/bit_and.hpp>
 #endif

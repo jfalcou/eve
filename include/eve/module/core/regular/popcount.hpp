@@ -50,12 +50,12 @@ namespace eve
 EVE_MAKE_CALLABLE(popcount_, popcount);
 }
 
-#include <eve/module/core/impl/popcount.hpp>
+#include <eve/module/core/regular/impl/popcount.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/popcount.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/popcount.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/popcount.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/popcount.hpp>
 #endif

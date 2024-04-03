@@ -95,8 +95,8 @@ namespace eve
 inline constexpr auto maxabs = functor<maxabs_t>;
 }
 
-#include <eve/module/core/impl/maxabs.hpp>
+#include <eve/module/core/regular/impl/maxabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/maxabs.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/maxabs.hpp>
 #endif

@@ -58,12 +58,12 @@ namespace eve
 EVE_MAKE_CALLABLE(maximum_, maximum);
 }
 
-#include <eve/module/core/impl/maximum.hpp>
+#include <eve/module/core/regular/impl/maximum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/maximum.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/maximum.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/maximum.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/maximum.hpp>
 #endif

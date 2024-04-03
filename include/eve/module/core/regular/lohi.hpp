@@ -9,8 +9,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/shuffle.hpp>
-#include <eve/module/core/zip.hpp>
+#include <eve/module/core/regular/shuffle.hpp>
+#include <eve/module/core/regular/zip.hpp>
 #include <bit>
 
 namespace eve

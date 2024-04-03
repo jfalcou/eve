@@ -89,20 +89,20 @@ namespace eve
   inline constexpr auto floor = functor<floor_t>;
 }
 
-#include <eve/module/core/impl/floor.hpp>
+#include <eve/module/core/regular/impl/floor.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/floor.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/floor.hpp>
 #endif

@@ -13,10 +13,10 @@
 #include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/abs.hpp>
-#include <eve/module/core/is_eqz.hpp>
-#include <eve/module/core/is_flint.hpp>
-#include <eve/module/core/is_not_equal.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_flint.hpp>
+#include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve

@@ -60,27 +60,27 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/if_else.cpp}
+//!  @godbolt{doc/core/regular/if_else.cpp}
 //!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(if_else_, if_else);
 }
 
-#include <eve/module/core/impl/if_else.hpp>
+#include <eve/module/core/regular/impl/if_else.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/if_else.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/if_else.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/if_else.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/if_else.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/if_else.hpp>
 #endif

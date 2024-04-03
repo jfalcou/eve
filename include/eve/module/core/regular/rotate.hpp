@@ -85,4 +85,4 @@ namespace detail
 
 }
 
-#include <eve/module/core/impl/rotate.hpp>
+#include <eve/module/core/regular/impl/rotate.hpp>

@@ -13,9 +13,9 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/max.hpp>
-#include <eve/module/core/min.hpp>
-#include <eve/module/core/zip.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/zip.hpp>
 #include <eve/traits.hpp>
 
 namespace eve

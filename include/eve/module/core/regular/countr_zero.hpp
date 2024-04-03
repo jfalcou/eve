@@ -51,8 +51,8 @@ namespace eve
 EVE_MAKE_CALLABLE(countr_zero_, countr_zero);
 }
 
-#include <eve/module/core/impl/countr_zero.hpp>
+#include <eve/module/core/regular/impl/countr_zero.hpp>
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/countr_zero.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/countr_zero.hpp>
 #endif

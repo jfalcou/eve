@@ -71,8 +71,8 @@ namespace eve
 EVE_MAKE_CALLABLE(minus_, minus);
 }
 
-#include <eve/module/core/impl/minus.hpp>
+#include <eve/module/core/regular/impl/minus.hpp>
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/minus.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/minus.hpp>
 #endif

@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/absmin.cpp}
+//!  @godbolt{doc/core/regular/absmin.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -91,8 +91,8 @@ namespace eve
 inline constexpr auto absmin = functor<absmin_t>;
 }
 
-#include <eve/module/core/impl/absmin.hpp>
+#include <eve/module/core/regular/impl/absmin.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/absmin.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/absmin.hpp>
 #endif

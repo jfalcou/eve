@@ -77,16 +77,16 @@ namespace eve
 EVE_MAKE_CALLABLE(fnma_, fnma);
 }
 
-#include <eve/module/core/impl/fnma.hpp>
+#include <eve/module/core/regular/impl/fnma.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fnma.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fnma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/fnma.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/fnma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/fnma.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/fnma.hpp>
 #endif

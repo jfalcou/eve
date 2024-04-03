@@ -56,4 +56,4 @@ namespace eve
 EVE_MAKE_CALLABLE(broadcast_group_, broadcast_group);
 }
 
-#include <eve/module/core/impl/broadcast_group.hpp>
+#include <eve/module/core/regular/impl/broadcast_group.hpp>

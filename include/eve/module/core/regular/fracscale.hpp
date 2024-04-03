@@ -107,8 +107,8 @@ namespace detail
 EVE_MAKE_CALLABLE(fracscale_, fracscale);
 }
 
-#include <eve/module/core/impl/fracscale.hpp>
+#include <eve/module/core/regular/impl/fracscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fracscale.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fracscale.hpp>
 #endif

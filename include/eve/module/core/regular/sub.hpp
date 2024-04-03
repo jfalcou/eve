@@ -69,20 +69,20 @@ namespace eve
 EVE_MAKE_CALLABLE(sub_, sub);
 }
 
-#include <eve/module/core/impl/sub.hpp>
+#include <eve/module/core/regular/impl/sub.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/sub.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/sub.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/sub.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/sub.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/sub.hpp>
 #endif

@@ -102,4 +102,4 @@ namespace detail
 EVE_MAKE_CALLABLE(shr_, shr);
 }
 
-#include <eve/module/core/impl/shr.hpp>
+#include <eve/module/core/regular/impl/shr.hpp>

@@ -75,4 +75,4 @@ template<> struct supports_conditional<tag::diff_of_prod_> : std::false_type
 EVE_MAKE_CALLABLE(diff_of_prod_, diff_of_prod);
 }
 
-#include <eve/module/core/impl/diff_of_prod.hpp>
+#include <eve/module/core/regular/impl/diff_of_prod.hpp>

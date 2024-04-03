@@ -84,20 +84,20 @@ namespace eve
 }
 
 
-#include <eve/module/core/impl/nearest.hpp>
+#include <eve/module/core/regular/impl/nearest.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/nearest.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/nearest.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/nearest.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/nearest.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/nearest.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/nearest.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/nearest.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/nearest.hpp>
 #endif

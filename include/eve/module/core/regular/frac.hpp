@@ -66,4 +66,4 @@ namespace eve
 EVE_MAKE_CALLABLE(frac_, frac);
 }
 
-#include <eve/module/core/impl/frac.hpp>
+#include <eve/module/core/regular/impl/frac.hpp>

@@ -51,4 +51,4 @@ namespace eve
 EVE_MAKE_CALLABLE(swap_pairs_, swap_pairs);
 }
 
-#include <eve/module/core/impl/swap_pairs.hpp>
+#include <eve/module/core/regular/impl/swap_pairs.hpp>

@@ -9,7 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/is_ltz.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/constant/false.hpp>
 
 namespace eve

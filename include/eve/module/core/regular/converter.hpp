@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/convert.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/traits/as_floating_point.hpp>
 
 namespace eve

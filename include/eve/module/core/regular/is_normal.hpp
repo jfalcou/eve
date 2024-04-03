@@ -11,11 +11,11 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/abs.hpp>
-#include <eve/module/core/is_finite.hpp>
-#include <eve/module/core/is_greater_equal.hpp>
-#include <eve/module/core/is_nez.hpp>
-#include <eve/module/core/logical_and.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve

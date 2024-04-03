@@ -70,16 +70,16 @@ namespace eve
 EVE_MAKE_CALLABLE(rec_, rec);
 }
 
-#include <eve/module/core/impl/rec.hpp>
+#include <eve/module/core/regular/impl/rec.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/rec.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/rec.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/rec.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/rec.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/rec.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/rec.hpp>
 #endif

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/is_pow2.hpp>
+#include <eve/module/core/regular/is_pow2.hpp>
 
 namespace eve
 {

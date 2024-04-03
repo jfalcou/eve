@@ -77,12 +77,12 @@ EVE_MAKE_CALLABLE(fam_, fam);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/impl/fam.hpp>
+#include <eve/module/core/regular/impl/fam.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fam.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fam.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/fam.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/fam.hpp>
 #endif

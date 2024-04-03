@@ -12,7 +12,7 @@
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/if_else.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -93,5 +93,5 @@ namespace detail
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/is_less.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_less.hpp>
 #endif

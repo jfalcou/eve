@@ -10,9 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/min.hpp>
-#include <eve/module/core/max.hpp>
-#include <eve/module/core/swap_if.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/swap_if.hpp>
 
 namespace eve
 {

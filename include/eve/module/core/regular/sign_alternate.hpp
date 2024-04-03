@@ -58,4 +58,4 @@ namespace eve
 EVE_MAKE_CALLABLE(sign_alternate_, sign_alternate);
 }
 
-#include <eve/module/core/impl/sign_alternate.hpp>
+#include <eve/module/core/regular/impl/sign_alternate.hpp>

@@ -10,9 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/all.hpp>
-#include <eve/module/core/trunc.hpp>
-#include <eve/module/core/is_flint.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/regular/is_flint.hpp>
 
 namespace eve
 {
@@ -77,8 +77,8 @@ struct ldexp_t : elementwise_callable<ldexp_t, Options, pedantic_option>
 inline constexpr auto ldexp = functor<ldexp_t>;
 }
 
-#include <eve/module/core/impl/ldexp.hpp>
+#include <eve/module/core/regular/impl/ldexp.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/ldexp.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/ldexp.hpp>
 #endif

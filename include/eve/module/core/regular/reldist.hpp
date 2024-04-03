@@ -50,4 +50,4 @@ namespace eve
 EVE_MAKE_CALLABLE(reldist_, reldist);
 }
 
-#include <eve/module/core/impl/reldist.hpp>
+#include <eve/module/core/regular/impl/reldist.hpp>

@@ -86,4 +86,4 @@ namespace eve
 EVE_MAKE_CALLABLE(sqr_, sqr);
 }
 
-#include <eve/module/core/impl/sqr.hpp>
+#include <eve/module/core/regular/impl/sqr.hpp>

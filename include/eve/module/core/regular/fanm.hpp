@@ -77,12 +77,12 @@ namespace eve
 EVE_MAKE_CALLABLE(fanm_, fanm);
 }
 
-#include <eve/module/core/impl/fanm.hpp>
+#include <eve/module/core/regular/impl/fanm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fanm.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fanm.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/fanm.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/fanm.hpp>
 #endif

@@ -54,4 +54,4 @@ namespace eve
 
 }
 
-#include <eve/module/core/impl/dot.hpp>
+#include <eve/module/core/regular/impl/dot.hpp>

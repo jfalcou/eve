@@ -60,8 +60,8 @@ namespace eve
 EVE_MAKE_CALLABLE(negate_, negate);
 }
 
-#include <eve/module/core/impl/negate.hpp>
+#include <eve/module/core/regular/impl/negate.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/negate.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/negate.hpp>
 #endif

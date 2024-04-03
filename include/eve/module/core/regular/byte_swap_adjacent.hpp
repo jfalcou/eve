@@ -67,4 +67,4 @@ namespace eve
 EVE_MAKE_CALLABLE(byte_swap_adjacent_, byte_swap_adjacent);
 }
 
-#include <eve/module/core/impl/byte_swap_adjacent.hpp>
+#include <eve/module/core/regular/impl/byte_swap_adjacent.hpp>

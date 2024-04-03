@@ -59,8 +59,8 @@ namespace eve
 EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
 }
 
-#include <eve/module/core/impl/is_ordered.hpp>
+#include <eve/module/core/regular/impl/is_ordered.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/is_ordered.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_ordered.hpp>
 #endif

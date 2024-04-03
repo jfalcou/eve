@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/bit_shl.hpp>
+#include <eve/module/core/regular/bit_shl.hpp>
 
 namespace eve
 {

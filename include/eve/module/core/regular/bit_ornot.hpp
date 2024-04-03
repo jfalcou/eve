@@ -84,8 +84,8 @@ namespace eve
   inline constexpr auto bit_ornot = functor<bit_ornot_t>;
 }
 
-#include <eve/module/core/impl/bit_ornot.hpp>
+#include <eve/module/core/regular/impl/bit_ornot.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/bit_ornot.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_ornot.hpp>
 #endif

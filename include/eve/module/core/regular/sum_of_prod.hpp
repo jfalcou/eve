@@ -75,4 +75,4 @@ template<> struct supports_conditional<tag::sum_of_prod_> : std::false_type
 EVE_MAKE_CALLABLE(sum_of_prod_, sum_of_prod);
 }
 
-#include <eve/module/core/impl/sum_of_prod.hpp>
+#include <eve/module/core/regular/impl/sum_of_prod.hpp>

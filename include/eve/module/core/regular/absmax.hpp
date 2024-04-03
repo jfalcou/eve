@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/absmax.cpp}
+//!  @godbolt{doc/core/regular/absmax.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -91,8 +91,8 @@ namespace eve
 inline constexpr auto absmax = functor<absmax_t>;
 }
 
-#include <eve/module/core/impl/absmax.hpp>
+#include <eve/module/core/regular/impl/absmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/absmax.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/absmax.hpp>
 #endif

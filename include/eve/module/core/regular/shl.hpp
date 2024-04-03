@@ -101,4 +101,4 @@ namespace detail
 EVE_MAKE_CALLABLE(shl_, shl);
 }
 
-#include <eve/module/core/impl/shl.hpp>
+#include <eve/module/core/regular/impl/shl.hpp>

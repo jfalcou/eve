@@ -102,20 +102,20 @@ namespace eve
 inline constexpr auto max = functor<max_t>;
 }
 
-#include <eve/module/core/impl/max.hpp>
+#include <eve/module/core/regular/impl/max.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/max.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/max.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/max.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/max.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/max.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/max.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/max.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/max.hpp>
 #endif

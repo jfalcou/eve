@@ -11,10 +11,10 @@
 #include <eve/traits/bit_value.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/abs.hpp>
-#include <eve/module/core/is_less.hpp>
-#include <eve/module/core/is_nez.hpp>
-#include <eve/module/core/logical_and.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve

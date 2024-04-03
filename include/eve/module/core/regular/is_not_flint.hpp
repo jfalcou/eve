@@ -9,8 +9,8 @@
 
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/core/is_nez.hpp>
-#include <eve/module/core/frac.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/frac.hpp>
 
 namespace eve
 {

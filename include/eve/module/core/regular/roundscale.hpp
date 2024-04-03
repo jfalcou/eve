@@ -110,8 +110,8 @@ namespace detail
 EVE_MAKE_CALLABLE(roundscale_, roundscale);
 }
 
-#include <eve/module/core/impl/roundscale.hpp>
+#include <eve/module/core/regular/impl/roundscale.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/roundscale.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/roundscale.hpp>
 #endif

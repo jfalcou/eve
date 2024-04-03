@@ -10,7 +10,7 @@
 #include <eve/assert.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/abs.hpp>
+#include <eve/module/core/regular/abs.hpp>
 
 #include <type_traits>
 
@@ -123,8 +123,8 @@ EVE_MAKE_CALLABLE(rshr_, rshr);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/impl/rshr.hpp>
+#include <eve/module/core/regular/impl/rshr.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/rshr.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/rshr.hpp>
 #endif

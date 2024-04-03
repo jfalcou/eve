@@ -12,9 +12,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/all.hpp>
-#include <eve/module/core/if_else.hpp>
-#include <eve/module/core/is_gez.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_gez.hpp>
 
 #include <type_traits>
 
@@ -69,4 +69,4 @@ namespace eve
 EVE_MAKE_CALLABLE(nextafter_, nextafter);
 }
 
-#include <eve/module/core/impl/nextafter.hpp>
+#include <eve/module/core/regular/impl/nextafter.hpp>

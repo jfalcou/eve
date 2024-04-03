@@ -69,8 +69,8 @@ namespace eve
 EVE_MAKE_CALLABLE(is_not_less_, is_not_less);
 }
 
-#include <eve/module/core/impl/is_not_less.hpp>
+#include <eve/module/core/regular/impl/is_not_less.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/is_not_less.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_not_less.hpp>
 #endif

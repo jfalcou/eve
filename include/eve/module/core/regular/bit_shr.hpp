@@ -99,8 +99,8 @@ namespace eve
   inline constexpr auto bit_shr = functor<bit_shr_t>;
 }
 
-#include <eve/module/core/impl/bit_shr.hpp>
+#include <eve/module/core/regular/impl/bit_shr.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/bit_shr.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/bit_shr.hpp>
 #endif

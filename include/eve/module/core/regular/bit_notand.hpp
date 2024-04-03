@@ -85,20 +85,20 @@ inline constexpr auto bit_notand = functor<bit_notand_t>;
 
 }
 
-#include <eve/module/core/impl/bit_notand.hpp>
+#include <eve/module/core/regular/impl/bit_notand.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/bit_notand.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/bit_notand.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/impl/simd/ppc/bit_notand.hpp>
+#  include <eve/module/core/regular/impl/simd/ppc/bit_notand.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/bit_notand.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_notand.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/impl/simd/arm/sve/bit_notand.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/bit_notand.hpp>
 #endif

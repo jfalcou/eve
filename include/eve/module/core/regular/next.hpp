@@ -12,9 +12,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/all.hpp>
-#include <eve/module/core/if_else.hpp>
-#include <eve/module/core/is_gez.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_gez.hpp>
 
 #include <type_traits>
 
@@ -118,4 +118,4 @@ namespace detail
 EVE_MAKE_CALLABLE(next_, next);
 }
 
-#include <eve/module/core/impl/next.hpp>
+#include <eve/module/core/regular/impl/next.hpp>

@@ -99,8 +99,8 @@ namespace eve
 EVE_MAKE_CALLABLE(rem_, rem);
 }
 
-#include <eve/module/core/impl/rem.hpp>
+#include <eve/module/core/regular/impl/rem.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/impl/simd/arm/neon/rem.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/rem.hpp>
 #endif

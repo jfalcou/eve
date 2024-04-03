@@ -11,17 +11,17 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/abs.hpp>
-#include <eve/module/core/fma.hpp>
-#include <eve/module/core/if_else.hpp>
-#include <eve/module/core/is_eqz.hpp>
-#include <eve/module/core/is_infinite.hpp>
-#include <eve/module/core/is_nez.hpp>
-#include <eve/module/core/none.hpp>
-#include <eve/module/core/rec.hpp>
-#include <eve/module/core/nearest.hpp>
-#include <eve/module/core/sign.hpp>
-#include <eve/module/core/zip.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/none.hpp>
+#include <eve/module/core/regular/rec.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/sign.hpp>
+#include <eve/module/core/regular/zip.hpp>
 
 namespace eve
 {

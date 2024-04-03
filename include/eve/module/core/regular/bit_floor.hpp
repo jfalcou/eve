@@ -12,13 +12,13 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/bit_width.hpp>
-#include <eve/module/core/dec.hpp>
-#include <eve/module/core/if_else.hpp>
-#include <eve/module/core/ifrexp.hpp>
-#include <eve/module/core/is_eqz.hpp>
-#include <eve/module/core/is_ltz.hpp>
-#include <eve/module/core/ldexp.hpp>
+#include <eve/module/core/regular/bit_width.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/ifrexp.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
 
 namespace eve
 {

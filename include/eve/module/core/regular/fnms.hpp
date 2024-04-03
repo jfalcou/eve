@@ -78,8 +78,8 @@ namespace eve
 EVE_MAKE_CALLABLE(fnms_, fnms);
 }
 
-#include <eve/module/core/impl/fnms.hpp>
+#include <eve/module/core/regular/impl/fnms.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/impl/simd/x86/fnms.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/fnms.hpp>
 #endif

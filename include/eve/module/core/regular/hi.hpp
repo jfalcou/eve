@@ -54,4 +54,4 @@ namespace eve
 EVE_MAKE_CALLABLE(hi_, hi);
 }
 
-#include <eve/module/core/impl/hi.hpp>
+#include <eve/module/core/regular/impl/hi.hpp>
