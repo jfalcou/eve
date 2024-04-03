@@ -48,6 +48,33 @@ jobs:
           ctest --output-on-failure -j 4 -E ^doc.*.exe
 
   ##################################################################################################
+  ## Full emulation tests
+  ##################################################################################################
+  nosimd:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         }
+        - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 5
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
+
+  ##################################################################################################
   ## Mac OS X Targets
   ##################################################################################################
   macosx:
@@ -101,12 +128,7 @@ jobs:
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
 
   ##################################################################################################
-  ## X86 Targets
-  ## There is a lot to do so we try to maximize the order & occupancy of our runners
-  ##################################################################################################
-
-  ##################################################################################################
-  ## Phase 1 - Pre-Skylake SIMD ISA - clang
+  ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################
   x86-clang:
     runs-on: [self-hosted, generic-x86]
@@ -134,7 +156,7 @@ jobs:
         run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
-  ## Phase 2 - Non-X86 - Requires clang and qemu
+  ## Host 1 - PPC & ARM SVE256/512 Tests
   ##################################################################################################
   other-arch:
     needs: x86-clang
@@ -146,9 +168,9 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang, arch: aarch64 , opts: -Wno-psabi}
-        - { comp: clang, arch: arm     , opts: -Wno-psabi}
-        - { comp: gcc  , arch: ppc64   , opts: -Wno-psabi}
+        - { comp: gcc, arch: sve256, opts: -Wno-psabi}
+        - { comp: gcc, arch: sve512, opts: -Wno-psabi}
+        - { comp: gcc, arch: ppc64 , opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -158,17 +180,13 @@ jobs:
           cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compile Unit Tests
-        run:  |
-          cd build
-          ninja unit.exe -j 10
-      - name: Running Random Sampling Tests
-        run:  |
-          cd build
-          ctest --output-on-failure -j 10 -E ^doc.*.exe
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 10
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
-  ## Phase 3 - Pre-Skylake SIMD ISA - g++
+  ## Host 1 - Pre-Skylake SIMD ISA - g++
   ##################################################################################################
   x86-gcc:
     needs: other-arch
@@ -197,11 +215,71 @@ jobs:
         run: cd build && ctest --output-on-failure -j 10  -E ^doc.*.exe
 
   ##################################################################################################
-  ## Phase 3 - Pre-Skylake SIMD ISA - Special cases
+  ## Host 2 - Non-X86 - Requires clang and qemu
   ##################################################################################################
-  x86-custom:
-    needs: x86-gcc
-    runs-on: [self-hosted, generic-x86]
+  arm:
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64 , opts: -Wno-psabi}
+        - { comp: clang, arch: arm     , opts: -Wno-psabi}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile Unit Tests
+        run:  |
+          cd build
+          ninja unit.exe -j 5
+      - name: Running Random Sampling Tests
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## Host 2 - Post-Skylake SIMD ISA
+  ##################################################################################################
+  avx512:
+    needs: arm
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
+        - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 5
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
+
+  ##################################################################################################
+  ## Host 2 - Pre-Skylake SIMD ISA - Special cases
+  ##################################################################################################
+  other-cases:
+    needs: avx512
+    runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
       options: -u root
@@ -223,69 +301,6 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit.exe -j 8
-      - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 8 -E ^doc.*.exe
-
-  ##################################################################################################
-  ## Post-Skylake SIMD ISA & Full emulation tests
-  ##################################################################################################
-  avx512:
-    runs-on: [self-hosted, avx512]
-    container:
-      image: ghcr.io/jfalcou/compilers:v7
-      options: -u root
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
-        - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         }
-        - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
-        - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
-
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
-      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        run: |
-          mkdir build && cd build
-          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compiling Unit Tests
         run:  cd build && ninja unit.exe -j 5
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
-
-  ##################################################################################################
-  ## ARM SVE Tests
-  ## Currently: SVE128/256/512
-  ##################################################################################################
-  arm-sve:
-    needs: x86-custom
-    runs-on: [self-hosted, generic-x86]
-    container:
-      image: ghcr.io/jfalcou/compilers:v7
-      options: -u root
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: gcc, arch: sve256, opts: -Wno-psabi}
-        - { comp: gcc, arch: sve512, opts: -Wno-psabi}
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
-      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        run:  |
-          mkdir build
-          cd build
-          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
-                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compile Unit Tests
-        run:  |
-          cd build
-          ninja unit.exe -j 12
-      - name: Running Random Sampling Tests
-        run:  |
-          cd build
-          ctest --output-on-failure -j 12 -E ^doc.*.exe
+        run: cd build && ctest --output-on-failure -j 4 -E ^doc.*.exe
