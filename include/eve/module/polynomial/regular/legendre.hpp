@@ -14,9 +14,10 @@
 namespace eve
 {
   template<typename Options>
-  struct legendre_t : elementwise_callable<legendre_t, Options
-                                           , successor_option, p_kind_option, q_kind_option
-                                           , condon_shortley_option, associated_option, spherical_option>
+  struct legendre_t : strict_elementwise_callable < legendre_t, Options
+                                                  , successor_option, p_kind_option, q_kind_option
+                                                  , condon_shortley_option, associated_option, spherical_option
+                                                  >
   {
     template<eve::floating_ordered_value ...Ts>
     constexpr EVE_FORCEINLINE
