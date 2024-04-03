@@ -44,7 +44,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eunsigned_value T, integral_value I>
+//!      template<unsigned_value T, integral_value I>
 //!      T bit_flip(T x, I i) noexcept;
 //!   }
 //!   @endcode

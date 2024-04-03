@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_eqz.cpp}
+//!  @godbolt{doc/core/is_eqz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -63,7 +63,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/core/regular/abs.cpp}
+//!   @godbolt{doc/core/abs.cpp}
 //!
 //!   @groupheader{Semantic Modifiers}
 //!

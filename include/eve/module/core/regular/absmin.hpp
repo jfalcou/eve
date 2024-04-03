@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/absmin.cpp}
+//!  @godbolt{doc/core/absmin.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
