@@ -15,7 +15,7 @@ int main()
             << " -> upward(rem)(pi, qi)       = " << eve::downward(eve::rem)(pi, qi) << '\n'
             << " -> downward(rem)(pi, qi)     = " << eve::upward(eve::rem)(pi, qi) << '\n'
             << " -> to_nearest(rem)(pi, qi)   = " << eve::to_nearest(eve::rem)(pi, qi) << '\n'
-            << " -> rem[ri!= 0](pi, ri)       = " << eve::rem[qi!= 0](pi, ri) << '\n'
+            << " -> rem[ri!= 0](pi, ri)       = " << eve::rem[ri!= 0](pi, ri) << '\n'
             << " -> pi % qi                   = " << pi % qi << '\n';
 
   std::int16_t xi  = 32700,  yi = 101;
