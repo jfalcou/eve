@@ -51,18 +51,15 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/convert.cpp}
+//!  @godbolt{doc/core/convert.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * eve::saturated
 //!
-//!     The expression `saturated(convert)(x,t)` computes a saturated conversion of `x` to
+//!     The expression `convert[saturated](x,t)` computes a saturated conversion of `x` to
 //!     the type wrapped by `t`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/convert.cpp}
 //! @}
 //================================================================================================
 EVE_ALIAS_CALLABLE(convert_, convert);

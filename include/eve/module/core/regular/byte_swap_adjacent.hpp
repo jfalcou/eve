@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/byte_swap_adjacent.cpp}
+//!  @godbolt{doc/core/byte_swap_adjacent.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,10 +61,6 @@ namespace eve
 //!     The call `eve::byte_swap_adjacent[mask](x, ...)` provides a masked
 //!     version of `byte_swap_adjacent` which is
 //!     equivalent to `if_else(mask, byte_swap_adjacent(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/byte_swap_adjacent.cpp}
 //!
 //! @}
 //================================================================================================

@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/byte_swap_pairs.cpp}
+//!  @godbolt{doc/core/byte_swap_pairs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -54,10 +54,6 @@ namespace eve
 //!     The call `eve::byte_swap_pairs[mask](x, ...)` provides a masked
 //!     version of `byte_swap_pairs` which is
 //!     equivalent to `if_else(mask, byte_swap_pairs(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/byte_swap_pairs.cpp}
 //!
 //! @}
 //================================================================================================
