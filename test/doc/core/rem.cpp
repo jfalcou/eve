@@ -5,7 +5,7 @@
 int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 32700}, qi = {4, 2, 0, 101};
+  w_t pi = {3, 2, 3, 32700}, qi = {4, 2, 1, 101},  ri = {4, 2, 0, 101};
 
   std::cout << "---- simd" << '\n'
             << " <- pi                        = " << pi << '\n'
@@ -15,7 +15,7 @@ int main()
             << " -> upward(rem)(pi, qi)       = " << eve::downward(eve::rem)(pi, qi) << '\n'
             << " -> downward(rem)(pi, qi)     = " << eve::upward(eve::rem)(pi, qi) << '\n'
             << " -> to_nearest(rem)(pi, qi)   = " << eve::to_nearest(eve::rem)(pi, qi) << '\n'
-            << " -> rem[qi!= 0](pi, qi)       = " << eve::rem[qi!= 0](pi, qi) << '\n'
+            << " -> rem[ri!= 0](pi, ri)       = " << eve::rem[qi!= 0](pi, ri) << '\n'
             << " -> pi % qi                   = " << pi % qi << '\n';
 
   std::int16_t xi  = 32700,  yi = 101;
