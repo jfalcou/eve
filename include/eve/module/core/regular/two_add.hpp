@@ -10,9 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/zip.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/zip.hpp>
+#include <eve/module/core/if_else.hpp>
+#include <eve/module/core/is_infinite.hpp>
 
 namespace eve
 {
@@ -68,7 +68,7 @@ struct two_add_t : elementwise_callable<two_add_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/two_add.cpp}
+//!  @godbolt{doc/core/two_add.cpp}
 //!
 //! @}
 //================================================================================================

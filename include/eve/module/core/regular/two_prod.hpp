@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/zip.hpp>
+#include <eve/module/core/zip.hpp>
 
 namespace eve
 {
@@ -67,7 +67,7 @@ struct two_prod_t : elementwise_callable<two_prod_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/two_prod.cpp}
+//!  @godbolt{doc/core/two_prod.cpp}
 //!
 //! @}
 //================================================================================================

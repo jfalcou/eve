@@ -12,9 +12,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
+#include <eve/module/core/all.hpp>
+#include <eve/module/core/if_else.hpp>
+#include <eve/module/core/is_gez.hpp>
 
 #include <type_traits>
 
@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/next.cpp}
+//!  @godbolt{doc/core/next.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -65,28 +65,16 @@ namespace eve
 //!     version of `next` which is
 //!     equivalent to `if_else(mask, next(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/next.cpp}
-//!
 //!   * eve::pedantic
 //!
 //!     The call `eve::pedantic(eve::next)(x, ...)` provides a pedantic
 //!     version of `next` which ensures that the successor of eve::mzero is  eve::zero
 //!     for floating points entries
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/next.cpp}
-//!
 //!   * eve::saturated
 //!
 //!     The call `eve::pedantic(eve::next)(x, ...)` provides a pedantic
 //!     version of `next` which ensures that eve::minf and  eve::nan are fixed points.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/next.cpp}
 //!
 //! @}
 //================================================================================================
@@ -130,4 +118,4 @@ namespace detail
 EVE_MAKE_CALLABLE(next_, next);
 }
 
-#include <eve/module/core/regular/impl/next.hpp>
+#include <eve/module/core/impl/next.hpp>

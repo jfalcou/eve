@@ -50,4 +50,4 @@ namespace eve
 EVE_MAKE_CALLABLE(countr_one_, countr_one);
 }
 
-#include <eve/module/core/regular/impl/countr_one.hpp>
+#include <eve/module/core/impl/countr_one.hpp>

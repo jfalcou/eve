@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sign.cpp}
+//!  @godbolt{doc/core/sign.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -58,18 +58,14 @@ namespace eve
 //!     The call `eve;::sign[mask](x)` provides a masked version of `eve::sign` which is
 //!     equivalent to `if_else (mask, sign(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sign.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sign_, sign);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/sign.hpp>
+#include <eve/module/core/impl/sign.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/sign.hpp>
+#  include <eve/module/core/impl/simd/x86/sign.hpp>
 #endif

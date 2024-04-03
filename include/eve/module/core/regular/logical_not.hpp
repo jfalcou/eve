@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/is_eqz.hpp>
 
 namespace eve
 {
@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/logical_not.cpp}
+//!  @godbolt{doc/core/logical_not.cpp}
 //! @}
 //================================================================================================
 namespace tag

@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/negatenz.cpp}
+//!  @godbolt{doc/core/negatenz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -55,12 +55,10 @@ namespace eve
 //!     The call `eve::negatenz[mask](x, ...)` provides a masked
 //!     version of `negatenz` which is
 //!     equivalent to `if_else(mask, negatenz(x, ...), x)`
-//!      **Example**
 //!
-//!        @godbolt{doc/core/masked/negatenz.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(negatenz_, negatenz);
 }
 
-#include <eve/module/core/regular/impl/negatenz.hpp>
+#include <eve/module/core/impl/negatenz.hpp>

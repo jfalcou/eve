@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/lerp.cpp}
+//!  @godbolt{doc/core/lerp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -55,12 +55,9 @@ namespace eve
 //!     version of `lerp` which is
 //!     equivalent to `if_else(mask, lerp(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/lerp.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(lerp_, lerp);
 }
 
-#include <eve/module/core/regular/impl/lerp.hpp>
+#include <eve/module/core/impl/lerp.hpp>

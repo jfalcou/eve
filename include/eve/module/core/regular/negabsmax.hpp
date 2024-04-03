@@ -70,7 +70,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/negabsmax.cpp}
+//!  @godbolt{doc/core/negabsmax.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -78,10 +78,6 @@ namespace eve
 //!
 //!     The call `eve::negabsmax[mask](x, ...)` provides a masked version of `eve::negabsmax` which
 //!     is equivalent to `eve::if_else (mask, negabsmax(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/negabsmax.cpp}
 //!
 //!   * eve::pedantic,  eve::numeric
 //!
@@ -93,8 +89,8 @@ namespace eve
 inline constexpr auto negabsmax = functor<negabsmax_t>;
 }
 
-#include <eve/module/core/regular/impl/negabsmax.hpp>
+#include <eve/module/core/impl/negabsmax.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/negabsmax.hpp>
+#  include <eve/module/core/impl/simd/x86/negabsmax.hpp>
 #endif

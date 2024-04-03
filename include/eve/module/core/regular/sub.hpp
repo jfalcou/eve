@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sub.cpp}
+//!  @godbolt{doc/core/sub.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -54,10 +54,6 @@ namespace eve
 //!     The call `eve::sub[mask](x, ...)` provides a masked
 //!     version of `sub` which is
 //!     equivalent to `if_else(mask, sub(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sub.cpp}
 //!
 //!   * eve::saturated
 //!
@@ -68,28 +64,25 @@ namespace eve
 //!     entries this kind of operation is highly order dependant. We do not advise
 //!     to use it for more than 2 parameters.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/sub.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sub_, sub);
 }
 
-#include <eve/module/core/regular/impl/sub.hpp>
+#include <eve/module/core/impl/sub.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/sub.hpp>
+#  include <eve/module/core/impl/simd/x86/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/sub.hpp>
+#  include <eve/module/core/impl/simd/ppc/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/sub.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/sub.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/sub.hpp>
 #endif

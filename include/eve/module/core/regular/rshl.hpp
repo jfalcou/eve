@@ -10,7 +10,7 @@
 #include <eve/assert.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/abs.hpp>
 
 #include <type_traits>
 
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rshl.cpp}
+//!  @godbolt{doc/core/rshl.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -72,9 +72,6 @@ namespace eve
 //!     version of `rshl` which is
 //!     equivalent to `if_else(mask, rshl(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/rshl.cpp}
 //! @}
 //================================================================================================
 
@@ -127,8 +124,8 @@ EVE_MAKE_CALLABLE(rshl_, rshl);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/rshl.hpp>
+#include <eve/module/core/impl/rshl.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/rshl.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/rshl.hpp>
 #endif

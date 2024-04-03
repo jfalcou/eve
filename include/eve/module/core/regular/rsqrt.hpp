@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rsqrt.cpp}
+//!  @godbolt{doc/core/rsqrt.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -53,10 +53,6 @@ namespace eve
 //!
 //!     The call `eve;::rsqrt[mask](x)` provides a masked version of `eve::rsqrt` which is
 //!     equivalent to `if_else (mask, rsqrt(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/rsqrt.cpp}
 //!
 //!   * eve::raw
 //!
@@ -68,16 +64,16 @@ namespace eve
 EVE_MAKE_CALLABLE(rsqrt_, rsqrt);
 }
 
-#include <eve/module/core/regular/impl/rsqrt.hpp>
+#include <eve/module/core/impl/rsqrt.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/rsqrt.hpp>
+#  include <eve/module/core/impl/simd/x86/rsqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/rsqrt.hpp>
+#  include <eve/module/core/impl/simd/ppc/rsqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/rsqrt.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/rsqrt.hpp>
 #endif

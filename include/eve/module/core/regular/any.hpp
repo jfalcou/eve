@@ -67,16 +67,16 @@ namespace eve
 EVE_MAKE_CALLABLE(any_, any);
 }
 
-#include <eve/module/core/regular/impl/any.hpp>
+#include <eve/module/core/impl/any.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/any.hpp>
+#  include <eve/module/core/impl/simd/ppc/any.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/any.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/any.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/any.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/any.hpp>
 #endif

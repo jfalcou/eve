@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/floor.cpp}
+//!  @godbolt{doc/core/floor.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,10 +71,6 @@ namespace eve
 //!
 //!     The call `eve;::floor[mask](x)` provides a masked version of `eve::floor` which is
 //!     equivalent to `if_else (mask, floor(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/floor.cpp}
 //!
 //!   * eve::tolerant
 //!
@@ -88,26 +84,25 @@ namespace eve
 //!      * If `tol` is omitted, the tolerance is taken to 3 times
 //!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
-//!      @godbolt{doc/core/fuzzy/floor.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto floor = functor<floor_t>;
 }
 
-#include <eve/module/core/regular/impl/floor.hpp>
+#include <eve/module/core/impl/floor.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/floor.hpp>
+#  include <eve/module/core/impl/simd/x86/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/floor.hpp>
+#  include <eve/module/core/impl/simd/ppc/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/floor.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/floor.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/floor.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/floor.hpp>
 #endif

@@ -60,4 +60,4 @@ namespace eve
 EVE_MAKE_CALLABLE(byte_swap_pairs_, byte_swap_pairs);
 }
 
-#include <eve/module/core/regular/impl/byte_swap_pairs.hpp>
+#include <eve/module/core/impl/byte_swap_pairs.hpp>

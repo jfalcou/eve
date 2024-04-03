@@ -43,15 +43,15 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core/regular/try_each_group_position.cpp}
+  //!  @godbolt{doc/core/try_each_group_position.cpp}
   //!
   //!  @}
   //================================================================================================
   EVE_MAKE_CALLABLE(try_each_group_position_, try_each_group_position);
 }
 
-#include <eve/module/core/regular/impl/try_each_group_position.hpp>
+#include <eve/module/core/impl/try_each_group_position.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/try_each_group_position.hpp>
+#  include <eve/module/core/impl/simd/x86/try_each_group_position.hpp>
 #endif

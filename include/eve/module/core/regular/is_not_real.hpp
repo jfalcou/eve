@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_real.cpp}
+//!  @godbolt{doc/core/is_not_real.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -70,10 +70,6 @@ namespace eve
 //!
 //!     The call `eve;::is_not_real[mask](x)` provides a masked version of `eve::is_not_real` which
 //!     is equivalent to `if_else (mask, is_not_real(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_real.cpp}
 //!
 //! @}
 //================================================================================================

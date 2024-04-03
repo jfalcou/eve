@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/shr.cpp}
+//!  @godbolt{doc/core/shr.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -72,9 +72,6 @@ namespace eve
 //!     version of `shr` which is
 //!     equivalent to `if_else(mask, shr(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/shr.cpp}
 //! @}
 //================================================================================================
 namespace tag
@@ -105,4 +102,4 @@ namespace detail
 EVE_MAKE_CALLABLE(shr_, shr);
 }
 
-#include <eve/module/core/regular/impl/shr.hpp>
+#include <eve/module/core/impl/shr.hpp>

@@ -9,7 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/is_ltz.hpp>
 #include <eve/module/core/constant/false.hpp>
 
 namespace eve
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_nlez.cpp}
+//!  @godbolt{doc/core/is_nlez.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,9 +71,6 @@ namespace eve
 //!     The call `eve;::is_nlez[mask](x)` provides a masked version of `eve::is_nlez` which is
 //!     equivalent to `if_else (mask, is_nlez(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_nlez.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto is_nlez = functor<is_nlez_t>;

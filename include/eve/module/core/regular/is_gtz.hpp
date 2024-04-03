@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/regular/is_greater.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/is_greater.hpp>
+#include <eve/module/core/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -70,10 +70,6 @@ namespace eve
 //!
 //!     The call `eve;::is_gtz[mask](x)` provides a masked version of `eve::is_gtz` which is
 //!     equivalent to `if_else (mask, is_gtz(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_gtz.cpp}
 //!
 //! @}
 //================================================================================================

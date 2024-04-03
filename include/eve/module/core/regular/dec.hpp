@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/dec.cpp}
+//!  @godbolt{doc/core/dec.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -65,19 +65,12 @@ namespace eve
 //!     version of `dec` which is
 //!     equivalent to `if_else(mask, dec(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/dec.cpp}
-//!
 //!   * eve::saturated
 //!
 //!       The call `saturated(dec)(x)` computes the saturated decrement of `x`.
 //!       The only interest of this behaviour is that
 //!       for integral type T  the call `saturated(dec)(Valmin<T>())` returns `Valmin<T>()`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/dec.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto dec = functor<dec_t>;

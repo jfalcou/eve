@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/minus.cpp}
+//!  @godbolt{doc/core/minus.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -59,10 +59,6 @@ namespace eve
 //!     The call `eve::minus[mask](x)` provides a masked version of `eve::minus` which is
 //!     equivalent to `if_else (mask, eve::minus(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/minus.cpp}
-//!
 //!   * eve::saturated
 //!
 //!     The call `eve::saturated(eve::minus)(x)` computes a saturated version of eve::minus.
@@ -70,17 +66,13 @@ namespace eve
 //!     More specifically, for any signed integer value `x`, the expression
 //!     `eve::saturated(eve::minus)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/minus.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(minus_, minus);
 }
 
-#include <eve/module/core/regular/impl/minus.hpp>
+#include <eve/module/core/impl/minus.hpp>
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/minus.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/minus.hpp>
 #endif

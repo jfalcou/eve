@@ -84,8 +84,8 @@ namespace eve
 }
 
 
-#include <eve/module/core/regular/impl/bit_notor.hpp>
+#include <eve/module/core/impl/bit_notor.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/bit_notor.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/bit_notor.hpp>
 #endif

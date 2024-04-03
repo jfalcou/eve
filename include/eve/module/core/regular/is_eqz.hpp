@@ -10,8 +10,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/is_equal.hpp>
-#include <eve/module/core/regular/logical_not.hpp>
+#include <eve/module/core/is_equal.hpp>
+#include <eve/module/core/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_eqz.cpp}
+//!  @godbolt{doc/core/is_eqz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -70,10 +70,6 @@ namespace eve
 //!
 //!     The call `eve;::is_eqz[mask](x)` provides a masked version of `eve::is_eqz` which is
 //!     equivalent to `if_else (mask, is_eqz(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_eqz.cpp}
 //!
 //! @}
 //================================================================================================

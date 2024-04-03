@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/dot.cpp}
+//!  @godbolt{doc/core/dot.cpp}
 //!
 //!
 //! @}
@@ -54,4 +54,4 @@ namespace eve
 
 }
 
-#include <eve/module/core/regular/impl/dot.hpp>
+#include <eve/module/core/impl/dot.hpp>

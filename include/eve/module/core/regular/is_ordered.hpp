@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_ordered.cpp}
+//!  @godbolt{doc/core/is_ordered.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -54,17 +54,13 @@ namespace eve
 //!     The call `eve;::is_ordered[mask](x,y)` provides a masked version of `eve::is_ordered` which
 //!     is equivalent to `if_else (mask, is_ordered(x), eve::false( eve::as(x,y)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_ordered.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
 }
 
-#include <eve/module/core/regular/impl/is_ordered.hpp>
+#include <eve/module/core/impl/is_ordered.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_ordered.hpp>
+#  include <eve/module/core/impl/simd/x86/is_ordered.hpp>
 #endif

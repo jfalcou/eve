@@ -72,20 +72,20 @@ namespace eve
 EVE_MAKE_CALLABLE(store_, store);
 }
 
-#include <eve/module/core/regular/impl/store.hpp>
+#include <eve/module/core/impl/store.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/store.hpp>
+#  include <eve/module/core/impl/simd/x86/store.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/store.hpp>
+#  include <eve/module/core/impl/simd/ppc/store.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/store.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/store.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/store.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/store.hpp>
 #endif

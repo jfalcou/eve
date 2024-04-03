@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_greater_equal.cpp}
+//!  @godbolt{doc/core/is_greater_equal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +57,6 @@ namespace eve
 //!     The call `eve;::is_greater_equal[mask](x,y)` provides a masked version of
 //!     `eve::is_greater_equal` which is equivalent to `if_else (mask, is_greater_equal(x),
 //!     eve::false( eve::as(x,y)))`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/masked/is_greater_equal.cpp}
 //!
 //!   * `almost`
 //!
@@ -72,9 +68,6 @@ namespace eve
 //!       - if `t` is a positive integral_value then \f$x > \mbox{prev}(y, t)\f$;
 //!       - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/fuzzy/is_greater_equal.cpp}
 //! @}
 //================================================================================================
 
@@ -101,5 +94,5 @@ namespace detail
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_greater_equal.hpp>
+#  include <eve/module/core/impl/simd/x86/is_greater_equal.hpp>
 #endif

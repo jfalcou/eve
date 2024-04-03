@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/bit_shl.hpp>
+#include <eve/module/core/bit_shl.hpp>
 
 namespace eve
 {
@@ -70,19 +70,19 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_select.cpp}
+//!  @godbolt{doc/core/bit_select.cpp}
 //!
 //!  @}
 //================================================================================================
   inline constexpr auto bit_select = functor<bit_select_t>;
 }
 
-#include <eve/module/core/regular/impl/bit_select.hpp>
+#include <eve/module/core/impl/bit_select.hpp>
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/bit_select.hpp>
+#  include <eve/module/core/impl/simd/ppc/bit_select.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/bit_select.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/bit_select.hpp>
 #endif

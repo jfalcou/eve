@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/mul.cpp}
+//!  @godbolt{doc/core/mul.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -58,10 +58,6 @@ namespace eve
 //!     version of `mul` which is
 //!     equivalent to `if_else(mask, mul(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/mul.cpp}
-//!
 //!   * eve::saturated
 //!
 //!     The call `saturated(mul)(args...)` computes the saturated  multiplication `of the arguments.
@@ -70,29 +66,25 @@ namespace eve
 //!     converted to this type and the saturated multiplication applied recursively on all
 //!     parameters. No overflow occurs.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/mul.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(mul_, mul);
 }
 
-#include <eve/module/core/regular/impl/mul.hpp>
+#include <eve/module/core/impl/mul.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/mul.hpp>
+#  include <eve/module/core/impl/simd/x86/mul.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/mul.hpp>
+#  include <eve/module/core/impl/simd/ppc/mul.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/mul.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/mul.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/mul.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/mul.hpp>
 #endif

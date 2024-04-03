@@ -45,10 +45,10 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/swap_pairs.cpp}
+//!  @godbolt{doc/core/swap_pairs.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(swap_pairs_, swap_pairs);
 }
 
-#include <eve/module/core/regular/impl/swap_pairs.hpp>
+#include <eve/module/core/impl/swap_pairs.hpp>

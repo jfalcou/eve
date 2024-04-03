@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sum_of_prod.cpp}
+//!  @godbolt{doc/core/sum_of_prod.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -63,10 +63,6 @@ namespace eve
 //!     The call `eve::pedantic(eve::sum_of_prod)(x, y, z, t)` computes a pedantic
 //!     version of eve::sum_of_prod ensuring better accuracy in any case.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/sum_of_prod.cpp}
-//!
 //! @}
 //================================================================================================
 namespace tag
@@ -79,4 +75,4 @@ template<> struct supports_conditional<tag::sum_of_prod_> : std::false_type
 EVE_MAKE_CALLABLE(sum_of_prod_, sum_of_prod);
 }
 
-#include <eve/module/core/regular/impl/sum_of_prod.hpp>
+#include <eve/module/core/impl/sum_of_prod.hpp>

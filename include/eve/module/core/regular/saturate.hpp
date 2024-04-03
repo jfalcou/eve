@@ -55,11 +55,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/saturate.cpp}
+//!  @godbolt{doc/core/saturate.cpp}
 //!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(saturate_, saturate);
 }
 
-#include <eve/module/core/regular/impl/saturate.hpp>
+#include <eve/module/core/impl/saturate.hpp>

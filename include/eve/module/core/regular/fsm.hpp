@@ -54,7 +54,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fsm.cpp}
+//!  @godbolt{doc/core/fsm.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -64,10 +64,6 @@ namespace eve
 //!     version of `fsm` which is
 //!     equivalent to `if_else(mask, fsm(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fsm.cpp}
-//!
 //!   * eve::pedantic, eve::numeric
 //!
 //!       * The call `pedantic(fsm)(x,y,z)` ensures the one rounding property.
@@ -76,18 +72,17 @@ namespace eve
 //!       * The call `numeric(fsm)(x,y,z)` ensures the full compliance to fsm properties.
 //!        This can be very expensive if the system has no hardware capability.
 //!
-//!       * see the above regular example.
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(fsm_, fsm);
 }
 
-#include <eve/module/core/regular/impl/fsm.hpp>
+#include <eve/module/core/impl/fsm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>
+#  include <eve/module/core/impl/simd/x86/fsm.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/fsm.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/fsm.hpp>
 #endif

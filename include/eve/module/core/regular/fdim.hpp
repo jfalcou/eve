@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fdim.cpp}
+//!  @godbolt{doc/core/fdim.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -56,13 +56,9 @@ namespace eve
 //!     The call `eve::fdim[mask](x)` provides a masked version of `eve::fdim` which is
 //!     equivalent to `if_else (mask, fdim(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fdim.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(fdim_, fdim);
 }
 
-#include <eve/module/core/regular/impl/fdim.hpp>
+#include <eve/module/core/impl/fdim.hpp>

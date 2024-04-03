@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/if_else.hpp>
+#include <eve/module/core/max.hpp>
 
 namespace eve
 {
@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_greater.cpp}
+//!  @godbolt{doc/core/is_not_greater.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -55,10 +55,6 @@ namespace eve
 //!     The call `eve;::is_not_greater[mask](x,y)` provides a masked version of
 //!     `eve::is_not_greater` which is equivalent to `if_else (mask, is_not_greater(x), eve::false(
 //!     eve::as(x,y)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_greater.cpp}
 //!
 //!    * `almost`
 //!
@@ -70,17 +66,14 @@ namespace eve
 //!      * if `t` is a positive integral_value then \f$(x < \mbox{next}(y, t)\f$;
 //!      * if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
-//!      **Example**
-//!
-//!         @godbolt{doc/core/fuzzy/is_not_greater.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/is_not_greater.hpp>
+#include <eve/module/core/impl/is_not_greater.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_not_greater.hpp>
+#  include <eve/module/core/impl/simd/x86/is_not_greater.hpp>
 #endif

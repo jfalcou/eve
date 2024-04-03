@@ -61,4 +61,4 @@ namespace eve
 EVE_MAKE_CALLABLE(bit_swap_pairs_, bit_swap_pairs);
 }
 
-#include <eve/module/core/regular/impl/bit_swap_pairs.hpp>
+#include <eve/module/core/impl/bit_swap_pairs.hpp>

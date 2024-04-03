@@ -10,10 +10,10 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/is_unordered.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/is_unordered.hpp>
+#include <eve/module/core/is_nan.hpp>
+#include <eve/module/core/max.hpp>
+#include <eve/module/core/min.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 
 namespace eve
@@ -60,7 +60,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/dist.cpp}
+//!  @godbolt{doc/core/dist.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,9 +76,6 @@ namespace eve
 //!     The call `pedantic(dist)(x, y)` computes a distance wich is nan if and only
 //!     if a or b is a Nan.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/dist.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto dist = functor<dist_t>;

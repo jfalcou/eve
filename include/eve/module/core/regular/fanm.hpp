@@ -54,7 +54,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fanm.cpp}
+//!  @godbolt{doc/core/fanm.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -64,10 +64,6 @@ namespace eve
 //!     version of `fanm` which is
 //!     equivalent to `if_else(mask, fanm(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fanm.cpp}
-//!
 //!   * eve::pedantic, eve::numeric
 //!
 //!       * The call `pedantic(fanm)(x,y,z)` ensures the one rounding property.
@@ -76,18 +72,17 @@ namespace eve
 //!       * The call `numeric(fanm)(x,y,z)` ensures the full compliance to fanm properties.
 //!        This can be very expensive if the system has no hardware capability.
 //!
-//!       * see the above regular example.
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(fanm_, fanm);
 }
 
-#include <eve/module/core/regular/impl/fanm.hpp>
+#include <eve/module/core/impl/fanm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/fanm.hpp>
+#  include <eve/module/core/impl/simd/x86/fanm.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/fanm.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/fanm.hpp>
 #endif

@@ -65,4 +65,4 @@ template<> struct supports_conditional<tag::binarize_not_> : std::false_type
 EVE_MAKE_CALLABLE(binarize_not_, binarize_not);
 }
 
-#include <eve/module/core/regular/impl/binarize_not.hpp>
+#include <eve/module/core/impl/binarize_not.hpp>

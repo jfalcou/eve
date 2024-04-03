@@ -50,14 +50,14 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/exponent.cpp}
+//!  @godbolt{doc/core/exponent.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(exponent_, exponent);
 }
 
-#include <eve/module/core/regular/impl/exponent.hpp>
+#include <eve/module/core/impl/exponent.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/exponent.hpp>
+#  include <eve/module/core/impl/simd/x86/exponent.hpp>
 #endif

@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sign_alternate.cpp}
+//!  @godbolt{doc/core/sign_alternate.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -53,13 +53,9 @@ namespace eve
 //!     The call `eve;::sign_alternate[mask](x)` provides a masked version of `eve::sign_alternate`
 //!     which is equivalent to `if_else (mask, sign_alternate(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sign_alternate.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sign_alternate_, sign_alternate);
 }
 
-#include <eve/module/core/regular/impl/sign_alternate.hpp>
+#include <eve/module/core/impl/sign_alternate.hpp>

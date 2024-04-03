@@ -71,11 +71,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sort.cpp}
+//!  @godbolt{doc/core/sort.cpp}
 //!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sort_, sort);
 }
 
-#include <eve/module/core/regular/impl/sort.hpp>
+#include <eve/module/core/impl/sort.hpp>

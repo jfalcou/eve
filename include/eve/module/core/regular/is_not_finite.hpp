@@ -10,7 +10,7 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/is_nan.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/traits/as_logical.hpp>
 
@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_finite.cpp}
+//!  @godbolt{doc/core/is_not_finite.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -77,10 +77,6 @@ namespace eve
 //!
 //!     The call `is_not_finite[mask](x)` provides a masked version of eve::is_not_finite
 //!     which is equivalent to `if_else (mask, is_not_finite(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_finite.cpp}
 //!
 //! @}
 //================================================================================================

@@ -67,7 +67,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/minabs.cpp}
+//!  @godbolt{doc/core/minabs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,10 +76,6 @@ namespace eve
 //!     The call `eve::minabs[mask](x, ...)` provides a masked
 //!     version of `minabs` which is
 //!     equivalent to `if_else(mask, minabs(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/minabs.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!
@@ -94,16 +90,13 @@ namespace eve
 //!        inputs is not a `Nan`, the corresponding
 //!        output element will not be a `Nan`.
 //!
-//!     **Example**
-//!
-//!        @godbolt{doc/core/pedantic/minabs.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto minabs = functor<minabs_t>;
 }
 
-#include <eve/module/core/regular/impl/minabs.hpp>
+#include <eve/module/core/impl/minabs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/minabs.hpp>
+#  include <eve/module/core/impl/simd/x86/minabs.hpp>
 #endif

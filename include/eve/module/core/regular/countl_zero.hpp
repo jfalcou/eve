@@ -51,16 +51,16 @@ namespace eve
 EVE_MAKE_CALLABLE(countl_zero_, countl_zero);
 }
 
-#include <eve/module/core/regular/impl/countl_zero.hpp>
+#include <eve/module/core/impl/countl_zero.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/countl_zero.hpp>
+#  include <eve/module/core/impl/simd/x86/countl_zero.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/countl_zero.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/countl_zero.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/countl_zero.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/countl_zero.hpp>
 #endif

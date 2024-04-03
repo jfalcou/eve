@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/sqr_abs.hpp>
+#include <eve/module/core/sqr_abs.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_unit.cpp}
+//!  @godbolt{doc/core/is_unit.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -69,10 +69,6 @@ namespace eve
 //!
 //!     The call `eve;::is_unit[mask](x)` provides a masked version of `eve::is_unit` which is
 //!     equivalent to `if_else (mask, is_unit(x), eve::false(eve::as<decltype(is_unit(x))>())`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_unit.cpp}
 //!
 //! @}
 //================================================================================================

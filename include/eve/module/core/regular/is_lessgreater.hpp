@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_lessgreater.cpp}
+//!  @godbolt{doc/core/is_lessgreater.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -54,17 +54,13 @@ namespace eve
 //!     `eve::is_lessgreater` which is equivalent to `if_else (mask, is_lessgreater(x, y),
 //!     eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_lessgreater.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
 }
 
-#include <eve/module/core/regular/impl/is_lessgreater.hpp>
+#include <eve/module/core/impl/is_lessgreater.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_lessgreater.hpp>
+#  include <eve/module/core/impl/simd/x86/is_lessgreater.hpp>
 #endif

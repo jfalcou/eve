@@ -10,9 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/abs.hpp>
+#include <eve/module/core/max.hpp>
+#include <eve/module/core/is_infinite.hpp>
 
 namespace eve
 {
@@ -65,7 +65,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/manhattan.cpp}
+//!  @godbolt{doc/core/manhattan.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -75,10 +75,6 @@ namespace eve
 //!     version of `manhattan` which is
 //!     equivalent to `if_else(mask, eve::manhattan(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/manhattan.cpp}
-//!
 //!   * eve::pedantic
 //!
 //!     The call `eve::pedantic(eve::manhattan)(...)` computes
@@ -86,9 +82,6 @@ namespace eve
 //!     returning \f$\infty\f$ as soon as one of its parameter is infinite,
 //!     regardless of possible `Nan` values.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/manhattan.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto manhattan = functor<manhattan_t>;

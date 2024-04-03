@@ -73,7 +73,7 @@ struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fma.cpp}
+//!  @godbolt{doc/core/fma.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -83,33 +83,32 @@ struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_opt
 //!     version of `fma` which is
 //!     equivalent to `if_else(mask, fma(x, ...), x)`
 //!
-//!     **Example**
+//!   * eve::pedantic, eve::numeric
 //!
-//!     @godbolt{doc/core/masked/fma.cpp}
+//!     * The call `pedantic(fma)(x,y,z)` ensures the one rounding property.
+//!       This can be very expensive if the system has no hardware capability.
 //!
-//!   * eve::pedantic
-//!
-//!     The call `fma[pedantic](x,y,z)` ensures the full compliance to fma properties.
-//!     This can be very expensive if the system has no hardware capability.
+//!     * The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties.
+//!       This can be very expensive if the system has no hardware capability.
 //! @}
 //======================================================================================================================
 inline constexpr auto fma = functor<fma_t>;
 }
 
-#include <eve/module/core/regular/impl/fma.hpp>
+#include <eve/module/core/impl/fma.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/fma.hpp>
+#  include <eve/module/core/impl/simd/x86/fma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/fma.hpp>
+#  include <eve/module/core/impl/simd/ppc/fma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/fma.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/fma.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/fma.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/fma.hpp>
 #endif

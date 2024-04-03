@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/firstbitset.cpp}
+//!  @godbolt{doc/core/firstbitset.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -56,13 +56,9 @@ namespace eve
 //!     version of `firstbitset` which is
 //!     equivalent to `if_else(mask, firstbitset(x), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/firstbitset.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(firstbitset_, firstbitset);
 }
 
-#include <eve/module/core/regular/impl/firstbitset.hpp>
+#include <eve/module/core/impl/firstbitset.hpp>

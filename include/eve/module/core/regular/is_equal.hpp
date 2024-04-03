@@ -53,7 +53,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_equal.cpp}
+//!  @godbolt{doc/core/is_equal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -62,17 +62,9 @@ namespace eve
 //!     The call `eve::is_equal[mask](x)` provides a masked version of `eve::is_equal` which is
 //!     equivalent to `if_else (mask, is_equal(x, y), false_)
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_equal.cpp}
-//!
 //!   * eve::numeric
 //!
 //!     The expression `numeric(is_equal)(x,y)` considers that Nan values are equal.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/is_equal.cpp}
 //!
 //!   * `almost`
 //!
@@ -88,9 +80,6 @@ namespace eve
 //!      - if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$
 //!      in the `x` type (`3*eps(as(x))`).
 //!
-//!   **Example**
-//!
-//!   @godbolt{doc/core/fuzzy/is_equal.cpp}
 //! @}
 //================================================================================================
 EVE_IMPLEMENT_CALLABLE(is_equal_, is_equal);
@@ -115,5 +104,5 @@ namespace detail
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_equal.hpp>
+#  include <eve/module/core/impl/simd/x86/is_equal.hpp>
 #endif

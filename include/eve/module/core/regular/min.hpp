@@ -74,7 +74,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/min.cpp}
+//!  @godbolt{doc/core/min.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -83,10 +83,6 @@ namespace eve
 //!     The call `eve::min[mask](x, ...)` provides a masked
 //!     version of `min` which is
 //!     equivalent to `if_else(mask, min(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/min.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!
@@ -109,20 +105,20 @@ namespace eve
 inline constexpr auto min = functor<min_t>;
 }
 
-#include <eve/module/core/regular/impl/min.hpp>
+#include <eve/module/core/impl/min.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/min.hpp>
+#  include <eve/module/core/impl/simd/x86/min.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/min.hpp>
+#  include <eve/module/core/impl/simd/ppc/min.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/min.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/min.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/min.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/min.hpp>
 #endif

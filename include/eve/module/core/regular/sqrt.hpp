@@ -47,9 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sqrt.cpp}
-//!
-//!
+//!  @godbolt{doc/core/sqrt.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +55,6 @@ namespace eve
 //!
 //!     The call `eve;::sqrt[mask](x)` provides a masked version of `eve::sqrt` which is
 //!     equivalent to `if_else (mask, sqrt(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sqrt.cpp}
 //!
 //!   * eve::raw
 //!
@@ -81,20 +75,20 @@ EVE_MAKE_CALLABLE(sqrt_, sqrt);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/sqrt.hpp>
+#include <eve/module/core/impl/sqrt.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/sqrt.hpp>
+#  include <eve/module/core/impl/simd/x86/sqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/sqrt.hpp>
+#  include <eve/module/core/impl/simd/ppc/sqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/sqrt.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/sqrt.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/sqrt.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/sqrt.hpp>
 #endif

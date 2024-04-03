@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/maximum.cpp}
+//!  @godbolt{doc/core/maximum.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -53,21 +53,17 @@ namespace eve
 //!     version of `maximum` which is
 //!     equivalent to : ``maximum(if_else(mask, x, valmin(as(x))))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/maximum.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(maximum_, maximum);
 }
 
-#include <eve/module/core/regular/impl/maximum.hpp>
+#include <eve/module/core/impl/maximum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/maximum.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/maximum.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/maximum.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/maximum.hpp>
 #endif

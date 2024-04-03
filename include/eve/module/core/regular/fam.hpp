@@ -53,7 +53,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fam.cpp}
+//!  @godbolt{doc/core/fam.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -63,10 +63,6 @@ namespace eve
 //!     version of `fam` which is
 //!     equivalent to `if_else(mask, fam(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fam.cpp}
-//!
 //!   * eve::pedantic, eve::numeric
 //!
 //!       * The call `pedantic(fam)(x,y,z)` ensures the one rounding property.
@@ -75,19 +71,18 @@ namespace eve
 //!       * The call `numeric(fam)(x,y,z)` ensures the full compliance to fam properties.
 //!        This can be very expensive if the system has no hardware capability.
 //!
-//!       * see the above regular example.
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(fam_, fam);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/fam.hpp>
+#include <eve/module/core/impl/fam.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/fam.hpp>
+#  include <eve/module/core/impl/simd/x86/fam.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/fam.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/fam.hpp>
 #endif

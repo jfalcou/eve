@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/regular/is_finite.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/is_finite.hpp>
+#include <eve/module/core/is_nan.hpp>
 
 namespace eve
 {
@@ -64,7 +64,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_infinite.cpp}
+//!  @godbolt{doc/core/is_not_infinite.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -73,10 +73,6 @@ namespace eve
 //!     The call `eve;::is_not_infinite[mask](x)` provides a masked version of
 //!     `eve::is_not_infinite` which is equivalent to `if_else (mask, is_not_infinite(x),
 //!     eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_infinite.cpp}
 //!
 //! @}
 //================================================================================================

@@ -53,7 +53,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rem.cpp}
+//!  @godbolt{doc/core/rem.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -62,10 +62,6 @@ namespace eve
 //!     The call `eve::rem[mask](x, ...)` provides a masked
 //!     version of `rem` which is
 //!     equivalent to `if_else(mask, rem(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/rem.cpp}
 //!
 //!   * eve::toward_zero
 //!
@@ -98,16 +94,13 @@ namespace eve
 //!        * If `y` is \f$\pm0\f$, NaN is returned
 //!        * If either argument is a Nan, NaN is returned
 //!
-//!        **Example**
-//!
-//!          @godbolt{doc/core/roundings/rem.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(rem_, rem);
 }
 
-#include <eve/module/core/regular/impl/rem.hpp>
+#include <eve/module/core/impl/rem.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/rem.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/rem.hpp>
 #endif

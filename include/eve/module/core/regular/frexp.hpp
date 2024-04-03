@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/ifrexp.hpp>
+#include <eve/module/core/ifrexp.hpp>
 
 namespace eve
 {
@@ -60,7 +60,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/frexp.cpp}
+//!  @godbolt{doc/core/frexp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -70,9 +70,6 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!     \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
 //!     denormal cases.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/frexp.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto frexp = functor<frexp_t>;

@@ -11,10 +11,10 @@
 #include <eve/traits/bit_value.hpp>
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/module/core/abs.hpp>
+#include <eve/module/core/is_less.hpp>
+#include <eve/module/core/is_nez.hpp>
+#include <eve/module/core/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -71,7 +71,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_denormal.cpp}
+//!  @godbolt{doc/core/is_denormal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -80,10 +80,6 @@ namespace eve
 //!     The call `eve;::is_denormal[mask](x)` provides a masked version
 //!     of `eve::is_denormal` which is
 //!     equivalent to `if_else (mask, is_denormal(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_denormal.cpp}
 //!
 //! @}
 //================================================================================================

@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/zip.hpp>
+#include <eve/module/core/zip.hpp>
 
 namespace eve
 {
@@ -61,7 +61,7 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ifrexp.cpp}
+//!  @godbolt{doc/core/ifrexp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,12 +71,9 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!     \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
 //!     denormal cases.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/ifrexp.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto ifrexp = functor<ifrexp_t>;
 }
 
-#include <eve/module/core/regular/impl/ifrexp.hpp>
+#include <eve/module/core/impl/ifrexp.hpp>

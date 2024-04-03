@@ -10,13 +10,13 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/bit_and.hpp>
-#include <eve/module/core/regular/bit_andnot.hpp>
-#include <eve/module/core/regular/byte_reverse.hpp>
-#include <eve/module/core/regular/bit_swap_adjacent.hpp>
-#include <eve/module/core/regular/bit_swap_pairs.hpp>
-#include <eve/module/core/regular/bit_shl.hpp>
-#include <eve/module/core/regular/bit_shr.hpp>
+#include <eve/module/core/bit_and.hpp>
+#include <eve/module/core/bit_andnot.hpp>
+#include <eve/module/core/byte_reverse.hpp>
+#include <eve/module/core/bit_swap_adjacent.hpp>
+#include <eve/module/core/bit_swap_pairs.hpp>
+#include <eve/module/core/bit_shl.hpp>
+#include <eve/module/core/bit_shr.hpp>
 
 
 namespace eve

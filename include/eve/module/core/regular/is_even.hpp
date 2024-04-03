@@ -13,10 +13,10 @@
 #include <eve/module/core/constant/mindenormal.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
-#include <eve/module/core/regular/is_flint.hpp>
-#include <eve/module/core/regular/is_not_equal.hpp>
+#include <eve/module/core/abs.hpp>
+#include <eve/module/core/is_eqz.hpp>
+#include <eve/module/core/is_flint.hpp>
+#include <eve/module/core/is_not_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -70,7 +70,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_even.cpp}
+//!  @godbolt{doc/core/is_even.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -78,10 +78,6 @@ namespace eve
 //!
 //!     The call `eve;::is_even[mask](x)` provides a masked version of `eve::is_even` which is
 //!     equivalent to `if_else (mask, is_even(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_even.cpp}
 //!
 //! @}
 //================================================================================================

@@ -83,20 +83,20 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 inline constexpr auto abs = functor<abs_t>;
 }
 
-#include <eve/module/core/regular/impl/abs.hpp>
+#include <eve/module/core/impl/abs.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/abs.hpp>
+#  include <eve/module/core/impl/simd/x86/abs.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/abs.hpp>
+#  include <eve/module/core/impl/simd/ppc/abs.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/abs.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/abs.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/abs.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/abs.hpp>
 #endif

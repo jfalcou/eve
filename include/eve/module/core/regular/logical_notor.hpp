@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/logical_notor.cpp}
+//!  @godbolt{doc/core/logical_notor.cpp}
 //! @}
 //================================================================================================
 
@@ -61,4 +61,4 @@ template<> struct supports_conditional<tag::logical_notor_> : std::false_type
 EVE_MAKE_CALLABLE(logical_notor_, logical_notor);
 }
 
-#include <eve/module/core/regular/impl/logical_notor.hpp>
+#include <eve/module/core/impl/logical_notor.hpp>

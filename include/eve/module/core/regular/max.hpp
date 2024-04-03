@@ -74,7 +74,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/max.cpp}
+//!  @godbolt{doc/core/max.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -83,10 +83,6 @@ namespace eve
 //!     The call `eve::max[mask](x, ...)` provides a masked
 //!     version of `max` which is
 //!     equivalent to `if_else(mask, max(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/max.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!
@@ -101,28 +97,25 @@ namespace eve
 //!        inputs is not a `Nan`, the corresponding
 //!        output element will not be a `Nan`.
 //!
-//!     **Example**
-//!
-//!        @godbolt{doc/core/pedantic/max.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto max = functor<max_t>;
 }
 
-#include <eve/module/core/regular/impl/max.hpp>
+#include <eve/module/core/impl/max.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/max.hpp>
+#  include <eve/module/core/impl/simd/x86/max.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/max.hpp>
+#  include <eve/module/core/impl/simd/ppc/max.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/max.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/max.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/max.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/max.hpp>
 #endif

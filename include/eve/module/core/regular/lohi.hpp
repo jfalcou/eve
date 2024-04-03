@@ -9,8 +9,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/module/core/regular/shuffle.hpp>
-#include <eve/module/core/regular/zip.hpp>
+#include <eve/module/core/shuffle.hpp>
+#include <eve/module/core/zip.hpp>
 #include <bit>
 
 namespace eve
@@ -66,7 +66,7 @@ struct lohi_t : elementwise_callable<lohi_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/lo.cpp}
+//!  @godbolt{doc/core/lo.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto lohi = functor<lohi_t>;

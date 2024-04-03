@@ -49,8 +49,8 @@ EVE_MAKE_CALLABLE(scan_, scan);
 }
 
 #include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/scan.hpp>
+#include <eve/module/core/impl/scan.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/scan.hpp>
+#  include <eve/module/core/impl/simd/x86/scan.hpp>
 #endif

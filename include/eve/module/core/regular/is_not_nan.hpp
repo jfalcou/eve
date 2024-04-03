@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/is_eqz.hpp>
 
 namespace eve
 {
@@ -57,7 +57,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_nan.cpp}
+//!  @godbolt{doc/core/is_not_nan.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -65,10 +65,6 @@ namespace eve
 //!
 //!     The call `eve;::is_not_nan[mask](x)` provides a masked version of `eve::is_not_nan` which is
 //!     equivalent to `if_else (mask, is_not_nan(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_nan.cpp}
 //!
 //! @}
 //================================================================================================

@@ -9,7 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/is_eqz.hpp>
 
 namespace eve
 {
@@ -60,7 +60,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_imag.cpp}
+//!  @godbolt{doc/core/is_imag.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -68,10 +68,6 @@ namespace eve
 //!
 //!     The call `eve;::is_imag[mask](x)` provides a masked version of `eve::is_imag` which is
 //!     equivalent to `if_else (mask, is_imag(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_imag.cpp}
 //!
 //! @}
 //================================================================================================

@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_denormal.cpp}
+//!  @godbolt{doc/core/is_not_denormal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -54,13 +54,10 @@ namespace eve
 //!     of `eve::is_not_denormal` which is
 //!     equivalent to `if_else (mask, is_not_denormal(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_denormal.cpp}
 //!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_not_denormal_, is_not_denormal);
 }
 
-#include <eve/module/core/regular/impl/is_not_denormal.hpp>
+#include <eve/module/core/impl/is_not_denormal.hpp>

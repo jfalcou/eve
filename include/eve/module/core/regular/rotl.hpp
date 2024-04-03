@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/abs.hpp>
 
 namespace eve
 {
@@ -47,8 +47,8 @@ namespace eve
   inline constexpr auto rotl = functor<rotl_t>;
 }
 
-#include <eve/module/core/regular/impl/rotl.hpp>
+#include <eve/module/core/impl/rotl.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/rotl.hpp>
+#  include <eve/module/core/impl/simd/x86/rotl.hpp>
 #endif

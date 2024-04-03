@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/frac.cpp}
+//!  @godbolt{doc/core/frac.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,12 +61,9 @@ namespace eve
 //!     The call `eve;::frac[mask](x)` provides a masked version of `eve::frac` which is
 //!     equivalent to `if_else (mask, frac(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/frac.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(frac_, frac);
 }
 
-#include <eve/module/core/regular/impl/frac.hpp>
+#include <eve/module/core/impl/frac.hpp>

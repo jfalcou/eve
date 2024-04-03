@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/minimum.cpp}
+//!  @godbolt{doc/core/minimum.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -53,21 +53,17 @@ namespace eve
 //!     version of `minimum` which is
 //!     equivalent to : ``minimum(if_else(mask, x, valmax(as(x))))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/minimum.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(minimum_, minimum);
 }
 
-#include <eve/module/core/regular/impl/minimum.hpp>
+#include <eve/module/core/impl/minimum.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/minimum.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/minimum.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/minimum.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/minimum.hpp>
 #endif

@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/none.cpp}
+//!  @godbolt{doc/core/none.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,13 +61,9 @@ namespace eve
 //!     version of `none` which is
 //!     equivalent to : all not masked elements are  zero.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/none.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(none_, none);
 }
 
-#include <eve/module/core/regular/impl/none.hpp>
+#include <eve/module/core/impl/none.hpp>

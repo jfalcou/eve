@@ -56,7 +56,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_imag.cpp}
+//!  @godbolt{doc/core/is_not_imag.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -65,9 +65,6 @@ namespace eve
 //!     The call `eve;::is_not_imag[mask](x)` provides a masked version of `eve::is_not_imag` which
 //!     is equivalent to `if_else (mask, is_not_imag(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_imag.cpp}
 //!
 //! @}
 //================================================================================================

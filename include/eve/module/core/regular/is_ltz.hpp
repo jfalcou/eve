@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/regular/is_greater_equal.hpp>
+#include <eve/module/core/is_greater_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!     @godbolt{doc/core/regular/is_ltz.cpp}
+//!     @godbolt{doc/core/is_ltz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,17 +71,13 @@ namespace eve
 //!     The call `eve;::is_ltz[mask](x)` provides a masked version of `eve::is_ltz` which is
 //!     equivalent to `if_else (mask, is_ltz(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_ltz.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_ltz = functor<is_ltz_t>;
 }
 
-#include <eve/module/core/regular/impl/is_ltz.hpp>
+#include <eve/module/core/impl/is_ltz.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#include <eve/module/core/regular/impl/simd/x86/is_ltz.hpp>
+#include <eve/module/core/impl/simd/x86/is_ltz.hpp>
 #endif

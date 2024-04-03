@@ -9,10 +9,10 @@
 #include <eve/arch.hpp>
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/impl/load.hpp>
+#include <eve/module/core/impl/load.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/load.hpp>
+#  include <eve/module/core/impl/simd/x86/load.hpp>
 #endif
 
 //================================================================================================

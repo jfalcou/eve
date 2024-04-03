@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/trunc.cpp}
+//!  @godbolt{doc/core/trunc.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,10 +71,6 @@ namespace eve
 //!
 //!     The call `eve;::trunc[mask](x)` provides a masked version of `eve::trunc` which is
 //!     equivalent to `if_else (mask, trunc(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/trunc.cpp}
 //!
 //!   * eve::tolerant
 //!
@@ -88,28 +84,25 @@ namespace eve
 //!        * If `tol` is omitted the tolerance is taken to 3 times
 //!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/fuzzy/trunc.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto trunc = functor<trunc_t>;
 }
 
-#include <eve/module/core/regular/impl/trunc.hpp>
+#include <eve/module/core/impl/trunc.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/trunc.hpp>
+#  include <eve/module/core/impl/simd/x86/trunc.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/trunc.hpp>
+#  include <eve/module/core/impl/simd/ppc/trunc.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/trunc.hpp>
+#  include <eve/module/core/impl/simd/arm/neon/trunc.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/trunc.hpp>
+#  include <eve/module/core/impl/simd/arm/sve/trunc.hpp>
 #endif

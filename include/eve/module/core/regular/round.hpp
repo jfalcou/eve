@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/round.cpp}
+//!  @godbolt{doc/core/round.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -52,10 +52,6 @@ namespace eve
 //!
 //!     The call `eve;::round[mask](x)` provides a masked version of `eve::round` which is
 //!     equivalent to `if_else (mask, round(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/round.cpp}
 //!
 //!   * eve::downward
 //!
@@ -73,10 +69,9 @@ namespace eve
 //!
 //!     The expression `eve::toward_zero(eve::round)(x)` is equivalent to `eve::trunc(x)`.
 //!
-//!      @godbolt{doc/core/roundings/round.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(round_, round);
 }
 
-#include <eve/module/core/regular/impl/round.hpp>
+#include <eve/module/core/impl/round.hpp>

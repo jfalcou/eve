@@ -12,9 +12,9 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
+#include <eve/module/core/all.hpp>
+#include <eve/module/core/if_else.hpp>
+#include <eve/module/core/is_gez.hpp>
 
 #include <type_traits>
 
@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/prev.cpp}
+//!  @godbolt{doc/core/prev.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -64,10 +64,6 @@ namespace eve
 //!     The call `eve::prev[mask](x, ...)` provides a masked
 //!     version of `prev` which is
 //!     equivalent to `if_else(mask, prev(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/prev.cpp}
 //!
 //! @}
 //================================================================================================
@@ -110,4 +106,4 @@ namespace detail
 EVE_MAKE_CALLABLE(prev_, prev);
 }
 
-#include <eve/module/core/regular/impl/prev.hpp>
+#include <eve/module/core/impl/prev.hpp>

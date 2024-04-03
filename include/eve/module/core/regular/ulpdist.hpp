@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ulpdist.cpp}
+//!  @godbolt{doc/core/ulpdist.cpp}
 //!
 //! @}
 //================================================================================================
@@ -62,4 +62,4 @@ template<> struct supports_conditional<tag::ulpdist_> : std::false_type
 EVE_MAKE_CALLABLE(ulpdist_, ulpdist);
 }
 
-#include <eve/module/core/regular/impl/ulpdist.hpp>
+#include <eve/module/core/impl/ulpdist.hpp>

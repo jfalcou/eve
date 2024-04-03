@@ -53,7 +53,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/signnz.cpp}
+//!  @godbolt{doc/core/signnz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -62,13 +62,9 @@ namespace eve
 //!     The call `eve;::signnz[mask](x)` provides a masked version of `eve::signnz` which is
 //!     equivalent to `if_else (mask, signnz(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/signnz.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(signnz_, signnz);
 }
 
-#include <eve/module/core/regular/impl/signnz.hpp>
+#include <eve/module/core/impl/signnz.hpp>

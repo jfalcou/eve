@@ -11,13 +11,13 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/regular/bit_floor.hpp>
-#include <eve/module/core/regular/dec.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/ifrexp.hpp>
-#include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/is_less_equal.hpp>
-#include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/bit_floor.hpp>
+#include <eve/module/core/dec.hpp>
+#include <eve/module/core/if_else.hpp>
+#include <eve/module/core/ifrexp.hpp>
+#include <eve/module/core/is_less.hpp>
+#include <eve/module/core/is_less_equal.hpp>
+#include <eve/module/core/ldexp.hpp>
 
 namespace eve
 {
@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_ceil.cpp}
+//!  @godbolt{doc/core/bit_ceil.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

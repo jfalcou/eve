@@ -11,11 +11,11 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/is_finite.hpp>
-#include <eve/module/core/regular/is_greater_equal.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/module/core/abs.hpp>
+#include <eve/module/core/is_finite.hpp>
+#include <eve/module/core/is_greater_equal.hpp>
+#include <eve/module/core/is_nez.hpp>
+#include <eve/module/core/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -70,7 +70,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_normal.cpp}
+//!  @godbolt{doc/core/is_normal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -79,9 +79,6 @@ namespace eve
 //!     The call `eve::is_normal[mask](x)` provides a masked version of `eve::is_normal` which is
 //!     equivalent to `if_else (mask, is_normal(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_normal.cpp}
 //!
 //! @}
 //================================================================================================

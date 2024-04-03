@@ -42,10 +42,10 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/reduce.cpp}
+//!  @godbolt{doc/core/reduce.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(reduce_, reduce);
 }
 
-#include <eve/module/core/regular/impl/reduce.hpp>
+#include <eve/module/core/impl/reduce.hpp>

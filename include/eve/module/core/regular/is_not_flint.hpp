@@ -9,8 +9,8 @@
 
 #include <eve/module/core/constant/false.hpp>
 #include <eve/module/core/constant/maxflint.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/frac.hpp>
+#include <eve/module/core/is_nez.hpp>
+#include <eve/module/core/frac.hpp>
 
 namespace eve
 {
@@ -64,7 +64,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_flint.cpp}
+//!  @godbolt{doc/core/is_not_flint.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -72,10 +72,6 @@ namespace eve
 //!
 //!     The call `eve;::is_not_flint[mask](x)` provides a masked version of `eve::is_not_flint`
 //!     which is equivalent to `if_else (mask, is_not_flint(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_not_flint.cpp}
 //!
 //! @}
 //================================================================================================

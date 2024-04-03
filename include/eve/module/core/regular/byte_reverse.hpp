@@ -62,4 +62,4 @@ namespace eve
 EVE_MAKE_CALLABLE(byte_reverse_, byte_reverse);
 }
 
-#include <eve/module/core/regular/impl/byte_reverse.hpp>
+#include <eve/module/core/impl/byte_reverse.hpp>
