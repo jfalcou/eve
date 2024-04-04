@@ -7,11 +7,15 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
- template<typename Options>
-  struct horner_t : tuple_callable<horner_t, Options, pedantic_option>
+  template<typename Options>
+  struct horner_t : elementwise_callable<horner_t, Options, pedantic_option>
   {
     template<floating_value X, value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<X, Ts...>
@@ -82,7 +86,7 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/math/regular/horner.cpp}
+//!   @godbolt{doc/math/horner.cpp}
 //!
 //!   @groupheader{Semantic Modifiers}
 //!

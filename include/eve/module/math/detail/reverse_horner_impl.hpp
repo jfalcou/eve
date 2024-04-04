@@ -22,7 +22,7 @@
 namespace eve::detail
 {
 
-  template<decorator D, value T0, value C0, value... Cs>
+  template<decorator D, floating_value X, value C0, value... Cs>
   EVE_FORCEINLINE constexpr auto
   reverse_horner_impl(D const& d, T0 xx, C0 c0, Cs... cs) noexcept
   -> decltype(horner(xx, c0, cs...))
@@ -38,7 +38,7 @@ namespace eve::detail
     {
       using r_t = common_value_t<T0, C0, Cs...>;
       auto x = r_t(xx);
-      using t_t = kumi::result::generate_t<sizeof...(cs)+1, r_t>;
+      using t_t = kumi::result::generate_t<sizeof...(cs), r_t>;
       t_t c {r_t{c0}, r_t{cs}...};
       return d(reverse_horner)(x, c);
     }

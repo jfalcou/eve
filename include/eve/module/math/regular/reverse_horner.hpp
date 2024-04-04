@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/horner.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct reverse_horner_t : elementwise_callable<reverse_horner_t, Options, pedantic_option>
+  {
+    template<floating_value X, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<X, Ts...>
+    operator()(X x, Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, ts...); }
+    
+    template<floating_value X, kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
+    operator()(X x, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
+    
+    EVE_CALLABLE_OBJECT(reverse_horner_t, reverse_horner_);
+  };
+  
+  
 //================================================================================================
 //! @addtogroup math
 //! @{
@@ -66,7 +87,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/reverse_horner.cpp}
+//!  @godbolt{doc/math/reverse_horner.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -80,7 +101,36 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(reverse_horner_, reverse_horner);
+  inline constexpr auto reverse_horner = functor<reverse_horner_t>;
+  
+  namespace detail
+  {
+    template<typename X, typename... Cs, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
+    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, Cs... cs) noexcept
+    {
+      if constexpr((... && scalar_value<Cs>))
+      {
+        using e_t =  element_type_t<X>;
+        using t_t = kumi::result::generate_t<sizeof...(cs), e_t>;
+        t_t c{e_t(cs)...};
+        return reverse_horner[o](xx, c);
+      }
+      else
+      {
+        using r_t = common_value_t<X, Cs...>;
+        auto x = r_t(xx);
+        using t_t = kumi::result::generate_t<sizeof...(cs), r_t>;
+        t_t c {r_t{cs}...};
+        return reverse_horner[o](x, c);
+      }
+    }
+    
+    template<typename X, typename... Cs, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
+    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x,  kumi::tuple<Cs...> tup) noexcept
+    {
+      return horner[o](x, kumi::reverse(tup));
+    }
+  }
 }
-
-#include <eve/module/math/regular/impl/reverse_horner.hpp>
