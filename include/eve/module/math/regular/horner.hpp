@@ -19,12 +19,14 @@ namespace eve
   {
     template<floating_value X, value T, value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
-    operator()(X x, T t,  Ts...ts) const noexcept { return EVE_DISPATCH_CALL(x, t, ts...); }
+    operator()(X x, T t,  Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, t, ts...); }
 
     template<floating_value X, kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
-    operator()(X x, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(x, t); }
+    operator()(X x, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
 
     EVE_CALLABLE_OBJECT(horner_t, horner_);
   };
