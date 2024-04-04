@@ -15,18 +15,16 @@
 namespace eve
 {
   template<typename Options>
-  struct horner_t : elementwise_callable<horner_t, Options, pedantic_option>
+  struct horner_t : callable<horner_t, Options, pedantic_option>
   {
-    template<floating_value X, value... Ts>
-    EVE_FORCEINLINE constexpr common_value_t<X, Ts...>
-    operator()(X x, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(x, ts...); }
+    template<floating_value X, value T, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
+    operator()(X x, T t,  Ts...ts) const noexcept { return EVE_DISPATCH_CALL(x, t, ts...); }
 
     template<floating_value X, kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
-    operator()(X x, Tup const& t) const noexcept
-    { return EVE_DISPATCH_CALL(x, t); }
+    operator()(X x, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(x, t); }
 
     EVE_CALLABLE_OBJECT(horner_t, horner_);
   };
@@ -103,29 +101,30 @@ namespace eve
 
   namespace detail
   {
-    template<typename X, typename... Cs, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
-    horner_(EVE_REQUIRES(cpu_), O const & o, X xx, Cs... cs) noexcept
+    template<typename X, typename C, typename... Cs, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<X, C, Cs...>
+    horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c, Cs... cs) noexcept
     {
       using r_t          = common_value_t<X, Cs...>;
-      constexpr size_t N = sizeof...(Cs);
-      if constexpr( N == 0 ) return r_t(0);
-      else if constexpr( N == 1 ) return (r_t(cs), ...);
+
+      if constexpr( sizeof...(Cs) == 0 ) return r_t(c);
       else
       {
-        auto x    = r_t(xx);
-        r_t  that(zero(as<r_t>()));
-        auto next = [&](auto that, auto arg) { return fma[o](that, x, arg); };
-        ((that = next(that, cs)), ...);
+        auto x = r_t(xx);
+        r_t  that{0};
+
+        that = fma[o](that, x, c);
+        ((that = fma[o](that, x, cs)), ...);
+
         return that;
       }
     }
 
-    template<typename X, typename... Cs, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
-    horner_(EVE_REQUIRES(cpu_), O const & o, X x,  kumi::tuple<Cs...> tup) noexcept
+    template<typename X, kumi::product_type Tuple, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    horner_(EVE_REQUIRES(cpu_), O const & o, X x, Tuple const& tup) noexcept
     {
-      return kumi::apply( [&](auto... m) { return horner(x, m...); }, tup);
+      return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
     }
   }
 }

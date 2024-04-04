@@ -42,7 +42,8 @@ namespace eve::detail
   // We catch the mask + PROMOTE case and handle it properly
   // No special provision is made for PEDANTIC as it is handled in the second pass without issues.
   template<typename T, typename U, typename V, conditional_expr C, callable_options O>
-  EVE_FORCEINLINE constexpr auto fma_(EVE_REQUIRES(cpu_), C const& mask, O const& o, T const& a, U const& b, V const& c)
+  EVE_FORCEINLINE constexpr auto
+  fma_(EVE_REQUIRES(cpu_), C const& mask, O const& o, T const& a, U const& b, V const& c)
   {
     // PROMOTE ---------------------
     if constexpr(O::contains(promote2))
@@ -64,7 +65,6 @@ namespace eve::detail
 
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto fma_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const& b, T const& c)
-  requires has_native_abi_v<T>
   {
     // PROMOTE ---------------------
     // We promote before going pedantic in case it changes the behavior
