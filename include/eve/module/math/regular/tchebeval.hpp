@@ -77,4 +77,4 @@ namespace eve
 EVE_MAKE_CALLABLE(tchebeval_, tchebeval);
 }
 
-#include <eve/module/polynomial/regular/impl/tchebeval.hpp>
+#include <eve/module/math/regular/impl/tchebeval.hpp>

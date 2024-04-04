@@ -12,6 +12,4 @@
 #include <eve/module/polynomial/regular/jacobi.hpp>
 #include <eve/module/polynomial/regular/laguerre.hpp>
 #include <eve/module/polynomial/regular/legendre.hpp>
-#include <eve/module/polynomial/regular/newton.hpp>
-#include <eve/module/polynomial/regular/tchebeval.hpp>
 #include <eve/module/polynomial/regular/tchebytchev.hpp>

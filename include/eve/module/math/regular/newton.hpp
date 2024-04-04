@@ -75,4 +75,4 @@ namespace eve
 EVE_MAKE_CALLABLE(newton_, newton);
 }
 
-#include <eve/module/polynomial/regular/impl/newton.hpp>
+#include <eve/module/math/regular/impl/newton.hpp>
