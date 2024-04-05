@@ -67,8 +67,9 @@ namespace eve
 //!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
 //!     * `c` :  tuple  containing The coefficients by decreasing power order.
 //!     * `n` :  tuple  containing The nodes by decreasing power order.
-//!     * `cn`:  coefficients followed by nodes unless empty the total number of values
-//!              is to be odd.If s is this number,  the (s+1)/2 first are the coefs and the others the nodes.
+//!     * `cn`:  coefficients followed by nodes. Unless empty the total number of values
+//!              is to be odd. If s is this number, the (s+1)/2 first are taken as the coefs
+//!              and the others are the nodes,  both in decreasing power order
 //!    **Return value**
 //!
 //!    The value of the polynom at  `x` is returned.
@@ -142,17 +143,13 @@ namespace eve
       using r_t = common_value_t<X, CsNs...>;
       auto x = r_t(xx);
       constexpr auto s   = sizeof...(cns);
-      if constexpr(s == 0) The expression `eve::horner[pedantic](...)`
+      if constexpr(s == 0)
         return zero(as(xx));
       else
       {
-        constexpr auto siz = (s+1)/2;
-        using tt_t = kumi::result::generate_t<s, r_t>;
-        using tc_t = kumi::result::generate_t<siz, r_t>;
-        using tn_t = kumi::result::generate_t<siz-1, r_t>;
-        tt_t tcn {r_t{cns}...};
-        auto tc = kumi::extract(tcn, kumi::index<0>, kumi::index<siz>);
-        auto tn = kumi::extract(tcn, kumi::index<siz>);
+        EVE_ASSERT(s&1, "nodes and coefs have incompatible sizes");
+        kumi::result::generate_t<s, r_t> tcn{r_t{cns}...};
+        auto [tc, tn] = split(tcn, kumi::index<(s+1)/2>);
         return newton[o](x,tc,tn);
       }
     }
