@@ -7,10 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct tchebeval_t : callable<tchebeval_t, Options, pedantic_option>
+  {
+    template<floating_value X, value T, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
+    operator()(X x, T t,  Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, t, ts...); }
+
+    template<floating_value X, kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
+    operator()(X x, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
+
+    EVE_CALLABLE_OBJECT(tchebeval_t, tchebeval_);
+  };
+
 //================================================================================================
 //! @addtogroup polynomial
 //! @{
@@ -24,7 +44,7 @@ namespace eve
 //!   **Defined in header**
 //!
 //!   @code
-//!   #include <eve/module/polynomial.hpp>
+//!   #include <eve/module/math.hpp>
 //!   @endcode
 //!
 //!   @groupheader{Callable Signatures}
@@ -35,12 +55,8 @@ namespace eve
 //!     template< eve::floating_ordered_value T, eve::floating_ordered_value Cs ...>
 //!     T tchebeval(T x, Cs ... cs) noexcept;                                     // 1
 //!
-//!     template< eve::floating_ordered_value T, eve::range R>
-//!     T tchebeval(T x, R r) noexcept;                                           // 2
-//!
-//!     template< eve::floating_ordered_value T, eve::floating_ordered_value U
-//!             , eve::floating_ordered_value V, eve::range R>
-//!     T tchebeval(T x, U a, V b,  R r) noexcept;                                // 3
+//!     template< eve::floating_ordered_value T, kumi::tuple Tup>
+//!     T tchebeval(T x, Tup t) noexcept;                                           // 2
 //!   }
 //!   @endcode
 //!
@@ -71,10 +87,10 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/polynomial/regular/tchebeval.cpp}
+//!   @godbolt{doc/math/tchebeval.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(tchebeval_, tchebeval);
-}
+  inline constexpr auto tchebeval = functor<tchebeval_t>;
 
-#include <eve/module/math/regular/impl/tchebeval.hpp>
+  namespace detail
+  {

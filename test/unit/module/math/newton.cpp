@@ -16,18 +16,18 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of newton on wide", eve::test::simd::all_types
+// TTS_CASE_TPL("Check return types of newton on wide", eve::test::simd::all_types
 
-)
-<typename T>(tts::type<T>)
-{
-  using v_t  = eve::element_type_t<T>;
-  using rv_t = std::vector<v_t>;
-  using rl_t = std::list<v_t>;
-  TTS_EXPR_IS(eve::newton(T(), rv_t(), rv_t()), T);
-  TTS_EXPR_IS(eve::newton(T(), rv_t(), rl_t()), T);
-  TTS_EXPR_IS(eve::newton(T(), rl_t(), rl_t()), T);
-};
+// )
+// <typename T>(tts::type<T>)
+// {
+//   using v_t  = eve::element_type_t<T>;
+//   using rv_t = std::vector<v_t>;
+//   using rl_t = std::list<v_t>;
+//   TTS_EXPR_IS(eve::newton(T(), rv_t(), rv_t()), T);
+//   TTS_EXPR_IS(eve::newton(T(), rv_t(), rl_t()), T);
+//   TTS_EXPR_IS(eve::newton(T(), rl_t(), rl_t()), T);
+// };
 
 //==================================================================================================
 //== newton tests
@@ -42,29 +42,15 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   using eve::numeric;
   using eve::one;
   using eve::pedantic;
-  using v_t = eve::element_type_t<T>;
+
   //============================================================================
-  //== ranges
+  //== variadic
   //============================================================================
-  std::vector<v_t> tab0;
-  std::vector<v_t> tab1{1};
-  std::vector<v_t> tab2{1, 2};
-  std::vector<v_t> tab3{1, 2, 3};
 
-  TTS_EQUAL((newton)(a0, tab0, tab0), T(0));
-  TTS_EQUAL((newton)(a0, tab1, tab0), T(1));
-  TTS_EQUAL((newton)(a0, tab2, tab1), (fma)(a0 - 1, 1, 2));
-  TTS_EQUAL((newton)(a0, tab3, tab2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
-
-  TTS_EQUAL(pedantic(newton)(a0, tab0, tab0), T(0));
-  TTS_EQUAL(pedantic(newton)(a0, tab1, tab0), T(1));
-  TTS_EQUAL(pedantic(newton)(a0, tab2, tab1), (fma)(a0 - 1, 1, 2));
-  TTS_EQUAL(pedantic(newton)(a0, tab3, tab2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
-
-  TTS_EQUAL(numeric(newton)(a0, tab0, tab0), T(0));
-  TTS_EQUAL(numeric(newton)(a0, tab1, tab0), T(1));
-  TTS_EQUAL(numeric(newton)(a0, tab2, tab1), (fma)(a0 - 1, 1, 2));
-  TTS_EQUAL(numeric(newton)(a0, tab3, tab2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
+  TTS_EQUAL((newton)(a0), T(0));
+  TTS_EQUAL((newton)(a0, 1), T(1));
+  TTS_EQUAL((newton)(a0, 1, 2, 1), (fma)(a0 - 1, 1, 2));
+  TTS_EQUAL((newton)(a0, 1, 2, 3, 1, 2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 
 
   //============================================================================
@@ -80,13 +66,8 @@ TTS_CASE_WITH("Check behavior of newton on wide",
   TTS_EQUAL((newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
   TTS_EQUAL((newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 
-  TTS_EQUAL(pedantic(newton)(a0, tup0, tup0), T(0));
-  TTS_EQUAL(pedantic(newton)(a0, tup1, tup0), T(1));
-  TTS_EQUAL(pedantic(newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
-  TTS_EQUAL(pedantic(newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
-
-  TTS_EQUAL(numeric(newton)(a0, tup0, tup0), T(0));
-  TTS_EQUAL(numeric(newton)(a0, tup1, tup0), T(1));
-  TTS_EQUAL(numeric(newton)(a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
-  TTS_EQUAL(numeric(newton)(a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
+  TTS_EQUAL(newton[pedantic](a0, tup0, tup0), T(0));
+  TTS_EQUAL(newton[pedantic](a0, tup1, tup0), T(1));
+  TTS_EQUAL(newton[pedantic](a0, tup2, tup1), (fma)(a0 - 1, 1, 2));
+  TTS_EQUAL(newton[pedantic](a0, tup3, tup2), (fma)(a0 - 2, (fma)(a0 - 1, 1, 2), 3));
 };

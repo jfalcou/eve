@@ -91,13 +91,13 @@ namespace eve
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
-//!  * eve::pedantic, eve::numeric
+//!  * eve::pedantic
 //!
-//!       If d denotes one of these modifiers, the expression `d(eve::reverse_horner)(...)`
-//!       computes the result using `d(eve::fma)` instead of `eve::fma` in internal computation.
+//!      The expression `eve::reverse_horner[pedantic](...)`
+//!      computes the result using `d(eve::fma)` instead of `eve::fma` in internal computation.
 //!
-//!       This is intended to insure more accurate computations where needed. This has no cost if
-//!       the system has hard wired fma but is very expansive if it is not the case.
+//!      This is intended to insure more accurate computations where needed. This has no cost (and is
+//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
 //!
 //! @}
 //================================================================================================

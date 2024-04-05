@@ -90,13 +90,13 @@ namespace eve
 //!
 //!   @groupheader{Semantic Modifiers}
 //!
-//!   * eve::pedantic, eve::numeric
+//!   * eve::pedantic
 //!
-//!       If d denotes one of these modifiers, the expression `d(eve::horner)(...)`
-//!       computes the result using `d(eve::fma)` instead of `eve::fma` in internal computations.
+//!      The expression `eve::horner[pedantic](...)`
+//!      computes the result using `fma[pedantic]` instead of `eve::fma` in internal computations.
 //!
-//!       This is intended to insure more accurate computations where needed. This has no cost if
-//!       the system has hard wired fma but is very expansive if it is not the case.
+//!      This is intended to insure more accurate computations where needed. This has no cost (and is
+//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
 //! @}
 //================================================================================================
   inline constexpr auto horner = functor<horner_t>;
