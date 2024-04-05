@@ -101,4 +101,3 @@
 #include <eve/module/math/regular/tand.hpp>
 #include <eve/module/math/regular/tanh.hpp>
 #include <eve/module/math/regular/tanpi.hpp>
-#include <eve/module/math/regular/tchebeval.hpp>

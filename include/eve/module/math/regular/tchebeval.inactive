@@ -52,17 +52,22 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T, eve::floating_ordered_value Cs ...>
+//!     template< eve::floating_value T, eve::floating_value Cs ...>
 //!     T tchebeval(T x, Cs ... cs) noexcept;                                     // 1
 //!
-//!     template< eve::floating_ordered_value T, kumi::tuple Tup>
-//!     T tchebeval(T x, Tup t) noexcept;                                           // 2
+//!     template< eve::floating_value T, kumi::tuple Tup>
+//!     T tchebeval(T x, Tup t) noexcept;                                         // 2
+//!
+//!     template< eve::floating_value T,
+//!               eve::floating_value U,
+//!               eve::floating_value V, kumi::tuple Tup>
+//!     T tchebeval(T x, U a, V b, Tup t) noexcept;                               // 3
 //!   }
 //!   @endcode
 //!
 //!   1. Evaluates the Tchebytchev polynomial using a variadic list of coefficients.
-//!   2. Evaluates the Tchebytchev polynomial using a range of coefficients.
-//!   3. Evaluates the Tchebytchev polynomial using a range of coefficients in interval `[a,b]`.
+//!   2. Evaluates the Tchebytchev polynomial using a tuple of coefficients.
+//!   3. Evaluates the Tchebytchev polynomial using a tuple of coefficients in interval `[a,b]`.
 //!
 //!   **Parameters**
 //!
