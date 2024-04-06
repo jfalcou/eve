@@ -10,6 +10,10 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/combinatorial/regular/gcd.hpp>
+#include <eve/module/core.hpp>
+#include <eve/traits/common_value.hpp>
+#include <eve/as_element.hpp>
 
 namespace eve
 {
@@ -80,6 +84,30 @@ namespace eve
 //================================================================================================
   inline constexpr auto lcm = functor<lcm_t>;
 
-}
+  namespace detail
+  {
 
-#include <eve/module/combinatorial/regular/impl/lcm.hpp>
+    template<typename T, typename U, callable_options O>
+    constexpr common_value_t<T, U>
+    lcm_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
+    {
+      if constexpr(!std::same_as<T, U>)
+      {
+        using c_t =  common_value_t<T, U>;
+        return lcm_(EVE_TARGETS(cpu_), o, c_t(a), c_t(b)); ;
+      }
+      else 
+      {
+        EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
+        a = abs(a);
+        b = abs(b);
+        if constexpr( scalar_value<T> )
+        {
+          if( !b || !a ) return T(0);
+          return b / gcd(a, b) * a;
+        }
+        else { return a * (b / gcd(a, if_else(b, b, eve::one))); }
+      }
+    }
+  }
+}
