@@ -29,35 +29,13 @@ glob_unit("doc" ${doc_root} "combinatorial/regular/*.cpp"    )
 glob_unit("doc" ${doc_root} "combinatorial/conversion/*.cpp" )
 
 ##==================================================================================================
-## GLOB and process complex doc tests
-##==================================================================================================
-# add_custom_target(doc.complex.exe        )
-# add_dependencies(doc.exe doc.complex.exe )
-# glob_unit("doc" ${doc_root} "complex/regular/*.cpp"  )
-# glob_unit("doc" ${doc_root} "complex/pedantic/*.cpp" )
-
-##==================================================================================================
-## GLOB and process quaternion doc tests
-##==================================================================================================
-# add_custom_target(doc.quaternion.exe        )
-# add_dependencies(doc.exe doc.quaternion.exe )
-# glob_unit("doc" ${doc_root} "quaternion/regular/*.cpp"  )
-
-##==================================================================================================
 ## GLOB and process core doc tests
 ##==================================================================================================
 add_custom_target(doc.core.exe        )
 add_dependencies(doc.exe doc.core.exe )
-glob_unit("doc" ${doc_root} "core/compress/*.cpp" )
+glob_unit("doc" ${doc_root} "core/compress/*.cpp"       )
 glob_unit("doc" ${doc_root} "core/constant/*.cpp"       )
-#glob_unit("doc" ${doc_root} "core/fuzzy/*.cpp"          )
-#glob_unit("doc" ${doc_root} "core/masked/*.cpp"         )
 glob_unit("doc" ${doc_root} "core/named_shuffles/*.cpp" )
-#glob_unit("doc" ${doc_root} "core/pedantic/*.cpp"       )
-#glob_unit("doc" ${doc_root} "core/raw/*.cpp"            )
-#glob_unit("doc" ${doc_root} "core/regular/*.cpp"        )
-#glob_unit("doc" ${doc_root} "core/roundings/*.cpp"      )
-#glob_unit("doc" ${doc_root} "core/saturated/*.cpp"      )
 glob_unit("doc" ${doc_root} "core/*.cpp"                )
 
 ##==================================================================================================
