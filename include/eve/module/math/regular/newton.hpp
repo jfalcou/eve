@@ -17,10 +17,10 @@ namespace eve
   template<typename Options>
   struct newton_t : callable<newton_t, Options, pedantic_option>
   {
-    template<floating_value X, value... Cs, value... Ns>
-    EVE_FORCEINLINE constexpr common_value_t<X, Cs..., Ns...>
-    operator()(X x, Cs... cs,  Ns... ns) const noexcept
-    { return EVE_DISPATCH_CALL(x, cs..., ns...); }
+    template<floating_value X, value... CsNs>
+    EVE_FORCEINLINE constexpr common_value_t<X, CsNs...>
+    operator()(X x, CsNs... csns) const noexcept
+    { return EVE_DISPATCH_CALL(x, csns...); }
 
     template<floating_value X, value... Cs, value... Ns>
     EVE_FORCEINLINE constexpr
@@ -83,7 +83,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/polynomial/regular/newton.cpp}
+//!  @godbolt{doc/math/newton.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
