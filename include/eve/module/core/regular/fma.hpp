@@ -7,9 +7,6 @@
 //======================================================================================================================
 #pragma once
 
-
-#include "eve/traits/common_type.hpp"
-#include "eve/traits/common_value.hpp"
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
@@ -17,7 +14,7 @@
 namespace eve
 {
 template<typename Options>
-struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_option, regular_option>
+struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_option>
 {
   template<eve::value T,eve::value U,eve::value V>
   requires(Options::contains(promote2))
@@ -51,8 +48,8 @@ struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_opt
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::common_value_t fma(T x, U y,  V z) noexcept;
+//!     template<eve::value T, eve::value U, eve::value V>
+//!     constexpr eve::common_value_t<T,U,V> fma(T x, U y,  V z) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -80,16 +77,15 @@ struct fma_t : elementwise_callable<fma_t, Options, pedantic_option, promote_opt
 //!   * Masked Call
 //!
 //!     The call `eve::fma[mask](x, ...)` provides a masked
-//!     version of `fma` which is
-//!     equivalent to `if_else(mask, fma(x, ...), x)`
+//!     version of `fma` which is equivalent to `if_else(mask, fma(x, ...), x)`
 //!
 //!   * eve::pedantic, eve::numeric
 //!
-//!     * The call `pedantic(fma)(x,y,z)` ensures the one rounding property.
+//!     * The call `fma[pedantic](x,y,z)` ensures the one rounding property.
 //!       This can be very expensive if the system has no hardware capability.
 //!
-//!     * The call `numeric(fma)(x,y,z)` ensures the full compliance to fma properties.
-//!       This can be very expensive if the system has no hardware capability.
+//!     * The call `fma[promote](x,y,z)`promotes all arguments to their common value type
+//!       before computing fma.
 //! @}
 //======================================================================================================================
 inline constexpr auto fma = functor<fma_t>;
