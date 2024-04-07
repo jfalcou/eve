@@ -9,6 +9,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/special/regular/factorial.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
 
 namespace eve
 {
@@ -69,6 +71,30 @@ namespace eve
 //! @}
 //================================================================================================
 inline constexpr auto lfactorial = functor<lfactorial_t>;
-}
 
-#include <eve/module/special/regular/impl/lfactorial.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE decltype(eve::factorial(T()))
+      lfactorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+    {
+      EVE_ASSERT(eve::all(is_flint(n)), "lfactorial : some entry elements are not flint");
+      EVE_ASSERT(eve::all(is_gez(n)), "lfactorial : some entry elements are not positive");
+      constexpr auto max = std::same_as<element_type_t<T>, double> ? 171 : 35;
+      auto           r   = eve::log(factorial(n));
+
+      if( eve::all(n < max) ) return r;
+      else
+      {
+        auto np = [](auto x)
+          {
+            if constexpr(integral_value<T>) return float64(inc(x));
+            else                            return inc(x);
+          }(n);
+
+        return if_else(n < max, r, log_abs_gamma(np));
+
+      }
+    }
+  }
+}
