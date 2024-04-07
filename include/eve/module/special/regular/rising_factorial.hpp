@@ -122,7 +122,7 @@ namespace eve
         else if constexpr(O::contains(pedantic2))
         {
           auto sga   = if_else(is_flint(a), one, signgam(a));
-          auto sgapx = if_else(is_flint(a + x), one, signgam(a + x));
+           auto sgapx = if_else(is_flint(a + x), one, signgam(a + x));
           return eve::exp(lrising_factorial[pedantic](a, x))*(sga * sgapx);
         }
         else
