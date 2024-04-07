@@ -40,7 +40,7 @@ namespace eve::detail
     else
     {
       T mcd = c * d;
-      T err = pedantic(fma)(-c, d, mcd);
+      T err = fma[pedantic](-c, d, mcd);
       T dop = pedantic(fms)(a, b, mcd);
       return if_else(is_finite(err), dop + err, dop);
     }

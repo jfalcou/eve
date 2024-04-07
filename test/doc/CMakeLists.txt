@@ -58,6 +58,7 @@ glob_unit("doc" ${doc_root} "core/raw/*.cpp"            )
 glob_unit("doc" ${doc_root} "core/regular/*.cpp"        )
 glob_unit("doc" ${doc_root} "core/roundings/*.cpp"      )
 glob_unit("doc" ${doc_root} "core/saturated/*.cpp"      )
+glob_unit("doc" é{doc_root} "core/*.cpp"                )
 
 ##==================================================================================================
 ## GLOB and process elliptic doc tests

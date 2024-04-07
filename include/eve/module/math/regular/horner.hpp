@@ -7,10 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct horner_t : callable<horner_t, Options, pedantic_option>
+  {
+    template<floating_value X, value T, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
+    operator()(X x, T t,  Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, t, ts...); }
+
+    template<floating_value X, kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
+    operator()(X x, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
+
+    EVE_CALLABLE_OBJECT(horner_t, horner_);
+  };
+
 //================================================================================================
 //! @addtogroup math
 //! @{
@@ -66,20 +86,47 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/math/regular/horner.cpp}
+//!   @godbolt{doc/math/horner.cpp}
 //!
 //!   @groupheader{Semantic Modifiers}
 //!
-//!   * eve::pedantic, eve::numeric
+//!   * eve::pedantic
 //!
-//!       If d denotes one of these modifiers, the expression `d(eve::horner)(...)`
-//!       computes the result using `d(eve::fma)` instead of `eve::fma` in internal computations.
+//!      The expression `eve::horner[pedantic](...)`
+//!      computes the result using `fma[pedantic]` instead of `eve::fma` in internal computations.
 //!
-//!       This is intended to insure more accurate computations where needed. This has no cost if
-//!       the system has hard wired fma but is very expansive if it is not the case.
+//!      This is intended to insure more accurate computations where needed. This has no cost (and is
+//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(horner_, horner);
-}
+  inline constexpr auto horner = functor<horner_t>;
 
-#include <eve/module/math/regular/impl/horner.hpp>
+  namespace detail
+  {
+    template<typename X, typename C, typename... Cs, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<X, C, Cs...>
+    horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c, Cs... cs) noexcept
+    {
+      using r_t          = common_value_t<X, Cs...>;
+
+      if constexpr( sizeof...(Cs) == 0 ) return r_t(c);
+      else
+      {
+        auto x = r_t(xx);
+        r_t  that{0};
+
+        that = fma[o](that, x, c);
+        ((that = fma[o](that, x, cs)), ...);
+
+        return that;
+      }
+    }
+
+    template<typename X, kumi::product_type Tuple, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    horner_(EVE_REQUIRES(cpu_), O const & o, X x, Tuple const& tup) noexcept
+    {
+      return kumi::apply( [&](auto... m) { return horner[o](x, m...); }, tup);
+    }
+  }
+}

@@ -10,11 +10,7 @@
 #include <eve/concept/range.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits/common_value.hpp>
-
-#include <concepts>
 #include <iterator>
-
-#include <initializer_list>
 
 namespace eve::detail
 {
@@ -38,7 +34,7 @@ namespace eve::detail
 //   else
 //   {
 //     auto x    = r_t(xx);
-//     auto dfma = d(fma);
+//     auto dfma = fma[d];
 //     r_t  that(zero(as<r_t>()));
 //     auto next = [&](auto that, auto arg) { return dfma(x, that, arg); };
 //     ((that = next(that, cs)), ...);
@@ -61,9 +57,8 @@ namespace eve::detail
     else
     {
       auto x    = r_t(xx);
-      auto dfma = d(fma);
       r_t  that(zero(as<r_t>()));
-      auto next = [&](auto that, auto arg) { return dfma(that, x, arg); };
+      auto next = [&](auto that, auto arg) { return fma[d](that, x, arg); };
       ((that = next(that, cs)), ...);
       return that;
     }
@@ -87,9 +82,8 @@ namespace eve::detail
     else
     {
       using std::advance;
-      auto dfma = d(fma);
       auto that = r_t(*cur);
-      auto step = [&](auto that, auto arg) { return dfma(x, that, arg); };
+      auto step = [&](auto that, auto arg) { return fma[d](x, that, arg); };
       for( advance(cur, 1); cur != last; advance(cur, 1) ) that = step(that, *cur);
       return that;
     }
