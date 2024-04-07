@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr auto inc</div><div class="ttdoc">return the input incremented by one.</div><div class="ttdef"><b>Definition:</b> inc.hpp:83</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr auto inc</div><div class="ttdoc">return the input incremented by one.</div><div class="ttdef"><b>Definition:</b> inc.hpp:76</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -157,19 +157,20 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <p><b>Return value</b></p>
 <p>The value of <code>x + 1</code> is returned.</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="fragment"><div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f};</div>
+<div class="line">  wide_ft <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {127, 1, -127, -128};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf            = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc(pf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; inc(pi)                        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[saturated](pi)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[<a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc[pi&lt;0]                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt; 0](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc[pi&gt;0][saturated](pi)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt; 0][<a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line"> </div>
@@ -179,52 +180,17 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
+<div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202" title="return the input incremented by one.">eve::inc</a>[mask](x, ...)</code> provides a masked version of <code>inc</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, inc(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, 10.0f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf            = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc[pf &lt; 5.0f][pf &gt; 5.0f](pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[pf &lt; 5.0f][pf &gt; 5.0f](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc[pf &gt; 5.0f][pf &lt; 5.0f](pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[pf &lt; 5.0f][pf &gt; 5.0f](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc[pf &gt; 5.0f]           (pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>           [pf &gt; 5.0f](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::inc[pf &lt; 5.0f]            (pf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[pf &lt; 5.0f]            (pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    ;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --></li>
+</li>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">eve::saturated</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">saturated(inc)</a>(x)</code> computes the saturated increment of <code>x</code>. The only interest of this behaviour is that for integral type T the call <code><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">saturated(inc)</a>(Valmax&lt;T&gt;())</code> returns <code>Valmax&lt;T&gt;()</code>.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0, 1, -127, -128};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                 = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[saturated](pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[<a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a>](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
-</div><!-- fragment --> </li>
+<p class="startli">The call <code><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">saturated(inc)</a>(x)</code> computes the saturated increment of <code>x</code>. The only interest of this behaviour is that for integral type T the call <code><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">saturated(inc)</a>(Valmax&lt;T&gt;())</code> returns <code>Valmax&lt;T&gt;()</code>. </p>
+</li>
 </ul>
 
 </div>

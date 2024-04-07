@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__bitops_gae53a4c2d8f8c820d
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">bit_floor</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b_html_gae53a4c2d8f8c820d95c7393f4b4b209b"><div class="ttname"><a href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">eve::bit_floor</a></div><div class="ttdeci">constexpr auto bit_floor</div><div class="ttdoc">If x is not zero, computes the largest integral power of two that is not greater than x.</div><div class="ttdef"><b>Definition:</b> bit_floor.hpp:86</div></div>
+<div class="ttc" id="agroup__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b_html_gae53a4c2d8f8c820d95c7393f4b4b209b"><div class="ttname"><a href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">eve::bit_floor</a></div><div class="ttdeci">constexpr auto bit_floor</div><div class="ttdoc">If x is not zero, computes the largest integral power of two that is not greater than x.</div><div class="ttdef"><b>Definition:</b> bit_floor.hpp:83</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -171,8 +171,9 @@ $(document).ready(function(){initNavTree('group__core__bitops_gae53a4c2d8f8c820d
 <div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {14, 1, 3, 7, 20, 23000, 0, 27};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_floor(pi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">eve::bit_floor</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_floor(pi)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">eve::bit_floor</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_floor[pi &gt; 4](pi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">eve::bit_floor</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &gt; 4](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::uint32_t xf = 48;</div>
 <div class="line"> </div>
@@ -186,25 +187,8 @@ $(document).ready(function(){initNavTree('group__core__bitops_gae53a4c2d8f8c820d
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b" title="If x is not zero, computes the largest integral power of two that is not greater than x.">eve::bit_floor</a>[mask](x, ...)</code> provides a masked version of <code>bit_floor</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, bit_floor(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_it <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {14, 1, 3, 7, 20, 23000, 0, 27};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_floor[pi &gt; 4](pi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b">eve::bit_floor</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &gt; 4](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<p class="startli">The call <code><a class="el" href="group__core__bitops_gae53a4c2d8f8c820d95c7393f4b4b209b.html#gae53a4c2d8f8c820d95c7393f4b4b209b" title="If x is not zero, computes the largest integral power of two that is not greater than x.">eve::bit_floor</a>[mask](x, ...)</code> provides a masked version of <code>bit_floor</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, bit_floor(x, ...), x)</a></code> </p>
+</li>
 </ul>
 
 </div>

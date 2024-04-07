@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_gab009fb2cf8ea
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">is_ngtz</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb_html_gab009fb2cf8ea7ae35b81b751f14d94fb"><div class="ttname"><a href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">eve::is_ngtz</a></div><div class="ttdeci">constexpr auto is_ngtz</div><div class="ttdoc">Returns a logical true if and only if the element value is not greater than zero.</div><div class="ttdef"><b>Definition:</b> is_ngtz.hpp:79</div></div>
+<div class="ttc" id="agroup__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb_html_gab009fb2cf8ea7ae35b81b751f14d94fb"><div class="ttname"><a href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">eve::is_ngtz</a></div><div class="ttdeci">constexpr auto is_ngtz</div><div class="ttdoc">Returns a logical true if and only if the element value is not greater than zero.</div><div class="ttdef"><b>Definition:</b> is_ngtz.hpp:76</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -169,8 +169,9 @@ $(document).ready(function(){initNavTree('group__core__predicates_gab009fb2cf8ea
 <div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf =          &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_ngtz(pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">eve::is_ngtz</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                  = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_ngtz(pf)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">eve::is_ngtz</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">           &lt;&lt; <span class="stringliteral">&quot;-&gt; is_ngtz[pf&lt;-0.5](pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">eve::is_ngtz</a>[pf&lt;-0.5](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line"> </div>
@@ -183,24 +184,8 @@ $(document).ready(function(){initNavTree('group__core__predicates_gab009fb2cf8ea
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb" title="Returns a logical true if and only if the element value is not greater than zero.">is_ngtz</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb" title="Returns a logical true if and only if the element value is not greater than zero.">eve::is_ngtz</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb" title="Returns a logical true if and only if the element value is not greater than zero.">is_ngtz(x)</a>, eve::false( eve::as(x)))</code>.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf         = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_ngtz[pf &lt;  -0.5](pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb">eve::is_ngtz</a>[pf &lt;  -0.5](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<p class="startli">The call <code>eve;<a class="el" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb" title="Returns a logical true if and only if the element value is not greater than zero.">is_ngtz</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb" title="Returns a logical true if and only if the element value is not greater than zero.">eve::is_ngtz</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__predicates_gab009fb2cf8ea7ae35b81b751f14d94fb.html#gab009fb2cf8ea7ae35b81b751f14d94fb" title="Returns a logical true if and only if the element value is not greater than zero.">is_ngtz(x)</a>, eve::false( eve::as(x)))</code>. </p>
+</li>
 </ul>
 
 </div>

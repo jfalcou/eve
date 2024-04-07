@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa581d6441ab3
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">frac</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732_html_gaa581d6441ab304517b9849ab3c5ce732"><div class="ttname"><a href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a></div><div class="ttdeci">constexpr callable_frac_ frac</div><div class="ttdoc">Computes the fractional part of the input.</div><div class="ttdef"><b>Definition:</b> frac.hpp:69</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732_html_gaa581d6441ab304517b9849ab3c5ce732"><div class="ttname"><a href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a></div><div class="ttdeci">constexpr callable_frac_ frac</div><div class="ttdoc">Computes the fractional part of the input.</div><div class="ttdef"><b>Definition:</b> frac.hpp:66</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -174,8 +174,9 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa581d6441ab3
 <div class="line">                 2.0f,  2.3f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf             = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; frac(pf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                 = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; frac(pf)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; frac[pf!=2.3f](pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a>[pf !=  2.3f](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = -327.68f;</div>
 <div class="line"> </div>
@@ -191,26 +192,8 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa581d6441ab3
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="Computes the fractional part of the input.">frac</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="Computes the fractional part of the input.">eve::frac</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="Computes the fractional part of the input.">frac(x)</a>, x)</code>.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {-1.0f, -1.3f, -0.0f, 0.0f,</div>
-<div class="line">                 2.0f,  2.3f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf             = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; frac[pf !=  2.3f](pf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732">eve::frac</a>[pf !=  2.3f](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="Computes the fractional part of the input.">frac</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="Computes the fractional part of the input.">eve::frac</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="Computes the fractional part of the input.">frac(x)</a>, x)</code>. </p>
+</li>
 </ul>
 
 </div>

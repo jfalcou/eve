@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gab2208a00c219
 <div class="line">   <span class="keyword">template</span>&lt; eve::ordered_value T , <span class="keywordtype">int</span>egral_value N &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">shr</a>(T x, N n) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f_html_gab2208a00c219fcd2f9387d1fefd61d9f"><div class="ttname"><a href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">eve::shr</a></div><div class="ttdeci">constexpr callable_shr_ shr</div><div class="ttdoc">Computes the arithmetic right shift operation.</div><div class="ttdef"><b>Definition:</b> shr.hpp:105</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f_html_gab2208a00c219fcd2f9387d1fefd61d9f"><div class="ttname"><a href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">eve::shr</a></div><div class="ttdeci">constexpr callable_shr_ shr</div><div class="ttdoc">Computes the arithmetic right shift operation.</div><div class="ttdef"><b>Definition:</b> shr.hpp:102</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -174,9 +174,10 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gab2208a00c219
 <div class="line">  wide_it qi = {1, 2, 3, 2};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi               = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::shr(pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">eve::shr</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi                    = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::shr(pi, qi)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">eve::shr</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; shr[pi!= 200](pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">eve::shr</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>!= 200](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  iT xi = 2, mxi = -2, yi = 3;</div>
 <div class="line"> </div>
@@ -193,29 +194,8 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gab2208a00c219
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f" title="Computes the arithmetic right shift operation.">eve::shr</a>[mask](x, ...)</code> provides a masked version of <code>shr</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, shr(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>iT       = std::int32_t;</div>
-<div class="line"><span class="keyword">using </span>uiT      = std::uint32_t;</div>
-<div class="line"><span class="keyword">using </span>wide_it  = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;iT, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_uit = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;uiT, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_uit <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {100, 200, 2, 3};</div>
-<div class="line">  wide_it qi  = {1, -2, 3, -1};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi            = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; shr[pi!= 200](pi, qi)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f">eve::shr</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>!= 200](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<p class="startli">The call <code><a class="el" href="group__core__arithmetic_gab2208a00c219fcd2f9387d1fefd61d9f.html#gab2208a00c219fcd2f9387d1fefd61d9f" title="Computes the arithmetic right shift operation.">eve::shr</a>[mask](x, ...)</code> provides a masked version of <code>shr</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, shr(x, ...), x)</a></code> </p>
+</li>
 </ul>
 
 </div>

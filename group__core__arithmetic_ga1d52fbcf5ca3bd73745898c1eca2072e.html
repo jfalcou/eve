@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1d52fbcf5ca3
 <div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a>&lt;Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>(Ts ... xs) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:90</div></div>
-<div class="ttc" id="agroup__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e_html_ga1d52fbcf5ca3bd73745898c1eca2072e"><div class="ttname"><a href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a></div><div class="ttdeci">constexpr auto average</div><div class="ttdoc">Computes the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition:</b> average.hpp:109</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e_html_ga1d52fbcf5ca3bd73745898c1eca2072e"><div class="ttname"><a href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a></div><div class="ttdeci">constexpr auto average</div><div class="ttdoc">Computes the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition:</b> average.hpp:106</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -174,25 +174,17 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1d52fbcf5ca3
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">float</span> mean(std::vector&lt;float&gt;  ary) {</div>
-<div class="line">  <span class="keywordtype">float</span> avg = 0;</div>
-<div class="line">  <span class="keywordtype">int</span> t = 1;</div>
-<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">float</span> x : ary) {</div>
-<div class="line">    avg += (x - avg) / t;</div>
-<div class="line">    ++t;</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">return</span> avg;</div>
-<div class="line">}</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  w_t <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {3, 2, 3, 3}, qi = {4, 1, 1, ~0};</div>
+<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  w_t <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {3, 2, 3, 3};</div>
+<div class="line">  w_t qi = {4, 1, 1, <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi              = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average(pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi                       = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average(pi, qi)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
 <div class="line"> </div>
 <div class="line">  std::uint32_t xi = 3, yi = 4;</div>
 <div class="line"> </div>
@@ -204,67 +196,32 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1d52fbcf5ca3
 <div class="line">  <span class="keyword">using </span>w_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
 <div class="line">  w_ft pf = {3, 4, 3, 10}, qf = {4, 1, 1, 15};;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- multi&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pf                               = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qf                               = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average(pf, 0.0f, qf, pf, 11.0f) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>(pf, 0.0f, qf, pf, 11.0f) &lt;&lt;  <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pf                                    = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qf                                    = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average(pf, 0.0f, qf, pf, 11.0f)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>(pf, 0.0f, qf, pf, 11.0f) &lt;&lt;  <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average[raw](pf, 0.0f, pf, qf, 11.0f) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>](pf, 0.0f, pf, qf, 11.0f) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- multi parameters&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:68</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e" title="Computes the arithmetic mean of its arguments.">eve::average</a>[mask](x, ...)</code> provides a masked version of <code>average</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, average(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  w_t <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {3, 2, 3, 3}, qi = {4, 1, 1, ~0};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi              = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average[pi &gt; qi](pi, qi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>[<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &gt; qi](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --></li>
+</li>
 <li><p class="startli"><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></p>
 <p class="startli">when <code><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">raw(average)</a>(x, args, ...)</code> is used, no provision is made to avoid overflows for more than 2 parameters.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  w_t <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> = {3, 2, 3, 3},</div>
-<div class="line">      qi = {4, 1, 1, <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())},</div>
-<div class="line">      ri = {4, 1, 1, <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qi                       = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- ri                       = &quot;</span> &lt;&lt; ri &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; raw(average)(pi, qi, ri) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>](<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi, ri) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; average(pi, qi, ri)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>, qi, ri) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:68</div></div>
-<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-</div><!-- fragment --> </li>
+</li>
+<li><p class="startli"><a class="el" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6" title="Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.">eve::downward</a>, <a class="el" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80" title="Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.">eve::upward</a></p>
+<p class="startli">only for two integral values, see above</p>
+</li>
 </ul>
+<p>//! </p>
 
 </div>
 </div>

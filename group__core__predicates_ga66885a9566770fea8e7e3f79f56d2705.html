@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga66885a956677
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U &gt;</div>
 <div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga66885a9566770fea8e7e3f79f56d2705_html_ga66885a9566770fea8e7e3f79f56d2705"><div class="ttname"><a href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">eve::is_less_equal</a></div><div class="ttdeci">constexpr callable_is_less_equal_ is_less_equal</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is less or equal to th...</div><div class="ttdef"><b>Definition:</b> is_less_equal.hpp:80</div></div>
+<div class="ttc" id="agroup__core__predicates_ga66885a9566770fea8e7e3f79f56d2705_html_ga66885a9566770fea8e7e3f79f56d2705"><div class="ttname"><a href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">eve::is_less_equal</a></div><div class="ttdeci">constexpr callable_is_less_equal_ is_less_equal</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is less or equal to th...</div><div class="ttdef"><b>Definition:</b> is_less_equal.hpp:73</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -169,9 +169,11 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga66885a956677
 <div class="line">  wide_ft qf = {1.0f, -1.0f, 0.0f, -2.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf              = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_less(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                            = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                            = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_less(pf, qf)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; almost(is_less_equal)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a>(<a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">eve::is_less_equal</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_less[pf &gt; 0](pf, qf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>[pf &gt; 0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = 2.0f;</div>
@@ -182,57 +184,21 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga66885a956677
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_less(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099_html_ga419057bf1a8ca5f46624a28a0ea47099"><div class="ttname"><a href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a></div><div class="ttdeci">constexpr callable_is_less_ is_less</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is less than the secon...</div><div class="ttdef"><b>Definition:</b> is_less.hpp:81</div></div>
+<div class="ttc" id="agroup__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c_html_gab948026b7cf3543e2fa4b43f32c3311c"><div class="ttname"><a href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a></div><div class="ttdeci">constexpr almost_type const almost</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to little errors semantic onto other Callable Objects...</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:58</div></div>
+<div class="ttc" id="agroup__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099_html_ga419057bf1a8ca5f46624a28a0ea47099"><div class="ttname"><a href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a></div><div class="ttdeci">constexpr callable_is_less_ is_less</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is less than the secon...</div><div class="ttdef"><b>Definition:</b> is_less.hpp:74</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code>eve;<a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">is_less_equal</a>[mask](x,y)</code> provides a masked version of <code><a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">eve::is_less_equal</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">is_less_equal(x)</a>, eve::false( eve::as(x,y)))</code>.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, 2.0f};</div>
-<div class="line">  wide_ft qf = {1.0f, -1.0f, 0.0f, 3.0f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf              = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_less[pf &gt; 0](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>[pf &gt; 0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --></li>
+</li>
 <li><p class="startli"><code>almost</code></p>
 <p class="startli">The expression <code><a class="el" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b" title="Higher-order Callable Object imbuing a tolerant to small errors semantic onto other Callable Objects.">definitely(is_less_equal)</a>(x, y, t)</code> where <code>x</code> and <code>y</code> must be floating point values, evaluates to true if and only if <code>x</code> is almost less than <code>y</code>. This means that:</p><ul>
 <li>if <code>t</code> is a floating_value then \(x &lt;  y + t \max(|x|, |y|)\)</li>
 <li>if <code>t</code> is a positive integral_value then \(x &lt;  \mbox{next}(y, t)\);</li>
-<li>if <code>t</code> is omitted then the tolerance <code>t</code> default to <code>3*eps(as(x))</code>.</li>
+<li>if <code>t</code> is omitted then the tolerance <code>t</code> default to <code>3*eps(as(x))</code>. </li>
 </ul>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, 2.0f};</div>
-<div class="line">  wide_ft qf = {1.0f, -1.0f, 0.0f, 3.0f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf              = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; almost(is_less_equal)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a>(<a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">eve::is_less_equal</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c_html_gab948026b7cf3543e2fa4b43f32c3311c"><div class="ttname"><a href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c">eve::almost</a></div><div class="ttdeci">constexpr almost_type const almost</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to little errors semantic onto other Callable Objects...</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:58</div></div>
-</div><!-- fragment --> </li>
+</li>
 </ul>
 
 </div>

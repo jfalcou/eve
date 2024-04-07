@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga89149aad8c2e
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U, eve::<span class="keywordtype">float</span>ing_value V &gt;</div>
 <div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U&gt;</a> <a class="code hl_variable" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">lerp</a>(T x, U y, V t) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3_html_ga89149aad8c2e072381ca4006f6c84dd3"><div class="ttname"><a href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a></div><div class="ttdeci">constexpr callable_lerp_ lerp</div><div class="ttdoc">Computes the linear interpolation.</div><div class="ttdef"><b>Definition:</b> lerp.hpp:63</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3_html_ga89149aad8c2e072381ca4006f6c84dd3"><div class="ttname"><a href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a></div><div class="ttdeci">constexpr callable_lerp_ lerp</div><div class="ttdoc">Computes the linear interpolation.</div><div class="ttdef"><b>Definition:</b> lerp.hpp:60</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -169,10 +169,11 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga89149aad8c2e
 <div class="line">  wf_t pf = {3, 2.5, -32.7, 1327.43}, qf = {4.2, 1.5, -100.834, 10.02}, tf = {0, 0.1, -3, 1.0};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pf               = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qf               = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- tf               = &quot;</span> &lt;&lt; tf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp(pf, qf, tf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>(pf, qf, tf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pf                       = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qf                       = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- tf                       = &quot;</span> &lt;&lt; tf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp[pf &gt; 0](pf, qf, tf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a>[pf &gt; 0](pf, qf, tf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp(pf, qf, tf)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a>(pf, qf, tf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">double</span> x = 10000, y = 32700, t = 0.5;</div>
 <div class="line"> </div>
@@ -180,33 +181,15 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga89149aad8c2e
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- x             = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- y             = &quot;</span> &lt;&lt; y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- t             = &quot;</span> &lt;&lt; t  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp(x, y, t) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a>(x, y, t) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp(x, y, t) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a>(x, y, t) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8_html_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8"><div class="ttname"><a href="group__core__arithmetic_gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8.html#gaeb0fe3ed9cad2906b5e7ab7a6a0d7ea8">eve::add</a></div><div class="ttdeci">constexpr callable_add_ add</div><div class="ttdoc">Computes the sum of its arguments.</div><div class="ttdef"><b>Definition:</b> add.hpp:83</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3" title="Computes the linear interpolation.">eve::lerp</a>[mask](x, ...)</code> provides a masked version of <code>lerp</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, lerp(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>wf_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line">  wf_t pf = {3, 2.5, -32.7, 1327.43}, qf = {4.2, 1.5, -100.834, 10.02}, tf = {0, 0.1, -3, 1.0};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pf                       = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- qf                       = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- tf                       = &quot;</span> &lt;&lt; tf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lerp[pf &gt; 0](pf, qf, tf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3">eve::lerp</a>[pf &gt; 0](pf, qf, tf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga89149aad8c2e072381ca4006f6c84dd3.html#ga89149aad8c2e072381ca4006f6c84dd3" title="Computes the linear interpolation.">eve::lerp</a>[mask](x, ...)</code> provides a masked version of <code>lerp</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, lerp(x, ...), x)</a></code> </p>
+</li>
 </ul>
 
 </div>

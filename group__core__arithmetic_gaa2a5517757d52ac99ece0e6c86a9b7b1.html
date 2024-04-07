@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa2a5517757d5
 <div class="line"> </div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1_html_gaa2a5517757d52ac99ece0e6c86a9b7b1"><div class="ttname"><a href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a></div><div class="ttdeci">constexpr auto maxmag</div><div class="ttdoc">Computes the maximum of the absolute value of its arguments.</div><div class="ttdef"><b>Definition:</b> maxmag.hpp:104</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1_html_gaa2a5517757d52ac99ece0e6c86a9b7b1"><div class="ttname"><a href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a></div><div class="ttdeci">constexpr auto maxmag</div><div class="ttdoc">Computes the maximum of the absolute value of its arguments.</div><div class="ttdef"><b>Definition:</b> maxmag.hpp:97</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:50</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -187,7 +187,10 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa2a5517757d5
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                        = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                        = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag(pf, qf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag(pf, qf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag[pedantic}(pf, qf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag[numeric](pf, qf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>[<a class="code hl_variable" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a>](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag[pf &lt;  0](pf, qf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>[pf &lt;  0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = -4.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = 1.0f;</div>
@@ -201,62 +204,18 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaa2a5517757d5
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr auto minf</div><div class="ttdoc">Computes the -infinity ieee value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
+<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
+<div class="ttc" id="agroup__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:53</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code><a class="el" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1" title="Computes the maximum of the absolute value of its arguments.">eve::maxmag</a>[mask](x, ...)</code> provides a masked version of <code>maxmag</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, maxmag(x, ...), x)</a></code></p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span><a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,</div>
-<div class="line">                <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line">  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
-<div class="line">                -0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -2.0f};</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                      = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag[pf &lt;  0](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>[pf &lt;  0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
-</div><!-- fragment --></li>
+</li>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a>, <a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></p>
-<p class="startli">The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators is identical except that if <code>|x| == |y|</code>, <code>d(max)</code> is used.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,</div>
-<div class="line">                <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line">  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f,  -3.0f,</div>
-<div class="line">                <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),  -<a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -2.0f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                        = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                        = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag[pedantic}(pf, qf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; maxmag[numeric](pf, qf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaa2a5517757d52ac99ece0e6c86a9b7b1.html#gaa2a5517757d52ac99ece0e6c86a9b7b1">eve::maxmag</a>[<a class="code hl_variable" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a>](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">   <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634_html_ga9e4172d6b835dc7d61072c41ea61a634"><div class="ttname"><a href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634">eve::numeric</a></div><div class="ttdeci">constexpr numeric_type const numeric</div><div class="ttdoc">Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...</div><div class="ttdef"><b>Definition:</b> numeric.hpp:53</div></div>
-</div><!-- fragment --> </li>
+<p class="startli">The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators is identical except that if <code>|x| == |y|</code>, <code>d(max)</code> is used. </p>
+</li>
 </ul>
 
 </div>

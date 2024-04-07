@@ -176,11 +176,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga915e97f159ed
 <div class="line">  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
 <div class="line">                -0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -2.0f};</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span>[mn,mx] = <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>(pf, qf);</div>
+<div class="line">  <span class="keyword">auto</span>[mn,mx]    = <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>(pf, qf);</div>
+<div class="line">  <span class="keyword">auto</span>[mn1, mx1] = <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>[pf &lt;  0](pf, qf);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf               = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf               = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; minmax(pf, qf)   = &quot;</span> &lt;&lt; mn &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; mx &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                      = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; minmax(pf, qf)          = {&quot;</span> &lt;&lt; mn &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; mx &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; minmax[pf &lt;  0](pf, qf) = {&quot;</span> &lt;&lt; mn1&lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; mx1 &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
@@ -190,13 +192,14 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga915e97f159ed
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf               = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; minmax(xf, yf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> prmm = [](<span class="keyword">auto</span> st, <span class="keyword">auto</span> k){ <span class="keyword">auto</span> [mi, ma] = <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>(k);  std::cout &lt;&lt; st &lt;&lt; <span class="charliteral">&#39;{&#39;</span> &lt;&lt; mi &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; ma &lt;&lt; <span class="stringliteral">&quot;}\n&quot;</span>; };</div>
 <div class="line">  <span class="keyword">auto</span> k = kumi::tuple{pf, qf, pf+qf, 1};</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- multi parameters&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; minmax(k)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>(k) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{pf, pf, 1}) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>( kumi::tuple{pf, qf, 1}) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{1, pf, pf}) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>( kumi::tuple{1, pf, qf}) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{pf, 1.0f)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>( kumi::tuple{pf, 1.0f}) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{1.0f, pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>( kumi::tuple{1.0f, pf}) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- multi parameters&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  prmm( <span class="stringliteral">&quot; -&gt; minmax(k)                      = &quot;</span>, k);</div>
+<div class="line">  prmm( <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{pf, pf, 1}) = &quot;</span>, kumi::tuple{pf, qf, 1});</div>
+<div class="line">  prmm( <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{1, pf, pf}) = &quot;</span>, kumi::tuple{1, pf, qf});</div>
+<div class="line">  prmm( <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{pf, 1.0f)   = &quot;</span>, kumi::tuple{pf, 1.0f});</div>
+<div class="line">  prmm( <span class="stringliteral">&quot; -&gt; minmax(kumi::tuple{1.0f, pf)   = &quot;</span>, kumi::tuple{1.0f, pf});</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
@@ -211,27 +214,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga915e97f159ed
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59" title="Computes the minimum and maximum of its arguments.">eve::minmax</a>[mask](x, ...)</code> provides a masked version of <code>minmax</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, minmax(x, ...), x)</a></code></p>
 <p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,</div>
-<div class="line">                <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line">  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
-<div class="line">                -0.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -2.0f};</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                      = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; minmax[pf &lt;  0](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga915e97f159edb127bff40c450f4cbe59.html#ga915e97f159edb127bff40c450f4cbe59">eve::minmax</a>[pf &lt;  0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </li>
+<div class="fragment"></div><!-- fragment --> </li>
 </ul>
 
 </div>
