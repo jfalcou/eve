@@ -48,9 +48,9 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [SIMD or scalar arithmetic value](@ref eve::value).
+//!     * `x` :  [SIMD or scalar value](@ref eve::value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
 //!    The [elementwise](@ref glossary_elementwise) absolute value of `x`, if it is representable.
 //!    More specifically, for signed integers : the absolute value of eve::valmin is not representable and
@@ -63,7 +63,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/core/regular/abs.cpp}
+//!   @godbolt{doc/core/abs.cpp}
 //!
 //!   @groupheader{Semantic Modifiers}
 //!
@@ -72,17 +72,12 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!     The call `eve::abs[mask](x)` provides a masked version of `eve::abs` which is
 //!     equivalent to `if_else (mask, abs(x), x)`.
 //!
-//!     **Example**
-//!     @godbolt{doc/core/masked/abs.cpp}
-//!
 //!   * eve::saturated
 //!
 //!     The call `eve::abs[eve::saturated](x)` computes a saturated version of eve::abs.
 //!     More specifically, for any signed integer value `x`, the expression
 //!     `eve::abs[eve::saturated](eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
 //!
-//!     **Example**
-//!     @godbolt{doc/core/saturated/abs.cpp}
 //! @}
 //======================================================================================================================
 inline constexpr auto abs = functor<abs_t>;

@@ -56,7 +56,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value Ts... >
-//!      T bit_xor(T x, Ts... xs) noexcept;
+//!      bit_value<T, Ts...> bit_xor(T x, Ts... xs) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -67,12 +67,12 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The value of the bitwise XOR of its arguments in the type of the first one
-//!      is returned.
+//!      The value of the bitwise XOR of its arguments converted to the bit_value<T,  Ts...>
+//!      type is returned.
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_xor.cpp}
+//!  @godbolt{doc/core/bit_xor.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -82,9 +82,6 @@ namespace eve
 //!     version of `bit_xor` which is
 //!     equivalent to `if_else(mask, bit_xor(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_xor.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_xor = functor<bit_xor_t>;

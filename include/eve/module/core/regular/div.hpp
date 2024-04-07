@@ -53,7 +53,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/div.cpp}
+//!  @godbolt{doc/core/div.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -62,10 +62,6 @@ namespace eve
 //!     The call `eve::div[mask](x, ...)` provides a masked
 //!     version of `div` which is
 //!     equivalent to `if_else(mask, div(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/div.cpp}
 //!
 //!   * eve::saturated
 //!
@@ -80,10 +76,6 @@ namespace eve
 //!       the division of [`eve::valmin(as(x))`](@ref eve::valmin)
 //!       by -1 that produces [`eve::valmax(as(x))`](@ref eve::valmax).
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/div.cpp}
-//!
 //!   * eve::toward_zero, eve::downward, eve::upward, eve::to_nearest
 //!
 //!       The calls `d(div)(x, y)` where d is one of these 4 decorators produce respectively
@@ -93,9 +85,6 @@ namespace eve
 //!           * `eve::ceil (div(x, y))`  for eve::upward.
 //!           * `eve::nearest (div(x,y))`for eve::to_nearest.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/roundings/div.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(div_, div);

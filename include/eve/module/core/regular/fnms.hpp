@@ -54,7 +54,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fnms.cpp}
+//!  @godbolt{doc/core/fnms.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -63,10 +63,6 @@ namespace eve
 //!     The call `eve::fnms[mask](x, ...)` provides a masked
 //!     version of `fnms` which is
 //!     equivalent to `if_else(mask, fnms(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fnms.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!

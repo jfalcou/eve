@@ -71,7 +71,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_denormal.cpp}
+//!  @godbolt{doc/core/is_denormal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -80,10 +80,6 @@ namespace eve
 //!     The call `eve;::is_denormal[mask](x)` provides a masked version
 //!     of `eve::is_denormal` which is
 //!     equivalent to `if_else (mask, is_denormal(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_denormal.cpp}
 //!
 //! @}
 //================================================================================================

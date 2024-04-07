@@ -77,7 +77,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/maxmag.cpp}
+//!  @godbolt{doc/core/maxmag.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -87,18 +87,11 @@ namespace eve
 //!     version of `maxmag` which is
 //!     equivalent to `if_else(mask, maxmag(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/maxmag.cpp}
-//!
 //!   * eve::pedantic, eve::numeric
 //!
 //!     The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators
 //!     is identical except that if  `|x| == |y|`, `d(max)` is used.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/maxmag.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto maxmag = functor<maxmag_t>;

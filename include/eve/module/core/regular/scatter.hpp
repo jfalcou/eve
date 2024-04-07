@@ -83,7 +83,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/core/regular/scatter.cpp}
+//!   @godbolt{doc/core/scatter.cpp}
 //!
 //! @}
 //======================================================================================================================

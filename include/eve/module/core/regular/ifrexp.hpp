@@ -61,7 +61,7 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ifrexp.cpp}
+//!  @godbolt{doc/core/ifrexp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,9 +71,6 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!     \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
 //!     denormal cases.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/ifrexp.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto ifrexp = functor<ifrexp_t>;

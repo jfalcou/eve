@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/roundscale.cpp}
+//!  @godbolt{doc/core/roundscale.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -60,17 +60,12 @@ namespace eve
 //!     The call `eve;::roundscale[mask](x, scale)` provides a masked version of `eve::roundscale`
 //!     which is equivalent to `if_else (mask, roundscale(x, scale), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/roundscale.cpp}
-//!
 //!    * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
 //!      If d is one of these 4 decorators
 //!      The call `d(roundscale)(x)`, call is equivalent to
 //!      `eve::ldexp(d(eve::round)(eve::ldexp(a0,scale), -scale))`
 //!
-//!      @godbolt{doc/core/roundings/roundscale.cpp}
 //! @}
 //================================================================================================
 namespace tag

@@ -67,7 +67,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/negmaxabs.cpp}
+//!  @godbolt{doc/core/negmaxabs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -75,10 +75,6 @@ namespace eve
 //!
 //!     The call `eve::negmaxabs[mask](x, ...)` provides a masked version of `eve::negmaxabs` which
 //!     is equivalent to `eve::if_else (mask, negmaxabs(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/negmaxabs.cpp}
 //!
 //!   * eve::pedantic,  eve::numeric
 //!

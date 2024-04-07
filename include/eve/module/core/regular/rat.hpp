@@ -75,7 +75,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rat.cpp}
+//!  @godbolt{doc/core/rat.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto rat = functor<rat_t>;

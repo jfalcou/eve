@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/negate.cpp}
+//!  @godbolt{doc/core/negate.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -55,9 +55,6 @@ namespace eve
 //!     The call `eve::negate[mask](x, ...)` provides a masked
 //!     version of `negate` which is equivalent to `if_else(mask, negate(x, ...), x)`
 //!
-//!   **Example**
-//!
-//!    @godbolt{doc/core/masked/negate.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(negate_, negate);

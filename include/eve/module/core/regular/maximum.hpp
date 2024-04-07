@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/maximum.cpp}
+//!  @godbolt{doc/core/maximum.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -52,10 +52,6 @@ namespace eve
 //!     The call `eve::maximum[mask](x)` provides a masked
 //!     version of `maximum` which is
 //!     equivalent to : ``maximum(if_else(mask, x, valmin(as(x))))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/maximum.cpp}
 //!
 //! @}
 //================================================================================================

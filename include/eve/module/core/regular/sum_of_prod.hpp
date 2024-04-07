@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sum_of_prod.cpp}
+//!  @godbolt{doc/core/sum_of_prod.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -62,10 +62,6 @@ namespace eve
 //!
 //!     The call `eve::pedantic(eve::sum_of_prod)(x, y, z, t)` computes a pedantic
 //!     version of eve::sum_of_prod ensuring better accuracy in any case.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/sum_of_prod.cpp}
 //!
 //! @}
 //================================================================================================

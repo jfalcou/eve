@@ -56,7 +56,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_shl.cpp}
+//!  @godbolt{doc/core/bit_shl.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -66,9 +66,6 @@ namespace eve
 //!     version of `bit_shl` which is
 //!     equivalent to `if_else(mask, bit_shl(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_shl.cpp}
 //! @}
 //================================================================================================
 EVE_ALIAS_CALLABLE(shl_, bit_shl);

@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/floor.cpp}
+//!  @godbolt{doc/core/floor.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,10 +71,6 @@ namespace eve
 //!
 //!     The call `eve;::floor[mask](x)` provides a masked version of `eve::floor` which is
 //!     equivalent to `if_else (mask, floor(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/floor.cpp}
 //!
 //!   * eve::tolerant
 //!
@@ -88,7 +84,6 @@ namespace eve
 //!      * If `tol` is omitted, the tolerance is taken to 3 times
 //!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
-//!      @godbolt{doc/core/fuzzy/floor.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto floor = functor<floor_t>;

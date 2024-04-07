@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/logical_not.cpp}
+//!  @godbolt{doc/core/logical_not.cpp}
 //! @}
 //================================================================================================
 namespace tag

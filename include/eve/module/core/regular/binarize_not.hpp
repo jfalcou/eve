@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/binarize_not.cpp}
+//!  @godbolt{doc/core/binarize_not.cpp}
 //! @}
 //================================================================================================
 

@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/mul.cpp}
+//!  @godbolt{doc/core/mul.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -58,10 +58,6 @@ namespace eve
 //!     version of `mul` which is
 //!     equivalent to `if_else(mask, mul(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/mul.cpp}
-//!
 //!   * eve::saturated
 //!
 //!     The call `saturated(mul)(args...)` computes the saturated  multiplication `of the arguments.
@@ -69,10 +65,6 @@ namespace eve
 //!     of the N parameters. The computation is done as if all arguments were
 //!     converted to this type and the saturated multiplication applied recursively on all
 //!     parameters. No overflow occurs.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/mul.cpp}
 //!
 //! @}
 //================================================================================================

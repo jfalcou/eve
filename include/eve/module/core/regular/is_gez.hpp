@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_gez.cpp}
+//!  @godbolt{doc/core/is_gez.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -69,10 +69,6 @@ namespace eve
 //!
 //!     The call `eve;::is_gez[mask](x)` provides a masked version of `eve::is_gez` which is
 //!     equivalent to `if_else (mask, is_gez(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_gez.cpp}
 //!
 //! @}
 //================================================================================================

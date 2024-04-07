@@ -56,7 +56,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value Ts... >
-//!      T bit_and(T x, Ts... xs) noexcept;
+//!      bit_value<T, Ts...> bit_and(T x, Ts... xs) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -67,8 +67,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The value of the bitwise AND of its arguments in the type of the first one
-//!      is returned.
+//!      The value of the bitwise AND of its arguments converted to the bit_value<T,  Ts...>
+//!      type is returned.
 //!
 //!    @note
 //!
@@ -78,7 +78,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_and.cpp}
+//!  @godbolt{doc/core/bit_and.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -88,9 +88,6 @@ namespace eve
 //!     version of `bit_and` which is
 //!     equivalent to `if_else(mask, bit_and(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_and.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_and = functor<bit_and_t>;

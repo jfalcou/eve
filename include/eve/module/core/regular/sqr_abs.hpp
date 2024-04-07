@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sqr_abs.cpp}
+//!  @godbolt{doc/core/sqr_abs.cpp}
 //!
 //! @}
 //================================================================================================

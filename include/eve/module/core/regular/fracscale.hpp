@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fracscale.cpp}
+//!  @godbolt{doc/core/fracscale.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,16 +61,11 @@ namespace eve
 //!     The call `eve::fracscale[mask](x, scale)` provides a masked version of `eve::fracscale`
 //!     which is equivalent to `if_else (mask, eve::fracscale(x, scale), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fracscale.cpp}
-//!
 //!   * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
 //!     If d is one of these 4 decorators
 //!     The call `d(eve:fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
 //!
-//!      @godbolt{doc/core/roundings/fracscale.cpp}
 //! @}
 //================================================================================================
 namespace tag

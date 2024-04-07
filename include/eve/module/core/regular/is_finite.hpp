@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_finite.cpp}
+//!  @godbolt{doc/core/is_finite.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -69,10 +69,6 @@ namespace eve
 //!
 //!     The call `eve;::is_finite[mask](x)` provides a masked version of `eve::is_finite` which is
 //!     equivalent to `if_else (mask, is_finite(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_finite.cpp}
 //!
 //! @}
 //================================================================================================

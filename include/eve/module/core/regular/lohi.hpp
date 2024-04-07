@@ -66,7 +66,7 @@ struct lohi_t : elementwise_callable<lohi_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/lo.cpp}
+//!  @godbolt{doc/core/lo.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto lohi = functor<lohi_t>;

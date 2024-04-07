@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/broadcast.cpp}
+//!  @godbolt{doc/core/broadcast.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(broadcast_, broadcast);

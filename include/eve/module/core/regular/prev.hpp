@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/prev.cpp}
+//!  @godbolt{doc/core/prev.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -64,10 +64,6 @@ namespace eve
 //!     The call `eve::prev[mask](x, ...)` provides a masked
 //!     version of `prev` which is
 //!     equivalent to `if_else(mask, prev(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/prev.cpp}
 //!
 //! @}
 //================================================================================================

@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!     @godbolt{doc/core/regular/is_ltz.cpp}
+//!     @godbolt{doc/core/is_ltz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -70,10 +70,6 @@ namespace eve
 //!
 //!     The call `eve;::is_ltz[mask](x)` provides a masked version of `eve::is_ltz` which is
 //!     equivalent to `if_else (mask, is_ltz(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_ltz.cpp}
 //!
 //! @}
 //================================================================================================

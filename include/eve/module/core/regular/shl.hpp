@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/shl.cpp}
+//!  @godbolt{doc/core/shl.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,9 +71,6 @@ namespace eve
 //!     version of `shl` which is
 //!     equivalent to `if_else(mask, shl(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/shl.cpp}
 //! @}
 //================================================================================================
 namespace tag

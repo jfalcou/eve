@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_nltz.cpp}
+//!  @godbolt{doc/core/is_nltz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,9 +71,6 @@ namespace eve
 //!     The call `eve;::is_nltz[mask](x)` provides a masked version of `eve::is_nltz` which is
 //!     equivalent to `if_else (mask, is_nltz(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_nltz.cpp}
 //! @}
 //================================================================================================
  inline constexpr auto is_nltz = functor<is_nltz_t>;

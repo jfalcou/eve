@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/popcount.cpp}
+//!  @godbolt{doc/core/popcount.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(popcount_, popcount);

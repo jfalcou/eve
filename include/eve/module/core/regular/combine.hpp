@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/combine.cpp}
+//!  @godbolt{doc/core/combine.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(combine_, combine);

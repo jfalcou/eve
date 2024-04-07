@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/plus.cpp}
+//!  @godbolt{doc/core/plus.cpp}
 //!
 //! @}
 //================================================================================================

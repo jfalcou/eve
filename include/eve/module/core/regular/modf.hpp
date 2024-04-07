@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/modf.cpp}
+//!  @godbolt{doc/core/modf.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/logical_notand.cpp}
+//!  @godbolt{doc/core/logical_notand.cpp}
 //! @}
 //================================================================================================
 

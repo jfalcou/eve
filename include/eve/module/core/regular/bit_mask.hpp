@@ -59,7 +59,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_mask.cpp}
+//!  @godbolt{doc/core/bit_mask.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -69,9 +69,6 @@ namespace eve
 //!     version of `bit_mask` which is
 //!     equivalent to `if_else(mask, bit_mask(x), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_mask.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_mask = functor<bit_mask_t>;

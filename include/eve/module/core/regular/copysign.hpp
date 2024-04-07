@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/copysign.cpp}
+//!  @godbolt{doc/core/copysign.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -55,10 +55,6 @@ namespace eve
 //!     The call `eve::copysign[mask](x, ...)` provides a masked
 //!     version of `copysign` which is
 //!     equivalent to `if_else(mask, copysign(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/copysign.cpp}
 //!
 //! @}
 //================================================================================================

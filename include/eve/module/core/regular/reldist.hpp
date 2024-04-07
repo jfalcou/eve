@@ -43,12 +43,8 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/reldist.cpp}
+//!  @godbolt{doc/core/reldist.cpp}
 //!
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/reldist.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(reldist_, reldist);

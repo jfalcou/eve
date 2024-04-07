@@ -43,7 +43,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core/regular/try_each_group_position.cpp}
+  //!  @godbolt{doc/core/try_each_group_position.cpp}
   //!
   //!  @}
   //================================================================================================

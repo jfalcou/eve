@@ -67,7 +67,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/maxabs.cpp}
+//!  @godbolt{doc/core/maxabs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,10 +76,6 @@ namespace eve
 //!     The call `eve::maxabs[mask](x, ...)` provides a masked
 //!     version of `maxabs` which is
 //!     equivalent to `if_else(mask, maxabs(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/maxabs.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!
@@ -94,9 +90,6 @@ namespace eve
 //!        inputs is not a `Nan`, the corresponding
 //!        output element will not be a `Nan`.
 //!
-//!     **Example**
-//!
-//!        @godbolt{doc/core/pedantic/maxabs.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto maxabs = functor<maxabs_t>;

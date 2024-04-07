@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/diff_of_prod.cpp}
+//!  @godbolt{doc/core/diff_of_prod.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,10 +61,6 @@ namespace eve
 //!
 //!     The call `eve::pedantic(eve::diff_of_prod)(x, y, z, t)` computes a pedantic
 //!     version of eve::diff_of_prod ensuring better accuracy in any case.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/diff_of_prod.cpp}
 //!
 //! @}
 //================================================================================================

@@ -76,7 +76,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/minmag.cpp}
+//!  @godbolt{doc/core/minmag.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -86,18 +86,11 @@ namespace eve
 //!     version of `minmag` which is
 //!     equivalent to `if_else(mask, minmag(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/minmag.cpp}
-//!
 //!   * eve::pedantic, eve::numeric
 //!
 //!     The behaviour of d(eve::minmag)(x, y) (where d is one of these two decorators
 //!     is identical except that if  `|x| == |y|`, `d(max)` is used.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/pedantic/minmag.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto minmag = functor<minmag_t>;

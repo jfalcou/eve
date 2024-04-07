@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/nearest.cpp}
+//!  @godbolt{doc/core/nearest.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -77,10 +77,6 @@ namespace eve
 //!
 //!     The call `eve;::nearest[mask](x)` provides a masked version of `eve::nearest` which is
 //!     equivalent to `if_else (mask, nearest(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/nearest.cpp}
 //!
 //! @}
 //================================================================================================

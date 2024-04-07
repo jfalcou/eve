@@ -59,7 +59,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/first_true.cpp}
+//!  @godbolt{doc/core/first_true.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(first_true_, first_true);

@@ -44,7 +44,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eunsigned_value T, integral_value I>
+//!      template<unsigned_value T, integral_value I>
 //!      T bit_flip(T x, I i) noexcept;
 //!   }
 //!   @endcode
@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_flip.cpp}
+//!  @godbolt{doc/core/bit_flip.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -70,10 +70,6 @@ namespace eve
 //!     The call `eve::bit_flip[mask](x, ...)` provides a masked
 //!     version of `bit_flip` which is
 //!     equivalent to `if_else(mask, bit_flip(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_flip.cpp}
 //!
 //! @}
 //================================================================================================

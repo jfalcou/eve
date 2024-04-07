@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/any.cpp}
+//!  @godbolt{doc/core/any.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,10 +61,6 @@ namespace eve
 //!     The call `eve::any[mask](x)` provides a masked
 //!     version of `any` which is
 //!     equivalent to : any not masked elements is not zero.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/any.cpp}
 //!
 //! @}
 //================================================================================================

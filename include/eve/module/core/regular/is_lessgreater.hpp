@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_lessgreater.cpp}
+//!  @godbolt{doc/core/is_lessgreater.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -53,10 +53,6 @@ namespace eve
 //!     The call `eve;::is_lessgreater[mask](x, y)` provides a masked version of
 //!     `eve::is_lessgreater` which is equivalent to `if_else (mask, is_lessgreater(x, y),
 //!     eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_lessgreater.cpp}
 //!
 //! @}
 //================================================================================================

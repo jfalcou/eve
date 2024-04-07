@@ -55,7 +55,7 @@ struct conj_t : elementwise_callable<conj_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/conj.cpp}
+//!  @godbolt{doc/core/conj.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -63,10 +63,6 @@ struct conj_t : elementwise_callable<conj_t, Options>
 //!
 //!     The call `eve;::conj[mask](x)` provides a masked version of `eve::conj` which is
 //!     equivalent to `if_else (mask, conj(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/conj.cpp}
 //!
 //! @}
 //================================================================================================

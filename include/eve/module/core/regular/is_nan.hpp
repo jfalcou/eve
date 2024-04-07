@@ -65,7 +65,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_nan.cpp}
+//!  @godbolt{doc/core/is_nan.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -73,10 +73,6 @@ namespace eve
 //!
 //!     The call `eve;::is_nan[mask](x)` provides a masked version of `eve::is_nan` which is
 //!     equivalent to `if_else (mask, is_nan(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_nan.cpp}
 //!
 //! @}
 //================================================================================================

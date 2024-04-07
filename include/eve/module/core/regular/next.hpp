@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/next.cpp}
+//!  @godbolt{doc/core/next.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -65,28 +65,16 @@ namespace eve
 //!     version of `next` which is
 //!     equivalent to `if_else(mask, next(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/next.cpp}
-//!
 //!   * eve::pedantic
 //!
 //!     The call `eve::pedantic(eve::next)(x, ...)` provides a pedantic
 //!     version of `next` which ensures that the successor of eve::mzero is  eve::zero
 //!     for floating points entries
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/next.cpp}
-//!
 //!   * eve::saturated
 //!
 //!     The call `eve::pedantic(eve::next)(x, ...)` provides a pedantic
 //!     version of `next` which ensures that eve::minf and  eve::nan are fixed points.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/next.cpp}
 //!
 //! @}
 //================================================================================================
