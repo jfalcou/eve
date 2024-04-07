@@ -70,7 +70,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
   {
 
     template<typename T, typename U, callable_options O>
-    eve::common_value_t<T, U>
+    constexpr eve::common_value_t<T, U>
     gamma_p_(EVE_REQUIRES(cpu_), O const&, T xx, U aa) noexcept
     {
       using r_t = common_value_t<T, U>;
