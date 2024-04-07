@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga63f3bcbf440bab3965
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::newton = {}</td>
+          <td class="memname">eve::newton = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;newton_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -143,22 +143,27 @@ $(document).ready(function(){initNavTree('group__polynomial_ga63f3bcbf440bab3965
 <p>If \((a_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by decreasing power order, and \((c_i)_{0\le i\le n-2}\) the nodes, the Newton scheme evaluates the polynom \(p\) at \(x\) using the following formula :</p>
 <p>\( \displaystyle p(x) = (((a_0(x-c_0)+a_1)(x-c_1)+ ... )(x-c_{n-2}) + a_{n-1})\)</p>
 <p><b>Defined in header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::Range C, eve::Range N&gt;</div>
-<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">newton</a>(T x, C c, N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, kumi::tuple C, kumi::tuple N&gt;</div>
+<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">newton</a>(T x, C c, N n) <span class="keyword">noexcept</span>;                                      <span class="comment">//1</span></div>
+<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T, <a class="code hl_concept" href="concepteve_1_1value.html">value</a>... CN&gt;</div>
+<div class="line">  T <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">newton</a>(T x, CN.. cn) <span class="keyword">noexcept</span>;                                       <span class="comment">//2</span></div>
+<div class="line"> </div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga63f3bcbf440bab39651168653ec0079f_html_ga63f3bcbf440bab39651168653ec0079f"><div class="ttname"><a href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a></div><div class="ttdeci">constexpr callable_newton_ newton</div><div class="ttdoc">Implement the Newton scheme to evaluate polynomials.</div><div class="ttdef"><b>Definition:</b> newton.hpp:75</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:124</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__polynomial_ga63f3bcbf440bab39651168653ec0079f_html_ga63f3bcbf440bab39651168653ec0079f"><div class="ttname"><a href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a></div><div class="ttdeci">constexpr auto newton</div><div class="ttdoc">Implement the Newton scheme to evaluate polynomials.</div><div class="ttdef"><b>Definition:</b> newton.hpp:100</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
-<li><code>r</code> : Range containing The coefficients by decreasing power order.</li>
-<li><code>n</code> : Range containing The nodes by decreasing power order.</li>
+<li><code>c</code> : tuple containing The coefficients by decreasing power order.</li>
+<li><code>n</code> : tuple containing The nodes by decreasing power order.</li>
+<li><code>cn</code>: coefficients followed by nodes. Unless empty the total number of values is to be odd. If s is this number, the (s+1)/2 first are taken as the coefs and the others are the nodes, both in decreasing power order <b>Return value</b></li>
 </ul>
-<p><b>Return value</b></p>
 <p>The value of the polynom at <code>x</code> is returned.</p>
 <p><b>Notes</b></p>
 <p>If the coefficients or nodes are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.</p><ul>
@@ -196,9 +201,9 @@ $(document).ready(function(){initNavTree('group__polynomial_ga63f3bcbf440bab3965
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a>, <a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></p>
-<p class="startli">If d denotes one of these modifiers, the expression <code>d(eve::newton)(...)</code> computes the result using <code>d(eve::fma)</code> instead of <code><a class="el" href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1" title="Computes the fused multiply add of its three parameters.">eve::fma</a></code> in internal computation.</p>
-<p class="startli">This is intended to insure more accurate computations where needed. This has no cost if the system has hard wired fma but is very expansive if it is not the case. </p>
+<li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
+<p class="startli">the expression <code><a class="el" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f" title="Implement the Newton scheme to evaluate polynomials.">eve::newton</a>[pedantic](...)</code> computes the result using <code><a class="el" href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1" title="Computes the fused multiply add of its three parameters.">eve::fma</a>[pedantic]</code> instead of <code><a class="el" href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1" title="Computes the fused multiply add of its three parameters.">eve::fma</a></code> in internal computation.</p>
+<p class="startli">This is intended to insure more accurate computations where needed. This has no cost (and is automatically done) if the system has hard wired fma but is very expansive if it is not the case. </p>
 </li>
 </ul>
 
