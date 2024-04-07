@@ -75,7 +75,7 @@ namespace eve
   namespace detail
   {
     template<typename T, typename U, typename V, callable_options O>
-    common_value_t<T, U, V>
+    constexpr common_value_t<T, U, V>
     betainc_inv_(EVE_REQUIRES(cpu_), O const&, T pp, U aa, V bb) noexcept
     {
       using r_t =  common_value_t<T, U, V>;
