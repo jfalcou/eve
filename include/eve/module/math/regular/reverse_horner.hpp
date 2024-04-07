@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math/regular/horner.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option>
+  {
+    template<floating_value X, value T, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
+    operator()(X x, T t, Ts...ts) const noexcept
+    { return EVE_DISPATCH_CALL(x, t, ts...); }
+
+    template<floating_value X, kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
+    operator()(X x, Tup const& t) const noexcept
+    { return EVE_DISPATCH_CALL(x, t); }
+
+    EVE_CALLABLE_OBJECT(reverse_horner_t, reverse_horner_);
+  };
+
+
 //================================================================================================
 //! @addtogroup math
 //! @{
@@ -66,21 +87,50 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/reverse_horner.cpp}
+//!  @godbolt{doc/math/reverse_horner.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
-//!  * eve::pedantic, eve::numeric
+//!  * eve::pedantic
 //!
-//!       If d denotes one of these modifiers, the expression `d(eve::reverse_horner)(...)`
-//!       computes the result using `d(eve::fma)` instead of `eve::fma` in internal computation.
+//!      The expression `eve::reverse_horner[pedantic](...)`
+//!      computes the result using `d(eve::fma)` instead of `eve::fma` in internal computation.
 //!
-//!       This is intended to insure more accurate computations where needed. This has no cost if
-//!       the system has hard wired fma but is very expansive if it is not the case.
+//!      This is intended to insure more accurate computations where needed. This has no cost (and is
+//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(reverse_horner_, reverse_horner);
-}
+  inline constexpr auto reverse_horner = functor<reverse_horner_t>;
 
-#include <eve/module/math/regular/impl/reverse_horner.hpp>
+  namespace detail
+  {
+    template<typename X, typename C, typename... Cs, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
+    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X xx, C c0, Cs... cs) noexcept
+    {
+      if constexpr((... && scalar_value<Cs>))
+      {
+        using e_t =  element_type_t<X>;
+        using t_t = kumi::result::generate_t<sizeof...(cs)+1, e_t>;
+        t_t c{e_t(c0), e_t(cs)...};
+        return reverse_horner[o](xx, c);
+      }
+      else
+      {
+        using r_t = common_value_t<X, Cs...>;
+        auto x = r_t(xx);
+        using t_t = kumi::result::generate_t<sizeof...(cs)+1, r_t>;
+        t_t c {r_t{c0}, r_t{cs}...};
+        return reverse_horner[o](x, c);
+      }
+    }
+
+    template<typename X, typename... Cs, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<X, Cs...>
+    reverse_horner_(EVE_REQUIRES(cpu_), O const & o, X x,  kumi::tuple<Cs...> tup) noexcept
+    {
+      return horner[o](x, kumi::reverse(tup));
+    }
+  }
+}

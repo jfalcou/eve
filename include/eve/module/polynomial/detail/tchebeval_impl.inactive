@@ -33,7 +33,7 @@ tchebeval_impl(D const& d, T0 xx, R const& r) noexcept
   else
   {
     --cur;
-    auto dfma = d(fma);
+    auto dfma = fma[d];
     r_t  b2   = zero(as<r_t>());
     r_t  b1   = r_t(*cur--);
     for( ; cur != first; --cur )
@@ -59,7 +59,7 @@ tchebeval_impl(D const& d, T0 xx, T1 a, T2 b, R const& r) noexcept
   if( std::distance(first, cur) == 1 ) return r_t((*first) / 2);
   else
   {
-    auto dfma = d(fma);
+    auto dfma = fma[d];
     auto up   = [&dfma, &r, first](auto, auto t)
     {
       auto cur = std::end(r);

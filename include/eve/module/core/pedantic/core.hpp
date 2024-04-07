@@ -10,7 +10,6 @@
 #include <eve/module/core/pedantic/diff_of_prod.hpp>
 #include <eve/module/core/pedantic/fam.hpp>
 #include <eve/module/core/pedantic/fanm.hpp>
-#include <eve/module/core/pedantic/fma.hpp>
 #include <eve/module/core/pedantic/fms.hpp>
 #include <eve/module/core/pedantic/fnma.hpp>
 #include <eve/module/core/pedantic/fnms.hpp>

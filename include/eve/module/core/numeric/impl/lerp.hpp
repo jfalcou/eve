@@ -13,7 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
-#include <eve/module/core/numeric/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/numeric/fnma.hpp>
 #include <eve/module/core/regular/all.hpp>
 
@@ -33,6 +33,6 @@ template<floating_ordered_value T>
 EVE_FORCEINLINE T
 lerp_(EVE_SUPPORTS(cpu_), numeric_type const&, T const& a, T const& b, T const& t) noexcept
 {
-  return numeric(fma)(t, b, numeric(fnma)(t, a, a));
+  return fma[pedantic](t, b, numeric(fnma)(t, a, a));
 }
 }

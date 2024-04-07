@@ -70,6 +70,7 @@
 #include <eve/module/math/regular/logspace_add.hpp>
 #include <eve/module/math/regular/logspace_sub.hpp>
 #include <eve/module/math/regular/lpnorm.hpp>
+#include <eve/module/math/regular/newton.hpp>
 #include <eve/module/math/regular/nthroot.hpp>
 #include <eve/module/math/regular/pow.hpp>
 #include <eve/module/math/regular/pow1p.hpp>

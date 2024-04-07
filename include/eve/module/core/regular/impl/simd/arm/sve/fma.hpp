@@ -1,37 +1,38 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
 #include <eve/arch/arm/sve/sve_true.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/forward.hpp>
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
+template<typename T, typename N, callable_options O>
 EVE_FORCEINLINE auto
-fma_(EVE_SUPPORTS(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+fma_(EVE_REQUIRES(sve_), O const&, wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
-  return fma[ignore_none](v0, v1, v2);
+  // We don't care about PEDANTIC as this is a proper FMA.
+  // We don't care about PROMOTE as we only accept similar types.
+  return svmad_x(sve_true<T>(), a, b, c);
 }
 
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
+template<conditional_expr C, typename T, typename N, callable_options O>
 EVE_FORCEINLINE auto
-fma_(EVE_SUPPORTS(sve_), C cond, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+fma_(EVE_SUPPORTS(sve_), C cond, O const&, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
-  if constexpr( C::is_complete && C::is_inverted ) return svmad_x(sve_true<T>(), v0, v1, v2);
-  else
-  {
-    auto const alt = alternative(cond, v0, as(v0));
-    if constexpr( C::is_complete && !C::is_inverted ) return alt;
-    else return svmad_m(cond.mask(as<T>{}), alt, v1, v2);
-  }
+  // We don't care about PEDANTIC as this is a proper FMA.
+  // We don't care about PROMOTE as we only accept similar types.
+  auto const alt = alternative(cond, a, as(a));
+  if constexpr( C::is_complete && !C::is_inverted ) return alt;
+  else                                              return svmad_m(cond.mask(as<T>{}), alt, b, c);
 }
 }

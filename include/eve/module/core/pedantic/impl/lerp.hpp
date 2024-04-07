@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/pedantic/fma.hpp>
+#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/pedantic/fnma.hpp>
 #include <eve/module/core/regular/all.hpp>
 
@@ -36,6 +36,6 @@ template<floating_ordered_value T>
 EVE_FORCEINLINE T
 lerp_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b, T const& t) noexcept
 {
-  return pedantic(fma)(t, b, pedantic(fnma)(t, a, a));
+  return fma[pedantic](t, b, pedantic(fnma)(t, a, a));
 }
 }
