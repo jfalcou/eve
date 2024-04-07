@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/none.cpp}
+//!  @godbolt{doc/core/none.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -60,10 +60,6 @@ namespace eve
 //!     The call `eve::none[mask](x)` provides a masked
 //!     version of `none` which is
 //!     equivalent to : all not masked elements are  zero.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/none.cpp}
 //!
 //! @}
 //================================================================================================

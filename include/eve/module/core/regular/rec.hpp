@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rec.cpp}
+//!  @godbolt{doc/core/rec.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -59,10 +59,6 @@ namespace eve
 //!
 //!     The call `eve;::rec[mask](x)` provides a masked version of `eve::rec` which is
 //!     equivalent to `if_else (mask, rec(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/rec.cpp}
 //!
 //!   * eve::raw
 //!

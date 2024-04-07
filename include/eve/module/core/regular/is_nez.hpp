@@ -59,7 +59,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_nez.cpp}
+//!  @godbolt{doc/core/is_nez.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -67,11 +67,6 @@ namespace eve
 //!
 //!     The call `eve;::is_nez[mask](x)` provides a masked version of `eve::is_nez` which is
 //!     equivalent to `if_else (mask, is_nez(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_nez.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_nez = functor<is_nez_t>;

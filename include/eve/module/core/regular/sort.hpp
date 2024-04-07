@@ -71,7 +71,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sort.cpp}
+//!  @godbolt{doc/core/sort.cpp}
 //!
 //! @}
 //================================================================================================

@@ -70,7 +70,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/agm.cpp}
+//!  @godbolt{doc/core/agm.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -79,9 +79,6 @@ namespace eve
 //!     The call `eve::agm[mask](x, ...)` provides a masked version of `agm` which is
 //!     equivalent to `if_else(mask, agm(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/agm.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto agm = functor<agm_t>;

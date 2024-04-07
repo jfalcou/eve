@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_less_equal.cpp}
+//!  @godbolt{doc/core/is_less_equal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +57,6 @@ namespace eve
 //!
 //!     The call `eve;::is_less_equal[mask](x,y)` provides a masked version of `eve::is_less_equal`
 //!     which is equivalent to `if_else (mask, is_less_equal(x), eve::false( eve::as(x,y)))`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/masked/is_less_equal.cpp}
 //!
 //!   * `almost`
 //!
@@ -72,9 +68,6 @@ namespace eve
 //!      - if `t` is a positive integral_value then \f$x <  \mbox{next}(y, t)\f$;
 //!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/fuzzy/is_less_equal.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_less_equal_, is_less_equal);

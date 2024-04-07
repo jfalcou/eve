@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_eqz.cpp}
+//!  @godbolt{doc/core/is_eqz.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,14 +71,10 @@ namespace eve
 //!     The call `eve;::is_eqz[mask](x)` provides a masked version of `eve::is_eqz` which is
 //!     equivalent to `if_else (mask, is_eqz(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_eqz.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_eqz = functor<is_eqz_t>;
-  
+
   namespace detail
   {
     template<typename T, callable_options O>

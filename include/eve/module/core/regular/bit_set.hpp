@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_set.cpp}
+//!  @godbolt{doc/core/bit_set.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -71,10 +71,6 @@ namespace eve
 //!     The call `eve::bit_set[mask](x, ...)` provides a masked
 //!     version of `bit_set` which is
 //!     equivalent to `if_else(mask, bit_set(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_set.cpp}
 //!
 //! @}
 //================================================================================================

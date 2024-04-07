@@ -69,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/absmin.cpp}
+//!  @godbolt{doc/core/absmin.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -78,14 +78,13 @@ namespace eve
 //!     The call `eve::absmin[mask](x, ...)` provides a masked version of `eve::absmin` which is
 //!     equivalent to `eve::if_else (mask, absmin(x, ...), x)`
 //!
-//!      **Example**
+//!   * eve::pedantic,  eve::numeric, eve::saturated
 //!
-//!        @godbolt{doc/core/masked/absmin.cpp}
-//!
-//!   * eve::pedantic,  eve::numeric
-//!
-//!     The call `d(eve::absmin)(...)`, where d is one of these two decorators, is equivalent to
+//!     The call `eve::absmin[d](...)`, where d is one of these two first decorators, is equivalent to
 //!     `eve::abs (d( eve::min )(...))`.
+//!
+//!     The call `eve::absmin[d][saturated](...)`, where d is one of these two first decorators or is not present, is equivalent to
+//!     `eve::abs[saturated](d( eve::min )(...))`.
 //!
 //! @}
 //================================================================================================

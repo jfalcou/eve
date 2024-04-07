@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/oneminus.cpp}
+//!  @godbolt{doc/core/oneminus.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -58,18 +58,11 @@ namespace eve
 //!     version of `oneminus` which is
 //!     equivalent to `if_else(mask, oneminus(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/oneminus.cpp}
-//!
 //!   * eve::saturated
 //!
 //!      The call `saturated(oneminus)(x)` is semantically equivalent to `eve::saturated(eve::sub)(
 //!      eve::one (as(x)), x)` and is never undefined.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/oneminus.cpp}
 //! @}
 //================================================================================================
 

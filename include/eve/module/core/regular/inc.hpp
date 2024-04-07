@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/inc.cpp}
+//!  @godbolt{doc/core/inc.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -65,19 +65,12 @@ namespace eve
 //!     version of `inc` which is
 //!     equivalent to `if_else(mask, inc(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/inc.cpp}
-//!
 //!   * eve::saturated
 //!
 //!       The call `saturated(inc)(x)` computes the saturated increment of `x`.
 //!       The only interest of this behaviour is that
 //!       for integral type T the call  `saturated(inc)(Valmax<T>())` returns `Valmax<T>()`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/inc.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto inc = functor<inc_t>;

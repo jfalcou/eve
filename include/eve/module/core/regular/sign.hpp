@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sign.cpp}
+//!  @godbolt{doc/core/sign.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +57,6 @@ namespace eve
 //!
 //!     The call `eve;::sign[mask](x)` provides a masked version of `eve::sign` which is
 //!     equivalent to `if_else (mask, sign(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sign.cpp}
 //!
 //! @}
 //================================================================================================

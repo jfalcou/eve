@@ -74,7 +74,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/min.cpp}
+//!  @godbolt{doc/core/min.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -83,10 +83,6 @@ namespace eve
 //!     The call `eve::min[mask](x, ...)` provides a masked
 //!     version of `min` which is
 //!     equivalent to `if_else(mask, min(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/min.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!
@@ -101,9 +97,6 @@ namespace eve
 //!        inputs is not a `Nan`, the corresponding
 //!        output element will not be a `Nan`.
 //!
-//!     **Example**
-//!
-//!        @godbolt{doc/core/pedantic/min.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto min = functor<min_t>;

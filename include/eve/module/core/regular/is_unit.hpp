@@ -61,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_unit.cpp}
+//!  @godbolt{doc/core/is_unit.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -69,10 +69,6 @@ namespace eve
 //!
 //!     The call `eve;::is_unit[mask](x)` provides a masked version of `eve::is_unit` which is
 //!     equivalent to `if_else (mask, is_unit(x), eve::false(eve::as<decltype(is_unit(x))>())`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_unit.cpp}
 //!
 //! @}
 //================================================================================================

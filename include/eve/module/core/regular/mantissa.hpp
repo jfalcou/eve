@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/mantissa.cpp}
+//!  @godbolt{doc/core/mantissa.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(mantissa_, mantissa);

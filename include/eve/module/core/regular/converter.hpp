@@ -124,7 +124,7 @@ template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/float32.cpp}
+//!  @godbolt{doc/core/float32.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<float> const float32 = {};
@@ -169,7 +169,7 @@ inline constexpr converter_type<float> const float32 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/float64.cpp}
+//!  @godbolt{doc/core/float64.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<double> const float64 = {};
@@ -215,7 +215,7 @@ inline constexpr converter_type<double> const float64 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/uint8.cpp}
+//!  @godbolt{doc/core/uint8.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::uint8_t> const uint8 = {};
@@ -261,7 +261,7 @@ inline constexpr converter_type<std::uint8_t> const uint8 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/uint16.cpp}
+//!  @godbolt{doc/core/uint16.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::uint16_t> const uint16 = {};
@@ -307,7 +307,7 @@ inline constexpr converter_type<std::uint16_t> const uint16 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/uint32.cpp}
+//!  @godbolt{doc/core/uint32.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::uint32_t> const uint32 = {};
@@ -353,7 +353,7 @@ inline constexpr converter_type<std::uint32_t> const uint32 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/uint64.cpp}
+//!  @godbolt{doc/core/uint64.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::uint64_t> const uint64 = {};
@@ -399,7 +399,7 @@ inline constexpr converter_type<std::uint64_t> const uint64 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/int8.cpp}
+//!  @godbolt{doc/core/int8.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::int8_t> const int8 = {};
@@ -445,7 +445,7 @@ inline constexpr converter_type<std::int8_t> const int8 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/int16.cpp}
+//!  @godbolt{doc/core/int16.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::int16_t> const int16 = {};
@@ -491,7 +491,7 @@ inline constexpr converter_type<std::int16_t> const int16 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/int32.cpp}
+//!  @godbolt{doc/core/int32.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::int32_t> const int32 = {};
@@ -537,7 +537,7 @@ inline constexpr converter_type<std::int32_t> const int32 = {};
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/int64.cpp}
+//!  @godbolt{doc/core/int64.cpp}
 //!  @}
 //================================================================================================
 inline constexpr converter_type<std::int64_t> const int64 = {};
@@ -589,7 +589,7 @@ using int_converter = decorated<convert_by_<as_integer>()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/int_.cpp}
+//!  @godbolt{doc/core/int_.cpp}
 //!  @}
 //================================================================================================
 inline constexpr int_converter const int_ = {};
@@ -638,7 +638,7 @@ using uint_converter = decorated<convert_by_<as_uinteger>()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/int_.cpp}
+//!  @godbolt{doc/core/int_.cpp}
 //!  @}
 //================================================================================================
 inline constexpr uint_converter const uint_ = {};
@@ -687,7 +687,7 @@ using floating_converter = decorated<convert_by_<as_floating_point>()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/floating_.cpp}
+//!  @godbolt{doc/core/floating_.cpp}
 //!  @}
 //================================================================================================
 inline constexpr floating_converter const floating_ = {};
@@ -734,7 +734,7 @@ using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/upgrade.cpp}
+//!  @godbolt{doc/core/upgrade.cpp}
 //!  @}
 //================================================================================================
 inline constexpr upgrade_converter const upgrade_ = {};

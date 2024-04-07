@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sqr.cpp}
+//!  @godbolt{doc/core/sqr.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +57,6 @@ namespace eve
 //!
 //!     The call `eve;::sqr[mask](x)` provides a masked version of `eve::sqr` which is
 //!     equivalent to `if_else (mask, sqr(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sqr.cpp}
 //!
 //!   * eve::saturated
 //!
@@ -76,10 +72,6 @@ namespace eve
 //!
 //!      [`eve::valmax(as(x))`](@ref eve::valmax) as soon as `eve::abs[eve::saturated](x)`
 //!      is greater than `eve::sqrtvalmax(as(x))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/regular/sqr.cpp}
 //!
 //! @}
 //================================================================================================

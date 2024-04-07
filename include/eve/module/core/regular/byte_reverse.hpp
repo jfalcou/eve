@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/byte_reverse.cpp}
+//!  @godbolt{doc/core/byte_reverse.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -56,10 +56,6 @@ namespace eve
 //!     The call `eve::byte_reverse[mask](x, ...)` provides a masked
 //!     version of `byte_reverse` which is
 //!     equivalent to `if_else(mask, byte_reverse(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/byte_reverse.cpp}
 //!
 //! @}
 //================================================================================================

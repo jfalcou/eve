@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ceil.cpp}
+//!  @godbolt{doc/core/ceil.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -72,23 +72,18 @@ namespace eve
 //!     The call `eve;::ceil[mask](x)` provides a masked version of `eve::ceil` which is
 //!     equivalent to `if_else (mask, ceil(x), x)`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/ceil.cpp}
-//!
 //!   * eve::tolerant
 //!
-//!     The expression `tolerant(ceil)(x, tol)` computes a tolerant ceil value for `x`,
+//!     The expression `ceil[tolerance = tol](x)` computes a tolerant ceil value for `x`,
 //!     where `x` must be a floating value.
 //!
 //!      * If `tol` is a floating value, computes the floor with a tolerance `tol`
 //!        using Hagerty's FL5 function.
 //!      * If `tol` is an integral value n, computes the floor of the next nth
 //!        representable value in the `x` type.
-//!      * If `tol` is omitted, the tolerance is taken to 3 times the machine
-//!        \f$\epsilon\f$ in the `x` type (`3*eve::eps (eve::as (x))`).
+
+//!      * ceil[tolerant](x) is equivalent to `ceil[tolerance = 3*eve::eps(eve::as (x))(x)`).
 //!
-//!      @godbolt{doc/core/fuzzy/ceil.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto ceil = functor<ceil_t>;

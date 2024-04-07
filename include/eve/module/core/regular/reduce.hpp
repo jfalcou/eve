@@ -42,7 +42,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/reduce.cpp}
+//!  @godbolt{doc/core/reduce.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(reduce_, reduce);

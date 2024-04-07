@@ -47,9 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sqrt.cpp}
-//!
-//!
+//!  @godbolt{doc/core/sqrt.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +55,6 @@ namespace eve
 //!
 //!     The call `eve;::sqrt[mask](x)` provides a masked version of `eve::sqrt` which is
 //!     equivalent to `if_else (mask, sqrt(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sqrt.cpp}
 //!
 //!   * eve::raw
 //!

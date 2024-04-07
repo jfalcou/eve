@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/dot.cpp}
+//!  @godbolt{doc/core/dot.cpp}
 //!
 //!
 //! @}

@@ -29,10 +29,10 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(t);
     }
-    
+
     EVE_CALLABLE_OBJECT(is_pow2_t, is_pow2_);
   };
-  
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -65,7 +65,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_pow2.cpp}
+//!  @godbolt{doc/core/is_pow2.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -74,14 +74,10 @@ namespace eve
 //!     The call `eve;::is_pow2[mask](x)` provides a masked version of `eve::is_pow2` which is
 //!     equivalent to `if_else (mask, is_pow2(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_pow2.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_pow2 = functor<is_pow2_t>;
-  
+
   namespace detail
   {
     template<typename T, callable_options O>

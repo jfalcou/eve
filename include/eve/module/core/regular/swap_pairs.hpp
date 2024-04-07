@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/swap_pairs.cpp}
+//!  @godbolt{doc/core/swap_pairs.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(swap_pairs_, swap_pairs);

@@ -41,7 +41,7 @@ namespace eve
   //!
   //!  @groupheader{Example}
   //!
-  //!  @godbolt{doc/core/regular/has_equal_in.cpp}
+  //!  @godbolt{doc/core/has_equal_in.cpp}
   //!
   //================================================================================================
   EVE_MAKE_CALLABLE(has_equal_in_, has_equal_in);

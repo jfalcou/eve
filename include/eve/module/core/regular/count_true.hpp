@@ -50,7 +50,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/count_true.cpp}
+//!  @godbolt{doc/core/count_true.cpp}
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
@@ -58,9 +58,6 @@ namespace eve
 //!     The call `eve::$name$[mask](x, ...)` provides a masked
 //!     version of `count_true which count the non masked non zero element
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/count_true.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(count_true_, count_true);

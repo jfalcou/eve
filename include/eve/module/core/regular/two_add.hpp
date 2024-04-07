@@ -68,7 +68,7 @@ struct two_add_t : elementwise_callable<two_add_t, Options>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/two_add.cpp}
+//!  @godbolt{doc/core/two_add.cpp}
 //!
 //! @}
 //================================================================================================

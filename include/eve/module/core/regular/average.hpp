@@ -82,7 +82,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/average.cpp}
+//!  @godbolt{doc/core/average.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -92,19 +92,16 @@ namespace eve
 //!     version of `average` which is
 //!     equivalent to `if_else(mask, average(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/average.cpp}
-//!
 //!   * eve::raw
 //!
 //!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid
 //!     overflows for more than 2 parameters.
 //!
-//!      **Example**
+//!   * eve::downward,  eve::upward
 //!
-//!        @godbolt{doc/core/raw/average.cpp}
-//! @}
+//!     only for two integral values, see above
+//!    
+//!//! @}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;
 

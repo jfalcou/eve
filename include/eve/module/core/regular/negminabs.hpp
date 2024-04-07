@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/negminabs.cpp}
+//!  @godbolt{doc/core/negminabs.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -74,10 +74,6 @@ namespace eve
 //!
 //!     The call `eve::negminabs[mask](x, ...)` provides a masked version of `eve::negminabs` which
 //!     is equivalent to `eve::if_else (mask, negminabs(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/negminabs.cpp}
 //!
 //!   * eve::pedantic,  eve::numeric
 //!

@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_odd.cpp}
+//!  @godbolt{doc/core/is_odd.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -74,10 +74,6 @@ namespace eve
 //!
 //!     The call `eve;::is_odd[mask](x)` provides a masked version of `eve::is_odd` which is
 //!     equivalent to `if_else (mask, is_odd(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_odd.cpp}
 //!
 //! @}
 //================================================================================================

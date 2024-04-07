@@ -50,7 +50,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value Ts... >
-//!      T bit_andnot(T x, Ts... xs) noexcept;
+//!      bit_value<T, Ts...> bit_andnot(T x, Ts... xs) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -61,14 +61,16 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!     * For two parameters it computes the  bitwise ANDNOT of the two parameters
-//!     * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
-//!     bit_and(xs...))`
-//!     *  The value returned is in the type of the first parameter
+//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
+//!       to this type and then:  
+//!
+//!       * For two parameters it computes the  bitwise ANDNOT of the two parameters
+//!       * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
+//!         bit_and(xs...))`
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_andnot.cpp}
+//!  @godbolt{doc/core/bit_andnot.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -78,9 +80,6 @@ namespace eve
 //!     version of `bit_andnot` which is
 //!     equivalent to `if_else(mask, bit_andnot(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_andnot.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_andnot = functor<bit_andnot_t>;

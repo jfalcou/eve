@@ -80,7 +80,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/minmax.cpp}
+//!  @godbolt{doc/core/minmax.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!

@@ -68,7 +68,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_negative.cpp}
+//!  @godbolt{doc/core/is_negative.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,10 +76,6 @@ namespace eve
 //!
 //!     The call `eve;::is_negative[mask](x)` provides a masked version of `eve::is_negative` which
 //!     is equivalent to `if_else (mask, is_negative(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_negative.cpp}
 //!
 //! @}
 //================================================================================================

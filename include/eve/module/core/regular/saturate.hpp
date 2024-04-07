@@ -55,7 +55,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/saturate.cpp}
+//!  @godbolt{doc/core/saturate.cpp}
 //!
 //! @}
 //================================================================================================

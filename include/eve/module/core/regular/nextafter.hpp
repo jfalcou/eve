@@ -54,7 +54,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/nextafter.cpp}
+//!  @godbolt{doc/core/nextafter.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -63,10 +63,6 @@ namespace eve
 //!     The call `eve::nextafter[mask](x, ...)` provides a masked
 //!     version of `nextafter` which is
 //!     equivalent to `if_else(mask, nextafter(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/nextafter.cpp}
 //!
 //! @}
 //================================================================================================

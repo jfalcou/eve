@@ -48,7 +48,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/hi.cpp}
+//!  @godbolt{doc/core/hi.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(hi_, hi);

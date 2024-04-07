@@ -60,7 +60,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/dist.cpp}
+//!  @godbolt{doc/core/dist.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,9 +76,6 @@ namespace eve
 //!     The call `pedantic(dist)(x, y)` computes a distance wich is nan if and only
 //!     if a or b is a Nan.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/dist.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto dist = functor<dist_t>;

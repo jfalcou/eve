@@ -46,7 +46,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/firstbitunset.cpp}
+//!  @godbolt{doc/core/firstbitunset.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -55,10 +55,6 @@ namespace eve
 //!     The call `eve::firstbitunset[mask](x)` provides a masked
 //!     version of `firstbitunset` which is
 //!     equivalent to `if_else(mask, firstbitunset(x), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/firstbitunset.cpp}
 //!
 //! @}
 //================================================================================================

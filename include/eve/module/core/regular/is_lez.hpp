@@ -67,10 +67,6 @@ namespace eve
 //!     The call `eve;::is_lez[mask](x)` provides a masked version of `eve::is_lez` which is
 //!     equivalent to `if_else (mask, is_lez(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_lez.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_lez = functor<is_lez_t>;

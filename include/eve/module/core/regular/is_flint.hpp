@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_flint.cpp}
+//!  @godbolt{doc/core/is_flint.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -74,10 +74,6 @@ namespace eve
 //!
 //!     The call `eve;::is_flint[mask](x)` provides a masked version of `eve::is_flint` which is
 //!     equivalent to `if_else (mask, is_flint(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!      @godbolt{doc/core/masked/is_flint.cpp}
 //!
 //! @}
 //================================================================================================

@@ -48,7 +48,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value Ts... >
-//!      T bit_ornot(T x, Ts... xs) noexcept;
+//!      bit_value<T, Ts...> bit_ornot(T x, Ts... xs) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -59,14 +59,17 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!     * For two parameters it computes the  bitwise ORNOT of the two parameters
-//!     * For more than two parameters the call is  semantically equivalent to to `bit_ornot(a0,
-//!     bit_or(xs...))`
-//!     *  The value returned is in the type of the first parameter
+//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
+//!       to this type and then:
+//!
+//!       * For two parameters it computes the  bitwise ORNOT of the two parameters
+//!       * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
+//!         bit_and(xs...))`
+//!
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_ornot.cpp}
+//!  @godbolt{doc/core/bit_ornot.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,9 +79,6 @@ namespace eve
 //!     version of `bit_ornot` which is
 //!     equivalent to `if_else(mask, bit_ornot(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_ornot.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_ornot = functor<bit_ornot_t>;

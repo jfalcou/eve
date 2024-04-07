@@ -54,7 +54,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/fms.cpp}
+//!  @godbolt{doc/core/fms.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -64,10 +64,6 @@ namespace eve
 //!     version of `fms` which is
 //!     equivalent to `if_else(mask, fms(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/fms.cpp}
-//!
 //!   * eve::pedantic, eve::numeric
 //!
 //!       * The call `pedantic(fms)(x,y,z)` ensures the one rounding property.
@@ -76,7 +72,6 @@ namespace eve
 //!       * The call `numeric(fms)(x,y,z)` ensures the full compliance to fms properties.
 //!        This can be very expensive if the system has no hardware capability.
 //!
-//!       * see the above regular example.
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(fms_, fms);

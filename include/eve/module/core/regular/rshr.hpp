@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rshr.cpp}
+//!  @godbolt{doc/core/rshr.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -72,9 +72,6 @@ namespace eve
 //!     version of `rshr` which is
 //!     equivalent to `if_else(mask, rshr(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/rshr.cpp}
 //! @}
 //================================================================================================
 

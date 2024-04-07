@@ -71,10 +71,6 @@ namespace eve
 //!     The call `eve;::is_gtz[mask](x)` provides a masked version of `eve::is_gtz` which is
 //!     equivalent to `if_else (mask, is_gtz(x), eve::false( eve::as(x)))`.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_gtz.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_gtz = functor<is_gtz_t>;

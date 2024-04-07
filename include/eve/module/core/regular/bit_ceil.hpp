@@ -66,7 +66,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_ceil.cpp}
+//!  @godbolt{doc/core/bit_ceil.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -76,9 +76,6 @@ namespace eve
 //!     version of `bit_ceil` which is
 //!     equivalent to `if_else(mask, bit_ceil(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_ceil.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_ceil = functor<bit_ceil_t>;

@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/rotate.cpp}
+//!  @godbolt{doc/core/rotate.cpp}
 //!
 //!  @}
 //================================================================================================

@@ -45,7 +45,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/sub.cpp}
+//!  @godbolt{doc/core/sub.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -54,10 +54,6 @@ namespace eve
 //!     The call `eve::sub[mask](x, ...)` provides a masked
 //!     version of `sub` which is
 //!     equivalent to `if_else(mask, sub(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/sub.cpp}
 //!
 //!   * eve::saturated
 //!
@@ -68,9 +64,6 @@ namespace eve
 //!     entries this kind of operation is highly order dependant. We do not advise
 //!     to use it for more than 2 parameters.
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/saturated/sub.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(sub_, sub);

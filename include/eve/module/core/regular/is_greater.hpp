@@ -49,7 +49,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_greater.cpp}
+//!  @godbolt{doc/core/is_greater.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -57,10 +57,6 @@ namespace eve
 //!
 //!     The call `eve;::is_greater[mask](x,y)` provides a masked version of `eve::is_greater` which
 //!     is equivalent to `if_else (mask, is_greater(x), eve::false( eve::as(x,y)))`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/masked/is_greater.cpp}
 //!
 //!   * `definitely`
 //!
@@ -72,9 +68,6 @@ namespace eve
 //!       - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
 //!       - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
 //!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/fuzzy/is_greater.cpp}
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(is_greater_, is_greater);

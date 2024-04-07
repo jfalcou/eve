@@ -67,7 +67,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/clamp.cpp}
+//!  @godbolt{doc/core/clamp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -75,10 +75,6 @@ namespace eve
 //!
 //!     The call `eve;::clamp[mask](x, ...)` provides a masked version of `eve::clamp` which is
 //!     equivalent to `if_else (mask, clamp(x, ...), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/clamp.cpp}
 //!
 //! @}
 //================================================================================================

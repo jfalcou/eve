@@ -44,7 +44,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ifnot_else.cpp}
+//!  @godbolt{doc/core/ifnot_else.cpp}
 //!
 //! @}
 //================================================================================================

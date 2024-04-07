@@ -74,7 +74,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/max.cpp}
+//!  @godbolt{doc/core/max.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -83,10 +83,6 @@ namespace eve
 //!     The call `eve::max[mask](x, ...)` provides a masked
 //!     version of `max` which is
 //!     equivalent to `if_else(mask, max(x, ...), x)`
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/max.cpp}
 //!
 //!   * eve::pedantic, eve::numeric
 //!
@@ -101,9 +97,6 @@ namespace eve
 //!        inputs is not a `Nan`, the corresponding
 //!        output element will not be a `Nan`.
 //!
-//!     **Example**
-//!
-//!        @godbolt{doc/core/pedantic/max.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto max = functor<max_t>;

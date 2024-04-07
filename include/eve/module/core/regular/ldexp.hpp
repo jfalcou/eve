@@ -61,16 +61,13 @@ struct ldexp_t : elementwise_callable<ldexp_t, Options, pedantic_option>
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ldexp.cpp}
+//!  @godbolt{doc/core/ldexp.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
 //!     The call `eve::ldexp[mask](x, n)` computes a value equivalent to `if_else(mask, ldexp(x, n), x)`
-//!
-//!     **Example**
-//!     @godbolt{doc/core/masked/ldexp.cpp}
 //!
 //!   * eve::pedantic
 //!

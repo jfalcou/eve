@@ -43,7 +43,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/minimum.cpp}
+//!  @godbolt{doc/core/minimum.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -52,10 +52,6 @@ namespace eve
 //!     The call `eve::minimum[mask](x)` provides a masked
 //!     version of `minimum` which is
 //!     equivalent to : ``minimum(if_else(mask, x, valmax(as(x))))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/minimum.cpp}
 //!
 //! @}
 //================================================================================================

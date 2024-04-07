@@ -47,7 +47,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/ulpdist.cpp}
+//!  @godbolt{doc/core/ulpdist.cpp}
 //!
 //! @}
 //================================================================================================

@@ -70,7 +70,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_even.cpp}
+//!  @godbolt{doc/core/is_even.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -78,10 +78,6 @@ namespace eve
 //!
 //!     The call `eve;::is_even[mask](x)` provides a masked version of `eve::is_even` which is
 //!     equivalent to `if_else (mask, is_even(x), eve::false( eve::as(x)))`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/is_even.cpp}
 //!
 //! @}
 //================================================================================================

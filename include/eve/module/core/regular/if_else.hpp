@@ -60,7 +60,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/if_else.cpp}
+//!  @godbolt{doc/core/if_else.cpp}
 //!
 //! @}
 //================================================================================================

@@ -84,7 +84,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/bit_shr.cpp}
+//!  @godbolt{doc/core/bit_shr.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -94,9 +94,6 @@ namespace eve
 //!     version of `bit_shr` which is
 //!     equivalent to `if_else(mask, bit_shr(x, ...), x)`
 //!
-//!      **Example**
-//!
-//!        @godbolt{doc/core/masked/bit_shr.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto bit_shr = functor<bit_shr_t>;

@@ -52,7 +52,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/is_not_equal.cpp}
+//!  @godbolt{doc/core/is_not_equal.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -61,17 +61,9 @@ namespace eve
 //!     The call `eve::is_not_equal[mask](x)` provides a masked version of `eve::is_not_equal` which
 //!     is equivalent to `if_else (mask, is_not_equal(x, y), false_
 //!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/masked/is_not_equal.cpp}
-//!
 //!   * eve::numeric
 //!
 //!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are not equal.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/pedantic/is_not_equal.cpp}
 //!
 //!   * `definitely`
 //!
@@ -86,9 +78,6 @@ namespace eve
 //!       * if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$
 //!         in the `x` type (`3*eps(as(x))`).
 //!
-//!     **Example**
-//!
-//!     @godbolt{doc/core/fuzzy/is_not_equal.cpp}
 //! @}
 //================================================================================================
 EVE_IMPLEMENT_CALLABLE(is_not_equal_, is_not_equal);

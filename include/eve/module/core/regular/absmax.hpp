@@ -61,8 +61,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The absolute value of the maximal element
-//!    is returned.
+//!    The absolute value of the maximal element is returned.
 //!
 //!    @note
 //!     If any element of the inputs is a NaN,
@@ -70,7 +69,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/regular/absmax.cpp}
+//!  @godbolt{doc/core/absmax.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
@@ -79,14 +78,13 @@ namespace eve
 //!     The call `eve::absmax[mask](x, ...)` provides a masked version of `eve::absmax` which is
 //!     equivalent to `eve::if_else (mask, absmax(x, ...), x)`
 //!
-//!      **Example**
+//!   * eve::pedantic, eve::numeric, eve::saturated
 //!
-//!        @godbolt{doc/core/masked/absmax.cpp}
-//!
-//!   * eve::pedantic,  eve::numeric
-//!
-//!     The call `d(eve::absmax)(...)`, where d is one of these two decorators, is equivalent to
+//!     The call `eve::absmax[d](...)`, where d is one of these two first decorators, is equivalent to
 //!     `eve::abs (d( eve::max )(...))`.
+//!
+//!     The call `eve::absmax[d][saturated](...)`, where d is one of these two first decorators or is not present, is equivalent to
+//!     `eve::abs[saturated](d( eve::max )(...))`.
 //!
 //! @}
 //================================================================================================
