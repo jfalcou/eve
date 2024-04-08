@@ -71,28 +71,18 @@ namespace eve
 
   namespace detail
   {
-
-    template<typename T, typename U, callable_options O>
-    constexpr common_value_t<T, U>
-    lcm_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
+    template<typename T, callable_options O>
+    constexpr auto lcm_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      if constexpr(!std::same_as<T, U>)
+      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "eve::lcm: some entries are not flint");
+      a = eve::abs(a);
+      b = eve::abs(b);
+      if constexpr( scalar_value<T> )
       {
-        using c_t =  common_value_t<T, U>;
-        return lcm_(EVE_TARGETS(cpu_), o, c_t(a), c_t(b)); ;
+        if( !b || !a ) return T(0);
+        return b / gcd(a, b) * a;
       }
-      else 
-      {
-        EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
-        a = abs(a);
-        b = abs(b);
-        if constexpr( scalar_value<T> )
-        {
-          if( !b || !a ) return T(0);
-          return b / gcd(a, b) * a;
-        }
-        else { return a * (b / gcd(a, if_else(b, b, eve::one))); }
-      }
+      else return a * (b / gcd(a, if_else(b, b, eve::one)));
     }
   }
 }
