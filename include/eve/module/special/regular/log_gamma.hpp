@@ -9,6 +9,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
 
 namespace eve
 {
@@ -16,7 +18,8 @@ namespace eve
   struct log_gamma_t : elementwise_callable<log_gamma_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(log_gamma_t, log_gamma_);
   };
@@ -60,6 +63,16 @@ namespace eve
 //! @}
 //================================================================================================
 inline constexpr auto log_gamma = functor<log_gamma_t>;
-}
 
-#include <eve/module/special/regular/impl/log_gamma.hpp>
+  namespace detail
+  {
+
+    template<typename T, callable_options O>
+    constexpr T
+    log_gamma_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    {
+      auto aa0 = if_else(a0 == minf(as(a0)) || is_lez(signgam(a0)), allbits, a0);
+      return log_abs_gamma(aa0);
+    }
+  }
+}
