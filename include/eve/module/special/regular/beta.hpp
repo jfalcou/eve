@@ -9,6 +9,10 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/log_abs_gamma.hpp>
+#include <eve/module/special/regular/signgam.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve
 {
@@ -58,6 +62,20 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto beta = functor<beta_t>;
-}
 
-#include <eve/module/special/regular/impl/beta.hpp>
+  namespace detail
+  {
+    template< typename T0, typename T1, callable_options O>
+    constexpr EVE_FORCEINLINE
+    eve::common_value_t<T0, T1> beta_(EVE_REQUIRES(cpu_), O const&,
+                                      T0 const& a00,  T1 const & a11) noexcept
+    {
+      using r_t =  common_value_t<T0, T1>;
+      r_t a0 = r_t(a00);
+      r_t a1 = r_t(a11);
+      auto y    = a0 + a1;
+      auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
+      return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));
+    }
+  }
+}

@@ -9,6 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -16,7 +17,7 @@ namespace eve
   struct signgam_t : elementwise_callable<signgam_t, Options>
   {
     template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(signgam_t, signgam_);
   };
@@ -57,6 +58,20 @@ namespace eve
 //! @}
 //================================================================================================
 inline constexpr auto signgam = functor<signgam_t>;
-}
 
-#include <eve/module/special/regular/impl/signgam.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T
+    signgam_(EVE_REQUIRES(cpu_), O const &, T a0)
+    {
+      auto isleza0 = is_ngtz(a0);
+      auto a       = if_else(is_flint(a0) || is_infinite(a0),
+                             eve::allbits,
+                             oneminus(binarize(is_odd(floor(a0))) * T(2)));
+      a            = if_else(is_eqz(a0), bit_or(one(as(a0)), bitofsign(a0)), a);
+      return if_else(is_nan(a0), a0, if_else(isleza0, a, eve::one));
+
+    }
+  }
+}

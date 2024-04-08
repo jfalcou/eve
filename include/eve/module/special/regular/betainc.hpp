@@ -10,6 +10,11 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core.hpp>
+#include <eve/module/math.hpp>
+#include <eve/module/special/regular/lbeta.hpp>
+#include <eve/module/special/regular/signgam.hpp>
+#include <eve/traits/common_value.hpp>
 
 namespace eve
 {
@@ -17,7 +22,7 @@ template<typename Options>
 struct betainc_t : elementwise_callable<betainc_t, Options>
 {
   template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
-  EVE_FORCEINLINE
+  constexpr EVE_FORCEINLINE
   eve::common_value_t<T0, T1, T2>
   operator()(T0 a, T1 b, T2 c) const noexcept { return EVE_DISPATCH_CALL(a, b, c); }
 
@@ -65,6 +70,55 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //! @}
 //================================================================================================
  inline constexpr auto betainc = functor<betainc_t>;
-}
 
-#include <eve/module/special/regular/impl/betainc.hpp>
+  namespace detail
+  {
+    template< typename T0, typename T1, typename T2, callable_options O>
+    constexpr EVE_FORCEINLINE
+    eve::common_value_t<T0, T1, T2> betainc_(EVE_REQUIRES(cpu_), O const&
+                                            , T0 xx, T1  aa, T2  bb) noexcept
+    {
+      using r_t =  common_value_t<T0, T1, T2>;
+      r_t x = r_t(xx);
+      r_t a = r_t(aa);
+      r_t b = r_t(bb);
+      auto betacf = [](auto x, auto a, auto b) {
+        // continued fraction for incomplete Beta function, used by betainc
+        constexpr std::size_t itmax = 100;
+        auto const            o     = one(as(x));
+        auto                  epsi  = 10 * eps(as(x));
+        auto                  fpmin = sqr(eps(as(x)));
+        auto                  qab   = a + b;
+        auto                  qap   = inc(a);
+        auto                  qam   = dec(a);
+        auto                  c     = o;
+        auto                  d     = rec(maxmag(oneminus(qab * x / qap), fpmin));
+        auto                  h     = d;
+        for( std::size_t m = 1; m <= itmax; ++m )
+        {
+          T0    vm(m);
+          auto vm2 = vm + vm;
+          auto aa  = vm * (b - vm) * x / ((qam + vm2) * (a + vm2));
+          d        = rec(maxmag(fma(aa, d, o), fpmin));
+          c        = maxmag(fma(aa, rec(c), o), fpmin);
+          h *= d * c;
+          aa       = -(a + vm) * (qab + vm) * x / ((a + vm2) * (qap + vm2));
+          d        = rec(maxmag(fma(aa, d, o), fpmin));
+          c        = maxmag(fma(aa, rec(c), o), fpmin);
+          auto del = d * c;
+          h *= del;
+          if( eve::all(eve::abs(oneminus(del)) < epsi) ) return h; // Are we done?
+        }
+        return h;
+      };
+      auto bt   = exp(fma(a, log(x), b * log1p(-x)) - lbeta(a, b));
+      auto test = (x > inc(a) / (a + b + T0(2)));
+      auto oms   = oneminus[test](x);
+      swap_if(test, a, b);
+      auto res  = bt * betacf(oms, a, b) / a;
+      return if_else(is_ltz(oms) || oms > one(as(x)),
+                     allbits,
+                     if_else(is_eqz(oms), zero, if_else(x == one(as(x)), one, oneminus[test](res))));
+    }
+  }
+}

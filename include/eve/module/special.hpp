@@ -21,4 +21,3 @@
 //==================================================================================================
 
 #include <eve/module/special/regular/special.hpp>
-#include <eve/module/special/pedantic/special.hpp>
