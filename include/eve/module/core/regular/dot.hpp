@@ -12,11 +12,23 @@
 
 namespace eve
 {
+  template<typename Options>
+  struct dot_t : elementwise_callable<dot_t, Options>
+  {
+    template<eve::value T,  value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(dot_t, dot_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var dot
 //!   @brief Computes elementwise the dot product of the two parameters.
+//!
+//!   @warning This is not a reduction ! For reals the dot product is the product
 //!
 //!   **Defined in Header**
 //!
@@ -29,8 +41,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< value T1, value T2>
-//!      auto dot(T1 x, T2 y) noexcept;
+//!      template< value T1, value T2>  auto dot(T1 x, T2 y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -49,9 +60,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
+  inline constexpr auto dot = functor<dot_t>;
 
-  EVE_MAKE_CALLABLE(dot_, dot);
-
+  namespace detail
+  {
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    dot_(EVE_REQUIRES(cpu_), O const &, T a,  U b) noexcept
+    {
+      return mul(a, b);
+    }
+  }
 }
-
-#include <eve/module/core/regular/impl/dot.hpp>

@@ -25,6 +25,7 @@
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
+
 namespace eve
 {
   template<typename Options>
