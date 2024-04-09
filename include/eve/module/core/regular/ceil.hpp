@@ -18,11 +18,17 @@ namespace eve
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v);
+    }
 
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
-    { return EVE_DISPATCH_CALL(v, target); }
+    {
+      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v, target);
+    }
 
     EVE_CALLABLE_OBJECT(ceil_t, ceil_);
   };
@@ -81,8 +87,8 @@ namespace eve
 //!        using Hagerty's FL5 function.
 //!      * If `tol` is an integral value n, computes the floor of the next nth
 //!        representable value in the `x` type.
-
 //!      * ceil[tolerant](x) is equivalent to `ceil[tolerance = 3*eve::eps(eve::as (x))(x)`).
+//!      * if t is an simd value x must be an simd value
 //!
 //! @}
 //================================================================================================
