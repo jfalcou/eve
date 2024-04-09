@@ -18,11 +18,17 @@ namespace eve
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      static_assert( valid_tolerance<T, Options>::value, "[eve::floor] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v);
+    }
 
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
-    { return EVE_DISPATCH_CALL(v, target); }
+    {
+      static_assert( valid_tolerance<T, Options>::value, "[eve::floor] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v, target);
+    }
 
     EVE_CALLABLE_OBJECT(floor_t, floor_);
   };
@@ -74,15 +80,16 @@ namespace eve
 //!
 //!   * eve::tolerant
 //!
-//!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`,
+//!     The expression `floor[tolerance = tol](x)` computes a tolerant floor value for `x`,
 //!     where `x` must be a floating value.
 //!
 //!      * If `tol` is a floating value, computes the floor with
 //!        a tolerance `tol` using Hagerty's FL5 function.
 //!      * If `tol` is an integral value n, computes the floor of
 //!        the next nth representable value in the `x` type.
-//!      * If `tol` is omitted, the tolerance is taken to 3 times
-//!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
+//!      * the call `floor[tolerant](x)` takes tol as  3 times
+//!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
+//!      * if t is an simd value x must be an simd value
 //!
 //! @}
 //================================================================================================

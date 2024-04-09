@@ -80,7 +80,7 @@ namespace eve
     EVE_FORCEINLINE as_logical_t<T>
     is_unit_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return almost(is_equal)(sqr(a), one(as<T>()));
+      return is_equal[tolerant](sqr(a), one(as<T>()));
     }
   }
 }

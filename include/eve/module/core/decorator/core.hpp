@@ -145,4 +145,11 @@ namespace eve
   struct tolerant_option : detail::exact_option<tolerance>    {};
   inline constexpr auto as_option(tolerant_type const&) { return tolerant2; }
 
+  // test tolerance has correct type
+  template<typename T, typename Options>
+  struct valid_tolerance
+  {
+    using tolerance_type = decltype(rbr::fetch(tolerance|std::declval<T>(), std::declval<Options>()));
+    static constexpr bool value = !(simd_value<tolerance_type> && scalar_value<T>);
+  };
 }

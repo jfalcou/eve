@@ -44,13 +44,13 @@ requires has_native_abi_v<T>
   if constexpr( integral_value<T> ) { return dist(a, b); }
   else if constexpr( scalar_value<T> )
   {
-    if( numeric(is_equal)(a, b) ) return T(0);
+    if( is_equal[numeric](a, b) ) return T(0);
     if( is_unordered(a, b) ) return inf(eve::as<T>());
     return nb_values(a, b) * half(eve::as(a));
   }
   else if constexpr( simd_value<T> )
   {
-    return if_else(numeric(is_equal)(a, b),
+    return if_else(is_equal[numeric](a, b),
                    eve::zero,
                    if_else(is_unordered(a, b)
                           , eve::inf(as(a))

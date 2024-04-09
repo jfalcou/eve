@@ -22,8 +22,8 @@ namespace eve::detail
 // masked  implementation
 template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_SUPPORTS(avx512_),
-                                                   O          const &opts,
                                                    C          const &cx,
+                                                   O          const &opts, 
                                                    wide<T, N> const &v,
                                                    wide<T, N> const &w) noexcept
 requires x86_abi<abi_t<T, N>>

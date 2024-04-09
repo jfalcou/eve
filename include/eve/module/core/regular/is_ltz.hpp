@@ -11,7 +11,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/true.hpp>
-#include <eve/module/core/regular/is_greater_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -74,9 +73,20 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto is_ltz = functor<is_ltz_t>;
-}
 
-#include <eve/module/core/regular/impl/is_ltz.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<T>
+    is_ltz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      if constexpr( unsigned_value<T> )
+        return false_(eve::as(a));
+      else
+        return a > zero(eve::as(a));
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #include <eve/module/core/regular/impl/simd/x86/is_ltz.hpp>
