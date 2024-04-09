@@ -19,7 +19,7 @@ namespace eve::detail
                                    wide<T, N> const& v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(tolerance))
+    if constexpr(!O::contains(almost2))
     {
       constexpr auto cat = categorize<wide<T, N>>();
       if constexpr( current_api >= asimd )

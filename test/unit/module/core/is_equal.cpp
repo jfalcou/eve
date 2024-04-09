@@ -44,7 +44,7 @@ TTS_CASE_WITH(
     "Check behavior of eve::is_equal(simd)",
     eve::test::simd::all_types,
     tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3), tts::logicals(1, 2)))
-<typename T, typename M>(T const& a0, T const& a1, M const& l0, M const& )
+<typename T, typename M>(T const& a0, T const& a1, M const& l0, M const& l1)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
@@ -57,8 +57,8 @@ TTS_CASE_WITH(
             map([](auto e) -> eve::logical<v_t> { return e == v_t(1); }, a0));
   TTS_EQUAL(eve::is_equal(v_t(14), a1),
             map([](auto e) -> eve::logical<v_t> { return e == v_t(14); }, a1));
-//   TTS_EQUAL(eve::is_equal(l0, l1),
-//             map([](auto e, auto f) -> eve::logical<v_t> { return e == f; }, l0, l1));
+  TTS_EQUAL(eve::is_equal(l0, l1),
+            map([](auto e, auto f) -> eve::logical<v_t> { return e == f; }, l0, l1));
   TTS_EQUAL(eve::is_equal[l0](a0, a1),
             eve::if_else(l0, eve::is_equal(a0, a1), eve::false_(eve::as(a0))));
 };

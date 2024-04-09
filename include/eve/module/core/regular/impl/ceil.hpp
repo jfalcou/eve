@@ -20,14 +20,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
-    if constexpr(O::contains(tolerance))
+    if constexpr(O::contains(almost2))
     {
-      auto tol = [&]<typename V>(V const& t){
-        if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as(a0));
-        else if constexpr(integral_value<V>)            return t;
-        else                                            return convert(t,as_element(a0));
-      }(o[tolerance]);
-
+      auto tol = o[almost2].value(a0);
       if constexpr(integral_value<decltype(tol)>)
         return ceil(prev(a0, tol));
       else
