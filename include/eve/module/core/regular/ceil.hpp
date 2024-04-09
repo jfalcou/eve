@@ -14,19 +14,19 @@
 namespace eve
 {
   template<typename Options>
-  struct ceil_t : strict_elementwise_callable<ceil_t, Options, tolerant_option>
+  struct ceil_t : strict_elementwise_callable<ceil_t, Options, almost_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     {
-      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
+      //     static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
       return EVE_DISPATCH_CALL(v);
     }
 
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
     {
-      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
+//      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
       return EVE_DISPATCH_CALL(v, target);
     }
 
@@ -78,16 +78,16 @@ namespace eve
 //!     The call `eve;::ceil[mask](x)` provides a masked version of `eve::ceil` which is
 //!     equivalent to `if_else (mask, ceil(x), x)`.
 //!
-//!   * eve::tolerant
+//!   * eve::almost
 //!
-//!     The expression `ceil[tolerance = tol](x)` computes a tolerant ceil value for `x`,
+//!     The expression `ceil[almost = tol](x)` computes a tolerant ceil value for `x`,
 //!     where `x` must be a floating value.
 //!
 //!      * If `tol` is a floating value, computes the floor with a tolerance `tol`
 //!        using Hagerty's FL5 function.
 //!      * If `tol` is an integral value n, computes the floor of the next nth
 //!        representable value in the `x` type.
-//!      * ceil[tolerant](x) is equivalent to `ceil[tolerance = 3*eve::eps(eve::as (x))(x)`).
+//!      * ceil[almost](x) is equivalent to `ceil[tolerance = 3*eve::eps(eve::as (x))(x)`).
 //!      * if t is an simd value x must be an simd value
 //!
 //! @}

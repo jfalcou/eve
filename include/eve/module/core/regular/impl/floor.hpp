@@ -23,6 +23,7 @@
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve::detail
 {
@@ -33,14 +34,9 @@ namespace eve::detail
     if constexpr(integral_value<T>) return a0;
     else
     {
-      if constexpr(O::contains(tolerance))
+      if constexpr(O::contains(almost2))
       {
-        auto tol = [&]<typename V>(V const& t){
-          if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as(a0));
-          else if constexpr(integral_value<V>)            return t;
-          else                                            return convert(t,as_element(a0));
-        }(o[tolerance]);
-        
+        auto tol = o[almost2].value(a0);
         if constexpr(integral_value<decltype(tol)>)
           return floor(next(a0, tol));
         else
