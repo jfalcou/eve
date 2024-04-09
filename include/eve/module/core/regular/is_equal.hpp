@@ -22,11 +22,12 @@
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct is_equal_t : elementwise_callable<is_equal_t, Options, numeric_option, tolerant_option>
+  struct is_equal_t : elementwise_callable<is_equal_t, Options, numeric_option, almost_option>
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
@@ -132,23 +133,14 @@ namespace eve
               T const& a, U const& b) noexcept
     {
       using w_t =  common_value_t<T, U>;
-      if constexpr(O::contains(tolerance))
+      if constexpr(O::contains(almost2))
       {
-        using w_t =  common_value_t<T, U>;
         using e_t =  element_type_t<w_t>;
-        using r_t = as_logical_t<w_t>;
-        auto tol = [&]<typename V>(V const& t){
-          if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as<e_t>());
-          else if constexpr(integral_value<V>)            return t;
-          else                                            return convert(t,as<e_t>());
-        }(o[tolerance]);
+        auto tol = o[almost2].value(w_t{});
         if constexpr(integral_value<decltype(tol)>)
-          return if_else(nb_values(a, b) <= tol, true_(as<r_t>()), false_(as<r_t>())) ;
+          return if_else(nb_values(a, b) <= tol, true_(as<w_t>()), false_(as<w_t>())) ;
         else
-        {
-//          return is_equal(a, b);
-         return dist[pedantic](a, b) <= tol * max(eve::abs(a), eve::abs(b));
-        }
+          return dist[pedantic](a, b) <= tol * max(eve::abs(a), eve::abs(b));
       }
       else if constexpr(O::contains(numeric2))
       {
