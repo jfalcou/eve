@@ -24,6 +24,6 @@ namespace eve::detail
     if constexpr( unsigned_value<T> )
       return false_(eve::as(a));
     else
-      return a <  zero(eve::as(a));
+      return a < zero(eve::as(a));
   }
 }
