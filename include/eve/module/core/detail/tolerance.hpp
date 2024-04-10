@@ -13,6 +13,9 @@
 
 namespace eve
 {
+  // ===============================================================================================
+  //almost
+
   template<typename Value>
   struct almost_t
   {
@@ -58,4 +61,54 @@ namespace eve
   inline constexpr almost_t<default_tolerance> almost2 = {};
 
   inline constexpr auto as_option(almost_type const&) { return almost2; }
+
+  //  ============================================================================================
+  // definitely
+
+  template<typename Value>
+  struct definitely_t
+  {
+    constexpr definitely_t() {}
+    constexpr explicit definitely_t(Value v) : value_(v) {}
+    constexpr definitely_t(definitely_t const& v) : value_(v.value_) {}
+
+    /// ID type associated to the keyword
+    using id_type = definitely_mode;
+
+    template<typename T> static constexpr bool accept() { return true; }
+
+    std::ostream& show(std::ostream& os, auto const& v) const
+    {
+      return os << "definitely by " << v.value_;
+    }
+
+    using tag_type          = definitely_t<default_tolerance>;
+    using keyword_type      = definitely_t<default_tolerance>;
+    using stored_value_type = definitely_t<Value>;
+
+    template<eve::value Type>
+    constexpr auto operator=(Type v) const noexcept { return definitely_t<Type>{v}; }
+
+    template<typename T>
+    constexpr auto operator=(definitely_t<T> const& v) const noexcept
+    {
+      return v;
+    }
+
+    constexpr auto operator()(keyword_type const&) const noexcept { return *this; }
+
+    template<typename T> constexpr auto value(T const&) const
+    {
+      if constexpr(std::same_as<Value,default_tolerance>) return 3 * eps(as<T>{});
+      else if constexpr(integral_value<Value>)            return value_;
+      else                                                return convert(value_,as_element<T>{});
+    }
+
+    Value value_;
+  };
+
+  inline constexpr definitely_t<default_tolerance> definitely2 = {};
+
+  inline constexpr auto as_option(definitely_type const&) { return definitely2; }
+
 }
