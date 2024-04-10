@@ -18,6 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE as_wide_as_t<T, I>
   cyl_bessel_jn_(EVE_REQUIRES(cpu_), O const&, I nu, T x)
   {
+    using w_t = as_wide_as_t<T, I>;
     if constexpr(floating_value<I>)
     {
       if constexpr(scalar_value<I> && simd_value<T>)
@@ -48,7 +49,7 @@ namespace eve::detail
     }
     else // nu is integral
     {
-      if      constexpr(simd_value<I> && scalar_value<T>)   return cyl_bessel_jn(nu, wide<T, cardinal_t<I>>(x));
+      if      constexpr(simd_value<I> && scalar_value<T>)   return cyl_bessel_jn(nu, w_t(x));
       else if constexpr(scalar_value<I> && scalar_value<T>) return kernel_bessel_j_int(nu, x);
       else if constexpr(simd_value<T>)                      return kernel_bessel_j_int(convert(nu, as_element(x)), x);
     }

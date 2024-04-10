@@ -45,7 +45,7 @@ TTS_CASE_WITH ( "Check behavior of cyl_bessel_j0 on wide"
   TTS_RELATIVE_EQUAL(eve::cyl_bessel_j0(a2), eve::detail::map(std_cyl_bessel_j0, a2), 1e-4);
   TTS_RELATIVE_EQUAL(eve::cyl_bessel_j0(a3), eve::detail::map(std_cyl_bessel_j0, a3), 2e-2);
 #else
-  TTS_PASS("No support for std::cyl_bessel_i");
+  TTS_PASS("No support for std::cyl_bessel_j");
 #endif
 };
 
