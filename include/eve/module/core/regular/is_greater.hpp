@@ -11,11 +11,33 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/next.hpp>
+//#include <eve/module/core/regular/max.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_greater_t : elementwise_callable<is_greater_t, Options, definitely_option>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
+    {
+//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(is_greater_t, is_greater_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -58,38 +80,65 @@ namespace eve
 //!     The call `eve;::is_greater[mask](x,y)` provides a masked version of `eve::is_greater` which
 //!     is equivalent to `if_else (mask, is_greater(x), eve::false( eve::as(x,y)))`.
 //!
-//!   * `definitely`
+//!   * `tolerance`
 //!
-//!     The expression `definitely(is_greater)(x, y, t)` where `x` and `y` must be
+//!     The expression `is_greater[tolerance = t](x, y)` where `x` and `y` must be
 //!     floating point values, evals to true if and only if `x` is definitely greater than `y`.
 //!     This means that:
 //!
 //!       - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
 //!       - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
 //!       - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
+//!       - if t is an simd value x or y must also be simd.
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_greater_, is_greater);
+  inline constexpr auto is_greater = functor<is_greater_t>;
 
-namespace detail
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+  namespace detail
   {
-    if constexpr( scalar_value<T> && scalar_value<U> ) return as_logical_t<T>(a > b);
-    else return a > b;
-  }
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    is_greater_(EVE_REQUIRES(cpu_),
+                  O const & o,
+                  logical<T> const& a, logical<U> const& b) noexcept
+    {
+      if constexpr( scalar_value<U> &&  scalar_value<T>)
+      {
+        using r_t =  common_value_t<T, U>;
+        return as_logical_t<r_t>(a > b);
+      }
+      else return a > b;
+    }
 
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, value U, value V>
-  EVE_FORCEINLINE auto
-  is_greater_(EVE_SUPPORTS(cpu_), C const& cond, U const& u, V const& v) noexcept
-  {
-    return logical_mask_op(cond, is_greater, u, v);
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    is_greater_(EVE_REQUIRES(cpu_),
+                  O const & o,
+                  T const& aa, U const& bb) noexcept
+    {
+      using w_t =  common_value_t<T, U>;
+      using r_t =  as_logical_t<w_t>;
+      auto a = w_t(aa);
+      auto b = w_t(bb);
+      if constexpr(O::contains(definitely2))
+      {
+        auto tol = o[definitely2].value(w_t{});
+        if constexpr(integral_value<decltype(tol)>)
+          return a > eve::next(b, tol);
+        else
+          return a > fam(b, tol, max(eve::abs(a), eve::abs(b)));
+      }
+      else
+      {
+        if constexpr( scalar_value<U> &&  scalar_value<T>)
+          return as_logical_t<w_t>(a > b);
+        else
+          return a > b;
+      }
+    }
   }
-}
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)

@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/zip.hpp>
@@ -136,24 +137,24 @@ inline constexpr auto minmax = functor<minmax_t>;
     }
 
     // -----  Predicate case
-    template<typename Callable, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
-    {
-      if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
-      else if constexpr( std::same_as<Callable, callable_is_greater_> )
-      {
-        return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
-      }
-      else
-      {
-        return [f](auto x, auto y)
-        {
-          auto check = f(y, x);
-          return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
-        };
-      }
-    }
+//     template<typename Callable, callable_options O>
+//     EVE_FORCEINLINE auto
+//     minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
+//     {
+//       if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
+//       else if constexpr( std::same_as<Callable, callable_is_greater_> )
+//       {
+//         return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
+//       }
+//       else
+//       {
+//         return [f](auto x, auto y)
+//         {
+//           auto check = f(y, x);
+//           return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
+//         };
+//       }
+//     }
 
     template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts, callable_options O>
     EVE_FORCEINLINE auto
