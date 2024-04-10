@@ -90,7 +90,7 @@ namespace eve
 //!
 //!     The expression `is_not_equal[numeric](x,y)` considers that Nan values are not equal.
 //!
-//!   * `tolerance`
+//!   * `definitely`
 //!
 //!     The expression `is_not_equal[definitely =  t](x, y)` where `x` and `y` must be floating point
 //!     values, evals to true if and only if `x` is definitely not equal to `y`.
