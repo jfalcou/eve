@@ -30,7 +30,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
+  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(definitely2))
   {
     return is_not_equal.behavior(cpu_{}, opts, v, w);
   }

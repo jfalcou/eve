@@ -14,7 +14,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
 
@@ -34,8 +33,8 @@ template<ordered_value T>
 EVE_FORCEINLINE auto
 is_not_less_equal_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {
-  if constexpr( integral_value<T> ) return is_greater(a, b);
-  else return is_greater(a, b) || is_unordered(a, b);
+  if constexpr( integral_value<T> ) return a > b;
+  else return (a > b) || is_unordered(a, b);
 }
 
 // -----------------------------------------------------------------------------------------------

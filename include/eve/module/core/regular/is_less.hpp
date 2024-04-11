@@ -14,9 +14,31 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_less_t : elementwise_callable<is_less_t, Options, definitely_option>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
+    {
+//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(is_less_t, is_less_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -71,25 +93,54 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_less_, is_less);
+  inline constexpr auto is_less = functor<is_less_t>;
 
-namespace detail
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
-  {
-    if constexpr( scalar_value<T> && scalar_value<U> ) return as_logical_t<T>(a < b);
-    else return a < b;
-  }
+  // Required for if_else optimisation detections
+  using callable_is_less_ = tag_t<is_less>;
 
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, value U, value V>
-  EVE_FORCEINLINE auto is_less_(EVE_SUPPORTS(cpu_), C const& cond, U const& u, V const& v) noexcept
+  namespace detail
   {
-    return logical_mask_op(cond, is_less, u, v);
+   template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    is_less_(EVE_REQUIRES(cpu_),
+                  O const & o,
+                  logical<T> const& a, logical<U> const& b) noexcept
+    {
+      if constexpr( scalar_value<U> &&  scalar_value<T>)
+      {
+        using r_t =  common_value_t<T, U>;
+        return as_logical_t<r_t>(a < b);
+      }
+      else return a <  b;
+    }
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    is_less_(EVE_REQUIRES(cpu_),
+                  O const & o,
+                  T const& aa, U const& bb) noexcept
+    {
+      using w_t =  common_value_t<T, U>;
+      using r_t =  as_logical_t<w_t>;
+      auto a = w_t(aa);
+      auto b = w_t(bb);
+      if constexpr(O::contains(definitely2))
+      {
+        auto tol = o[definitely2].value(w_t{});
+        if constexpr(integral_value<decltype(tol)>)
+          return a <  eve::prev(b, tol);
+        else
+          return a <  fam(b, -tol, max(eve::abs(a), eve::abs(b)));
+      }
+      else
+      {
+        if constexpr( scalar_value<U> &&  scalar_value<T>)
+          return as_logical_t<w_t>(a <  b);
+        else
+          return a <  b;
+      }
+    }
   }
-}
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
