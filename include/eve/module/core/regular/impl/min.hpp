@@ -96,12 +96,13 @@ namespace eve::detail
   //================================================================================================
   // Predicate case
   //================================================================================================
-//   template<typename Callable, callable_options O>
-//   EVE_FORCEINLINE constexpr auto
-//   min_(EVE_REQUIRES(cpu_), O const &, Callable const& f) noexcept
-//   {
-//     if      constexpr( std::same_as<Callable, callable_is_less_>    ) return eve::min;
-//     else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max;
-//     else    return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
-//   }
+  template<typename Callable, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  min_(EVE_REQUIRES(cpu_), O const &, Callable const& f) noexcept
+  {
+    if      constexpr( std::same_as<Callable, callable_is_less_>    ) return eve::min;
+    else if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::max; //TODO greater
+    else
+      return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
+  }
 }
