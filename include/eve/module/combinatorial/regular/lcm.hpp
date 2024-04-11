@@ -72,7 +72,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr auto lcm_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    constexpr T lcm_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "eve::lcm: some entries are not flint");
       a = eve::abs(a);
@@ -80,7 +80,7 @@ namespace eve
       if constexpr( scalar_value<T> )
       {
         if( !b || !a ) return T(0);
-        return b / gcd(a, b) * a;
+        else return b / gcd(a, b) * a;
       }
       else return a * (b / gcd(a, if_else(b, b, eve::one)));
     }
