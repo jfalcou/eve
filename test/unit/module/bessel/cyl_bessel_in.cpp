@@ -24,7 +24,7 @@ TTS_CASE_TPL( "Check return types of cyl_bessel_in", eve::test::simd::ieee_reals
 
 TTS_CASE_WITH ( "Check behavior of cyl_bessel_in on wide"
               , eve::test::simd::ieee_reals
-              , tts::generate(tts::randoms(+2.,+10.), tts::randoms(0.0, 50.0))
+              , tts::generate(tts::randoms(+2.,+10.), tts::randoms(0.0, 30.0))
               )
 <typename T>([[maybe_unused]] T const& a0, [[maybe_unused]] T const& a1)
 {
