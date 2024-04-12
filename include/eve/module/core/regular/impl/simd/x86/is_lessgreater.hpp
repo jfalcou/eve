@@ -14,11 +14,13 @@
 
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N>
+template<floating_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE logical<wide<T, N>>
                 is_lessgreater_(EVE_SUPPORTS(sse2_),
-                                wide<T, N> const                &a,
-                                wide<T, N> const                &b) noexcept requires x86_abi<abi_t<T, N>>
+                                wide<T, N> const &a,
+                                 O          const&o,
+                                wide<T, N> const &b) noexcept
+requires x86_abi<abi_t<T, N>>
 {
   using l_t        = logical<wide<T, N>>;
   constexpr auto c = categorize<wide<T, N>>();
@@ -37,7 +39,7 @@ EVE_FORCEINLINE logical<wide<T, N>>
   }
   else if constexpr( c == category::float64x4 ) return l_t(_mm256_cmp_pd(a, b, m));
   else if constexpr( c == category::float32x8 ) return l_t(_mm256_cmp_ps(a, b, m));
-  else return is_lessgreater_(EVE_RETARGET(cpu_), a, b);
+  else return is_lessgreater.behavior(cpu_{}, o, a, b);
 }
 
 // -----------------------------------------------------------------------------------------------
