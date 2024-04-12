@@ -23,7 +23,9 @@ TTS_CASE_WITH("Check behavior of sph_bessel_y1 on wide",
                             tts::randoms(0.5, 5.5),
                             tts::randoms(5.5, 9.5),
                             tts::randoms(9.5, 60.0)))
-<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+<typename T>( [[maybe_unused]] T const& a0, [[maybe_unused]] T const& a1
+            , [[maybe_unused]] T const& a2, [[maybe_unused]] T const& a3
+            )
 {
   using v_t = eve::element_type_t<T>;
 

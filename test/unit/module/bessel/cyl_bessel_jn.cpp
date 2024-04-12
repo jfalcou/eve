@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of cyl_bessel_jn", eve::test::simd::ieee_reals)
 TTS_CASE_WITH("Check behavior of cyl_bessel_jn on wide with integral order",
               eve::test::simd::ieee_reals,
               tts::generate(tts::ramp(0), tts::randoms(0.0, 1000.0)))
-<typename T>(T n, T a0)
+<typename T>([[maybe_unused]] T n, [[maybe_unused]] T a0)
 {
   using v_t               = eve::element_type_t<T>;
   using i_t               = eve::as_integer_t<v_t>;
@@ -105,7 +105,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_jn on wide with integral order",
 TTS_CASE_WITH("Check behavior of cyl_bessel_jn on wide with non integral order",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(0.0, 10.0), tts::randoms(0.0, 1000.0)))
-<typename T>(T n, T a0)
+<typename T>([[maybe_unused]] T n, [[maybe_unused]] T a0)
 {
   using v_t = eve::element_type_t<T>;
 

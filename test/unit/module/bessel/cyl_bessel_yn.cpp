@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check return types of cyl_bessel_yn", eve::test::simd::ieee_reals)
 TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
               eve::test::simd::ieee_reals,
               tts::generate(tts::ramp(0), tts::randoms(0.5, 100.0)))
-<typename T>(T n, T a0)
+<typename T>([[maybe_unused]] T n, [[maybe_unused]] T a0)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
@@ -109,11 +109,8 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
 TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with non integral order",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(0.1, 10.0), tts::randoms(0.5, 100.0)))
-<typename T>(T n, T a0)
+<typename T>([[maybe_unused]] T n, [[maybe_unused]] T a0)
 {
-  using v_t = eve::element_type_t<T>;
-
-
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(0.5), eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
@@ -122,6 +119,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with non integral order",
   }
 
 #if defined(__cpp_lib_math_special_functions)
+  using v_t = eve::element_type_t<T>;
   auto std_cyl_bessel_yn = [](auto n, auto x) -> v_t { return std::cyl_neumann(n, x); };
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(3.5), T(1500)), T(std_cyl_bessel_yn(v_t(3.5), v_t(1500))), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(2.5), T(500)), T(std_cyl_bessel_yn(v_t(2.5), v_t(500))), 20000.0);

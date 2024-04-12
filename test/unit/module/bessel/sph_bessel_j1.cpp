@@ -23,7 +23,7 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
                               tts::randoms(5.5, 9.5),
                               tts::randoms(9.5, 60.0))
          )
-<typename T>(T const& a0, T const& a1, T const& a2)
+<typename T>([[maybe_unused]] T const& a0, [[maybe_unused]] T const& a1, [[maybe_unused]] T const& a2)
 {
   using v_t = eve::element_type_t<T>;
 
@@ -60,7 +60,7 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::sph_bessel_j1(a1), eve::detail::map(std_sph_bessel_j1, a1), 390.0);
   TTS_ULP_EQUAL(eve::sph_bessel_j1(a2), eve::detail::map(std_sph_bessel_j1, a2), 10700.0);
 #else
-  TTS_PASS("No support for std::sph_bessel")
+  TTS_PASS("No support for std::sph_bessel");
 #endif
 };
 

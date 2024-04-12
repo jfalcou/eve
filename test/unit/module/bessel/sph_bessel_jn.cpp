@@ -32,7 +32,7 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_jn on wide with integral order"
         , eve::test::simd::ieee_reals
         , tts::generate(tts::ramp(0), tts::randoms(0.1, 200.0))
         )
-  <typename T>(T n, T a0)
+  <typename T>([[maybe_unused]] T n, [[maybe_unused]] T a0)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;

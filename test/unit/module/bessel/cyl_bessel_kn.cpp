@@ -32,13 +32,12 @@ TTS_CASE_TPL("Check return types of cyl_bessel_kn", eve::test::simd::ieee_reals)
 TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
               eve::test::simd::ieee_reals,
               tts::generate(tts::ramp(0), tts::randoms(0.0, 10.0)))
-<typename T>(T n, T a0)
+<typename T>([[maybe_unused]] T n, [[maybe_unused]] T a0)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<v_t>;
   using I_t = eve::wide<i_t, eve::cardinal_t<T>>;
 
-  auto std_cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, double(x)); };
 
   if constexpr( eve::platform::supports_invalids )
   {
@@ -57,6 +56,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
   }
 
 #if defined(__cpp_lib_math_special_functions)
+  auto std_cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, double(x)); };
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(3, v_t(1500)), eve::zero(eve::as<v_t>()), 5.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(2, v_t(50)), std_cyl_bessel_kn(2, v_t(50)), 5.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(0, v_t(10)), std_cyl_bessel_kn(0, v_t(10)), 5.0);
@@ -120,10 +120,8 @@ TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
         , tts::generate(tts::randoms(0.1, 10.0)
         , tts::randoms(0.0, 10.0))
         )
-<typename T>(T n, T a0 )
+<typename T>([[maybe_unused]] T n,[[maybe_unused]] T a0 )
 {
-  using v_t = eve::element_type_t<T>;
-
   if constexpr( eve::platform::supports_invalids )
   {
     TTS_ULP_EQUAL(eve::cyl_bessel_kn(T(0.5), eve::minf(eve::as<T>())), eve::nan(eve::as<T>()), 0);
@@ -135,6 +133,7 @@ TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
   }
 
 #if defined(__cpp_lib_math_special_functions)
+  using v_t = eve::element_type_t<T>;
   auto std_cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, double(x)); };
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(v_t(3.5), v_t(1500)), eve::zero(eve::as<v_t>()), 10.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(v_t(2.5), v_t(50)), std_cyl_bessel_kn(v_t(2.5), v_t(50)), 10.0);
