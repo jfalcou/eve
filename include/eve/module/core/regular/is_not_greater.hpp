@@ -23,7 +23,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_not_greater_t : elementwise_callable<is_not_greater_t, Options, definitely_option>
+  struct is_not_greater_t : elementwise_callable<is_not_greater_t, Options, almost_option>
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
@@ -122,20 +122,20 @@ namespace eve
       using r_t =  as_logical_t<w_t>;
       auto a = w_t(aa);
       auto b = w_t(bb);
-      if constexpr(O::contains(definitely2))
+      if constexpr(O::contains(almost2))
       {
-        auto tol = o[definitely2].value(w_t{});
+        auto tol = o[almost2].value(w_t{});
         if constexpr(integral_value<decltype(tol)>)
-          return a <  eve::next(b, tol);
+          return a <= eve::next(b, tol);
         else
-          return is_not_greater(a, fam(b, tol, max(eve::abs(a), eve::abs(b))));
+          return is_not_greater(a, fam(b, +tol, max(eve::abs(a), eve::abs(b))));
       }
       else
       {
         if constexpr( scalar_value<U> &&  scalar_value<T>)
           return as_logical_t<w_t>(a > b);
         else
-          return a > b || is_unordered(a, b); ;
+          return a <= b || is_unordered(a, b); ;
       }
     }
   }
