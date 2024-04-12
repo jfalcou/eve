@@ -11,13 +11,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/fam.hpp>
-#include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/regular/max.hpp>
-#include <eve/traits/as_logical.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
@@ -97,52 +90,61 @@ namespace eve
 
   // Required for if_else optimisation detections
   using callable_is_greater_ = tag_t<is_greater>;
+}
+//These include are there because max must see is_greater
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
-  namespace detail
+namespace eve::detail
+{
+  template<value T, value U, callable_options O>
+  EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+  is_greater_(EVE_REQUIRES(cpu_),
+              O const & o,
+              logical<T> const& a, logical<U> const& b) noexcept
   {
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
-    is_greater_(EVE_REQUIRES(cpu_),
-                  O const & o,
-                  logical<T> const& a, logical<U> const& b) noexcept
+    if constexpr( scalar_value<U> &&  scalar_value<T>)
+    {
+      using r_t =  common_value_t<T, U>;
+      return as_logical_t<r_t>(a > b);
+    }
+    else return a > b;
+  }
+
+
+  template<value T, value U, callable_options O>
+  EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+  is_greater_(EVE_REQUIRES(cpu_),
+              O const & o,
+              T const& aa, U const& bb) noexcept
+  {
+    using w_t =  common_value_t<T, U>;
+    using r_t =  as_logical_t<w_t>;
+    auto a = w_t(aa);
+    auto b = w_t(bb);
+    if constexpr(O::contains(definitely2))
+    {
+      auto tol = o[definitely2].value(w_t{});
+      if constexpr(integral_value<decltype(tol)>)
+        return a > eve::next(b, tol);
+      else
+        return a > fam(b, tol, max(eve::abs(a), eve::abs(b)));
+    }
+    else
     {
       if constexpr( scalar_value<U> &&  scalar_value<T>)
-      {
-        using r_t =  common_value_t<T, U>;
-        return as_logical_t<r_t>(a > b);
-      }
-      else return a > b;
-    }
-
-
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
-    is_greater_(EVE_REQUIRES(cpu_),
-                  O const & o,
-                  T const& aa, U const& bb) noexcept
-    {
-      using w_t =  common_value_t<T, U>;
-      using r_t =  as_logical_t<w_t>;
-      auto a = w_t(aa);
-      auto b = w_t(bb);
-      if constexpr(O::contains(definitely2))
-      {
-        auto tol = o[definitely2].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>)
-          return a > eve::next(b, tol);
-        else
-          return a > fam(b, tol, max(eve::abs(a), eve::abs(b)));
-      }
+        return as_logical_t<w_t>(a > b);
       else
-      {
-        if constexpr( scalar_value<U> &&  scalar_value<T>)
-          return as_logical_t<w_t>(a > b);
-        else
-          return a > b;
-      }
+        return a > b;
     }
   }
 }
+
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_greater.hpp>
