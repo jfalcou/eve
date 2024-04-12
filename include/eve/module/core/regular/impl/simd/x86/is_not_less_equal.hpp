@@ -68,7 +68,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical | O::contains(definitely2))
     {
-      return is_not_less_equal_(EVE_RETARGET(cpu_), cx, v, w);
+      return is_not_less_equal.behavior(cpu_{}, o, v, w);
     }
     else
     {

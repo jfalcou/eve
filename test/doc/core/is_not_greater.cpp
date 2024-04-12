@@ -13,7 +13,7 @@ int main()
             << "<- pf                             = " << pf << '\n'
             << "<- qf                             = " << qf << '\n'
             << "-> is_not_greater(pf, qf)         = " << eve::is_not_greater(pf, qf) << '\n'
-            << "-> almost(is_not_greater)(pf, qf) = " << eve::almost(eve::is_not_greater)(pf, qf) << '\n'
+            << "-> is_not_greater[almost2](pf, qf) = " << eve::is_not_greater[eve::definitely2](pf, qf) << '\n'
             << "-> is_not_greater[pf > 0](pf, qf) = " << eve::is_not_greater[pf > 0](pf, qf) << '\n';
 
   float xf = 1.0f;
