@@ -118,7 +118,7 @@ namespace eve
       auto b = w_t(bb);
       if constexpr(O::contains(almost2))
       {
-        auto tol = o[definitely2].value(w_t{});
+        auto tol = o[almost2].value(w_t{});
         if constexpr(integral_value<decltype(tol)>)
           return a <= eve::next(b, tol);
         else

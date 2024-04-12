@@ -80,9 +80,9 @@ namespace eve
 //!     The call `eve;::is_greater[mask](x,y)` provides a masked version of `eve::is_greater` which
 //!     is equivalent to `if_else (mask, is_greater(x), eve::false( eve::as(x,y)))`.
 //!
-//!   * `tolerance`
+//!   * `definitely`
 //!
-//!     The expression `is_greater[tolerance = t](x, y)` where `x` and `y` must be
+//!     The expression `is_greater[definitely = t](x, y)` where `x` and `y` must be
 //!     floating point values, evals to true if and only if `x` is definitely greater than `y`.
 //!     This means that:
 //!
