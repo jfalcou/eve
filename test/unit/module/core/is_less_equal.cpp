@@ -27,9 +27,9 @@ TTS_CASE_TPL("Check return types of eve::is_less_equal(simd)", eve::test::simd::
     TTS_EXPR_IS(eve::is_less_equal[eve::almost2](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_less_equal[eve::almost2](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_less_equal[eve::almost2](v_t(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_less_equal[eve::almost2](T(), T(), unsigned()), logical<T>);
-    TTS_EXPR_IS(eve::is_less_equal[eve::almost2](T(), v_t(), unsigned()), logical<T>);
-    TTS_EXPR_IS(eve::is_less_equal[eve::almost2](v_t(), T(), unsigned()), logical<T>);
+    TTS_EXPR_IS(eve::is_less_equal[eve::almost2 = unsigned()](T(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_less_equal[eve::almost2 = unsigned()](T(), v_t()), logical<T>);
+    TTS_EXPR_IS(eve::is_less_equal[eve::almost2 = unsigned()](v_t(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_less_equal[eve::almost2](T(), T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_less_equal[eve::almost2](T(), v_t(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_less_equal[eve::almost2](v_t(), T(), T()), logical<T>);
