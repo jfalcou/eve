@@ -16,6 +16,7 @@
 
 namespace eve::detail
 {
+
 template<value T, value U, value V>
 EVE_FORCEINLINE auto
 fnma_(EVE_SUPPORTS(cpu_),

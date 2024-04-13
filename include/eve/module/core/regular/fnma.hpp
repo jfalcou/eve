@@ -8,10 +8,22 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct fnma_t : elementwise_callable<fnma_t, Options, pedantic_option>
+  {
+    template<value T,  value U,  value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+    { return EVE_DISPATCH_CALL(a, b, c); }
+
+    EVE_CALLABLE_OBJECT(fnma_t, fnma_);
+  };
+
 //================================================================================================
 //! @addtogroup core_fma_family
 //! @{
@@ -74,10 +86,19 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fnma_, fnma);
-}
+  inline constexpr auto fnma = functor<fnma_t>;
 
-#include <eve/module/core/regular/impl/fnma.hpp>
+  namespace detail
+  {
+
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fnma_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    {
+      return fma[o](T(-a), b, c);
+    }
+
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fnma.hpp>
