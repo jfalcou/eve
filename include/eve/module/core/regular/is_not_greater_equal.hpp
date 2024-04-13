@@ -126,7 +126,7 @@ namespace eve
       {
         auto tol = o[definitely2].value(w_t{});
         if constexpr(integral_value<decltype(tol)>)
-          return a > eve::prev(b, tol);
+          return is_not_greater_equal(a, eve::prev(b, tol));
         else
           return is_not_greater_equal(a, fam(b, -tol, max(eve::abs(a), eve::abs(b))));
       }

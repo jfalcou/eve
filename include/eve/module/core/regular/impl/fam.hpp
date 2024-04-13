@@ -78,7 +78,7 @@ namespace eve::detail
       }
       else if constexpr( std::same_as<element_type_t<T>, double> )
       {
-        [[maybe_unused]] auto stdfam = [](auto sa, auto sb, auto sc){return std::fma(sc, sa, sb); };
+        [[maybe_unused]] auto stdfam = [](auto sa, auto sb, auto sc){return std::fma(sc, sb, sa); };
         if constexpr(scalar_value<T>) return std::fma(c, a, b);
         else                          return map(stdfam, a, b, c);
       }

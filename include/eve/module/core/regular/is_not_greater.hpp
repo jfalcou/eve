@@ -128,7 +128,7 @@ namespace eve
         if constexpr(integral_value<decltype(tol)>)
           return a <= eve::next(b, tol);
         else
-          return is_not_greater(a, fam(b, +tol, max(eve::abs(a), eve::abs(b))));
+          return is_not_greater(a, fam(b, tol, max(eve::abs(a), eve::abs(b))));
       }
       else
       {

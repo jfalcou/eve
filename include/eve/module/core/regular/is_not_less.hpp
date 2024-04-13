@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_not_less_t : elementwise_callable<is_not_less_t, Options, definitely_option>
+  struct is_not_less_t : elementwise_callable<is_not_less_t, Options, almost_option>
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
@@ -111,9 +111,9 @@ namespace eve
       using r_t =  as_logical_t<w_t>;
       auto a = w_t(aa);
       auto b = w_t(bb);
-      if constexpr(O::contains(definitely2))
+      if constexpr(O::contains(almost2))
       {
-        auto tol = o[definitely2].value(w_t{});
+        auto tol = o[almost2].value(w_t{});
         if constexpr(integral_value<decltype(tol)>)
           return is_not_less(a,  eve::prev(b, tol));
         else

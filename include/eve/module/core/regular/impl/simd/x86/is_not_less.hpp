@@ -74,7 +74,7 @@ namespace eve::detail
 
       if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
       {
-        return is_not_greater_(EVE_RETARGET(cpu_), cx, v, w);
+        return is_not_greater.behavior(cpu_{}, o, v, w);
       }
       else
       {
@@ -90,7 +90,7 @@ namespace eve::detail
           return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
         else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
         else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-        else return is_greater_equal[cx](v, w);
+        else return is_not_greater.behavior(cpu_{}, o, v, w);
       }
     }
   }
