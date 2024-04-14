@@ -8,10 +8,26 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct fms_t : elementwise_callable<fms_t, Options, pedantic_option, promote_option>
+  {
+    template<eve::value T,eve::value U,eve::value V>
+    requires(Options::contains(promote2))
+      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+    template<eve::value T,eve::value U,eve::value V>
+    requires(!Options::contains(promote2))
+      constexpr EVE_FORCEINLINE
+    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+    EVE_CALLABLE_OBJECT(fms_t, fms_);
+  };
+
 //================================================================================================
 //! @addtogroup core_fma_family
 //! @{
@@ -74,7 +90,8 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fms_, fms);
+  inline constexpr auto fms = functor<fms_t>;
+
 }
 
 #include <eve/module/core/regular/impl/fms.hpp>
