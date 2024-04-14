@@ -81,10 +81,6 @@ namespace eve
 //!
 //!       * The call `pedantic(fanm)(x,y,z)` ensures the one rounding property.
 //!       This can be very expensive if the system has no hardware capability.
-//!
-//!       * The call `numeric(fanm)(x,y,z)` ensures the full compliance to fanm properties.
-//!        This can be very expensive if the system has no hardware capability.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto fanm = functor<fanm_t>;

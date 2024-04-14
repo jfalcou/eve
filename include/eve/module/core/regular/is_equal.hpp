@@ -31,12 +31,14 @@ namespace eve
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
+    // constexpr EVE_FORCEINLINE auto  operator()(logical<T> a, logical<U> b) const -> as_logical_t<decltype(a == b)>
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_equal] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b); }
 
     template<value T,  value U>
-    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
+    //    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE auto  operator()(T a, U b) const -> as_logical_t<decltype(a == b)>
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(is_equal_t, is_equal_);
@@ -113,7 +115,7 @@ namespace eve
   namespace detail
   {
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    EVE_FORCEINLINE constexpr auto
     is_equal_(EVE_REQUIRES(cpu_),
               O const & o,
               logical<T> const& a, logical<U> const& b) noexcept
@@ -127,12 +129,12 @@ namespace eve
     }
 
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    EVE_FORCEINLINE constexpr auto
     is_equal_(EVE_REQUIRES(cpu_),
               O const & o,
               T const& a, U const& b) noexcept
     {
-      using w_t =  common_value_t<T, U>;
+      using w_t = as_logical_t<decltype(a == b)>;
       if constexpr(O::contains(almost2))
       {
         using e_t =  element_type_t<w_t>;

@@ -85,6 +85,11 @@ namespace eve
 //!       * The call `fms[pedantic](x,y,z)` ensures the full compliance to fms properties.
 //!       This can be very expensive if the system has no hardware capability.
 //!
+//!   * eve::promote
+//!  
+//!     * The call `fms[promote](x,y,z)`promotes all arguments to their common value type
+//!       before computing fma.
+//!
 //! @}
 //================================================================================================
   inline constexpr auto fms = functor<fms_t>;

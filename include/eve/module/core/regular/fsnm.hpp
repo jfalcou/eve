@@ -8,10 +8,22 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/fnma.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct fsnm_t : elementwise_callable<fsnm_t, Options, pedantic_option, promote_option>
+  {
+    template<value T,  value U,  value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+    { return EVE_DISPATCH_CALL(a, b, c); }
+
+    EVE_CALLABLE_OBJECT(fsnm_t, fsnm_);
+  };
+
 //================================================================================================
 //! @addtogroup core_fma_family
 //! @{
@@ -69,16 +81,19 @@ namespace eve
 //!       * The call `pedantic(fsnm)(x,y,z)` ensures the one rounding property.
 //!       This can be very expensive if the system has no hardware capability.
 //!
-//!       * The call `numeric(fsnm)(x,y,z)` ensures the full compliance to fsnm properties.
-//!        This can be very expensive if the system has no hardware capability.
-//!
 //! @}
 //================================================================================================
+  inline constexpr auto fsnm = functor<fsnm_t>;
 
-EVE_MAKE_CALLABLE(fsnm_, fsnm);
+  namespace detail
+  {
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fsnm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    {
+      return fnms[o](b, c, a);
+    }
+  }
 }
-
-#include <eve/module/core/regular/impl/fsnm.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fsnm.hpp>
