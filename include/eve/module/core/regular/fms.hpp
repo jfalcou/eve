@@ -82,11 +82,8 @@ namespace eve
 //!
 //!   * eve::pedantic, eve::numeric
 //!
-//!       * The call `pedantic(fms)(x,y,z)` ensures the one rounding property.
+//!       * The call `fms[pedantic](x,y,z)` ensures the full compliance to fms properties.
 //!       This can be very expensive if the system has no hardware capability.
-//!
-//!       * The call `numeric(fms)(x,y,z)` ensures the full compliance to fms properties.
-//!        This can be very expensive if the system has no hardware capability.
 //!
 //! @}
 //================================================================================================

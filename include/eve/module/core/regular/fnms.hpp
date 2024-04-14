@@ -8,10 +8,27 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct fnms_t : elementwise_callable<fnms_t, Options, pedantic_option, promote_option>
+  {
+    template<eve::value T,eve::value U,eve::value V>
+    requires(Options::contains(promote2))
+      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+    template<eve::value T,eve::value U,eve::value V>
+    requires(!Options::contains(promote2))
+      constexpr EVE_FORCEINLINE
+    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+    EVE_CALLABLE_OBJECT(fnms_t, fnms_);
+  };
+
 //================================================================================================
 //! @addtogroup core_fma_family
 //! @{
@@ -64,21 +81,26 @@ namespace eve
 //!     version of `fnms` which is
 //!     equivalent to `if_else(mask, fnms(x, ...), x)`
 //!
-//!   * eve::pedantic, eve::numeric
+//!   * eve::pedantic
 //!
-//!       * The call `pedantic(fnms)(x,y,z)` ensures the one rounding property.
+//!       * The call `fnms[pedantic](x,y,z)` ensures  the full compliance to fms properties.
 //!       This can be very expensive if the system has no hardware capability.
 //!
-//!       * The call `numeric(fnms)(x,y,z)` ensures the full compliance to fnms properties.
-//!        This can be very expensive if the system has no hardware capability.
-//!
-//!       * see the above regular example.
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fnms_, fnms);
-}
+ inline constexpr auto fnms = functor<fnms_t>;
 
-#include <eve/module/core/regular/impl/fnms.hpp>
+  namespace detail
+  {
+
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fnms_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    {
+      return minus(fma[o](a, b, c));
+    }
+
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fnms.hpp>

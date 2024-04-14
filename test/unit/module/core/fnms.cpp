@@ -59,8 +59,8 @@ TTS_CASE_WITH("Check precision behavior of fnms on real types",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      eve::pedantic(fnms)(a0, a1, eve::one(eve::as<T>())),
-      map([&](auto e, auto f) -> v_t { return eve::pedantic(fnms)(e, f, v_t(1)); }, a0, a1),
+      fnms[eve::pedantic](a0, a1, eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return fnms[eve::pedantic](e, f, v_t(1)); }, a0, a1),
       2);
 };
 
@@ -81,10 +81,10 @@ TTS_CASE_WITH("Check behavior of fnms on all types full range",
   using v_t = eve::element_type_t<T>;
   if( eve::all(
           eve::fnms(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))
-          == eve::pedantic(eve::fnms)(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
+          == eve::fnms[eve::pedantic](onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
   {
     TTS_ULP_EQUAL(fnms((a0), (a1), (a2)),
-                  map([&](auto e, auto f, auto g) -> v_t { return eve::pedantic(fnms)(e, f, g); },
+                  map([&](auto e, auto f, auto g) -> v_t { return fnms[eve::pedantic](e, f, g); },
                       a0,
                       a1,
                       a2),
@@ -97,12 +97,8 @@ TTS_CASE_WITH("Check behavior of fnms on all types full range",
                   2);
   }
   TTS_ULP_EQUAL(
-      eve::pedantic(fnms)((a0), (a1), (a2)),
-      map([&](auto e, auto f, auto g) -> v_t { return eve::pedantic(fnms)(e, f, g); }, a0, a1, a2),
-      2);
-  TTS_ULP_EQUAL(
-      eve::numeric(fnms)((a0), (a1), (a2)),
-      map([&](auto e, auto f, auto g) -> v_t { return eve::pedantic(fnms)(e, f, g); }, a0, a1, a2),
+      fnms[eve::pedantic]((a0), (a1), (a2)),
+      map([&](auto e, auto f, auto g) -> v_t { return fnms[eve::pedantic](e, f, g); }, a0, a1, a2),
       2);
 };
 
@@ -122,24 +118,24 @@ TTS_CASE_WITH("Check behavior of promote(fnms) on all types",
 
   constexpr int N = eve::cardinal_v<T>;
   eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
-  auto r1 = promote(fnms)(a0, a1, fa);
+  auto r1 = fnms[promote](a0, a1, fa);
   using er1_t =  eve::element_type_t<decltype(r1)>;
   auto refr1 = eve::fnms(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
   TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
   eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
-  auto r2 = promote(fnms)(a0, da, a1);
+  auto r2 = fnms[promote](a0, da, a1);
   using er2_t =  eve::element_type_t<decltype(r2)>;
   auto refr2 = eve::fnms(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
   TTS_ULP_EQUAL(r2,  refr2, 0.5);
 
   eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
-  auto r3 = promote(fnms)(ia, a0, a1);
+  auto r3 = fnms[promote](ia, a0, a1);
   using er3_t =  eve::element_type_t<decltype(r3)>;
   auto refr3 = eve::fnms(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));
   TTS_ULP_EQUAL(r3,  refr3, 0.5);
 
-  auto r4 = promote(fnms)(ia, da, a1);
+  auto r4 = fnms[promote](ia, da, a1);
   using er4_t =  eve::element_type_t<decltype(r4)>;
   auto refr4= eve::fnms(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
   TTS_ULP_EQUAL(r4,  refr4, 0.5);
