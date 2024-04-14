@@ -7,10 +7,32 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/hi.hpp>
+#include <eve/module/core/regular/lohi.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct lo_t : elementwise_callable<lo_t, Options>
+  {
+    template<typename T>
+    struct result
+    {
+      using type = as_wide_as_t<detail::downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+    };
+
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE typename result<T>::type
+    operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(lo_t, lo_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -51,7 +73,25 @@ namespace eve
 //!  @godbolt{doc/core/lo.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(lo_, lo);
-}
+  inline constexpr auto lo = functor<hi_t>;
 
-#include <eve/module/core/regular/impl/lo.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto lo_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    {
+      using elt_t = element_type_t<T>;
+      if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction
+      {
+        using ui_t = as_integer_t<T, unsigned>;
+        auto uia0  = bit_cast(a0, as<ui_t>());
+        return ui_t(uia0 & ui_t(0xF));
+      }
+      else
+      {
+        auto [l, _] = lohi(a0);
+        return l;
+      }
+    }
+  }
+}
