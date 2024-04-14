@@ -31,13 +31,11 @@ namespace eve
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
-    // constexpr EVE_FORCEINLINE auto  operator()(logical<T> a, logical<U> b) const -> as_logical_t<decltype(a == b)>
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_equal] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b); }
 
     template<value T,  value U>
-    //    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
     constexpr EVE_FORCEINLINE auto  operator()(T a, U b) const -> as_logical_t<decltype(a == b)>
     { return EVE_DISPATCH_CALL(a, b); }
 

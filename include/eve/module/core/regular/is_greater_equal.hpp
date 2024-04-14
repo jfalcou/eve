@@ -26,7 +26,7 @@ namespace eve
     }
 
     template<value T,  value U>
-    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE auto  operator()(T a, U b) const -> as_logical_t<decltype(a >= b)>
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(is_greater_equal_t, is_greater_equal_);
@@ -113,9 +113,9 @@ namespace eve
                   T const& aa, U const& bb) noexcept
     {
       using w_t =  common_value_t<T, U>;
-      using r_t =  as_logical_t<w_t>;
       auto a = w_t(aa);
       auto b = w_t(bb);
+      using r_t =  as_logical_t<decltype(a >= b)>;
       if constexpr(O::contains(almost2))
       {
         auto tol = o[almost2].value(w_t{});
