@@ -131,10 +131,11 @@ namespace eve
                   T const& a, U const& b) noexcept
     {
       using w_t =  as_logical_t<decltype(a != b)>;
+      using r_t =  common_value_t<T, U>;
       if constexpr(O::contains(definitely2))
       {
-        using e_t =  element_type_t<w_t>;
-        auto tol = o[eve::definitely2].value(w_t{});
+        using e_t =  element_type_t<r_t>;
+        auto tol = o[eve::definitely2].value(e_t{});
         if constexpr(integral_value<decltype(tol)>)
           return if_else(nb_values(a, b) > tol, true_(as<w_t>()), false_(as<w_t>())) ;
         else
