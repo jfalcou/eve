@@ -97,7 +97,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_less_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
     {
-      if constexpr( scalar_value<U> && scalar_value<T>) return as_logical_t<T>(a < b);
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a < b);
       else                                              return a < b;
     }
 

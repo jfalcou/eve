@@ -31,7 +31,10 @@ namespace eve
   {
     template<value T, value U>
     constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+    {
+  //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_equal] simd tolerance requires at least one simd parameter." );
+    return EVE_DISPATCH_CALL(a, b);
+    }
 
     EVE_CALLABLE_OBJECT(is_equal_t, is_equal_);
   };
@@ -110,7 +113,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
     {
-      if constexpr( scalar_value<U> && scalar_value<T>) return as_logical_t<T>(a == b);
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a == b);
       else                                              return a == b;
     }
 
