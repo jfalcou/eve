@@ -26,14 +26,7 @@ namespace eve
   struct is_less_t : elementwise_callable<is_less_t, Options, definitely_option>
   {
     template<value T,  value U>
-    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
-    {
-//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL(a, b);
-    }
-
-    template<value T,  value U>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> as_logical_t<decltype(a < b)>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(is_less_t, is_less_);
@@ -100,43 +93,32 @@ namespace eve
 
   namespace detail
   {
-   template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
-    is_less_(EVE_REQUIRES(cpu_),
-                  O const & o,
-                  logical<T> const& a, logical<U> const& b) noexcept
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_less_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
     {
-      if constexpr( scalar_value<U> &&  scalar_value<T>)
-      {
-        using r_t =  common_value_t<T, U>;
-        return as_logical_t<r_t>(a < b);
-      }
-      else return a <  b;
+      if constexpr( scalar_value<U> && scalar_value<T>) return as_logical_t<T>(a < b);
+      else                                              return a < b;
     }
 
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr auto  is_less_(EVE_REQUIRES(cpu_),
-                                             O const & o,
-                                             T const& aa, U const& bb) noexcept
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_less_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
     {
-      using w_t = common_value_t<T, U>;
-      auto a = w_t(aa);
-      auto b = w_t(bb);
-      using r_t = as_logical_t<decltype(a < b)>;
       if constexpr(O::contains(definitely2))
       {
+        using w_t = common_value_t<T, U>;
+        auto a = w_t(aa);
+        auto b = w_t(bb);
+
         auto tol = o[definitely2].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>)
-          return a <  eve::prev(b, tol);
-        else
-          return a <  fam(b, -tol, max(eve::abs(a), eve::abs(b)));
+        if constexpr(integral_value<decltype(tol)>) return a <  eve::prev(b, tol);
+        else              return a < fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
       }
       else
       {
-        if constexpr( scalar_value<U> &&  scalar_value<T>)
-          return r_t(a <  b);
-        else
-          return a <  b;
+        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa < bb);
+        else                                              return aa < bb;
       }
     }
   }
