@@ -89,7 +89,8 @@ namespace eve
                  O const & o,
                  T a, U b) noexcept
     {
-      if constexpr( scalar_value<T> && scalar_value<U> ) return as_logical_t<T>(a || b);
+      using r_t = as_logical_t<decltype(a || b)>;
+      if constexpr( scalar_value<T> && scalar_value<U> ) return r_t(a || b);
       else return a || b;
     }
 
@@ -113,4 +114,3 @@ namespace eve
     { return a || b; }
   }
 }
-
