@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -59,8 +60,14 @@ namespace eve::detail
   struct common_logical_impl<T,T> : as_logical<T>
   {};
 
-  template<typename T>
-  struct common_logical_impl<logical<T>,logical<T>>
+  template<value T, value U>
+  struct common_logical_impl<logical<T>,logical<U>>
+  {
+    using type = logical<std::conditional_t<simd_value<T>, T, U>>;
+  };
+
+  template<scalar_value T, scalar_value U>
+  struct common_logical_impl<logical<T>,logical<U>>
   {
     using type = logical<T>;
   };

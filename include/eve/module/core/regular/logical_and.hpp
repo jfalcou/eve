@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct logical_and_t : elementwise_callable<logical_and_t, Options>
+  struct logical_and_t : strict_elementwise_callable<logical_and_t, Options>
   {
     template<logical_value T, logical_value U>
     constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> as_logical_t<decltype(a && b)>
