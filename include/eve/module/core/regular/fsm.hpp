@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 namespace eve
 {
@@ -92,9 +93,17 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 //================================================================================================
   inline constexpr auto fsm = functor<fsm_t>;
 
-}
+  namespace detail
+  {
 
-#include <eve/module/core/regular/impl/fsm.hpp>
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    {
+      return fms[o](b, c, a);
+    }
+
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>
