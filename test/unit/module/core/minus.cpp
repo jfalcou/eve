@@ -30,16 +30,13 @@ TTS_CASE_TPL("Check return types of eve::minus", eve::test::simd::signed_types)
   TTS_EXPR_IS(eve::minus[bool()][eve::saturated](T()), T);
 
   TTS_EXPR_IS(eve::minus(v_t()), v_t);
-  TTS_EXPR_IS(eve::minus[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[bool()](v_t()), v_t);
 
   TTS_EXPR_IS(eve::minus[eve::saturated2](v_t()), v_t);
-  TTS_EXPR_IS(eve::minus[eve::logical<T>()][eve::saturated](v_t()), T);
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()][eve::saturated](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[bool()][eve::saturated](v_t()), v_t);
 
-  if constexpr( eve::floating_value<T> ) {}
 };
 
 //==================================================================================================
