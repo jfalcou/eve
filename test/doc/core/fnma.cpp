@@ -29,7 +29,7 @@ int main()
 
   std::cout << "---- scalar" << std::setprecision(10) << '\n'
             << " <- vm                                = " << vm << '\n'
-            << " -> pedantic(fnma)(vm, 2.0f, -vm)      = " << eve::fnma[eve::pedantic2](vm, 2.0f, -vm) << '\n'
+            << " -> fnma[pedantic2](fnma)(vm, 2.0f, -vm)      = " << eve::fnma[eve::pedantic2](vm, 2.0f, -vm) << '\n'
             << " -> fnma(vm, 2.0f, -vm)                = " << eve::fnma(vm, 2.0f, -vm) << '\n'
             << " <- esm1                              = " << esm1 << '\n'
             << " <- esp1                              = " << esp1 << '\n'

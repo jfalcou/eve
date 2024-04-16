@@ -59,7 +59,7 @@ TTS_CASE_WITH("Check precision behavior of fsm on real types",
   using eve::fsm;
   using eve::detail::map;
   TTS_IEEE_EQUAL(fsm[eve::pedantic](-eve::one(eve::as<T>()), a0, a1),
-                 eve::pedantic(fms)(a0, a1, -eve::one(eve::as<T>())));
+                 fms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())));
 };
 
 //==================================================================================================
@@ -117,7 +117,7 @@ TTS_CASE_WITH("Check behavior of fsm on all types full range",
   using eve::detail::map;
 
   TTS_ULP_EQUAL(fsm(a0, a1, a2), fms(a1, a2, a0), 0.5);
-  TTS_IEEE_EQUAL(fsm[eve::pedantic](a0, a1, a2), eve::pedantic(fms)(a1, a2, a0));
+  TTS_IEEE_EQUAL(fsm[eve::pedantic](a0, a1, a2), fms[eve::pedantic](a1, a2, a0));
 };
 
 //==================================================================================================
