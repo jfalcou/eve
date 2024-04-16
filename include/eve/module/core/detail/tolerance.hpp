@@ -37,7 +37,7 @@ namespace eve
     using keyword_type      = almost_t<default_tolerance>;
     using stored_value_type = almost_t<Value>;
 
-    template<eve::value Type>
+    template<eve::scalar_value Type>
     constexpr auto operator=(Type v) const noexcept { return almost_t<Type>{v}; }
 
     template<typename T>
@@ -50,9 +50,10 @@ namespace eve
 
     template<typename T> constexpr auto value(T const&) const
     {
-      if constexpr(std::same_as<Value,default_tolerance>) return 3 * eps(as<T>{});
+      using type = element_type_t<T>;
+      if constexpr(std::same_as<Value,default_tolerance>) return 3 * eps(as<type>{});
       else if constexpr(integral_value<Value>)            return value_;
-      else                                                return convert(value_,as_element<T>{});
+      else                                                return type{value_};
     }
 
     Value value_;
@@ -86,7 +87,7 @@ namespace eve
     using keyword_type      = definitely_t<default_tolerance>;
     using stored_value_type = definitely_t<Value>;
 
-    template<eve::value Type>
+    template<eve::scalar_value Type>
     constexpr auto operator=(Type v) const noexcept { return definitely_t<Type>{v}; }
 
     template<typename T>
@@ -99,9 +100,10 @@ namespace eve
 
     template<typename T> constexpr auto value(T const&) const
     {
-      if constexpr(std::same_as<Value,default_tolerance>) return 3 * eps(as<T>{});
+      using type = element_type_t<T>;
+      if constexpr(std::same_as<Value,default_tolerance>) return 3 * eps(as<type>{});
       else if constexpr(integral_value<Value>)            return value_;
-      else                                                return convert(value_,as_element<T>{});
+      else                                                return type{value_};
     }
 
     Value value_;

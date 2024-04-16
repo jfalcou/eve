@@ -19,7 +19,7 @@ namespace eve
   {
     template<value T,  value U,  value V>
     requires(Options::contains(promote2))
-      constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
 
     template<eve::value T,eve::value U,eve::value V>
