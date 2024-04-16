@@ -58,8 +58,8 @@ TTS_CASE_WITH("Check precision behavior of fsnm on real types",
   using eve::fnms;
   using eve::fsnm;
   using eve::detail::map;
-  TTS_IEEE_EQUAL(eve::pedantic(fsnm)(-eve::one(eve::as<T>()), a0, a1),
-                 eve::pedantic(fnms)(a0, a1, -eve::one(eve::as<T>())));
+  TTS_IEEE_EQUAL(fsnm[eve::pedantic2](-eve::one(eve::as<T>()), a0, a1),
+                 fnms[eve::pedantic2](a0, a1, -eve::one(eve::as<T>())));
 };
 
 //==================================================================================================
@@ -117,8 +117,7 @@ TTS_CASE_WITH("Check behavior of fsnm on all types full range",
   using eve::detail::map;
 
   TTS_IEEE_EQUAL(fsnm(a0, a1, a2), fnms(a1, a2, a0));
-  TTS_IEEE_EQUAL(eve::pedantic(fsnm)(a0, a1, a2), eve::pedantic(fnms)(a1, a2, a0));
-  TTS_IEEE_EQUAL(eve::numeric(fsnm)(a0, a1, a2), eve::pedantic(fnms)(a1, a2, a0));
+  TTS_IEEE_EQUAL(fsnm[ve::pedantic2 (a0, a1, a2), fnms[eve::pedantic2](a1, a2, a0));
 };
 
 //==================================================================================================
