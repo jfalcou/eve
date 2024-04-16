@@ -30,9 +30,9 @@ TTS_CASE_TPL("Check return types of eve::is_not_greater(simd)", eve::test::simd:
     TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = unsigned()](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = unsigned()](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = unsigned()](v_t(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = T()](T(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = T()](T(), v_t()), logical<T>);
-    TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = T()](v_t(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = v_t()](T(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = v_t()](T(), v_t()), logical<T>);
+    TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = v_t()](v_t(), T()), logical<T>);
     using ui_t = eve::as_integer_t<T, unsigned>;
     TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = ui_t()](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_not_greater[eve::almost2 = ui_t()](T(), v_t()), logical<T>);
@@ -77,15 +77,15 @@ TTS_CASE_TPL("Check behavior of eve::is_not_greater(simd)", eve::test::simd::iee
   TTS_EQUAL(eve::is_not_greater[eve::almost2](T(3), T(1)), eve::false_(eve::as<T>()));
   TTS_EQUAL(eve::is_not_greater[eve::almost2](T(3), v_t(1)), eve::false_(eve::as<T>()));
 
-  TTS_EQUAL(eve::is_not_greater[eve::almost2 = eve::eps(as<T>())](T(1 + eve::eps(as<T>())), T(1)),
+  TTS_EQUAL(eve::is_not_greater[eve::almost2  =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), T(1)),
             eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_not_greater[eve::almost2 = eve::eps(as<T>())](T(1 + 2 * eve::eps(as<T>())), T(1)),
+  TTS_EQUAL(eve::is_not_greater[eve::almost2  =  eve::eps(as<v_t>())](T(1 + 2 * eve::eps(as<T>())), T(1)),
             eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_not_greater[eve::almost2 = eve::eps(as<T>())](T(1 + eve::eps(as<T>())), v_t(1)),
+  TTS_EQUAL(eve::is_not_greater[eve::almost2  =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), v_t(1)),
             eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_not_greater[eve::almost2 = eve::eps(as<T>())](T(3), T(1)),
+  TTS_EQUAL(eve::is_not_greater[eve::almost2  =  eve::eps(as<v_t>())](T(3), T(1)),
             eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_not_greater[eve::almost2 = eve::eps(as<T>())](T(3), v_t(1)),
+  TTS_EQUAL(eve::is_not_greater[eve::almost2  =  eve::eps(as<v_t>())](T(3), v_t(1)),
             eve::false_(eve::as<T>()));
 
   TTS_EQUAL(eve::is_not_greater[eve::almost2 = ui_t(3)](T(1), T(1)), eve::true_(eve::as<T>()));

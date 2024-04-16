@@ -77,16 +77,16 @@ TTS_CASE_TPL("Check behavior of eve::is_greater_equal(simd)", eve::test::simd::i
   TTS_EQUAL(eve::is_greater_equal[eve::almost2](T(1), T(3)), eve::false_(eve::as<T>()));
   TTS_EQUAL(eve::is_greater_equal[eve::almost2](T(1), v_t(3)), eve::false_(eve::as<T>()));
 
-  TTS_EQUAL(eve::is_greater_equal[eve::almost2 = eve::eps(as<T>())](T(1 - eve::eps(as<T>())), T(1)),
+  TTS_EQUAL(eve::is_greater_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1 - eve::eps(as<T>())), T(1)),
             eve::true_(eve::as<T>()));
   TTS_EQUAL(
-      eve::is_greater_equal[eve::almost2 = eve::eps(as<T>())](T(1 - 2 * eve::eps(as<T>())), T(1)),
+      eve::is_greater_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1 - 2 * eve::eps(as<T>())), T(1)),
       eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_greater_equal[eve::almost2 = eve::eps(as<T>())](T(1 - eve::eps(as<T>())), v_t(1)),
+  TTS_EQUAL(eve::is_greater_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1 - eve::eps(as<T>())), v_t(1)),
             eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_greater_equal[eve::almost2 = eve::eps(as<T>())](T(1), T(3)),
+  TTS_EQUAL(eve::is_greater_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1), T(3)),
             eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_greater_equal[eve::almost2 = eve::eps(as<T>())](T(1), v_t(3)),
+  TTS_EQUAL(eve::is_greater_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1), v_t(3)),
             eve::false_(eve::as<T>()));
 
   using ui_t = eve::as_integer_t<v_t, unsigned>;

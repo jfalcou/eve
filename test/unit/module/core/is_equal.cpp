@@ -78,11 +78,11 @@ TTS_CASE_TPL("Check behavior of eve::is_equal(simd)", eve::test::simd::ieee_real
   TTS_EQUAL(eve::is_equal(cases.nan, cases.nan), eve::false_(as<T>()));
   TTS_EQUAL(eve::is_equal[eve::numeric](cases.nan, cases.nan), eve::true_(as<T>()));
   TTS_EQUAL(eve::is_equal[eve::almost2](T(1 + eve::eps(as<T>())), T(1)), eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<T>())](T(1 + eve::eps(as<T>())), T(1)), eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<T>())](T(1 + 2 * eve::eps(as<T>())), T(1)), eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<T>())](T(1 + eve::eps(as<T>())), v_t(1)), eve::true_(eve::as<T>()));
-  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<T>())](T(3), T(1)), eve::false_(eve::as<T>()));
-  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<T>())](T(3), v_t(1)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), T(1)), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1 + 2 * eve::eps(as<T>())), T(1)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), v_t(1)), eve::true_(eve::as<T>()));
+  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<v_t>())](T(3), T(1)), eve::false_(eve::as<T>()));
+  TTS_EQUAL(eve::is_equal[eve::almost2 =  eve::eps(as<v_t>())](T(3), v_t(1)), eve::false_(eve::as<T>()));
   TTS_EQUAL(eve::is_equal[eve::almost2 = ui_t(3)](T(1), T(1)), eve::true_(eve::as<T>()));
   TTS_EQUAL(eve::is_equal[eve::almost2 = ui_t(3)](T(1), v_t(1)), eve::true_(eve::as<T>()));
   TTS_EQUAL(eve::is_equal[eve::almost2 = ui_t(3)](T(3), T(1)), eve::false_(eve::as<T>()));
