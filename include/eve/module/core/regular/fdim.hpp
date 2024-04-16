@@ -10,13 +10,15 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/constant/zero.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct fdim_t : elementwise_callable<fdim_t, Options>
   {
-    template<eve::floating_value T,  floating_value U>
+    template<eve::value T,  value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 

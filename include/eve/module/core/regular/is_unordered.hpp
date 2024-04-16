@@ -17,15 +17,10 @@ namespace eve
   struct is_unordered_t : elementwise_callable<is_unordered_t, Options>
   {
     template<value T,  value U>
-    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(logical<T> a, logical<U> b) const
+    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(logical<T> a, logical<U> b) const
     {
-//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_unordered] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
     }
-
-    template<value T,  value U>
-    constexpr EVE_FORCEINLINE as_logical_t<common_value_t<T, U>> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(is_unordered_t, is_unordered_);
   };
@@ -79,7 +74,7 @@ namespace eve
   namespace detail
   {
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_unordered_(EVE_REQUIRES(cpu_),
                   O const & ,
                   logical<T> const& , logical<U> const& ) noexcept
@@ -90,7 +85,7 @@ namespace eve
 
 
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_unordered_(EVE_REQUIRES(cpu_),
                   O const & ,
                   T const& aa, U const& bb) noexcept
