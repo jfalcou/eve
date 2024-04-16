@@ -12,7 +12,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/lohi.hpp>
-#include <iostream>
 
 namespace eve
 {
