@@ -87,7 +87,7 @@ namespace eve
 
     template<floating_value  T, floating_value  U, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    nthroot_(EVE_REQUIRES(cpu_), O const & o, T xx, U nn) noexcept
+    nthroot_(EVE_REQUIRES(cpu_), O const &, T xx, U nn) noexcept
     {
       using r_t =  common_value_t<T, U>;
       r_t x = r_t(xx);
