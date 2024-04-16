@@ -10,15 +10,14 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct lentz_b_t : elementwise_callable<lentz_b_t, Options>
+  struct lentz_b_t : strict_elementwise_callable<lentz_b_t, Options>
   {
     template<typename G, eve::floating_scalar_value T>
-    constexpr EVE_FORCEINLINE auto operator()(G g, T eps, size_t m) const
+    constexpr EVE_FORCEINLINE auto operator()(G g, T eps, std::size_t m) const
     { return EVE_DISPATCH_CALL(g, eps, m); }
 
     EVE_CALLABLE_OBJECT(lentz_b_t, lentz_b_);

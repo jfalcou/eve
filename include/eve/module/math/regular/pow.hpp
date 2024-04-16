@@ -18,13 +18,13 @@
 namespace eve
 {
   template<typename Options>
-  struct pow_t : elementwise_callable<pow_t, Options, raw_option>
+  struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option>
   {
-     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
+    template<eve::floating_scalar_value T, eve::integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
-   template<eve::floating_value T, eve::floating_value U>
+    template<eve::floating_value T, eve::floating_value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
@@ -34,7 +34,7 @@ namespace eve
 
     template<floating_simd_value T,  integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+    {  return EVE_DISPATCH_CALL(v, w); }
 
     template<floating_value T,  integral_simd_value U>
     EVE_FORCEINLINE constexpr  as_wide_as_t<T, U > operator()(T v, U w) const noexcept
@@ -124,37 +124,49 @@ namespace eve
 
   namespace detail
   {
-
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
     EVE_FORCEINLINE constexpr T
-    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
     {
-      using r_t = eve::wide<T, fixed<1>>;
-      return pow(r_t(a0), a1).get(0);
+      if constexpr( std::is_unsigned_v<U> ) // U unsigned
+      {
+        T base = a0;
+        U expo = a1;
+
+        auto result = one(as(a0));
+        while( expo )
+        {
+          if( is_odd(expo) ) result *= base;
+          expo >>= 1;
+          base = sqr(base);
+        }
+        return result;
+      }
+      else //U integral signed scalar
+      {
+        using u_t = as_integer_t<U, unsigned>;
+        T tmp   = pow(a0, u_t(eve::abs(a1)));
+        return a1<0 ? rec(tmp) : tmp;
+      }
     }
 
     template<floating_value T,  floating_value U, callable_options O> //3
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(has_native_abi_v<r_t>)
+      if constexpr(O::contains(raw2))
       {
-        if constexpr(O::contains(raw2))
-        {
-          return exp(a1*log(a0));
-        }
-        else
-        {
-          if constexpr( scalar_value<T> )
-            if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
-          auto nega = is_negative(a0);
-          r_t  z  = eve::pow_abs(a0, a1);
-          return minus[is_odd(a1) && nega](z);
-        }
+        return exp(a1*log(a0));
       }
       else
-        return apply_over(pow[o], a0, a1);
+      {
+        if constexpr( scalar_value<T> )
+          if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
+        auto nega = is_negative(a0);
+        r_t  z  = eve::pow_abs(a0, a1);
+        return minus[is_odd(a1) && nega](z);
+      }
     }
 
     template<integral_scalar_value T,  integral_scalar_value U, callable_options O> //4
@@ -183,7 +195,7 @@ namespace eve
 
     template<floating_simd_value T, integral_scalar_value U, callable_options O>  //5
     EVE_FORCEINLINE constexpr T
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
       if constexpr( std::is_unsigned_v<U> ) // U unsigned
@@ -203,14 +215,14 @@ namespace eve
       else //U integral signed scalar
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow[o](r_t(a0), u_t(eve::abs(a1)));
+        r_t tmp   = pow(r_t(a0), u_t(eve::abs(a1)));
         return if_else(is_ltz(a1), rec(tmp), tmp);
       }
     }
 
     template<floating_value T,  integral_simd_value U, callable_options O>  //6
     EVE_FORCEINLINE constexpr as_wide_as_t<T, U >
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =   as_wide_as_t<T, U >;
       if constexpr( unsigned_value<U> )
@@ -230,14 +242,14 @@ namespace eve
       else
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow[o](a0, bit_cast(eve::abs(a1), as<u_t>()));
+        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
         return if_else(is_ltz(a1), rec(tmp), tmp);
       }
     }
 
     template<integral_simd_value T,  integral_value U, callable_options O>  //7
     EVE_FORCEINLINE constexpr common_value_t<T, U >
-    pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
+    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
       if constexpr( unsigned_value<U> )
@@ -257,7 +269,7 @@ namespace eve
       else
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow[o](a0, bit_cast(eve::abs(a1), as<u_t>()));
+        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
         return if_else(is_ltz(a1), rec(tmp), tmp);
       }
     }

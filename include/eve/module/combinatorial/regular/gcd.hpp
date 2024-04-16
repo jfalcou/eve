@@ -41,8 +41,8 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T,  eve::ordered_value U >
-//!      constexpr common_value_t<T, U> gcd(T p, U n) noexcept;
+//!     template< eve::value T,  eve::value U >
+//!     constexpr common_value_t<T, U> gcd(T p, U n) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -70,21 +70,96 @@ inline constexpr auto gcd = functor<gcd_t>;
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    constexpr common_value_t<T, U>
-    gcd_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
+    template<typename T, callable_options O>
+    constexpr auto gcd_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      if constexpr(!std::same_as<T, U>)
+      if constexpr(O::contains(raw2))
       {
-        using c_t =  common_value_t<T, U>;
-        return gcd_(EVE_TARGETS(cpu_), o, c_t(a), c_t(b)); ;
+        a = eve::abs(a);
+        b = eve::abs(b);
+        if constexpr( scalar_value<T> )
+        {
+          while( b )
+          {
+            auto r = rem(a, b);
+            a      = b;
+            b      = r;
+          }
+          return a;
+        }
+        else
+        {
+          auto test = is_nez(b);
+          T    r(0);
+          while( eve::any(test) )
+          {
+            r    = rem(a, b);
+            a    = if_else(test, b, a);
+            test = is_nez(r) && test;
+            b    = r;
+          }
+          return a;
+        }
       }
-      else if constexpr(O::contains(raw2))
+      else
       {
-        if constexpr( has_native_abi_v<T> )
+        if constexpr(integral_scalar_value<T>)
         {
           a = eve::abs(a);
           b = eve::abs(b);
+          while( b )
+          {
+            auto r = a % b;
+            a      = b;
+            b      = r;
+          }
+          return a;
+        }
+        else if constexpr(integral_simd_value<T>)
+        {
+          a           = abs(a);
+          b           = abs(b);
+          using elt_t = element_type_t<T>;
+          if constexpr( sizeof(elt_t) == 8 )
+          {
+            auto test = is_nez(b);
+            T    r(0);
+            while( eve::any(test) )
+            {
+              b    = if_else(test, b, allbits);
+              r    = a % b;
+              a    = if_else(test, b, a);
+              test = test && is_nez(r);
+              b    = r;
+            }
+            return a;
+          }
+          else if constexpr( sizeof(elt_t) == 4 )
+          {
+            auto r = gcd[raw](float64(a), float64(b));
+            if constexpr( std::is_signed_v<elt_t> ) return int32(r);
+            else return uint32(r);
+          }
+          else if constexpr( sizeof(elt_t) <= 2 )
+          {
+            auto r = gcd[raw](float32(a), float32(b));
+            if constexpr( sizeof(elt_t) == 2 )
+            {
+              if constexpr( std::is_signed_v<elt_t> ) return int16(r);
+              else return uint16(r);
+            }
+            else
+            {
+              if constexpr( std::is_signed_v<elt_t> ) return int8(r);
+              else return uint8(r);
+            }
+          }
+        }
+        else if constexpr(floating_value<T>)
+        {
+          EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
+          a = abs(a);
+          b = abs(b);
           if constexpr( scalar_value<T> )
           {
             while( b )
@@ -108,99 +183,6 @@ inline constexpr auto gcd = functor<gcd_t>;
             }
             return a;
           }
-        }
-        else { return apply_over(gcd[raw], a, b); }
-      }
-      else
-      {
-        if constexpr(integral_scalar_value<T>)
-        {
-          a = eve::abs(a);
-          b = eve::abs(b);
-          while( b )
-          {
-            auto r = a % b;
-            a      = b;
-            b      = r;
-          }
-          return a;
-        }
-        else if constexpr(integral_simd_value<T>)
-        {
-          if constexpr( has_native_abi_v<T> )
-          {
-            a           = abs(a);
-            b           = abs(b);
-            using elt_t = element_type_t<T>;
-            if constexpr( sizeof(elt_t) == 8 )
-            {
-              auto test = is_nez(b);
-              T    r(0);
-              while( eve::any(test) )
-              {
-                b    = if_else(test, b, allbits);
-                r    = a % b;
-                a    = if_else(test, b, a);
-                test = test && is_nez(r);
-                b    = r;
-              }
-              return a;
-            }
-            else if constexpr( sizeof(elt_t) == 4 )
-            {
-              auto r = gcd[raw](float64(a), float64(b));
-              if constexpr( std::is_signed_v<elt_t> ) return int32(r);
-              else return uint32(r);
-            }
-            else if constexpr( sizeof(elt_t) <= 2 )
-            {
-              auto r = gcd[raw](float32(a), float32(b));
-              if constexpr( sizeof(elt_t) == 2 )
-              {
-                if constexpr( std::is_signed_v<elt_t> ) return int16(r);
-                else return uint16(r);
-              }
-              else
-              {
-                if constexpr( std::is_signed_v<elt_t> ) return int8(r);
-                else return uint8(r);
-              }
-            }
-          }
-          else { return apply_over(gcd, a, b); }
-        }
-        else if constexpr(floating_value<T>)
-        {
-          if constexpr( has_native_abi_v<T> )
-          {
-            EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
-            a = abs(a);
-            b = abs(b);
-            if constexpr( scalar_value<T> )
-            {
-              while( b )
-              {
-                auto r = rem(a, b);
-                a      = b;
-                b      = r;
-              }
-              return a;
-            }
-            else
-            {
-              auto test = is_nez(b);
-              T    r(0);
-              while( eve::any(test) )
-              {
-                r    = rem(a, b);
-                a    = if_else(test, b, a);
-                test = is_nez(r) && test;
-                b    = r;
-              }
-              return a;
-            }
-          }
-          else { return apply_over(gcd, a, b); }
         }
       }
     }

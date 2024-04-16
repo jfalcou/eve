@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct prime_floor_t : elementwise_callable<prime_floor_t, Options>
+  struct prime_floor_t : strict_elementwise_callable<prime_floor_t, Options>
   {
     template<eve::unsigned_value T>
     constexpr EVE_FORCEINLINE
@@ -90,28 +90,25 @@ namespace eve
     prime_floor_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;
-      if constexpr( has_native_abi_v<T> )
+
+      auto constexpr maxi =
+        (sizeof(elt_t) == 1) ? (53u) : ((sizeof(elt_t) == 2) ? (6541u) : (10000u));
+      auto constexpr next =
+        (sizeof(elt_t) == 1) ? (255u) : ((sizeof(elt_t) == 2) ? (65535u) : (104742u));
+      auto first = T(0);
+      auto last  = T(maxi);
+      while( eve::any(inc(first) < last) )
       {
-        auto constexpr maxi =
-          (sizeof(elt_t) == 1) ? (53u) : ((sizeof(elt_t) == 2) ? (6541u) : (10000u));
-        auto constexpr next =
-          (sizeof(elt_t) == 1) ? (255u) : ((sizeof(elt_t) == 2) ? (65535u) : (104742u));
-        auto first = T(0);
-        auto last  = T(maxi);
-        while( eve::any(inc(first) < last) )
-        {
-          auto mid  = average(first, last);
-          auto pmid = convert(nth_prime(mid), as<elt_t>());
-          auto test = pmid <= n;
-          first     = if_else(test, mid, first);
-          last      = if_else(test, last, mid);
-        }
-        auto z = nth_prime(first);
-        z      = if_else(
-          (((last == T(maxi)) && (n < T(next))) || (first < T(maxi - 1))) && (n >= 2), z, zero);
-        return z;
+        auto mid  = average(first, last);
+        auto pmid = convert(nth_prime(mid), as<elt_t>());
+        auto test = pmid <= n;
+        first     = if_else(test, mid, first);
+        last      = if_else(test, last, mid);
       }
-      else return apply_over(prime_floor, n);
+      auto z = nth_prime(first);
+      z      = if_else(
+        (((last == T(maxi)) && (n < T(next))) || (first < T(maxi - 1))) && (n >= 2), z, zero);
+      return z;
     }
 
     template<unsigned_value T,  unsigned_scalar_value U, callable_options O>

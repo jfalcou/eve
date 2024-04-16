@@ -80,18 +80,16 @@ namespace eve
 //================================================================================================
   inline constexpr auto dist = functor<dist_t>;
 
-
   namespace detail
   {
-    template<value T0,  value T1, callable_options O>
-    constexpr common_value_t<T0, T1> dist_(EVE_REQUIRES(cpu_), O const&, T0 const& a,  T1 const & b)
+    template<value T, callable_options O>
+    constexpr T dist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      using r_t = common_value_t<T0, T1>;
-      auto d = eve::max(a, b) - eve::min(a, b);
-      if constexpr(O::contains(saturated2) && signed_integral_value<r_t>)
-        return if_else(is_ltz(d), valmax(eve::as(a)), d);
-      else if constexpr(O::contains(pedantic2) && floating_value<r_t>)
-        return if_else(is_unordered(a, b), allbits, if_else(is_nan(d), inf(as<r_t>()), d));
+      T d = eve::max(a, b) - eve::min(a, b);
+      if constexpr(O::contains(saturated2) && signed_integral_value<T>)
+        return if_else(is_ltz(d), valmax(eve::as(d)), d);
+      else if constexpr(O::contains(pedantic2) && floating_value<T>)
+        return if_else(is_unordered(a, b), allbits, if_else(is_nan(d), inf(as(d)), d));
       else
         return d;
     }

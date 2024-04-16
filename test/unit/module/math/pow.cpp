@@ -35,11 +35,10 @@ TTS_CASE_WITH("Check behavior of pow on wide",
               tts::generate(tts::randoms(1.0, 10.0), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_RELATIVE_EQUAL(eve::pow(a0, a1),
-                     map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1),
+                     eve::detail::map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1),
                      0.001);
 };
 
@@ -81,32 +80,28 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
   TTS_EQUAL(eve::pow(T(2), 3u), T(8));
   TTS_EQUAL(eve::pow(2, 3), (8));
 
-  if constexpr( !eve::scalar_value<T> )
+  using v_t = eve::element_type_t<T>;
+  if constexpr( std::is_floating_point_v<v_t> )
   {
-    using v_t = eve::element_type_t<T>;
-    if constexpr( std::is_floating_point_v<v_t> )
+    using w8_t = eve::wide<v_t, eve::fixed<8>>;
+    auto Inf   = eve::inf(eve::as<v_t>());
     {
-      using w8_t = eve::wide<v_t, eve::fixed<8>>;
-      auto Inf   = eve::inf(eve::as<v_t>());
-      {
-        w8_t a(-0.0, -0.0, -0.0, -0.0, -1.0, -1.0, -Inf, -Inf);
-        w8_t b(-Inf, -3.0, -4.0, -4.5, -Inf, Inf, -3.0, -4.0);
-        w8_t r(Inf, -Inf, Inf, Inf, 1.0, 1.0, -0.0, 0.0);
-        w8_t c = (eve::pow)(a, b);
-        TTS_ULP_EQUAL(c, r, 2);
-      }
-      {
-        using w4_t = eve::wide<v_t, eve::fixed<4>>;
-        w4_t a(-Inf, -Inf, -Inf, 0.0);
-        w4_t b(-4.5, 4.0, 4.5, 0.0);
-        w4_t r(0.0, Inf, Inf, 1.0);
-        w4_t c = (eve::pow)(a, b);
-        TTS_ULP_EQUAL(c, r, 2);
-      }
+      w8_t a(-0.0, -0.0, -0.0, -0.0, -1.0, -1.0, -Inf, -Inf);
+      w8_t b(-Inf, -3.0, -4.0, -4.5, -Inf, Inf, -3.0, -4.0);
+      w8_t r(Inf, -Inf, Inf, Inf, 1.0, 1.0, -0.0, 0.0);
+      w8_t c = (eve::pow)(a, b);
+      TTS_ULP_EQUAL(c, r, 2);
+    }
+    {
+      using w4_t = eve::wide<v_t, eve::fixed<4>>;
+      w4_t a(-Inf, -Inf, -Inf, 0.0);
+      w4_t b(-4.5, 4.0, 4.5, 0.0);
+      w4_t r(0.0, Inf, Inf, 1.0);
+      w4_t c = (eve::pow)(a, b);
+      TTS_ULP_EQUAL(c, r, 2);
     }
   }
 };
-
 
 //==================================================================================================
 // Tests for masked pow
@@ -120,6 +115,5 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::pow)(eve::wide)",
                          T const& a1,
                          M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::pow[mask](a0, a1),
-            eve::if_else(mask, eve::pow(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::pow[mask](a0, a1),eve::if_else(mask, eve::pow(a0, a1), a0));
 };

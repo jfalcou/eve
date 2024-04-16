@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_flip_t : elementwise_callable<bit_flip_t, Options>
+  struct bit_flip_t : strict_elementwise_callable<bit_flip_t, Options>
   {
     template<eve::value T, integral_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const

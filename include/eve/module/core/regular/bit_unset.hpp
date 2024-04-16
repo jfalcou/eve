@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_unset_t : elementwise_callable<bit_unset_t, Options>
+  struct bit_unset_t : strict_elementwise_callable<bit_unset_t, Options>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const

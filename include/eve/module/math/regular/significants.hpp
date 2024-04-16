@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct significants_t : elementwise_callable<significants_t, Options>
+  struct significants_t : strict_elementwise_callable<significants_t, Options>
   {
     template<floating_value T0, value T1>
     EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
@@ -65,35 +65,30 @@ namespace eve
 //!
 //!  @godbolt{doc/core/significants.cpp}
 //! @}
-  inline constexpr auto significants = functor<significants_t>;
+//================================================================================================
+inline constexpr auto significants = functor<significants_t>;
 
-  namespace detail
+namespace detail
+{
+  template<floating_value T, value U, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
   {
-
-    template<floating_value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
+    using r_t = as_wide_as_t<T, U>;
+    if constexpr(integral_value<U>)
     {
-      using r_t = as_wide_as_t<T, U>;
-      if constexpr(integral_value<U>)
-      {
-        using elt_t = element_type_t<T>;
-        return significants(r_t(a), convert(n, as<elt_t>()));
-      }
-      else
-      {
-        EVE_ASSERT(eve::all(is_flint(n)), "n is not flint");
-        EVE_ASSERT(eve::all(is_gez(n)), "some n are not positive");
-        if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
-        {
-          auto e      = floor(inc(log10(eve::abs(a)) - n));
-          auto factor = exp10(abs(e));
-          auto tmp    = if_else(is_gez(e), nearest(a / factor) * factor, nearest(a * factor) / factor);
-          tmp         = if_else(is_eqz(a), a, tmp);
-          return if_else(is_nez(n), tmp, allbits);
-        }
-        else return apply_over(significants, a, n);
-      }
+      return significants(r_t(a), convert(n, as_element<T>()));
+    }
+    else
+    {
+      EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
+      EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
+      auto e      = floor(inc(log10(eve::abs(a)) - n));
+      auto factor = exp10(abs(e));
+      auto tmp    = if_else(is_gez(e), nearest(a / factor) * factor, nearest(a * factor) / factor);
+      tmp         = if_else(is_eqz(a), a, tmp);
+      return if_else(is_nez(n), tmp, allbits);
     }
   }
+}
 }

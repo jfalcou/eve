@@ -17,9 +17,8 @@
 
 namespace eve
 {
-
   template<typename Options>
-  struct lcm_t : elementwise_callable<lcm_t, Options/*, upgrade_converter_option*/>
+  struct lcm_t : elementwise_callable<lcm_t, Options>
   {
     template<eve::value T, eve::value U>
     constexpr EVE_FORCEINLINE
@@ -27,7 +26,6 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(lcm_t, lcm_);
   };
-
 
 //================================================================================================
 //! @addtogroup combinatorial
@@ -67,47 +65,24 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!     @godbolt{doc/combinatorial/regular/lcm.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Optimized Conversion Call
-//!     If the input types are integral, the result is susceptible to overflow,
-//!     but will never be greater than the product of the two input values which will be
-//!     representable in the upgraded integral type. The call `upgrade_(lcm)(a,b)` returns a correct
-//!     result in the upgraded type if the upgraded type is available.
-//!
-//!    **Example**
-//!
-//!    @godbolt{doc/combinatorial/conversion/lcm.cpp}
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto lcm = functor<lcm_t>;
 
   namespace detail
   {
-
-    template<typename T, typename U, callable_options O>
-    constexpr common_value_t<T, U>
-    lcm_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
+    template<typename T, callable_options O>
+    constexpr T lcm_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      if constexpr(!std::same_as<T, U>)
+      EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "eve::lcm: some entries are not flint");
+      a = eve::abs(a);
+      b = eve::abs(b);
+      if constexpr( scalar_value<T> )
       {
-        using c_t =  common_value_t<T, U>;
-        return lcm_(EVE_TARGETS(cpu_), o, c_t(a), c_t(b)); ;
+        if( !b || !a ) return T(0);
+        else return b / gcd(a, b) * a;
       }
-      else 
-      {
-        EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "lcm: some entries are not flint");
-        a = abs(a);
-        b = abs(b);
-        if constexpr( scalar_value<T> )
-        {
-          if( !b || !a ) return T(0);
-          return b / gcd(a, b) * a;
-        }
-        else { return a * (b / gcd(a, if_else(b, b, eve::one))); }
-      }
+      else return a * (b / gcd(a, if_else(b, b, eve::one)));
     }
   }
 }

@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct jacobi_t : elementwise_callable<jacobi_t, Options>
+  struct jacobi_t : strict_elementwise_callable<jacobi_t, Options>
   {
     template<eve::floating_ordered_value ...Ts>
     constexpr EVE_FORCEINLINE

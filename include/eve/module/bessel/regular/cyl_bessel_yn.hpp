@@ -14,9 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct cyl_bessel_yn_t : elementwise_callable<cyl_bessel_yn_t, Options>
+  struct cyl_bessel_yn_t : strict_elementwise_callable<cyl_bessel_yn_t, Options>
   {
-    template<eve::ordered_value N, eve::floating_ordered_value T>
+    template<eve::value N, eve::floating_value T>
     EVE_FORCEINLINE constexpr
     as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
 
@@ -44,16 +44,15 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::ordered_value N, eve::floating_ordered_value T >
-  //!      T cyl_bessel_yn(N n, T x) noexcept;
+  //!     template< eve::value N, eve::floating_value T >
+  //!     constexpr T cyl_bessel_yn(N n, T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   [ordered value](@ref eve::ordered_value) order of the function.
-  //!
-  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+  //!   * `n`: Order of the function.
+  //!   * `x`: [Floating argument](@ref eve::floating_value).
   //!
   //!   **Return value**
   //!

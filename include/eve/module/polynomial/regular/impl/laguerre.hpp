@@ -11,21 +11,22 @@
 
 namespace eve::detail
 {
-
-// Recurrence relation for Laguerre polynomials:
-  template<ordered_value N, floating_value T, callable_options O>
-  constexpr EVE_FORCEINLINE T
-  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, T x, T Ln, T Lnm1)
-   requires(O::contains(successor2))
+  constexpr EVE_FORCEINLINE auto laguerre_successor(auto n, auto l, auto x, auto pl, auto plm1)
   {
     auto np1 = inc(n);
-    return fms(np1 + n - x, Ln, n * Lnm1) / np1;
+    auto npl = n + l;
+    return fms(np1 + npl - x, pl, npl * plm1) / np1;
+  }
+
+  template<typename N>
+  constexpr EVE_FORCEINLINE auto laguerre_successor(N n, auto x, auto Ln, auto Lnm1)
+  {
+    return laguerre_successor(n,N{0},x,Ln,Lnm1);
   }
 
   //  Laguerre polynomials:
   template<typename I, typename T, callable_options O>
-  constexpr auto
-  laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x)
+  constexpr auto laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
     if constexpr(scalar_value<I>)
     {
@@ -39,63 +40,47 @@ namespace eve::detail
         auto p    = p0;
         p0        = p1;
         auto vcp1 = inc(vc);
-        p1        = laguerre[successor](c, x, p0, p);
+        p1        = laguerre_successor(c, x, p0, p);
         vc        = vcp1;
         ++c;
       }
       return p1;
     }
-    else if constexpr(simd_value<I>)
+    else
     {
       if constexpr(scalar_value<T>)
       {
-        using f_t = as_wide_t<T, cardinal_t<I>>;
-        return laguerre(n, f_t(x));
+        return laguerre(n, as_wide_t<T, cardinal_t<I>>(x));
       }
       else if constexpr(simd_value<T>)
       {
-        if( has_native_abi_v<T> )
-        {
-          using elt_t = element_type_t<T>;
-          auto p0     = one(as(x));
-          auto iseqzn = is_eqz(n);
-          if( eve::all(iseqzn) ) return p0;
+        using elt_t = element_type_t<T>;
+        auto p0     = one(as(x));
+        auto iseqzn = is_eqz(n);
+        if( eve::all(iseqzn) ) return p0;
 
-          auto p1   = oneminus(x);
-          auto nn    = convert(n, as<elt_t>());
-          auto c    = one(as(nn));
-          auto test = c < nn;
-          while( eve::any(test) )
-          {
-            auto p = p0;
-            p0     = p1;
-            p1     = if_else(test, laguerre[successor](c, x, p0, p), p1);
-            c      = inc(c);
-            test   = c < nn;
-          }
-          return if_else(iseqzn, one, p1);
+        auto p1   = oneminus(x);
+        auto nn    = convert(n, as<elt_t>());
+        auto c    = one(as(nn));
+        auto test = c < nn;
+        while( eve::any(test) )
+        {
+          auto p = p0;
+          p0     = p1;
+          p1     = if_else(test, laguerre_successor(c, x, p0, p), p1);
+          c      = inc(c);
+          test   = c < nn;
         }
-        else return apply_over(laguerre, n, x);
+        return if_else(iseqzn, one, p1);
       }
     }
   }
 
-  // Recurrence relation for Laguerre associated polynomials:
-  template< typename N, typename L, typename T, callable_options O> //successor associated option
-  EVE_FORCEINLINE constexpr T
-  laguerre_(EVE_REQUIRES(cpu_), O const&, N n, L l, T x, T pl, T plm1)
-    requires(O::contains(successor2) && O::contains(associated2))
-  {
-    auto np1 = inc(n);
-    auto npl = n + l;
-    return ((np1 + npl - x) * pl - npl * plm1) / np1;
-  }
-
- // associated laguerre polynomials
+  // associated laguerre polynomials
   template<typename M, typename N, typename T, callable_options O>
   constexpr as_wide_as_t<T, common_value_t<M, N>>
   laguerre_(EVE_REQUIRES(cpu_), O const&, N nn, M mm, T x)
-    requires(O::contains(associated2))
+  requires(O::contains(associated2))
   {
     if constexpr(integral_scalar_value<M> && integral_scalar_value<N>)
     {
@@ -108,7 +93,7 @@ namespace eve::detail
       while( c < nn )
       {
         std::swap(p0, p1);
-        p1 = laguerre[associated][successor](c, mm, x, p0, p1);
+        p1 = laguerre_successor(c, mm, x, p0, p1);
         ++c;
       }
       return p1;
@@ -137,7 +122,7 @@ namespace eve::detail
           {
             auto p = p0;
             p0     = p1;
-            p1     = if_else(test, laguerre[associated][successor](c, m, x, p0, p), p1);
+            p1     = if_else(test, laguerre_successor(c, m, x, p0, p), p1);
             c      = inc(c);
             test   = c < n;
           }

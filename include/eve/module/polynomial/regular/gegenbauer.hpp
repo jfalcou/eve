@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct gegenbauer_t : elementwise_callable<gegenbauer_t, Options>
+  struct gegenbauer_t : strict_elementwise_callable<gegenbauer_t, Options>
   {
     template<eve::floating_ordered_value ...Ts>
     constexpr EVE_FORCEINLINE

@@ -17,9 +17,9 @@
 namespace eve
 {
 template<typename Options>
-struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
+struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 {
-  template<eve::unsigned_value N, floating_ordered_value T0,  floating_ordered_value T1>
+  template<eve::unsigned_value N, floating_value T0,  floating_value T1>
   constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N>
   operator()(N n, T0 t0, T1 t1) const noexcept { return EVE_DISPATCH_CALL(n, t0, t1); }
 
@@ -52,7 +52,7 @@ struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N, eve::floating_ordered_value T, eve::floating_ordered_value U>
+//!      template< eve::unsigned_value N, eve::floating_value T, eve::floating_value U>
 //!      constexpr eve::common_value_t<T, U> fibonacci(N n, T x, U y) noexcept
 //!   }
 //!   @endcode
@@ -61,7 +61,7 @@ struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 //!
 //!   `n`: [index](@ref eve::unsigned_value) of the value to be returned
 //!
-//!   `x`, `y`: [floating point arguments](@ref eve::floating_ordered_value) : \f$f_0\f$ and \f$f_1\f$.
+//!   `x`, `y`: [floating point arguments](@ref eve::floating_value) : \f$f_0\f$ and \f$f_1\f$.
 //!
 //!    **Return value**
 //!
@@ -73,7 +73,7 @@ struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
 //! @}
 //================================================================================================
 inline constexpr auto fibonacci = functor<fibonacci_t>;
-  
+
   namespace detail
   {
     template<typename N, typename T, typename U, callable_options O>
@@ -86,20 +86,16 @@ inline constexpr auto fibonacci = functor<fibonacci_t>;
       auto gold    = c_t(1.61803398874989484820458683436563811772030917980575);
       auto goldbar = c_t(-0.61803398874989484820458683436563811772030917980575);
       constexpr elt_t oneosqrt5 = 0.4472135954999579392818347337462552470881236719223;
+
       if constexpr(std::same_as<T, U>)
       {
-        if constexpr( has_native_abi_v<T> &&  has_native_abi_v<N>)
-        {
-          auto nm1 = to_<eli_t>((n));
-          auto c2  = fms(gold, a, b) * oneosqrt5;
-          auto c1  = a - c2;
-          auto f   = fma(c1, eve::pow(gold, nm1), c2 * eve::pow(goldbar, nm1));
-          return  nearest[is_flint(a) && is_flint(b)](f);
-        }
-        else return apply_over(fibonacci, n, a, b);
+        auto nm1 = to_<eli_t>((n));
+        auto c2  = fms(gold, a, b) * oneosqrt5;
+        auto c1  = a - c2;
+        auto f   = fma(c1, eve::pow(gold, nm1), c2 * eve::pow(goldbar, nm1));
+        return  nearest[is_flint(a) && is_flint(b)](f);
       }
-      else
-        return indexed_call(fibonacci, n, a, b);
+      else return fibonacci(n,c_t(a), c_t(b));
     }
   }
 }
