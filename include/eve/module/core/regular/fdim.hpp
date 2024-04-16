@@ -77,7 +77,7 @@ namespace eve
 
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    fdim_(EVE_REQUIRES(cpu_), O const &, T aa,  U bb) noexcept
+    fdim_(EVE_REQUIRES(cpu_), O const &, T a,  U b) noexcept
     {
       return if_else(a >= b, sub(a, b), eve::zero);
     }
