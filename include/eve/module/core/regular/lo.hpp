@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/lohi.hpp>
+#include <iostream>
 
 namespace eve
 {
@@ -73,12 +74,12 @@ namespace eve
 //!  @godbolt{doc/core/lo.cpp}
 //! @}
 //================================================================================================
-  inline constexpr auto lo = functor<hi_t>;
+  inline constexpr auto lo = functor<lo_t>;
 
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto lo_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    EVE_FORCEINLINE constexpr auto lo_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction
