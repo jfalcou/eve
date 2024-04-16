@@ -83,7 +83,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<T, U, V>
     lerp_(EVE_REQUIRES(cpu_), O const & o, T const &aa,  U const &bb,  V const &tt) noexcept
     {
-      using r_t =  common_value_t<T, U>;
+      using r_t =  common_value_t<T, U, V>;
       auto a = r_t(aa);
       auto b = r_t(bb);
       auto t = r_t(tt);
