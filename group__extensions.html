@@ -133,11 +133,17 @@ $(document).ready(function(){initNavTree('group__extensions.html',''); initResiz
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1callable.html">eve::callable&lt; Func, OptionsValues, Options &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRTP base class defining an EVE's <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <a href="structeve_1_1callable.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1elementwise__callable.html">eve::elementwise_callable&lt; Func, OptionsValues, Options &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRTP base class giving an EVE's <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> the elementwise function semantic.  <a href="structeve_1_1elementwise__callable.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1constant__callable.html">eve::constant_callable&lt; Func, OptionsValues, Options &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRTP base class giving an EVE's <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> the constant function semantic.  <a href="structeve_1_1constant__callable.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1options.html">eve::options&lt; Settings &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper class around bundle of options passed to eve::callable.  <a href="structeve_1_1options.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper class around bundle of options passed to <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a>.  <a href="structeve_1_1options.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1decorated__with.html">eve::decorated_with&lt; OptionsValues, Options &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to aggregate options handlers and states.  <a href="structeve_1_1decorated__with.html#details">More...</a><br /></td></tr>
@@ -155,7 +161,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:gafb7ce9baadbb712995f3a9dbef803314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the generic function interface for any EVE-compatible <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>  <br /></td></tr>
 <tr class="separator:gafb7ce9baadbb712995f3a9dbef803314"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(TYPE,  NAME)</td></tr>
-<tr class="memdesc:ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the generic function interface for an actual eve::callable.  <br /></td></tr>
+<tr class="memdesc:ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the generic function interface for an actual <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a>.  <br /></td></tr>
 <tr class="separator:ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0beae174fce698157d30319be9355d0"><td class="memItemLeft" align="right" valign="top"><a id="gaf0beae174fce698157d30319be9355d0" name="gaf0beae174fce698157d30319be9355d0"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>EVE_DISPATCH_CALL</b>(...)&#160;&#160;&#160;this-&gt;behavior(eve::current_api, this-&gt;options(), __VA_ARGS__)                                                         \</td></tr>
@@ -163,7 +169,7 @@ Macros</h2></td></tr>
 <tr class="separator:gaf0beae174fce698157d30319be9355d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad83e12234bfdd5eb87538358c5b1b6b4"><td class="memItemLeft" align="right" valign="top"><a id="gad83e12234bfdd5eb87538358c5b1b6b4" name="gad83e12234bfdd5eb87538358c5b1b6b4"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>EVE_CALLABLE_NAMESPACE</b>()</td></tr>
-<tr class="memdesc:gad83e12234bfdd5eb87538358c5b1b6b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a namespace as suitable for containing eve::callable overloads. <br /></td></tr>
+<tr class="memdesc:gad83e12234bfdd5eb87538358c5b1b6b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a namespace as suitable for containing <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a> overloads. <br /></td></tr>
 <tr class="separator:gad83e12234bfdd5eb87538358c5b1b6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa3458167ed8a49f4d2bcc308470b0d75"><td class="memItemLeft" align="right" valign="top"><a id="gaa3458167ed8a49f4d2bcc308470b0d75" name="gaa3458167ed8a49f4d2bcc308470b0d75"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>EVE_REQUIRES</b>(ARCH)&#160;&#160;&#160;adl_helper_t const &amp;, ARCH const &amp;</td></tr>

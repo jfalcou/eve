@@ -151,14 +151,14 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>(N n, T x) <span class="keyword">noexcept</span>;                               <span class="comment">//1</span></div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as_t&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>(N n, T x) <span class="keyword">noexcept</span>;                                              <span class="comment">// 1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[<a class="code hl_variable" href="group__core__decorators_gaa014e2fd932c0593d69ce0a16b7a1cd9.html#gaa014e2fd932c0593d69ce0a16b7a1cd9">associated</a>](N n, M m, T x) <span class="keyword">noexcept</span>;                          <span class="comment">//2</span></div>
+<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> eve::eve::as_wide_as_t&lt;T, eve::common_type_t&lt;M,N&gt;&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[<a class="code hl_variable" href="group__core__decorators_gaa014e2fd932c0593d69ce0a16b7a1cd9.html#gaa014e2fd932c0593d69ce0a16b7a1cd9">associated</a>](N n, M m, T x) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_gaa014e2fd932c0593d69ce0a16b7a1cd9_html_gaa014e2fd932c0593d69ce0a16b7a1cd9"><div class="ttname"><a href="group__core__decorators_gaa014e2fd932c0593d69ce0a16b7a1cd9.html#gaa014e2fd932c0593d69ce0a16b7a1cd9">eve::associated</a></div><div class="ttdeci">constexpr associated_type const associated</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> associated.hpp:42</div></div>
-<div class="ttc" id="agroup__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b_html_ga354e9d0edf47f3f2742a9d5c29c9706b"><div class="ttname"><a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a></div><div class="ttdeci">constexpr auto laguerre</div><div class="ttdoc">Computes the value of the Laguerre and associated Laguerre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> laguerre.hpp:111</div></div>
+<div class="ttc" id="agroup__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b_html_ga354e9d0edf47f3f2742a9d5c29c9706b"><div class="ttname"><a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a></div><div class="ttdeci">constexpr auto laguerre</div><div class="ttdoc">Computes the value of the Laguerre and associated Laguerre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> laguerre.hpp:103</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Evaluate the laguerre polynomial of order n</li>
@@ -166,8 +166,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 </ol>
 <p><b>Parameters</b></p>
 <ul>
-<li><code>n</code>, <code>m</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive arguments</a>.</li>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__value.html">real floating argument</a>.</li>
+<li><code>n</code>, m<code>: [integral positive arguments](@ref <a class="el" href="concepteve_1_1integral__value.html">eve::integral_value</a>). *</code>x` : <a class="el" href="concepteve_1_1floating__value.html">real floating argument</a>.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>The value of the polynomial at <code>x</code> is returned.</p>
@@ -204,7 +203,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Other Semantic Modifier </h2>
+</div><!-- fragment --><h2 class="groupheader">Semantic Modifier </h2>
 <ul>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
 <p class="startli">The expression <code>laguerre[successor](n, x, ln, lnm1)</code> implements the three term recurrence relation for the Laguerre polynomials,  \(\displaystyle \mbox{L}_{n+1} =
@@ -213,38 +212,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\)</p>
 <p class="startli">These functions can be used to create a sequence of values evaluated at the same <code>x</code> (and <code>m</code>) and for rising <code>n</code>.</p>
 <p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line"> </div>
-<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd             = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n              = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::array&lt;wide_ft, 8&gt; h;</div>
-<div class="line">  h[0] = <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a>(0, xd);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[0]          =  &quot;</span> &lt;&lt;  h[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  h[1] = <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a>(1, xd);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[1]          = &quot;</span> &lt;&lt;  h[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
-<div class="line">  {</div>
-<div class="line">    h[i] = <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a>[<a class="code hl_variable" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a>](i-1, xd, h[i-1], h[i-2]);</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  h[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> }</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0_html_ga4eb5977c62725094fe76ad7d62387dd0"><div class="ttname"><a href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a></div><div class="ttdeci">constexpr successor_type const successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> successor.hpp:42</div></div>
-</div><!-- fragment --> </li>
+<div class="fragment"></div><!-- fragment --> </li>
 </ul>
 
 </div>
