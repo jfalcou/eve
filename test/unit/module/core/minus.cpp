@@ -24,7 +24,7 @@ TTS_CASE_TPL("Check return types of eve::minus", eve::test::simd::signed_types)
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::minus[bool()](T()), T);
 
-  TTS_EXPR_IS(eve::saturated(eve::minus)(T()), T);
+  TTS_EXPR_IS(eve::minus[eve::saturated](T()), T);
   TTS_EXPR_IS(eve::minus[eve::logical<T>()][eve::saturated](T()), T);
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()][eve::saturated](T()), T);
   TTS_EXPR_IS(eve::minus[bool()][eve::saturated](T()), T);
@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check return types of eve::minus", eve::test::simd::signed_types)
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[bool()](v_t()), v_t);
 
-  TTS_EXPR_IS(eve::minus[eve::saturated](v_t()), v_t);
+  TTS_EXPR_IS(eve::minus[eve::saturated2](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[eve::logical<T>()][eve::saturated](v_t()), T);
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()][eve::saturated](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[bool()][eve::saturated](v_t()), v_t);
@@ -71,7 +71,7 @@ TTS_CASE_WITH("Check behavior of eve::minus[eve::saturated2](eve::wide)",
             map([](auto e)
                 { return e == eve::valmin(eve::as(e)) ? eve::valmax(eve::as(e)) : eve::minus(e); },
                 a0));
-  TTS_EQUAL(eve::saturated(eve::minus[mask])(a0),
+  TTS_EQUAL(eve::minus[mask][eve::saturated2](a0),
             eve::if_else(mask, eve::minus[eve::saturated2](a0), a0));
 };
 
