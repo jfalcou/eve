@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct fdim_t : elementwise_callable<fdim_t, Options>
+  {
+    template<eve::floating_value T,  floating_value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(fdim_t, fdim_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -58,7 +70,16 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fdim_, fdim);
-}
+  inline constexpr auto fdim = functor<fdim_t>;
 
-#include <eve/module/core/regular/impl/fdim.hpp>
+  namespace detail
+  {
+
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    fdim_(EVE_REQUIRES(cpu_), O const &, T aa,  U bb) noexcept
+    {
+      return if_else(a >= b, sub(a, b), eve::zero);
+    }
+  }
+}
