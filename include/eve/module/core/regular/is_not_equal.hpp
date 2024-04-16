@@ -24,7 +24,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_not_equal_t : elementwise_callable<is_not_equal_t, Options, numeric_option, definitely_option>
+  struct is_not_equal_t : strict_elementwise_callable<is_not_equal_t, Options, numeric_option, definitely_option>
   {
     template<value T, value U>
     constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const

@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fanm_t : elementwise_callable<fanm_t, Options, pedantic_option, promote_option>
+  struct fanm_t : strict_elementwise_callable<fanm_t, Options, pedantic_option, promote_option>
   {
     template<value T,  value U,  value V>
     constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const

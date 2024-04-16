@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fam_t : elementwise_callable<fam_t, Options, pedantic_option, promote_option>
+  struct fam_t : strict_elementwise_callable<fam_t, Options, pedantic_option, promote_option>
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote2))

@@ -20,7 +20,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_not_less_t : elementwise_callable<is_not_less_t, Options, almost_option>
+  struct is_not_less_t : strict_elementwise_callable<is_not_less_t, Options, almost_option>
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
@@ -28,10 +28,10 @@ namespace eve
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_less] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);
     }
-    
+
     EVE_CALLABLE_OBJECT(is_not_less_t, is_not_less_);
   };
-  
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -87,10 +87,10 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto is_not_less = functor<is_not_less_t>;
-  
+
   namespace detail
   {
-    
+
     template<value T, value U, callable_options O>
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_not_less_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
@@ -98,7 +98,7 @@ namespace eve
       if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a >= b);
       else                                              return a >= b;
     }
-    
+
     template<value T, value U, callable_options O>
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_not_less_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
@@ -108,7 +108,7 @@ namespace eve
         using w_t = common_value_t<T, U>;
         auto a = w_t(aa);
         auto b = w_t(bb);
-        
+
         auto tol = o[almost2].value(w_t{});
         if constexpr(integral_value<decltype(tol)>) return a >=  eve::prev(b, tol);
         else              return a >= fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));

@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_greater_t : elementwise_callable<is_greater_t, Options, definitely_option>
+  struct is_greater_t : strict_elementwise_callable<is_greater_t, Options, definitely_option>
   {
     template<value T, value U>
     constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const

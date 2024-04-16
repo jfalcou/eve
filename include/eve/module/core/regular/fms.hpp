@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fms_t : elementwise_callable<fms_t, Options, pedantic_option, promote_option>
+  struct fms_t : strict_elementwise_callable<fms_t, Options, pedantic_option, promote_option>
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote2))
@@ -86,7 +86,7 @@ namespace eve
 //!       This can be very expensive if the system has no hardware capability.
 //!
 //!   * eve::promote
-//!  
+//!
 //!     * The call `fms[promote](x,y,z)`promotes all arguments to their common value type
 //!       before computing fma.
 //!
