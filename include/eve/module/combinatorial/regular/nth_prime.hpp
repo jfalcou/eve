@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct nth_prime_t : elementwise_callable<nth_prime_t, Options>
+  struct nth_prime_t : strict_elementwise_callable<nth_prime_t, Options>
   {
     template<eve::unsigned_value T>
     constexpr EVE_FORCEINLINE
@@ -1273,38 +1273,34 @@ inline constexpr auto nth_prime = functor<nth_prime_t>;
       };
       // clang-format on
 
-      if constexpr( has_native_abi_v<T> )
+      auto n = uint16(inc(nn));
+      if constexpr( scalar_value<T> )
       {
-        auto n = uint16(inc(nn));
-        if constexpr( scalar_value<T> )
-        {
-          if constexpr( sizeof(T) == 1 ) { return uint8(a1[n > 54u ? 0 : n]); }
-          else if constexpr( sizeof(T) == 2 ) { return a1[n > 6542u ? 0 : n]; }
-          else
-          {
-            n = (n > 10000u) ? 0u : n;
-            return T(a1[n] + (n > 6542u) * 0xffffu);
-          }
-        }
+        if constexpr( sizeof(T) == 1 ) { return uint8(a1[n > 54u ? 0 : n]); }
+        else if constexpr( sizeof(T) == 2 ) { return a1[n > 6542u ? 0 : n]; }
         else
         {
-          using elt_t = element_type_t<T>;
-          if constexpr( sizeof(elt_t) >= 1 ) n = if_else(n > 10000u, zero, n);
-          auto tmp = gather(&a1[0], n);
-          if constexpr( sizeof(elt_t) == 1 )
-          {
-            tmp = if_else(n > 54u, zero, tmp);
-            return uint8(tmp);
-          }
-          else if constexpr( sizeof(elt_t) == 2 )
-          {
-            tmp = if_else(n > 6542u, zero, tmp);
-            return uint16(tmp);
-          }
-          else { return add[convert(n, as<elt_t>()) > 6542u](convert(tmp, as<elt_t>()), T(0xffffu)); }
+          n = (n > 10000u) ? 0u : n;
+          return T(a1[n] + (n > 6542u) * 0xffffu);
         }
       }
-      else return apply_over(nth_prime, nn);
+      else
+      {
+        using elt_t = element_type_t<T>;
+        if constexpr( sizeof(elt_t) >= 1 ) n = if_else(n > 10000u, zero, n);
+        auto tmp = gather(&a1[0], n);
+        if constexpr( sizeof(elt_t) == 1 )
+        {
+          tmp = if_else(n > 54u, zero, tmp);
+          return uint8(tmp);
+        }
+        else if constexpr( sizeof(elt_t) == 2 )
+        {
+          tmp = if_else(n > 6542u, zero, tmp);
+          return uint16(tmp);
+        }
+        else { return add[convert(n, as<elt_t>()) > 6542u](convert(tmp, as<elt_t>()), T(0xffffu)); }
+      }
     }
 
     template<unsigned_value T,  unsigned_scalar_value U, callable_options O>

@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_xor_t : tuple_callable<bit_xor_t, Options>
+  struct bit_xor_t : strict_tuple_callable<bit_xor_t, Options>
   {
     template<eve::value T0, value T1>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1>
@@ -22,6 +22,7 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
+
     template<eve::value T0, value T1, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept

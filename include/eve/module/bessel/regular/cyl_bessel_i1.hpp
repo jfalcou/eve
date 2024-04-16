@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct cyl_bessel_i1_t : elementwise_callable<cyl_bessel_i1_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
     eve::common_value_t<T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
@@ -43,14 +43,13 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_ordered_value T >
-  //!      T cyl_bessel_i1(T x) noexcept;
+  //!     template<eve::floating_value T> constexpr T cyl_bessel_i1(T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+  //!   * `x` : [Floating argument](@ref eve::floating_value).
   //!
   //!   **Return value**
   //!

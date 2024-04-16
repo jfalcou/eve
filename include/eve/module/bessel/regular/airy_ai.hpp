@@ -16,9 +16,8 @@ namespace eve
   template<typename Options>
   struct airy_ai_t : elementwise_callable<airy_ai_t, Options>
   {
-    template<eve::floating_ordered_value T>
-    EVE_FORCEINLINE constexpr
-    T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<eve::floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(airy_ai_t, airy_ai_);
   };
@@ -43,19 +42,18 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::floating_ordered_value T >
-  //!      T airy_ai(T x) noexcept;
+  //!     template<eve::floating_value T> constexpr T airy_ai(T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+  //!   * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
   //!
-  //!    **Return value**
+  //!   **Return value**
   //!
-  //!    The value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos
-  //!    \left( \frac{t^3}{3}+xt \right) \,dt\f$ is returned.
+  //!   The value of \f$ \displaystyle Ai(x)=\frac1{\pi} \int_{0}^{\infty}\cos
+  //!   \left( \frac{t^3}{3}+xt \right) \,dt\f$ is returned.
   //!
   //!   @groupheader{Example}
   //!

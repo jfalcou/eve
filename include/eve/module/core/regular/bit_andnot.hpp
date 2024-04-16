@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_andnot_t : tuple_callable<bit_andnot_t, Options>
+  struct bit_andnot_t : strict_tuple_callable<bit_andnot_t, Options>
   {
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
@@ -22,16 +22,16 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
-    
+
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::bit_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
     { return EVE_DISPATCH_CALL(t); }
-    
+
     EVE_CALLABLE_OBJECT(bit_andnot_t, bit_andnot_);
   };
-  
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{

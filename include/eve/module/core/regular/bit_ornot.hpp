@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_ornot_t : tuple_callable<bit_ornot_t, Options>
+  struct bit_ornot_t : strict_tuple_callable<bit_ornot_t, Options>
   {
     template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>

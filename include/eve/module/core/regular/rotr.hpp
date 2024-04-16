@@ -13,11 +13,12 @@
 #include <eve/detail/assert_utils.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/rotl.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct rotr_t : elementwise_callable<rotr_t, Options>
+  struct rotr_t : strict_elementwise_callable<rotr_t, Options>
   {
     template<eve::integral_value T, eve::integral_value S>
     requires(unsigned_scalar_value<element_type_t<T>>)
@@ -54,7 +55,7 @@ namespace eve::detail
   constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotr_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
   {
     using s_t = as_wide_as_t<as_integer_t<S,signed>, S>;
-    return rotl_(EVE_TARGETS(cpu_),o,v,bit_cast(-s,as<s_t>{}));
+    return rotl_(EVE_TARGETS(cpu_),o,v,bit_cast(eve::minus(s),as<s_t>{}));
   }
 
   template<typename T, auto S, callable_options O>

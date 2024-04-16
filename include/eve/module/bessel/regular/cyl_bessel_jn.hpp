@@ -14,9 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct cyl_bessel_jn_t : elementwise_callable<cyl_bessel_jn_t, Options>
+  struct cyl_bessel_jn_t : strict_elementwise_callable<cyl_bessel_jn_t, Options>
   {
-    template<eve::ordered_value N, eve::floating_ordered_value T>
+    template<eve::value N, eve::floating_value T>
     EVE_FORCEINLINE constexpr
     as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
 
@@ -45,16 +45,14 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template< eve::ordered_value N, eve::floating_ordered_value T >
-  //!      T cyl_bessel_jn(T x) noexcept;
+  //!     template<eve::value N, eve::floating_value T> constexpr T cyl_bessel_jn(T x) noexcept;
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!     * `n`:   order of the function (non necessarily integral)
-  //!
-  //!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+  //!   * `n`: order of the function (not necessarily integral)
+  //!   * `x`: [floating argument](@ref eve::floating_value).
   //!
   //!   **Return value**
   //!
@@ -68,6 +66,5 @@ namespace eve
   //================================================================================================
  inline constexpr auto cyl_bessel_jn = functor<cyl_bessel_jn_t>;
 }
-
 
 #include <eve/module/bessel/regular/impl/cyl_bessel_jn.hpp>

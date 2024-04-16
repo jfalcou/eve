@@ -6,16 +6,20 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/combinatorial.hpp>
-
-#include <cmath>
 
 //==================================================================================================
 // Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of eve::gcd", eve::test::simd::all_types)
-<typename T>(tts::type<T>) { TTS_EXPR_IS(eve::gcd(T(), T()), T); };
+<typename T>(tts::type<T>)
+{
+  using e_t = eve::element_type_t<T>;
+  TTS_EXPR_IS(eve::gcd(T()  , T()  ), T  );
+  TTS_EXPR_IS(eve::gcd(T()  , e_t()), T  );
+  TTS_EXPR_IS(eve::gcd(e_t(), T()  ), T  );
+  TTS_EXPR_IS(eve::gcd(e_t(), e_t()), e_t);
+};
 
 auto mini = tts::constant([]<typename T>(eve::as<T> const&)
                           { return eve::inc(eve::valmin(eve::as<T>())); });

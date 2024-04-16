@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct hermite_t : elementwise_callable<hermite_t, Options, successor_option>
+  struct hermite_t : strict_elementwise_callable<hermite_t, Options, successor_option>
   {
     template<eve::floating_ordered_value ...Ts>
     constexpr EVE_FORCEINLINE

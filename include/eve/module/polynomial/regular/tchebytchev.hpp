@@ -14,7 +14,9 @@
 namespace eve
 {
   template<typename Options>
-  struct tchebytchev_t : elementwise_callable<tchebytchev_t, Options, successor_option, kind_1_option, kind_2_option>
+  struct tchebytchev_t : strict_elementwise_callable< tchebytchev_t, Options
+                                                    , successor_option, kind_1_option, kind_2_option
+                                                    >
   {
     template<eve::floating_ordered_value ...Ts>
     constexpr EVE_FORCEINLINE

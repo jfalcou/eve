@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct nearest_t : elementwise_callable<nearest_t, Options>
+  struct nearest_t : strict_elementwise_callable<nearest_t, Options>
   {
     template<eve::integral_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept

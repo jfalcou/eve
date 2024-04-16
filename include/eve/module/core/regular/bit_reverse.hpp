@@ -18,11 +18,10 @@
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
 
-
 namespace eve
 {
   template<typename Options>
-  struct bit_reverse_t : elementwise_callable<bit_reverse_t, Options>
+  struct bit_reverse_t : strict_elementwise_callable<bit_reverse_t, Options>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const

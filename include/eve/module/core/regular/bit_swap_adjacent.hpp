@@ -15,7 +15,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct bit_swap_adjacent_t : elementwise_callable<bit_swap_adjacent_t, Options>
+  struct bit_swap_adjacent_t : strict_elementwise_callable<bit_swap_adjacent_t, Options>
   {
     template<eve::value T, integral_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const

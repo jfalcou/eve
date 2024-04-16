@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct floor_t : elementwise_callable<floor_t, Options, tolerant_option>
+  struct floor_t : strict_elementwise_callable<floor_t, Options, tolerant_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept

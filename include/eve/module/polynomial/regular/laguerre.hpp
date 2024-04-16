@@ -14,25 +14,18 @@
 namespace eve
 {
   template<typename Options>
-  struct laguerre_t : elementwise_callable<laguerre_t, Options, associated_option, successor_option>
+  struct laguerre_t : strict_elementwise_callable<laguerre_t, Options, associated_option>
   {
-    template<eve::floating_ordered_value ...Ts>
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    template<eve::integral_value N, eve::floating_value T>
+    constexpr EVE_FORCEINLINE eve::as_wide_as_t<T, N> operator()(N n, T t) const
     {
-      return EVE_DISPATCH_CALL(b...);
+      return EVE_DISPATCH_CALL(n,t);
     }
-    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+
+    template<eve::integral_value N, eve::integral_value M, eve::floating_value T>
+    constexpr EVE_FORCEINLINE eve::as_wide_as_t<T, common_value_t<M,N>> operator()(N n, M m, T t) const
     {
-      return EVE_DISPATCH_CALL(a, b...);
-    }
-    template<eve::integral_value T0, eve::integral_value T1, eve::floating_ordered_value ...Ts>
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
-    {
-      return EVE_DISPATCH_CALL(a, b, c...);
+      return EVE_DISPATCH_CALL(n, m, t);
     }
 
     EVE_CALLABLE_OBJECT(laguerre_t, laguerre_);
@@ -61,11 +54,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value N, eve::floating_ordered_value T >
-//!     constexpr eve::as_wide_as<T, N> laguerre(N n, T x) noexcept;                               //1
+//!     template< eve::integral_value N, eve::floating_value T >
+//!     constexpr eve::as_wide_as_t<T, N> laguerre(N n, T x) noexcept;                                              // 1
 //!
-//!     template< eve::integral_value N, eve::integral_value M, eve::floating_ordered_value T >
-//!     constexpr eve::as_wide_as<T, N> laguerre[associated](N n, M m, T x) noexcept;                          //2
+//!     template< eve::integral_value N, eve::integral_value M, eve::floating_value T >
+//!     constexpr eve::eve::as_wide_as_t<T, eve::common_type_t<M,N>> laguerre[associated](N n, M m, T x) noexcept;  // 2
 //!   }
 //!   @endcode
 //!
@@ -74,19 +67,18 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n`, `m` :  [integral positive arguments](@ref eve::integral_value).
-//!
+//!     * `n`, m` :  [integral positive arguments](@ref eve::integral_value).
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!
 //!    **Return value**
 //!
-//!      The value of the polynomial at `x` is returned.
+//!    The value of the polynomial at `x` is returned.
 //!
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/polynomial/regular/laguerre.cpp}
 //!
-//!   @groupheader{Other Semantic Modifier}
+//!   @groupheader{Semantic Modifier}
 //!
 //!   * eve::successor
 //!
