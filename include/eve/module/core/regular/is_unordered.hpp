@@ -82,7 +82,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
     is_unordered_(EVE_REQUIRES(cpu_),
                   O const & ,
-                  logical<T> const& a, logical<U> const& b) noexcept
+                  logical<T> const& , logical<U> const& ) noexcept
     {
       using r_t =  common_value_t<T, U>;
       return false_(as<r_t>());
