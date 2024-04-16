@@ -80,7 +80,7 @@ namespace eve
   {
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(cpu_),
-                                      O const & o,
+                                      O const & ,
                                       logical<T> const& a,
                                       logical<U> const& b) noexcept
     {
@@ -102,21 +102,21 @@ namespace eve
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_xor_(EVE_REQUIRES(cpu_), O const & o, T a, bool b) noexcept
+    auto logical_xor_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
     {
       return T(b) !=  a;
     }
 
     template<typename U, callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_xor_(EVE_REQUIRES(cpu_), O const & o, bool a, U b) noexcept
+    auto logical_xor_(EVE_REQUIRES(cpu_), O const & , bool a, U b) noexcept
     {
       return U(a) !=  b;
     }
 
     template<callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_xor_(EVE_REQUIRES(cpu_), O const & o, bool a, bool b) noexcept
+    auto logical_xor_(EVE_REQUIRES(cpu_), O const & , bool a, bool b) noexcept
     { return a!=b; }
   }
 }

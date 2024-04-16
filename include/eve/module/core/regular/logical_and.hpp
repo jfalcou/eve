@@ -85,7 +85,7 @@ namespace eve
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr auto
     logical_and_(EVE_REQUIRES(cpu_),
-                 O const & o,
+                 O const & ,
                  T a, U b) noexcept
     {
       using r_t = as_logical_t<decltype(a && b)>;
@@ -95,21 +95,21 @@ namespace eve
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_and_(EVE_REQUIRES(cpu_), O const & o, T a, bool b) noexcept
+    auto logical_and_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
     {
       return b ? T {a} : false_(as<T>());
     }
 
     template<typename U, callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_and_(EVE_REQUIRES(cpu_), O const & o, bool a, U b) noexcept
+    auto logical_and_(EVE_REQUIRES(cpu_), O const & , bool a, U b) noexcept
     {
       return a ? U {b} : false_(as<U>());
     }
 
     template<callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_and_(EVE_REQUIRES(cpu_), O const & o, bool a, bool b) noexcept
+    auto logical_and_(EVE_REQUIRES(cpu_), O const & , bool a, bool b) noexcept
     { return a && b; }
   }
 }

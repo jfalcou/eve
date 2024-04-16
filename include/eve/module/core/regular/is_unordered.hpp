@@ -81,7 +81,7 @@ namespace eve
     template<value T, value U, callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
     is_unordered_(EVE_REQUIRES(cpu_),
-                  O const & o,
+                  O const & ,
                   logical<T> const& a, logical<U> const& b) noexcept
     {
       using r_t =  common_value_t<T, U>;
@@ -92,7 +92,7 @@ namespace eve
     template<value T, value U, callable_options O>
     EVE_FORCEINLINE constexpr as_logical_t<common_value_t<T, U>>
     is_unordered_(EVE_REQUIRES(cpu_),
-                  O const & o,
+                  O const & ,
                   T const& aa, U const& bb) noexcept
     {
       using w_t =  common_value_t<T, U>;
