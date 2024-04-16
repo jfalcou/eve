@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/fnma.hpp>
+#include <eve/module/core/regular/fnms.hpp>
 
 namespace eve
 {
@@ -18,8 +18,14 @@ namespace eve
   struct fsnm_t : strict_elementwise_callable<fsnm_t, Options, pedantic_option, promote_option>
   {
     template<value T,  value U,  value V>
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+    requires(Options::contains(promote2))
+      constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
+
+    template<eve::value T,eve::value U,eve::value V>
+    requires(!Options::contains(promote2))
+    constexpr EVE_FORCEINLINE
+    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     EVE_CALLABLE_OBJECT(fsnm_t, fsnm_);
   };
