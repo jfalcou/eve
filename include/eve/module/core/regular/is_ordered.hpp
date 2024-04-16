@@ -17,7 +17,7 @@ namespace eve
   struct is_ordered_t : elementwise_callable<is_ordered_t, Options>
   {
     template<value T,  value U>
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(logical<T> a, logical<U> b) const
+    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
     {
       return EVE_DISPATCH_CALL(a, b);
     }
@@ -74,18 +74,18 @@ namespace eve
   namespace detail
   {
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    EVE_FORCEINLINE constexpr auto
     is_ordered_(EVE_REQUIRES(cpu_),
                   O const & ,
                   logical<T> const& , logical<U> const& ) noexcept
     {
-      using r_t =  common_value_t<T, U>;
+      using r_t =   common_logical_t<logical<T>, logical<U>>;
       return true_(as<r_t>());
     }
 
 
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    EVE_FORCEINLINE constexpr auto
     is_ordered_(EVE_REQUIRES(cpu_),
                   O const & ,
                   T const& aa, U const& bb) noexcept
