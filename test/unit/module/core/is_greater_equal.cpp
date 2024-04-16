@@ -30,10 +30,10 @@ TTS_CASE_TPL("Check return types of eve::is_greater_equal(simd)", eve::test::sim
     TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = unsigned()](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = unsigned()](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = unsigned()](v_t(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = T()](T(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = T()](T(), v_t()), logical<T>);
-    TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = T()](v_t(), T()), logical<T>);
-    using ui_t = eve::as_integer_t<T, unsigned>;
+    TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = v_t()](T(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = v_t()](T(), v_t()), logical<T>);
+    TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = v_t()](v_t(), T()), logical<T>);
+    using ui_t = eve::as_integer_t<v_t, unsigned>;
     TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = ui_t()](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = ui_t()](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_greater_equal[eve::almost2 = ui_t()](v_t(), T()), logical<T>);

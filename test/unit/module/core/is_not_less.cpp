@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check return types of eve::is_not_less(simd)", eve::test::simd::al
     TTS_EXPR_IS(eve::is_not_less[eve::almost2 = v_t()](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_not_less[eve::almost2 = v_t()](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_not_less[eve::almost2 = v_t()](v_t(), T()), logical<T>);
-    using ui_t = eve::as_integer_t<T, unsigned>;
+    using ui_t = eve::as_integer_t<v_t, unsigned>;
     TTS_EXPR_IS(eve::is_not_less[eve::almost2 = ui_t()](T(), T()), logical<T>);
     TTS_EXPR_IS(eve::is_not_less[eve::almost2 = ui_t()](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_not_less[eve::almost2 = ui_t()](v_t(), T()), logical<T>);
