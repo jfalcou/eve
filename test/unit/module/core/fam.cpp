@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
-<typename T>(T const& a0, T const& a1)
+<typename T>(T a0, T a1)
 {
   using eve::fam;
   using eve::fma;

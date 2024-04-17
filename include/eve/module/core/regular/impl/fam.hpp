@@ -16,16 +16,15 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/fma.hpp>
 
-
 namespace eve::detail
 {
   template<typename T, typename U, typename V, callable_options O>
   EVE_FORCEINLINE constexpr auto fam_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
   {
-    // PROMOTE ---------------------
+     // PROMOTE ---------------------
     if constexpr(O::contains(promote2))
     {
-      using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
+     using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
       constexpr auto tgt = as(eve::as<er_t>());
       return fam[o.drop(promote2)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
     }
@@ -78,9 +77,17 @@ namespace eve::detail
       }
       else if constexpr( std::same_as<element_type_t<T>, double> )
       {
-        [[maybe_unused]] auto stdfam = [](auto sa, auto sb, auto sc){return std::fma(sc, sb, sa); };
-        if constexpr(scalar_value<T>) return std::fma(c, a, b);
-        else                          return map(stdfam, a, b, c);
+        if constexpr(scalar_value<T>)
+        {
+          return std::fma(c, b, a);
+        }
+        else
+        {
+          auto stdfam = [](auto x, auto y, auto z){
+            return std::fma(y, z, x);
+          };
+          return map(stdfam, a, b, c);
+        }
       }
       else if constexpr( std::is_integral_v<element_type_t<T>> )
       {
@@ -91,9 +98,13 @@ namespace eve::detail
         constexpr auto tgt = as<as_integer_t<T, unsigned>>{};
         return bit_cast(fam(bit_cast(a,tgt), bit_cast(b,tgt), bit_cast(c,tgt)), as<T>());
       }
-      else  return fam(a, b, c);
+      else
+      {
+        return fam(a, b, c);
+      }
     }
     // REGULAR ---------------------
-    else  return a + b * c;
+    else
+      return a + b * c;
   }
 }
