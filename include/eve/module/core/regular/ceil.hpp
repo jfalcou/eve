@@ -81,14 +81,13 @@ namespace eve
 //!   * eve::almost
 //!
 //!     The expression `ceil[almost = tol](x)` computes a tolerant ceil value for `x`,
-//!     where `x` must be a floating value.
+//!     where `x` must be a floating value and tol a scalar value.
 //!
 //!      * If `tol` is a floating value, computes the floor with a tolerance `tol`
 //!        using Hagerty's FL5 function.
 //!      * If `tol` is an integral value n, computes the floor of the next nth
 //!        representable value in the `x` type.
 //!      * ceil[almost](x) is equivalent to `ceil[tolerance = 3*eve::eps(eve::as (x))(x)`).
-//!      * if t is an simd value x must be an simd value
 //!
 //! @}
 //================================================================================================

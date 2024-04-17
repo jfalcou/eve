@@ -81,7 +81,7 @@ namespace eve
 //!   * eve::almost
 //!
 //!     The expression `floor[almost = tol](x)` computes a tolerant floor value for `x`,
-//!     where `x` must be a floating value.
+//!     where `x` must be a floating value and tol a scalar value.
 //!
 //!      * If `tol` is a floating value, computes the floor with
 //!        a tolerance `tol` using Hagerty's FL5 function.
@@ -89,7 +89,6 @@ namespace eve
 //!        the next nth representable value in the `x` type.
 //!      * the call `floor[almost](x)` takes tol as  3 times
 //!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-//!      * if t is an simd value x must be an simd value
 //!
 //! @}
 //================================================================================================

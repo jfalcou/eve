@@ -81,7 +81,7 @@ namespace eve
 //!   * eve::almost
 //!
 //!     The expression `trunc[almost = tol](x)` computes a tolerant truncated
-//!     value for `x`, where `x` must be a floating value.
+//!     value for `x`, where `x` must be a floating value and tol a scalar value.
 //!
 //!        * If `tol` is a floating_value computes the truncation with
 //!          a tolerance `tol` using Hagerty's FL5 function.
@@ -89,7 +89,6 @@ namespace eve
 //!          the next or previous nth representable value in the `x` type.
 //!        * the call `trunc[almost](x)` takes tol as  3 times
 //!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-//!        * if t is an simd value x must be an simd value
 //!
 //! @}
 //================================================================================================

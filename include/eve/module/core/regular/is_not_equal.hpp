@@ -99,7 +99,7 @@ namespace eve
 //!         `x` representable in the interval \f$[x,y[\f$.
 //!       * the call `is_equal[definitely](x, y)` takes tol as  3 times
 //!         the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-//!       * if t is an simd value x or y must also be simd.
+//!       * t must be a scalar value.
 //!
 //! @}
 //================================================================================================

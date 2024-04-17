@@ -141,12 +141,12 @@ inline constexpr auto minmax = functor<minmax_t>;
     EVE_FORCEINLINE auto
     minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
     {
-//       if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
-//       else if constexpr( std::same_as<Callable, callable_is_greater_> )
-//       {
-//         return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
-//       }
-//       else
+      if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
+      else if constexpr( std::same_as<Callable, callable_is_greater_> )
+      {
+        return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
+      }
+      else
       {
         return [f](auto x, auto y)
         {
