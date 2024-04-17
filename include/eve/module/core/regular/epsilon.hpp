@@ -32,10 +32,7 @@ namespace eve
 //! @addtogroup core_fma_internal
 //! @{
 //!   @var epsilon
-//!   @brief Computes the fused add multiply of its three parameters.
-//!
-//!   The call `epsilon(x, y, z)` is similar to `x+y*z` as if calculated to infinite precision
-//!   and rounded once to fit the result as much as supported by the hardware.
+//!   @brief Computes The distance of abs(x) to the next representable element of type T
 //!
 //!   **Defined in Header**
 //!
