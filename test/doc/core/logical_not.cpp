@@ -9,13 +9,13 @@ int main()
   wide_ft pf = {-1.0f, -1.3f, -0.0f, -1.7f, 0.0f, 2.3f, 2.5f, 2.7f};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf              = " << pf << '\n'
-            << "-> logical_not(pf) = " << eve::logical_not(pf) << '\n';
+            << "<- pf                  = " << pf << '\n'
+            << "-> logical_not(pf > 0) = " << eve::logical_not(pf > 0) << '\n';
 
   float xf = -32.768f;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> logical_not(xf) = " << eve::logical_not(xf) << '\n';
+            << "<- xf                  = " << xf << '\n'
+            << "-> logical_not(xf > 0) = " << eve::logical_not(xf > 0) << '\n';
   return 0;
 }

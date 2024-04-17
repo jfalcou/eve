@@ -76,14 +76,14 @@ namespace eve
   {
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    logical_not_(EVE_REQUIRES(cpu_), T const& a) noexcept
+    logical_not_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       return as_logical_t<T>(!a);
     }
 
-    template<value T>
+    template<callable_options O>
     EVE_FORCEINLINE constexpr auto
-    logical_not_(EVE_REQUIRES(cpu_), bool a) noexcept
+    logical_not_(EVE_REQUIRES(cpu_), O const &, bool a) noexcept
     {
       return !a;
     }
