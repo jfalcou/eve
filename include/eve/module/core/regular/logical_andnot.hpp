@@ -23,16 +23,16 @@ namespace eve
     constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> as_logical_t<decltype(a && !b)>
     { return EVE_DISPATCH_CALL(a, b); }
 
-//     template<logical_value U>
-//     constexpr EVE_FORCEINLINE auto  operator()(bool a, U b) const -> as_logical_t<decltype(U(a) && b)>
-//     { return EVE_DISPATCH_CALL(a, b); }
+    template<logical_value U>
+    constexpr EVE_FORCEINLINE auto  operator()(bool a, U b) const -> as_logical_t<decltype(U(a) && b)>
+    { return EVE_DISPATCH_CALL(a, b); }
 
-//     template<logical_value T>
-//     constexpr EVE_FORCEINLINE auto  operator()(T a, bool b) const -> as_logical_t<decltype(a && T(b))>
-//     { return EVE_DISPATCH_CALL(a, b); }
+    template<logical_value T>
+    constexpr EVE_FORCEINLINE auto  operator()(T a, bool b) const -> as_logical_t<decltype(a && T(b))>
+    { return EVE_DISPATCH_CALL(a, b); }
 
-//     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const
-//     { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const
+    { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(logical_andnot_t, logical_andnot_);
   };
