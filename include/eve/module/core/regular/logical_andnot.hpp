@@ -17,22 +17,22 @@
 namespace eve
 {
   template<typename Options>
-  struct logical_andnot_t : elementwise_callable<logical_andnot_t, Options>
+  struct logical_andnot_t : strict_elementwise_callable<logical_andnot_t, Options>
   {
     template<logical_value T, logical_value U>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> as_logical_t<decltype(a && b)>
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> as_logical_t<decltype(a && !b)>
     { return EVE_DISPATCH_CALL(a, b); }
 
-    template<logical_value U>
-    constexpr EVE_FORCEINLINE auto  operator()(bool a, U b) const -> as_logical_t<decltype(U(a) && b)>
-    { return EVE_DISPATCH_CALL(a, b); }
+//     template<logical_value U>
+//     constexpr EVE_FORCEINLINE auto  operator()(bool a, U b) const -> as_logical_t<decltype(U(a) && b)>
+//     { return EVE_DISPATCH_CALL(a, b); }
 
-    template<logical_value T>
-    constexpr EVE_FORCEINLINE auto  operator()(T a, bool b) const -> as_logical_t<decltype(a && T(b))>
-    { return EVE_DISPATCH_CALL(a, b); }
+//     template<logical_value T>
+//     constexpr EVE_FORCEINLINE auto  operator()(T a, bool b) const -> as_logical_t<decltype(a && T(b))>
+//     { return EVE_DISPATCH_CALL(a, b); }
 
-    constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+//     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const
+//     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(logical_andnot_t, logical_andnot_);
   };
@@ -76,15 +76,15 @@ namespace eve
 //!  @godbolt{doc/core/logical_andnot.cpp}
 //! @}
 //================================================================================================
- inline constexpr auto logical_andnot = functor<logical_andnot_t>;
+  inline constexpr auto logical_andnot = functor<logical_andnot_t>;
 
   namespace detail
   {
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE auto logical_andnot_(EVE_REQUIRES(cpu_),
-                                      O const &,
-                                      logical<T> const& a,
-                                      logical<U> const& b) noexcept
+                                         O const &,
+                                         logical<T> const& a,
+                                         logical<U> const& b) noexcept
     {
       constexpr auto scT =  scalar_value<T>;
       constexpr auto scU =  scalar_value<U>;
@@ -146,7 +146,7 @@ namespace eve
     EVE_FORCEINLINE constexpr
     auto logical_andnot_(EVE_REQUIRES(cpu_), O const & , bool a, U b) noexcept
     {
-       return a ? U {!b} : false_(as<U>());
+      return a ? U {!b} : false_(as<U>());
     }
 
     template<callable_options O>
