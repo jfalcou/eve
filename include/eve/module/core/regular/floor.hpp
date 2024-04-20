@@ -14,15 +14,21 @@
 namespace eve
 {
   template<typename Options>
-  struct floor_t : strict_elementwise_callable<floor_t, Options, tolerant_option>
+  struct floor_t : strict_elementwise_callable<floor_t, Options, almost_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+//      static_assert( valid_tolerance<T, Options>::value, "[eve::floor] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v);
+    }
 
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
-    { return EVE_DISPATCH_CALL(v, target); }
+    {
+//      static_assert( valid_tolerance<T, Options>::value, "[eve::floor] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v, target);
+    }
 
     EVE_CALLABLE_OBJECT(floor_t, floor_);
   };
@@ -72,17 +78,17 @@ namespace eve
 //!     The call `eve;::floor[mask](x)` provides a masked version of `eve::floor` which is
 //!     equivalent to `if_else (mask, floor(x), x)`.
 //!
-//!   * eve::tolerant
+//!   * eve::almost
 //!
-//!     The expression `tolerant(floor)(x, tol)` computes a tolerant floor value for `x`,
-//!     where `x` must be a floating value.
+//!     The expression `floor[almost = tol](x)` computes a tolerant floor value for `x`,
+//!     where `x` must be a floating value and tol a scalar value.
 //!
 //!      * If `tol` is a floating value, computes the floor with
 //!        a tolerance `tol` using Hagerty's FL5 function.
 //!      * If `tol` is an integral value n, computes the floor of
 //!        the next nth representable value in the `x` type.
-//!      * If `tol` is omitted, the tolerance is taken to 3 times
-//!        the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
+//!      * the call `floor[almost](x)` takes tol as  3 times
+//!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
 //! @}
 //================================================================================================

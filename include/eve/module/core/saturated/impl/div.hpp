@@ -73,7 +73,7 @@ requires has_native_abi_v<T>
     {
       auto a2 = bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
       // case valmin/-1 is treated here
-      a           = inc[logical_not(inc(b) | add(a, eve::valmin(eve::as(a))))](a);
+      a           = inc[!(inc(b) | add(a, eve::valmin(eve::as(a))))](a);
       auto isnezb = is_nez(b);
       b           = if_else(isnezb, b, mone);
       return if_else(isnezb, div(a, b), a2);

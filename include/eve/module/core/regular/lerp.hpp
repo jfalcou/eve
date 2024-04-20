@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fnma.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct lerp_t : elementwise_callable<lerp_t, Options, pedantic_option>
+  {
+    template<value T,  value U,  value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+    { return EVE_DISPATCH_CALL(a, b, c); }
+
+    EVE_CALLABLE_OBJECT(lerp_t, lerp_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -41,7 +56,7 @@ namespace eve
 //!    **Return value**
 //!
 //!    The value of the interpolation (or extrapolation)  between `x` and `y` is returned.
-//!    The call is semantically equivalent to `x+t*(y-x)`.
+//!    The call is semantically equivalent to `x+t*(y-x)` but uses fma opportunities.
 //!
 //!  @groupheader{Example}
 //!
@@ -55,9 +70,24 @@ namespace eve
 //!     version of `lerp` which is
 //!     equivalent to `if_else(mask, lerp(x, ...), x)`
 //!
+//!   * eve::pedantic
+//!
+//!     when `lerp[pedantic](a, b, t)` pedantic version of fma is used internally
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(lerp_, lerp);
-}
+  inline constexpr auto lerp = functor<lerp_t>;
 
-#include <eve/module/core/regular/impl/lerp.hpp>
+  namespace detail
+  {
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U, V>
+    lerp_(EVE_REQUIRES(cpu_), O const & o, T const &aa,  U const &bb,  V const &tt) noexcept
+    {
+      using r_t =  common_value_t<T, U, V>;
+      auto a = r_t(aa);
+      auto b = r_t(bb);
+      auto t = r_t(tt);
+      return fma[o](t, b, fnma[o](t, a, a));
+    }
+  }
+}

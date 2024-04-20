@@ -79,11 +79,13 @@ struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, prom
 //!     The call `eve::fma[mask](x, ...)` provides a masked
 //!     version of `fma` which is equivalent to `if_else(mask, fma(x, ...), x)`
 //!
-//!   * eve::pedantic, eve::numeric
+//!   * eve::pedantic
 //!
 //!     * The call `fma[pedantic](x,y,z)` ensures the one rounding property.
 //!       This can be very expensive if the system has no hardware capability.
 //!
+//!   * eve::promote
+//!  
 //!     * The call `fma[promote](x,y,z)`promotes all arguments to their common value type
 //!       before computing fma.
 //! @}

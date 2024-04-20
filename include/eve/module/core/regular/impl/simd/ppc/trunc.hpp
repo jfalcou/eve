@@ -18,7 +18,7 @@ namespace eve::detail
                                     wide<T, N> const& v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if  constexpr(!O::contains(tolerance))
+    if  constexpr(!O::contains(almost2))
     {
       if constexpr( integral_value<T> )
         return v0;

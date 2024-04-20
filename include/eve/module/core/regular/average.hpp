@@ -6,7 +6,6 @@
 */
 //==================================================================================================
 #pragma once
-#pragma once
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
@@ -100,7 +99,7 @@ namespace eve
 //!   * eve::downward,  eve::upward
 //!
 //!     only for two integral values, see above
-//!    
+//!
 //!//! @}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/traits/as_wide.hpp>
 #include <type_traits>
 
 namespace eve::detail
@@ -33,14 +34,6 @@ namespace eve::detail
   {
     using type = std::remove_cvref_t<decltype(detail::find_common_value<Ts...>())>;
   };
-
-  template<typename Index, typename... Ts>
-  struct indexed_common_value_impl
-  {
-    using co_t = typename eve::detail::common_value_impl<void, Ts...>::type;
-    using w_t  = std::conditional_t<scalar_value<co_t> && simd_value<Index>, as_wide_as< co_t, Index>, co_t>;
-    using type = std::conditional_t<scalar_value<co_t>, w_t, co_t>;
-  };
 }
 
 namespace eve
@@ -52,10 +45,45 @@ namespace eve
   template<typename... Ts>
   struct common_value : eve::detail::common_value_impl<void, Ts...>
   {};
+}
 
-  template<typename... Ts>
-  using common_logical_t = as_logical_t<common_value_t<Ts...>>;
+namespace eve::detail
+{
+  template<typename T, typename U>
+  struct common_logical_impl;
 
-  template<typename Index, typename... Ts>
-  using indexed_common_value_t = typename eve::detail::indexed_common_value_impl<Index, Ts...>::type;
+  template<scalar_value T, scalar_value U>
+  struct common_logical_impl<T,U> : as_logical<T>
+  {};
+
+  template<kumi::product_type T>
+  struct common_logical_impl<T,T> : as_logical<T>
+  {};
+
+  template<value T, value U>
+  struct common_logical_impl<logical<T>,logical<U>>
+  {
+    using type = logical<std::conditional_t<simd_value<T>, T, U>>;
+  };
+
+  template<scalar_value T, scalar_value U>
+  struct common_logical_impl<logical<T>,logical<U>>
+  {
+    using type = logical<T>;
+  };
+
+  template<typename T, typename U>
+  requires(!(scalar_value<T> && scalar_value<U>) && requires{ detail::find_common_value<T,U>(); } )
+  struct common_logical_impl<T,U> : as_logical<typename common_value<T,U>::type>
+  {};
+}
+
+namespace eve
+{
+  template<typename T, typename U>
+  using common_logical_t = typename eve::detail::common_logical_impl<T, U>::type;
+
+  template<typename T, typename U>
+  struct common_logical : eve::detail::common_logical_impl<T, U>
+  {};
 }

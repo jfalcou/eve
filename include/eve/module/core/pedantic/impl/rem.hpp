@@ -45,7 +45,7 @@ rem_(EVE_SUPPORTS(cpu_), pedantic_type const&, T const& a, T const& b) noexcept
                      allbits,
                      if_else(is_eqz(a) || is_infinite(b),
                              a,
-                             pedantic(fnma)(b, trunc(div(a, b)), a) // rem(a, b)
+                             fnma[pedantic2](b, trunc(div(a, b)), a) // rem(a, b)
                              ));                                    // as remainder
     }
     else return if_else(is_nez(b), rem(a, bb), a);

@@ -13,9 +13,9 @@ int main()
   std::cout << "---- simd"  << std::setprecision(8) << '\n'
             << "<- pf                            = " << pf << '\n'
             << "-> floor(pf)                     = " << eve::floor(pf) << '\n'
-            << "-> floor[tolerant](pf)           = " << eve::floor[eve::tolerant](pf)           << '\n'
-            << "-> floor[tolerance = 2*decr](pf) = " << eve::floor[eve::tolerance = 2*decr](pf) << '\n'
-            << "-> floor[tolerance = 4](pf)      = " << eve::floor[eve::tolerance = 4](pf)      << '\n'
+            << "-> floor[almost2](pf)           = " << eve::floor[eve::almost2](pf)           << '\n'
+            << "-> floor[almost2 = 2*decr](pf) = " << eve::floor[eve::almost2 = 2*decr](pf) << '\n'
+            << "-> floor[almost2 = 4](pf)      = " << eve::floor[eve::almost2 = 4](pf)      << '\n'
             << "-> floor[pf>1.5](pf)             = " << eve::floor[pf>1.5](pf) << '\n';
 
   float xf = -32.768f;

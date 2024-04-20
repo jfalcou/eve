@@ -23,7 +23,7 @@ namespace eve::detail
                                     wide<T, N> a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if  constexpr(!O::contains(tolerance))
+    if  constexpr(!O::contains(almost2))
     {
       constexpr auto c = categorize<wide<T, N>>();
 
@@ -53,7 +53,7 @@ namespace eve::detail
 
     if constexpr( C::is_complete )
       return src;
-    else if  constexpr(!O::contains(tolerance))
+    else if  constexpr(!O::contains(almost2))
     {
       if constexpr( c == category::float32x16 )
         return _mm512_mask_roundscale_ps(src, m, v, _MM_FROUND_TO_ZERO);

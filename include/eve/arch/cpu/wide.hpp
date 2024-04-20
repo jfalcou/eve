@@ -553,6 +553,7 @@ namespace eve
     //! @brief Perform the addition between all lanes of its parameters
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, wide const& w) noexcept
+    requires(!kumi::product_type<Type>)
     {
       auto that = v;
       return that += w;
@@ -561,7 +562,7 @@ namespace eve
     //! @brief Perform the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(plain_scalar_value auto s, wide const& v) noexcept
-        requires(!kumi::product_type<Type>)
+    requires(!kumi::product_type<Type>)
     {
       return v + wide(s);
     }
@@ -569,7 +570,7 @@ namespace eve
     //! @brief Perform the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, plain_scalar_value auto s) noexcept
-        requires(!kumi::product_type<Type>)
+    requires(!kumi::product_type<Type>)
     {
       return v + wide(s);
     }

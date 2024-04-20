@@ -25,6 +25,8 @@
 #include <eve/module/core/decorator/sph.hpp>
 #include <eve/module/core/decorator/spherical.hpp>
 #include <eve/module/core/decorator/successor.hpp>
+#include <eve/as_element.hpp>
+#include <eve/as.hpp>
 
 //======================================================================================================================
 // New option style  - TODO rename later without the '2'
@@ -57,11 +59,9 @@ namespace eve
   struct toward_zero_mode {};
   struct upward_mode      {};
 
-  [[maybe_unused]] inline constexpr auto almost2      = ::rbr::flag( almost_mode{}      );
   [[maybe_unused]] inline constexpr auto associated2  = ::rbr::flag( associated_mode{}  );
   [[maybe_unused]] inline constexpr auto compensated2 = ::rbr::flag( compensated_mode{} );
   [[maybe_unused]] inline constexpr auto condon_shortley2  = ::rbr::flag( condon_shortley_mode{} );
-  [[maybe_unused]] inline constexpr auto definitely2  = ::rbr::flag( definitely_mode{}  );
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}      );
   [[maybe_unused]] inline constexpr auto kind_22      = ::rbr::flag( kind_2_mode{}      );
@@ -81,11 +81,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
-  struct almost_option       : detail::exact_option<almost2>      {};
   struct associated_option   : detail::exact_option<associated2>  {};
   struct compensated_option  : detail::exact_option<compensated2> {};
   struct condon_shortley_option  : detail::exact_option<condon_shortley2> {};
-  struct definitely_option   : detail::exact_option<definitely2>  {};
   struct downward_option     : detail::exact_option<downward2>    {};
   struct kind_1_option       : detail::exact_option<kind_12>      {};
   struct kind_2_option       : detail::exact_option<kind_22>      {};
@@ -108,11 +106,9 @@ namespace eve
   // ----------------------------------------------------------------------------------
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
-  inline constexpr auto as_option(almost_type       const&) { return almost2;       }
   inline constexpr auto as_option(associated_type   const&) { return associated2;   }
   inline constexpr auto as_option(compensated_type  const&) { return compensated2;  }
   inline constexpr auto as_option(condon_shortley_type const&) { return condon_shortley2;  }
-  inline constexpr auto as_option(definitely_type   const&) { return definitely2;   }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
   inline constexpr auto as_option(kind_2_type       const&) { return kind_22;       }
@@ -133,6 +129,36 @@ namespace eve
   inline constexpr auto as_option(upward_type       const&) { return upward2;       }
 
   // New tolerance option that carry a value
+  template<typename Value>
+  struct almost_t;
+
+  struct almost_option
+  {
+    template<typename Value>
+    EVE_FORCEINLINE constexpr auto process(auto const& base, almost_t<Value> const& opts) const
+    {
+      auto news = rbr::merge(options{opts}, base);
+      return options<decltype(news)>{news};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+  };
+
+  template<typename Value>
+  struct definitely_t;
+
+  struct definitely_option
+  {
+    template<typename Value>
+    EVE_FORCEINLINE constexpr auto process(auto const& base, definitely_t<Value> const& opts) const
+    {
+      auto news = rbr::merge(options{opts}, base);
+      return options<decltype(news)>{news};
+    }
+
+    EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
+  };
+
   struct tolerant_mode    {};
   struct default_tolerance
   {
@@ -144,5 +170,4 @@ namespace eve
 
   struct tolerant_option : detail::exact_option<tolerance>    {};
   inline constexpr auto as_option(tolerant_type const&) { return tolerant2; }
-
 }

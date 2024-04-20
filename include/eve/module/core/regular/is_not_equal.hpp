@@ -12,9 +12,31 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/constant/eps.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/dist.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/nb_values.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_not_equal_t : strict_elementwise_callable<is_not_equal_t, Options, numeric_option, definitely_option>
+  {
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    {
+//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_equal] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+
+    EVE_CALLABLE_OBJECT(is_not_equal_t, is_not_equal_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -59,47 +81,71 @@ namespace eve
 //!   * Masked Call
 //!
 //!     The call `eve::is_not_equal[mask](x)` provides a masked version of `eve::is_not_equal` which
-//!     is equivalent to `if_else (mask, is_not_equal(x, y), false_
+//!     is equivalent to `if_else (mask, is_not_equal(x, y), false_)
 //!
 //!   * eve::numeric
 //!
-//!     The expression `numeric(is_not_equal)(x,y)` considers that Nan values are not equal.
+//!     The expression `is_not_equal[numeric](x,y)` considers that Nan values are not equal.
 //!
 //!   * `definitely`
 //!
-//!     The expression `definitely(is_not_equal)(x, y, t)` where `x` and `y` must be floating point
-//!     values, evals to true if and only if `x` is almost equal to `y`.
+//!     The expression `is_not_equal[definitely =  t](x, y)` where `x` and `y` must be floating point
+//!     values, evals to true if and only if `x` is definitely not equal to `y`.
 //!     This means that:
 //!
 //!       * if `t` is a floating_value then the relative error of not confusing is `x` and `y` is
 //!         greater than `t` \f$(|x-y| \ge t \max(|x|, |y|))\f$.
 //!       * if `t` is a positive integral_value then there are more than `t` values of the type of
 //!         `x` representable in the interval \f$[x,y[\f$.
-//!       * if `t` is omitted then the tolerance `t` is taken to 3 times the machine \f$\epsilon\f$
-//!         in the `x` type (`3*eps(as(x))`).
+//!       * the call `is_equal[definitely](x, y)` takes tol as  3 times
+//!         the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
+//!       * t must be a scalar value.
 //!
 //! @}
 //================================================================================================
-EVE_IMPLEMENT_CALLABLE(is_not_equal_, is_not_equal);
+  inline constexpr auto is_not_equal = functor<is_not_equal_t>;
 
-namespace detail
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto is_not_equal_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+  namespace detail
   {
-    if constexpr( scalar_value<T> && scalar_value<U> ) return as_logical_t<T>(a != b);
-    else return a != b;
-  }
 
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, value U, value V>
-  EVE_FORCEINLINE auto
-  is_not_equal_(EVE_SUPPORTS(cpu_), C const& cond, U const& u, V const& v) noexcept
-  {
-    return logical_mask_op(cond, is_not_equal, u, v);
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_not_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+    {
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a != b);
+      else                                              return a != b;
+    }
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_not_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, U const& b) noexcept
+    {
+      if constexpr(O::contains(definitely2))
+      {
+        using w_t = common_logical_t<T,U>;
+        using r_t = common_value_t<T, U>;
+
+        auto tol = o[definitely2].value(r_t{});
+
+        if constexpr(integral_value<decltype(tol)>)
+          return if_else(nb_values(a, b) > tol, true_(as<w_t>()), false_(as<w_t>())) ;
+        else
+          return dist[pedantic](a, b) > tol * max(eve::abs(a), eve::abs(b));
+      }
+      else if constexpr(O::contains(numeric2))
+      {
+        using r_t = common_value_t<T, U>;
+        auto tmp  = is_not_equal(a, b);
+        if constexpr( floating_value<r_t> ) return tmp && (is_not_nan(a) || is_not_nan(b));
+        else                                return tmp;
+      }
+      else
+      {
+        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(a != b);
+        else                                              return a != b;
+      }
+    }
   }
-}
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)

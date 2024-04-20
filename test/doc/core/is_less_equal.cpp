@@ -13,7 +13,7 @@ int main()
             << "<- pf                            = " << pf << '\n'
             << "<- qf                            = " << qf << '\n'
             << "-> is_less(pf, qf)               = " << eve::is_less(pf, qf) << '\n'
-            << "-> almost(is_less_equal)(pf, qf) = " << eve::almost(eve::is_less_equal)(pf, qf) << '\n'
+            << "-> is_less_equal[almost2](pf, qf)= " << eve::is_less_equal[eve::almost2](pf, qf) << '\n'
             << "-> is_less[pf > 0](pf, qf)       = " << eve::is_less[pf > 0](pf, qf) << '\n';
 
   float xf = 1.0f;

@@ -58,12 +58,12 @@ TTS_CASE_WITH("Check precision behavior of fsnm on real types",
   using eve::fnms;
   using eve::fsnm;
   using eve::detail::map;
-  TTS_IEEE_EQUAL(eve::pedantic(fsnm)(-eve::one(eve::as<T>()), a0, a1),
-                 eve::pedantic(fnms)(a0, a1, -eve::one(eve::as<T>())));
+  TTS_IEEE_EQUAL(fsnm[eve::pedantic2](-eve::one(eve::as<T>()), a0, a1),
+                 fnms[eve::pedantic2](a0, a1, -eve::one(eve::as<T>())));
 };
 
 //==================================================================================================
-// fsnm promote tests
+//  fsnm promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of promote(fsnm) on all types",
               eve::test::simd::all_types,
@@ -78,24 +78,24 @@ TTS_CASE_WITH("Check behavior of promote(fsnm) on all types",
 
   constexpr int N = eve::cardinal_v<T>;
   eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
-  auto r1 = promote(fsnm)(a0, a1, fa);
+  auto r1 =fsnm[promote](a0, a1, fa);
   using er1_t =  eve::element_type_t<decltype(r1)>;
   auto refr1 = eve::fsnm(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
   TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
   eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
-  auto r2 = promote(fsnm)(a0, da, a1);
+  auto r2 =fsnm[promote](a0, da, a1);
   using er2_t =  eve::element_type_t<decltype(r2)>;
   auto refr2 = eve::fsnm(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
   TTS_ULP_EQUAL(r2,  refr2, 0.5);
 
   eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
-  auto r3 = promote(fsnm)(ia, a0, a1);
+  auto r3 =fsnm[promote](ia, a0, a1);
   using er3_t =  eve::element_type_t<decltype(r3)>;
   auto refr3 = eve::fsnm(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));
   TTS_ULP_EQUAL(r3,  refr3, 0.5);
 
-  auto r4 = promote(fsnm)(ia, da, a1);
+  auto r4 =fsnm[promote](ia, da, a1);
   using er4_t =  eve::element_type_t<decltype(r4)>;
   auto refr4= eve::fsnm(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
   TTS_ULP_EQUAL(r4,  refr4, 0.5);
@@ -117,8 +117,7 @@ TTS_CASE_WITH("Check behavior of fsnm on all types full range",
   using eve::detail::map;
 
   TTS_IEEE_EQUAL(fsnm(a0, a1, a2), fnms(a1, a2, a0));
-  TTS_IEEE_EQUAL(eve::pedantic(fsnm)(a0, a1, a2), eve::pedantic(fnms)(a1, a2, a0));
-  TTS_IEEE_EQUAL(eve::numeric(fsnm)(a0, a1, a2), eve::pedantic(fnms)(a1, a2, a0));
+  TTS_IEEE_EQUAL(fsnm[eve::pedantic2](a0, a1, a2), fnms[eve::pedantic2](a1, a2, a0));
 };
 
 //==================================================================================================

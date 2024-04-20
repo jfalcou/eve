@@ -20,18 +20,19 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
+template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE as_logical_t<wide<T, N>>
                 is_not_equal_(EVE_SUPPORTS(avx512_),
-                              C const                         &cx,
-                              wide<T, N> const                &v,
-                              wide<T, N> const                &w) noexcept requires x86_abi<abi_t<T, N>>
+                              C          const &cx,
+                              O          const &opts,
+                              wide<T, N> const &v,
+                              wide<T, N> const &w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
+  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(definitely2))
   {
-    return is_not_equal_(EVE_RETARGET(cpu_), cx, v, w);
+    return is_not_equal.behavior(cpu_{}, opts, v, w);
   }
   else
   {

@@ -8,10 +8,25 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/true.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct is_ordered_t : elementwise_callable<is_ordered_t, Options>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    {
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    EVE_CALLABLE_OBJECT(is_ordered_t, is_ordered_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -56,10 +71,41 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_ordered_, is_ordered);
-}
+  inline constexpr auto is_ordered = functor<is_ordered_t>;
 
-#include <eve/module/core/regular/impl/is_ordered.hpp>
+  namespace detail
+  {
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    is_ordered_(EVE_REQUIRES(cpu_),
+                  O const & ,
+                  logical<T> const& , logical<U> const& ) noexcept
+    {
+      using r_t =   common_logical_t<logical<T>, logical<U>>;
+      return true_(as<r_t>());
+    }
+
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    is_ordered_(EVE_REQUIRES(cpu_),
+                  O const & ,
+                  T const& aa, U const& bb) noexcept
+    {
+      using w_t =  common_value_t<T, U>;
+      {
+        if constexpr(integral_value<T> )
+          return true_(as<w_t>());
+        else
+        {
+          auto a = w_t(aa);
+          auto b = w_t(bb);
+          return (a == a) && (b == b);
+        }
+      }
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_ordered.hpp>

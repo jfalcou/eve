@@ -41,7 +41,7 @@ namespace eve::detail
     {
       T mcd = c * d;
       T err = fma[pedantic](-c, d, mcd);
-      T dop = pedantic(fms)(a, b, mcd);
+      T dop = fms[pedantic](a, b, mcd);
       return if_else(is_finite(err), dop + err, dop);
     }
   }

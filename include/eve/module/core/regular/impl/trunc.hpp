@@ -36,14 +36,9 @@ namespace eve::detail
         using i_t   = as_integer_t<elt_t>;
         return convert(convert(a0, as<i_t>()), as<elt_t>());
       }
-      if constexpr(O::contains(tolerance))
+      if constexpr(O::contains(almost2))
       {
-        auto tol = [&]<typename V>(V const& t){
-          if constexpr(std::same_as<V,default_tolerance>) return 3 * eps(as(a0));
-          else if constexpr(integral_value<V>)            return t;
-          else                                            return convert(t,as_element(a0));
-        }(o[tolerance]);
-
+        auto tol = o[almost2].value(a0);
         if constexpr(integral_value<decltype(tol)>)
           return copysign(trunc(next(eve::abs(a0))), a0);
         else

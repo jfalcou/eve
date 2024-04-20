@@ -26,7 +26,7 @@ namespace eve::detail
                                     wide<T, N>  const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(tolerance))
+    if constexpr(!O::contains(almost2))
     {
       constexpr auto c = categorize<wide<T, N>>();
 
@@ -50,7 +50,7 @@ namespace eve::detail
                                     wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(tolerance))
+    if constexpr(!O::contains(almost2))
     {
       constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});

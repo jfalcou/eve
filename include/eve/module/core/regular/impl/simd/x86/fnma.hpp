@@ -18,64 +18,64 @@
 
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                fnma_(EVE_SUPPORTS(avx2_),
-                      wide<T, N> const                &a,
-                      wide<T, N> const                &b,
-                      wide<T, N> const                &c) noexcept requires x86_abi<abi_t<T, N>>
-{
-  if constexpr( std::is_same_v<T, double> )
+  template<typename T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N>
+  fnma_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_fnmadd_pd(a, b, c);
-    else if constexpr( std::same_as<abi_t<T, N>, x86_128_> && supports_fma3 )
-      return _mm_fnmadd_pd(a, b, c);
-    else return fnma_(EVE_RETARGET(cpu_), a, b, c);
-  }
-  else
-  {
-    if constexpr( std::same_as<abi_t<T, N>, x86_512_> ) return _mm512_fnmadd_ps(a, b, c);
-    else if constexpr( std::same_as<abi_t<T, N>, x86_128_> && supports_fma3 )
-      return _mm_fnmadd_ps(a, b, c);
-    else return fnma_(EVE_RETARGET(cpu_), a, b, c);
-  }
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                fnma_(EVE_SUPPORTS(sse2_),
-                      C const                         &cx,
-                      wide<T, N> const                &v,
-                      wide<T, N> const                &w,
-                      wide<T, N> const                &x) noexcept requires x86_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr( C::is_complete || abi_t<T, N>::is_wide_logical )
-  {
-    return fnma_(EVE_RETARGET(cpu_), cx, v, w, x);
-  }
-  else
-  {
-    auto m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
-    if constexpr( !C::has_alternative )
+    // Integral don't do anything special ----
+    if constexpr( std::integral<T> ) return fnma.behavior(cpu_{}, opts, a, b, c);
+    // PEDANTIC ---
+    else if constexpr(O::contains(pedantic2) )
     {
-      if constexpr( c == category::float32x16 ) return _mm512_mask_fnmadd_ps(v, m, w, x);
-      else if constexpr( c == category::float64x8 ) return _mm512_mask_fnmadd_pd(v, m, w, x);
-      else if constexpr( c == category::float32x8 ) return _mm256_mask_fnmadd_ps(v, m, w, x);
-      else if constexpr( c == category::float64x4 ) return _mm256_mask_fnmadd_pd(v, m, w, x);
-      else if constexpr( c == category::float32x4 ) return _mm_mask_fnmadd_ps(v, m, w, x);
-      else if constexpr( c == category::float64x2 ) return _mm_mask_fnmadd_pd(v, m, w, x);
-      else return fnma_(EVE_RETARGET(cpu_), cx, v, w, x);
+      if constexpr( supports_fma3 ) return fnma(a, b, c);
+      else                          return fnma.behavior(cpu_{}, opts, a, b, c);
     }
+    // REGULAR ---
+    // we don't care about PROMOTE as we only accept similar types.
     else
     {
-      auto src = alternative(cx, v, as<wide<T, N>> {});
-      return fnma_(EVE_RETARGET(cpu_), cx, v, w, x);
+      constexpr auto cat = categorize<wide<T, N>>();
+
+      if      constexpr( cat == category::float64x8  )  return _mm512_fnmadd_pd(a, b, c);
+      else if constexpr( cat == category::float32x16 )  return _mm512_fnmadd_ps(a, b, c);
+      else if constexpr( supports_fma3)
+      {
+        if      constexpr( cat == category::float64x4 ) return _mm256_fnmadd_pd(a, b, c);
+        else if constexpr( cat == category::float64x2 ) return _mm_fnmadd_pd   (a, b, c);
+        else if constexpr( cat == category::float32x8 ) return _mm256_fnmadd_ps(a, b, c);
+        else if constexpr( cat == category::float32x4 ) return _mm_fnmadd_ps   (a, b, c);
+      }
+      else return fnma.behavior(cpu_{}, opts, a, b, c);
     }
   }
-}
+
+  template<typename T, typename N, conditional_expr C, callable_options O>
+  EVE_FORCEINLINE wide<T, N>
+  fnma_( EVE_REQUIRES(avx512_), C const& mask, O const&
+      , wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c
+      )
+  noexcept requires x86_abi<abi_t<T, N>>
+  {
+    // NOTE: As those masked version are at the AVX512 level, they will always uses a variant of
+    // hardware VMADD, thus ensuring the pedantic behavior by default, hence why we don't care about
+    // PEDANTIC. As usual, we don't care about PROMOTE as we only accept similar types.
+
+    if      constexpr( C::is_complete )               return alternative(mask, a, as(a));
+    else if constexpr( !C::has_alternative )
+    {
+      constexpr auto              cx = categorize<wide<T, N>>();
+      [[maybe_unused]] auto const m  = expand_mask(mask, as(a)).storage().value;
+
+      if      constexpr( cx == category::float32x16 ) return _mm512_mask_fnmadd_ps(a, m, b, c);
+      else if constexpr( cx == category::float64x8  ) return _mm512_mask_fnmadd_pd(a, m, b, c);
+      else if constexpr( cx == category::float32x8  ) return _mm256_mask_fnmadd_ps(a, m, b, c);
+      else if constexpr( cx == category::float64x4  ) return _mm256_mask_fnmadd_pd(a, m, b, c);
+      else if constexpr( cx == category::float32x4  ) return _mm_mask_fnmadd_ps   (a, m, b, c);
+      else if constexpr( cx == category::float64x2  ) return _mm_mask_fnmadd_pd   (a, m, b, c);
+      // No rounding issue with integers, so we just mask over regular FMA
+      else                                            return if_else(mask, eve::fnma(a, b, c), a);
+    }
+    else                                              return if_else(mask, eve::fnma(a, b, c), alternative(mask, a, as(a)));
+  }
 }

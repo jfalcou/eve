@@ -39,6 +39,6 @@ fanm_(EVE_SUPPORTS(cpu_),
       T const& b,
       T const& c) noexcept requires has_native_abi_v<T>
 {
-  return pedantic(fnma)(b, c, a);
+  return fnma[pedantic2](b, c, a);
 }
 }

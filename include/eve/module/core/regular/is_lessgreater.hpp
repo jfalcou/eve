@@ -8,10 +8,25 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/is_ordered.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_lessgreater_t : strict_elementwise_callable<is_lessgreater_t, Options, definitely_option>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    {
+      //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_lessgreater] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    EVE_CALLABLE_OBJECT(is_lessgreater_t, is_lessgreater_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -56,10 +71,31 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_lessgreater_, is_lessgreater);
+  inline constexpr auto is_lessgreater = functor<is_lessgreater_t>;
+
+  namespace detail
+  {
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_lessgreater_(EVE_REQUIRES(cpu_),
+                    O const & ,
+                    logical<T> const& a, logical<U> const& b) noexcept
+    {
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a != b);
+      else                                              return a != b;
+    }
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr  common_logical_t<T,U>
+    is_lessgreater_(EVE_REQUIRES(cpu_),
+                    O const & o,
+                    T const& a, U const& b)  noexcept
+    {
+      return  is_not_equal[o](a, b) && is_ordered(a, b);
+    }
+  }
 }
 
-#include <eve/module/core/regular/impl/is_lessgreater.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_lessgreater.hpp>

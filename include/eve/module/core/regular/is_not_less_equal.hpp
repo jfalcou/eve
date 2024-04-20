@@ -8,9 +8,29 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct is_not_less_equal_t : strict_elementwise_callable<is_not_less_equal_t, Options, definitely_option>
+  {
+   template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    {
+      //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_less_equal] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    EVE_CALLABLE_OBJECT(is_not_less_equal_t, is_not_less_equal_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -66,11 +86,42 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_not_less_equal_, is_not_less_equal);
+  inline constexpr auto is_not_less_equal = functor<is_not_less_equal_t>;
+
+
+  namespace detail
+  {
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_not_less_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+    {
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a > b);
+      else                                              return a > b;
+    }
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_not_less_equal_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
+    {
+      if constexpr(O::contains(definitely2))
+      {
+        using w_t = common_value_t<T, U>;
+        auto a = w_t(aa);
+        auto b = w_t(bb);
+
+        auto tol = o[definitely2].value(w_t{});
+        if constexpr(integral_value<decltype(tol)>) return is_not_less_equal(a, eve::next(b, tol));
+        else              return is_not_less_equal(a, fam(b, tol, eve::max(eve::abs(a), eve::abs(b))));
+      }
+      else
+      {
+        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa > bb || is_unordered(aa, bb));
+        else                                              return aa > bb || is_unordered(aa, bb);
+      }
+    }
+  }
 }
 
-#include <eve/module/core/regular/impl/is_not_less_equal.hpp>
-
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_not_less.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/is_not_less_equal.hpp>
 #endif

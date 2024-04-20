@@ -20,12 +20,12 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     // Integral don't do anything special ----
-    if constexpr( std::integral<T> ) return fma_(EVE_TARGETS(cpu_), opts, a, b, c);
+    if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
     // PEDANTIC ---
     else if constexpr(O::contains(pedantic2) )
     {
       if constexpr( supports_fma3 ) return fma(a, b, c);
-      else                          return fma_(EVE_TARGETS(cpu_), opts, a, b, c);
+      else                          return fma.behavior(cpu_{}, opts, a, b, c);
     }
     // REGULAR ---
     // we don't care about PROMOTE as we only accept similar types.
@@ -42,7 +42,7 @@ namespace eve::detail
         else if constexpr( cat == category::float32x8 ) return _mm256_fmadd_ps(a, b, c);
         else if constexpr( cat == category::float32x4 ) return _mm_fmadd_ps   (a, b, c);
       }
-      else return fma_(EVE_TARGETS(cpu_), opts, a, b, c);
+      else return fma.behavior(cpu_{}, opts, a, b, c);
     }
   }
 

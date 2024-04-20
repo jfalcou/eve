@@ -11,9 +11,24 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/traits/as_logical.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct logical_not_t : elementwise_callable<logical_not_t, Options>
+  {
+    template<logical_value T>
+    constexpr EVE_FORCEINLINE auto operator()(T a) const -> as_logical_t<decltype(!a)>
+    { return EVE_DISPATCH_CALL(a); }
+
+    constexpr EVE_FORCEINLINE bool operator()(bool a) const
+    { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(logical_not_t, logical_not_);
+  };
+
 //================================================================================================
 //! @addtogroup core_logical
 //! @{
@@ -55,28 +70,22 @@ namespace eve
 //!  @godbolt{doc/core/logical_not.cpp}
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct logical_not_;
-}
-template<> struct supports_conditional<tag::logical_not_> : std::false_type
-{};
+  inline constexpr auto logical_not = functor<logical_not_t>;
 
-EVE_MAKE_CALLABLE(logical_not_, logical_not);
-}
+  namespace detail
+  {
+    template<value T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    logical_not_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    {
+      return as_logical_t<T>(!a);
+    }
 
-namespace eve::detail
-{
-template<value T>
-EVE_FORCEINLINE auto
-logical_not_(EVE_SUPPORTS(cpu_), T const& a) noexcept
-{
-  return as_logical_t<T>(!a);
-}
-
-EVE_FORCEINLINE auto
-logical_not_(EVE_SUPPORTS(cpu_), bool a) noexcept
-{
-  return !a;
-}
+    template<callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    logical_not_(EVE_REQUIRES(cpu_), O const &, bool a) noexcept
+    {
+      return !a;
+    }
+  }
 }
