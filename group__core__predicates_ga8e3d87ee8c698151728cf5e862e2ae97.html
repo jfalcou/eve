@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8e3d87ee8c69
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::is_not_equal = {}</td>
+          <td class="memname">eve::is_not_equal = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;is_not_equal_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8e3d87ee8c69
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U &gt;</div>
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">is_not_equal</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97_html_ga8e3d87ee8c698151728cf5e862e2ae97"><div class="ttname"><a href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a></div><div class="ttdeci">constexpr callable_is_not_equal_ is_not_equal</div><div class="ttdoc">Returns a logical true if and only if the element value are not equal.</div><div class="ttdef"><b>Definition:</b> is_not_equal.hpp:83</div></div>
+<div class="ttc" id="agroup__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97_html_ga8e3d87ee8c698151728cf5e862e2ae97"><div class="ttname"><a href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a></div><div class="ttdeci">constexpr auto is_not_equal</div><div class="ttdoc">Returns a logical true if and only if the element value are not equal.</div><div class="ttdef"><b>Definition:</b> is_not_equal.hpp:106</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -177,12 +177,12 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8e3d87ee8c69
 <div class="line">  pf += 3*<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                                     = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                                     = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_equal)(pf, qf)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; definitely(is_not_equal)(pf, qf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a>(<a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; definitely(is_not_equal)(pf, qf, 2)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a>(<a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>)(pf, qf, 2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; definitely(is_not_equal)(pf, qf, 2.0f) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a>(<a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>)(pf, qf, 2.0f) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                                      = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                                      = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_equal)(pf, qf)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_equal[definitely2](pf, qf)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>[eve::definitely2](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_equal[definitely2 = 2](pf, qf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>[eve::definitely2 = 2](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_equal[definitely2 = 2.0f](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97">eve::is_not_equal</a>[eve::definitely2 = 2.0f](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = 2.0f;</div>
@@ -194,22 +194,22 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga8e3d87ee8c69
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:76</div></div>
-<div class="ttc" id="agroup__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b_html_ga8677881ff2d27fba6adedaeb8f84151b"><div class="ttname"><a href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a></div><div class="ttdeci">constexpr definitely_type const definitely</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to small errors semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:104</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97" title="Returns a logical true if and only if the element value are not equal.">eve::is_not_equal</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97" title="Returns a logical true if and only if the element value are not equal.">eve::is_not_equal</a></code> which is equivalent to `if_else (mask, <a class="el" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97" title="Returns a logical true if and only if the element value are not equal.">is_not_equal(x, y)</a>, false_</p>
+<p class="startli">The call <code><a class="el" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97" title="Returns a logical true if and only if the element value are not equal.">eve::is_not_equal</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97" title="Returns a logical true if and only if the element value are not equal.">eve::is_not_equal</a></code> which is equivalent to `if_else (mask, <a class="el" href="group__core__predicates_ga8e3d87ee8c698151728cf5e862e2ae97.html#ga8e3d87ee8c698151728cf5e862e2ae97" title="Returns a logical true if and only if the element value are not equal.">is_not_equal(x, y)</a>, false_)</p>
 </li>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">eve::numeric</a></p>
-<p class="startli">The expression <code><a class="el" href="group__core__decorators_ga9e4172d6b835dc7d61072c41ea61a634.html#ga9e4172d6b835dc7d61072c41ea61a634" title="Higher-order Callable Object imbuing non invalid return preference semantic onto other Callable Objec...">numeric(is_not_equal)</a>(x,y)</code> considers that Nan values are not equal.</p>
+<p class="startli">The expression <code>is_not_equal[numeric](x,y)</code> considers that Nan values are not equal.</p>
 </li>
 <li><p class="startli"><code>definitely</code></p>
-<p class="startli">The expression <code><a class="el" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b" title="Higher-order Callable Object imbuing a tolerant to small errors semantic onto other Callable Objects.">definitely(is_not_equal)</a>(x, y, t)</code> where <code>x</code> and <code>y</code> must be floating point values, evals to true if and only if <code>x</code> is almost equal to <code>y</code>. This means that:</p><ul>
+<p class="startli">The expression <code>is_not_equal[definitely = t](x, y)</code> where <code>x</code> and <code>y</code> must be floating point values, evals to true if and only if <code>x</code> is definitely not equal to <code>y</code>. This means that:</p><ul>
 <li>if <code>t</code> is a floating_value then the relative error of not confusing is <code>x</code> and <code>y</code> is greater than <code>t</code> \((|x-y| \ge t \max(|x|, |y|))\).</li>
 <li>if <code>t</code> is a positive integral_value then there are more than <code>t</code> values of the type of <code>x</code> representable in the interval \([x,y[\).</li>
-<li>if <code>t</code> is omitted then the tolerance <code>t</code> is taken to 3 times the machine \(\epsilon\) in the <code>x</code> type (<code>3*eps(as(x))</code>). </li>
+<li>the call <code>is_equal[definitely](x, y)</code> takes tol as 3 times the machine \(\epsilon\) in the <code>x</code> type (<code>3*eps(as(x))</code>).</li>
+<li>t must be a scalar value. </li>
 </ul>
 </li>
 </ul>

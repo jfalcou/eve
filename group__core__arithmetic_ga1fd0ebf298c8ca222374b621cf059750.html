@@ -140,9 +140,6 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1fd0ebf298c8
   </tr>
 </table>
 </div><div class="memdoc">
-<ul>
-<li>ceil[tolerant](x) is equivalent to <code>ceil[tolerance = 3*eve<a class="el" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063" title="Computes a constant to the machine epsilon.">eps(eve::as (x))</a>(x)</code>).</li>
-</ul>
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -151,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1fd0ebf298c8
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">ceil</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750_html_ga1fd0ebf298c8ca222374b621cf059750"><div class="ttname"><a href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a></div><div class="ttdeci">constexpr auto ceil</div><div class="ttdoc">Computes the smallest integer not less than the input.</div><div class="ttdef"><b>Definition:</b> ceil.hpp:89</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750_html_ga1fd0ebf298c8ca222374b621cf059750"><div class="ttname"><a href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a></div><div class="ttdeci">constexpr auto ceil</div><div class="ttdoc">Computes the smallest integer not less than the input.</div><div class="ttdef"><b>Definition:</b> ceil.hpp:94</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -174,8 +171,8 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1fd0ebf298c8
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil(pf)                        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil[eve::tolerant]ceil(pf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>[<a class="code hl_variable" href="group__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a">eve::tolerant</a>](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil[eve::tolerant]ceil(pf, 1.0)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>[eve::tolerance = 1](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil[eve::almost2]ceil(pf)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>[eve::almost2](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil[eve::almost2 = 1]ceil(pf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>[eve::almost2 = 1](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil[pf &gt; -1.5f](pf)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>[pf &gt; -1.5f](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordtype">float</span> xf = -32.768f;</div>
 <div class="line"> </div>
@@ -184,17 +181,17 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1fd0ebf298c8
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; ceil(xf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a_html_ga1cef78b42db5aeb88da7c503baed5b4a"><div class="ttname"><a href="group__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a">eve::tolerant</a></div><div class="ttdeci">constexpr tolerant_type const tolerant</div><div class="ttdoc">Higher-order Callable Object imbuing a less strict semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:147</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
 <p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750" title="Computes the smallest integer not less than the input.">ceil</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750" title="Computes the smallest integer not less than the input.">eve::ceil</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750" title="Computes the smallest integer not less than the input.">ceil(x)</a>, x)</code>.</p>
 </li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga1cef78b42db5aeb88da7c503baed5b4a.html#ga1cef78b42db5aeb88da7c503baed5b4a" title="Higher-order Callable Object imbuing a less strict semantic onto other Callable Objects.">eve::tolerant</a></p>
-<p class="startli">The expression <code>ceil[tolerance = tol](x)</code> computes a tolerant ceil value for <code>x</code>, where <code>x</code> must be a floating value.</p><ul>
+<li><p class="startli"><a class="el" href="group__core__decorators_gab948026b7cf3543e2fa4b43f32c3311c.html#gab948026b7cf3543e2fa4b43f32c3311c" title="Higher-order Callable Object imbuing a tolerant to little errors semantic onto other Callable Objects...">eve::almost</a></p>
+<p class="startli">The expression <code>ceil[almost = tol](x)</code> computes a tolerant ceil value for <code>x</code>, where <code>x</code> must be a floating value and tol a scalar value.</p><ul>
 <li>If <code>tol</code> is a floating value, computes the floor with a tolerance <code>tol</code> using Hagerty's FL5 function.</li>
-<li>If <code>tol</code> is an integral value n, computes the floor of the next nth representable value in the <code>x</code> type. </li>
+<li>If <code>tol</code> is an integral value n, computes the floor of the next nth representable value in the <code>x</code> type.</li>
+<li>ceil[almost](x) is equivalent to <code>ceil[tolerance = 3*eve<a class="el" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063" title="Computes a constant to the machine epsilon.">eps(eve::as (x))</a>(x)</code>). </li>
 </ul>
 </li>
 </ul>

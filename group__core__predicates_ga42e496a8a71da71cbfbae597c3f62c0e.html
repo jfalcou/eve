@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga42e496a8a71d
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::is_not_greater_equal = {}</td>
+          <td class="memname">eve::is_not_greater_equal = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;is_not_greater_equal_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga42e496a8a71d
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U &gt;</div>
 <div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">is_not_greater_equal</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e_html_ga42e496a8a71da71cbfbae597c3f62c0e"><div class="ttname"><a href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a></div><div class="ttdeci">constexpr callable_is_not_greater_equal_ is_not_greater_equal</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is greater or equal to...</div><div class="ttdef"><b>Definition:</b> is_not_greater_equal.hpp:70</div></div>
+<div class="ttc" id="agroup__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e_html_ga42e496a8a71da71cbfbae597c3f62c0e"><div class="ttname"><a href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a></div><div class="ttdeci">constexpr auto is_not_greater_equal</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is greater or equal to...</div><div class="ttdef"><b>Definition:</b> is_not_greater_equal.hpp:92</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -173,7 +173,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga42e496a8a71d
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                                       = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_greater_equal(pf, qf)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a>(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_greater_equal[pf&gt;0](pf, qf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a>[pf &gt; 0](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; definitely(is_not_greater_equal)(pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a>(<a class="code hl_variable" href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a>)(pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_greater_equal[eve::definitely2](pf, qf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a>[eve::definitely2](pf, qf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> yf = 2.0f;</div>
@@ -184,7 +184,6 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga42e496a8a71d
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_not_greater_equal(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga42e496a8a71da71cbfbae597c3f62c0e.html#ga42e496a8a71da71cbfbae597c3f62c0e">eve::is_not_greater_equal</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b_html_ga8677881ff2d27fba6adedaeb8f84151b"><div class="ttname"><a href="group__core__decorators_ga8677881ff2d27fba6adedaeb8f84151b.html#ga8677881ff2d27fba6adedaeb8f84151b">eve::definitely</a></div><div class="ttdeci">constexpr definitely_type const definitely</div><div class="ttdoc">Higher-order Callable Object imbuing a tolerant to small errors semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> fuzzy.hpp:104</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
