@@ -12,13 +12,13 @@
 
 int main()
 {
-  auto lmax = eve::detail::Rempio2_limit(eve::half_circle_type(), eve::as<EVE_VALUE>());
+  auto lmax = eve::Rempio2_limit[eve::half_circle2](eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(half_circle(eve::sind)) , xp, eve::half_circle(eve::sind) , arg0);
-  run<EVE_TYPE> (EVE_NAME(half_circle(eve::sind)) , xp, eve::half_circle(eve::sind) , arg0);
+  run<EVE_VALUE>(EVE_NAME(sind[eve::half_circle2]) , xp, eve::sind[eve::half_circle2] , arg0);
+  run<EVE_TYPE> (EVE_NAME(sind[eve::half_circle2]) , xp, eve::sind[eve::half_circle2] , arg0);
 
 }

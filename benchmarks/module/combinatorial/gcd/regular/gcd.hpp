@@ -11,14 +11,8 @@
 
 int main()
 {
-  auto lmin = 1; //eve::valmin(eve::as<EVE_VALUE>());
-  auto lmax = 100; //eve::valmax(eve::as<EVE_VALUE>());
-//   if constexpr(std::is_floating_point_v<EVE_VALUE>)
-//   {
-//     lmin = -100000;
-//     lmax =  100000;
-//   }
-
+  auto lmin = 1;
+  auto lmax = 100;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);

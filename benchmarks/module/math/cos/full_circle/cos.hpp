@@ -19,8 +19,8 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(scalar std::cos)  , xp, std__cos                  , arg0);
-  run<EVE_VALUE>(EVE_NAME(full_circle(cos)) , xp, eve::full_circle(eve::cos), arg0);
-  run<EVE_TYPE >(EVE_NAME(full_circle(cos)) , xp, eve::full_circle(eve::cos), arg0);
+  run<EVE_VALUE>(EVE_NAME(full_circle(cos)) , xp, eve::cos[eve::full_circle2], arg0);
+  run<EVE_TYPE >(EVE_NAME(full_circle(cos)) , xp, eve::cos[eve::full_circle2], arg0);
   run<EVE_VALUE>(EVE_NAME(eve::cos)      , xp, eve::cos           , arg0);
   run<EVE_TYPE >(EVE_NAME(eve::cos)      , xp, eve::cos           , arg0);
 }

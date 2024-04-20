@@ -20,6 +20,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__max) , xp, std__max, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic(eve::max)) , xp, eve::pedantic(eve::max), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic(eve::max)) , xp, eve::pedantic(eve::max), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(max[eve::pedantic2]) , xp, eve::max[eve::pedantic2], arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(max[eve::pedantic2]) , xp, eve::max[eve::pedantic2], arg0, arg1);
 }

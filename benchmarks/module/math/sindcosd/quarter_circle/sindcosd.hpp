@@ -17,6 +17,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(quarter_circle(eve::sindcosd)) , xp, eve::quarter_circle(eve::sindcosd) , arg0);
-  run<EVE_TYPE> (EVE_NAME(quarter_circle(eve::sindcosd)) , xp, eve::quarter_circle(eve::sindcosd) , arg0);
+  run<EVE_VALUE>(EVE_NAME(sindcosd[eve::quarter_circle2]) , xp, eve::sindcosd[eve::quarter_circle2] , arg0);
+  run<EVE_TYPE> (EVE_NAME(sindcosd[eve::quarter_circle2]) , xp, eve::sindcosd[eve::quarter_circle2] , arg0);
 }

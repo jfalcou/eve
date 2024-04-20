@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__atan2) , xp, std__atan2 , arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic(eve::atan2)) , xp, eve::pedantic(eve::atan2) , arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic(eve::atan2)) , xp, eve::pedantic(eve::atan2) , arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(atan2[eve::pedantic2]) , xp, eve::atan2[eve::pedantic2] , arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(atan2[eve::pedantic2]) , xp, eve::atan2[eve::pedantic2] , arg0, arg1);
 
 }

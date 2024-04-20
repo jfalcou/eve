@@ -19,8 +19,8 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(scalar std::cos)     , xp, std__cos                     , arg0);
-  run<EVE_VALUE>(EVE_NAME(quarter_circle(cos)) , xp, eve::quarter_circle(eve::cos), arg0);
-  run<EVE_TYPE >(EVE_NAME(quarter_circle(cos)) , xp, eve::quarter_circle(eve::cos), arg0);
+  run<EVE_VALUE>(EVE_NAME(quarter_circle(cos)) , xp, eve::cos[eve::quarter_circle2], arg0);
+  run<EVE_TYPE >(EVE_NAME(quarter_circle(cos)) , xp, eve::cos[eve::quarter_circle2], arg0);
   run<EVE_VALUE>(EVE_NAME(cos)                 , xp, eve::cos                     , arg0);
   run<EVE_TYPE >(EVE_NAME(cos)                 , xp, eve::cos                     , arg0);
 }
