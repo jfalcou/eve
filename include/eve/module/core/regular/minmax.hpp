@@ -13,6 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/zip.hpp>

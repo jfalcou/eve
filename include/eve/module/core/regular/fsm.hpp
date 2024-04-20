@@ -8,10 +8,27 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/fma.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, promote_option>
+{
+  template<eve::value T,eve::value U,eve::value V>
+  requires(Options::contains(promote2))
+  constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+  template<eve::value T,eve::value U,eve::value V>
+  requires(!Options::contains(promote2))
+  constexpr EVE_FORCEINLINE
+  common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+
+  EVE_CALLABLE_OBJECT(fsm_t, fsm_);
+};
+
 //================================================================================================
 //! @addtogroup core_fma_family
 //! @{
@@ -66,18 +83,27 @@ namespace eve
 //!
 //!   * eve::pedantic, eve::numeric
 //!
-//!       * The call `pedantic(fsm)(x,y,z)` ensures the one rounding property.
+//!       * The call `fsm[pedantic](x,y,z)` ensures the full compliance to fsm properties.
 //!       This can be very expensive if the system has no hardware capability.
 //!
-//!       * The call `numeric(fsm)(x,y,z)` ensures the full compliance to fsm properties.
-//!        This can be very expensive if the system has no hardware capability.
+//!     * The call `fma[promote](x,y,z)`promotes all arguments to their common value type
+//!       before computing fsm.
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fsm_, fsm);
-}
+  inline constexpr auto fsm = functor<fsm_t>;
 
-#include <eve/module/core/regular/impl/fsm.hpp>
+  namespace detail
+  {
+
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    {
+      return fms[o](b, c, a);
+    }
+
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>

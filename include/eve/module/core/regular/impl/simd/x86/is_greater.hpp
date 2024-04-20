@@ -21,17 +21,19 @@ namespace eve::detail
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-is_greater_(EVE_SUPPORTS(avx512_), C const& cx, wide<T, N> const& v, wide<T, N> const& w) noexcept
+template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+EVE_FORCEINLINE auto is_greater_(EVE_SUPPORTS(avx512_),
+                                 C          const& cx,
+                                 O          const& opts,
+                                 wide<T, N> const& v,
+                                 wide<T, N> const& w) noexcept
     -> decltype(is_greater(v, w)) requires x86_abi<abi_t<T, N>>
 {
-  //    using r_t =  decltype(is_greater(u, v);
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
+  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(definitely2))
   {
-    return is_greater_(EVE_RETARGET(cpu_), cx, v, w);
+    return is_greater.behavior(cpu_{}, opts, v, w);
   }
   else
   {

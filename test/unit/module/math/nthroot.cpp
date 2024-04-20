@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of nthroot on wide",
                 100);
 };
 
-TTS_CASE_TPL("Check return types of nthroot", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check special cases of  nthroot", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   TTS_ULP_EQUAL(eve::nthroot(T(0), T(-1)), eve::inf(eve::as<T>()), 0);
@@ -69,6 +69,8 @@ TTS_CASE_TPL("Check return types of nthroot", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::nthroot(T(8), -3), T(0.5));
   TTS_EQUAL(eve::nthroot(T(8), 3), T(2));
   TTS_EQUAL(eve::nthroot(T(8), 3u), T(2));
+  TTS_IEEE_EQUAL(eve::nthroot(T(-64), 4), eve::nan(eve::as<T>()));
+
 };
 
 

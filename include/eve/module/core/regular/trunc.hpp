@@ -14,15 +14,21 @@
 namespace eve
 {
   template<typename Options>
-  struct trunc_t : strict_elementwise_callable<trunc_t, Options, tolerant_option, raw_option>
+  struct trunc_t : strict_elementwise_callable<trunc_t, Options, almost_option, raw_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+//      static_assert( valid_tolerance<T, Options>::value, "[eve::trunc] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v);
+    }
 
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
-    { return EVE_DISPATCH_CALL(v, target); }
+    {
+//      static_assert( valid_tolerance<T, Options>::value, "[eve::trunc] simd tolerance requires simd parameter." );
+      return EVE_DISPATCH_CALL(v, target);
+    }
 
     EVE_CALLABLE_OBJECT(trunc_t, trunc_);
   };
@@ -72,16 +78,16 @@ namespace eve
 //!     The call `eve;::trunc[mask](x)` provides a masked version of `eve::trunc` which is
 //!     equivalent to `if_else (mask, trunc(x), x)`.
 //!
-//!   * eve::tolerant
+//!   * eve::almost
 //!
-//!     The expression `tolerant(trunc)(x, tol)` computes a tolerant truncated
-//!     value for `x`, where `x` must be a floating value.
+//!     The expression `trunc[almost = tol](x)` computes a tolerant truncated
+//!     value for `x`, where `x` must be a floating value and tol a scalar value.
 //!
 //!        * If `tol` is a floating_value computes the truncation with
 //!          a tolerance `tol` using Hagerty's FL5 function.
 //!        * If `tol` is an integral_value n compute the truncation of
 //!          the next or previous nth representable value in the `x` type.
-//!        * If `tol` is omitted the tolerance is taken to 3 times
+//!        * the call `trunc[almost](x)` takes tol as  3 times
 //!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
 //!
 //! @}

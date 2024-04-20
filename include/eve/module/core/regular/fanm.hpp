@@ -8,10 +8,23 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/fnma.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct fanm_t : strict_elementwise_callable<fanm_t, Options, pedantic_option, promote_option>
+  {
+    template<value T,  value U,  value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+    { return EVE_DISPATCH_CALL(a, b, c); }
+
+    EVE_CALLABLE_OBJECT(fanm_t, fanm_);
+  };
+
 //================================================================================================
 //! @addtogroup core_fma_family
 //! @{
@@ -68,16 +81,19 @@ namespace eve
 //!
 //!       * The call `pedantic(fanm)(x,y,z)` ensures the one rounding property.
 //!       This can be very expensive if the system has no hardware capability.
-//!
-//!       * The call `numeric(fanm)(x,y,z)` ensures the full compliance to fanm properties.
-//!        This can be very expensive if the system has no hardware capability.
-//!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(fanm_, fanm);
-}
+  inline constexpr auto fanm = functor<fanm_t>;
 
-#include <eve/module/core/regular/impl/fanm.hpp>
+  namespace detail
+  {
+    template<typename T, typename U, typename V, callable_options O>
+    EVE_FORCEINLINE constexpr auto fanm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+    {
+      return fnma[o](b, c, a);
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fanm.hpp>

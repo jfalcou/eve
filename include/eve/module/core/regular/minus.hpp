@@ -6,11 +6,28 @@
 */
 //==================================================================================================
 #pragma once
-
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/constant/signmask.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct minus_t : elementwise_callable<minus_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T a) const
+    { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(minus_t, minus_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -68,10 +85,28 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(minus_, minus);
-}
+  inline constexpr auto minus = functor<minus_t>;
 
-#include <eve/module/core/regular/impl/minus.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    minus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
+    {
+      if constexpr( floating_value<T> )
+        return bit_xor(v, signmask(eve::as(v)));
+      else if constexpr(O::contains(saturated2))
+      {
+        return if_else(v == valmin(as<T>()), valmax(as<T>()), minus(v));
+      }
+      else
+      {
+        if constexpr( simd_value<T> ) return -v;
+        else return T{0} - v;
+      }
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/minus.hpp>

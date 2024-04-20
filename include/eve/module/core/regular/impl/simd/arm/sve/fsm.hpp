@@ -12,9 +12,10 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
+template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE auto
-fsm_(EVE_SUPPORTS(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+fsm_(EVE_SUPPORTS(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept
+-> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
   return -fanm(v0, v1, v2);

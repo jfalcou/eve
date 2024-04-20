@@ -7,12 +7,34 @@
 //==================================================================================================
 #pragma once
 
+
+#include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/abs.hpp>
+
+#include <eve/traits/as_logical.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct is_not_greater_t : strict_elementwise_callable<is_not_greater_t, Options, almost_option>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    {
+      //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_greater] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    EVE_CALLABLE_OBJECT(is_not_greater_t, is_not_greater_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -68,11 +90,41 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(is_not_greater_, is_not_greater);
-}
+  inline constexpr auto is_not_greater = functor<is_not_greater_t>;
 
-#include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/is_not_greater.hpp>
+
+  namespace detail
+  {
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_not_greater_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+    {
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a <= b);
+      else                                              return (a <= b) || is_unordered(a, b);
+    }
+
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_not_greater_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
+    {
+      if constexpr(O::contains(almost2))
+      {
+        using w_t = common_value_t<T, U>;
+        auto a = w_t(aa);
+        auto b = w_t(bb);
+
+        auto tol = o[almost2].value(w_t{});
+        if constexpr(integral_value<decltype(tol)>) return a <=  eve::next(b, tol);
+        else              return is_not_greater(a, fam(b, tol, eve::max(eve::abs(a), eve::abs(b))));
+      }
+      else
+      {
+        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa <= bb || is_unordered(aa, bb));
+        else                                              return (aa <= bb) || is_unordered(aa, bb);
+      }
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_not_greater.hpp>

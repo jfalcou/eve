@@ -10,7 +10,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 

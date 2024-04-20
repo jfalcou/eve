@@ -17,12 +17,12 @@ int main()
   pf += 3*eve::eps(eve::as<float>());
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                                     = " << pf << '\n'
-            << "<- qf                                     = " << qf << '\n'
-            << "-> is_not_equal)(pf, qf)                  = " << eve::is_not_equal(pf, qf) << '\n'
-            << "-> definitely(is_not_equal)(pf, qf)       = " << eve::definitely(eve::is_not_equal)(pf, qf) << '\n'
-            << "-> definitely(is_not_equal)(pf, qf, 2)    = " << eve::definitely(eve::is_not_equal)(pf, qf, 2) << '\n'
-            << "-> definitely(is_not_equal)(pf, qf, 2.0f) = " << eve::definitely(eve::is_not_equal)(pf, qf, 2.0f) << '\n';
+            << "<- pf                                      = " << pf << '\n'
+            << "<- qf                                      = " << qf << '\n'
+            << "-> is_not_equal)(pf, qf)                   = " << eve::is_not_equal(pf, qf) << '\n'
+            << "-> is_not_equal[definitely2](pf, qf)        = " << eve::is_not_equal[eve::definitely2](pf, qf) << '\n'
+            << "-> is_not_equal[definitely2 = 2](pf, qf)    = " << eve::is_not_equal[eve::definitely2 = 2](pf, qf) << '\n'
+            << "-> is_not_equal[definitely2 = 2.0f](pf, qf) = " << eve::is_not_equal[eve::definitely2 = 2.0f](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = 2.0f;

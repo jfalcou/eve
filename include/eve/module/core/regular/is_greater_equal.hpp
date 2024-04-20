@@ -15,6 +15,19 @@
 
 namespace eve
 {
+  template<typename Options>
+  struct is_greater_equal_t : strict_elementwise_callable<is_greater_equal_t, Options, almost_option>
+  {
+  template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    {
+      //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater_equal] simd tolerance requires at least one simd parameter." );
+      return EVE_DISPATCH_CALL(a, b);
+    }
+
+    EVE_CALLABLE_OBJECT(is_greater_equal_t, is_greater_equal_);
+  };
+
 //================================================================================================
 //! @addtogroup core_predicates
 //! @{
@@ -70,27 +83,39 @@ namespace eve
 //!
 //! @}
 //================================================================================================
+  inline constexpr auto is_greater_equal = functor<is_greater_equal_t>;
 
-EVE_MAKE_CALLABLE(is_greater_equal_, is_greater_equal);
-
-namespace detail
-{
-  template<value T, value U>
-  EVE_FORCEINLINE auto is_greater_equal_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
+  namespace detail
   {
-    if constexpr( scalar_value<T> && scalar_value<U> ) return as_logical_t<T>(a >= b);
-    else return a >= b;
-  }
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_greater_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+    {
+      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a >= b);
+      else                                              return a >= b;
+    }
 
-  // -----------------------------------------------------------------------------------------------
-  // logical masked case
-  template<conditional_expr C, value U, value V>
-  EVE_FORCEINLINE auto
-  is_greater_equal_(EVE_SUPPORTS(cpu_), C const& cond, U const& u, V const& v) noexcept
-  {
-    return logical_mask_op(cond, is_greater_equal, u, v);
+    template<value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    is_greater_equal_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
+    {
+      if constexpr(O::contains(almost2))
+      {
+        using w_t = common_value_t<T, U>;
+        auto a = w_t(aa);
+        auto b = w_t(bb);
+
+        auto tol = o[almost2].value(w_t{});
+        if constexpr(integral_value<decltype(tol)>) return a >=  eve::prev(b, tol);
+        else              return a >= fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
+      }
+      else
+      {
+        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(aa >= bb);
+        else                                              return aa >= bb;
+      }
+    }
   }
-}
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)

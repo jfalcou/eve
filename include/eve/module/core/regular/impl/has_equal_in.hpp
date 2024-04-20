@@ -9,6 +9,7 @@
 
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/try_each_group_position.hpp>
+#include <eve/module/core/regular/logical_or.hpp>
 
 namespace eve::detail
 {

@@ -28,25 +28,25 @@ TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EXPR_IS(eve::trunc[eve::tolerant2](T()), T);
-    TTS_EXPR_IS(eve::trunc[eve::tolerant2](v_t()), v_t);
+    TTS_EXPR_IS(eve::trunc[eve::almost2](T()), T);
+    TTS_EXPR_IS(eve::trunc[eve::almost2](v_t()), v_t);
   }
 };
 
 //==================================================================================================
-// tolerant tests
+// almost2 tests
 //==================================================================================================
 TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::inc(-eve::eps(eve::as<T>()))), T(1));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::inc(-2 * eve::eps(eve::as<T>()))), T(1));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::inc(-3 * eve::eps(eve::as<T>()))), T(1));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::inc(-4 * eve::eps(eve::as<T>()))), T(0));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::dec(eve::eps(eve::as<T>()))), T(-1));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::dec(2 * eve::eps(eve::as<T>()))), T(-1));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::dec(3 * eve::eps(eve::as<T>()))), T(-1));
-  TTS_EQUAL(eve::trunc[eve::tolerant2](eve::dec(4 * eve::eps(eve::as<T>()))), T(0));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::inc(-eve::eps(eve::as<T>()))), T(1));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::inc(-2 * eve::eps(eve::as<T>()))), T(1));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::inc(-3 * eve::eps(eve::as<T>()))), T(1));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::inc(-4 * eve::eps(eve::as<T>()))), T(0));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::dec(eve::eps(eve::as<T>()))), T(-1));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::dec(2 * eve::eps(eve::as<T>()))), T(-1));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::dec(3 * eve::eps(eve::as<T>()))), T(-1));
+  TTS_EQUAL(eve::trunc[eve::almost2](eve::dec(4 * eve::eps(eve::as<T>()))), T(0));
 };
 
 //==================================================================================================

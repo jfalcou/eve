@@ -17,8 +17,8 @@ TTS_CASE_TPL("Check return types of eve::logical_not(simd)", eve::test::simd::al
 {
   using eve::logical;
   using v_t = eve::element_type_t<T>;
-  TTS_EXPR_IS(eve::logical_not(T()), logical<T>);
-  TTS_EXPR_IS(eve::logical_not(v_t()), logical<v_t>);
+  TTS_EXPR_IS(eve::logical_not(logical<T>()), logical<T>);
+  TTS_EXPR_IS(eve::logical_not(logical<v_t>()), logical<v_t>);
 };
 
 //==================================================================================================

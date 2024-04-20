@@ -80,6 +80,6 @@ namespace detail
   constexpr EVE_FORCEINLINE auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, U b)
   {
     auto r0 = a * b;
-    return eve::zip(r0, numeric(fms)(a, b, r0));
+    return eve::zip(r0,fms[pedantic](a, b, r0));
   }
 }}
