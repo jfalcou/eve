@@ -11,7 +11,6 @@
 #include <eve/module/core/decorator/condon_shortley.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/kind.hpp>
-#include <eve/module/core/decorator/musl.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/plain.hpp>
@@ -41,7 +40,6 @@ namespace eve
   struct downward_mode    {};
   struct kind_1_mode      {};
   struct kind_2_mode      {};
-  struct musl_mode        {};
   struct numeric_mode     {};
   struct p_kind_mode      {};
   struct pedantic_mode    {};
@@ -63,7 +61,6 @@ namespace eve
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}      );
   [[maybe_unused]] inline constexpr auto kind_22      = ::rbr::flag( kind_2_mode{}      );
-  [[maybe_unused]] inline constexpr auto musl2        = ::rbr::flag( musl_mode{}        );
   [[maybe_unused]] inline constexpr auto numeric2     = ::rbr::flag( numeric_mode{}     );
   [[maybe_unused]] inline constexpr auto p_kind2      = ::rbr::flag( p_kind_mode{}      );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
@@ -85,7 +82,6 @@ namespace eve
   struct downward_option     : detail::exact_option<downward2>    {};
   struct kind_1_option       : detail::exact_option<kind_12>      {};
   struct kind_2_option       : detail::exact_option<kind_22>      {};
-  struct musl_option         : detail::exact_option<musl2>        {};
   struct numeric_option      : detail::exact_option<numeric2>     {};
   struct p_kind_option       : detail::exact_option<p_kind2>      {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};
@@ -109,7 +105,6 @@ namespace eve
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
   inline constexpr auto as_option(kind_2_type       const&) { return kind_22;       }
-  inline constexpr auto as_option(musl_type         const&) { return musl2;         }
   inline constexpr auto as_option(numeric_type      const&) { return numeric2;      }
   inline constexpr auto as_option(p_kind_type       const&) { return p_kind2;       }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
