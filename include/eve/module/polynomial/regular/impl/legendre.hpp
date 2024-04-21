@@ -18,7 +18,7 @@ namespace eve::detail
   template<typename L, typename T, callable_options O>
   constexpr EVE_FORCEINLINE as_wide_as_t<T, L>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, T x, T pl, T plm1)
-    requires(O::contains(successor2))
+    requires(O::contains(successor))
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)),
                "successor(legendre)(l, x, pl, plm1): l is negative or not integral");
@@ -132,7 +132,7 @@ namespace eve::detail
   template<typename L, typename M, typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x, T pl, T plm1)
-    requires(O::contains(successor2)&& O::contains(associated))
+    requires(O::contains(successor)&& O::contains(associated))
   {
     auto lp1 = inc(l);
     return fms((lp1 + l) * x, pl, (l + m) * plm1) / (lp1 - m);

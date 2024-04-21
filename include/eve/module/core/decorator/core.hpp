@@ -7,16 +7,15 @@
 //======================================================================================================================
 #pragma once
 
+#include <eve/detail/abi.hpp>
+#include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/promote.hpp>
 #include <eve/module/core/decorator/raw.hpp>
-#include <eve/module/core/decorator/regular.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/decorator/sph.hpp>
-#include <eve/module/core/decorator/spherical.hpp>
-#include <eve/module/core/decorator/successor.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
 
@@ -38,14 +37,13 @@ namespace eve
   struct promote_mode         {};
   struct q_kind_mode          {};
   struct spherical_mode       {};
+  struct successor_mode       {};
 
   struct downward_mode    {};
   struct numeric_mode     {};
   struct pedantic_mode    {};
   struct raw_mode         {};
-  struct regular_mode     {};
   struct saturated_mode   {};
-  struct successor_mode   {};
   struct to_nearest_mode  {};
   struct toward_zero_mode {};
   struct upward_mode      {};
@@ -59,14 +57,13 @@ namespace eve
   [[maybe_unused]] inline constexpr auto q_kind           = ::rbr::flag( q_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto spherical        = ::rbr::flag( spherical_mode{}       );
   [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
+  [[maybe_unused]] inline constexpr auto successor        = ::rbr::flag( successor_mode{}       );
 
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto numeric2     = ::rbr::flag( numeric_mode{}     );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
   [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}         );
-  [[maybe_unused]] inline constexpr auto regular2     = ::rbr::flag( regular_mode{}     );
   [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{}   );
-  [[maybe_unused]] inline constexpr auto successor2   = ::rbr::flag( successor_mode{}   );
   [[maybe_unused]] inline constexpr auto to_nearest2  = ::rbr::flag( to_nearest_mode{}  );
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
@@ -80,14 +77,13 @@ namespace eve
   struct promote_option         : detail::exact_option<promote>         {};
   struct q_kind_option          : detail::exact_option<q_kind>          {};
   struct spherical_option       : detail::exact_option<spherical>       {};
+  struct successor_option       : detail::exact_option<successor>       {};
 
   struct downward_option     : detail::exact_option<downward2>    {};
   struct numeric_option      : detail::exact_option<numeric2>     {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};
   struct raw_option          : detail::exact_option<raw2>         {};
-  struct regular_option      : detail::exact_option<regular2>     {};
   struct saturated_option    : detail::exact_option<saturated2>   {};
-  struct successor_option    : detail::exact_option<successor2>   {};
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
   struct toward_zero_option  : detail::exact_option<toward_zero2> {};
   struct upward_option       : detail::exact_option<upward2>      {};
@@ -99,9 +95,7 @@ namespace eve
   inline constexpr auto as_option(numeric_type      const&) { return numeric2;      }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
   inline constexpr auto as_option(raw_type          const&) { return raw2;          }
-  inline constexpr auto as_option(regular_type      const&) { return regular2;      }
   inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }
-  inline constexpr auto as_option(successor_type    const&) { return successor2;    }
   inline constexpr auto as_option(to_nearest_type   const&) { return to_nearest2;   }
   inline constexpr auto as_option(toward_zero_type  const&) { return toward_zero2;  }
   inline constexpr auto as_option(upward_type       const&) { return upward2;       }
