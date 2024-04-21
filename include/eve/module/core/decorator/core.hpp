@@ -7,7 +7,6 @@
 //======================================================================================================================
 #pragma once
 
-#include <eve/module/core/decorator/condon_shortley.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/kind.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
@@ -30,11 +29,11 @@
 
 namespace eve
 {
-  struct almost_mode      {};
-  struct associated_mode  {};
-  struct compensated_mode {};
+  struct almost_mode          {};
+  struct associated_mode      {};
+  struct compensated_mode     {};
   struct condon_shortley_mode {};
-  struct definitely_mode  {};
+  struct definitely_mode      {};
   struct downward_mode    {};
   struct kind_1_mode      {};
   struct kind_2_mode      {};
@@ -52,9 +51,9 @@ namespace eve
   struct toward_zero_mode {};
   struct upward_mode      {};
 
-  [[maybe_unused]] inline constexpr auto associated  = ::rbr::flag( associated_mode{}  );
-  [[maybe_unused]] inline constexpr auto compensated = ::rbr::flag( compensated_mode{} );
-  [[maybe_unused]] inline constexpr auto condon_shortley2  = ::rbr::flag( condon_shortley_mode{} );
+  [[maybe_unused]] inline constexpr auto associated       = ::rbr::flag( associated_mode{}      );
+  [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
+  [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}      );
   [[maybe_unused]] inline constexpr auto kind_22      = ::rbr::flag( kind_2_mode{}      );
@@ -72,9 +71,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
-  struct associated_option   : detail::exact_option<associated>  {};
-  struct compensated_option  : detail::exact_option<compensated> {};
-  struct condon_shortley_option  : detail::exact_option<condon_shortley2> {};
+  struct associated_option      : detail::exact_option<associated>      {};
+  struct compensated_option     : detail::exact_option<compensated>     {};
+  struct condon_shortley_option : detail::exact_option<condon_shortley> {};
   struct downward_option     : detail::exact_option<downward2>    {};
   struct kind_1_option       : detail::exact_option<kind_12>      {};
   struct kind_2_option       : detail::exact_option<kind_22>      {};
@@ -95,7 +94,6 @@ namespace eve
   // ----------------------------------------------------------------------------------
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
-  inline constexpr auto as_option(condon_shortley_type const&) { return condon_shortley2;  }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
   inline constexpr auto as_option(kind_2_type       const&) { return kind_22;       }
