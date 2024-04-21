@@ -7,12 +7,11 @@
 //==================================================================================================
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
-#include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <cmath>
 
 int main()
 {
-  auto lmax = eve::Rempio2_limit[eve::half_circle2](eve::as<EVE_VALUE>());
+  auto lmax = EVE_VALUE(90);
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
