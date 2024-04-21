@@ -18,12 +18,12 @@ namespace eve
   struct fsnm_t : strict_elementwise_callable<fsnm_t, Options, pedantic_option, promote_option>
   {
     template<value T,  value U,  value V>
-    requires(Options::contains(promote2))
+    requires(Options::contains(promote))
       constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
 
     template<eve::value T,eve::value U,eve::value V>
-    requires(!Options::contains(promote2))
+    requires(!Options::contains(promote))
     constexpr EVE_FORCEINLINE
     common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
