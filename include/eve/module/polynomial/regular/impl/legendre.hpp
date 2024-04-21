@@ -141,11 +141,11 @@ namespace eve::detail
   template<typename L, typename M, typename T, callable_options O>
   constexpr as_wide_as_t<T, common_value_t<M, L>>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
-    requires(O::contains(associated)||O::contains(condon_shortley2)||O::contains(spherical2))
+    requires(O::contains(associated)||O::contains(condon_shortley)||O::contains(spherical))
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, m, x): l is negative or not integral");
     EVE_ASSERT(eve::all(m >= 0 && is_flint(l)), "legendre(l, m, x): m is negative or not integral");
-    if constexpr(O::contains(spherical2))
+    if constexpr(O::contains(spherical))
     {
       auto ll   = convert(l, as_element(x));
       auto mm   = convert(m, as_element(x));
@@ -156,7 +156,7 @@ namespace eve::detail
                  * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
       return if_else(is_odd(m), -p0, p0);
     }
-    else if constexpr(O::contains(condon_shortley2))
+    else if constexpr(O::contains(condon_shortley))
     {
       auto p0 = legendre[associated](l, m, x);
       return if_else(is_odd(m), -p0, p0);

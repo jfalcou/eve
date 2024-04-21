@@ -10,11 +10,9 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/promote.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/decorator/sph.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
 
