@@ -9,6 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/detail/raberu.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
@@ -19,8 +20,6 @@
 //======================================================================================================================
 // New option style  - TODO rename later without the '2'
 //======================================================================================================================
-#include <eve/detail/raberu.hpp>
-
 namespace eve
 {
   struct almost_mode          {};
@@ -30,12 +29,12 @@ namespace eve
   struct definitely_mode      {};
   struct kind_1_mode          {};
   struct kind_2_mode          {};
+  struct numeric_mode         {};
   struct p_kind_mode          {};
   struct promote_mode         {};
   struct q_kind_mode          {};
   struct spherical_mode       {};
   struct successor_mode       {};
-  struct numeric_mode         {};
 
   struct downward_mode    {};
   struct pedantic_mode    {};
@@ -50,12 +49,12 @@ namespace eve
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
+  [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
   [[maybe_unused]] inline constexpr auto p_kind           = ::rbr::flag( p_kind_mode{}          );
+  [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
   [[maybe_unused]] inline constexpr auto q_kind           = ::rbr::flag( q_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto spherical        = ::rbr::flag( spherical_mode{}       );
-  [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
   [[maybe_unused]] inline constexpr auto successor        = ::rbr::flag( successor_mode{}       );
-  [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
 
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
@@ -70,12 +69,12 @@ namespace eve
   struct condon_shortley_option : detail::exact_option<condon_shortley> {};
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};
+  struct numeric_option         : detail::exact_option<numeric>         {};
   struct p_kind_option          : detail::exact_option<p_kind>          {};
   struct promote_option         : detail::exact_option<promote>         {};
   struct q_kind_option          : detail::exact_option<q_kind>          {};
   struct spherical_option       : detail::exact_option<spherical>       {};
   struct successor_option       : detail::exact_option<successor>       {};
-  struct numeric_option         : detail::exact_option<numeric>         {};
 
   struct downward_option     : detail::exact_option<downward2>    {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};

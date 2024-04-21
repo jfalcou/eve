@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/module/core/pedantic/diff_of_prod.hpp>
-#include <eve/module/core/pedantic/lerp.hpp>
 #include <eve/module/core/pedantic/negatenz.hpp>
 #include <eve/module/core/pedantic/next.hpp>
 #include <eve/module/core/pedantic/nextafter.hpp>
