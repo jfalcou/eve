@@ -7,7 +7,6 @@
 //======================================================================================================================
 #pragma once
 
-#include <eve/module/core/decorator/compensated.hpp>
 #include <eve/module/core/decorator/condon_shortley.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
 #include <eve/module/core/decorator/kind.hpp>
@@ -54,7 +53,7 @@ namespace eve
   struct upward_mode      {};
 
   [[maybe_unused]] inline constexpr auto associated  = ::rbr::flag( associated_mode{}  );
-  [[maybe_unused]] inline constexpr auto compensated2 = ::rbr::flag( compensated_mode{} );
+  [[maybe_unused]] inline constexpr auto compensated = ::rbr::flag( compensated_mode{} );
   [[maybe_unused]] inline constexpr auto condon_shortley2  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto kind_12      = ::rbr::flag( kind_1_mode{}      );
@@ -74,7 +73,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
   struct associated_option   : detail::exact_option<associated>  {};
-  struct compensated_option  : detail::exact_option<compensated2> {};
+  struct compensated_option  : detail::exact_option<compensated> {};
   struct condon_shortley_option  : detail::exact_option<condon_shortley2> {};
   struct downward_option     : detail::exact_option<downward2>    {};
   struct kind_1_option       : detail::exact_option<kind_12>      {};
@@ -96,7 +95,6 @@ namespace eve
   // ----------------------------------------------------------------------------------
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
-  inline constexpr auto as_option(compensated_type  const&) { return compensated2;  }
   inline constexpr auto as_option(condon_shortley_type const&) { return condon_shortley2;  }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(kind_1_type       const&) { return kind_12;       }
