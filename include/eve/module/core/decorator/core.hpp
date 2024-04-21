@@ -9,7 +9,6 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/promote.hpp>
 #include <eve/module/core/decorator/raw.hpp>
@@ -38,9 +37,9 @@ namespace eve
   struct q_kind_mode          {};
   struct spherical_mode       {};
   struct successor_mode       {};
+  struct numeric_mode         {};
 
   struct downward_mode    {};
-  struct numeric_mode     {};
   struct pedantic_mode    {};
   struct raw_mode         {};
   struct saturated_mode   {};
@@ -58,9 +57,9 @@ namespace eve
   [[maybe_unused]] inline constexpr auto spherical        = ::rbr::flag( spherical_mode{}       );
   [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
   [[maybe_unused]] inline constexpr auto successor        = ::rbr::flag( successor_mode{}       );
+  [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
 
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
-  [[maybe_unused]] inline constexpr auto numeric2     = ::rbr::flag( numeric_mode{}     );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
   [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}         );
   [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{}   );
@@ -78,9 +77,9 @@ namespace eve
   struct q_kind_option          : detail::exact_option<q_kind>          {};
   struct spherical_option       : detail::exact_option<spherical>       {};
   struct successor_option       : detail::exact_option<successor>       {};
+  struct numeric_option         : detail::exact_option<numeric>         {};
 
   struct downward_option     : detail::exact_option<downward2>    {};
-  struct numeric_option      : detail::exact_option<numeric2>     {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};
   struct raw_option          : detail::exact_option<raw2>         {};
   struct saturated_option    : detail::exact_option<saturated2>   {};
@@ -92,7 +91,6 @@ namespace eve
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
-  inline constexpr auto as_option(numeric_type      const&) { return numeric2;      }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
   inline constexpr auto as_option(raw_type          const&) { return raw2;          }
   inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }

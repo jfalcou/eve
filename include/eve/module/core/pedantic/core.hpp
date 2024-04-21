@@ -8,13 +8,6 @@
 #pragma once
 
 #include <eve/module/core/pedantic/diff_of_prod.hpp>
-#include <eve/module/core/pedantic/fam.hpp>
-#include <eve/module/core/pedantic/fanm.hpp>
-#include <eve/module/core/pedantic/fms.hpp>
-#include <eve/module/core/pedantic/fnma.hpp>
-#include <eve/module/core/pedantic/fnms.hpp>
-#include <eve/module/core/pedantic/fsm.hpp>
-#include <eve/module/core/pedantic/fsnm.hpp>
 #include <eve/module/core/pedantic/lerp.hpp>
 #include <eve/module/core/pedantic/negatenz.hpp>
 #include <eve/module/core/pedantic/next.hpp>

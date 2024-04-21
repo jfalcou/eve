@@ -133,7 +133,7 @@ namespace eve
         else
           return dist[pedantic](a, b) <= tol * max(eve::abs(a), eve::abs(b));
       }
-      else if constexpr(O::contains(numeric2))
+      else if constexpr(O::contains(numeric))
       {
         using r_t = common_value_t<T, U>;
         auto tmp  = is_equal(a, b);

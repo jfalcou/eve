@@ -29,7 +29,7 @@ namespace eve::detail
   min_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v0, wide<T, N> v1) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric2) || O::contains(pedantic2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic2))
       return min.behavior(cpu_{}, opts, v0, v1);
     else
     {
@@ -116,7 +116,7 @@ namespace eve::detail
   -> wide<T, N>
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric2) || O::contains(pedantic2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic2))
       return min.behavior(cpu_{}, opts, v, w);
     else
     {
