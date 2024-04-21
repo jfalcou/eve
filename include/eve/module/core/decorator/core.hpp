@@ -13,7 +13,6 @@
 #include <eve/module/core/decorator/kind.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/plain.hpp>
 #include <eve/module/core/decorator/promote.hpp>
 #include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/regular.hpp>
@@ -43,7 +42,6 @@ namespace eve
   struct numeric_mode     {};
   struct p_kind_mode      {};
   struct pedantic_mode    {};
-  struct plain_mode       {};
   struct promote_mode     {};
   struct q_kind_mode      {};
   struct raw_mode         {};
@@ -64,7 +62,6 @@ namespace eve
   [[maybe_unused]] inline constexpr auto numeric2     = ::rbr::flag( numeric_mode{}     );
   [[maybe_unused]] inline constexpr auto p_kind2      = ::rbr::flag( p_kind_mode{}      );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
-  [[maybe_unused]] inline constexpr auto plain2       = ::rbr::flag( plain_mode{}       );
   [[maybe_unused]] inline constexpr auto promote2     = ::rbr::flag( promote_mode{}     );
   [[maybe_unused]] inline constexpr auto q_kind2      = ::rbr::flag( q_kind_mode{}      );
   [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}         );
@@ -85,7 +82,6 @@ namespace eve
   struct numeric_option      : detail::exact_option<numeric2>     {};
   struct p_kind_option       : detail::exact_option<p_kind2>      {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};
-  struct plain_option        : detail::exact_option<plain2>       {};
   struct promote_option      : detail::exact_option<promote2>     {};
   struct q_kind_option       : detail::exact_option<q_kind2>      {};
   struct raw_option          : detail::exact_option<raw2>         {};
@@ -108,7 +104,6 @@ namespace eve
   inline constexpr auto as_option(numeric_type      const&) { return numeric2;      }
   inline constexpr auto as_option(p_kind_type       const&) { return p_kind2;       }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
-  inline constexpr auto as_option(plain_type        const&) { return plain2;        }
   inline constexpr auto as_option(promote_type      const&) { return promote2;      }
   inline constexpr auto as_option(q_kind_type       const&) { return q_kind2;       }
   inline constexpr auto as_option(raw_type          const&) { return raw2;          }
