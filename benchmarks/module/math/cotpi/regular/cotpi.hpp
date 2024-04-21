@@ -15,7 +15,7 @@ int main()
   auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__cotpi = [](auto x){return eve::radindeg(std::cos(x));};
+  auto std__cotpi = [](auto x){return 1/(std::tan(eve::pi(eve::as(x))*(x)));};
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__cotpi) , xp, std__cotpi , arg0);
