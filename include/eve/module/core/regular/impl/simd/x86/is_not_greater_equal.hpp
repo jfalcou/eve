@@ -26,7 +26,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_NGE_UQ;
 
-    if constexpr( O::contains(almost2))
+    if constexpr( O::contains(almost))
     {
       return is_not_less_equal.behavior(cpu_{}, o, a, b);
     }

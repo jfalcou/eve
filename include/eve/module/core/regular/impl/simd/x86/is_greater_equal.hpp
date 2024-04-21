@@ -32,7 +32,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(almost2) )
+    if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(almost) )
     {
       return is_greater.behavior(cpu_{}, opts, v, w);
     }

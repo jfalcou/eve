@@ -7,11 +7,9 @@
 //======================================================================================================================
 #pragma once
 
-#include <eve/module/core/decorator/associated.hpp>
 #include <eve/module/core/decorator/compensated.hpp>
 #include <eve/module/core/decorator/condon_shortley.hpp>
 #include <eve/module/core/decorator/cyl.hpp>
-#include <eve/module/core/decorator/fuzzy.hpp>
 #include <eve/module/core/decorator/kind.hpp>
 #include <eve/module/core/decorator/musl.hpp>
 #include <eve/module/core/decorator/numeric.hpp>
@@ -59,7 +57,7 @@ namespace eve
   struct toward_zero_mode {};
   struct upward_mode      {};
 
-  [[maybe_unused]] inline constexpr auto associated2  = ::rbr::flag( associated_mode{}  );
+  [[maybe_unused]] inline constexpr auto associated  = ::rbr::flag( associated_mode{}  );
   [[maybe_unused]] inline constexpr auto compensated2 = ::rbr::flag( compensated_mode{} );
   [[maybe_unused]] inline constexpr auto condon_shortley2  = ::rbr::flag( condon_shortley_mode{} );
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
@@ -81,7 +79,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
 
-  struct associated_option   : detail::exact_option<associated2>  {};
+  struct associated_option   : detail::exact_option<associated>  {};
   struct compensated_option  : detail::exact_option<compensated2> {};
   struct condon_shortley_option  : detail::exact_option<condon_shortley2> {};
   struct downward_option     : detail::exact_option<downward2>    {};
@@ -106,7 +104,6 @@ namespace eve
   // ----------------------------------------------------------------------------------
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
-  inline constexpr auto as_option(associated_type   const&) { return associated2;   }
   inline constexpr auto as_option(compensated_type  const&) { return compensated2;  }
   inline constexpr auto as_option(condon_shortley_type const&) { return condon_shortley2;  }
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
@@ -129,8 +126,7 @@ namespace eve
   inline constexpr auto as_option(upward_type       const&) { return upward2;       }
 
   // New tolerance option that carry a value
-  template<typename Value>
-  struct almost_t;
+  template<typename Value> struct almost_t;
 
   struct almost_option
   {
@@ -144,8 +140,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
 
-  template<typename Value>
-  struct definitely_t;
+  template<typename Value> struct definitely_t;
 
   struct definitely_option
   {
@@ -158,16 +153,4 @@ namespace eve
 
     EVE_FORCEINLINE constexpr auto default_to(auto const& base) const { return base; }
   };
-
-  struct tolerant_mode    {};
-  struct default_tolerance
-  {
-    friend std::ostream& operator<<(std::ostream& os, default_tolerance const&) { return os << "3 * eps"; }
-  };
-
-  [[maybe_unused]] inline constexpr auto tolerance  = ::rbr::keyword( tolerant_mode{} );
-  [[maybe_unused]] inline constexpr auto tolerant2  = (tolerance = default_tolerance{});
-
-  struct tolerant_option : detail::exact_option<tolerance>    {};
-  inline constexpr auto as_option(tolerant_type const&) { return tolerant2; }
 }

@@ -20,9 +20,9 @@ int main()
             << "<- pf                                      = " << pf << '\n'
             << "<- qf                                      = " << qf << '\n'
             << "-> is_not_equal)(pf, qf)                   = " << eve::is_not_equal(pf, qf) << '\n'
-            << "-> is_not_equal[definitely2](pf, qf)        = " << eve::is_not_equal[eve::definitely2](pf, qf) << '\n'
-            << "-> is_not_equal[definitely2 = 2](pf, qf)    = " << eve::is_not_equal[eve::definitely2 = 2](pf, qf) << '\n'
-            << "-> is_not_equal[definitely2 = 2.0f](pf, qf) = " << eve::is_not_equal[eve::definitely2 = 2.0f](pf, qf) << '\n';
+            << "-> is_not_equal[definitely](pf, qf)        = " << eve::is_not_equal[eve::definitely](pf, qf) << '\n'
+            << "-> is_not_equal[definitely = 2](pf, qf)    = " << eve::is_not_equal[eve::definitely = 2](pf, qf) << '\n'
+            << "-> is_not_equal[definitely = 2.0f](pf, qf) = " << eve::is_not_equal[eve::definitely = 2.0f](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = 2.0f;

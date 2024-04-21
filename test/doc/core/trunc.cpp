@@ -12,9 +12,9 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                            = " << pf << '\n'
             << "-> trunc(pf)                     = " << eve::trunc(pf) << '\n'
-            << "-> trunc[almost2](pf)            = " << eve::trunc[eve::almost2](pf)           << '\n'
-            << "-> trunc[almost2 = 2*decr](pf)   = " << eve::trunc[eve::almost2 = 2*decr](pf) << '\n'
-            << "-> trunc[almost2 = 4](pf)        = " << eve::trunc[eve::almost2 = 4](pf)      << '\n';
+            << "-> trunc[almost](pf)            = " << eve::trunc[eve::almost](pf)           << '\n'
+            << "-> trunc[almost = 2*decr](pf)   = " << eve::trunc[eve::almost = 2*decr](pf) << '\n'
+            << "-> trunc[almost = 4](pf)        = " << eve::trunc[eve::almost = 4](pf)      << '\n';
   return 0;
   float xf = -32.768f;
 

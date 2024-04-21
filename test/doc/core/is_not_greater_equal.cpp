@@ -14,7 +14,7 @@ int main()
             << "<- qf                                       = " << qf << '\n'
             << "-> is_not_greater_equal(pf, qf)             = " << eve::is_not_greater_equal(pf, qf) << '\n'
             << "-> is_not_greater_equal[pf>0](pf, qf)       = " << eve::is_not_greater_equal[pf > 0](pf, qf) << '\n'
-            << "-> is_not_greater_equal[eve::definitely2](pf, qf) = " << eve::is_not_greater_equal[eve::definitely2](pf, qf) << '\n';
+            << "-> is_not_greater_equal[eve::definitely](pf, qf) = " << eve::is_not_greater_equal[eve::definitely](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = 2.0f;

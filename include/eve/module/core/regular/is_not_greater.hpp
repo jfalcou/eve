@@ -80,8 +80,8 @@ namespace eve
 //!
 //!    * `almost`
 //!
-//!     The expression `almost(is_not_greater)(x, y, t)` where `x` and `y` must be
-//!      floating point values, evals to true if and only if and only if `x` is not almost greater
+//!     The expression `is_not_greater[almost](x, y, t)` where `x` and `y` must be
+//!      floating point values, evaluates to true if and only if and only if `x` is not almost greater
 //!      than `y`. This means that:
 //!
 //!      * if `t` is a floating_value then  \f$(x < y + t \max(|x|, |y|))\f$
@@ -107,13 +107,13 @@ namespace eve
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_not_greater_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
     {
-      if constexpr(O::contains(almost2))
+      if constexpr(O::contains(almost))
       {
         using w_t = common_value_t<T, U>;
         auto a = w_t(aa);
         auto b = w_t(bb);
 
-        auto tol = o[almost2].value(w_t{});
+        auto tol = o[almost].value(w_t{});
         if constexpr(integral_value<decltype(tol)>) return a <=  eve::next(b, tol);
         else              return is_not_greater(a, fam(b, tol, eve::max(eve::abs(a), eve::abs(b))));
       }

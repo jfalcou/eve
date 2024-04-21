@@ -34,9 +34,9 @@ namespace eve::detail
     if constexpr(integral_value<T>) return a0;
     else
     {
-      if constexpr(O::contains(almost2))
+      if constexpr(O::contains(almost))
       {
-        auto tol = o[almost2].value(a0);
+        auto tol = o[almost].value(a0);
         if constexpr(integral_value<decltype(tol)>)
           return floor(next(a0, tol));
         else
