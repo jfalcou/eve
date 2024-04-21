@@ -93,9 +93,9 @@ namespace eve
 //!
 //!     * eve::p_kind, eve::q_kind
 //!
-//!       The expression `p_kind(legendre)(n,x)` is equivalent to `legendre(n,x)`.
+//!       The expression `legendre[p_kind](n,x)` is equivalent to `legendre(n,x)`.
 //!
-//!       The expression `q_kind(legendre)(n,x)` return the value at `x` of the
+//!       The expression `legendre[q_kind](n,x)` return the value at `x` of the
 //!       second kind legendre function of order `n`.
 //!
 //!       **Example**

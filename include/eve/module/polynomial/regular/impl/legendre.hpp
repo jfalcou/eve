@@ -35,17 +35,17 @@ namespace eve::detail
     using r_t = as_wide_as_t<T, L>;
     if constexpr(scalar_value<L>)
     {
-      if constexpr(O::contains(p_kind2) || O::contains(q_kind2))
+      if constexpr(O::contains(p_kind) || O::contains(q_kind))
       {
         auto out_of_range = eve::abs(x) > one(as(x));
         if( l < 0 ) l = -l - 1; // reflection formula
         auto p0 = one(as(x));
         auto p1 = x;
-        if constexpr(O::contains(p_kind2))
+        if constexpr(O::contains(p_kind))
         {
           if( is_eqz(l) ) return if_else(out_of_range, allbits, p0);
         }
-        else if constexpr(O::contains(q_kind2))
+        else if constexpr(O::contains(q_kind))
         {
           p0 = eve::atanh(x);
           if( is_eqz(l) ) return if_else(out_of_range, allbits, p0);
@@ -74,7 +74,7 @@ namespace eve::detail
       {
         if constexpr( has_native_abi_v<T> )
         {
-          if constexpr(O::contains(p_kind2) || O::contains(q_kind2))
+          if constexpr(O::contains(p_kind) || O::contains(q_kind))
           {
             auto xx = r_t(x);
             using elt_t = element_type_t<T>;
@@ -84,11 +84,11 @@ namespace eve::detail
             auto p1           = xx;
             auto out_of_range = eve::abs(xx) > one(as(xx));
 
-            if constexpr(O::contains(p_kind2))
+            if constexpr(O::contains(p_kind))
             {
               if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, p0);
             }
-            else if constexpr(O::contains(q_kind2))
+            else if constexpr(O::contains(q_kind))
             {
               p0  = atanh(xx);
               p00 = p0;
@@ -106,9 +106,9 @@ namespace eve::detail
               c      = inc(c);
               test   = c < n;
             }
-            if constexpr(O::contains(p_kind2))
+            if constexpr(O::contains(p_kind))
               p1 = if_else(iseqzn, one, p1);
-            else if constexpr(O::contains(q_kind2) )
+            else if constexpr(O::contains(q_kind) )
               p1 = if_else(iseqzn, p00, p1);
             return if_else(out_of_range, allbits, p1);
           }
@@ -116,7 +116,7 @@ namespace eve::detail
         }
         else
         {
-          if constexpr(O::contains(p_kind2))
+          if constexpr(O::contains(p_kind))
             return apply_over(legendre[p_kind], l, r_t(x));
           else
             return apply_over(legendre[q_kind], l, r_t(x));
