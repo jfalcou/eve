@@ -11,15 +11,16 @@
 
 int main()
 {
-  auto lmin = EVE_VALUE(eve::valmin(eve::as<EVE_VALUE>()));
-  auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
+//   auto lmin = EVE_VALUE(eve::valmin(eve::as<EVE_VALUE>()));
+//   auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
+  auto lmax = 100*eve::Rempio2_limit[eve::medium2](eve::as<EVE_VALUE>());
+  auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__secpi = [](auto x){return 1/std::cos(eve::pi(eve::as(x))*x);};
+  auto std__rempio2 = [](auto x){return eve::rem_pio2(x);};
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(std__secpi) , xp, std__secpi , arg0);
-  run<EVE_VALUE>(EVE_NAME(secpi) , xp, eve::secpi , arg0);
-  run<EVE_TYPE> (EVE_NAME(secpi) , xp, eve::secpi , arg0);
-
+  run<EVE_VALUE>(EVE_NAME(scalar std::rempio2), xp, std__rempio2 , arg0);
+  run<EVE_VALUE>(EVE_NAME(rempio2) , xp, eve::rempio2 , arg0);
+  run<EVE_TYPE> (EVE_NAME(rempio2) , xp, eve::rempio2 , arg0);
 }
