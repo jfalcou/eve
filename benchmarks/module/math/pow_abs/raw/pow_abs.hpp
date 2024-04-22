@@ -11,7 +11,7 @@
 
 int main()
 {
-  auto const eve_rpow_abs = [](auto x, auto y) { return eve::raw(eve::pow_abs)(x, y); };
+  auto const eve_rpow_abs = [](auto x, auto y) { return eve::pow_abs[eve::raw2](x, y); };
   auto const std_rpow_abs = [](auto x, auto y) { return std::exp(std::log(std::abs(x))*y); };
   auto lmin = EVE_VALUE(-10);
   auto lmax = EVE_VALUE(10);

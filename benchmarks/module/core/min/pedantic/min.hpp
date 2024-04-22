@@ -19,6 +19,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__min) , xp, std__min, arg0, arg1);
-  run<EVE_VALUE>(EVE_NAME(pedantic(eve::min)) , xp, eve::pedantic(eve::min), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(pedantic(eve::min)) , xp, eve::pedantic(eve::min), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(min[eve::pedantic2]) , xp, eve::min[eve::pedantic2], arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(min[eve::pedantic2]) , xp, eve::min[eve::pedantic2], arg0, arg1);
 }

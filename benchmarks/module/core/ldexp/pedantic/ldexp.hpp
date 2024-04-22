@@ -24,9 +24,9 @@ int main()
 
   eve::bench::experiment xp;
   run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(std__ldexp) , xp, std__ldexp, arg0, arg1);
-  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(eve::pedantic(eve::ldexp)) , xp, eve::pedantic(eve::ldexp), arg0, arg1);
-  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(eve::pedantic(eve::ldexp)) , xp, eve::pedantic(eve::ldexp), arg0, arg1);
-  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(eve::pedantic(eve::ldexp)) , xp, eve::pedantic(eve::ldexp), arg0, arg1);
+  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(eve::ldexp[eve::pedantic2]) , xp, eve::ldexp[eve::pedantic2], arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(eve::ldexp[eve::pedantic2]) , xp, eve::ldexp[eve::pedantic2], arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(eve::ldexp[eve::pedantic2]) , xp, eve::ldexp[eve::pedantic2], arg0, arg1);
 
 
 }

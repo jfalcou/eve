@@ -13,10 +13,10 @@ int main()
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-  auto const std__minus = [](EVE_VALUE x, EVE_VALUE y) { return x ? EVE_VALUE(-y):y; };
-  auto eve__minus =  [](auto x,  auto y){ return eve::minus[x](y); };
+  auto const std__minus = [](EVE_VALUE x, EVE_VALUE y) { return x > 0? EVE_VALUE(-y):y; };
+  auto eve__minus =  [](auto x,  auto y){ return eve::minus[x > 0](y); };
 
-  auto arg0 = eve::bench::random_<EVE_VALUE>(0, 1);
+  auto arg0 = eve::bench::random_<EVE_VALUE>(-1, 1);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;

@@ -19,6 +19,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__tan) , xp, std__tan , arg0);
-  run<EVE_VALUE>(EVE_NAME(quarter_circle(eve::tan)) , xp, eve::quarter_circle(eve::tan) , arg0);
-  run<EVE_TYPE> (EVE_NAME(quarter_circle(eve::tan)) , xp, eve::quarter_circle(eve::tan) , arg0);
+  run<EVE_VALUE>(EVE_NAME(tan[eve::quarter_circle2]) , xp, eve::tan[eve::quarter_circle2] , arg0);
+  run<EVE_TYPE> (EVE_NAME(tan[eve::quarter_circle2]) , xp, eve::tan[eve::quarter_circle2] , arg0);
 }

@@ -18,6 +18,6 @@ int main()
 
 
   eve::bench::experiment xp;
-  run<EVE_VALUE>(EVE_NAME(numeric(eve::minmag)) , xp, eve::numeric(eve::minmag), arg0, arg1);
-  run<EVE_TYPE> (EVE_NAME(numeric(eve::minmag)) , xp, eve::numeric(eve::minmag), arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(minmag[eve::numeric2]) , xp, eve::minmag[eve::numeric2], arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(minmag[eve::numeric2]) , xp, eve::minmag[eve::numeric2], arg0, arg1);
 }

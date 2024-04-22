@@ -15,7 +15,7 @@ int main()
   auto lmax = EVE_VALUE(eve::valmax(eve::as<EVE_VALUE>()));
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
-  auto std__secpi = [](auto x){return eve::radindeg(std::cos(x));};
+  auto std__secpi = [](auto x){return 1/std::cos(eve::pi(eve::as(x))*x);};
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__secpi) , xp, std__secpi , arg0);

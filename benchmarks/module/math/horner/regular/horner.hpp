@@ -14,7 +14,7 @@ int main()
 {
   using v_t = eve::element_type_t<EVE_TYPE>;
   auto eve__horner = []<typename T>(T z) -> T{
-    constexpr std::array < v_t, 5> a = {
+    constexpr kumi::tuple < v_t, v_t, v_t, v_t, v_t> a = {
       -4.497014141919556E+001,
       5.073465654089319E+001,
       -2.485774108720340E+001,
