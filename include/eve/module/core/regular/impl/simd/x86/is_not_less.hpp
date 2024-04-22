@@ -23,7 +23,8 @@ namespace eve::detail
   EVE_FORCEINLINE logical<wide<T, N>> is_not_less_(EVE_SUPPORTS(sse2_),
                                                    O          const & o,
                                                    wide<T, N> const & a,
-                                                   wide<T, N> const & b) noexcept requires x86_abi<abi_t<T, N>>
+                                                   wide<T, N> const & b) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
@@ -57,41 +58,25 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_not_less_(EVE_SUPPORTS(avx512_),
-                                    C const& cx,
-                                    O const& o,
-                                    wide<T, N> const& v,
-                                    wide<T, N> const& w) noexcept
-  -> decltype(is_not_less(v, w)) requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE  as_logical_t<wide<T, N>> is_not_less_(EVE_SUPPORTS(avx512_),
+                                                         C const& mask,
+                                                         O const& o,
+                                                         wide<T, N> const& v,
+                                                         wide<T, N> const& w) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( O::contains(definitely2))
-    {
-      return is_not_less.behavior(cpu_{}, o, v, w);
-    }
-    else
-    {
-      constexpr auto c = categorize<wide<T, N>>();
+    auto const            s = alternative(mask, v, as(to_logical(v)));
+    [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
+    constexpr auto        c = categorize<wide<T, N>>();
+    constexpr auto        f = to_integer(cmp_flt::nlt_uq);
 
-      if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
-      {
-        return is_not_greater.behavior(cpu_{}, o, v, w);
-      }
-      else
-      {
-        auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-        constexpr auto f = to_integer(cmp_flt::nlt_uq);
-
-        if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
-        else if constexpr( c == category::float64x8 )
-          return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
-        else if constexpr( c == category::float32x8 )
-          return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
-        else if constexpr( c == category::float64x4 )
-          return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
-        else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
-        else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-        else return is_not_greater.behavior(cpu_{}, o, v, w);
-      }
-    }
+    if      constexpr( C::is_complete )            return s;
+    else if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
+    else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
+    else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
+    else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
+    else if constexpr( c == category::float32x4 )  return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
+    else if constexpr( c == category::float64x2 )  return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
+    else return is_not_less.behavior(cpu_{}, o, v, w);
   }
 }
