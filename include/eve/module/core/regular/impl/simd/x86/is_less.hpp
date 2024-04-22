@@ -21,73 +21,49 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE as_logical_t<wide<T, N>> is_less_(EVE_SUPPORTS(avx512_),
-                                                  C          const &cx,
-                                                  O          const &opts,
-                                                  wide<T, N> const &v,
-                                                  wide<T, N> const &w) noexcept requires x86_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(definitely2))
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_less_(EVE_SUPPORTS(avx512_),
+                                                    C          const &mask,
+                                                    O          const &,
+                                                    wide<T, N> const &v,
+                                                    wide<T, N> const &w) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    return is_less.behavior(cpu_{}, opts, v, w);
-  }
-  else
-  {
-    auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-    constexpr auto f = to_integer(cmp_flt::lt_oq);
+    auto const            s = alternative(mask, v, as(to_logical(v)));
+    [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
+    constexpr auto        c = categorize<wide<T, N>>();
+    constexpr auto        f = to_integer(cmp_flt::lt_oq);
 
-    if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
-    else if constexpr( c == category::float64x8 )
-      return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
-    else if constexpr( c == category::float32x8 )
-      return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
-    else if constexpr( c == category::float64x4 )
-      return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
-    else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
-    else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-    else if constexpr( c == category::int64x8 )
-      return mask8 {_mm512_mask_cmplt_epi64_mask(m, v, w)};
-    else if constexpr( c == category::int64x4 )
-      return mask8 {_mm256_mask_cmplt_epi64_mask(m, v, w)};
-    else if constexpr( c == category::int64x2 ) return mask8 {_mm_mask_cmplt_epi64_mask(m, v, w)};
-    else if constexpr( c == category::int32x16 )
-      return mask16 {_mm512_mask_cmplt_epi32_mask(m, v, w)};
-    else if constexpr( c == category::int32x8 )
-      return mask8 {_mm256_mask_cmplt_epi32_mask(m, v, w)};
-    else if constexpr( c == category::int32x4 ) return mask8 {_mm_mask_cmplt_epi32_mask(m, v, w)};
-    else if constexpr( c == category::int16x32 )
-      return mask32 {_mm512_mask_cmplt_epi16_mask(m, v, w)};
-    else if constexpr( c == category::int16x16 )
-      return mask16 {_mm256_mask_cmplt_epi16_mask(m, v, w)};
-    else if constexpr( c == category::int16x8 ) return mask8 {_mm_mask_cmplt_epi16_mask(m, v, w)};
-    else if constexpr( c == category::int8x64 )
-      return mask64 {_mm512_mask_cmplt_epi8_mask(m, v, w)};
-    else if constexpr( c == category::int8x32 )
-      return mask32 {_mm256_mask_cmplt_epi8_mask(m, v, w)};
-    else if constexpr( c == category::int8x16 ) return mask16 {_mm_mask_cmplt_epi8_mask(m, v, w)};
-    else if constexpr( c == category::uint64x8 )
-      return mask8 {_mm512_mask_cmplt_epu64_mask(m, v, w)};
-    else if constexpr( c == category::uint64x4 )
-      return mask8 {_mm256_mask_cmplt_epu64_mask(m, v, w)};
-    else if constexpr( c == category::uint64x2 ) return mask8 {_mm_mask_cmplt_epu64_mask(m, v, w)};
-    else if constexpr( c == category::uint32x16 )
-      return mask16 {_mm512_mask_cmplt_epu32_mask(m, v, w)};
-    else if constexpr( c == category::uint32x8 )
-      return mask8 {_mm256_mask_cmplt_epu32_mask(m, v, w)};
-    else if constexpr( c == category::uint32x4 ) return mask8 {_mm_mask_cmplt_epu32_mask(m, v, w)};
-    else if constexpr( c == category::uint16x32 )
-      return mask32 {_mm512_mask_cmplt_epu16_mask(m, v, w)};
-    else if constexpr( c == category::uint16x16 )
-      return mask16 {_mm256_mask_cmplt_epu16_mask(m, v, w)};
-    else if constexpr( c == category::uint16x8 ) return mask8 {_mm_mask_cmplt_epu16_mask(m, v, w)};
-    else if constexpr( c == category::uint8x64 )
-      return mask64 {_mm512_mask_cmplt_epu8_mask(m, v, w)};
-    else if constexpr( c == category::uint8x32 )
-      return mask32 {_mm256_mask_cmplt_epu8_mask(m, v, w)};
-    else if constexpr( c == category::uint8x16 ) return mask16 {_mm_mask_cmplt_epu8_mask(m, v, w)};
+    if      constexpr( C::is_complete )            return s;
+    else if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
+    else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
+    else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
+    else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
+    else if constexpr( c == category::float32x4 )  return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
+    else if constexpr( c == category::float64x2 )  return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
+    else if constexpr( c == category::int64x8 )    return mask8 {_mm512_mask_cmplt_epi64_mask(m, v, w)};
+    else if constexpr( c == category::int64x4 )    return mask8 {_mm256_mask_cmplt_epi64_mask(m, v, w)};
+    else if constexpr( c == category::int64x2 )    return mask8 {_mm_mask_cmplt_epi64_mask(m, v, w)};
+    else if constexpr( c == category::int32x16 )   return mask16 {_mm512_mask_cmplt_epi32_mask(m, v, w)};
+    else if constexpr( c == category::int32x8 )    return mask8 {_mm256_mask_cmplt_epi32_mask(m, v, w)};
+    else if constexpr( c == category::int32x4 )    return mask8 {_mm_mask_cmplt_epi32_mask(m, v, w)};
+    else if constexpr( c == category::int16x32 )   return mask32 {_mm512_mask_cmplt_epi16_mask(m, v, w)};
+    else if constexpr( c == category::int16x16 )   return mask16 {_mm256_mask_cmplt_epi16_mask(m, v, w)};
+    else if constexpr( c == category::int16x8 )    return mask8 {_mm_mask_cmplt_epi16_mask(m, v, w)};
+    else if constexpr( c == category::int8x64 )    return mask64 {_mm512_mask_cmplt_epi8_mask(m, v, w)};
+    else if constexpr( c == category::int8x32 )    return mask32 {_mm256_mask_cmplt_epi8_mask(m, v, w)};
+    else if constexpr( c == category::int8x16 )    return mask16 {_mm_mask_cmplt_epi8_mask(m, v, w)};
+    else if constexpr( c == category::uint64x8 )   return mask8 {_mm512_mask_cmplt_epu64_mask(m, v, w)};
+    else if constexpr( c == category::uint64x4 )   return mask8 {_mm256_mask_cmplt_epu64_mask(m, v, w)};
+    else if constexpr( c == category::uint64x2 )   return mask8 {_mm_mask_cmplt_epu64_mask(m, v, w)};
+    else if constexpr( c == category::uint32x16 )  return mask16 {_mm512_mask_cmplt_epu32_mask(m, v, w)};
+    else if constexpr( c == category::uint32x8 )   return mask8 {_mm256_mask_cmplt_epu32_mask(m, v, w)};
+    else if constexpr( c == category::uint32x4 )   return mask8 {_mm_mask_cmplt_epu32_mask(m, v, w)};
+    else if constexpr( c == category::uint16x32 )  return mask32 {_mm512_mask_cmplt_epu16_mask(m, v, w)};
+    else if constexpr( c == category::uint16x16 )  return mask16 {_mm256_mask_cmplt_epu16_mask(m, v, w)};
+    else if constexpr( c == category::uint16x8 )   return mask8 {_mm_mask_cmplt_epu16_mask(m, v, w)};
+    else if constexpr( c == category::uint8x64 )   return mask64 {_mm512_mask_cmplt_epu8_mask(m, v, w)};
+    else if constexpr( c == category::uint8x32 )   return mask32 {_mm256_mask_cmplt_epu8_mask(m, v, w)};
+    else if constexpr( c == category::uint8x16 )   return mask16 {_mm_mask_cmplt_epu8_mask(m, v, w)};
   }
-}
 }
