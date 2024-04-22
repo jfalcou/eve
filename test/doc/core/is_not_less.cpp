@@ -14,7 +14,7 @@ int main()
             << "<- qf                          = " << qf << '\n'
             << "-> is_not_less(pf, qf)         = " << eve::is_not_less(pf, qf) << '\n'
             << "-> is_not_less[pf > 0](pf, qf) = " << eve::is_not_less[pf > 0](pf, qf) << '\n'
-            << "-> is_not_lessl[almost2](pf, qf) = " << eve::is_not_less[eve::almost2](pf, qf) << '\n';
+            << "-> is_not_lessl[almost](pf, qf) = " << eve::is_not_less[eve::almost](pf, qf) << '\n';
 
   float xf = 1.0f;
   float yf = 2.0f;

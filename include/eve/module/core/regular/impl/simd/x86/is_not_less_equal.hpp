@@ -28,7 +28,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_NLE_UQ;
 
-    if constexpr( O::contains(almost2))
+    if constexpr( O::contains(almost))
     {
       return is_not_less_equal.behavior(cpu_{}, o, a, b);
     }
@@ -66,7 +66,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical | O::contains(definitely2))
+    if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical | O::contains(definitely))
     {
       return is_not_less_equal.behavior(cpu_{}, o, v, w);
     }

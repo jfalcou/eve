@@ -13,6 +13,11 @@
 
 namespace eve
 {
+  struct default_tolerance
+  {
+    friend std::ostream& operator<<(std::ostream& os, default_tolerance const&) { return os << "3 * eps"; }
+  };
+
   // ===============================================================================================
   //almost
 
@@ -59,9 +64,7 @@ namespace eve
     Value value_;
   };
 
-  inline constexpr almost_t<default_tolerance> almost2 = {};
-
-  inline constexpr auto as_option(almost_type const&) { return almost2; }
+  inline constexpr almost_t<default_tolerance> almost = {};
 
   //  ============================================================================================
   // definitely
@@ -109,8 +112,5 @@ namespace eve
     Value value_;
   };
 
-  inline constexpr definitely_t<default_tolerance> definitely2 = {};
-
-  inline constexpr auto as_option(definitely_type const&) { return definitely2; }
-
+  inline constexpr definitely_t<default_tolerance> definitely = {};
 }

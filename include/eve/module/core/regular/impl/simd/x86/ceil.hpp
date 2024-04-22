@@ -25,7 +25,7 @@ EVE_FORCEINLINE wide<T, N> ceil_(EVE_REQUIRES(sse4_1_),
                                  wide<T, N> a0) noexcept
 requires x86_abi<abi_t<T, N>>
 {
-  if constexpr(!O::contains(almost2))
+  if constexpr(!O::contains(almost))
   {
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -49,7 +49,7 @@ requires x86_abi<abi_t<T, N>>
                                    wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost2))
+    if constexpr(!O::contains(almost))
     {
       constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});

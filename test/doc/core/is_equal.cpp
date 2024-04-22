@@ -14,8 +14,8 @@ int main()
             << "<- qf                                 = " << qf << '\n'
             << "-> is_equal(pf, qf)                   = " << eve::is_equal(pf, qf) << '\n'
             << "-> is_equal[eve::numeric](pf, qf)     = " << eve::is_equal[eve::numeric](pf, qf) << '\n'
-            << "-> is_equal[almost2](pf, qf)          = " << eve::is_equal[eve::almost2](pf, qf) << '\n'
-            << "-> is_equal[almost2 = 2](pf, qf)      = " << eve::is_equal[eve::almost2 = 2](pf, qf) << '\n'
-            << "-> is_equal[almost2 = 2.0f](pf, qf)   = " << eve::is_equal[eve::almost2 = 2.0f](pf, qf) << '\n';
+            << "-> is_equal[almost](pf, qf)          = " << eve::is_equal[eve::almost](pf, qf) << '\n'
+            << "-> is_equal[almost = 2](pf, qf)      = " << eve::is_equal[eve::almost = 2](pf, qf) << '\n'
+            << "-> is_equal[almost = 2.0f](pf, qf)   = " << eve::is_equal[eve::almost = 2.0f](pf, qf) << '\n';
   return 0;
 }

@@ -18,7 +18,7 @@ namespace eve::detail
   template<typename L, typename T, callable_options O>
   constexpr EVE_FORCEINLINE as_wide_as_t<T, L>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, T x, T pl, T plm1)
-    requires(O::contains(successor2))
+    requires(O::contains(successor))
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)),
                "successor(legendre)(l, x, pl, plm1): l is negative or not integral");
@@ -35,17 +35,17 @@ namespace eve::detail
     using r_t = as_wide_as_t<T, L>;
     if constexpr(scalar_value<L>)
     {
-      if constexpr(O::contains(p_kind2) || O::contains(q_kind2))
+      if constexpr(O::contains(p_kind) || O::contains(q_kind))
       {
         auto out_of_range = eve::abs(x) > one(as(x));
         if( l < 0 ) l = -l - 1; // reflection formula
         auto p0 = one(as(x));
         auto p1 = x;
-        if constexpr(O::contains(p_kind2))
+        if constexpr(O::contains(p_kind))
         {
           if( is_eqz(l) ) return if_else(out_of_range, allbits, p0);
         }
-        else if constexpr(O::contains(q_kind2))
+        else if constexpr(O::contains(q_kind))
         {
           p0 = eve::atanh(x);
           if( is_eqz(l) ) return if_else(out_of_range, allbits, p0);
@@ -74,7 +74,7 @@ namespace eve::detail
       {
         if constexpr( has_native_abi_v<T> )
         {
-          if constexpr(O::contains(p_kind2) || O::contains(q_kind2))
+          if constexpr(O::contains(p_kind) || O::contains(q_kind))
           {
             auto xx = r_t(x);
             using elt_t = element_type_t<T>;
@@ -84,11 +84,11 @@ namespace eve::detail
             auto p1           = xx;
             auto out_of_range = eve::abs(xx) > one(as(xx));
 
-            if constexpr(O::contains(p_kind2))
+            if constexpr(O::contains(p_kind))
             {
               if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, p0);
             }
-            else if constexpr(O::contains(q_kind2))
+            else if constexpr(O::contains(q_kind))
             {
               p0  = atanh(xx);
               p00 = p0;
@@ -106,9 +106,9 @@ namespace eve::detail
               c      = inc(c);
               test   = c < n;
             }
-            if constexpr(O::contains(p_kind2))
+            if constexpr(O::contains(p_kind))
               p1 = if_else(iseqzn, one, p1);
-            else if constexpr(O::contains(q_kind2) )
+            else if constexpr(O::contains(q_kind) )
               p1 = if_else(iseqzn, p00, p1);
             return if_else(out_of_range, allbits, p1);
           }
@@ -116,7 +116,7 @@ namespace eve::detail
         }
         else
         {
-          if constexpr(O::contains(p_kind2))
+          if constexpr(O::contains(p_kind))
             return apply_over(legendre[p_kind], l, r_t(x));
           else
             return apply_over(legendre[q_kind], l, r_t(x));
@@ -132,7 +132,7 @@ namespace eve::detail
   template<typename L, typename M, typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x, T pl, T plm1)
-    requires(O::contains(successor2)&& O::contains(associated2))
+    requires(O::contains(successor)&& O::contains(associated))
   {
     auto lp1 = inc(l);
     return fms((lp1 + l) * x, pl, (l + m) * plm1) / (lp1 - m);
@@ -141,11 +141,11 @@ namespace eve::detail
   template<typename L, typename M, typename T, callable_options O>
   constexpr as_wide_as_t<T, common_value_t<M, L>>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
-    requires(O::contains(associated2)||O::contains(condon_shortley2)||O::contains(spherical2))
+    requires(O::contains(associated)||O::contains(condon_shortley)||O::contains(spherical))
   {
     EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, m, x): l is negative or not integral");
     EVE_ASSERT(eve::all(m >= 0 && is_flint(l)), "legendre(l, m, x): m is negative or not integral");
-    if constexpr(O::contains(spherical2))
+    if constexpr(O::contains(spherical))
     {
       auto ll   = convert(l, as_element(x));
       auto mm   = convert(m, as_element(x));
@@ -156,9 +156,9 @@ namespace eve::detail
                  * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
       return if_else(is_odd(m), -p0, p0);
     }
-    else if constexpr(O::contains(condon_shortley2))
+    else if constexpr(O::contains(condon_shortley))
     {
-      auto p0 = legendre[associated2](l, m, x);
+      auto p0 = legendre[associated](l, m, x);
       return if_else(is_odd(m), -p0, p0);
     }
     else if constexpr(scalar_value<M> && scalar_value<L>)

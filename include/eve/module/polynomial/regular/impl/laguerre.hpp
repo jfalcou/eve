@@ -80,7 +80,7 @@ namespace eve::detail
   template<typename M, typename N, typename T, callable_options O>
   constexpr as_wide_as_t<T, common_value_t<M, N>>
   laguerre_(EVE_REQUIRES(cpu_), O const&, N nn, M mm, T x)
-  requires(O::contains(associated2))
+  requires(O::contains(associated))
   {
     if constexpr(integral_scalar_value<M> && integral_scalar_value<N>)
     {

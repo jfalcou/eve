@@ -55,7 +55,7 @@ namespace eve::detail
             else                    return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), eve::min(a0, a1));
           }
         }
-        else if  constexpr(O::contains(numeric2))  // numeric
+        else if  constexpr(O::contains(numeric))  // numeric
         {
           if constexpr( eve::platform::supports_invalids )
           {

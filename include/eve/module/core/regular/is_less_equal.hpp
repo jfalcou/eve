@@ -99,13 +99,13 @@ namespace eve
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_less_equal_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
     {
-      if constexpr(O::contains(almost2))
+      if constexpr(O::contains(almost))
       {
         using w_t = common_value_t<T, U>;
         auto a = w_t(aa);
         auto b = w_t(bb);
 
-        auto tol = o[almost2].value(w_t{});
+        auto tol = o[almost].value(w_t{});
         if constexpr(integral_value<decltype(tol)>) return a <=  eve::next(b, tol);
         else                                        return a <= fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
       }

@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   maxabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
   {
-    auto abso = abs[o.drop(pedantic2,numeric2)];
+    auto abso = abs[o.drop(pedantic2,numeric)];
     return eve::max[o.drop(saturated2)](abso(a0), abso(a1), abso(as)...);
   }
 }

@@ -20,9 +20,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
-    if constexpr(O::contains(almost2))
+    if constexpr(O::contains(almost))
     {
-      auto tol = o[almost2].value(a0);
+      auto tol = o[almost].value(a0);
       if constexpr(integral_value<decltype(tol)>)
         return ceil(prev(a0, tol));
       else

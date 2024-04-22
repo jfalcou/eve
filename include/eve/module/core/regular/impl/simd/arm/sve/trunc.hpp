@@ -33,7 +33,7 @@ namespace eve::detail
     auto alt = alternative(cond, v, as(v));
 
     if      constexpr(C::is_complete && !C::is_inverted)  return alt;
-    else if constexpr(!O::contains(almost2  ))            return svrintz_m(alt, cond.mask(as(v)), v);
+    else if constexpr(!O::contains(almost  ))            return svrintz_m(alt, cond.mask(as(v)), v);
     else                                                  return trunc.behavior(cpu_{}, opts, v);
   }
 }

@@ -15,7 +15,7 @@ namespace eve::detail
 {
   // Recurrence relation for Tchebytchev polynomials:
   template<typename T, callable_options O>
-  requires(O::contains(successor2))
+  requires(O::contains(successor))
   constexpr EVE_FORCEINLINE T
   tchebytchev_(EVE_REQUIRES(cpu_),  O const& , T x, T tn, T tnm1)
   {
@@ -30,7 +30,7 @@ namespace eve::detail
     EVE_ASSERT(eve::all(is_gez(n)), "n  not positive");
     EVE_ASSERT(eve::all(is_flint(n)), "n  not flint");
     using r_t = as_wide_as_t<T, I>;
-    if constexpr(O::contains(kind_12))
+    if constexpr(O::contains(kind_1))
     {
       if constexpr(scalar_value<I>)
       {
@@ -108,7 +108,7 @@ namespace eve::detail
         else return apply_over(tchebytchev, n, x);
       }
     }
-    else if constexpr(O::contains(kind_22))
+    else if constexpr(O::contains(kind_2))
     {
       auto nn  = inc(convert(n, as_element(x)));
       auto z   = eve::abs(x);
@@ -131,7 +131,7 @@ namespace eve::detail
     }
     else
     {
-      return tchebytchev[kind_12](n, x);
+      return tchebytchev[kind_1](n, x);
     }
   }
 }
