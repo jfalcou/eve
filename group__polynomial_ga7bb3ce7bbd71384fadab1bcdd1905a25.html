@@ -198,8 +198,8 @@ $(document).ready(function(){initNavTree('group__polynomial_ga7bb3ce7bbd71384fad
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
-<p class="startli">The expression <code><a class="el" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">successor(hermite)</a>(n, x, Hn, Hnm1)</code> implements the three terms recurrence relation for the physicists Hermite polynomials, \(\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\)</p>
+<li><p class="startli"><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
+<p class="startli">The expression <code><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">successor(hermite)</a>(n, x, Hn, Hnm1)</code> implements the three terms recurrence relation for the physicists Hermite polynomials, \(\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\)</p>
 <p class="startli">This function can be used to create a sequence of values evaluated at the same <code>x</code>, and for rising <code>n</code>.</p>
 <p class="startli"><b>Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
@@ -226,13 +226,13 @@ $(document).ready(function(){initNavTree('group__polynomial_ga7bb3ce7bbd71384fad
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[1]          = &quot;</span> &lt;&lt;  h[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
 <div class="line">  {</div>
-<div class="line">    h[i] = <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>[<a class="code hl_variable" href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a>](i-1, xd, h[i-1], h[i-2]);</div>
+<div class="line">    h[i] = <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>[<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a>](i-1, xd, h[i-1], h[i-2]);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  h[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga7bb3ce7bbd71384fadab1bcdd1905a25.html#ga7bb3ce7bbd71384fadab1bcdd1905a25">eve::hermite</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> }</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0_html_ga4eb5977c62725094fe76ad7d62387dd0"><div class="ttname"><a href="group__core__decorators_ga4eb5977c62725094fe76ad7d62387dd0.html#ga4eb5977c62725094fe76ad7d62387dd0">eve::successor</a></div><div class="ttdeci">constexpr successor_type const successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> successor.hpp:42</div></div>
+<div class="ttc" id="agroup__core__decorators_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr auto successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:57</div></div>
 </div><!-- fragment --> </li>
 </ul>
 
