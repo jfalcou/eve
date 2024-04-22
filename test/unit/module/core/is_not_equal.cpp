@@ -31,10 +31,10 @@ TTS_CASE_TPL("Check return types of eve::is_not_equal(simd)", eve::test::simd::a
     TTS_EXPR_IS(eve::is_not_equal[eve::numeric](T(), v_t()), logical<T>);
     TTS_EXPR_IS(eve::is_not_equal[eve::numeric](v_t(), T()), logical<T>);
 
-    TTS_EXPR_IS(eve::is_not_equal[eve::definitely2](T(), T()), logical<T>);
-    TTS_EXPR_IS(eve::is_not_equal[eve::definitely2](v_t(), v_t()), logical<v_t>);
-    TTS_EXPR_IS(eve::is_not_equal[eve::definitely2](T(), v_t()), logical<T>);
-    TTS_EXPR_IS(eve::is_not_equal[eve::definitely2](v_t(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_not_equal[eve::definitely](T(), T()), logical<T>);
+    TTS_EXPR_IS(eve::is_not_equal[eve::definitely](v_t(), v_t()), logical<v_t>);
+    TTS_EXPR_IS(eve::is_not_equal[eve::definitely](T(), v_t()), logical<T>);
+    TTS_EXPR_IS(eve::is_not_equal[eve::definitely](v_t(), T()), logical<T>);
   }
 };
 
@@ -75,26 +75,26 @@ TTS_CASE_TPL("Check behavior of eve::is_not_equal(simd)", eve::test::simd::ieee_
   using v_t  = eve::element_type_t<T>;
   using ui_t = eve::as_integer_t<v_t, unsigned>;
 
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2](T(1), T(1)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2](T(1), v_t(1)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2](T(3), T(1)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2](T(3), v_t(1)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), T(1)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  eve::eps(as<v_t>())](T(1 + 2 * eve::eps(as<T>())), T(1)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), v_t(1)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  eve::eps(as<v_t>())](T(3), T(1)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  eve::eps(as<v_t>())](T(3), v_t(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely](T(1), T(1)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely](T(1), v_t(1)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely](T(3), T(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely](T(3), v_t(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), T(1)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  eve::eps(as<v_t>())](T(1 + 2 * eve::eps(as<T>())), T(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  eve::eps(as<v_t>())](T(1 + eve::eps(as<T>())), v_t(1)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  eve::eps(as<v_t>())](T(3), T(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  eve::eps(as<v_t>())](T(3), v_t(1)), eve::true_(as<T>()));
 
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](T(1), T(1)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](T(1), v_t(1)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](T(3), T(1)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](T(3), v_t(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](T(1), T(1)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](T(1), v_t(1)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](T(3), T(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](T(3), v_t(1)), eve::true_(as<T>()));
   auto md = eve::next(v_t(0));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(md), T(0)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(2 * md), T(0)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(3 * md), T(0)), eve::false_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(4 * md), T(0)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(1), v_t(1)), eve::false_(as<v_t>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(3), T(1)), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_not_equal[eve::definitely2 =  ui_t(3)](v_t(3), v_t(1)), eve::true_(as<v_t>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(md), T(0)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(2 * md), T(0)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(3 * md), T(0)), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(4 * md), T(0)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(1), v_t(1)), eve::false_(as<v_t>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(3), T(1)), eve::true_(as<T>()));
+  TTS_EQUAL(eve::is_not_equal[eve::definitely =  ui_t(3)](v_t(3), v_t(1)), eve::true_(as<v_t>()));
 };

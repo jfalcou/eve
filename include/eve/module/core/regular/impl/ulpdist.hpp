@@ -14,9 +14,8 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/constant/half.hpp>
 #include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/decorator/numeric.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
-#include <eve/module/core/numeric/is_equal.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/dist.hpp>

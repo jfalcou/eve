@@ -10,8 +10,7 @@
 #include <eve/assert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>

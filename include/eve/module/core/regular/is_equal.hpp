@@ -121,19 +121,19 @@ namespace eve
     EVE_FORCEINLINE constexpr common_logical_t<T,U>
     is_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, U const& b) noexcept
     {
-      if constexpr(O::contains(almost2))
+      if constexpr(O::contains(almost))
       {
         using w_t = common_logical_t<T,U>;
         using r_t = common_value_t<T, U>;
 
-        auto tol = o[almost2].value(r_t{});
+        auto tol = o[almost].value(r_t{});
 
         if constexpr(integral_value<decltype(tol)>)
           return if_else(nb_values(a, b) <= tol, true_(as<w_t>()), false_(as<w_t>())) ;
         else
           return dist[pedantic](a, b) <= tol * max(eve::abs(a), eve::abs(b));
       }
-      else if constexpr(O::contains(numeric2))
+      else if constexpr(O::contains(numeric))
       {
         using r_t = common_value_t<T, U>;
         auto tmp  = is_equal(a, b);

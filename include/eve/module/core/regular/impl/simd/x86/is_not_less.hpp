@@ -29,7 +29,7 @@ namespace eve::detail
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_NLT_UQ;
 
-    if constexpr( O::contains(definitely2))
+    if constexpr( O::contains(definitely))
     {
       return is_not_less.behavior(cpu_{}, o, a, b);
     }
@@ -64,7 +64,7 @@ namespace eve::detail
                                     wide<T, N> const& w) noexcept
   -> decltype(is_not_less(v, w)) requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( O::contains(definitely2))
+    if constexpr( O::contains(definitely))
     {
       return is_not_less.behavior(cpu_{}, o, v, w);
     }

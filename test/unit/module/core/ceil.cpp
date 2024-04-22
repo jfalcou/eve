@@ -30,13 +30,13 @@ TTS_CASE_TPL("Check return types of ceil", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::ceil(v_t(), eve::as<int>()), eve::as_integer_t<v_t>);
     TTS_EXPR_IS(eve::ceil(T(), eve::as<uint>()), (eve::as_integer_t<T, unsigned>));
     TTS_EXPR_IS(eve::ceil(v_t(), eve::as<uint>()), (eve::as_integer_t<v_t, unsigned>));
-    TTS_EXPR_IS(eve::ceil[eve::almost2](T()), T);
-    TTS_EXPR_IS(eve::ceil[eve::almost2](v_t()), v_t);
+    TTS_EXPR_IS(eve::ceil[eve::almost](T()), T);
+    TTS_EXPR_IS(eve::ceil[eve::almost](v_t()), v_t);
   }
 };
 
 //==================================================================================================
-// almost2 tests
+// almost tests
 //==================================================================================================
 TTS_CASE_TPL("Check  with specific values", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
@@ -54,22 +54,22 @@ TTS_CASE_TPL("Check  with specific values", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::ceil(T(1.5)), T(2));
   TTS_EQUAL(eve::ceil(T(1.6)), T(2));
 
-  TTS_EQUAL(eve::ceil[eve::almost2](T(-1)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(-2)), T(-2));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(0)), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(1)), T(1));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(2)), T(2));
+  TTS_EQUAL(eve::ceil[eve::almost](T(-1)), T(-1));
+  TTS_EQUAL(eve::ceil[eve::almost](T(-2)), T(-2));
+  TTS_EQUAL(eve::ceil[eve::almost](T(0)), T(0));
+  TTS_EQUAL(eve::ceil[eve::almost](T(1)), T(1));
+  TTS_EQUAL(eve::ceil[eve::almost](T(2)), T(2));
 
-  TTS_EQUAL(eve::ceil[eve::almost2](T(-1.3)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(-1.5)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(-1.6)), T(-1));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(1.3)), T(2));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(1.5)), T(2));
-  TTS_EQUAL(eve::ceil[eve::almost2](T(1.6)), T(2));
-  TTS_EQUAL(eve::ceil[eve::almost2](eve::eps(eve::as<T>())), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost2](2 * eve::eps(eve::as<T>())), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost2](3 * eve::eps(eve::as<T>())), T(0));
-  TTS_EQUAL(eve::ceil[eve::almost2](4 * eve::eps(eve::as<T>())), T(1));
+  TTS_EQUAL(eve::ceil[eve::almost](T(-1.3)), T(-1));
+  TTS_EQUAL(eve::ceil[eve::almost](T(-1.5)), T(-1));
+  TTS_EQUAL(eve::ceil[eve::almost](T(-1.6)), T(-1));
+  TTS_EQUAL(eve::ceil[eve::almost](T(1.3)), T(2));
+  TTS_EQUAL(eve::ceil[eve::almost](T(1.5)), T(2));
+  TTS_EQUAL(eve::ceil[eve::almost](T(1.6)), T(2));
+  TTS_EQUAL(eve::ceil[eve::almost](eve::eps(eve::as<T>())), T(0));
+  TTS_EQUAL(eve::ceil[eve::almost](2 * eve::eps(eve::as<T>())), T(0));
+  TTS_EQUAL(eve::ceil[eve::almost](3 * eve::eps(eve::as<T>())), T(0));
+  TTS_EQUAL(eve::ceil[eve::almost](4 * eve::eps(eve::as<T>())), T(1));
 };
 
 //==================================================================================================

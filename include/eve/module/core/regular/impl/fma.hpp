@@ -24,11 +24,11 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto fma_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
   {
     // PROMOTE ---------------------
-    if constexpr(O::contains(promote2))
+    if constexpr(O::contains(promote))
     {
       using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
       constexpr auto tgt = as(eve::as<er_t>());
-      return fma[o.drop(promote2)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
+      return fma[o.drop(promote)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
     }
     // OTHERS ---------------------
     else
@@ -46,12 +46,12 @@ namespace eve::detail
   fma_(EVE_REQUIRES(cpu_), C const& mask, O const& o, T const& a, U const& b, V const& c)
   {
     // PROMOTE ---------------------
-    if constexpr(O::contains(promote2))
+    if constexpr(O::contains(promote))
     {
       using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
       constexpr auto tgt = as(eve::as<er_t>());
 
-      return fma[o.drop(promote2)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
+      return fma[o.drop(promote)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
     }
     // OTHERS ---------------------
     else
@@ -68,7 +68,7 @@ namespace eve::detail
   {
     // PROMOTE ---------------------
     // We promote before going pedantic in case it changes the behavior
-    if constexpr(O::contains(promote2)) return fma[o.drop(promote2)](a,b,c);
+    if constexpr(O::contains(promote)) return fma[o.drop(promote)](a,b,c);
     // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic2))
     {

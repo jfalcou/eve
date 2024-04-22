@@ -111,13 +111,13 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr common_logical_t<T,U>
   is_greater_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
   {
-    if constexpr(O::contains(definitely2))
+    if constexpr(O::contains(definitely))
     {
       using w_t = common_value_t<T, U>;
       auto a = w_t(aa);
       auto b = w_t(bb);
 
-      auto tol = o[definitely2].value(w_t{});
+      auto tol = o[definitely].value(w_t{});
       if constexpr(integral_value<decltype(tol)>) return a >  eve::next(b, tol);
       else              return a > fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
     }

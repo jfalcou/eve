@@ -29,7 +29,7 @@ namespace eve::detail
   max_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v0, wide<T, N> v1) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric2) || O::contains(pedantic2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic2))
       return max.behavior(cpu_{}, opts, v0, v1);
     else
     {
@@ -115,7 +115,7 @@ namespace eve::detail
   max_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric2) || O::contains(pedantic2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic2))
       return max.behavior(cpu_{}, opts, v, w);
     else
     {

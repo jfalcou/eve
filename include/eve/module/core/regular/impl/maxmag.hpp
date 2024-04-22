@@ -31,7 +31,7 @@ namespace eve::detail
     auto abso =  abs[saturated];
     if constexpr(sizeof...(Ts) == 0) // 2 parameters
     {
-      if constexpr(O::contains(numeric2))
+      if constexpr(O::contains(numeric))
       {
         auto aaa = if_else(is_nan(a), b, a);
         auto bbb = if_else(is_nan(b), a, b);

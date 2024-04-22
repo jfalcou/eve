@@ -18,7 +18,7 @@ namespace eve::detail
                                    wide<T, N> const& v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr(!O::contains(almost2))
+    if constexpr(!O::contains(almost))
     {
       if constexpr( floating_value<T> )
         return vec_ceil(v0.storage());

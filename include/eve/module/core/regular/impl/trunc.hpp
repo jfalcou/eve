@@ -36,9 +36,9 @@ namespace eve::detail
         using i_t   = as_integer_t<elt_t>;
         return convert(convert(a0, as<i_t>()), as<elt_t>());
       }
-      if constexpr(O::contains(almost2))
+      if constexpr(O::contains(almost))
       {
-        auto tol = o[almost2].value(a0);
+        auto tol = o[almost].value(a0);
         if constexpr(integral_value<decltype(tol)>)
           return copysign(trunc(next(eve::abs(a0))), a0);
         else
