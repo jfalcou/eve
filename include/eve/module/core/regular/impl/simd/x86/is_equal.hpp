@@ -20,26 +20,23 @@ namespace eve::detail
 {
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
-template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_SUPPORTS(avx512_),
-                                                   C          const &cx,
-                                                   O          const &opts,
-                                                   wide<T, N> const &v,
-                                                   wide<T, N> const &w) noexcept
-requires x86_abi<abi_t<T, N>>
-{
-  constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || O::contains(almost2))
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_SUPPORTS(avx512_),
+                                                     C          const &mask,
+                                                     O          const &,
+                                                     wide<T, N> const &v,
+                                                     wide<T, N> const &w) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    return is_equal.behavior(cpu_{}, opts, v, w);
-  }
-  else
-  {
-    auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+    auto const            s = alternative(mask, v, as(v));
+    [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
+    constexpr auto        c = categorize<wide<T, N>>();
+//   constexpr auto c = categorize<wide<T, N>>();
+//   auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
     constexpr auto f = to_integer(cmp_flt::eq_oq);
 
-         if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
+    if      constexpr( C::is_complete )            return s;
+    else if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
     else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
     else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
     else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
@@ -70,5 +67,4 @@ requires x86_abi<abi_t<T, N>>
     else if constexpr( c == category::uint8x32 )   return mask32 {_mm256_mask_cmpeq_epu8_mask(m, v, w)};
     else if constexpr( c == category::uint8x16 )   return mask16 {_mm_mask_cmpeq_epu8_mask(m, v, w)};
   }
-}
 }

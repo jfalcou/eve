@@ -16,6 +16,8 @@ int main()
             << "-> is_equal[eve::numeric](pf, qf)     = " << eve::is_equal[eve::numeric](pf, qf) << '\n'
             << "-> is_equal[almost2](pf, qf)          = " << eve::is_equal[eve::almost2](pf, qf) << '\n'
             << "-> is_equal[almost2 = 2](pf, qf)      = " << eve::is_equal[eve::almost2 = 2](pf, qf) << '\n'
-            << "-> is_equal[almost2 = 2.0f](pf, qf)   = " << eve::is_equal[eve::almost2 = 2.0f](pf, qf) << '\n';
+            << "-> is_equal[almost2 = 2.0f](pf, qf)   = " << eve::is_equal[eve::almost2 = 2.0f](pf, qf) << '\n'
+            << "-> is_equal[pf > 0](pf, qf)           = " << eve::is_equal[pf > 0](pf, qf) << '\n';
+
   return 0;
 }
