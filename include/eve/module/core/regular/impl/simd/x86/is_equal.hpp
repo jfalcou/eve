@@ -28,7 +28,7 @@ namespace eve::detail
                                                      wide<T, N> const &w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    auto const            s = alternative(mask, v, as(v));
+    auto const            s = alternative(mask, v, as(to_logical(v)));
     [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
     constexpr auto        c = categorize<wide<T, N>>();
     constexpr auto        f = to_integer(cmp_flt::eq_oq);
