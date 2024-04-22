@@ -13,7 +13,7 @@ int main()
   auto lmin = eve::valmin(eve::as<EVE_VALUE>());
   auto lmax = eve::valmax(eve::as<EVE_VALUE>());
 
-  auto const std__dec = [](EVE_VALUE x) { return x > 0 ? x : EVE_VALUE(-x); };
+  auto const std__dec = [](EVE_VALUE x) { return x > 0 ? x : EVE_VALUE(x)-EVE_VALUE(1); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 

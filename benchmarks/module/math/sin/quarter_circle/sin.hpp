@@ -19,6 +19,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__sin) , xp, std__sin , arg0);
-  run<EVE_VALUE>(EVE_NAME(quarter_circle(eve::sin)) , xp, eve::quarter_circle(eve::sin) , arg0);
-  run<EVE_TYPE> (EVE_NAME(quarter_circle(eve::sin)) , xp, eve::quarter_circle(eve::sin) , arg0);
+  run<EVE_VALUE>(EVE_NAME(sin[eve::quarter_circle2]) , xp, eve::sin[eve::quarter_circle2] , arg0);
+  run<EVE_TYPE> (EVE_NAME(sin[eve::quarter_circle2]) , xp, eve::sin[eve::quarter_circle2] , arg0);
 }
