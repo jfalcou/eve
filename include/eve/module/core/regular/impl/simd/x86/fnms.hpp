@@ -17,16 +17,41 @@
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> fnms_(EVE_SUPPORTS(avx2_),
-                                   O          const  &,
-                                   wide<T, N> const  &a,
-                                   wide<T, N> const  &b,
-                                   wide<T, N> const  &c) noexcept
+  template<typename T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> fnms_(EVE_REQUIRES(sse2_),
+                                   O const& opts,
+                                   wide<T, N> const& a,
+                                   wide<T, N> const& b,
+                                   wide<T, N> const& c) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    return fms(-a, b, c);
+    // Integral don't do anything special ----
+    if constexpr( std::integral<T> ) return fnms.behavior(cpu_{}, opts, a, b, c);
+    // PEDANTIC ---
+    else if constexpr(O::contains(pedantic2) )
+    {
+      if constexpr( supports_fma3 ) return fnms(a, b, c);
+      else                          return fnms.behavior(cpu_{}, opts, a, b, c);
+    }
+    // REGULAR ---
+    // we don't care about PROMOTE as we only accept similar types.
+    else
+    {
+      constexpr auto cat = categorize<wide<T, N>>();
+
+      if      constexpr( cat == category::float64x8  )  return _mm512_fnmsub_pd(a, b, c);
+      else if constexpr( cat == category::float32x16 )  return _mm512_fnmsub_ps(a, b, c);
+      else if constexpr( supports_fma3)
+      {
+        if      constexpr( cat == category::float64x4 ) return _mm256_fnmsub_pd(a, b, c);
+        else if constexpr( cat == category::float64x2 ) return _mm_fnmsub_pd   (a, b, c);
+        else if constexpr( cat == category::float32x8 ) return _mm256_fnmsub_ps(a, b, c);
+        else if constexpr( cat == category::float32x4 ) return _mm_fnmsub_ps   (a, b, c);
+      }
+      else return fnms.behavior(cpu_{}, opts, a, b, c);
+    }
   }
+
 
 // -----------------------------------------------------------------------------------------------
 // Masked case

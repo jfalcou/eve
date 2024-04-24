@@ -105,6 +105,6 @@ namespace eve::detail
     }
     // REGULAR ---------------------
     else
-      return a + b * c;
+      return fma(b, c;, a);
   }
 }

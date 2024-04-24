@@ -19,8 +19,11 @@
 namespace eve::detail
 {
   template<typename T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
-  fnma_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c) noexcept
+  EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sse2_),
+                                   O const& opts,
+                                   wide<T, N> const& a,
+                                   wide<T, N> const& b,
+                                   wide<T, N> const& c) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     // Integral don't do anything special ----
@@ -51,9 +54,12 @@ namespace eve::detail
   }
 
   template<typename T, typename N, conditional_expr C, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
-  fnma_( EVE_REQUIRES(avx512_), C const& mask, O const&
-      , wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c
+  EVE_FORCEINLINE wide<T, N> fnma_( EVE_REQUIRES(avx512_),
+                                    C const& mask,
+                                    O const&
+                                  , wide<T, N> const& a,
+                                    wide<T, N> const& b,
+                                    wide<T, N> const& c
       )
   noexcept requires x86_abi<abi_t<T, N>>
   {
