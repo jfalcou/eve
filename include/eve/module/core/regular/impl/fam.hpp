@@ -105,6 +105,6 @@ namespace eve::detail
     }
     // REGULAR ---------------------
     else
-      return fma(b, c;, a);
+      return fma(b, c, a);
   }
 }
