@@ -27,7 +27,7 @@ namespace eve::detail
 
     if constexpr( O::contains(definitely))
     {
-      return is_not_less_equal.behavior(cpu_{}, o, a, b);
+      return is_not_greater_equal.behavior(cpu_{}, o, a, b);
     }
     else
     {
@@ -46,7 +46,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return l_t(_mm256_cmp_ps(a, b, m));
       else if constexpr( c == category::float64x2 ) return l_t(_mm_cmpnge_pd(a, b));
       else if constexpr( c == category::float32x4 ) return l_t(_mm_cmpnge_ps(a, b));
-      else return is_less(b, a);
+      else return is_not_greater_equal.behavior(cpu_{}, o, a, b);
     }
   }
 
@@ -78,7 +78,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
       else if constexpr( c == category::float32x4 )  return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
       else if constexpr( c == category::float64x2 )  return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-      else return is_less[o](v, w);
+      else return is_not_greater_equal.behavior(cpu_{}, o, v, w);
     }
   }
 }
