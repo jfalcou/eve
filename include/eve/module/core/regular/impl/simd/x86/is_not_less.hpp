@@ -74,7 +74,7 @@ namespace eve::detail
       auto const            s = alternative(mask, v, as(to_logical(v)));
       [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
       constexpr auto        c = categorize<wide<T, N>>();
-      constexpr auto        f = to_integer(cmp_flt::ngt_uq);
+      constexpr auto        f = to_integer(cmp_flt::nlt_uq);
 
       if      constexpr( C::is_complete )            return s;
       else if constexpr( c == category::float32x16)  return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
