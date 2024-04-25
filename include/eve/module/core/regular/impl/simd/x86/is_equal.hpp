@@ -21,7 +21,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
 template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_SUPPORTS(avx512_),
+EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(avx512_),
                                                    C          const &cx,
                                                    O          const &opts,
                                                    wide<T, N> const &v,
