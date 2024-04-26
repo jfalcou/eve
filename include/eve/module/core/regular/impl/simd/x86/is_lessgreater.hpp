@@ -16,8 +16,8 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_lessgreater_(EVE_REQUIRES(sse2_),
-                                                      wide<T, N> const &a,
                                                       O          const &o,
+                                                      wide<T, N> const &a,
                                                       wide<T, N> const &b) noexcept
   requires x86_abi<abi_t<T, N>>
   {
