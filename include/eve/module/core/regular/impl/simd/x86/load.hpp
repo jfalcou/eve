@@ -15,6 +15,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/pragmas.hpp>
+EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 
 namespace eve::detail
 {
@@ -62,7 +63,6 @@ requires simd_compatible_ptr<Ptr, Pack> && (!has_bundle_abi_v<Pack>)
   else if constexpr( C::is_complete ) return load_(EVE_RETARGET(cpu_), cond, s, tgt, p);
   else if constexpr( current_api >= avx512 )
     {
-EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
     r_t  that;
     auto src = [&](auto const& s)
     {
@@ -105,7 +105,6 @@ EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
     else if constexpr( c == category::uint8x64 ) return _mm512_mask_loadu_epi8(src(that), mask, p);
     else if constexpr( c == category::uint8x32 ) return _mm256_mask_loadu_epi8(src(that), mask, p);
     else if constexpr( c == category::uint8x16 ) return _mm_mask_loadu_epi8(src(that), mask, p);
-EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
   }
   else if constexpr( current_api >= avx )
   {
@@ -162,3 +161,4 @@ EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
 }
 
 }
+EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA
