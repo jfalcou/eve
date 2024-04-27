@@ -15,20 +15,19 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>>
-  is_not_greater_equal_(EVE_SUPPORTS(sse2_),
-                        O const          &o,
-                        wide<T, N> const &a,
-                        wide<T, N> const &b) noexcept
+  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(sse2_),
+                                                                 O const          &o,
+                                                                 wide<T, N> const &a,
+                                                                 wide<T, N> const &b) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_NGE_UQ;
 
-    if constexpr( O::contains(almost))
+    if constexpr( O::contains(definitely))
     {
-      return is_not_less_equal.behavior(cpu_{}, o, a, b);
+      return is_not_greater_equal.behavior(cpu_{}, o, a, b);
     }
     else
     {
@@ -47,41 +46,39 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return l_t(_mm256_cmp_ps(a, b, m));
       else if constexpr( c == category::float64x2 ) return l_t(_mm_cmpnge_pd(a, b));
       else if constexpr( c == category::float32x4 ) return l_t(_mm_cmpnge_ps(a, b));
-      else return is_less(b, a);
+      else return is_less(a, b);
     }
   }
+
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_not_greater_equal_(EVE_SUPPORTS(avx512_),
-                                             C          const& cx,
-                                             O          const& o,
-                                             wide<T, N> const& v,
-                                             wide<T, N> const& w) noexcept
-  -> decltype(is_not_greater_equal(v, w))
-    requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE  as_logical_t<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(avx512_),
+                                                                  C          const& mask,
+                                                                  O          const& o,
+                                                                  wide<T, N> const& v,
+                                                                  wide<T, N> const& w) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<wide<T, N>>();
-
-    if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
+    if constexpr( C::has_alternative || O::contains(definitely))
     {
       return is_not_greater_equal.behavior(cpu_{}, o, v, w);
     }
     else
     {
-      auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-      constexpr auto f = to_integer(cmp_flt::nge_uq);
+      auto const            s = alternative(mask, v, as(to_logical(v)));
+      [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
+      constexpr auto        c = categorize<wide<T, N>>();
+      constexpr auto        f = to_integer(cmp_flt::nge_uq);
 
-      if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
-      else if constexpr( c == category::float64x8 )
-        return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
-      else if constexpr( c == category::float32x8 )
-        return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
-      else if constexpr( c == category::float64x4 )
-        return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
-      else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
-      else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-      else return is_less[cx](v, w);
+      if      constexpr( C::is_complete )            return s;
+      else if constexpr( c == category::float32x16 ) return mask16 {_mm512_mask_cmp_ps_mask(m, v, w, f)};
+      else if constexpr( c == category::float64x8 )  return mask8 {_mm512_mask_cmp_pd_mask(m, v, w, f)};
+      else if constexpr( c == category::float32x8 )  return mask8 {_mm256_mask_cmp_ps_mask(m, v, w, f)};
+      else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
+      else if constexpr( c == category::float32x4 )  return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
+      else if constexpr( c == category::float64x2 )  return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
+      else return is_less[mask](v, w);
     }
   }
 }

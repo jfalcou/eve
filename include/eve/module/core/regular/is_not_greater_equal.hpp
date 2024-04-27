@@ -114,7 +114,7 @@ namespace eve
 
         auto tol = o[definitely].value(w_t{});
         if constexpr(integral_value<decltype(tol)>) return a <  eve::prev(b, tol);
-        else              return a < fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
+        else              return a < fanm(b, tol, eve::max(eve::abs(a), eve::abs(b)));
       }
       else
       {
