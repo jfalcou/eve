@@ -15,11 +15,11 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                  =" << std::setprecision(12) << pf << '\n'
             << "-> prev(pf)            =" << eve::prev(pf) << '\n'
-            << "-> pedantic(prev)(pf)  =" << eve::pedantic(eve::prev)(pf) << '\n'
-            << "-> saturated(prev)(pf) = " << eve::saturated(eve::prev)(pf) << '\n'
+            << "-> prev[pedantic2](pf) =" << eve::prev[eve::pedantic2](pf) << '\n'
+            << "-> prev[saturated2](pf)= " <<eve::prev[eve::saturated2](pf) << '\n'
             << "<- pi                  =" << pi << '\n'
             << "-> prev(pi)            =" << eve::prev(pi) << '\n'
-            << "-> saturated(prev)(pf) = " << eve::saturated(eve::prev)(pf) << '\n';
+            << "-> prev[saturated2](pf)= " <<eve::prev[eve::saturated2](pf) << '\n';
 
   float        xf = 0.0f;
   std::int16_t xi = -3;

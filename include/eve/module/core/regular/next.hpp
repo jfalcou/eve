@@ -24,7 +24,6 @@
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/saturated/add.hpp>
 #include <eve/module/core/regular/inc.hpp>
-#include <iostream>
 
 namespace eve
 {
@@ -92,14 +91,14 @@ namespace eve
 //!
 //!   * eve::pedantic
 //!
-//!     The call `eve::pedantic(eve::next)(x, ...)` provides a pedantic
+//!     The call `eve::next[eve::pedantic](x, ...)` provides a pedantic
 //!     version of `next` which ensures that the successor of eve::mzero is  eve::zero
 //!     for floating points entries
 //!
 //!   * eve::saturated
 //!
-//!     The call `eve::pedantic(eve::next)(x, ...)` provides a pedantic
-//!     version of `next` which ensures that eve::minf and  eve::nan are fixed points.
+//!     The call `eve::next[eve::saturated](x, ...)` provides a saturated
+//!     version of `next` which ensures that x is never less than the result of the call.
 //!
 //! @}
 //================================================================================================
@@ -130,6 +129,7 @@ namespace eve
         {
           auto z = if_else(a == inf(as(a)), a, next(a));
           if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+          else return z;
         }
         else
           return bitfloating(inc(bitinteger(a)));

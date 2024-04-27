@@ -20,7 +20,7 @@ namespace eve
   struct nextafter_t : elementwise_callable<nextafter_t, Options, pedantic_option>
   {
     template<eve::value T, eve::value U>
-    constexpr EVE_FORCEINLINE T operator()(T t, U u) const noexcept
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T t, U u) const noexcept
     { return EVE_DISPATCH_CALL(t, u); }
 
     EVE_CALLABLE_OBJECT(nextafter_t, nextafter_);
@@ -87,8 +87,8 @@ namespace eve
     nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& xx, U const & yy) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      auto x = r_t(xx);
-      auto y = r_t(yy);
+      auto a = r_t(xx);
+      auto b = r_t(yy);
       if constexpr( scalar_value<T> )
         return (a < b) ? next[o](a) : ((a > b) ? prev[o](a) : a);
       else if constexpr( simd_value<T> )

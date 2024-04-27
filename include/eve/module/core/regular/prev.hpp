@@ -12,14 +12,37 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
-
-#include <type_traits>
+#include <eve/module/core/regular/is_positive.hpp>
+#include <eve/module/core/regular/is_negative.hpp>
+#include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/converter.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct prev_t : strict_elementwise_callable<prev_t, Options, pedantic_option,  saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::value T, integral_value N>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
+    {
+      EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
+      return EVE_DISPATCH_CALL(v, n);
+    }
+
+    EVE_CALLABLE_OBJECT(prev_t, prev_);
+  };
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -65,45 +88,109 @@ namespace eve
 //!     version of `prev` which is
 //!     equivalent to `if_else(mask, prev(x, ...), x)`
 //!
-//! @}
+//!   * eve::pedantic
+//!
+//!     The call `eve::prev[eve::pedantic](x, ...)` provides a pedantic
+//!     version of `prev` which ensures that the predecessor of eve::zero is  eve::mzero
+//!     for floating points entries
+//!
+//!   * eve::saturated
+//!
+//!     The call `eve::prev[eve::saturated](x, ...)` provides a saturated
+//!     version of `prev` which ensures that that x is never greater than the result of the call.
+//!//! @}
 //================================================================================================
-namespace tag
-{
-  struct prev_;
+  inline constexpr auto prev = functor<prev_t>;
+
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    prev_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    {
+      if constexpr( floating_value<T> )
+      {
+        if constexpr(O::contains(pedantic2))
+        {
+          auto pz   = bitinteger(a);
+          auto z    = bitfloating(dec(pz));
+          auto test = is_negative(z) && is_positive(a);
+          auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
+          prv =  if_else(is_nan(a), eve::allbits, prv);
+          if  constexpr(O::contains(saturated2))
+          {
+            prv = if_else(a == minf(as(a)), a, prv);
+            if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, prv);
+          }
+          return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), prv);
+        }
+        else if  constexpr(O::contains(saturated2))
+        {
+          auto prv = prev(a);
+          auto z = if_else(a == minf(as(a)), a, prv);
+          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+          else return z;
+        }
+        else
+          return bitfloating(dec(bitinteger(a)));
+      }
+      else
+      {
+        if  constexpr(O::contains(saturated2))
+        {
+          return if_else(a == valmin(as(a)), a, dec(a));
+        }
+        else
+        {
+          return dec(a);
+        }
+      }
+    }
+
+    template<typename T, typename N, callable_options O>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
+    prev_(EVE_REQUIRES(cpu_), O const &, T const &a,  N const &n) noexcept
+    {
+      if constexpr( floating_value<T> )
+      {
+        if constexpr(O::contains(pedantic2))
+        {
+          using i_t = as_integer_t<T>;
+          auto pz   = inc(bitinteger(a) - to_<i_t>(n));
+          auto z    = bitfloating(dec(pz));
+          auto test = is_negative(z) && is_positive(a);
+          if constexpr( scalar_value<T> && scalar_value<N> )
+          {
+            if( is_nan(a) ) return a;
+            return test ? (z == 0 ? T(-0.) : bitfloating(pz)) : z;
+          }
+          else { return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z); }
+        }
+        else if  constexpr(O::contains(saturated2))
+        {
+          auto prv = prev(a, n);
+          auto z = if_else(a >  prv || is_nan(prv), minf(as(a)), prv);
+          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+          else return z;
+        }
+        else
+        {
+          using i_t = as_integer_t<T>;
+          return bitfloating(bitinteger(a) - to_<i_t>(n));
+        }
+      }
+      else
+      {
+        if  constexpr(O::contains(saturated2))
+        {
+          auto tmp = prev(a, n);
+          return if_else(a < tmp, a, tmp);
+        }
+        else
+        {
+          return a-to_<T>(n);
+        }
+      }
+    }
+  }
 }
-
-namespace detail
-{
-  template<conditional_expr C, value T, integral_value U>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::prev_), C const&, T const&, [[maybe_unused]] U const& n)
-  {
-    EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
-  }
-  template<value T, integral_value U>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::prev_), T const&, [[maybe_unused]] U const& n)
-  {
-    EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
-  }
-
-  template<conditional_expr C, value T, integral_value U>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_),
-                             C const&,
-                             T const&,
-                             [[maybe_unused]] U const& n)
-  {
-    EVE_ASSERT(eve::all(is_gez(n)), "[eve::prev] : second parameter must be positive");
-  }
-  template<value T, integral_value U>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(saturated_type, eve::tag::prev_), T const&, [[maybe_unused]] U const& n)
-  {
-    EVE_ASSERT(eve::all(is_gez(n)),
-               "[[eve::saturated([eve::prev)] : second parameter must be positive");
-  }
-}
-
-EVE_MAKE_CALLABLE(prev_, prev);
-}
-
-#include <eve/module/core/regular/impl/prev.hpp>
