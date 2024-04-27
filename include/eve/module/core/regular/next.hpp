@@ -7,18 +7,39 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/assert.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/converter.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/decorator/saturated.hpp>
+#include <eve/module/core/detail/next_kernel.hpp>
+#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
-
-#include <type_traits>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/regular/inc.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct next_t : elementwise_callable<next_t, Options, pedantic_option,  saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<eve::value T, integral_value N>
+    constexpr EVE_FORCEINLINE T operator()(T v, N n) const noexcept
+    {
+      EVE_ASSERT(eve::all(is_gez(n)), "[eve::next] : second parameter must be positive");
+      return EVE_DISPATCH_CALL(v, n);
+    }
+
+    EVE_CALLABLE_OBJECT(next_t, next_);
+  };
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -77,44 +98,70 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct next_;
-}
+  inline constexpr auto next = functor<next_t>;
 
 namespace detail
 {
-  template<conditional_expr C, value T, integral_value U>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::next_), C const&, T const&, [[maybe_unused]] U const& n)
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T, U>
+  average_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
   {
-    EVE_ASSERT(eve::all(is_gez(n)), "[eve::next] : second parameter must be positive");
-  }
-  template<value T, integral_value U>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::next_), T const&, [[maybe_unused]] U const& n)
-  {
-    EVE_ASSERT(eve::all(is_gez(n)), "[eve::next] : second parameter must be positive");
+    if constexpr( floating_value<T> )
+    {
+      if constexpr(O::contains(pedantic2))
+      {
+        auto pz   = bitinteger(a);
+        auto z    = bitfloating(inc(pz));
+        auto test = is_negative(a) && is_positive(z);
+        auto nxt = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
+        if  constexpr(O::contains(saturated2))
+        {
+          nxt = if_else(a == inf(as(a)), a, nxt);
+          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+        }
+        return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), nxt);
+      }
+      else if  constexpr(O::contains(saturated2))
+      {
+        auto z = if_else(a == inf(as(a)), a, next(a));
+        if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+      }
+      else
+        return bitfloating(inc(bitinteger(a)));
+    }
+    else if constexpr( integral_value<T> ) { return inc(a); }
   }
 
-  template<conditional_expr C, value T, integral_value U>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(saturated_type, eve::tag::next_),
-                             C const&,
-                             T const&,
-                             [[maybe_unused]] U const& n)
+  template<typename T, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr common_value_t<T, U>
+  average_(EVE_REQUIRES(cpu_), O const &, T const &a,  U const &n) noexcept
   {
-    EVE_ASSERT(eve::all(is_gez(n)), "[eve::next] : second parameter must be positive");
   }
-  template<value T, integral_value U>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(saturated_type, eve::tag::next_), T const&, [[maybe_unused]] U const& n)
-  {
-    EVE_ASSERT(eve::all(is_gez(n)),
-               "[[eve::saturated([eve::next)] : second parameter must be positive");
-  }
-
 }
 
-EVE_MAKE_CALLABLE(next_, next);
-}
-
-#include <eve/module/core/regular/impl/next.hpp>
+    if constexpr( floating_value<T> )
+    {
+      if constexpr(O::contains(pedantic))
+      {
+        using i_t = as_integer_t<T>;
+        auto pz   = dec(bitinteger(a) + to_<i_t>(n));
+        auto z    = bitfloating(inc(pz));
+        auto test = is_negative(a) && is_positive(z);
+        if constexpr( scalar_value<T> && scalar_value<U> )
+        {
+          if( is_nan(a) ) return a;
+          return test ? (z == 0 ? T(-0.) : bitfloating(pz)) : z;
+        }
+        else { return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z); }
+      }
+      else if  constexpr(O::contains(saturated))
+      {
+        auto nxt = next(a, n);
+        auto z = if_else(a != inf(as(a)) && nxt == nan(as(a)), inf(as(a)), nxt);
+        if constexpr( eve::platform::supports_nans ) return if_inf(as(a))else(is_nan(a), eve::allbits, z);
+        else return z;
+      }
+      else
+        return bitfloating(inc(bitinteger(a)));
+    }
+    else if constexpr( integral_value<T> ) { return a+to_<T>(n)); }
