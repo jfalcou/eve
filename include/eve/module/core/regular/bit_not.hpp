@@ -7,10 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/forward.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct bit_not_t : elementwise_callable<bit_not_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(bit_not_t, bit_not_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -55,7 +70,17 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_not_, bit_not);
-}
+inline constexpr auto bit_not = functor<bit_not_t>;
 
-#include <eve/module/core/regular/impl/bit_not.hpp>
+  namespace detail
+  {
+    template<ordered_value T, callable_options O>
+    constexpr T  bit_not_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    {
+      if constexpr( floating_scalar_value<T> )
+        return bit_cast(~bit_cast(v, as<as_integer_t<T>> {}), as(v));
+      else
+        return T(~v);
+    }
+  }
+}
