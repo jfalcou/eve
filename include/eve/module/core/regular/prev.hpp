@@ -181,7 +181,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2))
+        if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
         {
           auto tmp = prev(a, n);
           return if_else(a < tmp, a, tmp);
