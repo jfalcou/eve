@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct negate_t : elementwise_callable<negate_t, Options, raw_option, upward_option, downward_option>
+  struct negate_t : elementwise_callable<negate_t, Options, raw_option>
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const

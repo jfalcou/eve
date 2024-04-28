@@ -25,7 +25,6 @@ TTS_CASE_TPL("Check return types of eve::signnz", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::signnz[bool()](T()), T);
 
   TTS_EXPR_IS(eve::signnz(v_t()), v_t);
-  TTS_EXPR_IS(eve::signnz[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::signnz[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::signnz[bool()](v_t()), v_t);
 };
@@ -45,6 +44,8 @@ TTS_CASE_WITH("Check behavior of eve::signnz(eve::wide)",
   TTS_EQUAL(eve::signnz[mask](a0), eve::if_else(mask, eve::signnz(a0), a0));
   if constexpr( eve::floating_value<T> )
   {
-    TTS_IEEE_EQUAL(eve::pedantic(eve::signnz)(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::signnz[eve::pedantic2](eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::abs(eve::signnz(eve::nan(eve::as<T>()))), T(1));
+
   }
 };
