@@ -136,7 +136,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2))
+        if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
         {
           return if_else(a == valmin(as(a)), a, dec(a));
         }
