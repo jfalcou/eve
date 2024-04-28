@@ -14,7 +14,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                   = " << pf << '\n'
             << "-> signnz(pf)           = " << eve::signnz(pf) << '\n'
-            << "-> pedantic(signnz)(pf) = " << eve::pedantic(eve::signnz)(pf) << '\n'
+            << "-> signnz(pedantic2](pf) = " << eve::signnz(eve::pedantic2](pf) << '\n'
             << "-> signnz[abs(pf)<2](pf)= " << eve::signnz[eve::abs(pf)<2](pf) << '\n'
             << "<- pi                   = " << pi << '\n'
             << "-> signnz(pi)           = " << eve::signnz(pi) << '\n';
