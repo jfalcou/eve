@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/is_finite.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/fms.hpp>
+#include <eve/module/core/regular/fnma.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct diff_of_prod_t : elementwise_callable<diff_of_prod_t, Options, raw_option, pedantic_option>
+  {
+    template<value T,  value U, value V,  value W>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V, W> operator()(T a, U b, V c, W d) const
+    { return EVE_DISPATCH_CALL(a, b, c, d); }
+
+    EVE_CALLABLE_OBJECT(diff_of_prod_t, diff_of_prod_);
+  };
+
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
@@ -55,7 +71,7 @@ namespace eve
 //!   * eve::raw
 //!
 //!     The call `eve::raw(eve::diff_of_prod)(x, y, z, t)` computes a raw
-//!     version of eve::diff_of_prod,  i.e. the naive formula
+//!     version of eve::diff_of_prod,  i.e. the naive formula (in fact  `fms(x, y, z, t)`)
 //!
 //!   * eve::pedantic
 //!
@@ -64,15 +80,32 @@ namespace eve
 //!
 //! @}
 //================================================================================================
+ inline constexpr auto diff_of_prod = functor<diff_of_prod_t>;
 
-namespace tag
-{
-  struct diff_of_prod_;
+  namespace detail
+  {
+    template<typename T, typename U, typename V, typename W, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U, V, W>
+    diff_of_prod_(EVE_REQUIRES(cpu_), O const & o,
+                  T const &aa,  U const &bb,
+                  V const &cc,  W const &dd) noexcept
+    {
+      using r_t = common_value_t<T, U, V, W>;
+      r_t a = r_t(aa);
+      r_t b = r_t(bb);
+      r_t c = r_t(cc);
+      r_t d = r_t(dd);
+      r_t cd =  c*d;
+      if constexpr(O::contains(raw2))
+      {
+        return fms(a, b, cd);
+      }
+      else
+      {
+        auto err = fnma[o](c, d, cd);
+        auto dop = fms[o](a, b, cd);
+        return if_else(is_finite(err), dop + err, dop);
+      }
+    }
+  }
 }
-template<> struct supports_conditional<tag::diff_of_prod_> : std::false_type
-{};
-
-EVE_MAKE_CALLABLE(diff_of_prod_, diff_of_prod);
-}
-
-#include <eve/module/core/regular/impl/diff_of_prod.hpp>
