@@ -70,8 +70,8 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-inline constexpr auto bit_not = functor<bit_not_t>;
-
+  inline constexpr auto bit_not = functor<bit_not_t>;
+  
   namespace detail
   {
     template<ordered_value T, callable_options O>
