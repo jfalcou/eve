@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/forward.hpp>
+#include <eve/module/core/regular/countl_zero.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct bit_width_t : elementwise_callable<bit_width_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(bit_width_t, bit_width_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -48,7 +62,15 @@ namespace eve
 //!  @godbolt{doc/core/bit_width.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bit_width_, bit_width);
-}
+  inline constexpr auto bit_width = functor<bit_width_t>;
 
-#include <eve/module/core/regular/impl/bit_width.hpp>
+  namespace detail
+  {
+    template<unsigned_value T, callable_options O>
+    constexpr T  bit_width_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    {
+      using elt_t = element_type_t<T>;
+      return sizeof(elt_t) * 8 - countl_zero(v);
+    }
+  }
+}
