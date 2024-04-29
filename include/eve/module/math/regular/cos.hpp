@@ -123,7 +123,6 @@ namespace eve
         }
         else
         {
-          using elt_t   = element_type_t<T>;
           auto n        = one[is_not_less_equal(x, pio_4(eve::as(x)))](eve::as(x));
           auto sign_bit   = signmask[is_nez(n)](eve::as(x));
           auto xr       = reduce(x);
