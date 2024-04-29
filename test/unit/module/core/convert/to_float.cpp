@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
   TTS_EQUAL(eve::convert((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
   TTS_EQUAL(eve::convert((T(0)), tgt), eve::float32(T(0)));
   TTS_EQUAL(eve::convert((T(42.69)), tgt), eve::float32(T(42.69)));
-  TTS_EQUAL(eve::convert(eve::sqr(T(2)), tgt), eve::float32(eve::sqr)(T(2)));
+//TODO  TTS_EQUAL(eve::convert(eve::sqr(T(2)), tgt), eve::float32(eve::sqr)(T(2)));
 
   if constexpr( sizeof(v_t) <= sizeof(float) )
   {

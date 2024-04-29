@@ -49,7 +49,7 @@ TTS_CASE_TPL("Random check for eve::prev", eve::test::simd::all_types)
       return e == eve::valmin(eve::as(e)) ? e : e-1;
     }
   };
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_pedantic_prev, eve::pedantic(eve::prev));
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_pedantic_prev, eve::prev[eve::pedantic2]);
 
   auto std_saturated_prev = [](auto e) -> e_t {
     if constexpr(eve::floating_value<T>)
@@ -63,5 +63,5 @@ TTS_CASE_TPL("Random check for eve::prev", eve::test::simd::all_types)
       return e == eve::valmin(eve::as(e)) ? e : e-1;
     }
   };
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax), std_saturated_prev, eve::saturated(eve::prev));
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax), std_saturated_prev, eve::prev[eve::saturated2]);
 };

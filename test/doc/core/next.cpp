@@ -13,14 +13,14 @@ int main()
   wide_it pi = {-1, 2, -3, 32767};
 
   std::cout << "---- simd" << std::setprecision(12) << '\n'
-            << "<- pf                  = "  << pf << '\n'
-            << "-> next(pf)            = " << eve::next(pf) << '\n'
-            << "-> pedantic(next)(pf)  = " << eve::pedantic(eve::next)(pf) << '\n'
-            << "-> next[pf > 0](pf)    = " << eve::next[pf > 0](pf) << '\n'
-            << "-> saturated(next)(pf)  = " << eve::saturated(eve::next)(pf) << '\n'
-            << "<- pi                  = " << pi << '\n'
-            << "-> next(pi)            = " << eve::next(pi) << '\n'
-            << "-> saturated(next)(pi) = " << eve::saturated(eve::next)(pi) << '\n';
+            << "<- pf                    = "  << pf << '\n'
+            << "-> next(pf)              = " << eve::next(pf) << '\n'
+            << "-> next[pedantic2](pf)   = " << eve::next[eve::pedantic2](pf) << '\n'
+            << "-> next[pf > 0](pf)      = " << eve::next[pf > 0](pf) << '\n'
+            << "-> next[saturated2](pf)  = " << eve::next[eve::saturated2](pf) << '\n'
+            << "<- pi                    = " << pi << '\n'
+            << "-> next(pi)              = " << eve::next(pi) << '\n'
+            << "-> next[saturated2](pi)   = " << eve::next[eve::saturated2](pi) << '\n';
 
   float        xf = 0.0f;
   std::int16_t xi = -3;

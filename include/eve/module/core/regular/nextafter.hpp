@@ -7,19 +7,25 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/assert.hpp>
-#include <eve/concept/value.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/prev.hpp>
 
-#include <type_traits>
-
+#
 namespace eve
 {
+  template<typename Options>
+  struct nextafter_t : elementwise_callable<nextafter_t, Options, pedantic_option>
+  {
+    template<eve::value T, eve::value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T t, U u) const noexcept
+    { return EVE_DISPATCH_CALL(t, u); }
+
+    EVE_CALLABLE_OBJECT(nextafter_t, nextafter_);
+  };
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -58,6 +64,12 @@ namespace eve
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
+//!   * pedantic Call
+//!
+//!     The call `eve::nextafter[pedantic](x, ...)` provides a
+//!     version of `nextafter` for which floating plus zero and minus zero are distinct
+//!     for x.
+//!
 //!   * Masked Call
 //!
 //!     The call `eve::nextafter[mask](x, ...)` provides a masked
@@ -66,7 +78,21 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(nextafter_, nextafter);
-}
+  inline constexpr auto nextafter = functor<nextafter_t>;
 
-#include <eve/module/core/regular/impl/nextafter.hpp>
+  namespace detail
+  {
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& xx, U const & yy) noexcept
+    {
+      using r_t =  common_value_t<T, U>;
+      auto a = r_t(xx);
+      auto b = r_t(yy);
+      if constexpr( scalar_value<T> )
+        return (a < b) ? next[o](a) : ((a > b) ? prev[o](a) : a);
+      else if constexpr( simd_value<T> )
+        return if_else(a < b, next[o](a), if_else(a > b, prev[o](a), a));
+    }
+  }
+}
