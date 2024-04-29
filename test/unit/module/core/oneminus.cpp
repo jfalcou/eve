@@ -24,20 +24,18 @@ TTS_CASE_TPL("Check return types of eve::oneminus", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::oneminus[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::oneminus[bool()](T()), T);
 
-  TTS_EXPR_IS(eve::saturated(eve::oneminus)(T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[eve::logical<T>()])(T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[eve::logical<v_t>()])(T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[bool()])(T()), T);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2](T()), T);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2][eve::logical<T>()](T()), T);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2][eve::logical<v_t>()](T()), T);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2][bool()](T()), T);
 
   TTS_EXPR_IS(eve::oneminus(v_t()), v_t);
-  TTS_EXPR_IS(eve::oneminus[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::oneminus[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::oneminus[bool()](v_t()), v_t);
 
-  TTS_EXPR_IS(eve::saturated(eve::oneminus)(v_t()), v_t);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[eve::logical<T>()])(v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[eve::logical<v_t>()])(v_t()), v_t);
-  TTS_EXPR_IS(eve::saturated(eve::oneminus[bool()])(v_t()), v_t);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2](v_t()), v_t);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2][eve::logical<v_t>()](v_t()), v_t);
+  TTS_EXPR_IS(eve::oneminus[eve::saturated2][bool()](v_t()), v_t);
 
   if constexpr( eve::floating_value<T> ) {}
 };
@@ -52,18 +50,18 @@ TTS_CASE_WITH("Check behavior of eve::oneminus(eve::wide)",
 {
   using eve::as;
   using eve::oneminus;
-  using eve::saturated;
+  using eve::saturated2;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(oneminus(a0), map([](auto e) -> v_t { return 1 - e; }, a0));
   TTS_EQUAL(oneminus[mask](a0), eve::if_else(mask, oneminus(a0), a0));
   if constexpr( eve::unsigned_value<T> )
-    TTS_EQUAL(saturated(oneminus)(a0),
+    TTS_EQUAL(oneminus[saturated2](a0),
               eve::if_else(eve::is_eqz(a0), eve::one(eve::as(a0)), eve::zero));
   else
     TTS_EQUAL(
-        saturated(oneminus)(a0),
+        oneminus[saturated2](a0),
         eve::if_else(a0 < eve::valmin(eve::as(a0)) + 2, eve::valmax(eve::as(a0)), oneminus(a0)));
 };
 
@@ -74,29 +72,29 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::oneminus variants on wide",
              eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  TTS_EQUAL(eve::saturated(eve::oneminus)(T(1)), T(0));
+  TTS_EQUAL(eve::oneminus[eve::saturated2](T(1)), T(0));
 
   if constexpr( eve::signed_value<T> )
   {
-    TTS_EQUAL(eve::saturated(eve::oneminus)(T(2)), T(-1));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(static_cast<T>(-2)), T(3));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(eve::valmin(eve::as<T>())), eve::valmax(eve::as<T>()));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(eve::inc(eve::valmin(eve::as<T>()))),
+    TTS_EQUAL(eve::oneminus[eve::saturated2](T(2)), T(-1));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](static_cast<T>(-2)), T(3));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](eve::valmin(eve::as<T>())), eve::valmax(eve::as<T>()));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](eve::inc(eve::valmin(eve::as<T>()))),
               eve::valmax(eve::as<T>()));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(eve::inc(eve::inc(eve::valmin(eve::as<T>())))),
+    TTS_EQUAL(eve::oneminus[eve::saturated2](eve::inc(eve::inc(eve::valmin(eve::as<T>())))),
               eve::valmax(eve::as<T>()));
   }
 
   if constexpr( eve::unsigned_value<T> )
   {
-    TTS_EQUAL(eve::saturated(eve::oneminus)(T(2)), T(0));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(T(1)), T(0));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(T(0)), T(1));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](T(2)), T(0));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](T(1)), T(0));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](T(0)), T(1));
   }
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::saturated(eve::oneminus)(T(-0.)), T(1));
-    TTS_EQUAL(eve::saturated(eve::oneminus)(T(0)), T(1));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](T(-0.)), T(1));
+    TTS_EQUAL(eve::oneminus[eve::saturated2](T(0)), T(1));
   }
 };

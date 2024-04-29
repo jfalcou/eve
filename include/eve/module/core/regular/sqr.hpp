@@ -7,10 +7,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/sqrtvalmax.hpp>
+#include <eve/module/core/constant/valmax.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
+{
+  template<eve::value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(sqr_t, sqr_);
+};
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -75,15 +89,28 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-// namespace tag
-// {
-//   struct sqr_;
-// }
+  inline constexpr auto sqr = functor<sqr_t>;
 
-// template<> struct supports_optimized_conversion<tag::sqr_> : std::true_type
-// {};
+  namespace detail
+  {
 
-EVE_MAKE_CALLABLE(sqr_, sqr);
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    sqr_(EVE_REQUIRES(cpu_), O const &, T const &a0) noexcept
+    {
+      if constexpr(O::contains(saturated2))
+      {
+        if constexpr( scalar_value<T> )
+        {
+          return (eve::abs[saturated2](a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0)) : sqr(a0);
+        }
+        else
+        {
+          return if_else(eve::abs[saturated2](a0) > sqrtvalmax(eve::as(a0)), valmax(eve::as(a0)), sqr(a0));
+        }
+      }
+      else
+        return mul(a0, a0);
+    }
+  }
 }
-
-#include <eve/module/core/regular/impl/sqr.hpp>

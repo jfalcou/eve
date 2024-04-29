@@ -16,8 +16,8 @@ int main()
             << " <- zf                                     = " << zf << '\n'
             << " -> xf*yf-tf*zf                            = " << (xf*yf)-(tf*zf) << '\n'
             << " -> diff_of_prod(xf, yf, tf, zf)           = " << eve::diff_of_prod(xf, yf, tf, zf) << '\n'
-            << " -> diff_of_prod[pedantic](xf, yf, tf, zf) = " << eve::pedantic(eve::diff_of_prod)(xf, yf, tf, zf) << '\n';
-
+            << " -> diff_of_prod[pedantic2](xf, yf, tf, zf) = " << eve::diff_of_prod[eve::pedantic2](xf, yf, tf, zf) << '\n'
+            << " -> diff_of_prod[raw2](xf, yf, tf, zf)      = " << eve::diff_of_prod[eve::raw2](xf, yf, tf, zf) << '\n';
 
   return 0;
 }

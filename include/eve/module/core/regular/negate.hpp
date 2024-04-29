@@ -8,10 +8,21 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct negate_t : elementwise_callable<negate_t, Options, raw_option>
+  {
+    template<value T,  value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(negate_t, negate_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -57,10 +68,24 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(negate_, negate);
-}
+ inline constexpr auto negate = functor<negate_t>;
 
-#include <eve/module/core/regular/impl/negate.hpp>
+  namespace detail
+  {
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    negate_(EVE_REQUIRES(cpu_), O const &, T const &aa,  U const &bb) noexcept
+    {
+      using r_t = common_value_t<T, U>;
+      r_t a = r_t(aa);
+      r_t b = r_t(bb);
+      if constexpr( signed_value<T> )
+        return a * sign(b);
+      else
+        return if_else(is_nez(b), a, eve::zero);
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/negate.hpp>
