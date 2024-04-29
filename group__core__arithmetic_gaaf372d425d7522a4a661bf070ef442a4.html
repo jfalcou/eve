@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaaf372d425d75
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::signnz = {}</td>
+          <td class="memname">eve::signnz = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;signnz_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaaf372d425d75
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">signnz</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4_html_gaaf372d425d7522a4a661bf070ef442a4"><div class="ttname"><a href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a></div><div class="ttdeci">constexpr callable_signnz_ signnz</div><div class="ttdoc">Computes the never zero sign of the parameter.</div><div class="ttdef"><b>Definition:</b> signnz.hpp:67</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4_html_gaaf372d425d7522a4a661bf070ef442a4"><div class="ttname"><a href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a></div><div class="ttdeci">constexpr auto signnz</div><div class="ttdoc">Computes the never zero sign of the parameter.</div><div class="ttdef"><b>Definition:</b> signnz.hpp:85</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -162,9 +162,8 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaaf372d425d75
 <li>If x is <a class="el" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">negative</a>, -1 is returned.</li>
 </ul>
 </li>
-<li>Moreover for <a class="el" href="concepteve_1_1floating__value.html">floating real value</a> if x is <code>Nan</code>, the result is <code>Nan</code></li>
+<li>Note that is_negative and is_positive only look at the sign bit and a Nan has generally unpredicable sign bit.</li>
 </ul>
-<p>value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> never zero sign of <code>x</code></p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -182,7 +181,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaaf372d425d75
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                   = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; signnz(pf)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; pedantic(signnz)(pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>(<a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a>)(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; signnz(pedantic2](pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a>[eve::pedantic2](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; signnz[abs(pf)&lt;2](pf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a>[<a class="code hl_variable" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a>(pf)&lt;2](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pi                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; signnz(pi)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a>(<a class="code hl_variable" href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">pi</a>) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -198,13 +197,15 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaaf372d425d75
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1_html_gaf9bc648f57be07a02903259faabd2df1"><div class="ttname"><a href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1">eve::abs</a></div><div class="ttdeci">constexpr auto abs</div><div class="ttdoc">Computes the absolute value of the parameter.</div><div class="ttdef"><b>Definition:</b> abs.hpp:83</div></div>
-<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">signnz</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">eve::signnz</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">signnz(x)</a>, x)</code>. </p>
+<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">signnz</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">eve::signnz</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">signnz(x)</a>, x)</code>.</p>
+</li>
+<li><p class="startli">pedantic Call</p>
+<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4" title="Computes the never zero sign of the parameter.">signnz</a>[pedantic](x)</code> returns nan for nan input`. </p>
 </li>
 </ul>
 
