@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/binarize.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/constant/valmax.hpp>
@@ -99,7 +98,7 @@ namespace eve
       {
         if constexpr( std::is_unsigned_v<elt_t> )
         {
-          return binarize(is_eqz(v));
+          return one[is_eqz(v)](as(v));
         }
         else if constexpr( scalar_value<T> )
         {

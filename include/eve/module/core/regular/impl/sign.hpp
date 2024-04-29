@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/regular/binarize.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/signnz.hpp>
@@ -26,8 +25,8 @@ sign_(EVE_SUPPORTS(cpu_), T const& a) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-          if constexpr( unsigned_value<T> ) return binarize(is_nez(a));
-    else  if constexpr( floating_value<T> ) return if_else(is_eqz(a),a,signnz(a));
+    if constexpr( unsigned_value<T> ) return one[is_nez(a)](eve::as(a));
+    else  if constexpr( floating_value<T> ) return signnz[is_nez(a)](a);
     else
     {
       constexpr auto tgt = as<T>{};

@@ -16,7 +16,6 @@
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/binarize_not.hpp>
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>

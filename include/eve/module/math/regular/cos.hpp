@@ -124,8 +124,8 @@ namespace eve
         else
         {
           using elt_t   = element_type_t<T>;
-          auto n        = binarize(is_not_less_equal(x, pio_4(eve::as(x))));
-          auto sign_bit = binarize(is_nez(n), signmask(eve::as<elt_t>()));
+          auto n        = one[is_not_less_equal(x, pio_4(eve::as(x)))](eve::as(x));
+          auto sign_bit   = signmask[is_nez(n)](eve::as(x));
           auto xr       = reduce(x);
           xr            = if_else(n, xr, x);
           auto z        = sqr(xr);

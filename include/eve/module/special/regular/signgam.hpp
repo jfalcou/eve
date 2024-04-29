@@ -68,7 +68,7 @@ inline constexpr auto signgam = functor<signgam_t>;
       auto isleza0 = is_ngtz(a0);
       auto a       = if_else(is_flint(a0) || is_infinite(a0),
                              eve::allbits,
-                             oneminus(binarize(is_odd(floor(a0))) * T(2)));
+                             oneminus(is_odd[floor(a0)](as(a0)) * T(2)));
       a            = if_else(is_eqz(a0), bit_or(one(as(a0)), bitofsign(a0)), a);
       return if_else(is_nan(a0), a0, if_else(isleza0, a, eve::one));
 

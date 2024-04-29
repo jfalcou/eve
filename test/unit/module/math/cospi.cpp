@@ -50,8 +50,8 @@ TTS_CASE_WITH("Check behavior of cospi on wide",
   TTS_ULP_EQUAL(cospi[eve::quarter_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cospi[eve::half_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cospi(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cospi(a1), cospi(eve::frac(a1)+eve::binarize(eve::is_odd(eve::trunc(a1)))), 2);
-  TTS_ULP_EQUAL(cospi(a2), cospi(eve::frac(a2)+eve::binarize(eve::is_odd(eve::trunc(a2)))), 2);
+  TTS_ULP_EQUAL(cospi(a1), cospi(eve::frac(a1)+eve::one[eve::is_odd(eve::trunc(a1))](eve::as(a1))), 2);
+  TTS_ULP_EQUAL(cospi(a2), cospi(eve::frac(a2)+eve::one[eve::is_odd(eve::trunc(a2))](eve::as(a2))), 2);
 };
 
 
