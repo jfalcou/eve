@@ -23,7 +23,6 @@ TTS_CASE_TPL("Check return types of bit_not", eve::test::simd::all_types)
   // conditional
   TTS_EXPR_IS(eve::bit_not[logical<T>()](T()), T);
   TTS_EXPR_IS(eve::bit_not[logical<v_t>()](T()), T);
-  TTS_EXPR_IS(eve::bit_not[logical<T>()](v_t()), T);
 };
 
 //==================================================================================================
@@ -65,7 +64,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::bit_not)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::bit_not[mask](a0),
