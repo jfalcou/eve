@@ -7,10 +7,20 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
-
 namespace eve
 {
+
+  template<typename Options>
+  struct mantissa_t : elementwise_callable<mantissa_t, Options>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(mantissa_t, mantissa_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -53,10 +63,32 @@ namespace eve
 //!  @godbolt{doc/core/mantissa.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(mantissa_, mantissa);
-}
 
-#include <eve/module/core/regular/impl/mantissa.hpp>
+ inline constexpr auto mantissa = functor<mantissa_t>;
+
+  namespace detail
+  {
+    template<floating_value T, callable_options O>
+    constexpr T  mantissa_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    {
+      if constexpr( scalar_value<T> )
+      {
+        if( !a ) return a;
+        if constexpr( eve::platform::supports_invalids )
+        {
+          if( is_not_finite(a) ) return a;
+        }
+        return bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as(a)));
+      }
+      else if constexpr( simd_value<T> )
+      {
+        auto test = is_eqz(a);
+        if constexpr( eve::platform::supports_invalids ) { test = test || is_not_finite(a); }
+        return if_else(test, a, bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>())));
+      }
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/mantissa.hpp>
