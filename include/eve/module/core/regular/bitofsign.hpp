@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/forward.hpp>
+#include <eve/module/core/constant/signmask.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
 
 namespace eve
 {
+
+  template<typename Options>
+  struct bitofsign_t : elementwise_callable<bitofsign_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(bitofsign_t, bitofsign_);
+  };
+
 //================================================================================================
 //! @addtogroup core_internal
 //! @{
@@ -58,7 +74,14 @@ namespace eve
 //!  @godbolt{doc/core/bitofsign.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(bitofsign_, bitofsign);
-}
+  inline constexpr auto bitofsign = functor<bitofsign_t>;
 
-#include <eve/module/core/regular/impl/bitofsign.hpp>
+  namespace detail
+  {
+    template<ordered_value T, callable_options O>
+    constexpr T  bitofsign_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    {
+      return bit_and(a, signmask(eve::as(a)));
+    }
+  }
+}

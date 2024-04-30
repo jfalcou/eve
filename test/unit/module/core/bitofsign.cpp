@@ -22,7 +22,6 @@ TTS_CASE_TPL("Check return types of bitofsign", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::bitofsign(T()), T);
   TTS_EXPR_IS(eve::bitofsign(v_t()), v_t);
   TTS_EXPR_IS(eve::bitofsign[eve::logical<T>()](T()), T);
-  TTS_EXPR_IS(eve::bitofsign[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::bitofsign[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::bitofsign[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::bitofsign[bool()](T()), T);

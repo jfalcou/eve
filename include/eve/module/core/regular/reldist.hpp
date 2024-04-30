@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/dist.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
+ template<typename Options>
+  struct reldist_t : elementwise_callable<reldist_t, Options, saturated_option,  pedantic_option>
+  {
+    template<value T,  value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
+    { return EVE_DISPATCH_CALL(a, b); }
+
+    EVE_CALLABLE_OBJECT(reldist_t, reldist_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -47,7 +63,14 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(reldist_, reldist);
-}
+  inline constexpr auto reldist = functor<reldist_t>;
 
-#include <eve/module/core/regular/impl/reldist.hpp>
+  namespace detail
+  {
+    template<value T, callable_options O>
+    constexpr T reldist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    {
+      return dist(a, b)/max(abs(a), abs(b), one(as(a)));
+    }
+  }
+}
