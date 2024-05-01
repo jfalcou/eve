@@ -15,74 +15,79 @@
 
 namespace eve
 {
+
+//   template <typename T> using as_int = as_element<as_integer_t<T, signed>>;
+//   template <typename T> using as_uint = as_element<as_integer_t<T, unsigned>>;
+//   template <typename T> using as_float =  as_element<as_floating_point_t<T>>;
+
 //================================================================================================
 // Function decorator based on concrete type
 //================================================================================================
-template<scalar_value T> struct convert_to_
-{
-  using value_type = element_type_t<T>;
-
-  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
-
-  template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const& val) const noexcept
+  template<scalar_value T> struct convert_to_
   {
-    return convert(val, as<T>());
-  }
+    using value_type = element_type_t<T>;
 
-  template<typename Function>
-  EVE_FORCEINLINE constexpr auto operator()(Function const& f) const noexcept
-  {
-    return [f]<typename... Ts>(Ts&&...args)
+    template<typename D> static constexpr auto combine(D const&) noexcept = delete;
+
+    template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const& val) const noexcept
     {
-      if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+      return convert(val, as<T>());
+    }
+
+    template<typename Function>
+    EVE_FORCEINLINE constexpr auto operator()(Function const& f) const noexcept
+    {
+      return [f]<typename... Ts>(Ts&&...args)
       {
-        return f(decorated<convert_to_<T>()>(), EVE_FWD(args)...);
-      }
-      else { return convert(f(EVE_FWD(args)...), as<T>()); }
-    };
-  }
-};
+        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+        {
+          return f(decorated<convert_to_<T>()>(), EVE_FWD(args)...);
+        }
+        else { return convert(f(EVE_FWD(args)...), as<T>()); }
+      };
+    }
+  };
 
 //================================================================================================
 // Function decorator based on type transformation
 //================================================================================================
-template<template<class...> class Meta, bool isDirect = true> struct convert_by_
-{
-  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
-
-  template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const& val) const noexcept
+  template<template<class...> class Meta, bool isDirect = true> struct convert_by_
   {
-    using value_type = typename Meta<element_type_t<Val>>::type;
-    return convert(val, as<value_type>());
-  }
+    template<typename D> static constexpr auto combine(D const&) noexcept = delete;
 
-  template<typename Function>
-  EVE_FORCEINLINE constexpr auto operator()(Function const& f) const noexcept
-  {
-    return [f]<typename T, typename... Ts>(T&& arg0, Ts&&...args)
+    template<value Val> constexpr EVE_FORCEINLINE auto operator()(Val const& val) const noexcept
     {
-      using value_type = typename Meta<element_type_t<std::remove_cvref_t<T>>>::type;
+      using value_type = typename Meta<element_type_t<Val>>::type;
+      return convert(val, as<value_type>());
+    }
 
-      if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
+    template<typename Function>
+    EVE_FORCEINLINE constexpr auto operator()(Function const& f) const noexcept
+    {
+      return [f]<typename T, typename... Ts>(T&& arg0, Ts&&...args)
       {
-        if constexpr( isDirect )
+        using value_type = typename Meta<element_type_t<std::remove_cvref_t<T>>>::type;
+
+        if constexpr( supports_optimized_conversion<typename Function::tag_type>::value )
         {
-          return f(decorated<convert_to_<value_type>()>(), EVE_FWD(arg0), EVE_FWD(args)...);
+          if constexpr( isDirect )
+          {
+            return f(decorated<convert_to_<value_type>()>(), EVE_FWD(arg0), EVE_FWD(args)...);
+          }
+          else
+          {
+            return f(decorated<convert_by_<Meta, isDirect>()>(), EVE_FWD(arg0), EVE_FWD(args)...);
+          }
         }
-        else
-        {
-          return f(decorated<convert_by_<Meta, isDirect>()>(), EVE_FWD(arg0), EVE_FWD(args)...);
-        }
-      }
-      else { return convert(f(EVE_FWD(arg0), EVE_FWD(args)...), as<value_type>()); }
-    };
-  }
-};
+        else { return convert(f(EVE_FWD(arg0), EVE_FWD(args)...), as<value_type>()); }
+      };
+    }
+  };
 
 //================================================================================================
 // Function decorators for conversion
 //================================================================================================
-template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
+  template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -127,7 +132,7 @@ template<scalar_value T> using converter_type = decorated<convert_to_<T>()>;
 //!  @godbolt{doc/core/float32.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<float> const float32 = {};
+  inline constexpr converter_type<float> const float32 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -172,7 +177,7 @@ inline constexpr converter_type<float> const float32 = {};
 //!  @godbolt{doc/core/float64.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<double> const float64 = {};
+  inline constexpr converter_type<double> const float64 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -218,7 +223,7 @@ inline constexpr converter_type<double> const float64 = {};
 //!  @godbolt{doc/core/uint8.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::uint8_t> const uint8 = {};
+  inline constexpr converter_type<std::uint8_t> const uint8 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -264,7 +269,7 @@ inline constexpr converter_type<std::uint8_t> const uint8 = {};
 //!  @godbolt{doc/core/uint16.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::uint16_t> const uint16 = {};
+  inline constexpr converter_type<std::uint16_t> const uint16 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -310,7 +315,7 @@ inline constexpr converter_type<std::uint16_t> const uint16 = {};
 //!  @godbolt{doc/core/uint32.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::uint32_t> const uint32 = {};
+  inline constexpr converter_type<std::uint32_t> const uint32 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -356,7 +361,7 @@ inline constexpr converter_type<std::uint32_t> const uint32 = {};
 //!  @godbolt{doc/core/uint64.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::uint64_t> const uint64 = {};
+  inline constexpr converter_type<std::uint64_t> const uint64 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -402,7 +407,7 @@ inline constexpr converter_type<std::uint64_t> const uint64 = {};
 //!  @godbolt{doc/core/int8.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::int8_t> const int8 = {};
+  inline constexpr converter_type<std::int8_t> const int8 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -448,7 +453,7 @@ inline constexpr converter_type<std::int8_t> const int8 = {};
 //!  @godbolt{doc/core/int16.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::int16_t> const int16 = {};
+  inline constexpr converter_type<std::int16_t> const int16 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -494,7 +499,7 @@ inline constexpr converter_type<std::int16_t> const int16 = {};
 //!  @godbolt{doc/core/int32.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::int32_t> const int32 = {};
+  inline constexpr converter_type<std::int32_t> const int32 = {};
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -540,11 +545,11 @@ inline constexpr converter_type<std::int32_t> const int32 = {};
 //!  @godbolt{doc/core/int64.cpp}
 //!  @}
 //================================================================================================
-inline constexpr converter_type<std::int64_t> const int64 = {};
+  inline constexpr converter_type<std::int64_t> const int64 = {};
 
-template<typename T> inline constexpr converter_type<element_type_t<T>> const to_ = {};
+  template<typename T> inline constexpr converter_type<element_type_t<T>> const to_ = {};
 
-using int_converter = decorated<convert_by_<as_integer>()>;
+  using int_converter = decorated<convert_by_<as_integer>()>;
 
 //================================================================================================
 //! @addtogroup core_conversions
@@ -592,9 +597,9 @@ using int_converter = decorated<convert_by_<as_integer>()>;
 //!  @godbolt{doc/core/int_.cpp}
 //!  @}
 //================================================================================================
-inline constexpr int_converter const int_ = {};
+  inline constexpr int_converter const int_ = {};
 
-using uint_converter = decorated<convert_by_<as_uinteger>()>;
+  using uint_converter = decorated<convert_by_<as_uinteger>()>;
 //================================================================================================
 //! @addtogroup core_conversions
 //! @{
@@ -641,9 +646,9 @@ using uint_converter = decorated<convert_by_<as_uinteger>()>;
 //!  @godbolt{doc/core/int_.cpp}
 //!  @}
 //================================================================================================
-inline constexpr uint_converter const uint_ = {};
+  inline constexpr uint_converter const uint_ = {};
 
-using floating_converter = decorated<convert_by_<as_floating_point>()>;
+  using floating_converter = decorated<convert_by_<as_floating_point>()>;
 //================================================================================================
 //! @addtogroup core_conversions
 //! @{
@@ -690,9 +695,9 @@ using floating_converter = decorated<convert_by_<as_floating_point>()>;
 //!  @godbolt{doc/core/floating_.cpp}
 //!  @}
 //================================================================================================
-inline constexpr floating_converter const floating_ = {};
+  inline constexpr floating_converter const floating_ = {};
 
-using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
+  using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
 //================================================================================================
 //! @addtogroup core_conversions
 //! @{
@@ -737,5 +742,5 @@ using upgrade_converter = decorated<convert_by_<detail::upgrade, false>()>;
 //!  @godbolt{doc/core/upgrade.cpp}
 //!  @}
 //================================================================================================
-inline constexpr upgrade_converter const upgrade_ = {};
+  inline constexpr upgrade_converter const upgrade_ = {};
 }

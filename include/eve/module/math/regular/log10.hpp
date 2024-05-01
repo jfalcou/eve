@@ -151,7 +151,7 @@ namespace eve
             T t2     = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
             T R      = t2 + t1;
             T hfsq   = half(eve::as<T>()) * sqr(f);
-            T dk     = float32(k);
+            T dk     = convert(k, as<float>());
             T hibits = f - hfsq;
             hibits   = bit_and(hibits, uiT(0xfffff000ul));
             T lobits = fma(s, hfsq + R, f - hibits - hfsq);

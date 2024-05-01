@@ -161,7 +161,7 @@ namespace eve
                           , z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f))
                           );
               T hfsq = half(eve::as<T>()) * sqr(f);
-              T dk   = float32(k);
+              T dk   = convert(k, as<float>());
               T r    = fma(dk, Log_2hi, ((fma(s, (hfsq + R), fma(dk, Log_2lo, c)) - hfsq) + f));
               T zz;
               if constexpr( eve::platform::supports_infinites )

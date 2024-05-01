@@ -115,7 +115,7 @@ namespace detail
         T t    = fnma(r1, hx, T(3));
         T e    = hxs * ((r1 - t) / (T(6) - x * t));
         e      = fms(x, e, hxs);
-        i_t ik = int_(k);
+        i_t ik = convert(k, as_int<T>()); //int_(k);
         T   two2mk = bit_cast((maxexponent(eve::as<T>()) - ik) << nbmantissabits(eve::as<elt_t>()), as<T>());
         k = oneminus(two2mk) - (e - x);
         k = ldexp[o](k, ik);
@@ -133,7 +133,7 @@ namespace detail
         T e    = hxs * ((r1 - t) / (T(6) - x * t));
         T c    = (hi - x) - lo;
         e      = (x * (e - c) - c) - hxs;
-        i_t ik = int_(k);
+        i_t ik = convert(k, as_int<T>());//int_(k);
         T   two2mk = bit_cast((maxexponent(eve::as<T>()) - ik) << nbmantissabits(eve::as<T>()), as<T>());
         T ct1 = oneminus(two2mk) - (e - x);
         T ct2 = inc((x - (e + two2mk)));
