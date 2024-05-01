@@ -115,7 +115,7 @@ namespace detail
         T t    = fnma(r1, hx, T(3));
         T e    = hxs * ((r1 - t) / (T(6) - x * t));
         e      = fms(x, e, hxs);
-        i_t ik = convert(k, as_int<T>()); //int_(k);
+        i_t ik = convert(k, to_int<T>());
         T   two2mk = bit_cast((maxexponent(eve::as<T>()) - ik) << nbmantissabits(eve::as<elt_t>()), as<T>());
         k = oneminus(two2mk) - (e - x);
         k = ldexp[o](k, ik);
