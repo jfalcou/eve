@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/as_element.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
