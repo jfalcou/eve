@@ -223,7 +223,7 @@ namespace eve
                                           , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
             T R    = t2 + t1;
             T hfsq = half(eve::as<T>()) * sqr(f);
-            T dk   = float64(k);
+            T dk   = convert(k, as<double>()); 
             //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
             T hi     = f - hfsq;
             hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));

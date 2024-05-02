@@ -116,14 +116,14 @@ namespace eve
     constexpr EVE_FORCEINLINE auto
     prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
-      return convert(prime_ceil(uint32(n)), target);
+      return convert(prime_ceil(convert(n, as<uint32_t>())), target);
     }
 
     template<unsigned_value T,  floating_scalar_value U, callable_options O>
     constexpr EVE_FORCEINLINE auto
     prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
-      auto r = convert(prime_ceil(uint32(n)), target);
+      auto r = convert(prime_ceil(convert(n, as<uint32_t>())), target);
       return if_else(is_eqz(r), allbits, r);
     }
   }

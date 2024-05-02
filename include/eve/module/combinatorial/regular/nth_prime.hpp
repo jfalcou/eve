@@ -1273,7 +1273,7 @@ inline constexpr auto nth_prime = functor<nth_prime_t>;
       };
       // clang-format on
 
-      auto n = uint16(inc(nn));
+      auto n = convert(inc(nn), as<uint16_t>());
       if constexpr( scalar_value<T> )
       {
         if constexpr( sizeof(T) == 1 ) { return uint8(a1[n > 54u ? 0 : n]); }
@@ -1292,12 +1292,12 @@ inline constexpr auto nth_prime = functor<nth_prime_t>;
         if constexpr( sizeof(elt_t) == 1 )
         {
           tmp = if_else(n > 54u, zero, tmp);
-          return uint8(tmp);
+          return convert(tmp, as<uint8_t>());
         }
         else if constexpr( sizeof(elt_t) == 2 )
         {
           tmp = if_else(n > 6542u, zero, tmp);
-          return uint16(tmp);
+          return convert(tmp, as<uint16_t>());
         }
         else { return add[convert(n, as<elt_t>()) > 6542u](convert(tmp, as<elt_t>()), T(0xffffu)); }
       }
@@ -1314,7 +1314,7 @@ inline constexpr auto nth_prime = functor<nth_prime_t>;
     constexpr EVE_FORCEINLINE auto
     nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
-      auto r = convert(nth_prime(uint32(n)), target);
+      auto r = convert(nth_prime(convert(n, as<uint32_t>())), target);
       return if_else(is_eqz(r), allbits, r);
     }
   }

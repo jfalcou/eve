@@ -44,7 +44,7 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x   = float64(xx);
+      auto x   = convert(xx, as<double>());
       auto n   = nearest(x * two_o_pi(eve::as<double>()));
       auto dxr = fma(n, -pio_2(eve::as<double>()), x);
       return  eve::zip(quadrant(convert(n, as<float>())), convert(dxr, as<float>()), T(0.0f));
@@ -79,20 +79,20 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x   = float64(xx);
+      auto x   = convert(xx, as<double>());
       auto xn  = nearest(x * two_o_pi(eve::as<double>()));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
-      auto n   = float32(quadrant(xn));
+      auto n   = convert(quadrant(xn), as<float>());
       auto da  = xn1 * pp3;
       auto t   = y - da;
       da       = (y - t) - da;
       da       = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a   = t + da;
       da       = (t - a) + da;
-      auto fa  = float32(a);
-      auto dfa = float32((a - float64(fa)) + da);
+      auto fa  = convert(a, as<float>());
+      auto dfa = convert((a - convert(fa, as<double>())) + da, as<float>());
       if( eve::any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
       {
         auto [n1, fa1, dfa1] = rempio2_half_circle(fa);
@@ -305,15 +305,15 @@ namespace eve::detail
       auto xi                     = bit_cast(xx, as<ui_t>());
       auto index                  = ((xi >> 26) & 15);
       auto arr0                   = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index);
-      auto arr4 = uint64(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 4));
-      auto arr8 = uint64(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 8));
+      auto arr4 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 4), as<uint64_t>());
+      auto arr8 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 8), as<uint64_t>());
 
       auto shift = ((xi >> 23) & 7);
       auto xii   = bit_or(bit_and(xi, 0xffffff), 0x800000);
       xi         = (xii << shift);
 
-      auto xi64 = uint64(xi);
-      auto res0 = uint64(xi * arr0);
+      auto xi64 = convert(xi, as<uint64_t>());
+      auto res0 = convert(xi * arr0, as<uint64_t>());
 
       wui_t res1 = xi64 * arr4;
       wui_t res2 = xi64 * arr8;
@@ -323,11 +323,11 @@ namespace eve::detail
       auto n    = ((res0 + (one(as(res0)) << 61)) >> 62);
       res0      = res0 - (n << 62); // -= n << 62;
       auto tmp  = bit_cast(res0, as<i_t>());
-      auto xx1  = float64(tmp);
-      auto bn   = if_else(xlerfl, sn, float32(n));
+      auto xx1  = convert(tmp,  as<double>());
+      auto bn   = if_else(xlerfl, sn, convert(n, as<float>()));
       auto z    = xx1 * pi63;
-      auto sr1  = float32(z);
-      auto dsr1 = float32(z - float64(sr1));
+      auto sr1  = convert(z, as<float>());
+      auto dsr1 = convert(z - convert(sr1,  as<double>()), as<float>());
       auto br   = if_else(xlerfl, sr, sr1);
       auto dbr  = if_else(xlerfl, dsr, dsr1);
       br        = if_else(is_not_finite(xx), eve::allbits, br);

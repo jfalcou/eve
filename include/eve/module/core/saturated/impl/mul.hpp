@@ -117,9 +117,9 @@ mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
       if constexpr( sizeof(elt_t) <= 4 )
       {
         using sup_t = upgrade_t<elt_t>;
-        auto z      = mul(to_<sup_t>(a), to_<sup_t>(b));
+        auto z      = mul(convert(a, as<sup_t>()), convert(b, as<sup_t>()));
         auto s      = saturate(z, as<elt_t>());
-        return to_<elt_t>(s);
+        return convert(s, as<elt_t>());
       }
       else
       {

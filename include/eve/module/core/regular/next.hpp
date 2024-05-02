@@ -16,7 +16,6 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
@@ -175,8 +174,8 @@ namespace eve
         }
         else
         {
-          using i_t = as_integer_t<T>;
-          return bitfloating(bitinteger(a) + to_<i_t>(n));
+          using i_t =as_integer_t<element_type_t<T>>;
+          return bitfloating(bitinteger(a) + convert(n, as<i_t>()));
         }
       }
       else
@@ -188,7 +187,7 @@ namespace eve
         }
         else
         {
-          return a+to_<T>(n);
+          return a+convert(n, as<element_type_t<T>>());
         }
       }
     }

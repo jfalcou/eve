@@ -89,7 +89,7 @@ inline constexpr auto fibonacci = functor<fibonacci_t>;
 
       if constexpr(std::same_as<T, U>)
       {
-        auto nm1 = to_<eli_t>((n));
+        auto nm1 = convert(n, uint_from<eli_t>());
         auto c2  = fms(gold, a, b) * oneosqrt5;
         auto c1  = a - c2;
         auto f   = fma(c1, eve::pow(gold, nm1), c2 * eve::pow(goldbar, nm1));

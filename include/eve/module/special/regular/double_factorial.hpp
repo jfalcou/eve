@@ -82,7 +82,7 @@ inline constexpr auto double_factorial = functor<double_factorial_t>;
         else
         {
           constexpr double invsqrtpi = 0.564189583547756286948079451560772585844050629329;
-          auto             r1        = tgamma(fma(float64(i), 0.5, 1.0)) * invsqrtpi;
+          auto             r1        = tgamma(fma(convert(i, as<double>()), 0.5, 1.0)) * invsqrtpi;
           return if_else(test, r, ldexp(r1, inc(i) >> 1));
         }
       };
@@ -92,7 +92,7 @@ inline constexpr auto double_factorial = functor<double_factorial_t>;
         auto r = factorial(n);
         return ldexp(r, n);
       };
-      auto i       = uint64(i0);
+      auto i       =  convert(i0, as<uint64_t>());
       auto r       = inf(as<decltype(factorial(i))>()); // perhaps 0 should be fine
       auto notdone = i <= 300;
       notdone      = next_interval(odd, notdone, is_odd(i), r, i);

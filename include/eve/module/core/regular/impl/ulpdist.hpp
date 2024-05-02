@@ -53,8 +53,9 @@ requires has_native_abi_v<T>
                    eve::zero,
                    if_else(is_unordered(a, b)
                           , eve::inf(as(a))
-                          , to_<T>(nb_values(a, b)))
-                       * half(eve::as(a)));
+                          , convert(nb_values(a, b), as<element_type_t<T>>()))
+                   * half(eve::as(a))
+                  );
   }
 }
 }
