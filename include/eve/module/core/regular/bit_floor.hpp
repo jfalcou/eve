@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-//#include <eve/as_element.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/zero.hpp>
@@ -102,7 +101,7 @@ namespace eve
       }
       else if constexpr( signed_integral_value<T> )
       {
-        auto uz = bit_floor(convert(v, to_uint<T>()));
+        auto uz = bit_floor(convert(v, uint_from<T>()));
         return if_else(is_ltz(v), zero, to_<T>(uz));
       }
       else
