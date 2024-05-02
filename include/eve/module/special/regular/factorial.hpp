@@ -81,7 +81,7 @@ inline constexpr auto factorial = functor<factorial_t>;
       if constexpr(signed_integral_value<T>)
       {
         EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-        return factorial(convert(n, as_uint<T>()));
+        return factorial(convert(n, uint_from<T>()));
       }
       else
       {
@@ -273,7 +273,7 @@ inline constexpr auto factorial = functor<factorial_t>;
       using elt_t = element_type_t<T>;
       EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
       EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-      auto r = factorial(convert(n, as_uint<T>()));
+      auto r = factorial(convert(n, uint_from<T>()));
       if constexpr( std::same_as<elt_t, double> ) return r;
       else return convert(r, as<float>());
     }
