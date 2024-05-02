@@ -16,6 +16,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/dist.hpp>
+#include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/traits/as_logical.hpp>
