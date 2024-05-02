@@ -16,10 +16,6 @@
 namespace eve
 {
 
-//   template <typename T> using as_int = as_element<as_integer_t<T, signed>>;
-//   template <typename T> using as_uint = as_element<as_integer_t<T, unsigned>>;
-//   template <typename T> using as_float =  as_element<as_floating_point_t<T>>;
-
 //================================================================================================
 // Function decorator based on concrete type
 //================================================================================================

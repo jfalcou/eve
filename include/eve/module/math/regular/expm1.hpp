@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/as_element.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
@@ -116,7 +115,7 @@ namespace detail
         T t    = fnma(r1, hx, T(3));
         T e    = hxs * ((r1 - t) / (T(6) - x * t));
         e      = fms(x, e, hxs);
-        i_t ik = convert(k, to_int<T>());
+        i_t ik = convert(k, int_from<T>()); //as_element<as_integer_t<T, signed>>()); //to_int<T>());
         T   two2mk = bit_cast((maxexponent(eve::as<T>()) - ik) << nbmantissabits(eve::as<elt_t>()), as<T>());
         k = oneminus(two2mk) - (e - x);
         k = ldexp[o](k, ik);
@@ -134,7 +133,7 @@ namespace detail
         T e    = hxs * ((r1 - t) / (T(6) - x * t));
         T c    = (hi - x) - lo;
         e      = (x * (e - c) - c) - hxs;
-        i_t ik = convert(k, to_int<T>());
+        i_t ik = convert(k, int_from<T>()); //as_element<as_integer_t<T, signed>>());//to_int<T>());
         T   two2mk = bit_cast((maxexponent(eve::as<T>()) - ik) << nbmantissabits(eve::as<T>()), as<T>());
         T ct1 = oneminus(two2mk) - (e - x);
         T ct2 = inc((x - (e + two2mk)));
