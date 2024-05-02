@@ -75,13 +75,10 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    negatenz_(EVE_REQUIRES(cpu_), O const &o, T const &aa,  U const &bb) noexcept
+    negatenz_(EVE_REQUIRES(cpu_), O const &o, T const &a,  T const &b) noexcept
     {
-      using r_t = common_value_t<T, U>;
-      r_t a = r_t(aa);
-      r_t b = r_t(bb);
       if constexpr( signed_value<T> )
         return a * signnz[o](b);
       else
