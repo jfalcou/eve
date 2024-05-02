@@ -18,32 +18,27 @@
 
 namespace eve::detail
 {
-  template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T, U>
-  average_(EVE_REQUIRES(cpu_), O const &, T const &aa,  U const &bb) noexcept
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  average_(EVE_REQUIRES(cpu_), O const &, T const &a,  T const &b) noexcept
   {
-    using r_t =  common_value_t<T, U>;
-    auto a = r_t(aa);
-    auto b = r_t(bb);
-    if constexpr(integral_value <r_t>)
+    if constexpr(integral_value <T>)
     {
       if constexpr(O::contains(upward2))
-      {
         return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
-      }
       else
         return (a & b) + ((a ^ b) >> 1);   //compute floor( (x+y)/2 )
     }
     else
     {
-      const auto h = eve::half(eve::as<r_t>());
+      const auto h = eve::half(eve::as<T>());
       return fma(a, h, b*h);
     }
   }
 
-  template<typename T0, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
-  average_(EVE_REQUIRES(cpu_), O const &, T0 const &r0, Ts const &... args) noexcept
+  template<typename T, std::same_as<T>... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr T
+  average_(EVE_REQUIRES(cpu_), O const &, T const &r0, Ts const &... args) noexcept
   {
     if constexpr(sizeof...(Ts) == 0)
       return r0;
@@ -55,11 +50,10 @@ namespace eve::detail
       }
       else
       {
-        using r_t   = common_value_t<T0, Ts...>;
-        r_t invn  = rec(r_t(sizeof...(args) + 1u));
-        r_t   that(r0 * invn);
+        T invn  = rec(T(sizeof...(args) + 1u));
+        T that(r0 * invn);
         auto  next = [invn](auto avg, auto x) { return fma(x, invn, avg); };
-        ((that = next(that, r_t(args))), ...);
+        ((that = next(that, args)), ...);
         return that;
       }
     }
