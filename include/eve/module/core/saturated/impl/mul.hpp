@@ -20,7 +20,6 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>

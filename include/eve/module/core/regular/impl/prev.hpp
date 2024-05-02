@@ -11,7 +11,6 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/dec.hpp>
 
 namespace eve::detail
