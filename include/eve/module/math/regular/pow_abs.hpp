@@ -146,7 +146,7 @@ namespace eve
             }
             return result;
           };
-          z *= russian(ax, convert(yi, uint_from<T>());
+          z *= russian(ax, convert(yi, uint_from<T>()));
           z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
           z = if_else(iseqzx && ylt0, zero, z);
           z = if_else(is_infinite(ax), inf(as(x)), z);
