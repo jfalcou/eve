@@ -140,14 +140,14 @@ inline constexpr auto gcd = functor<gcd_t>;
             if constexpr( sizeof(elt_t) == 4 )
             {
               auto r = gcd[raw](convert(a, as<double>()), convert(b, as<double>()));
-              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>()); //as_element<as_integer_t<T, signed>>());//to_int<T>());
-              else                                    return convert(r, uint_from<T>()); //as_element<as_integer_t<T, unsigned>>());//to_uint<T>());
+              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
+              else                                    return convert(r, uint_from<T>());
             }
             else if constexpr( sizeof(elt_t) <= 2 )
             {
               auto r = gcd[raw](convert(a, as<float>()), convert(b, as<float>()));
-              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());//as_element<as_integer_t<T, signed>>());//to_int<T>());
-              else                                    return convert(r, uint_from<T>());//as_element<as_integer_t<T, unsigned>>());//to_uint<T>());
+              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
+              else                                    return convert(r, uint_from<T>());
             }
           }
         }
