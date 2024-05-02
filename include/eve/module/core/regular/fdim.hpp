@@ -77,9 +77,9 @@ namespace eve
   namespace detail
   {
 
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
-    fdim_(EVE_REQUIRES(cpu_), O const &, T a,  U b) noexcept
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    fdim_(EVE_REQUIRES(cpu_), O const &, T a, T b) noexcept
     {
       return if_else(a >= b, sub(a, b), eve::zero);
     }
