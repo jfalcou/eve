@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
@@ -21,7 +23,7 @@
 namespace eve
 {
  template<typename Options>
-  struct ulpdist_t : elementwise_callable<ulpdist_t, Options, saturated_option,  pedantic_option>
+  struct ulpdist_t : elementwise_callable<ulpdist_t, Options>
   {
     template<value T,  value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
@@ -75,23 +77,20 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    constexpr T ulpdist_(EVE_REQUIRES(cpu_), O const&, T aa, U bb)
+    template<typename T, callable_options O>
+    constexpr T ulpdist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      using r_t =  common_value_t<T, U>;
-      r_t a = r_t(aa);
-      r_t b = r_t(bb);
-      if constexpr( integral_value<r_t> )
+      if constexpr( integral_value<T> )
       {
         return dist(a, b);
       }
-      else if constexpr( scalar_value<r_t> )
+      else if constexpr( scalar_value<T> )
       {
         if( is_equal[numeric](a, b) ) return T(0);
         if( is_unordered(a, b) ) return inf(eve::as<T>());
-        return nb_values(a, b) * half(eve::as(a));
+        return nb_values(a, b)*half(eve::as(a));
       }
-      else if constexpr( simd_value<r_t> )
+      else if constexpr( simd_value<T> )
       {
         auto inen = is_not_equal[numeric](a, b);
         return half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+to_<T>(nb_values(a, b)));
