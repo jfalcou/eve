@@ -54,7 +54,7 @@ TTS_CASE_WITH("Check behavior of rotr on wide",
   a0        = eve::one(eve::as(a0));
   a1        = eve::iota(eve::as(a0));
   a1        = a1 % (sizeof(v_t) * 8);
-  auto ua1  = eve::int_(a1);
+  auto ua1  =  eve::convert(a1, eve::as<eve::as_integer_t<eve::element_type_t<T>, signed>>());
   TTS_EQUAL(rotr(a0, a1), map([](auto e, auto f) -> v_t { return std::rotr(e, f); }, a0, a1));
   TTS_EQUAL(rotr(a0, ua1), map([](auto e, auto f) -> v_t { return std::rotr(e, f); }, a0, ua1));
 };
