@@ -24,7 +24,7 @@ TTS_CASE_TPL("Random check for eve::bit_floor", eve::test::simd::all_types)
   }
    else  if constexpr(eve::signed_value<e_t>)
   {
-    auto std_bit_floor = [](auto e) -> e_t { return (e <1 ? 0 : std::bit_floor(eve::uint_(e))); };
+    auto std_bit_floor = [](auto e) -> e_t { return (e <1 ? 0 : std::bit_floor((unsigned int)(e)); };
     EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_bit_floor, eve::bit_floor );
   }
   else
