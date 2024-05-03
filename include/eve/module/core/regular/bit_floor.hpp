@@ -102,7 +102,7 @@ namespace eve
       else if constexpr( signed_integral_value<T> )
       {
         auto uz = bit_floor(convert(v, uint_from<T>()));
-        return if_else(is_ltz(v), zero, to_<T>(uz));
+        return if_else(is_ltz(v), zero, convert(uz, as<element_type_t<T>>()));
       }
       else
       {

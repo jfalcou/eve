@@ -39,7 +39,7 @@ next_(EVE_SUPPORTS(cpu_), T const& a, U const& n) noexcept
     if constexpr( floating_value<T> )
     {
       using i_t = as_integer_t<T>;
-      return bitfloating(bitinteger(a) + to_<i_t>(n));
+      return bitfloating(bitinteger(a) + convert(as<elementype_t<i_t>>());
     }
     else if constexpr( integral_value<T> ) { return to_<T>(a + to_<T>(n)); }
   }

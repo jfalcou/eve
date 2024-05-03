@@ -154,7 +154,7 @@ namespace eve
         if constexpr(O::contains(pedantic2))
         {
           using i_t = as_integer_t<T>;
-          auto pz   = dec(bitinteger(a) + to_<i_t>(n));
+          auto pz   = dec(bitinteger(a) + convert(n, as<element_type_t<i_t>>(n)));
           auto z    = bitfloating(inc(pz));
           auto test = is_negative(a) && is_positive(z);
           if constexpr( scalar_value<T> && scalar_value<N> )

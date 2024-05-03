@@ -38,10 +38,10 @@ prev_(EVE_SUPPORTS(cpu_), T const& a, U const& n) noexcept
   {
     if constexpr( floating_value<T> )
     {
-      using i_t = as_integer_t<T>;
-      return bitfloating(bitinteger(a) - to_<i_t>(n));
+      using i_t = as_integer_t<element_type-t<T>>;
+      return bitfloating(bitinteger(a) - convert(n, as<i_t>(n));
     }
-    else if constexpr( integral_value<T> ) { return to_<T>(a - to_<T>(n)); }
+      else if constexpr( integral_value<T> ) { return (a - convert(n, <as<element_type<T>>()); }
   }
   else { return apply_over(prev, a, n); }
 }
