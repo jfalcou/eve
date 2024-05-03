@@ -1276,7 +1276,7 @@ inline constexpr auto nth_prime = functor<nth_prime_t>;
       auto n = convert(inc(nn), as<uint16_t>());
       if constexpr( scalar_value<T> )
       {
-        if constexpr( sizeof(T) == 1 ) { return uint8(a1[n > 54u ? 0 : n]); }
+        if constexpr( sizeof(T) == 1 ) { return convert(a1[n > 54u ? 0 : n], as<int8_t>()); }
         else if constexpr( sizeof(T) == 2 ) { return a1[n > 6542u ? 0 : n]; }
         else
         {
