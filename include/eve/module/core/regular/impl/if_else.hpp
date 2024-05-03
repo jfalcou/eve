@@ -129,14 +129,16 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& u, Constant const& v) noexc
             Constant,
             callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
     {
-      return bit_and(u, bit_mask(mask));
+      if constexpr(logical_value<U>)  return to_logical(bit_and(u.mask(), bit_mask(mask)));
+      else                            return bit_and(u, bit_mask(mask));
     }
     else if constexpr(
         std::same_as<
             Constant,
             callable_allbits_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
     {
-      return bit_ornot(u, bit_mask(mask));
+      if constexpr(logical_value<U>)  return to_logical(bit_ornot(u.mask(), bit_mask(mask)));
+      else                            return bit_ornot(u, bit_mask(mask));
     }
     else if constexpr( integral_value<U> )
     {
@@ -182,7 +184,8 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, Constant const& v, U const& u) noexc
             callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
     // valmin is zero in this case
     {
-      return bit_andnot(u, bit_mask(mask));
+      if constexpr(logical_value<U>)  return to_logical(bit_andnot(u.mask(), bit_mask(mask)));
+      else                            return bit_andnot(u, bit_mask(mask));
     }
     else if constexpr(
         std::same_as<
@@ -190,7 +193,8 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, Constant const& v, U const& u) noexc
             callable_allbits_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
     // valmax is allbits in this case
     {
-      return bit_or(u, bit_mask(mask));
+      if constexpr(logical_value<U>)  return to_logical(bit_or(u.mask(), bit_mask(mask)));
+      else                            return bit_or(u, bit_mask(mask));
     }
     else if constexpr( integral_value<U> )
     {
