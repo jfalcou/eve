@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
-#include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/inc.hpp>
 
 namespace eve

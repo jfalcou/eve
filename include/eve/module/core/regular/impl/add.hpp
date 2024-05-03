@@ -7,63 +7,50 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/conditional.hpp>
-#include <eve/traits/common_value.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_mask.hpp>
+#include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/constant/valmin.hpp>
 
 namespace eve::detail
 {
-//================================================================================================
-// Masked case
-//================================================================================================
-template<conditional_expr C, value U, value... Vs>
-EVE_FORCEINLINE auto
-add_(EVE_SUPPORTS(cpu_),
-     C const& cond,
-     U    t,
-     Vs... fs) noexcept
-{
-  return mask_op(cond, eve::add, t, fs...);
-}
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
+  {
+    if constexpr(O::contains(saturated2) && integral_value<T>)
+    {
+      if constexpr( signed_integral_value<T> )
+      {
+        auto test = is_ltz(b);
+        auto pos  = min(sub(valmax(as(a)), b), a);
+        auto neg  = max(sub(valmin(as(a)), b), a);
+        return add(b, if_else(test, neg, pos));
+      }
+      else
+      {
+        // Triggers conditional MOV that directly read the flag register
+        T r = a + b;
+        return bit_or(r, bit_mask(is_less(r, a)));
+      }
+    }
+    else
+    {
+      return a += b;
+    }
+  }
 
-//================================================================================================
-// N parameters
-//================================================================================================
-template<decorator D, value T0, value... Ts>
-auto
-add_(EVE_SUPPORTS(cpu_), D const& d, T0 a0, Ts... args) noexcept
-{
-  common_value_t<T0, Ts...> that(a0);
-  ((that = d(add)(that, args)), ...);
-  return that;
-}
-
-template<value T0, value... Ts>
-auto
-add_(EVE_SUPPORTS(cpu_), T0 a0, Ts... args) noexcept
--> common_value_t<T0, Ts...>
-{
-  auto that((a0 + ... + args));
-  return that;
-}
-
-//================================================================================================
-// tuples
-//================================================================================================
-template<kumi::non_empty_product_type Ts>
-auto
-add_(EVE_SUPPORTS(cpu_), Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return kumi::apply( [&](auto... m) { return add(m...); }, tup);
-}
-
-template<decorator D, kumi::non_empty_product_type Ts>
-auto
-add_(EVE_SUPPORTS(cpu_), D const & d, Ts tup) noexcept
-{
-  if constexpr( kumi::size_v<Ts> == 1) return get<0>(tup);
-  else return kumi::apply( [&](auto... m) { return d(add)(m...); }, tup);
-}
-
+  template<typename T, std::same_as<T>... Ts, callable_options O>
+  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  {
+    r0   = add[o](r0,r1);
+    ((r0 = add[o](r0,rs)),...);
+    return r0;
+  }
 }

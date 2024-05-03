@@ -11,7 +11,7 @@
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
-#include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/regular/add.hpp>
 
 namespace eve::detail
 {
