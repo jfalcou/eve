@@ -156,7 +156,7 @@ inline constexpr auto exp_int = functor<exp_int_t>;
               t   = if_else(is_nez(ans), abs(yk / ans), one);
             }
             while( eve::any(t > epso_2(as(x))) );
-            auto in = int_(n);
+            auto in = convert(n, int_from<T>());
             return add[eqzx]((eve::pow(z, dec(in)) * psi / tgamma(n)) - ans, inf(as(x)));
           };
           auto xlt1 = x < 1;

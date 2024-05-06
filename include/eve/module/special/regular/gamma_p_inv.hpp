@@ -79,7 +79,10 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
       r_t p(pp);
       r_t k(kk);
 
-      if constexpr( std::is_same_v<element_type_t<r_t>, float> ) { return float32(gamma_p_inv(float64(p), float64(k))); }
+      if constexpr( std::is_same_v<element_type_t<r_t>, float> )
+      {
+        return convert(gamma_p_inv(convert(p, as<double>()), convert(k, as<double>())), as<float>());
+      }
       p                 = if_else(is_ltz(p) || p > one(as(p)), allbits, p);
       auto       iseqzp = is_eqz(p);
       auto       iseq1p = p == one(as(p));

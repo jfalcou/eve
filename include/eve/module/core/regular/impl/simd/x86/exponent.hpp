@@ -29,12 +29,12 @@ namespace eve::detail
     using r_t    = wide<T, N>;
     auto compute = [](auto a0){
       constexpr auto c = categorize<r_t>();
-      if      constexpr( c == category::float64x8 ) return int_(r_t(_mm512_getexp_pd(a0)));
-      else if constexpr( c == category::float32x16) return int_(r_t(_mm512_getexp_ps(a0)));
-      else if constexpr( c == category::float64x4 ) return int_(r_t(_mm256_getexp_pd(a0)));
-      else if constexpr( c == category::float32x8 ) return int_(r_t(_mm256_getexp_ps(a0)));
-      else if constexpr( c == category::float64x2 ) return int_(r_t(_mm_getexp_pd(a0)));
-      else if constexpr( c == category::float32x4 ) return int_(r_t(_mm_getexp_ps(a0)));
+      if      constexpr( c == category::float64x8 ) return convert(r_t(_mm512_getexp_pd(a0)), int_from<T>());
+      else if constexpr( c == category::float32x16) return convert(r_t(_mm512_getexp_ps(a0)), int_from<T>());
+      else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_getexp_pd(a0)), int_from<T>());
+      else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_getexp_ps(a0)), int_from<T>());
+      else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_getexp_pd(a0)), int_from<T>());
+      else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_getexp_ps(a0)), int_from<T>());
     };
     return if_else(is_eqz(a0), zero, compute(a0));
   }
@@ -61,12 +61,12 @@ namespace eve::detail
         auto src = alternative(cx, v, as<wide<T, N>> {});
         auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-        if      constexpr( c == category::float32x16) return int_(r_t(_mm512_mask_getexp_ps(src, m, v)));
-        else if constexpr( c == category::float64x8 ) return int_(r_t(_mm512_mask_getexp_pd(src, m, v)));
-        else if constexpr( c == category::float64x4 ) return int_(r_t(_mm256_mask_getexp_pd(src, m, v)));
-        else if constexpr( c == category::float32x8 ) return int_(r_t(_mm256_mask_getexp_ps(src, m, v)));
-        else if constexpr( c == category::float64x2 ) return int_(r_t(_mm_mask_getexp_pd(src, m, v)));
-        else if constexpr( c == category::float32x4 ) return int_(r_t(_mm_mask_getexp_ps(src, m, v)));
+        if      constexpr( c == category::float32x16) return convert(r_t(_mm512_mask_getexp_ps(src, m, v)), int_from<T>());
+        else if constexpr( c == category::float64x8 ) return convert(r_t(_mm512_mask_getexp_pd(src, m, v)), int_from<T>());
+        else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_mask_getexp_pd(src, m, v)), int_from<T>());
+        else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
+        else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
+        else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
       };
       return if_else(is_eqz(v), zero, compute(v, mask));
     }

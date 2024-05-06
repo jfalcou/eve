@@ -58,7 +58,7 @@ div_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T a, T b) noexcept requires has
         return if_else(is_ltz(b), dec[cond](q), inc[cond](q));
       }
     }
-    else { return saturated(convert)(nearest(float64(a) / float64(b)), as<v_t>()); }
+    else { return saturated(convert)(nearest(convert(a,as<double>()) / convert(b,as<double>())), as<v_t>()); }
   }
 }
 }

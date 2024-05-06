@@ -20,7 +20,6 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
   using t_t = eve::wide<float, eve::cardinal_t<T>>;
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<float>()), t_t);
-  TTS_EXPR_IS(eve::float32(T()), t_t);
   TTS_EXPR_IS(eve::saturated(eve::convert)(T(), eve::as<float>()), t_t);
 };
 
@@ -36,9 +35,6 @@ TTS_CASE_TPL("Check eve::convert arithmetic behavior", eve::test::simd::all_type
 
   TTS_EQUAL(eve::convert((T(0)), tgt), static_cast<t_t>(0));
   TTS_EQUAL(eve::convert((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
-  TTS_EQUAL(eve::convert((T(0)), tgt), eve::float32(T(0)));
-  TTS_EQUAL(eve::convert((T(42.69)), tgt), eve::float32(T(42.69)));
-//TODO  TTS_EQUAL(eve::convert(eve::sqr(T(2)), tgt), eve::float32(eve::sqr)(T(2)));
 
   if constexpr( sizeof(v_t) <= sizeof(float) )
   {

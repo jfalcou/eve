@@ -88,7 +88,7 @@ inline constexpr auto lfactorial = functor<lfactorial_t>;
       {
         auto np = [](auto x)
           {
-            if constexpr(integral_value<T>) return float64(inc(x));
+            if constexpr(integral_value<T>) return convert(inc(x), as<double>());
             else                            return inc(x);
           }(n);
 

@@ -21,7 +21,6 @@
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/inc.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 
 namespace eve
@@ -156,7 +155,7 @@ namespace eve
         if constexpr(O::contains(pedantic2))
         {
           using i_t = as_integer_t<T>;
-          auto pz   = inc(bitinteger(a) - to_<i_t>(n));
+          auto pz   = inc(bitinteger(a) - convert(n, as<element_type_t<i_t>>()));
           auto z    = bitfloating(dec(pz));
           auto test = is_negative(z) && is_positive(a);
           if constexpr( scalar_value<T> && scalar_value<N> )
@@ -175,8 +174,8 @@ namespace eve
         }
         else
         {
-          using i_t = as_integer_t<T>;
-          return bitfloating(bitinteger(a) - to_<i_t>(n));
+          using i_t =as_integer_t<element_type_t<T>>;
+          return bitfloating(bitinteger(a) - convert(n, as<i_t>()));
         }
       }
       else
@@ -188,7 +187,7 @@ namespace eve
         }
         else
         {
-          return a-to_<T>(n);
+          return a-convert(n, as<element_type_t<T>>());
         }
       }
     }

@@ -17,7 +17,6 @@
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/all.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/dist.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
@@ -53,8 +52,9 @@ requires has_native_abi_v<T>
                    eve::zero,
                    if_else(is_unordered(a, b)
                           , eve::inf(as(a))
-                          , to_<T>(nb_values(a, b)))
-                       * half(eve::as(a)));
+                          , convert(nb_values(a, b), as<element_type_t<T>>()))
+                   * half(eve::as(a))
+                  );
   }
 }
 }

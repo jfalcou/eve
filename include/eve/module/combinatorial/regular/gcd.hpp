@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/as_element.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 
@@ -70,13 +71,17 @@ inline constexpr auto gcd = functor<gcd_t>;
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr auto gcd_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    template<typename T, typename U, callable_options O>
+    constexpr auto gcd_(EVE_REQUIRES(cpu_), O const&, T aa, U bb)
     {
+      using r_t =  common_value_t<T, U>;
+      r_t a = r_t(aa);
+      r_t b = r_t(bb);
+      a = eve::abs(a);
+      b = eve::abs(b);
+
       if constexpr(O::contains(raw2))
       {
-        a = eve::abs(a);
-        b = eve::abs(b);
         if constexpr( scalar_value<T> )
         {
           while( b )
@@ -105,8 +110,6 @@ inline constexpr auto gcd = functor<gcd_t>;
       {
         if constexpr(integral_scalar_value<T>)
         {
-          a = eve::abs(a);
-          b = eve::abs(b);
           while( b )
           {
             auto r = a % b;
@@ -117,8 +120,6 @@ inline constexpr auto gcd = functor<gcd_t>;
         }
         else if constexpr(integral_simd_value<T>)
         {
-          a           = abs(a);
-          b           = abs(b);
           using elt_t = element_type_t<T>;
           if constexpr( sizeof(elt_t) == 8 )
           {
@@ -134,32 +135,25 @@ inline constexpr auto gcd = functor<gcd_t>;
             }
             return a;
           }
-          else if constexpr( sizeof(elt_t) == 4 )
+          else
           {
-            auto r = gcd[raw](float64(a), float64(b));
-            if constexpr( std::is_signed_v<elt_t> ) return int32(r);
-            else return uint32(r);
-          }
-          else if constexpr( sizeof(elt_t) <= 2 )
-          {
-            auto r = gcd[raw](float32(a), float32(b));
-            if constexpr( sizeof(elt_t) == 2 )
+            if constexpr( sizeof(elt_t) == 4 )
             {
-              if constexpr( std::is_signed_v<elt_t> ) return int16(r);
-              else return uint16(r);
+              auto r = gcd[raw](convert(a, as<double>()), convert(b, as<double>()));
+              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
+              else                                    return convert(r, uint_from<T>());
             }
-            else
+            else if constexpr( sizeof(elt_t) <= 2 )
             {
-              if constexpr( std::is_signed_v<elt_t> ) return int8(r);
-              else return uint8(r);
+              auto r = gcd[raw](convert(a, as<float>()), convert(b, as<float>()));
+              if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
+              else                                    return convert(r, uint_from<T>());
             }
           }
         }
         else if constexpr(floating_value<T>)
         {
           EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "gcd: some entries are not flint");
-          a = abs(a);
-          b = abs(b);
           if constexpr( scalar_value<T> )
           {
             while( b )

@@ -33,4 +33,11 @@ namespace eve
     constexpr as_element()          noexcept {}
     explicit constexpr as_element(T const&)  noexcept {}
   };
+
+  template <typename T> using int_from        = as_element<as_integer_t<T, signed>>;
+  template <typename T> using uint_from       = as_element<as_integer_t<T, unsigned>>;
+  template <typename T> using floating_from   = as_element<as_floating_point_t<T>>;
+  template <typename T> using upgraded_from   = detail::upgrade_t<element_type_t<T>>;
+  template <typename T> using downgraded_from = detail::downgrade_t<element_type_t<T>>;
+
 }

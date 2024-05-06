@@ -43,7 +43,7 @@ namespace eve
         T       c  = Cl * a;
         return if_else(test, a, fma(a, Ch, c));
       }
-      else { return float32(div_180(float64(a))); }
+      else { return convert(div_180(convert(a, as<double>())), as<float>()); }
     }
   }
 }
