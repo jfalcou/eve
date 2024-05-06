@@ -83,8 +83,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    clamp_(EVE_REQUIRES(cpu_), O const &, T const &a, T l,  T h) noexcept
+    EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
     {
       swap_if(l > h, l, h);
       return eve::min(eve::max(a, l), h);
