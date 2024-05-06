@@ -109,13 +109,12 @@ TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::ieee_real
   }
   else if constexpr( eve::integral_value<T> ) { TTS_EQUAL(eve::allbits(as<T>()), test(T(elt_t(~0)))); }
 
-
-  TTS_IEEE_EQUAL(eve::allbits[eve::ignore_none](as<T>()), test(eve::bit_not(T(0))));
+  TTS_IEEE_EQUAL(eve::allbits[eve::ignore_none](as<T>()), eve::allbits(as<T>()));
   TTS_EQUAL(eve::true_[eve::ignore_none](as<T>()), eve::true_(as<T>()));
-  TTS_EQUAL(eve::false_[eve::ignore_none](as<T>()),eve::true_(as<T>()));
-  TTS_EQUAL(eve::one[eve::ignore_none](as<T>()), test(T(1)));
-  TTS_EQUAL(eve::mone[eve::ignore_none](as<T>()), test(T(-1)));
-  TTS_EQUAL(eve::zero[eve::ignore_none](as<T>()), test(T(0)));
+  TTS_EQUAL(eve::false_[eve::ignore_none](as<T>()),eve::false_(as<T>()));
+  TTS_EQUAL(eve::one[eve::ignore_none](as<T>()), T(1));
+  TTS_EQUAL(eve::mone[eve::ignore_none](as<T>()), T(-1));
+  TTS_EQUAL(eve::zero[eve::ignore_none](as<T>()), T(0));
 
   TTS_IEEE_EQUAL(eve::allbits[eve::ignore_all](as<T>()), eve::zero(as<T>()));
   TTS_EQUAL(eve::true_[eve::ignore_all](as<T>()), eve::false_(as<T>()));
@@ -126,20 +125,20 @@ TTS_CASE_TPL("Check basic masked constants behavior", eve::test::simd::ieee_real
 
   if constexpr( eve::floating_value<T> )
   {
-    TTS_IEEE_EQUAL(eve::allbits[eve::ignore_none](as<T>()), test(T(0.0 / 0.0)));
-    TTS_EQUAL(eve::mzero[eve::ignore_none](as<T>()), test(T(-0)));
-    TTS_EQUAL(eve::half[eve::ignore_none](as<T>()), test(T(0.5)));
-    TTS_EQUAL(eve::mhalf[eve::ignore_none](as<T>()), test(T(-0.5)));
+    TTS_IEEE_EQUAL(eve::allbits[eve::ignore_none](as<T>()), (T(0.0 / 0.0)));
+    TTS_EQUAL(eve::mzero[eve::ignore_none](as<T>()), (T(-0)));
+    TTS_EQUAL(eve::half[eve::ignore_none](as<T>()), (T(0.5)));
+    TTS_EQUAL(eve::mhalf[eve::ignore_none](as<T>()), (T(-0.5)));
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), test(T(2.2204460492503130e-16)));
-      TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), test(i_t(0x7ff0000000000000ULL)));
+      TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), T(2.2204460492503130e-16));
+      TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), i_t(0x7ff0000000000000ULL));
     }
     else
     {
-      TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), test(T(1.1920929e-7)));
-      TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), test(i_t(0x7f800000U)));
+      TTS_EQUAL(eve::eps[eve::ignore_none](as<T>()), T(1.1920929e-7));
+      TTS_EQUAL(eve::exponentmask[eve::ignore_none](as<T>()), i_t(0x7f800000U));
     }
   }
-  else if constexpr( eve::integral_value<T> ) { TTS_EQUAL(eve::allbits(as<T>()), test(T(elt_t(~0)))); }
+  else if constexpr( eve::integral_value<T> ) { TTS_EQUAL(eve::allbits[eve::ignore_none](as<T>()), T(elt_t(~0))); }
 };
