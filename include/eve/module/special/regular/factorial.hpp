@@ -76,13 +76,12 @@ inline constexpr auto factorial = functor<factorial_t>;
 
     template<integral_value T, callable_options O>
     constexpr EVE_FORCEINLINE
-    as_wide_as_t<double, T>
-    factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+    as_wide_as_t<double, T> factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       if constexpr(signed_integral_value<T>)
       {
         EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-        return factorial(uint_(n));
+        return factorial(convert(n, uint_from<T>()));
       }
       else
       {
@@ -274,10 +273,9 @@ inline constexpr auto factorial = functor<factorial_t>;
       using elt_t = element_type_t<T>;
       EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");
       EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
-      auto nn = uint_(n);
-      auto r  = factorial(nn);
+      auto r = factorial(convert(n, uint_from<T>()));
       if constexpr( std::same_as<elt_t, double> ) return r;
-      else return float32(r);
+      else return convert(r, as<float>());
     }
   }
 }

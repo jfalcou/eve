@@ -164,8 +164,8 @@ namespace eve
     exp2_(EVE_REQUIRES(cpu_), O const&, T xx, as<U> const & ) noexcept
     {
       using b_t = as_wide_as_t<U, T>;
-      using i_t  = as_integer_t<b_t>;
-      auto x  = to_<i_t>(xx);
+      using i_t  = as_integer_t<element_type_t<b_t>>;
+      auto x  = convert(xx, as<i_t>());
       auto isnez  = is_nez(x);
       auto zz = eve::min(x + maxexponent(eve::as<U>()), 2 * maxexponent(eve::as<U>()) + 1) & isnez.mask();
       zz = zz << nbmantissabits(eve::as<U>());

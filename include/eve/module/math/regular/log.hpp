@@ -167,7 +167,7 @@ namespace eve
             T t2   = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
             T R    = t2 + t1;
             T hfsq = half(eve::as<T>()) * sqr(f);
-            T dk = float32(k);
+            T dk = convert(k, as<float>());
             T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
             T zz;
             if constexpr( eve::platform::supports_infinites )
@@ -229,7 +229,7 @@ namespace eve
             T R    = t2 + t1;
             T hfsq = half(eve::as<T>()) * sqr(f);
 
-            T dk = float64(k);
+            T dk = convert(k, as<double>());
             T r  = fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
             T zz;
             if constexpr( eve::platform::supports_infinites )
@@ -291,7 +291,7 @@ namespace eve
           T t2   = z*eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
           T R    = t2 + t1;
           T hfsq = 0.5f * sqr(f);
-          T dk   = float32(k);
+          T dk   = convert(k, as<float>());
           return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
         }
         else if constexpr( std::is_same_v<T, double> )
@@ -336,7 +336,7 @@ namespace eve
           T t2   = z*eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
                                         , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
           T R  = t2 + t1;
-          T dk = float64(k);
+          T dk = convert(k, as<double>());
           return fma(dk, Log_2hi, ((fma(s, (hfsq + R), dk * Log_2lo) - hfsq) + f));
         }
       }

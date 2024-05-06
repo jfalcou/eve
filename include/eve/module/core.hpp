@@ -101,7 +101,6 @@
 //!
 //! @}
 //==================================================================================================
-
 #include <eve/module/core/compress/core.hpp>
 #include <eve/module/core/constant/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
@@ -112,3 +111,4 @@
 #include <eve/module/core/saturated/core.hpp>
 #include <eve/wide.hpp>
 #include <eve/arch/nofs.hpp>
+#include <eve/as_element.hpp>

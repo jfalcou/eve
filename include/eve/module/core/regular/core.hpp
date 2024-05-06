@@ -49,7 +49,6 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/conj.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/count_true.hpp>
 #include <eve/module/core/regular/countl_one.hpp>

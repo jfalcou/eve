@@ -47,7 +47,7 @@ div_(EVE_SUPPORTS(cpu_),
         auto test = if_else(is_gtz(b), is_ltz(r), is_gtz(r));
         return inc[test](q);
       }
-      else { return saturated(convert)(ceil(float64(a) / float64(b)), as<elt_t>()); }
+      else { return saturated(convert)(ceil(convert(a,as<double>()) / convert(b,as<double>())), as<elt_t>()); }
     }
     else if constexpr( unsigned_value<T> )
     {

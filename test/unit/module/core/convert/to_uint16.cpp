@@ -20,7 +20,6 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
   using t_t = eve::wide<std::uint16_t, eve::cardinal_t<T>>;
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<std::uint16_t>()), t_t);
-  TTS_EXPR_IS(eve::uint16(T()), t_t);
   TTS_EXPR_IS(eve::saturated(eve::convert)(T(), eve::as<std::uint16_t>()), t_t);
 };
 

@@ -10,13 +10,11 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
-#include <eve/module/core/regular/converter.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
@@ -156,7 +154,7 @@ namespace eve
         if constexpr(O::contains(pedantic2))
         {
           using i_t = as_integer_t<T>;
-          auto pz   = dec(bitinteger(a) + to_<i_t>(n));
+          auto pz   = dec(bitinteger(a) + convert(n, as<element_type_t<i_t>>(n)));
           auto z    = bitfloating(inc(pz));
           auto test = is_negative(a) && is_positive(z);
           if constexpr( scalar_value<T> && scalar_value<N> )
@@ -175,8 +173,8 @@ namespace eve
         }
         else
         {
-          using i_t = as_integer_t<T>;
-          return bitfloating(bitinteger(a) + to_<i_t>(n));
+          using i_t =as_integer_t<element_type_t<T>>;
+          return bitfloating(bitinteger(a) + convert(n, as<i_t>()));
         }
       }
       else
@@ -188,7 +186,7 @@ namespace eve
         }
         else
         {
-          return a+to_<T>(n);
+          return a+convert(n, as<element_type_t<T>>());
         }
       }
     }

@@ -44,7 +44,7 @@ div_(EVE_SUPPORTS(cpu_), downward_type const&, T a, T b) noexcept requires has_n
         auto test = if_else(is_ltz(b), is_ltz(r), is_gtz(r));
         return dec[test](q);
       }
-      else { return saturated(convert)(floor(float64(a) / float64(b)), as<elt_t>()); }
+      else { return saturated(convert)(floor(convert(a, as<double>()) / convert(b, as<double>())), as<elt_t>()); }
     }
     else if constexpr( unsigned_value<T> ) { return div(a, b); }
   }

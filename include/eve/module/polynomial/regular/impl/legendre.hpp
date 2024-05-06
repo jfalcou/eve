@@ -214,7 +214,7 @@ namespace eve::detail
               using r_t            = decltype(x * l * m);
               auto sin_theta_power = eve::pow1p(-sqr(x), eve::abs(m) / 2);
 
-              r_t p0 = convert(eve::double_factorial(uint_(eve::max(2 * mm - 1, zero(as(mm))))),
+              r_t p0 = convert(eve::double_factorial(convert(eve::max(2 * mm - 1, zero(as(mm))), uint_from<T>())),
                                as<elt_t>())
               * sin_theta_power;
               auto p00  = p0;
