@@ -317,11 +317,12 @@ namespace eve
       else
       {
         // Compute the raw constant
-        auto const constant_value = Func<OptionsValues>::value(target,opts);
-        
+        auto constant_value = Func<OptionsValues>::value(target,opts);
+        using type = decltype(constant_value);
+
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
         if constexpr(match_option<condition_key, O, ignore_none_>) return constant_value;
-        else  return detail::mask_op(opts[condition_key], detail::return_2nd, 0, constant_value);
+        else  return detail::mask_op(opts[condition_key], detail::return_2nd, type{0}, constant_value);
       }
     }
   };
