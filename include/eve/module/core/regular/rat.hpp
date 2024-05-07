@@ -88,18 +88,13 @@ namespace detail
     return rat[o](x, T(1.0e-6) * eve::abs(x));
   }
 
-  template<typename T, typename U, callable_options O>
+  template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  rat_(EVE_REQUIRES(cpu_), O const&, T const& v, U const& t) noexcept
+  rat_(EVE_REQUIRES(cpu_), O const&, T const& x, T const& tol) noexcept
   {
-    using r_t = common_value_t<T,U>;
-
-    auto x    = r_t{v};
-    auto tol  = r_t{t};
-
-    if constexpr(scalar_value<r_t>)
+     if constexpr(scalar_value<T>)
     {
-      if( is_infinite(x) || is_eqz(x) ) return zip(sign(x), r_t{0});
+      if( is_infinite(x) || is_eqz(x) ) return zip(sign(x), T{0});
       auto n     = nearest(x);
       auto d     = one(as(x));
       auto frac  = x - n;
@@ -136,13 +131,13 @@ namespace detail
       {
         auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
         if( none(notdone) ) break;
-        auto flip   = if_else(notdone, rec(frac), frac);
+        auto flip   = rec[notdone](frac);
         auto step   = if_else(notdone, nearest(flip), zero);
         frac        = flip - step;
         auto savedn = n;
         auto savedd = d;
-        n           = if_else(notdone, fma(n, step, lastn), n);
-        d           = if_else(notdone, fma(d, step, lastd), d);
+        n           = fma[notdone](n, step, lastn);
+        d           = fma[notdone](d, step, lastd);
         lastn       = savedn;
         lastd       = savedd;
       }

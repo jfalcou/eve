@@ -76,8 +76,8 @@ inline constexpr auto two_prod = functor<two_prod_t>;
 
 namespace detail
 {
-  template<typename T, typename U, callable_options O>
-  constexpr EVE_FORCEINLINE auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, U b)
+  template<typename T, callable_options O>
+  constexpr EVE_FORCEINLINE auto two_prod_(EVE_REQUIRES(cpu_), O const&, T a, T b)
   {
     auto r0 = a * b;
     return eve::zip(r0,fms[pedantic](a, b, r0));

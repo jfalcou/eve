@@ -82,14 +82,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
-    nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& xx, U const & yy) noexcept
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const & b) noexcept
     {
-      using r_t =  common_value_t<T, U>;
-      auto a = r_t(xx);
-      auto b = r_t(yy);
-      if constexpr( scalar_value<T> )
+       if constexpr( scalar_value<T> )
         return (a < b) ? next[o](a) : ((a > b) ? prev[o](a) : a);
       else if constexpr( simd_value<T> )
         return if_else(a < b, next[o](a), if_else(a > b, prev[o](a), a));

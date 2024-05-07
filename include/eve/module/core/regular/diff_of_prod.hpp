@@ -84,18 +84,13 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, typename W, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U, V, W>
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
     diff_of_prod_(EVE_REQUIRES(cpu_), O const & o,
-                  T const &aa,  U const &bb,
-                  V const &cc,  W const &dd) noexcept
+                  T const &a,  T const &b,
+                  T const &c,  T const &d) noexcept
     {
-      using r_t = common_value_t<T, U, V, W>;
-      r_t a = r_t(aa);
-      r_t b = r_t(bb);
-      r_t c = r_t(cc);
-      r_t d = r_t(dd);
-      r_t cd =  c*d;
+      auto cd =  c*d;
       if constexpr(O::contains(raw2))
       {
         return fms(a, b, cd);
