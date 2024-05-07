@@ -69,13 +69,9 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    constexpr common_value_t<T, U>
-    ellint_rc_(EVE_REQUIRES(cpu_), O const&, T xx, U yy) noexcept
+    template<typename T, callable_options O>
+    constexpr auto ellint_rc_(EVE_REQUIRES(cpu_), O const&, T x, T y) noexcept
     {
-      using r_t = common_value_t<T, U>;
-      r_t x = r_t(xx);
-      r_t y = r_t(yy);
       auto ylt0   = is_ltz(y);
       auto prefix = one(as(x));
       if( eve::any(ylt0) ) // provisions for y < 0

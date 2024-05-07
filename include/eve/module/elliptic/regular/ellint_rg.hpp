@@ -75,23 +75,16 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    constexpr common_value_t<T, U, V>
-    ellint_rg_(EVE_REQUIRES(cpu_), O const&, T xx, U yy, V zz)
+    template<typename T, callable_options O>
+    constexpr T ellint_rg_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z)
     {
-      using r_t = common_value_t<T, U, V>;
-      r_t x = r_t(xx);
-      r_t y = r_t(yy);
-      r_t z = r_t(zz);
       if constexpr(O::contains(raw2))
       {
         swap_if(x < y, x, y);
         swap_if(x < z, x, z);
         swap_if(y > z, y, z);
         // now all(x >= z) and all(z >= y)
-        return (z * ellint_rf(x, y, z) - (x - z) * (y - z) *
-                ellint_rd(x, y, z) / 3 + sqrt(x * y / z))
-          * half(as(x));
+        return average(z*ellint_rf(x,y,z)-(x-z)*(y-z)*ellint_rd(x, y, z)*third(as<T>()), sqrt(x*y/z));
       }
       else
       {
