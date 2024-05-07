@@ -59,11 +59,12 @@ namespace eve
 //!     * `lo`, `hi`: [the boundary values](@ref eve::value) to clamp `x` to.
 //!
 //!    **Return value**
-//!       let l = min(lo, hi) and h =  max(lo, hi)
-//!       Each [element](@ref glossary_elementwise)  of the result contains:
-//!          *  `l`, if `x` is less than `l`.
-//!          *  `h`, if `h` is less than `x`.
+//!      Each [element](@ref glossary_elementwise)  of the result contains:
+//!          *  `lo`, if `x` is less than `lo`.
+//!          *  `hi`, if `hi` is less than `x`.
 //!          *  otherwise `x`.
+//!
+//!      If some lo are not less than the corresponding hi the routine asserts.
 //!
 //!  @groupheader{Example}
 //!
@@ -85,7 +86,7 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
     {
-      swap_if(l > h, l, h);
+      EVE_ASSERT(eve::all(l <= h), "[eve::clamp] bounds are not correctly ordered");
       return eve::min(eve::max(a, l), h);
     }
   }
