@@ -33,6 +33,6 @@ TTS_CASE_WITH("Check behavior of eve::is_unit(simd)",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::is_unit(a0), map([](auto e) -> eve::logical<v_t> { return eve::sqr_abs(e) == v_t(1); }, a0));
+  TTS_EQUAL(eve::is_unit(a0), map([](auto e) -> eve::logical<v_t> { return eve::sqr(e) == v_t(1); }, a0));
   TTS_EQUAL(eve::is_unit[t](a0), eve::if_else(t, eve::is_unit(a0), eve::false_(eve::as(a0))));
 };

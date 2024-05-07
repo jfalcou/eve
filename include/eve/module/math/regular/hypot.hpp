@@ -130,7 +130,7 @@ namespace eve
           }
           else
           {
-            return eve::sqrt(add(sqr_abs(r_t(r0)), sqr_abs(r_t(r1))));
+            return eve::sqrt(add(sqr(r_t(r0)), sqr(r_t(r1))));
           }
         }
         else //N parameters
@@ -143,7 +143,7 @@ namespace eve
           }
           else
           {
-            r_t that = add(sqr_abs(r_t(r0)), sqr_abs(r_t(r1)), sqr_abs(r_t(rs))...);
+            r_t that = add(sqr(r_t(r0)), sqr(r_t(r1)), sqr(r_t(rs))...);
             return eve::sqrt(that);
           }
         }

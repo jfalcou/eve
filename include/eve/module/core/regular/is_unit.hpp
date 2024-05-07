@@ -10,7 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/sqr_abs.hpp>
+#include <eve/module/core/regular/sqr.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
