@@ -74,29 +74,25 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    constexpr common_value_t<T, U, V>
-    betainc_inv_(EVE_REQUIRES(cpu_), O const&, T pp, U aa, V bb) noexcept
+    template<typename T, callable_options O>
+    constexpr auto
+    betainc_inv_(EVE_REQUIRES(cpu_), O const&, T p, T a, T b) noexcept
     {
-      using r_t =  common_value_t<T, U, V>;
-      r_t p = r_t(pp);
-      r_t a = r_t(aa);
-      r_t b = r_t(bb);
       auto large = [](auto p, auto a, auto b){
         //  Set initial guess.
-        auto const FiveoSix = r_t(5. / 6.);
+        auto const FiveoSix = T(5. / 6.);
         auto       a1       = dec(a);
         auto       b1       = dec(b);
-        auto       pp       = oneminus[p >= r_t(0.5)](p);
+        auto       pp       = oneminus[p >= T(0.5)](p);
         auto       t        = sqrt(-2 * log(pp));
         auto       x =
-        fma(t, r_t(0.27061), r_t(2.30753)) / fma(t, fma(t, r_t(0.04481), r_t(0.99229)), one(as(p))) - t;
-        x         = minus[p < r_t(0.5)](x);
-        auto al   = (sqr(x) - r_t(3)) * r_t(1.0 / 6.0);
+        fma(t, T(0.27061), T(2.30753)) / fma(t, fma(t, T(0.04481), T(0.99229)), one(as(p))) - t;
+        x         = minus[p < T(0.5)](x);
+        auto al   = (sqr(x) - T(3)) * T(1.0 / 6.0);
         auto r2a1 = rec(a + a1);
         auto r2b1 = rec(b + b1);
         auto h    = rec(average(r2a1, r2b1));
-        auto w    = (x * sqrt(al + h) / h) - (r2b1 - r2a1) * (al + FiveoSix - r_t(2.0 / 3.0) / h);
+        auto w    = (x * sqrt(al + h) / h) - (r2b1 - r2a1) * (al + FiveoSix - T(2.0 / 3.0) / h);
         return a / fma(exp(w + w), b, a);
       };
 

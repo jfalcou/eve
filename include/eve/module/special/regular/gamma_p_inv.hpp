@@ -71,15 +71,10 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    constexpr eve::common_value_t<T, U>
-    gamma_p_inv_(EVE_REQUIRES(cpu_), O const&, T pp, U kk) noexcept
+    template<typename T, callable_options O>
+    constexpr auto  gamma_p_inv_(EVE_REQUIRES(cpu_), O const&, T p, T k) noexcept
     {
-      using r_t = common_value_t<T, U>;
-      r_t p(pp);
-      r_t k(kk);
-
-      if constexpr( std::is_same_v<element_type_t<r_t>, float> )
+      if constexpr( std::is_same_v<element_type_t<T>, float> )
       {
         return convert(gamma_p_inv(convert(p, as<double>()), convert(k, as<double>())), as<float>());
       }
