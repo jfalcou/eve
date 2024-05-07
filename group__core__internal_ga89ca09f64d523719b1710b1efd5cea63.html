@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__internal_ga89ca09f64d5237
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::nb_values = {}</td>
+          <td class="memname">eve::nb_values = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;nb_values_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,10 +145,10 @@ $(document).ready(function(){initNavTree('group__core__internal_ga89ca09f64d5237
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">nb_values</a>(T x, T y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U &gt;</div>
+<div class="line">   as_integer_t&lt;common_value_t&lt;T, U&gt;, <span class="keywordtype">unsigned</span>&gt; <a class="code hl_variable" href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">nb_values</a>(T x, T y) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__internal_ga89ca09f64d523719b1710b1efd5cea63_html_ga89ca09f64d523719b1710b1efd5cea63"><div class="ttname"><a href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">eve::nb_values</a></div><div class="ttdeci">constexpr callable_nb_values_ nb_values</div><div class="ttdoc">Computes the number of values representable in the type between the arguments.</div><div class="ttdef"><b>Definition:</b> nb_values.hpp:50</div></div>
+<div class="ttc" id="agroup__core__internal_ga89ca09f64d523719b1710b1efd5cea63_html_ga89ca09f64d523719b1710b1efd5cea63"><div class="ttname"><a href="group__core__internal_ga89ca09f64d523719b1710b1efd5cea63.html#ga89ca09f64d523719b1710b1efd5cea63">eve::nb_values</a></div><div class="ttdeci">constexpr auto nb_values</div><div class="ttdoc">Computes the number of values representable in the type between the arguments.</div><div class="ttdef"><b>Definition:</b> nb_values.hpp:67</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
