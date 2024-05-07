@@ -167,14 +167,15 @@ $(document).ready(function(){initNavTree('group__core__constants_ga062b9f19ac529
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft x;</div>
+<div class="line">  wide_ft x{-1, -2, 3, 4};</div>
 <div class="line">  wide_it y;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; valmax(as&lt;wide_ft&gt;()  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wide_ft&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; valmax(as&lt;wide_it&gt;()  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;wide_it&gt;</a>()) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; valmax(as(x))         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(x))        &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; valmax(as(y))         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(y))        &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; valmax(as(y))         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(y))        &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; valmax[x &gt; 0]         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a>[x &gt; 0](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(x))&lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span>        xf;</div>
 <div class="line">  std::int16_t xi;</div>
