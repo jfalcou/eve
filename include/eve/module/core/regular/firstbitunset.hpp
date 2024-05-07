@@ -70,14 +70,14 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto firstbitunset = functor<firstbitunset_t>;
-  
+
   namespace detail
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
     firstbitunset_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
     {
-      return     if constexpr( scalar_value<T> )
+     if constexpr( scalar_value<T> )
         return ~a0 & inc(a0);
       else
         return bit_notand(a0, inc(a0));
