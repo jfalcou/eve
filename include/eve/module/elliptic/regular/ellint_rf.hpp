@@ -73,53 +73,48 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O >
-    constexpr common_value_t<T, U, V>
-    ellint_rf_(EVE_REQUIRES(cpu_), O const&, T xx, U yy, V zz) noexcept
+    template<typename T, callable_options O >
+    constexpr auto ellint_rf_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
     {
-      using r_t = common_value_t<T, U, V>;
-      r_t x = r_t(xx);
-      r_t y = r_t(yy);
-      r_t z = r_t(zz);
       if constexpr(O::contains(raw2))
       {
-        r_t    xn   = x;
-        r_t    yn   = y;
-        r_t    zn   = z;
-        r_t    an   = (x + y + z) / 3;
-        r_t    a0   = an;
-        auto epsi = pow_abs(3 * eps(as(element_type_t<r_t>())), -1 / r_t(8));
-        r_t    q  = epsi * (eve::max)((eve::max)(eve::abs(an - xn), eve::abs(an - yn)), eve::abs(an - zn));
-        r_t    fn = one(as(x));
+        T    xn   = x;
+        T    yn   = y;
+        T    zn   = z;
+        T    an   = (x + y + z) / 3;
+        T    a0   = an;
+        auto epsi = pow_abs(3 * eps(as(element_type_t<T>())), -1 / T(8));
+        T    q  = epsi * (eve::max)((eve::max)(eve::abs(an - xn), eve::abs(an - yn)), eve::abs(an - zn));
+        T    fn = one(as(x));
 
         // duplication
         unsigned k  = 1;
-        r_t        hf = half(as(x));
+        T        hf = half(as(x));
         for( ; k < 30; ++k )
         {
-          r_t root_x = eve::sqrt(xn);
-          r_t root_y = eve::sqrt(yn);
-          r_t root_z = eve::sqrt(zn);
-          r_t lambda = root_x * root_y + root_x * root_z + root_y * root_z;
+          T root_x = eve::sqrt(xn);
+          T root_y = eve::sqrt(yn);
+          T root_z = eve::sqrt(zn);
+          T lambda = root_x * root_y + root_x * root_z + root_y * root_z;
           an       = average(an, lambda) * hf;
           xn       = average(xn, lambda) * hf;
           yn       = average(yn, lambda) * hf;
           zn       = average(zn, lambda) * hf;
-          q *= r_t(0.25);
-          fn *= r_t(4);
+          q *= T(0.25);
+          fn *= T(4);
           if( eve::all(q < eve::abs(an)) ) break;
         }
-        r_t denom = rec(an * fn);
-        r_t xx    = (a0 - x) * denom;
-        r_t yy    = (a0 - y) * denom;
-        r_t zz    = -xx - yy;
+        T denom = rec(an * fn);
+        T xx    = (a0 - x) * denom;
+        T yy    = (a0 - y) * denom;
+        T zz    = -xx - yy;
 
         // Taylor series expansion to the 7th order
-        r_t p  = xx * yy;
-        r_t e2 = fnma(zz, zz, p);
-        r_t e3 = p * zz;
+        T p  = xx * yy;
+        T e2 = fnma(zz, zz, p);
+        T e3 = p * zz;
         // TODO put constant values in expansion
-        using elt_t        = element_type_t<r_t>;
+        using elt_t        = element_type_t<T>;
         constexpr elt_t c0 = sizeof(elt_t) == 4 ? 1 / 14.0f : 1 / 14.0;
         constexpr elt_t c1 = sizeof(elt_t) == 4 ? 3 / 104.0f : 3 / 104.0;
         constexpr elt_t c2 = sizeof(elt_t) == 4 ? -1 / 10.0f : -1 / 10.0;

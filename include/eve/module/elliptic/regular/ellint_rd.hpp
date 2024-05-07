@@ -74,14 +74,9 @@ inline constexpr auto ellint_rd = functor<ellint_rd_t>;
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    constexpr common_value_t<T, U, V>
-    ellint_rd_(EVE_REQUIRES(cpu_), O const&, T xx, U yy, V zz) noexcept
+    template<typename T, callable_options O>
+    constexpr auto  ellint_rd_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
     {
-      using r_t =  common_value_t<T, U, V>;
-      r_t x = r_t(xx);
-      r_t y = r_t(yy);
-      r_t z = r_t(zz);
       if constexpr(O::contains(raw2))
       {
         using elt_t = element_type_t<T>;

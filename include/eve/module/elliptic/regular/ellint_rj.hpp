@@ -79,15 +79,9 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, typename W, callable_options O >
-    constexpr common_value_t<T, U, V, W>
-    ellint_rj_(EVE_REQUIRES(cpu_), O const&, T xx, U yy, V zz, W pp)
+    template<typename T, callable_options O >
+    constexpr auto ellint_rj_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z, T p)
     {
-      using r_t = common_value_t<T, U, V>;
-      r_t x = r_t(xx);
-      r_t y = r_t(yy);
-      r_t z = r_t(zz);
-      r_t p = r_t(pp);
       if (O::contains(raw2))
       {
         auto xn    = x;
@@ -97,12 +91,12 @@ namespace eve
         auto an    = (x + y + z + 2 * p) / 5;
         auto a0    = an;
         auto delta = (p - x) * (p - y) * (p - z);
-        auto q     = pow_abs(eps(as<r_t>()) / 5, -r_t(1) / 8)
+        auto q     = pow_abs(eps(as<T>()) / 5, -T(1) / 8)
           * (eve::max)((eve::max)(eve::abs(an - x), eve::abs(an - y)),
                        (eve::max)(eve::abs(an - z), eve::abs(an - p)));
 
-        r_t fmn(one(as(x))); // 4^-n
-        r_t rc_sum(zero(as(x)));
+        T fmn(one(as(x))); // 4^-n
+        T rc_sum(zero(as(x)));
 
         for( unsigned n = 0; n < 30; ++n )
         {
@@ -134,8 +128,8 @@ namespace eve
                   auto arg       = sqrt(-y);
                   auto log1parg  = log1p(arg);
                   auto br_ygtmhf = [arg, log1parg]()
-                    { return if_else(is_eqz(arg), r_t(1), (log1parg - log1p(-arg)) / (2 * arg)); };
-                  notdone = next_interval(br_ygtmhf, notdone, y > r_t(-0.5), r);
+                    { return if_else(is_eqz(arg), T(1), (log1parg - log1p(-arg)) / (2 * arg)); };
+                  notdone = next_interval(br_ygtmhf, notdone, y > T(-0.5), r);
                   if( eve::any(notdone) )
                   {
                     auto br_last = [arg, log1parg](auto y) { return log1parg * rsqrt(inc(y)) / arg; };
@@ -164,7 +158,7 @@ namespace eve
             // after than en reverts to it's usual very small values.
             //
             auto b   = 2 * rp * (pn + rx * (ry + rz) + ry * rz) / dn;
-            auto r0  = ellint_rc(r_t(1), b);
+            auto r0  = ellint_rc(T(1), b);
             auto r1  = rc1p(en);
             auto tmp = if_else(test, r0, r1);
             rc_sum += fmn / dn * tmp;
@@ -177,16 +171,16 @@ namespace eve
           auto lambda = fma(rx, ry, fma(rx, rz, ry * rz));
 
           // from here on we move to n+1:
-          an = (an + lambda) * r_t(0.25); // / 4;
+          an = (an + lambda) * T(0.25); // / 4;
           fmn /= 4;
 
           if( eve::all(fmn * q < an) ) break;
 
-          xn = (xn + lambda) * r_t(0.25); // / 4;
-          yn = (yn + lambda) * r_t(0.25); // / 4;
-          zn = (zn + lambda) * r_t(0.25); // / 4;
-          pn = (pn + lambda) * r_t(0.25); // / 4;
-          delta *= r_t(0.015625);         // /= 64;
+          xn = (xn + lambda) * T(0.25); // / 4;
+          yn = (yn + lambda) * T(0.25); // / 4;
+          zn = (zn + lambda) * T(0.25); // / 4;
+          pn = (pn + lambda) * T(0.25); // / 4;
+          delta *= T(0.015625);         // /= 64;
         }
         auto fmninvan = fmn * rec(an);
         auto xx       = (a0 - x) * fmninvan;
