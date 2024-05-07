@@ -7,14 +7,15 @@ using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft x;
+  wide_ft x{-1, -2, 3, 4};
   wide_it y;
 
   std::cout << "---- simd" << '\n'
             << "-> valmax(as<wide_ft>()  = " << eve::valmax(eve::as<wide_ft>()) << '\n'
             << "-> valmax(as<wide_it>()  = " << eve::valmax(eve::as<wide_it>()) << '\n'
             << "-> valmax(as(x))         = " << eve::valmax(eve::as(x))        << '\n'
-            << "-> valmax(as(y))         = " << eve::valmax(eve::as(y))        << '\n';
+            << "-> valmax(as(y))         = " << eve::valmax(eve::as(y))        << '\n'
+            << "-> valmax[x > 0]         = " << eve::valmax[x > 0](eve::as(x))<< '\n';
 
   float        xf;
   std::int16_t xi;

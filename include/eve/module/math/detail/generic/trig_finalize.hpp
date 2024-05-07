@@ -92,7 +92,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
-      auto tmp      = eve::if_else(fn >= T(2), eve::one(eve::as(xr)), zero);//eve::binarize(test);
+      auto tmp      = one[fn >= T(2)](eve::as(xr));
       auto swap_bit = (eve::fma(T(-2), tmp, fn));
       auto zz1 = eve::is_odd(fn+tmp);
       auto sign    =  eve::if_else(zz1, eve::mone(eve::as(xr)), eve::one(eve::as(xr)));
@@ -107,7 +107,7 @@ namespace eve
     EVE_FORCEINLINE auto
     sincos_finalize(T a0, const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
-      auto tmp          = eve::binarize(eve::logical<T>(fn >= T(2)));
+      auto tmp          = one[fn >= T(2)](eve::as(xr));
       auto swap         = eve::is_nez(eve::fma(T(-2), tmp, fn));
       auto cos_sign     = eve::if_else(eve::is_odd(fn+tmp), eve::mone(eve::as(xr)), eve::one(eve::as(xr)));
       auto sin_sign     =  eve::signnz(a0);
@@ -125,7 +125,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     sin_finalize(T a0,  T fn,  T xr, T dxr = T(0)) noexcept
     {
-      auto tmp      = eve::binarize(eve::logical<T>(fn >= T(2)));
+      auto tmp      = one[fn >= T(2)](eve::as(xr));
       auto swap_bit = (eve::fma(T(-2), tmp, fn));
       auto sign = eve::signnz(a0);
       sign *= eve::if_else(tmp, eve::mone(eve::as(a0)), eve::one(eve::as(a0)));
@@ -152,7 +152,7 @@ namespace eve
       }
       else
       {
-        auto tmp      = binarize(fn >= T(2));
+        auto tmp      = one[fn >= T(2)](eve::as(xr));
         auto swap_bit = (fma(T(-2), tmp, fn));
         auto test     = is_eqz(swap_bit);
         y             = if_else(test, y, -rec(y));
@@ -176,7 +176,7 @@ namespace eve
       else
       {
         auto aa0lteps = eve::abs(a0) < eps(as<T>());
-        auto tmp      = binarize(fn >= T(2));
+        auto tmp      = one[fn >= T(2)](eve::as(xr));
         auto swap_bit = (fma(T(-2), tmp, fn));
         auto test     = is_eqz(swap_bit);
         y             = if_else(test, rec(y), -y);

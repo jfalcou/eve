@@ -125,7 +125,7 @@ namespace eve
         else
         {
           auto xnlepio4 = is_not_less_equal(x, pio_4(eve::as(x)));
-          auto fn       = binarize(xnlepio4);
+          auto fn       = one[xnlepio4](eve::as(x));
           auto xr       = if_else(fn, reduce(x), x);
           auto y        = tancot_eval(xr);
           y             = if_else(is_not_finite(a0), eve::allbits, if_else(xnlepio4, -y, rec(y)));
