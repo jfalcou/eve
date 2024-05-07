@@ -19,8 +19,9 @@ template<typename Options>
 struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 {
   template<eve::ordered_value T, ordered_value U>
-  constexpr EVE_FORCEINLINE common_value_t<T, U>
-  operator()(T v, U w) const noexcept { return EVE_DISPATCH_CALL(v, w); }
+  constexpr EVE_FORCEINLINE
+  common_value_t<T, U> operator()(T v, U w) const noexcept
+  { return EVE_DISPATCH_CALL(v, w); }
 
   EVE_CALLABLE_OBJECT(gcd_t, gcd_);
 };
@@ -71,15 +72,11 @@ inline constexpr auto gcd = functor<gcd_t>;
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    constexpr auto gcd_(EVE_REQUIRES(cpu_), O const&, T aa, U bb)
+    template<typename T, callable_options O>
+    constexpr auto gcd_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
-      using r_t =  common_value_t<T, U>;
-      r_t a = r_t(aa);
-      r_t b = r_t(bb);
       a = eve::abs(a);
       b = eve::abs(b);
-
       if constexpr(O::contains(raw2))
       {
         if constexpr( scalar_value<T> )
