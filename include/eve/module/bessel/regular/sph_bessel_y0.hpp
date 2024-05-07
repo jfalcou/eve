@@ -19,7 +19,7 @@ namespace eve
   {
     template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
-    eve::common_value_t<T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    eve::T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(sph_bessel_y0_t, sph_bessel_y0_);
   };
