@@ -49,7 +49,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * m - logical_value or top_bits where to find first true value
-//!     * ignore - ignored elements are considred false. Only supported for
+//!     * ignore - ignored elements are considered false. Only supported for
 //!                `logical_simd_value`
 //!
 //!   **Return value**
