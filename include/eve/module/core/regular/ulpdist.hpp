@@ -93,7 +93,7 @@ namespace eve
       else if constexpr( simd_value<T> )
       {
         auto inen = is_not_equal[numeric](a, b);
-        return half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+to_<T>(nb_values(a, b)));
+        return half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+convert(nb_values(a, b), eve::as<eve::element_type_t<T>>()));
       }
     }
   }
