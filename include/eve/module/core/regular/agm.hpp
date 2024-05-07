@@ -87,15 +87,12 @@ namespace eve
   namespace detail
   {
 
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
-    agm_(EVE_REQUIRES(cpu_), O const &, T aa,  U bb) noexcept
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    agm_(EVE_REQUIRES(cpu_), O const &, T a,  T b) noexcept
     {
-      using v_t = common_value_t<T, U>;
-      v_t a(aa);
-      v_t b(bb);
       auto ex = exponent(average(a, b));
-      auto r     = nan(as<v_t>());
+      auto r     = nan(as<T>());
       auto null = is_eqz(a)||is_eqz(b);
       r = if_else(null, zero, r);
       auto infi = is_infinite(a) || is_infinite(b);
@@ -107,7 +104,7 @@ namespace eve
       a =  ldexp(a, -ex);
       b =  ldexp(b, -ex);
       auto c  = average(a, -b);
-      while (eve::any(eve::abs(c) > v_t(2)*eps(as(c))))
+      while (eve::any(eve::abs(c) > T(2)*eps(as(c))))
       {
         auto an=average(a, b);
         auto bn=sqrt(a*b);

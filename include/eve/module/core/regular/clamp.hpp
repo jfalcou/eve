@@ -82,16 +82,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U, V>
-    clamp_(EVE_REQUIRES(cpu_), O const &, T const &a, U const & lo,  V const & hi) noexcept
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
     {
-      using r_t = common_value_t<T, U, V>;
-      auto l = r_t(lo);
-      auto h = r_t(hi);
-      auto aa = r_t(a);
       swap_if(l > h, l, h);
-      return eve::min(eve::max(aa, l), h);
+      return eve::min(eve::max(a, l), h);
     }
   }
 }

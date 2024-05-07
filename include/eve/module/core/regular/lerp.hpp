@@ -79,14 +79,10 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, typename V, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U, V>
-    lerp_(EVE_REQUIRES(cpu_), O const & o, T const &aa,  U const &bb,  V const &tt) noexcept
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    lerp_(EVE_REQUIRES(cpu_), O const & o, T const &a,  T const &b,  T const &t) noexcept
     {
-      using r_t =  common_value_t<T, U, V>;
-      auto a = r_t(aa);
-      auto b = r_t(bb);
-      auto t = r_t(tt);
       return fma[o](t, b, fnma[o](t, a, a));
     }
   }
