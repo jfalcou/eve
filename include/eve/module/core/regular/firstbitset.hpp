@@ -77,7 +77,8 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     firstbitset_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
     {
-     if constexpr( scalar_value<T> ) { return a0 & ~inc(a0); }
-     else { return bit_andnot(a0, inc(a0)); }
+      if constexpr( scalar_value<T> ) { return a0 & ~inc(a0); }
+      else { return bit_andnot(a0, inc(a0)); }
+    }
   }
 }

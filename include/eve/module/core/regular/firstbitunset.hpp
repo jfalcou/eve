@@ -70,7 +70,7 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto firstbitunset = functor<firstbitunset_t>;
-
+  
   namespace detail
   {
     template<typename T, callable_options O>
