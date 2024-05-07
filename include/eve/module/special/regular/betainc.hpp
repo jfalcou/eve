@@ -73,15 +73,10 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 
   namespace detail
   {
-    template< typename T0, typename T1, typename T2, callable_options O>
+    template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1, T2> betainc_(EVE_REQUIRES(cpu_), O const&
-                                            , T0 xx, T1  aa, T2  bb) noexcept
+    auto betainc_(EVE_REQUIRES(cpu_), O const&, T x, T  a, T  b) noexcept
     {
-      using r_t =  common_value_t<T0, T1, T2>;
-      r_t x = r_t(xx);
-      r_t a = r_t(aa);
-      r_t b = r_t(bb);
       auto betacf = [](auto x, auto a, auto b) {
         // continued fraction for incomplete Beta function, used by betainc
         constexpr std::size_t itmax = 100;
@@ -96,7 +91,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
         auto                  h     = d;
         for( std::size_t m = 1; m <= itmax; ++m )
         {
-          T0    vm(m);
+          T    vm(m);
           auto vm2 = vm + vm;
           auto aa  = vm * (b - vm) * x / ((qam + vm2) * (a + vm2));
           d        = rec(maxmag(fma(aa, d, o), fpmin));
@@ -112,7 +107,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
         return h;
       };
       auto bt   = exp(fma(a, log(x), b * log1p(-x)) - lbeta(a, b));
-      auto test = (x > inc(a) / (a + b + T0(2)));
+      auto test = (x > inc(a) / (a + b + T(2)));
       auto oms   = oneminus[test](x);
       swap_if(test, a, b);
       auto res  = bt * betacf(oms, a, b) / a;

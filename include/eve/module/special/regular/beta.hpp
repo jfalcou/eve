@@ -65,14 +65,10 @@ namespace eve
 
   namespace detail
   {
-    template< typename T0, typename T1, callable_options O>
+    template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1> beta_(EVE_REQUIRES(cpu_), O const&,
-                                      T0 const& a00,  T1 const & a11) noexcept
+    auto beta_(EVE_REQUIRES(cpu_), O const&, T a0,  T a1) noexcept
     {
-      using r_t =  common_value_t<T0, T1>;
-      r_t a0 = r_t(a00);
-      r_t a1 = r_t(a11);
       auto y    = a0 + a1;
       auto sign = eve::signgam(a0) * eve::signgam(a1) * eve::signgam(y);
       return sign * exp(log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y));

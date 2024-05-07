@@ -22,8 +22,9 @@ template<typename Options>
 struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 {
   template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
-  EVE_FORCEINLINE
-  eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept { return EVE_DISPATCH_CALL(a, b); }
+  EVE_FORCEINLINE  eve::common_value_t<T0, T1>
+  operator()(T0 a, T1 b) const  noexcept
+  { return EVE_DISPATCH_CALL(a, b); }
 
   EVE_CALLABLE_OBJECT(gamma_p_t, gamma_p_);
 };
@@ -69,17 +70,14 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
   namespace detail
   {
 
-    template<typename T, typename U, callable_options O>
-    constexpr eve::common_value_t<T, U>
-    gamma_p_(EVE_REQUIRES(cpu_), O const&, T xx, U aa) noexcept
+    template<typename T, callable_options O>
+    constexpr auto
+    gamma_p_(EVE_REQUIRES(cpu_), O const&, T x, T a) noexcept
     {
-      using r_t = common_value_t<T, U>;
-      r_t x(xx);
-      r_t a(aa);
-      auto const third   = r_t(1 / 3.0);
+      auto const third   = T(1 / 3.0);
       auto       res     = nan(as<T>()); // nan case treated here
       auto       notdone = is_not_nan(x);
-      const auto amax    = r_t(1048576);
+      const auto amax    = T(1048576);
       auto       test    = (a > amax);
       if( eve::any(test) )
       {
@@ -97,7 +95,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
         auto del = one(as(ap));
         auto sum = del;
 
-        while( eve::any(abs(del) >= r_t(100) * epsilon(maximum(abs(sum)))) )
+        while( eve::any(abs(del) >= T(100) * epsilon(maximum(abs(sum)))) )
         {
           ap += one(as(ap));
           del = x * del / ap;

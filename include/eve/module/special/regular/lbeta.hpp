@@ -61,15 +61,10 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 
   namespace detail
   {
-    template< typename T0, typename T1, callable_options O>
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1> lbeta_(EVE_REQUIRES(cpu_), O const&, T0 const& aa0,  T1 const & aa1)
+    template< typename T, callable_options O>
+    constexpr EVE_FORCEINLINE auto lbeta_(EVE_REQUIRES(cpu_), O const&, T a0, T a1)
     {
-      using r_t = common_value_t<T0, T1>;
-      r_t a1(aa1);
-      r_t a0(aa0);
-      auto y = a0 + a1;
-      return log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(y);
+      return log_abs_gamma(a0) + log_abs_gamma(a1) - log_abs_gamma(a0 + a1);
     }
   }
 }
