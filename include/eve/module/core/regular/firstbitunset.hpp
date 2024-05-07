@@ -7,10 +7,21 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/inc.hpp>
+#include <eve/module/core/regular/bit_notand.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct firstbitunset_t : elementwise_callable<firstbitunset_t, Options>
+  {
+    template<eve::integral_value T>
+    constexpr EVE_FORCEINLINE T operator()(T a) const
+    { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(firstbitunset_t, firstbitunset_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -58,7 +69,18 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(firstbitunset_, firstbitunset);
-}
+  inline constexpr auto firstbitunset = functor<firstbitunset_t>;
 
-#include <eve/module/core/regular/impl/firstbitunset.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    firstbitunset_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
+    {
+      return     if constexpr( scalar_value<T> )
+        return ~a0 & inc(a0);
+      else
+        return bit_notand(a0, inc(a0));
+    }
+  }
+}
