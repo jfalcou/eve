@@ -15,8 +15,6 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/average.hpp>
-#include <eve/module/core/regular/binarize.hpp>
-#include <eve/module/core/regular/binarize_not.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_ceil.hpp>

@@ -49,10 +49,9 @@ TTS_CASE_WITH("Check behavior of sinpi on wide",
   auto ref  = [pi](auto e) -> v_t { return std::sin((pi*(long double)e)); };
   TTS_ULP_EQUAL(sinpi[eve::quarter_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(sinpi[eve::half_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sinpi(a1), sinpi(eve::frac(a1)+eve::binarize(eve::is_odd(eve::trunc(a1)))), 2);
-  TTS_ULP_EQUAL(sinpi(a2), sinpi(eve::frac(a2)+eve::binarize(eve::is_odd(eve::trunc(a2)))), 2);
+  TTS_ULP_EQUAL(sinpi(a1), sinpi(eve::frac(a1)+eve::one[eve::is_odd(eve::trunc(a1))](eve::as(a1))), 2);
+  TTS_ULP_EQUAL(sinpi(a2), sinpi(eve::frac(a2)+eve::one[eve::is_odd(eve::trunc(a2))](eve::as(a2))), 2);
 };
-
 
 //==================================================================================================
 // Tests for masked sinpi

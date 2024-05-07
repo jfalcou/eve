@@ -137,7 +137,7 @@ namespace eve
         {
           x           = if_else(is_not_less_equal(x, pio_2(eve::as<T>())), eve::allbits, x);
           auto test   = is_not_less_equal(x, pio_4(eve::as<T>()));
-          auto n      = binarize(test);
+          auto n      = one[test](eve::as(x));
           auto xr     = if_else(test, reduce(x), x);
           auto [s, c] = sincos_finalize(a0, n, xr, T(0));
           return eve::zip(s, c);
