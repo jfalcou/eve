@@ -18,7 +18,6 @@
 #include <eve/module/core/regular/logical_or.hpp>
 #include <eve/module/core/regular/maximum.hpp>
 #include <eve/module/core/regular/minimum.hpp>
-#include <eve/module/core/regular/plus.hpp>
 #include <eve/module/core/regular/splat.hpp>
 #include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 
@@ -30,8 +29,7 @@ template<typename Callable, typename Option = int>
 EVE_FORCEINLINE auto
 find_reduction(Callable f, Option = 0) noexcept
 {
-  if constexpr( std::same_as<Callable, callable_plus_> ) return eve::detail::sum;
-  else if constexpr( std::same_as<Callable, callable_add_> ) return eve::detail::sum;
+  if constexpr( std::same_as<Callable, callable_add_> ) return eve::detail::sum;
   else if constexpr( std::same_as<Callable, decltype(min)> ) return eve::minimum;
   else if constexpr( std::same_as<Callable, decltype(max)> ) return eve::maximum;
   else if constexpr( std::same_as<Callable, decltype(logical_and)> ) return eve::all;

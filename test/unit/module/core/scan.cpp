@@ -31,7 +31,7 @@ TTS_CASE_WITH("Check behavior of default scan",
               tts::generate(tts::randoms(-50, 50)))
 <typename T>(T simd)
 {
-  T expected = std_scan(simd, eve::plus);
+  T expected = std_scan(simd, eve::add);
   T actual   = eve::scan(simd);
 
   TTS_RELATIVE_EQUAL(expected, actual, 0.0005);

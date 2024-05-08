@@ -89,7 +89,7 @@ namespace eve
         using u_t = underlying_type_t<T>;
         const u_t Expx2c1 = ieee_constant<0x1.0p+5f, 0x1.0000000000000p+7>(eve::as<u_t>{});
         const u_t Expx2c2 = ieee_constant<0x1.0p-5f, 0x1.0000000000000p-7>(eve::as<u_t>{});
-        /* Represent x as an exact multiple of 1/32 plus a residual.  */
+        /* Represent x as an exact multiple of 1/32 added to a residual.  */
         T m = Expx2c1 * eve::floor(fma(Expx2c2, x, half(as<T>())));
         x -= m;
         /* x**2 = m**2 + 2mf + f**2 */
