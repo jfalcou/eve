@@ -54,7 +54,7 @@ TTS_CASE_TPL( "Check behavior of scan, same type", eve::test::scalar::all_types)
   w_t expected = kumi::map(eve::scan, x);
 
   auto plus = [](auto a, auto b) {
-    return kumi::map(eve::plus, a, b);
+    return kumi::map(eve::add, a, b);
   };
 
   w_t actual_1 = eve::scan(x, plus, eve::zero);
