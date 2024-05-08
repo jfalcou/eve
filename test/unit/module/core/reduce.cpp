@@ -17,9 +17,9 @@ TTS_CASE_TPL("Check return types of eve::reduce(wide)", eve::test::simd::all_typ
 {
   using v_t = eve::element_type_t<T>;
   TTS_EXPR_IS((eve::reduce(T {})), v_t);
-  TTS_EXPR_IS((eve::reduce(T {}, eve::plus)), v_t);
+  TTS_EXPR_IS((eve::reduce(T {}, eve::add)), v_t);
   TTS_EXPR_IS((eve::splat(eve::reduce)(T {})), T);
-  TTS_EXPR_IS((eve::splat(eve::reduce)(T {}, eve::plus)), T);
+  TTS_EXPR_IS((eve::splat(eve::reduce)(T {}, eve::add)), T);
 };
 
 //==================================================================================================
@@ -35,12 +35,10 @@ TTS_CASE_TPL("Check behavior of eve::reduce(eve::wide)", eve::test::simd::all_ty
   for( std::ptrdiff_t i = 0; i < T::size(); ++i ) ref += data.get(i);
 
   TTS_EQUAL(eve::reduce(data, [](auto a, auto b) { return a + b; }), ref);
-  TTS_EQUAL(eve::reduce(data, eve::plus), ref);
   TTS_EQUAL(eve::reduce(data, eve::add), ref);
   TTS_EQUAL(eve::reduce(data), ref);
 
   TTS_EQUAL(eve::splat(eve::reduce)(data, [](auto a, auto b) { return a + b; }), T(ref));
-  TTS_EQUAL(eve::splat(eve::reduce)(data, eve::plus), T(ref));
   TTS_EQUAL(eve::splat(eve::reduce)(data, eve::add), T(ref));
   TTS_EQUAL(eve::splat(eve::reduce)(data), T(ref));
 };

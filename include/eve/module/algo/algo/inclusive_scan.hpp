@@ -88,7 +88,7 @@ namespace eve::algo
     template <relaxed_range Rng, typename U>
     EVE_FORCEINLINE void operator()(Rng&& rng, U init) const
     {
-      operator()(EVE_FWD(rng), std::pair{eve::plus, eve::zero}, init);
+      operator()(EVE_FWD(rng), std::pair{eve::add, eve::zero}, init);
     }
   };
 
@@ -107,7 +107,7 @@ namespace eve::algo
     template <zipped_range_pair R, typename U>
     EVE_FORCEINLINE auto operator()(R r, U init) const
     {
-      operator()(r, std::pair{eve::plus, eve::zero}, init);
+      operator()(r, std::pair{eve::add, eve::zero}, init);
     }
 
     template <typename R1, typename R2, typename Op, typename Zero, typename U>
