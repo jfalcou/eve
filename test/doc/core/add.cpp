@@ -15,7 +15,7 @@ int main()
             << " -> add(pi, qi)             = " << eve::add(pi, qi) << '\n'
             << " -> pi + qi                 = " << pi + qi << '\n'
             << " -> add[pi < qi](pi, qi)    = " << eve::add[pi < qi](pi, qi) << '\n'
-            <<  " -> saturated(add)(pi, qi) = " << eve::saturated(eve::add)(pi, qi) << '\n'
+            <<  " -> add[saturated](pi, qi) = " << eve::add[eve::saturated](pi, qi) << '\n'
             << " -> pf + qf                 = " << pf + qf << '\n';
 
   std::int16_t xi = 100, yi = 32700;
@@ -33,6 +33,6 @@ int main()
             << " -> add(kumi::tuple{pf, pf})      = " << eve::add( kumi::tuple{pf, pf})  << '\n'
             << " -> add(kumi::tuple{pf, 1.0f)     = " << eve::add( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> add(kumi::tuple{1.0f, pf)     = " << eve::add( kumi::tuple{1.0f, pf})  << '\n'
-            << " -> saturated(add)(pi,12,pi,pi)   = " << eve::saturated(eve::add)(pi, 12, pi,pi) << '\n';
+            << " -> add[saturated](pi,12,pi,pi)   = " << eve::add[eve::saturated](pi, 12, pi,pi) << '\n';
   return 0;
 }
