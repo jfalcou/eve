@@ -31,12 +31,8 @@ TTS_CASE_TPL("Check return types of clamp", eve::test::simd::all_types)
 //==================================================================================================
 // clamp simd tests
 //==================================================================================================
-auto val1 = ::tts::constant(
-    []<typename T>(eve::as<T> const&)
-    {
-      return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6);
-      ;
-    });
+auto val1 = ::tts::constant([]<typename T>(eve::as<T> const&)
+                            { return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6); });
 auto val2 = ::tts::constant([]<typename T>(eve::as<T> const&)
                             { return (eve::valmax(eve::as(eve::element_type_t<T>())) / 6) * 2; });
 auto val3 = ::tts::constant([]<typename T>(eve::as<T> const&)
@@ -63,15 +59,15 @@ TTS_CASE_WITH("Check behavior of clamp(wide) and diff  on all types",
 //==================================================================================================
 // Tests for masked clamp
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::clamp)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//                             tts::randoms(eve::valmin, eve::valmax),
-//                             tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          T const& a1,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::clamp[mask](a0),
-//                  eve::if_else(mask, eve::clamp(a0, eve::dec(a1), a1), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::clamp)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         T const& a1,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::clamp[mask](a0, eve::dec(a1), a1),
+                 eve::if_else(mask, eve::clamp(a0, eve::dec(a1), a1), a0));
+};

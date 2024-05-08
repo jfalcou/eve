@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/max.hpp>
-#include <eve/module/core/regular/swap_if.hpp>
+#include <eve/module/core/regular/all.hpp>
 
 namespace eve
 {
@@ -24,6 +24,7 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<T, U, V>
     operator()(T a, U lo, V hi) const noexcept
     {
+      EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] bounds are not correctly ordered");
       return EVE_DISPATCH_CALL(a, lo, hi);
     }
 
@@ -86,7 +87,6 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
     {
-      EVE_ASSERT(eve::all(l <= h), "[eve::clamp] bounds are not correctly ordered");
       return eve::min(eve::max(a, l), h);
     }
   }
