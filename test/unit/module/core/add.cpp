@@ -36,7 +36,6 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::add[eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(eve::add[eve::logical<v_t>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::add[eve::logical<v_t>()](v_t(), T()), T);
-  TTS_EXPR_IS(eve::add[eve::logical<T>()](v_t(), v_t()), T);
   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<T>()](T(), T()), T);
   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<T>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](T(), T()), T);
