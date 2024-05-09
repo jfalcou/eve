@@ -122,7 +122,7 @@ mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
       }
       else
       {
-        auto that = map(saturated(eve::mul), a, b);
+        auto that = map(eve::mul[saturated], a, b);
         return that;
       }
     }
@@ -138,8 +138,8 @@ mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T0 a0, T1 a1, Ts... args) noexce
 -> decltype(mul(a0, a1, args...))
 {
   using r_t = decltype(mul(a0, a1, args...));
-  r_t that(saturated(mul)(r_t(a0), r_t(a1)));
-  ((that = saturated(mul)(that, r_t(args))), ...);
+  r_t that(mul[saturated](r_t(a0), r_t(a1)));
+  ((that = mul[saturated](that, r_t(args))), ...);
   return that;
 }
 
@@ -155,6 +155,6 @@ mul_(EVE_SUPPORTS(cpu_),
      V const& f) noexcept
 ->decltype(if_else(cond, mul(t, f), t))
 {
-  return mask_op(cond, saturated(mul), t, f);
+  return mask_op(cond, mul[saturated], t, f);
 }
 }
