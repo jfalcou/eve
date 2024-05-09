@@ -11,7 +11,11 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/fam.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/next.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -106,7 +110,7 @@ namespace eve
         auto b = w_t(bb);
 
         auto tol = o[almost].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>) return a <=  eve::next(b, tol);
+        if constexpr(integral_value<decltype(tol)>) return a <= next(b, tol);
         else                                        return a <= fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
       }
       else

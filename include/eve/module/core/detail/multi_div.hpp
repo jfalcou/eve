@@ -23,8 +23,8 @@ namespace eve::detail
   {
     using r_t = common_value_t<T0, T1, Ts...>;
     r_t that(a1);
-    that = mul[d](that, r_t(args)...);
-    EVE_ASSERT(eve::all(is_nez(that)), "[eve] div[O] - 0/0 is undefined");
-    return div/*[d]*/(r_t(a0), that); /*TODO*/
+    that = mul/*[d]*/(that, r_t(args)...);//TODO
+    EVE_ASSERT(eve::all(is_nez(that)), "[eve] D()(div) - 0/0 is undefined");
+    return (D()(div))(r_t(a0), that);
   }
 }
