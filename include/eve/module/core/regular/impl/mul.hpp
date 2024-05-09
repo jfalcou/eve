@@ -35,23 +35,10 @@ namespace eve::detail
       {
         if constexpr(scalar_value<T>)
         {
-          if constexpr( sizeof(T) <= 2 )
+          if constexpr( sizeof(T) <= 4 )
           {
             using up_t = upgrade_t<T>;
             return static_cast<T>(saturate(static_cast<up_t>(a) * static_cast<up_t>(b), as<T>()));
-          }
-          else if constexpr( sizeof(T) == 4 )
-          {
-            using un_t = std::make_unsigned_t<T>;
-            using up_t = int64_t;
-            enum Sizee { value = sizeof(T) * 8 - 1 };
-
-            up_t res  = up_t(a) * up_t(b);
-            un_t res2 = (un_t(a ^ b) >> Sizee::value) + valmax(eve::as<T>());
-            T    hi   = (res >> (Sizee::value + 1));
-            T    lo   = res;
-            if( hi != (lo >> Sizee::value) ) res = res2;
-            return static_cast<T>(res);
           }
           else if constexpr( sizeof(T) == 8 )
           {
