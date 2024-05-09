@@ -33,19 +33,6 @@ namespace eve::detail
   }
 
   template<scalar_value T>
-  EVE_FORCEINLINE  auto  mul_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
-  {
-    return static_cast<T>(a * b);
-  }
-
-  template<value T, value U>
-  EVE_FORCEINLINE auto
-  mul_(EVE_SUPPORTS(cpu_), T const &a, U const &b) noexcept requires compatible_values<T, U>
-  {
-    return a * b;
-  }
-
-  template<scalar_value T>
   EVE_FORCEINLINE  auto  div_(EVE_SUPPORTS(cpu_), T a, T b) noexcept
   {
     return static_cast<T>(a / b);
