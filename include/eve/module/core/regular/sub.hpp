@@ -8,10 +8,28 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sub_t : tuple_callable<sub_t, Options, saturated_option>
+  {
+    template<eve::value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(sub_t, sub_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -66,21 +84,14 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sub_, sub);
+  inline constexpr auto sub = functor<sub_t>;
+
 }
 
 #include <eve/module/core/regular/impl/sub.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/sub.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/sub.hpp>
-#endif
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/sub.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
