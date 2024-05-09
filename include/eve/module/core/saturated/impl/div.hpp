@@ -23,7 +23,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/mul.hpp>
+#include <eve/module/core/regular/mul.hpp>
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
