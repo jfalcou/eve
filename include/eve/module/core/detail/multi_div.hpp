@@ -25,6 +25,6 @@ namespace eve::detail
     r_t that(a1);
     that = mul[d](that, r_t(args)...);
     EVE_ASSERT(eve::all(is_nez(that)), "[eve] div[O] - 0/0 is undefined");
-    return div[d](r_t(a0), that);
+    return div/*[d]*/(r_t(a0), that); /*TODO*/
   }
 }
