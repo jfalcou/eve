@@ -18,7 +18,6 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/module/core/regular/is_lez.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/max.hpp>
@@ -69,7 +68,7 @@ namespace eve::detail
         else //unsigned
         {
           T r = a - b;
-          return bit_and(r, bit_mask(is_less_equal(r, a)));
+          return bit_and(r, bit_mask(r <= a));
         }
       }
     }
