@@ -67,7 +67,7 @@ namespace eve
 //!
 //!       The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated
 //!       division of `x` by  all `xs`. The result is semantically equivalent to
-//!       `saturated(div)(x, saturated(mul)(xs...))` but is always defined even if
+//!       `saturated(div)(x, mul[saturated](xs...))` but is always defined even if
 //!       the denominator is 0.
 //!
 //!       The relevant cases are just in fact  the division by 0 for integral types

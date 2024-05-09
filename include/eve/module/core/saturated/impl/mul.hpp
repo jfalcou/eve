@@ -27,21 +27,8 @@
 
 namespace eve::detail
 {
-//================================================================================================
-// saturated case
-//================================================================================================
-template<ordered_value T, ordered_value U>
-EVE_FORCEINLINE auto
-mul_(EVE_SUPPORTS(cpu_),
-     saturated_type const&,
-     T const& a,
-     U const& b) noexcept
--> decltype(mul(a, b))
-{
-  return arithmetic_call(saturated(mul), a, b);
-}
 
-template<ordered_value T>
+template<value T>
 EVE_FORCEINLINE auto
 mul_(EVE_SUPPORTS(cpu_), saturated_type const&, T const& a, T const& b) noexcept
 {
