@@ -16,7 +16,6 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
-#include <optional>
 
 //======================================================================================================================
 // New option style  - TODO rename later without the '2'
@@ -41,10 +40,10 @@ namespace eve
   struct raw_mode         {};
   struct saturated_mode   {};
 
-  struct downward_mode    {};
-  struct to_nearest_mode  {};
-  struct toward_zero_mode {};
-  struct upward_mode      {};
+  struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEG_INF
+  struct downward_mode    { static constexpr int value = 0x08 | 0x01; }; // _MM_FROUND_TO_NEAREST_INT
+  struct upward_mode      { static constexpr int value = 0x08 | 0x02; }; // _MM_FROUND_TO_ZERO
+  struct toward_zero_mode { static constexpr int value = 0x08 | 0x03; }; // _MM_FROUND_TO_POS_INF
 
   [[maybe_unused]] inline constexpr auto associated       = ::rbr::flag( associated_mode{}      );
   [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
@@ -94,14 +93,14 @@ namespace eve
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
   // ----------------------------------------------------------------------------------
-  template<typename S> consteval std::optional<int> rounding_mode() noexcept
+  template<typename S, typename T> consteval int rounding_mode(T) noexcept
   {
     // All set the _MM_FROUND_NO_EXC bit
-    if      constexpr(S::contains(eve::to_nearest2 )) return 0x08 | 0x00; // _MM_FROUND_TO_NEAREST_INT
-    else if constexpr(S::contains(eve::downward2   )) return 0x08 | 0x01; // _MM_FROUND_TO_NEG_INF
-    else if constexpr(S::contains(eve::upward2     )) return 0x08 | 0x02; // _MM_FROUND_TO_POS_INF
-    else if constexpr(S::contains(eve::toward_zero2)) return 0x08 | 0x03; // _MM_FROUND_TO_ZERO
-    else                                              return {};          // disengage if no rounding option
+    if      constexpr(S::contains(eve::to_nearest2 )) return to_nearest_mode::value;
+    else if constexpr(S::contains(eve::downward2   )) return downward_mode::value;
+    else if constexpr(S::contains(eve::upward2     )) return toward_zero_mode::value;
+    else if constexpr(S::contains(eve::toward_zero2)) return upward_mode::value;
+    else                                              return T::value;
   };
 
   // ----------------------------------------------------------------------------------
