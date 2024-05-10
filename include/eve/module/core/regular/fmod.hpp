@@ -7,10 +7,17 @@
 //==================================================================================================
 #pragma once
 
-
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/is_not_infinite.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/fanm.hpp>
+#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/constant/allbits.hpp>
 
 namespace eve
 {
@@ -27,7 +34,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
-//!   @var rem
+//!   @var fmod
 //!   @brief Computes the  remainder after division for floating entries similarly to std::fmod
 //!   for floating entries.
 //!
@@ -92,7 +99,7 @@ namespace eve
       {
         return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
                        allbits,
-                       fanm[pedantic2][is_eqz(a) || is_infinite(b)](a, b, trunc(div(a, b))));
+                       fanm[pedantic2][is_nez(a) && is_not_infinite(b)](a, trunc(a/b), b));
       }
       else
       {
