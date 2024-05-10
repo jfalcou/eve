@@ -111,25 +111,23 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::div variants on wide",
 {
   using type = T;
   using eve::div;
-  using eve::saturated;
+  using eve::saturated2;
 
   auto cases = tts::limits(tgt);
-  TTS_EQUAL(div[saturated](cases.valmin, type(-1)), cases.valmax);
-  TTS_EQUAL(div[saturated](type(3), type(0)), cases.valmax);
-  TTS_EQUAL(div[saturated](type(-3), type(0)), cases.valmin);
+  TTS_EQUAL(div[saturated2](cases.valmin, type(-1)), cases.valmax);
+  TTS_EQUAL(div[saturated2](type(3), type(0)), cases.valmax);
+  TTS_EQUAL(div[saturated2](type(-3), type(0)), cases.valmin);
 };
 
 //==================================================================================================
 //==  conditional div tests on simd
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
-{ return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of div on signed types",
               eve::test::simd::signed_types,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127)))
+              tts::generate(tts::randoms(-128, 127),
+                            tts::randoms(-128, 127),
+                            tts::randoms(-128, 127)))
 <typename T>(T a0, T a1, T a2)
 {
   using eve::div;
@@ -140,7 +138,7 @@ TTS_CASE_WITH("Check behavior of div on signed types",
   TTS_ULP_EQUAL(div[is_nez(a2)](a0, a2),
                 map([](auto e, auto f) { return is_nez(f) ? div(e, f) : e; }, a0, a2),
                 2.5);
-  TTS_ULP_EQUAL(
+ TTS_ULP_EQUAL(
       div[saturated][is_nez(a0) && is_nez(a2)](a0, a2),
       map([](auto e, auto f) { return is_nez(e) && is_nez(f) ? div[saturated](e, f) : e; }, a0, a2),
       2.5);
