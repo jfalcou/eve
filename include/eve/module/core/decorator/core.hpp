@@ -16,6 +16,7 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
+#include <optional>
 
 //======================================================================================================================
 // New option style  - TODO rename later without the '2'
