@@ -36,10 +36,11 @@ namespace eve
   struct spherical_mode       {};
   struct successor_mode       {};
 
-  struct downward_mode    {};
   struct pedantic_mode    {};
   struct raw_mode         {};
   struct saturated_mode   {};
+
+  struct downward_mode    {};
   struct to_nearest_mode  {};
   struct toward_zero_mode {};
   struct upward_mode      {};
@@ -56,10 +57,11 @@ namespace eve
   [[maybe_unused]] inline constexpr auto spherical        = ::rbr::flag( spherical_mode{}       );
   [[maybe_unused]] inline constexpr auto successor        = ::rbr::flag( successor_mode{}       );
 
-  [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
   [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}         );
   [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{}   );
+
+  [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto to_nearest2  = ::rbr::flag( to_nearest_mode{}  );
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
   [[maybe_unused]] inline constexpr auto upward2      = ::rbr::flag( upward_mode{}      );
@@ -76,13 +78,30 @@ namespace eve
   struct spherical_option       : detail::exact_option<spherical>       {};
   struct successor_option       : detail::exact_option<successor>       {};
 
-  struct downward_option     : detail::exact_option<downward2>    {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};
   struct raw_option          : detail::exact_option<raw2>         {};
   struct saturated_option    : detail::exact_option<saturated2>   {};
+
+  // ----------------------------------------------------------------------------------
+  // Rounding modes
+  // ----------------------------------------------------------------------------------
+  struct downward_option     : detail::exact_option<downward2>    {};
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
   struct toward_zero_option  : detail::exact_option<toward_zero2> {};
   struct upward_option       : detail::exact_option<upward2>      {};
+
+  // ----------------------------------------------------------------------------------
+  // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
+  // ----------------------------------------------------------------------------------
+  template<typename S> consteval std::optional<int> rounding_mode() noexcept
+  {
+    // All set the _MM_FROUND_NO_EXC bit
+    if      constexpr(S::contains(eve::to_nearest2 )) return 0x08 | 0x00; // _MM_FROUND_TO_NEAREST_INT
+    else if constexpr(S::contains(eve::downward2   )) return 0x08 | 0x01; // _MM_FROUND_TO_NEG_INF
+    else if constexpr(S::contains(eve::upward2     )) return 0x08 | 0x02; // _MM_FROUND_TO_POS_INF
+    else if constexpr(S::contains(eve::toward_zero2)) return 0x08 | 0x03; // _MM_FROUND_TO_ZERO
+    else                                              return {};          // disengage if no rounding option
+  };
 
   // ----------------------------------------------------------------------------------
   // [TEMPORARY] Will be removed when all decorator have been converted
