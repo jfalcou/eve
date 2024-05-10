@@ -19,5 +19,4 @@
 //==================================================================================================
 #include <eve/module/core/detail/horn.hpp>
 #include <eve/module/core/detail/horn1.hpp>
-#include <eve/module/core/detail/multi_div.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
