@@ -99,7 +99,6 @@ namespace eve
         return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
                        allbits,
                        fanm[pedantic2][is_nez(a) && is_not_infinite(b)](a, nearest(a/b), b));
-        //            if_else(is_eqz(a) || is_infinite(b), a, fanm[pedantic2](a, nearest(a/b), b)));
       }
       else
       {
