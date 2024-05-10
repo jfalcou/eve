@@ -12,19 +12,31 @@
 
 namespace eve::detail
 {
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T,N>
-div_(EVE_SUPPORTS(sve_), C const& cx, wide<T, N> const& v, wide<T, N> const& w) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  if constexpr( C::is_complete ) { return div_(EVE_RETARGET(cpu_), cx, v, w); }
-  else
+  template<conditional_expr C, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T,N>
+  div_(EVE_SUPPORTS(sve_), C const& cx, wide<T, N> const& v, wide<T, N> const& w) noexcept
+  requires sve_abi<abi_t<T, N>>
   {
-    if constexpr( !C::has_alternative && std::floating_point<T>)
+    auto const alt = alternative(mask, v, as(v));
+
+    // ignore all just return alternative
+    if constexpr( C::is_complete ) return alt;
+    else
     {
-      auto m   = expand_mask(cx, as<wide<T, N>> {});
-      return svdiv_m(m,v,w);
+      //  if saturated on integer, we don't have masked op so we delegate
+      if        constexpr(O::contains(saturated2) && std::integral<T>) return div.behavior(cpu_{},opts,v,w);
+      //  If not, we can mask if there is no alterative value
+      else  if  constexpr( !C::has_alternative )
+      {
+        auto m   = expand_mask(mask, as(v));
+        return svdiv_m(m,v,w);
+      }
+      // If not, we delegate to the automasking
+      else
+      {
+        return div.behavior(cpu_{},opts,v,w);
+      }
+
     }
-    else  return div_(EVE_RETARGET(cpu_), cx, v, w); }
-}
+  }
 }
