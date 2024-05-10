@@ -167,6 +167,15 @@ namespace eve::detail
     }
   }
 
+  //masked call must treat specifically masked 0 denominateur
+  template<conditional_expr C, integral_value T, callable_options O>
+  EVE_FORCEINLINE auto
+  div_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T const& t, T const& f) noexcept
+  {
+    auto g = if_else(cond, f, mone);
+    return if_else(cond, div[o.drop(condition_key)](t, g), t);
+  }
+
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {

@@ -37,14 +37,12 @@ TTS_CASE_TPL("Check return types of fmod", eve::test::simd::ieee_reals)
 //==================================================================================================
 //==  fmod simd tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
-{ return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0; };
 
 TTS_CASE_WITH("Check behavior of fmod on wide",
               eve::test::simd::ieee_reals
               ,
-              tts::generate(tts::randoms(tts::constant(mini), 100),
-                            tts::randoms(tts::constant(mini), 100)))
+              tts::generate(tts::randoms(-100, 100),
+                            tts::randoms(-100, 100)))
 <typename T>(T a0, T a1)
 {
   using eve::fmod;
