@@ -50,5 +50,28 @@ TTS_CASE_WITH("Check behavior of fmod on wide",
 
   auto thrs = std::same_as<eve::element_type_t<T>, float> ? 5e-4 : 5e-12;
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_RELATIVE_EQUAL(fmod(a0, a1), map([](auto e, auto f) { return eve::fmod(e, f); }, a0, a1), thrs);
+  TTS_RELATIVE_EQUAL(fmod(a0, a1), map([](auto e, auto f) { return std::fmod(e, f); }, a0, a1), thrs) << "a0" << a0 << " a1 " << a1 << '\n';
+};
+
+TTS_CASE_WITH("Check behavior of fmod on wide corner cases",
+              eve::test::simd::ieee_reals
+              ,
+              tts::generate(tts::randoms(1, 100),
+                            tts::randoms(1, 100)))
+<typename T>(T a0, T a1)
+{
+  using eve::fmod;
+  using eve::detail::map;
+  using eve::as;
+
+  TTS_IEEE_EQUAL(fmod(T(0), a1), T(0));
+  TTS_IEEE_EQUAL(fmod(-T(0), a1), T(0));
+  TTS_IEEE_EQUAL(fmod(eve::inf(as<T>()), a1), eve::nan(as<T>()));
+  TTS_IEEE_EQUAL(fmod(eve::minf(as<T>()), a1), eve::nan(as<T>()));
+  TTS_IEEE_EQUAL(fmod(a0, eve::zero(as<T>())), eve::nan(as<T>()));
+  TTS_IEEE_EQUAL(fmod(a0, eve::mzero(as<T>())), eve::nan(as<T>()));
+  TTS_IEEE_EQUAL(fmod(a0, eve::inf(as<T>())), a0);
+  TTS_IEEE_EQUAL(fmod(a0, eve::minf(as<T>())), a0);
+  TTS_IEEE_EQUAL(fmod(eve::nan(as<T>()), a1), eve::nan(as<T>()));
+  TTS_IEEE_EQUAL(fmod(a0, eve::nan(as<T>())), eve::nan(as<T>()));
 };
