@@ -92,7 +92,7 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T remainder_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
-      auto bb = if_else(is_nez(b), b, one);
+      b = if_else(is_nez(b), b, one);
       if constexpr( floating_value<T> )
       {
         return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
