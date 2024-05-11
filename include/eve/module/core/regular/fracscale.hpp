@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
-#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/round.hpp>
 
 namespace eve
 {
@@ -99,16 +99,16 @@ namespace eve
   {
     template<typename T, typename S, callable_options O>
     EVE_FORCEINLINE constexpr T
-    fracscale_(EVE_REQUIRES(cpu_), O const &, T const &a0, S scale) noexcept
+    fracscale_(EVE_REQUIRES(cpu_), O const & o, T const &a0, S scale) noexcept
     {
-      return if_else(is_infinite(a0), zero, a0 - ldexp(nearest(ldexp(a0, scale)), -scale));
+      return if_else(is_infinite(a0), zero, a0 - ldexp(round[o](ldexp(a0, scale)), -scale));
     }
 
     template<typename T, auto S, callable_options O>
     EVE_FORCEINLINE constexpr T
-    fracscale_(EVE_REQUIRES(cpu_), O const &, T const &a0, std::integral_constant<int, S> scale) noexcept
+    fracscale_(EVE_REQUIRES(cpu_), O const & o, T const &a0, std::integral_constant<int, S> scale) noexcept
     {
-      return if_else(is_infinite(a0), zero, a0 - ldexp(nearest(ldexp(a0, S)), -S));
+      return if_else(is_infinite(a0), zero, a0 - ldexp(round[o](ldexp(a0, S)), -S));
     }
   }
 }
