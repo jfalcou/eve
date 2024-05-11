@@ -12,26 +12,26 @@
 //==================================================================================================
 //== Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of rem", eve::test::simd::all_types)
+TTS_CASE_TPL("Check return types of rem", eve::test::simd::integers)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
 
   // downward
-  TTS_EXPR_IS(eve::downward(eve::rem)(T(), T()), T);
-  TTS_EXPR_IS(eve::downward(eve::rem)(T(), v_t()), T);
-  TTS_EXPR_IS(eve::downward(eve::rem)(v_t(), T()), T);
-  TTS_EXPR_IS(eve::downward(eve::rem)(v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::rem[eve::downward](T(), T()), T);
+  TTS_EXPR_IS(eve::rem[eve::downward](T(), v_t()), T);
+  TTS_EXPR_IS(eve::rem[eve::downward](v_t(), T()), T);
+  TTS_EXPR_IS(eve::rem[eve::downward](v_t(), v_t()), v_t);
 
-  TTS_EXPR_IS(eve::upward(eve::rem)(T(), T()), T);
-  TTS_EXPR_IS(eve::upward(eve::rem)(T(), v_t()), T);
-  TTS_EXPR_IS(eve::upward(eve::rem)(v_t(), T()), T);
-  TTS_EXPR_IS(eve::upward(eve::rem)(v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::rem[eve::upward](T(), T()), T);
+  TTS_EXPR_IS(eve::rem[eve::upward](T(), v_t()), T);
+  TTS_EXPR_IS(eve::rem[eve::upward](v_t(), T()), T);
+  TTS_EXPR_IS(eve::rem[eve::upward](v_t(), v_t()), v_t);
 
-  TTS_EXPR_IS(eve::to_nearest(eve::rem)(T(), T()), T);
-  TTS_EXPR_IS(eve::to_nearest(eve::rem)(T(), v_t()), T);
-  TTS_EXPR_IS(eve::to_nearest(eve::rem)(v_t(), T()), T);
-  TTS_EXPR_IS(eve::to_nearest(eve::rem)(v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::rem[eve::to_nearest](T(), T()), T);
+  TTS_EXPR_IS(eve::rem[eve::to_nearest](T(), v_t()), T);
+  TTS_EXPR_IS(eve::rem[eve::to_nearest](v_t(), T()), T);
+  TTS_EXPR_IS(eve::rem[eve::to_nearest](v_t(), v_t()), v_t);
 
   // conditionnal
   TTS_EXPR_IS(eve::rem[eve::logical<T>()](T(), T()), T);
@@ -59,18 +59,16 @@ TTS_CASE_WITH("Check behavior of rem on wide",
   a2 = eve::if_else(eve::is_eqz(a2), eve::one, a2);
 
   TTS_EQUAL(eve::rem(a0, a2), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a2));
-  TTS_EQUAL(downward(rem)(a0, a2),
-            map([&](auto e, auto f) { return downward(rem)(e, f); }, a0, a2));
-  TTS_EQUAL(upward(rem)(a0, a2), map([&](auto e, auto f) { return upward(rem)(e, f); }, a0, a2));
-  TTS_EQUAL(to_nearest(rem)(a0, a2),
-            map([&](auto e, auto f) { return to_nearest(rem)(e, f); }, a0, a2));
+  TTS_EQUAL(rem[downward](a0, a2), map([&](auto e, auto f) { return rem[downward](e, f); }, a0, a2));
+  TTS_EQUAL(rem[upward](a0, a2), map([&](auto e, auto f) { return rem[upward](e, f); }, a0, a2));
+  TTS_EQUAL(rem[to_nearest](a0, a2), map([&](auto e, auto f) { return rem[to_nearest](e, f); }, a0, a2));
 };
 
 //==================================================================================================
 //== Test for corner-cases values
 //==================================================================================================
 TTS_CASE_TPL("Check corner-cases behavior of eve::rem variants on wide",
-             eve::test::simd::signed_types)
+             eve::test::simd::signed_integers)
 <typename T>(tts::type<T>)
 {
   using eve::downward;
@@ -80,86 +78,86 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rem variants on wide",
   using v_t = eve::element_type_t<T>;
 
   // downward
-  TTS_EQUAL(downward(eve::rem)(T(-1), T(2)), T(1));
-  TTS_EQUAL(downward(eve::rem)(v_t(-1), T(2)), T(1));
-  TTS_EQUAL(downward(eve::rem)(T(-1), v_t(2)), T(1));
-  TTS_EQUAL(downward(eve::rem)(T(-4), T(3)), T(2));
-  TTS_EQUAL(downward(eve::rem)(v_t(-4), T(3)), T(2));
-  TTS_EQUAL(downward(eve::rem)(T(-4), v_t(3)), T(2));
+  TTS_EQUAL(eve::rem[downward](T(-1), T(2)), T(1));
+  TTS_EQUAL(eve::rem[downward](v_t(-1), T(2)), T(1));
+  TTS_EQUAL(eve::rem[downward](T(-1), v_t(2)), T(1));
+  TTS_EQUAL(eve::rem[downward](T(-4), T(3)), T(2));
+  TTS_EQUAL(eve::rem[downward](v_t(-4), T(3)), T(2));
+  TTS_EQUAL(eve::rem[downward](T(-4), v_t(3)), T(2));
 
-  TTS_EQUAL(downward(eve::rem)(T(1), T(-2)), T(-1));
-  TTS_EQUAL(downward(eve::rem)(v_t(1), T(-2)), T(-1));
-  TTS_EQUAL(downward(eve::rem)(T(1), v_t(-2)), T(-1));
-  TTS_EQUAL(downward(eve::rem)(T(4), T(-3)), T(-2));
-  TTS_EQUAL(downward(eve::rem)(v_t(4), T(-3)), T(-2));
-  TTS_EQUAL(downward(eve::rem)(T(4), v_t(-3)), T(-2));
+  TTS_EQUAL(eve::rem[downward](T(1), T(-2)), T(-1));
+  TTS_EQUAL(eve::rem[downward](v_t(1), T(-2)), T(-1));
+  TTS_EQUAL(eve::rem[downward](T(1), v_t(-2)), T(-1));
+  TTS_EQUAL(eve::rem[downward](T(4), T(-3)), T(-2));
+  TTS_EQUAL(eve::rem[downward](v_t(4), T(-3)), T(-2));
+  TTS_EQUAL(eve::rem[downward](T(4), v_t(-3)), T(-2));
 
-  TTS_EQUAL(downward(eve::rem)(T {12}, T(4)), T(0));
-  TTS_EQUAL(downward(eve::rem)(T(1), T(2)), T(1));
-  TTS_EQUAL(downward(eve::rem)(T(4), T(3)), T(1));
-  TTS_EQUAL(downward(eve::rem)(T(4), T(4)), T(0));
+  TTS_EQUAL(eve::rem[downward](T {12}, T(4)), T(0));
+  TTS_EQUAL(eve::rem[downward](T(1), T(2)), T(1));
+  TTS_EQUAL(eve::rem[downward](T(4), T(3)), T(1));
+  TTS_EQUAL(eve::rem[downward](T(4), T(4)), T(0));
 
-  TTS_EQUAL(downward(eve::rem)(v_t(12), T(4)), T(0));
-  TTS_EQUAL(downward(eve::rem)(v_t(1), T(2)), T(1));
-  TTS_EQUAL(downward(eve::rem)(v_t(4), T(3)), T(1));
+  TTS_EQUAL(eve::rem[downward](v_t(12), T(4)), T(0));
+  TTS_EQUAL(eve::rem[downward](v_t(1), T(2)), T(1));
+  TTS_EQUAL(eve::rem[downward](v_t(4), T(3)), T(1));
 
-  TTS_EQUAL(downward(eve::rem)(T(12), v_t(4)), T(0));
-  TTS_EQUAL(downward(eve::rem)(T(1), v_t(2)), T(1));
-  TTS_EQUAL(downward(eve::rem)(T(4), v_t(3)), T(1));
+  TTS_EQUAL(eve::rem[downward](T(12), v_t(4)), T(0));
+  TTS_EQUAL(eve::rem[downward](T(1), v_t(2)), T(1));
+  TTS_EQUAL(eve::rem[downward](T(4), v_t(3)), T(1));
 
   // upward
-  TTS_EQUAL(eve::upward(eve::rem)(T(-1), T(2)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(-1), T(2)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(-1), v_t(2)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(-4), T(3)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(-4), T(3)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(-4), v_t(3)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](T(-1), T(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(-1), T(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](T(-1), v_t(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](T(-4), T(3)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(-4), T(3)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](T(-4), v_t(3)), T(-1));
 
-  TTS_EQUAL(eve::upward(eve::rem)(T(1), T(-2)), T(1));
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(1), T(-2)), T(1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(1), v_t(-2)), T(1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(4), T(-3)), T(1));
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(4), T(-3)), T(1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(4), v_t(-3)), T(1));
+  TTS_EQUAL(eve::rem[eve::upward](T(1), T(-2)), T(1));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(1), T(-2)), T(1));
+  TTS_EQUAL(eve::rem[eve::upward](T(1), v_t(-2)), T(1));
+  TTS_EQUAL(eve::rem[eve::upward](T(4), T(-3)), T(1));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(4), T(-3)), T(1));
+  TTS_EQUAL(eve::rem[eve::upward](T(4), v_t(-3)), T(1));
 
-  TTS_EQUAL(eve::upward(eve::rem)(T {12}, T(4)), T(0));
-  TTS_EQUAL(eve::upward(eve::rem)(T(1), T(2)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(4), T(3)), T(-2));
+  TTS_EQUAL(eve::rem[eve::upward](T {12}, T(4)), T(0));
+  TTS_EQUAL(eve::rem[eve::upward](T(1), T(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](T(4), T(3)), T(-2));
 
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(12), T(4)), T(0));
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(1), T(2)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(v_t(4), T(3)), T(-2));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(12), T(4)), T(0));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(1), T(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](v_t(4), T(3)), T(-2));
 
-  TTS_EQUAL(eve::upward(eve::rem)(T(12), v_t(4)), T(0));
-  TTS_EQUAL(eve::upward(eve::rem)(T(1), v_t(2)), T(-1));
-  TTS_EQUAL(eve::upward(eve::rem)(T(4), v_t(3)), T(-2));
+  TTS_EQUAL(eve::rem[eve::upward](T(12), v_t(4)), T(0));
+  TTS_EQUAL(eve::rem[eve::upward](T(1), v_t(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::upward](T(4), v_t(3)), T(-2));
 
   // to_nearest
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(-1), T(2)), T(-1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(-1), T(2)), T(-1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(-1), v_t(2)), T(-1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(-4), T(3)), T(-1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(-4), T(3)), T(-1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(-4), v_t(3)), T(-1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(-1), T(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(-1), T(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(-1), v_t(2)), T(-1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(-4), T(3)), T(-1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(-4), T(3)), T(-1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(-4), v_t(3)), T(-1));
 
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(1), T(-2)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(1), T(-2)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(1), v_t(-2)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(4), T(-3)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(4), T(-3)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(4), v_t(-3)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(1), T(-2)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(1), T(-2)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(1), v_t(-2)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(4), T(-3)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(4), T(-3)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(4), v_t(-3)), T(1));
 
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T {12}, T(4)), T(0));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(1), T(2)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(4), T(3)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T {12}, T(4)), T(0));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(1), T(2)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(4), T(3)), T(1));
 
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(12), T(4)), T(0));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(1), T(2)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(v_t(4), T(3)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(12), T(4)), T(0));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(1), T(2)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](v_t(4), T(3)), T(1));
 
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(12), v_t(4)), T(0));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(1), v_t(2)), T(1));
-  TTS_EQUAL(eve::to_nearest(eve::rem)(T(4), v_t(3)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(12), v_t(4)), T(0));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(1), v_t(2)), T(1));
+  TTS_EQUAL(eve::rem[eve::to_nearest](T(4), v_t(3)), T(1));
 };
 
 //==================================================================================================
@@ -169,7 +167,7 @@ auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of rem on signed types",
-              eve::test::simd::signed_types,
+              eve::test::simd::signed_integers,
               tts::generate(tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127)))
@@ -183,33 +181,33 @@ TTS_CASE_WITH("Check behavior of rem on signed types",
   using eve::detail::map;
 
   TTS_RELATIVE_EQUAL(
-      downward(rem[is_nez(a2)])(a0, a2),
-      map([](auto e, auto f) { return is_nez(f) ? downward(rem)(e, f) : e; }, a0, a2),
+      rem[downward][is_nez(a2)](a0, a2),
+      map([](auto e, auto f) { return is_nez(f) ? rem[downward](e, f) : e; }, a0, a2),
       4e-4);
 
-  TTS_RELATIVE_EQUAL(upward(rem[is_nez(a2)])(a0, a2),
-                     map([](auto e, auto f) { return is_nez(f) ? upward(rem)(e, f) : e; }, a0, a2),
+  TTS_RELATIVE_EQUAL(rem[upward][is_nez(a2)](a0, a2),
+                     map([](auto e, auto f) { return is_nez(f) ? rem[upward](e, f) : e; }, a0, a2),
                      4e-4);
 
   TTS_RELATIVE_EQUAL(
-      to_nearest(rem[is_nez(a2)])(a0, a2),
-      map([](auto e, auto f) { return is_nez(f) ? to_nearest(rem)(e, f) : e; }, a0, a2),
+      rem[to_nearest][is_nez(a2)](a0, a2),
+      map([](auto e, auto f) { return is_nez(f) ? rem[to_nearest](e, f) : e; }, a0, a2),
       4e-4);
 
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
 
   TTS_RELATIVE_EQUAL(
-      downward(rem[a2 > T(64)])(a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? downward(rem)(e, f) : e; }, a0, a1, a2),
+      rem[downward][a2 > T(64)](a0, a1),
+      map([](auto e, auto f, auto g) { return g > 64 ? rem[downward](e, f) : e; }, a0, a1, a2),
       4e-4);
 
   TTS_RELATIVE_EQUAL(
-      upward(rem[a2 > T(64)])(a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? upward(rem)(e, f) : e; }, a0, a1, a2),
+      rem[upward][a2 > T(64)](a0, a1),
+      map([](auto e, auto f, auto g) { return g > 64 ? rem[upward](e, f) : e; }, a0, a1, a2),
       4e-4);
 
   TTS_RELATIVE_EQUAL(
-      to_nearest(rem[a2 > T(64)])(a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? to_nearest(rem)(e, f) : e; }, a0, a1, a2),
+      rem[to_nearest][a2 > T(64)](a0, a1),
+      map([](auto e, auto f, auto g) { return g > 64 ? rem[to_nearest](e, f) : e; }, a0, a1, a2),
       4e-4);
 };

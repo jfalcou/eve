@@ -7,10 +7,31 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct rem_t : tuple_callable<rem_t, Options, saturated_option, downward_option, upward_option,
+                                to_nearest_option, toward_zero_option>
+  {
+    template<eve::integral_value T0, integral_value T1>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(rem_t, rem_);
+  };
+
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -28,7 +49,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value U>
+//!      template< eve::integral_value T,  eve::integral_value U>
 //!      eve::common_value_t<T, U> rem(T x, U y) noexcept;
 //!   }
 //!   @endcode
@@ -65,42 +86,33 @@ namespace eve
 //!
 //!   * eve::toward_zero
 //!
-//!       The call `toward_zero(rem)(x, y)`  computes  `x-towardzero_(div)(x, y)*y`.
-//!        For floating point entries this call is similar to std::fmod. In particular:
-//!
-//!        * If `x` is  \f$\pm0\f$ and y is not zero,  \f$\pm0\f$ is returned.
-//!        * If `x` is \f$\pm\infty\f$, and y is not NaN, NaN is returned.
-//!        * If `y` is  \f$\pm0\f$, NaN is returned.
-//!        * If `y` is  \f$\pm\infty\f$ and `x` is finite, `x` is returned.
-//!        * If either argument is a Nan, NaN is returned.
+//!       The call `rem[toward_zero](x, y)`  computes  `x-div[towardzero](x, y)*y`.
+//!       (this is also the default).
 //!
 //!   * eve::downward
 //!
-//!       The call `downward(rem)(x, y)`  computes  `x-downward(div)(x, y)*y`.
+//!       The call `rem[downward](x, y)`  computes  `x-div[downward](x, y)*y`.
 //!
 //!   * eve::upward
 //!
-//!       The call `upward(rem)(x, y)`  computes  `x-upward(div)(x, y)*y`.
+//!       The call `rem[upward](x, y)`  computes  `x-div[upward](x, y)*y`.
 //!        It is not defined for unsigned values as the result can be negative.
 //!
 //!   * eve::to_nearest
 //!
-//!       The call `to_nearest(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
+//!       The call `rem[to_nearest](x, y)`  computes  `x-div[to_nearest(](x,y)*y`.
 //!        It is not defined for unsigned values as the result can be negative.
-//!        For floating point entries this call is similar to std::remainder.
-//!        In particular:
-//!
-//!        * If `x` is \f$\pm\infty\f$, NaN is returned
-//!        * If `y` is \f$\pm0\f$, NaN is returned
-//!        * If either argument is a Nan, NaN is returned
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(rem_, rem);
+  inline constexpr auto rem = functor<rem_t>;
+
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+    {
+      return fanm(a, div[o](a, b), b);
+    }
+  }
 }
-
-#include <eve/module/core/regular/impl/rem.hpp>
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/rem.hpp>
-#endif
