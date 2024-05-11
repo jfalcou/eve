@@ -95,7 +95,7 @@ namespace eve::detail
     else
     {
       if( eve::all(p == P(2)) ) return hypot[o](r_t(a0), r_t(a1), r_t(args)...);
-      else if( eve::all(p == P(1)) ) return manhattan/*[o]*/(r_t(a0), r_t(a1), r_t(args)...);
+      else if( eve::all(p == P(1)) ) return manhattan[o](r_t(a0), r_t(a1), r_t(args)...);
       else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
       else
       {

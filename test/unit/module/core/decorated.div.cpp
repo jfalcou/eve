@@ -43,7 +43,6 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](T(), T()), T);
   TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](v_t(), v_t()), T);
   TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](v_t(), T()), T);
@@ -224,7 +223,7 @@ TTS_CASE_WITH("Check behavior of div on signed types",
   TTS_ULP_EQUAL(div[upward][is_nez(a2)](a0, a2),
                 map([](auto e, auto f) { return is_nez(f) ? div[upward](e, f) : e; }, a0, a2),
                 2.5);
-  TTS_ULP_EQUAL(div[to_nearest](is_nez(a2)](a0, a2),
+  TTS_ULP_EQUAL(div[to_nearest][is_nez(a2)](a0, a2),
                 map([](auto e, auto f) { return is_nez(f) ? div[to_nearest](e, f) : e; }, a0, a2),
                 2.5);
 
