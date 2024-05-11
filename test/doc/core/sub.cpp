@@ -16,7 +16,7 @@ int main()
             << " -> pi - qi                 = " << pi - qi << '\n'
             << " -> pf - qf                 = " << pf - qf << '\n'
             <<  " -> sub[pi > qi](pi, qi)   = " << eve::sub[pi > qi](pi, qi) << '\n'
-            <<  " -> saturated(sub)(pi, qi) = " << eve::saturated(eve::sub)(pi, qi) << '\n';
+            <<  " -> sub[saturated](pi, qi) = " <<eve::sub[eve::saturated](pi, qi) << '\n';
 
   std::int16_t xi = 100, yi = 32700;
 
@@ -34,7 +34,7 @@ int main()
             << " -> sub(kumi::tuple{pf, pf})      = " << eve::sub( kumi::tuple{pf, pf})  << '\n'
             << " -> sub(kumi::tuple{pf, 1.0f)     = " << eve::sub( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> sub(kumi::tuple{1.0f, pf)     = " << eve::sub( kumi::tuple{1.0f, pf})  << '\n'
-            << " -> saturated(sub)(pi,12,pi,pi)   = " << eve::saturated(eve::sub)(pi, 12, pi,pi) << '\n';
+            << " -> sub[saturated](pi,12,pi,pi)   = " << eve::sub[eve::saturated](pi, 12, pi, pi) << '\n';
 
   return 0;
 }

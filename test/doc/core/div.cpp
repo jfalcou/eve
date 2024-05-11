@@ -22,19 +22,19 @@ int main()
             << " -> div(xi, yi)            = " << eve::div(xi, yi)                 << '\n'
             << " -> xi / yi                = " << xi / yi << '\n' // C++ promotion to int
             << " -> std::int16_t( xi / yi) = " << std::int16_t( xi / yi)           << '\n'
-            << " -> saturated(div(xi, yi)) = " << eve::div[eve::saturated](xi, yi) << '\n'
+            << " -> div[saturated](xi, yi)) = " << eve::div[eve::saturated](xi, yi) << '\n'
             << " -> div[pf> qf](pf, qf)    = " << eve::div[pf>qf](pf, qf)          << '\n';
 
    wi_t rf = {3034, 200, 333, -32768}, sf = {4, 7, 13, -1};
 
   std::cout << "---- simd" << '\n'
-            << " <- rf                       = " << rf << '\n'
-            << " <- sf                       = " << sf << '\n'
-            << " -> div[saturated](rf, sf)   = " << eve::div[eve::saturated2](rf, sf) << '\n'
-//             << " -> toward_zero(div)(rf, sf) = " << eve::div[eve::toward_zero2](rf, sf) << '\n'
-//             << " -> downward(div)(rf, sf)    = " << eve::div[eve::downward2](eve::div)(rf, sf)    << '\n'
-//             << " -> upward(div)(rf, sf)      = " << eve::div[eve::upward2](eve::div)(rf, sf)      << '\n'
-//             << " -> to_nearest(div)(rf, sf)  = " << eve::div[eve::to_nearest2](eve::div)(rf, sf)  << '\n'
+            << " <- rf                           = " << rf << '\n'
+            << " <- sf                           = " << sf << '\n'
+            << " -> div[saturated   ](rf, sf)    = " << eve::div[eve::saturated2  ](rf, sf) << '\n'
+            << " -> div[toward_zero2](rf, sf)    = " << eve::div[eve::toward_zero2](rf, sf) << '\n'
+            << " -> div[downward2   ](rf, sf)    = " << eve::div[eve::downward2   ](eve::div)(rf, sf) << '\n'
+            << " -> div[upward2     ](rf, sf)    = " << eve::div[eve::upward2     ](eve::div)(rf, sf) << '\n'
+            << " -> div[to_nearest2 ](rf, sf)    = " << eve::div[eve::to_nearest2 ](eve::div)(rf, sf) << '\n'
     ;
 
   auto k = kumi::tuple{pf, pf, pf, 1};

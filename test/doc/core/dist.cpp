@@ -13,7 +13,7 @@ int main()
             << "<- pf                       = " << pf << '\n'
             << "<- qf                       = " << qf << '\n'
             << "-> dist(pf, qf)             = " << eve::dist(pf, qf) << '\n'
-            << "-> saturated(dist)(pf, qf)  = " << eve::dist[eve::saturated](pf, qf) << '\n';
+            << "-> dist[saturated](pf, qf)  = " << eve::dist[eve::saturated](pf, qf) << '\n';
 
   int16_t xf = -eve::valmax(eve::as<int16_t>());
   int16_t yf = eve::valmax(eve::as<int16_t>());
