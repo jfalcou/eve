@@ -123,7 +123,7 @@ namespace eve
         notdone = next_interval(br_philarge, notdone, aphi * eps(as(aphi)) > one(as(aphi)), r, k);
         if( eve::any(notdone) )
         {
-          auto rphi         = rem(aphi, pio_2(as(aphi)));
+          auto rphi         = fmod(aphi, pio_2(as(aphi)));
           auto m            = nearest((aphi - rphi) / pio_2(as(aphi)));
           auto oddm         = is_odd(m);
           m                 = inc[oddm](m);

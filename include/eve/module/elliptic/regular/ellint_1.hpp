@@ -122,7 +122,7 @@ namespace eve
       // Carlson's algorithm works only for |phi| <= pi/2,
       // use the integrand's periodicity to normalize phi
       //
-      T    rphi         = rem(phi, pio_2(as(phi))); // rempio2 ?
+      T    rphi         = fmod(phi, pio_2(as(phi))); // rempio2 ?
       T    m            = nearest((phi - rphi) / pio_2(as(phi)));
       auto oddm         = is_odd(m);
       m                 = inc[oddm](m);
