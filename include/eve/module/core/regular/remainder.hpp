@@ -27,7 +27,6 @@ namespace eve
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    //      requires(signed_value<common_value_t<T, U>>)
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(remainder_t, remainder_);
