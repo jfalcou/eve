@@ -7,10 +7,30 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/ceil.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/trunc.hpp>
+
 
 namespace eve
 {
+  template<typename Options>
+  struct round_t : elementwise_callable<round_t, Options,  downward_option, upward_option,
+                                        to_nearest_option, toward_zero_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
+    {
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    EVE_CALLABLE_OBJECT(round_t, round_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -71,7 +91,19 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(round_, round);
-}
+  inline constexpr auto round = functor<round_t>;
 
-#include <eve/module/core/regular/impl/round.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T
+    round_(EVE_REQUIRES(cpu_), O const & o, T const &a) noexcept
+    {
+      if      constexpr( O::contains(eve::upward2)      ) return eve::ceil(a);
+      else if constexpr( O::contains(eve::downward2)    ) return eve::floor(a);
+      else if constexpr( O::contains(eve::toward_zero2) ) return eve::trunc(a);
+      else if constexpr( O::contains(eve::to_nearest2)  ) return eve::nearest(a);
+      else                                                return eve::nearest(a);
+    }
+  }
+}
