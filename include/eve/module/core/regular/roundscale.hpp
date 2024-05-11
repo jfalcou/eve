@@ -106,7 +106,7 @@ namespace eve
 
     template<typename T, auto S, callable_options O>
     EVE_FORCEINLINE constexpr T
-    roundscale_(EVE_REQUIRES(cpu_), O const & o, T const &a0, std::integral_constant<int, S> scale) noexcept
+    roundscale_(EVE_REQUIRES(cpu_), O const & o, T const &a0, std::integral_constant<int, S> const &) noexcept
     {
       return if_else(is_infinite(a0), a0, ldexp(round[o](ldexp(a0, S)), -S));
     }
