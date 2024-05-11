@@ -11,17 +11,17 @@ int main()
 
   std::cout << "---- simd" << '\n'
             << " <- pf            = " << pf << '\n'
-            << " -> roundscale(pf, 4)               = " << eve::roundscale(pf, 4) << '\n'
             << " -> roundscale(pf, 4)              = " << eve::roundscale(pf, 4) << '\n'
-            << " -> upward(roundscale)(pf, 4)      = " << eve::downward(eve::roundscale)(pf, 4) << '\n'
-            << " -> downward(roundscale)(pf, 4)    = " << eve::upward(eve::roundscale)(pf, 4) << '\n'
-            << " -> to_nearest(roundscale)(pf, 4)  = " << eve::to_nearest(eve::roundscale)(pf, 4) << '\n';
+            << " -> roundscale(pf, 4)              = " << eve::roundscale(pf, 4) << '\n'
+            << " -> upward(roundscale)(pf, 4)      = " << eve::roundscale[eve::downward  ](pf, 4) << '\n'
+            << " -> downward(roundscale)(pf, 4)    = " << eve::roundscale[eve::upward    ](pf, 4) << '\n'
+            << " -> to_nearest(roundscale)(pf, 4)  = " << eve::roundscale[eve::to_nearest](pf, 4) << '\n';
 
   float xf = 0x1.fffffep0f;
 
   std::cout << "---- scalar" << '\n'
                 << "<- xf                             = " << std::hexfloat << xf << '\n';
     for (int i = 0;  i < 16; ++i)
-      std::cout << "-> toward_zero(roundscale)(xf," << std::setw(2) << i << ")  = " << std::hexfloat << eve::toward_zero(eve::roundscale)(xf, i) << '\n';
+      std::cout << "-> roundscale[toward_zero](xf," << std::setw(2) << i << ")  = " << std::hexfloat << eve::roundscale[eve::toward_zero](xf, i) << '\n';
   return 0;
 }
