@@ -92,10 +92,11 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T remainder_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
+      auto iszb = is_eqz(b);
       b = if_else(is_nez(b), b, one);
       if constexpr( floating_value<T> )
       {
-        return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
+        return if_else(iszb || is_infinite(a) || is_unordered(a, b),
                        allbits,
                        fanm[pedantic2][is_nez(a) && is_not_infinite(b)](a, nearest(a/b), b));
       }
