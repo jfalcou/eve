@@ -30,11 +30,11 @@ int main()
   std::cout << "---- simd" << '\n'
             << " <- rf                           = " << rf << '\n'
             << " <- sf                           = " << sf << '\n'
-            << " -> div[saturated   ](rf, sf)    = " << eve::div[eve::saturated2  ](rf, sf) << '\n'
-            << " -> div[toward_zero2](rf, sf)    = " << eve::div[eve::toward_zero2](rf, sf) << '\n'
-            << " -> div[downward2   ](rf, sf)    = " << eve::div[eve::downward2   ](eve::div)(rf, sf) << '\n'
-            << " -> div[upward2     ](rf, sf)    = " << eve::div[eve::upward2     ](eve::div)(rf, sf) << '\n'
-            << " -> div[to_nearest2 ](rf, sf)    = " << eve::div[eve::to_nearest2 ](eve::div)(rf, sf) << '\n'
+            << " -> div[saturated   ](rf, sf)    = " << eve::div[eve::saturated  ](rf, sf) << '\n'
+            << " -> div[toward_zero2](rf, sf)    = " << eve::div[eve::toward_zero](rf, sf) << '\n'
+            << " -> div[downward2   ](rf, sf)    = " << eve::div[eve::downward   ](rf, sf) << '\n'
+            << " -> div[upward2     ](rf, sf)    = " << eve::div[eve::upward     ](rf, sf) << '\n'
+            << " -> div[to_nearest2 ](rf, sf)    = " << eve::div[eve::to_nearest ](rf, sf) << '\n'
     ;
 
   auto k = kumi::tuple{pf, pf, pf, 1};
