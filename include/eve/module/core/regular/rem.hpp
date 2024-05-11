@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/constant/mone.hpp>
 
 namespace eve
 {
@@ -114,5 +116,15 @@ namespace eve
     {
       return fanm(a, div[o](a, b), b);
     }
+
+    //masked call must treat specifically masked 0 denominateur
+    template<conditional_expr C, integral_value T, callable_options O>
+    EVE_FORCEINLINE auto
+    div_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T const& t, T const& f) noexcept
+    {
+      auto g = if_else(cond, f, mone);
+      return if_else(cond, rem[o.drop(condition_key)](t, g), t);
+    }
+
   }
 }
