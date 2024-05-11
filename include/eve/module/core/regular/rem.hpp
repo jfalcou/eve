@@ -22,6 +22,7 @@ namespace eve
     template<eve::integral_value T0, integral_value T1>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
     {
+      EVE_ASSERT(eve::all(is_nez(t1)), "[eve::rem] elements of the second parameter must be non zero");
       return EVE_DISPATCH_CALL(t0, t1);
     }
 
