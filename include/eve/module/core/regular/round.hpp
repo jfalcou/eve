@@ -97,7 +97,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    round_(EVE_REQUIRES(cpu_), O const & o, T const &a) noexcept
+    round_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     {
       if      constexpr( O::contains(eve::upward2)      ) return eve::ceil(a);
       else if constexpr( O::contains(eve::downward2)    ) return eve::floor(a);
