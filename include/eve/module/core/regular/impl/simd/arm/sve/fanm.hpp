@@ -18,7 +18,7 @@ EVE_FORCEINLINE auto
 fanm_(EVE_REQUIRES(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
-  return fanm[ignore_none](v0, v1, v2);
+  return svmls_m(sve_true<T>(), v0, v1, v2);
 }
 
 template<conditional_expr C, arithmetic_scalar_value T, typename N>
