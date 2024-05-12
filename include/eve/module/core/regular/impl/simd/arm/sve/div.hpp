@@ -29,7 +29,7 @@ namespace eve::detail
       //  if saturated on integer, we don't have masked op so we delegate
       if        constexpr(O::contains(saturated2) && std::integral<T>) return div.behavior(cpu_{},opts,v,w);
       //  If not, we can mask if there is no alterative value
-      else  if  constexpr( !C::has_alternative && (sizeof(T) > 1))
+      else  if  constexpr( !C::has_alternative && (sizeof(T) > 4))
       {
         auto m   = expand_mask(mask, as(v));
         return svdiv_m(m,v,w);
