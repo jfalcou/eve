@@ -151,12 +151,15 @@ namespace eve::detail
         }
         else //unsigned
         {
+          auto inzb = is_nez(b);
           if constexpr(scalar_value<T>)
           {
-            return ( b != 0 ) ? a / b : eve::valmax(as(a));
+            return ( inzb ) ? div[inzb](a, b) : eve::valmax(as(a));
           }
           else //simd
-            return if_else(is_nez(b), div(a, b), allbits);
+          {
+            return if_else(inzb, div[inzb](a, b), allbits);
+          }
         }
       }
       else

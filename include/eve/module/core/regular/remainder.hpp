@@ -25,7 +25,7 @@ namespace eve
   template<typename Options>
   struct remainder_t : elementwise_callable<remainder_t, Options>
   {
-    template<value T,  value U>
+    template<signed_value T, signed_value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 

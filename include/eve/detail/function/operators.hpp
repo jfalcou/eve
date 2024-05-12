@@ -16,17 +16,6 @@
 
 namespace eve::detail
 {
-  //================================================================================================
-  // Infix arithmetic operators
-  //================================================================================================
-
-  template<integral_value T, integral_value U>
-  EVE_FORCEINLINE auto rem_ ( EVE_SUPPORTS(cpu_)
-                            , T const &a, U const &b
-                            ) noexcept requires compatible_values<T, U>
-  {
-    return a % b;
-  }
 
   //================================================================================================
   // infix bitwise operators

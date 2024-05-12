@@ -119,9 +119,9 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::div variants on wide",
   TTS_EQUAL(div[saturated2](type(-3), type(0)), cases.valmin);
 };
 
-//==================================================================================================
-//==  conditional div tests on simd
-//==================================================================================================
+// //==================================================================================================
+// //==  conditional div tests on simd
+// //==================================================================================================
 
 TTS_CASE_WITH("Check behavior of div on signed types",
               eve::test::simd::signed_types,
