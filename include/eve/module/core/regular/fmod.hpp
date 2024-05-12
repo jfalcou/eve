@@ -104,7 +104,7 @@ namespace eve
         if constexpr( floating_value<T> )
           return fanm(a, trunc(a/b), b);
         else
-          return rem(a, b)
+          return rem(a, b);
       }
       else
       {
