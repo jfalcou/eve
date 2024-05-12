@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct lcm_t : elementwise_callable<lcm_t, Options>
+  struct lcm_t : elementwise_callable<lcm_t, Options, raw_option>
   {
     template<eve::value T, eve::value U>
     constexpr EVE_FORCEINLINE
@@ -72,7 +72,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr T lcm_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    constexpr T lcm_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
     {
       EVE_ASSERT(eve::all(is_flint(a) && is_flint(b)), "eve::lcm: some entries are not flint");
       a = eve::abs(a);
@@ -80,9 +80,9 @@ namespace eve
       if constexpr( scalar_value<T> )
       {
         if( !b || !a ) return T(0);
-        else return b / gcd(a, b) * a;
+        else return b / gcd[o](a, b) * a;
       }
-      else return a * (b / gcd(a, if_else(b, b, eve::one)));
+      else return a * (b / gcd[o](a, if_else(b, b, eve::one)));
     }
   }
 }

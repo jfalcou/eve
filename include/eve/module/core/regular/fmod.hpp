@@ -22,7 +22,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fmod_t : elementwise_callable<fmod_t, Options>
+  struct fmod_t : elementwise_callable<fmod_t, Options, raw_option>
   {
     template<value T,  value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
@@ -85,6 +85,11 @@ namespace eve
 //!     version of `fmod` which is
 //!     equivalent to `if_else(mask, fmod(x, ...), x)`
 //!
+//!   * raw Call
+//!
+//!     The call `eve::fmod[raw](x, ...)`
+//!     as usual does not care for limiting values
+//!
 //! @}
 //================================================================================================
  inline constexpr auto fmod = functor<fmod_t>;
@@ -94,16 +99,26 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T fmod_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
-      auto bb = if_else(is_nez(b), b, one);
-      if constexpr( floating_value<T> )
+      if constexpr(O::contains(raw2) && floating_value<T>)
       {
-        return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
-                       allbits,
-                       fanm[pedantic2][is_nez(a) && is_not_infinite(b)](a, trunc(a/b), b));
+        if constexpr( floating_value<T> )
+          return fanm(a, trunc(a/b), b);
+        else
+          return rem(a, b)
       }
       else
       {
-        return if_else(is_nez(b), rem(a, bb), a);
+        auto bb = if_else(is_nez(b), b, one);
+        if constexpr( floating_value<T> )
+        {
+          return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
+                         allbits,
+                         fanm[pedantic2][is_nez(a) && is_not_infinite(b)](a, trunc(a/b), b));
+        }
+        else
+        {
+          return if_else(is_nez(b), rem(a, bb), a);
+        }
       }
     }
   }

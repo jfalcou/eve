@@ -83,7 +83,7 @@ inline constexpr auto gcd = functor<gcd_t>;
         {
           while( b )
           {
-            auto r = fmod(a, b);
+            auto r = fmod[raw2](a, b);
             a      = b;
             b      = r;
           }
@@ -95,7 +95,7 @@ inline constexpr auto gcd = functor<gcd_t>;
           T    r(0);
           while( eve::any(test) )
           {
-            r    = fmod(a, b);
+            r    = fmod[raw2](a, b);
             a    = if_else(test, b, a);
             test = is_nez(r) && test;
             b    = r;
@@ -155,7 +155,7 @@ inline constexpr auto gcd = functor<gcd_t>;
           {
             while( b )
             {
-              auto r = fmod(a, b);
+              auto r = fmod[raw2](a, b);
               a      = b;
               b      = r;
             }
@@ -167,7 +167,7 @@ inline constexpr auto gcd = functor<gcd_t>;
             T    r(0);
             while( eve::any(test) )
             {
-              r    = fmod(a, b);
+              r    = fmod[raw2](a, b);
               a    = if_else(test, b, a);
               test = is_nez(r) && test;
               b    = r;
