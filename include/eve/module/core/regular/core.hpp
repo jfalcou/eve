@@ -84,7 +84,6 @@
 #include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/ifnot_else.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/interleave.hpp>
