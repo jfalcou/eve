@@ -14,7 +14,7 @@ namespace eve::detail
 {
 template<arithmetic_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE auto
-fsm_(EVE_SUPPORTS(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept
+fsm_(EVE_REQUIRES(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept
 -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {

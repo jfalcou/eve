@@ -15,7 +15,7 @@ namespace eve::detail
 {
 template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
-fanm_(EVE_SUPPORTS(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+fanm_(EVE_REQUIRES(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
   return fanm[ignore_none](v0, v1, v2);
@@ -23,7 +23,7 @@ requires sve_abi<abi_t<T, N>>
 
 template<conditional_expr C, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
-fanm_(EVE_SUPPORTS(sve_), C cond, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+fanm_(EVE_REQUIRES(sve_), C cond, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
 requires sve_abi<abi_t<T, N>>
 {
   if constexpr( C::is_complete && C::is_inverted ) return svmls_x(sve_true<T>(), v0, v1, v2);

@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  fam_(EVE_SUPPORTS(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+  fam_(EVE_REQUIRES(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
     return svmla_x(sve_true<T>(), v0, v1, v2);
@@ -23,7 +23,7 @@ namespace eve::detail
   
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  fam_(EVE_SUPPORTS(sve_), C cond, O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+  fam_(EVE_REQUIRES(sve_), C cond, O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
     if constexpr( C::is_complete && C::is_inverted ) return svmla_x(sve_true<T>(), v0, v1, v2);

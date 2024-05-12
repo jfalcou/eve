@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto fnma_(EVE_SUPPORTS(sve_),
+  EVE_FORCEINLINE auto fnma_(EVE_REQUIRES(sve_),
                              O const&,
                              wide<T, N> v0, wide<T, N> v1,
                              wide<T, N> v2) noexcept -> wide<T, N>
@@ -24,7 +24,7 @@ namespace eve::detail
   }
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto  fnma_(EVE_SUPPORTS(sve_),
+  EVE_FORCEINLINE auto  fnma_(EVE_REQUIRES(sve_),
                               C cond,
                               O const&,
                               wide<T, N> v0,
