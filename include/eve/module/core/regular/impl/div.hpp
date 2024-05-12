@@ -39,7 +39,7 @@ namespace eve::detail
   {
     if constexpr( integral_value<T>)
     {
-      EVE_ASSERT(eve::all(is_nez(t1)), "[eve::div] elements of the second parameter must be non zero");
+      EVE_ASSERT(eve::all(is_nez(b)), "[eve::div] for integral types non masked elements of the second parameter must be non zero");
       using elt_t = element_type_t<T>;
       if constexpr(O::contains(downward2))
       {
