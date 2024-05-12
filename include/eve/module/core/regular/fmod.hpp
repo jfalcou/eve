@@ -99,7 +99,7 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T fmod_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
-      if constexpr(O::contains(raw2) && floating_value<T>)
+      if constexpr(O::contains(raw2))
       {
         if constexpr( floating_value<T> )
           return fanm(a, trunc(a/b), b);

@@ -45,7 +45,7 @@ EVE_FORCEINLINE auto&
 self_div(wide<T, N>& self, U const& other) noexcept
 requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
 {
-  if constexpr(sizeof(T) >= 4)  self = svdiv_x(sve_true<T>(), self, other);
+  if constexpr(sizeof(T) >= 1)  self = svdiv_x(sve_true<T>(), self, other);
   else apply<N::value>([&](auto... I) { (self.set(I, self.get(I) / other.get(I)), ...); });
   return self;
 }
