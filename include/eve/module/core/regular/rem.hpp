@@ -114,7 +114,7 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
     {
-      EVE_ASSERT(eve::all(is_nez(t1)), "[eve::rem] elements of the second parameter must be non zero");
+      EVE_ASSERT(eve::all(is_nez(b)), "[eve::rem] elements of the second parameter must be non zero");
       return fanm(a, div[o](a, b), b);
     }
 
