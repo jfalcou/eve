@@ -13,11 +13,11 @@
 namespace eve::detail
 {
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T,N> mul_((EVE_REQUIRES(sve_),
-                                  C          const& mask,
-                                  O          const& opts,
-                                  wide<T, N> const& v,
-                                  wide<T, N> const& w) noexcept
+  EVE_FORCEINLINE wide<T,N> mul_(EVE_REQUIRES(sve_),
+                                 C          const& mask,
+                                 O          const& opts,
+                                 wide<T, N> const& v,
+                                 wide<T, N> const& w) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     auto const alt = alternative(mask, v, as(v));
