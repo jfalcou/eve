@@ -31,8 +31,8 @@ namespace eve::detail
   {
     // We don't care about PEDANTIC as this is a proper FMA.
     // We don't care about PROMOTE as we only accept similar types.
-    auto const alt = alternative(cond, a, as(a));
-    if constexpr( C::is_complete && !C::is_inverted ) return alt;
-    else                                              return svmsb_m(cond.mask(as<T>{}), alt, b, c);
+    if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
+    else if constexpr(!C::has_alternative)                  return svmsb_m(cond.mask(as<T>{}), a, b, c);
+    else                                                    return fms.behavior(cpu_{}, opts, a, b, c);
   }
 }
