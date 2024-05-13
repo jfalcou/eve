@@ -135,4 +135,5 @@ TTS_CASE_WITH("Check behavior of masked fma on all types",
   TTS_IEEE_EQUAL(fma[t](a0, a1, a2), eve::if_else(t, fma(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(fma[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fma(a0, a1, a2), 100));
   TTS_IEEE_EQUAL(fma[eve::ignore_all](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fma[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
 };

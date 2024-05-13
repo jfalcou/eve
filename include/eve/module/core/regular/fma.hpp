@@ -103,10 +103,10 @@ inline constexpr auto fma = functor<fma_t>;
 #  include <eve/module/core/regular/impl/simd/ppc/fma.hpp>
 #endif
 
-// #if defined(EVE_INCLUDE_ARM_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/neon/fma.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/fma.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/fma.hpp>
-// #endif
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/fma.hpp>
+#endif

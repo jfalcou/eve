@@ -41,8 +41,8 @@ requires arm_abi<abi_t<T, N>>
   {
     if      constexpr( cat == category::float64x2 ) return vfmaq_f64(c, b, a);
     else if constexpr( cat == category::float64x1 ) return vfma_f64 (c, b, a);
-    else                                            return fma_(EVE_TARGETS(cpu_), opts, a, b, c);
+    else                                            return fma.behavior(cpu_{}, opts, a, b, c);
   }
-  else                                              return fma_(EVE_TARGETS(cpu_), opts, a, b, c);
+  else                                              return fma.behavior(cpu_{}, opts, a, b, c);
 }
 }
