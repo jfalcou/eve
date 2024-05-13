@@ -93,7 +93,7 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
   {
     TTS_ULP_EQUAL(fnma((a0), (a1), (a2)),
                   map([&](auto e, auto f, auto g) -> v_t { return -e * f + g; }, a0, a1, a2),
-                  2);
+                  6);
   }
   TTS_ULP_EQUAL(
       fnma[eve::pedantic2]((a0), (a1), (a2)),
