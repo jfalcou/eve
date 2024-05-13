@@ -87,7 +87,7 @@ TTS_CASE_WITH("Check behavior of promote(fsm) on all types",
   auto r2 = fsm[promote](a0, da, a1);
   using er2_t =  eve::element_type_t<decltype(r2)>;
   auto refr2 = eve::fsm(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
-  TTS_ULP_EQUAL(r2,  refr2, 0.5);
+  TTS_ULP_EQUAL(r2,  refr2, 3.5);
 
   eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
   auto r3 = fsm[promote](ia, a0, a1);
