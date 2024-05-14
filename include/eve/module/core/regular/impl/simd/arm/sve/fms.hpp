@@ -21,7 +21,7 @@ namespace eve::detail
   {
     // We don't care about PEDANTIC as this is a proper FMA.
     // We don't care about PROMOTE as we only accept similar types.
-    return svmsb_x(sve_true<T>(), a, b, c);
+    return -svmsb_x(sve_true<T>(), a, b, c);
   }
 
   template<conditional_expr C, scalar_value T, typename N, callable_options O>
@@ -32,7 +32,7 @@ namespace eve::detail
     // We don't care about PEDANTIC as this is a proper FMA.
     // We don't care about PROMOTE as we only accept similar types.
     if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
-    else if constexpr(!C::has_alternative)                  return svmsb_m(cond.mask(as<T>{}), a, b, c);
+    else if constexpr(!C::has_alternative)                  return -svmsb_m(cond.mask(as<T>{}), a, b, c);
     else                                                    return fms.behavior(cpu_{}, opts, a, b, c);
   }
 }
