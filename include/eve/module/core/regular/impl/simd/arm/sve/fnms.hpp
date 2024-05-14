@@ -27,9 +27,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto  fnms_(EVE_REQUIRES(sve_),
                               C cond,
                               O const&,
-                              wide<T, N> v0,
-                              wide<T, N> v1,
-                              wide<T, N> v2) noexcept -> wide<T, N>
+                              wide<T, N> a,
+                              wide<T, N> b,
+                              wide<T, N> c) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
     if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
