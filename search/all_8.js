@@ -82,8 +82,9 @@ var searchData=
   ['is_5freal_79',['is_real',['../group__core__predicates_ga38314db2a1da99c8bdec146b4ed56c9b.html#ga38314db2a1da99c8bdec146b4ed56c9b',1,'eve']]],
   ['is_5funit_80',['is_unit',['../group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0',1,'eve']]],
   ['is_5funordered_81',['is_unordered',['../group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]],
-  ['iterator_82',['iterator',['../structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3',1,'eve::algo::soa_vector']]],
-  ['iterator_5faligned_83',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],
-  ['iterator_5fcardinal_5ft_84',['iterator_cardinal_t',['../group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980',1,'eve']]],
-  ['iterator_5ft_85',['iterator_t',['../group__algo__concepts_ga2b10643c19cf7b6ee3ace583f1b68595.html#ga2b10643c19cf7b6ee3ace583f1b68595',1,'eve::algo']]]
+  ['iterate_5fselected_82',['iterate_selected',['../group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc',1,'eve']]],
+  ['iterator_83',['iterator',['../structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3',1,'eve::algo::soa_vector']]],
+  ['iterator_5faligned_84',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],
+  ['iterator_5fcardinal_5ft_85',['iterator_cardinal_t',['../group__traits_ga1eb720c70448889dec28d1d72973a980.html#ga1eb720c70448889dec28d1d72973a980',1,'eve']]],
+  ['iterator_5ft_86',['iterator_t',['../group__algo__concepts_ga2b10643c19cf7b6ee3ace583f1b68595.html#ga2b10643c19cf7b6ee3ace583f1b68595',1,'eve::algo']]]
 ];

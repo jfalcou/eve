@@ -154,9 +154,9 @@ CMake setup</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">X86_avx512_no_native   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86_sde.cmake -DEVE_OPTIONS='-march=skylake-avx512'    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Aarch64(arm-v8)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.aarch64.cmake    </td></tr>
+<td class="markdownTableBodyNone">Aarch64(arm-v8)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.aarch64.cmake    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Arm (arm-v7)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/gcc.arm.cmake    </td></tr>
+<td class="markdownTableBodyNone">Arm (arm-v7)   </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.arm.cmake    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">wasm   </td><td class="markdownTableBodyNone">emcmake cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE='../cmake/toolchain/emcc.cmake'    </td></tr>
 <tr class="markdownTableRowOdd">
