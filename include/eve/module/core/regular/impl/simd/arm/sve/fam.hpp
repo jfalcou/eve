@@ -28,6 +28,6 @@ namespace eve::detail
   {
     if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
     else if constexpr(!C::has_alternative)                  return svmla_m(cond.mask(as<T>{}), a, b, c);
-    else                                                    return fms.behavior(cpu_{}, opts, a, b, c);
+    else                                                    return fam.behavior(cpu_{}, opts, a, b, c);
   }
 }
