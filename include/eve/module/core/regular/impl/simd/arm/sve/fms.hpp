@@ -26,7 +26,7 @@ namespace eve::detail
 
   template<conditional_expr C, scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  fms_(EVE_REQUIRES(sve_), C cond, O const&, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept
+  fms_(EVE_REQUIRES(sve_), C cond, O const& opts, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     // We don't care about PEDANTIC as this is a proper FMA.
