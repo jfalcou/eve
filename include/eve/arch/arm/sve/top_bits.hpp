@@ -92,6 +92,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   {
     using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
     uint_type raw;
+
     std::memcpy(&raw, &storage, sizeof(uint_type));
 
     uint_type r = raw;

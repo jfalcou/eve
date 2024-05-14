@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <concepts>
 #include <type_traits>
 
 namespace eve
@@ -82,4 +83,15 @@ concept invocable = requires(F&& f, Args&&...args)
 {
   typename detail::get_invoke_result<F&&, Args&&...>::type;
 };
+
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @brief std::predicate but doesn't require regularity
+  //!
+  //! @tparam T
+  //================================================================================================
+  template <typename T, typename ... Args>
+  concept irregular_predicate = requires (T&& f, Args&&... args) {
+    { !f(EVE_FWD(args)...) } -> std::convertible_to<bool>;
+  };
 }

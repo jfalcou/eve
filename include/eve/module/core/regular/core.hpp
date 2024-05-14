@@ -130,6 +130,7 @@
 #include <eve/module/core/regular/is_real.hpp>
 #include <eve/module/core/regular/is_unit.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
+#include <eve/module/core/regular/iterate_selected.hpp>
 #include <eve/module/core/regular/last_true.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 #include <eve/module/core/regular/lerp.hpp>
