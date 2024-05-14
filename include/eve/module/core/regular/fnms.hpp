@@ -107,5 +107,5 @@ namespace eve
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/sve/fnms.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/fnms.hpp>
 #endif
