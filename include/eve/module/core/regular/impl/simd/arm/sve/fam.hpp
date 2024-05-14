@@ -23,7 +23,7 @@ namespace eve::detail
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  fam_(EVE_REQUIRES(sve_), C cond, O const&, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept -> wide<T, N>
+  fam_(EVE_REQUIRES(sve_), C cond, O const& opts, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
     if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
