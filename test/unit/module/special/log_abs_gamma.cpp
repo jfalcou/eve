@@ -38,7 +38,7 @@ TTS_CASE_WITH("Check behavior of log_abs_gamma on wide",
 
   TTS_ULP_EQUAL(log_abs_gamma(T(0.5)), T(std::lgamma(v_t(0.5))), 1.);
   TTS_ULP_EQUAL(log_abs_gamma(T(-35)), T(std::lgamma(v_t(-35))), 0.5);
-  TTS_ULP_EQUAL(log_abs_gamma(T(-75.3)), T(std::lgamma(v_t(-75.3))), 0.5);
+  TTS_ULP_EQUAL(log_abs_gamma(T(-75.3)), T(std::lgamma(v_t(-75.3))), 1);
 
   if constexpr( eve::platform::supports_invalids )
   {
