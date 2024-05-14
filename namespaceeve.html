@@ -2053,6 +2053,14 @@ template&lt;template&lt; typename &gt; class Func&gt; </td></tr>
 <tr class="memitem:ga8d4a330a114fd1d202febb3c7c87a3fa"><td class="memItemLeft" align="right" valign="top">constexpr detail::condition_key_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__extensions_ga8d4a330a114fd1d202febb3c7c87a3fa.html#ga8d4a330a114fd1d202febb3c7c87a3fa">condition_key</a> = {}</td></tr>
 <tr class="memdesc:ga8d4a330a114fd1d202febb3c7c87a3fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyword for retrieving conditionals decorator.  <br /></td></tr>
 <tr class="separator:ga8d4a330a114fd1d202febb3c7c87a3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b4a7215de0f6765b7e4a8e73789ed4a"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:ga0b4a7215de0f6765b7e4a8e73789ed4a"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_ga0b4a7215de0f6765b7e4a8e73789ed4a.html#ga0b4a7215de0f6765b7e4a8e73789ed4a">same_lanes_or_scalar</a> = detail::lanes_check&lt;Ts...&gt;()</td></tr>
+<tr class="memdesc:ga0b4a7215de0f6765b7e4a8e73789ed4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that all types <code>Ts</code> are either scalar or share a common number of lanes.  <br /></td></tr>
+<tr class="separator:ga0b4a7215de0f6765b7e4a8e73789ed4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa679dc217c4e6f1beb4df2bd87b458fa"><td class="memTemplParams" colspan="2">template&lt;simd_value T0, simd_value... Ts&gt; </td></tr>
+<tr class="memitem:gaa679dc217c4e6f1beb4df2bd87b458fa"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__traits_gaa679dc217c4e6f1beb4df2bd87b458fa.html#gaa679dc217c4e6f1beb4df2bd87b458fa">same_lanes</a> = ((cardinal_v&lt;T0&gt; == cardinal_v&lt;Ts&gt;) &amp;&amp; ... &amp;&amp; true)</td></tr>
+<tr class="memdesc:gaa679dc217c4e6f1beb4df2bd87b458fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that all SIMD types <code>Ts</code> share a common number of lanes.  <br /></td></tr>
+<tr class="separator:gaa679dc217c4e6f1beb4df2bd87b458fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
