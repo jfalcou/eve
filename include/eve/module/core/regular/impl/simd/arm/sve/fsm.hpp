@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/fanm.hpp>
 
 namespace eve::detail
 {
