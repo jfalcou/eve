@@ -28,7 +28,8 @@ namespace eve::detail
 
   template<conditional_expr C, scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fms_(EVE_REQUIRES(sve_),
-                                  C cond, O const& o,
+                                  C,
+                                  O const& o,
                                   wide<T, N> a,
                                   wide<T, N> b,
                                   wide<T, N> c) noexcept
