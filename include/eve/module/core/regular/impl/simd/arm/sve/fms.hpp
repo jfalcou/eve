@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/arm/sve/sve_true.hpp>
-#include <eve/module/core/fnma.hpp>
+#include <eve/module/core/regular/fnma.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
