@@ -14,22 +14,23 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto fnma_(EVE_REQUIRES(sve_),
-                             O const&,
-                             wide<T, N> v0, wide<T, N> v1,
-                             wide<T, N> v2) noexcept -> wide<T, N>
+  EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sve_),
+                                   O const&,
+                                   wide<T, N> a,
+                                   wide<T, N> b,
+                                   wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return svmsb_x(sve_true<T>(), v0, v1, v2);
+    return svmsb_x(sve_true<T>(), a, b, c);
   }
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto  fnma_(EVE_REQUIRES(sve_),
-                              C cond,
-                              O const& opts,
-                              wide<T, N> a,
-                              wide<T, N> b,
-                              wide<T, N> c) noexcept -> wide<T, N>
+  EVE_FORCEINLINE  wide<T, N> fnma_(EVE_REQUIRES(sve_),
+                                    C cond,
+                                    O const& opts,
+                                    wide<T, N> a,
+                                    wide<T, N> b,
+                                    wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));

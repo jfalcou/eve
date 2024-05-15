@@ -20,7 +20,7 @@ namespace eve::detail
                                    wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return -fam(v0, v1, v2);
+    return -fam(a, b, c);
   }
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
