@@ -22,7 +22,7 @@ namespace eve::detail
                                   wide<T, N> const& c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return -fnma(a, b, c)
+    return -fnma(a, b, c);
   }
 
   template<conditional_expr C, scalar_value T, typename N, callable_options O>
@@ -33,6 +33,6 @@ namespace eve::detail
                                   wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return  -fnma[o](a, b, c)
+    return  -fnma[o](a, b, c);
   }
 }
