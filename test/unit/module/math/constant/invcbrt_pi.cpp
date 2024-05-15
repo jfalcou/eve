@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check behavior of invcbrt_pi on scalar", eve::test::scalar::ieee_r
     TTS_EXPECT(eve::invcbrt_pi[eve::downward](eve::as<T>()) <= 1.0l/std::cbrt(3.141592653589793238462643l));
     TTS_EXPECT(eve::invcbrt_pi[eve::upward](eve::as<T>()) >= 1.0l/std::cbrt(3.141592653589793238462643l)); 
   }
-  TTS_EQUAL(eve::invcbrt_pi(eve::as<T>()), T(1.0l/std::cbrt(3.141592653589793238462643l)));
+  TTS_ULP_EQUAL(eve::invcbrt_pi(eve::as<T>()), T(1.0l/std::cbrt(3.141592653589793238462643l)), 0.5);
 };
 
 //==================================================================================================

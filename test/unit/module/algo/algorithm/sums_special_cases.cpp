@@ -124,9 +124,9 @@ TTS_CASE("eve.algo.reduce, stateful reduce")
 
   TTS_EQUAL(6,
             eve::algo::reduce(v,
-                              std::pair {[_ = 3](auto x, auto y)
+                              std::pair {[state = 3](auto x, auto y)
                                          {
-                                           (void)_;
+                                           (void)state;
                                            return x + y;
                                          },
                                          eve::zero},
@@ -143,9 +143,9 @@ TTS_CASE("eve.algo.transform_reduce, stateful map/reduce")
             eve::algo::transform_reduce(
                 v,
                 [coeff](auto x) { return x * coeff; },
-                std::pair {[_ = coeff](auto x, auto y)
+                std::pair {[state = coeff](auto x, auto y)
                            {
-                             (void)_;
+                             (void)state;
                              return x + y;
                            },
                            eve::zero},
