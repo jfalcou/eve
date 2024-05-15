@@ -14,20 +14,29 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto
-  fam_(EVE_REQUIRES(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
+  EVE_FORCEINLINE  wide<T, N> fam_(EVE_REQUIRES(sve_),
+                                   O const&,
+                                   wide<T, N> a,
+                                   wide<T, N> b,
+                                   wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return svmla_x(sve_true<T>(), v0, v1, v2);
+    return svmla_x(sve_true<T>(), a, b, c);
   }
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto
-  fam_(EVE_REQUIRES(sve_), C cond, O const& opts, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept -> wide<T, N>
+  EVE_FORCEINLINE wide<T, N> fam_(EVE_REQUIRES(sve_),
+                                  C cond,
+                                  O const& o,
+                                  wide<T, N> a,
+                                  wide<T, N> b,
+                                  wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
+    // We don't care about PEDANTIC as this is a proper FMA.
+    // We don't care about PROMOTE as we only accept similar types.
     if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
     else if constexpr(!C::has_alternative)                  return svmla_m(cond.mask(as<T>{}), a, b, c);
-    else                                                    return fam.behavior(cpu_{}, opts, a, b, c);
+    else                                                    return fam.behavior(cpu_{}, o, a, b, c);
   }
 }

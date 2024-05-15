@@ -15,24 +15,24 @@
 namespace eve::detail
 {
   template<scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto
-  fms_(EVE_REQUIRES(sve_), O const&, wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c) noexcept -> wide<T, N>
+  EVE_FORCEINLINE wide<T, N> fms_(EVE_REQUIRES(sve_),
+                                  O const&,
+                                  wide<T, N> const& a,
+                                  wide<T, N> const& b,
+                                  wide<T, N> const& c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    // We don't care about PEDANTIC as this is a proper FMA.
-    // We don't care about PROMOTE as we only accept similar types.
-    return -svmsb_x(sve_true<T>(), a, b, c);
+    return -fnma(a, b, c)
   }
 
   template<conditional_expr C, scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto
-  fms_(EVE_REQUIRES(sve_), C cond, O const& opts, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept
+  EVE_FORCEINLINE wide<T, N> fms_(EVE_REQUIRES(sve_),
+                                  C cond, O const& o,
+                                  wide<T, N> a,
+                                  wide<T, N> b,
+                                  wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    // We don't care about PEDANTIC as this is a proper FMA.
-    // We don't care about PROMOTE as we only accept similar types.
-    if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
-    else if constexpr(!C::has_alternative)                  return -svmsb_m(cond.mask(as<T>{}), a, b, c);
-    else                                                    return fms.behavior(cpu_{}, opts, a, b, c);
+    return  -fnma[o](a, b, c)
   }
 }

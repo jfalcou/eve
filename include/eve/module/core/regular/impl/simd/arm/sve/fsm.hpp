@@ -12,12 +12,28 @@
 
 namespace eve::detail
 {
-template<scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE auto
-fsm_(EVE_REQUIRES(sve_), O const&, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept
--> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return -fanm(v0, v1, v2);
+  template<scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_),
+                                  O const&,
+                                  wide<T, N> a,
+                                  wide<T, N> b,
+                                  wide<T, N> c) noexcept
+  requires sve_abi<abi_t<T, N>>
+  {
+    return -fanm(a, b, c);
+  }
+
+
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_),
+                                   C cond,
+                                   O const& o,
+                                   wide<T, N> a,
+                                   wide<T, N> b,
+                                   wide<T, N> c) noexcept
+  requires sve_abi<abi_t<T, N>>
+  {
+    -fanm[o](a, b, c);
+  }
 }
 }

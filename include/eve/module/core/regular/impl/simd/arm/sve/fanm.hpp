@@ -13,25 +13,32 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-fanm_(EVE_REQUIRES(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return svmls_m(sve_true<T>(), v0, v1, v2);
-}
-
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-fanm_(EVE_REQUIRES(sve_), C cond, wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  if constexpr( C::is_complete && C::is_inverted ) return svmls_x(sve_true<T>(), v0, v1, v2);
-  else
+  template<arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> fanm_(EVE_REQUIRES(sve_),
+                                   O const&,
+                                   wide<T, N> a,
+                                   wide<T, N> b,
+                                   wide<T, N> c) noexcept
+  requires sve_abi<abi_t<T, N>>
   {
-    auto const alt = alternative(cond, v0, as(v0));
-    if constexpr( C::is_complete && !C::is_inverted ) return alt;
-    else return svmls_m(cond.mask(as<T>{}), alt, v1, v2);
+    // We don't care about PEDANTIC as this is a proper FMA.
+    // We don't care about PROMOTE as we only accept similar types.
+    return svmls_m(sve_true<T>(), a, b, c);
   }
-}
+
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE  wide<T, N> fanm_(EVE_REQUIRES(sve_),
+                                    C cond,
+                                    O const& o,
+                                    wide<T, N> a,
+                                    wide<T, N> b,
+                                    wide<T, N> c) noexcept
+  requires sve_abi<abi_t<T, N>>
+  {
+    // We don't care about PEDANTIC as this is a proper FMA.
+    // We don't care about PROMOTE as we only accept similar types.
+    if      constexpr( C::is_complete && !C::is_inverted )  return alternative(cond, a, as(a));
+    else if constexpr(!C::has_alternative)                  return svmls_m(cond.mask(as<T>{}), a, b, c);
+    else                                                    return fanm.behavior(cpu_{}, o, a, b, c);
+  }
 }
