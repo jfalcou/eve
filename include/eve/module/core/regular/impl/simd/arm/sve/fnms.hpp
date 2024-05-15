@@ -26,7 +26,7 @@ namespace eve::detail
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fnms_(EVE_REQUIRES(sve_),
-                                   C cond,
+                                   C,
                                    O const& o,
                                    wide<T, N> a,
                                    wide<T, N> b,
