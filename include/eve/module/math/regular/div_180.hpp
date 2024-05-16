@@ -30,10 +30,10 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T div_180_(EVE_REQUIRES(cpu_), O const&, T const& a)
     {
-      auto test = is_eqz(a);
+      auto test = is_nez(a);
       if constexpr( scalar_value<T> )
       {
-        if( test ) return a;
+        if( !test ) return a;
       }
       using elt_t = element_type_t<T>;
       if constexpr( std::is_same_v<elt_t, double> )
