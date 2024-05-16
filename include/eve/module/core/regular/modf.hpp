@@ -90,7 +90,6 @@ namespace detail
     if constexpr(floating_value<T>)
     {
       auto t = trunc(a);
-
       if constexpr(O::contains(pedantic2) && platform::supports_infinites)
       {
         auto f = if_else(is_infinite(a), eve::zero, a - t);

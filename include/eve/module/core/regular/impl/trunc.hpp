@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_not_greater.hpp>
+#include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/next.hpp>
@@ -35,7 +35,7 @@ namespace eve::detail
         using i_t   = as_integer_t<elt_t>;
         return convert(convert(a0, as<i_t>()), as<elt_t>());
       }
-      if constexpr(O::contains(almost))
+      else if constexpr(O::contains(almost))
       {
         auto tol = o[almost].value(a0);
         if constexpr(integral_value<decltype(tol)>)
@@ -45,7 +45,7 @@ namespace eve::detail
       }
       else
       {
-        auto not_already_integral = is_not_greater(eve::abs(a0), maxflint(eve::as<T>()));
+        auto not_already_integral = is_less(eve::abs(a0), maxflint(eve::as<T>()));
         if constexpr( scalar_value<T> )
           return not_already_integral ? trunc[raw2](a0) : a0;
         else if constexpr( simd_value<T> )
