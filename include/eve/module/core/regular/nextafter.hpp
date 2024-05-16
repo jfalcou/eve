@@ -68,7 +68,6 @@ namespace eve
 //!
 //!     The call `eve::nextafter[pedantic](x, ...)` provides a
 //!     version of `nextafter` for which floating plus zero and minus zero are distinct
-//!     for x.
 //!
 //!   * Masked Call
 //!
