@@ -86,10 +86,19 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const & b) noexcept
     {
-       if constexpr( scalar_value<T> )
+      if constexpr( scalar_value<T> )
         return (a < b) ? next[o](a) : ((a > b) ? prev[o](a) : a);
       else if constexpr( simd_value<T> )
-        return if_else(a < b, next[o](a), if_else(a > b, prev[o](a), a));
+      {
+        if constexpr(O::contains(pedantic2))
+        {
+          return if_else(a < b, next[o](a), if_else(a > b, prev[o](a), a));
+        }
+        else
+        {
+          return next[a < b](prev[a > b](a));
+        }
+      }
     }
   }
 }
