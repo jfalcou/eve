@@ -40,7 +40,7 @@ namespace eve
       {
         const T Ch = T(5.5555555555555557675773137304986448725685477256775e-3);
         const T Cl = T(2.12021758174943082362265970771770243087787985109985e-19);
-        T       c  = Cl * a;
+        T c  = Cl * a;
         return fma[test](a, Ch, c);
       }
       else { return convert(div_180(convert(a, as<double>())), as<float>()); }
