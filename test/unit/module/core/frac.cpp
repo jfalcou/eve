@@ -36,7 +36,6 @@ TTS_CASE_WITH("Check behavior of eve::frac(simd)",
 
   TTS_EQUAL(eve::frac(a0), map([](auto e) -> v_t { return e - std::trunc(e); }, a0));
   TTS_EXPECT(eve::all(eve::is_negative(eve::frac(eve::mzero(eve::as(a0))))));
-  TTS_EXPECT(eve::all(eve::is_negative(eve::frac[eve::raw2](eve::mzero(eve::as(a0)))))); //TODO this is a test to see if implementation can not be simplified
 };
 
 
