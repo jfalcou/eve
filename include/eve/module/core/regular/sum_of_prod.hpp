@@ -99,7 +99,7 @@ namespace eve
       {
         auto err = fms[o](c, d, cd);
         auto dop = fma[o](a, b, cd);
-        return if_else(is_finite(err), dop + err, dop);
+        return add[is_finite(err)](dop, err);
       }
     }
   }
