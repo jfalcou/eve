@@ -13,6 +13,7 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf                 = " << pf << '\n'
             << "-> frac(pf)           = " << eve::frac(pf) << '\n'
+            << "-> frac[raw](pf)      = " << eve::frac[eve::raw](pf) << '\n'
             << "-> frac[pf!=2.3f](pf) = " << eve::frac[pf !=  2.3f](pf) << '\n';
 
   float xf = -327.68f;
