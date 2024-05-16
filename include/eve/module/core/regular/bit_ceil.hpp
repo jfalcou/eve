@@ -80,6 +80,7 @@ namespace eve
 //================================================================================================
   inline constexpr auto bit_ceil = functor<bit_ceil_t>;
 
+
   namespace detail
   {
     template<typename T, callable_options O>
@@ -97,15 +98,19 @@ namespace eve
         e           = dec(e);
         auto tmp    = ldexp(one(eve::as(v)), e);
         auto tmpltv = tmp < v;
-        if constexpr( scalar_value<T> ) { return tmpltv ? tmp + tmp : tmp; }
-        else { return if_else(vle1, one(eve::as(v)), if_else(tmpltv, tmp + tmp, tmp)); }
+        if constexpr( scalar_value<T> )
+          return tmpltv ? tmp + tmp : tmp;
+        else
+          return if_else(vle1, one(eve::as(v)), add[tmpltv](tmp, tmp));
       }
       else
       {
         auto tmp    = bit_floor(v);
         auto tmpltv = tmp < v;
-        if constexpr( scalar_value<T> ) return T(tmpltv ? tmp + tmp : tmp);
-        else return if_else(vle1, one, if_else(tmpltv, tmp + tmp, tmp));
+        if constexpr( scalar_value<T> )
+          return T(tmpltv ? tmp + tmp : tmp);
+        else
+          return if_else(vle1, one, add[tmpltv](tmp, tmp));
       }
     }
   }
