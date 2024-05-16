@@ -80,7 +80,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       auto aa = abs(a0);
-      return if_else(is_nan(a0), allbits, dist(aa, next(aa)));
+      return dist[is_not_nan(a0)](aa, next(aa));
     }
   }
 }
