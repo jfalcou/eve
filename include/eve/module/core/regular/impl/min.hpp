@@ -19,6 +19,8 @@
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_ordered.hpp>
+#include <eve/module/core/regular/is_unordered.hpp>
 
 namespace eve::detail
 {
@@ -45,7 +47,7 @@ namespace eve::detail
             }
             else
             {
-              auto tmp = if_else(is_unordered(a0, a1), a0, eve::min(a0, a1));
+              auto tmp = eve::min[is_ordered(a0, a1)](a0, a1);
               return if_else(is_eqz(a0) && is_eqz(a1), bit_or(a0, a1), tmp);
             }
           }
