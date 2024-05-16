@@ -112,7 +112,7 @@ namespace eve
             // so just try it and see:
             auto l = y*log_abs(x);
             auto tmp0 = expm1(l);
-            auto tmp1 = if_else(is_ltz(x) && is_odd(x), -tmp0, tmp0);
+            auto tmp1 = minus[is_ltz(x) && is_odd(x)](tmp0);
             return if_else(l < T(0.5), tmp1, r);
           }
           else return r;

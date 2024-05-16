@@ -216,7 +216,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp   = pow(r_t(a0), u_t(eve::abs(a1)));
-        return if_else(is_ltz(a1), rec(tmp), tmp);
+        return rec[is_ltz(a1)](tmp);
       }
     }
 
