@@ -25,7 +25,9 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 {
   template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
   EVE_FORCEINLINE
-  eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept { return EVE_DISPATCH_CALL(a, b); }
+  eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept
+  requires (same_lanes_or_scalar<T0, T1>)    
+   { return EVE_DISPATCH_CALL(a, b); }
 
   EVE_CALLABLE_OBJECT(gamma_p_inv_t, gamma_p_inv_);
 };
