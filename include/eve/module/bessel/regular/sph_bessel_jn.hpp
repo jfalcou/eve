@@ -18,7 +18,9 @@ namespace eve
   {
     template<eve::value N, eve::floating_value T>
     EVE_FORCEINLINE constexpr
-    as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
+    as_wide_as_t<T, N> operator()(N n, T x) const
+      requires (same_lanes_or_scalar<N, T>)
+    { return EVE_DISPATCH_CALL(n, x); }
 
     EVE_CALLABLE_OBJECT(sph_bessel_jn_t, sph_bessel_jn_);
   };
