@@ -34,6 +34,6 @@ namespace eve::detail
                                   wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return fma[o](-a, b, c));
+    return fma[o](-a, b, c);
   }
 }
