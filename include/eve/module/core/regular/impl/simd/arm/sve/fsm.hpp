@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/fanm.hpp>
+#include <eve/module/core/regular/fsnm.hpp>
 
 namespace eve::detail
 {
@@ -27,13 +27,13 @@ namespace eve::detail
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_),
-                                  C const &,
-                                  O const& o,
+                                  C const & mask,
+                                  O const & o,
                                   wide<T, N> a,
                                   wide<T, N> b,
                                   wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return fma[o](-a, b, c);
+    return if_else(mask, fam[o](-a, b, c), a);
   }
 }
