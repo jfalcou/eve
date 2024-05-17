@@ -22,7 +22,9 @@ namespace eve
   {
      template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
     constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept { return EVE_DISPATCH_CALL(a, b, c); }
+    eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2>)
+    { return EVE_DISPATCH_CALL(a, b, c); }
 
     EVE_CALLABLE_OBJECT(ellint_rf_t, ellint_rf_);
   };

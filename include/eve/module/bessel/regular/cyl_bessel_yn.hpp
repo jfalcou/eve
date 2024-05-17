@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::value N, eve::floating_value T>
     EVE_FORCEINLINE constexpr
-    as_wide_as_t<T, N> operator()(N n, T x) const 
+    as_wide_as_t<T, N> operator()(N n, T x) const noexcept
       requires (same_lanes_or_scalar<N, T>)
     { return EVE_DISPATCH_CALL(n, x); }
 

@@ -27,6 +27,7 @@ namespace eve
               , eve::floating_ordered_value T2, eve::floating_ordered_value T3>
     constexpr EVE_FORCEINLINE
     eve::common_value_t<T0, T1, T2, T3> operator()(T0 a, T1 b, T2 c, T3 d) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2, T3>)
     { return EVE_DISPATCH_CALL(a, b, c, d); }
 
     EVE_CALLABLE_OBJECT(ellint_rj_t, ellint_rj_);
