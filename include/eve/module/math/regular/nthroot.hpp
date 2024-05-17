@@ -84,7 +84,6 @@ namespace eve
       return nthroot[o](x,convert(n, as<elt_t>()));
     }
 
-
     template<floating_value  T, floating_value  U, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T, U>
     nthroot_(EVE_REQUIRES(cpu_), O const &, T xx, U nn) noexcept

@@ -16,11 +16,10 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
-#include <eve/module/core/saturated/add.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/inc.hpp>
 
 namespace eve
@@ -35,7 +34,7 @@ namespace eve
     template<eve::value T, integral_value N>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
     {
-      EVE_ASSERT(eve::all(is_gez(n)), "[eve::next] : second parameter must be positive");
+      EVE_ASSERT(eve::all(n >= 0), "[eve::next] : second parameter must be positive");
       return EVE_DISPATCH_CALL(v, n);
     }
 

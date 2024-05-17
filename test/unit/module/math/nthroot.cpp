@@ -70,9 +70,7 @@ TTS_CASE_TPL("Check special cases of  nthroot", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::nthroot(T(8), 3), T(2));
   TTS_EQUAL(eve::nthroot(T(8), 3u), T(2));
   TTS_IEEE_EQUAL(eve::nthroot(T(-64), 4), eve::nan(eve::as<T>()));
-
 };
-
 
 //==================================================================================================
 //===  Tests for masked nthroot

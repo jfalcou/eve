@@ -9,7 +9,6 @@
 
 namespace eve::detail
 {
-
   template<conditional_expr C, typename T, typename N, callable_options O>
   EVE_FORCEINLINE
   wide<T, N> mul_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
@@ -32,10 +31,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, v, w);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, v, w);
-      else if constexpr( match(c,category::int32x16, category::uint32x16) ) return _mm512_mask_mul_epi32(src, m, v, w);
-      else if constexpr( match(c,category::int32x8 , category::uint32x8 ) ) return _mm256_mask_mul_epi32(src, m, v, w);
-      else if constexpr( match(c,category::int32x4 , category::uint32x4 ) ) return _mm_mask_mul_epi32   (src, m, v, w);
-      else                                                                  return mul.behavior(cpu_{}, opts, v, w);
+      else                                          return mul.behavior(cpu_{}, opts, v, w);
     }
   }
 }

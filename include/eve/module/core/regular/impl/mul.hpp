@@ -113,7 +113,7 @@ namespace eve::detail
           }
           else
           {
-            auto that = map(saturated(eve::mul), a, b);
+            auto that = map(eve::mul[saturated], a, b);
             return that;
           }
         }
