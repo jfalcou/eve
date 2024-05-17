@@ -137,7 +137,7 @@ namespace eve::algo
   //!    * `rng`:       Relaxed range  input range to process
   //!    * `init`:      Initial value. Also type of init matches the result type
   //!    * `op_zero`:   Pair of reduction operation (commutative/associative) and an identity (zero)
-  //!                   for it. Default add_zero is `{eve::plus, eve::zero}`.
+  //!                   for it. Default add_zero is `{eve::add, eve::zero}`.
   //!
   //!   **Return value**
   //!
