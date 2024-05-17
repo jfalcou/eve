@@ -27,13 +27,13 @@ namespace eve::detail
 
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_),
-                                  C,
+                                  C const &,
                                   O const& o,
                                   wide<T, N> a,
                                   wide<T, N> b,
                                   wide<T, N> c) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-   return -fanm[o](a, b, c);
+    return fma[o](-a, b, c));
   }
 }
