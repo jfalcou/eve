@@ -120,7 +120,6 @@ saturate_(EVE_SUPPORTS(cpu_), U const& v, as<Target> const& at)
         {
           auto mn = U(valmin(eve::as<float>()));
           auto mx = U(valmax(eve::as<float>()));
-//          return if_else(is_infinite(v), v, clamp(v, mn, mx));
           return clamp[is_not_infinite(v)](v, mn, mx);
         }
       }
