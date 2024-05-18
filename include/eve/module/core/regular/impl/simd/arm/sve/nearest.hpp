@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/implementation.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
