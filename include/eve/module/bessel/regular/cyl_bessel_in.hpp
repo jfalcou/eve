@@ -17,9 +17,8 @@ namespace eve
   struct cyl_bessel_in_t : strict_elementwise_callable<cyl_bessel_in_t, Options>
   {
     template<eve::value N, eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<T, N> operator()(N n, T x) const noexcept
-      requires (same_lanes_or_scalar<N, T>)
+    requires (same_lanes_or_scalar<N, T>)
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(N n, T x) const noexcept
     { return EVE_DISPATCH_CALL(n, x); }
 
     EVE_CALLABLE_OBJECT(cyl_bessel_in_t, cyl_bessel_in_);
