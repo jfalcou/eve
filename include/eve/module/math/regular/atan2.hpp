@@ -113,9 +113,9 @@ namespace eve
         {
           if (is_unordered(a00, a10)) return nan(eve::as(a00));
         }
-         auto test1 =  eve::is_infinite(a00) && eve::is_infinite(a10);
         if constexpr(platform::supports_infinites)
         {
+          auto test1 =  eve::is_infinite(a00) && eve::is_infinite(a10);
           a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a00)), a00), a00);
           a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a00)), a10), a10);
         }

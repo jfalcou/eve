@@ -92,7 +92,7 @@ namespace eve::detail
                                   1.587401051968199474751};
       auto           ax        = eve::abs(x);
       auto           test      = is_less(eve::abs(x), T(100) * smallestposval(eve::as<T>()));
-      ax                       = if_else(test, ldexp(ax, 54), ax);
+      ax                       = ldexp[test](ax, 54);
       /* Reduce x.  xm now is an range  [0.5, 1.0].  */
       auto [xm, xe] = ifrexp[raw](ax);
       T u;

@@ -81,7 +81,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr(integral_value<T> && O::contains(saturated2))
-        return if_else(a != valmax(eve::as(a)), inc(a),  a);
+        return inc[a != valmax(eve::as(a))](a);
       else
         return a + one(eve::as(a));
     }

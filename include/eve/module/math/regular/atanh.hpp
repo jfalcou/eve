@@ -95,7 +95,7 @@ namespace eve
       auto test = absx < half(eve::as<T>());
       auto tmp  = if_else(test, absx, t) / z1;
       if constexpr( scalar_value<T> ) tmp = test ? fma(t, tmp, t) : tmp;
-      else tmp = if_else(test, fma(t, tmp, t), tmp);
+      else tmp = fma[test](tmp, t, t);
       return signnz(x)*half(eve::as<T>())*log1p(tmp);
     }
   }

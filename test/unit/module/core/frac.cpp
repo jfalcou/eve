@@ -35,6 +35,7 @@ TTS_CASE_WITH("Check behavior of eve::frac(simd)",
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::frac(a0), map([](auto e) -> v_t { return e - std::trunc(e); }, a0));
+  TTS_EXPECT(eve::all(eve::is_negative(eve::frac(eve::mzero(eve::as(a0))))));
 };
 
 
@@ -45,7 +46,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::frac)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::frac[mask](a0),

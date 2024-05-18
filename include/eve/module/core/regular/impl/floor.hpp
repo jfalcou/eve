@@ -12,6 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_not_less_equal.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>

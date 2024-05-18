@@ -17,8 +17,12 @@ namespace eve
   struct significants_t : strict_elementwise_callable<significants_t, Options>
   {
     template<floating_value T0, value T1>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
-    { return EVE_DISPATCH_CALL(t0, t1); }
+    EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 n) const noexcept
+    {
+      EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
+      EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
+      return EVE_DISPATCH_CALL(t0, n);
+    }
 
     EVE_CALLABLE_OBJECT(significants_t, significants_);
   };
@@ -85,7 +89,8 @@ namespace detail
       EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
       auto e      = floor(inc(log10(eve::abs(a)) - n));
       auto factor = exp10(abs(e));
-      auto tmp    = if_else(is_gez(e), nearest(a / factor) * factor, nearest(a * factor) / factor);
+      auto rfactor = rec(factor);
+      auto tmp    = if_else(is_gez(e), nearest(a*rfactor)*factor, nearest(a*factor)*rfactor);
       tmp         = if_else(is_eqz(a), a, tmp);
       return if_else(is_nez(n), tmp, allbits);
     }
