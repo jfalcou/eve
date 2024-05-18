@@ -17,12 +17,14 @@ namespace eve
   struct laguerre_t : strict_elementwise_callable<laguerre_t, Options, associated_option>
   {
     template<eve::integral_value N, eve::floating_value T>
+    requires (same_lanes_or_scalar<N, T>)
     constexpr EVE_FORCEINLINE eve::as_wide_as_t<T, N> operator()(N n, T t) const
     {
       return EVE_DISPATCH_CALL(n,t);
     }
 
     template<eve::integral_value N, eve::integral_value M, eve::floating_value T>
+    requires (same_lanes_or_scalar<N, M, T>)
     constexpr EVE_FORCEINLINE eve::as_wide_as_t<T, common_value_t<M,N>> operator()(N n, M m, T t) const
     {
       return EVE_DISPATCH_CALL(n, m, t);
