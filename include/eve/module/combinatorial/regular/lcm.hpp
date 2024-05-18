@@ -21,9 +21,9 @@ namespace eve
   struct lcm_t : elementwise_callable<lcm_t, Options>
   {
     template<eve::value T, eve::value U>
+    requires (same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE
     common_value_t<T, U> operator()(T v, U w) const noexcept
-    requires (same_lanes_or_scalar<T, U>)
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(lcm_t, lcm_);

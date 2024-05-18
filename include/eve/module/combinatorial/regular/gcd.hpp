@@ -19,9 +19,9 @@ template<typename Options>
 struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 {
   template<eve::ordered_value T, ordered_value U>
+  requires (same_lanes_or_scalar<T, U>)
   constexpr EVE_FORCEINLINE
   common_value_t<T, U> operator()(T v, U w) const noexcept
-  requires (same_lanes_or_scalar<T, U>)
   { return EVE_DISPATCH_CALL(v, w); }
 
   EVE_CALLABLE_OBJECT(gcd_t, gcd_);
