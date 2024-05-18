@@ -143,7 +143,7 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
 //==================================================================================================
 // fnma masked
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fnma on all types full range",
+TTS_CASE_WITH("Check behavior of masked fnma on all types full range",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
@@ -151,8 +151,11 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
                             tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
-  using eve::as;
   using eve::fnma;
+  using eve::if_;
 
-  TTS_IEEE_EQUAL(fnma[t](a0, a1, a2), eve::if_else(t, fnma[t](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fnma[t](a0, a1, a2), eve::if_else(t, fnma(a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fnma[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fnma(a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fnma[eve::ignore_all](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fnma[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
 };
