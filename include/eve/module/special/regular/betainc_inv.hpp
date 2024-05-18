@@ -24,10 +24,9 @@ namespace eve
   struct betainc_inv_t : elementwise_callable<betainc_inv_t, Options>
   {
     template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
-    EVE_FORCEINLINE constexpr
-    eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
-      requires (same_lanes_or_scalar<T0, T1, T2>)
-     { return EVE_DISPATCH_CALL(a, b, c); }
+    requires (same_lanes_or_scalar<T0, T1, T2>)
+    EVE_FORCEINLINE constexpr eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+    { return EVE_DISPATCH_CALL(a, b, c); }
 
     EVE_CALLABLE_OBJECT(betainc_inv_t, betainc_inv_);
   };
