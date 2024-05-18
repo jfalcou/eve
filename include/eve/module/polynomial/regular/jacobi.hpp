@@ -16,12 +16,14 @@ namespace eve
   struct jacobi_t : strict_elementwise_callable<jacobi_t, Options>
   {
     template<eve::floating_ordered_value ...Ts>
+    requires (same_lanes_or_scalar<Ts...>)
     constexpr EVE_FORCEINLINE
     eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(b...);
     }
     template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    requires (same_lanes_or_scalar<T0, Ts...>)
     constexpr EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
     {

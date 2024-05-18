@@ -17,8 +17,9 @@ namespace eve
   struct sph_bessel_jn_t : strict_elementwise_callable<sph_bessel_jn_t, Options>
   {
     template<eve::value N, eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<T, N> operator()(N n, T x) const  { return EVE_DISPATCH_CALL(n, x); }
+    requires (same_lanes_or_scalar<N, T>)
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(N n, T x) const noexcept
+    { return EVE_DISPATCH_CALL(n, x); }
 
     EVE_CALLABLE_OBJECT(sph_bessel_jn_t, sph_bessel_jn_);
   };
