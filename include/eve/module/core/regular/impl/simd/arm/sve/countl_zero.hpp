@@ -29,9 +29,10 @@ namespace eve::detail
                                           wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
+    auto const alt = alternative(mask, v, as(v));
     if constexpr( C::is_complete )
-      return svclz_x(sve_true<T>(), v);
+      return alt;
     else
-      return svclz_m(alternative(cond, v, as(v)), expand_mask(cond, as(v)), v);
+      return svclz_m(alt, expand_mask(cond, as(v)), v);
   }
 }

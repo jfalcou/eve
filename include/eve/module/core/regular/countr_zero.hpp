@@ -62,17 +62,17 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto countr_zero = functor<countr_zero_t>;
-  
+
   namespace detail
   {
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T countr_zero_(EVE_REQUIRES(cpu_),
                                              O const&,
-                                             T const& x) noexcept
+                                             T x) noexcept
     {
       if constexpr( scalar_value<T> )
-        return T(std::countr_zero(x)); 
-      else 
+        return T(std::countr_zero(x));
+      else
       {
         //      return map(countr_zero, x); // TO DO
         constexpr auto siz = sizeof(eve::element_type_t<T>) * 8;
@@ -110,7 +110,7 @@ namespace eve
           c -= if_else(is_nez(x & T(0x5555555555555555)), T(1), zero);
         }
         return if_else(is_eqz(x), sizeof(elt_t) * 8, c);
-//        return inc[is_eqz(x)](c); 
+//        return inc[is_eqz(x)](c);
       }
     }
   }
