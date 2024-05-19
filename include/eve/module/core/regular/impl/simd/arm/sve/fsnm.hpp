@@ -12,11 +12,18 @@
 
 namespace eve::detail
 {
-template<arithmetic_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE auto
-fsnm_(EVE_SUPPORTS(sve_), wide<T, N> v0, wide<T, N> v1, wide<T, N> v2) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return -fam(v0, v1, v2);
-}
+  template<typename T, typename N, callable_options O>
+  requires sve_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> fsnm_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
+  {
+    return -fam(a, b, c);
+  }
+
+  template<conditional_expr C, typename T, typename N, callable_options O>
+  requires sve_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> fsnm_(EVE_REQUIRES(sve_), C, O const& o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
+  {
+    // This is done so the masking use a and not -a as source
+    return fsm[o](a, -b, c);
+  }
 }

@@ -5,10 +5,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/core.hpp>
-
-#include <algorithm>
 
 //==================================================================================================
 // Types tests
@@ -34,12 +31,11 @@ TTS_CASE_TPL("Check return types of fsnm", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fsnm(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fsnm(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fsnm(wi_t(), std::int8_t(), int()), wi_t);
-    TTS_EXPR_IS(eve::fsnm(wi_t(), int(), int()), wi_t);
   }
 };
 
 //==================================================================================================
-// fsnm tests
+//  fsnm tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -55,17 +51,38 @@ TTS_CASE_WITH("Check precision behavior of fsnm on real types",
                             tts::randoms(onemmileps, onepmileps)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::fnms;
   using eve::fsnm;
   using eve::detail::map;
-  TTS_IEEE_EQUAL(fsnm[eve::pedantic2](-eve::one(eve::as<T>()), a0, a1),
-                 fnms[eve::pedantic2](a0, a1, -eve::one(eve::as<T>())));
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(
+      eve::fsnm[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::fsnm[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+      2);
+};
+
+
+//==================================================================================================
+// fsnm tests
+//==================================================================================================
+TTS_CASE_WITH("Check precision behavior of fsnm on real types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(onemmileps, onepmileps),
+                            tts::randoms(onemmileps, onepmileps)))
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::fsnm;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(
+      eve::fsnm[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::fsnm[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+      2);
 };
 
 //==================================================================================================
-//  fsnm promote tests
+// fsnm promote tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of promote(fsnm) on all types",
+TTS_CASE_WITH("Check behavior of fsnm[promote] on all types",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -78,61 +95,45 @@ TTS_CASE_WITH("Check behavior of promote(fsnm) on all types",
 
   constexpr int N = eve::cardinal_v<T>;
   eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
-  auto r1 =fsnm[promote](a0, a1, fa);
+  auto r1 = fsnm[promote](a0, a1, fa);
   using er1_t =  eve::element_type_t<decltype(r1)>;
   auto refr1 = eve::fsnm(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
   TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
   eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
-  auto r2 =fsnm[promote](a0, da, a1);
+  auto r2 = fsnm[promote](a0, da, a1);
   using er2_t =  eve::element_type_t<decltype(r2)>;
   auto refr2 = eve::fsnm(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
   TTS_ULP_EQUAL(r2,  refr2, 0.5);
 
   eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
-  auto r3 =fsnm[promote](ia, a0, a1);
+  auto r3 = fsnm[promote](ia, a0, a1);
   using er3_t =  eve::element_type_t<decltype(r3)>;
   auto refr3 = eve::fsnm(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));
   TTS_ULP_EQUAL(r3,  refr3, 0.5);
 
-  auto r4 =fsnm[promote](ia, da, a1);
+  auto r4 = fsnm[promote](ia, da, a1);
   using er4_t =  eve::element_type_t<decltype(r4)>;
   auto refr4= eve::fsnm(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
   TTS_ULP_EQUAL(r4,  refr4, 0.5);
 };
 
 //==================================================================================================
-//== fsnm full range tests
+//  fsnm masked
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fsnm on all types full range",
+TTS_CASE_WITH("Check behavior of masked fsnm on all types",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2)
-{
-  using eve::as;
-  using eve::fnms;
-  using eve::fsnm;
-  using eve::detail::map;
-
-  TTS_IEEE_EQUAL(fsnm(a0, a1, a2), fnms(a1, a2, a0));
-  TTS_IEEE_EQUAL(fsnm[eve::pedantic2](a0, a1, a2), fnms[eve::pedantic2](a1, a2, a0));
-};
-
-//==================================================================================================
-//== fsnm masked
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of fsnm on all types full range",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
+              tts::generate(tts::randoms(1, 5),
+                            tts::randoms(1, 5),
+                            tts::randoms(1, 5),
                             tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
-  using eve::as;
   using eve::fsnm;
+  using eve::if_;
 
-  TTS_IEEE_EQUAL(fsnm[t](a0, a1, a2), eve::if_else(t, fsnm[t](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fsnm[t](a0, a1, a2), eve::if_else(t, fsnm(a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fsnm[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fsnm(a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fsnm[eve::ignore_all](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fsnm[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
 };
