@@ -95,13 +95,21 @@ namespace eve
 
   namespace detail
   {
-
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fnma_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
-      return fma[o](T(-a), b, c);
+      if constexpr(O::contains(promote))
+      {
+        using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
+        constexpr auto tgt = as(eve::as<er_t>());
+        return fma[o.drop(promote)](minus(convert(a, tgt)), convert(b, tgt), convert(c,tgt));
+      }
+      else
+      {
+        using r_t = common_value_t<T, U, V>;
+        return fma[o](minus(r_t(a)), r_t(b), r_t(c));
+      }
     }
-
   }
 }
 

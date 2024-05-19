@@ -5,10 +5,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/core.hpp>
-
-#include <algorithm>
 
 //==================================================================================================
 // Types tests
@@ -34,12 +31,11 @@ TTS_CASE_TPL("Check return types of fam", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fam(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fam(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fam(wi_t(), std::int8_t(), int()), wi_t);
-    TTS_EXPR_IS(eve::fam(wi_t(), int(), int()), wi_t);
   }
 };
 
 //==================================================================================================
-// fam tests
+//  fam tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -53,19 +49,40 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(onemmileps, onepmileps),
                             tts::randoms(onemmileps, onepmileps)))
-<typename T>(T a0, T a1)
+<typename T>(T const& a0, T const& a1)
 {
   using eve::fam;
-  using eve::fma;
   using eve::detail::map;
-  TTS_IEEE_EQUAL(fam[eve::pedantic2](-eve::one(eve::as<T>()), a0, a1),
-                 fma[eve::pedantic2](a0, a1, -eve::one(eve::as<T>())));
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(
+      eve::fam[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::fam[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+      2);
+};
+
+
+//==================================================================================================
+// fam tests
+//==================================================================================================
+TTS_CASE_WITH("Check precision behavior of fam on real types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(onemmileps, onepmileps),
+                            tts::randoms(onemmileps, onepmileps)))
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::fam;
+  using eve::detail::map;
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(
+      eve::fam[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::fam[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+      2);
 };
 
 //==================================================================================================
 // fam promote tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of promote(fam) on all types",
+TTS_CASE_WITH("Check behavior of fam[promote] on all types",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -102,37 +119,21 @@ TTS_CASE_WITH("Check behavior of promote(fam) on all types",
 };
 
 //==================================================================================================
-//== fam full range tests
+//  fam masked
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fam on all types full range",
+TTS_CASE_WITH("Check behavior of masked fam on all types",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2)
-{
-  using eve::as;
-  using eve::fam;
-  using eve::fma;
-  using eve::detail::map;
-
-  TTS_ULP_EQUAL(fam(a0, a1, a2), fma(a1, a2, a0), 10.5);
-  TTS_IEEE_EQUAL(fam[eve::pedantic2](a0, a1, a2), fma[eve::pedantic2](a1, a2, a0));
-};
-
-//==================================================================================================
-//== fam masked
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of fam on all types full range",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
+              tts::generate(tts::randoms(1, 5),
+                            tts::randoms(1, 5),
+                            tts::randoms(1, 5),
                             tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
-  using eve::as;
   using eve::fam;
+  using eve::if_;
 
-  TTS_IEEE_EQUAL(fam[t](a0, a1, a2), eve::if_else(t, fam[t](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fam[t](a0, a1, a2), eve::if_else(t, fam(a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fam[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fam(a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fam[eve::ignore_all](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fam[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
 };

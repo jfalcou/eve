@@ -95,13 +95,11 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 
   namespace detail
   {
-
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fsm_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
       return fms[o](b, c, a);
     }
-
   }
 }
 

@@ -18,11 +18,11 @@ namespace eve
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
-      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     template<eve::value T,eve::value U,eve::value V>
     requires(!Options::contains(promote))
-      constexpr EVE_FORCEINLINE
+    constexpr EVE_FORCEINLINE
     common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
     EVE_CALLABLE_OBJECT(fam_t, fam_);
@@ -93,7 +93,6 @@ namespace eve
   inline constexpr auto fam = functor<fam_t>;
 }
 
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/fam.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
