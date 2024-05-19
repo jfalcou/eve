@@ -90,7 +90,7 @@ namespace eve
         if constexpr( integral_value<T> )
           return true_(eve::as<T>());
         else
-          return is_eqz(frac(a));
+          return is_eqz(frac[raw](a));
       }
      else
         return is_flint(a) && (a <= eve::maxflint(eve::as<T>()));

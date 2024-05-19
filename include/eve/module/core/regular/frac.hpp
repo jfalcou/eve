@@ -18,7 +18,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct frac_t : elementwise_callable<frac_t, Options>
+  struct frac_t : elementwise_callable<frac_t, Options, raw_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
@@ -72,6 +72,11 @@ namespace eve
 //!
 //!  @groupheader{Semantic Modifiers}
 //!
+//!   * raw Call
+//!
+//!     The call `eve;::frac[raw](x)` does not guaranties the bit of sign
+//!     conservation when the input is \f$\pm0\f$.
+//!
 //!   * Masked Call
 //!
 //!     The call `eve;::frac[mask](x)` provides a masked version of `eve::frac` which is
@@ -89,10 +94,11 @@ namespace eve
    {
      if constexpr( floating_value<T> )
      {
-       if constexpr( scalar_value<T> ) return !a ? a : a - trunc(a);
-       else                            return if_else(is_eqz(a), a, a - trunc(a));
+       if constexpr(O::contains(raw2))      return a-trunc(a);
+       else if constexpr( scalar_value<T> ) return !a ? a : a - trunc(a);
+       else                                 return if_else(is_eqz(a), a, a - trunc(a));
      }
-     else                              return zero(eve::as(a));
+     else                                   return zero(eve::as(a));
    }
   }
 }
