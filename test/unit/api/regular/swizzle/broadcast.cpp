@@ -13,6 +13,23 @@
 
 template<int I, int N>
 inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; } );
+TTS_CASE_TPL( "Check behavior of broadcast for scalars", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  TTS_EQUAL(eve::broadcast(T{42}), eve::wide<T>{42});
+
+  auto f  = [&]<std::size_t... N>(std::index_sequence<N...>)
+            {
+              auto check = []<std::ptrdiff_t L>(eve::fixed<L>)
+              {
+                TTS_EQUAL(eve::broadcast(T{42},eve::lane<L>), (eve::wide<T,eve::fixed<L>>{42}));
+              };
+
+              (check(eve::lane<(1<<N)>),...);
+            };
+
+  f(std::make_index_sequence<8>{});
+};
 
 //==================================================================================================
 // Broadcast test

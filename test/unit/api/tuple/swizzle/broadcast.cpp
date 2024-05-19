@@ -8,15 +8,31 @@
 #include "test.hpp"
 #include <eve/module/core.hpp>
 #include <eve/wide.hpp>
-#include <bit>
 #include <cstdint>
 
 template<int I, int N>
 inline constexpr auto broadcast = eve::fix_pattern<N>( [](int, int){ return I; } );
 
-//==================================================================================================
-// Identity test
-//==================================================================================================
+TTS_CASE_TPL( "Check behavior of broadcast for tuples", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using s_t = kumi::tuple<std::int8_t,T,double>;
+
+  TTS_EQUAL(eve::broadcast(s_t{'A',42,3.5}), (eve::wide<s_t>{s_t{'A',42,3.5}}));
+  auto f  = [&]<std::size_t... N>(std::index_sequence<N...>)
+            {
+              auto check = []<std::ptrdiff_t L>(eve::fixed<L>)
+              {
+                auto v = s_t{'A',42,3.5};
+                TTS_EQUAL(eve::broadcast(v,eve::lane<L>), (eve::wide<s_t,eve::fixed<L>>{v}));
+              };
+
+              (check(eve::lane<(1<<N)>),...);
+            };
+
+  f(std::make_index_sequence<8>{});
+};
+
 TTS_CASE_TPL( "Check behavior of broadcast swizzle", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
