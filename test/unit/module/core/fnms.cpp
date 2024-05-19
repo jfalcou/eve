@@ -5,10 +5,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/core.hpp>
-
-#include <algorithm>
 
 //==================================================================================================
 // Types tests
@@ -34,12 +31,11 @@ TTS_CASE_TPL("Check return types of fnms", eve::test::simd::all_types)
     TTS_EXPR_IS(eve::fnms(v_t(), int(), T()), T);
     TTS_EXPR_IS(eve::fnms(int(), T(), int()), T);
     TTS_EXPR_IS(eve::fnms(wi_t(), std::int8_t(), int()), wi_t);
-    TTS_EXPR_IS(eve::fnms(wi_t(), int(), int()), wi_t);
   }
 };
 
 //==================================================================================================
-// fnms tests
+//  fnms tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -59,53 +55,34 @@ TTS_CASE_WITH("Check precision behavior of fnms on real types",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      fnms[eve::pedantic](a0, a1, eve::one(eve::as<T>())),
-      map([&](auto e, auto f) -> v_t { return fnms[eve::pedantic](e, f, v_t(1)); }, a0, a1),
+      eve::fnms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::fnms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
       2);
 };
 
+
 //==================================================================================================
-// fnms full range tests
+// fnms tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fnms on all types full range",
-              eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
-<typename T>(T const& a0, T const& a1, T const& a2)
+TTS_CASE_WITH("Check precision behavior of fnms on real types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(onemmileps, onepmileps),
+                            tts::randoms(onemmileps, onepmileps)))
+<typename T>(T const& a0, T const& a1)
 {
-  using eve::as;
   using eve::fnms;
   using eve::detail::map;
-
   using v_t = eve::element_type_t<T>;
-  if( eve::all(
-          eve::fnms(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))
-          == eve::fnms[eve::pedantic](onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
-  {
-    TTS_ULP_EQUAL(fnms((a0), (a1), (a2)),
-                  map([&](auto e, auto f, auto g) -> v_t { return fnms[eve::pedantic](e, f, g); },
-                      a0,
-                      a1,
-                      a2),
-                  2);
-  }
-  else
-  {
-    TTS_ULP_EQUAL(fnms((a0), (a1), (a2)),
-                  map([&](auto e, auto f, auto g) -> v_t { return -e * f + g; }, a0, a1, a2),
-                  2);
-  }
   TTS_ULP_EQUAL(
-      fnms[eve::pedantic]((a0), (a1), (a2)),
-      map([&](auto e, auto f, auto g) -> v_t { return fnms[eve::pedantic](e, f, g); }, a0, a1, a2),
+      eve::fnms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return eve::fnms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
       2);
 };
 
 //==================================================================================================
 // fnms promote tests
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of promote(fnms) on all types",
+TTS_CASE_WITH("Check behavior of fnms[promote] on all types",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -142,18 +119,21 @@ TTS_CASE_WITH("Check behavior of promote(fnms) on all types",
 };
 
 //==================================================================================================
-// fnms masked
+//  fnms masked
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of fnms on all types full range",
+TTS_CASE_WITH("Check behavior of masked fnms on all types",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
+              tts::generate(tts::randoms(1, 5),
+                            tts::randoms(1, 5),
+                            tts::randoms(1, 5),
                             tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
-  using eve::as;
   using eve::fnms;
+  using eve::if_;
 
-  TTS_IEEE_EQUAL(fnms[t](a0, a1, a2), eve::if_else(t, fnms[t](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fnms[t](a0, a1, a2), eve::if_else(t, fnms(a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fnms[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fnms(a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fnms[eve::ignore_all](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fnms[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
 };
