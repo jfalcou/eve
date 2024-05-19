@@ -112,7 +112,7 @@ var searchData=
   ['elementwise_5fcallable_3c_20fdim_5ft_2c_20options_20_3e_109',['elementwise_callable&lt; fdim_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20firstbitset_5ft_2c_20options_20_3e_110',['elementwise_callable&lt; firstbitset_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20firstbitunset_5ft_2c_20options_20_3e_111',['elementwise_callable&lt; firstbitunset_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20frac_5ft_2c_20options_20_3e_112',['elementwise_callable&lt; frac_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20frac_5ft_2c_20options_2c_20raw_5foption_20_3e_112',['elementwise_callable&lt; frac_t, Options, raw_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20frexp_5ft_2c_20options_2c_20pedantic_5foption_2c_20raw_5foption_20_3e_113',['elementwise_callable&lt; frexp_t, Options, pedantic_option, raw_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20func_2c_20optionsvalues_2c_20options_2e_2e_2e_20_3e_114',['elementwise_callable&lt; Func, OptionsValues, Options... &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20gamma_5fp_5finv_5ft_2c_20options_20_3e_115',['elementwise_callable&lt; gamma_p_inv_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
