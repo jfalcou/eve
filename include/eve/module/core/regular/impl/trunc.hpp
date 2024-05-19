@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/next.hpp>
-#include <iostream>
 
 namespace eve::detail
 {
