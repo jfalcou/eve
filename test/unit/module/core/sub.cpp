@@ -24,10 +24,10 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::sub(v_t(), v_t()), v_t);
 
   // saturated
-  TTS_EXPR_IS(eve::saturated(eve::sub)(T(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(v_t(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::sub[eve::saturated](T(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](T(), v_t()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), v_t()), v_t);
 
   // conditionnal
   TTS_EXPR_IS(eve::sub[eve::logical<T>()](T(), T()), T);
@@ -36,12 +36,12 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](v_t(), T()), T);
   TTS_EXPR_IS(eve::sub[eve::logical<v_t>()](v_t(), v_t()), v_t);
-  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<T>()])(T(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<T>()])(T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(T(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(v_t(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub[eve::logical<v_t>()])(v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::sub[eve::saturated][eve::logical<T>()](T(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated][eve::logical<T>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated][eve::logical<v_t>()](T(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated][eve::logical<v_t>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated][eve::logical<v_t>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated][eve::logical<v_t>()](v_t(), v_t()), v_t);
 
   // multi
   TTS_EXPR_IS(eve::sub(T(), T(), T()), T);
@@ -52,13 +52,13 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::sub(v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::sub(v_t(), v_t(), v_t()), v_t);
 
-  TTS_EXPR_IS(eve::saturated(eve::sub)(T(), T(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(T(), v_t(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(v_t(), T(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(T(), T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(v_t(), v_t(), T()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(v_t(), T(), v_t()), T);
-  TTS_EXPR_IS(eve::saturated(eve::sub)(v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::sub[eve::saturated](T(), T(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](T(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), T(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](T(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), v_t(), v_t()), v_t);
 };
 
 //==================================================================================================
@@ -76,21 +76,21 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   using eve::detail::map;
 
   TTS_EQUAL(sub(a0, a2), map([](auto e, auto f) { return sub(e, f); }, a0, a2));
-  TTS_EQUAL(saturated(sub)(a0, a2),
-            map([&](auto e, auto f) { return saturated(sub)(e, f); }, a0, a2));
+  TTS_EQUAL(sub[saturated](a0, a2),
+            map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
   TTS_EQUAL(sub(a0, a1, a2),
             map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(saturated(sub)(a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return saturated(sub)(saturated(sub)(e, f), g); },
+  TTS_EQUAL(sub[saturated](a0, a1, a2),
+            map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
                 a0,a1,a2)
             );
   TTS_EQUAL(sub(kumi::tuple{a0, a2}), map([](auto e, auto f) { return sub(e, f); }, a0, a2));
-  TTS_EQUAL(saturated(sub)(kumi::tuple{a0, a2}),
-            map([&](auto e, auto f) { return saturated(sub)(e, f); }, a0, a2));
+  TTS_EQUAL(sub[saturated](kumi::tuple{a0, a2}),
+            map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
   TTS_EQUAL(sub(kumi::tuple{a0, a1, a2}),
             map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(saturated(sub)(kumi::tuple{a0, a1, a2}),
-            map([&](auto e, auto f, auto g) { return saturated(sub)(saturated(sub)(e, f), g); },
+  TTS_EQUAL(sub[saturated](kumi::tuple{a0, a1, a2}),
+            map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
                 a0,a1,a2)
             );
 };
@@ -113,9 +113,8 @@ TTS_CASE_WITH("Check behavior of sub on signed types",
   using eve::detail::map;
   TTS_EQUAL(sub[a2 > T(64)](a0, a1),
             map([](auto e, auto f, auto g) { return g > 64 ? sub(e, f) : e; }, a0, a1, a2));
-  TTS_EQUAL(
-      saturated(sub[a2 > T(64)])(a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? saturated(sub)(e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(sub[saturated][a2 > T(64)](a0, a1)
+           , map([](auto e, auto f, auto g) { return g > 64 ? sub[saturated](e, f) : e; }, a0, a1, a2));
 };
 
 /// TODO waiting for interface simplifications to add scalar tests

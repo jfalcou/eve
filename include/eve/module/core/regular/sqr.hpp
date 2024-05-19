@@ -12,6 +12,10 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/sqrtvalmax.hpp>
 #include <eve/module/core/constant/valmax.hpp>
+#include <eve/module/core/regular/mul.hpp>
+#include <eve/module/core/regular/abs.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+
 
 namespace eve
 {

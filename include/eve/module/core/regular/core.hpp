@@ -84,7 +84,6 @@
 #include <eve/module/core/regular/has_single_bit.hpp>
 #include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/ifnot_else.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/interleave.hpp>
@@ -169,7 +168,6 @@
 #include <eve/module/core/regular/nextafter.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
-#include <eve/module/core/regular/plus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/rat.hpp>

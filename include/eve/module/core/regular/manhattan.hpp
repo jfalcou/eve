@@ -90,10 +90,10 @@ namespace eve
   {
     template<typename T0,typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    manhattan_(EVE_REQUIRES(cpu_), O const & , T0 a0, T1 a1, Ts... args) noexcept
+    manhattan_(EVE_REQUIRES(cpu_), O const & o , T0 a0, T1 a1, Ts... args) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;
-      auto r = eve::add/*TODO[o]*/(abs(r_t(a0)), abs(r_t(a1)), abs(r_t(args))...);
+      auto r = eve::add[o](abs(r_t(a0)), abs(r_t(a1)), abs(r_t(args))...);
       if constexpr(O::contains(pedantic2))
       {
         auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1));

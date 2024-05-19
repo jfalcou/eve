@@ -14,13 +14,13 @@ int main()
             << " <- qi                      = " << qi << '\n'
             << " -> mul(pi, qi)             = " << eve::mul(pi, qi) << '\n'
             << " -> pi * qi                 = " << pi * qi << '\n'
-            << " -> saturated(mul)((pi, qi) = " << eve::saturated(eve::mul)(pi, qi) << '\n'
+            << " -> mul[saturated]((pi, qi) = " << eve::mul[eve::saturated](pi, qi) << '\n'
             << " <- pf                      = " << pf << '\n'
             << " <- qf                      = " << qf << '\n'
             << " -> mul(pf, qf)             = " << eve::mul(pf, qf) << '\n'
             << " -> pf * qf                 = " << pf * qf << '\n'
             << " -> mul[qi > 0](pi, qi)     = " << eve::mul[qi > 0](pi, qi) << '\n';
-  
+
   std::int16_t xi = 100, yi = 32700;
 
   std::cout << "---- scalar" << '\n'
@@ -36,6 +36,6 @@ int main()
             << " -> mul(kumi::tuple{pf, pf})      = " << eve::mul( kumi::tuple{pf, pf})  << '\n'
             << " -> mul(kumi::tuple{pf, 1.0f)     = " << eve::mul( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> mul(kumi::tuple{1.0f, pf)     = " << eve::mul( kumi::tuple{1.0f, pf})  << '\n'
-            << " -> saturated(mul)(pi,12,pi,pi)   = " << eve::saturated(eve::mul)(pi, 12, pi,pi) << '\n';
+            << " -> mul[saturated](pi,12,pi,pi)   = " << eve::mul[eve::saturated](pi, 12, pi,pi) << '\n';
   return 0;
 }

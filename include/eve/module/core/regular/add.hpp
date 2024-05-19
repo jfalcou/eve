@@ -7,10 +7,29 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct add_t : tuple_callable<add_t, Options, saturated_option>
+  {
+    template<eve::value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    EVE_CALLABLE_OBJECT(add_t, add_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -28,26 +47,25 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value... Ts >
+//!      template<eve::value... Ts >
 //!      eve::common_value_t<Ts ...> add(Ts ... xs) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` :  [real](@ref eve::value) arguments.
+//!     * `xs ...` :  [Values](@ref eve::value) to sum.
 //!
 //!   **Return value**
 //!
-//!     The value of the sum of the arguments is returned.
+//!     The value of the sum of the arguments.
 //!
 //!   @note
 //!
 //!     * Take care that for floating entries, the addition is only 'almost' associative.
 //!       This call performs additions in reverse incoming order.
 //!
-//!     * Although the infix notation with `+` is supported for
-//!       two parameters, the `+` operator on
+//!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on
 //!       standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
@@ -63,15 +81,16 @@ namespace eve
 //!
 //!   * eve::saturated
 //!
-//!     The call `eve::saturated(eve::add)(...)` computes
-//!     a saturated version of `eve::add`.
+//!     The call `eve::add[eve::saturated](...)` computes a saturated version of `eve::add`.
 //!
 //!     Take care that for signed integral entries this kind of addition is not associative at all.
 //!     This call perform saturated additions in reverse incoming order.
-//!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(add_, add);
+  inline constexpr auto add = functor<add_t>;
+
+  // Required for optimisation detections
+  using callable_add_ = tag_t<add>;
 }
 
 #include <eve/module/core/regular/impl/add.hpp>

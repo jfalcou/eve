@@ -52,6 +52,9 @@ TTS_CASE_WITH("Check behavior of eve::minus(eve::wide)",
 
   TTS_EQUAL(eve::minus(a0), map([](auto e) -> v_t { return -e; }, a0));
   TTS_EQUAL(eve::minus[mask](a0), eve::if_else(mask, eve::minus(a0), a0));
+  TTS_EQUAL(eve::minus[eve::if_(mask).else_(99)](a0), eve::if_else(mask, eve::minus(a0), T{99}));
+  TTS_EQUAL(eve::minus[eve::ignore_all](a0), a0);
+  TTS_EQUAL(eve::minus[eve::ignore_all.else_(42)](a0), T{42});
 };
 
 //==================================================================================================

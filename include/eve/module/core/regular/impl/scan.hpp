@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/plus.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/slide_right.hpp>
 
 namespace eve::detail
@@ -65,7 +65,7 @@ template<simd_value Wide>
 EVE_FORCEINLINE Wide
 scan_(EVE_SUPPORTS(cpu_), Wide v) noexcept
 {
-  return scan(v, plus, eve::zero);
+  return scan(v, add, eve::zero);
 }
 
 }
