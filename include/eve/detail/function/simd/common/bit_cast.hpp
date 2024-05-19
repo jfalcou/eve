@@ -19,14 +19,10 @@
 
 namespace eve::detail
 {
-  template<typename T, typename Target>
-  EVE_FORCEINLINE auto bit_cast_(EVE_SUPPORTS(cpu_), T const &a, as<Target> const &) noexcept
-  requires (sizeof(T) == sizeof(Target))
+  template<callable_options O, typename T, typename Target>
+  EVE_FORCEINLINE auto bit_cast_(EVE_REQUIRES(cpu_), O const&, T const &a, as<Target> const &) noexcept
   {
-    if constexpr(std::is_same_v<T, Target>)
-    {
-      return a;
-    }
+    if constexpr(std::is_same_v<T, Target>) return a;
     else
     {
       [[maybe_unused]] Target that;
