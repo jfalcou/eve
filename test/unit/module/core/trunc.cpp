@@ -60,7 +60,7 @@ TTS_CASE_WITH("Check behavior of trunc on wide",
 <typename T>(T const& a0)
 {
    using wi_t  = eve::as_integer_t<T, signed>;
-  using uwi_t = eve::as_integer_t<T, unsigned>;
+ using uwi_t = eve::as_integer_t<T, unsigned>;
    using v_t   = eve::element_type_t<T>;
    using i_t   = eve::as_integer_t<v_t, signed>;
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
@@ -71,8 +71,28 @@ TTS_CASE_WITH("Check behavior of trunc on wide",
     TTS_EQUAL(eve::trunc(eve::abs(a0), eve::as<unsigned>()), uwi_t([&](auto i, auto) { return ui_t(std::abs(a0.get(i))); }));
   }
   else { TTS_EQUAL(eve::trunc(a0), a0); }
+
 };
 
+TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using elt_t = eve::element_type_t<T>;
+  T a = [](auto i, auto){ return eve::next(elt_t(-1), i); };
+  T b = [](auto i, auto){ return eve::prev(elt_t(1), i); };
+  T ra = [](auto i, auto){ return i <=  2 ? elt_t(-1) : elt_t(0);  };
+  T rb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
+  TTS_EQUAL( eve::trunc[eve::almost = 2](a), ra);
+  TTS_EQUAL( eve::trunc[eve::almost = 2](b), rb);
+  elt_t epsi = eve::eps(eve::as<elt_t>());
+  T ea = [epsi](auto i, auto){ return elt_t(-1)+i*epsi; };
+  T eb = [epsi](auto i, auto){ return elt_t(1 )-i*epsi; };
+  T era = [](auto i, auto){ return i <=  2 ? elt_t(-1) : elt_t(0);  };
+  T erb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
+  TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](ea), era);
+  TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](eb), erb);
+
+};
 
 //==================================================================================================
 // Tests for masked trunc
