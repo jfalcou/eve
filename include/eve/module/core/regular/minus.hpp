@@ -21,8 +21,7 @@ namespace eve
   struct minus_t : elementwise_callable<minus_t, Options, saturated_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    constexpr EVE_FORCEINLINE T operator()(T a) const { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(minus_t, minus_);
   };
@@ -90,11 +89,9 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    minus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
+    EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
     {
-      if constexpr( floating_value<T> )
-        return bit_xor(v, signmask(eve::as(v)));
+      if      constexpr( floating_value<T> ) return bit_xor(v, signmask(eve::as(v)));
       else if constexpr(O::contains(saturated2))
       {
         return if_else(v == valmin(as<T>()), valmax(as<T>()), minus(v));
@@ -102,7 +99,7 @@ namespace eve
       else
       {
         if constexpr( simd_value<T> ) return -v;
-        else return T{0} - v;
+        else                          return T{0} - v;
       }
     }
   }

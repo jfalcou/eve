@@ -13,19 +13,28 @@
 
 namespace eve::detail
 {
-template<signed_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-minus_(EVE_SUPPORTS(sve_), wide<T, N> const& v) noexcept requires sve_abi<abi_t<T, N>>
-{
-  return -v;
-}
+  template<signed_scalar_value T, typename N, callable_options O>
+  requires sve_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), O const& o, wide<T, N> v) noexcept
+  {
+    // saturated integer has no intrinsic and floating is better by default
+    if constexpr((O::contains(saturated2) && std::integral<T>) || floating_value<T>)  return minus.behavior(cpu_{},o,v);
+    else                                                                              return svneg_x(sve_true<T>(),v);
+  }
 
-template<conditional_expr C, signed_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-minus_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  if constexpr( C::is_complete && C::is_inverted ) return -v;
-  else  return svneg_m(alternative(cond, v, as(v)), expand_mask(cond, as(v)), v);
-}
+  template<conditional_expr C, signed_scalar_value T, typename N, callable_options O>
+  requires sve_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), C const& mask, O const& o, wide<T, N> v) noexcept
+  {
+    auto const alt = alternative(mask, v, as(v));
+
+    // ignore all just return alternative
+    if constexpr( C::is_complete ) return alt;
+    else
+    {
+      //  if saturated on integer, we don't have masked op so we delegate
+      if constexpr(O::contains(saturated2) && std::integral<T>) return minus.behavior(cpu_{},o,v);
+      else                                                      return svneg_m(alt,expand_mask(mask, as(v)),v);
+    }
+  }
 }
