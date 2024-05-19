@@ -8,62 +8,88 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/concept/vectorizable.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/traits/overload.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
 namespace eve
 {
-//================================================================================================
-//! @addtogroup memory
-//! @{
-//! @var write
-//!
-//! @brief Callable object writing single value from memory
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! `operator*` based interface used in the standard has notorious issues with proxy references.
-//! To prevent those issues when dealing with complex, potentially SIMD-aware iterators,
-//! `eve::write` is to be used.
-//!
-//! #### Members Functions
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Performs a single write to memory                          |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<typename Ptr, scalar_value V> auto operator()(V v,Ptr p) const noexcept
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//! `v`  : [scalar value](@ref eve::scalar_value) to write.
-//! `ptr`: Memory to write to.
-//!
-//!  @}
-//================================================================================================
-EVE_MAKE_CALLABLE(write_, write);
+  template<typename Options>
+  struct write_t : callable<write_t, Options>
+  {
+    template<typename Ptr, scalar_value V>
+    requires requires(Ptr p, V v) { *p = v; }
+    EVE_FORCEINLINE void operator()(V v, Ptr ptr) const noexcept{ return EVE_DISPATCH_CALL(v,ptr); }
 
-namespace detail
+    template<typename Writeable, scalar_value V>
+    requires requires(Writeable p, V v) { p.write(v); }
+    EVE_FORCEINLINE void operator()(V v, Writeable p) const noexcept{ return EVE_DISPATCH_CALL(v,p); }
+
+    template<typename... Ptrs, scalar_value V>
+    EVE_FORCEINLINE void operator()(V v, soa_ptr<Ptrs...> ptr) const noexcept{ return EVE_DISPATCH_CALL(v,ptr); }
+
+    EVE_CALLABLE_OBJECT(write_t, write_);
+  };
+
+  //================================================================================================
+  //! @addtogroup memory
+  //! @{
+  //!   @var write
+  //!   @brief Callable object writing a scalar value to memory
+  //!
+  //!   `operator*` based interface used in the standard has notorious issues with proxy references.
+  //!   To prevent those issues when dealing with complex, potentially SIMD-aware iterators, `eve::write` is to be used.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template<typename Ptr, scalar_value V>
+  //!     requires requires(Ptr p, V v) { *p = v; }
+  //!     EVE_FORCEINLINE void operator()(V v, Ptr p) const noexcept;               // 1
+  //!
+  //!     template<typename Writeable, scalar_value V>
+  //!     requires requires(Writeable p, V v) { p.write(v); }
+  //!     EVE_FORCEINLINE void operator()(V v, Writeable p) const noexcept;         // 2
+  //!
+  //!     template<typename... Ptrs, scalar_value V>
+  //!     EVE_FORCEINLINE void operator()(V v, soa_ptr<Ptrs...> p) const noexcept;  // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!   1. Write the [scalar](@ref eve::scalar_value) `v` into the memory pointed by `p`;
+  //!   2. Write the [scalar](@ref eve::scalar_value) `v` into the memory managed by the object `p`;
+  //!   3. Write the [scalar](@ref eve::scalar_value) `v` into the memory pointed by SoA pointer `p`;
+  //!
+  //!   **Parameters**
+  //!
+  //!   * `v`: [scalar](@ref eve::scalar_value) to write to memory.
+  //!   * `p`: A pointer or rich iterator to write to.
+  //!
+  //! @}
+  //================================================================================================
+  inline constexpr auto write = functor<write_t>;
+}
+
+namespace eve::detail
 {
-  template<typename Ptr, scalar_value V>
-  EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), V v, Ptr ptr) noexcept requires
-      requires(Ptr p, V v)
+  template<callable_options O, typename Ptr, typename V>
+  EVE_FORCEINLINE void write_(EVE_REQUIRES(cpu_), O const&, V v, Ptr p) noexcept
   {
-    *p = v;
-  }
-  {
-    *ptr = v;
+    if constexpr(requires { p.write(v); })   p.write(v);
+    else                                    *p = v;
   }
 
-  template<scalar_value V, typename... Ptrs>
-  EVE_FORCEINLINE void write_(EVE_SUPPORTS(cpu_), V v, soa_ptr<Ptrs...> ptr) noexcept
+  template<callable_options O,  typename... Ptrs, typename V>
+  EVE_FORCEINLINE void write_(EVE_REQUIRES(cpu_), O const&, V v, soa_ptr<Ptrs...> ptr) noexcept
   {
     kumi::for_each(write, v, ptr);
   }
-}
 }

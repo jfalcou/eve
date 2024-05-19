@@ -171,10 +171,7 @@ namespace eve::algo::views
         return kumi::map(eve::read, self.storage);
       }
 
-      EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::write_, value_type v, zip_iterator<Is...> self)
-      {
-        kumi::for_each(eve::write, v, self.storage);
-      }
+      EVE_FORCEINLINE void write(value_type v) const noexcept { kumi::for_each(eve::write, v, storage); }
 
       EVE_FORCEINLINE operator zip_iterator<unaligned_t<Is>...>() const
       {

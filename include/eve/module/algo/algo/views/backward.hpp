@@ -123,10 +123,7 @@ namespace eve::algo::views
       return eve::read(unalign(self.base) - 1);
     }
 
-    EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::write_, value_type v, backward_iterator self)
-    {
-      return eve::write(v, unalign(self.base) - 1);
-    }
+    EVE_FORCEINLINE void write(value_type v) const noexcept { eve::write(v, unalign(base) - 1); }
 
     template <relaxed_sentinel_for<I> I1>
     EVE_FORCEINLINE bool operator==(backward_iterator<I1> y) const
