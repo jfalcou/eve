@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE  wide<T, N>  countl_zero_(EVE_REQUIRES(sve_),
-                                            O           const& o,
+                                            O           const&,
                                             wide<T, N>  const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
@@ -24,7 +24,7 @@ namespace eve::detail
 
   template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sve_),
-                                          O          const& o,
+                                          O          const&,
                                           C          const& mask,
                                           wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
