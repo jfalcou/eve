@@ -39,6 +39,26 @@ TTS_CASE_WITH("Check behavior of eve::frac(simd)",
 };
 
 
+TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using elt_t = eve::element_type_t<T>;
+  T a = [](auto i, auto){ return eve::next(elt_t(-1), i); };
+  T b = [](auto i, auto){ return eve::prev(elt_t(1), i); };
+  T ra = [](auto i, auto){ return i <=  2 ? elt_t(-1) : elt_t(0);  };
+  T rb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
+  TTS_EQUAL( eve::frac[eve::almost = 2](a), a-ra);
+  TTS_EQUAL( eve::frac[eve::almost = 2](b), b-rb);
+  elt_t epsi = eve::eps(eve::as<elt_t>());
+  T ea = [epsi](auto i, auto){ return elt_t(-1)+i*epsi; };
+  T eb = [epsi](auto i, auto){ return elt_t(1 )-i*epsi; };
+  T era = [](auto i, auto){ return i <=  2 ? elt_t(-1) : elt_t(0);  };
+  T erb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
+  TTS_EQUAL( eve::frac[eve::almost = 2*epsi](ea), ea-era);
+  TTS_EQUAL( eve::frac[eve::almost = 2*epsi](eb), eb-erb);
+
+};
+
 //==================================================================================================
 // Tests for masked frac
 //==================================================================================================

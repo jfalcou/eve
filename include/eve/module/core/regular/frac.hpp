@@ -18,7 +18,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct frac_t : elementwise_callable<frac_t, Options, raw_option>
+  struct frac_t : elementwise_callable<frac_t, Options, raw_option, almost_option, pedantic_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
@@ -77,9 +77,17 @@ namespace eve
 //!     The call `eve;::frac[raw](x)` does not guaranties the bit of sign
 //!     conservation when the input is \f$\pm0\f$.
 //!
+//!   * pedantic Call
+//!
+//!     The call `eve;::frac[pedantic](x)` return zero if x is infinite, and preserves the sign bit.
+//!
+//!   * almost Call
+//!
+//!     If the The call `eve;::frac[almost { = tolerance }](x)` computes `x-trunc[almost { = tolerance }(x)`
+//!
 //!   * Masked Call
 //!
-//!     The call `eve;::frac[mask](x)` provides a masked version of `eve::frac` which is
+//!     The call `eve::frac[mask](x)` provides a masked version of `eve::frac` which is
 //!     equivalent to `if_else (mask, frac(x), x)`.
 //!
 //! @}
@@ -88,17 +96,24 @@ namespace eve
 
   namespace detail
   {
-   template<typename T, callable_options O>
+    template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    frac_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
-   {
-     if constexpr( floating_value<T> )
-     {
-       if constexpr(O::contains(raw2))      return a-trunc(a);
-       else if constexpr( scalar_value<T> ) return !a ? a : a - trunc(a);
-       else                                 return if_else(is_eqz(a), a, a - trunc(a));
-     }
-     else                                   return zero(eve::as(a));
-   }
+    frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
+    {
+      if constexpr( floating_value<T> )
+      {
+        if constexpr(O::contains(raw2))      return a-trunc[o](a);
+        else
+        {
+          auto f = if_else(is_eqz(a), a, a - trunc[o](a));
+          if constexpr(platform::supports_infinites && O::contains(pedantic2))
+            return if_else(is_infinite(a), bit_and(a, signmask(as(a))), f);
+          else
+            return f;
+        }
+      }
+      else
+        return zero(eve::as(a));
+    }
   }
 }
