@@ -19,7 +19,7 @@ namespace eve::detail
                                           wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return countl_zero(svrbit_x(sve_true<T>(),v)));
+    return countl_zero(wide<T, N>(svrbit_x(sve_true<T>(),v)));
   }
 
   template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
