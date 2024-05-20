@@ -9,7 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/countl_zero.hpp>
+#include <eve/module/core/regular/countr_zero.hpp>
 #include <bit>
 
 namespace eve
