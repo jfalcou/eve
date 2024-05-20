@@ -6,10 +6,24 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/countr_zero.hpp>
+#include <bit>
 
 namespace eve
 {
+  template<typename Options>
+  struct countr_one_t : elementwise_callable<countr_one_t, Options>
+  {
+    template<eve::unsigned_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(countr_one_t, countr_one_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -47,7 +61,17 @@ namespace eve
 //!  @godbolt{doc/core/countr_one.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(countr_one_, countr_one);
-}
+  inline constexpr auto countr_one = functor<countr_one_t>;
 
-#include <eve/module/core/regular/impl/countr_one.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T countr_one_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    {
+      if constexpr( scalar_value<T> )
+        return T(std::countr_one(v));
+      else
+        return countr_zero(~v);
+    }
+  }
+}

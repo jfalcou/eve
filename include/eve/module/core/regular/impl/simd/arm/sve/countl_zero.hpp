@@ -13,26 +13,26 @@
 
 namespace eve::detail
 {
-template<unsigned_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-countl_zero_(EVE_SUPPORTS(sve_), wide<T, N> v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return countl_zero[ignore_none](v);
-}
-
-template<conditional_expr C, unsigned_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-countl_zero_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  if constexpr( C::is_complete && C::is_inverted )
+  template<unsigned_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE  wide<T, N>  countl_zero_(EVE_REQUIRES(sve_),
+                                            O           const&,
+                                            wide<T, N>  const& v) noexcept
+  requires sve_abi<abi_t<T, N>>
   {
     return svclz_x(sve_true<T>(), v);
   }
-  else
+
+  template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sve_),
+                                          O          const&,
+                                          C          const& mask,
+                                          wide<T, N> const& v) noexcept
+  requires sve_abi<abi_t<T, N>>
   {
-    return svclz_m(alternative(cond, v, as(v)), expand_mask(cond, as(v)), v);
+    auto const alt = alternative(mask, v, as(v));
+    if constexpr( C::is_complete )
+      return alt;
+    else
+      return svclz_m(alt, expand_mask(mask, as(v)), v);
   }
-}
 }

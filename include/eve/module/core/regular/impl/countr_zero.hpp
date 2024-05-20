@@ -15,66 +15,54 @@
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
-
 #include <bit>
-
-#include <type_traits>
 
 namespace eve::detail
 {
-template<unsigned_value T>
-EVE_FORCEINLINE T
-countr_zero_(EVE_SUPPORTS(cpu_), T x) noexcept
-{
-  if constexpr( scalar_value<T> ) { return T(std::countr_zero(x)); }
-  else if constexpr( has_native_abi_v<T> )
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr T countr_zero_(EVE_REQUIRES(cpu_),
+                                           O const&,
+                                           T x) noexcept
   {
-    //      return map(countr_zero, x); // TO DO
-    constexpr auto siz = sizeof(eve::element_type_t<T>) * 8;
-    using elt_t        = element_type_t<T>;
-    x &= eve::inc(~x);
-    T c(sizeof(elt_t) * 8 - 1);
-    if constexpr( siz == 8 )
+    if constexpr( scalar_value<T> )
+      return T(std::countr_zero(x));
+    else
     {
-      c -= if_else(is_nez(x & T(0x0F)), T(4), zero);
-      c -= if_else(is_nez(x & T(0x33)), T(2), zero);
-      c -= if_else(is_nez(x & T(0x55)), T(1), zero);
+      constexpr auto siz = sizeof(eve::element_type_t<T>) * 8;
+      using elt_t        = element_type_t<T>;
+      x &= eve::inc(~x);
+      T c(sizeof(elt_t) * 8 - 1);
+      if constexpr( siz == 8 )
+      {
+        c -= if_else(is_nez(x & T(0x0F)), T(4), zero);
+        c -= if_else(is_nez(x & T(0x33)), T(2), zero);
+        c -= if_else(is_nez(x & T(0x55)), T(1), zero);
+      }
+      else if constexpr( siz == 16 )
+      {
+        c -= if_else(is_nez(x & T(0x00FF)), T(8), zero);
+        c -= if_else(is_nez(x & T(0x0F0F)), T(4), zero);
+        c -= if_else(is_nez(x & T(0x3333)), T(2), zero);
+        c -= if_else(is_nez(x & T(0x5555)), T(1), zero);
+      }
+      else if constexpr( siz == 32 )
+      {
+        c -= if_else(is_nez(x & T(0x0000FFFF)), T(16), zero);
+        c -= if_else(is_nez(x & T(0x00FF00FF)), T(8), zero);
+        c -= if_else(is_nez(x & T(0x0F0F0F0F)), T(4), zero);
+        c -= if_else(is_nez(x & T(0x33333333)), T(2), zero);
+        c -= if_else(is_nez(x & T(0x55555555)), T(1), zero);
+      }
+      else if constexpr( siz == 64 )
+      {
+        c -= if_else(is_nez(x & T(0x00000000FFFFFFFF)), T(32), zero);
+        c -= if_else(is_nez(x & T(0x0000FFFF0000FFFF)), T(16), zero);
+        c -= if_else(is_nez(x & T(0x00FF00FF00FF00FF)), T(8), zero);
+        c -= if_else(is_nez(x & T(0x0F0F0F0F0F0F0F0F)), T(4), zero);
+        c -= if_else(is_nez(x & T(0x3333333333333333)), T(2), zero);
+        c -= if_else(is_nez(x & T(0x5555555555555555)), T(1), zero);
+      }
+      return if_else(is_eqz(x), sizeof(elt_t) * 8, c);
     }
-    else if constexpr( siz <= 16 )
-    {
-      c -= if_else(is_nez(x & T(0x00FF)), T(8), zero);
-      c -= if_else(is_nez(x & T(0x0F0F)), T(4), zero);
-      c -= if_else(is_nez(x & T(0x3333)), T(2), zero);
-      c -= if_else(is_nez(x & T(0x5555)), T(1), zero);
-    }
-    else if constexpr( siz == 32 )
-    {
-      c -= if_else(is_nez(x & T(0x0000FFFF)), T(16), zero);
-      c -= if_else(is_nez(x & T(0x00FF00FF)), T(8), zero);
-      c -= if_else(is_nez(x & T(0x0F0F0F0F)), T(4), zero);
-      c -= if_else(is_nez(x & T(0x33333333)), T(2), zero);
-      c -= if_else(is_nez(x & T(0x55555555)), T(1), zero);
-    }
-    else if constexpr( siz == 64 )
-    {
-      c -= if_else(is_nez(x & T(0x00000000FFFFFFFF)), T(32), zero);
-      c -= if_else(is_nez(x & T(0x0000FFFF0000FFFF)), T(16), zero);
-      c -= if_else(is_nez(x & T(0x00FF00FF00FF00FF)), T(8), zero);
-      c -= if_else(is_nez(x & T(0x0F0F0F0F0F0F0F0F)), T(4), zero);
-      c -= if_else(is_nez(x & T(0x3333333333333333)), T(2), zero);
-      c -= if_else(is_nez(x & T(0x5555555555555555)), T(1), zero);
-    }
-    return if_else(is_eqz(x), sizeof(elt_t) * 8, c);
   }
-  else return apply_over(countr_zero, x);
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, unsigned_value U>
-EVE_FORCEINLINE auto
-countr_zero_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-{
-  return mask_op(cond, countr_zero, t);
-}
 }

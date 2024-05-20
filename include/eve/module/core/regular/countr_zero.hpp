@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct countr_zero_t : elementwise_callable<countr_zero_t, Options>
+  {
+    template<eve::unsigned_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(countr_zero_t, countr_zero_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -48,7 +60,7 @@ namespace eve
 //!  @godbolt{doc/core/countr_zero.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(countr_zero_, countr_zero);
+  inline constexpr auto countr_zero = functor<countr_zero_t>;
 }
 
 #include <eve/module/core/regular/impl/countr_zero.hpp>
