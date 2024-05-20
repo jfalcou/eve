@@ -57,7 +57,7 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
     auto r0    = bit_or(half(eve::as<T>()), x);
     auto test0 = is_nez(a0);
     auto test1 = is_greater(e, maxexponentp1(eve::as<T>()));
-    auto ee    = if_else(logical_notand(test1, test0), e, eve::zero);
+    auto ee    = if_else(logical_andnot(test0, test1), e, eve::zero);
 
     if constexpr( eve::platform::supports_denormals ) { ee -= t; }
     return eve::zip(if_else(test0, add[test1](r0, a0), eve::zero), ee);
