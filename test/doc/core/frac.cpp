@@ -8,7 +8,7 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 int main()
 {
   wide_ft pf = {-1.0f, -1.3f, -0.0f, 0.0f,
-                2.0f,  eve::prev(2.0f), eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
+                2.0f,  eve::prev(2.0f, 4), eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << std::setprecision(8) << '\n'
             << "<- pf                         = " << pf << '\n'
@@ -17,6 +17,7 @@ int main()
             << "-> frac[pedantic](pf)         = " << eve::frac[eve::pedantic](pf)<< '\n'
             << "-> frac[raw](pf)              = " << eve::frac[eve::raw](pf)<< '\n'
             << "-> frac[almost](pf)           = " << eve::frac[eve::almost](pf)<< '\n'
+            << "-> frac[almost = 1](pf)       = " << eve::frac[eve::almost = 1](pf)<< '\n'
             << "-> frac[almost][pedantic](pf) = " << eve::frac[eve::almost][eve::pedantic](pf)<< '\n'
     ;
 

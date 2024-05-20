@@ -87,7 +87,7 @@ namespace eve
 //!
 //!   * Masked Call
 //!
-//!     The call `eve;::frac[mask](x)` provides a masked version of `eve::frac` which is
+//!     The call `eve::frac[mask](x)` provides a masked version of `eve::frac` which is
 //!     equivalent to `if_else (mask, frac(x), x)`.
 //!
 //! @}
