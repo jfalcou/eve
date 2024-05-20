@@ -71,7 +71,7 @@ namespace eve
       if constexpr( scalar_value<T> )
         return T(std::countr_one(v));
       else
-        return countl_zero(~v);
+        return countr_zero(~v);
     }
   }
 }
