@@ -28,7 +28,6 @@ namespace eve::detail
       return T(std::countr_zero(x));
     else
     {
-      //      return map(countr_zero, x); // TO DO
       constexpr auto siz = sizeof(eve::element_type_t<T>) * 8;
       using elt_t        = element_type_t<T>;
       x &= eve::inc(~x);
