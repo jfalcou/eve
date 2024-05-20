@@ -12,11 +12,10 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/next.hpp>
-
 
 namespace eve::detail
 {
@@ -39,13 +38,13 @@ namespace eve::detail
       {
         auto tol = o[almost].value(a0);
         if constexpr(integral_value<decltype(tol)>)
-          return copysign(trunc(next(eve::abs(a0))), a0);
+          return copysign(eve::trunc(next(eve::abs(a0), tol)), a0);
         else
           return copysign(floor[o](eve::abs(a0)), a0);
       }
       else
       {
-        auto not_already_integral = is_less(eve::abs(a0), maxflint(eve::as<T>()));
+        auto not_already_integral = is_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
         if constexpr( scalar_value<T> )
           return not_already_integral ? trunc[raw2](a0) : a0;
         else if constexpr( simd_value<T> )
