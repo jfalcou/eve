@@ -13,6 +13,7 @@
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/abs.hpp>
+#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
@@ -22,7 +23,7 @@ namespace eve
     template<unsigned_value T, integral_value N>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
     {
-      EVE_ASSERT(assert_good_shift<T>(s),
+      EVE_ASSERT(detail::assert_good_shift<T>(s),
                  "[eve::rshl] - Shifting by " << s << " is out of the range ]"
                  << -int(sizeof(element_type_t<T>) * 8) << ", "
                  << sizeof(element_type_t<T>) * 8 << "[.");
@@ -32,7 +33,7 @@ namespace eve
     template<unsigned_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      EVE_ASSERT(assert_good_shift<T>(S),
+      EVE_ASSERT(detail::assert_good_shift<T>(S),
                  "[eve::rshl] - Shifting by " << S << " is out of the range ]"
                  << -int(sizeof(element_type_t<T>) * 8) << ", "
                  << sizeof(element_type_t<T>) * 8 << "[.");
