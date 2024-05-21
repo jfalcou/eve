@@ -15,7 +15,7 @@
 namespace eve::detail
 {
 template<integral_scalar_value T, typename N, integral_scalar_value I, callable_options O>
-EVE_FORCEINLINE wide<T, N> rshl_(EVE_SUPPORTS(neon128_),
+EVE_FORCEINLINE wide<T, N> rshl_(EVE_REQUIRES(neon128_),
                                  O          const &,
                                  wide<T, N> const &v0,
                                  wide<I, N> const &v1) noexcept
@@ -26,7 +26,7 @@ requires arm_abi<abi_t<T, N>>
 
 template<integral_scalar_value T, typename N, integral_scalar_value I, callable_options O>
 EVE_FORCEINLINE wide<T, N>
-                rshl_(EVE_SUPPORTS(neon128_),
+                rshl_(EVE_REQUIRES(neon128_),
                       O          const &,
                       wide<T, N> const &v0,
                       I          const &v1) noexcept requires arm_abi<abi_t<T, N>>
@@ -37,7 +37,7 @@ EVE_FORCEINLINE wide<T, N>
 
 template<integral_scalar_value T, typename N, std::ptrdiff_t S, callable_options O>
 EVE_FORCEINLINE wide<T, N>
-                rshl_(EVE_SUPPORTS(neon128_),
+                rshl_(EVE_REQUIRES(neon128_),
                       O          const &,
                       wide<T, N> const &v0,
                       index_t<S> const & s
