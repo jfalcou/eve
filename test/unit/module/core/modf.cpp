@@ -104,7 +104,7 @@ TTS_CASE_WITH("Check behavior of eve::modf(eve::wide)",
   TTS_IEEE_EQUAL(f, eve::frac(a0));
   TTS_IEEE_EQUAL(t, eve::trunc(a0));
   TTS_IEEE_EQUAL(fp, eve::frac[eve::pedantic2](a0));
-  TTS_IEEE_EQUAL(tp, eve::trunc[eve::pedantic2](a0));
+  TTS_IEEE_EQUAL(tp, eve::trunc(a0));
   TTS_IEEE_EQUAL(fr, eve::frac[eve::raw2](a0));
   TTS_IEEE_EQUAL(tr, eve::trunc[eve::raw2](a0));
   TTS_IEEE_EQUAL(fa, eve::frac[eve::almost = 10](a0));
