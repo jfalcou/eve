@@ -98,7 +98,7 @@ namespace detail
   {
     if constexpr(floating_value<T>)
     {
-      auto t = trunc[o.drop(pedantic)](a);
+      auto t = trunc[o.drop(pedantic2)](a);
       if constexpr(O::contains(raw2))
       {
         return eve::zip(a-t, t);
