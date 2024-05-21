@@ -7,14 +7,36 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/assert.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/detail/overload.hpp>
-
-#include <type_traits>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct shl_t : strict_elementwise_callable<shl_t, Options>
+  {
+    template<integral_value T0, integral_value N>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T0, N> operator()(T0 t0, N s) const noexcept
+    {
+      EVE_ASSERT(assert_good_shift<T>(s),
+                 "[eve::shl] Shifting by " << s << " is out of the range [0, "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+      return EVE_DISPATCH_CALL(t0, s);
+    }
+
+    template<integral_value T0, std::ptrdiff_t N>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> s) const noexcept
+    {
+      EVE_ASSERT(assert_good_shift<T>(s),
+                 "[eve::shl] Shifting by " << s << " is out of the range [0, "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+      return EVE_DISPATCH_CALL(t0, s);
+    }
+
+    EVE_CALLABLE_OBJECT(shl_t, shl_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -73,32 +95,27 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct shl_;
-}
+  inline constexpr auto shl = functor<shl_t>;
 
-namespace detail
-{
-  template<typename T, typename S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shl_), T const&,
-                             [[maybe_unused]] S const& s)
+  namespace detail
   {
-    EVE_ASSERT(assert_good_shift<T>(s),
-               "[eve::shl] Shifting by " << s << " is out of the range [0, "
-                                         << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-  template<conditional_expr C, typename T, typename S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::shl_), C const& , T const&,
-                             [[maybe_unused]] S const& s)
-  {
-    EVE_ASSERT(assert_good_shift<T>(s),
-               "[eve::shl] Shifting by " << s << " is out of the range [0, "
-                                         << sizeof(element_type_t<T>) * 8 << "[.");
+    template<integral_value T, integral_value U, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    shl_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& s) noexcept
+    {
+      if constexpr( scalar_value<T> && scalar_value<U> )
+        return static_cast<T>(a << s);
+      else if constexpr( scalar_value<T> )
+        return as_wide_t<T, cardinal_t<U>>(a) << s;
+      else
+        return a << s;
+    }
+
+    template<integral_value T, std::ptrdiff_t S, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    shl_(EVE_REQUIRES(cpu_), O const &, T const& a, index_t<S> const& s) noexcept
+    {
+      return a << s;
+    }
   }
 }
-
-EVE_MAKE_CALLABLE(shl_, shl);
-}
-
-#include <eve/module/core/regular/impl/shl.hpp>

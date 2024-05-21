@@ -68,5 +68,5 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_ALIAS_CALLABLE(shl_, bit_shl);
+//EVE_ALIAS_CALLABLE(shl_, bit_shl);
 }

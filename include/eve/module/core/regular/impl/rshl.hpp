@@ -15,77 +15,63 @@
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/minus.hpp>
-#include <eve/module/core/regular/shl.hpp>
-#include <eve/module/core/regular/shr.hpp>
 
 namespace eve::detail
 {
-template<unsigned_scalar_value T, integral_simd_value U>
-EVE_FORCEINLINE auto
-rshl_(EVE_SUPPORTS(cpu_), T const& a0, U const& a1) noexcept
-{
-  using w_t = wide<T, cardinal_t<U>>;
-  return rshl(w_t(a0), a1);
-}
-
-template<unsigned_scalar_value T, integral_scalar_value U>
-EVE_FORCEINLINE auto
-rshl_(EVE_SUPPORTS(cpu_), T const& a0, U const& a1) noexcept
-{
-  if constexpr( unsigned_value<U> ) { return T(a0 << a1); }
-  else
+  template<typename T, typename U, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  rshl_(EVE_REQUIRES(cpu_), O const &, T const& a0, U const& a1) noexcept
   {
-#ifndef NDEBUG
-    return is_gtz(a1) ? T(a0 << max(zero(eve::as(a1)), a1))
-                      : T(a0 >> max(zero(eve::as(a1)), minus(a1)));
-#else
-    return is_gtz(a1) ? T(a0 << a1) : T(a0 >> minus(a1));
-#endif
-  }
-}
-
-template<unsigned_simd_value T, integral_value U>
-EVE_FORCEINLINE auto
-rshl_(EVE_SUPPORTS(cpu_), T const& a0, U const& a1) noexcept
-{
-  if constexpr( unsigned_value<U> ) { return T(a0 << a1); }
-  else if constexpr( scalar_value<U> ) { return (a1 > 0) ? T(shl(a0, a1)) : T(shr(a0, minus(a1))); }
-  else
-  {
-    if constexpr( has_native_abi_v<T> && has_native_abi_v<U> )
+    if constexpr( scalar_value<U> && scalar_value<T>)
     {
-#ifndef NDEBUG
-      return if_else(is_gtz(a1),
-                     T(a0 << max(zero(eve::as(a1)), a1)),
-                     T(a0 >> max(zero(eve::as(a1)), minus(a1))));
-#else
-      return if_else(is_gtz(a1), T(a0 << a1), T(a0 >> minus(a1)));
-#endif
+      if constexpr( unsigned_value<U> )
+        return T(a0 <<  a1);
+      else
+      {
+        #ifndef NDEBUG
+        return is_gtz(a1) ? T(a0 << max(zero(eve::as(a1)), a1)) : T(a0 >> max(zero(eve::as(a1)), minus(a1)));
+        #else
+        return is_gtz(a1) ? T(a0 <<  a1) : T(a0 >> minus(a1));
+        #endif
+      }
     }
-    else { return apply_over(rshl, a0, a1); }
+    else if constexpr( scalar_value<T> && simd_value<U>)
+      return rshl(wide<T, cardinal_t<U>>(a0), a1);
+    else if constexpr( scalar_value<U> && simd_value<T>)
+    {
+      if constexpr( unsigned_value<U> )
+        return T(a0 << a1);
+      else
+      {
+        #ifndef NDEBUG
+        return is_gtz(a1) ? a0 <<  max(zero(eve::as(a1)), a1) : T(a0 >> max(zero(eve::as(a1)), minus(a1)));
+        #else
+        return is_gtz(a1) ? a0 <<  a1 : a0 >> minus(a1);
+        #endif
+      }
+    }
+    else if constexpr( simd_value<U> && simd_value<T>)
+    {
+      if constexpr( unsigned_value<U> )
+        return T(a0 >> a1);
+      else if constexpr( scalar_value<U> )
+        return (a1 > 0) ? a0 << a1 : a0 >> minus(a1);
+      else
+      {
+        #ifndef NDEBUG
+        return if_else(is_gtz(a1), a0 << max(zero(eve::as(a1)), a1), a0 >> max(zero(eve::as(a1)), -a1));
+        #else
+        return if_else(is_gtz(a1), a0 << a1, a0 >> minus(a1));
+        #endif
+      }
+    }
   }
-}
 
-template<unsigned_value T, std::ptrdiff_t N>
-EVE_FORCEINLINE auto
-rshl_(EVE_SUPPORTS(cpu_), T const& a0, index_t<N> const&) noexcept
-{
-  return rshl(a0, N);
-}
 
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, unsigned_simd_value T, integral_value U>
-EVE_FORCEINLINE auto
-rshl_(EVE_SUPPORTS(cpu_), C const& cond, T const& a0, U const& a1) noexcept
-{
-  return mask_op(cond, eve::rshl, a0, a1);
-}
-
-template<conditional_expr C, unsigned_simd_value T, std::ptrdiff_t N>
-EVE_FORCEINLINE auto
-rshl_(EVE_SUPPORTS(cpu_), C const& cond, T const& a0, index_t<N> const& a1) noexcept
-{
-  return mask_op(cond, eve::rshl, a0, a1);
-}
+  template<integral_value T, std::ptrdiff_t N, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  rshl_(EVE_SUPPORTS(cpu_), O const &, T const& a0, index_t<N> const&) noexcept
+  {
+    return rshl(a0, N);
+  }
 }

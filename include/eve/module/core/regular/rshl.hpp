@@ -7,15 +7,41 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/assert.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/abs.hpp>
 
-#include <type_traits>
-
 namespace eve
 {
+  template<typename Options>
+  struct rshl_t : strict_elementwise_callable<rshl_t, Options>
+  {
+    template<unsigned_value T, integral_value N>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
+    {
+      EVE_ASSERT(assert_good_shift<T>(s),
+                 "[eve::rshl] - Shifting by " << s << " is out of the range ]"
+                 << -int(sizeof(element_type_t<T>) * 8) << ", "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+      return EVE_DISPATCH_CALL(t0, s);
+    }
+
+    template<unsigned_value T, std::ptrdiff_t S>
+    EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
+    {
+      EVE_ASSERT(assert_good_shift<T>(S),
+                 "[eve::rshl] - Shifting by " << S << " is out of the range ]"
+                 << -int(sizeof(element_type_t<T>) * 8) << ", "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+      return EVE_DISPATCH_CALL(t0, s);
+    }
+
+    EVE_CALLABLE_OBJECT(rshl_t, rshl_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -33,7 +59,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T , integral_value N >
+//!      template< eve::unsigned_value T , integral_value N >
 //!      T rshl(T x, N n) noexcept;
 //!   }
 //!   @endcode
@@ -74,56 +100,9 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-
-namespace tag
-{
-  struct rshl_;
+  inline constexpr auto rshl = functor<rshl_t>;
 }
 
-namespace detail
-{
-  template<typename T, typename S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&,
-                             [[maybe_unused]] S const& s)
-  {
-    EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
-               "[eve::rshl] - Shifting by " << s << " is out of the range ]"
-                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
-                                            << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-  template<conditional_expr C, typename T, typename S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), C const&, T const&,
-                             [[maybe_unused]] S const& s)
-  {
-    EVE_ASSERT(assert_good_shift<T>(eve::abs(s)),
-               "[eve::rshl] - Shifting by " << s << " is out of the range ]"
-                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
-                                            << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-
-  template<typename T, std::ptrdiff_t S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), T const&,index_t<S> const&)
-  {
-    EVE_ASSERT(assert_good_shift<T>(eve::abs(S)),
-               "[eve::rshl] - Shifting by " << S << " is out of the range ]"
-                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
-                                            << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-
-  template<conditional_expr C, typename T, std::ptrdiff_t S>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::rshl_), C const&, T const&,index_t<S> const&)
-  {
-    EVE_ASSERT(assert_good_shift<T>(eve::abs(S)),
-               "[eve::rshl] - Shifting by " << S << " is out of the range ]"
-                                            << -int(sizeof(element_type_t<T>) * 8) << ", "
-                                            << sizeof(element_type_t<T>) * 8 << "[.");
-  }
-}
-
-EVE_MAKE_CALLABLE(rshl_, rshl);
-}
-
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/rshl.hpp>
 
 #if defined(EVE_INCLUDE_ARM_HEADER)
