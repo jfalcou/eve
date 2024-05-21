@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct logical_notand_t : elementwise_callable<logical_notand_t, Options>
+  struct logical_notand_t : strict_elementwise_callable<logical_notand_t, Options>
   {
     template<logical_value T, logical_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
