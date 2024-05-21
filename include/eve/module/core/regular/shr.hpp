@@ -16,8 +16,8 @@ namespace eve
   template<typename Options>
   struct shr_t : strict_elementwise_callable<shr_t, Options>
   {
-    template<integral_value T0, integral_value N>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T0, N> operator()(T0 t0, N s) const noexcept
+    template<integral_value T, integral_value N>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
     {
       EVE_ASSERT(assert_good_shift<T>(s),
                  "[eve::shr] Shifting by " << s << " is out of the range [0, "
@@ -25,8 +25,8 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, s);
     }
 
-    template<integral_value T0, std::ptrdiff_t S>
-    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<S> s) const noexcept
+    template<integral_value T, std::ptrdiff_t S>
+    EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
       EVE_ASSERT(assert_good_shift<T>(s),
                  "[eve::shr] Shifting by " << S << " is out of the range [0, "
