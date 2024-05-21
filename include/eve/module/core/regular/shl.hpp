@@ -54,14 +54,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T , integral_value N >
+//!      template< eve::integral_value T , integral_value N >
 //!      T shl(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::ordered_value) to be shifted.
+//!     * `x` :  [argument](@ref eve::integral_value) to be shifted.
 //!     * `n`:   [shift](@ref eve::integral_value).
 //!
 //!    **Return value**
@@ -99,7 +99,7 @@ namespace eve
 
   namespace detail
   {
-    template<integral_value T, integral_value U, callable_options O>
+    template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr auto
     shl_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& s) noexcept
     {
@@ -111,7 +111,7 @@ namespace eve
         return a << s;
     }
 
-    template<integral_value T, std::ptrdiff_t S, callable_options O>
+    template<typename T, std::ptrdiff_t S, callable_options O>
     EVE_FORCEINLINE constexpr auto
     shl_(EVE_REQUIRES(cpu_), O const &, T const& a, index_t<S> const& s) noexcept
     {

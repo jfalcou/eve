@@ -57,14 +57,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T , integral_value N >
+//!      template< eve::integral_value T , integral_value N >
 //!      T bit_shr(T x, N n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  argument(@ref eve::value). to be shifted.
+//!     * `x` :  argument(@ref eve::integral_value). to be shifted.
 //!
 //!     * `n`:    [shift](@ref eve::integral_value).
 //!
@@ -75,7 +75,7 @@ namespace eve
 //!
 //!   @note
 //!     * The call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is
-//!       an [simd value](@ref eve::simd_value).
+//!       an [unsigned_value](@ref eve::simd_value).
 //!
 //!     * The types must share the same cardinal or be scalar and if \f$N\f$
 //!       is the size in bits  of the element type of `T`,

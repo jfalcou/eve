@@ -26,7 +26,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, s);
     }
 
-    template<integral_value T, std::ptrdiff_t S>
+    template<unsigned_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
       EVE_ASSERT(assert_good_shift<T>(S),
@@ -56,7 +56,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T , integral_value N >
+//!      template< eve::unsigned_value T , integral_value N >
 //!      T rshr(T x, N n) noexcept;
 //!   }
 //!   @endcode

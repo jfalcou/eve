@@ -100,7 +100,7 @@ namespace eve
 
   namespace detail
   {
-    template<integral_value T, integral_value U, callable_options O>
+    template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr auto
     shr_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& s) noexcept
     {
@@ -112,7 +112,7 @@ namespace eve
         return a >> s;
     }
 
-    template<integral_value T, std::ptrdiff_t S, callable_options O>
+    template<typename T, std::ptrdiff_t S, callable_options O>
     EVE_FORCEINLINE constexpr auto
     shr_(EVE_REQUIRES(cpu_), O const &, T const& a, index_t<S> const& s) noexcept
     {
