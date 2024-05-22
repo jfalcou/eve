@@ -72,7 +72,7 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U,type> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as<T>{});
+      auto bit_other = bit_cast(other , as<T>{});
       self = vec_and(self.storage(), type{bit_other}.storage());
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
@@ -94,7 +94,7 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U,type> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as<T>{});
+      auto bit_other = bit_cast(other , as<T>{});
       self = vec_or(self.storage(), type{bit_other}.storage());
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
@@ -116,7 +116,7 @@ namespace eve::detail
 
     if constexpr( element_bit_compatible_to<U,type> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other , as<T>{});
+      auto bit_other = bit_cast(other , as<T>{});
       self = vec_xor(self.storage(), type{bit_other}.storage());
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
