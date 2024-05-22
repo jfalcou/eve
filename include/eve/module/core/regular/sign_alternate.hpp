@@ -7,10 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/is_flint.hpp>
+#include <eve/module/core/regular/all.hpp>
+#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sign_alternate_t : elementwise_callable<sign_alternate_t, Options>
+  {
+    template<eve::signed_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    {
+      EVE_ASSERT(eve::all(is_flint(n)), "sign_alternate : some entries are not flint");
+      return EVE_DISPATCH_CALL(v);
+    }
+
+    EVE_CALLABLE_OBJECT(sign_alternate_t, sign_alternate_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -55,7 +73,15 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sign_alternate_, sign_alternate);
-}
+  inline constexpr auto sign_alternate = functor<sign_alternate_t>;
 
-#include <eve/module/core/regular/impl/sign_alternate.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    sign_alternate_(EVE_REQUIRES(cpu_), O const &, T const& n) noexcept
+    {
+      return if_else(is_odd(n), mone, one(as(n)));
+    }
+  }
+}
