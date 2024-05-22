@@ -95,7 +95,7 @@ namespace eve
     EVE_FORCEINLINE constexpr
     auto logical_ornot_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
     {
-      return !b ? a : true_(as(a));
+      return b ? a : true_(as(a));
     }
 
     template<typename U, callable_options O>
