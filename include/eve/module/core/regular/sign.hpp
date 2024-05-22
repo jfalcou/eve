@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct signnz_t : elementwise_callable<sign_t, Options, pedantic_option>
+  struct signnz_t : elementwise_callable<sign_t, Options>
   {
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
@@ -76,8 +76,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T>
-    EVE_FORCEINLINE constexpr T sign_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr T sign_(EVE_SUPPORTS(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
         return one[is_nez(a)](eve::as(a));

@@ -23,7 +23,7 @@ requires x86_abi<abi_t<T, N>>
   constexpr auto tgt  = eve::as(a);
 
   if constexpr(unsigned_value<T>)                                     return one(as(a));
-  if constexpr(current_api >= avx512 || sizeof(T) == 8)               return sign.behavior(cpu_{}, a);
+  if constexpr(current_api >= avx512 || sizeof(T) == 8)               return sign.behavior(cpu_{}, o, a);
   else if constexpr( current_api >= avx2 && c == category::int32x8 )  return _mm256_sign_epi32(one(tgt), a);
   else if constexpr( current_api >= avx2 && c == category::int32x8 )  return _mm256_sign_epi32(one(tgt), a);
   else if constexpr( current_api >= avx2 && c == category::int16x16)  return _mm256_sign_epi16(one(tgt), a);
@@ -37,6 +37,6 @@ requires x86_abi<abi_t<T, N>>
   else if constexpr( current_api >= ssse3 && c == category::int16x8 ) return _mm_sign_epi16(one(tgt), a);
   else if constexpr( current_api >= ssse3 && c == category::int8x16 ) return _mm_sign_epi8(one(tgt), a);
   else if constexpr( current_api >= sse2 )                            return (a >> sizeof(T)*8) - (a > 0).mask();
-  else return sign.behavior(cpu_{}, a);
+  else return sign.behavior(cpu_{}, o, a);
 }
 }
