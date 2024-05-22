@@ -13,11 +13,5 @@ int main()
             << "<- pf =                            " << pf << '\n'
             << "-> eve::lookup(pf, pi) =           " << eve::lookup(pf, pi) << '\n';
 
-  float        xf = -327.0f;
-  std::int32_t xi = 0;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf =                            " << xf << '\n'
-            << "-> eve::lookup(xf, xi) =           " << eve::lookup(xf, xi) << '\n';
   return 0;
 }

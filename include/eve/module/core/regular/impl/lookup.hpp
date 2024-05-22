@@ -12,79 +12,50 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/implementation.hpp>
 
-#include <concepts>
-
 namespace eve::detail
 {
-template<ordered_value T, integral_value I>
-EVE_FORCEINLINE constexpr T
-lookup_(EVE_SUPPORTS(cpu_), T const& a, I const& i) noexcept
-requires(scalar_value<T>)
-{
-  return (i == static_cast<I>(-1)) ? 0 : a;
-}
-
-template<typename T, integral_scalar_value I, typename N>
-EVE_FORCEINLINE auto
-lookup_(EVE_SUPPORTS(cpu_), wide<T, N> const& a, wide<I, N> const& ind) noexcept
-{
-  if constexpr( is_bundle_v<abi_t<T, N>> )
+  template<callable_options O, typename T, typename I, typename N>
+  EVE_FORCEINLINE logical<wide<T,N>> lookup_(EVE_REQUIRES(cpu_), O const&, logical<wide<T,N>> a, wide<I,N> i) noexcept
   {
-    return wide<T, N>(kumi::map([=]<typename M>(M m) { return lookup(m, ind); }, a));
+    if constexpr(abi_t<T, N>::is_wide_logical) return bit_cast(lookup(a.bits(), i), as(a));
+    else                                       return to_logical(lookup(a.mask(), i));
   }
-  else
+
+  template<callable_options O, typename T, integral_scalar_value I, typename N>
+  EVE_FORCEINLINE wide<T,N> lookup_(EVE_REQUIRES(cpu_), O const&, wide<T,N> const& a, wide<I,N> const& ind) noexcept
   {
-    auto const cond = [&]()
+    if constexpr( is_bundle_v<abi_t<T, N>> )
     {
-      if constexpr( std::is_signed_v<I> ) return ind >= 0;
-      else return ind < N::value;
-    }();
+      return wide<T, N>(kumi::map([=]<typename M>(M m) { return lookup(m, ind); }, a));
+    }
+    else
+    {
+      logical<wide<I,N>> const cond = [&]()
+      {
+        if constexpr( std::is_signed_v<I> ) return ind >= 0; else return ind < N::value;
+      }();
 
-    // Compute mask as SIMD
-    auto idx = cond.bits();
-    idx &= ind;
+      // Compute mask as SIMD
+      auto idx = cond.bits();
+      idx     &= ind;
 
-    // Rebuild as scalar
-    wide<T, N> data;
-    apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T {}), ...); });
+      // Rebuild as scalar
+      wide<T, N> data;
 
-    return data;
+      if constexpr(has_aggregated_abi_v<wide<T,N>>)
+      {
+        constexpr auto const half = N::value / 2;
+        apply<half>([&, lx = idx.slice(lower_)](auto... v)
+                    { (data.set(v, (cond.get(v) ? a.get(lx.get(v)) : T {})), ...); });
+        apply<half>([&, hx = idx.slice(upper_)](auto... v)
+                    { (data.set(v + half, (cond.get(v) ? a.get(hx.get(v)) : T {})), ...); });
+      }
+      else
+      {
+        apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T {}), ...); });
+      }
+
+      return data;
+    }
   }
-}
-
-template<scalar_value T, integral_scalar_value I, typename N>
-EVE_FORCEINLINE auto
-lookup_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& a, wide<I, N> const& ind) noexcept
-{
-  if constexpr( abi_t<T, N>::is_wide_logical ) return bit_cast(lookup(a.bits(), ind), as(a));
-  return to_logical(lookup(a.mask(), ind));
-}
-
-template<scalar_value T, integral_scalar_value I, typename N>
-EVE_FORCEINLINE auto
-lookup_(EVE_SUPPORTS(cpu_),
-        wide<T, N> const& a,
-        wide<I, N> const& ind) noexcept requires std::same_as<abi_t<I, N>, aggregated_>
-{
-  auto const cond = [&]()
-  {
-    if constexpr( std::is_signed_v<I> ) return ind >= 0;
-    else return ind < N::value;
-  }();
-
-  // Compute mask as SIMD
-  auto idx = cond.bits();
-  idx &= ind;
-
-  // Rebuild as scalar
-  wide<T, N> data;
-
-  constexpr auto const half = N::value / 2;
-  apply<half>([&, lx = idx.slice(lower_)](auto... v)
-              { (data.set(v, (cond.get(v) ? a.get(lx.get(v)) : T {})), ...); });
-  apply<half>([&, hx = idx.slice(upper_)](auto... v)
-              { (data.set(v + half, (cond.get(v) ? a.get(hx.get(v)) : T {})), ...); });
-
-  return data;
-}
 }
