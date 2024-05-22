@@ -80,7 +80,7 @@ namespace eve::detail
   // 256 bits
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
-  popcount_(EVE_REQUIRES(avx_), O const&, wide<T, N> x) noexcept
+  popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
     using r_t = wide<as_integer_t<T, unsigned>, N>;
@@ -133,7 +133,7 @@ namespace eve::detail
     else
     {
       if constexpr( sizeof(T) >= 8 )
-        return popcount.behavior(cpu_{}, x);
+        return popcount.behavior(cpu_{}, o, x);
       else
       {
         auto [lo, hi] = x.slice();

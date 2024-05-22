@@ -21,7 +21,7 @@
 namespace eve::detail
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+  EVE_FORCEINLINE constexpr auto popcount_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
   {
     if constexpr( scalar_value<T> )
       return T(std::popcount(x));
