@@ -88,7 +88,12 @@ namespace eve
                                       T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return one[is_nez(a)](eve::as(a));
+      {
+        if constexpr(scalar_value<T>)
+          return a ? one(eve::as(a)) : a;
+        else
+          return one[is_nez(a)](eve::as(a));
+      }
       else  if constexpr( floating_value<T> )
         return signnz[is_nez(a)](a);
       else
