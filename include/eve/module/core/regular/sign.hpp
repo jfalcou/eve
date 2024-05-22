@@ -7,10 +7,22 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct signnz_t : elementwise_callable<sign_t, Options, pedantic_option>
+  {
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T a) const
+    { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(sign_t, sign_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -60,11 +72,22 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sign_, sign);
-}
+  inline constexpr auto sign = functor<sign_t>;
 
-#include <eve/arch.hpp>
-#include <eve/module/core/regular/impl/sign.hpp>
+  namespace detail
+  {
+    template<typename T>
+    EVE_FORCEINLINE constexpr T sign_(EVE_SUPPORTS(cpu_), T const& a) noexcept
+    {
+      if constexpr( unsigned_value<T> )
+        return one[is_nez(a)](eve::as(a));
+      else  if constexpr( floating_value<T> )
+        return signnz[is_nez(a)](a);
+      else
+        return eve::max(eve::min(a,one(eve::as(a))), mone(eve::as(a)));
+    }
+  }
+}
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/sign.hpp>
