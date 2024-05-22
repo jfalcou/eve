@@ -15,8 +15,10 @@
 
 namespace eve::detail
 {
-template<integral_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N> sign_(EVE_REQUIRES(ssse3_), wide<T, N> a, callable_options O) noexcept
+template<integral_scalar_value T, typename N, callable_options O>
+EVE_FORCEINLINE wide<T, N> sign_(EVE_REQUIRES(ssse3_),
+                                 O const & o,
+                                 wide<T, N> a) noexcept
 requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c    = categorize<wide<T, N>>();
