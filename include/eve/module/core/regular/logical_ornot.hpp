@@ -19,15 +19,15 @@ namespace eve
   {
     template<logical_value T, logical_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE  auto operator()(T a, U b) const noexcept -> decltype(a && b)
+      constexpr EVE_FORCEINLINE  auto operator()(T a, U b) const noexcept  -> decltype(logical_and(a, b))
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value T>
-    constexpr EVE_FORCEINLINE auto operator()(T a, bool b) const noexcept -> decltype(a && b)
+    constexpr EVE_FORCEINLINE T operator()(T a, bool b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value T>
-    constexpr EVE_FORCEINLINE auto operator()(bool a, T b) const noexcept -> decltype(a && b)
+    constexpr EVE_FORCEINLINE T operator()(bool a, T b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
@@ -81,15 +81,35 @@ namespace eve
   namespace detail
   {
     template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr auto logical_ornot_(EVE_REQUIRES(cpu_),
-                                                O const & ,
-                                                T a, U b) noexcept
+    EVE_FORCEINLINE constexpr auto
+    logical_ornot_(EVE_REQUIRES(cpu_),
+                 O const & ,
+                 T a, U b) noexcept
     {
-      using r_t = as_logical_t<decltype(a && b)>;
-      if constexpr( scalar_value<T> && scalar_value<U> )
-        return r_t(a || !b);
-      else
-        return a || !b;
+      using r_t = decltype(logical_and(a, b));
+      if constexpr( scalar_value<T> || scalar_value<U> ) return r_t(!a || b);
+      else return a || !b;
+    }
+
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr
+    auto logical_ornot_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
+    {
+      return !b ? a : true_(as(a));
+    }
+
+    template<typename U, callable_options O>
+    EVE_FORCEINLINE constexpr
+    auto logical_ornot_(EVE_REQUIRES(cpu_), O const & , bool a, U b) noexcept
+    {
+      return a ? true_(as(b)) : !b;
+    }
+
+    template<callable_options O>
+    EVE_FORCEINLINE constexpr
+    auto logical_ornot_(EVE_REQUIRES(cpu_), O const & , bool a, bool b) noexcept
+    {
+      return a || !b;
     }
   }
 }

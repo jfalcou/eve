@@ -19,15 +19,15 @@ namespace eve
   struct logical_xor_t : strict_elementwise_callable<logical_xor_t, Options>
   {
     template<logical_value T, logical_value U>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> as_logical_t<decltype(a && b)>
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> decltype(logical_and(a, b))
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value U>
-    constexpr EVE_FORCEINLINE auto  operator()(bool a, U b) const -> as_logical_t<decltype(U(a) && b)>
+    constexpr EVE_FORCEINLINE U operator()(bool a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value T>
-    constexpr EVE_FORCEINLINE auto  operator()(T a, bool b) const -> as_logical_t<decltype(a && T(b))>
+    constexpr EVE_FORCEINLINE T operator()(T a, bool b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const
@@ -117,7 +117,9 @@ namespace eve
     template<callable_options O>
     EVE_FORCEINLINE constexpr
     auto logical_xor_(EVE_REQUIRES(cpu_), O const & , bool a, bool b) noexcept
-    { return a!=b; }
+    {
+      return a!=b;
+    }
   }
 }
 
