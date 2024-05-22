@@ -10,6 +10,12 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/signnz.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/constant/mone.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
@@ -77,7 +83,9 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T sign_(EVE_SUPPORTS(cpu_), O const&, T const& a) noexcept
+    EVE_FORCEINLINE constexpr T sign_(EVE_REQUIRES(cpu_),
+                                      O const&,
+                                      T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
         return one[is_nez(a)](eve::as(a));
