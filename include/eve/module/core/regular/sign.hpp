@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct signnz_t : elementwise_callable<sign_t, Options>
+  struct sign_t : elementwise_callable<sign_t, Options>
   {
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
