@@ -189,7 +189,7 @@ var searchData=
   ['elementwise_5fcallable_3c_20minmag_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_186',['elementwise_callable&lt; minmag_t, Options, Options... &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20minmax_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_187',['elementwise_callable&lt; minmax_t, Options, Options... &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20minus_5ft_2c_20options_2c_20saturated_5foption_20_3e_188',['elementwise_callable&lt; minus_t, Options, saturated_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20modf_5ft_2c_20options_2c_20pedantic_5foption_20_3e_189',['elementwise_callable&lt; modf_t, Options, pedantic_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20modf_5ft_2c_20options_2c_20pedantic_5foption_2c_20raw_5foption_2c_20almost_5foption_20_3e_189',['elementwise_callable&lt; modf_t, Options, pedantic_option, raw_option, almost_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20mul_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_190',['elementwise_callable&lt; mul_t, Options, Options... &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20nb_5fvalues_5ft_2c_20options_20_3e_191',['elementwise_callable&lt; nb_values_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20negabsmax_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_192',['elementwise_callable&lt; negabsmax_t, Options, Options... &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
