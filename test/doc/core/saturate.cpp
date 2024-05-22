@@ -5,6 +5,7 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int64_t, eve::fixed<4>>;
 using int_16 = eve::as<std::int16_t>;
+using uint_16 = eve::as<std::uint16_t>;
 using int_64 = eve::as<std::int64_t>;
 
 int main()
@@ -16,17 +17,16 @@ int main()
             << "<- pf                                  = " << pf << '\n'
             << "-> saturate(pf, int_64())              = " << eve::saturate(pf, int_64()) << '\n'
             << "-> saturate(pf, int_16())              = " << eve::saturate(pf, int_16()) << '\n'
-            << "-> rsqrt[pf > 0](pf)                   = " << eve::rsqrt[pf > 0](pf) << '\n'
             << "<- pi                                  = " << pi << '\n'
             << "-> saturate(pi, as(eve::as<double>())) = " << eve::saturate(pi, eve::as<double>()) << '\n';
 
   double        xf = -64768.4f;
-  std::int64_t xi = -64768;
+  std::int64_t xi =  -1;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                                  = " << xf << '\n'
-            << "-> saturate(xf, int_64())              = " << eve::saturate(xf, int_64()) << '\n'
+            << "-> saturate(xf, int_16())              = " << eve::saturate(xf, int_64()) << '\n'
             << "<- xi                                  = " << xi << '\n'
-            << "-> saturate(xi, as(eve::as<double>())) = " << eve::saturate(xi, eve::as<double>()) << '\n';
+            << "-> saturate(xi, as(eve::as<uint16_t>())) = " << eve::saturate(xi, eve::as<uint16_t>()) << '\n';
   return 0;
 }
