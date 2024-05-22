@@ -16,6 +16,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <iostream>
 
 namespace eve
 {
@@ -88,12 +89,7 @@ namespace eve
                                       T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-      {
-        if constexpr(scalar_value<T>)
-          return a ? one(eve::as(a)) : a;
-        else
-          return one[is_nez(a)](eve::as(a));
-      }
+        return one[is_nez(a)](eve::as(a));
       else  if constexpr( floating_value<T> )
         return signnz[is_nez(a)](a);
       else

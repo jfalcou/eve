@@ -24,7 +24,6 @@ requires x86_abi<abi_t<T, N>>
   constexpr auto c    = categorize<wide<T, N>>();
   constexpr auto tgt  = eve::as(a);
 
-  if constexpr(unsigned_value<T>)                                     return one(as(a));
   if constexpr(current_api >= avx512 || sizeof(T) == 8)               return sign.behavior(cpu_{}, o, a);
   else if constexpr( current_api >= avx2 && c == category::int32x8 )  return _mm256_sign_epi32(one(tgt), a);
   else if constexpr( current_api >= avx2 && c == category::int32x8 )  return _mm256_sign_epi32(one(tgt), a);
