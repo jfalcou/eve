@@ -7,10 +7,24 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct popcount_t : elementwise_callable<popcount_t, Options>
+  {
+    template<integral_value T>
+    EVE_FORCEINLINE constexpr T operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(popcount_t, popcount_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
@@ -35,7 +49,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
+//!     * `x` :  [integral argument](@ref eve::integral_value).
 //!
 //!    **Return value**
 //!
@@ -47,7 +61,8 @@ namespace eve
 //!  @godbolt{doc/core/popcount.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(popcount_, popcount);
+  inline constexpr auto popcount = functor<popcount_t>;
+
 }
 
 #include <eve/module/core/regular/impl/popcount.hpp>

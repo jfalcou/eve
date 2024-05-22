@@ -13,26 +13,26 @@
 
 namespace eve::detail
 {
-template<unsigned_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-popcount_(EVE_SUPPORTS(sve_), wide<T, N> v) noexcept -> wide<T, N>
+template<unsigned_scalar_value T, typename N, callable_options O>
+EVE_FORCEINLINE wide<T, N> popcount_(EVE_SUPPORTS(sve_),
+                                     O const&,
+                                     wide<T, N> v) noexcept 
 requires sve_abi<abi_t<T, N>>
 {
-  return popcount[ignore_none](v);
+  return  svcnt_x(sve_true<T>(), v);
 }
 
-template<conditional_expr C, unsigned_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-popcount_(EVE_SUPPORTS(sve_), C const& cond, wide<T, N> v) noexcept -> wide<T, N>
+template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
+EVE_FORCEINLINE wide<T, N> popcount_(EVE_SUPPORTS(sve_),
+                                     C const& cond,
+                                     O const&,
+                                     wide<T, N> v) noexcept 
 requires sve_abi<abi_t<T, N>>
 {
-  if constexpr( C::is_complete && C::is_inverted )
-  {
-    return svcnt_x(sve_true<T>(), v);
-  }
+  auto alt = alternative(cond, v, as(v)); 
+  if constexpr( C::is_complete )
+    return alt; 
   else
-  {
-    return svcnt_m(alternative(cond, v, as(v)), expand_mask(cond, as(v)), v);
-  }
+    return svcnt_m(alt, expand_mask(cond, as(v)), v);
 }
 }
