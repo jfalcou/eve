@@ -87,7 +87,7 @@ namespace eve
                  T a, U b) noexcept
     {
       using r_t = decltype(logical_and(a, b));
-      if constexpr( scalar_value<T> || scalar_value<U> ) return r_t(!a || b);
+      if constexpr( scalar_value<T> || scalar_value<U> ) return r_t(a || !b);
       else return a || !b;
     }
 
