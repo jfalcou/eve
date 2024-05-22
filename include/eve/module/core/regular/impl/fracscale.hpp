@@ -51,7 +51,7 @@ fracscale_(EVE_SUPPORTS(cpu_), D const&, T const& a0, int scale) noexcept
 {
   if constexpr( has_native_abi_v<T> )
   {
-    return if_else(is_infinite(a0), zero, a0 - ldexp(D()(round)(ldexp(a0, scale)), -scale));
+    return if_else(is_infinite(a0), zero, a0 - ldexp((round[D])(ldexp(a0, scale)), -scale));
   }
   else { return apply_over(D()(fracscale), a0, scale); }
 }

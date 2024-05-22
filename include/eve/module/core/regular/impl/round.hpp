@@ -49,7 +49,7 @@ EVE_FORCEINLINE auto
 round_(EVE_SUPPORTS(cpu_), C const& cond, D const& d, U const& t) noexcept
     requires(is_one_of<D>(types<upward_type, downward_type, toward_zero_type, to_nearest_type> {}))
 {
-  return mask_op(cond, d(eve::round), t);
+    return mask_op(cond, d(eve::round), t);
 }
 
 }
