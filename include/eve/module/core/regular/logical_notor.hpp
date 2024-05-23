@@ -20,7 +20,8 @@ namespace eve
   {
     template<logical_value T, logical_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-      constexpr EVE_FORCEINLINE  auto operator()(T a, U b) const noexcept -> decltype(logical_and(a, b))
+    constexpr EVE_FORCEINLINE  auto operator()(T a, U b) const noexcept -> decltype(logical_and(a, b))
+    requires(eve::same_lanes_or_scalar<T, U>)
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value T>

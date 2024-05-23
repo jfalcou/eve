@@ -19,18 +19,19 @@ namespace eve
   struct logical_xor_t : strict_elementwise_callable<logical_xor_t, Options>
   {
     template<logical_value T, logical_value U>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const -> decltype(logical_and(a, b))
+    requires(eve::same_lanes_or_scalar<T, U>)
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const noexcept -> decltype(logical_and(a, b))
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value U>
-    constexpr EVE_FORCEINLINE U operator()(bool a, U b) const
+    constexpr EVE_FORCEINLINE U operator()(bool a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<logical_value T>
-    constexpr EVE_FORCEINLINE T operator()(T a, bool b) const
+    constexpr EVE_FORCEINLINE T operator()(T a, bool b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
-    constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const
+    constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(logical_xor_t, logical_xor_);
