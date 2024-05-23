@@ -25,7 +25,7 @@ int main()
 
   std::cout << "---- scalar" << '\n'
             << "<- xf                        = " << xf << '\n'
-            << "-> saturate(xf, int_16())    = " << eve::saturate(xf, int_64()) << '\n'
+            << "-> saturate(xf, int_16())    = " << eve::saturate(xf, int_16()) << '\n'
             << "<- xi                        = " << xi << '\n'
             << "-> saturate(xi, uint16_t>()) = " << eve::saturate(xi, eve::as<uint16_t>()) << '\n';
   return 0;
