@@ -8,13 +8,33 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/assert.hpp>
-#include <eve/detail/overload.hpp>
-
-#include <type_traits>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/round.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct significants_t : strict_elementwise_callable<significants_t, Options, upward_option, downward_option,
+                                                      to_nearest_option, toward_zero_option>
+  {
+    template<floating_value T0, value T1>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 n) const noexcept
+    {
+      EVE_ASSERT(n >= 0 && n < 16, "[eve::fracscale] -  integral scale out of range [0, 15]: " << n);
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    template<floating_value T0, auto N>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T0> operator()(T0 t0, index_t<N> const &) const noexcept
+    {
+      EVE_ASSERT(N >= 0 && N < 16, "[eve::fracscale] -  scale integral constant out of range [0, 15]: " << N);
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    EVE_CALLABLE_OBJECT(significants_t, significants_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -68,43 +88,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct fracscale_;
-}
-
-namespace detail
-{
-  template<typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::fracscale_), T const&,
-                             [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::fracscale] -  parameter s out of range [0, 15]: " << s);
-  }
-  template<int S, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::fracscale_), T const&, std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::fracscale] -  integral constant out of range [0, 15]: " << S);
-  }
-
-  template<conditional_expr C, typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::fracscale_),
-                             C const&, T const&, [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::fracscale] -  parameter s out of range [0, 15]: " << s);
-  }
-  template<conditional_expr C, int S, typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::fracscale_),
-                             C const&, T const&, std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::fracscale] -  integral constant out of range [0, 15]: " << S);
-  }
-}
-
-EVE_MAKE_CALLABLE(fracscale_, fracscale);
+  inline constexpr auto fracscale = functor<fracscale_t>;
 }
 
 #include <eve/module/core/regular/impl/fracscale.hpp>
