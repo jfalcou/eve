@@ -84,7 +84,6 @@ namespace eve
   namespace detail
   {
     template<typename T, typename U, callable_options O>
-    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr auto
     logical_and_(EVE_REQUIRES(cpu_), O const &, T a, U b) noexcept
     {
