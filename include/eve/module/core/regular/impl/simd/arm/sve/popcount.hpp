@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<integral_scalar_value T, typename N, callable_options O>
+template<unsigned_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> popcount_(EVE_REQUIRES(sve_),
                                      O const&,
                                      wide<T, N> v) noexcept
@@ -22,7 +22,7 @@ requires sve_abi<abi_t<T, N>>
   return  svcnt_x(sve_true<T>(), v);
 }
 
-template<conditional_expr C, integral_scalar_value T, typename N, callable_options O>
+template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> popcount_(EVE_SUPPORTS(sve_),
                                      C const& cond,
                                      O const&,

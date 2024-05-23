@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct popcount_t : elementwise_callable<popcount_t, Options>
   {
-    template<integral_value T>
+    template<unsigned_value T>
     EVE_FORCEINLINE constexpr T operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -49,7 +49,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [integral argument](@ref eve::integral_value).
+//!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
 //!
 //!    **Return value**
 //!

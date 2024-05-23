@@ -23,7 +23,7 @@
 namespace eve::detail
 {
 
-  template<integral_scalar_value T, typename N, callable_options O>
+  template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const&, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
@@ -78,7 +78,7 @@ namespace eve::detail
 
   /////////////////////////////////////////////////////////////////////////////
   // 256 bits
-  template<integral_scalar_value T, typename N, callable_options O>
+  template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
   popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
