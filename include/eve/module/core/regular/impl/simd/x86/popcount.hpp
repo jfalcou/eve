@@ -23,7 +23,7 @@
 namespace eve::detail
 {
 
-  template<unsigned_scalar_value T, typename N, callable_options O>
+  template<integral_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const&, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
@@ -41,7 +41,7 @@ namespace eve::detail
         return xx;
       };
 
-    using r_t = wide<as_integer_t<T, unsigned>, N>;
+    using r_t = wide<T, N>;
     if constexpr( sizeof(T) == 8 || sizeof(T) == 1 )
     {
       using N16   = fixed<(sizeof(T) < 8) ? 8u : sizeof(T)>;
@@ -78,12 +78,12 @@ namespace eve::detail
 
   /////////////////////////////////////////////////////////////////////////////
   // 256 bits
-  template<unsigned_scalar_value T, typename N, callable_options O>
+  template<integral_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
   popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    using r_t = wide<as_integer_t<T, unsigned>, N>;
+    using r_t = wide<T, N>;
     if constexpr( current_api >= avx2 )
     {
       auto putcounts = [](auto xx)
