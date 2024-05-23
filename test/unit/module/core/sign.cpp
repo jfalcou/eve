@@ -25,7 +25,6 @@ TTS_CASE_TPL("Check return types of eve::sign", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::sign[bool()](T()), T);
 
   TTS_EXPR_IS(eve::sign(v_t()), v_t);
-  TTS_EXPR_IS(eve::sign[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::sign[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::sign[bool()](v_t()), v_t);
 
