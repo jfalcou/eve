@@ -57,72 +57,42 @@ TTS_CASE_WITH("Check behavior of fracscale[cond](wide) on  floating types",
   using eve::fracscale;
 
   TTS_EQUAL(fracscale(a0, 4), a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  std::integral_constant<int, 4> four;
-  TTS_ULP_EQUAL(
-      eve::to_nearest(fracscale)(a0, 4), a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), 0.5);
-  TTS_ULP_EQUAL(
-      eve::upward(fracscale)(a0, 4), a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), 0.5);
-  TTS_ULP_EQUAL(
-      eve::downward(fracscale)(a0, 4), a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), 0.5);
-  TTS_ULP_EQUAL(
-      eve::toward_zero(fracscale)(a0, 4), a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), 0.5);
+  constexpr eve::index_t<4> four;
+  TTS_ULP_EQUAL(fracscale[eve::to_nearest](a0, 4), a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::upward](a0, 4), a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::downward](a0, 4), a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::toward_zero](a0, 4), a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), 0.5);
 
   TTS_ULP_EQUAL(fracscale(a0, four), a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), 0.5);
-  TTS_ULP_EQUAL(eve::to_nearest(fracscale)(a0, four),
-                a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4),
-                0.5);
-  TTS_ULP_EQUAL(
-      eve::upward(fracscale)(a0, four), a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), 0.5);
-  TTS_ULP_EQUAL(
-      eve::downward(fracscale)(a0, four), a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), 0.5);
-  TTS_ULP_EQUAL(eve::toward_zero(fracscale)(a0, four),
-                a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4),
-                0.5);
+  TTS_ULP_EQUAL(fracscale[eve::to_nearest](a0, four), a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), 0.5);
+  TTS_ULP_EQUAL( fracscale[eve::upward](a0, four), a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::downward](a0, four), a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::toward_zero](a0, four), a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), 0.5);
 
-  TTS_ULP_EQUAL(fracscale[t](a0, four),
-                eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::to_nearest(fracscale[t])(a0, four),
-                eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::upward(fracscale[t])(a0, four),
-                eve::if_else(t, a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::downward(fracscale[t])(a0, four),
-                eve::if_else(t, a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::toward_zero(fracscale[t])(a0, four),
-                eve::if_else(t, a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
+  TTS_ULP_EQUAL(fracscale[t](a0, four), eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::to_nearest][t](a0, four), eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::upward][t](a0, four), eve::if_else(t, a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::downward][t](a0, four), eve::if_else(t, a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0), 0.5);
+  TTS_ULP_EQUAL(fracscale[eve::toward_zero][t](a0, four), eve::if_else(t, a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0), 0.5);
 
-  TTS_ULP_EQUAL(fracscale[t](a0, 4),
-                eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::to_nearest(fracscale[t])(a0, 4),
-                eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::upward(fracscale[t])(a0, 4),
-                eve::if_else(t, a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::downward(fracscale[t])(a0, 4),
-                eve::if_else(t, a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
-  TTS_ULP_EQUAL(eve::toward_zero(fracscale[t])(a0, 4),
-                eve::if_else(t, a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0),
-                0.5);
+  TTS_ULP_EQUAL(fracscale[t](a0, 4), eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0),  0.5);
+  TTS_ULP_EQUAL(fracscale[eve::to_nearest][t](a0, 4),  eve::if_else(t, a0 - eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0),  0.5);
+  TTS_ULP_EQUAL(fracscale[eve::upward][t](a0, 4),  eve::if_else(t, a0 - eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0),  0.5);
+  TTS_ULP_EQUAL(fracscale[eve::downward][t][t](a0, 4),  eve::if_else(t, a0 - eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0),  0.5);
+  TTS_ULP_EQUAL(fracscale[eve::toward_zero][t](a0, 4),  eve::if_else(t, a0 - eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0),  0.5);
 };
 
 
 //==================================================================================================
 // Tests for masked fracscale
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::fracscale)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::fracscale[mask](a0, 4),
-//             eve::if_else(mask, eve::fracscale(a0, 4), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::fracscale)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::fracscale[mask](a0, 4),
+            eve::if_else(mask, eve::fracscale(a0, 4), a0));
+};

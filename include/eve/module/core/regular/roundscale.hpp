@@ -8,13 +8,32 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/assert.hpp>
-#include <eve/detail/overload.hpp>
-
-#include <type_traits>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct roundscale_t : strict_elementwise_callable<roundscale_t, Options, upward_option, downward_option,
+                                                      to_nearest_option, toward_zero_option>
+  {
+    template<floating_value T0, integral_value T1>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
+    {
+      //     EVE_ASSERT(n >= 0 && n < 16, "[eve::roundscale] -  integral scale out of range [0, 15]: " << n);
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    template<floating_value T0, auto N>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
+    {
+      //    EVE_ASSERT(N >= 0 && N < 16, "[eve::roundscale] -  scale integral constant out of range [0, 15]: " << N);
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    EVE_CALLABLE_OBJECT(roundscale_t, roundscale_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -68,46 +87,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct roundscale_;
-}
-
-namespace detail
-{
-  template<typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] - parameter s out of range [0, 15]: " << s);
-  }
-  template<int S, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&,
-        std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::roundscale] -  integral constant out of range [0, 15]: " << S);
-  }
-
-  template<conditional_expr C, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), C const&, T const&,
-        [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] - parameter s out of range [0, 15]: " << s);
-  }
-  template<conditional_expr C, int S, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), C const&, T const&,
-        std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::roundscale] -  integral constant out of range [0, 15]: " << S);
-  }
-}
-
-EVE_MAKE_CALLABLE(roundscale_, roundscale);
+  inline constexpr auto roundscale = functor<roundscale_t>;
 }
 
 #include <eve/module/core/regular/impl/roundscale.hpp>

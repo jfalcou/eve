@@ -10,29 +10,28 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/round.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct significants_t : strict_elementwise_callable<significants_t, Options, upward_option, downward_option,
-                                                      to_nearest_option, toward_zero_option>
+  struct fracscale_t : strict_elementwise_callable<fracscale_t, Options, upward_option, downward_option,
+                                                      to_nearest_option, toward_zero_option, pedantic_option>
   {
-    template<floating_value T0, value T1>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T0, T1> operator()(T0 t0, T1 n) const noexcept
+    template<floating_value T0, integral_value T1>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
     {
-      EVE_ASSERT(n >= 0 && n < 16, "[eve::fracscale] -  integral scale out of range [0, 15]: " << n);
+      //     EVE_ASSERT(n >= 0 && n < 16, "[eve::fracscale] -  integral scale out of range [0, 15]: " << n);
       return EVE_DISPATCH_CALL(t0, n);
     }
 
     template<floating_value T0, auto N>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T0> operator()(T0 t0, index_t<N> const &) const noexcept
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
     {
-      EVE_ASSERT(N >= 0 && N < 16, "[eve::fracscale] -  scale integral constant out of range [0, 15]: " << N);
+      //    EVE_ASSERT(N >= 0 && N < 16, "[eve::fracscale] -  scale integral constant out of range [0, 15]: " << N);
       return EVE_DISPATCH_CALL(t0, n);
     }
 
-    EVE_CALLABLE_OBJECT(significants_t, significants_);
+    EVE_CALLABLE_OBJECT(fracscale_t, fracscale_);
   };
 
 //================================================================================================

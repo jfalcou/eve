@@ -12,9 +12,9 @@ int main()
   std::cout << "---- simd" << '\n'
             << " <- pf                            = " << pf << '\n'
             << " -> fracscale(pf, 4)              = " << eve::fracscale(pf, 4) << '\n'
-            << " -> upward(fracscale)(pf, 4)      = " << eve::downward(eve::fracscale)(pf, 4) << '\n'
-            << " -> downward(fracscale)(pf, 4)    = " << eve::upward(eve::fracscale)(pf, 4) << '\n'
-            << " -> to_nearest(fracscale)(pf, 4)  = " << eve::to_nearest(eve::fracscale)(pf, 4) << '\n';
+            << " -> fracscale[downward2  ](pf, 4) = " << eve::fracscale[eve::downward2  ](pf, 4) << '\n'
+            << " -> fracscale[upward2    ](pf, 4) = " << eve::fracscale[eve::upward2    ](pf, 4) << '\n'
+            << " -> fracscale[to_nearest2](pf, 4) = " << eve::fracscale[eve::to_nearest2](pf, 4) << '\n';
 
 
   float xf = 0x1.fffffep0f;
@@ -22,6 +22,6 @@ int main()
   std::cout << "---- scalar" << '\n'
                 << "<- xf                             = " << std::hexfloat << xf << '\n';
     for (int i = 0;  i < 16; ++i)
-      std::cout << "-> toward_zero(fracscale)(xf," << std::setw(2) << i << ")  = " << std::hexfloat << eve::toward_zero(eve::fracscale)(xf, i) << '\n';
+      std::cout << "-> fracscale[toward_zero](xf," << std::setw(2) << i << ")  = " << std::hexfloat << eve::fracscale[eve::toward_zero](xf, i) << '\n';
   return 0;
 }
