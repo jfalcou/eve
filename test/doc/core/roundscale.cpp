@@ -31,7 +31,7 @@ int main()
 
   std::cout << "---- scalar" << '\n'
                 << "<- xf                             = " << std::hexfloat << xf << '\n';
-    for (int i = 0;  i < 16; ++i)
+    for (int i = 0;  i < 20; ++i)
       std::cout << "-> roundscale[toward_zero](xf," << std::setw(2) << i << ")  = " << std::hexfloat << eve::roundscale[eve::toward_zero](xf, i) << '\n';
   return 0;
 }

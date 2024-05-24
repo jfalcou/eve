@@ -20,14 +20,12 @@ namespace eve
     template<floating_value T0, integral_value T1>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
     {
-      //     EVE_ASSERT(n >= 0 && n < 16, "[eve::roundscale] -  integral scale out of range [0, 15]: " << n);
       return EVE_DISPATCH_CALL(t0, n);
     }
 
     template<floating_value T0, auto N>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
     {
-      //    EVE_ASSERT(N >= 0 && N < 16, "[eve::roundscale] -  scale integral constant out of range [0, 15]: " << N);
       return EVE_DISPATCH_CALL(t0, n);
     }
 
@@ -51,7 +49,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, int scale >
+//!      template< eve::value T, auto scale >
+//!      T roundscale(T x,  index_t<scale> ) noexcept;
+//!  
+//!      template< eve::value T>
 //!      T roundscale(T x, int scale) noexcept;
 //!   }
 //!   @endcode
@@ -59,14 +60,14 @@ namespace eve
 //!   **Parameters**
 //!
 //!      * `x`:      [floating value](@ref eve::floating_value).
-//!      * `scale` : int or std::integral_constant of int type limited to the range [0, 15].
+//!      * `scale` : inttegal value or integral_constant of integral type.
 //!
 //!    **Return value**
 //!
 //!       *  Returns the [elementwise](@ref glossary_elementwise) scaled input.
 //!          The number of fraction bits retained is specified by scale. By default the internal
 //!          rounding after scaling is done to nearest integer.
-//!          `ldexp(round(ldexp(a0,scale),-scale))`
+//!          The call `roundscale(x, scale)` is equivalent to  `eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
 //!
 //!  @groupheader{Example}
 //!
@@ -81,9 +82,9 @@ namespace eve
 //!
 //!    * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
-//!      If d is one of these 4 decorators
-//!      The call `d(roundscale)(x)`, call is equivalent to
-//!      `eve::ldexp(d(eve::round)(eve::ldexp(a0,scale), -scale))`
+//!      If o is one of these 4 decorators
+//!      The call `roundscale[o](x)` is equivalent to
+//!      `eve::ldexp(eve::round[o](eve::ldexp(x,scale), -scale))`
 //!
 //! @}
 //================================================================================================

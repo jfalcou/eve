@@ -16,13 +16,13 @@ namespace eve::detail
 {
 
   template<auto S, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
-  roundscale_(EVE_REQUIRES(avx512_),
-             wide<T, N> const & a0,
-             O          const & o,
-             eve::index_t<S> const & ) noexcept requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_),
+                                         wide<T, N> const & a0,
+                                         O          const & o,
+                                         eve::index_t<S> const & s) noexcept
+  requires x86_abi<abi_t<T, N>>
   {
-    return roundscale[true_(as(a0))][o](a0, S);
+    return roundscale[true_(as(a0))][o](a0, s);
   }
 
   // -----------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ namespace eve::detail
   template<auto S, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_),
                                         C          const &mask,
-                                        O          const &,
+                                        O          const &o,
                                         wide<T, N> const &a0,
                                         eve::index_t<S> const & ) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -39,6 +39,7 @@ namespace eve::detail
     auto const alt = alternative(mask, a0, as(a0));
 
     if constexpr( C::is_complete)  return alt;
+    else if constexpr(S > 15)      return roundscale.behavior(o, a0, S);
     else
     {
       auto          src = alternative(mask, a0, as<wide<T, N>> {});

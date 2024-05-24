@@ -20,14 +20,12 @@ namespace eve
     template<floating_value T0, integral_value T1>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
     {
-      //     EVE_ASSERT(n >= 0 && n < 16, "[eve::fracscale] -  integral scale out of range [0, 15]: " << n);
       return EVE_DISPATCH_CALL(t0, n);
     }
 
     template<floating_value T0, auto N>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
     {
-      //    EVE_ASSERT(N >= 0 && N < 16, "[eve::fracscale] -  scale integral constant out of range [0, 15]: " << N);
       return EVE_DISPATCH_CALL(t0, n);
     }
 
@@ -53,7 +51,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, int scale >
+//!      template< eve::value T, auto scale >
+//!      T roundscale(T x,  index_t<scale> ) noexcept;
+//!
+//!      template< eve::floating_value T >
 //!      T fracscale(T x, int scale) noexcept;
 //!   }
 //!   @endcode
@@ -68,6 +69,7 @@ namespace eve
 //!      Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
 //!      The number of fraction bits retained is specified by scale. By default the internal
 //!      rounding after scaling is done to nearest integer.
+//!      The call `fracscale(x, scale)` is equivalent to  `x-eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
 //!
 //!  @groupheader{Example}
 //!
@@ -82,8 +84,8 @@ namespace eve
 //!
 //!   * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
-//!     If d is one of these 4 decorators
-//!     The call `d(eve:fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
+//!     If o is one of these 4 decorators
+//!     The call `eve:fracscale[o](x, scale)` is equivalent to  `a0-d(eve::round[o](a0, scale)`
 //!
 //! @}
 //================================================================================================
