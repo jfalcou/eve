@@ -17,8 +17,8 @@ namespace eve::detail
 
   template<auto S, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_),
-                                         wide<T, N> const & a0,
                                          O          const & o,
+                                         wide<T, N> const & a0,
                                          eve::index_t<S> const & s) noexcept
   requires x86_abi<abi_t<T, N>>
   {
