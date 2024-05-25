@@ -19,7 +19,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_),
                                          O          const & o,
                                          wide<T, N> const & a0,
-                                         eve::index_t<S> const & s) noexcept
+                                         eve::index_t<S> const &) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     constexpr int spv = ((S) << 4) + (eve::rounding_mode<O>(eve::to_nearest2) & 3);
