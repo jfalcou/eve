@@ -23,7 +23,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr int spv = ((S) << 4) + (eve::rounding_mode<O>(eve::to_nearest2) & 3);
-    
+
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr(S > 15)                          return roundscale.behavior(o, a0, S);
     else if constexpr( c == category::float32x16) return _mm512_roundscale_ps(a0, spv);
@@ -33,10 +33,10 @@ namespace eve::detail
     else if constexpr( c == category::float32x4 ) return _mm_roundscale_ps(a0, spv);
     else if constexpr( c == category::float64x2 ) return _mm_roundscale_pd(a0, spv);
   }
-  
+
   // -----------------------------------------------------------------------------------------------
   // Masked case
-  
+
   template<auto S, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_),
                                         C          const &mask,
@@ -53,7 +53,7 @@ namespace eve::detail
     {
       auto          src = alternative(mask, a0, as<wide<T, N>> {});
       auto          m   = expand_mask(mask, as<wide<T, N>> {}).storage().value;
-      constexpr int spv = ((S) << 4) + eve::rounding_mode<O>(eve::to_nearest2) & 3;
+      constexpr int spv = ((S) << 4) + (eve::rounding_mode<O>(eve::to_nearest2) & 3);
 
       constexpr auto c = categorize<wide<T, N>>();
 
