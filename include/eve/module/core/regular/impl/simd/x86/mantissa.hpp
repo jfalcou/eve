@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 
-#include <type_traits>
+#include <iostream>
 
 namespace eve::detail
 {
@@ -28,7 +28,17 @@ namespace eve::detail
                                        wide<T, N> const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    return mantissa[true_(as<wide<T, N>>()).storage().value](a0);
+    std::cout << "icitte" << std::endl;
+    constexpr auto        c = categorize<wide<T, N>>();
+    constexpr auto interval = _MM_MANT_NORM_1_2;
+    constexpr auto sign     = _MM_MANT_SIGN_src;
+
+    if      constexpr( c == category::float32x16) return _mm512_getmant_ps(a0, interval, sign);
+    else if constexpr( c == category::float64x8 ) return _mm512_getmant_pd(a0, interval, sign);
+    else if constexpr( c == category::float64x4 ) return _mm256_getmant_pd(a0, interval, sign);
+    else if constexpr( c == category::float32x8 ) return _mm256_getmant_ps(a0, interval, sign);
+    else if constexpr( c == category::float64x2 ) return _mm_getmant_pd(a0, interval, sign);
+    else if constexpr( c == category::float32x4 ) return _mm_getmant_ps(a0, interval, sign);
   }
 
 // -----------------------------------------------------------------------------------------------

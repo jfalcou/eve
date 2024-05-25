@@ -11,7 +11,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct mantissa_t : elementwise_callable<mantissa_t, Options>
+  struct mantissa_t : elementwise_callable<mantissa_t, Options, pedantic_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -71,25 +71,31 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr T  mantissa_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr( scalar_value<T> )
+      if constexpr(O::contains(pedantic2))
       {
-        if( !a ) return a;
-        if constexpr( eve::platform::supports_invalids )
+        if constexpr( scalar_value<T> )
         {
-          if( is_not_finite(a) ) return a;
+          if( !a ) return a;
+          if constexpr( eve::platform::supports_invalids )
+          {
+            if( is_not_finite(a) ) return a;
+          }
+          return bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as(a)));
         }
-        return bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as(a)));
+        else if constexpr( simd_value<T> )
+        {
+          auto test = is_eqz(a);
+          if constexpr( eve::platform::supports_invalids ) { test = test || is_not_finite(a); }
+          return if_else(test, a, bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>())));
+        }
       }
-      else if constexpr( simd_value<T> )
+      else
       {
-        auto test = is_eqz(a);
-        if constexpr( eve::platform::supports_invalids ) { test = test || is_not_finite(a); }
-        return if_else(test, a, bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>())));
+        return if_else(is_eqz(a), a, bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>())));
       }
     }
   }
 }
-
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/mantissa.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/core/regular/impl/simd/x86/mantissa.hpp>
+// #endif
