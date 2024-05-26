@@ -47,8 +47,8 @@ TTS_CASE_TPL("Check behavior of mantissa on wide", eve::test::simd::ieee_reals)
 {
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_EQUAL(eve::mantissa(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
-    TTS_EQUAL(eve::mantissa(eve::minf(eve::as<T>())), eve::minf(eve::as<T>()));
+    TTS_EQUAL(eve::mantissa(eve::inf(eve::as<T>())), eve::one(eve::as<T>()));
+    TTS_EQUAL(eve::mantissa(eve::minf(eve::as<T>())), eve::mone(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::mantissa(eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
   }
   TTS_EQUAL(eve::mantissa(T(-1)), T(-1));
@@ -57,6 +57,18 @@ TTS_CASE_TPL("Check behavior of mantissa on wide", eve::test::simd::ieee_reals)
   TTS_EQUAL(eve::mantissa(T(2)), T(1));
   TTS_EQUAL(eve::mantissa(T(1.5)), T(1.5));
   TTS_EQUAL(eve::mantissa(T(2.5)), T(1.25));
+
+
+  if constexpr( eve::platform::supports_invalids )
+  {
+    TTS_EQUAL(eve::mantissa[eve::raw2](eve::inf(eve::as<T>())), eve::one(eve::as<T>()));
+    TTS_EQUAL(eve::mantissa[eve::raw2](eve::minf(eve::as<T>())), eve::mone(eve::as<T>()));
+  }
+  TTS_EQUAL(eve::mantissa[eve::raw2](T(-1)), T(-1));
+  TTS_EQUAL(eve::mantissa[eve::raw2](T(1)), T(1));
+  TTS_EQUAL(eve::mantissa[eve::raw2](T(2)), T(1));
+  TTS_EQUAL(eve::mantissa[eve::raw2](T(1.5)), T(1.5));
+  TTS_EQUAL(eve::mantissa[eve::raw2](T(2.5)), T(1.25));
 };
 
 
@@ -67,7 +79,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::mantissa)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::mantissa[mask](a0),

@@ -11,7 +11,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct mantissa_t : elementwise_callable<mantissa_t, Options, pedantic_option>
+  struct mantissa_t : elementwise_callable<mantissa_t, Options, raw_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -47,16 +47,24 @@ namespace eve
 //!
 //!     * `x` :  [real argument](@ref eve::value).
 //!
+//!    In particular:
+//!      *  `nan` returns nan
+//!      *  zero returns zero
+//!
 //!    **Return value**
 //!
-//!    The value of the IEEE mantissa.
-//!    is returned.
+//!    The value of the IEEE mantissa is returned.
 //!
 //! @note
 //!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$
-//!       are related by \f$x =  m\times 2^e\f$, with  \f$|m| \in [1, 2[\f$.
+//!       are related by \f$x =  m\times 2^e\f$, with  \f$|m| \in \{0, nan\} \cup [1, 2[\f$.
 //!
-//!    *  The exception is when \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$).
+//!   @groupheader{Semantic Modifiers}
+//!
+//!   * raw Call
+//!
+//!     The call `eve::abs[raw](x)` is identical except that results for zero and nan
+//!     inputs are unspecified.
 //!
 //!  @groupheader{Example}
 //!
@@ -64,38 +72,22 @@ namespace eve
 //! @}
 //================================================================================================
 
- inline constexpr auto mantissa = functor<mantissa_t>;
+  inline constexpr auto mantissa = functor<mantissa_t>;
 
   namespace detail
   {
     template<floating_value T, callable_options O>
     constexpr T  mantissa_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr(O::contains(pedantic2))
-      {
-        if constexpr( scalar_value<T> )
-        {
-          if( !a ) return a;
-          if constexpr( eve::platform::supports_invalids )
-          {
-            if( is_not_finite(a) ) return a;
-          }
-          return bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as(a)));
-        }
-        else if constexpr( simd_value<T> )
-        {
-          auto test = is_eqz(a);
-          if constexpr( eve::platform::supports_invalids ) { test = test || is_not_finite(a); }
-          return if_else(test, a, bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>())));
-        }
-      }
+      auto r =  bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>()));
+      if constexpr(O::contains(raw2))
+        return   bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>()));
       else
-      {
-        return if_else(is_eqz(a), a, bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>())));
-      }
+        return  if_else(is_nan(a), allbits,  bit_or(bit_and(a, mantissamask(eve::as<T>())), one[is_nez(a)](eve::as<T>())));
     }
   }
 }
-// #if defined(EVE_INCLUDE_X86_HEADER)
-// #  include <eve/module/core/regular/impl/simd/x86/mantissa.hpp>
-// #endif
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/mantissa.hpp>
+#endif
