@@ -11,7 +11,7 @@ on:
 
 jobs:
   check-changes:
-    use: './.github/workflows/check-changes.yml'
+    uses: './.github/workflows/check-changes.yml'
     with:
       directories: "['doc/**']"
   generate-doc:
