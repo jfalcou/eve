@@ -18,6 +18,7 @@ namespace eve
   struct rshr_t : strict_elementwise_callable<rshr_t, Options>
   {
     template<unsigned_value T, integral_value N>
+    requires(eve::same_lanes_or_scalar<T, N>)
     EVE_FORCEINLINE constexpr auto/*as_wide_as_t<T, N>*/ operator()(T t0, N s) const noexcept
     {
       EVE_ASSERT(detail::assert_good_shift<T>(s),

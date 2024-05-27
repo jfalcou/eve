@@ -32,6 +32,7 @@ namespace eve
     { return EVE_DISPATCH_CALL(v); }
 
     template<eve::value T, integral_value N>
+    requires(eve::same_lanes_or_scalar<T, N>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
     {
       EVE_ASSERT(eve::all(n >= 0), "[eve::next] : second parameter must be positive");

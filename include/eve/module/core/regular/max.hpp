@@ -17,6 +17,7 @@ namespace eve
   struct max_t : tuple_callable<max_t, Options, pedantic_option, numeric_option>
   {
     template<eve::value T, value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
 
     template<eve::value T0, value T1, value... Ts>

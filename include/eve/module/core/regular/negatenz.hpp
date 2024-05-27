@@ -19,6 +19,7 @@ namespace eve
   struct negatenz_t : elementwise_callable<negatenz_t, Options, pedantic_option>
   {
     template<value T,  value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
