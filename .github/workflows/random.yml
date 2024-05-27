@@ -37,7 +37,8 @@ jobs:
     steps:
       - name: Early exit if no changes
         if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
-        run: exit 0
+        continue-on-error: true
+        run: exit 1
 
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
