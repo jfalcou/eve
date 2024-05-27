@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "Checking for changes in ${{ env.watch_list }}"
           if git diff --quiet HEAD^ HEAD -- ${{ env.watch_list }}; then
-            echo "has_changes=yes" >> $GITHUB_ENV
-          else
             echo "has_changes=no" >> $GITHUB_ENV
+          else
+            echo "has_changes=yes" >> $GITHUB_ENV
           fi
