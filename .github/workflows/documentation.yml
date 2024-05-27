@@ -9,10 +9,10 @@ on:
     branches:
       - main
     paths:
-      - cmake
-      - CMakeLists.txt
-      - examples
-      - test
+      - 'cmake/**'
+      - 'CMakeLists.txt'
+      - 'examples/**'
+      - 'test/**'
 
 concurrency:
   group: doc-${{ github.ref }}
