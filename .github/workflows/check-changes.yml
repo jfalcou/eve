@@ -24,12 +24,14 @@ jobs:
       - id: fetch
         name: Fetch current branch
         uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 2
 
       - id: check
         name: Check for changes
         run: |
           echo "Checking for changes in ${{ env.watch_list }}"
-          if git diff --quiet HEAD^ -- ${{ env.watch_list }}; then
+          if git diff --quiet HEAD^ HEAD -- ${{ env.watch_list }}; then
             echo "has_changes=yes" >> $GITHUB_ENV
           else
             echo "has_changes=no" >> $GITHUB_ENV
