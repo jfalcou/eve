@@ -15,7 +15,8 @@ on:
 jobs:
   check:
     env:
-      watch_list: "${{ fromJSON(inputs.directories) }}"
+      # put the list of directories to watch for changes here, convert to space-separated list
+      watch_list: "${{ join(fromJson(inputs.directories), ' ') }}"
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
