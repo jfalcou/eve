@@ -42,14 +42,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T, eve::ordered_value U >
+//!      template< eve::value T, eve::value U >
 //!      T fdim(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [real](@ref eve::ordered_value)  arguments.
+//!     * `x`, `y` :  [real](@ref eve::value)  arguments.
 //!
 //!   **Return value**
 //!

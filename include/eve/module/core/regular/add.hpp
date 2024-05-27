@@ -17,6 +17,7 @@ namespace eve
   struct add_t : tuple_callable<add_t, Options, saturated_option>
   {
     template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);

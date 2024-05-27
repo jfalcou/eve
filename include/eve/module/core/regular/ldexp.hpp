@@ -19,7 +19,7 @@ namespace eve
 template<typename Options>
 struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
 {
-  template<eve::floating_ordered_value T, eve::value U>
+  template<eve::floating_value T, eve::value U>
   constexpr EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
   {
     return EVE_DISPATCH_CALL(x,n);

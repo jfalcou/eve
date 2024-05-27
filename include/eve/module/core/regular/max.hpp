@@ -16,10 +16,11 @@ namespace eve
   template<typename Options>
   struct max_t : tuple_callable<max_t, Options, pedantic_option, numeric_option>
   {
-    template<eve::ordered_value T, ordered_value U>
+    template<eve::value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
 
-    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0,  t1, ts...);
@@ -30,7 +31,7 @@ namespace eve
     operator()(Tup const & t) const noexcept  requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
-    requires(!kumi::product_type<Callable> && !eve::ordered_value<Callable>)
+    requires(!kumi::product_type<Callable> && !eve::value<Callable>)
     EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
 
     EVE_CALLABLE_OBJECT(max_t, max_);

@@ -24,7 +24,8 @@ namespace eve
   template<typename Options>
   struct minmax_t : tuple_callable<minmax_t, Options, pedantic_option, numeric_option>
   {
-    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr
     zipped<common_value_t<T0,T1,Ts...>,common_value_t<T0,T1,Ts...>>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
@@ -39,7 +40,7 @@ namespace eve
     { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
-    requires(!kumi::product_type<Callable> && !eve::ordered_value<Callable>)
+    requires(!kumi::product_type<Callable> && !eve::value<Callable>)
     EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
 
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
@@ -118,7 +119,7 @@ inline constexpr auto minmax = functor<minmax_t>;
     }
 
 
-    template<ordered_value T0, ordered_value T1, ordered_value... Ts, callable_options O>
+    template<value T0, value T1, value... Ts, callable_options O>
     EVE_FORCEINLINE auto
     minmax_(EVE_REQUIRES(cpu_), O const & , T0 v0, T1 v1, Ts... vs) noexcept
     -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
@@ -156,7 +157,7 @@ inline constexpr auto minmax = functor<minmax_t>;
       }
     }
 
-    template<conditional_expr C, ordered_value T0, ordered_value T1, ordered_value... Ts, callable_options O>
+    template<conditional_expr C, value T0, value T1, value... Ts, callable_options O>
     EVE_FORCEINLINE auto
     minmax_(EVE_REQUIRES(cpu_), C const& c, O const &, T0 v0, T1 v1, Ts... vs) noexcept
     -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))

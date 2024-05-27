@@ -15,7 +15,8 @@ namespace eve
   template<typename Options>
   struct bit_notor_t : strict_tuple_callable<bit_notor_t, Options>
   {
-    template<eve::ordered_value T0, ordered_value T1, ordered_value... Ts>
+    template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
