@@ -10,6 +10,7 @@ on:
       - main
     paths:
       - cmake
+      - CMakeLists.txt
       - examples
       - test
 
