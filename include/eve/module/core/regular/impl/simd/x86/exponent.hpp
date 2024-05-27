@@ -22,12 +22,13 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_),
-                                 O          const&,
+                                 O          const& o,
                                  wide<T, N> const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    using r_t    = wide<T, N>;
-    auto compute = [](auto a0){
+    if  constexpr(O::contains(raw2))
+    {
+      using r_t    = wide<T, N>;
       constexpr auto c = categorize<r_t>();
       if      constexpr( c == category::float64x8 ) return convert(r_t(_mm512_getexp_pd(a0)), int_from<T>());
       else if constexpr( c == category::float32x16) return convert(r_t(_mm512_getexp_ps(a0)), int_from<T>());
@@ -35,8 +36,9 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_getexp_ps(a0)), int_from<T>());
       else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_getexp_pd(a0)), int_from<T>());
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_getexp_ps(a0)), int_from<T>());
-    };
-    return if_else(is_eqz(a0), zero, compute(a0));
+    }
+    else
+      return exponent.behavior(cpu_{}, o, a0);
   }
 
 // -----------------------------------------------------------------------------------------------
@@ -44,7 +46,7 @@ namespace eve::detail
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_),
                                  C const         & mask,
-                                 O          const&,
+                                 O          const& o,
                                  wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -53,7 +55,7 @@ namespace eve::detail
     constexpr auto        c = categorize<wide<T, N>>();
 
     if constexpr( C::is_complete ) return s;
-    else
+    else if  constexpr(O::contains(raw2))
     {
       using r_t        = wide<T, N>;
 
@@ -68,7 +70,7 @@ namespace eve::detail
         else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
         else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
       };
-      return if_else(is_eqz(v), zero, compute(v, mask));
     }
+    else return exponent.behavior(cpu_{}, o, v);
   }
 }

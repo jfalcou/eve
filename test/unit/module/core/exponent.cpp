@@ -64,4 +64,20 @@ TTS_CASE_TPL("Check return types of eve::exponent(simd)", eve::test::simd::ieee_
   TTS_EQUAL(eve::exponent(v_t(0)), vi_t(0));
   TTS_EQUAL(eve::exponent(T(1)), i_t(0));
   TTS_EQUAL(eve::exponent(v_t(1)), vi_t(0));
+  TTS_EQUAL(eve::exponent(eve::inf(eve::as<T>())), eve::maxexponentp1(eve::as<T>()));
+  TTS_EQUAL(eve::exponent(eve::inf(eve::as<v_t>())), eve::maxexponentp1(eve::as<v_t>()));
+  TTS_EQUAL(eve::exponent(eve::minf(eve::as<T>())), eve::maxexponentp1(eve::as<T>()));
+  TTS_EQUAL(eve::exponent(eve::minf(eve::as<v_t>())), eve::maxexponentp1(eve::as<v_t>()));
+  TTS_EQUAL(eve::exponent(eve::nan(eve::as<T>())), eve::maxexponentp1(eve::as<T>()));
+  TTS_EQUAL(eve::exponent(eve::nan(eve::as<v_t>())), eve::maxexponentp1(eve::as<v_t>()));
+  TTS_IEEE_EQUAL(eve::ldexp(eve::mantissa( eve::inf(eve::as<T>())),eve::exponent( eve::inf(eve::as<T>())) ), eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::ldexp(eve::mantissa(eve::minf(eve::as<T>())),eve::exponent(eve::minf(eve::as<T>())) ), eve::minf(eve::as<T>()));
+  TTS_IEEE_EQUAL(eve::ldexp(eve::mantissa( eve::nan(eve::as<T>())),eve::exponent( eve::nan(eve::as<T>())) ), eve::nan(eve::as<T>()));
+
+
+  TTS_EQUAL(eve::exponent[eve::raw2](T(1)), i_t(0));
+  TTS_EQUAL(eve::exponent[eve::raw2](v_t(1)), vi_t(0));
+  TTS_EQUAL(eve::exponent[eve::raw2](T(2.5)), i_t(1));
+  TTS_EQUAL(eve::exponent[eve::raw2](v_t(2.5)), vi_t(1));
+
 };
