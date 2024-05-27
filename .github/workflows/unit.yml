@@ -71,6 +71,7 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
 
     steps:
+      if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
