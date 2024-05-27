@@ -15,7 +15,7 @@ on:
 jobs:
   check:
     env:
-      watch_list: ${{ fromJSON(inputs.directories) }}
+      watch_list: "${{ fromJSON(inputs.directories) }}"
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
