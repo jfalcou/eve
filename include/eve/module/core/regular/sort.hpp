@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct sort_t : callable<sort_t, Options>
   {
-    template<eve::value T, typename Less>
+    template<eve::simd_value T, typename Less>
     constexpr EVE_FORCEINLINE T operator()(T v, Less l) const noexcept
     { return EVE_DISPATCH_CALL(v, l); }
 
