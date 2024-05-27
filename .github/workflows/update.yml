@@ -8,6 +8,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - cmake
+      - examples
+      - test
 
 jobs:
   generate-doc:

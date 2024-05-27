@@ -8,6 +8,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - cmake
+      - examples
+      - test
 
 concurrency:
   group: install-${{ github.ref }}
