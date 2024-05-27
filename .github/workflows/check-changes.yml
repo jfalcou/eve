@@ -1,0 +1,36 @@
+name: Check for changes that require running the rest of the CI
+
+on:
+  workflow_call:
+    inputs:
+      directories:
+        description: 'The directories to check for changes'
+        required: true
+        type: string
+        default: "['cmake/**', 'CMakeLists.txt', 'examples/**', 'test/**', 'include/**']"
+    outputs:
+      has_changes: ${{ job.check.outputs.has_changes }}
+
+jobs:
+  check:
+    env:
+      watch_list: ${{ fromJSON(inputs.directories) }}
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+    outputs:
+      has_changes: ${{ steps.check.outputs.has_changes }}
+    steps:
+      - id: fetch
+        name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+
+      - id: check
+        name: Check for changes
+        run: |
+          echo "Checking for changes in ${{ env.watch_list }}"
+          if git diff --quiet HEAD^ HEAD ${{ env.watch_list }}; then
+            echo "has_changes=yes" >> $GITHUB_ENV
+          else
+            echo "has_changes=no" >> $GITHUB_ENV
+          fi

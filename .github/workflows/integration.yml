@@ -8,23 +8,23 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'cmake/**'
-      - 'CMakeLists.txt'
-      - 'examples/**'
-      - 'test/**'
-      - 'include/**'
 
 concurrency:
   group: install-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  check-changes:
+    use: './.github/workflows/check-changes.yml'
+    with:
+      directories: "['cmake/**', 'CMakeLists.txt', 'examples/**', 'test/**', 'include/**', 'doc/**']"
 
   ##################################################################################################
   ## Check install process of EVE via CMake
   ##################################################################################################
   install:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [ubuntu-latest]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -49,6 +49,8 @@ jobs:
   ## Check install process of EVE via CPM
   ##################################################################################################
   cpm:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     env:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     runs-on: [ubuntu-latest]
@@ -70,6 +72,8 @@ jobs:
   ## Check install process of EVE via FetchContents
   ##################################################################################################
   fetch:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     env:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     runs-on: [ubuntu-latest]
@@ -91,6 +95,8 @@ jobs:
   ## Check EVE multi-architecture setup
   ##################################################################################################
   multi-arch:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v6

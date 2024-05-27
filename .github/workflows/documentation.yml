@@ -8,22 +8,23 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'cmake/**'
-      - 'CMakeLists.txt'
-      - 'examples/**'
-      - 'test/**'
-      - 'include/**'
 
 concurrency:
   group: doc-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  check-changes:
+    use: './.github/workflows/check-changes.yml'
+    with:
+      directories: "['doc/**']"
+  
   ##################################################################################################
   ## Randomized precision tests
   ##################################################################################################
   documentation:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7

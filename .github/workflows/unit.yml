@@ -8,23 +8,21 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'cmake/**'
-      - 'CMakeLists.txt'
-      - 'examples/**'
-      - 'test/**'
-      - 'include/**'
 
 concurrency:
   group: unit-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-
+  check-changes:
+    use: './.github/workflows/check-changes.yml'
+    
   ##################################################################################################
   ## Check no PCH mode
   ##################################################################################################
   no_pch:
+    needs:  check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -57,6 +55,8 @@ jobs:
   ## Full emulation tests
   ##################################################################################################
   nosimd:
+    needs:  check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -84,6 +84,8 @@ jobs:
   ## Mac OS X Targets
   ##################################################################################################
   macosx:
+    needs:  check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [macos-12]
     strategy:
       fail-fast: false
@@ -106,6 +108,8 @@ jobs:
   ## Windows Targets
   ##################################################################################################
   msvc:
+    needs:  check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [windows-2022]
     strategy:
       fail-fast: false
@@ -137,6 +141,8 @@ jobs:
   ## Host 1 - Pre-Skylake SIMD ISA - clang
   ##################################################################################################
   x86-clang:
+    needs:  check-changes
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -165,7 +171,8 @@ jobs:
   ## Host 1 - PPC & ARM SVE256/512 Tests
   ##################################################################################################
   other-arch:
-    needs: x86-clang
+    needs: [check-changes, x86-clang]
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -195,7 +202,8 @@ jobs:
   ## Host 1 - Pre-Skylake SIMD ISA - g++
   ##################################################################################################
   x86-gcc:
-    needs: other-arch
+    needs: [ check-changes, other-arch ]
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -224,6 +232,8 @@ jobs:
   ## Host 2 - Non-X86 - Requires clang and qemu
   ##################################################################################################
   arm:
+    needs: [ check-changes ]
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -256,7 +266,8 @@ jobs:
   ## Host 2 - Post-Skylake SIMD ISA
   ##################################################################################################
   avx512:
-    needs: arm
+    needs: [ check-changes, arm ]
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -284,7 +295,8 @@ jobs:
   ## Host 2 - Pre-Skylake SIMD ISA - Special cases
   ##################################################################################################
   other-cases:
-    needs: avx512
+    needs: [ check-changes, avx512 ]
+    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
