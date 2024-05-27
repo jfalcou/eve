@@ -9,7 +9,9 @@ on:
         type: string
         default: "['cmake/**', 'CMakeLists.txt', 'examples/**', 'test/**', 'include/**']"
     outputs:
-      has_changes: ${{ jobs.check.outputs.has_changes }}
+      has_changes:
+        description: 'Whether changes were found or not (yes/no)'
+        value: ${{ jobs.check.outputs.has_changes }}
 
 jobs:
   check:
