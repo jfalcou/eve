@@ -17,14 +17,13 @@ jobs:
   check-changes:
     uses: './.github/workflows/check-changes.yml'
     with:
-      directories: "['doc/**']"
+      directories: "['test/doc/**']"
   
   ##################################################################################################
   ## Randomized precision tests
   ##################################################################################################
   documentation:
     needs: check-changes
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -38,6 +37,9 @@ jobs:
         - { comp: clang, arch: x86    , opts: -msse2    , pch: OFF}
         - { comp: gcc  , arch: x86    , opts: -msse2    , pch: OFF}
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
 

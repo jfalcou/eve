@@ -23,8 +23,7 @@ jobs:
   ## Check no PCH mode
   ##################################################################################################
   no_pch:
-    needs:  check-changes
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
+    needs: check-changes
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -36,6 +35,9 @@ jobs:
         - { comp: clang, arch: x86    , opts: -msse2    }
         - { comp: gcc  , arch: x86    , opts: -msse2    }
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -58,7 +60,6 @@ jobs:
   ##################################################################################################
   nosimd:
     needs:  check-changes
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -69,9 +70,10 @@ jobs:
         cfg:
         - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         }
         - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         }
-
     steps:
-      if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -87,8 +89,7 @@ jobs:
   ## Mac OS X Targets
   ##################################################################################################
   macosx:
-    needs:  check-changes
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
+    needs: check-changes
     runs-on: [macos-12]
     strategy:
       fail-fast: false
@@ -96,6 +97,9 @@ jobs:
         cfg:
         - { comp: clang , arch: x86_osx, opts: -mavx }
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -112,15 +116,16 @@ jobs:
   ##################################################################################################
   msvc:
     needs:  check-changes
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [windows-2022]
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { mode: Debug, options: "-DEVE_NO_FORCEINLINE"}
-
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for MSVC ${{ matrix.cfg.mode }} ${{ matrix.cfg.options }}
@@ -145,7 +150,6 @@ jobs:
   ##################################################################################################
   x86-clang:
     needs:  check-changes
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -157,8 +161,10 @@ jobs:
         - { comp: clang , arch: x86, opts: -msse4.2 }
         - { comp: clang , arch: x86, opts: -mavx    }
         - { comp: clang , arch: x86, opts: -mavx2   }
-
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -175,7 +181,6 @@ jobs:
   ##################################################################################################
   other-arch:
     needs: [check-changes, x86-clang]
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -188,6 +193,9 @@ jobs:
         - { comp: gcc, arch: sve512, opts: -Wno-psabi}
         - { comp: gcc, arch: ppc64 , opts: -Wno-psabi}
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -206,7 +214,6 @@ jobs:
   ##################################################################################################
   x86-gcc:
     needs: [ check-changes, other-arch ]
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -218,8 +225,10 @@ jobs:
         - { comp: gcc , arch: x86, opts: -msse4.2  }
         - { comp: gcc , arch: x86, opts: -mavx     }
         - { comp: gcc , arch: x86, opts: -mavx2    }
-
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -236,7 +245,6 @@ jobs:
   ##################################################################################################
   arm:
     needs: [ check-changes ]
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -248,6 +256,9 @@ jobs:
         - { comp: clang, arch: aarch64 , opts: -Wno-psabi}
         - { comp: clang, arch: arm     , opts: -Wno-psabi}
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -270,7 +281,6 @@ jobs:
   ##################################################################################################
   avx512:
     needs: [ check-changes, arm ]
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -283,6 +293,9 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
 
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
@@ -299,7 +312,6 @@ jobs:
   ##################################################################################################
   other-cases:
     needs: [ check-changes, avx512 ]
-    if: ${{ needs.check-changes.outputs.has_changes == 'yes' }}
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -315,6 +327,9 @@ jobs:
         - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
 
     steps:
+      - name: Early exit if no changes
+        if: ${{ needs.check-changes.outputs.has_changes == 'no' }}
+        run: exit 0
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
