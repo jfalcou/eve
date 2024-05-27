@@ -77,7 +77,7 @@ namespace eve
 //!
 //!   * raw Call
 //!
-//!     The call `eve::abs[raw](x)` is identical except that results for zero, nan and infinite
+//!     The call `eve::exponent[raw](x)` is identical except that results for zero, nan and infinite
 //!     inputs are unspecified
 //!
 //!
