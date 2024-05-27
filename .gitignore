@@ -45,3 +45,6 @@ Testing/*
 doc/docs/*
 .cache/
 .idea/
+
+# file system metadata
+*.DS_Store
