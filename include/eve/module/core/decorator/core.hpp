@@ -36,13 +36,13 @@ namespace eve
   struct spherical_mode       {};
   struct successor_mode       {};
 
-  struct downward_mode    {};
+  struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEAREST_INT
+  struct downward_mode    { static constexpr int value = 0x08 | 0x01; }; // _MM_FROUND_TO_NEG_INF
+  struct upward_mode      { static constexpr int value = 0x08 | 0x02; }; // _MM_FROUND_TO_POS_INF
+  struct toward_zero_mode { static constexpr int value = 0x08 | 0x03; }; // _MM_FROUND_TO_ZERO
   struct pedantic_mode    {};
   struct raw_mode         {};
   struct saturated_mode   {};
-  struct to_nearest_mode  {};
-  struct toward_zero_mode {};
-  struct upward_mode      {};
 
   [[maybe_unused]] inline constexpr auto associated       = ::rbr::flag( associated_mode{}      );
   [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
@@ -83,6 +83,19 @@ namespace eve
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
   struct toward_zero_option  : detail::exact_option<toward_zero2> {};
   struct upward_option       : detail::exact_option<upward2>      {};
+
+  // ----------------------------------------------------------------------------------
+  // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
+  // ----------------------------------------------------------------------------------
+  template<typename S, typename T> consteval int rounding_mode(T) noexcept
+  {
+    // All set the _MM_FROUND_NO_EXC bit
+    if      constexpr(S::contains(eve::to_nearest2 )) return to_nearest_mode::value;
+    else if constexpr(S::contains(eve::downward2   )) return downward_mode::value;
+    else if constexpr(S::contains(eve::toward_zero2)) return toward_zero_mode::value;
+    else if constexpr(S::contains(eve::upward2     )) return upward_mode::value;
+    else                                              return T::id_type::value;
+  };
 
   // ----------------------------------------------------------------------------------
   // [TEMPORARY] Will be removed when all decorator have been converted

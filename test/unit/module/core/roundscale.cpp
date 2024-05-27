@@ -54,39 +54,39 @@ TTS_CASE_WITH("Check behavior of roundscale[cond](wide) on  floating types",
 {
   using eve::roundscale;
 
-  std::integral_constant<int, 4> four;
+  constexpr eve::index_t<4> four;
   TTS_EQUAL(roundscale(a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::to_nearest(roundscale)(a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::upward(roundscale)(a0, 4), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::downward(roundscale)(a0, 4), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::toward_zero(roundscale)(a0, 4), eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::to_nearest](a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::upward](a0, 4), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::downward](a0, 4), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::toward_zero](a0, 4), eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4));
 
   TTS_EQUAL(roundscale(a0, four), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::to_nearest(roundscale)(a0, four), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::upward(roundscale)(a0, four), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::downward(roundscale)(a0, four), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(eve::toward_zero(roundscale)(a0, four), eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::to_nearest](a0, four), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::upward](a0, four), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::downward](a0, four), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::toward_zero](a0, four), eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4));
 
   TTS_EQUAL(roundscale[t](a0, four),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::to_nearest(roundscale[t])(a0, four),
+  TTS_EQUAL(roundscale[eve::to_nearest][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::upward(roundscale[t])(a0, four),
+  TTS_EQUAL(roundscale[eve::upward][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::downward(roundscale[t])(a0, four),
+  TTS_EQUAL(roundscale[eve::downward][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::toward_zero(roundscale[t])(a0, four),
+  TTS_EQUAL(roundscale[eve::toward_zero][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0));
 
   TTS_EQUAL(roundscale[t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::to_nearest(roundscale[t])(a0, 4),
+  TTS_EQUAL(roundscale[eve::to_nearest][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::upward(roundscale[t])(a0, 4),
+  TTS_EQUAL(roundscale[eve::upward][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::downward(roundscale[t])(a0, 4),
+  TTS_EQUAL(roundscale[eve::downward][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(eve::toward_zero(roundscale[t])(a0, 4),
+  TTS_EQUAL(roundscale[eve::toward_zero][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0));
 };
 
@@ -94,13 +94,13 @@ TTS_CASE_WITH("Check behavior of roundscale[cond](wide) on  floating types",
 //==================================================================================================
 // Tests for masked roundscale
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of eve::masked(eve::roundscale)(eve::wide)",
-//               eve::test::simd::ieee_reals,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//               tts::logicals(0, 3)))
-// <typename T, typename M>(T const& a0,
-//                          M const& mask)
-// {
-//   TTS_IEEE_EQUAL(eve::roundscale[mask](a0, 4),
-//             eve::if_else(mask, eve::roundscale(a0, 4), a0));
-// };
+TTS_CASE_WITH("Check behavior of eve::masked(eve::roundscale)(eve::wide)",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)))
+<typename T, typename M>(T const& a0,
+                         M const& mask)
+{
+  TTS_IEEE_EQUAL(eve::roundscale[mask](a0, 4),
+            eve::if_else(mask, eve::roundscale(a0, 4), a0));
+};

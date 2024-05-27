@@ -7,10 +7,28 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/decorator/roundings.hpp>
+#include <eve/module/core/regular/ceil.hpp>
+#include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/nearest.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct round_t : elementwise_callable<round_t, Options, upward_option, downward_option,
+                                        to_nearest_option, toward_zero_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T x) const noexcept
+    { return EVE_DISPATCH_CALL(x); }
+
+    EVE_CALLABLE_OBJECT(round_t, round_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -55,23 +73,40 @@ namespace eve
 //!
 //!   * eve::downward
 //!
-//!     The expression `eve::downward(eve::round)(x)` is equivalent to `eve::floor(x)`.
+//!     The expression `eve::roun[eve::downward](x)` is equivalent to `eve::floor(x)`.
 //!
 //!   * eve::upward
 //!
-//!     The expression `eve::upward(eve::round)(x)` is equivalent to `eve::ceil(x)`.
+//!     The expression `eve::round[eve::upward](x)` is equivalent to `eve::ceil(x)`.
 //!
 //!   * eve::to_nearest
 //!
-//!     The expression `to_nearest(eve::round)(x)` is equivalent to `eve::nearest(x)`.
+//!     The expression `eve::round[to_nearest](x)` is equivalent to `eve::nearest(x)`.
 //!
 //!   * eve::toward_zero
 //!
-//!     The expression `eve::toward_zero(eve::round)(x)` is equivalent to `eve::trunc(x)`.
+//!     The expression `eve::round[eve::toward_zero](x)` is equivalent to `eve::trunc(x)`.
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(round_, round);
-}
+  inline constexpr auto round = functor<round_t>;
 
-#include <eve/module/core/regular/impl/round.hpp>
+  namespace detail
+  {
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto
+    round_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
+    {
+      if constexpr(integral_value<T>)
+        return x;
+      else if constexpr(O::contains(downward2 ))
+        return eve::floor(x);
+      else if constexpr(O::contains(upward2)  )
+        return eve::ceil(x);
+      else if constexpr(O::contains(toward_zero2 ))
+        return eve::trunc(x);
+      else
+        return nearest(x);
+    }
+  }
+}

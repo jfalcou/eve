@@ -8,13 +8,30 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/assert.hpp>
-#include <eve/detail/overload.hpp>
-
-#include <type_traits>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct fracscale_t : strict_elementwise_callable<fracscale_t, Options, upward_option, downward_option,
+                                                      to_nearest_option, toward_zero_option, pedantic_option>
+  {
+    template<floating_value T0, integral_value T1>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    template<floating_value T0, auto N>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    EVE_CALLABLE_OBJECT(fracscale_t, fracscale_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -34,7 +51,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, int scale >
+//!      template< eve::value T, auto scale >
+//!      T roundscale(T x,  index_t<scale> ) noexcept;
+//!
+//!      template< eve::floating_value T >
 //!      T fracscale(T x, int scale) noexcept;
 //!   }
 //!   @endcode
@@ -49,6 +69,7 @@ namespace eve
 //!      Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
 //!      The number of fraction bits retained is specified by scale. By default the internal
 //!      rounding after scaling is done to nearest integer.
+//!      The call `fracscale(x, scale)` is equivalent to  `x-eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
 //!
 //!  @groupheader{Example}
 //!
@@ -63,48 +84,12 @@ namespace eve
 //!
 //!   * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
-//!     If d is one of these 4 decorators
-//!     The call `d(eve:fracscale)(x, scale)`, call is equivalent to  `a0-d(eve::roundscale)(a0, scale)`
+//!     If o is one of these 4 decorators
+//!     The call `eve:fracscale[o](x, scale)` is equivalent to  `a0-d(eve::round[o](a0, scale)`
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct fracscale_;
-}
-
-namespace detail
-{
-  template<typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::fracscale_), T const&,
-                             [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::fracscale] -  parameter s out of range [0, 15]: " << s);
-  }
-  template<int S, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::fracscale_), T const&, std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::fracscale] -  integral constant out of range [0, 15]: " << S);
-  }
-
-  template<conditional_expr C, typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::fracscale_),
-                             C const&, T const&, [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::fracscale] -  parameter s out of range [0, 15]: " << s);
-  }
-  template<conditional_expr C, int S, typename T>
-  EVE_FORCEINLINE void check(EVE_MATCH_CALL(eve::tag::fracscale_),
-                             C const&, T const&, std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::fracscale] -  integral constant out of range [0, 15]: " << S);
-  }
-}
-
-EVE_MAKE_CALLABLE(fracscale_, fracscale);
+  inline constexpr auto fracscale = functor<fracscale_t>;
 }
 
 #include <eve/module/core/regular/impl/fracscale.hpp>

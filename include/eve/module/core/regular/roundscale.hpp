@@ -8,13 +8,30 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/assert.hpp>
-#include <eve/detail/overload.hpp>
-
-#include <type_traits>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct roundscale_t : strict_elementwise_callable<roundscale_t, Options, upward_option, downward_option,
+                                                      to_nearest_option, toward_zero_option>
+  {
+    template<floating_value T0, integral_value T1>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    template<floating_value T0, auto N>
+    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, n);
+    }
+
+    EVE_CALLABLE_OBJECT(roundscale_t, roundscale_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -32,7 +49,10 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, int scale >
+//!      template< eve::value T, auto scale >
+//!      T roundscale(T x,  index_t<scale> ) noexcept;
+//!  
+//!      template< eve::value T>
 //!      T roundscale(T x, int scale) noexcept;
 //!   }
 //!   @endcode
@@ -40,14 +60,14 @@ namespace eve
 //!   **Parameters**
 //!
 //!      * `x`:      [floating value](@ref eve::floating_value).
-//!      * `scale` : int or std::integral_constant of int type limited to the range [0, 15].
+//!      * `scale` : inttegal value or integral_constant of integral type.
 //!
 //!    **Return value**
 //!
 //!       *  Returns the [elementwise](@ref glossary_elementwise) scaled input.
 //!          The number of fraction bits retained is specified by scale. By default the internal
 //!          rounding after scaling is done to nearest integer.
-//!          `ldexp(round(ldexp(a0,scale),-scale))`
+//!          The call `roundscale(x, scale)` is equivalent to  `eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
 //!
 //!  @groupheader{Example}
 //!
@@ -62,52 +82,13 @@ namespace eve
 //!
 //!    * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
 //!
-//!      If d is one of these 4 decorators
-//!      The call `d(roundscale)(x)`, call is equivalent to
-//!      `eve::ldexp(d(eve::round)(eve::ldexp(a0,scale), -scale))`
+//!      If o is one of these 4 decorators
+//!      The call `roundscale[o](x)` is equivalent to
+//!      `eve::ldexp(eve::round[o](eve::ldexp(x,scale), -scale))`
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct roundscale_;
-}
-
-namespace detail
-{
-  template<typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&, [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] - parameter s out of range [0, 15]: " << s);
-  }
-  template<int S, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), T const&,
-        std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::roundscale] -  integral constant out of range [0, 15]: " << S);
-  }
-
-  template<conditional_expr C, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), C const&, T const&,
-        [[maybe_unused]] int s)
-  {
-    EVE_ASSERT(s >= 0 && s < 16, "[eve::roundscale] - parameter s out of range [0, 15]: " << s);
-  }
-  template<conditional_expr C, int S, typename T>
-  EVE_FORCEINLINE void
-  check(EVE_MATCH_CALL(eve::tag::roundscale_), C const&, T const&,
-        std::integral_constant<int, S> const&)
-  {
-    EVE_ASSERT(S >= 0 && S < 16,
-               "[eve::roundscale] -  integral constant out of range [0, 15]: " << S);
-  }
-}
-
-EVE_MAKE_CALLABLE(roundscale_, roundscale);
+  inline constexpr auto roundscale = functor<roundscale_t>;
 }
 
 #include <eve/module/core/regular/impl/roundscale.hpp>
