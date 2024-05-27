@@ -11,7 +11,7 @@ int main()
   std::cout
     << "---- simd" << '\n'
     << "<- pi                   = " << pi << '\n'
-    << "-> sign_alternate(pi)             = " << eve::sign_alternate(pi) << '\n';
+    << "-> sign_alternate(pi)   = " << eve::sign_alternate(pi) << '\n';
 
 
   float xf = 2.0f;
@@ -19,7 +19,7 @@ int main()
   std::cout
     << "---- scalar"  << '\n'
     << "<- xf                   = " << xf << '\n'
-    << "-> sign_alternate(xf)             = " << eve::sign_alternate(xf) << '\n';
+    << "-> sign_alternate(xf)   = " << eve::sign_alternate(xf) << '\n';
 
   return 0;
 }
