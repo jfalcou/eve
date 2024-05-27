@@ -148,19 +148,28 @@ $(document).ready(function(){initNavTree('group__core__internal_gad7abe741b69d30
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__internal_gad7abe741b69d3032a4c4bd5e66e5524e.html#gad7abe741b69d3032a4c4bd5e66e5524e">mantissa</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__internal_gad7abe741b69d3032a4c4bd5e66e5524e_html_gad7abe741b69d3032a4c4bd5e66e5524e"><div class="ttname"><a href="group__core__internal_gad7abe741b69d3032a4c4bd5e66e5524e.html#gad7abe741b69d3032a4c4bd5e66e5524e">eve::mantissa</a></div><div class="ttdeci">constexpr auto mantissa</div><div class="ttdoc">Computes the IEEE mantissa of the floating value.</div><div class="ttdef"><b>Definition:</b> mantissa.hpp:67</div></div>
+<div class="ttc" id="agroup__core__internal_gad7abe741b69d3032a4c4bd5e66e5524e_html_gad7abe741b69d3032a4c4bd5e66e5524e"><div class="ttname"><a href="group__core__internal_gad7abe741b69d3032a4c4bd5e66e5524e.html#gad7abe741b69d3032a4c4bd5e66e5524e">eve::mantissa</a></div><div class="ttdeci">constexpr auto mantissa</div><div class="ttdoc">Computes the IEEE mantissa of the floating value.</div><div class="ttdef"><b>Definition:</b> mantissa.hpp:75</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real argument</a>.</li>
 </ul>
+<p>In particular:</p><ul>
+<li><code>nan</code> returns nan</li>
+<li>zero returns zero</li>
+</ul>
 <p><b>Return value</b></p>
-<p>The value of the IEEE mantissa. is returned.</p>
+<p>The value of the IEEE mantissa is returned.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>The exponent \(e\) and mantissa \(m\) of a floating point entry \(x\) are related by \(x =  m\times 2^e\), with \(|m| \in [1, 2[\).</li>
-<li>The exception is when \(x = \pm0, \pm\infty\) or is a Nan, where \(m=x\) and \(e=0\)).</li>
+<li>The exponent \(e\) and mantissa \(m\) of a floating point entry \(x\) are related by \(x =  m\times 2^e\), with \(|m| \in \{0, nan\} \cup [1, 2[\).</li>
 </ul>
 </dd></dl>
+<h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li><p class="startli">raw Call</p>
+<p class="startli">The call <code><a class="el" href="group__core__internal_gad7abe741b69d3032a4c4bd5e66e5524e.html#gad7abe741b69d3032a4c4bd5e66e5524e" title="Computes the IEEE mantissa of the floating value.">eve::mantissa</a>[raw](x)</code> is identical except that results for zero and nan outputs are unspecified.</p>
+</li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
