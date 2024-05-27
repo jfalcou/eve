@@ -21,7 +21,6 @@
 #include <eve/module/core/regular/logical_not.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
 #include <eve/arch/platform.hpp>
-#include <iostream>
 
 namespace eve
 {
@@ -68,12 +67,12 @@ namespace eve
 //!
 //!    In particular:
 //!      *  `inf`,  `minf` and `nan` return maxexponent plus 1
-//!      *  zero returns zero  
+//!      *  zero returns zero
 //!
 //! @note
 //!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
 //!       \f$x =  m\times 2^e\f$, with  \f$|m| \in \{0\} \cup [1, 2[\f$.
-//!  
+//!
 //!   @groupheader{Semantic Modifiers}
 //!
 //!   * raw Call

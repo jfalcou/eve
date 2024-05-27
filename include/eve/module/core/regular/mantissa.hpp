@@ -63,8 +63,8 @@ namespace eve
 //!
 //!   * raw Call
 //!
-//!     The call `eve::abs[raw](x)` is identical except that results for zero and nan
-//!     inputs are unspecified.
+//!     The call `eve::mantissa[raw](x)` is identical except that results for zero and nan
+//!     outputs are unspecified.
 //!
 //!  @groupheader{Example}
 //!
