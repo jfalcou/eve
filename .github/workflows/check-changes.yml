@@ -7,7 +7,6 @@ on:
         description: 'The directories to check for changes'
         required: true
         type: string
-        default: "['cmake/**', 'CMakeLists.txt', 'examples/**', 'test/**', 'include/**']"
     outputs:
       has_changes:
         description: 'Whether changes were found or not (yes/no)'

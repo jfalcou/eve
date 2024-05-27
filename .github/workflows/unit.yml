@@ -16,6 +16,8 @@ concurrency:
 jobs:
   check-changes:
     uses: './.github/workflows/check-changes.yml'
+    with:
+      directories: "['cmake/**', 'CMakeLists.txt', 'examples/**', 'test/**', 'include/**']"
     
   ##################################################################################################
   ## Check no PCH mode
