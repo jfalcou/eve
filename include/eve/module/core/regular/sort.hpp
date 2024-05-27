@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct sort_t : callable<sort_t, Options>
+  {
+    template<eve::simd_value T, typename Less>
+    constexpr EVE_FORCEINLINE T operator()(T v, Less l) const noexcept
+    { return EVE_DISPATCH_CALL(v, l); }
+
+     template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    EVE_CALLABLE_OBJECT(sort_t, sort_);
+  };
+
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
@@ -75,7 +91,68 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(sort_, sort);
-}
+  inline constexpr auto sort = functor<sort_t>;
 
-#include <eve/module/core/regular/impl/sort.hpp>
+  namespace detail
+  {
+    // Building up, then going down.
+    // 0, 1, 1, 0, 0, 1, 1, 0 ...
+    template <std::ptrdiff_t Full>
+    constexpr auto bitonic_merge_blend_pattern = [](int i, int) {
+      int turn = i / Full;
+      bool is_odd_turn = turn % 2;
+      return (i + is_odd_turn) % 2;
+    };
+
+    template <typename T, typename Less, std::ptrdiff_t Full, std::ptrdiff_t G>
+    constexpr EVE_FORCEINLINE
+    T bitonic_merge_impl(T x, Less less, fixed<Full> full, fixed<G> g) noexcept
+    {
+      if constexpr ( G == 0 ) return x;
+      else
+      {
+        T ab = x;
+        T ba = eve::swap_adjacent(ab, g);
+        auto [aa, bb] = minmax(less)(ab, ba);
+        x = blend(aa, bb, g, bitonic_merge_blend_pattern<Full / G>);
+        return bitonic_merge_impl(x, less, full, lane<G / 2>);
+      }
+    }
+
+    // G is the length of the monotonic sequence
+    template <typename T, typename Less, std::ptrdiff_t G>
+    constexpr EVE_FORCEINLINE
+    T bitonic_merge(T x, Less less, fixed<G>) noexcept
+    {
+      return bitonic_merge_impl(x, less, lane<G * 2>, eve::lane<G>);
+    }
+
+    // G - length of monotonic sequence
+    template <simd_value T, typename Less, std::ptrdiff_t G>
+    constexpr EVE_FORCEINLINE
+    T make_bitonic(T x, Less less, fixed<G>) noexcept
+    {
+      if constexpr (G < 1)
+        return x;
+      else
+      {
+        x = make_bitonic(x, less, lane<G / 2>);
+        return bitonic_merge(x, less, lane<G / 2>);
+      }
+    }
+
+    template <typename T, typename Less, callable_options O>
+    constexpr EVE_FORCEINLINE
+    T sort_(EVE_REQUIRES(cpu_), O const &, T x, Less less) noexcept
+    {
+      return make_bitonic(x, less, eve::lane<T::size()>);
+    }
+
+    template <typename T, callable_options O>
+    constexpr EVE_FORCEINLINE
+    T sort_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
+    {
+      return sort(x, eve::is_less);
+    }
+  }
+}
