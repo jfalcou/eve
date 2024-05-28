@@ -23,6 +23,7 @@ namespace eve
                                                             >
   {
     template<ordered_value I, floating_ordered_value T>
+    requires (same_lanes_or_scalar<I, T>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(lrising_factorial_t, lrising_factorial_);
