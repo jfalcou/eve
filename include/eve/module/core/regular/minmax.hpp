@@ -34,6 +34,7 @@ namespace eve
     }
 
     template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     auto operator()(Tup const & t) const noexcept -> decltype(zip(min(t),max(t)))
     requires(kumi::size_v<Tup> >= 2)
