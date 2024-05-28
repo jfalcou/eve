@@ -7,6 +7,16 @@
 //==================================================================================================
 #pragma once
 
+#if defined(_MSC_VER)
+#    if _MSVC_LANG < 202002L
+#        error "Eve requires C++20 or higher. Use /std:c++20 or higher to enable C++20 features."
+#    endif
+#else
+#    if __cplusplus < 202002L
+#        error "Eve requires C++20 or higher. Use -std=c++20 or higher to enable C++20 features."
+#    endif
+#endif
+
 //==================================================================================================
 //! @addtogroup functions
 //! @{
