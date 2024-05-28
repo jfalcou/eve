@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/detail/kumi.hpp>
 #include <eve/traits/cardinal.hpp>
 #include <eve/concept/vectorized.hpp>
 
@@ -14,11 +15,11 @@ namespace eve
 {
   namespace detail
   {
-    template<typename... Ts>
+    template<typename T0, typename... Ts>
     consteval auto lanes_check()
     {
       // Find largest lanes as a reference
-      std::ptrdiff_t cards[] = { cardinal_v<Ts>... };
+      std::ptrdiff_t cards[] = { cardinal_v<T0>, cardinal_v<Ts>... };
 
       auto max_card = cards[0];
       for(auto c : cards) max_card = max_card < c ? c : max_card;
@@ -30,6 +31,19 @@ namespace eve
             return false;
       }
       return true;
+    }
+
+    template<kumi::product_type T>
+    consteval auto tuple_lanes_check()
+    {
+      if constexpr(sized_product_type<T,0>) return true;
+      else
+      {
+        return [&]<std::size_t... I>(std::index_sequence<I...>)
+        {
+          return lanes_check<kumi::element_t<I,T>...>();
+        }(std::make_index_sequence<kumi::size_v<T>>());
+      }
     }
   }
 
@@ -47,6 +61,21 @@ namespace eve
   //================================================================================================
   template<typename... Ts>
   inline constexpr bool same_lanes_or_scalar  = detail::lanes_check<Ts...>();
+
+  //================================================================================================
+  //! @addtogroup traits
+  //! @{
+  //!  @var same_lanes_or_scalar_tuple
+  //!
+  //!  @tparam T Product type to process
+  //!
+  //!  @brief Checks that all types within a product type are either scalar or share a common number of lanes.
+  //!
+  //!  **Required header:** `#include <eve/traits.hpp>`
+  //! @}
+  //================================================================================================
+  template<typename T>
+  inline constexpr bool same_lanes_or_scalar_tuple  = detail::tuple_lanes_check<T>();
 
   //================================================================================================
   //! @addtogroup traits

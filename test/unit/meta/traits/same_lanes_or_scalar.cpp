@@ -52,3 +52,15 @@ TTS_CASE( "Check same_lanes_or_scalar on mixed types" )
   TTS_CONSTEXPR_EXPECT_NOT((eve::same_lanes_or_scalar<wide<int,fixed<8>>,short,wide<char,fixed<2>>>));
   TTS_CONSTEXPR_EXPECT_NOT((eve::same_lanes_or_scalar<double,wide<int>,wide<char>>));
 };
+
+TTS_CASE( "Check same_lanes_tuple" )
+{
+  using eve::wide;
+  using eve::fixed;
+
+  TTS_CONSTEXPR_EXPECT((eve::same_lanes_or_scalar_tuple<kumi::tuple<float,wide<int>>>));
+  TTS_CONSTEXPR_EXPECT((eve::same_lanes_or_scalar_tuple<kumi::tuple<wide<int>,double,wide<float>>>));
+  TTS_CONSTEXPR_EXPECT((eve::same_lanes_or_scalar_tuple<kumi::tuple<wide<int,fixed<8>>,short,wide<char,fixed<8>>>>));
+  TTS_CONSTEXPR_EXPECT_NOT((eve::same_lanes_or_scalar_tuple<kumi::tuple<wide<int,fixed<8>>,short,wide<char,fixed<2>>>>));
+  TTS_CONSTEXPR_EXPECT_NOT((eve::same_lanes_or_scalar_tuple<kumi::tuple<double,wide<int>,wide<char>>>));
+};
