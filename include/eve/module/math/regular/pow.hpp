@@ -25,6 +25,7 @@ namespace eve
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<eve::floating_value T, eve::floating_value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
@@ -37,10 +38,12 @@ namespace eve
     {  return EVE_DISPATCH_CALL(v, w); }
 
     template<floating_value T,  integral_simd_value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr  as_wide_as_t<T, U > operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<integral_simd_value T,  integral_simd_value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U > operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
