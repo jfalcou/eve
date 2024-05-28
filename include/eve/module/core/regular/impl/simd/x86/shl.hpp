@@ -35,7 +35,7 @@ namespace eve::detail
       else if constexpr( c == category::int64x4  ) return _mm256_mask_sllv_epi64 (src, m, v, s);
       else if constexpr( c == category::int64x2  ) return _mm_mask_sllv_epi64    (src, m, v, s);
 
-      // perform an arithmetic shift right for the uints
+      // perform a logical shift left for uints as it is equivalent to an arithmetic shift left
       else if constexpr( c == category::uint16x32) return _mm512_mask_sllv_epi16 (src, m, v, s);
       else if constexpr( c == category::uint16x16) return _mm256_mask_sllv_epi16 (src, m, v, s);
       else if constexpr( c == category::uint16x8 ) return _mm_mask_sllv_epi16    (src, m, v, s);
@@ -70,7 +70,7 @@ namespace eve::detail
       else if constexpr( c == category::int64x4  ) return _mm256_mask_slli_epi64 (src, m, v, s);
       else if constexpr( c == category::int64x2  ) return _mm_mask_slli_epi64    (src, m, v, s);
 
-      // perform an arithmetic shift right for the uints
+      // perform a logical shift left for uints as it is equivalent to an arithmetic shift left
       else if constexpr( c == category::uint16x32) return _mm512_mask_slli_epi16 (src, m, v, s);
       else if constexpr( c == category::uint16x16) return _mm256_mask_slli_epi16 (src, m, v, s);
       else if constexpr( c == category::uint16x8 ) return _mm_mask_slli_epi16    (src, m, v, s);
