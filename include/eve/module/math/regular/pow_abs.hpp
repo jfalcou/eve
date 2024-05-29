@@ -22,6 +22,7 @@ namespace eve
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<eve::value T, eve::value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 

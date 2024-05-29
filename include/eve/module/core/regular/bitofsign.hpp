@@ -78,7 +78,7 @@ namespace eve
 
   namespace detail
   {
-    template<ordered_value T, callable_options O>
+    template<value T, callable_options O>
     constexpr T  bitofsign_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       return bit_and(a, signmask(eve::as(a)));

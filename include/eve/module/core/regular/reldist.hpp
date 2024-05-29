@@ -21,6 +21,7 @@ namespace eve
   struct reldist_t : elementwise_callable<reldist_t, Options, saturated_option,  pedantic_option>
   {
     template<value T,  value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 

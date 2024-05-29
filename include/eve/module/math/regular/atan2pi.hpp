@@ -20,6 +20,7 @@ namespace eve
   struct atan2pi_t : elementwise_callable<atan2pi_t, Options, pedantic_option>
   {
     template<eve::floating_ordered_value T, eve::floating_ordered_value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 

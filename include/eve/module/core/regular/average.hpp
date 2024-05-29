@@ -17,10 +17,12 @@ namespace eve
   struct average_t : elementwise_callable<average_t, Options, raw_option, upward_option, downward_option>
   {
     template<value T,  value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     template<eve::floating_value T0, floating_value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
     operator()(T0 t0, Ts...ts) const noexcept
     {

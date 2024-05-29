@@ -19,8 +19,8 @@ namespace eve
   template<typename Options>
   struct rotl_t : strict_elementwise_callable<rotl_t, Options>
   {
-    template<eve::integral_value T, eve::integral_value S>
-    requires(unsigned_scalar_value<element_type_t<T>>)
+    template<eve::unsigned_value T, eve::integral_value S>
+    requires(eve::same_lanes_or_scalar<T, S>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T,S> operator()(T v, S s) const
     {
       constexpr int l [[maybe_unused]] = sizeof(element_type_t<T>) * 8;
@@ -31,8 +31,7 @@ namespace eve
       return EVE_DISPATCH_CALL(v,s);
     }
 
-    template<eve::integral_value T, auto S>
-    requires(unsigned_scalar_value<element_type_t<T>>)
+    template<eve::unsigned_value T, auto S>
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
     {
       constexpr int l = sizeof(element_type_t<T>) * 8;

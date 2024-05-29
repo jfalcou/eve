@@ -19,6 +19,7 @@ namespace eve
   struct fdim_t : elementwise_callable<fdim_t, Options>
   {
     template<eve::value T,  value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
@@ -42,14 +43,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T, eve::ordered_value U >
+//!      template< eve::value T, eve::value U >
 //!      T fdim(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [real](@ref eve::ordered_value)  arguments.
+//!     * `x`, `y` :  [real](@ref eve::value)  arguments.
 //!
 //!   **Return value**
 //!

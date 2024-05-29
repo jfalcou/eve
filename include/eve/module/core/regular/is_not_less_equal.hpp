@@ -22,7 +22,8 @@ namespace eve
   struct is_not_less_equal_t : strict_elementwise_callable<is_not_less_equal_t, Options, definitely_option>
   {
    template<value T,  value U>
-    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+   requires(eve::same_lanes_or_scalar<T, U>)
+   constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_less_equal] simd tolerance requires at least one simd parameter." );
       return EVE_DISPATCH_CALL(a, b);

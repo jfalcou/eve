@@ -21,7 +21,8 @@ namespace eve
   struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option>
   {
     template<value P, floating_value T0, floating_value T1, floating_value... Ts>
-    EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
+     EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P>
     operator()(P p, T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(p, t0, t1, ts...);

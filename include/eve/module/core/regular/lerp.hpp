@@ -20,6 +20,7 @@ namespace eve
   struct lerp_t : elementwise_callable<lerp_t, Options, pedantic_option>
   {
     template<value T,  value U,  value V>
+    requires(eve::same_lanes_or_scalar<T, U, V>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
 

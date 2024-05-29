@@ -83,7 +83,7 @@ inline constexpr auto bit_swap_pairs = functor<bit_swap_pairs_t>;
   namespace detail
   {
 
-    template<ordered_value T, integral_value I0, integral_value I1, callable_options O>
+    template<value T, integral_value I0, integral_value I1, callable_options O>
     constexpr T  bit_swap_pairs_(EVE_REQUIRES(cpu_), O const&, T a, I0 i0,  I1 i1) noexcept
     {
       [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;

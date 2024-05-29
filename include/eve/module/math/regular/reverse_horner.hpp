@@ -18,6 +18,7 @@ namespace eve
   struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option>
   {
     template<floating_value X, value T, value... Ts>
+    requires(eve::same_lanes_or_scalar<X, T, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
     operator()(X x, T t, Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(x, t, ts...); }

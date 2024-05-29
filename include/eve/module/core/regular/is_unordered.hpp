@@ -17,6 +17,7 @@ namespace eve
   struct is_unordered_t : elementwise_callable<is_unordered_t, Options>
   {
     template<value T,  value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
     {
       return EVE_DISPATCH_CALL(a, b);
