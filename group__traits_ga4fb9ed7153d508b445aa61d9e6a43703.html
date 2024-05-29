@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::horner</title>
+<title>E.V.E: eve::same_lanes_or_scalar_tuple</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__traits_ga4fb9ed7153d508b445aa61d9e6a43703.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,17 +121,19 @@ $(document).ready(function(){initNavTree('group__math_ga90f1fb37df377d7fd9f95282
 </div>
 
 <div class="contents">
-<a id="ga90f1fb37df377d7fd9f95282ec3c70cb" name="ga90f1fb37df377d7fd9f95282ec3c70cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga90f1fb37df377d7fd9f95282ec3c70cb">&#9670;&#160;</a></span>horner</h2>
+<a id="ga4fb9ed7153d508b445aa61d9e6a43703" name="ga4fb9ed7153d508b445aa61d9e6a43703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4fb9ed7153d508b445aa61d9e6a43703">&#9670;&#160;</a></span>same_lanes_or_scalar_tuple</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::horner = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;horner_t&gt;</td>
+          <td class="memname">eve::same_lanes_or_scalar_tuple = detail::tuple_lanes_check&lt;T&gt;()</td>
         </tr>
       </table>
   </td>
@@ -140,47 +142,13 @@ $(document).ready(function(){initNavTree('group__math_ga90f1fb37df377d7fd9f95282
   </tr>
 </table>
 </div><div class="memdoc">
-<p>If \((a_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by decreasing power order, the Horner scheme evaluates the polynom \(p\) at \(x\) by : \(\displaystyle p(x) = (((a_0x+a_1)x+ ... )x + a_{n-1})\)</p>
-<p><b>Defined in header</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T, <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> C ...&gt;</div>
-<div class="line">  T <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">horner</a>(T x, C ... coefs) <span class="keyword">noexcept</span>;                                   <span class="comment">//1</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::Range R&gt;</div>
-<div class="line">  T <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">horner</a>(T x, R r) <span class="keyword">noexcept</span>;                                           <span class="comment">//2</span></div>
-<div class="line"> </div>
-<div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:124</div></div>
-<div class="ttc" id="agroup__math_ga90f1fb37df377d7fd9f95282ec3c70cb_html_ga90f1fb37df377d7fd9f95282ec3c70cb"><div class="ttname"><a href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a></div><div class="ttdeci">constexpr auto horner</div><div class="ttdoc">Implement the horner scheme to evaluate polynomials/.</div><div class="ttdef"><b>Definition:</b> horner.hpp:103</div></div>
-<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-</div><!-- fragment --><ol type="1">
-<li>Polynom is evaluated at x the other inputs are the polynomial coefficients.</li>
-<li>Polynom is evaluated at x the other input is a range or a kumi::tuple containing the coefficients</li>
-</ol>
-<p><b>Parameters</b></p>
-<ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
-<li><code>coefs...</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating arguments</a>. The coefficients by decreasing power order</li>
-<li><code>r</code> : Range or kumi::tuple containing The coefficients by decreasing power order.</li>
-</ul>
-<p><b>Return value</b></p>
-<p>The value of the polynom at <code>x</code> is returned.</p>
-<p><b>Notes</b></p>
-<p>If the coefficients are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.</p><ul>
-<li>If x is scalar, the polynomials are all computed at the same point</li>
-<li>If x is simd, the nth polynomial is computed on the nth value of x</li>
-</ul>
-<h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
-<p class="startli">The expression <code><a class="el" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb" title="Implement the horner scheme to evaluate polynomials/.">eve::horner</a>[pedantic](...)</code> computes the result using <code>fma[pedantic]</code> instead of <code><a class="el" href="group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1" title="Computes the fused multiply add of its three parameters.">eve::fma</a></code> in internal computations.</p>
-<p class="startli">This is intended to insure more accurate computations where needed. This has no cost (and is automatically done) if the system has hard wired fma but is very expansive if it is not the case. </p>
-</li>
-</ul>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Product type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <code>#include &lt;eve/traits.hpp&gt;</code> </p>
 
 </div>
 </div>
