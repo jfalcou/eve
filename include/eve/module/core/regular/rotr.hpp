@@ -44,6 +44,58 @@ namespace eve
     EVE_CALLABLE_OBJECT(rotr_t, rotr_);
   };
 
+  //================================================================================================
+  //! @addtogroup core_arithmetic
+  //! @{
+  //!   @var rotr
+  //!   @brief Bitwise rotation to the right
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template<unsigned_value T, integral_value N>
+  //!      T rotr(T x, N n) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`:  [argument](@ref eve::unsigned_value) to be rotated.
+  //!     * `n`:  [shift](@ref eve::integral_value).
+  //!
+  //!    **Return value**
+  //!
+  //!      The [elementwise](@ref glossary_elementwise) bitwise rotation to the right of the first
+  //!      parameter by the second.
+  //!
+  //!      The call `rotr(x, n)` is equivalent to `std::rotr(x, n)` if `x` is an [simd value](@ref
+  //!      eve::simd_value).
+  //!
+  //!      The types must share the same cardinal or be scalar and if `N` is the size in bits of
+  //!      the element type of `T`, all [elements](@ref glossary_elementwise) of n must belong to the
+  //!      interval: `[0, N[` or the result is undefined.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/rotr.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The expression `eve::rotr[mask](x, ...)` is a masked version of `rotr` which is
+  //!     equivalent to `if_else(mask, rotr(x, ...), x)`
+  //!
+  //! @}
+  //================================================================================================
   inline constexpr auto rotr = functor<rotr_t>;
 }
 
