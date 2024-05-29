@@ -23,30 +23,31 @@ namespace eve::detail
       auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
+      // perform an arithmetic shift right for the ints
       if      constexpr( c == category::int16x32 ) return src;
-      else if constexpr( c == category::int16x16 ) return _mm256_mask_srlv_epi16 (src, m, v, s);
-      else if constexpr( c == category::int16x8  ) return _mm_mask_srlv_epi16    (src, m, v, s);
+      else if constexpr( c == category::int16x16 ) return _mm256_mask_srav_epi16 (src, m, v, s);
+      else if constexpr( c == category::int16x8  ) return _mm_mask_srav_epi16    (src, m, v, s);
 
-      else if constexpr( c == category::int32x16 ) return _mm512_mask_srlv_epi32 (src, m, v, s);
-      else if constexpr( c == category::int32x8  ) return _mm256_mask_srlv_epi32 (src, m, v, s);
-      else if constexpr( c == category::int32x4  ) return _mm_mask_srlv_epi32    (src, m, v, s);
+      else if constexpr( c == category::int32x16 ) return _mm512_mask_srav_epi32 (src, m, v, s);
+      else if constexpr( c == category::int32x8  ) return _mm256_mask_srav_epi32 (src, m, v, s);
+      else if constexpr( c == category::int32x4  ) return _mm_mask_srav_epi32    (src, m, v, s);
 
-      else if constexpr( c == category::int64x8  ) return _mm512_mask_srlv_epi64 (src, m, v, s);
-      else if constexpr( c == category::int64x4  ) return _mm256_mask_srlv_epi64 (src, m, v, s);
-      else if constexpr( c == category::int64x2  ) return _mm_mask_srlv_epi64    (src, m, v, s);
+      else if constexpr( c == category::int64x8  ) return _mm512_mask_srav_epi64 (src, m, v, s);
+      else if constexpr( c == category::int64x4  ) return _mm256_mask_srav_epi64 (src, m, v, s);
+      else if constexpr( c == category::int64x2  ) return _mm_mask_srav_epi64    (src, m, v, s);
 
-      // perform an arithmetic shift right for the uints
-      else if constexpr( c == category::uint16x32) return _mm512_mask_srav_epi16 (src, m, v, s);
-      else if constexpr( c == category::uint16x16) return _mm256_mask_srav_epi16 (src, m, v, s);
-      else if constexpr( c == category::uint16x8 ) return _mm_mask_srav_epi16    (src, m, v, s);
+      // it does not matter for the uints, so just perform a logical shift
+      else if constexpr( c == category::uint16x32) return _mm512_mask_srlv_epi16 (src, m, v, s);
+      else if constexpr( c == category::uint16x16) return _mm256_mask_srlv_epi16 (src, m, v, s);
+      else if constexpr( c == category::uint16x8 ) return _mm_mask_srlv_epi16    (src, m, v, s);
 
-      else if constexpr( c == category::uint32x16) return _mm512_mask_srav_epi32 (src, m, v, s);
-      else if constexpr( c == category::uint32x8 ) return _mm256_mask_srav_epi32 (src, m, v, s);
-      else if constexpr( c == category::uint32x4 ) return _mm_mask_srav_epi32    (src, m, v, s);
+      else if constexpr( c == category::uint32x16) return _mm512_mask_srlv_epi32 (src, m, v, s);
+      else if constexpr( c == category::uint32x8 ) return _mm256_mask_srlv_epi32 (src, m, v, s);
+      else if constexpr( c == category::uint32x4 ) return _mm_mask_srlv_epi32    (src, m, v, s);
 
-      else if constexpr( c == category::uint64x8 ) return _mm512_mask_srav_epi64 (src, m, v, s);
-      else if constexpr( c == category::uint64x4 ) return _mm256_mask_srav_epi64 (src, m, v, s);
-      else if constexpr( c == category::uint64x2 ) return _mm_mask_srav_epi64    (src, m, v, s);
+      else if constexpr( c == category::uint64x8 ) return _mm512_mask_srlv_epi64 (src, m, v, s);
+      else if constexpr( c == category::uint64x4 ) return _mm256_mask_srlv_epi64 (src, m, v, s);
+      else if constexpr( c == category::uint64x2 ) return _mm_mask_srlv_epi64    (src, m, v, s);
   }
 
   // shr[mask](wide_val, imm_mask)

@@ -23,6 +23,7 @@ namespace eve::detail
       auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
+      // perform a logical shift right for the ints, arithmetic shift is defined in eve::shr[mask]
       if      constexpr( c == category::int16x32 ) return _mm512_mask_srlv_epi16 (src, m, v, s);
       else if constexpr( c == category::int16x16 ) return _mm256_mask_srlv_epi16 (src, m, v, s);
       else if constexpr( c == category::int16x8  ) return _mm_mask_srlv_epi16    (src, m, v, s);
@@ -35,7 +36,6 @@ namespace eve::detail
       else if constexpr( c == category::int64x4  ) return _mm256_mask_srlv_epi64 (src, m, v, s);
       else if constexpr( c == category::int64x2  ) return _mm_mask_srlv_epi64    (src, m, v, s);
 
-      // perform a logical shift right for the uints too, arithmetic shift is defined in eve::shr[mask]
       else if constexpr( c == category::uint16x32) return _mm512_mask_srlv_epi16 (src, m, v, s);
       else if constexpr( c == category::uint16x16) return _mm256_mask_srlv_epi16 (src, m, v, s);
       else if constexpr( c == category::uint16x8 ) return _mm_mask_srlv_epi16    (src, m, v, s);
