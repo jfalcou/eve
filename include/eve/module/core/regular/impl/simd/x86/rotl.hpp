@@ -54,7 +54,7 @@ requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   auto src = alternative(cx, v, as<wide<T, N>> {});
   auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-  else if constexpr( c == category::uint32x16 ) return _mm512_mask_rolv_epi32 (src, m, v, s);
+  if constexpr( c == category::uint32x16 ) return _mm512_mask_rolv_epi32 (src, m, v, s);
   else if constexpr( c == category::uint32x8  ) return _mm256_mask_rolv_epi32 (src, m, v, s);
   else if constexpr( c == category::uint32x4  ) return _mm_mask_rolv_epi32    (src, m, v, s);
 
@@ -71,7 +71,7 @@ requires(sizeof(T) >= 4 && x86_abi<abi_t<T, N>>)
   auto src = alternative(cx, v, as<wide<T, N>> {});
   auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-  else if constexpr( c == category::uint32x16 ) return _mm512_mask_rol_epi32 (src, m, v, S);
+  if constexpr( c == category::uint32x16 ) return _mm512_mask_rol_epi32 (src, m, v, S);
   else if constexpr( c == category::uint32x8  ) return _mm256_mask_rol_epi32 (src, m, v, S);
   else if constexpr( c == category::uint32x4  ) return _mm_mask_rol_epi32    (src, m, v, S);
 
