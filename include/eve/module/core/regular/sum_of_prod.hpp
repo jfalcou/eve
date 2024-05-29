@@ -21,6 +21,7 @@ namespace eve
   struct sum_of_prod_t : elementwise_callable<sum_of_prod_t, Options, raw_option, pedantic_option>
   {
     template<value T,  value U, value V,  value W>
+    requires(eve::same_lanes_or_scalar<T, U, V, W>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V, W> operator()(T a, U b, V c, W d) const
     { return EVE_DISPATCH_CALL(a, b, c, d); }
 

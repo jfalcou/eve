@@ -18,6 +18,7 @@ template<typename Options>
 struct two_prod_t : elementwise_callable<two_prod_t, Options>
 {
   template<eve::floating_value T, eve::floating_value U>
+  requires(eve::same_lanes_or_scalar<T, U>)
   constexpr EVE_FORCEINLINE
   zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
   {

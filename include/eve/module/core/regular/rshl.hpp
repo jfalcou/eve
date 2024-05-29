@@ -21,6 +21,7 @@ namespace eve
   struct rshl_t : strict_elementwise_callable<rshl_t, Options>
   {
     template<unsigned_value T, integral_value N>
+    requires(eve::same_lanes_or_scalar<T, N>)
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
     {
       EVE_ASSERT(detail::assert_good_shift<T>(s),
@@ -67,7 +68,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::ordered_value) to be shifted.
+//!     * `x` :  [argument](@ref eve::value) to be shifted.
 //!     * `n`:   [shift](@ref eve::integral_value).
 //!
 //!    **Return value**

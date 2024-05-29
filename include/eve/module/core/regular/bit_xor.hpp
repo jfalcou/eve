@@ -17,6 +17,7 @@ namespace eve
   struct bit_xor_t : strict_tuple_callable<bit_xor_t, Options>
   {
     template<eve::value T0, value T1>
+    requires(eve::same_lanes_or_scalar<T0, T1>)
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1>
     operator()(T0 t0, T1 t1) const noexcept
     {
@@ -24,6 +25,7 @@ namespace eve
     }
 
     template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
     operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
@@ -31,6 +33,7 @@ namespace eve
     }
 
     template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::bit_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)

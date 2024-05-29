@@ -91,7 +91,7 @@ namespace eve
       auto vlt1 = v < one(eve::as(v));
       if constexpr( scalar_value<T> )
         if( vlt1 ) return zero(eve::as(v));
-      if constexpr( floating_ordered_value<T> )
+      if constexpr( floating_value<T> )
       {
         auto [m, e] = ifrexp(v);
         e           = dec(e);

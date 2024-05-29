@@ -20,6 +20,7 @@ namespace eve
   struct nextafter_t : elementwise_callable<nextafter_t, Options, pedantic_option>
   {
     template<eve::value T, eve::value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T t, U u) const noexcept
     { return EVE_DISPATCH_CALL(t, u); }
 

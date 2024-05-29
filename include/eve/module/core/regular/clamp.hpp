@@ -21,6 +21,7 @@ namespace eve
   struct clamp_t : elementwise_callable<clamp_t, Options>
   {
     template<value T,  value U,  value V>
+    requires(eve::same_lanes_or_scalar<T, U, V>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V>
     operator()(T a, U lo, V hi) const noexcept
     {
@@ -48,7 +49,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T, eve::ordered_value U,  eve::value V>
+//!      template< eve::value T, eve::value U,  eve::value V>
 //!      auto clamp(T x, U lo, V hi) noexcept;
 //!   }
 //!   @endcode
