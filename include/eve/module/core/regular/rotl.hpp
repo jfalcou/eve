@@ -28,7 +28,7 @@ namespace eve
                 , "[eve::rotl] Rotating by "  << s << " is out of the range ]" << -l << ", " << l << "[."
                 );
 
-      return EVE_DISPATCH_CALL(v,s);
+      return EVE_DISPATCH_CALL(v, s);
     }
 
     template<eve::unsigned_value T, auto S>
@@ -37,7 +37,7 @@ namespace eve
       constexpr int l = sizeof(element_type_t<T>) * 8;
       static_assert(eve::abs(S) < l, "[eve::rotl] Rotation is out of range.");
 
-      return EVE_DISPATCH_CALL(v,s);
+      return EVE_DISPATCH_CALL(v, s);
     }
 
     EVE_CALLABLE_OBJECT(rotl_t, rotl_);

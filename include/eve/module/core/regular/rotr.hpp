@@ -29,7 +29,7 @@ namespace eve
                 , "[eve::rotr] Rotating by "  << s << " is out of the range ]" << -l << ", " << l << "[."
                 );
 
-      return EVE_DISPATCH_CALL(v,s);
+      return EVE_DISPATCH_CALL(v, s);
     }
 
     template<eve::unsigned_value T, auto S>
@@ -38,7 +38,7 @@ namespace eve
       constexpr int l = sizeof(element_type_t<T>) * 8;
       static_assert(eve::abs(S) < l, "[eve::rotr] Rotation is out of range.");
 
-      return EVE_DISPATCH_CALL(v,s);
+      return EVE_DISPATCH_CALL(v, s);
     }
 
     EVE_CALLABLE_OBJECT(rotr_t, rotr_);
@@ -53,14 +53,14 @@ namespace eve::detail
   template<typename T, typename S, callable_options O>
   constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotr_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
   {
-    using s_t = as_wide_as_t<as_integer_t<S,signed>, S>;
-    return rotl_(EVE_TARGETS(cpu_),o,v,bit_cast(eve::minus(s),as<s_t>{}));
+    using s_t = as_wide_as_t<as_integer_t<S, signed>, S>;
+    return rotl_(EVE_TARGETS(cpu_), o, v, bit_cast(eve::minus(s), as<s_t>{}));
   }
 
   template<typename T, auto S, callable_options O>
   constexpr EVE_FORCEINLINE T rotr_(EVE_REQUIRES(cpu_), O const& o, T v, index_t<S>)
   {
-    return rotl_(EVE_TARGETS(cpu_),o,v,index<-S>);
+    return rotl_(EVE_TARGETS(cpu_), o, v, index<-S>);
   }
 }
 
