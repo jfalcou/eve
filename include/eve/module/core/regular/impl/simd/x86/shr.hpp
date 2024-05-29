@@ -24,7 +24,7 @@ namespace eve::detail
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
       // perform an arithmetic shift right for the ints
-      if      constexpr( c == category::int16x32 ) return src;
+      if      constexpr( c == category::int16x32 ) return _mm512_mask_srav_epi16  (src, m, v, s);
       else if constexpr( c == category::int16x16 ) return _mm256_mask_srav_epi16 (src, m, v, s);
       else if constexpr( c == category::int16x8  ) return _mm_mask_srav_epi16    (src, m, v, s);
 

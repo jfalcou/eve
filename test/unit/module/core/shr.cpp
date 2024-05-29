@@ -51,7 +51,7 @@ TTS_CASE_WITH("Check behavior of shr on integral types",
   TTS_EQUAL(shr(a0, a1), T([&](auto i, auto) { return shr(a0.get(i), a1.get(i)); }));
 };
 
-TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
+TTS_CASE_WITH("Check behavior of shr(wide, integral constant)",
               eve::test::simd::integers,
               tts::generate(tts::randoms(-50, 50), tts::logicals(0, 3)))
 <typename T, typename L>(T a0, L test)
