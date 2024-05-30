@@ -73,7 +73,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      Bitwise rotatation of each lane of `x` by `n` bits to the right.
+  //!      Bitwise rotation of each lane of `x` by `n` bits to the right.
   //!
   //!      The call `rotr(x, n)` is equivalent to `std::rotr(x, n)` if `x` is an [simd value](@ref
   //!      eve::simd_value).
