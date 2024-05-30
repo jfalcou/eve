@@ -23,7 +23,7 @@ requires sve_abi<abi_t<T, N>>
 }
 
 template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE wide<T, N> popcount_(EVE_SUPPORTS(sve_),
+EVE_FORCEINLINE wide<T, N> popcount_(EVE_REQUIRES(sve_),
                                      C const& cond,
                                      O const&,
                                      wide<T, N> v) noexcept

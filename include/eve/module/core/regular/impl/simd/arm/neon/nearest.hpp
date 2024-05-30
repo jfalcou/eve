@@ -14,7 +14,7 @@
 namespace eve::detail
 {
 template<floating_scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE wide<T, N> nearest_(EVE_SUPPORTS(neon128_),
+EVE_FORCEINLINE wide<T, N> nearest_(EVE_REQUIRES(neon128_),
                                     O const& o,
                                     wide<T, N> const& v) noexcept
 requires arm_abi<abi_t<T, N>>
