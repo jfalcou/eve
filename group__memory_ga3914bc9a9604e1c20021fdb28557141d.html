@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__memory_ga3914bc9a9604e1c20021fd
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::write = {}</td>
+          <td class="memname">eve::write = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;write_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -140,20 +140,34 @@ $(document).ready(function(){initNavTree('group__memory_ga3914bc9a9604e1c20021fd
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code></p>
-<p><code>operator*</code> based interface used in the standard has notorious issues with proxy references. To prevent those issues when dealing with complex, potentially SIMD-aware iterators, <code><a class="el" href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d" title="Callable object writing single value from memory.">eve::write</a></code> is to be used.</p>
-<h4><a class="anchor" id="autotoc_md48"></a>
-Members Functions</h4>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Member   </th><th class="markdownTableHeadLeft">Effect    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>operator()</code>   </td><td class="markdownTableBodyLeft">Performs a single write to memory   </td></tr>
-</table>
-<hr  />
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ptr, scalar_value V&gt; <span class="keyword">auto</span> operator()(V v,Ptr p) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
-<p><code>v</code> : <a class="el" href="concepteve_1_1scalar__value.html">scalar value</a> to write. <code>ptr</code>: Memory to write to. </p>
+<p><code>operator*</code> based interface used in the standard has notorious issues with proxy references. To prevent those issues when dealing with complex, potentially SIMD-aware iterators, <code><a class="el" href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d" title="Callable object writing a scalar value to memory.">eve::write</a></code> is to be used.</p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ptr, scalar_value V&gt;</div>
+<div class="line">  <span class="keyword">requires</span> <span class="keyword">requires</span>(Ptr p, V v) { *p = v; }</div>
+<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, Ptr p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;               <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Writeable, scalar_value V&gt;</div>
+<div class="line">  <span class="keyword">requires</span> <span class="keyword">requires</span>(Writeable p, V v) { p.write(v); }</div>
+<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, Writeable p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;         <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ptrs, scalar_value V&gt;</div>
+<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, soa_ptr&lt;Ptrs...&gt; p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;  <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
+</div><!-- fragment --><ol type="1">
+<li>Write the <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> <code>v</code> into the memory pointed by <code>p</code>;</li>
+<li>Write the <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> <code>v</code> into the memory managed by the object <code>p</code>;</li>
+<li>Write the <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> <code>v</code> into the memory pointed by SoA pointer <code>p</code>;</li>
+</ol>
+<p><b>Parameters</b></p>
+<ul>
+<li><code>v</code>: <a class="el" href="concepteve_1_1scalar__value.html">scalar</a> to write to memory.</li>
+<li><code>p</code>: A pointer or rich iterator to write to. </li>
+</ul>
 
 </div>
 </div>

@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('group__algos_ga760be28cf43b4fe02d1124c
 <p>Supports <code>fuse_operations</code> trait =&gt; <code>map_op</code> starts to take an extra parameter: current sum. Allows to use fma. Note that <code>add</code> operations and <code>zero</code> are still used and have to be correct.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The interface differs from the standard because we felt this better matches our use case: do unary transformation and then accumulate that.</li>
-<li>Multiple range interface is omitted for simplicity. Use <a class="el" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94" title="lable object constructing a SoA value.">eve::zip</a> to get that effect.</li>
+<li>Multiple range interface is omitted for simplicity. Use <a class="el" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94" title="Callable for SoA value constructions.">eve::zip</a> to get that effect.</li>
 <li>eve::transform_reduce requires less requirement on the operations than eve::views::map. In transform_reduce we don't need the map_op to be a template, for example.</li>
 <li>Compilers can auto-vectorize reductions, especially with special options. Maybe you don't need a library implementation.</li>
 </ul>
