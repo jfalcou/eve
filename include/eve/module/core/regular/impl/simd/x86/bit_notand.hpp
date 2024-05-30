@@ -67,7 +67,7 @@ namespace eve ::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sse2_),
+  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx512_),
                                          C const          &cx,
                                          O const          &,
                                          wide<T, N> const &v0,
