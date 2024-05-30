@@ -73,8 +73,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The [elementwise](@ref glossary_elementwise) bitwise rotation to the right of the first
-  //!      parameter by the second.
+  //!      Bitwise rotatation of each lane of `x` by `n` bits to the right.
   //!
   //!      The call `rotr(x, n)` is equivalent to `std::rotr(x, n)` if `x` is an [simd value](@ref
   //!      eve::simd_value).

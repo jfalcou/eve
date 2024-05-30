@@ -15,7 +15,7 @@
 
 namespace eve::detail
 {
-  template<unsigned_value T, typename S, callable_options O>
+  template<typename T, typename S, callable_options O>
   constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotl_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
   {
     if constexpr(scalar_value<S>)
@@ -24,16 +24,16 @@ namespace eve::detail
       int         n     = s & width;
 
       if( n >= 0 ) return (v << n) | (v >> (-n & width));
-      else         return rotl_(EVE_TARGETS(cpu_),o,v,-s);
+      else         return rotl_(EVE_TARGETS(cpu_), o, v, -s);
     }
     else if constexpr( scalar_value<T> )                            return rotl[o](as_wide_as_t<T,S>(v), s);
     else if constexpr( has_native_abi_v<T> && has_native_abi_v<S>)  return map(rotl[o], v, s);
     else                                                            return apply_over(rotl[o], v, s);
   }
 
-  template<unsigned_value T, auto S, callable_options O>
+  template<typename T, auto S, callable_options O>
   constexpr EVE_FORCEINLINE T rotl_(EVE_REQUIRES(cpu_), O const& o, T v, index_t<S>)
   {
-    return rotl[o](v,S);
+    return rotl[o](v, S);
   }
 }
