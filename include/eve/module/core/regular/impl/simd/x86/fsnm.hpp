@@ -17,7 +17,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> fsnm_(EVE_SUPPORTS(sse2_),
+  EVE_FORCEINLINE wide<T, N> fsnm_(EVE_REQUIRES(avx512_),
                                    C          const &mask,
                                    O          const &,
                                    wide<T, N> const &v,

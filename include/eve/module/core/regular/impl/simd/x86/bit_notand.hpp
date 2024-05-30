@@ -18,7 +18,7 @@
 namespace eve ::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_SUPPORTS(sse2_),
+  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(sse2_),
                                          O const          &,
                                          wide<T, N> const &v0,
                                          wide<T, N> const &v1) noexcept
@@ -32,7 +32,7 @@ namespace eve ::detail
   // -----------------------------------------------------------------------------------------------
   // 256 bits implementation
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_SUPPORTS(avx_),
+  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx_),
                                          O const          &,
                                          wide<T, N> const &v0,
                                          wide<T, N> const &v1) noexcept
@@ -52,7 +52,7 @@ namespace eve ::detail
   // -----------------------------------------------------------------------------------------------
   // 512 bits implementation
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_SUPPORTS(avx512_),
+  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx512_),
                                          O const          &,
                                          wide<T, N> const &v0,
                                          wide<T, N> const &v1) noexcept requires std::same_as<abi_t<T, N>, x86_512_>
@@ -67,7 +67,7 @@ namespace eve ::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_SUPPORTS(sse2_),
+  EVE_FORCEINLINE wide<T, N> bit_notand_(EVE_REQUIRES(avx512_),
                                          C const          &cx,
                                          O const          &,
                                          wide<T, N> const &v0,

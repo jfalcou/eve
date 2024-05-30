@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, scalar_value U, callable_options O>
-  EVE_FORCEINLINE auto logical_xor_(EVE_SUPPORTS(avx512_),
+  EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(avx512_),
                                     O                  const& ,
                                     logical<wide<T,N>> const& a,
                                     logical<wide<U,N>> const& b) noexcept
