@@ -19,14 +19,15 @@
 namespace algo_test
 {
 
-template<typename Algo, typename T> struct copy_if_ptr_test
+template<typename Algo, typename Op, typename T> struct transform_copy_if_ptr_test
 {
   Algo                                alg;
+  Op                                  op;
   std::vector<eve::element_type_t<T>> buf1;
   std::vector<eve::element_type_t<T>> buf2;
   std::mt19937                        g {T::size()};
 
-  copy_if_ptr_test(Algo alg) : alg(alg) {}
+  transform_copy_if_ptr_test(Algo alg, Op op) : alg(alg), op(op) {}
 
   void init(auto *page_begin, auto *, auto *, auto *page_end)
   {
@@ -43,14 +44,15 @@ template<typename Algo, typename T> struct copy_if_ptr_test
     auto p = [](auto x) { return x != 0; };
 
     std::copy_if(eve::unalign(rng.begin()), eve::unalign(rng.end()), std::back_inserter(buf1), p);
+    std::transform(eve::unalign(buf1.begin()), eve::unalign(buf1.end()), buf1.begin(), op);
 
-    buf2.erase(alg(rng, buf2, p), buf2.end());
+    buf2.erase(alg(rng, buf2, op, p), buf2.end());
     TTS_EQUAL(buf1, buf2, REQUIRED);
 
     if( buf2.empty() ) return;
 
     buf2.pop_back();
-    auto end1 = alg(rng, buf2, p);
+    auto end1 = alg(rng, buf2, op, p);
 
     TTS_EQUAL(buf2.end() - end1, 0, REQUIRED);
 
@@ -65,19 +67,19 @@ template<typename Algo, typename T> struct copy_if_ptr_test
   }
 };
 
-template<typename T, typename Algo>
+template<typename T, typename Algo, typename Op>
 void
-copy_if_test_page_ends(eve::as<T> tgt, Algo alg)
+transform_copy_if_test_page_ends(eve::as<T> tgt, Algo alg, Op op)
 {
-  algo_test::page_ends_test(tgt, copy_if_ptr_test<Algo, T> {alg});
+  algo_test::page_ends_test(tgt, transform_copy_if_ptr_test<Algo, Op, T> {alg, op});
 }
 
-template<typename T, typename Algo>
+template<typename T, typename Algo, typename Op>
 void
-copy_if_generic_test(eve::as<T> as_t, Algo alg)
+transform_copy_if_generic_test(eve::as<T> as_t, Algo alg, Op op)
 {
-  copy_if_test_page_ends(eve::as<eve::nofs_wide<typename T::value_type>> {}, alg);
-  copy_if_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>]);
+  transform_copy_if_test_page_ends(eve::as<eve::nofs_wide<typename T::value_type>> {}, alg, op);
+  transform_copy_if_test_page_ends(as_t, alg[eve::algo::force_cardinal<T::size()>], op);
 }
 
 }

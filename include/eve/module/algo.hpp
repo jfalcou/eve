@@ -55,6 +55,7 @@
 #include <eve/module/algo/algo/swap_ranges.hpp>
 #include <eve/module/algo/algo/traits.hpp>
 #include <eve/module/algo/algo/transform.hpp>
+#include <eve/module/algo/algo/transform_copy_if.hpp>
 #include <eve/module/algo/algo/transform_reduce.hpp>
 #include <eve/module/algo/algo/two_stage_iteration.hpp>
 #include <eve/module/algo/views/backward.hpp>
