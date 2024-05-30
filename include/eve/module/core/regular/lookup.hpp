@@ -6,21 +6,24 @@
 //==================================================================================================
 #pragma once
 
-//==================================================================================================
-/*
-  EVE - Expressive Vector Engine
-  Copyright : EVE Project Contributors
-  SPDX-License-Identifier: BSL-1.0
-*/
-//==================================================================================================
-#pragma once
-
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/detail/kumi.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/traits/same_lanes.hpp>
 
 namespace eve
 {
-EVE_MAKE_CALLABLE(lookup_, lookup);
+  template<typename Options>
+  struct lookup_t : callable<lookup_t, Options>
+  {
+    template<simd_value V, integral_simd_value I>
+    requires( same_lanes<V,I> )
+    constexpr EVE_FORCEINLINE V operator()(V v, I i) const noexcept { return EVE_DISPATCH_CALL(v,i); }
+
+    EVE_CALLABLE_OBJECT(lookup_t, lookup_);
+  };
+
+  inline constexpr auto lookup = functor<lookup_t>;
 }
 
 #include <eve/module/core/regular/impl/lookup.hpp>

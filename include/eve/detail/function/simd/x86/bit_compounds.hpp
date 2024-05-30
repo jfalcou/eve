@@ -252,12 +252,12 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
+      auto bit_other = bit_cast(other, as<T> {});
       return self_bitor(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<type> {});
+      auto bits = bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
       constexpr bool i = match(c, category::integer_);
 
@@ -294,12 +294,12 @@ namespace eve::detail
 
     if constexpr( scalar_value<U> )
     {
-      auto bit_other = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<T> {});
+      auto bit_other = bit_cast(other, as<T> {});
       return self_bitxor(self, type {bit_other});
     }
     else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
-      auto bits = detail::bit_cast_(EVE_RETARGET(cpu_), other, as<type> {});
+      auto bits = bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
       constexpr bool i = match(c, category::integer_);
 

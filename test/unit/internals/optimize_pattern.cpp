@@ -118,7 +118,6 @@ TTS_CASE("Check broadcast patterns get optimized")
 {
   using eve::detail::find_optimized_shuffle_pattern;
   using eve::detail::bound;
-  using eve::callable_broadcast_;
 
   // Test all broadcast of size 1->64 with every index from 1->64
   [&]<std::ptrdiff_t... R>(std::integer_sequence<std::ptrdiff_t,R...>)
@@ -133,7 +132,7 @@ TTS_CASE("Check broadcast patterns get optimized")
       {
         auto val = [](auto,auto i) { return i; };
         TTS_EXPR_IS ( (find_optimized_shuffle_pattern< sizeof...(Q), val(Q,i)... >())
-                    , (bound< callable_broadcast_
+                    , (bound< eve::tag_t<eve::broadcast>
                             , eve::index_t<i>
                             , eve::fixed<sizeof...(Q)>
                             >

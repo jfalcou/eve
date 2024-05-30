@@ -8,11 +8,24 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(bit_cast_, bit_cast);
+  template<typename Options>
+  struct bit_cast_t : callable<bit_cast_t, Options>
+  {
+    template<typename T, typename Target>
+    requires (sizeof(T) == sizeof(Target))
+    EVE_FORCEINLINE Target operator()(T const& a, as<Target> const& tgt) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a,tgt);
+    }
+
+    EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);
+  };
+
+  inline constexpr auto bit_cast = functor<bit_cast_t>;
 }
 
 #include <eve/detail/function/simd/common/bit_cast.hpp>

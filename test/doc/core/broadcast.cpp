@@ -10,11 +10,15 @@ int main()
   wide_ft pf = {1.2f,0.34f,0.056f,0.0078f};
   wide_it pi = {-1, 2,-3, 4,-5, 6,-7, 8};
 
+  std::cout << eve::broadcast( 7.6 ) << "\n";
+  std::cout << eve::broadcast(7.6, eve::lane<8> ) << "\n";
+  std::cout << "\n";
+
   std::cout << pf << "\n"
             << eve::broadcast(pf, eve::index<3> ) << "\n";
 
   std::cout << "\n";
 
   std::cout << pi << "\n"
-            << eve::broadcast(pi, eve::index<5> ) << "\n";
+            << eve::broadcast(pi, eve::index<5>, eve::lane<4> ) << "\n";
 }
