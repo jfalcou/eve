@@ -17,13 +17,13 @@ template<typename Options>
 struct true_t : constant_callable<true_t, Options, downward_option, upward_option>
 {
   template<typename T>
-  static EVE_FORCEINLINE as_logical_t<T> value(eve::as<T> const&, auto const&)
+  static constexpr EVE_FORCEINLINE as_logical_t<T> value(eve::as<T> const&, auto const&)
   {
     return as_logical_t<T>(true);
   }
 
   template<typename T>
-  EVE_FORCEINLINE as_logical_t<T>  operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  EVE_FORCEINLINE constexpr as_logical_t<T>  operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(true_t, true__);
 };

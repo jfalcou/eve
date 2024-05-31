@@ -28,7 +28,7 @@ namespace eve
 
     template<typename T>
     requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exponentmask_t, exponentmask_);
   };

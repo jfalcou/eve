@@ -18,7 +18,7 @@ template<typename Options>
 struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward_option>
 {
   template<typename T>
-  static EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+  static constexpr EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
   {
     using e_t           = element_type_t<T>;
     using i_t           = as_integer_t<e_t, unsigned>;
@@ -30,7 +30,7 @@ struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward
 
   template<typename T>
   requires(plain_scalar_value<element_type_t<T>>)
-  EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+  constexpr EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(allbits_t, allbits_);
 };
