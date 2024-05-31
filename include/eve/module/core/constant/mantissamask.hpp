@@ -17,7 +17,7 @@ namespace eve
   struct mantissamask_t : constant_callable<mantissamask_t, Options, downward_option, upward_option>
   {
     template<floating_value T>
-    static constexpr EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;

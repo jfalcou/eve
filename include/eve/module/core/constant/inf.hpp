@@ -17,7 +17,7 @@ namespace eve
   struct inf_t : constant_callable<inf_t, Options, downward_option, upward_option>
   {
     template<floating_value T>
-    static constexpr EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
 

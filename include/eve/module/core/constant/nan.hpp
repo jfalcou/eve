@@ -18,7 +18,7 @@ namespace eve
   struct nan_t : constant_callable<nan_t, Options, downward_option, upward_option>
   {
     template<typename T>
-    static constexpr EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       return allbits(eve::as<T>());
    }
