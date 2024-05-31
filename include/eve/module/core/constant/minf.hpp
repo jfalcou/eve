@@ -17,7 +17,7 @@ namespace eve
   struct minf_t : constant_callable<minf_t, Options, downward_option, upward_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static constexpr EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
       return T(-std::numeric_limits<e_t>::infinity());

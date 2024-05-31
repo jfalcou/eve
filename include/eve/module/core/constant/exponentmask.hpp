@@ -17,7 +17,7 @@ namespace eve
   struct exponentmask_t : constant_callable<exponentmask_t, Options, downward_option, upward_option>
   {
     template<floating_value T>
-    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
+    static constexpr EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;
@@ -28,7 +28,7 @@ namespace eve
 
     template<typename T>
     requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exponentmask_t, exponentmask_);
   };

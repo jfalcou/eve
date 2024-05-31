@@ -17,22 +17,22 @@ namespace eve
   struct eps_t : constant_callable<eps_t, Options, downward_option, upward_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static constexpr EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       using e_t = element_type_t<T>;
-      
+
            if constexpr(std::integral<e_t>        ) return T(1);
       else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-23);
       else if constexpr(std::same_as<e_t, double> ) return T(0x1p-52);
     }
-    
+
     template<typename T>
     requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
-    
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+
     EVE_CALLABLE_OBJECT(eps_t, eps_);
   };
-  
+
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
