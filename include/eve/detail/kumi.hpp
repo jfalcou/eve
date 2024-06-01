@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#define KUMI_NO_STD_ADAPTORS
 #if __has_include(<kumi/tuple.hpp>)
 # include <kumi/tuple.hpp>
 #else

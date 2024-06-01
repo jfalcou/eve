@@ -615,8 +615,12 @@ struct std::basic_common_reference<kumi::tuple<Ts...>, kumi::tuple<Us...>, TQual
   using type = kumi::tuple<std::common_reference_t<TQual<Ts>, UQual<Us>>...>;
 };
 #endif
+
+#if !defined(KUMI_NO_STD_ADAPTORS)
 template< typename T, std::size_t N >
 struct kumi::is_product_type<std::array<T , N>> : std::true_type {};
+#endif
+
 #endif
 #include <iosfwd>
 #include <type_traits>
