@@ -10,7 +10,7 @@
 EVE is a re-implementation of the old EVE SIMD library by Falcou et al. which for a while was
 named Boost.SIMD. It's a C++20 and onward implementation of a type based wrapper around
 SIMD extensions sets for most current architectures. It aims at showing how C++20 can be used
-to design and implement efficient, low level, high abstraction library suited for high performances.
+to design and implement efficient, low level, high abstraction library suited for high performance.
 
 It's a research project first and an open source library second. We reserve the right to
 change API and baseline compiler required until the first official 0.1 release. However, we'll try
@@ -34,11 +34,11 @@ needs to change.
 
 [![Playlist by Denis Yaroshevskiy](http://img.youtube.com/vi/U1e_k8xmwR0/0.jpg)](https://www.youtube.com/playlist?list=PLYCMvilhmuPEM8DUvY6Wg_jaSFHpmlSBD)
 
-## Current status - Operationnal
+## Current status - Operational
 
-EVE is considered **operationnal**: it's usable, has a large feature sets for a sensible amount of instructions sets but it's possible some values or performances issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
+EVE is considered **operational**: it's usable, has a large feature set for a sensible amount of instruction sets but it's possible some values or performance issues may still remain. Don't hesitate to report any funky code-gen or bad optimizations so we can deliver the best performance around.
 
-### Current roster of supported Instructions Sets
+### Current roster of supported Instruction Sets
 
 In term of SIMD extension sets, we actively supports (ie code is optimized and regularly tested)
 the following:
@@ -61,7 +61,7 @@ Partial/In-progress support with minimal checks:
 
 We **do not support** ARM SVE with dynamic size nor GPGPU, this is the job for another tool.
 
-### Current roster of supported compiler
+### Current roster of supported compilers
 
 EVE requires a C++ 20 compliant compiler. The main features from C++17/20 we require are:
  - Concepts and requires
