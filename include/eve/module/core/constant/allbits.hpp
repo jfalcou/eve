@@ -26,8 +26,8 @@ struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward
     constexpr auto mask = ~0ULL;
 
     if constexpr( std::integral<e_t> ) return T(mask);
-//    else                               return T(bit_cast(i_t(mask), as<e_t>()));
-    else                               return T(std::bit_cast<e_t>(i_t(mask)));
+    else if constexpr(std::same_as<e_t, double>) return T(std::bit_cast<double>(~0ULL));
+    else if constexpr(std::same_as<e_t, float >) return T(std::bit_cast<float>(~0U));
   }
 
   template<typename T>
