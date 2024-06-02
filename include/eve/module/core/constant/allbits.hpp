@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/function/bit_cast.hpp>
+#include <bit>
 
 namespace eve
 {
@@ -25,7 +26,8 @@ struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward
     constexpr auto mask = ~0ULL;
 
     if constexpr( std::integral<e_t> ) return T(mask);
-    else                               return T(bit_cast(i_t(mask), as<e_t>()));
+//    else                               return T(bit_cast(i_t(mask), as<e_t>()));
+    else                               return T(std::bit_cast<e_t>(i_t(mask)));
   }
 
   template<typename T>
