@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+template<typename T>
+consteval auto constexpr_allbits() { return eve::allbits(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +27,8 @@ int main()
             << "-> allbits(as<std::int16_t>())  = " << eve::allbits(eve::as<std::int16_t>()) << '\n'
             << "-> allbits(as<xf))              = " << eve::allbits(eve::as(xf)) << '\n'
             << "-> allbits(as<xi))              = " << eve::allbits(eve::as(xi)) << '\n';
+
+  std::cout << "-> constexpr allbits            = " << constexpr_allbits<float>() << std::endl;
 
   return 0;
 }

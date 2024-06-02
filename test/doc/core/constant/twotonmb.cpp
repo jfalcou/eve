@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_twotonmb() { return eve::twotonmb(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> twotonmb(as<float>())         = " << eve::twotonmb(eve::as(float())) << std::endl
             << "-> twotonmb(as<xf))              = " << eve::twotonmb(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr twotonmb            = " << constexpr_twotonmb<float>() << std::endl;
 
   return 0;
 }

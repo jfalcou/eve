@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_maxlog10() { return eve::maxlog10(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> maxlog10(as<float>())         = " << eve::maxlog10(eve::as(float())) << std::endl
             << "-> maxlog10(as<xf))              = " << eve::maxlog10(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr maxlog10            = " << constexpr_maxlog10<float>() << std::endl;
 
   return 0;
 }

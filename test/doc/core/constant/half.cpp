@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_half() { return eve::half(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> half(as<float>())         = " << eve::half(eve::as(float())) << std::endl
             << "-> half(as<xf))              = " << eve::half(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr half            = " << constexpr_half<float>() << std::endl;
 
   return 0;
 }

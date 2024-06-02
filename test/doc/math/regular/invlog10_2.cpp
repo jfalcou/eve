@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_invlog10_2() { return eve::invlog10_2(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> invlog10_2(as<float>())         = " << eve::invlog10_2(eve::as(float())) << std::endl
             << "-> invlog10_2(as<xf))              = " << eve::invlog10_2(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr invlog10_2            = " << constexpr_invlog10_2<float>() << std::endl;
 
   return 0;
 }

@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_third() { return eve::third(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> third(as<xf))                  = " << eve::third(eve::as(xf))      << std::endl
             << "-> third(as<double>())            = " << eve::third(eve::as(double()))<< std::endl
             << "-> third(as<xd))                  = " << eve::third(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr third            = " << constexpr_third<float>() << std::endl;
 
   return 0;
 }

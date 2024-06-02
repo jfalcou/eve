@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_oneosqrteps() { return eve::oneosqrteps(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -21,6 +24,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> oneosqrteps(as<float>())         = " << eve::oneosqrteps(eve::as(float())) << std::endl
             << "-> oneosqrteps(as<xf))              = " << eve::oneosqrteps(eve::as(xf))      << std::endl;
+
+  std::cout << "-> constexpr oneosqrteps            = " << constexpr_oneosqrteps<float>() << std::endl;
 
   return 0;
 }

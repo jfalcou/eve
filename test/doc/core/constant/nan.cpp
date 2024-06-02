@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+template<typename T>
+consteval auto constexpr_nan() { return eve::nan(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +27,8 @@ int main()
             << "-> nan(as<std::int16_t>())  = " << eve::nan(eve::as(std::int16_t())) << std::endl
             << "-> nan(as<xf))              = " << eve::nan(eve::as(xf)) << std::endl
             << "-> nan(as<xi))              = " << eve::nan(eve::as(xi)) << std::endl;
+
+  std::cout << "-> constexpr nan            = " << constexpr_nan<float>() << std::endl;
 
   return 0;
 }

@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_khinchin() { return eve::khinchin(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> khinchin(as<xf))                  = " << eve::khinchin(eve::as(xf))      << std::endl
             << "-> khinchin(as<double>())            = " << eve::khinchin(eve::as(double()))<< std::endl
             << "-> khinchin(as<xd))                  = " << eve::khinchin(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr khinchin            = " << constexpr_khinchin<float>() << std::endl;
 
   return 0;
 }

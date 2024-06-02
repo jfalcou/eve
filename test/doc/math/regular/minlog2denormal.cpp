@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_minlog2denormal() { return eve::minlog2denormal(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> minlog2denormal(as<float>())         = " << eve::minlog2denormal(eve::as(float())) << std::endl
             << "-> minlog2denormal(as<xf))              = " << eve::minlog2denormal(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr minlog2denormal            = " << constexpr_minlog2denormal<float>() << std::endl;
 
   return 0;
 }

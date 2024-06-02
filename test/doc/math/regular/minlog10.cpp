@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_minlog10() { return eve::minlog10(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> minlog10(as<float>())         = " << eve::minlog10(eve::as(float())) << std::endl
             << "-> minlog10(as<xf))              = " << eve::minlog10(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr minlog10            = " << constexpr_minlog10<float>() << std::endl;
 
   return 0;
 }

@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_inv_egamma() { return eve::inv_egamma(eve::as<T>{}); }
+
 int main()
 {
 
@@ -16,6 +19,9 @@ int main()
 
   std::cout << "---- scalar" << std::endl
             << "-> inv_egamma(as<float>())             = " << eve::inv_egamma(eve::as(float())) << std::endl;
+
+
+  std::cout << "-> constexpr inv_egamma            = " << constexpr_inv_egamma<float>() << std::endl;
 
   return 0;
 }

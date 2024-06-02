@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_pi_minus_3() { return eve::pi_minus_3(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> pi_minus_3(as<xf))                  = " << eve::pi_minus_3(eve::as(xf))      << std::endl
             << "-> pi_minus_3(as<double>())            = " << eve::pi_minus_3(eve::as(double()))<< std::endl
             << "-> pi_minus_3(as<xd))                  = " << eve::pi_minus_3(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr pi_minus_3            = " << constexpr_pi_minus_3<float>() << std::endl;
 
   return 0;
 }

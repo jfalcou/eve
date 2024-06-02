@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_egamma_sqr() { return eve::egamma_sqr(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> egamma_sqr(as<xf))                  = " << eve::egamma_sqr(eve::as(xf))      << std::endl
             << "-> egamma_sqr(as<double>())            = " << eve::egamma_sqr(eve::as(double()))<< std::endl
             << "-> egamma_sqr(as<xd))                  = " << eve::egamma_sqr(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr egamma_sqr            = " << constexpr_egamma_sqr<float>() << std::endl;
 
   return 0;
 }

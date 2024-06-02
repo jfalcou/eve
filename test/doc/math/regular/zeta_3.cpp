@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_zeta_3() { return eve::zeta_3(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> zeta_3(as<xf))                  = " << eve::zeta_3(eve::as(xf))      << std::endl
             << "-> zeta_3(as<double>())            = " << eve::zeta_3(eve::as(double()))<< std::endl
             << "-> zeta_3(as<xd))                  = " << eve::zeta_3(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr zeta_3            = " << constexpr_zeta_3<float>() << std::endl;
 
   return 0;
 }

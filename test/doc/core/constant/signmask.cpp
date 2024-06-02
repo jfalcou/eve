@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+template<typename T>
+consteval auto constexpr_signmask() { return eve::signmask(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +27,8 @@ int main()
             << "-> signmask(as<std::int16_t>())  = " << eve::signmask(eve::as(std::int16_t())) << std::endl
             << "-> signmask(as<xf))              = " << eve::signmask(eve::as(xf)) << std::endl
             << "-> signmask(as<xi))              = " << eve::signmask(eve::as(xi)) << std::endl;
+
+  std::cout << "-> constexpr signmask            = " << constexpr_signmask<float>() << std::endl;
 
   return 0;
 }

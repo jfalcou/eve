@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_mindenormal() { return eve::mindenormal(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> mindenormal(as<float>())         = " << eve::mindenormal(eve::as(float())) << std::endl
             << "-> mindenormal(as<xf))              = " << eve::mindenormal(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr mindenormal            = " << constexpr_mindenormal<float>() << std::endl;
 
   return 0;
 }

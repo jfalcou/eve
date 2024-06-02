@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_inv_e() { return eve::inv_e(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> inv_e(as<xf))                  = " << eve::inv_e(eve::as(xf))      << std::endl
             << "-> inv_e(as<double>())            = " << eve::inv_e(eve::as(double()))<< std::endl
             << "-> inv_e(as<xd))                  = " << eve::inv_e(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr inv_e            = " << constexpr_inv_e<float>() << std::endl;
 
   return 0;
 }

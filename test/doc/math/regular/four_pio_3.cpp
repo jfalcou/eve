@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_four_pio_3() { return eve::four_pio_3(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> four_pio_3(as<xf))                  = " << eve::four_pio_3(eve::as(xf))      << std::endl
             << "-> four_pio_3(as<double>())            = " << eve::four_pio_3(eve::as(double()))<< std::endl
             << "-> four_pio_3(as<xd))                  = " << eve::four_pio_3(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr four_pio_3            = " << constexpr_four_pio_3<float>() << std::endl;
 
   return 0;
 }

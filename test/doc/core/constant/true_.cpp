@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+template<typename T>
+consteval auto constexpr_true_() { return eve::true_(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +27,8 @@ int main()
             << "-> true_(as<std::int16_t>())  = " << eve::true_(eve::as(std::int16_t())) << std::endl
             << "-> true_(as<xf))              = " << eve::true_(eve::as(xf)) << std::endl
             << "-> true_(as<xi))              = " << eve::true_(eve::as(xi)) << std::endl;
+
+  std::cout << "-> constexpr true_            = " << constexpr_true_<float>() << std::endl;
 
   return 0;
 }

@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_sqrtlog_4() { return eve::sqrtlog_4(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> sqrtlog_4(as<xf))                  = " << eve::sqrtlog_4(eve::as(xf))      << std::endl
             << "-> sqrtlog_4(as<double>())            = " << eve::sqrtlog_4(eve::as(double()))<< std::endl
             << "-> sqrtlog_4(as<xd))                  = " << eve::sqrtlog_4(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr sqrtlog_4            = " << constexpr_sqrtlog_4<float>() << std::endl;
 
   return 0;
 }

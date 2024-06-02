@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_maxflint() { return eve::maxflint(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> maxflint(as<float>())         = " << std::setprecision(17) << eve::maxflint(eve::as(float())) << std::endl
             << "-> maxflint(as<xf))              = " << std::setprecision(17) << eve::maxflint(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr maxflint            = " << constexpr_maxflint<float>() << std::endl;
 
   return 0;
 }

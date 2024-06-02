@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_sqrt_e() { return eve::sqrt_e(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> sqrt_e(as<xf))                  = " << eve::sqrt_e(eve::as(xf))      << std::endl
             << "-> sqrt_e(as<double>())            = " << eve::sqrt_e(eve::as(double()))<< std::endl
             << "-> sqrt_e(as<xd))                  = " << eve::sqrt_e(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr sqrt_e            = " << constexpr_sqrt_e<float>() << std::endl;
 
   return 0;
 }

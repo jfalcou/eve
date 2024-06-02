@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/function/bit_cast.hpp>
+#include <bit>
 
 namespace eve
 {
@@ -21,11 +22,11 @@ struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward
   static constexpr EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
   {
     using e_t           = element_type_t<T>;
-    using i_t           = as_integer_t<e_t, unsigned>;
     constexpr auto mask = ~0ULL;
 
     if constexpr( std::integral<e_t> ) return T(mask);
-    else                               return T(bit_cast(i_t(mask), as<e_t>()));
+    else if constexpr(std::same_as<e_t, double>) return T(std::bit_cast<double>(~0ULL));
+    else if constexpr(std::same_as<e_t, float >) return T(std::bit_cast<float>(~0U));
   }
 
   template<typename T>

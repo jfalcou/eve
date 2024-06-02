@@ -17,5 +17,6 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- as_value(xf, as<float>())        = " << eve::as_value(xf, eve::as<float>()) << '\n'
             << "<- as_value(xf, as<int16_t>())      = " << eve::as_value(xf, eve::as<int16_t>()) << '\n';
+
   return 0;
 }

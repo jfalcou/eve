@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_glaisher() { return eve::glaisher(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> glaisher(as<xf))                  = " << eve::glaisher(eve::as(xf))      << std::endl
             << "-> glaisher(as<double>())            = " << eve::glaisher(eve::as(double()))<< std::endl
             << "-> glaisher(as<xd))                  = " << eve::glaisher(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr glaisher            = " << constexpr_glaisher<float>() << std::endl;
 
   return 0;
 }

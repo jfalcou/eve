@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+template<typename T>
+consteval auto constexpr_mzero() { return eve::mzero(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +27,8 @@ int main()
             << "-> mzero(as<std::int16_t>())  = " << eve::mzero(eve::as(std::int16_t())) << std::endl
             << "-> mzero(as<xf))              = " << eve::mzero(eve::as(xf)) << std::endl
             << "-> mzero(as<xi))              = " << eve::mzero(eve::as(xi)) << std::endl;
+
+  std::cout << "-> constexpr mzero            = " << constexpr_mzero<float>() << std::endl;
 
   return 0;
 }

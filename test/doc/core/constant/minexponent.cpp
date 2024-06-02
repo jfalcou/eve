@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_minexponent() { return eve::minexponent(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> minexponent(as<float>())         = " << eve::minexponent(eve::as(float())) << std::endl
             << "-> minexponent(as<xf))              = " << eve::minexponent(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr minexponent            = " << constexpr_minexponent<float>() << std::endl;
 
   return 0;
 }
