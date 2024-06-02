@@ -22,7 +22,6 @@ struct allbits_t : constant_callable<allbits_t, Options, downward_option, upward
   static constexpr EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
   {
     using e_t           = element_type_t<T>;
-    using i_t           = as_integer_t<e_t, unsigned>;
     constexpr auto mask = ~0ULL;
 
     if constexpr( std::integral<e_t> ) return T(mask);
