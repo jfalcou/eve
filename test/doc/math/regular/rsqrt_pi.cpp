@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_rsqrt_pi() { return eve::rsqrt_pi(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> rsqrt_pi(as<float>())         = " << eve::rsqrt_pi(eve::as(float())) << std::endl
             << "-> rsqrt_pi(as<xf))              = " << eve::rsqrt_pi(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr rsqrt_pi            = " << constexpr_rsqrt_pi<float>() << std::endl;
 
   return 0;
 }

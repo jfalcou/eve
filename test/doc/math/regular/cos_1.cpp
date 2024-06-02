@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_cos_1() { return eve::cos_1(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> cos_1(as<xf))                  = " << eve::cos_1(eve::as(xf))      << std::endl
             << "-> cos_1(as<double>())            = " << eve::cos_1(eve::as(double()))<< std::endl
             << "-> cos_1(as<xd))                  = " << eve::cos_1(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr cos_1            = " << constexpr_cos_1<float>() << std::endl;
 
   return 0;
 }

@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_logeps() { return eve::logeps(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> logeps(as<float>())         = " << eve::logeps(eve::as(float())) << std::endl
             << "-> logeps(as<xf))              = " << eve::logeps(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr logeps            = " << constexpr_logeps<float>() << std::endl;
 
   return 0;
 }

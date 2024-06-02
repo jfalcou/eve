@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_pio_2() { return eve::pio_2(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> pio_2(as<float>())         = " << eve::pio_2(eve::as(float())) << std::endl
             << "-> pio_2(as<xf))              = " << eve::pio_2(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr pio_2            = " << constexpr_pio_2<float>() << std::endl;
 
   return 0;
 }

@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
+template<typename T>
+consteval auto constexpr_valmin() { return eve::valmin(eve::as<T>{}); }
+
 int main()
 {
   wide_ft x;
@@ -24,6 +27,8 @@ int main()
             << "-> valmin(as<std::int16_t>()  = " << eve::valmin(eve::as<std::int16_t>()) << '\n'
             << "-> valmin(as(xf))             = " << eve::valmin(eve::as(xf)) << '\n'
             << "-> valmin(as(xi))             = " << eve::valmin(eve::as(xi)) << '\n';
+
+  std::cout << "-> constexpr valmin            = " << constexpr_valmin<float>() << std::endl;
 
   return 0;
 }

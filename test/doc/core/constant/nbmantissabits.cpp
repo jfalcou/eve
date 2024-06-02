@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_nbmantissabits() { return eve::nbmantissabits(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> nbmantissabits(as<float>())         = " << eve::nbmantissabits(eve::as(float())) << std::endl
             << "-> nbmantissabits(as<xf))              = " << eve::nbmantissabits(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr nbmantissabits            = " << constexpr_nbmantissabits<float>() << std::endl;
 
   return 0;
 }

@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_sixth() { return eve::sixth(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> sixth(as<xf))                  = " << eve::sixth(eve::as(xf))      << std::endl
             << "-> sixth(as<double>())            = " << eve::sixth(eve::as(double()))<< std::endl
             << "-> sixth(as<xd))                  = " << eve::sixth(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr sixth            = " << constexpr_sixth<float>() << std::endl;
 
   return 0;
 }

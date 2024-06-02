@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_cbrt_pi() { return eve::cbrt_pi(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> cbrt_pi(as<xf))                  = " << eve::cbrt_pi(eve::as(xf))      << std::endl
             << "-> cbrt_pi(as<double>())            = " << eve::cbrt_pi(eve::as(double()))<< std::endl
             << "-> cbrt_pi(as<xd))                  = " << eve::cbrt_pi(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr cbrt_pi            = " << constexpr_cbrt_pi<float>() << std::endl;
 
   return 0;
 }

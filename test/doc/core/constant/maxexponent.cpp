@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_maxexponent() { return eve::maxexponent(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> maxexponent(as<float>())         = " << eve::maxexponent(eve::as(float())) << std::endl
             << "-> maxexponent(as<xf))              = " << eve::maxexponent(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr maxexponent            = " << constexpr_maxexponent<float>() << std::endl;
 
   return 0;
 }

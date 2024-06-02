@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_log_phi() { return eve::log_phi(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> log_phi(as<xf))                  = " << eve::log_phi(eve::as(xf))      << std::endl
             << "-> log_phi(as<double>())            = " << eve::log_phi(eve::as(double()))<< std::endl
             << "-> log_phi(as<xd))                  = " << eve::log_phi(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr log_phi            = " << constexpr_log_phi<float>() << std::endl;
 
   return 0;
 }

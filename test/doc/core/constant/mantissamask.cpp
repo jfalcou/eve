@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_mantissamask() { return eve::mantissamask(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> mantissamask(as<float>())         = " << eve::mantissamask(eve::as(float())) << std::endl
             << "-> mantissamask(as<xf))              = " << eve::mantissamask(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr mantissamask            = " << constexpr_mantissamask<float>() << std::endl;
 
   return 0;
 }

@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_inf() { return eve::inf(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> inf(as<float>())         = " << eve::inf(eve::as(float())) << std::endl
             << "-> inf(as<xf))              = " << eve::inf(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr inf            = " << constexpr_inf<float>() << std::endl;
 
   return 0;
 }

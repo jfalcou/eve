@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_phi() { return eve::phi(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> phi(as<float>())         = " << eve::phi(eve::as(float())) << std::endl
             << "-> phi(as<xf))              = " << eve::phi(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr phi            = " << constexpr_phi<float>() << std::endl;
 
   return 0;
 }

@@ -5,6 +5,7 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int32_t, eve::fixed<4>>;
 
+
 int main()
 {
   wide_it pi = {-1, 2, -3, 4};
@@ -16,5 +17,6 @@ int main()
             << "-> (eve::dec[pi > 0])(pi) =        " << (eve::dec[pi > 0])(pi) << '\n'
             << "-> eve::dec(pf) =                  " << eve::dec(pf) << '\n'
             << "-> (eve::dec[pi < 2])(pf) =        " << (eve::dec[pi < 2])(pf) << '\n';
+
   return 0;
 }

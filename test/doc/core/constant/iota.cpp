@@ -12,8 +12,7 @@ concept iota_supports = std::invocable<decltype(eve::iota), eve::as<T>>;
 // See below - maybe this is what you are looking for?
 void how_to_keep_track_of_index();
 
-int
-main()
+int main()
 {
   how_to_keep_track_of_index();
 

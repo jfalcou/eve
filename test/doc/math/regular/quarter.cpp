@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_quarter() { return eve::quarter(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> quarter(as<xf))                  = " << eve::quarter(eve::as(xf))      << std::endl
             << "-> quarter(as<double>())            = " << eve::quarter(eve::as(double()))<< std::endl
             << "-> quarter(as<xd))                  = " << eve::quarter(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr quarter            = " << constexpr_quarter<float>() << std::endl;
 
   return 0;
 }

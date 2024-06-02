@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_inv_2eps() { return eve::inv_2eps(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> inv_2eps(as<float>())         = " << eve::inv_2eps(eve::as(float())) << std::endl
             << "-> inv_2eps(as<xf))              = " << eve::inv_2eps(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr inv_2eps            = " << constexpr_inv_2eps<float>() << std::endl;
 
   return 0;
 }

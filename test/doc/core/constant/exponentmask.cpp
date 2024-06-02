@@ -4,6 +4,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_exponentmask() { return eve::exponentmask(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -17,6 +20,8 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> exponentmask(as<float>())         = " << eve::exponentmask(eve::as(float())) << std::endl
             << "-> exponentmask(as<xf))              = " << eve::exponentmask(eve::as(xf)) << std::endl;
+
+  std::cout << "-> constexpr exponentmask            = " << constexpr_exponentmask<float>() << std::endl;
 
   return 0;
 }

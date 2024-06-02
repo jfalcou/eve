@@ -5,6 +5,9 @@
 
 using wide_ft = eve::wide<float>;
 
+template<typename T>
+consteval auto constexpr_egamma() { return eve::egamma(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -18,6 +21,9 @@ int main()
   std::cout << "---- scalar" << std::endl
             << "-> egamma(as<float>())         = " << eve::egamma(eve::as(float())) << std::endl
             << "-> egamma(as<xf))              = " << eve::egamma(eve::as(xf))      << std::endl;
+
+
+  std::cout << "-> constexpr egamma            = " << constexpr_egamma<float>() << std::endl;
 
   return 0;
 }

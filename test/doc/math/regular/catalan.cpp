@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_catalan() { return eve::catalan(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf([](auto i, auto){return eve::is_odd(i)?-1.f:1.f; ; });
@@ -39,5 +42,8 @@ int main()
              << "<- wxf                               = " << wxf << std::endl
              << "-> catalan[wxf <  0.0f](as(wxf))     = " << eve::catalan[wxf < 0.0f](eve::as(wxf)) << std::endl
              << "-> catalan[ignore_first(3)](as(wxf)) = " << eve::catalan[eve::ignore_first(3)](eve::as(wxf))  << std::endl;
+
+  std::cout << "-> constexpr catalan            = " << constexpr_catalan<float>() << std::endl;
+
   return 0;
 }

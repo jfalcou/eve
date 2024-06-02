@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
+template<typename T>
+consteval auto constexpr_sqrtvalmax() { return eve::sqrtvalmax(eve::as<T>{}); }
+
 int main()
 {
   wide_ft x;
@@ -24,6 +27,8 @@ int main()
             << "-> sqrtvalmax(as<std::int16_t>()  = " << eve::sqrtvalmax(eve::as<std::int16_t>()) << '\n'
             << "-> sqrtvalmax(as(xf))             = " << eve::sqrtvalmax(eve::as(xf)) << '\n'
             << "-> sqrtvalmax(as(xi))             = " << eve::sqrtvalmax(eve::as(xi)) << '\n';
+
+  std::cout << "-> constexpr sqrtvalmax            = " << constexpr_sqrtvalmax<float>() << std::endl;
 
   return 0;
 }

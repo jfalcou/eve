@@ -5,6 +5,9 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+template<typename T>
+consteval auto constexpr_smallestposval() { return eve::smallestposval(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +27,8 @@ int main()
             << "-> smallestposval(as<std::int16_t>())  = " << eve::smallestposval(eve::as(std::int16_t())) << std::endl
             << "-> smallestposval(as<xf))              = " << eve::smallestposval(eve::as(xf)) << std::endl
             << "-> smallestposval(as<xi))              = " << eve::smallestposval(eve::as(xi)) << std::endl;
+
+  std::cout << "-> constexpr smallestposval            = " << constexpr_smallestposval<float>() << std::endl;
 
   return 0;
 }

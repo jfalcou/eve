@@ -6,6 +6,9 @@
 using wide_ft = eve::wide<float>;
 using wide_dt = eve::wide<double>;
 
+template<typename T>
+consteval auto constexpr_sinh_1() { return eve::sinh_1(eve::as<T>{}); }
+
 int main()
 {
   wide_ft wxf;
@@ -34,6 +37,9 @@ int main()
             << "-> sinh_1(as<xf))                  = " << eve::sinh_1(eve::as(xf))      << std::endl
             << "-> sinh_1(as<double>())            = " << eve::sinh_1(eve::as(double()))<< std::endl
             << "-> sinh_1(as<xd))                  = " << eve::sinh_1(eve::as(xd))      << std::endl;
+
+
+  std::cout << "-> constexpr sinh_1            = " << constexpr_sinh_1<float>() << std::endl;
 
   return 0;
 }
