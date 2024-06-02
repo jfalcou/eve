@@ -166,6 +166,9 @@ $(document).ready(function(){initNavTree('group__math__constants_ga90c009b5250c3
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>wide_dt = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a>;</div>
 <div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_zeta_3() { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__math__constants_ga90c009b5250c39b983799c1c13cad713.html#ga90c009b5250c39b983799c1c13cad713">eve::zeta_3</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  wide_ft wxf;</div>
@@ -194,6 +197,9 @@ $(document).ready(function(){initNavTree('group__math__constants_ga90c009b5250c3
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zeta_3(as&lt;xf))                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga90c009b5250c39b983799c1c13cad713.html#ga90c009b5250c39b983799c1c13cad713">eve::zeta_3</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xf))      &lt;&lt; std::endl</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zeta_3(as&lt;double&gt;())            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga90c009b5250c39b983799c1c13cad713.html#ga90c009b5250c39b983799c1c13cad713">eve::zeta_3</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(<span class="keywordtype">double</span>()))&lt;&lt; std::endl</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zeta_3(as&lt;xd))                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga90c009b5250c39b983799c1c13cad713.html#ga90c009b5250c39b983799c1c13cad713">eve::zeta_3</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xd))      &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; constexpr zeta_3            = &quot;</span> &lt;&lt; constexpr_zeta_3&lt;float&gt;() &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>

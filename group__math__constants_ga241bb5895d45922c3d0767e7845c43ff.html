@@ -167,6 +167,9 @@ $(document).ready(function(){initNavTree('group__math__constants_ga241bb5895d459
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>wide_dt = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a>;</div>
 <div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_catalan() { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__math__constants_ga241bb5895d45922c3d0767e7845c43ff.html#ga241bb5895d45922c3d0767e7845c43ff">eve::catalan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  wide_ft wxf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span>){<span class="keywordflow">return</span> <a class="code hl_variable" href="group__core__predicates_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e">eve::is_odd</a>(i)?-1.f:1.f; ; });</div>
@@ -200,6 +203,9 @@ $(document).ready(function(){initNavTree('group__math__constants_ga241bb5895d459
 <div class="line">             &lt;&lt; <span class="stringliteral">&quot;&lt;- wxf                               = &quot;</span> &lt;&lt; wxf &lt;&lt; std::endl</div>
 <div class="line">             &lt;&lt; <span class="stringliteral">&quot;-&gt; catalan[wxf &lt;  0.0f](as(wxf))     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga241bb5895d45922c3d0767e7845c43ff.html#ga241bb5895d45922c3d0767e7845c43ff">eve::catalan</a>[wxf &lt; 0.0f](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wxf)) &lt;&lt; std::endl</div>
 <div class="line">             &lt;&lt; <span class="stringliteral">&quot;-&gt; catalan[ignore_first(3)](as(wxf)) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga241bb5895d45922c3d0767e7845c43ff.html#ga241bb5895d45922c3d0767e7845c43ff">eve::catalan</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(3)](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wxf))  &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; constexpr catalan            = &quot;</span> &lt;&lt; constexpr_catalan&lt;float&gt;() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80_html_ga3b3cda8b6305e7d7e0dbc9da29c6be80"><div class="ttname"><a href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">eve::upward</a></div><div class="ttdeci">constexpr upward_type const upward</div><div class="ttdoc">Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:160</div></div>

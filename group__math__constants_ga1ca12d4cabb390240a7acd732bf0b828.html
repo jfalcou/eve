@@ -166,6 +166,9 @@ $(document).ready(function(){initNavTree('group__math__constants_ga1ca12d4cabb39
 <div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>;</div>
 <div class="line"><span class="keyword">using </span>wide_dt = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a>;</div>
 <div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_cbrt_pi() { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__math__constants_ga1ca12d4cabb390240a7acd732bf0b828.html#ga1ca12d4cabb390240a7acd732bf0b828">eve::cbrt_pi</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  wide_ft wxf;</div>
@@ -194,6 +197,9 @@ $(document).ready(function(){initNavTree('group__math__constants_ga1ca12d4cabb39
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cbrt_pi(as&lt;xf))                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga1ca12d4cabb390240a7acd732bf0b828.html#ga1ca12d4cabb390240a7acd732bf0b828">eve::cbrt_pi</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xf))      &lt;&lt; std::endl</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cbrt_pi(as&lt;double&gt;())            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga1ca12d4cabb390240a7acd732bf0b828.html#ga1ca12d4cabb390240a7acd732bf0b828">eve::cbrt_pi</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(<span class="keywordtype">double</span>()))&lt;&lt; std::endl</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; cbrt_pi(as&lt;xd))                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__constants_ga1ca12d4cabb390240a7acd732bf0b828.html#ga1ca12d4cabb390240a7acd732bf0b828">eve::cbrt_pi</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(xd))      &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; constexpr cbrt_pi            = &quot;</span> &lt;&lt; constexpr_cbrt_pi&lt;float&gt;() &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
