@@ -11,6 +11,8 @@ using std::int32_t;
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_absmin(auto a, auto b) { return eve::absmin(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
@@ -34,5 +36,8 @@ int main()
             << "-> absmin(xf, yf)            = " << eve::absmin(xf, yf) << '\n'
             << "-> absmin[pedantic](xf, yf)  = " << eve::absmin[eve::pedantic](xf, yf) << '\n'
             << "-> absmin[numeric](xf, yf)   = " << eve::absmin[eve::numeric](xf, yf) << '\n';
+
+  std::cout << "-> constexpr_absmin(1.0f,2.0f)        = " << constexpr_absmin(1.0f,2.0f) << std::endl;
+
    return 0;
 }
