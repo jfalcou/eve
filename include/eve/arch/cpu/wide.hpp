@@ -34,6 +34,9 @@
 
 #include <type_traits>
 
+#include <eve/concept/underlying_storage.hpp>
+
+
 #if !defined(EVE_DOXYGEN_INVOKED)
 namespace eve
 {
@@ -61,9 +64,9 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>
   {
-    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>;
 
     public:
     //! The type stored in the register.
@@ -535,7 +538,7 @@ namespace eve
 
     //! Unary minus operator. See also: eve::unary_minus
     friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
-        requires(!kumi::product_type<Type>)
+        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
     {
       return self_negate(v);
     }
@@ -545,7 +548,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE auto operator+=(wide& w, V v) noexcept
     -> decltype(detail::self_add(w, v))
-      requires(!kumi::product_type<Type>)
+      requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
     {
       return detail::self_add(w, v);
     }
@@ -553,7 +556,7 @@ namespace eve
     //! @brief Performs the addition between all lanes of its parameters
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, wide const& w) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
     {
       auto that = v;
       return that += w;
@@ -562,7 +565,7 @@ namespace eve
     //! @brief Performs the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(plain_scalar_value auto s, wide const& v) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
     {
       return v + wide(s);
     }
@@ -570,7 +573,7 @@ namespace eve
     //! @brief Performs the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, plain_scalar_value auto s) noexcept
-    requires(!kumi::product_type<Type>)
+    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
     {
       return v + wide(s);
     }
@@ -982,8 +985,8 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +that[0];
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +that[i];
+        os << '(' << +static_cast<underlying_storage_t<Type>>(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +static_cast<underlying_storage_t<Type>>(that[i]);
         return os << ')';
       }
     }

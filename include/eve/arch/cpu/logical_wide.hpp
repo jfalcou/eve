@@ -52,9 +52,9 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>
   {
-    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>;
 
     public:
     //! The type stored in the register.

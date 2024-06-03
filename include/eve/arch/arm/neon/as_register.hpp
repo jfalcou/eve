@@ -26,7 +26,11 @@ namespace eve
   {
     static constexpr auto find()
     {
-      if constexpr( std::is_same_v<T,float> && Size::value <= 2)
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, eve::arm_64_>::find();
+      }
+      else if constexpr( std::is_same_v<T,float> && Size::value <= 2)
       {
         return float32x2_t{};
       }
@@ -64,7 +68,11 @@ namespace eve
   {
     static constexpr auto find()
     {
-      if constexpr( std::is_same_v<T,float> )
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, eve::arm_128_>::find();
+      }
+      else if constexpr( std::is_same_v<T,float> )
       {
         return float32x4_t{};
       }

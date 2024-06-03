@@ -9,6 +9,7 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/underlying_storage.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -16,14 +17,20 @@
 
 namespace eve::detail
 {
-// This is not directly a concept to prevent some compiler bugs about concepts depending
-// on themselves. This should go away at one point in the future.
-template<typename T>
-constexpr bool is_plain() noexcept
-{
-  return    !(std::is_same_v<T, bool> || std::is_same_v<T, long double>)
-        &&  (std::is_floating_point_v<T> || std::is_integral_v<T>);
-}
+  // This is not directly a concept to prevent some compiler bugs about concepts depending
+  // on themselves. This should go away at one point in the future.
+  template<typename T>
+  constexpr bool is_plain() noexcept
+  {
+    if constexpr (has_underlying_representation<T>)
+    {
+      return is_plain<underlying_storage_t<T>>();
+    }
+    else {
+      return    !(std::is_same_v<T, bool> || std::is_same_v<T, long double>)
+            &&  (std::is_floating_point_v<T> || std::is_integral_v<T>);
+    }
+  }
 }
 
 namespace eve

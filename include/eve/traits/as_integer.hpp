@@ -9,6 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/wide_forward.hpp>
+#include <eve/concept/underlying_storage.hpp>
 #include <eve/traits/element_type.hpp>
 
 namespace eve
@@ -33,6 +34,10 @@ namespace eve
   {
     using type = detail::make_integer_t<sizeof(T), Sign>;
   };
+
+  template<has_underlying_representation T, typename Sign>
+  struct as_integer<T, Sign>: as_integer<underlying_storage_t<T>, Sign>
+  { };
 
   template<typename T, typename N, typename Sign>
   struct as_integer<wide<T,N>, Sign>

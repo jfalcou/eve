@@ -11,6 +11,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/underlying_storage.hpp>
 
 namespace eve::detail
 {
@@ -19,15 +20,22 @@ namespace eve::detail
   template<typename Type, regular_abi ABI>
   constexpr std::ptrdiff_t find_expected_cardinal()
   {
-    if constexpr(kumi::product_type<Type>)
+    if constexpr(has_underlying_representation<Type>)
     {
-      return kumi::min_flat ( kumi::as_tuple_t<Type, fec_box>{}
-                            , []<typename M>(M) { return find_expected_cardinal<typename M::type,ABI>(); }
-                            );
+      return find_expected_cardinal<underlying_storage_t<Type>, ABI>();
     }
     else
     {
-      return ABI::template expected_cardinal<Type>;
+      if constexpr(kumi::product_type<Type>)
+      {
+        return kumi::min_flat ( kumi::as_tuple_t<Type, fec_box>{}
+                              , []<typename M>(M) { return find_expected_cardinal<typename M::type,ABI>(); }
+                              );
+      }
+      else
+      {
+        return ABI::template expected_cardinal<Type>;
+      }
     }
   }
 }

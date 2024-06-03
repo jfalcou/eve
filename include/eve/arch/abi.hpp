@@ -70,6 +70,10 @@ namespace eve
     using type = eve::aggregated_;
   };
 
+  template<has_underlying_representation Type, typename Lanes>
+  struct abi<Type, Lanes>: abi<underlying_storage_t<Type>, Lanes>
+  { };
+
   template<typename Type, typename Lanes>
   requires( kumi::product_type<Type> )
   struct abi<Type, Lanes>

@@ -30,6 +30,15 @@ namespace eve
   template<typename Type, typename Cardinal, typename ABI>
   using as_logical_register_t = typename as_logical_register<Type, Cardinal, ABI>::type;
 
+  // template<has_underlying_representation Type, typename Cardinal, typename ABI>
+  // struct as_register<Type, Cardinal, ABI>: as_register<underlying_storage_t<Type>, Cardinal, ABI>
+  // { };
+
+  // template<has_underlying_representation Type, typename Cardinal, typename ABI>
+  // struct as_logical_register<Type, Cardinal, ABI>: as_logical_register<underlying_storage_t<Type>, Cardinal, ABI>
+  // { };
+  
+
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
   {
