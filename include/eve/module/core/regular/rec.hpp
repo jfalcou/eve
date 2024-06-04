@@ -8,10 +8,21 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
+{
+  template<eve::value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(rec_t, rec_);
+};
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -66,9 +77,9 @@ namespace eve
 //!     very poor accuracy in return. Otherwise it uses the non decorated call.
 //! @}
 //================================================================================================
-
-EVE_MAKE_CALLABLE(rec_, rec);
+  inline constexpr auto rec = functor<rec_t>;
 }
+
 
 #include <eve/module/core/regular/impl/rec.hpp>
 

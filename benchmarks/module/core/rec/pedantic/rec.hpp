@@ -19,18 +19,11 @@ int main()
   auto lmin = EVE_VALUE(1);
 
   auto const std__rec = [](EVE_VALUE x) { return EVE_VALUE(1/x); };
-  auto const eve__div = []<typename T>(T x) { return eve::div(T(1), x); };
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__rec) , xp, std__rec, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve__div) , xp, eve__div, arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve__div) , xp, eve__div, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec[eve::raw2]) , xp, eve::rec[eve::raw2], arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec[eve::raw2]) , xp, eve::rec[eve::raw2], arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec           ) , xp, eve::rec           , arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec           ) , xp, eve::rec           , arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec[eve::pedantic2]) , xp, eve::rec[eve::pedantic2], arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec[eve::pedantic2]) , xp, eve::rec[eve::pedantic2], arg0);
+  run<EVE_VALUE> (EVE_NAME(eve:rec) , xp, eve::rec[eve::pedantic2], arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve:rec) , xp, eve::rec[eve::pedantic2], arg0);
 }

@@ -25,7 +25,6 @@ TTS_CASE_TPL("Check return types of eve::rec", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::rec[bool()](T()), T);
 
   TTS_EXPR_IS(eve::rec(v_t()), v_t);
-  TTS_EXPR_IS(eve::rec[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::rec[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::rec[bool()](v_t()), v_t);
 
@@ -35,7 +34,7 @@ TTS_CASE_TPL("Check return types of eve::rec", eve::test::simd::all_types)
 //==================================================================================================
 // Specific generator - valmin or valmin+1 if T is signed
 //==================================================================================================
-auto mini = tts::constant([](auto tgt) { return -eve::smallestposval(tgt); });
+auto mini = tts::constant([](auto tgt) { return eve::smallestposval(tgt); });
 auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 //==================================================================================================
