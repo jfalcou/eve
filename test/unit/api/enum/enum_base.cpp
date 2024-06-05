@@ -9,7 +9,7 @@
 
 #include <eve/arch/wide.hpp>
 
-TTS_CASE_TPL("Implement get function for wide<enum class>", eve::test::simd::integers)
+TTS_CASE_TPL("Create & get function for wide<enum class>", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -20,7 +20,7 @@ TTS_CASE_TPL("Implement get function for wide<enum class>", eve::test::simd::int
   for(int i = 0; i != x.size(); ++i ) { TTS_EQUAL(static_cast<E>(i), x.get(i)); }
 };
 
-TTS_CASE_TPL("All wides: set", eve::test::simd::integers)
+TTS_CASE_TPL("All wides<enum class>: set", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -37,7 +37,7 @@ TTS_CASE_TPL("All wides: set", eve::test::simd::integers)
   }
 };
 
-TTS_CASE_TPL("Make all wides, splat", eve::test::simd::integers)
+TTS_CASE_TPL("Make all wides<enum class>, splat", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -60,7 +60,7 @@ TTS_CASE_TPL("Make all wides, splat", eve::test::simd::integers)
   }
 };
 
-TTS_CASE_TPL("Slice all wides", tts::integral_types)
+TTS_CASE_TPL("Slice all wides<enum class>", tts::integral_types)
 <typename T>(tts::type<T>)
 {
   enum class E: T { };

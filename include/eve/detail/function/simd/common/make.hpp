@@ -24,7 +24,7 @@ namespace eve::detail
   {
     using s_t = typename Pack::storage_type;
     using t_t = typename Pack::value_type;
-    return s_t{static_cast<t_t>(v0), static_mcast<t_t>(vs)...};
+    return s_t{static_cast<t_t>(v0), static_cast<t_t>(vs)...};
   }
 
   template<typename Pack, typename V> EVE_FORCEINLINE auto make_emulated(V v) noexcept
@@ -37,18 +37,32 @@ namespace eve::detail
     }(std::make_index_sequence<s_t{}.size()>{});
   }
 
-  template<typename T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
     return make_emulated<wide<T, N>>(vs...);
   }
 
-  template<typename T, typename N, typename... Vs>
+  template<has_underlying_representation T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, N>, emulated_>
+  {
+    return bit_cast(make(eve::as<wide<underlying_storage_t<T>, N>>{}, static_cast<underlying_storage_t<Vs>>(vs)...), as<wide<T, N>>{});
+  }
+
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
     return make_emulated<logical<wide<T, N>>>(vs...);
+  }
+
+  template<has_underlying_representation T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
+    requires std::same_as<abi_t<T, N>, emulated_>
+  {
+    return bit_cast(make(eve::as<logical<wide<underlying_storage_t<T>, N>>>{}, static_cast<underlying_storage_t<Vs>>(vs)...), as<logical<wide<T, N>>>{});
   }
 
   //================================================================================================
