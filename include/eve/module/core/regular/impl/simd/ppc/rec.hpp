@@ -26,7 +26,7 @@ namespace eve::detail
 
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  rec_(EVE_REQUIRES(neon128_), O const&, wide<T, N> v) noexcept
+  rec_(EVE_REQUIRES(neon128_), O const&, wide<T, N> v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(raw2))
