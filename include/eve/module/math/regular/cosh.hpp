@@ -96,7 +96,7 @@ namespace eve
       //////////////////////////////////////////////////////////////////////////////
       // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
       // respectively computed
-      // *  in the first case cosh (e+rec(e))/2
+      // *  in the first case cosh (e+rec[pedantic2](e))/2
       // *  in the second     cosh is (e/2)*e (avoiding undue overflow)
       // Threshold is maxlog - Log_2
       //////////////////////////////////////////////////////////////////////////////
@@ -117,12 +117,12 @@ namespace eve
           return t;
         }
         auto t = exp(x);
-        return (x > 22) ? t * half(eve::as<T>()) : average(t, rec(t));
+        return (x > 22) ? t * half(eve::as<T>()) : average(t, rec[pedantic2](t));
       }
       else
       {
         auto t    = exp(x);
-        auto invt = if_else(x > 22, eve::zero, rec(t));
+        auto invt = if_else(x > 22, eve::zero, rec[pedantic2](t));
         auto c    = average(t, invt);
         auto test = x < ovflimitmln2;
         if( eve::all(test) ) return c;

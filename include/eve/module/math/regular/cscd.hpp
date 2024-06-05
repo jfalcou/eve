@@ -83,7 +83,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T cscd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr(O::contains(quarter_circle2))
-        return eve::rec(eve::sind[o](a0));
+        return eve::rec[pedantic2](eve::sind[o](a0));
       else
       {
         auto a0_180 = div_180(a0);
@@ -92,7 +92,7 @@ namespace eve
         {
           if( test ) return nan(eve::as<T>());
         }
-        return if_else(test, eve::allbits, rec(sind[o](a0)));
+        return if_else(test, eve::allbits, rec[pedantic2](sind[o](a0)));
       }
     }
   }

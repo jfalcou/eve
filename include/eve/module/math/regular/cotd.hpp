@@ -91,14 +91,14 @@ namespace eve
         {
           if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
           if( is_not_less_equal(x, T(45)) ) return nan(eve::as<T>());
-          return rec(tancot_eval(deginrad(a0)));
+          return rec[pedantic2](tancot_eval(deginrad(a0)));
         }
         else
         {
           return if_else(
             is_eqz(a0),
             bit_or(a0, inf(eve::as(a0))),
-            if_else(is_not_less_equal(x, T(45)), eve::allbits, rec(tancot_eval(deginrad(a0)))));
+            if_else(is_not_less_equal(x, T(45)), eve::allbits, rec[pedantic2](tancot_eval(deginrad(a0)))));
         }
       }
       else if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
