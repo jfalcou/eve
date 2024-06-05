@@ -168,12 +168,9 @@ namespace eve
         {
           if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
         }
-        else
-        {
-          auto nega = is_negative(r_t(a0));
-          r_t  z  = eve::pow_abs(a0, a1);
-          return minus[is_odd(a1) && nega](z);
-        }
+        auto nega = is_negative(r_t(a0));
+        r_t  z  = eve::pow_abs(a0, a1);
+        return minus[is_odd(a1) && nega](z);
       }
     }
 
