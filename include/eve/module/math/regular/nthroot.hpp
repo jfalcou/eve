@@ -94,7 +94,7 @@ namespace eve
       r_t n = r_t(nn);
       if constexpr( O::contains(raw2))
       {
-        auto r      = pow(abs(x), rec(n));
+        auto r      = pow(abs(x), rec[pedantic](n));
         auto islezx = is_lez(x);
         if( none(islezx) ) return r;
         else
@@ -113,7 +113,7 @@ namespace eve
         auto yinc = -((p-ax)/(an*p))*y;
         y         = add[is_nez(y) && is_finite(x)](y, yinc);
         y         = if_else(is_negative(x) && is_even(an), allbits, y*sign(x));
-        return rec[is_ltz(n)](y);
+        return rec[pedantic][is_ltz(n)](y);
       }
     }
   }

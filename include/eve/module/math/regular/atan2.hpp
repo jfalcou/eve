@@ -122,7 +122,7 @@ namespace eve
         }
 
         r_t q = eve::abs(a00/a10);
-        r_t z = atan_kernel(q, rec(q));
+        r_t z = atan_kernel(q, rec[pedantic2](q));
         r_t sgn = signnz(a00);
         if constexpr(scalar_value<r_t>)
         {

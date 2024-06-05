@@ -107,7 +107,7 @@ namespace eve::detail
           auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
           auto f = [&](auto a){return pow_abs(ldexp[o](r_t(a), e), rp); };
           r_t that = add(f(a0), f(a1), f(args)...);
-          auto r = ldexp[pedantic](pow_abs(that, rec(rp)), -e);
+          auto r = ldexp[pedantic](pow_abs(that, rec[pedantic](rp)), -e);
           auto isinfp = is_infinite(rp);
           auto rinf = maxabs(r_t(a0), r_t(a1), r_t(args)...);
           r = if_else(isinfp, rinf, r);
@@ -117,7 +117,7 @@ namespace eve::detail
         {
           auto rp = r_t(p);
           r_t that = add(pow_abs(r_t(a0),rp), pow_abs(r_t(a1), rp), pow_abs(r_t(args), rp)...);
-          auto r = pow(that, rec(rp));
+          auto r = pow(that, rec[pedantic](rp));
           auto isinfp = is_infinite(rp);
           if (eve::none(isinfp)) return r;
           else return if_else(is_infinite(rp), eve::maxabs(a0, a1, args...), r);

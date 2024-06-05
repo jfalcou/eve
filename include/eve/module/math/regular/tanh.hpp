@@ -95,7 +95,7 @@ namespace eve
       auto x    = eve::abs(a0 + a0);
       auto test = x > T(0.5493) * 2;
       auto t    = expm1(x);
-      auto rt2  = rec(t + T(2));
+      auto rt2  = rec[pedantic2](t + T(2));
       if constexpr( scalar_value<T> )
       {
         auto r = test ? fnma(T(2), rt2, T(1)) : t * rt2;

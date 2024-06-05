@@ -24,7 +24,10 @@ namespace eve::detail
   constexpr T  rec_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
   {
     if constexpr( floating_value<T> )
+    {
+      std::cout << "icitte" << std::endl;
       return T {1} / a;
+    }
     else if( integral_value<T> )
     {
       if constexpr( scalar_value<T> )

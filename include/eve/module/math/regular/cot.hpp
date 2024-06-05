@@ -91,9 +91,9 @@ namespace eve
         auto aa0nlepio4 = is_not_less_equal(x, pio_4(eve::as<T>()));
         if constexpr( scalar_value<T> )
         {
-          return (aa0nlepio4) ? nan(eve::as<T>()) : rec(tancot_eval(a0));
+          return (aa0nlepio4) ? nan(eve::as<T>()) : rec[pedantic2](tancot_eval(a0));
         }
-        else { return if_else(aa0nlepio4, eve::allbits, rec(tancot_eval(a0))); }
+        else { return if_else(aa0nlepio4, eve::allbits, rec[pedantic2](tancot_eval(a0))); }
       }
       else if constexpr(O::contains(half_circle2))
       {
@@ -111,7 +111,7 @@ namespace eve
         if constexpr( scalar_value<T> )
         {
           using i_t = as_integer_t<T, signed>;
-          if( xleeps ) return rec(a0);
+          if( xleeps ) return rec[pedantic2](a0);
           if( is_not_less_equal(x, pio_2(eve::as<T>())) ) return nan(eve::as<T>());
           i_t n = x > pio_4(eve::as<T>());
           if( n )
@@ -120,7 +120,7 @@ namespace eve
             T    y  = tancot_eval(xr);
             return bit_xor(bitofsign(a0), -y);
           }
-          else { return rec(tancot_eval(a0)); }
+          else { return rec[pedantic2](tancot_eval(a0)); }
         }
         else
         {
@@ -128,8 +128,8 @@ namespace eve
           auto fn       = one[xnlepio4](eve::as(x));
           auto xr       = if_else(fn, reduce(x), x);
           auto y        = tancot_eval(xr);
-          y             = if_else(is_not_finite(a0), eve::allbits, if_else(xnlepio4, -y, rec(y)));
-          return if_else(xleeps, rec(a0), bit_xor(bitofsign(a0), y));
+          y             = if_else(is_not_finite(a0), eve::allbits, if_else(xnlepio4, -y, rec[pedantic2](y)));
+          return if_else(xleeps, rec[pedantic2](a0), bit_xor(bitofsign(a0), y));
         }
       }
       else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )

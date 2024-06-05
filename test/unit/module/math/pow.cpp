@@ -75,7 +75,7 @@ TTS_CASE_TPL("Check  pow", eve::test::simd::all_types)
     TTS_IEEE_EQUAL(eve::pow(eve::inf(eve::as<T>()), -T(4)), T(0));
   }
 
-  TTS_EQUAL(eve::pow(T(2), -3), T(1 / 8.0));
+ TTS_EQUAL(eve::pow(T(2), -3), T(1 / 8.0));
   TTS_EQUAL(eve::pow(T(2), 3), T(8));
   TTS_EQUAL(eve::pow(T(2), 3u), T(8));
   TTS_EQUAL(eve::pow(2, 3), (8));
