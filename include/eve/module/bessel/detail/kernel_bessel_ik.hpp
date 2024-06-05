@@ -59,7 +59,7 @@ requires(simd_value<T>)
 
   const T mu  = nu - nl;
   const T mu2 = sqr(mu);
-  const T xi  = if_else(iseqzx, x, rec(x));
+  const T xi  = if_else(iseqzx, x, rec[pedantic2](x));
   const T xi2 = xi + xi;
 
   T h = nu * xi;
@@ -73,8 +73,8 @@ requires(simd_value<T>)
   for( i = 1; i <= max_iter; ++i )
   {
     b += xi2;
-    d           = rec(b + d);
-    c           = b + rec(c);
+    d           = rec[pedantic2](b + d);
+    c           = b + rec[pedantic2](c);
     const T del = c * d;
     h *= del;
     test = (eve::abs(dec(del)) < Eps);
@@ -103,7 +103,7 @@ requires(simd_value<T>)
   auto case_lt = [=](auto x, T& Kmu, T& Knu1)
   {
     const T x2    = x / T(2);
-    const T fact  = rec(sinpic(mu));
+    const T fact  = rec[pedantic2](sinpic(mu));
     T       d     = -eve::log(x2);
     T       e     = mu * d;
     const T fact2 = eve::sinhc(e);
@@ -111,8 +111,8 @@ requires(simd_value<T>)
     auto    gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
     {
       auto gamma_e = T(0.57721566490153286060651209008240243104215933593992);
-      gampl        = rec(tgamma(inc(mu)));
-      gammi        = rec(tgamma(oneminus(mu)));
+      gampl        = rec[pedantic2](tgamma(inc(mu)));
+      gammi        = rec[pedantic2](tgamma(oneminus(mu)));
       gam1         = if_else(eve::abs(mu) < Eps, gamma_e, (gammi - gampl) / (mu + mu));
       gam2         = average(gammi, gampl);
       return;
@@ -155,7 +155,7 @@ requires(simd_value<T>)
   auto case_ge = [=](auto x, T& Kmu, T& Knu1)
   {
     T b    = 2 * inc(x);
-    T d    = rec(b);
+    T d    = rec[pedantic2](b);
     T delh = d;
     T h    = delh;
     T q1   = T(0);
@@ -176,7 +176,7 @@ requires(simd_value<T>)
         q2           = qnew;
         q += c * qnew;
         b += T(2);
-        d    = rec(fam(b, a, d));
+        d    = rec[pedantic2](fam(b, a, d));
         delh = dec(b * d) * delh;
         h += delh; // if_else(test, h, h+delh);
         const T dels = q * delh;
@@ -215,7 +215,7 @@ requires(simd_value<T>)
 
   T    Kpmu    = fms(mu, xi * Kmu, Knu1);
   T    Inumu   = xi / fms(f, Kmu, Kpmu);
-  auto invInul = rec(Inul);
+  auto invInul = rec[pedantic2](Inul);
   Inu          = Inumu * Inul1 * invInul;
   Ipnu         = Inumu * Ipnu1 * invInul;
   i            = 1;
@@ -278,7 +278,7 @@ requires(scalar_value<T>)
 
   const T mu  = nu - nl;
   const T mu2 = sqr(mu);
-  const T xi  = rec(x);
+  const T xi  = rec[pedantic2](x);
   const T xi2 = T(2) * xi;
   T       h   = nu * xi;
   if( h < fp_min ) h = fp_min;
@@ -289,8 +289,8 @@ requires(scalar_value<T>)
   for( i = 1; i <= max_iter; ++i )
   {
     b += xi2;
-    d           = rec(b + d);
-    c           = b + rec(c);
+    d           = rec[pedantic2](b + d);
+    c           = b + rec[pedantic2](c);
     const T del = c * d;
     h *= del;
     if( eve::abs(del - T(1)) < Eps ) break;
@@ -313,7 +313,7 @@ requires(scalar_value<T>)
   if( x < x_min )
   {
     const T x2    = x / T(2);
-    const T fact  = rec(sinpic(mu));
+    const T fact  = rec[pedantic2](sinpic(mu));
     T       d     = -eve::log(x2);
     T       e     = mu * d;
     const T fact2 = eve::sinhc(e);
@@ -321,8 +321,8 @@ requires(scalar_value<T>)
     auto    gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
     {
       auto gamma_e = T(0.57721566490153286060651209008240243104215933593992);
-      gampl        = rec(tgamma(inc(mu)));
-      gammi        = rec(tgamma(oneminus(mu)));
+      gampl        = rec[pedantic2](tgamma(inc(mu)));
+      gammi        = rec[pedantic2](tgamma(oneminus(mu)));
       gam1         = eve::abs(mu) < Eps ? gamma_e : (gammi - gampl) / (mu + mu);
       gam2         = average(gammi, gampl);
       return;
@@ -355,7 +355,7 @@ requires(scalar_value<T>)
   else
   {
     T b    = 2 * inc(x);
-    T d    = rec(b);
+    T d    = rec[pedantic2](b);
     T delh = d;
     T h    = delh;
     T q1   = T(0);
@@ -375,7 +375,7 @@ requires(scalar_value<T>)
         q2           = qnew;
         q += c * qnew;
         b += T(2);
-        d    = rec(fam(b, a, d));
+        d    = rec[pedantic2](fam(b, a, d));
         delh = dec(b * d) * delh;
         h += delh;
         const T dels = q * delh;
@@ -394,7 +394,7 @@ requires(scalar_value<T>)
   }
   T    Kpmu    = fms(mu, xi * Kmu, Knu1);
   T    Inumu   = xi / fms(f, Kmu, Kpmu);
-  auto invInul = rec(Inul);
+  auto invInul = rec[pedantic2](Inul);
   Inu          = Inumu * Inul1 * invInul;
   Ipnu         = Inumu * Ipnu1 * invInul;
   for( i = 1; i <= nl; ++i )

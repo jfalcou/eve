@@ -122,12 +122,12 @@ kernel_bessel_yn_small_x(T n, T x)
     T             yk(1);
     T             k_f(1);
     T             dig_kp1   = T(-0.57721566490153286060651209008240243104215933593992);
-    T             dig_npkp1 = dig_n + rec(n);
+    T             dig_npkp1 = dig_n + rec[pedantic2](n);
     T             sum2      = (dig_kp1 + dig_npkp1 - 2.0 * log_xo_2) / npk_f;
     for( elt_t k = 1; k < KMAX; k = inc(k) )
     {
-      dig_kp1 += rec(k);
-      dig_npkp1 += rec(n + k);
+      dig_kp1 += rec[pedantic2](k);
+      dig_npkp1 += rec[pedantic2](n + k);
       k_f *= k;
       npk_f *= n + k;
       yk *= -y;

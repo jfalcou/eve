@@ -50,7 +50,7 @@ requires(scalar_value<T>)
       (x < x_min ? static_cast<int>(nu + T(0.5)) : eve::max(0, static_cast<int>(nu - x + T(1.5))));
   const T mu    = nu - nl;
   const T mu2   = sqr(mu);
-  const T xi    = rec(x);
+  const T xi    = rec[pedantic2](x);
   const T xi2   = xi + xi;
   T       w     = xi2 * inv_pi(as(x));
   int     isign = 1;
@@ -95,7 +95,7 @@ requires(scalar_value<T>)
   if( x < x_min )
   {
     const T x2    = x / T(2);
-    T       fact  = rec(sinpic(mu));
+    T       fact  = rec[pedantic2](sinpic(mu));
     T       d     = -eve::log(x2);
     T       e     = mu * d;
     T       fact2 = (eve::abs(e) < Eps ? T(1) : std::sinh(e) / e);
@@ -104,8 +104,8 @@ requires(scalar_value<T>)
     auto gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
     {
       auto gamma_e = T(0.57721566490153286060651209008240243104215933593992);
-      gampl        = rec(tgamma(inc(mu)));
-      gammi        = rec(tgamma(oneminus(mu)));
+      gampl        = rec[pedantic2](tgamma(inc(mu)));
+      gammi        = rec[pedantic2](tgamma(oneminus(mu)));
       gam1         = eve::abs(mu) < Eps ? gamma_e : (gammi - gampl) / (mu + mu);
       gam2         = average(gammi, gampl);
       return;
@@ -232,7 +232,7 @@ requires(simd_value<T>)
   auto          nl    = if_else(x < x_min, trunc(nu + T(0.5)), eve::max(0, trunc(nu - x + T(1.5))));
   const T       mu    = nu - nl;
   const T       mu2   = sqr(mu);
-  const T       xi    = if_else(iseqzx, x, rec(x));
+  const T       xi    = if_else(iseqzx, x, rec[pedantic2](x));
   const T       xi2   = xi + xi;
   T             w     = xi2 * inv_pi(as(x));
   T             isign = one(as(x));
@@ -249,9 +249,9 @@ requires(simd_value<T>)
       b += xi2;
       d           = b - d;
       d           = if_else(eve::abs(d) < fp_min, fp_min, d);
-      c           = b - rec(c);
+      c           = b - rec[pedantic2](c);
       c           = if_else(eve::abs(c) < fp_min, fp_min, c);
-      d           = rec(d);
+      d           = rec[pedantic2](d);
       const T del = c * d;
       h *= del;
       isign = if_else(is_ltz(d), -isign, isign);
@@ -283,7 +283,7 @@ requires(simd_value<T>)
   {
     const T Pi    = eve::pi(as(x));
     const T x2    = x / T(2);
-    T       fact  = rec(sinpic(mu));
+    T       fact  = rec[pedantic2](sinpic(mu));
     T       d     = -eve::log(x2);
     T       e     = mu * d;
     T       fact2 = sinhc(e);
@@ -291,8 +291,8 @@ requires(simd_value<T>)
     auto    gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
     {
       auto gamma_e = T(0.57721566490153286060651209008240243104215933593992);
-      gampl        = rec(tgamma(inc(mu)));
-      gammi        = rec(tgamma(oneminus(mu)));
+      gampl        = rec[pedantic2](tgamma(inc(mu)));
+      gammi        = rec[pedantic2](tgamma(oneminus(mu)));
       gam1         = if_else(eve::abs(mu) < Eps, gamma_e, (gammi - gampl) / (mu + mu));
       gam2         = average(gammi, gampl);
       return;
@@ -301,7 +301,7 @@ requires(simd_value<T>)
     T ff    = (T(2) / Pi) * fact * fma(gam1, eve::cosh(e), gam2 * fact2 * d);
     e       = eve::exp(e);
     T p     = e / (Pi * gampl);
-    T q     = rec(e * Pi * gammi);
+    T q     = rec[pedantic2](e * Pi * gammi);
     T muo2  = mu * T(0.5);
     T fact3 = sinpic(muo2);
     T r     = sqr(Pi * fact3) * muo2;
