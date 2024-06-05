@@ -15,6 +15,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/concept/scalar.hpp>
+#include <eve/concept/element.hpp>
 #include <eve/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
@@ -33,8 +34,6 @@
 #include <utility>
 
 #include <type_traits>
-
-#include <eve/concept/underlying_storage.hpp>
 
 
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -62,7 +61,7 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<arithmetic_scalar_value Type, typename Cardinal>
+  template<element_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
       : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>
   {
@@ -90,6 +89,9 @@ namespace eve
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
     template<typename T, typename N = expected_cardinal_t<T>> using rebind = wide<T, N>;
+
+    //! Generates a eve::wide from a different type `T` and with the same cardinal.
+    template<typename T> using retype = wide<T, Cardinal>;
 
     //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type, N>;

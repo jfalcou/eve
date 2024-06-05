@@ -26,7 +26,11 @@ namespace eve
     {
       constexpr auto width = sizeof(Type)*Size::value*8;
 
-      if constexpr(width <= __ARM_FEATURE_SVE_BITS)
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, ABI>::find();
+      }
+      else if constexpr(width <= __ARM_FEATURE_SVE_BITS)
       {
         constexpr bool signed_v = std::is_signed_v<Type>;
 

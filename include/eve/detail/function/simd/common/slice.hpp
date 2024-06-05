@@ -138,4 +138,21 @@ namespace eve::detail
   {
     return slice_impl(a, s);
   }
+
+  template<has_underlying_representation T, typename N>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+  {
+    using sub_t = as<as_wide_t<T, typename N::split_type>>;
+
+    auto [l, h] = bit_cast(a, as<wide<underlying_storage_t<T>, N>>{}).slice();
+    return std::array{bit_cast(l, sub_t{}), bit_cast(h, sub_t{})};
+  }
+
+  template<has_underlying_representation T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &s) noexcept
+  {
+    using sub_t = as<as_wide_t<T, typename N::split_type>>;
+
+    return bit_cast(bit_cast(a, as<wide<underlying_storage_t<T>, N>>{}).slice(s), sub_t{});
+  }
 }

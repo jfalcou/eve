@@ -9,7 +9,6 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/concept/underlying_storage.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -22,14 +21,8 @@ namespace eve::detail
   template<typename T>
   constexpr bool is_plain() noexcept
   {
-    if constexpr (has_underlying_representation<T>)
-    {
-      return is_plain<underlying_storage_t<T>>();
-    }
-    else {
-      return    !(std::is_same_v<T, bool> || std::is_same_v<T, long double>)
-            &&  (std::is_floating_point_v<T> || std::is_integral_v<T>);
-    }
+    return    !(std::is_same_v<T, bool> || std::is_same_v<T, long double>)
+          &&  (std::is_floating_point_v<T> || std::is_integral_v<T>);
   }
 }
 

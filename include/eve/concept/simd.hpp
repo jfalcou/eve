@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/spec.hpp>
+#include <eve/concept/element.hpp>
 #include <eve/concept/scalar.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/element_type.hpp>
@@ -16,7 +17,7 @@ namespace eve
 {
   inline namespace EVE_ABI_NAMESPACE
   {
-    template<arithmetic_scalar_value Type, typename Size> struct wide;
+    template<element_value Type, typename Size> struct wide;
   }
 
   template<typename T>

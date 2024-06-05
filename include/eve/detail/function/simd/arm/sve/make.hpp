@@ -22,17 +22,20 @@ namespace eve::detail
 // Enumerated make
 //================================================================================================
 template<arithmetic_scalar_value T, typename N, typename... Vs>
-EVE_FORCEINLINE auto
-make(eve::as<wide<T, N>>, Vs... vs) noexcept
+EVE_FORCEINLINE auto make(eve::as<wide<T, N>>, Vs... vs) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
 
+  if constexpr (has_underlying_representation<T>)
+  {
+    return make(as<wide<underlying_storage_t<T>, N>> {}, static_cast<underlying_storage_t<Vs>>(vs)...);
+  }
   if constexpr( wide<T, N>::size() < eve::fundamental_cardinal_v<T> )
   {
     return [&]<std::size_t... i>(std::index_sequence<i...>)
     {
-      return make(as<wide<T, fundamental_cardinal_t<T>>> {}, vs..., ((void)i, 0)...);
+      return make(as<wide<T, fundamental_cardinal_t<T>>> {}, vs..., ((void) i, 0)...);
     }
     (std::make_index_sequence<fundamental_cardinal_v<T> - N::value> {});
   }
@@ -47,12 +50,15 @@ requires sve_abi<abi_t<T, N>>
 // splat make
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-make(eve::as<wide<T, N>>, T x) noexcept
+EVE_FORCEINLINE auto make(eve::as<wide<T, N>>, T x) noexcept
 requires sve_abi<abi_t<T, N>> && (N::value > 1)
 {
+  if constexpr (has_underlying_representation<T>)
+  {
+    return make(as<wide<underlying_storage_t<T>, N>> {}, static_cast<underlying_storage_t<T>>(x));
+  }
   // This may be suboptimal, we a one instruction iota on sve
-  if constexpr( N::value < eve::fundamental_cardinal_v<T> )
+  else if constexpr( N::value < eve::fundamental_cardinal_v<T> )
   {
     // Use svdup then mask using optimized iota comparison
     return wide<T>{x} & (iota(as<wide<as_integer_t<T>>>{}) < N::value).mask();
@@ -78,8 +84,7 @@ requires sve_abi<abi_t<T, N>> && (N::value > 1)
 // logical cases
 //================================================================================================
 template<arithmetic_scalar_value T, typename N, typename... Vs>
-EVE_FORCEINLINE auto
-make(as<logical<wide<T, N>>>, Vs... vs) noexcept
+EVE_FORCEINLINE auto make(as<logical<wide<T, N>>>, Vs... vs) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   using bits_type = typename logical<wide<T, N>>::bits_type;
@@ -90,8 +95,7 @@ requires sve_abi<abi_t<T, N>>
 }
 
 template<arithmetic_scalar_value T, typename N, typename V>
-EVE_FORCEINLINE auto
-make(eve::as<logical<wide<T, N>>>, V x) noexcept
+EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>>, V x) noexcept
 requires sve_abi<abi_t<T, N>> && (N::value > 1)
 {
   using f_t = fundamental_cardinal_t<T>;

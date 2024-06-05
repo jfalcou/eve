@@ -14,7 +14,7 @@ namespace eve::detail
 {
   template<typename T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &) noexcept
-      requires arm_abi<abi_t<T, N>>
+      requires (arm_abi<abi_t<T, N>> && !has_underlying_representation<T>)
   {
     using type = wide<T, typename N::split_type>;
     constexpr auto c = categorize<wide<T, N>>();
@@ -66,7 +66,7 @@ namespace eve::detail
 
   template<typename T, typename N>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
-      requires arm_abi<abi_t<T, N>>
+      requires (arm_abi<abi_t<T, N>> && !has_underlying_representation<T>)
   {
     std::array<wide<T, typename N::split_type>, 2> that{ slice(a, lower_), slice(a, upper_) };
     return that;

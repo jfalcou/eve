@@ -35,7 +35,14 @@ namespace eve
     {
       using detail::wrap;
 
-      if constexpr( std::is_same_v<T,float> && Size::value <= 4) { return wrap<__vector float>{}; }
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, eve::ppc_>::find();
+      }
+      else if constexpr( std::is_same_v<T,float> && Size::value <= 4)
+      {
+        return wrap<__vector float>{};
+      }
       else if constexpr( std::is_same_v<T,double> && Size::value <= 2 )
       {
         if constexpr(spy::simd_instruction_set >= spy::vsx_)  { return wrap<__vector double>{}; }

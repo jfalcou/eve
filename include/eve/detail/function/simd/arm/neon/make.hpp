@@ -22,7 +22,7 @@ namespace eve::detail
     template<typename... Vs> auto operator()(Vs... vs) const
     {
       using type = as_register_t<T, fixed<sizeof...(vs)>, abi_type>;
-      type that {static_cast<underlying_storage_t<T>>(vs)...};
+      type that { static_cast<underlying_storage_t<T>>(vs)... };
       return that;
     }
 
@@ -38,7 +38,7 @@ namespace eve::detail
       {
         using type = as_register_t<T, expected_cardinal_t<T, abi_type>, abi_type>;
         auto u     = static_cast<underlying_storage_t<T>>(v);
-        return type {val(u, I)...};
+        return type { val(u, I)... };
       };
 
       return apply<expected_cardinal_v<T, abi_type>>(impl);

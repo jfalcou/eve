@@ -22,7 +22,7 @@ namespace eve::detail
     requires ppc_abi<abi_t<T, N>>
   {
     using type = as_register_t<T, N, ppc_>;
-    type that  = {static_cast<T>(vs)...};
+    type that  = {static_cast<underlying_type_t<T>>(vs)...};
     return that;
   }
 
@@ -35,7 +35,7 @@ namespace eve::detail
     return [&]<std::size_t... N>(std::index_sequence<N...> const&)
     {
       auto val = [](auto vv, auto) { return vv; };
-      return type { val(v, N)... };
+      return type { val(static_cast<underlying_type_t<T>>(v), N)... };
     }(std::make_index_sequence<S::value>());
   }
 

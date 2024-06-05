@@ -29,8 +29,12 @@ namespace eve
   {
     static constexpr auto find()
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width <= 16)
+      constexpr auto width = sizeof(Type) * Size::value;
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, eve::x86_128_>::find();
+      }
+      else if constexpr(width <= 16)
       {
               if constexpr(std::is_same_v<Type,double> ) return  __m128d{};
         else  if constexpr(std::is_same_v<Type,float > ) return  __m128{};
@@ -47,8 +51,12 @@ namespace eve
   {
     static constexpr auto find()
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width == 32)
+      constexpr auto width = sizeof(Type) * Size::value;
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, eve::x86_256_>::find();
+      }
+      else if constexpr(width == 32)
       {
               if constexpr(std::is_same_v<Type,double> ) return __m256d{};
         else  if constexpr(std::is_same_v<Type,float > ) return __m256{};
@@ -65,8 +73,12 @@ namespace eve
   {
     static constexpr auto find()
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width == 64)
+      constexpr auto width = sizeof(Type) * Size::value;
+      if constexpr (has_underlying_representation<T>)
+      {
+        return as_register<underlying_storage_t<T>, Size, eve::x86_512_>::find();
+      }
+      else if constexpr(width == 64)
       {
               if constexpr(std::is_same_v<Type,double> ) return __m512d{};
         else  if constexpr(std::is_same_v<Type,float > ) return __m512{};
