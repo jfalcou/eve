@@ -126,7 +126,7 @@ namespace eve
       auto [sinp, cosp] = sincos(rphi);
       auto sinp2        = sqr(sinp);
       auto notdone      = sinp2 * k2 <= one(as(phi));
-      auto c            = if_else(notdone, rec(sinp2), allbits);
+      auto c            = if_else(notdone, rec[pedantic2](sinp2), allbits);
       auto cm1          = sqr(cosp) * c; // c-1
       auto r =
         s

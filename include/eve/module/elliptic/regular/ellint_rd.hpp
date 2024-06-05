@@ -112,7 +112,7 @@ inline constexpr auto ellint_rd = functor<ellint_rd_t>;
           if( eve::all(q < eve::abs(an)) ) break;
         }
 
-        T invan = rec(an);
+        T invan = rec[pedantic2](an);
         T xx    = fn * (a0 - x) * invan;
         T yy    = fn * (a0 - y) * invan;
         T zz    = -(xx + yy) / 3;

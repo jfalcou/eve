@@ -170,14 +170,9 @@ namespace eve
         }
         else
         {
-          auto nega = is_negative(a0);
+          auto nega = is_negative(r_t(a0));
           r_t  z  = eve::pow_abs(a0, a1);
-          std::cout << "z "<< z << std::endl;
-          std::cout << "nega " << nega<< std::endl;
-          std::cout << "is_odd(a) " <<  is_odd(a1) << std::endl;
-//          return z;
-         return if_else(is_odd(a1) && nega, -z, z);
-        //return minus[is_odd(a1) && nega](z);
+          return minus[is_odd(a1) && nega](z);
         }
       }
     }
