@@ -19,7 +19,7 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(sse2_),
-                                  O const&,
+                                  O const& o,
                                   wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -65,6 +65,7 @@ namespace eve::detail
           if      constexpr( c == category::float32x4 ) return _mm_div_ps(one(eve::as(v)), v);
           else if constexpr( c == category::float64x2 ) return _mm_div_pd(one(eve::as(v)), v);
         }
+        return rec.behavior(cpu_{}, o, v);
       }
       else
       {

@@ -93,8 +93,7 @@ namespace eve
         {
           if( test ) return nan(eve::as<T>());
         }
-        else
-          return if_else(test, eve::allbits, rec[pedantic2](cosd[o](a0)));
+        return if_else(test, eve::allbits, rec[pedantic2](cosd[o](a0)));
       }
     }
   }
