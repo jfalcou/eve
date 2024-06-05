@@ -24,7 +24,7 @@ namespace eve
     template<typename T> using wrap = T;
   }
 
-  template<typename T, typename Size> struct as_register<T, Size, eve::ppc_>
+  template<arithmetic_scalar_value T, typename Size> struct as_register<T, Size, eve::ppc_>
   {
     static constexpr bool size_check(std::size_t t, std::size_t s)
     {
@@ -35,11 +35,7 @@ namespace eve
     {
       using detail::wrap;
 
-      if constexpr (has_underlying_representation<T>)
-      {
-        return as_register<underlying_storage_t<T>, Size, eve::ppc_>::find();
-      }
-      else if constexpr( std::is_same_v<T,float> && Size::value <= 4)
+      if constexpr( std::is_same_v<T,float> && Size::value <= 4)
       {
         return wrap<__vector float>{};
       }

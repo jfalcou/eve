@@ -11,7 +11,6 @@
 #include <eve/arch/expected_cardinal.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/scalar.hpp>
-#include <eve/concept/element.hpp>
 
 namespace eve
 {

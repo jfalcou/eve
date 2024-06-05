@@ -29,5 +29,7 @@ namespace eve
   template <typename T>
   requires (std::is_enum_v<T>)
   struct underlying_storage<T>: std::underlying_type<T>
-  { };
+  {
+    using eve_disable_ordering = void;
+  };
 }

@@ -110,6 +110,10 @@ concept product_scalar_value = detail::scalar_tuple<T>();
 template<typename T>
 concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T>;
 
+// represents any type that can be put into a eve::wide
+template <typename T>
+concept element_value = has_underlying_representation<T> || arithmetic_scalar_value<T>;
+
 //================================================================================================
 //! @concept scalar_value
 //! @brief Specify that a type represents a scalar value
@@ -122,5 +126,5 @@ concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<
 //! - `kumi::tuple<double,std::int32_t>`
 //================================================================================================
 template<typename T>
-concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
+concept scalar_value = element_value<T> || logical_scalar_value<T>;
 }

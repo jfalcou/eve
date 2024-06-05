@@ -20,17 +20,13 @@ namespace eve
 #if defined(EVE_HW_ARM_SVE)
 namespace eve
 {
-  template<typename Type, typename Size, sve_abi ABI> struct as_register<Type, Size, ABI>
+  template<arithmetic_scalar_value Type, typename Size, sve_abi ABI> struct as_register<Type, Size, ABI>
   {
     static constexpr auto find()
     {
-      constexpr auto width = sizeof(Type)*Size::value*8;
+      constexpr auto width = sizeof(Type) * Size::value*8;
 
-      if constexpr (has_underlying_representation<T>)
-      {
-        return as_register<underlying_storage_t<T>, Size, ABI>::find();
-      }
-      else if constexpr(width <= __ARM_FEATURE_SVE_BITS)
+      if constexpr(width <= __ARM_FEATURE_SVE_BITS)
       {
         constexpr bool signed_v = std::is_signed_v<Type>;
 

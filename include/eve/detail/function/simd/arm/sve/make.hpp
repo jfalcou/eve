@@ -27,10 +27,6 @@ requires sve_abi<abi_t<T, N>>
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
 
-  if constexpr (has_underlying_representation<T>)
-  {
-    return make(as<wide<underlying_storage_t<T>, N>> {}, static_cast<underlying_storage_t<Vs>>(vs)...);
-  }
   if constexpr( wide<T, N>::size() < eve::fundamental_cardinal_v<T> )
   {
     return [&]<std::size_t... i>(std::index_sequence<i...>)
@@ -53,12 +49,8 @@ template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto make(eve::as<wide<T, N>>, T x) noexcept
 requires sve_abi<abi_t<T, N>> && (N::value > 1)
 {
-  if constexpr (has_underlying_representation<T>)
-  {
-    return make(as<wide<underlying_storage_t<T>, N>> {}, static_cast<underlying_storage_t<T>>(x));
-  }
   // This may be suboptimal, we a one instruction iota on sve
-  else if constexpr( N::value < eve::fundamental_cardinal_v<T> )
+  if constexpr( N::value < eve::fundamental_cardinal_v<T> )
   {
     // Use svdup then mask using optimized iota comparison
     return wide<T>{x} & (iota(as<wide<as_integer_t<T>>>{}) < N::value).mask();

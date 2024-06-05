@@ -32,58 +32,51 @@ namespace eve::detail
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    if constexpr (has_underlying_representation<T>)
+    constexpr auto c = categorize<wide<T,S>>();
+
+    if constexpr( c == category::float64x2 )
     {
-      return make(as<wide<underlying_storage_t<T>, S>> {}, static_cast<underlying_storage_t<Vs>>(vs)...);
+      return _mm_setr_pd(static_cast<T>(vs)...);
     }
-    else
+    else  if constexpr( c == category::float32x4 )
     {
-      constexpr auto c = categorize<wide<T,S>>();
+      return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+      {
+        return _mm_setr_ps(vs..., (N ? 0:0)...);
+      }(std::make_index_sequence<4 - sizeof...(vs)>());
+    }
+    else  if constexpr( match(c,category::int8x16, category::uint8x16) )
+    {
+      return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+      {
+        return _mm_setr_epi8(vs..., (N ? 0:0)...);
+      }(std::make_index_sequence<16 - sizeof...(vs)>());
+    }
+    else  if constexpr( match(c,category::int16x8, category::uint16x8) )
+    {
+      return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+      {
+        return _mm_setr_epi16(vs..., (N ? 0:0)...);
+      }(std::make_index_sequence<8 - sizeof...(vs)>());
+    }
+    else  if constexpr( match(c,category::int32x4, category::uint32x4) )
+    {
+      return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+      {
+        return _mm_setr_epi32(vs..., (N ? 0:0)...);
+      }(std::make_index_sequence<4 - sizeof...(vs)>());
+    }
+    else  if constexpr( match(c,category::int64x2, category::uint64x2) )
+    {
+      [[maybe_unused]] __m128i that;
 
-      if constexpr( c == category::float64x2 )
-      {
-        return _mm_setr_pd(static_cast<T>(vs)...);
-      }
-      else  if constexpr( c == category::float32x4 )
-      {
-        return [&]<std::size_t... N>(std::index_sequence<N...> const&)
-        {
-          return _mm_setr_ps(vs..., (N ? 0:0)...);
-        }(std::make_index_sequence<4 - sizeof...(vs)>());
-      }
-      else  if constexpr( match(c,category::int8x16, category::uint8x16) )
-      {
-        return [&]<std::size_t... N>(std::index_sequence<N...> const&)
-        {
-          return _mm_setr_epi8(vs..., (N ? 0:0)...);
-        }(std::make_index_sequence<16 - sizeof...(vs)>());
-      }
-      else  if constexpr( match(c,category::int16x8, category::uint16x8) )
-      {
-        return [&]<std::size_t... N>(std::index_sequence<N...> const&)
-        {
-          return _mm_setr_epi16(vs..., (N ? 0:0)...);
-        }(std::make_index_sequence<8 - sizeof...(vs)>());
-      }
-      else  if constexpr( match(c,category::int32x4, category::uint32x4) )
-      {
-        return [&]<std::size_t... N>(std::index_sequence<N...> const&)
-        {
-          return _mm_setr_epi32(vs..., (N ? 0:0)...);
-        }(std::make_index_sequence<4 - sizeof...(vs)>());
-      }
-      else  if constexpr( match(c,category::int64x2, category::uint64x2) )
-      {
-        [[maybe_unused]] __m128i that;
+      T *ptr = reinterpret_cast<detail::alias_t<T> *>(&that);
+      T d[] = {static_cast<T>(vs)...};
 
-        T *ptr = reinterpret_cast<detail::alias_t<T> *>(&that);
-        T d[] = {static_cast<T>(vs)...};
+      ptr[0] = d[0];
+      ptr[1] = d[1];
 
-        ptr[0] = d[0];
-        ptr[1] = d[1];
-
-        return that;
-      }
+      return that;
     }
   }
 
@@ -98,21 +91,14 @@ namespace eve::detail
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    if constexpr (has_underlying_representation<T>)
-    {
-      return make(as<wide<underlying_storage_t<T>, S>> {}, static_cast<underlying_storage_t<Vs>>(vs)...);
-    }
-    else
-    {
-      constexpr auto c = categorize<wide<T, S>>();
+    constexpr auto c = categorize<wide<T, S>>();
 
-            if constexpr( c == category::float64x4) return _mm256_setr_pd(vs...);
-      else  if constexpr( c == category::float32x8) return _mm256_setr_ps(vs...);
-      else  if constexpr( sizeof(T) == 1) return _mm256_setr_epi8(vs...);
-      else  if constexpr( sizeof(T) == 2) return _mm256_setr_epi16(vs...);
-      else  if constexpr( sizeof(T) == 4) return _mm256_setr_epi32(vs...);
-      else  if constexpr( sizeof(T) == 8) return _mm256_setr_epi64x(vs...);
-    }
+          if constexpr( c == category::float64x4) return _mm256_setr_pd(vs...);
+    else  if constexpr( c == category::float32x8) return _mm256_setr_ps(vs...);
+    else  if constexpr( sizeof(T) == 1) return _mm256_setr_epi8(vs...);
+    else  if constexpr( sizeof(T) == 2) return _mm256_setr_epi16(vs...);
+    else  if constexpr( sizeof(T) == 4) return _mm256_setr_epi32(vs...);
+    else  if constexpr( sizeof(T) == 8) return _mm256_setr_epi64x(vs...);
   }
 
   //================================================================================================
@@ -126,61 +112,54 @@ namespace eve::detail
                   , "[eve::make] - Invalid number of arguments"
                   );
 
-    if constexpr (has_underlying_representation<T>)
-    {
-      return make(as<wide<underlying_storage_t<T>, S>> {}, static_cast<underlying_storage_t<Vs>>(vs)...);
-    }
-    else
-    {
-      constexpr auto c = categorize<wide<T, S>>();
+    constexpr auto c = categorize<wide<T, S>>();
 
-      /*
-        Please take a minute to acknowledge the effect of deciding _mm512_setr should be
-        a macro on g++. Thanks, I hate it
+    /*
+      Please take a minute to acknowledge the effect of deciding _mm512_setr should be
+      a macro on g++. Thanks, I hate it
 
-        Press F for respect.
-      */
-      if constexpr( c == category::float64x8)
-        return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7)
-                { return _mm512_setr_pd(a0,a1,a2,a3,a4,a5,a6,a7); }(vs...);
-      else  if constexpr( c == category::float32x16)
-        return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
-                  , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
-                  )
-                { return _mm512_setr_ps(a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b2,b3,b4,b5,b6,b7); }(vs...);
-      else  if constexpr( sizeof(T) == 8)
-        return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7)
-            { return _mm512_setr_epi64(a0,a1,a2,a3,a4,a5,a6,a7); }(vs...);
-      else  if constexpr( sizeof(T) == 4)
-        return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
-                  , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
-                  )
-            { return _mm512_setr_epi32(a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b2,b3,b4,b5,b6,b7); }(vs...);
-      else  if constexpr( sizeof(T) == 2)
-        return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
-                  , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
-                  , auto c0,auto c1,auto c2,auto c3, auto c4,auto c5,auto c6,auto c7
-                  , auto d0,auto d1,auto d2,auto d3, auto d4,auto d5,auto d6,auto d7
-                  )
-            { return _mm512_set_epi16 ( d7,d6,d5,d4,d3,d2,d1,d0,c7,c6,c5,c4,c3,c2,c1,c0,b7,
+      Press F for respect.
+    */
+    if constexpr( c == category::float64x8)
+      return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7)
+              { return _mm512_setr_pd(a0,a1,a2,a3,a4,a5,a6,a7); }(vs...);
+    else  if constexpr( c == category::float32x16)
+      return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
+                , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
+                )
+              { return _mm512_setr_ps(a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b2,b3,b4,b5,b6,b7); }(vs...);
+    else  if constexpr( sizeof(T) == 8)
+      return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7)
+          { return _mm512_setr_epi64(a0,a1,a2,a3,a4,a5,a6,a7); }(vs...);
+    else  if constexpr( sizeof(T) == 4)
+      return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
+                , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
+                )
+          { return _mm512_setr_epi32(a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b2,b3,b4,b5,b6,b7); }(vs...);
+    else  if constexpr( sizeof(T) == 2)
+      return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
+                , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
+                , auto c0,auto c1,auto c2,auto c3, auto c4,auto c5,auto c6,auto c7
+                , auto d0,auto d1,auto d2,auto d3, auto d4,auto d5,auto d6,auto d7
+                )
+          { return _mm512_set_epi16 ( d7,d6,d5,d4,d3,d2,d1,d0,c7,c6,c5,c4,c3,c2,c1,c0,b7,
+                                      b6,b5,b4,b3,b2,b1,b0,a7,a6,a5,a4,a3,a2,a1,a0
+                                    ); }(vs...);
+    else  if constexpr( sizeof(T) == 1)
+          return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
+                    , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
+                    , auto c0,auto c1,auto c2,auto c3, auto c4,auto c5,auto c6,auto c7
+                    , auto d0,auto d1,auto d2,auto d3, auto d4,auto d5,auto d6,auto d7
+                    , auto e0,auto e1,auto e2,auto e3, auto e4,auto e5,auto e6,auto e7
+                    , auto f0,auto f1,auto f2,auto f3, auto f4,auto f5,auto f6,auto f7
+                    , auto g0,auto g1,auto g2,auto g3, auto g4,auto g5,auto g6,auto g7
+                    , auto h0,auto h1,auto h2,auto h3, auto h4,auto h5,auto h6,auto h7
+                    )
+              { return _mm512_set_epi8( h7,h6,h5,h4,h3,h2,h1,h0,g7,g6,g5,g4,g3,g2,g1,g0,
+                                        f7,f6,f5,f4,f3,f2,f1,f0,e7,e6,e5,e4,e3,e2,e1,e0,
+                                        d7,d6,d5,d4,d3,d2,d1,d0,c7,c6,c5,c4,c3,c2,c1,c0,b7,
                                         b6,b5,b4,b3,b2,b1,b0,a7,a6,a5,a4,a3,a2,a1,a0
                                       ); }(vs...);
-      else  if constexpr( sizeof(T) == 1)
-            return  []( auto a0,auto a1,auto a2,auto a3, auto a4,auto a5,auto a6,auto a7
-                      , auto b0,auto b1,auto b2,auto b3, auto b4,auto b5,auto b6,auto b7
-                      , auto c0,auto c1,auto c2,auto c3, auto c4,auto c5,auto c6,auto c7
-                      , auto d0,auto d1,auto d2,auto d3, auto d4,auto d5,auto d6,auto d7
-                      , auto e0,auto e1,auto e2,auto e3, auto e4,auto e5,auto e6,auto e7
-                      , auto f0,auto f1,auto f2,auto f3, auto f4,auto f5,auto f6,auto f7
-                      , auto g0,auto g1,auto g2,auto g3, auto g4,auto g5,auto g6,auto g7
-                      , auto h0,auto h1,auto h2,auto h3, auto h4,auto h5,auto h6,auto h7
-                      )
-                { return _mm512_set_epi8( h7,h6,h5,h4,h3,h2,h1,h0,g7,g6,g5,g4,g3,g2,g1,g0,
-                                          f7,f6,f5,f4,f3,f2,f1,f0,e7,e6,e5,e4,e3,e2,e1,e0,
-                                          d7,d6,d5,d4,d3,d2,d1,d0,c7,c6,c5,c4,c3,c2,c1,c0,b7,
-                                          b6,b5,b4,b3,b2,b1,b0,a7,a6,a5,a4,a3,a2,a1,a0
-                                        ); }(vs...);
-    }
   }
 
   //================================================================================================
@@ -190,11 +169,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto make(eve::as<wide<T,S>> const&, V v) noexcept
       requires x86_abi<abi_t<T, S>>
   {
-    if constexpr (has_underlying_representation<T>)
-    {
-      return make(as<wide<underlying_storage_t<T>, S>> {}, static_cast<underlying_storage_t<V>>(v));
-    }
-    else if constexpr(wide<T,S>::size() < eve::fundamental_cardinal_v<T>)
+    if constexpr(wide<T,S>::size() < eve::fundamental_cardinal_v<T>)
     {
       return [&]<std::size_t... N>(std::index_sequence<N...> const&)
       {

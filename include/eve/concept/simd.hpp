@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/arch/spec.hpp>
-#include <eve/concept/element.hpp>
 #include <eve/concept/scalar.hpp>
+#include <eve/concept/underlying_storage.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/element_type.hpp>
 
@@ -24,7 +24,7 @@ namespace eve
   concept arithmetic_simd_value = detail::instance_of<T,wide>;
 
   template<typename T>
-  concept plain_simd_value =  arithmetic_simd_value<T> && plain_scalar_value<element_type_t<T>>;
+  concept plain_simd_value =  arithmetic_simd_value<T> && (plain_scalar_value<element_type_t<T>> || has_underlying_representation<element_type_t<T>>);
 
   template<typename T>
   concept product_simd_value = arithmetic_simd_value<T> && kumi::product_type<element_type_t<T>>;

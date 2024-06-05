@@ -79,25 +79,3 @@ TTS_CASE_TPL("Slice all wides", tts::integral_types)
     for( ; i != W::size(); ++i ) TTS_EQUAL(h.get(i - (W::size() / 2)), static_cast<E>(i + 1));
   }
 };
-
-//TODO: implement == and != for wide<enum class>
-
-// TTS_CASE_TPL("Wide<enum class> equals", eve::test::simd::integers)
-// <typename Wb>(tts::type<Wb>)
-// {
-//   enum class E: eve::element_type_t<Wb> { };
-//   using W = Wb::template retype<E>;
-  
-//   W x{ static_cast<E>(3) };
-//   TTS_EQUAL(x, x);
-// };
-
-// TTS_CASE_TPL("logical<Wide<enum class>> equals", eve::test::simd::integers)
-// <typename Wb>(tts::type<Wb>)
-// {
-//   enum class E: eve::element_type_t<Wb> { };
-//   using W = Wb::template retype<E>;
-
-//   W x{ static_cast<E>(3) };
-//   TTS_EQUAL((x != static_cast<E>(0)), (x != static_cast<E>(0)));
-// };

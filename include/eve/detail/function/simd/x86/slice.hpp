@@ -91,7 +91,7 @@ namespace eve::detail
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
       requires x86_abi<abi_t<T, N>>
   {
