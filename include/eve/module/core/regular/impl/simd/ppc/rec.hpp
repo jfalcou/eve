@@ -19,7 +19,6 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
-#include <eve/module/core/regular/refine_rec.hpp>
 #include <eve/arch/platform.hpp>
 
 namespace eve::detail
