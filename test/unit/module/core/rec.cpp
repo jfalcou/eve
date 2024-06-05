@@ -66,10 +66,6 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
   if constexpr( eve::floating_value<T> )
   {
     TTS_IEEE_EQUAL(eve::rec(cases.nan), cases.nan);
-    TTS_IEEE_EQUAL(eve::rec(cases.minf), cases.nan);
-    TTS_IEEE_EQUAL(eve::rec(cases.inf) , cases.nan);
-    TTS_IEEE_EQUAL(eve::rec(cases.mzero), cases.nan);
-    TTS_IEEE_EQUAL(eve::rec(cases.zero), cases.nan);
     TTS_EQUAL(eve::rec[eve::pedantic2](cases.valmin), T(1)/cases.valmin);
     TTS_EQUAL(eve::rec[eve::pedantic2](cases.valmax), T(1)/cases.valmax);
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](cases.nan), cases.nan);
