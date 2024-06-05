@@ -158,24 +158,33 @@ namespace eve::detail
   }
 
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_eq(Wide const& v,Wide const& w) noexcept
+  EVE_FORCEINLINE auto self_eq(Wide const& v, Wide const& w) noexcept
   {
-    constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
-
-    if constexpr(has_native_abi_v<Wide>)
+    using e_t = element_type_t<Wide>;
+    if constexpr(has_underlying_representation<e_t>)
     {
-      if constexpr(is_logical_v<Wide>)  return bit_cast(v.bits() == w.bits(), as(v));
-      else                              return apply_over(eq, v, w);
+      using ws_t = as<typename Wide::template retype<underlying_storage_t<e_t>>>;
+      return self_eq(bit_cast(v, ws_t{}), bit_cast(w, ws_t{}));
     }
     else
     {
-      return apply_over(eq, v, w);
+      constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e == f); };
+
+      if constexpr(has_native_abi_v<Wide>)
+      {
+        if constexpr(is_logical_v<Wide>)  return bit_cast(v.bits() == w.bits(), as(v));
+        else                              return apply_over(eq, v, w);
+      }
+      else
+      {
+        return apply_over(eq, v, w);
+      }
     }
   }
 
   //================================================================================================
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
+  EVE_FORCEINLINE auto self_neq(Wide const& v, Wide const& w) noexcept
   requires( kumi::product_type<element_type_t<Wide>> )
   {
     if constexpr( detail::tag_dispatchable<tag::is_not_equal_,Wide,Wide> )
@@ -196,18 +205,27 @@ namespace eve::detail
   }
 
   template<simd_value Wide>
-  EVE_FORCEINLINE auto self_neq(Wide const& v,Wide const& w) noexcept
+  EVE_FORCEINLINE auto self_neq(Wide const& v, Wide const& w) noexcept
   {
-    constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e != f); };
-
-    if constexpr(has_native_abi_v<Wide>)
+    using e_t = element_type_t<Wide>;
+    if constexpr(has_underlying_representation<e_t>)
     {
-      if constexpr(is_logical_v<Wide>)  return bit_cast(v.bits() != w.bits(), as(v));
-      else                              return apply_over(eq, v, w);
+      using ws_t = as<typename Wide::template retype<underlying_storage_t<e_t>>>;
+      return self_neq(bit_cast(v, ws_t{}), bit_cast(w, ws_t{}));
     }
     else
     {
-      return apply_over(eq, v, w);
+      constexpr auto eq = []<typename E>(E const& e, E const& f) { return as_logical_t<E>(e != f); };
+
+      if constexpr(has_native_abi_v<Wide>)
+      {
+        if constexpr(is_logical_v<Wide>)  return bit_cast(v.bits() != w.bits(), as(v));
+        else                              return apply_over(eq, v, w);
+      }
+      else
+      {
+        return apply_over(eq, v, w);
+      }
     }
   }
 
