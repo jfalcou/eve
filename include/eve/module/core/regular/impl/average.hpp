@@ -50,7 +50,7 @@ namespace eve::detail
       }
       else
       {
-        T invn  = rec(T(sizeof...(args) + 1u));
+        T invn  = rec[pedantic2](T(sizeof...(args) + 1u));
         T that(r0 * invn);
         auto  next = [invn](auto avg, auto x) { return fma(x, invn, avg); };
         ((that = next(that, args)), ...);

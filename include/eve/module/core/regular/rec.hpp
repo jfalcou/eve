@@ -54,6 +54,11 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!    value containing the [elementwise](@ref glossary_elementwise)
 //!    inverse value of `x`.
 //!
+//!     @warning
+//!        regular rec does not take care of 0,  infinities and denormals.
+//!        If you need them use the pedantic option or the division operator
+//!
+//!
 //!  @note
 //!     For [real integral value](@ref eve::value) `x` is semantically equivalent to:
 //!       * If x==1 or x==-1, x is returned.
@@ -74,7 +79,11 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!   * eve::raw
 //!
 //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return. Otherwise it uses the non decorated call.
+//!     very poor accuracy in return (circa 12 bits). Otherwise it uses the non decorated call.
+//!
+//!   * eve::pedantic
+//!
+//!     The call `rec[pedantic](x)` is equivalent to one(as(x)/x.
 //! @}
 //================================================================================================
   inline constexpr auto rec = functor<rec_t>;

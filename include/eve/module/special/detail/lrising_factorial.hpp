@@ -37,11 +37,10 @@ inner_lrising_factorial(T a, T x) noexcept
     const auto c1  = -xoa / den;
     const auto c3  = -xoa * (3 + xoa * (3 + xoa)) / d3;
     const auto c5  = -xoa * (5 + xoa * (10 + xoa * (10 + xoa * (5 + xoa)))) / d5;
-    const auto c7 =
-        -xoa * (7 + xoa * (21 + xoa * (35 + xoa * (35 + xoa * (21 + xoa * (7 + xoa)))))) / d7;
+    const auto c7 =  -xoa * (7 + xoa * (21 + xoa * (35 + xoa * (35 + xoa * (21 + xoa * (7 + xoa)))))) / d7;
     const auto p8    = eve::pow(inc(xoa), 8);
-    const auto c8    = dec(rec(p8));            /* these need not   */
-    const auto c9    = dec(rec(p8 * inc(xoa))); /* be very accurate */
+    const auto c8    = dec(rec[pedantic2](p8));            /* these need not   */
+    const auto c9    = dec(rec[pedantic2](p8 * inc(xoa))); /* be very accurate */
     const auto a2    = sqr(a);
     const auto a4    = sqr(a2);
     const auto a6    = a4 * a2;

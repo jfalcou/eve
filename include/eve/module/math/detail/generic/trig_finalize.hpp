@@ -146,7 +146,7 @@ namespace eve
       {
         if( aa0lteps ) return a0;
         if( is_not_finite(xr) ) return nan(eve::as<T>());
-        y = (int(fn) & 1) ? -rec(y) : y;
+        y = (int(fn) & 1) ? -rec[pedantic2](y) : y;
         if( dxr ) y += dxr * fma(y, y, one(eve::as<T>()));
         return bit_xor(y, bitofsign(a0));
       }
@@ -155,7 +155,7 @@ namespace eve
         auto tmp      = one[fn >= T(2)](eve::as(xr));
         auto swap_bit = (fma(T(-2), tmp, fn));
         auto test     = is_eqz(swap_bit);
-        y             = if_else(test, y, -rec(y));
+        y             = if_else(test, y, -rec[pedantic2](y));
         y             = fma(dxr, fma(y, y, one(eve::as<T>())), y);
         return if_else(aa0lteps, a0, bit_xor(y, bitofsign(a0)));
       }
@@ -169,7 +169,7 @@ namespace eve
       if constexpr( scalar_value<T> )
       {
         if( is_not_finite(a0) ) return nan(eve::as<T>());
-        y = (int(fn) & 1) ? -y : rec(y);
+        y = (int(fn) & 1) ? -y : rec[pedantic2](y);
         if( dxr ) y += dxr * fma(y, y, one(eve::as<T>()));
         return bit_xor(y, bitofsign(a0));
       }
@@ -179,9 +179,9 @@ namespace eve
         auto tmp      = one[fn >= T(2)](eve::as(xr));
         auto swap_bit = (fma(T(-2), tmp, fn));
         auto test     = is_eqz(swap_bit);
-        y             = if_else(test, rec(y), -y);
+        y             = if_else(test, rec[pedantic2](y), -y);
         y             = fma(dxr, fma(y, y, one(eve::as<T>())), y);
-        return if_else(aa0lteps, /*pedantic*/ (rec)(a0), bit_xor(y, bitofsign(a0)));
+        return if_else(aa0lteps, rec[pedantic2](a0), bit_xor(y, bitofsign(a0)));
       }
     }
   }
