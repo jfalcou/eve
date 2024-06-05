@@ -88,19 +88,19 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
         auto                  qap   = inc(a);
         auto                  qam   = dec(a);
         auto                  c     = o;
-        auto                  d     = rec(maxmag(oneminus(qab * x / qap), fpmin));
+        auto                  d     = rec[pedantic2](maxmag(oneminus(qab * x / qap), fpmin));
         auto                  h     = d;
         for( std::size_t m = 1; m <= itmax; ++m )
         {
           T    vm(m);
           auto vm2 = vm + vm;
           auto aa  = vm * (b - vm) * x / ((qam + vm2) * (a + vm2));
-          d        = rec(maxmag(fma(aa, d, o), fpmin));
-          c        = maxmag(fma(aa, rec(c), o), fpmin);
+          d        = rec[pedantic2](maxmag(fma(aa, d, o), fpmin));
+          c        = maxmag(fma(aa, rec[pedantic2](c), o), fpmin);
           h *= d * c;
           aa       = -(a + vm) * (qab + vm) * x / ((a + vm2) * (qap + vm2));
-          d        = rec(maxmag(fma(aa, d, o), fpmin));
-          c        = maxmag(fma(aa, rec(c), o), fpmin);
+          d        = rec[pedantic2](maxmag(fma(aa, d, o), fpmin));
+          c        = maxmag(fma(aa, rec[pedantic2](c), o), fpmin);
           auto del = d * c;
           h *= del;
           if( eve::all(eve::abs(oneminus(del)) < epsi) ) return h; // Are we done?

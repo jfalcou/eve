@@ -67,7 +67,7 @@ namespace eve::detail
                             2.91866904423115499e-02f,
                             1.35614940793742178e-02f,
                             1.31409251787866793e-01f};
-          return eve::exp(x) * reverse_horner(rec(x), P) * eve::rsqrt(x);
+          return eve::exp(x) * reverse_horner(rec[pedantic2](x), P) * eve::rsqrt(x);
         }
         else
         {
@@ -81,7 +81,7 @@ namespace eve::detail
             6.76825737854096565e+12,  -4.49034849696138065e+13, 2.24155239966958995e+14,
             -8.13426467865659318e+14, 2.02391097391687777e+15,  -3.08675715295370878e+15,
             2.17587543863819074e+15};
-          return eve::exp(x) * reverse_horner(rec(x), P) * eve::rsqrt(x);
+          return eve::exp(x) * reverse_horner(rec[pedantic2](x), P) * eve::rsqrt(x);
         }
       };
 
@@ -96,7 +96,7 @@ namespace eve::detail
             , 2.94835666900682535e-02f}
           ;
           auto ex = eve::exp(x / 2);
-          return ex * (ex * reverse_horner(rec(x), P) / eve::sqrt(x));
+          return ex * (ex * reverse_horner(rec[pedantic2](x), P) / eve::sqrt(x));
         }
         else
         {
@@ -107,7 +107,7 @@ namespace eve::detail
                               2.92179096853915176e-02,
                               4.53371208762579442e-02};
           auto                           ex = eve::exp(x / 2);
-          return ex * (ex * reverse_horner(rec(x), P) * eve::rsqrt(x));
+          return ex * (ex * reverse_horner(rec[pedantic2](x), P) * eve::rsqrt(x));
         }
       };
 

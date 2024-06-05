@@ -25,7 +25,6 @@ namespace eve::detail
   {
     if constexpr( floating_value<T> )
     {
-      std::cout << "icitte" << std::endl;
       return T {1} / a;
     }
     else if( integral_value<T> )

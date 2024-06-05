@@ -90,9 +90,9 @@ namespace eve
         fma(t, T(0.27061), T(2.30753)) / fma(t, fma(t, T(0.04481), T(0.99229)), one(as(p))) - t;
         x         = minus[p < T(0.5)](x);
         auto al   = (sqr(x) - T(3)) * T(1.0 / 6.0);
-        auto r2a1 = rec(a + a1);
-        auto r2b1 = rec(b + b1);
-        auto h    = rec(average(r2a1, r2b1));
+        auto r2a1 = rec[pedantic2](a + a1);
+        auto r2b1 = rec[pedantic2](b + b1);
+        auto h    = rec[pedantic2](average(r2a1, r2b1));
         auto w    = (x * sqrt(al + h) / h) - (r2b1 - r2a1) * (al + FiveoSix - T(2.0 / 3.0) / h);
         return a / fma(exp(w + w), b, a);
       };
@@ -105,7 +105,7 @@ namespace eve
         auto w    = t + u;
         auto test = p < t / w;
         auto z    = if_else(test, a * w * p, b * w * oneminus(p));
-        auto po   = pow(z, rec(if_else(test, a, b)));
+        auto po   = pow(z, rec[pedantic2](if_else(test, a, b)));
         return if_else(test, po, oneminus(po));
       };
       auto       a1      = dec(a);

@@ -50,7 +50,7 @@ namespace eve::detail
                               3.7890229745772202641e+04,
                               8.6383677696049909675e+02,
                               1.0};
-      T                              y      = 8 * rec(x);
+      T                              y      = 8 * rec[pedantic2](x);
       T                              y2     = sqr(y);
       auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
       auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
@@ -77,7 +77,7 @@ namespace eve::detail
 
       auto br_8 = [](auto x)
         {
-          auto                 q       = rec(x);
+          auto                 q       = rec[pedantic2](x);
           auto                 w       = sqrt(q);
           using A8 = kumi::result::generate_t<8, elt_t>;
           constexpr A8 MO1     = {6.913942741265801E-002f,
@@ -207,7 +207,7 @@ namespace eve::detail
             3.36093607810698293419E2,
           };
 
-          auto           w      = 5.0 * rec(x);
+          auto           w      = 5.0 * rec[pedantic2](x);
           auto           z      = sqr(w);
           auto           p      = horner(z, PP) / horner(z, PQ);
           auto           q      = horner(z, QP) / horner(z, QQ);

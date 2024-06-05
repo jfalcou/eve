@@ -125,7 +125,7 @@ inline constexpr auto exp_int = functor<exp_int_t>;
       {
         auto br_largen = [](auto n, auto x) { // n >  5000
           auto xk  = x + n;
-          auto yk  = rec(sqr(xk));
+          auto yk  = rec[pedantic2](sqr(xk));
           auto t   = n;
           auto ans = yk * t * (6 * sqr(x) - 8 * t * x + sqr(t));
           ans      = yk * (ans + t * (t - 2 * x));
@@ -140,7 +140,7 @@ inline constexpr auto exp_int = functor<exp_int_t>;
             x            = inc[eqzx](x); // loop is infinite for x == 0
             auto    psi1 = zero(as(x));
             int32_t maxn = dec(max(1, int32_t(eve::maximum(n))));
-            for( int32_t i = maxn; i != 0; --i ) psi1 = add[T(i) < n](psi1, rec(T(i)));
+            for( int32_t i = maxn; i != 0; --i ) psi1 = add[T(i) < n](psi1, rec[pedantic2](T(i)));
             auto euler = ieee_constant<0x1.2788d00p-1f, 0x1.2788cfc6fb619p-1>(eve::as<T>{});
             auto psi   = -euler - log(x) + psi1;
             T    t;
@@ -149,7 +149,7 @@ inline constexpr auto exp_int = functor<exp_int_t>;
             auto xk  = zero(as(x));
             auto yk  = one(as(x));
             auto pk  = oneminus(n);
-            auto ans = if_else(is_eqz(pk), zero, rec(pk));
+            auto ans = if_else(is_eqz(pk), zero, rec[pedantic2](pk));
             do {
               xk = inc(xk);
               yk *= z / xk;
@@ -207,7 +207,7 @@ inline constexpr auto exp_int = functor<exp_int_t>;
           }
         }
       }
-      return if_else(is_eqz(x), rec(dec(n)), r);
+      return if_else(is_eqz(x), rec[pedantic2](dec(n)), r);
     }
   }
 }

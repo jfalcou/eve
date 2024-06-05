@@ -91,7 +91,7 @@ namespace eve::detail
             , 1.561635813e+00f
             , 1.573660661e-01f
           };
-          auto r = rec(x);
+          auto r = rec[pedantic2](x);
           if( eve::all(x < maxlog(as(x))) )
             return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * exp(-x) * rsqrt(x));
           else
@@ -121,7 +121,7 @@ namespace eve::detail
                               5.486540717439723515e+01,
                               6.118075837628957015e+00,
                               1.586261269326235053e-01};
-          auto                           r = rec(x);
+          auto                           r = rec[pedantic2](x);
           if( eve::all(x < maxlog(as(x))) )
             return (inc(reverse_horner(r, P)/reverse_horner(r, Q)) * exp(-x) * rsqrt(x));
           else

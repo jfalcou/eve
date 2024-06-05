@@ -53,12 +53,18 @@ namespace eve::detail
     {
       if (current_api < avx512 )
       {
-        if     constexpr( c == category::float32x16 ) return _mm512_div_ps(one(eve::as(v)), v);
-        else if constexpr( c == category::float64x8 ) return _mm512_div_pd(one(eve::as(v)), v);
-        else if constexpr( c == category::float32x8 ) return _mm256_div_ps(one(eve::as(v)), v);
-        else if constexpr( c == category::float64x4 ) return _mm256_div_pd(one(eve::as(v)), v);
-        else if constexpr( c == category::float32x4 ) return _mm_div_ps(one(eve::as(v)), v);
-        else if constexpr( c == category::float64x2 ) return _mm_div_pd(one(eve::as(v)), v);
+ //        if     constexpr( c == category::float32x16 ) return _mm512_div_ps(one(eve::as(v)), v);
+//         else if constexpr( c == category::float64x8 ) return _mm512_div_pd(one(eve::as(v)), v);
+        if (current_api >= avx)
+        {
+          if      constexpr( c == category::float32x8 ) return _mm256_div_ps(one(eve::as(v)), v);
+          else if constexpr( c == category::float64x4 ) return _mm256_div_pd(one(eve::as(v)), v);
+        }
+        if (current_api >= sse2)
+        {
+          if      constexpr( c == category::float32x4 ) return _mm_div_ps(one(eve::as(v)), v);
+          else if constexpr( c == category::float64x2 ) return _mm_div_pd(one(eve::as(v)), v);
+        }
       }
       else
       {

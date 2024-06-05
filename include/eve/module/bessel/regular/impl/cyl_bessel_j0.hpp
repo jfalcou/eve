@@ -47,7 +47,7 @@ namespace eve::detail
                                 1.4887231232283756582e+03,
                                 9.0593769594993125859e+01,
                                 1.0};
-        T                              y      = 8 * rec(x);
+        T                              y      = 8 * rec[pedantic2](x);
         T                              y2     = sqr(y);
         auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
         auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
@@ -70,7 +70,7 @@ namespace eve::detail
 
       auto br_8 = [](auto x)
         {
-          auto q  = rec(x);
+          auto q  = rec[pedantic2](x);
           auto w  = sqrt(q);
           auto p3 = w
           *
@@ -189,7 +189,7 @@ namespace eve::detail
             2.06209331660327847417E3,
             2.42005740240291393179E2,
           };
-          auto w                  = 5.0 * rec(x);
+          auto w                  = 5.0 * rec[pedantic2](x);
           auto q                  = sqr(w);
           auto p                  = horner(q, PP) / horner(q, PQ);
           q                       = horner(q, QP) / horner(q, QQ);

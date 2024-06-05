@@ -43,7 +43,7 @@ namespace eve::detail
             , -4.640275408e-03f
             , -1.156442414e-04f
           };
-          return reverse_horner(sqr(x), P2) * x + rec(x) + log(x) * a;
+          return reverse_horner(sqr(x), P2) * x + rec[pedantic2](x) + log(x) * a;
         }
         else
         {
@@ -75,7 +75,7 @@ namespace eve::detail
             -1.49749618004162787e-06
           };
           auto x2 = sqr(x);
-          return (reverse_horner(x2, P2)/reverse_horner(x2, Q2)) * x + rec(x) + log(x) * a;
+          return (reverse_horner(x2, P2)/reverse_horner(x2, Q2)) * x + rec[pedantic2](x) + log(x) * a;
         }
       };
 
@@ -97,7 +97,7 @@ namespace eve::detail
             , 9.904984851e-01f
             , 4.585534549e-02f
           };
-          auto r = rec(x);
+          auto r = rec[pedantic2](x);
           if( eve::all(x < maxlog(as(x))) )
             return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
           else
@@ -128,7 +128,7 @@ namespace eve::detail
                             2.88448064302447607e+01,
                             2.27912927104139732e+00,
                             2.50358186953478678e-02};
-          auto                           r = rec(x);
+          auto                           r = rec[pedantic2](x);
           if( eve::all(x < maxlog(as(x))) )
             return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
           else
