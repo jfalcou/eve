@@ -55,9 +55,6 @@ namespace eve
     //! Default constructor
     EVE_FORCEINLINE constexpr logical() noexcept {}
 
-    //! Copy constructor
-    EVE_FORCEINLINE constexpr logical(logical const&) noexcept = default;
-
     //! Construct from a `bool`
     EVE_FORCEINLINE constexpr logical(bool v) noexcept : value_(v ? true_mask : false_mask) {}
 
@@ -74,13 +71,6 @@ namespace eve
     //! @name Assignment operators
     //! @{
     //==============================================================================================
-    //! Assign another logical
-    EVE_FORCEINLINE constexpr logical &operator=(logical const& v) & noexcept
-    {
-      value_ = v.value_;
-      return *this;
-    }
-
     //! Assign a `bool`
     EVE_FORCEINLINE constexpr logical &operator=(bool v) & noexcept
     {
@@ -129,7 +119,7 @@ namespace eve
     }
 
     //==============================================================================================
-    // Convertion from logical to other formats (mask, bits, bitmap)
+    // Conversion from logical to other formats (mask, bits, bitmap)
     //==============================================================================================
     EVE_FORCEINLINE constexpr operator bool()   const noexcept { return !!value_; }
     EVE_FORCEINLINE constexpr bool value()      const noexcept { return !!value_; }

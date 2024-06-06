@@ -17,7 +17,7 @@ namespace eve
   {
     template<typename T, typename Target>
     requires (sizeof(T) == sizeof(Target))
-    EVE_FORCEINLINE Target operator()(T const& a, as<Target> const& tgt) const noexcept
+    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> const& tgt) const noexcept
     {
       return EVE_DISPATCH_CALL(a,tgt);
     }
