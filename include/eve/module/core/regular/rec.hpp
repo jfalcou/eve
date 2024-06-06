@@ -54,9 +54,9 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!    value containing the [elementwise](@ref glossary_elementwise)
 //!    inverse value of `x`.
 //!
-//!     @warning
-//!        regular rec does not take care of 0,  infinities and denormals.
-//!        If you need them use the pedantic option or the division operator
+//!  @warning
+//!     regular rec does not take care of denormals.
+//!     If you need them use the pedantic option or the division operator
 //!
 //!
 //!  @note

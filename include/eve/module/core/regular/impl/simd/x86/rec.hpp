@@ -14,6 +14,8 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/frexp.hpp>
+#include <eve/module/core/regular/ldexp.hpp>
 
 namespace eve::detail
 {
@@ -23,6 +25,7 @@ namespace eve::detail
                                   wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    using r_t = wide<T, N>;
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr(O::contains(raw2))
     {
@@ -36,7 +39,10 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 )
       {
         if constexpr( current_api >= avx512 ) return _mm256_rcp14_pd(v);
-        else return _mm256_cvtps_pd(_mm_rcp_ps(_mm256_cvtpd_ps(v)));
+        else
+        {
+          return _mm256_cvtps_pd(_mm_rcp_ps(_mm256_cvtpd_ps(v)));
+        }
       }
       else if constexpr( c == category::float32x4 )
       {
@@ -46,10 +52,13 @@ namespace eve::detail
       else if constexpr( c == category::float64x2 )
       {
         if constexpr( current_api >= avx512 ) return _mm_rcp14_pd(v);
-        else return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(v)));
+        else
+        {
+          return _mm_cvtps_pd(_mm_rcp_ps(_mm_cvtpd_ps(v)));
+        }
       }
     }
-    else if constexpr(O::contains(pedantic2))
+    else if constexpr(O::contains(pedantic2) || current_api < avx512)
     {
       if (current_api >= avx512)
       {
@@ -75,10 +84,14 @@ namespace eve::detail
       if constexpr(std::same_as<T, double>)
       {
         x =  fma(fnma(x, v, one(eve::as(v))), x, x);
-        if constexpr(current_api < avx512 )
-          x =  fma(fnma(x, v, one(eve::as(v))), x, x);
       }
-      return x;
+      x =  if_else (is_not_nan(v) && is_nan(x),  x & inf(eve::as(v)), x);
+      return if_else(is_eqz(v),
+                     v | inf(eve::as(v)),
+                     if_else(is_infinite(v),
+                             v & mzero(eve::as(v)),
+                             x)
+                    );
     }
   }
 
@@ -130,8 +143,13 @@ namespace eve::detail
         {
           x =  if_else(mask,fma(fnma(x, a0, one(eve::as(a0))), x, x), a0);
         }
-        return x;
-     }
+        return if_else(is_eqz(a0) && m,
+                       a0 | inf(eve::as(a0)),
+                       if_else(is_infinite(a0) && m,
+                               a0 & mzero(eve::as(a0)),
+                               x)
+                      );
+      }
     }
   }
 }
