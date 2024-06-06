@@ -437,7 +437,7 @@ namespace tts
   using int_types         = types < std::int64_t , std::int32_t , std::int16_t , std::int8_t>;
   using signed_types      = concatenate_t<real_types,int_types>;
   using uint_types        = types < std::uint64_t , std::uint32_t , std::uint16_t , std::uint8_t>;
-  using integral_types    = concatenate_t<int_types,int_types>;
+  using integral_types    = concatenate_t<int_types,uint_types>;
   using arithmetic_types  = concatenate_t<real_types,int_types,uint_types>;
 }
 #include <tuple>
@@ -522,16 +522,16 @@ namespace tts::detail
   };
 }
 #define TTS_PROTOTYPE(...) [] __VA_ARGS__
-#define TTS_CASE(ID)                                                                                \
-static bool const TTS_CAT(case_,TTS_FUNCTION) = ::tts::detail::test_capture{ID} + TTS_PROTOTYPE(()) \
+#define TTS_CASE(ID)                                                                                                  \
+[[maybe_unused]] static bool const TTS_CAT(case_,TTS_FUNCTION) = ::tts::detail::test_capture{ID} + TTS_PROTOTYPE(())  \
 
-#define TTS_CASE_TPL(ID,...)                                                                        \
-static bool const TTS_CAT(case_,TTS_FUNCTION) = ::tts::detail::test_captures<__VA_ARGS__>{ID}       \
-                                              + TTS_PROTOTYPE()                                     \
+#define TTS_CASE_TPL(ID,...)                                                                                          \
+[[maybe_unused]] static bool const TTS_CAT(case_,TTS_FUNCTION) = ::tts::detail::test_captures<__VA_ARGS__>{ID}        \
+                                              + TTS_PROTOTYPE()                                                       \
 
-#define TTS_CASE_WITH(ID, TYPES, GENERATOR)                                                         \
-static bool const TTS_CAT(case_,TTS_FUNCTION)                                                       \
-                  = ::tts::detail::test_generators{ID,GENERATOR,TYPES{}} << TTS_PROTOTYPE()         \
+#define TTS_CASE_WITH(ID, TYPES, GENERATOR)                                                                           \
+[[maybe_unused]] static bool const TTS_CAT(case_,TTS_FUNCTION)                                                        \
+                                 = ::tts::detail::test_generators{ID,GENERATOR,TYPES{}} << TTS_PROTOTYPE()            \
 
 #include <string_view>
 #include <ostream>
@@ -990,6 +990,7 @@ namespace tts::detail
 }
 #include <iomanip>
 #include <sstream>
+#include <optional>
 #include <type_traits>
 namespace tts
 {
@@ -1052,6 +1053,12 @@ namespace tts
   inline std::string as_string(std::string const& e)      { return  e;                          }
   inline std::string as_string(std::string_view const& e) { return  std::string(e);             }
   inline std::string as_string(std::nullptr_t)            { return  std::string("nullptr");     }
+  template<typename T>
+  std::string as_string(std::optional<T> const& o)
+  {
+    if(o) return  std::string("optional<") + typename_<T> +">{" + as_string(*o) + "}";
+    else  return  std::string("optional<") + typename_<T> + ">{}";
+  }
 }
 #define TTS_RELATION_BASE(A, B, OP, T, F, FAILURE)                                                \
 if( ::tts::detail::OP(a,b) )                                                                      \
@@ -1333,6 +1340,16 @@ namespace tts::detail
 #include <cmath>
 namespace tts
 {
+namespace detail
+{
+  #if defined(__FAST_MATH__)
+    inline constexpr auto isinf = [](auto) { return false; };
+    inline constexpr auto isnan = [](auto) { return false; };
+  #else
+    inline constexpr auto isinf = [](auto x) { return std::isinf(x); };
+    inline constexpr auto isnan = [](auto x) { return std::isnan(x); };
+  #endif
+}
   template<typename T, typename U> inline double absolute_distance(T const &a, U const &b)
   {
     if constexpr(std::is_same_v<T, U>)
@@ -1343,8 +1360,8 @@ namespace tts
       }
       else if constexpr(std::is_floating_point_v<T>)
       {
-        if((a == b) || (std::isnan(a) && std::isnan(b))) return 0.;
-        if(std::isinf(a) || std::isinf(b) || std::isnan(a) || std::isnan(b))
+        if((a == b) || (detail::isnan(a) && detail::isnan(b))) return 0.;
+        if(detail::isinf(a) || detail::isinf(b) || detail::isnan(a) || detail::isnan(b))
           return std::numeric_limits<double>::infinity();
         return std::abs(a - b);
       }
@@ -1375,8 +1392,8 @@ namespace tts
       { return a == b ? 0. : 100.; }
       else if constexpr(std::is_floating_point_v<T>)
       {
-        if((a == b) || (std::isnan(a) && std::isnan(b))) return 0.;
-        if(std::isinf(a) || std::isinf(b) || std::isnan(a) || std::isnan(b))
+        if((a == b) || (detail::isnan(a) && detail::isnan(b))) return 0.;
+        if(detail::isinf(a) || detail::isinf(b) || detail::isnan(a) || detail::isnan(b))
           return std::numeric_limits<double>::infinity();
         return 100. * (std::abs(a - b) / std::max(T(1), std::max(std::abs(a), std::abs(b))));
       }
@@ -1410,7 +1427,7 @@ namespace tts
       else if constexpr(std::is_floating_point_v<T>)
       {
         using ui_t = std::conditional_t<std::is_same_v<T, float>, std::uint32_t, std::uint64_t>;
-        if((a == b) || (std::isnan(a) && std::isnan(b)))
+        if((a == b) || (detail::isnan(a) && detail::isnan(b)))
         {
           return 0.;
         }
@@ -1451,7 +1468,7 @@ namespace tts
   {
     if constexpr(std::is_floating_point_v<T>)
     {
-      return (a==b) || (std::isnan(a) && std::isnan(b));
+      return (a==b) || (detail::isnan(a) && detail::isnan(b));
     }
     else
     {
@@ -1507,7 +1524,7 @@ namespace tts
   }                                                                                                 \
 }(LHS,RHS)                                                                                          \
 
-#define TTS_DO_IEEE_EQUAL(L,R,F,...)    TTS_DO_IEEE_EQUAL_ ## __VA_ARGS__ (L,R)
+#define TTS_DO_IEEE_EQUAL(L,R,...)    TTS_DO_IEEE_EQUAL_ ## __VA_ARGS__ (L,R)
 #define TTS_DO_IEEE_EQUAL_(L,R)         TTS_DO_IEEE_EQUAL_IMPL(L,R,TTS_FAIL)
 #define TTS_DO_IEEE_EQUAL_REQUIRED(L,R) TTS_DO_IEEE_EQUAL_IMPL(L,R,TTS_FATAL)
 #define TTS_IEEE_EQUAL(L,R,...)       TTS_DO_IEEE_EQUAL(L, R, __VA_ARGS__ )
@@ -1589,11 +1606,11 @@ namespace tts::detail
   inline std::size_t last_bucket_less(std::size_t nb_buckets, double ulp) noexcept
   {
     std::size_t bucket;
-    if     (ulp <= 1.5     ) bucket = static_cast<std::size_t>(std::ceil(ulp*2));
-    else if(std::isinf(ulp)) bucket = nb_buckets-1;
-    else                     bucket = std::min( nb_buckets-2
-                                              , static_cast<std::size_t>(std::log2(next2(ulp))+4)
-                                              );
+    if     (ulp <= 1.5        ) bucket = static_cast<std::size_t>(std::ceil(ulp*2));
+    else if(detail::isinf(ulp)) bucket = nb_buckets-1;
+    else                        bucket = std::min ( nb_buckets-2
+                                                  , static_cast<std::size_t>(std::log2(next2(ulp))+4)
+                                                  );
     return bucket;
   }
   template<typename Type,typename In, typename Out, typename Func>
