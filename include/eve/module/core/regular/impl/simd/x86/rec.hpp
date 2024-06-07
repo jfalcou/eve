@@ -14,8 +14,6 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/regular/frexp.hpp>
-#include <eve/module/core/regular/ldexp.hpp>
 
 namespace eve::detail
 {
