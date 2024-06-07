@@ -35,13 +35,29 @@ namespace eve::detail
   {
     if constexpr(integral_value<T>)
     {
-      if constexpr( O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
+//       auto doit = [](auto a,  auto b, auto &o){
+//         if constexpr(O::contains(pedantic2))
+//         {
+//           return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
+//                          allbits,
+//                          if_else(is_eqz(a) || is_infinite(b),
+//                                  a,
+//                                  fnma[pedantic2](b, div[o](a, b)), a)
+//                         );
+//         }
+//         else
+//         {
+//           return fnma(b, eve::div[o](a, b), a);;
+//         }
+//       };
+      if constexpr(O::contains(downward2) ||
+                   (( O::contains(upward2) || O::contains(to_nearest2)) && !(unsigned_value<T>)))
       {
-        return  fnma(b, eve::div[o](a, b), a);;
+        return fnma(b, eve::div[o](a, b), a);;
       }
       else
       {
-        return  fnma(b, eve::div(a, b), a);
+        return fnma(b, eve::div(a, b), a);
       }
     }
     else if constexpr(floating_value<T>)
@@ -69,38 +85,3 @@ namespace eve::detail
     }
   }
 }
-
-
-// template<floating_ordered_value T>
-// EVE_FORCEINLINE auto
-// rem_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-// {
-//   if constexpr( current_api == neon && simd_value<T> ) return map(rem, a, b);
-//   else
-//   {
-//     return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
-//                    allbits,
-//                    if_else(is_eqz(a), a, fnma(b, trunc(div(a, b)), a)));
-//   }
-// }
-
-// template<ordered_value T, decorator D>
-// EVE_FORCEINLINE auto
-// rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, T const& b) noexcept
-//     requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, to_nearest_type> {}))
-// {
-//   if constexpr( has_native_abi_v<T> ) return fnma(b, D()(eve::div)(a, b), a);
-//   else return apply_over(D()(rem), a, b);
-// }
-// template<floating_ordered_value T>
-// EVE_FORCEINLINE auto
-// rem_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T const& a, T const& b) noexcept
-// {
-//   if constexpr( has_native_abi_v<T> )
-//   {
-//     return if_else(is_eqz(b) || is_unordered(a, b),
-//                    if_else(is_eqz(a) || is_infinite(b), a, allbits),
-//                    fnma(b, to_nearest(eve::div)(a, b), a)); // as remainder
-//   }
-//   else return apply_over(to_nearest(rem), a, b);
-// }
