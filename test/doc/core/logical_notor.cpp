@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_logical_notor(auto a, auto b) { return eve::logical_notor(a, b); }
+
 int main()
 {
   using eve::is_even;
@@ -22,5 +24,8 @@ int main()
             << " yf                                             = " << yf << '\n'
             << " -> eve::logical_notor(is_odd(xf), is_even(yf)) = " << eve::logical_notor(is_odd(xf), is_even(yf)) << '\n'
             << " -> eve::logical_notor(xf == 3,    is_even(yf)) = " << eve::logical_notor(xf == 3   , is_even(yf)) << '\n' ;
+
+  std::cout << "-> constexpr_logical_notor(true, false) = " << constexpr_logical_notor(true, false) << std::endl;
+
   return 0;
 }

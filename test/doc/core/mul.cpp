@@ -2,6 +2,8 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+consteval auto constexpr_mul(auto a, auto b) { return eve::mul(a, b); }
+
 int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
@@ -37,5 +39,8 @@ int main()
             << " -> mul(kumi::tuple{pf, 1.0f)     = " << eve::mul( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> mul(kumi::tuple{1.0f, pf)     = " << eve::mul( kumi::tuple{1.0f, pf})  << '\n'
             << " -> mul[saturated](pi,12,pi,pi)   = " << eve::mul[eve::saturated](pi, 12, pi,pi) << '\n';
+
+  std::cout << "-> constexpr_mul(1.0f,2.0f) = " << constexpr_mul(1.0f,2.0f) << std::endl;
+
   return 0;
 }

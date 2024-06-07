@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int8_t, eve::fixed<4>>;
 
+consteval auto constexpr_dec(auto a) { return eve::dec(a); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f};
@@ -21,6 +23,9 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf           = " << xf << '\n'
             << "-> eve::dec(xf) = " << eve::dec(xf) << '\n';
+
+
+  std::cout << "-> constexpr_dec(1.0f) = " << constexpr_dec(1.0f) << std::endl;
 
   return 0;
 }

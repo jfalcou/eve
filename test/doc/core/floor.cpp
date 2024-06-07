@@ -5,6 +5,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_floor(auto a) { return eve::floor(a); }
+
 int main()
 {
   float decr = -eve::eps(eve::as<float>());
@@ -23,5 +25,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf        = " << xf << '\n'
             << "-> floor(xf) = " << eve::floor(xf) << '\n';
+
+//  std::cout << "-> constexpr_floor(1.0f) = " << constexpr_floor(1.0f) << std::endl;
+
   return 0;
 }

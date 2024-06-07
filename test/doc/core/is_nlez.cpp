@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_is_nlez(auto a) { return eve::is_nlez(a); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};
@@ -18,5 +20,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf          = " << xf << '\n'
             << "-> is_nlez(xf) = " << eve::is_nlez(xf) << '\n';
+
+  std::cout << "-> constexpr_is_nlez(1.0f) = " << constexpr_is_nlez(1.0f) << std::endl;
+
   return 0;
 }

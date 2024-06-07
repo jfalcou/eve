@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float>;
 using wide_it = eve::wide<std::int16_t>;
 
+consteval auto constexpr_bitincrement(auto a) { return eve::bitincrement(a); }
+
 int main()
 {
   wide_ft wxf;
@@ -24,6 +26,9 @@ int main()
             << "-> bitincrement(as<std::int16_t>())  = " << eve::bitincrement(eve::as(std::int16_t())) << '\n'
             << "-> bitincrement(as<xf))              = " << eve::bitincrement(eve::as(xf)) << '\n'
             << "-> bitincrement(as<xi))              = " << eve::bitincrement(eve::as(xi)) << '\n';
+
+
+  std::cout << "-> constexpr_bitincrement(1.0f) = " << constexpr_bitincrement(eve::as<float>()) << std::endl;
 
   return 0;
 }

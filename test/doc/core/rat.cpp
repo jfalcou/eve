@@ -13,6 +13,8 @@
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
 
+consteval auto constexpr_rat(auto a) { return eve::rat(a); }
+
 int main()
 {
   using eve::as;
@@ -31,5 +33,8 @@ int main()
             << "<- xf                  = " << xf << '\n'
             << "-> xn                  = " << xn << '\n'
             << "-> xd                  = " << xd << '\n';
+
+//  std::cout << "-> constexpr_rat(1.0f) = " << constexpr_rat(1.0f) << std::endl;
+
   return 0;
 }

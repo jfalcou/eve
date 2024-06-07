@@ -2,6 +2,8 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+consteval auto constexpr_add(auto a, auto b) { return eve::add(a, b); }
+
 int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;

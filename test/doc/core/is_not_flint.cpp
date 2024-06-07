@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_is_not_flint(auto a) { return eve::is_not_flint(a); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, eve::valmax(eve::as<float>()),
@@ -20,5 +22,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf                          = " << xf << '\n'
             << "-> is_not_flint(xf)            = " << eve::is_not_flint(xf) << '\n';
+
+//  std::cout << "-> constexpr_is_not_flint(1.0f) = " << constexpr_is_not_flint(1.0f) << std::endl;
+
   return 0;
 }

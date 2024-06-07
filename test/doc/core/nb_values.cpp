@@ -3,6 +3,8 @@
 #include <iostream>
 #include <iomanip>
 
+consteval auto constexpr_nb_values(auto a, auto b) { return eve::nb_values(a, b); }
+
 int main()
 {
   using w_t = eve::wide<float, eve::fixed<4>>;
@@ -20,5 +22,8 @@ int main()
             << " xi                   = " << xi << '\n'
             << " yi                   = " << yi << '\n'
             << " -> nb_values(xi, yi) = " << eve::nb_values(xi, yi) << '\n';
+
+//  std::cout << "-> constexpr_nb_values(3, 7f) = " << constexpr_nb_values(3, 7) << std::endl;
+
   return 0;
 }

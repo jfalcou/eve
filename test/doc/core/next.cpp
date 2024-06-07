@@ -6,6 +6,8 @@
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
+consteval auto constexpr_next(auto a) { return eve::next(a); }
+
 int main()
 {
   wide_ft pf = {-0.0f, 2.0f, eve::eps(eve::as<float>()), 0.0f, 30.0f,eve::mindenormal(eve::as<float>()),
@@ -30,5 +32,8 @@ int main()
             << "-> next(xf, 3)         = " << eve::next(xf, 3) << '\n'
             << "<- xi                  = " << xi << '\n'
             << "-> next(xi)            = " << eve::next(xi) << '\n';
+
+  std::cout << "-> constexpr_next(1) = " << constexpr_next(1) << std::endl;
+
   return 0;
 }

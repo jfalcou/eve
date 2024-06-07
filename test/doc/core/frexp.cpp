@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<double, eve::fixed<8>>;
 
+consteval auto constexpr_frexp(auto a) { return eve::frexp(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, 0.0f, 367.0f, -1005600.0f, eve::mindenormal(eve::as<double>()),
@@ -28,5 +30,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf        =  " << xf << '\n'
             << "-> frexp(xf) = [" << sm << ", " << se << "]\n";
+
+//  std::cout << "-> constexpr_frexp(1.0f) = " << constexpr_frexp(1.0f) << std::endl;
+
   return 0;
 }

@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_manhattan(auto a, auto b) { return eve::manhattan(a, b); }
+
 int main()
 {
   wide_ft pf = {-1.0f, 2.0f, -3.0f, eve::inf(eve::as<float>())};
@@ -31,5 +33,8 @@ int main()
             << " -> manhattan(kumi::tuple{1, pf, pf})           = " << eve::manhattan( kumi::tuple{1, pf, qf}) << '\n'
             << " -> manhattan(kumi::tuple{pf, 1.0f)             = " << eve::manhattan( kumi::tuple{pf, 1.0f}) << '\n'
             << " -> manhattan(kumi::tuple{1.0f, pf)             = " << eve::manhattan( kumi::tuple{1.0f, pf}) << '\n';
+
+  std::cout << "-> constexpr_manhattan(1.0f,2.0f) = " << constexpr_manhattan(1.0f,2.0f) << std::endl;
+
   return 0;
 }

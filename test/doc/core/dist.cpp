@@ -4,6 +4,8 @@
 
 using wide_it = eve::wide<int16_t, eve::fixed<4>>;
 
+consteval auto constexpr_dist(auto a, auto b) { return eve::dist(a, b); }
+
 int main()
 {
   wide_it pf = {0, 1, -1, -eve::valmax(eve::as<int16_t>())};
@@ -22,5 +24,8 @@ int main()
             << "<- xf                       = " << xf << '\n'
             << "<- yf                       = " << yf << '\n'
             << "-> dist(xf, yf)             = " << eve::dist(xf, yf) << '\n';
+
+  std::cout << "-> constexpr_dist(1.0f,2.0f) = " << constexpr_dist(1.0f,2.0f) << std::endl;
+
   return 0;
 }

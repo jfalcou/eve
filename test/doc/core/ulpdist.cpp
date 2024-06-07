@@ -3,6 +3,8 @@
 #include <iostream>
 #include <iomanip>
 
+consteval auto constexpr_ulpdist(auto a, auto b) { return eve::ulpdist(a, b); }
+
 int main()
 {
   using w_t = eve::wide<float, eve::fixed<4>>;
@@ -20,5 +22,8 @@ int main()
             << " xi                 = " << xi << '\n'
             << " yi                 = " << yi << '\n'
             << " -> ulpdist(xi, yi) = " << eve::ulpdist(xi, yi) << '\n';
+
+//  std::cout << "-> constexpr_ulpdist(1.0f,2.0f) = " << constexpr_ulpdist(1.0f,2.0f) << std::endl;
+
   return 0;
 }

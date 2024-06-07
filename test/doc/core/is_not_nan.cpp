@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_is_not_nan(auto a) { return eve::is_not_nan(a); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, eve::nan(eve::as<float>()),
@@ -19,5 +21,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf             = " << xf << '\n'
             << "-> is_not_nan(xf) = " << eve::is_not_nan(xf) << '\n';
+
+  std::cout << "-> constexpr_is_not_nan(1.0f) = " << constexpr_is_not_nan(1.0f) << std::endl;
+
   return 0;
 }

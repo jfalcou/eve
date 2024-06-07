@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_maxabs(auto a, auto b) { return eve::maxabs(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
@@ -26,5 +28,8 @@ int main()
             << "<- xf                        = " << xf << '\n'
             << "<- yf                        = " << yf << '\n'
             << "-> maxabs(xf, yf)            = " << eve::maxabs(xf, yf) << '\n';
+
+  std::cout << "-> constexpr_maxabs(1.0f,2.0f) = " << constexpr_maxabs(1.0f,2.0f) << std::endl;
+
    return 0;
 }

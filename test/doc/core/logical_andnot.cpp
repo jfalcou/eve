@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_logical_andnot(auto a, auto b) { return eve::logical_andnot(a, b); }
+
 int main()
 {
   using eve::is_even;
@@ -22,5 +24,8 @@ int main()
             << " yf                                              = " << yf << '\n'
             << " -> eve::logical_andnot(is_odd(xf), is_even(yf)) = " << eve::logical_andnot(is_odd(xf), is_even(yf)) << '\n'
             << " -> eve::logical_andnot(xf == 3,    is_even(yf)) = " << eve::logical_andnot(xf == 3   , is_even(yf)) << '\n' ;
+
+  std::cout << "-> constexpr_logical_andnot(true, false) = " << constexpr_logical_andnot(true, false) << std::endl;
+
   return 0;
 }

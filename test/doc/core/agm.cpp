@@ -3,7 +3,6 @@
 #include <vector>
 #include <iostream>
 
-
 int main()
 {
   using wf_t = eve::wide<float, eve::fixed<4>>;
@@ -22,5 +21,6 @@ int main()
             << " xi                 = " << xi << '\n'
             << " yi                 = " << yi << '\n'
             << " -> agm(xi, yi)     = " << eve::agm(xi, yi) << '\n';
+
   return 0;
 }

@@ -24,5 +24,6 @@ int main()
             << "-> all(xf) = " << eve::all(xf == 0) << '\n'
             << "<- yf      = " << yf << '\n'
             << "-> all(yf) = " << eve::all(yf == 0) << '\n';
+
   return 0;
 }

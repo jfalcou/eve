@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
+consteval auto constexpr_none(auto a) { return eve::none(a); }
+
 int main()
 {
   wide_ft pf = {-0.0f, 0.0f, -0.0f, -0.0f};
@@ -25,5 +27,8 @@ int main()
             << "-> none(xf) = " << eve::none(xf != 0) << '\n'
             << "<- yf       = " << yf << '\n'
             << "-> none(yf) = " << eve::none(yf != 0) << '\n';
+
+//  std::cout << "-> constexpr_none(1.0f) = " << constexpr_none(1.0f) << std::endl;
+
   return 0;
 }

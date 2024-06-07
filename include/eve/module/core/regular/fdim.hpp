@@ -82,7 +82,10 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     fdim_(EVE_REQUIRES(cpu_), O const &, T a, T b) noexcept
     {
-      return if_else(a >= b, sub(a, b), eve::zero);
+      if constexpr(scalar_value<T>)
+        return  a >= b ? sub(a, b) : T(0);
+      else
+        return if_else(a >= b, sub(a, b), eve::zero);
     }
   }
 }

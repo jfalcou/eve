@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
+consteval auto constexpr_sqr(auto a) { return eve::sqr(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, 2.0f, -3.0f, 182.0f};
@@ -27,5 +29,8 @@ int main()
             << "<- xi                  = " << xi << '\n'
             << "-> sqr[saturated2](xi)  = " << eve::sqr[eve::saturated2](xi) << '\n'
             << "-> sqr(xi)             = " << eve::sqr(xi) << '\n';
+
+  std::cout << "-> constexpr_sqr(1.0f) = " << constexpr_sqr(1.0f) << std::endl;
+
   return 0;
 }

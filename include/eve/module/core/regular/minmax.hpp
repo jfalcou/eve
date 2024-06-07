@@ -121,7 +121,7 @@ inline constexpr auto minmax = functor<minmax_t>;
 
 
     template<value T0, value T1, value... Ts, callable_options O>
-    EVE_FORCEINLINE auto
+    EVE_FORCEINLINE constexpr auto
     minmax_(EVE_REQUIRES(cpu_), O const & , T0 v0, T1 v1, Ts... vs) noexcept
     -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
     {
@@ -140,7 +140,7 @@ inline constexpr auto minmax = functor<minmax_t>;
 
     // -----  Predicate case
     template<typename Callable, callable_options O>
-    EVE_FORCEINLINE auto
+    EVE_FORCEINLINE constexpr auto
     minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
     {
       if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
@@ -159,7 +159,7 @@ inline constexpr auto minmax = functor<minmax_t>;
     }
 
     template<conditional_expr C, value T0, value T1, value... Ts, callable_options O>
-    EVE_FORCEINLINE auto
+    EVE_FORCEINLINE constexpr auto
     minmax_(EVE_REQUIRES(cpu_), C const& c, O const &, T0 v0, T1 v1, Ts... vs) noexcept
     -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))
     {

@@ -3,6 +3,8 @@
 
 using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 
+consteval auto constexpr_bit_not(auto a) { return eve::bit_not(a); }
+
 int main()
 {
   wide_it pi = {14, 1, 3, 0};
@@ -17,5 +19,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf          = " << xf << '\n'
             << "-> bit_not(xf) = " << eve::bit_not(xf) << '\n';
+
+  std::cout << "-> constexpr_bit_not(1.0f) = " << constexpr_bit_not(1.0f) << std::endl;
+
   return 0;
 }

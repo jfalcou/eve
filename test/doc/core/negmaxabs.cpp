@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_negmaxabs(auto a, auto b) { return eve::negmaxabs(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
@@ -28,6 +30,9 @@ int main()
             << "-> negmaxabs(xf, yf)            = " << eve::negmaxabs(xf, yf) << '\n'
             << "-> negmaxabs[pedantic}(xf, yf)  = " << eve::negmaxabs[eve::pedantic](xf, yf) << '\n'
             << "-> negmaxabs[numeric](xf, yf)   = " << eve::negmaxabs[eve::numeric](xf, yf) << '\n';
+
+
+  std::cout << "-> constexpr_negmaxabs(1.0f,2.0f) = " << constexpr_negmaxabs(1.0f,2.0f) << std::endl;
 
    return 0;
 }

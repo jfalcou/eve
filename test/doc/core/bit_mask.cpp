@@ -5,6 +5,8 @@
 using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_bit_mask(auto a) { return eve::bit_mask(a); }
+
 int main()
 {
   wide_it pi = {14, 1, 3, 0, 16, 23000, 0, 27};
@@ -23,5 +25,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf           = " << xf << '\n'
             << "-> bit_mask(xf) = " << eve::bit_mask(xf) << '\n';
+
+  std::cout << "-> constexpr_bit_mask(1.0f) = " << constexpr_bit_mask(1.0f) << std::endl;
+
   return 0;
 }

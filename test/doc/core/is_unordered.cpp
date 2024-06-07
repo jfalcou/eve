@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_is_unordered(auto a, auto b) { return eve::is_unordered(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
@@ -24,5 +26,8 @@ int main()
             << "<- xf                   = " << xf << '\n'
             << "<- yf                   = " << yf << '\n'
             << "-> is_unordered(xf, yf) = " << eve::is_unordered(xf, yf) << '\n';
+
+  std::cout << "-> constexpr_is_unordered(1.0f,2.0f) = " << constexpr_is_unordered(1.0f,2.0f) << std::endl;
+
   return 0;
 }

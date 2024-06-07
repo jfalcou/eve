@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_is_lessgreater(auto a, auto b) { return eve::is_lessgreater(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -0.0f, -2.0f};
@@ -22,5 +24,8 @@ int main()
             << "<- xf                     = " << xf << '\n'
             << "<- yf                     = " << yf << '\n'
             << "-> is_lessgreater(xf, yf) = " << eve::is_lessgreater(xf, yf) << '\n';
+
+  std::cout << "-> constexpr_is_lessgreater(1.0f,2.0f) = " << constexpr_is_lessgreater(1.0f,2.0f) << std::endl;
+
   return 0;
 }

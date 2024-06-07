@@ -17,7 +17,7 @@ namespace eve::detail
   // Wide to Logical
   //================================================================================================
   template<typename T, typename N>
-  EVE_FORCEINLINE as_logical_t<wide<T,N>> to_logical( wide<T,N> const& v ) noexcept
+  EVE_FORCEINLINE constexpr as_logical_t<wide<T,N>> to_logical( wide<T,N> const& v ) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return as_logical_t<wide<T,N>>(vec_cmpne(v.storage(), wide<T,N>{0}.storage()));

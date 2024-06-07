@@ -21,7 +21,7 @@ namespace eve::detail
   // What's the alternative for this case ?
   //================================================================================================
   template<conditional_expr C, typename Target, typename Arg>
-  EVE_FORCEINLINE Target alternative(C const& c, Arg a0, as<Target> const&)
+  EVE_FORCEINLINE constexpr Target alternative(C const& c, Arg a0, as<Target> const&)
   {
     if constexpr( C::has_alternative )  return Target{c.alternative};
     else
@@ -37,7 +37,7 @@ namespace eve::detail
   // Turn a conditional into a mask
   //================================================================================================
   template<conditional_expr C, typename Target>
-  EVE_FORCEINLINE auto expand_mask(C const& c, as<Target> const&)
+  EVE_FORCEINLINE constexpr auto expand_mask(C const& c, as<Target> const&)
   {
     auto msk = c.mask( as<Target>{} );
     return as_wide_t<decltype(msk), cardinal_t<Target>>(msk);
@@ -47,7 +47,7 @@ namespace eve::detail
   // Handle the basic if/if_else cases
   //================================================================================================
   template<conditional_expr C, typename Op, typename Arg0, typename... Args>
-  EVE_FORCEINLINE auto mask_op( C const& c
+  EVE_FORCEINLINE constexpr auto mask_op( C const& c
                               , [[maybe_unused]] Op f
                               , [[maybe_unused]] Arg0 const& a0
                               , [[maybe_unused]] Args const&... as

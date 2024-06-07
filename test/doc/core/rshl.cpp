@@ -7,6 +7,8 @@ using uiT      = std::uint32_t;
 using wide_it  = eve::wide<iT, eve::fixed<4>>;
 using wide_uit = eve::wide<uiT, eve::fixed<4>>;
 
+consteval auto constexpr_rshl(auto a, auto b) { return eve::rshl(a, b); }
+
 int main()
 {
   wide_uit pi = {100, 200, 2, 3};
@@ -24,5 +26,8 @@ int main()
             << "<- xi            = " << xi << '\n'
             << "<- yi            = " << yi << '\n'
             << "-> rshl(xi, yi)  = " << eve::rshl(xi, yi) << '\n';
+
+  std::cout << "-> constexpr_rshl(1u,2u) = " << constexpr_rshl(1u,2u) << std::endl;
+
   return 0;
 }

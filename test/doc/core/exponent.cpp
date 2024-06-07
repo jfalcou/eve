@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_exponent(auto a) { return eve::exponent(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, 0.0f, 367.0f, -1005600.0f, eve::mindenormal(eve::as<float>()),
@@ -18,5 +20,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf           = " << xf << '\n'
             << "-> exponent(xf) = " << eve::exponent(xf) << '\n';
+
+//  std::cout << "-> constexpr_exponent(1.0f) = " << constexpr_exponent(1.0f) << std::endl;
+
   return 0;
 }

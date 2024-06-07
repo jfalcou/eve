@@ -5,6 +5,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_modf(auto a) { return eve::modf(a); }
+
 int main()
 {
   wide_ft pf = {-0.0,  1.30f, -1.3f,  eve::inf(eve::as<float>()),  0.0f,
@@ -41,5 +43,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf       =  " << xf << '\n'
             << "-> modf(xf) = [" << sm << ", " << se << "]\n";
+
+//  std::cout << "-> constexpr_modf(1.0f) = " << constexpr_modf(1.0f) << std::endl;
+
   return 0;
 }

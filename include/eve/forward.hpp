@@ -28,21 +28,21 @@ struct ignore_extrema;
 namespace eve::detail
 {
 // to_logical -----------------------------------------------------------
-template<typename T, typename N> auto to_logical(wide<T, N> const& v) noexcept;
+template<typename T, typename N> auto  constexpr to_logical(wide<T, N> const& v) noexcept;
 
-template<value T> EVE_FORCEINLINE auto to_logical(logical<T> v) noexcept;
+template<value T> EVE_FORCEINLINE constexpr  auto to_logical(logical<T> v) noexcept;
 
-template<logical_simd_value Logical> Logical to_logical(eve::top_bits<Logical> mmask) noexcept;
+template<logical_simd_value Logical>  constexpr Logical to_logical(eve::top_bits<Logical> mmask) noexcept;
 
-template<scalar_value T> auto to_logical(T v) noexcept;
+template<scalar_value T>  constexpr auto to_logical(T v) noexcept;
 
-template<relative_conditional_expr C, simd_value T> auto to_logical(C c, eve::as<T>) noexcept;
+template<relative_conditional_expr C, simd_value T>  constexpr auto to_logical(C c, eve::as<T>) noexcept;
 
 template<relative_conditional_expr C, simd_value T>
-auto EVE_FORCEINLINE to_logical(C c, eve::as<T>) noexcept requires(current_api >= avx512);
+auto EVE_FORCEINLINE  constexpr to_logical(C c, eve::as<T>) noexcept requires(current_api >= avx512);
 
 template<conditional_expr C, typename Op, typename Arg0, typename... Args>
-EVE_FORCEINLINE auto mask_op(C const&                     c,
+EVE_FORCEINLINE  constexpr auto mask_op(C const&                     c,
                              [[maybe_unused]] Op          f,
                              [[maybe_unused]] Arg0 const& a0,
                              [[maybe_unused]] Args const&...as);

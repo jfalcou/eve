@@ -6,6 +6,8 @@ using wide_ft = eve::wide<float, eve::fixed<8>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 using wide_uit = eve::wide<std::uint16_t, eve::fixed<4>>;
 
+consteval auto constexpr_sign(auto a) { return eve::sign(a); }
+
 int main()
 {
   wide_ft pf = {-0.0f, 2.0f, -3.0f, -32768.0f,
@@ -33,5 +35,8 @@ int main()
             << "-> sign(xi) = " << eve::sign(xi) << '\n'
             << "<- xui       = " << +xui << '\n'
             << "-> sign(xui) = " << +eve::sign(xui) << '\n';
+
+//  std::cout << "-> constexpr_sign(1.0f) = " << constexpr_sign(1.0f) << std::endl;
+
   return 0;
 }

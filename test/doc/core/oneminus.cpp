@@ -5,6 +5,8 @@
 using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;
 using wide_ft = eve::wide <float, eve::fixed<8>>;
 
+consteval auto constexpr_oneminus(auto a) { return eve::oneminus(a); }
+
 int main()
 {
   wide_it pi = { 0, 1, 2, 3, -1, -32766, -32767, -32768};
@@ -25,6 +27,9 @@ int main()
     << "---- scalar"  << '\n'
     << "<- xf                       = " << xf << '\n'
     << "-> oneminus(xf)             = " << eve::oneminus(xf) << '\n';
+
+
+  std::cout << "-> constexpr_oneminus(1.0f) = " << constexpr_oneminus(1.0f) << std::endl;
 
   return 0;
 }
