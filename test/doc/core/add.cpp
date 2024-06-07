@@ -2,6 +2,8 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+consteval auto constexpr_add(auto a, auto b) { return eve::add(a, b); }
+
 int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
@@ -34,5 +36,8 @@ int main()
             << " -> add(kumi::tuple{pf, 1.0f)     = " << eve::add( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> add(kumi::tuple{1.0f, pf)     = " << eve::add( kumi::tuple{1.0f, pf})  << '\n'
             << " -> add[saturated](pi,12,pi,pi)   = " << eve::add[eve::saturated](pi, 12, pi,pi) << '\n';
+
+  std::cout << "-> constexpr_add(1.0f,2.0f)        = " << constexpr_add(1.0f,2.0f) <<  '\n';
+
   return 0;
 }

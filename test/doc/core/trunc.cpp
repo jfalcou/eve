@@ -5,6 +5,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_trunc(auto a) { return eve::trunc(a); }
+
 int main()
 {
   float decr = eve::eps(eve::as<float>());
@@ -31,6 +33,9 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf        = " << xf << '\n'
             << "-> trunc(xf) = " << eve::trunc(xf) << '\n';
+
+
+//  std::cout << "-> constexpr_trunc(1.0f) = " << constexpr_trunc(1.0f) << std::endl;
 
   return 0;
 }

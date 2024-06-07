@@ -19,6 +19,5 @@ int main()
             << "-> count_true(pf)                  = " << eve::count_true(pf) << '\n'
             << "-> count_true[ignore_first(2)](pf) = " << eve::count_true[eve::ignore_first(2)](pf) << '\n';
 
-
   return 0;
 }

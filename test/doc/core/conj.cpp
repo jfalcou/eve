@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_conj(auto a) { return eve::conj(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};
@@ -17,5 +19,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf                   = " << xf << '\n'
             << "-> conj(xf)             = " << eve::conj(xf) << '\n';
+
+  std::cout << "-> constexpr_conj(1.0f) = " << constexpr_conj(1.0f) << std::endl;
+
   return 0;
 }

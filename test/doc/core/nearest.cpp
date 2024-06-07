@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_nearest(auto a) { return eve::nearest(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, -1.3f, -1.5f, -1.7f, 2.0f, 2.3f, 2.5f, 2.7f};
@@ -18,5 +20,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf          = " << xf << '\n'
             << "-> nearest(xf) = " << eve::nearest(xf) << '\n';
+
+  std::cout << "-> constexpr_nearest(1.0f) = " << constexpr_nearest(1.0f) << std::endl;
+
   return 0;
 }

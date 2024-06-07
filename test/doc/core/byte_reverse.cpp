@@ -20,5 +20,6 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf              = " << +xf << '\n'
             << "-> byte_reverse(xf) = " << +eve::byte_reverse(xf) << '\n';
+
   return 0;
 }

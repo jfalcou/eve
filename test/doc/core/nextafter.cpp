@@ -3,6 +3,8 @@
 #include <iostream>
 #include <iomanip>
 
+consteval auto constexpr_nextafter(auto a, auto b) { return eve::nextafter(a, b); }
+
 int main()
 {
   using w_t = eve::wide<float, eve::fixed<4>>;
@@ -22,5 +24,8 @@ int main()
             << " yi                   = " << yi << '\n'
             << " -> nextafter(xi, yi) = " << eve::nextafter(xi, yi) << '\n'
             << " -> nextafter[pi < qi](pi, qi) = " << eve::nextafter[pi < qi](pi, qi) << '\n';
+
+  std::cout << "-> constexpr_nextafter(3, 7) = " << constexpr_nextafter(3, 7) << std::endl;
+
   return 0;
 }

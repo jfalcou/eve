@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_negate(auto a, auto b) { return eve::negate(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, -0.0f, 0.0f, -0.0f, 2.0f, -2.0f,  2.0f, 2.0f};
@@ -22,5 +24,8 @@ int main()
             << "<- xf             = " << xf << '\n'
             << "<- yf             = " << yf << '\n'
             << "-> negate(xf, yf) = " << eve::negate(xf, yf) << '\n';
+
+//  std::cout << "-> constexpr_negate(1.0f,2.0f) = " << constexpr_negate(1.0f,2.0f) << std::endl;
+
   return 0;
 }

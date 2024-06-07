@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 
+consteval auto constexpr_average(auto a, auto b) { return eve::average(a, b); }
+
 int main()
 {
   using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
@@ -31,5 +33,8 @@ int main()
             << " -> average[raw](pf, 0.0f, pf, qf, 11.0f) = " << eve::average[eve::raw](pf, 0.0f, pf, qf, 11.0f) << '\n';
 
   std::cout << "---- multi parameters" << '\n';
+
+  std::cout << "-> constexpr_average(1.0f,2.0f) = " << constexpr_average(1.0f,2.0f) << std::endl;
+
   return 0;
 }

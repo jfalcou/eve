@@ -5,6 +5,8 @@
 
 using wide_it = eve::wide<std::uint16_t, eve::fixed<4>>;
 
+consteval auto constexpr_bit_reverse(auto a) { return eve::bit_reverse(a); }
+
 int main()
 {
   wide_it pi = {-14, 1, 3, 0};
@@ -28,5 +30,8 @@ int main()
             << "-> bit_reverse[xf > 2](xf, 4) = " << std::bitset<16>(eve::bit_reverse[xf > 2](xf, 4))<< '\n'
             << "-> bit_reverse[xf < 2](xf, 4) = " << std::bitset<16>(eve::bit_reverse[xf <  2](xf, 4))<< '\n'
   ;
+
+//  std::cout << "-> constexpr_bit_reverse(1.0f) = " << constexpr_bit_reverse(1.0f) << std::endl;
+
   return 0;
 }

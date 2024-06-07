@@ -11,6 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/traits/as_integer.hpp>
 
+#include <bit>
 #include <bitset>
 #include <cstring>
 #include <ostream>
@@ -87,33 +88,33 @@ namespace eve
     EVE_FORCEINLINE constexpr logical operator!() const noexcept { return {!value_}; }
 
     template<arithmetic_scalar_value U>
-    friend EVE_FORCEINLINE logical operator&&(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator&&(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() && w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator&&(logical const& v, bool const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator&&(logical const& v, bool const& w) noexcept
     {
       return logical{v.value() && w};
     }
 
-    friend EVE_FORCEINLINE logical operator&&(bool const& v, logical const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator&&(bool const& v, logical const& w) noexcept
     {
       return logical{v && w.value()};
     }
 
     template<arithmetic_scalar_value U>
-    friend EVE_FORCEINLINE logical operator||(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator||(logical const& v, logical<U> const& w) noexcept
     {
       return logical{v.value() || w.value()};
     }
 
-    friend EVE_FORCEINLINE logical operator||(logical const& v, bool const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator||(logical const& v, bool const& w) noexcept
     {
       return logical{v.value() || w};
     }
 
-    friend EVE_FORCEINLINE logical operator||(bool const& v, logical const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator||(bool const& v, logical const& w) noexcept
     {
       return logical{v || w.value()};
     }
@@ -128,9 +129,10 @@ namespace eve
 
     EVE_FORCEINLINE constexpr auto mask() const noexcept
     {
-      value_type that;
-      std::memcpy(&that, &value_, sizeof(value_type));
-      return that;
+      return std::bit_cast<value_type>(value_);
+//       value_type that;
+//       std::memcpy(&that, &value_, sizeof(value_type));
+//       return that;
     }
 
     void swap( logical& other ) { std::swap(value_,other.value_); }
@@ -139,33 +141,33 @@ namespace eve
     // Comparison operators
     //==============================================================================================
     template<scalar_value U>
-    friend EVE_FORCEINLINE logical operator==(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator==(logical const& v, logical<U> const& w) noexcept
     {
       return v.value() == w.value();
     }
 
-    friend EVE_FORCEINLINE logical operator==(logical const& v, bool w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator==(logical const& v, bool w) noexcept
     {
       return v.value() == w;
     }
 
-    friend EVE_FORCEINLINE logical operator==(bool v, logical const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator==(bool v, logical const& w) noexcept
     {
       return w.value() == v;
     }
 
     template<scalar_value U>
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, logical<U> const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator!=(logical const& v, logical<U> const& w) noexcept
     {
       return v.value() != w.value();
     }
 
-    friend EVE_FORCEINLINE logical operator!=(logical const& v, bool w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator!=(logical const& v, bool w) noexcept
     {
       return v.value() != w;
     }
 
-    friend EVE_FORCEINLINE logical operator!=(bool v, logical const& w) noexcept
+    friend EVE_FORCEINLINE constexpr logical operator!=(bool v, logical const& w) noexcept
     {
       return w.value() != v;
     }

@@ -4,6 +4,8 @@
 
 using wide_it = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_reldist(auto a, auto b) { return eve::reldist(a, b); }
+
 int main()
 {
   wide_it pf = {0, 1, -1, -eve::valmax(eve::as<float>())/10};
@@ -21,5 +23,8 @@ int main()
             << "<- xf                       = " << xf << '\n'
             << "<- yf                       = " << yf << '\n'
             << "-> reldist(xf, yf)          = " << eve::reldist(xf, yf) << '\n';
+
+  std::cout << "-> constexpr_reldist(1.0f,2.0f) = " << constexpr_reldist(1.0f,2.0f) << std::endl;
+
   return 0;
 }

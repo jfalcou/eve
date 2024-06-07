@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 using eve::pedantic;
 
+consteval auto constexpr_minmax(auto a, auto b) { return eve::minmax(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
@@ -36,6 +38,9 @@ int main()
   prmm( " -> minmax(kumi::tuple{1, pf, pf}) = ", kumi::tuple{1, pf, qf});
   prmm( " -> minmax(kumi::tuple{pf, 1.0f)   = ", kumi::tuple{pf, 1.0f});
   prmm( " -> minmax(kumi::tuple{1.0f, pf)   = ", kumi::tuple{1.0f, pf});
+
+
+//  std::cout << "-> constexpr_minmax(1.0f,2.0f) = " << constexpr_minmax(1.0f,2.0f) << std::endl;
 
   return 0;
 }

@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
+consteval auto constexpr_minus(auto a) { return eve::minus(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};
@@ -27,5 +29,8 @@ int main()
             << "-> minus(xf) = " << eve::minus(xf) << '\n'
             << "<- xi        = " << xi << '\n'
             << "-> minus(xi) = " << eve::minus(xi) << '\n';
+
+  std::cout << "-> constexpr_minus(1.0f) = " << constexpr_minus(1.0f) << std::endl;
+
   return 0;
 }

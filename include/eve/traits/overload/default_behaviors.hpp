@@ -98,7 +98,7 @@ namespace eve
     struct ignore { template<typename T> operator T() { return T{}; } };
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x,  Ts const&... xs) const
+    constexpr EVE_FORCEINLINE constexpr auto adapt_call(auto a, O const& o, T x,  Ts const&... xs) const
     {
       constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
       constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };

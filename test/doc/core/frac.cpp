@@ -5,6 +5,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_frac(auto a) { return eve::frac(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, -1.3f, -0.0f, 0.0f,
@@ -26,5 +28,8 @@ int main()
   std::cout << "---- scalar" << std::setprecision(8) << '\n'
             << "<- xf             = " << xf << '\n'
             << "-> frac(xf)       = " << eve::frac(xf) << '\n';
+
+//  std::cout << "-> constexpr_frac(1.0f) = " << constexpr_frac(1.0f) << std::endl;
+
   return 0;
 }

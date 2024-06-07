@@ -29,5 +29,7 @@ int main()
             << "<- xi                  = " << xi << '\n'
             << "-> abs(xi)             = " << eve::abs(xi) << '\n';
 
+  std::cout << "-> constexpr_abs(1.0f) = " << constexpr_abs(1.0f) << std::endl;
+
   return 0;
 }
