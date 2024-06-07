@@ -112,7 +112,7 @@ concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<
 
 // represents any type that can be put into a eve::wide
 template <typename T>
-concept element_value = has_underlying_representation<T> || arithmetic_scalar_value<T>;
+concept element_value = transparent_value<T> || arithmetic_scalar_value<T>;
 
 //================================================================================================
 //! @concept scalar_value

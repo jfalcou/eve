@@ -62,9 +62,9 @@ namespace eve
   //================================================================================================
   template<element_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>
+      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, transparent_value<Type>>
   {
-    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_underlying_representation<Type>>;
+    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, transparent_value<Type>>;
 
     public:
     //! The type stored in the register.
@@ -539,7 +539,7 @@ namespace eve
 
     //! Unary minus operator. See also: eve::unary_minus
     friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return self_negate(v);
     }
@@ -549,7 +549,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE auto operator+=(wide& w, V v) noexcept
     -> decltype(detail::self_add(w, v))
-      requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+      requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return detail::self_add(w, v);
     }
@@ -557,7 +557,7 @@ namespace eve
     //! @brief Performs the addition between all lanes of its parameters
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, wide const& w) noexcept
-    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+    requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       auto that = v;
       return that += w;
@@ -566,7 +566,7 @@ namespace eve
     //! @brief Performs the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(plain_scalar_value auto s, wide const& v) noexcept
-    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+    requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return v + wide(s);
     }
@@ -574,7 +574,7 @@ namespace eve
     //! @brief Performs the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, plain_scalar_value auto s) noexcept
-    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+    requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return v + wide(s);
     }
@@ -584,7 +584,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE auto operator-=(wide& w, V v) noexcept
     -> decltype(detail::self_sub(w, v))
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return detail::self_sub(w, v);
     }
@@ -592,7 +592,7 @@ namespace eve
     //! @brief Performs the difference between all lanes of its parameters
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(wide const& v, wide const& w) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that -= w;
@@ -601,7 +601,7 @@ namespace eve
     //! @brief Performs the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(plain_scalar_value auto s, wide const& v) noexcept
-    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+    requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return wide(s) - v;
     }
@@ -609,7 +609,7 @@ namespace eve
     //! @brief Performs the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(wide const& v, plain_scalar_value auto s) noexcept
-    requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+    requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return v - wide(s);
     }
@@ -619,7 +619,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE auto operator*=(wide& w, V o) noexcept
     -> decltype(detail::self_mul(w, o))
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return detail::self_mul(w, o);
     }
@@ -627,7 +627,7 @@ namespace eve
     //! @brief Performs the product between all lanes of its parameters
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(wide const& v, wide const& w) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that *= w;
@@ -636,7 +636,7 @@ namespace eve
     //! @brief Performs the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(plain_scalar_value auto s, wide const& v) noexcept
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return v * s;
     }
@@ -644,7 +644,7 @@ namespace eve
     //! @brief Performs the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(wide const& v, plain_scalar_value auto s) noexcept
-      requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+      requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       auto that = v;
       return that *= s;
@@ -655,7 +655,7 @@ namespace eve
     template<value V>
     friend EVE_FORCEINLINE auto operator/=(wide& w, V o) noexcept
     -> decltype(detail::self_div(w, o))
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return detail::self_div(w, o);
     }
@@ -663,7 +663,7 @@ namespace eve
     //! @brief Performs the division between all lanes of its parameters
     //! See also: eve::div
     friend EVE_FORCEINLINE auto operator/(wide const& v, wide const& w) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that /= w;
@@ -672,7 +672,7 @@ namespace eve
     //! @brief Performs the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
     friend EVE_FORCEINLINE auto operator/(plain_scalar_value auto s, wide const& v) noexcept
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return wide(s) / v;
     }
@@ -680,7 +680,7 @@ namespace eve
     //! @brief Performs the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
     friend EVE_FORCEINLINE auto operator/(wide const& v, plain_scalar_value auto s) noexcept
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
     {
       return v / wide(s);
     }
@@ -691,7 +691,7 @@ namespace eve
     template<integral_value V>
     friend EVE_FORCEINLINE auto& operator%=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && integral_scalar_value<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && integral_scalar_value<Type> && !transparent_value<Type>)
 #endif
     {
       return detail::self_rem(w, o);
@@ -702,7 +702,7 @@ namespace eve
     //! integral_scalar_value
     friend EVE_FORCEINLINE auto operator%(wide const& v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(integral_scalar_value<Type> && !has_underlying_representation<Type>)
+        requires(integral_scalar_value<Type> && !transparent_value<Type>)
 #endif
     {
       auto that = v;
@@ -715,7 +715,7 @@ namespace eve
     template<integral_scalar_value S>
     friend EVE_FORCEINLINE auto operator%(S s, wide const& v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(integral_scalar_value<Type> && !has_underlying_representation<Type>)
+        requires(integral_scalar_value<Type> && !transparent_value<Type>)
 #endif
     {
       return wide(s) % v;
@@ -726,7 +726,7 @@ namespace eve
     //! integral_scalar_value
     friend EVE_FORCEINLINE auto operator%(wide const& v, integral_scalar_value auto s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(integral_scalar_value<Type> && !has_underlying_representation<Type>)
+        requires(integral_scalar_value<Type> && !transparent_value<Type>)
 #endif
     {
       return v % wide(s);
@@ -737,7 +737,7 @@ namespace eve
     template<integral_value S>
     friend EVE_FORCEINLINE auto& operator<<=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
 #endif
     {
       return detail::self_shl(w, s);
@@ -748,7 +748,7 @@ namespace eve
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto& operator<<=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
 #endif
     {
       return detail::self_shl(w, s);
@@ -756,7 +756,7 @@ namespace eve
 
     //! @brief Performs the left-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S> friend EVE_FORCEINLINE auto operator<<(wide v, S s) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that <<= s;
@@ -765,7 +765,7 @@ namespace eve
     //! @brief Performs the left-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto operator<<(wide v, index_t<V> const& s) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that <<= s;
@@ -776,7 +776,7 @@ namespace eve
     template<integral_value S>
     friend EVE_FORCEINLINE auto& operator>>=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
 #endif
     {
       return detail::self_shr(w, s);
@@ -787,7 +787,7 @@ namespace eve
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto& operator>>=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
 #endif
     {
       return detail::self_shr(w, s);
@@ -795,7 +795,7 @@ namespace eve
 
     //! @brief Performs the right-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S> friend EVE_FORCEINLINE auto operator>>(wide v, S s) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that >>= s;
@@ -804,7 +804,7 @@ namespace eve
     //! @brief Performs the right-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto operator>>(wide v, index_t<V> const& s) noexcept
-    requires(!has_underlying_representation<Type>)
+    requires(!transparent_value<Type>)
     {
       auto that = v;
       return that >>= s;
@@ -964,7 +964,7 @@ namespace eve
     //! Computes the logical negation of its parameter
     friend EVE_FORCEINLINE logical<wide> operator!(wide v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && !has_underlying_representation<Type>)
+        requires(!kumi::product_type<Type> && !transparent_value<Type>)
 #endif
     {
       return detail::self_lognot(v);
@@ -993,8 +993,8 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +static_cast<underlying_storage_t<Type>>(that[0]);
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +static_cast<underlying_storage_t<Type>>(that[i]);
+        os << '(' << +transparent_inner(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +transparent_inner(that[i]);
         return os << ')';
       }
     }

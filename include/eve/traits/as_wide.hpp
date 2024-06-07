@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/concept/underlying_storage.hpp>
+#include <eve/concept/transparent.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/wide_forward.hpp>
 #include <eve/as.hpp>
@@ -32,7 +32,7 @@ namespace eve
     using type = eve::wide<Type, Size>;
   };
 
-  template<has_underlying_representation Type, typename Size>
+  template<transparent_value Type, typename Size>
   struct as_wide<Type, Size>
   {
     using type = eve::wide<Type, Size>;

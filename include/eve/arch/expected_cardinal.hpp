@@ -11,7 +11,7 @@
 #include <eve/arch/spec.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/concept/underlying_storage.hpp>
+#include <eve/concept/transparent.hpp>
 
 namespace eve::detail
 {
@@ -20,9 +20,9 @@ namespace eve::detail
   template<typename Type, regular_abi ABI>
   constexpr std::ptrdiff_t find_expected_cardinal()
   {
-    if constexpr(has_underlying_representation<Type>)
+    if constexpr(transparent_value<Type>)
     {
-      return find_expected_cardinal<underlying_storage_t<Type>, ABI>();
+      return find_expected_cardinal<transparent_inner_t<Type>, ABI>();
     }
     else
     {

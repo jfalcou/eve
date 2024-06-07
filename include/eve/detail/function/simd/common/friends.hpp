@@ -161,9 +161,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto self_eq(Wide const& v, Wide const& w) noexcept
   {
     using e_t = element_type_t<Wide>;
-    if constexpr(has_underlying_representation<e_t>)
+    if constexpr(transparent_value<e_t>)
     {
-      using ws_t = as<typename Wide::template retype<underlying_storage_t<e_t>>>;
+      using ws_t = as<typename Wide::template retype<transparent_inner_t<e_t>>>;
       return self_eq(bit_cast(v, ws_t{}), bit_cast(w, ws_t{}));
     }
     else
@@ -208,9 +208,9 @@ namespace eve::detail
   EVE_FORCEINLINE auto self_neq(Wide const& v, Wide const& w) noexcept
   {
     using e_t = element_type_t<Wide>;
-    if constexpr(has_underlying_representation<e_t>)
+    if constexpr(transparent_value<e_t>)
     {
-      using ws_t = as<typename Wide::template retype<underlying_storage_t<e_t>>>;
+      using ws_t = as<typename Wide::template retype<transparent_inner_t<e_t>>>;
       return self_neq(bit_cast(v, ws_t{}), bit_cast(w, ws_t{}));
     }
     else

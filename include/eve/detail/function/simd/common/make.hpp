@@ -44,11 +44,11 @@ namespace eve::detail
     return make_emulated<wide<T, N>>(vs...);
   }
 
-  template<has_underlying_representation T, typename N, typename... Vs>
+  template<transparent_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
-    return bit_cast(make(eve::as<wide<underlying_storage_t<T>, N>>{}, static_cast<underlying_storage_t<Vs>>(vs)...), as<wide<T, N>>{});
+    return bit_cast(make(eve::as<wide<transparent_inner_t<T>, N>>{}, transparent_inner(vs)...), as<wide<T, N>>{});
   }
 
   template<arithmetic_scalar_value T, typename N, typename... Vs>
@@ -58,11 +58,11 @@ namespace eve::detail
     return make_emulated<logical<wide<T, N>>>(vs...);
   }
 
-  template<has_underlying_representation T, typename N, typename... Vs>
+  template<transparent_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
-    return bit_cast(make(eve::as<logical<wide<underlying_storage_t<T>, N>>>{}, static_cast<underlying_storage_t<Vs>>(vs)...), as<logical<wide<T, N>>>{});
+    return bit_cast(make(eve::as<logical<wide<transparent_inner_t<T>, N>>>{}, transparent_inner(vs)...), as<logical<wide<T, N>>>{});
   }
 
   //================================================================================================
@@ -116,10 +116,10 @@ namespace eve::detail
     return make_aggregated<wide<T, N>>(vs...);
   }
 
-  template<has_underlying_representation T, typename N, typename... Vs>
+  template<transparent_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
   {
-    return bit_cast(make(eve::as<wide<underlying_storage_t<T>,N>>{}, static_cast<underlying_storage_t<Vs>>(vs)...), as<wide<T,N>>{});
+    return bit_cast(make(eve::as<wide<transparent_inner_t<T>,N>>{}, transparent_inner(vs)...), as<wide<T,N>>{});
   }
 
   template<arithmetic_scalar_value T, typename N, typename... Vs>
@@ -129,9 +129,9 @@ namespace eve::detail
     return make_aggregated<logical<wide<T, N>>>(vs...);
   }
 
-  template<has_underlying_representation T, typename N, typename... Vs>
+  template<transparent_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T,N>>> const &, Vs... vs) noexcept
   {
-    return bit_cast(make(eve::as<logical<wide<underlying_storage_t<T>, N>>>{}, static_cast<underlying_storage_t<Vs>>(vs)...), as<logical<wide<T,N>>>{});
+    return bit_cast(make(eve::as<logical<wide<transparent_inner_t<T>, N>>>{}, transparent_inner(vs)...), as<logical<wide<T,N>>>{});
   }
 }
