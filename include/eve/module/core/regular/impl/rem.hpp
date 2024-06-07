@@ -69,4 +69,13 @@ namespace eve::detail
       }
     }
   }
+
+
+  template<conditional_expr C, typename T, callable_options O>
+  EVE_FORCEINLINE T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const & o, T t, T f) noexcept
+  requires(integral_value<T>)
+  {
+    auto g = if_else(cond, f, one);
+    return if_else(cond, eve::rem[o.drop(condition_key)](t, g), t);
+  }
 }

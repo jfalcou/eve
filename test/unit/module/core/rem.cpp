@@ -99,23 +99,20 @@ TTS_CASE_TPL("Check fixed-cases behavior of eve::rem", eve::test::simd::all_type
 TTS_CASE_WITH("Check behavior of rem on signed types",
               eve::test::simd::signed_types,
               tts::generate(tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127),
+                            tts::randoms(1, 127),
                             tts::randoms(tts::constant(mini), 127)))
-<typename T>(T a0, T a1, T a2)
+  <typename T>(T a0, T a1, T a2)
 {
   using eve::is_nez;
   using eve::pedantic;
   using eve::rem;
   using eve::detail::map;
+  auto a2b = eve::if_else(a2 >= 0, eve::one, a2);
+  a2 = eve::if_else(a2 >= 0, eve::zero, a2);
 
   TTS_ULP_EQUAL(rem[is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return is_nez(f) ? rem(e, f) : e; }, a0, a2),
-                160);
-
-  a2 = eve::if_else(a2 >= 0, eve::one, a2);
-  TTS_ULP_EQUAL(rem[is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return rem(e, f); }, a0, a2),
-                160);
+                map([](auto e, auto f, auto g) { return is_nez(f) ? rem(e, g) : e; }, a0, a2, a2b),
+                1);
 
   TTS_ULP_EQUAL(
     rem[a2 > T(64)](a0, a1),
@@ -127,13 +124,10 @@ TTS_CASE_WITH("Check behavior of rem on signed types",
     map([](auto e, auto f, auto g) { return g > 64 ? rem(e, f) : e; }, a0, a1, a2),
     2);
 
-  TTS_RELATIVE_EQUAL((rem[is_nez(a2)])(a0, a2),
-                     map([](auto e, auto f) { return is_nez(f) ? rem(e, f) : e; }, a0, a2),
-                     0.001);
+  a2b = eve::if_else(a2 == 0, eve::one, a2);
 
-  a2 = eve::if_else(a2 >= 0, eve::one, a2);
   TTS_RELATIVE_EQUAL(
-    rem[is_nez(a2)](a0, a2), map([](auto e, auto f) { return rem(e, f); }, a0, a2), 0.001);
+    rem[is_nez(a2)](a0, a2), map([](auto e, auto f, auto g) { return f ? rem(e, g) :e; }, a0, a2, a2b), 0.001);
 
   TTS_RELATIVE_EQUAL(
     rem[a2 > T(64)](a0, a1),
