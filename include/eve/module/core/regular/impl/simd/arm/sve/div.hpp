@@ -12,15 +12,16 @@
 
 namespace eve::detail
 {
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T,N> div_(EVE_SUPPORTS(sve_), C const& cx,
+template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+EVE_FORCEINLINE wide<T,N> div_(EVE_SUPPORTS(sve_),
+                               C          const& cx,
                                O          const& o,
                                wide<T, N> const& v,
                                wide<T, N> const& w) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   auto alt = alternative(cx, v, as<wide<T, N>> {});
-  if constexpr( C::is_complete )  return alt; 
+  if constexpr( C::is_complete )  return alt;
   else
   {
     if constexpr( !C::has_alternative)
