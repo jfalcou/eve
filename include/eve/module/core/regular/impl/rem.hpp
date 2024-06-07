@@ -35,21 +35,6 @@ namespace eve::detail
   {
     if constexpr(integral_value<T>)
     {
-//       auto doit = [](auto a,  auto b, auto &o){
-//         if constexpr(O::contains(pedantic2))
-//         {
-//           return if_else(is_eqz(b) || is_infinite(a) || is_unordered(a, b),
-//                          allbits,
-//                          if_else(is_eqz(a) || is_infinite(b),
-//                                  a,
-//                                  fnma[pedantic2](b, div[o](a, b)), a)
-//                         );
-//         }
-//         else
-//         {
-//           return fnma(b, eve::div[o](a, b), a);;
-//         }
-//       };
       if constexpr(O::contains(downward2) ||
                    (( O::contains(upward2) || O::contains(to_nearest2)) && !(unsigned_value<T>)))
       {
