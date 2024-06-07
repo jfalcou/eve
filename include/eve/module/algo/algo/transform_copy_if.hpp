@@ -13,9 +13,6 @@
 #include <eve/module/algo/algo/views/convert.hpp>
 #include <eve/module/core.hpp>
 
-#include <utility>
-#include <type_traits>
-
 namespace eve::algo
 {
 
@@ -23,32 +20,29 @@ namespace eve::algo
   {
     template<typename TraitsSupport> struct transform_copy_if_ : TraitsSupport
     {
-      template<typename OutIt, typename Func> struct delegate
+      template<typename O, typename F> struct delegate
       {
-        OutIt out_first;
-        OutIt out_last;
-        Func func;
-
-        static constexpr auto compress_copy()
-        {
-          auto density = density_for_compress_copy<typename TraitsSupport::traits_type>();
-          return eve::compress_copy[eve::unsafe][density];
-        }
+        O of;
+        O ol;
+        F func;
 
         EVE_FORCEINLINE
         bool tail(auto f, auto ignore)
         {
-          auto out_ignore   = eve::keep_first(std::min(out_last - out_first, eve::iterator_cardinal_v<OutIt>));
-          auto loaded       = eve::load(f);
+          auto out_ignore   = eve::keep_first(std::min(ol - of, eve::iterator_cardinal_v<O>));
+          auto loaded       = eve::load[ignore](f);
           auto [vals, mask] = func(loaded);
-          out_first = eve::compress_store[eve::unsafe][ignore][out_ignore](vals, mask, out_first);
-          return out_first == out_last;
+          using out_t = eve::element_type_t<decltype(vals)>;
+          auto cvt_and_store_it = views::convert(of, eve::as<out_t>{});
+          auto write_end = eve::compress_store[eve::unsafe][ignore][out_ignore](vals, mask, cvt_and_store_it);
+          of += write_end - cvt_and_store_it;
+          return of == ol;
         }
 
         EVE_FORCEINLINE
         std::ptrdiff_t left_for_stage1() const
         {
-          return out_last - out_first;
+          return ol - of;
         }
 
         EVE_FORCEINLINE
@@ -56,7 +50,10 @@ namespace eve::algo
         {
           auto loaded       = eve::load(f);
           auto [vals, mask] = func(loaded);
-          out_first = eve::compress_store[eve::unsafe](vals, mask, out_first);
+          using out_t = eve::element_type_t<decltype(vals)>;
+          auto cvt_and_store_it = views::convert(of, eve::as<out_t>{});
+          auto write_end = eve::compress_store[eve::unsafe](vals, mask, cvt_and_store_it);
+          of += write_end - cvt_and_store_it;
           return false;
         }
 
@@ -64,11 +61,14 @@ namespace eve::algo
         bool step_2(auto f)
         {
           // ol - of < cardinal
-          auto out_ignore   = eve::keep_first(out_last - out_first);
+          auto out_ignore   = eve::keep_first(ol - of);
           auto loaded       = eve::load(f);
           auto [vals, mask] = func(loaded);
-          out_first = eve::compress_store[eve::unsafe][eve::ignore_none][out_ignore](vals, mask, out_first);
-          return out_first == out_last;
+          using out_t = eve::element_type_t<decltype(vals)>;
+          auto cvt_and_store_it = views::convert(of, eve::as<out_t>{});
+          auto write_end = eve::compress_store[eve::unsafe][eve::ignore_none][out_ignore](vals, mask, cvt_and_store_it);
+          of += write_end - cvt_and_store_it;
+          return of == ol;
         }
       };
 
@@ -79,18 +79,17 @@ namespace eve::algo
         if( in.begin() == in.end() || out.begin() == out.end() )
           return out.begin();
 
-        using out_type = eve::element_type_t<std::remove_reference_t<decltype(get<0>(func(std::declval<wide<value_type_t<In>>>())))>>;
         auto [processed_in, processed_out] = temporary_preprocess_ranges_hack(
-          TraitsSupport::get_traits(), in, views::convert(out, eve::as<out_type>()));
+          TraitsSupport::get_traits(), in, out);
 
         auto iteration = two_stage_iteration(processed_in.traits(), processed_in.begin(), processed_in.end());
 
-        auto out_first = unalign(processed_out.begin());
-        auto out_last  = unalign(processed_out.end());
+        auto of = unalign(processed_out.begin());
+        auto ol = unalign(processed_out.end());
 
-        delegate<decltype(out_first), Func> d {out_first, out_last, func};
+        delegate<decltype(of), Func> d {of, ol, func};
         iteration(d);
-        return eve::unalign(out.begin()) + (d.out_first - processed_out.begin());
+        return eve::unalign(out.begin()) + (d.of - processed_out.begin());
       }
 
       template<relaxed_range In, relaxed_range Out, typename Op, typename P>
