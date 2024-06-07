@@ -34,9 +34,8 @@
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/saturate.hpp>
-#include <eve/module/core/saturated/div.hpp>
 #include <eve/module/core/regular/round.hpp>
-#include <iostream>
+
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
