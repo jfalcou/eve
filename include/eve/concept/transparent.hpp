@@ -9,6 +9,7 @@
 
 #include <type_traits>
 #include <concepts>
+#include <bit>
 
 namespace eve
 {
@@ -21,13 +22,12 @@ namespace eve
   template <typename T>
   using transparent_inner_t = typename transparent_trait<T>::type;
 
-  // TODO: add check for sizeof(T) == sizeof(transparent_inner_t<T>) somewhere
   template <typename T>
   concept transparent_value = !std::same_as<transparent_inner_t<T>, T>;
 
   template <typename V>
   constexpr auto transparent_inner(V val) {
-    static_assert(sizeof(transparent_inner_t<V>) == sizeof(V), "Invalid transparent_inner_t: size mismatch");
+    static_assert((sizeof(V) == sizeof(transparent_trait<T>::type)) && (alignof(V) == alignof(transparent_trait<T>::type)));
     return std::bit_cast<transparent_inner_t<V>>(val);
   }
 
