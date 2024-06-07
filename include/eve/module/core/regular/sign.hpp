@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <iostream>
 
 namespace eve
 {

@@ -15,7 +15,6 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/arch/platform.hpp>
-#include <iostream>
 
 namespace eve
 {
