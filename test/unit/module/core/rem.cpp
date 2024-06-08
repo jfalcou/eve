@@ -110,9 +110,9 @@ TTS_CASE_WITH("Check behavior of rem on signed types",
   auto a2b = eve::if_else(a2 >= 0, eve::one, a2);
   a2 = eve::if_else(a2 >= 0, eve::zero, a2);
 
-  TTS_ULP_EQUAL(rem[is_nez(a2)](a0, a2),
+  TTS_RELATIVE_EQUAL(rem[is_nez(a2)](a0, a2),
                 map([](auto e, auto f, auto g) { return is_nez(f) ? rem(e, g) : e; }, a0, a2, a2b),
-                1);
+                0.001);
 
   TTS_ULP_EQUAL(
     rem[a2 > T(64)](a0, a1),

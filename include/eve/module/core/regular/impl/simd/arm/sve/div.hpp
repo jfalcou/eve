@@ -20,9 +20,10 @@ namespace eve::detail
                                  wide<T, N> const& w) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(toward_zero2) || O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
+    else if constexpr(O::contains(toward_zero2) || O::contains(upward2) ||
+                      O::contains(downward2) || O::contains(to_nearest2))
     {
-      if (floating_scalar_value<T>)
+      if (floating_value<T>)
         return round[o](div[cx](v, w));
       else
         return div.behavior(cpu_{}, o, v, w);
