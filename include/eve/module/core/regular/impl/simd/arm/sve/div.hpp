@@ -29,17 +29,22 @@ namespace eve::detail
     }
     else
     {
-      auto alt = alternative(cx, v, as<wide<T, N>> {});
-      if constexpr( C::is_complete )  return alt;
-      else
+      if constexpr(sizeof(T) >= 4)
       {
-        if constexpr( !C::has_alternative)
+        auto alt = alternative(cx, v, as<wide<T, N>> {});
+        if constexpr( C::is_complete )  return alt;
+        else
         {
-          auto m   = expand_mask(cx, as<wide<T, N>> {});
-          return svdiv_m(m,v,w);
+          if constexpr( !C::has_alternative)
+          {
+            auto m   = expand_mask(cx, as<wide<T, N>> {});
+            return svdiv_m(m,v,w);
+          }
+          else return div.behavior(cpu_{},o,v,w);
         }
-        else  return div.behavior(cpu_{},o,v,w);
       }
+      else
+        return div.behavior(cpu_{},o,v,w);
     }
   }
 }
