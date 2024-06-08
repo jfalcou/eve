@@ -19,20 +19,14 @@
 
 namespace eve::detail
 {
-template<value T, decorator D>
-EVE_FORCEINLINE constexpr T
-rec_(EVE_SUPPORTS(cpu_), D const&, T a0) noexcept
-{
-  return rec(a0);
-}
 
-template<ordered_value T>
-EVE_FORCEINLINE constexpr T
-rec_(EVE_SUPPORTS(cpu_), T a) noexcept
-{
-  if constexpr( has_native_abi_v<T> )
+  template<ordered_value T, callable_options O>
+  constexpr T  rec_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
   {
-    if constexpr( floating_value<T> ) return T {1} / a;
+    if constexpr( floating_value<T> )
+    {
+      return T {1} / a;
+    }
     else if( integral_value<T> )
     {
       if constexpr( scalar_value<T> )
@@ -52,26 +46,13 @@ rec_(EVE_SUPPORTS(cpu_), T a) noexcept
           return (a ? a : valmax(eve::as(a))) * b2;
         }
       }
-      else
+      else // constexpr( simd_value<T> )
       {
         if( std::is_unsigned_v<T> )
-        {
-          return if_else(
-              is_eqz(a), valmax(eve::as(a)), if_else(eve::abs(a) == one(eve::as(a)), a, eve::zero));
-        }
-        else { return map(eve::rec, a); }
+          return if_else(is_eqz(a), valmax(eve::as(a)), if_else(eve::abs(a) == one(eve::as(a)), a, eve::zero));
+        else
+          return map(eve::rec, a);
       }
     }
   }
-  else { return apply_over(rec, a); }
-}
-
-// -----------------------------------------------------------------------------------------------
-// Masked case
-template<conditional_expr C, value U>
-EVE_FORCEINLINE auto
-rec_(EVE_SUPPORTS(cpu_), C const& cond, U const& t) noexcept
-{
-  return mask_op(cond, eve::rec, t);
-}
 }

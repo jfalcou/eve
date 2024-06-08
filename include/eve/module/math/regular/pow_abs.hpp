@@ -151,7 +151,7 @@ namespace eve
           z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
           z = if_else(iseqzx && ylt0, zero, z);
           z = if_else(is_infinite(ax), inf(as(x)), z);
-          z = if_else(ylt0, rec(z), z);
+          z = if_else(ylt0, rec[pedantic2](z), z);
           z = if_else(ax_is1 || is_eqz(y), one, z);
           z = if_else(iseqzx && is_gtz(y), zero, z);
           z = if_else(is_nan(x) && is_nan(y), allbits, z);

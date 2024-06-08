@@ -79,7 +79,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T atan_(EVE_REQUIRES(cpu_), O const& , T const& a)
     {
       T x = eve::abs(a);
-      return bit_xor(atan_kernel(x, rec(x)), bitofsign(a));
+      return bit_xor(atan_kernel(x, rec[pedantic2](x)), bitofsign(a));
     }
   }
 }

@@ -84,7 +84,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
       auto       iseq1p = p == one(as(p));
       auto       x      = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), allbits));
       logical<T> notdone(is_not_nan(p) && !iseqzp && !iseq1p);
-      auto       d   = rec(9 * k);
+      auto       d   = rec[pedantic2](9 * k);
       auto       omp = oneminus(p);
       auto       y   = oneminus(d - sqrt_2(as(omp)) * erfc_inv(2 * omp) * eve::sqrt(d));
 

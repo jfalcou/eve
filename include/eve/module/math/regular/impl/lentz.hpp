@@ -57,16 +57,16 @@ namespace eve::detail
       if constexpr(pure_pair)
       {
         D = fam(get<1>(v), get<0>(v), D);
-        C = fam(get<1>(v), get<0>(v), rec(C));
+        C = fam(get<1>(v), get<0>(v), rec[pedantic2](C));
       }
       else
       {
         D = v+D;
-        C = v+rec(C);
+        C = v+rec[pedantic2](C);
       }
       D = if_else(is_eqz(D), tiny, D);
       C = if_else(is_eqz(C), tiny, C);
-      D = rec(D);
+      D = rec[pedantic2](D);
       delta = C*D;
       f *= delta;
     } while (any(abs(dec(delta)) > terminator) && --counter);
@@ -117,16 +117,16 @@ namespace eve::detail
       if constexpr(pure_pair)
       {
         D = fam(get<1>(v), get<0>(v), D);
-        C = fam(get<1>(v), get<0>(v), rec(C));
+        C = fam(get<1>(v), get<0>(v), rec[pedantic2](C));
       }
       else
       {
         D = v+D;
-        C = v+rec(C);
+        C = v+rec[pedantic2](C);
       }
       D = if_else(is_eqz(D), tiny, D);
       C = if_else(is_eqz(C), tiny, C);
-      D = rec(D);
+      D = rec[pedantic2](D);
       delta = C*D;
       f *= delta;
     } while (eve::any(abs(dec(delta)) > terminator) && --counter);

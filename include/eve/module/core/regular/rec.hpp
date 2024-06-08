@@ -8,10 +8,21 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+template<typename Options>
+struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
+{
+  template<eve::value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  { return EVE_DISPATCH_CALL(v); }
+
+  EVE_CALLABLE_OBJECT(rec_t, rec_);
+};
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -43,6 +54,11 @@ namespace eve
 //!    value containing the [elementwise](@ref glossary_elementwise)
 //!    inverse value of `x`.
 //!
+//!  @warning
+//!     regular rec does not take care of denormals.
+//!     If you need them use the pedantic option or the division operator
+//!
+//!
 //!  @note
 //!     For [real integral value](@ref eve::value) `x` is semantically equivalent to:
 //!       * If x==1 or x==-1, x is returned.
@@ -63,12 +79,16 @@ namespace eve
 //!   * eve::raw
 //!
 //!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return. Otherwise it uses the non decorated call.
+//!     very poor accuracy in return (circa 12 bits). Otherwise it uses the non decorated call.
+//!
+//!   * eve::pedantic
+//!
+//!     The call `rec[pedantic](x)` is equivalent to one(as(x)/x.
 //! @}
 //================================================================================================
-
-EVE_MAKE_CALLABLE(rec_, rec);
+  inline constexpr auto rec = functor<rec_t>;
 }
+
 
 #include <eve/module/core/regular/impl/rec.hpp>
 

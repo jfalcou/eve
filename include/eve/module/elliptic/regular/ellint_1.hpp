@@ -135,7 +135,7 @@ namespace eve
       cosp *= cosp;
       auto notdone = sinp * sqr(x) < one(as(phi));
 
-      auto c    = if_else(notdone, rec(sinp), allbits);
+      auto c    = if_else(notdone, rec[pedantic2](sinp), allbits);
       auto r    = s * ellint_rf(cosp * c, c - sqr(x), c);
       auto xis1 = x == one(as(x));
       if( eve::any(xis1) )

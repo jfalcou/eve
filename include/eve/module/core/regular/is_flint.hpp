@@ -85,15 +85,16 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_flint_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-     if (!O::contains(pedantic2))
-     {
-        if constexpr( integral_value<T> )
-          return true_(eve::as<T>());
+      if constexpr( integral_value<T> )
+        return true_(eve::as<T>());
+      else
+      {
+        auto r = is_eqz(frac[raw](a));
+        if constexpr( O::contains(pedantic2) )
+          return r && (a <= eve::maxflint(eve::as<T>()));
         else
-          return is_eqz(frac[raw](a));
+          return r;
       }
-     else
-        return is_flint(a) && (a <= eve::maxflint(eve::as<T>()));
     }
   }
 }

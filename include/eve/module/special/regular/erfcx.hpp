@@ -92,7 +92,7 @@ inline constexpr auto erfcx = functor<erfcx_t>;
       if constexpr( scalar_value<T> )
       {
         if( x == inf(as(x)) ) return zero(as(a));
-        if( x > ll ) return invsqrtpi * rec(a);
+        if( x > ll ) return invsqrtpi * rec[pedantic2](a);
         auto largeneglimit = [](){
           // for x less than the value erfcx(x) is inf at working precision
           if constexpr( std::is_same_v<elt_t, float> ) return -0x1.fffffcp+63;
@@ -105,7 +105,7 @@ inline constexpr auto erfcx = functor<erfcx_t>;
       /* Compute q = (a-shift)/(a+shift) accurately. [0,INF) -> [-1,1] */
       T    m = a - shift;
       T    p = a + shift;
-      auto r = rec(p);
+      auto r = rec[pedantic2](p);
       T    q = m * r;
       T    t = fnma(inc(q), shift, a);
       T    e = fma(q, -a, t);
@@ -132,13 +132,13 @@ inline constexpr auto erfcx = functor<erfcx_t>;
 
       /* Divide (1+p) by (1+2*a) ==> exp(a*a)*erfc(a) */
       T d = a + half(as<T>());
-      r   = rec(d);
+      r   = rec[pedantic2](d);
       r *= half(as<T>());
       q = fma(p, r, r);
       t = q + q;
       e = (p - q) + fma(t, -a, T(1));
       r = fma(e, r, q);
-      if( eve::any(a > ll) ) r = if_else(a > ll, invsqrtpi * rec(a), r);
+      if( eve::any(a > ll) ) r = if_else(a > ll, invsqrtpi * rec[pedantic2](a), r);
       auto xpos = (x >= 0);
       if( eve::all(xpos) ) return r;
       /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */

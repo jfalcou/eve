@@ -82,7 +82,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T sec_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      return eve::rec(cos[o](a0));
+      return eve::rec[pedantic2](cos[o](a0));
     }
   }
 }

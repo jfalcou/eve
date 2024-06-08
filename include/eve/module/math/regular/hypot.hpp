@@ -96,6 +96,7 @@ namespace eve
     hypot_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;
+      using e_t = element_type_t<r_t>;
       if constexpr( has_native_abi_v<r_t> )
       {
         if constexpr(sizeof...(Ts) == 0) // 2 parameters
@@ -111,9 +112,9 @@ namespace eve
             r_t ay(abs(r1));
             auto test = ax > ay;
             eve::swap_if(test, ax, ay); // now 0 <= ax <= ay
-
+            constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>()));
             auto scale = if_else(ax > sqrtvalmax(as(ax)), sqrtsmallestposval(as<r_t>())/4
-                                , if_else(ay < sqrtsmallestposval(as(ay)), rec(sqrtsmallestposval(as<r_t>())/4)
+                                , if_else(ay < sqrtsmallestposval(as(ay)), rsqspvo4
                                          ,  one)
                                 );
             ax *= scale;

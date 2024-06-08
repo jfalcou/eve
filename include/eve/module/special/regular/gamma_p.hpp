@@ -117,7 +117,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
         auto x1   = x;
         auto b0   = zero(as(x));
         auto b1   = x0;
-        auto fac  = rec(x1);
+        auto fac  = rec[pedantic2](x1);
         auto n    = one(as(x));
         auto g    = b1 * fac;
         auto gold = b0;
@@ -131,7 +131,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
           auto anf = n * fac;
           x1       = fma(x, x0, anf * x1);
           b1       = fma(x, b0, anf * b1);
-          fac      = rec(x1);
+          fac      = rec[pedantic2](x1);
           g        = b1 * fac;
           n        = inc(n);
         }

@@ -149,7 +149,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         T tmp   = pow(a0, u_t(eve::abs(a1)));
-        return a1<0 ? rec(tmp) : tmp;
+        return a1<0 ? rec[pedantic2](tmp) : tmp;
       }
     }
 
@@ -165,8 +165,10 @@ namespace eve
       else
       {
         if constexpr( scalar_value<T> )
+        {
           if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
-        auto nega = is_negative(a0);
+        }
+        auto nega = is_negative(r_t(a0));
         r_t  z  = eve::pow_abs(a0, a1);
         return minus[is_odd(a1) && nega](z);
       }
@@ -219,7 +221,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp   = pow(r_t(a0), u_t(eve::abs(a1)));
-        return rec[is_ltz(a1)](tmp);
+        return rec[pedantic2][is_ltz(a1)](tmp);
       }
     }
 
@@ -246,7 +248,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-        return if_else(is_ltz(a1), rec(tmp), tmp);
+        return if_else(is_ltz(a1), rec[pedantic2](tmp), tmp);
       }
     }
 
@@ -273,7 +275,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-        return if_else(is_ltz(a1), rec(tmp), tmp);
+        return if_else(is_ltz(a1), rec[pedantic2](tmp), tmp);
       }
     }
   }

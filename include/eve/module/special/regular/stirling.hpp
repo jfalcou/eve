@@ -95,7 +95,7 @@ inline constexpr auto stirling = functor<stirling_t>;
       if constexpr( simd_value<T> )
       {
         a0        = if_else(is_gez(a0), a0, eve::allbits);
-        T w       = rec(a0);
+        T w       = rec[pedantic2](a0);
         w         = fma(w, stirling1(w), one(eve::as<T>()));
         T    y    = exp(-a0);
         auto test = is_less(a0, Stirlingsplitlim);
@@ -113,7 +113,7 @@ inline constexpr auto stirling = functor<stirling_t>;
         if( is_ltz(a0) ) return nan(eve::as<T>());
         if( is_nan(a0) ) return a0;
         if( a0 > Stirlinglargelim ) return inf(eve::as<T>());
-        T w = rec(a0);
+        T w = rec[pedantic2](a0);
         w   = fma(w, stirling1(w), one(eve::as<T>()));
         T y = exp(-a0);
         if( is_eqz(y) ) return inf(eve::as<T>());

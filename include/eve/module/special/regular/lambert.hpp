@@ -84,7 +84,7 @@ inline constexpr auto lambert = functor<lambert_t>;
         return fam(mone(as(r)), r, eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
       }
     }
-    
+
     template<typename T, callable_options O>
     constexpr  kumi::tuple<T, T> lambert_(EVE_REQUIRES(cpu_), O const&, T x)
     {
@@ -98,17 +98,17 @@ inline constexpr auto lambert = functor<lambert_t>;
             T t = fms(w, e, x);
             t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
             w -= t;
-            T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec(eve::abs(p) * e));
+            T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec[pedantic2](eve::abs(p) * e));
             if( eve::all(eve::abs(t) < tol) ) break;
           }
           return w;
         };
-      
+
       T    q              = x + T(0.367879441171442);
       auto lambert0_small = [](auto q) { // branch 0 q <= 1.0e-3
         return lambert_serie_utility(eve::sqrt(q));
       };
-      
+
       auto lambert0_other = [&halley](auto x, auto q){ // branch 0 q <= 1.0e'3
         auto p  = eve::sqrt(T(5.436563656918090) * q);
         auto w1 = dec(p * (inc(p * fam(T(-1.0 / 3), p, T(1.0 / 72)))));
@@ -117,7 +117,7 @@ inline constexpr auto lambert = functor<lambert_t>;
         auto init = if_else(x < one(as(x)), w1, w2);
         return halley(x, init, 10);
       };
-      
+
       auto lambert1 = [&halley](auto x, auto q, auto positivex){ // branch 1 q > 0
         T    r    = -eve::sqrt(q);
         auto test = (x < T(-1.0e-6));
@@ -129,12 +129,12 @@ inline constexpr auto lambert = functor<lambert_t>;
         T w2 = l1 - l2 + l2 / l1;
         return if_else(is_eqz(x) && !positivex, minf(as(x)), halley(x, w2, 30));
       };
-      
+
       auto r       = nan(as<T>());                // nan case treated here
       r            = if_else(is_eqz(x), zero, r); // zero case treated here
       r            = if_else(x == inf(as(x)), x, r);
       auto notdone = is_nlez(q) && (q != inf(as(x)));
-      
+
       if( eve::any(notdone) )
       {
         notdone = next_interval(lambert0_small, notdone, q < T(1.0e-3), r, q);
@@ -145,5 +145,5 @@ inline constexpr auto lambert = functor<lambert_t>;
       auto r1 = if_else(positivex, r, lambert1(x, q, positivex));
       return eve::zip(r, r1);
     }
-  } 
+  }
 }

@@ -76,7 +76,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T asech_(EVE_REQUIRES(cpu_), O const&, T const& x)
     {
-      return acosh(rec(x));
+      return acosh(rec[pedantic2](x));
     }
   }
 }

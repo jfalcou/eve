@@ -76,7 +76,7 @@ namespace eve
       if constexpr( has_native_abi_v<T> )
       {
         auto x = eve::abs(a);
-        return bit_xor(atan_kernel(rec(x), x), bitofsign(a));
+        return bit_xor(atan_kernel(rec[pedantic2](x), x), bitofsign(a));
       }
       else
         return apply_over(acot, a);

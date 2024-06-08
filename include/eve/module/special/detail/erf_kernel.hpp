@@ -74,7 +74,7 @@ namespace eve::detail
   {
     T Invsqrtpi = T(0.564189583547756286948079451561);
     T Xhuge     = T(6.71e+7);
-    T ysq       = rec(sqr(y));
+    T ysq       = rec[pedantic2](sqr(y));
     T res       = ysq
       *
       eve::reverse_horner(ysq, T(0x1.595fd0d71e33cp-11), T(0x1.078448cd6c5b5p-6), T(0x1.0199d980a842fp-3), T(0x1.70fe40e2425b8p-2), T(0x1.38a78b9f065f6p-2), T(0x1.0b4fb18b485c7p-6))

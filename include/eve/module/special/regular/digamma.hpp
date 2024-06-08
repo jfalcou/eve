@@ -108,8 +108,8 @@ inline constexpr auto digamma = functor<digamma_t>;
         // if we're above the lower-limit for the asymptotic expansion then use it:
         x = dec(x);
         result += log(x);
-        result += rec(x + x);
-        auto z = rec(sqr(x));
+        result += rec[pedantic2](x + x);
+        auto z = rec[pedantic2](sqr(x));
         T    y(0);
         if constexpr( std::is_same_v<elt_t, double> )
         {
@@ -196,13 +196,13 @@ inline constexpr auto digamma = functor<digamma_t>;
             while( eve::any(cond) )
             {
               x      = dec[cond](x);
-              result = add[cond](result, rec(x));
+              result = add[cond](result, rec[pedantic2](x));
               cond   = x > T(2);
             }
             cond = x < T(1);
             while( eve::any(cond) )
             {
-              result = add[cond](result, -rec(x));
+              result = add[cond](result, -rec[pedantic2](x));
               x      = inc[cond](x);
               cond   = x < T(1);
             }

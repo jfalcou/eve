@@ -10,9 +10,12 @@ int main()
                eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
 
   std::cout << "---- simd" << '\n'
-            << "<- pf              = " << pf << '\n'
-            << "-> rec(pf)         = " << eve::rec(pf) << '\n'
-            << "-> rec[pf > 3](pf) = " << eve::rec[pf > 1](pf) << '\n';
+            << "<- pf                 = " << pf << '\n'
+            << "-> rec[raw2](pf   )   = " << eve::rec[eve::raw2](pf) << '\n'
+            << "-> rec(pf)            = " << eve::rec(pf) << '\n'
+            << "-> rec[pedantic2](pf) = " << eve::rec[eve::raw2](pf) << '\n'
+            << "-> rec[pf > 10][raw2](pf) = " << eve::rec[pf > 10][eve::raw2](pf) << '\n'
+            << "-> rec[pf > 10](pf)    = " << eve::rec[pf > 10](pf) << '\n';
 
   float xf = 1.0f;
 

@@ -97,7 +97,7 @@ namespace eve
 
         a0 *= pi(eve::as<T>());
         auto x2 = sqr(a0);
-        return rec(cos_eval(x2));
+        return rec[pedantic2](cos_eval(x2));
       }
       else if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
                         || O::contains(medium2) || O::contains(big2))
@@ -110,8 +110,8 @@ namespace eve
         }
 
         T z = cospi[o](x);
-        if constexpr( scalar_value<T> ) { return (z) ? rec(z) : nan(eve::as<T>()); }
-        else { return if_else(is_nez(z) && is_finite(a0), rec(z), eve::allbits); }
+        if constexpr( scalar_value<T> ) { return (z) ? rec[pedantic2](z) : nan(eve::as<T>()); }
+        else { return if_else(is_nez(z) && is_finite(a0), rec[pedantic2](z), eve::allbits); }
       }
       else
       {

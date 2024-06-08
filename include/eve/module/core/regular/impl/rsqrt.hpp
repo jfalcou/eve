@@ -24,7 +24,7 @@ template<floating_ordered_value T>
 EVE_FORCEINLINE constexpr T
 rsqrt_(EVE_SUPPORTS(cpu_), T a0) noexcept
 {
-  if constexpr( scalar_value<T> ) { return a0 ? rec(eve::sqrt(a0)) : inf(eve::as(a0)); }
+  if constexpr( scalar_value<T> ) { return a0 ? rec[pedantic2](eve::sqrt(a0)) : inf(eve::as(a0)); }
   else if constexpr( has_aggregated_abi_v<T> ) { return aggregate(eve::rsqrt, a0); }
   else { return map(rsqrt, a0); }
 }
