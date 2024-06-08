@@ -117,7 +117,7 @@ namespace eve::algo::views
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, backward_iterator self)
     {
-      return eve::read(self.unalign() - 1);
+      return eve::read(eve::unalign(self.base) - 1);
     }
 
     EVE_FORCEINLINE void write(value_type v) const noexcept { eve::write(v, unalign(base) - 1); }
