@@ -72,6 +72,15 @@ jobs:
           cd build
           cmake .. -G Ninja
           cmake --install . --prefix /usr
+      - name: Install RABERU
+        run: |
+          cd 3rdparty
+          git clone https://github.com/jfalcou/raberu.git
+          cd raberu
+          mkdir build
+          cd build
+          cmake .. -G Ninja
+          cmake --install . --prefix /usr
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
