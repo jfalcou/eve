@@ -12,13 +12,18 @@
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(vsx_),
                                   O const&,
                                   wide<T, N> v0,
                                   wide<T, N> const& v1) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    return v0 /= v1;
+    if constexpr(O::contains(toward_zero2) || O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
+      return round[o](div(v, w));
+    else
+    {
+      return v0 /= v1;
+    }
   }
 }
