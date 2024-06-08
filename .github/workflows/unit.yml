@@ -78,7 +78,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+          cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile Unit Tests
         run:  |
