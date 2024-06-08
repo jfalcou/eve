@@ -87,7 +87,8 @@ namespace eve::detail
           return if_else(is_nez(b), div(a, b), allbits);
       }
     }
-    else if constexpr(O::contains(toward_zero2) || O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
+    else if constexpr(O::contains(toward_zero2) || O::contains(upward2) ||
+                      O::contains(downward2) || O::contains(to_nearest2))
     {
       using elt_t = element_type_t<T>;
       if constexpr(floating_value<T>)
@@ -139,7 +140,7 @@ namespace eve::detail
       }
       else if  constexpr(O::contains(to_nearest2))
       {
-       EVE_ASSERT(eve::all((b != 0)), "[eve] - div[to_nearest](a, 0) is undefined");
+        EVE_ASSERT(eve::all((b != 0)), "[eve] - div[to_nearest](a, 0) is undefined");
         using v_t = element_type_t<T>;
         if constexpr( sizeof(v_t) == 8 )
         {

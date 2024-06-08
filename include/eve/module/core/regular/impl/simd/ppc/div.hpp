@@ -20,7 +20,7 @@ namespace eve::detail
   requires ppc_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(toward_zero2) || O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
-      return round[o](div(v, w));
+      return round[o](div(v0, v1));
     else
     {
       return v0 /= v1;
