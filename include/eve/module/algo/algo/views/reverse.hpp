@@ -105,14 +105,11 @@ namespace eve::algo::views
     template <std::convertible_to<I> I1>
     EVE_FORCEINLINE reverse_iterator(reverse_iterator<I1> x) : base(x.base) {}
 
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, reverse_iterator self )
-    {
-      return reverse(unalign(self.base));
-    }
+    EVE_FORCEINLINE auto unalign() const noexcept { return reverse(eve::unalign(base)); }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, reverse_iterator self)
     {
-      return eve::read(unalign(self.base) - 1);
+      return eve::read(self.unalign() - 1);
     }
 
     EVE_FORCEINLINE void write(value_type v) const noexcept { return eve::write(v,unalign(base) - 1); }

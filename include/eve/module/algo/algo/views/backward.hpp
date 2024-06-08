@@ -113,14 +113,11 @@ namespace eve::algo::views
     template <std::convertible_to<I> I1>
     EVE_FORCEINLINE backward_iterator(backward_iterator<I1> x) : base(x.base) {}
 
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, backward_iterator self )
-    {
-      return backward(unalign(self.base));
-    }
+    EVE_FORCEINLINE auto unalign() const noexcept { return backward(eve::unalign(base)); }
 
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, backward_iterator self)
     {
-      return eve::read(unalign(self.base) - 1);
+      return eve::read(self.unalign() - 1);
     }
 
     EVE_FORCEINLINE void write(value_type v) const noexcept { eve::write(v, unalign(base) - 1); }

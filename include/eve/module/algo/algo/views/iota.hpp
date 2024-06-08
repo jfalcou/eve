@@ -55,10 +55,7 @@ namespace eve::algo::views
       operator+=(i_);
     }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, iota_with_step_iterator self )
-    {
-      return self;
-    }
+    EVE_FORCEINLINE auto unalign() const noexcept { return *this; }
 
     iota_with_step_iterator previous_partially_aligned() const { return *this; }
     iota_with_step_iterator next_partially_aligned()     const { return *this; }

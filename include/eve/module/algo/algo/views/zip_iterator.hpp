@@ -176,13 +176,10 @@ namespace eve::algo::views
       EVE_FORCEINLINE operator zip_iterator<unaligned_t<Is>...>() const
       {
         return zip_iterator<unaligned_t<Is>...> {
-            kumi::map([](auto x) { return unalign(x); }, *this)};
+            kumi::map([](auto x) { return eve::unalign(x); }, *this)};
       }
 
-      EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, zip_iterator<Is...> self )
-      {
-        return zip_iterator<unaligned_t<Is>...>(self);
-      }
+      EVE_FORCEINLINE auto unalign() const noexcept { return zip_iterator<unaligned_t<Is>...>(*this); }
 
       template<std::derived_from<zip_iterator_common> Self, compatible_zip_iterators<Self> Other>
       EVE_FORCEINLINE friend bool operator==(Self const &x, Other const &y)
@@ -220,7 +217,7 @@ namespace eve::algo::views
         auto map_one_it = [&]<std::size_t idx>(auto f, std::integral_constant<std::size_t, idx>)
         {
           if constexpr (idx == 0) return l;
-          else                    return unalign(f) + distance;
+          else                    return eve::unalign(f) + distance;
         };
 
         auto real_l =[&]<std::size_t ... idxs>(std::index_sequence<idxs...>) {
