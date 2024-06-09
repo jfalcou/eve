@@ -21,7 +21,7 @@ namespace eve::detail
                                    O const& opts,
                                    C const& cond,
                                    V const& v) noexcept
-  requires sve_abi<typename V::abi_type>
+  requires sve_abi<abi_t<T, N>>
   {
     constexpr auto  c   = categorize<wide<T, N>>();
     auto const      src = alternative(mask, v, as(v));
