@@ -11,14 +11,14 @@ int main()
   std::cout << "---- simd" << '\n'
             << "<- pf               = " << pf << '\n'
             << "-> rsqrt(pf)        = " << eve::rsqrt(pf) << '\n'
-            << "-> raw(rsqrt)(pf)   = " << eve::raw(eve::rsqrt)(pf) << '\n'
+            << "-> rsqrt[raw](pf)   = " << eve::rsqrt[eve::raw2](pf) << '\n'
             << "-> rsqrt[pf > 0](pf)= " << eve::rsqrt[pf > 0](pf) << '\n';
 
   float xf = 32.768f;
 
   std::cout << "---- scalar" << '\n'
             << "<- xf               = " << xf << '\n'
-            << "-> sqrt(xf)         = " << eve::rsqrt(xf) << '\n';
+            << "-> rsqrt(xf)        = " << eve::rsqrt(xf) << '\n';
 
   return 0;
 }
