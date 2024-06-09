@@ -26,7 +26,9 @@ namespace eve::detail
     constexpr auto  c   = categorize<wide<T, N>>();
     auto const      src = alternative(mask, v, as(v));
     if constexpr( C::is_complete )
-      return src:
+    {
+      return src;
+    }
     else
     {
       auto m   = expand_mask(cond, as<V> {});

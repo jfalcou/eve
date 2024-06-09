@@ -25,8 +25,8 @@ namespace eve::detail
                                     wide<T, N> const& v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(raw2 && std::same_as<T, float>)
-       return vec_rsqrte(v0.storage());
+    if constexpr(O::contains(raw2) && std::same_as<T, float>)                 {
+      return vec_rsqrte(v0.storage());
     else
     {
       if constexpr( std::same_as<T, float> )
