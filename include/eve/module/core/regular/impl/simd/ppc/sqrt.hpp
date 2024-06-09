@@ -10,43 +10,26 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/inf.hpp>
-#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
 
-#include <type_traits>
-
 namespace eve::detail
 {
-template<floating_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-sqrt_(EVE_SUPPORTS(vmx_), wide<T, N> const& v0) noexcept requires ppc_abi<abi_t<T, N>>
-{
-  if constexpr( std::is_floating_point_v<T> )
+  template<floating_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(vmx_),
+                                   O          const&,
+                                   wide<T, N> const& v0) noexcept
+  requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr( current_api >= vsx ) return vec_sqrt(v0.storage());
+    if constexpr( current_api >= vsx )
+      return vec_sqrt(v0.storage());
     else
     {
-      auto that = if_else(v0, v0 * rsqrt(v0), v0);
-      if constexpr( platform::supports_invalids )
-      {
+      auto that = if_else(is_nez(v0), v0 * rsqrt(v0), v0);
+      if constexpr( platform::supports_invalids && !O::contains(raw2))
         return if_else(v0 == inf(eve::as(v0)), v0, that);
-      }
-      else { return that; }
+      else
+        return that;
     }
   }
-}
-
-template<floating_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N>
-                sqrt_(EVE_SUPPORTS(vmx_),
-                      raw_type const&,
-                      wide<T, N> const                &v0) noexcept requires ppc_abi<abi_t<T, N>>
-{
-  if constexpr( std::is_floating_point_v<T> )
-  {
-    if constexpr( current_api >= vsx )  return vec_sqrt(v0.storage());
-    else                                return if_else(v0, v0 * raw(rsqrt)(v0), eve::zero);
-  }
-}
 }

@@ -11,33 +11,35 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/forward.hpp>
+
 
 namespace eve::detail
 {
-template<conditional_expr C, value V>
-EVE_FORCEINLINE auto
-sqrt_(EVE_SUPPORTS(sve_), C const& cond, V const& v) noexcept -> V
-requires sve_abi<typename V::abi_type>
-{
-  if constexpr( C::is_complete )
+  template<floating_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
+                                   O const& opts,
+                                   C const& cond,
+                                   V const& v) noexcept
+  requires sve_abi<typename V::abi_type>
   {
-    if constexpr( C::is_inverted )  return svsqrt_x(sve_true<element_type_t<V>>(), v);
-    else                            return alternative(cond, v, as<V> {});
+    constexpr auto  c   = categorize<wide<T, N>>();
+    auto const      src = alternative(mask, v, as(v));
+    if constexpr( C::is_complete )
+      return src:
+    else
+    {
+      auto m   = expand_mask(cond, as<V> {});
+      return svsqrt_m(src, m, v);
+    }
   }
-  else
-  {
-    auto src = alternative(cond, v, as<V> {});
-    auto m   = expand_mask(cond, as<V> {});
-    return svsqrt_m(src, m, v);
-  }
-}
 
-template<floating_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-sqrt_(EVE_SUPPORTS(sve_), wide<T, N> const& v) noexcept -> wide<T, N>
-requires sve_abi<abi_t<T, N>>
-{
-  return sqrt[ignore_none](v);
-}
+  template<floating_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE auto
+  sqrt_(EVE_REQUIRES(sve_), wide<T, N> const& v) noexcept -> wide<T, N>
+  requires sve_abi<abi_t<T, N>>
+  {
+    return svsqrt_z(sve_true<T>(),v);
+  }
 
 }

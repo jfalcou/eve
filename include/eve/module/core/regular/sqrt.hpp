@@ -7,13 +7,19 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
-
-#include <type_traits>
-
 namespace eve
 {
+  template<typename Options>
+  struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option>
+  {
+    template<eve::floating_value T>
+    requires(eve::same_lanes_or_scalar<T>)
+    constexpr EVE_FORCEINLINE T operator()(T a) const
+    { return EVE_DISPATCH_CALL(a); }
+
+    EVE_CALLABLE_OBJECT(sqrt_t, sqrt_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -58,23 +64,14 @@ namespace eve
 //!
 //!   * eve::raw
 //!
-//!     The call `raw(sqrt)(x)`, call a proper system intrinsic if one exists, but with possibly
+//!     The call `sqrt[raw](x)`, call a proper system intrinsic if one exists, but with possibly
 //!     very poor accuracy in return. Otherwise it uses the non-decorated call.
 //!
 //! @}
 //================================================================================================
-namespace tag
-{
-  struct sqrt_;
+  inline constexpr auto sqrt = functor<sqrt_t>;
 }
 
-template<> struct supports_optimized_conversion<tag::sqrt_> : std::true_type
-{};
-
-EVE_MAKE_CALLABLE(sqrt_, sqrt);
-}
-
-#include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/sqrt.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
