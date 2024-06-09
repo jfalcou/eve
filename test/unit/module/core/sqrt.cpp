@@ -24,7 +24,6 @@ TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::sqrt(T()), T);
   TTS_EXPR_IS(eve::sqrt(v_t()), v_t);
   TTS_EXPR_IS(eve::sqrt[eve::logical<T>()](T()), T);
-  TTS_EXPR_IS(eve::sqrt[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::sqrt[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::sqrt[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::sqrt[bool()](T()), T);

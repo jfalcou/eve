@@ -25,6 +25,10 @@ TTS_CASE_TPL("Check return types of rsqrt", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::rsqrt[eve::raw2](v_t()), v_t);
   TTS_EXPR_IS(eve::rsqrt[eve::pedantic2](T()), T);
   TTS_EXPR_IS(eve::rsqrt[eve::pedantic2](v_t()), v_t);
+  TTS_EXPR_IS(eve::rsqrt[eve::logical<T>()](T()), T);
+  TTS_EXPR_IS(eve::rsqrt[eve::logical<v_t>()](T()), T);
+  TTS_EXPR_IS(eve::rsqrt[eve::logical<v_t>()](v_t()), v_t);
+
 };
 
 //==================================================================================================
