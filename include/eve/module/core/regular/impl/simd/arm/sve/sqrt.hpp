@@ -18,9 +18,9 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
-                                   O const& opts,
-                                   C const& cond,
-                                   V const& v) noexcept
+                                   C          const& mask,
+                                   O          const&,
+                                   wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     constexpr auto  c   = categorize<wide<T, N>>();
@@ -37,8 +37,9 @@ namespace eve::detail
   }
 
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto
-  sqrt_(EVE_REQUIRES(sve_), wide<T, N> const& v) noexcept -> wide<T, N>
+  EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
+                                   O          const&,
+                                   wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     return svsqrt_z(sve_true<T>(),v);
