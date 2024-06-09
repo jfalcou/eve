@@ -61,7 +61,7 @@ namespace eve
 //!      In particular:
 //!
 //!      * If `x` is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If `x` is \f$\pm\inf\f$ or `nan`, `NaN` is returned.
+//!      * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
 //!      * If `y` is \f$\pm0\f$, `NaN` is returned.
 //!      * If `y` is \f$\pm\inf\f$ and `x` is finite, `x`is returned.
 //!

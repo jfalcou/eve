@@ -60,9 +60,9 @@ namespace eve
 //!
 //!      In particular:
 //!
-//!      * If `x` is \f$\pm\inf\f$ or `nan`, `NaN` is returned.
+//!      * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
 //!      * If `y` is \f$\pm0\f$  \f$\pm0\f$ is returned
-//!      * If `y` is `nan`, `NaN` is returned.
+//!      * If `y` is `NaN`, `NaN` is returned.
 //!
 //! @}
 //================================================================================================
