@@ -12,7 +12,7 @@ namespace eve::detail
 template<floating_scalar_value T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(neon128_),
                        O          const &,
-                       wide<T, N> const &v) noexcept
+                       wide<T, N> const &v0) noexcept
 requires arm_abi<abi_t<T, N>>
 {
   if constexpr(O::contains(raw2))
@@ -20,14 +20,14 @@ requires arm_abi<abi_t<T, N>>
     using that_t       = wide<T, N>;
     constexpr auto cat = categorize<that_t>();
 
-    if      constexpr( cat == category::float32x2 ) return vrsqrte_f32(v);
-    else if constexpr( cat == category::float32x4 ) return vrsqrteq_f32(v);
+    if      constexpr( cat == category::float32x2 ) return vrsqrte_f32(v0);
+    else if constexpr( cat == category::float32x4 ) return vrsqrteq_f32(v0);
     else if constexpr( current_api >= asimd )
     {
-      if constexpr( cat == category::float64x1 ) return vrsqrte_f64(v);
-      else if constexpr( cat == category::float64x2 ) return vrsqrteq_f64(v);
+      if constexpr( cat == category::float64x1 ) return vrsqrte_f64(v0);
+      else if constexpr( cat == category::float64x2 ) return vrsqrteq_f64(v0);
     }
-    else return map(rsqrt, v);
+    else return map(rsqrt, v0);
   }
   else
   {
