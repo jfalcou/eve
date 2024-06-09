@@ -65,7 +65,9 @@ namespace eve::detail
   rsqrt_x86_pedantic(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
-    if( eve::any(is_denormal(x)) || (std::is_same_v<v_t, double> && eve::any(eve::abs(x) < smallestposval(eve::as<float>()) || eve::abs(x) > valmax(eve::as<float>()))) )
+    if( eve::any(is_denormal(x)) ||
+        (std::is_same_v<v_t, double> && eve::any(eve::abs(x) < smallestposval(eve::as<float>()) ||
+                                                 eve::abs(x) > valmax(eve::as<float>()))) )
       // this is necessary because of the poor initialisation by float intrinsic
     {
       auto [a00, nn] = ifrexp[pedantic](x);
@@ -73,77 +75,15 @@ namespace eve::detail
       nn             = dec[tst](nn);
       a00            = mul[tst](a00, 2);
       auto a0        = rsqrt_x86(a00);
+      std::cout << ldexp[pedantic](a0, -nn / 2) << std::endl;
+      std::cout << is_eqz(x) << std::endl;
       return if_else(is_eqz(x), inf(eve::as(x)), ldexp[pedantic](a0, -nn / 2));
     }
     else
+    {
       return rsqrt_x86(x);
+    }
   }
-
-//  template<floating_scalar_value T, typename N, callable_options O>
-//   EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(sse2_),
-//                                     O          const&,
-//                                     wide<T, N> const& a0) noexcept
-//   requires  x86_abi<abi_t<T, N>>
-//   {
-//     if constexpr(current_api >= avx512)
-//     {
-//       constexpr auto c = categorize<wide<T, N>>();
-
-//       if      constexpr( c == category::float32x16) return _mm512_rsqrt_ps(a0);
-//       else if constexpr( c == category::float64x8 ) return _mm512_rsqrt14_pd(a0);
-//       else if constexpr( c == category::float32x8 ) return _mm256_rsqrt_ps(a0);
-//       else if constexpr( c == category::float64x4 ) return _mm256_rsqrt14_pd(a0);
-//       else if constexpr( c == category::float32x4 ) return _mm_rsqrt_ps(a0);
-//       else if constexpr( c == category::float64x2 ) return _mm_rsqrt14_pd(a0);
-//     }
-//     else if constexpr(current_api >= avx)
-//     {
-//       if constexpr(O::contains(raw2))
-//       {
-//         if constexpr( std::is_same_v<T, double> )
-//         {
-//           // The maximum error for this approximation is 1.5e-12
-//           return _mm256_cvtps_pd(_mm256_rsqrt_ps(_mm256_cvtpd_ps(a0)));
-//         }
-//         else if constexpr( std::is_same_v<T, float> )
-//         {
-//           return _mm256_rsqrt_ps(a0);
-//         }
-//       }
-//       else
-//       {
-//         if constexpr( std::is_same_v<T, double> )
-//           return rsqrt_x86_pedantic(a0);
-//         else
-//           return rsqrt_x86(a0);
-//       }
-//     }
-//     else if constexpr(current_api >= sse2)
-//     {
-//       if constexpr(O::contains(pedantic2))
-//       {
-//         return rsqrt_x86_pedantic(a0);
-//       }
-//       else if constexpr(O::contains(raw2))
-//       {
-//         if constexpr( std::is_same_v<T, double> )
-//         {
-//           // The maximum error for this approximation is 1.5e-12
-//           return _mm_cvtps_pd(_mm_rsqrt_ps(_mm_cvtpd_ps(a0)));
-//         }
-//         else if constexpr( std::is_same_v<T, float> )
-//         { return _mm_rsqrt_ps(a0); }
-//       }
-//       else
-//       {
-//         if constexpr( std::is_same_v<T, double> )
-//           return rsqrt_x86_pedantic(a0);
-//         else
-//           return rsqrt_x86(a0);
-//       }
-//     }
-//   }
-// }
 
 //------------------------------------------------------------------------------------------------
 //128 bits rsqrt
@@ -184,7 +124,11 @@ namespace eve::detail
                                      wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(pedantic2))
+    {
+      return rsqrt_x86_pedantic(a0);
+    }
+    else if constexpr(O::contains(raw2))
     {
       if constexpr( std::is_same_v<T, double> )
       {
