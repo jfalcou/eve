@@ -189,7 +189,7 @@ namespace eve::detail
       if constexpr( std::is_same_v<T, double> )
       {
         // The maximum error for this approximation is 1.5e-12
-        return _mm256_cvtps_pd(_mm256_rsqrt_ps(_mm256_cvtpd_ps(a0)));
+        return _mm256_cvtps_pd(_mm_rsqrt_ps(_mm256_cvtpd_ps(a0)));
       }
       else if constexpr( std::is_same_v<T, float> )
       {
