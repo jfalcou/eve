@@ -44,14 +44,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value U>
-//!      eve::common_value_t<T, U> rem(T x, U y) noexcept;
+//!      template< eve::floating_value T,  eve::floating_value U>
+//!      eve::common_value_t<T, U> fmod(T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:   [real](@ref eve::value) argumentx.
+//!     * `x`, `y`:   [real](@ref eve::floating_value) argumentx.
 //!
 //!   **Return value**
 //!

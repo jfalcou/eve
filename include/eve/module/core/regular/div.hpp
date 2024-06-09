@@ -34,7 +34,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @divtogroup core_arithmetic
+//! @addtogroup core_arithmetic
 //! @{
 //!   @var div
 //!   @brief Computes the  division of multiple values.
