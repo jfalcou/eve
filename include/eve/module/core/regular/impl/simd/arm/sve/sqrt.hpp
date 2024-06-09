@@ -16,7 +16,7 @@
 
 namespace eve::detail
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, typename N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
                                    O const& opts,
                                    C const& cond,
