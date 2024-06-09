@@ -31,7 +31,7 @@ namespace eve::detail
     }
     else
     {
-      auto m   = expand_mask(cond, as(v));
+      auto m   = expand_mask(mask, as(v));
       return svsqrt_m(src, m, v);
     }
   }
