@@ -15,9 +15,9 @@ namespace eve::detail
                                     wide<T, N> const &v0) noexcept
   requires arm_abi<abi_t<T, N>>
   {
+    using that_t       = wide<T, N>;
     if constexpr(O::contains(raw2))
     {
-      using that_t       = wide<T, N>;
       constexpr auto cat = categorize<that_t>();
 
       if      constexpr( cat == category::float32x2 ) return vrsqrte_f32(v0);
