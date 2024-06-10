@@ -33,7 +33,7 @@ namespace eve::detail
 //------------------------------------------------------------------------------------------------
 // Generic function for rsqrt on X86
   template<typename Pack> EVE_FORCEINLINE Pack
-  rsqrt_x86(Pack const& x) noexcept
+  rsqrt_x86_normal(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
     // Local constants
@@ -62,7 +62,7 @@ namespace eve::detail
   }
 
   template<typename Pack> EVE_FORCEINLINE Pack
-  rsqrt_x86_pedantic(Pack const& x) noexcept
+  rsqrt_x86_full(Pack const& x) noexcept
   {
     using v_t = typename Pack::value_type;
     if( eve::any(is_denormal(x)) ||
@@ -74,14 +74,14 @@ namespace eve::detail
       auto tst       = is_odd(nn);
       nn             = dec[tst](nn);
       a00            = mul[tst](a00, 2);
-      auto a0        = rsqrt_x86(a00);
+      auto a0        = rsqrt_x86_normal(a00);
       std::cout << ldexp[pedantic](a0, -nn / 2) << std::endl;
       std::cout << is_eqz(x) << std::endl;
       return if_else(is_eqz(x), inf(eve::as(x)), ldexp[pedantic](a0, -nn / 2));
     }
     else
     {
-      return rsqrt_x86(x);
+      return rsqrt_x86_normal(x);
     }
   }
 
@@ -93,11 +93,7 @@ namespace eve::detail
                                     wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if constexpr(O::contains(pedantic2))
-    {
-      return rsqrt_x86_pedantic(a0);
-    }
-    else if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw2))
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -109,10 +105,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( std::is_same_v<T, double> )
-        return rsqrt_x86_pedantic(a0);
-      else
-        return rsqrt_x86(a0);
+      return rsqrt_x86_full(a0);
     }
   }
 
@@ -124,11 +117,7 @@ namespace eve::detail
                                      wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if constexpr(O::contains(pedantic2))
-    {
-      return rsqrt_x86_pedantic(a0);
-    }
-    else if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw2))
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -141,10 +130,7 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( std::is_same_v<T, double> )
-        return rsqrt_x86_pedantic(a0);
-      else
-        return rsqrt_x86(a0);
+        return rsqrt_x86_full(a0);
     }
   }
 
@@ -155,14 +141,20 @@ namespace eve::detail
                                      O const&,
                                      wide<T, N> a0) noexcept
   {
-    constexpr auto c = categorize<wide<T, N>>();
-
-    if      constexpr( c == category::float32x16) return _mm512_rsqrt_ps(a0);
-    else if constexpr( c == category::float64x8 ) return _mm512_rsqrt14_pd(a0);
-    else if constexpr( c == category::float32x8 ) return _mm256_rsqrt_ps(a0);
-    else if constexpr( c == category::float64x4 ) return _mm256_rsqrt14_pd(a0);
-    else if constexpr( c == category::float32x4 ) return _mm_rsqrt_ps(a0);
-    else if constexpr( c == category::float64x2 ) return _mm_rsqrt14_pd(a0);
+    if constexpr(O::contains(raw2))
+    {
+      constexpr auto c = categorize<wide<T, N>>();
+      if      constexpr( c == category::float32x16) return _mm512_rsqrt14_ps(a0);
+      else if constexpr( c == category::float64x8 ) return _mm512_rsqrt14_pd(a0);
+      else if constexpr( c == category::float32x8 ) return _mm256_rsqrt_ps(a0);
+      else if constexpr( c == category::float64x4 ) return _mm256_rsqrt14_pd(a0);
+      else if constexpr( c == category::float32x4 ) return _mm_rsqrt_ps(a0);
+      else if constexpr( c == category::float64x2 ) return _mm_rsqrt14_pd(a0);
+    }
+    else
+    {
+      return rsqrt_x86_full(a0);
+    }
   }
 
 // -----------------------------------------------------------------------------------------------
@@ -173,20 +165,23 @@ namespace eve::detail
                                     O          const&,
                                     wide<T, N> const& v) noexcept
   {
-    constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
 
     if constexpr( C::is_complete) return src;
+    else if constexpr(O::contains(raw2))
+    {
+      constexpr auto c = categorize<wide<T, N>>();
+      auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+      if      constexpr( c == category::float32x16) return _mm512_mask_rsqrt14_ps(src, m, v);
+      else if constexpr( c == category::float64x8 ) return _mm512_mask_rsqrt14_pd(src, m, v);
+      else if constexpr( c == category::float32x16) return _mm256_mask_rsqrt14_ps(src, m, v);
+      else if constexpr( c == category::float64x8 ) return _mm256_mask_rsqrt14_pd(src, m, v);
+      else if constexpr( c == category::float32x16) return _mm_mask_rsqrt14_ps(src, m, v);
+      else if constexpr( c == category::float64x8 ) return _mm_mask_rsqrt14_pd(src, m, v);
+    }
     else
     {
-      auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
-      if      constexpr( c == category::float32x16) return _mm512_mask_rsqrt_ps(src, m, v);
-      else if constexpr( c == category::float64x8 ) return _mm512_mask_rsqrt14_pd(src, m, v);
-      else if constexpr( c == category::float32x16) return _mm256_mask_rsqrt_ps(src, m, v);
-      else if constexpr( c == category::float64x8 ) return _mm256_mask_rsqrt14_pd(src, m, v);
-      else if constexpr( c == category::float32x16) return _mm_mask_rsqrt_ps(src, m, v);
-      else if constexpr( c == category::float64x8 ) return _mm_mask_rsqrt14_pd(src, m, v);
+      return if_else(cx,rsqrt_x86_full(v), v);
     }
   }
 }
