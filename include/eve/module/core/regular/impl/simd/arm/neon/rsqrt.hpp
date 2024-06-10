@@ -11,13 +11,17 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rsqrt_(EVE_REQUIRES(neon128_),
-                                    O          const &,
+                                    O          const &o,
                                     wide<T, N> const &v0) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     using that_t       = wide<T, N>;
     constexpr auto cat = categorize<that_t>();
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(pedantic2))
+    {
+      return rem.behaviour(cpu_{}, o, v0);
+    }
+    else if constexpr(O::contains(raw2))
     {
       if      constexpr( cat == category::float32x2 ) return vrsqrte_f32(v0);
       else if constexpr( cat == category::float32x4 ) return vrsqrteq_f32(v0);
