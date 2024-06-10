@@ -18,7 +18,7 @@ var searchData=
   ['firstbitunset_15',['firstbitunset',['../group__core__bitops_ga8bc33d70eb0f0eb36126b95e06588748.html#ga8bc33d70eb0f0eb36126b95e06588748',1,'eve']]],
   ['floor_16',['floor',['../group__core__arithmetic_ga9f22991052abdd78ebc5e87e31631540.html#ga9f22991052abdd78ebc5e87e31631540',1,'eve']]],
   ['fma_17',['fma',['../group__core__fma__family_gaa9a5f13618342522ebb924a864555cc1.html#gaa9a5f13618342522ebb924a864555cc1',1,'eve']]],
-  ['fmod_18',['fmod',['../group__core__arithmetic.html#ga5dbda88b3cab20b719e316ecfc301b0e',1,'eve']]],
+  ['fmod_18',['fmod',['../group__core__arithmetic_ga5dbda88b3cab20b719e316ecfc301b0e.html#ga5dbda88b3cab20b719e316ecfc301b0e',1,'eve']]],
   ['fms_19',['fms',['../group__core__fma__family_gaae2ebed60c826b5686a2599a37bc1a88.html#gaae2ebed60c826b5686a2599a37bc1a88',1,'eve']]],
   ['fnma_20',['fnma',['../group__core__fma__family_ga074ab3f337c7af4c8d8cb430ac4e1cc5.html#ga074ab3f337c7af4c8d8cb430ac4e1cc5',1,'eve']]],
   ['fnms_21',['fnms',['../group__core__fma__family_ga7d02a108e868c1deaa0143f6377c7c3f.html#ga7d02a108e868c1deaa0143f6377c7c3f',1,'eve']]],
