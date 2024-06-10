@@ -10,12 +10,13 @@ int main()
   std::cout << "---- simd" << '\n'
             << " <- pi                        = " << pi << '\n'
             << " <- qi                        = " << qi << '\n'
+            << " <- ri                        = " << ri << '\n'
             << " -> rem(pi, qi)               = " << eve::rem(pi, qi) << '\n'
-            << " -> toward_zero(rem)(pi, qi)  = " << eve::toward_zero(eve::rem)(pi, qi) << '\n'
-            << " -> upward(rem)(pi, qi)       = " << eve::downward(eve::rem)(pi, qi) << '\n'
-            << " -> downward(rem)(pi, qi)     = " << eve::upward(eve::rem)(pi, qi) << '\n'
-            << " -> to_nearest(rem)(pi, qi)   = " << eve::to_nearest(eve::rem)(pi, qi) << '\n'
-            << " -> rem[ri!= 0](pi, ri)       = " << eve::rem[ri!= 0](pi, ri) << '\n'
+            << " -> rem[toward_zero](pi, qi)  = " << eve::rem[eve::toward_zero](pi, qi) << '\n'
+            << " -> rem[downward](pi, qi)     = " << eve::rem[eve::downward](pi, qi) << '\n'
+            << " -> rem[upward](pi, qi)       = " << eve::rem[eve::upward](pi, qi) << '\n'
+            << " -> rem[toward_zero](pi, qi)  = " << eve::rem[eve::to_nearest](pi, qi) << '\n'
+//            << " -> rem[ri!= 0](pi, ri)       = " << eve::rem[ri!= 0](pi, ri) << '\n'
             << " -> pi % qi                   = " << pi % qi << '\n';
 
   std::int16_t xi  = 32700,  yi = 101;

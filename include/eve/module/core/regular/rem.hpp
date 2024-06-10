@@ -7,10 +7,26 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/overload.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct rem_t : elementwise_callable<rem_t, Options, upward_option, downward_option,
+                                      to_nearest_option, toward_zero_option>
+  {
+    template<eve::value T0, value T1>
+    requires(eve::same_lanes_or_scalar<T0, T1>)
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1);
+    }
+
+    EVE_CALLABLE_OBJECT(rem_t, rem_);
+  };
+
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
@@ -96,11 +112,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(rem_, rem);
+  inline constexpr auto rem = functor<rem_t>;
 }
 
 #include <eve/module/core/regular/impl/rem.hpp>
-
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/rem.hpp>
-#endif

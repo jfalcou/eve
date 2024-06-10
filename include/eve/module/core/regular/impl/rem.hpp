@@ -29,80 +29,53 @@
 
 namespace eve::detail
 {
-template<ordered_value T, ordered_value U>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), T const& a, U const& b) noexcept
--> common_value_t<T, U>
-requires(std::is_floating_point_v<eve::underlying_type_t<common_value_t<T, U>>>)
-{
-  return arithmetic_call(rem, a, b);
-}
 
-template<decorator D, ordered_value T, ordered_value U>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, U const& b) noexcept
--> common_value_t<T, U>
-requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downward_type, to_nearest_type> {}))
-{
-  return arithmetic_call(D()(rem), a, b);
-}
-
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
-{
-  if constexpr( current_api == neon && simd_value<T> ) return map(rem, a, b);
-  else
+  template<typename T, callable_options O>
+  EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
-                   allbits,
-                   if_else(is_eqz(a), a, fnma(b, trunc(div(a, b)), a)));
+    if constexpr(integral_value<T>)
+    {
+      if constexpr(O::contains(downward2) ||
+                   (( O::contains(upward2) || O::contains(to_nearest2)) && !(unsigned_value<T>)))
+      {
+        return fnma(b, eve::div[o](a, b), a);;
+      }
+      else
+      {
+        return fnma(b, eve::div(a, b), a);
+      }
+    }
+    else if constexpr(floating_value<T>)
+    {
+      if constexpr(O::contains(to_nearest2))
+      {
+        return if_else(is_eqz(b) || is_unordered(a, b),
+                       if_else(is_eqz(a) || is_infinite(b), a, allbits),
+                       fnma(b, eve::div[to_nearest2](a, b), a)); // as remainder
+      }
+      else if constexpr(O::contains(upward2) || O::contains(downward2))
+      {
+        return  fnma(b, eve::div[o](a, b), a);
+      }
+      else
+      {
+        if constexpr( current_api == neon && simd_value<T> ) return map(rem, a, b);
+        else
+        {
+          return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
+                         allbits,
+                         if_else(is_eqz(a), a, fnma(b, div[toward_zero2](a, b), a)));
+        }
+      }
+    }
   }
-}
 
-template<ordered_value T, decorator D>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), D const&, T const& a, T const& b) noexcept
-    requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, to_nearest_type> {}))
-{
-  if constexpr( has_native_abi_v<T> ) return fnma(b, D()(eve::div)(a, b), a);
-  else return apply_over(D()(rem), a, b);
-}
-template<floating_ordered_value T>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), to_nearest_type const&, T const& a, T const& b) noexcept
-{
-  if constexpr( has_native_abi_v<T> )
+
+  template<conditional_expr C, typename T, callable_options O>
+  EVE_FORCEINLINE T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const & o, T t, T f) noexcept
+  requires(integral_value<T>)
   {
-    return if_else(is_eqz(b) || is_unordered(a, b),
-                   if_else(is_eqz(a) || is_infinite(b), a, allbits),
-                   fnma(b, to_nearest(eve::div)(a, b), a)); // as remainder
+    auto g = if_else(cond, f, one);
+    return if_else(cond, eve::rem[o.drop(condition_key)](t, g), t);
   }
-  else return apply_over(to_nearest(rem), a, b);
-}
-
-//================================================================================================
-// Masked case
-//================================================================================================
-template<conditional_expr C, ordered_value U, ordered_value V>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_),
-     C const& cond,
-     U const& t,
-     V const& f) noexcept
--> common_value_t<V, U>
-{
-  auto g = if_else(cond, f, one);
-  return mask_op(cond, eve::rem, t, g);
-}
-
-template<conditional_expr C, decorator D, ordered_value U, ordered_value V>
-EVE_FORCEINLINE auto
-rem_(EVE_SUPPORTS(cpu_), C const& cond, D const&, U const& t, V const& f) noexcept
--> common_value_t<V, U>
-requires(is_one_of<D>(types<toward_zero_type, downward_type, upward_type, downward_type, to_nearest_type> {}))
-{
-  auto g = if_else(cond, f, one);
-  return mask_op(cond, D()(rem), t, g);
-}
 }

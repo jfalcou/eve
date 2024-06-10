@@ -14,6 +14,12 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/mzero.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/is_not_nan.hpp>
 
 namespace eve::detail
 {

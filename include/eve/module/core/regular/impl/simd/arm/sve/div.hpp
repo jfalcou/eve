@@ -12,19 +12,40 @@
 
 namespace eve::detail
 {
-template<conditional_expr C, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T,N>
-div_(EVE_SUPPORTS(sve_), C const& cx, wide<T, N> const& v, wide<T, N> const& w) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  if constexpr( C::is_complete ) { return div_(EVE_RETARGET(cpu_), cx, v, w); }
-  else
+  template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_),
+                                 C          const& cx,
+                                 O          const& o,
+                                 wide<T, N> const& v,
+                                 wide<T, N> const& w) noexcept
+  requires sve_abi<abi_t<T, N>>
   {
-    if constexpr( !C::has_alternative && std::floating_point<T>)
+    if constexpr(O::contains(toward_zero2) || O::contains(upward2) ||
+                      O::contains(downward2) || O::contains(to_nearest2))
     {
-      auto m   = expand_mask(cx, as<wide<T, N>> {});
-      return svdiv_m(m,v,w);
+      if (floating_value<T>)
+        return round[o](div[cx](v, w));
+      else
+        return div.behavior(cpu_{}, o, v, w);
     }
-    else  return div_(EVE_RETARGET(cpu_), cx, v, w); }
-}
+    else
+    {
+      if constexpr(sizeof(T) >= 4)
+      {
+        auto alt = alternative(cx, v, as<wide<T, N>> {});
+        if constexpr( C::is_complete )  return alt;
+        else
+        {
+          if constexpr( !C::has_alternative)
+          {
+            auto m   = expand_mask(cx, as<wide<T, N>> {});
+            return svdiv_m(m,v,w);
+          }
+          else return div.behavior(cpu_{},o,v,w);
+        }
+      }
+      else
+        return div.behavior(cpu_{},o,v,w);
+    }
+  }
 }
