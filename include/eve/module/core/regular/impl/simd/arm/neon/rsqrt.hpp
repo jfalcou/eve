@@ -19,7 +19,7 @@ namespace eve::detail
     constexpr auto cat = categorize<that_t>();
     if constexpr(O::contains(pedantic2))
     {
-      return rem.behaviour(cpu_{}, o, v0);
+      return rem.behavior(cpu_{}, o, v0);
     }
     else if constexpr(O::contains(raw2))
     {
