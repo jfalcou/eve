@@ -27,7 +27,7 @@ namespace eve
 
   template <typename V>
   constexpr auto transparent_inner(V val) {
-    static_assert((sizeof(V) == sizeof(transparent_trait<T>::type)) && (alignof(V) == alignof(transparent_trait<T>::type)));
+    static_assert((sizeof(V) == sizeof(transparent_trait<V>::type)) && (alignof(V) == alignof(transparent_trait<V>::type)));
     return std::bit_cast<transparent_inner_t<V>>(val);
   }
 
