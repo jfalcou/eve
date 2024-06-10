@@ -16,7 +16,7 @@ struct copy_if_ignore_op_ : TraitsSupport
     return eve::algo::copy_if(in, out, p);
   }
 };
-auto copy_if_ignore_op = eve::algo::function_with_traits<copy_if_ignore_op_>;
+auto copy_if_ignore_op = eve::algo::function_with_traits<copy_if_ignore_op_>[eve::algo::copy_if.get_traits()];
 
 TTS_CASE_TPL("Check copy_if", algo_test::selected_types)
 <typename T>(tts::type<T>)
