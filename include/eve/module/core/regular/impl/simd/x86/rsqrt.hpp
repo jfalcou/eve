@@ -75,8 +75,6 @@ namespace eve::detail
       nn             = dec[tst](nn);
       a00            = mul[tst](a00, 2);
       auto a0        = rsqrt_x86_normal(a00);
-      std::cout << ldexp[pedantic](a0, -nn / 2) << std::endl;
-      std::cout << is_eqz(x) << std::endl;
       return if_else(is_eqz(x), inf(eve::as(x)), ldexp[pedantic](a0, -nn / 2));
     }
     else
@@ -101,7 +99,9 @@ namespace eve::detail
         return _mm_cvtps_pd(_mm_rsqrt_ps(_mm_cvtpd_ps(a0)));
       }
       else if constexpr( std::is_same_v<T, float> )
-      { return _mm_rsqrt_ps(a0); }
+      {
+        return _mm_rsqrt_ps(a0);
+      }
     }
     else
     {

@@ -14,7 +14,6 @@ namespace eve
   struct rsqrt_t : elementwise_callable<rsqrt_t, Options, raw_option, pedantic_option>
   {
     template<eve::floating_value T>
-    requires(eve::same_lanes_or_scalar<T>)
     constexpr EVE_FORCEINLINE T operator()(T a) const
     { return EVE_DISPATCH_CALL(a); }
 

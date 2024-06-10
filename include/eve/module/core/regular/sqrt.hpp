@@ -17,7 +17,6 @@ namespace eve
   struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option>
   {
     template<eve::value T>
-    requires(eve::same_lanes_or_scalar<T>)
     constexpr EVE_FORCEINLINE T operator()(T a) const
     { return EVE_DISPATCH_CALL(a); }
 
