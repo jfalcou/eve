@@ -47,7 +47,7 @@ TTS_CASE_TPL("Wide<transparent struct> eq/neq", eve::test::simd::integers)
   using W = typename Wb::template retype<S>;
 
   W x{ S::of(3) };
-  W y{ S::of(3) };
+  W y{ S::of(2) };
 
   TTS_EQUAL(x, x);
   TTS_NOT_EQUAL(x, y);
