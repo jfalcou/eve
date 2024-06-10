@@ -23,7 +23,6 @@ namespace eve::detail
                                    wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    constexpr auto  c   = categorize<wide<T, N>>();
     auto const      src = alternative(mask, v, as(v));
     if constexpr( C::is_complete )
     {
