@@ -17,8 +17,11 @@ namespace eve::detail
   //================================================================================================
   // Interleave pairs of wides
   //================================================================================================
-  template<scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(neon128_), wide<T,N> v0, wide<T,N> v1) noexcept
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(neon128_),
+                                   O const& o,
+                                   wide<T,N> v0,
+                                   wide<T,N> v1) noexcept
   requires (N::value > 1) && arm_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
@@ -127,7 +130,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave_(EVE_RETARGET(cpu_),v0,v1);
+      return interleave.behavior(cpu_{},o,v0,v1);
     }
   }
 }

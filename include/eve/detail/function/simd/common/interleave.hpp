@@ -16,8 +16,8 @@ namespace eve::detail
   // N-ary interleave
   // This is the main one as it is easier to specify optimisation on this interface than on tuple
   //================================================================================================
-  template<simd_value T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(cpu_),T v0, Ts... vs) noexcept
+  template<callable_options OO, simd_value T, std::same_as<T>... Ts>
+  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(cpu_), OO const&, T v0, Ts... vs) noexcept
   {
     auto const values = kumi::make_tuple(v0,vs...);
     constexpr auto nb   = 1 + sizeof...(Ts);
@@ -25,7 +25,7 @@ namespace eve::detail
     using ABI = abi_t<element_type_t<T>, eve::fixed<T::size()>>;
     constexpr bool is_bit_logical = logical_simd_value<T> && !ABI::is_wide_logical;
 
-         if constexpr (T::size() == 1) return values;
+    if constexpr (T::size() == 1) return values;
     else if constexpr ( nb == 4 && (sizeof(eve::element_type_t<T>) < 8) && !is_bit_logical )
     {
       auto a = v0;
@@ -56,29 +56,29 @@ namespace eve::detail
       return [&]<std::size_t... J>(std::index_sequence<J...>)
       {
         return kumi::make_tuple
-        ( [&]<std::size_t O, std::size_t... I>
-          (std::index_sequence<I...>, std::integral_constant<std::size_t,O>)
-          {
-            /*
-              We look at interleave as a matrix transpose task:
+          ( [&]<std::size_t O, std::size_t... I>
+            (std::index_sequence<I...>, std::integral_constant<std::size_t,O>)
+            {
+              /*
+                We look at interleave as a matrix transpose task:
                 - I+card*O gives a linear index into the card * nb values matrix
                 - We then compute the row and col to look for the proper data using / and %
                 - We use those pseudo-coordinate to select the register in the tuple and the
-                  the value inside the register.
+                the value inside the register.
 
-              Note on codegen quality:
+                Note on codegen quality:
                 - g++ and clang are able to turn this mess into an intrinsic based code if able
                 - special cases are optimized in their respective arch file
-            */
-            return T{ kumi::get<((I+card*O)%nb)>(values).get((I+card*O)/nb)... };
-          }( std::make_index_sequence<card>{}, std::integral_constant<std::size_t,J>{})...
-        );
+              */
+              return T{ kumi::get<((I+card*O)%nb)>(values).get((I+card*O)/nb)... };
+            }( std::make_index_sequence<card>{}, std::integral_constant<std::size_t,J>{})...
+          );
       }( std::make_index_sequence<nb>{});
     }
   }
 
-  template<simd_value T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(cpu_),logical<T> v0, logical<Ts>... vs) noexcept
+  template<callable_options O, simd_value T, std::same_as<T>... Ts>
+  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(cpu_), O const&, logical<T> v0, logical<Ts>... vs) noexcept
   requires( T::abi_type::is_wide_logical )
   {
     auto that = interleave(v0.mask(),vs.mask()...);
