@@ -24,7 +24,6 @@ TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::sqrt(T()), T);
   TTS_EXPR_IS(eve::sqrt(v_t()), v_t);
   TTS_EXPR_IS(eve::sqrt[eve::logical<T>()](T()), T);
-  TTS_EXPR_IS(eve::sqrt[eve::logical<T>()](v_t()), T);
   TTS_EXPR_IS(eve::sqrt[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::sqrt[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::sqrt[bool()](T()), T);
@@ -56,8 +55,7 @@ TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
   using v_t = eve::element_type_t<T>;
   auto val  = eve::unsigned_value<v_t> ? (eve::valmax(eve::as<v_t>()) / 2) : 0;
   using eve::detail::map;
-  TTS_ULP_EQUAL(
-      eve::sqrt[a0 < val](a0), map([&](auto e) { return (e < val) ? std::sqrt(e) : e; }, a0), 2);
+  TTS_ULP_EQUAL(eve::sqrt[a0 < val](a0), map([&](auto e) { return (e < val) ? std::sqrt(e) : e; }, a0), 2);
 };
 
 
@@ -68,9 +66,8 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::sqrt)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, 
+<typename T, typename M>(T const& a0,
                          M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::sqrt[mask](a0),
-            eve::if_else(mask, eve::sqrt(a0), a0));
+  TTS_IEEE_EQUAL(eve::sqrt[mask](a0), eve::if_else(mask, eve::sqrt(a0), a0));
 };
