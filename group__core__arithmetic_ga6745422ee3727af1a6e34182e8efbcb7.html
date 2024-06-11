@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::sqrt = {}</td>
+          <td class="memname">eve::sqrt = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;sqrt_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">sqrt</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr callable_sqrt_ sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:74</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:75</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -163,16 +163,17 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {1.0f, 2.0f, -3.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  wide_ft pf = {1.0f, 2.0f, -3.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
+<div class="line">                <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), -0.0f, 0.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf              = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sqrt(pf)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; raw(sqrt)(pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>(<a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>)(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sqrt[raw](pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[eve::raw2](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sqrt[pf &gt; 0](pf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>[pf &gt; 0](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -184,8 +185,8 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
-<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
@@ -194,7 +195,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga6745422ee372
 <p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">sqrt</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">eve::sqrt</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7" title="Computes the square root of the parameter.">sqrt(x)</a>, x)</code>.</p>
 </li>
 <li><p class="startli"><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">raw(sqrt)</a>(x)</code>, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return. Otherwise it uses the non-decorated call. </p>
+<p class="startli">The call <code>sqrt[raw](x)</code>, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return. Otherwise it uses the non-decorated call. </p>
 </li>
 </ul>
 

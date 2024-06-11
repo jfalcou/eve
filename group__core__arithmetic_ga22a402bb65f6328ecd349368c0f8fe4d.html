@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga22a402bb65f6
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::rsqrt = {}</td>
+          <td class="memname">eve::rsqrt = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;rsqrt_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,14 +145,14 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga22a402bb65f6
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">rsqrt</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d_html_ga22a402bb65f6328ecd349368c0f8fe4d"><div class="ttname"><a href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a></div><div class="ttdeci">constexpr callable_rsqrt_ rsqrt</div><div class="ttdoc">Computes the inverse of the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> rsqrt.hpp:64</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d_html_ga22a402bb65f6328ecd349368c0f8fe4d"><div class="ttname"><a href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a></div><div class="ttdeci">constexpr auto rsqrt</div><div class="ttdoc">Computes the inverse of the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> rsqrt.hpp:75</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> argument.</li>
+<li><code>x</code> : real argument.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>value containing the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> inverse of the square root of <code>x</code>.</p>
@@ -170,19 +170,18 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga22a402bb65f6
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf               = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rsqrt(pf)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; raw(rsqrt)(pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>(<a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a>)(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rsqrt[raw](pf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a>[eve::raw2](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rsqrt[pf &gt; 0](pf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a>[pf &gt; 0](pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> xf = 32.768f;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf               = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; sqrt(xf)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rsqrt(xf)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d">eve::rsqrt</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
-<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
@@ -191,7 +190,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga22a402bb65f6
 <p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d" title="Computes the inverse of the square root of the parameter.">rsqrt</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d" title="Computes the inverse of the square root of the parameter.">eve::rsqrt</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_ga22a402bb65f6328ecd349368c0f8fe4d.html#ga22a402bb65f6328ecd349368c0f8fe4d" title="Computes the inverse of the square root of the parameter.">rsqrt(x)</a>, x)</code>.</p>
 </li>
 <li><p class="startli"><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">raw(rsqrt)</a>(x)</code>, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return. Otherwise it uses the non-decorated call. </p>
+<p class="startli">The call <code>rsqr[raw](x)</code>, call a proper system intrinsic if one exists, but with possibly very poor accuracy in return. Otherwise it uses the non-decorated call. </p>
 </li>
 </ul>
 
