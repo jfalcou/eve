@@ -24,7 +24,6 @@ namespace eve
 
     template<simd_value T, std::same_as<T>... Ts>
     EVE_FORCEINLINE kumi::tuple<logical<T>, logical<Ts>...> operator()(logical<T> v, logical<Ts>... vs) const noexcept
-    requires( T::abi_type::is_wide_logical )
     { return EVE_DISPATCH_CALL(v, vs...); }
 
     EVE_CALLABLE_OBJECT(interleave_t, interleave_);
