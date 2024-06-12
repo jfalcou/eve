@@ -10,6 +10,9 @@
 #include <eve/arch.hpp>
 #include <eve/detail/function/interleave.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/traits/as_wide.hpp>
+#include <eve/traits/cardinal.hpp>
+
 
 namespace eve
 {
@@ -18,7 +21,8 @@ namespace eve
   {
     template<eve::value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-      EVE_FORCEINLINE auto operator()(T v, U w) const noexcept
+    EVE_FORCEINLINE  auto
+    operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(interleave_shuffle_t, interleave_shuffle_);
