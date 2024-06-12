@@ -11,8 +11,9 @@
 template <typename TraitsSupport>
 struct copy_if_ignore_op_ : TraitsSupport
 {
-  auto operator()(auto&& in, auto&& out, auto, auto p)
+  auto operator()(auto&& in, auto&& out, auto func)
   {
+    auto p = [&](auto x) { return get<1>(func(x)); };
     return eve::algo::copy_if(in, out, p);
   }
 };

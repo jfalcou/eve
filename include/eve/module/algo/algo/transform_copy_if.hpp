@@ -88,14 +88,6 @@ namespace eve::algo
         return eve::unalign(out.begin()) + (d.of - processed_out.begin());
       }
 
-      template<relaxed_range In, relaxed_range Out, typename Op, typename P>
-      EVE_FORCEINLINE
-      auto operator()(In&& in, Out&& out, Op op, P p) const -> unaligned_iterator_t<Out>
-      {
-        return operator()(in, out, [&](auto elt) {
-          return kumi::make_tuple(op(elt), p(elt));
-        });
-      }
     };
   }
 
@@ -119,23 +111,13 @@ namespace eve::algo
   //!   
   //!   If the output range's element type is different from the type of the values returned by the transforming function, performs the appropriate conversions.
   //!
-  //!   There are two overloads: one that takes in two separate operation and predicate functions,
-  //!   and one that takes in a single function that returns a pair.
-  //!   * The first form gives the same input to both functions.
-  //!     You can think of it as applying `eve::copy_if` and then `eve::transform_to`.
-  //!   * The second form is especially useful when the predicate and the transforming operation
-  //!     have some overlap or depend on each other.
-  //!
   //!   @groupheader{Callable Signatures}
   //!
   //!   @code
   //!   namespace eve::algo
   //!   {
   //!     template <eve::algo::relaxed_range In, eve::algo::relaxed_range Out, typename Func>
-  //!     auto operator()(In&& in, Out&& out, Func func) const -> unaligned_iterator_t<Out>
-  //!
-  //!     template <eve::algo::relaxed_range In, eve::algo::relaxed_range Out, typename Op, typename P>
-  //!     auto operator()(In&& in, Out&& out, Op op, P p) const -> unaligned_iterator_t<Out>
+  //!     auto transform_copy_if(In&& in, Out&& out, Func func) const -> unaligned_iterator_t<Out>
   //!   }
   //!   @endcode
   //!
@@ -146,8 +128,6 @@ namespace eve::algo
   //!    * `func`: Function that takes elements from `in` as SIMD registers and returns a pair of:
   //!        - the transformed values
   //!        - a logical mask.
-  //!    * `op`: Transformation operation over elements from `in` as SIMD registers
-  //!    * `p`: Predicate over elements from `in` as SIMD registers
   //!
   //!   **Return value**
   //!

@@ -43,16 +43,18 @@ template<typename Algo, typename Op, typename T> struct transform_copy_if_ptr_te
 
     auto p = [](auto x) { return x != 0; };
 
+    auto func = [&](auto x) { return kumi::make_tuple(op(x), p(x)); };
+
     std::copy_if(eve::unalign(rng.begin()), eve::unalign(rng.end()), std::back_inserter(buf1), p);
     std::transform(eve::unalign(buf1.begin()), eve::unalign(buf1.end()), buf1.begin(), op);
 
-    buf2.erase(alg(rng, buf2, op, p), buf2.end());
+    buf2.erase(alg(rng, buf2, func), buf2.end());
     TTS_EQUAL(buf1, buf2, REQUIRED);
 
     if( buf2.empty() ) return;
 
     buf2.pop_back();
-    auto end1 = alg(rng, buf2, op, p);
+    auto end1 = alg(rng, buf2, func);
 
     TTS_EQUAL(buf2.end() - end1, 0, REQUIRED);
 
