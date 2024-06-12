@@ -18,13 +18,12 @@
 
 namespace eve::detail
 {
-  template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-  EVE_FORCEINLINE T
-  byte_swap_pairs_(EVE_SUPPORTS(cpu_), T x, index_t<I0> const & i0, index_t<I1> const & i1) noexcept;
-
-  template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-  EVE_FORCEINLINE T
-  byte_swap_pairs_(EVE_SUPPORTS(cpu_), T x , index_t<I0> const & i0, index_t<I1> const & i1) noexcept
+  template<typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
+  EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
+                                     O const & o,
+                                     T x ,
+                                     index_t<I0> const & i0,
+                                     index_t<I1> const & i1) noexcept
   {
     if constexpr(simd_value<T>)
     {
@@ -52,11 +51,13 @@ namespace eve::detail
   }
 
   // Masked case
-  template<conditional_expr C, unsigned_value T, std::integral auto I0, std::integral auto I1>
-  EVE_FORCEINLINE auto
-  byte_swap_pairs_(EVE_SUPPORTS(cpu_), C const& cond, T const& t
-                  , index_t<I0> const & i0
-                  , index_t<I1> const & i1) noexcept
+  template<conditional_expr C, typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
+  EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
+                                     C const& cond,
+                                     O const & o,
+                                     T t,
+                                     index_t<I0> const & i0,
+                                     index_t<I1> const & i1) noexcept
   {
     return mask_op(cond, eve::byte_swap_pairs, t, i0, i1);
   }
