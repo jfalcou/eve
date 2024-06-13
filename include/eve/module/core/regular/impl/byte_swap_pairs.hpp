@@ -54,7 +54,7 @@ namespace eve::detail
   template<conditional_expr C, typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
   EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
                                      C const& cond,
-                                     O const & o,
+                                     O const &,
                                      T t,
                                      index_t<I0> const & i0,
                                      index_t<I1> const & i1) noexcept
