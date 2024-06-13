@@ -100,6 +100,10 @@ TTS_CASE_TPL("Make all wides<transparent enum>, splat", eve::test::simd::integer
       TTS_EQUAL(expected, full_wide.get(i));
     }
   }
+  else
+  {
+    TTS_PASS("Test passed");
+  }
 };
 
 TTS_CASE_TPL("Make all wides<transparent struct>, splat", eve::test::simd::integers)
@@ -121,6 +125,10 @@ TTS_CASE_TPL("Make all wides<transparent struct>, splat", eve::test::simd::integ
       S expected = S::of(i < Wb::size() ? 3 : 0);
       TTS_EQUAL(expected, full_wide.get(i));
     }
+  }
+  else
+  {
+    TTS_PASS("Test passed");
   }
 };
 
