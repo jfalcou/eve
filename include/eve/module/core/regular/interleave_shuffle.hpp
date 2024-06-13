@@ -21,7 +21,7 @@ namespace eve
   {
     template<eve::value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE  auto
+    EVE_FORCEINLINE  as_wide_t<common_value_t<T,U>, typename cardinal_t<common_value_t<T,U>>::combined_type>
     operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
