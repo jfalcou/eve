@@ -23,8 +23,8 @@ namespace eve::detail
   EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
                                      O const &,
                                      T x ,
-                                     index_t<I0> const & i0,
-                                     index_t<I1> const & i1) noexcept
+                                     index_t<I0> const & ,
+                                     index_t<I1> const &) noexcept
   {
     if constexpr(simd_value<T>)
     {
