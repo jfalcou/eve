@@ -20,7 +20,7 @@ namespace eve::detail
 {
   template<typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
   EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
-                                     O const & o,
+                                     O const &,
                                      T x ,
                                      index_t<I0> const & i0,
                                      index_t<I1> const & i1) noexcept
