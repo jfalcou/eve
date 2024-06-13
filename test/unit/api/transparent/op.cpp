@@ -9,6 +9,8 @@
 
 #include <eve/arch/wide.hpp>
 
+#include <iostream>
+
 // base struct used in the test
 template <typename E>
 struct BS {
@@ -22,8 +24,6 @@ struct BS {
 
 template<typename E>
 struct eve::transparent_trait<BS<E>> { using type = E; };
-
-enum class E: uint32_t { };
 
 TTS_CASE_TPL("Wide<transparent enum> eq/neq", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)

@@ -972,6 +972,7 @@ namespace eve
 
     //! Inserts a eve::wide into a output stream
     friend std::ostream& operator<<(std::ostream& os, wide p)
+    requires (requires(Type v, std::ostream stream) { stream << transparent_inner(v); })
     {
       if constexpr( kumi::product_type<Type> )
       {
