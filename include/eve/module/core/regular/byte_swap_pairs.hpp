@@ -13,7 +13,7 @@
 namespace eve
 {
   template<typename Options>
-  struct byte_swap_pairs_t : strict_elementwise_callable<byte_swap_pairs_t, Options>
+  struct byte_swap_pairs_t : callable<byte_swap_pairs_t, Options>
   {
     template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
     EVE_FORCEINLINE T operator()(T a, index_t<I0> const & i0,  index_t<I1> const & i1) const noexcept
