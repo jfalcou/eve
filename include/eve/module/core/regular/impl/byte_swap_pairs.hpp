@@ -15,6 +15,7 @@
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
 #include <bit>
+#include <array>
 
 namespace eve::detail
 {
@@ -44,9 +45,10 @@ namespace eve::detail
     }
     else if constexpr(scalar_value<T>)
     {
-      using w_t = wide<T>;
-      auto wx = w_t(x);
-      return byte_swap_pairs(wx, i0, i1).get(0);
+      using a_t = std::array<uint8_t, sizeof(T)>;
+      a_t a =  bit_cast(x, as<a_t>());
+      std::swap(a[I0], a[I1]);
+      return bit_cast(a, as<T>());
     }
   }
 
