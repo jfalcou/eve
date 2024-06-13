@@ -27,21 +27,12 @@ namespace eve::algo
         F func;
 
         EVE_FORCEINLINE
-        void load_apply_func_and_store(auto f, auto in_ignore, auto out_ignore)
-        {
-          auto loaded = eve::load[in_ignore](f);
-          auto [vals, mask] = func(loaded);
-          using out_t = eve::element_type_t<decltype(vals)>;
-          auto cvt_and_store_it = views::convert(of, eve::as<out_t>{});
-          auto write_end = eve::compress_store[eve::unsafe][in_ignore][out_ignore](vals, mask, cvt_and_store_it);
-          of += write_end - cvt_and_store_it;
-        }
-
-        EVE_FORCEINLINE
         bool tail(auto f, auto ignore)
         {
           auto out_ignore   = eve::keep_first(std::min(ol - of, eve::iterator_cardinal_v<O>));
-          load_apply_func_and_store(f, ignore, out_ignore);
+          auto loaded = eve::load[ignore](f);
+          auto [vals, mask] = func(loaded);
+          of = eve::compress_store[eve::unsafe][ignore][out_ignore](vals, mask, of);
           return of == ol;
         }
 
@@ -54,7 +45,9 @@ namespace eve::algo
         EVE_FORCEINLINE
         bool step_1(auto f)
         {
-          load_apply_func_and_store(f, eve::ignore_none, eve::ignore_none);
+          auto loaded = eve::load(f);
+          auto [vals, mask] = func(loaded);
+          of = eve::compress_store[eve::unsafe](vals, mask, of);
           return false;
         }
 
@@ -63,7 +56,9 @@ namespace eve::algo
         {
           // ol - of < cardinal
           auto out_ignore   = eve::keep_first(ol - of);
-          load_apply_func_and_store(f, eve::ignore_none, out_ignore);
+          auto loaded = eve::load(f);
+          auto [vals, mask] = func(loaded);
+          of = eve::compress_store[eve::unsafe][eve::ignore_none][out_ignore](vals, mask, of);
           return of == ol;
         }
       };
@@ -78,14 +73,19 @@ namespace eve::algo
         auto [processed_in, processed_out] = temporary_preprocess_ranges_hack(
           TraitsSupport::get_traits(), in, out);
 
+        using transformed_wide_rref_t = decltype(get<0>(func(eve::load(processed_in.begin()))));
+        using transformed_t = eve::element_type_t<std::remove_reference_t<transformed_wide_rref_t>>;
+
         auto iteration = two_stage_iteration(processed_in.traits(), processed_in.begin(), processed_in.end());
 
-        auto of = unalign(processed_out.begin());
-        auto ol = unalign(processed_out.end());
+        auto convert_out = views::convert(processed_out, eve::as<transformed_t>{});
+
+        auto of = unalign(convert_out.begin());
+        auto ol = unalign(convert_out.end());
 
         delegate<decltype(of), Func> d {of, ol, func};
         iteration(d);
-        return eve::unalign(out.begin()) + (d.of - processed_out.begin());
+        return eve::unalign(out.begin()) + (d.of - convert_out.begin());
       }
 
     };
