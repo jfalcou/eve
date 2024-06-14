@@ -96,6 +96,9 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 //!   #include <eve/module/algo.hpp>
 //!   @endcode
 //!
+//!   @note
+//!   If you need to apply a transformation, you can use `eve::algo::views::map` or `eve::algo::transform_copy_if`.
+//!
 //!   The main difference from std::copy_if is that it accepts output range and not
 //!   an output iterator. If the output doesn't have enough space, algorithm will fill
 //!   all of the avaliable output and then stop.
