@@ -68,9 +68,12 @@ For example, the following code let's **EVE** know that the loop body is heavy.
 
 Best strategy is always to benchmark your code and tune algorithms accordingly.
 
+Note that this kind of tuning is not reserved to algorithms. The callable `eve::hypot` can also be tuned
+(here as `eve::hypot[eve::pedantic]`) to enforce some behaviors regarding accuracy or standard compliance).
+
 # Conclusion
 In this tutorial, we managed to:
-  - use a simple algorithms from **EVE** algorithms set
+  - use a simple algorithm from **EVE** algorithms set
   - use a range view to handle multiple inputs into our algorithm
   - work with SIMD tuple of data
   - tune algorithm using traits

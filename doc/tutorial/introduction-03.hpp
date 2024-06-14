@@ -8,7 +8,7 @@ and we used them in the context of a SIMD algorithm to apply them over an arbitr
 While doing so, we introduced the eve::views::zip component that helped us gather multiple ranges
 into a single one. This worked by feeding eve::algo::transform_to's lambda a tuple of eve::wide.
 
-This interaction between SIMD register and tuple-like types is very interesting and **EVE** provides
+This interaction between SIMD registers and tuple-like types is very interesting and **EVE** provides
 different ways to take advantage of these interactions. In this tutorial, we'll go over how **EVE**
 can help you design SIMD-aware tuple to write higher level SIMD code.
 

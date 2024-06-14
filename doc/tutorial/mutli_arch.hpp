@@ -17,9 +17,9 @@ issues as the core of **EVE** is based on templated callable object, you may end
 binary containing the incorrect symbols and implementations.
 
 # From static to dynamic dispatch
-A more successful approach is isolate the various version of a given kernel into separate dynamic
-libraries. In this case, no multiple definition can happen. This means using **dynamic libraries**
-to store your code and use **dynamic loading**.
+A more successful approach is to isolate the various versions of a given kernel into separate dynamic
+libraries. In this case, no multiple definition can happen. This means to use **dynamic libraries**
+to store your code and **dynamic loading**.
 
 Dynamic loading in itself is a large topic mostly due to its OS specific components so
 [a good read on the subject is maybe in order](https://en.wikipedia.org/wiki/Dynamic_loading).
@@ -131,8 +131,8 @@ target_link_libraries(multi-arch PUBLIC setup ${CMAKE_DL_LIBS})
 ```
 
 Let's get into the details:
-  + After the classical CMake basics, we use `find_package` to grab **EVE**. Depending on your
-    **EVE** installation path, you may have to specify `CMAKE_PREFIX_PATH` for CMake to find it.
+  + After the classical CMake basics, we use `find_package` to grab **EVE**. Depending on your **EVE**
+    installation path, you may have to specify `CMAKE_PREFIX_PATH` for CMake to find it.
   + We define an INTERFACE library that use the main **EVE** interface and add some customisation.
   + We call `eve_build_variants` to build a set of targets. The base name will be `compute` and
     there are three different target suffixes: `basic`, `advanced`, `perfect`. For each of those,

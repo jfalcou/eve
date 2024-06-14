@@ -32,14 +32,6 @@ The eve::if_else call explicitly requests we pass:
  - the value to use whenever an element of said condition evaluates to `true`, here the product of `a` and `b`
  - the value to use whenever an element of said condition evaluates to `false`, here the difference of `a` and `b`
 
-The expected result of this program is:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(true, false, false, true)
-(1, -4, 30, 16)
-(0, 4, -7, 0)
-(1, 4, -7, 16)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 @warning  Contrary to a `if ... else` statement, eve::if_else will evaluates all its arguments
           before performing its selection even if potential short-cut can be applied later on.
@@ -52,7 +44,7 @@ or returns it unchanged otherwise. One can write:
 
 This code is perfectly valid and will produce the correct result. However, it has some issues:
  - the code looks like the important part is the test
- - the code can't be optimized in case the current architecture support masked operations (i.e. AVX512)
+ - the code can't be optimized in case the current architecture support masked operations (i.e. AVX512 or sve)
 
 To go beyond those limitations, **EVE** functions supports -- whenever it makes sense -- a
 conditional call syntax:
@@ -90,13 +82,6 @@ Let's modify `sqrt_positive` so that, if the argument is not positive, 0 is retu
 
 @snippet tutorial/sqrt_positive_else.cpp snippet
 
-The output is then:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(1, -2, 3.16228, -3.5)
-(1, 0, 3.16228, 0)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 ## Context-sensitive mask
 Some algorithms require conditional function calls but use logical expression relative to the
 element index inside a eve::simd_value rather than its value. One may want for example to not
@@ -107,43 +92,25 @@ out of bounds values:
 
 @snippet tutorial/load_ignore.cpp snippet
 
-The output is then:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(99, 1, 2, 3)
-(6, 7, 8, 42)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Here, the eve::ignore_first and eve::ignore_last conditionals take a number of elements
 as parameter that describe which zone of the eve::simd_value won't be affected. By default,
 the value of the not loaded lanes are undefined. As for other eve::conditional_expr, we can
 affix them with an alternative (99 and 42 respectively) to replace the not loaded pieces.
 
 But what if we want to apply our operation to every element but the first and last one ? Clearly,
-calling two operations with two different conditional masks is sub-optimal.
-
-**EVE** provides some more conditional expression to express this need.
+calling two operations with two different conditional masks is sub-optimal and **EVE**
+provides some more conditional expressions to express this need.
 
 The first is to use the eve::keep_between helper:
 
 @snippet tutorial/load_between.cpp snippet
-
-The output is then:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(-6.3, 1, 2, -6.3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 eve::keep_between uses ad-hoc indexes, which makes the code a bit too size dependent. One can
 also use the same conditional but use a similar interface to eve::ignore_first.
 
 @snippet tutorial/load_ignore_both.cpp snippet
 
-The output is the same obviously:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ bash
-(-6.3, 1, 2, -6.3)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The output is obviously the same.
 
 # Conclusion
 

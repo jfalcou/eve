@@ -17,7 +17,7 @@
 auto load_kernel()
 {
   // Load the dynamic library
-  static auto handle = []()
+  static auto selector = []()
   {
     void* handle = nullptr;
     if(!handle && eve::is_supported(eve::avx2)  ) handle = dlopen("./libcompute_perfect.so" , RTLD_NOW);
@@ -26,7 +26,7 @@ auto load_kernel()
     return handle;
   }();
 
-  return handle;
+  return selector;
 }
 
 void compute(std::span<float> data)
