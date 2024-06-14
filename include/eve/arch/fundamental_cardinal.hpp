@@ -26,7 +26,7 @@ namespace eve
   //!
   //!   **Required header:** `#include <eve/arch/fundamental_cardinal.hpp>`
   //!
-  //!   eve::fundamental_cardinal computed the cardinal of the smallest register able to store
+  //!   eve::fundamental_cardinal computes the cardinal of the smallest register able to store
   //!   values of type `Type` for a given SIMD `ABI` with no uninitialized lanes.
   //!
   //!   @tparam Type  Type of value to assess

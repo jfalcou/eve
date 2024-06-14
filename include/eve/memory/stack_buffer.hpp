@@ -23,7 +23,7 @@ namespace eve
   //!
   //! @tparam T simd value type
   //!
-  //! Use `ptr()` member function to get a pointer compatible with T to operate with.
+  //! Uses `ptr()` member function to get a pointer compatible with T to operate with.
   //================================================================================================
 
   template <simd_value T>

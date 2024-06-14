@@ -30,7 +30,7 @@ namespace eve
   //!
   //! aligned_ptr is a non-owning pointer that binds a preexisting aligned memory and prevent
   //! any alignment-altering operations to be performed. The bound pointer must be aligned so that
-  //! they can be used to load at most `Lanes` element of type `Type` natively.
+  //! it can be used to load at most `Lanes` element of type `Type` natively.
   //!
   //! Rebinding to another pointer is allowed only if the new pointer's alignment is compatible
   //! with the current aligned_ptr constraints.
@@ -422,7 +422,7 @@ namespace eve
   //================================================================================================
   //! @relates eve::aligned_ptr
   //!
-  //! @brief Computes an address lesser or equal to `p` which is satisfy the alignment constraint of
+  //! @brief Computes an address lesser or equal to `p` which satisfies the alignment constraint of
   //! SIMD registers of size `Lanes`.
   //!
   //! @param p      Pointer to realign
@@ -459,7 +459,7 @@ namespace eve
   //================================================================================================
   //! @relates eve::aligned_ptr
   //!
-  //! @brief Computes an address greater or equal to `p` which is satisfy the alignment constraint of
+  //! @brief Computes an address greater or equal to `p` which satisfies the alignment constraint of
   //! SIMD registers of size `Lanes`.
   //!
   //! @param p      Pointer to realign
@@ -480,7 +480,7 @@ namespace eve
   //================================================================================================
   //! @relates eve::aligned_ptr
   //!
-  //! @brief Computes an address greater or equal to `p` which is satisfy the alignment constraint of
+  //! @brief Computes an address greater or equal to `p` which satisfies the alignment constraint of
   //! current architecture's SIMD register.
   //!
   //! @param p      Pointer to realign

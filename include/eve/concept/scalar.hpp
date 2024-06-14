@@ -34,7 +34,6 @@ template<typename Type> struct logical;
 //! @ingroup simd_concepts
 //! @concept plain_scalar_value
 //! @brief Specify that a type represents a plain scalar value
-//!
 //! The concept `plain_scalar_value<T>` is satisfied if and only if T is an instance of
 //! any non-bool, non-long double, arithmetic types.
 //!
@@ -49,7 +48,6 @@ concept plain_scalar_value = detail::is_plain<T>();
 //! @ingroup simd_concepts
 //! @concept logical_scalar_value
 //! @brief Specify that a type represents a logical scalar value
-//!
 //! The concept `logical_scalar_value<T>` is satisfied if and only if T is an instance of
 //! eve::logical and its contents satisfy eve::plain_scalar_value
 //!
@@ -86,9 +84,9 @@ namespace eve
 //! @ingroup simd_concepts
 //! @concept product_scalar_value
 //! @brief Specify that a type represents a product type made of scalars
-//!
 //! The concept `product_scalar_value<T>` is satisfied if and only if T is a kumi::product_type
 //! containing only @ref eve::plain_scalar_value or @ref eve::logical_scalar_value
+//!
 //! ## Example Types
 //! - `kumi::tuple<float,int>`
 //! - `kumi::tuple<logical<double>, char>`
@@ -100,7 +98,6 @@ concept product_scalar_value = detail::scalar_tuple<T>();
 //! @ingroup simd_concepts
 //! @concept arithmetic_scalar_value
 //! @brief Specify that a type represents a type suitable for vectorization
-//!
 //! The concept `arithmetic_scalar_value<T>` is satisfied if and only if T can be used as a base
 //! type for @ref eve::wide , i.e it's either satisfying @ref eve::plain_scalar_value or
 //! @ref eve::product_scalar_value
@@ -116,7 +113,6 @@ concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<
 //================================================================================================
 //! @concept scalar_value
 //! @brief Specify that a type represents a scalar value
-//!
 //! The concept `scalar_value<T>` is satisfied if and only if it satisfies either
 //! arithmetic_scalar_value or logical_scalar_value.
 //!

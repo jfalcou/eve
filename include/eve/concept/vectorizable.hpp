@@ -15,8 +15,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept integral_scalar_value
-  //! @brief Specify that a type represents an integral scalar value
-  //!
+  //! @brief Specify that a type represents an integral scalar value.
   //! The concept `integral_scalar_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_scalar_value<T>` and `std::integral<T>`.
   //!
@@ -29,8 +28,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_scalar_value
-  //! @brief Specify that a type represents a signed scalar value
-  //!
+  //! @brief Specify that a type represents a signed scalar value.
   //! The concept `signed_scalar_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_scalar_value<T>` and `std::integral<T>`.
   //!
@@ -44,8 +42,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept unsigned_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
+  //! @brief Specify that a type represents an unsigned scalar value.
   //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_scalar_value<T>` and `std::unsigned_integral<T>`.
   //!
@@ -58,8 +55,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_integral_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
+  //! @brief Specify that a type represents an integral scalar value.
   //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_scalar_value<T>` and `std::signed_integral<T>`.
   //!
@@ -72,8 +68,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept floating_scalar_value
-  //! @brief Specify that a type represents a scalar value
-  //!
+  //! @brief Specify that a type represents a floating scalar value.
   //! The concept `unsigned_scalar_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_scalar_value<T>` and `std::floating_point<T>`.
   //!

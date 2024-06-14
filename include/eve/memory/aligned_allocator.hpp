@@ -34,7 +34,7 @@ namespace eve
   //! [std::allocator_traits](https://en.cppreference.com/w/cpp/memory/allocator_traits), so it
   //! provides the minimal amount of members and members types.
   //!
-  //! @tparam T     Type to allocates
+  //! @tparam T     Type to allocate
   //! @tparam Lanes Alignment constraint to uphold. Default value is computed to be compatible with
   //!               current SIMD ABI requirements.
   //================================================================================================
@@ -43,7 +43,7 @@ namespace eve
           >
   struct aligned_allocator
   {
-    //! type to allocates, i.e `T`
+    //! type to allocate, i.e `T`
     using value_type = T;
 
     //! Return the value of the alignment constraint

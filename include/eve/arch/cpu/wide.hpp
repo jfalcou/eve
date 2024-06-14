@@ -258,10 +258,10 @@ namespace eve
     //! Retrieve the value from a given lane
     EVE_FORCEINLINE auto get(std::size_t i) const noexcept { return detail::extract(*this, i); }
 
-    //! Retrieve the value of the first lanes
+    //! Retrieve the value from the last lane
     EVE_FORCEINLINE auto back() const noexcept { return get(Cardinal::value - 1); }
 
-    //! Retrieve the value of the first lane
+    //! Retrieve the value from the first lane
     EVE_FORCEINLINE auto front() const noexcept { return get(0); }
 
     //==============================================================================================
@@ -378,7 +378,7 @@ namespace eve
     // Bitwise operators
     //==============================================================================================
 
-    //! Perform a bitwise complement on all the wide lanes
+    //! @brief Performs a bitwise complement on all the wide lanes
     friend EVE_FORCEINLINE auto operator~(wide const& v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
@@ -387,7 +387,7 @@ namespace eve
       return detail::self_bitnot(v);
     }
 
-    //! Perform a compound bitwise and on all the wide lanes and assign the result to the current
+    //! @brief Performs a compound bitwise and on all the wide lanes and assign the result to the current
     //! one
     template<value V>
     friend EVE_FORCEINLINE auto operator&=(wide& w, V o) noexcept
@@ -398,8 +398,8 @@ namespace eve
       return detail::self_bitand(w, o);
     }
 
-    //! @brief Perform a bitwise and between all lanes of two wide instances.
-    //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
+    //! @brief Performs a bitwise and between all lanes of two wide instances.
+    //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE auto operator&(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -410,7 +410,7 @@ namespace eve
       return that &= w;
     }
 
-    //! @brief Perform a bitwise and between all lanes of a eve::wide and a scalar
+    //! @brief Performs a bitwise and between all lanes of a eve::wide and a scalar
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(wide const& v, S w) noexcept
@@ -422,7 +422,7 @@ namespace eve
       return that &= bit_cast(w, as<Type> {});
     }
 
-    //! @brief Perform a bitwise and between all lanes of a scalar and a eve::wide
+    //! @brief Performs a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
@@ -434,7 +434,7 @@ namespace eve
       return u &= v;
     }
 
-    //! Perform a Compound bitwise or on all the wide lanes and assign the result to the current
+    //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current
     //! one
     template<value V>
     friend EVE_FORCEINLINE auto operator|=(wide& w, V o) noexcept
@@ -445,7 +445,7 @@ namespace eve
       return detail::self_bitor(w, o);
     }
 
-    //! @brief Perform a bitwise or between all lanes of two wide instances.
+    //! @brief Performs a bitwise or between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE auto operator|(wide const& v, wide<U, M> const& w) noexcept
@@ -457,7 +457,7 @@ namespace eve
       return that |= w;
     }
 
-    //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
+    //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(wide const& v, S w) noexcept
@@ -469,7 +469,7 @@ namespace eve
       return that |= bit_cast(w, as<Type> {});
     }
 
-    //! @brief Perform a bitwise or between all lanes of a scalar and a eve::wide
+    //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
@@ -481,7 +481,7 @@ namespace eve
       return u |= v;
     }
 
-    //! Perform a bitwise xor on all the wide lanes and assign the result to the current one
+    //! @brief Performs a bitwise xor on all the wide lanes and assign the result to the current one
     template<value V>
     friend EVE_FORCEINLINE auto operator^=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
@@ -491,7 +491,7 @@ namespace eve
       return detail::self_bitxor(w, o);
     }
 
-    //! @brief Perform a bitwise xor between all lanes of two wide instances.
+    //! @brief Performs a bitwise xor between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
     template<scalar_value U, typename M>
     friend EVE_FORCEINLINE auto operator^(wide const& v, wide<U, M> const& w) noexcept
@@ -503,7 +503,7 @@ namespace eve
       return that ^= w;
     }
 
-    //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
+    //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(wide const& v, S w) noexcept
@@ -515,7 +515,7 @@ namespace eve
       return that ^= bit_cast(w, as<Type> {});
     }
 
-    //! @brief Perform a bitwise xor between all lanes of a scalar and a eve::wide
+    //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
     friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
@@ -540,7 +540,7 @@ namespace eve
       return self_negate(v);
     }
 
-    //! @brief Perform the compound addition on all the wide lanes and assign the result
+    //! @brief Performs the compound addition on all the wide lanes and assign the result
     //! to the current one. See also: eve::add
     template<value V>
     friend EVE_FORCEINLINE auto operator+=(wide& w, V v) noexcept
@@ -550,7 +550,7 @@ namespace eve
       return detail::self_add(w, v);
     }
 
-    //! @brief Perform the addition between all lanes of its parameters
+    //! @brief Performs the addition between all lanes of its parameters
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, wide const& w) noexcept
     requires(!kumi::product_type<Type>)
@@ -559,7 +559,7 @@ namespace eve
       return that += w;
     }
 
-    //! @brief Perform the addition between a scalar and all lanes of a eve::wide
+    //! @brief Performs the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(plain_scalar_value auto s, wide const& v) noexcept
     requires(!kumi::product_type<Type>)
@@ -567,7 +567,7 @@ namespace eve
       return v + wide(s);
     }
 
-    //! @brief Perform the addition between all lanes of a eve::wide and a scalar
+    //! @brief Performs the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
     friend EVE_FORCEINLINE auto operator+(wide const& v, plain_scalar_value auto s) noexcept
     requires(!kumi::product_type<Type>)
@@ -575,7 +575,7 @@ namespace eve
       return v + wide(s);
     }
 
-    //! @brief Perform the compound difference on all the wide lanes and assign
+    //! @brief Performs the compound difference on all the wide lanes and assign
     //! the result to the current one. See also: eve::sub
     template<value V>
     friend EVE_FORCEINLINE auto operator-=(wide& w, V v) noexcept
@@ -585,7 +585,7 @@ namespace eve
       return detail::self_sub(w, v);
     }
 
-    //! @brief Perform the difference between all lanes of its parameters
+    //! @brief Performs the difference between all lanes of its parameters
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(wide const& v, wide const& w) noexcept
     {
@@ -593,7 +593,7 @@ namespace eve
       return that -= w;
     }
 
-    //! @brief Perform the difference between a scalar and all lanes of a eve::wide
+    //! @brief Performs the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
@@ -601,7 +601,7 @@ namespace eve
       return wide(s) - v;
     }
 
-    //! @brief Perform the difference between all lanes of a eve::wide and a scalar
+    //! @brief Performs the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
     friend EVE_FORCEINLINE auto operator-(wide const& v, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
@@ -609,7 +609,7 @@ namespace eve
       return v - wide(s);
     }
 
-    //! @brief Perform the compound product on all the wide lanes and assign
+    //! @brief Performs the compound product on all the wide lanes and assign
     //! the result to the current one. See also: eve::mul
     template<value V>
     friend EVE_FORCEINLINE auto operator*=(wide& w, V o) noexcept
@@ -619,7 +619,7 @@ namespace eve
       return detail::self_mul(w, o);
     }
 
-    //! @brief Perform the product between all lanes of its parameters
+    //! @brief Performs the product between all lanes of its parameters
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(wide const& v, wide const& w) noexcept
     {
@@ -627,7 +627,7 @@ namespace eve
       return that *= w;
     }
 
-    //! @brief Perform the product between a scalar and all lanes of a eve::wide
+    //! @brief Performs the product between a scalar and all lanes of a eve::wide
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
@@ -635,7 +635,7 @@ namespace eve
       return v * s;
     }
 
-    //! @brief Perform the product between all lanes of a eve::wide and a scalar
+    //! @brief Performs the product between all lanes of a eve::wide and a scalar
     //! See also: eve::mul
     friend EVE_FORCEINLINE auto operator*(wide const& v, plain_scalar_value auto s) noexcept
       requires(!kumi::product_type<Type>)
@@ -644,7 +644,7 @@ namespace eve
       return that *= s;
     }
 
-    //! @brief Perform the compound division on all the wide lanes and assign
+    //! @brief Performs the compound division on all the wide lanes and assign
     //! the result to the current one. See also: eve::div
     template<value V>
     friend EVE_FORCEINLINE auto operator/=(wide& w, V o) noexcept
@@ -654,7 +654,7 @@ namespace eve
       return detail::self_div(w, o);
     }
 
-    //! @brief Perform the division between all lanes of its parameters
+    //! @brief Performs the division between all lanes of its parameters
     //! See also: eve::div
     friend EVE_FORCEINLINE auto operator/(wide const& v, wide const& w) noexcept
     {
@@ -662,7 +662,7 @@ namespace eve
       return that /= w;
     }
 
-    //! @brief Perform the division between a scalar and all lanes of a eve::wide
+    //! @brief Performs the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
     friend EVE_FORCEINLINE auto operator/(plain_scalar_value auto s, wide const& v) noexcept
         requires(!kumi::product_type<Type>)
@@ -670,7 +670,7 @@ namespace eve
       return wide(s) / v;
     }
 
-    //! @brief Perform the division between all lanes of a eve::wide and a scalar
+    //! @brief Performs the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
     friend EVE_FORCEINLINE auto operator/(wide const& v, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
@@ -678,7 +678,7 @@ namespace eve
       return v / wide(s);
     }
 
-    //! @brief Perform the compound modulo on all the wide lanes and assign
+    //! @brief Performs the compound modulo on all the wide lanes and assign
     //! the result to the current one. Does not participate in overload resolution
     //! if `Type` does not models integral_scalar_value
     template<integral_value V>
@@ -690,7 +690,7 @@ namespace eve
       return detail::self_rem(w, o);
     }
 
-    //! @brief Perform the modulo between all lanes of its parameters.
+    //! @brief Performs the modulo between all lanes of its parameters.
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
     friend EVE_FORCEINLINE auto operator%(wide const& v, wide const& w) noexcept
@@ -702,7 +702,7 @@ namespace eve
       return that %= w;
     }
 
-    //! @brief Perform the modulo between a scalar and all lanes of a eve::wide
+    //! @brief Performs the modulo between a scalar and all lanes of a eve::wide
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
     template<integral_scalar_value S>
@@ -714,7 +714,7 @@ namespace eve
       return wide(s) % v;
     }
 
-    //! @brief Perform the modulo between all lanes of a eve::wide and a scalar
+    //! @brief Performs the modulo between all lanes of a eve::wide and a scalar
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
     friend EVE_FORCEINLINE auto operator%(wide const& v, integral_scalar_value auto s) noexcept
@@ -725,7 +725,7 @@ namespace eve
       return v % wide(s);
     }
 
-    //! @brief Perform the compound left-shift on all the eve::wide lanes and assign
+    //! @brief Performs the compound left-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
     friend EVE_FORCEINLINE auto& operator<<=(wide& w, S s) noexcept
@@ -736,7 +736,7 @@ namespace eve
       return detail::self_shl(w, s);
     }
 
-    //! @brief Perform the compound left-shift on all the eve::wide lanes with a constant and assign
+    //! @brief Performs the compound left-shift on all the eve::wide lanes with a constant and assign
     //! the result to current one.
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto& operator<<=(wide& w, index_t<V> const& s) noexcept
@@ -747,14 +747,14 @@ namespace eve
       return detail::self_shl(w, s);
     }
 
-    //! @brief Perform the left-shift between all lanes of a eve::wide and an integral scalar.
+    //! @brief Performs the left-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S> friend EVE_FORCEINLINE auto operator<<(wide v, S s) noexcept
     {
       auto that = v;
       return that <<= s;
     }
 
-    //! @brief Perform the left-shift between all lanes of a eve::wide and an integral constant.
+    //! @brief Performs the left-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto operator<<(wide v, index_t<V> const& s) noexcept
     {
@@ -762,7 +762,7 @@ namespace eve
       return that <<= s;
     }
 
-    //! @brief Perform the compound right-shift on all the eve::wide lanes and assign
+    //! @brief Performs the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
     friend EVE_FORCEINLINE auto& operator>>=(wide& w, S s) noexcept
@@ -773,7 +773,7 @@ namespace eve
       return detail::self_shr(w, s);
     }
 
-    //! @brief Perform the compound right-shift on all the eve::wide lanes and assign
+    //! @brief Performs the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto& operator>>=(wide& w, index_t<V> const& s) noexcept
@@ -784,14 +784,14 @@ namespace eve
       return detail::self_shr(w, s);
     }
 
-    //! @brief Perform the right-shift between all lanes of a eve::wide and an integral scalar.
+    //! @brief Performs the right-shift between all lanes of a eve::wide and an integral scalar.
     template<integral_value S> friend EVE_FORCEINLINE auto operator>>(wide v, S s) noexcept
     {
       auto that = v;
       return that >>= s;
     }
 
-    //! @brief Perform the right-shift between all lanes of a eve::wide and an integral constant.
+    //! @brief Performs the right-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
     friend EVE_FORCEINLINE auto operator>>(wide v, index_t<V> const& s) noexcept
     {
@@ -950,7 +950,7 @@ namespace eve
       return wide {v} <= w;
     }
 
-    //! Computes the logical complement of its parameter
+    //! Computes the logical negation of its parameter
     friend EVE_FORCEINLINE logical<wide> operator!(wide v) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)

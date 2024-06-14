@@ -91,7 +91,7 @@ namespace eve
   //! **Required header:** `#include <eve/conditional.hpp>`
   //!
   //! eve::if_ wraps a eve::logical value so that it can be either extended with an
-  //! alternative value or help optimize conditional operations evaluation.
+  //! alternative value or an helper to optimize conditional operations evaluation.
   //!
   //! @tparam C Type of the wrapped eve::logical value
   //================================================================================================
@@ -105,12 +105,12 @@ namespace eve
     if_(C c) : condition_(c) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V> EVE_FORCEINLINE auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const&)  const { return condition_; }
 
     //! Inserts a eve::if_ conditional expression into a output stream
@@ -138,13 +138,13 @@ namespace eve
     static constexpr bool is_complete     = true;
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const& tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -195,13 +195,13 @@ namespace eve
     static constexpr bool is_complete     = true;
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_([[maybe_unused]] V v) const  {  return *this;  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE auto mask(eve::as<T> const& tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -253,13 +253,13 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE keep_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -310,13 +310,13 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE ignore_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -366,13 +366,13 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE keep_last(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -422,13 +422,13 @@ namespace eve
     constexpr explicit EVE_FORCEINLINE ignore_first(std::ptrdiff_t n) noexcept : count_(n) {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -482,13 +482,13 @@ namespace eve
     }
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       return detail::to_logical(*this, tgt);
@@ -541,13 +541,13 @@ namespace eve
     {}
 
     //==============================================================================================
-    //! @brief Extend a conditional expression with an alternative value
+    //! @brief Extends a conditional expression with an alternative value
     //! \include{doc} common/conditional.else.hpp
     //==============================================================================================
     template<typename V>
     EVE_FORCEINLINE constexpr auto else_(V const& v) const  {  return or_(*this,v);  }
 
-    //! Compute the eve::logical_value associated to the current conditional
+    //! Computes the eve::logical_value associated to the current conditional
     template<typename T> EVE_FORCEINLINE as_logical_t<T> mask(eve::as<T> tgt) const
     {
       return detail::to_logical(*this, tgt);
