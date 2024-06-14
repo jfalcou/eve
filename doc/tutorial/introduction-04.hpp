@@ -57,7 +57,7 @@ Let's go over the new components introduced here:
     comparison operators as we don't want to automatically be able to order instances of `polar_coords`.
 
   - We then define friend functions to assign names to numbered fields. As the
-    structure thus defined will be usable in both scalar and SIMD context, we use the eve::like
+    structure thus defined will be usable in both scalar and SIMD contexts, we use the eve::like
     concept to overload them. `eve::like<polar_coords>` used as a parameters concept means that the
     function accepts any type that behaves like a `polar_coords`, i.e `polar_coords` and
     `eve::wide<polar_coords>`. Such function can also be defined as regular function, but this form
@@ -89,7 +89,7 @@ allow frequency scaling.
 # Conclusion
 In this tutorial, we managed to:
   - adapt existing UDT to be compatible with eve::wide
-  - create new UDTs compatible with eve::wide by constrcution
+  - create new UDTs compatible with eve::wide by construction
   - use eve::soa_vector, the SIMD-aware storage in place of standard containers
   - process SIMD-aware storage with **EVE** algorithms
 **/

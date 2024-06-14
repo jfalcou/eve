@@ -15,12 +15,12 @@ slower.
 For big datasets the price of lower frequency is often outweighed by processing
 more numbers in open operation and seed ups of 15% are not unheard of.
 
-This lead to a dilemma in the API design for us: if the user is on the AVX512 system,
+For us, This lead to a dilemma in the API design: if the user is on the AVX512 system,
 most likely they expect the register to be 64 bytes. But we suspect this is not what
 they actually want. So we decided that `eve::wide` on avx512 is by default 64 bytes
 but algorithms by default use 32 bytes. If you want to get an algorithm to use 64 byte
 you can pass `eve::algo::allow_frequency_scaling` trait.
-There are also a typedefs `nofs_wide`, `nofs_logical` where `nofs` stands for
+There are also typedefs `nofs_wide`, `nofs_logical` where `nofs` stands for
 "no frequency scaling".
 
 If you would like the default register size to be 64 bytes on AVX512, for example
