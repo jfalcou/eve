@@ -25,7 +25,7 @@ using spherical_type = decorated<spherical_()>;
 //! @{
 //! @var spherical
 //!
-//! @brief  Higher-order @callable imbuing sphericalerical semantic onto other @callable{s}.
+//! @brief  Higher-order @callable imbuing spherical semantic onto other @callable{s}.
 //!
 //! #### Synopsis
 //!
