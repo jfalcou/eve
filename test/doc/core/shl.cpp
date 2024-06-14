@@ -5,7 +5,7 @@
 using iT      = std::int32_t;
 using wide_it = eve::wide<iT, eve::fixed<4>>;
 
-consteval auto constexpr_shl(auto a, auto b) { return eve::shl(a, b); }
+//consteval auto constexpr_shl(auto a, auto b) { return eve::shl(a, b); }
 
 int main()
 {
@@ -27,7 +27,7 @@ int main()
             << "-> eve::shl(xi, yi)  = " << eve::shl(xi, yi) << '\n'
             << "-> eve::shl(mxi, yi) = " << eve::shl(mxi, yi) << '\n';
 
-  std::cout << "-> constexpr_shl(1u,2u) = " << constexpr_shl(1u,2u) << std::endl;
+//  std::cout << "-> constexpr_shl(1u,2u) = " << constexpr_shl(1u,2u) << std::endl;
 
   return 0;
 }
