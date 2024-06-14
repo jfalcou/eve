@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('intro-03.html',''); initResizable(); }
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>In the previous tutorials, we built a SIMD function to compute those cartesian-polar conversions and we used them in the context of a SIMD algorithm to apply them over an arbitrary set of data. While doing so, we introduced the eve::views::zip component that helped us gather multiple ranges into a single one. This worked by feeding <a class="el" href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e" title="SIMD version of std::transform.">eve::algo::transform_to</a>'s lambda a tuple of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
-<p>This interaction between SIMD register and tuple-like types is very interesting and <b>EVE</b> provides different ways to take advantage of these interactions. In this tutorial, we'll go over how <b>EVE</b> can help you design SIMD-aware tuple to write higher level SIMD code.</p>
+<p>This interaction between SIMD registers and tuple-like types is very interesting and <b>EVE</b> provides different ways to take advantage of these interactions. In this tutorial, we'll go over how <b>EVE</b> can help you design SIMD-aware tuple to write higher level SIMD code.</p>
 <h1><a class="anchor" id="autotoc_md132"></a>
 Tuple of SIMD registers</h1>
 <p>If we go back to the initial scalar conversion functions, we can actually merge both <code>rho</code> and <code>theta</code> functions in a single <code>to_polar</code> function that will return a tuple of float containing both results of the conversion.</p>

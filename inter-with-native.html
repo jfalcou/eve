@@ -124,10 +124,11 @@ $(document).ready(function(){initNavTree('inter-with-native.html',''); initResiz
   <div class="headertitle"><div class="title">Interaction with native code. </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>In EVE we recognise that we cannot possibly cover all the individual things you might want to do and it's necessery for the users to be able to write intrinsics.</p>
-<p>That's why <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and eve::logical for native sizes are implicitly convertible to and from the intrinsic type you'd expect.</p>
-<p>x86: __m128/256/512 for floats and double, __m128i/256i/512i for ints neon: int8x8_t, int8x16_t for int8s and similar for other types. sve, power: similar.</p>
-<p>To combine this with algorithms, force a specific cardinal. All of algorithms are designed to not require templated callbacks so that you are able to do this. (unfortunately views still require you to provide a template).</p>
+<div class="textblock"><p>In EVE we recognise that we cannot possibly cover all the individual things you might want to do and it is necessary for the users to be able to write intrinsics.</p>
+<p>That is why <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> and eve::logical for native sizes are implicitly convertible to and from the intrinsic type you would expect. </p><pre class="fragment">x86: __m128/256/512 for floats and double, __m128i/256i/512i for ints
+neon: int8x8_t, int8x16_t for int8s etc.
+sve, powerpc: ....
+</pre><p> To combine this with <code>eve::algorithm</code>s we have to force a specific cardinal. All algorithms are designed to do not require templated callbacks so this remains possible. But, unfortunately views still require a templated callback.</p>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
@@ -165,8 +166,8 @@ $(document).ready(function(){initNavTree('inter-with-native.html',''); initResiz
 <div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition:</b> wide.hpp:365</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md122"></a>
 What about non-native sizes?</h1>
-<p>If the cardinal is less than can be natively represented, it's internally still represented as a full register. For example wide&lt;int, eve::fixed&lt;2&gt;&gt; on x86 is still __m128i. The data is at the first 2 elements, the rest can be garbage.</p>
-<p>If the cardinal is larger than the one natively representable, you can use slice to get to the half the wide size.</p>
+<p>If the number is less than the one that can be natively represented, it's internally still represented as a full register. For example wide&lt;int, eve::fixed&lt;2&gt;&gt; on x86 is still __m128i. The relevant data just occupy the first 2 elements, the others can be garbage.</p>
+<p>If the cardinal is larger than the one that can be natively represented, you can use slice to get to the half the wide size.</p>
 <div class="fragment"><div class="line"> </div>
 <div class="line">TTS_CASE(<span class="stringliteral">&quot;Slice Example&quot;</span>) {</div>
 <div class="line">  <span class="comment">// Om most platforms is 2 registers or even 4.</span></div>

@@ -223,10 +223,11 @@ Tuning algorithms</h1>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algo__traits_ga244da44511b03c597243683208a3b731_html_ga244da44511b03c597243683208a3b731"><div class="ttname"><a href="group__algo__traits_ga244da44511b03c597243683208a3b731.html#ga244da44511b03c597243683208a3b731">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdoc">NOTE: equivalent to no_aligning + no_unrolling + single_pass By default eve algorithms will assume th...</div><div class="ttdef"><b>Definition:</b> traits.hpp:267</div></div>
 </div><!-- fragment --><p>Best strategy is always to benchmark your code and tune algorithms accordingly.</p>
+<p>Note that this kind of tuning is not reserved to algorithms. The callable <code><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="Callable object computing the  norm of its inputs.">eve::hypot</a></code> can also be tuned (here as <code><a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="Callable object computing the  norm of its inputs.">eve::hypot</a>[<a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a>]</code>) to enforce some behaviors regarding accuracy or standard compliance).</p>
 <h1><a class="anchor" id="autotoc_md131"></a>
 Conclusion</h1>
 <p>In this tutorial, we managed to:</p><ul>
-<li>use a simple algorithms from <b>EVE</b> algorithms set</li>
+<li>use a simple algorithm from <b>EVE</b> algorithms set</li>
 <li>use a range view to handle multiple inputs into our algorithm</li>
 <li>work with SIMD tuple of data</li>
 <li>tune algorithm using traits</li>

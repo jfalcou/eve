@@ -130,7 +130,7 @@ The Issue</h1>
 <p>A first solution could be to just recompile a given kernel with different architecture settings and link everything. Then, at runtime, use eve::is_supported to choose the correct implementation between the available ones. However, in attempting to solve the problem in this way, you'll face issues as the core of <b>EVE</b> is based on templated callable object, you may end up violating the <a href="https://en.cppreference.com/w/cpp/language/definition">One Definition Rule</a> and end up with a binary containing the incorrect symbols and implementations.</p>
 <h1><a class="anchor" id="autotoc_md140"></a>
 From static to dynamic dispatch</h1>
-<p>A more successful approach is isolate the various version of a given kernel into separate dynamic libraries. In this case, no multiple definition can happen. This means using <b>dynamic libraries</b> to store your code and use <b>dynamic loading</b>.</p>
+<p>A more successful approach is to isolate the various versions of a given kernel into separate dynamic libraries. In this case, no multiple definition can happen. This means to use <b>dynamic libraries</b> to store your code and <b>dynamic loading</b>.</p>
 <p>Dynamic loading in itself is a large topic mostly due to its OS specific components so <a href="https://en.wikipedia.org/wiki/Dynamic_loading">a good read on the subject is maybe in order</a>. Once you are acquainted with dynamic loading, let's start building our own SIMD dynamic system.</p>
 <h2><a class="anchor" id="autotoc_md141"></a>
 Writing the kernel</h2>
@@ -174,7 +174,7 @@ Writing the dynamic function hub</h2>
 <div class="line"><span class="keyword">auto</span> load_kernel()</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Load the dynamic library</span></div>
-<div class="line">  <span class="keyword">static</span> <span class="keyword">auto</span> handle = []()</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">auto</span> selector = []()</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordtype">void</span>* handle = <span class="keyword">nullptr</span>;</div>
 <div class="line">    <span class="keywordflow">if</span>(!handle &amp;&amp; eve::is_supported(eve::avx2)  ) handle = dlopen(<span class="stringliteral">&quot;./libcompute_perfect.so&quot;</span> , RTLD_NOW);</div>
@@ -183,7 +183,7 @@ Writing the dynamic function hub</h2>
 <div class="line">    <span class="keywordflow">return</span> handle;</div>
 <div class="line">  }();</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> handle;</div>
+<div class="line">  <span class="keywordflow">return</span> selector;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> compute(std::span&lt;float&gt; data)</div>
@@ -239,7 +239,7 @@ Compiling and Using Dynamic Kernels</h2>
 <div class="line">add_dependencies(multi-arch ${eve_compute_variants})</div>
 <div class="line">target_link_libraries(multi-arch PUBLIC setup ${CMAKE_DL_LIBS})</div>
 </div><!-- fragment --><p>Let's get into the details:</p><ul>
-<li>After the classical CMake basics, we use <code>find_package</code> to grab <b>EVE</b>. Depending on your EVE** installation path, you may have to specify <code>CMAKE_PREFIX_PATH</code> for CMake to find it.</li>
+<li>After the classical CMake basics, we use <code>find_package</code> to grab <b>EVE</b>. Depending on your <b>EVE</b> installation path, you may have to specify <code>CMAKE_PREFIX_PATH</code> for CMake to find it.</li>
 <li>We define an INTERFACE library that use the main <b>EVE</b> interface and add some customisation.</li>
 <li>We call <code>eve_build_variants</code> to build a set of targets. The base name will be <code>compute</code> and there are three different target suffixes: <code>basic</code>, <code>advanced</code>, <code>perfect</code>. For each of those, the following options will be used: <code>-msse2</code>, <code>-msse4.1</code>, <code>-march=haswell</code>. Each target is compiled with its corresponding options. In the end, we expect three libraries to be compiled: <code>libcompute_basic.so</code>, <code>libcompute_advanced.so</code>, and <code>libcompute_perfect.so</code>. Notice how the suffixes are arbitrary. They just need to correspond to any naming scheme you see fit and those names will have to be used in the dynamic loading function.</li>
 <li>To perform this compilation, we use the <code>setup</code> interface we customized earlier.</li>
