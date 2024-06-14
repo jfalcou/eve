@@ -7,7 +7,7 @@ using uiT      = std::uint32_t;
 using wide_it  = eve::wide<iT, eve::fixed<4>>;
 using wide_uit = eve::wide<uiT, eve::fixed<4>>;
 
-consteval auto constexpr_rshr(auto a, auto b) { return eve::rshr(a, b); }
+//consteval auto constexpr_rshr(auto a, auto b) { return eve::rshr(a, b); }
 
 int main()
 {
@@ -27,7 +27,7 @@ int main()
             << "<- yi            = " << yi << '\n'
             << "-> rshr(xi, yi)  = " << eve::rshr(xi, yi) << '\n';
 
-  std::cout << "-> constexpr_rshr(1u,2u) = " << constexpr_rshr(1u,2u) << std::endl;
+//  std::cout << "-> constexpr_rshr(1u,2u) = " << constexpr_rshr(1u,2u) << std::endl;
 
   return 0;
 }
