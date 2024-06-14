@@ -111,6 +111,9 @@ namespace eve::algo
   //!   
   //!   If the output range's element type is different from the type of the values returned by the transforming function, performs the appropriate conversions.
   //!
+  //!   @note
+  //!   If the scalar operation is cheap enough, `::copy_if` + `views::map` might be slightly faster.
+  //!
   //!   @groupheader{Callable Signatures}
   //!
   //!   @code
@@ -136,6 +139,10 @@ namespace eve::algo
   //!   @groupheader{Example}
   //!
   //!   @godbolt{doc/algo/transform_copy_if.cpp}
+  //!
+  //!   @see `copy_if`
+  //!   @see `transform_to`
+  //!   @see `views::map`
   //!
   //! @}
   //==============================================================================================

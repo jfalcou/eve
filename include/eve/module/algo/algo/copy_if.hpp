@@ -135,6 +135,9 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 //!   ** Return value **
 //!
 //!    relaxed_iterator past the last written element.
+//!
+//!   @see `transform_copy_if`
+//!
 //! @}
 //================================================================================================
 inline constexpr auto copy_if = function_with_traits<copy_if_>;
