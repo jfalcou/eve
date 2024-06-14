@@ -113,14 +113,10 @@ namespace eve::algo::views
     template <std::convertible_to<I> I1>
     EVE_FORCEINLINE backward_iterator(backward_iterator<I1> x) : base(x.base) {}
 
-    EVE_FORCEINLINE auto unalign() const noexcept { return backward(eve::unalign(base)); }
+    EVE_FORCEINLINE auto unalign()  const noexcept { return backward(eve::unalign(base));       }
+    EVE_FORCEINLINE auto read()     const noexcept { return eve::read(eve::unalign(base) - 1);  }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, backward_iterator self)
-    {
-      return eve::read(eve::unalign(self.base) - 1);
-    }
-
-    EVE_FORCEINLINE void write(value_type v) const noexcept { eve::write(v, unalign(base) - 1); }
+    EVE_FORCEINLINE void write(value_type v) const noexcept { eve::write(v, eve::unalign(base) - 1); }
 
     template <relaxed_sentinel_for<I> I1>
     EVE_FORCEINLINE bool operator==(backward_iterator<I1> y) const

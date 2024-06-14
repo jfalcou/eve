@@ -8,12 +8,33 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/implementation.hpp>
-#include <eve/memory/pointer.hpp>
+#include <eve/concept/value.hpp>
+#include <eve/traits/overload.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct read_t : callable<read_t, Options>
+  {
+    template<typename Ptr>
+    EVE_FORCEINLINE auto operator()(Ptr ptr) const noexcept -> std::remove_cvref_t<decltype(*ptr)>
+    {
+      return EVE_DISPATCH_CALL(ptr);
+    }
+
+    template<typename Readable>
+    EVE_FORCEINLINE auto operator()(Readable ptr) const noexcept -> decltype(ptr.read())
+    {
+      return EVE_DISPATCH_CALL(ptr);
+    }
+
+    template<typename... Ptrs>
+    EVE_FORCEINLINE auto operator()(soa_ptr<Ptrs...> ptr) const noexcept { return EVE_DISPATCH_CALL(ptr); }
+
+    EVE_CALLABLE_OBJECT(read_t, read_);
+  };
+
 //================================================================================================
 //! @addtogroup memory
 //! @{
@@ -50,23 +71,20 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(read_, read);
-
-namespace detail
+  inline constexpr auto read = functor<read_t>;
+}
+namespace eve::detail
 {
-  template<typename Ptr>
-  EVE_FORCEINLINE auto read_(EVE_SUPPORTS(cpu_), Ptr ptr) noexcept requires requires(Ptr p)
+  template<typename Ptr, callable_options O>
+  EVE_FORCEINLINE auto read_(EVE_REQUIRES(cpu_), O const&, Ptr ptr) noexcept
   {
-    *p;
-  }
-  {
-    return *ptr;
+    if constexpr(requires { ptr.read(); })  return ptr.read();
+    else                                    return *ptr;
   }
 
-  template<typename... Ptrs>
-  EVE_FORCEINLINE auto read_(EVE_SUPPORTS(cpu_), soa_ptr<Ptrs...> ptr) noexcept
+  template<typename... Ptrs, callable_options O>
+  EVE_FORCEINLINE auto read_(EVE_REQUIRES(cpu_), O const&, soa_ptr<Ptrs...> ptr) noexcept
   {
     return kumi::map(read, ptr);
   }
-}
 }
