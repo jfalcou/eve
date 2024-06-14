@@ -7,12 +7,29 @@
 //==================================================================================================
 #pragma once
 
+
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
 
 namespace eve
 {
-  EVE_MAKE_CALLABLE(interleave_, interleave);
+  template<typename Options>
+  struct interleave_t : callable<interleave_t, Options>
+  {
+
+    template<eve::simd_value T, std::same_as<T>... Ts>
+    EVE_FORCEINLINE kumi::tuple<T, Ts...> operator()(T v, Ts... vs) const noexcept
+    { return EVE_DISPATCH_CALL(v, vs...); }
+
+
+    template<simd_value T, std::same_as<T>... Ts>
+    EVE_FORCEINLINE kumi::tuple<logical<T>, logical<Ts>...> operator()(logical<T> v, logical<Ts>... vs) const noexcept
+    { return EVE_DISPATCH_CALL(v, vs...); }
+
+    EVE_CALLABLE_OBJECT(interleave_t, interleave_);
+  };
+
+  inline constexpr auto interleave = functor<interleave_t>;
 }
 
 #include <eve/detail/function/simd/common/interleave.hpp>

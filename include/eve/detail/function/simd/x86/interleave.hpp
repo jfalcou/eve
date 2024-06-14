@@ -16,8 +16,8 @@ namespace eve::detail
   //================================================================================================
   // Interleave pairs of wides
   //================================================================================================
-  template<scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(sse2_), wide<T,N> v0, wide<T,N> v1) noexcept
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(sse2_) , O const& o, wide<T,N> v0, wide<T,N> v1) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
@@ -170,12 +170,13 @@ namespace eve::detail
     }
     else
     {
-      return interleave_(EVE_RETARGET(cpu_),v0,v1);
+      return interleave.behavior(cpu_{},o,v0,v1);
     }
   }
 
-  template<scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_( EVE_SUPPORTS(sse2_)
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
+                                  , O const& o
                                   , logical<wide<T,N>> v0, logical<wide<T,N>> v1
                                   ) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
@@ -213,15 +214,16 @@ namespace eve::detail
     }
     else
     {
-      return interleave_( EVE_RETARGET(cpu_),v0,v1);
+      return interleave.behavior(cpu_{},o,v0,v1);
     }
   }
 
   //================================================================================================
   // Interleave triplets of wides
   //================================================================================================
-  template<scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_( EVE_SUPPORTS(sse2_)
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
+                                  , O const& o
                                   , wide<T,N> v0, wide<T,N> v1, wide<T,N> v2
                                   ) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
@@ -233,7 +235,7 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        return interleave_(EVE_RETARGET(cpu_),v0,v1,v2);
+        return interleave.behavior(cpu_{},o,v0,v1,v2);
       }
       else if constexpr(N::value == 4)
       {
@@ -263,15 +265,16 @@ namespace eve::detail
     }
     else
     {
-      return interleave_(EVE_RETARGET(cpu_),v0,v1,v2);
+      return interleave.behavior(cpu_{},o,v0,v1,v2);
     }
   }
 
   //================================================================================================
   // Interleave quadruplets of wides
   //================================================================================================
-  template<scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_( EVE_SUPPORTS(sse2_)
+  template<callable_options O, scalar_value T, typename N>
+  EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
+                                  , O const& o
                                   , wide<T,N> v0, wide<T,N> v1, wide<T,N> v2, wide<T,N> v3
                                   ) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
@@ -283,7 +286,7 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        return interleave_(EVE_RETARGET(cpu_),v0,v1,v2,v3);
+        return interleave.behavior(cpu_{},o,v0,v1,v2,v3);
       }
       else if constexpr(N::value == 4)
       {
@@ -306,7 +309,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave_(EVE_RETARGET(cpu_),v0,v1,v2,v3);
+      return interleave.behavior(cpu_{},o, v0,v1,v2,v3);
     }
   }
 }

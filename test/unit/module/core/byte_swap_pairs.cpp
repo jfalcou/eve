@@ -24,7 +24,6 @@ TTS_CASE_WITH("Check behavior of byte_swap_pairs(simd) on integral types",
  constexpr auto _H = eve::index_t<S/2>();
   using eve::byte_swap_pairs;
   using eve::detail::map;
-  std::cout << tts::typename_<decltype(_0)> << std::endl;
   TTS_EQUAL(byte_swap_pairs(a0, _0, _S), map([_0, _S](auto e) -> v_t { return eve::byte_swap_pairs(e, _0, _S); }, a0));
   TTS_EQUAL(eve::byte_swap_pairs[t](a0, _0, _S), eve::if_else(t, eve::byte_swap_pairs(a0, _0, _S), a0));
   TTS_EQUAL(byte_swap_pairs(a0, _0, _H), map([_0, _H](auto e) -> v_t { return eve::byte_swap_pairs(e, _0, _H); }, a0));
