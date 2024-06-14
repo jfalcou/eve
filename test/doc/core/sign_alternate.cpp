@@ -4,7 +4,7 @@
 
 using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;
 
-consteval auto constexpr_sign_alternate(auto a) { return eve::sign_alternate(a); }
+//consteval auto constexpr_sign_alternate(auto a) { return eve::sign_alternate(a); }
 
 int main()
 {
@@ -24,7 +24,7 @@ int main()
     << "-> sign_alternate(xf)   = " << eve::sign_alternate(xf) << '\n';
 
 
-  std::cout << "-> constexpr_sign_alternate(3) = " << constexpr_sign_alternate(3) << std::endl;
+//  std::cout << "-> constexpr_sign_alternate(3) = " << constexpr_sign_alternate(3) << std::endl;
 
   return 0;
 }

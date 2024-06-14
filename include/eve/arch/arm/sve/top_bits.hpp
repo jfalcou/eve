@@ -9,6 +9,7 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/meta.hpp>
+#include <bit>
 
 namespace eve
 {
@@ -93,7 +94,8 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
     using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
     uint_type raw;
 
-    std::memcpy(&raw, &storage, sizeof(uint_type));
+//    std::memcpy(&raw, &storage, sizeof(uint_type));
+    raw = std::bicast<uint_type>(&storage);
 
     uint_type r = raw;
 
