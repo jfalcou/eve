@@ -22,7 +22,7 @@ namespace eve
 //!   If an iterator's store operation can be done as a store to some other
 //!   iterator/pointer - this is a transformation to customize.
 //!
-//!   Should return new ignore/value/pointer triplep
+//!   Should return new ignore/value/pointer triplet
 //!
 //!   By default returns ignore/value/pointer tuple, unchanged.
 //!
@@ -35,7 +35,7 @@ EVE_MAKE_CALLABLE(store_equivalent_, store_equivalent);
 //! @{
 //!   @concept has_store_equivalent
 //!
-//!   @brief a concept, tests `store_equivalent` has a non-default definition for
+//!   @brief tests if `store_equivalent` has a non-default definition for
 //!          a value and a pointer.
 //! @}
 //================================================================================================

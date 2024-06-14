@@ -20,7 +20,7 @@ namespace eve
   //! @addtogroup memory
   //! @{
   //!    @struct soa_ptr
-  //!    @brief a low level abstruction that is like a tuple of pointers to parallel arrays.
+  //!    @brief a low level abstraction that is like a tuple of pointers to parallel arrays.
   //!           We think that in code one should use `views::zip_iterator` instead,
   //!           it can do everything `soa_ptr` can and more.
   //!           We are still trying to figure out how/where these abstractions should live.

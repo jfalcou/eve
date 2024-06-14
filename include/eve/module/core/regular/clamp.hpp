@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var clamp
-//!   @brief Computes the largest integer not greater than the input.
+//!   @brief If the value of v is within [lo, hi], returns v; otherwise returns the nearest boundary.
 //!
 //!   **Defined in Header**
 //!

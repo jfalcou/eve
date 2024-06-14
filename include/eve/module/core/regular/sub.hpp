@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var sub
-//!   @brief Computes the sum of its arguments.
+//!   @brief Computes the difference of its first argument with the sum of the others.
 //!
 //!   **Defined in Header**
 //!

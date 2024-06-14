@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var mul
-//!   @brief Computes the sum of its arguments.
+//!   @brief Computes the product of its arguments.
 //!
 //!   **Defined in Header**
 //!

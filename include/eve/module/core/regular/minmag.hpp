@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var minmag
-//!   @brief Computes the  maximum  of the absolute value of its arguments.
+//!   @brief Computes the value for which the minimum of the absolute value of its arguments is obtained.
 //!
 //!   **Defined in Header**
 //!
