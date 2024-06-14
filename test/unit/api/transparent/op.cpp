@@ -18,8 +18,6 @@ struct BS {
 
   template <typename V>
   static BS of(V v) { return BS{ static_cast<E>(v) }; }
-
-  bool operator==(BS const& other) const { return value == other.value; }
 };
 
 template<typename E>
