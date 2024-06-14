@@ -11,6 +11,8 @@
 
 #include <iostream>
 
+using namespace eve;
+
 // base struct used in the test
 template <typename E>
 struct BS {
@@ -22,6 +24,77 @@ struct BS {
 
 template<typename E>
 struct eve::transparent_trait<BS<E>> { using type = E; };
+
+//==================================================================================================
+// Types tests
+//==================================================================================================
+TTS_CASE_TPL( "Check return types of arithmetic operators on wide", eve::test::simd::integers)
+<typename Wb>(tts::type<Wb>)
+{
+  using i_t = eve::element_type_t<Wb>;
+  enum class E: i_t { };
+  using T = typename Wb::template retype<E>;
+
+  auto v = T{};
+
+  TTS_EXPR_IS( T()    + T()   , T);
+  TTS_EXPR_IS( T()    - T()   , T);
+  TTS_EXPR_IS( T()    * T()   , T);
+  TTS_EXPR_IS( T()    / T()   , T);
+  TTS_EXPR_IS( T()    + v , T);
+  TTS_EXPR_IS( v  + T()   , T);
+  TTS_EXPR_IS( T()    - v , T);
+  TTS_EXPR_IS( v  - T()   , T);
+  TTS_EXPR_IS( T()    * v , T);
+  TTS_EXPR_IS( v  * T()   , T);
+  TTS_EXPR_IS( T()    / v , T);
+  TTS_EXPR_IS( v  / T()   , T);
+
+  TTS_EXPR_IS( T()    & T()   , T);
+  TTS_EXPR_IS( T()    & v , T);
+  TTS_EXPR_IS( v  & T()   , T);
+  TTS_EXPR_IS( T()    | T()   , T);
+  TTS_EXPR_IS( T()    | v , T);
+  TTS_EXPR_IS( v  | T()   , T);
+  TTS_EXPR_IS( T()    ^ T()   , T);
+  TTS_EXPR_IS( T()    ^ v , T);
+  TTS_EXPR_IS( v  ^ T()   , T);
+  TTS_EXPR_IS( ~T()           , T);
+
+  TTS_EXPR_IS((T() == T())                  , logical<T>);
+  TTS_EXPR_IS((T() != T())                  , logical<T>);
+  TTS_EXPR_IS((T() <  T())                  , logical<T>);
+  TTS_EXPR_IS((T() <= T())                  , logical<T>);
+  TTS_EXPR_IS((T() >  T())                  , logical<T>);
+  TTS_EXPR_IS((T() >= T())                  , logical<T>);
+  TTS_EXPR_IS((logical<T>() != logical<T>()), logical<T>);
+  TTS_EXPR_IS((logical<T>() != logical<T>()), logical<T>);
+
+  TTS_EXPR_IS((T() == v)                  , logical<T>);
+  TTS_EXPR_IS((T() != v)                  , logical<T>);
+  TTS_EXPR_IS((T() <  v)                  , logical<T>);
+  TTS_EXPR_IS((T() <= v)                  , logical<T>);
+  TTS_EXPR_IS((T() >  v)                  , logical<T>);
+  TTS_EXPR_IS((T() >= v)                  , logical<T>);
+  TTS_EXPR_IS((logical<T>() != logical<E>()), logical<T>);
+  TTS_EXPR_IS((logical<T>() != logical<E>()), logical<T>);
+
+  TTS_EXPR_IS((v == T())                  , logical<T>);
+  TTS_EXPR_IS((v != T())                  , logical<T>);
+  TTS_EXPR_IS((v <  T())                  , logical<T>);
+  TTS_EXPR_IS((v <= T())                  , logical<T>);
+  TTS_EXPR_IS((v >  T())                  , logical<T>);
+  TTS_EXPR_IS((v >= T())                  , logical<T>);
+  TTS_EXPR_IS((logical<E>() != logical<T>()), logical<T>);
+  TTS_EXPR_IS((logical<E>() != logical<T>()), logical<T>);
+
+  if constexpr( eve::integral_element_value<T> )
+  {
+    TTS_EXPR_IS( T() % T(), T);
+    TTS_EXPR_IS( v % T(), T);
+    TTS_EXPR_IS( T() % v, T);
+  }
+};
 
 TTS_CASE_TPL("Wide<transparent enum> eq/neq", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
@@ -37,7 +110,7 @@ TTS_CASE_TPL("Wide<transparent enum> eq/neq", eve::test::simd::integers)
   TTS_EQUAL((x != static_cast<E>(0)), (y != static_cast<E>(0)));
 };
 
-TTS_CASE_TPL("Wide<transparent struct> eq/neq", eve::test::simd::integers)
+TTS_CASE_TPL("Wide<transparent struct> eq/neq", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;

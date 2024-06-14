@@ -45,6 +45,9 @@ namespace eve
   //================================================================================================
   template<typename T> concept integral_value        = value<T> && std::integral<underlying_type_t<T>>;
 
+  //TODO: doc
+  template<typename T> concept integral_element_value = integral_value<transparent_inner_t<element_type_t<T>>>;
+
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_value
