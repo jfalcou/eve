@@ -92,14 +92,8 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   EVE_FORCEINLINE constexpr auto as_int() const requires(static_bits_size <= 64)
   {
     using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
-    uint_type raw;
 
-<<<<<<< Updated upstream
-
-    raw = std::bit_cast<uint_type>(&storage);
-=======
     auto raw = std::bit_cast<uint_type>(storage);
->>>>>>> Stashed changes
 
     uint_type r = raw;
 
