@@ -9,6 +9,7 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/meta.hpp>
+#include <bit>
 
 namespace eve
 {
@@ -94,7 +95,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
     uint_type raw;
 
 
-    raw = bit_cast(storage, eve::as<uint_type> {});  //std::bit_cast<uint_type>(&storage);
+    raw = std::bit_cast<uint_type>(&storage);
 
     uint_type r = raw;
 
