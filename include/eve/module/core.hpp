@@ -107,7 +107,6 @@
 #include <eve/module/core/detail/core.hpp>
 #include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/module/core/regular/core.hpp>
-#include <eve/module/core/pedantic/core.hpp>
 #include <eve/module/core/saturated/core.hpp>
 #include <eve/wide.hpp>
 #include <eve/arch/nofs.hpp>
