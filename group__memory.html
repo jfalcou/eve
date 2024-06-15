@@ -163,7 +163,7 @@ Concepts</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga33eaeb7216e54812993e44457de2c34c"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga33eaeb7216e54812993e44457de2c34c.html#ga33eaeb7216e54812993e44457de2c34c">eve::unaligned_t</a> = decltype(<a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">unalign</a>(std::declval&lt; T &gt;()))</td></tr>
-<tr class="memdesc:ga33eaeb7216e54812993e44457de2c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><b>Required header:</b> <code>#include &lt;eve/module/core.hpp&gt;</code>  <br /></td></tr>
+<tr class="memdesc:ga33eaeb7216e54812993e44457de2c34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the unaligned pointer type associated to a given type.  <br /></td></tr>
 <tr class="separator:ga33eaeb7216e54812993e44457de2c34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
@@ -210,7 +210,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="memItemLeft" align="right" valign="top">constexpr callable_read_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a> = {}</td></tr>
+<tr class="memitem:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a> = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;read_t&gt;</td></tr>
 <tr class="memdesc:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object reading single value from memory.  <br /></td></tr>
 <tr class="separator:ga1b643b7f66cbab0cbbb3bf454dd82818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga92b6c322f7422825155c2a590be84f09"><td class="memItemLeft" align="right" valign="top">constexpr callable_store_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga92b6c322f7422825155c2a590be84f09.html#ga92b6c322f7422825155c2a590be84f09">eve::store</a> = {}</td></tr>
@@ -219,7 +219,7 @@ Variables</h2></td></tr>
 <tr class="memitem:ga72e1a8955910c7a2453b517afe7cde4e"><td class="memItemLeft" align="right" valign="top">constexpr callable_store_equivalent_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga72e1a8955910c7a2453b517afe7cde4e.html#ga72e1a8955910c7a2453b517afe7cde4e">eve::store_equivalent</a> = {}</td></tr>
 <tr class="memdesc:ga72e1a8955910c7a2453b517afe7cde4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object, customisation point. If an iterator's store operation can be done as a store to some other iterator/pointer - this is a transformation to customize.  <br /></td></tr>
 <tr class="separator:ga72e1a8955910c7a2453b517afe7cde4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecf2b55e1403fdb96d6128ede314779a"><td class="memItemLeft" align="right" valign="top">constexpr callable_unalign_&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">eve::unalign</a> = {}</td></tr>
+<tr class="memitem:gaecf2b55e1403fdb96d6128ede314779a"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_gaecf2b55e1403fdb96d6128ede314779a.html#gaecf2b55e1403fdb96d6128ede314779a">eve::unalign</a> = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;unalign_t&gt;</td></tr>
 <tr class="memdesc:gaecf2b55e1403fdb96d6128ede314779a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for computing an unaligned version of a relaxed iterator.  <br /></td></tr>
 <tr class="separator:gaecf2b55e1403fdb96d6128ede314779a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3914bc9a9604e1c20021fdb28557141d"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga3914bc9a9604e1c20021fdb28557141d.html#ga3914bc9a9604e1c20021fdb28557141d">eve::write</a> = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;write_t&gt;</td></tr>

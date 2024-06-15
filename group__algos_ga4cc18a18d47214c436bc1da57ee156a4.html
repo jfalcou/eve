@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('group__algos_ga4cc18a18d47214c436bc1da
 <div class="line">     -&gt; <a class="code hl_struct" href="structeve_1_1algo_1_1views_1_1zip__iterator.html">eve::views::zip_iterator</a>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algos_ga4cc18a18d47214c436bc1da57ee156a4_html_ga4cc18a18d47214c436bc1da57ee156a4"><div class="ttname"><a href="group__algos_ga4cc18a18d47214c436bc1da57ee156a4.html#ga4cc18a18d47214c436bc1da57ee156a4">eve::algo::mismatch</a></div><div class="ttdeci">constexpr auto mismatch</div><div class="ttdoc">a SIMD version of std::mismatch</div><div class="ttdef"><b>Definition:</b> mismatch.hpp:114</div></div>
-<div class="ttc" id="astructeve_1_1algo_1_1views_1_1zip__iterator_html"><div class="ttname"><a href="structeve_1_1algo_1_1views_1_1zip__iterator.html">eve::algo::views::zip_iterator</a></div><div class="ttdoc">A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...</div><div class="ttdef"><b>Definition:</b> zip_iterator.hpp:300</div></div>
+<div class="ttc" id="astructeve_1_1algo_1_1views_1_1zip__iterator_html"><div class="ttname"><a href="structeve_1_1algo_1_1views_1_1zip__iterator.html">eve::algo::views::zip_iterator</a></div><div class="ttdoc">A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...</div><div class="ttdef"><b>Definition:</b> zip_iterator.hpp:294</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Compare both halves of zipped_range_pair for equality</li>
 <li>Compare both halves of zipped_range_pair for equivalence using predicate P</li>
@@ -213,7 +213,7 @@ to better understand the <code>zip</code> interfaces, have a look at <code>examp
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- auto [no_sign_vv, no_sign_ww] = eve::algo::mismatch(v, w, [](...){ });\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; mismatch at &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a>(no_sign_vv) &lt;&lt; <span class="stringliteral">&quot; != &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a>(no_sign_ww) &lt;&lt; std::endl;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__memory_ga1b643b7f66cbab0cbbb3bf454dd82818_html_ga1b643b7f66cbab0cbbb3bf454dd82818"><div class="ttname"><a href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a></div><div class="ttdeci">constexpr callable_read_ read</div><div class="ttdoc">Callable object reading single value from memory.</div><div class="ttdef"><b>Definition:</b> read.hpp:53</div></div>
+<div class="ttc" id="agroup__memory_ga1b643b7f66cbab0cbbb3bf454dd82818_html_ga1b643b7f66cbab0cbbb3bf454dd82818"><div class="ttname"><a href="group__memory_ga1b643b7f66cbab0cbbb3bf454dd82818.html#ga1b643b7f66cbab0cbbb3bf454dd82818">eve::read</a></div><div class="ttdeci">constexpr auto read</div><div class="ttdoc">Callable object reading single value from memory.</div><div class="ttdef"><b>Definition:</b> read.hpp:74</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
