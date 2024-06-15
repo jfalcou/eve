@@ -43,7 +43,7 @@ namespace eve
 //! @var logspace_add
 //!
 //! @brief Callable object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n
-//! e^{x_i}\right)\f$
+//! e^{\log x_i}\right)\f$
 //!
 //!   **Defined in Header**
 //!
@@ -68,7 +68,7 @@ namespace eve
 //! **Return value**
 //!
 //! The call `logspace_add(arg0, arg1, args...)` is semantically equivalent to
-//!`log(exp(arg0) + exp(arg1) + exp(args)...)`.
+//!`log(exp(log(arg0)) + exp(log(arg1)) + exp(log(args))...)`.
 //!
 //! The result type is the [common value type](@ref common_value_t) of the parameters.
 //!

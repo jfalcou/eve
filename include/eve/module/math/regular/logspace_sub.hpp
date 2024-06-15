@@ -44,7 +44,7 @@ namespace eve
 //! @var logspace_sub
 //!
 //! @brief Callable object computing the logspace_sub operation:
-//!        \f$\log\left(e^{x_0}-\sum_{i = 1}^n e^{x_i}\right)\f$.
+//!        \f$\log\left(e^{\log x_0}-\sum_{i = 1}^n e^{\log x_i}\right)\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -69,7 +69,7 @@ namespace eve
 //! **Return value**
 //!
 //! The call `logspace_sub(arg0, arg1, args...)` is semantically equivalent to
-//!`log(exp(arg0) - exp(arg1) - exp(args)...)`.
+//!`log(exp(log(arg0)) - exp(log(arg1)) - exp(log(args))...)`.
 //!
 //! The result type is the [common value type](@ref common_value_t) of the parameters.
 //!

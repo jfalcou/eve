@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //! @var sinpi
 //!
-//! @brief Callable object computing the sine rom an input in \f$\pi\f$ multiples.
+//! @brief Callable object computing the sine from an input in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

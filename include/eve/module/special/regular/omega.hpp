@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var omega
-//!   @brief Computes the the Wright \f$\omega\f$ the inverse function of \f$ x \rightarrow \log
+//!   @brief Computes the Wright \f$\omega\f$ the inverse function of \f$ x \rightarrow \log
 //!   x+x\f$
 //!
 //!   **Defined in header**

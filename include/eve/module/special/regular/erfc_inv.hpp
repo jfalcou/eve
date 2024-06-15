@@ -29,8 +29,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var erfc_inv
-//!   @brief Computes the complementar error function \f$ \displaystyle
-//!   \mbox{erf}(x)=1-\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
+//!   @brief Computes the inverse of the complementary error function.
 //!
 //!   **Defined in header**
 //!
@@ -55,7 +54,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The value of the inverse error function is returned. In particular:
+//!    The value of the inverse complementary error function is returned. In particular:
 //!
 //!      * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
 //!      * If the argument is \f$2\f$, \f$-\infty\f$ is returned.

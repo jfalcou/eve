@@ -15,7 +15,7 @@ namespace eve
 //! @addtogroup core_reduction
 //! @{
 //!   @var maximum
-//!   @brief Computes the maximal value of an simd vector
+//!   @brief Computes the maximal value in a simd vector
 //!
 //!   **Defined in Header**
 //!
