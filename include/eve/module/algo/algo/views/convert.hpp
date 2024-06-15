@@ -146,19 +146,12 @@ namespace eve::algo::views
     template <std::convertible_to<I> I1>
     converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}
 
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, converting_iterator self )
-    {
-      return convert(unalign(self.base), as<T>{});
-    }
-
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, converting_iterator self)
-    {
-      return eve::convert(eve::read(self.base), eve::as<T>{});
-    }
+    EVE_FORCEINLINE auto unalign() const noexcept { return convert(eve::unalign(base), as<T>{}); }
+    EVE_FORCEINLINE auto read()    const noexcept { return eve::convert(eve::read(base)   , as<T>{}); }
 
     EVE_FORCEINLINE void write(T v) const noexcept
     {
-      eve::write(eve::convert(v, eve::as<value_type_t<I>>{}),base);
+      eve::write(eve::convert(v, as<value_type_t<I>>{}),base);
     }
 
     template <relaxed_sentinel_for<I> I1>

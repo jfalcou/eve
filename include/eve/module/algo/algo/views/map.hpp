@@ -243,15 +243,11 @@ namespace eve::algo::views
                                                         load_op(x.load_op),
                                                         store_op(x.store_op) {}
 
-    EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::unalign_, map_iterator self )
-    {
-      return map_convert(unalign(self.base), self.load_op, self.store_op);
-    }
+    EVE_FORCEINLINE auto unalign() const noexcept { return map_convert(eve::unalign(base), load_op, store_op); }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::read_, map_iterator self)
-      requires (!std::same_as<LoadOp, nothing_t>)
+    EVE_FORCEINLINE auto read() const noexcept requires (!std::same_as<LoadOp, nothing_t>)
     {
-      return self.load_op(eve::read(self.base));
+      return load_op(eve::read(base));
     }
 
     EVE_FORCEINLINE void write(value_type v) const noexcept

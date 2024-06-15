@@ -26,11 +26,7 @@ struct my_ptr
     return kumi::make_tuple(ignore, u8s{3}, self.equivalent);
   }
 
-  EVE_FORCEINLINE friend
-  auto tagged_dispatch(eve::tag::unalign_, my_ptr self)
-  {
-    return self.equivalent;
-  }
+  EVE_FORCEINLINE auto unalign() const noexcept { return equivalent; }
 };
 
 TTS_CASE("store_equivalent")
