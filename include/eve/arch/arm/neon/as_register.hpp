@@ -96,7 +96,7 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename Size, arm_abi ABI>
+  template<arithmetic_scalar_value T, typename Size, arm_abi ABI>
   struct  as_logical_register<T, Size, ABI>
         : as_register<as_integer_t<T, unsigned>, Size, ABI>
   {};

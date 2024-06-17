@@ -36,6 +36,10 @@ namespace eve
   struct as_logical<T> : as_logical< kumi::element_t<0,T> >
   {};
 
+  template<transparent_value T>
+  struct as_logical<T> : as_logical<transparent_inner_t<T>>
+  {};
+
   template<typename T>
   using as_logical_t = typename as_logical<T>::type;
 }

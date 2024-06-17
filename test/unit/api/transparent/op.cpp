@@ -34,6 +34,8 @@ TTS_CASE_TPL( "Check return types of arithmetic operators on wide<transparent en
   using i_t = eve::element_type_t<Wb>;
   enum class E: i_t { };
   using T = typename Wb::template retype<E>;
+  using L = as_logical_t<T>;
+  using l_e = as_logical_t<E>;
 
   auto v = T{};
 
@@ -61,32 +63,32 @@ TTS_CASE_TPL( "Check return types of arithmetic operators on wide<transparent en
   TTS_EXPR_IS( v  ^ T()   , T);
   TTS_EXPR_IS( ~T()           , T);
 
-  TTS_EXPR_IS((T() == T())                  , logical<T>);
-  TTS_EXPR_IS((T() != T())                  , logical<T>);
-  TTS_EXPR_IS((T() <  T())                  , logical<T>);
-  TTS_EXPR_IS((T() <= T())                  , logical<T>);
-  TTS_EXPR_IS((T() >  T())                  , logical<T>);
-  TTS_EXPR_IS((T() >= T())                  , logical<T>);
-  TTS_EXPR_IS((logical<T>() != logical<T>()), logical<T>);
-  TTS_EXPR_IS((logical<T>() != logical<T>()), logical<T>);
+  TTS_EXPR_IS((T() == T())                  , L);
+  TTS_EXPR_IS((T() != T())                  , L);
+  TTS_EXPR_IS((T() <  T())                  , L);
+  TTS_EXPR_IS((T() <= T())                  , L);
+  TTS_EXPR_IS((T() >  T())                  , L);
+  TTS_EXPR_IS((T() >= T())                  , L);
+  TTS_EXPR_IS((L() == L()), L);
+  TTS_EXPR_IS((L() != L()), L);
 
-  TTS_EXPR_IS((T() == v)                  , logical<T>);
-  TTS_EXPR_IS((T() != v)                  , logical<T>);
-  TTS_EXPR_IS((T() <  v)                  , logical<T>);
-  TTS_EXPR_IS((T() <= v)                  , logical<T>);
-  TTS_EXPR_IS((T() >  v)                  , logical<T>);
-  TTS_EXPR_IS((T() >= v)                  , logical<T>);
-  TTS_EXPR_IS((logical<T>() != logical<E>()), logical<T>);
-  TTS_EXPR_IS((logical<T>() != logical<E>()), logical<T>);
+  TTS_EXPR_IS((T() == v)                  , L);
+  TTS_EXPR_IS((T() != v)                  , L);
+  TTS_EXPR_IS((T() <  v)                  , L);
+  TTS_EXPR_IS((T() <= v)                  , L);
+  TTS_EXPR_IS((T() >  v)                  , L);
+  TTS_EXPR_IS((T() >= v)                  , L);
+  TTS_EXPR_IS((L() == l_e()), L);
+  TTS_EXPR_IS((L() != l_e()), L);
 
-  TTS_EXPR_IS((v == T())                  , logical<T>);
-  TTS_EXPR_IS((v != T())                  , logical<T>);
-  TTS_EXPR_IS((v <  T())                  , logical<T>);
-  TTS_EXPR_IS((v <= T())                  , logical<T>);
-  TTS_EXPR_IS((v >  T())                  , logical<T>);
-  TTS_EXPR_IS((v >= T())                  , logical<T>);
-  TTS_EXPR_IS((logical<E>() != logical<T>()), logical<T>);
-  TTS_EXPR_IS((logical<E>() != logical<T>()), logical<T>);
+  TTS_EXPR_IS((v == T())                  , L);
+  TTS_EXPR_IS((v != T())                  , L);
+  TTS_EXPR_IS((v <  T())                  , L);
+  TTS_EXPR_IS((v <= T())                  , L);
+  TTS_EXPR_IS((v >  T())                  , L);
+  TTS_EXPR_IS((v >= T())                  , L);
+  TTS_EXPR_IS((l_e() == L()), L);
+  TTS_EXPR_IS((l_e() != L()), L);
 
   if constexpr( eve::integral_element_value<T> )
   {

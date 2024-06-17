@@ -89,7 +89,7 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename Type, typename Size, sve_abi ABI>
+  template<arithmetic_scalar_value Type, typename Size, sve_abi ABI>
   struct  as_logical_register<Type, Size, ABI>
   {
     static constexpr auto find()
