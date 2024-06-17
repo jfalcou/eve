@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('structeve_1_1aligned__ptr.html',''); i
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Type, typename Lanes = expected_cardinal_t&lt;Type&gt;&gt;<br />
 struct eve::aligned_ptr&lt; Type, Lanes &gt;</div><p><b>Required header:</b> <code>#include &lt;eve/memory/aligned_ptr.hpp&gt;</code></p>
-<p><a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> is a non-owning pointer that binds a preexisting aligned memory and prevent any alignment-altering operations to be performed. The bound pointer must be aligned so that they can be used to load at most <code>Lanes</code> element of type <code>Type</code> natively.</p>
+<p><a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> is a non-owning pointer that binds a preexisting aligned memory and prevent any alignment-altering operations to be performed. The bound pointer must be aligned so that it can be used to load at most <code>Lanes</code> element of type <code>Type</code> natively.</p>
 <p>Rebinding to another pointer is allowed only if the new pointer's alignment is compatible with the current <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> constraints.</p>
 <p>An <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> may alternatively own no object, in which case it is called empty.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -273,7 +273,7 @@ Related Functions</h2></td></tr>
 <tr class="separator:ac2f686e634604536ddbdcfce629887f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28fd884a05e3b74a5252025c69239e7f"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Lanes &gt; </td></tr>
 <tr class="memitem:a28fd884a05e3b74a5252025c69239e7f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__ptr_a28fd884a05e3b74a5252025c69239e7f.html#a28fd884a05e3b74a5252025c69239e7f">previous_aligned_address</a> (T *p, Lanes width) noexcept</td></tr>
-<tr class="memdesc:a28fd884a05e3b74a5252025c69239e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address lesser or equal to <code>p</code> which is satisfy the alignment constraint of SIMD registers of size <code>Lanes</code>.  <br /></td></tr>
+<tr class="memdesc:a28fd884a05e3b74a5252025c69239e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address lesser or equal to <code>p</code> which satisfies the alignment constraint of SIMD registers of size <code>Lanes</code>.  <br /></td></tr>
 <tr class="separator:a28fd884a05e3b74a5252025c69239e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a911aab2fb14b05dcc4625f412282dbe1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a911aab2fb14b05dcc4625f412282dbe1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__ptr_a911aab2fb14b05dcc4625f412282dbe1.html#a911aab2fb14b05dcc4625f412282dbe1">previous_aligned_address</a> (T *p) noexcept</td></tr>
@@ -281,11 +281,11 @@ Related Functions</h2></td></tr>
 <tr class="separator:a911aab2fb14b05dcc4625f412282dbe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5f46ed7531da24993e83cbd4ac128c0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Lanes &gt; </td></tr>
 <tr class="memitem:af5f46ed7531da24993e83cbd4ac128c0"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__ptr_af5f46ed7531da24993e83cbd4ac128c0.html#af5f46ed7531da24993e83cbd4ac128c0">next_aligned_address</a> (T *p, Lanes width) noexcept</td></tr>
-<tr class="memdesc:af5f46ed7531da24993e83cbd4ac128c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address greater or equal to <code>p</code> which is satisfy the alignment constraint of SIMD registers of size <code>Lanes</code>.  <br /></td></tr>
+<tr class="memdesc:af5f46ed7531da24993e83cbd4ac128c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address greater or equal to <code>p</code> which satisfies the alignment constraint of SIMD registers of size <code>Lanes</code>.  <br /></td></tr>
 <tr class="separator:af5f46ed7531da24993e83cbd4ac128c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3183f3cbe25f5af3b5d3842a76a7cfb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ab3183f3cbe25f5af3b5d3842a76a7cfb"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1aligned__ptr_ab3183f3cbe25f5af3b5d3842a76a7cfb.html#ab3183f3cbe25f5af3b5d3842a76a7cfb">next_aligned_address</a> (T *p) noexcept</td></tr>
-<tr class="memdesc:ab3183f3cbe25f5af3b5d3842a76a7cfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address greater or equal to <code>p</code> which is satisfy the alignment constraint of current architecture's SIMD register.  <br /></td></tr>
+<tr class="memdesc:ab3183f3cbe25f5af3b5d3842a76a7cfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address greater or equal to <code>p</code> which satisfies the alignment constraint of current architecture's SIMD register.  <br /></td></tr>
 <tr class="separator:ab3183f3cbe25f5af3b5d3842a76a7cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

@@ -125,10 +125,12 @@ $(document).ready(function(){initNavTree('concepteve_1_1floating__ordered__value
 </div><!--header-->
 <div class="contents">
 
+<p>The concept <code>ordered_value&lt;T&gt;</code> is satisfied if and only if T satisfies <code><a class="el" href="concepteve_1_1ordered__value.html" title="The concept ordered_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element_type ...">eve::ordered_value</a></code> and the element_type satisfies std::floating_point.  
+<a href="concepteve_1_1floating__ordered__value.html#details">More...</a></p>
+
 <p><code>#include &lt;eve/concept/value.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODO describe</p>
-<h2 class="groupheader">Examples </h2>
+<div class="textblock"><h2 class="groupheader">Examples </h2>
 <ul>
 <li><code>double</code></li>
 <li><code><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;2&gt;&gt;</code> </li>
@@ -136,8 +138,8 @@ $(document).ready(function(){initNavTree('concepteve_1_1floating__ordered__value
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> =  <a class="code hl_concept" href="concepteve_1_1ordered__value.html">ordered_value&lt;T&gt;</a> &amp;&amp; std::floating_point&lt;element_type_t&lt;T&gt;&gt;</div>
-<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:124</div></div>
-<div class="ttc" id="aconcepteve_1_1ordered__value_html"><div class="ttname"><a href="concepteve_1_1ordered__value.html">eve::ordered_value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:113</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdoc">The concept ordered_value&lt;T&gt; is satisfied if and only if T satisfies eve::ordered_value and the eleme...</div><div class="ttdef"><b>Definition:</b> value.hpp:132</div></div>
+<div class="ttc" id="aconcepteve_1_1ordered__value_html"><div class="ttname"><a href="concepteve_1_1ordered__value.html">eve::ordered_value</a></div><div class="ttdoc">The concept ordered_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element_type ...</div><div class="ttdef"><b>Definition:</b> value.hpp:120</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

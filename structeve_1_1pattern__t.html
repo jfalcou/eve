@@ -157,7 +157,7 @@ constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>strictly_ov
 <tr class="separator:ad9a31d4204779fdda7cebd0c4322b94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1272523c834659df8e28caa48d05c0bc"><td class="memItemLeft" align="right" valign="top"><a id="a1272523c834659df8e28caa48d05c0bc" name="a1272523c834659df8e28caa48d05c0bc"></a>
 constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>strictly_under</b> (std::ptrdiff_t n) const noexcept</td></tr>
-<tr class="memdesc:a1272523c834659df8e28caa48d05c0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all non zeroing-indexes in a pattern are leser than a given index. <br /></td></tr>
+<tr class="memdesc:a1272523c834659df8e28caa48d05c0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if all non zeroing-indexes in a pattern are lesser than a given index. <br /></td></tr>
 <tr class="separator:a1272523c834659df8e28caa48d05c0bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7237b50974aed5cd0107f53541ba5ff7"><td class="memItemLeft" align="right" valign="top"><a id="a7237b50974aed5cd0107f53541ba5ff7" name="a7237b50974aed5cd0107f53541ba5ff7"></a>
 constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>over</b> (std::ptrdiff_t n) const noexcept</td></tr>
@@ -207,16 +207,16 @@ Related Functions</h2></td></tr>
 <tr class="memitem:abfc27bc9e535aab6f92c30fc1f7ec756"><td class="memTemplParams" colspan="2"><a id="abfc27bc9e535aab6f92c30fc1f7ec756" name="abfc27bc9e535aab6f92c30fc1f7ec756"></a>
 template&lt;std::ptrdiff_t Sz, pattern_formula F&gt; </td></tr>
 <tr class="memitem:abfc27bc9e535aab6f92c30fc1f7ec756"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>fix_pattern</b> (F)</td></tr>
-<tr class="memdesc:abfc27bc9e535aab6f92c30fc1f7ec756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a formula pattern to index pattern. <br /></td></tr>
+<tr class="memdesc:abfc27bc9e535aab6f92c30fc1f7ec756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a formula pattern to an index pattern. <br /></td></tr>
 <tr class="separator:abfc27bc9e535aab6f92c30fc1f7ec756"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac580eb9f0d080a624c6daff238715ef"><td class="memTemplParams" colspan="2"><a id="aac580eb9f0d080a624c6daff238715ef" name="aac580eb9f0d080a624c6daff238715ef"></a>
 template&lt;std::ptrdiff_t N, shuffle_pattern Pattern&gt; </td></tr>
 <tr class="memitem:aac580eb9f0d080a624c6daff238715ef"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pattern_clamp</b> (Pattern const &amp;) noexcept</td></tr>
-<tr class="memdesc:aac580eb9f0d080a624c6daff238715ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamp a pattern to a given size. <br /></td></tr>
+<tr class="memdesc:aac580eb9f0d080a624c6daff238715ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps a pattern to a given size. <br /></td></tr>
 <tr class="separator:aac580eb9f0d080a624c6daff238715ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba2457c37b6001a44f3c682466fd4e36"><td class="memTemplParams" colspan="2">template&lt;std::ptrdiff_t B, std::ptrdiff_t E, std::ptrdiff_t N, shuffle_pattern Pattern&gt; </td></tr>
 <tr class="memitem:aba2457c37b6001a44f3c682466fd4e36"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1pattern__t_aba2457c37b6001a44f3c682466fd4e36.html#aba2457c37b6001a44f3c682466fd4e36">pattern_view</a> (Pattern const &amp;) noexcept</td></tr>
-<tr class="memdesc:aba2457c37b6001a44f3c682466fd4e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract a sub-pattern of an existing pattern.  <br /></td></tr>
+<tr class="memdesc:aba2457c37b6001a44f3c682466fd4e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a sub-pattern from an existing pattern.  <br /></td></tr>
 <tr class="separator:aba2457c37b6001a44f3c682466fd4e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad209f6cc99dbfc1a50994908c70159d5"><td class="memTemplParams" colspan="2">template&lt;std::ptrdiff_t O, std::ptrdiff_t N, shuffle_pattern Pattern&gt; </td></tr>
 <tr class="memitem:ad209f6cc99dbfc1a50994908c70159d5"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structeve_1_1pattern__t_ad209f6cc99dbfc1a50994908c70159d5.html#ad209f6cc99dbfc1a50994908c70159d5">slide_pattern</a> (Pattern) noexcept</td></tr>

@@ -125,10 +125,12 @@ $(document).ready(function(){initNavTree('concepteve_1_1value.html',''); initRes
 </div><!--header-->
 <div class="contents">
 
+<p>The concept <code>value&lt;T&gt;</code> is satisfied if and only if T satisfies either <code><a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...">eve::scalar_value</a></code> or <code><a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a></code>.  
+<a href="concepteve_1_1value.html#details">More...</a></p>
+
 <p><code>#include &lt;eve/concept/value.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The concept <code>value&lt;T&gt;</code> is satisfied if and only if T satisfies either <code><a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value.">eve::scalar_value</a></code> or <code><a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type a SIMD type.">eve::simd_value</a></code>.</p>
-<h2 class="groupheader">Examples </h2>
+<div class="textblock"><h2 class="groupheader">Examples </h2>
 <ul>
 <li><code>eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;&gt;</code></li>
 <li><code>float</code></li>
@@ -138,9 +140,9 @@ $(document).ready(function(){initNavTree('concepteve_1_1value.html',''); initRes
 </div><h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> =  <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value&lt;T&gt;</a> || <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value&lt;T&gt;</a></div>
-<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value.</div><div class="ttdef"><b>Definition:</b> scalar.hpp:129</div></div>
-<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type a SIMD type.</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:34</div></div>
-<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...</div><div class="ttdef"><b>Definition:</b> scalar.hpp:125</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->

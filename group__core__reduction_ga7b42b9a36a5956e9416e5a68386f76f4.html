@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('group__core__reduction_ga7b42b9a36a595
 <div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
 <div class="line">   eve::element_type_t&lt;T&gt; <a class="code hl_variable" href="group__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4">minimum</a>(T x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4_html_ga7b42b9a36a5956e9416e5a68386f76f4"><div class="ttname"><a href="group__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4">eve::minimum</a></div><div class="ttdeci">constexpr callable_minimum_ minimum</div><div class="ttdoc">Computes the maximal value of an simd vector.</div><div class="ttdef"><b>Definition:</b> minimum.hpp:58</div></div>
+<div class="ttc" id="agroup__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4_html_ga7b42b9a36a5956e9416e5a68386f76f4"><div class="ttname"><a href="group__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4">eve::minimum</a></div><div class="ttdeci">constexpr callable_minimum_ minimum</div><div class="ttdoc">Computes the minimal value in a simd vector.</div><div class="ttdef"><b>Definition:</b> minimum.hpp:58</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameter</b></p>
 <ul>
@@ -182,7 +182,7 @@ $(document).ready(function(){initNavTree('group__core__reduction_ga7b42b9a36a595
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4" title="Computes the maximal value of an simd vector.">eve::minimum</a>[mask](x)</code> provides a masked version of <code>minimum</code> which is equivalent to : `<code>minimum(if_else(mask, x, <a class="el" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2" title="Computes the the greatest representable value.">valmax(as(x))</a>))</code>. </p>
+<p class="startli">The call <code><a class="el" href="group__core__reduction_ga7b42b9a36a5956e9416e5a68386f76f4.html#ga7b42b9a36a5956e9416e5a68386f76f4" title="Computes the minimal value in a simd vector.">eve::minimum</a>[mask](x)</code> provides a masked version of <code>minimum</code> which is equivalent to : `<code>minimum(if_else(mask, x, <a class="el" href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2" title="Computes the the greatest representable value.">valmax(as(x))</a>))</code>. </p>
 </li>
 </ul>
 

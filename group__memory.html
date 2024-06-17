@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('group__memory.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p><b>EVE</b> provides various element to simplify the management of SIMD-compatible memory like functions and allocators for requesting SIMD-compatible block of memory, pointer wrapper to discriminate aligned memory from regular one, and alignment computation functions.</p>
+<p><b>EVE</b> provides various elements to simplify the management of SIMD-compatible memory like functions and allocators for requesting SIMD-compatible block of memory, pointer wrappers to discriminate aligned memory from regular one, and alignment computation functions.</p>
 <p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/memory.hpp&gt;</span> </div>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -147,7 +147,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A stack buffer for a simd-value.  <a href="structeve_1_1stack__buffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1soa__ptr.html">eve::soa_ptr&lt; Ptrs &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a low level abstruction that is like a tuple of pointers to parallel arrays. We think that in code one should use <code>views::zip_iterator</code> instead, it can do everything <code><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstruction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></code> can and more. We are still trying to figure out how/where these abstructions should live.  <a href="structeve_1_1soa__ptr.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code one should use <code>views::zip_iterator</code> instead, it can do everything <code><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></code> can and more. We are still trying to figure out how/where these abstractions should live.  <a href="structeve_1_1soa__ptr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt; Type, Allocator &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD-aware container for product types.  <a href="structeve_1_1algo_1_1soa__vector.html#details">More...</a><br /></td></tr>
@@ -156,7 +156,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a concept, tests <code>store_equivalent</code> has a non-default definition for a value and a pointer. <br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests if <code>store_equivalent</code> has a non-default definition for a value and a pointer. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -169,8 +169,10 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga069e9f110c0cb2416812ef8fc5a37555"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555">eve::over</a> : std::size_t </td></tr>
+<tr class="memdesc:ga069e9f110c0cb2416812ef8fc5a37555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strong integral type that represents the notion of over-alignment constraints.  <a href="group__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555">More...</a><br /></td></tr>
 <tr class="separator:ga069e9f110c0cb2416812ef8fc5a37555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga664bc5b316e0dd3be42aa4c2fd818047"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">eve::under</a> : std::size_t </td></tr>
+<tr class="memdesc:ga664bc5b316e0dd3be42aa4c2fd818047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strong integral type that represents the notion of under-alignment constraints.  <a href="group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">More...</a><br /></td></tr>
 <tr class="separator:ga664bc5b316e0dd3be42aa4c2fd818047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -197,15 +199,15 @@ Functions</h2></td></tr>
 <tr class="separator:gad05ab928f3e9aa972a7e7146f76cce13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1add731db6f65a080c9ec8b4a125858"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, std::integral T&gt; </td></tr>
 <tr class="memitem:gab1add731db6f65a080c9ec8b4a125858"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858">eve::is_aligned</a> (T v) noexcept</td></tr>
-<tr class="memdesc:gab1add731db6f65a080c9ec8b4a125858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfy an alignment constraint.  <br /></td></tr>
+<tr class="memdesc:gab1add731db6f65a080c9ec8b4a125858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 <tr class="separator:gab1add731db6f65a080c9ec8b4a125858"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, typename T &gt; </td></tr>
 <tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">eve::is_aligned</a> (T *ptr) noexcept</td></tr>
-<tr class="memdesc:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfy an alignment constraint.  <br /></td></tr>
+<tr class="memdesc:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 <tr class="separator:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="memTemplParams" colspan="2">template&lt;typename T , typename Lanes &gt; </td></tr>
 <tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__memory_ga3c06e236e6195d1a36a43e0fcc7c5eca.html#ga3c06e236e6195d1a36a43e0fcc7c5eca">eve::is_aligned</a> (T *ptr, Lanes lanes) noexcept</td></tr>
-<tr class="memdesc:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfy an alignment constraint.  <br /></td></tr>
+<tr class="memdesc:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 <tr class="separator:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
