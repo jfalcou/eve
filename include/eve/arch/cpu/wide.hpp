@@ -915,7 +915,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_eq(as_transparent_inner(v), as_transparent_inner(w)), as_logical_t<wide>{});
+        return detail::self_eq(as_transparent_inner(v), as_transparent_inner(w));
       }
       else
       {
@@ -938,7 +938,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_neq(as_transparent_inner(v), as_transparent_inner(w)), as_logical_t<wide>{});
+        return detail::self_neq(as_transparent_inner(v), as_transparent_inner(w));
       }
       else
       {
@@ -964,7 +964,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_less(as_transparent_inner(v), as_transparent_inner(w)), as<logical<wide>>{});
+        return detail::self_less(as_transparent_inner(v), as_transparent_inner(w));
       }
       else
       {
@@ -1000,7 +1000,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_greater(as_transparent_inner(v), as_transparent_inner(w)), as<logical<wide>>{});
+        return detail::self_greater(as_transparent_inner(v), as_transparent_inner(w));
       }
       else
       {
@@ -1036,7 +1036,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_geq(as_transparent_inner(v), as_transparent_inner(w)), as<logical<wide>>{});
+        return detail::self_geq(as_transparent_inner(v), as_transparent_inner(w));
       }
       else
       {
@@ -1072,7 +1072,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_leq(as_transparent_inner(v), as_transparent_inner(w)), as<logical<wide>>{});
+        return detail::self_leq(as_transparent_inner(v), as_transparent_inner(w));
       }
       else
       {
