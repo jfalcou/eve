@@ -915,7 +915,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_eq(as_transparent_inner(v), as_transparent_inner(w)), as<logical<wide>>{});
+        return bit_cast(detail::self_eq(as_transparent_inner(v), as_transparent_inner(w)), as_logical_t<wide>{});
       }
       else
       {
@@ -938,7 +938,7 @@ namespace eve
     {
       if constexpr(transparent_value<Type>)
       {
-        return bit_cast(detail::self_neq(as_transparent_inner(v), as_transparent_inner(w)), as<logical<wide>>{});
+        return bit_cast(detail::self_neq(as_transparent_inner(v), as_transparent_inner(w)), as_logical_t<wide>{});
       }
       else
       {
