@@ -60,7 +60,7 @@ namespace eve
     //! Checks if all non zeroing-indexes in a pattern are greater than a given index
     constexpr bool strictly_over(std::ptrdiff_t n) const noexcept { return ((I  > n || I == -1) && ...); }
 
-    //! Checks if all non zeroing-indexes in a pattern are leser than a given index
+    //! Checks if all non zeroing-indexes in a pattern are lesser than a given index
     constexpr bool strictly_under(std::ptrdiff_t n) const noexcept { return ((I  < n || I == -1) && ...); }
 
     //! Checks if all non zeroing-indexes in a pattern are strictly greater or equal than a given index
@@ -104,7 +104,7 @@ namespace eve
   template<pattern_formula F> struct as_pattern { constexpr as_pattern(F) {} };
 
   //! @relates eve::pattern_t
-  //! @brief Converts a formula pattern to index pattern
+  //! @brief Converts a formula pattern to an index pattern
   template<std::ptrdiff_t Sz, pattern_formula F> constexpr auto fix_pattern(F)
   {
     return []<auto... N>( std::integer_sequence<std::ptrdiff_t,N...> )
@@ -119,7 +119,7 @@ namespace eve
   }
 
   //! @relates eve::pattern_t
-  //! @brief Clamp a pattern to a given size
+  //! @brief Clamps a pattern to a given size
   template<std::ptrdiff_t N, shuffle_pattern Pattern >
   constexpr auto pattern_clamp(Pattern const&) noexcept
   {
@@ -128,7 +128,7 @@ namespace eve
 
   //================================================================================================
   //! @relates eve::pattern_t
-  //! @brief Extract a sub-pattern of an existing pattern
+  //! @brief Extracts a sub-pattern from an existing pattern
   //!
   //! Constructs a pattern by extracting all index from a pattern of size `N` between `B` and `E`.
   //!

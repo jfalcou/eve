@@ -43,7 +43,7 @@ struct euler_t : constant_callable<euler_t, Options, downward_option, upward_opt
 //! @addtogroup math_constants
 //! @{
 //!   @var euler
-//!   @brief Callable object computing the constant \f$\e^1\f$.
+//!   @brief Callable object computing the constant e basis of the natural logarithms.
 //!
 //!   **Defined in Header**
 //!

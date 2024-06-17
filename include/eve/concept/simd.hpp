@@ -33,8 +33,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept logical_simd_value
-  //! @brief Specify that a type represents a logical SIMD value
-  //!
+  //! @brief Specify that a type represents a logical SIMD value.
   //! The concept `logical_simd_value<T>` is satisfied if and only if T is an instance of
   //! eve::logical and its contents satisfy eve::plain_simd_value
   //!

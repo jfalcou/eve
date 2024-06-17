@@ -58,11 +58,11 @@
 //!   2. there is no intermediate overflow
 //!
 //! The implementation of these two properties can always be obtained calling
-//! the decorated pedantic and numeric versions of these functions.
+//! the decorated pedantic version of these functions.
 //!
 //! Take care that can be very expansive if the proper hardware capabilities are not present.
 //!
-//! By themselves tne regular version of these function acts the naive (and less accurate way)
+//! By themselves tne regular version of these function acts in the naive (and less accurate way)
 //! if the intrinsics are not at hand.
 //!
 //! @defgroup core_reduction  Reductions

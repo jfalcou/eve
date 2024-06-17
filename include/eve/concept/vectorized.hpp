@@ -20,8 +20,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept simd_value
-  //! @brief   Specifies that a type a SIMD type
-  //!
+  //! @brief   Specifies that a type is a SIMD type.
   //! The concept `simd_value<T>` is satisfied if and only if T satisfies either
   //! `eve::arithmetic_simd_value` or `eve::logical_simd_value`.
   //!
@@ -36,7 +35,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept integral_simd_value
-  //! @brief   Specifies that a type a SIMD type with integral elements
+  //! @brief   Specifies that a type is a SIMD type with integral elements
   //!
   //! The concept `integral_simd_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_simd_value<T>` and `eve::element_type<T>` satisfies `std::integral`.
@@ -51,7 +50,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_simd_value
-  //! @brief   Specifies that a type a SIMD type with signed elements
+  //! @brief   Specifies that a type is a SIMD type with signed elements
   //!
   //! The concept `integral_simd_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_simd_value<T>` and `eve::element_type<T>` is signed.
@@ -66,7 +65,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept unsigned_simd_value
-  //! @brief   Specifies that a type a SIMD type with unsigned elements
+  //! @brief   Specifies that a type is a SIMD type with unsigned elements
   //!
   //! The concept `unsigned_simd_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_simd_value<T>` and `eve::element_type<T>` satisfies `std::unsigned_integral`.
@@ -82,7 +81,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_integral_simd_value
-  //! @brief   Specifies that a type a SIMD type with signed integral elements
+  //! @brief   Specifies that a type is a SIMD type with signed integral elements
   //!
   //! The concept `unsigned_simd_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_simd_value<T>` and `eve::element_type<T>` satisfies `std::signed_integral`.
@@ -98,7 +97,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept floating_simd_value
-  //! @brief   Specifies that a type a SIMD type with signed integral elements
+  //! @brief   Specifies that a type is a SIMD type with floating elements.
   //!
   //! The concept `floating_simd_value<T>` is satisfied if and only if T satisfies
   //! `eve::arithmetic_simd_value<T>` and `eve::element_type<T>` satisfies `std::floating_point`.

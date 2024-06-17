@@ -27,7 +27,7 @@ namespace eve
 //! @addtogroup bessel
 //! @{
 //!   @var airy
-//!   @brief Computes the airy functions values \f$ Ai(x)\f$ and \f$ Bi(x)\f$.
+//!   @brief Computes simutaneously the airy functions values \f$ Ai(x)\f$ and \f$ Bi(x)\f$.
 //!
 //!   This function is designed to be faster than two separate calls to
 //!   eve::airy_ai and eve::airy_bi.

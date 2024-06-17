@@ -21,7 +21,7 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept value
-  //! The concept `value<T>` is satisfied if and only if T satisfies
+  //! @brief The concept `value<T>` is satisfied if and only if T satisfies
   //! either `eve::scalar_value` or `eve::simd_value`.
   //!
   //! @groupheader{Examples}
@@ -35,7 +35,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept integral_value
-  //! TODO describe
+  //! @brief The concept `integral_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the underlying_type satisfies `std::integral`
   //!
   //! @groupheader{Examples}
   //! - `eve::wide<char>`
@@ -47,7 +48,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_value
-  //! TODO describe
+  //! @brief The concept `signed_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the underlying_type satisfies `std::is_signed`
   //!
   //! @groupheader{Examples}
   //! - `eve::wide<char>`
@@ -59,7 +61,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept unsigned_value
-  //! TODO describe
+  //! @brief The concept `unsigned_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the underlying_type satisfies `std::unsigned_integral`
   //!
   //! @groupheader{Examples}
   //! - `unsigned int`
@@ -70,7 +73,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_integral_value
-  //! TODO describe
+  //! @brief The concept `signed_integral_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the underlying_type satisfies `std::signed_integral`
   //!
   //! @groupheader{Examples}
   //! - `short int`
@@ -81,7 +85,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept floating_value
-  //! TODO describe
+  //! @brief The concept `floating_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the underlying_type satisfies `std::floating_point`
   //!
   //! @groupheader{Examples}
   //! - `double`
@@ -92,7 +97,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept logical_value
-  //! TODO describe
+  //! @brief The concept `logical_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the underlying_type satisfies is_logical_v
   //!
   //! @groupheader{Examples}
   //! - `eve::logical<eve::wide<char>>`
@@ -104,7 +110,8 @@ namespace eve
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept ordered_value
-  //! TODO describe
+  //! @brief The concept `ordered_value<T>` is satisfied if and only if T satisfies
+  //! `eve::value` and the element_type satisfies std::totally_ordered
   //!
   //! @groupheader{Examples}
   //! - `double`
@@ -112,10 +119,11 @@ namespace eve
   //================================================================================================
   template<typename T> concept ordered_value = value<T> && std::totally_ordered<element_type_t<T>>;
 
-   //================================================================================================
-   //! @ingroup simd_concepts
- //! @concept floating_ordered_value
-  //! TODO describe
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @concept floating_ordered_value
+  //! @brief The concept `ordered_value<T>` is satisfied if and only if T satisfies
+  //! `eve::ordered_value` and the element_type satisfies std::floating_point
   //!
   //! @groupheader{Examples}
   //! - `double`

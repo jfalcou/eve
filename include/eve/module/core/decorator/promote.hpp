@@ -25,7 +25,7 @@ using promote_type = decorated<promote_()>;
 //! @{
 //! @var promote
 //!
-//! @brief  Higher-order @callable imbuing more standard semantic onto other @callable{s}.
+//! @brief  Higher-order @callable imbuing promoted semantic onto other @callable{s}.
 //!
 //! #### Synopsis
 //!

@@ -44,7 +44,7 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_equal
-//!   @brief Returns a logical true  if and only if the element value are equal.
+//!   @brief Returns a logical true  if and only if the element values are equal.
 //!
 //!   **Defined in Header**
 //!

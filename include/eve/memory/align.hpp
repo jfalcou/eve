@@ -18,6 +18,8 @@ namespace eve
   //! @addtogroup memory
   //! @{
   //! @enum over
+  //! @brief Strong integral type that represents the notion of over-alignment constraints.
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/memory/align.hpp>
@@ -47,6 +49,8 @@ namespace eve
   //! @addtogroup memory
   //! @{
   //! @enum under
+  //! @brief Strong integral type that represents the notion of under-alignment constraints.
+  //!
   //! **Required header:**
   //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
   //!  #include <eve/memory/align.hpp>

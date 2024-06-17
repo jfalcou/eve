@@ -29,7 +29,7 @@ namespace eve
 //! @{
 //! @var acotpi
 //!
-//! @brief Callable object computing in \f$\pi\f$ multiples.
+//! @brief Callable object computing te arc cotangent in \f$\pi\f$ multiples.
 //!
 //!   **Defined in Header**
 //!

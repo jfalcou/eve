@@ -113,7 +113,7 @@ namespace eve
   //! **Required header:** `#include <eve/traits/product_type.hpp>`
   //!
   //! `eve::struct_support` is a CRTP based helper class to define product type like user-defined
-  //! type. If `Self`this type that inherits from `eve::struct_supports<Self,Fields...>`, it will
+  //! type. If `Self` is this type that inherits from `eve::struct_supports<Self,Fields...>`, it will
   //! behave as a structure containing members of type `Fields...` and provides supports for
   //! operators based on the implementation of `Self`.
   //!

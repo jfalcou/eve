@@ -96,7 +96,7 @@ namespace detail
 
     static constexpr auto half_size = (static_size/2 > 0) ? static_size/2 : 1;
 
-    //! logical or half size
+    //! logical of half size (or 1 if size is 1)
     using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
 
    private:
@@ -138,7 +138,7 @@ namespace detail
     //! type of the underlying storage
     using storage_type = decltype(top_bits::storage_type_impl());
 
-    //! how many bits do we store per one element
+    //! how many bits do we store per element
     static constexpr std::ptrdiff_t bits_per_element = bits_per_element_impl();
 
     //! how many bits are used

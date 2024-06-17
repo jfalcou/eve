@@ -17,7 +17,7 @@ namespace eve
   //! @addtogroup memory
   //! @{
   //================================================================================================
-  //! @brief Checks if a pointer satisfy an alignment constraint.
+  //! @brief Checks if a pointer satisfies an alignment constraint.
   //!
   //! @param  v           Integral value to check.
   //! @tparam Alignment   Alignment constraint to verify. Behavior is undefined if this constraint
@@ -33,7 +33,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @brief Checks if a pointer satisfy an alignment constraint.
+  //! @brief Checks if a pointer satisfies an alignment constraint.
   //!
   //! @param  ptr         Pointer to check
   //! @tparam Alignment   Alignment constraint to verify. Behavior is undefined if this constraint
@@ -49,7 +49,7 @@ namespace eve
   }
 
   //================================================================================================
-  //! @brief Checks if a pointer satisfy an alignment constraint.
+  //! @brief Checks if a pointer satisfies an alignment constraint.
   //!
   //! @param  ptr   Pointer to check
   //! @param  lanes Alignment constraint to verify expressed as a SIMD register number of lanes.

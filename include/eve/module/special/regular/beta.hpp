@@ -32,7 +32,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var beta
-//!   @brief Computes the beta function: \f$\displaystyle \mathbf{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$ is returned.
+//!   @brief Computes the beta function: \f$\displaystyle \mathbf{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
 //!
 //!   **Defined in header**
 //!

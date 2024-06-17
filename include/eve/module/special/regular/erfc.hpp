@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var erfc
-//!   @brief Computes the complementar error function \f$ \displaystyle
+//!   @brief Computes the complementary error function \f$ \displaystyle
 //!   \mbox{erf}(x)=1-\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$
 //!
 //!   **Defined in header**

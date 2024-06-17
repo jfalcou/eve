@@ -10,8 +10,8 @@
 //================================================================================================
 //! @defgroup memory Memory Management
 //!
-//! **EVE** provides various element to simplify the management of SIMD-compatible memory like
-//! functions and allocators for requesting SIMD-compatible block of memory, pointer wrapper
+//! **EVE** provides various elements to simplify the management of SIMD-compatible memory like
+//! functions and allocators for requesting SIMD-compatible block of memory, pointer wrappers
 //! to discriminate aligned memory from regular one, and alignment computation functions.
 //!
 //! **Convenience header:** @code{.cpp} #include <eve/memory.hpp> @endcode

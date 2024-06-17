@@ -20,7 +20,7 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!    @var replace_ignored
-//!    @brief A small helper tto replace ignored values
+//!    @brief A small helper to replace ignored values
 //!
 //!   **Defined in Header**
 //!   @code
