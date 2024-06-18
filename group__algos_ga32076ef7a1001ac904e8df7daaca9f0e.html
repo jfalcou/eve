@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::copy_if</title>
+<title>E.V.E: eve::algo::transform_copy_if</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algos_ga7013846147444ece6d3c132e4204e07e.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__algos_ga7013846147444ece6d3c132
 </div>
 
 <div class="contents">
-<a id="ga7013846147444ece6d3c132e4204e07e" name="ga7013846147444ece6d3c132e4204e07e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7013846147444ece6d3c132e4204e07e">&#9670;&#160;</a></span>copy_if</h2>
+<a id="ga32076ef7a1001ac904e8df7daaca9f0e" name="ga32076ef7a1001ac904e8df7daaca9f0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga32076ef7a1001ac904e8df7daaca9f0e">&#9670;&#160;</a></span>transform_copy_if</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__algos_ga7013846147444ece6d3c132
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::copy_if = function_with_traits&lt;copy_if_&gt;</td>
+          <td class="memname">eve::algo::transform_copy_if = function_with_traits&lt;detail::transform_copy_if_&gt;</td>
         </tr>
       </table>
   </td>
@@ -141,34 +141,72 @@ $(document).ready(function(){initNavTree('group__algos_ga7013846147444ece6d3c132
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/module/algo/algo/copy_if.hpp&gt;</code></p>
-<p><b>Defined in Header</b></p>
+<p><code>#include &lt;eve/module/algo/algo/transform_copy_if.hpp&gt;</code></p>
+<p><b>Defined in header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If you need to apply a transformation, you can use <code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">eve::algo::views::map</a></code> or <code><a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">eve::algo::transform_copy_if</a></code>.</dd></dl>
-<p>The main difference from std::copy_if is that it accepts output range and not an output iterator. If the output doesn't have enough space, algorithm will fill all of the avaliable output and then stop. The interface difference allows eve to store more then just selected elements which is important for efficiency.</p>
-<dl class="section note"><dt>Note</dt><dd>fix-1656: unfortunately at the moment, we only return where writing output finished. We should return where the input stopped too but we couldn't solve that efficiently so far.</dd></dl>
-<p>Tuning:</p><ul>
-<li><a class="el" href="group__algo__traits_ga0c5777eb4a0596f2f8412b42d7723d89.html#ga0c5777eb4a0596f2f8412b42d7723d89" title="for algorithms that output data based on input (eve::algo::copy_if, eve::algo::remove_if,...">eve::algo::dense_output</a>/eve<a class="el" href="group__algo__traits_ga287988654952e8715cf1fa674d7b9b3c.html#ga287988654952e8715cf1fa674d7b9b3c" title="for algorithms that output data based on input (eve::algo::copy_if, eve::algo::remove_if,...">algo::sparse_output</a> - if you expect very sparse output (one or two trues per register) - you can pass sparse_output to try to optimize for that.</li>
-<li>Does not support unrolling at the moment. In the exepriments with compress it didn't prove beneficial, but you can always try with <code><a class="el" href="group__algos_gabc4fab3473dac382f3ad4edc9531aec0.html#gabc4fab3473dac382f3ad4edc9531aec0" title="a basic for_each algorithm.">eve::algo::for_each</a></code>, assuming you can overallocate the output.</li>
-<li>Algorithm switches to a much slower version, when there is not enough space to write a full register. Allocating more than input size won't help though.</li>
-</ul>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If the scalar operation is cheap enough, <code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> + <code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">views::map</a></code> might be slightly faster.</dd></dl>
+<p>Conditionally copies values from an input range to an output range, transforming them in the process.</p>
+<p>If the output range is too small, fills all the available space and then stops.</p>
+<p>If the output range's element type is different from the type of the values returned by the transforming function, performs the appropriate conversions.</p>
 <h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt;relaxed_range In, relaxed_range Out, <span class="keyword">typename</span> P&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e">copy_if</a>(In&amp;&amp; in, Out&amp;&amp; out, P p) -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Out&gt;</a></div>
+<div class="line">  <span class="keyword">template</span> &lt;eve::algo::relaxed_range In, eve::algo::relaxed_range Out, <span class="keyword">typename</span> Func&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">transform_copy_if</a>(In&amp;&amp; in, Out&amp;&amp; out, Func func) <span class="keyword">const</span> -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Out&gt;</a></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition:</b> ranges_types.hpp:68</div></div>
-<div class="ttc" id="agroup__algos_ga7013846147444ece6d3c132e4204e07e_html_ga7013846147444ece6d3c132e4204e07e"><div class="ttname"><a href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e">eve::algo::copy_if</a></div><div class="ttdeci">constexpr auto copy_if</div><div class="ttdoc">SIMD variation on std::copy_if.</div><div class="ttdef"><b>Definition:</b> copy_if.hpp:146</div></div>
-</div><!-- fragment --><p>** Parameters **</p>
+<div class="ttc" id="agroup__algos_ga32076ef7a1001ac904e8df7daaca9f0e_html_ga32076ef7a1001ac904e8df7daaca9f0e"><div class="ttname"><a href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">eve::algo::transform_copy_if</a></div><div class="ttdeci">constexpr auto transform_copy_if</div><div class="ttdoc">Similar to applying eve::transform_to and eve::copy_if at the same time.</div><div class="ttdef"><b>Definition:</b> transform_copy_if.hpp:149</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li>in - <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> input</li>
-<li>out - <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> output</li>
-<li>p - simd prediocate for elmenets of <code>in</code></li>
+<li><code>in</code>: Input range</li>
+<li><code>out</code>: Output range</li>
+<li><code>func</code>: Function that takes elements from <code>in</code> as SIMD registers and returns a pair of:<ul>
+<li>the transformed values</li>
+<li>a logical mask.</li>
 </ul>
-<p>** Return value **</p>
-<p><a class="el" href="structrelaxed__iterator.html" title="anything that can be reasonably converted to an iterator: std::contigious_iterator,...">relaxed_iterator</a> past the last written element.</p>
-<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a></code> </dd></dl>
+</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Output iterator past the last written element.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;int&gt; input(16);</div>
+<div class="line">  <a class="code hl_variable" href="group__algos_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a">eve::algo::iota</a>(input, 0);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Input vector:\n  &quot;</span> &lt;&lt; tts::as_string(input) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> func = [](<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;int&gt;</a> <span class="keyword">auto</span> x) {</div>
+<div class="line">    <span class="keywordflow">return</span> kumi::make_tuple(-x, <a class="code hl_variable" href="group__core__predicates_gaf47a88cced054b2d5bc4b4f4ed8debd1.html#gaf47a88cced054b2d5bc4b4f4ed8debd1">eve::is_even</a>(x));</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;int&gt; output_big(42);</div>
+<div class="line">  output_big.erase(<a class="code hl_variable" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">eve::algo::transform_copy_if</a>(input, output_big, func), output_big.end());</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Output (opposites of even numbers):\n  &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(output_big)</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::vector&lt;unsigned char&gt; output_small(5);</div>
+<div class="line">  output_small.erase(<a class="code hl_variable" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">eve::algo::transform_copy_if</a>(input, output_small, func), output_small.end());</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Output on a range too small to hold all the results,\nwith conversion to unsigned char:\n  &quot;</span></div>
+<div class="line">            &lt;&lt; tts::as_string(output_small)</div>
+<div class="line">            &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:107</div></div>
+<div class="ttc" id="agroup__algos_gaca4936fc6b0b70ef06e72b118dce7c7a_html_gaca4936fc6b0b70ef06e72b118dce7c7a"><div class="ttname"><a href="group__algos_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a">eve::algo::iota</a></div><div class="ttdeci">constexpr auto iota</div><div class="ttdoc">SIMD version of std::iota For conversion/overflow behaviour, should follow the standard.</div><div class="ttdef"><b>Definition:</b> iota.hpp:38</div></div>
+<div class="ttc" id="agroup__core__predicates_gaf47a88cced054b2d5bc4b4f4ed8debd1_html_gaf47a88cced054b2d5bc4b4f4ed8debd1"><div class="ttname"><a href="group__core__predicates_gaf47a88cced054b2d5bc4b4f4ed8debd1.html#gaf47a88cced054b2d5bc4b4f4ed8debd1">eve::is_even</a></div><div class="ttdeci">constexpr auto is_even</div><div class="ttdoc">Returns a logical true if and only if the element value is even.</div><div class="ttdef"><b>Definition:</b> is_even.hpp:84</div></div>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e" title="SIMD version of std::transform.">transform_to</a></code> </dd>
+<dd>
+<code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">views::map</a></code> </dd></dl>
 
 </div>
 </div>
