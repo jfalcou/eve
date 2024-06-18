@@ -108,14 +108,14 @@ namespace eve::detail
     return l_t( bit_cast(a.mask().slice(s).storage(), as<s_t>()) );
   }
 
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(logical<wide<T, N>> const &a) noexcept
     requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice(logical<wide<T, N>> const &a, Slice const &s) noexcept
     requires non_native_abi<abi_t<T, N>>
   {
@@ -125,14 +125,14 @@ namespace eve::detail
   //================================================================================================
   // Arithmetic slices
   //================================================================================================
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &s) noexcept
       requires non_native_abi<abi_t<T, N>>
   {

@@ -17,20 +17,24 @@ TTS_CASE_TPL("Transparent enum trait impl", eve::test::scalar::integers)
   static_assert(!eve::transparent_value<T>, "T is not transparent");
   static_assert(eve::transparent_value<E>, "E is transparent");
   static_assert(std::same_as<eve::transparent_inner_t<E>, T>, "E inner type is T");
+
+  TTS_PASS("All checks passed");
 };
 
 template <typename E>
-struct BS { E value; };
+struct BaseStruct { E value; };
 
 template<typename E>
-struct eve::transparent_trait<BS<E>> { using type = E; };
+struct eve::transparent_trait<BaseStruct<E>> { using type = E; };
 
 TTS_CASE_TPL("Transparent struct trait impl", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
-  using S = BS<T>;
+  using S = BaseStruct<T>;
 
   static_assert(!eve::transparent_value<T>, "T is not transparent");
   static_assert(eve::transparent_value<S>, "S is transparent");
   static_assert(std::same_as<eve::transparent_inner_t<S>, T>, "S inner type is T");
+
+  TTS_PASS("All checks passed");
 };
