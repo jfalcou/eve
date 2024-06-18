@@ -47,7 +47,7 @@ Full support with tests:
   - **Intel**
     - SSE2, SSSE3, SSE3, SSE4.1, SSE4.2
     - AVX, AVX2, FMA3
-    - AVX512 in SKylake-AVX512 mode (F, CD, VL, DQ, BW)
+    - AVX512 in Skylake-AVX512 mode (F, CD, VL, DQ, BW)
   - **ARM**
     - NEON A32 (64 & 128 bits)
     - NEON A64 (64 & 128 bits)
