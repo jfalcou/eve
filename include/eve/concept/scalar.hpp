@@ -9,6 +9,7 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/transparent.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -111,9 +112,18 @@ template<typename T>
 concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T>;
 
 //================================================================================================
+//! @concept element_value
+//! @brief Represents any type that can be loaded into a eve::wide
+//! The concept `element_value<T>` is satisfied if and only if T satisfies either
+//! transparent_value or arithmetic_scalar_value.
+//================================================================================================
+ template <typename T>
+ concept element_value = transparent_value<T> || arithmetic_scalar_value<T>;
+
+//================================================================================================
 //! @concept scalar_value
 //! @brief Specify that a type represents a scalar value
-//! The concept `scalar_value<T>` is satisfied if and only if it satisfies either
+//! The concept `scalar_value<T>` is satisfied if and only if T satisfies either
 //! arithmetic_scalar_value or logical_scalar_value.
 //!
 //! @groupheader{Examples}
@@ -122,5 +132,5 @@ concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<
 //! - `kumi::tuple<double,std::int32_t>`
 //================================================================================================
 template<typename T>
-concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
+concept scalar_value = element_value<T> || logical_scalar_value<T>;
 }
