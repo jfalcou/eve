@@ -104,15 +104,15 @@ namespace eve::algo
   //!
   //!   @brief Similar to applying `eve::transform_to` and `eve::copy_if` at the same time.
   //!
+  //!   @note
+  //!   If the scalar operation is cheap enough, `::copy_if` + `views::map` might be slightly faster.
+  //!
   //!   Conditionally copies values from an input range to an output range,
   //!   transforming them in the process.
   //!
   //!   If the output range is too small, fills all the available space and then stops.
   //!   
   //!   If the output range's element type is different from the type of the values returned by the transforming function, performs the appropriate conversions.
-  //!
-  //!   @note
-  //!   If the scalar operation is cheap enough, `::copy_if` + `views::map` might be slightly faster.
   //!
   //!   @groupheader{Callable Signatures}
   //!
