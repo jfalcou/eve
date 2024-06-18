@@ -42,7 +42,9 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T > T abs(T x) noexcept;
+//!      constexpr auto abs(eve::value auto x)                      noexcept;  // 1
+//!      constexpr auto abs[conditional auto m](eve::value auto x)  noexcept;  // 2
+//!      constexpr auto abs[saturated](eve::value auto x)           noexcept;  // 3
 //!   }
 //!   @endcode
 //!
@@ -52,31 +54,23 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   **Return value**
 //!
-//!    The [elementwise](@ref glossary_elementwise) absolute value of `x`, if it is representable.
-//!    More specifically, for signed integers : the absolute value of eve::valmin is not representable and
-//!    the result is undefined.
+//!   `abs` is an [elementwise](@ref glossary_elementwise) callable. returning the absolute value of `x`
+//!
+//!    1.  For signed integral : the absolute value of eve::valmin is not representable and the result is undefined.
+//!
+//!    2.  For signed integral : the absolute value of eve::valmin is valmax as it is the representable value
+//!        nearest to the correct value.
+//!
+//!    3. [masked call](@ref masked_call)
 //!
 //!   @warning
-//!   `abs` is also a standard library function name and there possibly
-//!   exists a C macro version which may be called instead of the EVE version.<br/>
-//!   To avoid confusion, use the eve::abs notation.
+//!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
+//!    instead of the EVE version.<br/>
+//!    To avoid confusion, use the eve::abs notation.
 //!
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/core/abs.cpp}
-//!
-//!   @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::abs[mask](x)` provides a masked version of `eve::abs` which is
-//!     equivalent to `if_else (mask, abs(x), x)`.
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::abs[eve::saturated](x)` computes a saturated version of eve::abs.
-//!     More specifically, for any signed integer value `x`, the expression
-//!     `eve::abs[eve::saturated](eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
 //!
 //! @}
 //======================================================================================================================
