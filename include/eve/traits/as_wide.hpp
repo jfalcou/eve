@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/transparent.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/wide_forward.hpp>
 #include <eve/as.hpp>
@@ -29,6 +30,12 @@ namespace eve
   struct as_wide<Type,Size>
   {
     using type = eve::wide<Type,Size>;
+  };
+
+  template<transparent_value Type, typename Size>
+  struct as_wide<Type, Size>
+  {
+    using type = eve::wide<Type, Size>;
   };
 
   template<typename T, typename Size>

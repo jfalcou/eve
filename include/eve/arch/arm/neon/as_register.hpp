@@ -22,7 +22,7 @@ namespace eve
 {
   // ---------------------------------------------------------------------------------------------
   // NEON 64
-  template<typename T, typename Size> struct as_register<T, Size, eve::arm_64_>
+  template<arithmetic_scalar_value T, typename Size> struct as_register<T, Size, eve::arm_64_>
   {
     static constexpr auto find()
     {
@@ -59,7 +59,7 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // NEON 128
-  template<typename T, typename Size>
+  template<arithmetic_scalar_value T, typename Size>
   struct as_register<T, Size, eve::arm_128_>
   {
     static constexpr auto find()
@@ -96,7 +96,7 @@ namespace eve
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename Size, arm_abi ABI>
+  template<arithmetic_scalar_value T, typename Size, arm_abi ABI>
   struct  as_logical_register<T, Size, ABI>
         : as_register<as_integer_t<T, unsigned>, Size, ABI>
   {};

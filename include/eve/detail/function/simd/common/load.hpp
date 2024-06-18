@@ -9,6 +9,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/memory.hpp>
+#include <eve/concept/transparent.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/memory/aligned_ptr.hpp>
@@ -200,6 +201,19 @@ namespace eve::detail
     return piecewise_load(tgt, unalign(ptr));
   }
 
+  //================================================================================================
+  // Load from pointer - Transparent
+  //================================================================================================
+  template<transparent_value T, typename N, data_source Ptr, typename Arch>
+  EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(Arch), ignore_none_ const&, safe_type const&
+                                  , eve::as<wide<T, N>> const &tgt, Ptr ptr
+                                  ) noexcept
+  requires simd_compatible_ptr<Ptr,wide<T, N>>
+  {
+    using type = transparent_inner_t<T>;
+    return bit_cast(load(ignore_none, safe, eve::as<wide<type, N>>{}, ptr_cast<type>(ptr)), tgt); 
+  }
+  
   //================================================================================================
   // Aggregation
   //================================================================================================

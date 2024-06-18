@@ -24,31 +24,32 @@ namespace eve::detail
   //! once even if multiple wide instance requires the same SIMD register type.
   //!
   //! @tparam Storage Architecture-specific SIMD register type to store
-  //================================================================================================
-  template<typename Storage> struct wide_storage
+  //! @tparam PreventConversion Control the availability of the automatic conversion to the storage type
+  //====================================================================================================
+  template<typename Storage, bool PreventConversion> struct wide_storage
   {
     using storage_type = Storage;
 
     wide_storage() {}
     wide_storage(storage_type const &r) : data_(r) {}
 
-    //! @brief Retrieve the architecture-specific storage help by wide
+    //! Retrieve the architecture-specific storage help by wide
     EVE_FORCEINLINE storage_type const& storage() const & noexcept { return data_; }
 
-    //! @brief Retrieve the architecture-specific storage help by wide
+    //! Retrieve the architecture-specific storage help by wide
     EVE_FORCEINLINE storage_type &      storage() &       noexcept { return data_; }
 
-    //! @brief Retrieve the architecture-specific storage help by wide
+    //! Retrieve the architecture-specific storage help by wide
     EVE_FORCEINLINE storage_type        storage() &&      noexcept { return data_; }
 
-    //! @brief Implicit conversion to the architecture-specific storage help by wide
-    EVE_FORCEINLINE operator storage_type const& () const &  noexcept { return data_; }
+    //! Implicit conversion to the architecture-specific storage help by wide
+    EVE_FORCEINLINE explicit(PreventConversion) operator storage_type const& () const &  noexcept { return data_; }
 
-    //! @brief Implicit conversion to the architecture-specific storage help by wide
-    EVE_FORCEINLINE operator storage_type&       () &        noexcept { return data_; }
+    //! Implicit conversion to the architecture-specific storage help by wide
+    EVE_FORCEINLINE explicit(PreventConversion) operator storage_type&       () &        noexcept { return data_; }
 
-    //! @brief Implicit conversion to the architecture-specific storage help by wide
-    EVE_FORCEINLINE operator storage_type        () &&       noexcept { return data_; }
+    //! Implicit conversion to the architecture-specific storage help by wide
+    EVE_FORCEINLINE explicit(PreventConversion) operator storage_type        () &&       noexcept { return data_; }
 
     protected:
     Storage data_;

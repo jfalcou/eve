@@ -15,7 +15,7 @@ namespace eve::detail
   //================================================================================================
   // Single slice
   //================================================================================================
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE wide<T, typename N::split_type>
   slice(wide<T,N> const &a, Slice const &) noexcept
       requires x86_abi<abi_t<T, N>>
@@ -73,7 +73,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
   slice(logical<wide<T,N>> const &a, Slice const &) noexcept
       requires x86_abi<abi_t<T, N>> && ( !abi_t<T, N>::is_wide_logical )
@@ -91,7 +91,7 @@ namespace eve::detail
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
       requires x86_abi<abi_t<T, N>>
   {
@@ -99,7 +99,7 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(logical<wide<T,N>> const &a) noexcept
       requires x86_abi<abi_t<T, N>> && (!abi_t<T, N>::is_wide_logical)
   {

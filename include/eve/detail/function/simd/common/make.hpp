@@ -10,6 +10,8 @@
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/concept/transparent.hpp>
+#include <eve/traits/as_transparent.hpp>
 
 #include <cstddef>
 
@@ -108,17 +110,30 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, aggregated_>
   {
     return make_aggregated<wide<T, N>>(vs...);
   }
 
-  template<typename T, typename N, typename... Vs>
+  template<transparent_value T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
+  {
+    using Wu = wide<transparent_inner_t<T>, N>;
+    return bit_cast(Wu{as_transparent_inner(vs)...}, as<wide<T,N>>{});
+  }
+
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T,N>>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, aggregated_>
   {
     return make_aggregated<logical<wide<T, N>>>(vs...);
+  }
+
+  template<transparent_value T, typename N, typename... Vs>
+  EVE_FORCEINLINE auto make(eve::as<logical<wide<T,N>>> const &, Vs... vs) noexcept
+  {
+    return bit_cast(make(eve::as<logical<wide<transparent_inner_t<T>, N>>>{}, as_transparent_inner(vs)...), as<logical<wide<T,N>>>{});
   }
 }

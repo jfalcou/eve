@@ -35,7 +35,7 @@ namespace eve::detail
     return [&]<std::size_t... N>(std::index_sequence<N...> const&)
     {
       auto val = [](auto vv, auto) { return vv; };
-      return type { val(v, N)... };
+      return type { val(static_cast<T>(v), N)... };
     }(std::make_index_sequence<S::value>());
   }
 

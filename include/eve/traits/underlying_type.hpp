@@ -49,14 +49,14 @@ namespace eve
   template<typename Ts>
   struct underlying_type;
 
-  template<arithmetic_scalar_value T>
+  template<element_value T>
   requires requires { typename T::underlying_type; }
   struct underlying_type<T>
   {
     using type = typename T::underlying_type;
   };
 
-  template<arithmetic_scalar_value T>
+  template<element_value T>
   struct underlying_type<T>
   {
     using type = T;

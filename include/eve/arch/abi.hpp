@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
+#include <eve/concept/transparent.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/arch/abi_of.hpp>
 
@@ -76,6 +77,10 @@ namespace eve
   {
     using type = eve::bundle_;
   };
+
+  template<transparent_value Type, typename Lanes>
+  struct abi<Type, Lanes>: abi<transparent_inner_t<Type>, Lanes>
+  {};
 
   template<typename Type, typename Lanes>
   requires( arithmetic<Type> && !detail::require_aggregation<Type, Lanes> )

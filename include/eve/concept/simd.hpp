@@ -16,7 +16,7 @@ namespace eve
 {
   inline namespace EVE_ABI_NAMESPACE
   {
-    template<arithmetic_scalar_value Type, typename Size> struct wide;
+    template<element_value Type, typename Size> struct wide;
   }
 
   template<typename T>
