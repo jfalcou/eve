@@ -9,7 +9,7 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
-#include <eve/concept/equivalent.hpp>
+#include <eve/concept/translation.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -109,16 +109,7 @@ concept product_scalar_value = detail::scalar_tuple<T>();
 //! - `float`
 //==================================================================================================
 template<typename T>
-concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T>;
-
-//================================================================================================
-//! @concept vectorizable
-//! @brief Represents any type that can be loaded into a eve::wide
-//! The concept `vectorizable<T>` is satisfied if and only if T satisfies either
-//! has_equivalent or arithmetic_scalar_value.
-//================================================================================================
- template <typename T>
- concept vectorizable = has_equivalent<T> || arithmetic_scalar_value<T>;
+concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T> || has_plain_translation<T>;
 
 //================================================================================================
 //! @concept scalar_value
@@ -132,5 +123,5 @@ concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<
 //! - `kumi::tuple<double,std::int32_t>`
 //================================================================================================
 template<typename T>
-concept scalar_value = vectorizable<T> || logical_scalar_value<T>;
+concept scalar_value = arithmetic_scalar_value<T> || logical_scalar_value<T>;
 }

@@ -13,16 +13,16 @@ namespace eve
 {
 	// Default case: normal types do not have specific storage type
 	template <typename T>
-	struct equivalent_to {
-			using type = T;
+	struct translation_of {
+		using type = T;
 	};
 
 	template <typename T>
-	using as_equivalent_t = typename equivalent_to<T>::type;
+	using translate_t = typename translation_of<T>::type;
 
 	// Covers every enum
 	template <typename T>
 	requires (std::is_enum_v<T>)
-	struct equivalent_to<T>: std::underlying_type<T>
+	struct translation_of<T>: std::underlying_type<T>
 	{ };
 }
