@@ -13,16 +13,16 @@ namespace eve
 {
 	// Default case: normal types do not have specific storage type
 	template <typename T>
-	struct transparent_trait {
+	struct equivalent_to {
 			using type = T;
 	};
 
 	template <typename T>
-	using transparent_inner_t = typename transparent_trait<T>::type;
+	using as_equivalent_t = typename equivalent_to<T>::type;
 
 	// Covers every enum
 	template <typename T>
 	requires (std::is_enum_v<T>)
-	struct transparent_trait<T>: std::underlying_type<T>
+	struct equivalent_to<T>: std::underlying_type<T>
 	{ };
 }

@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/transparent.hpp>
+#include <eve/traits/equivalent.hpp>
 
 #include <concepts>
 
 namespace eve
 {
   template <typename T>
-  concept transparent_value = !std::same_as<transparent_inner_t<T>, T>;
+  concept has_equivalent = !std::same_as<as_equivalent_t<T>, T>;
 }
