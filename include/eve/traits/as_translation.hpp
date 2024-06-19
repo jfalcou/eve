@@ -17,7 +17,7 @@ namespace eve {
   constexpr auto translate(V val) {
     if constexpr (has_plain_translation<V>) {
       static_assert((sizeof(V) == sizeof(translate_t<V>)) && (alignof(V) == alignof(translate_t<V>)));
-      return std::bit_cast<translate_t<V>>(val);
+      return translate(std::bit_cast<translate_t<V>>(val));
     } else {
       return val;
     }
@@ -26,7 +26,7 @@ namespace eve {
   template <typename T, typename N>
   constexpr auto translate(wide<T, N> val) {
     if constexpr (has_plain_translation<T>) {
-      return bit_cast(val, as<wide<translate_t<T>, N>>{});
+      return translate(bit_cast(val, as<wide<translate_t<T>, N>>{}));
     } else {
       return val;
     }
