@@ -45,9 +45,6 @@ namespace eve
   //================================================================================================
   template<typename T> concept integral_value        = value<T> && std::integral<underlying_type_t<T>>;
 
-  // TODO: doc
-  template<typename T> concept integral_element_value = integral_value<transparent_inner_t<element_type_t<T>>>;
-
   //================================================================================================
   //! @ingroup simd_concepts
   //! @concept signed_value
@@ -133,5 +130,4 @@ namespace eve
   //! - `eve::wide<float, eve::fixed<2>>`
   //================================================================================================
   template<typename T> concept floating_ordered_value = ordered_value<T> && std::floating_point<element_type_t<T>>;
-
 }

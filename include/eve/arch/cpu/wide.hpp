@@ -15,7 +15,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/concept/scalar.hpp>
-#include <eve/concept/transparent.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
@@ -60,11 +60,11 @@ namespace eve
   //! @tparam Cardinal  Cardinal of the register. By default, the best cardinal for current
   //!                    architecture is selected.
   //================================================================================================
-  template<element_value Type, typename Cardinal>
+  template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, transparent_value<Type>>
+      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_plain_translation<Type>>
   {
-    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, transparent_value<Type>>;
+    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_plain_translation<Type>>;
 
     public:
     //! The type stored in the register.
@@ -986,8 +986,8 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +as_transparent_inner(that[0]);
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +as_transparent_inner(that[i]);
+        os << '(' << +translate(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +translate(that[i]);
         return os << ')';
       }
     }

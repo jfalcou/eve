@@ -11,17 +11,17 @@
 
 // base struct used in the test
 template <typename E>
-struct BS {
+struct BaseStruct {
   eve::element_type_t<E> value;
 
   template <typename V>
-  static BS of(V v) { return BS{ static_cast<E>(v) }; }
+  static BaseStruct of(V v) { return BaseStruct{ static_cast<E>(v) }; }
 
-  bool operator==(BS const& other) const { return value == other.value; }
+  bool operator==(BaseStruct const& other) const { return value == other.value; }
 };
 
 template<typename E>
-struct eve::transparent_trait<BS<E>> { using type = E; };
+struct eve::translation_of<BaseStruct<E>> { using type = E; };
 
 TTS_CASE_TPL("Create & get function for wide<transparent enum>", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
@@ -38,7 +38,7 @@ TTS_CASE_TPL("Create & get function for wide<transparent struct>", eve::test::si
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
-  using S = BS<E>;
+  using S = BaseStruct<E>;
   using W = typename Wb::template retype<S>;
 
   W x {[](int i, int) { return S::of(i); }};
@@ -67,7 +67,7 @@ TTS_CASE_TPL("All wides<transparent struct>: set", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
-  using S = BS<E>;
+  using S = BaseStruct<E>;
   using W = typename Wb::template retype<S>;
 
   // No splat make yet
@@ -110,7 +110,7 @@ TTS_CASE_TPL("Make all wides<transparent struct>, splat", eve::test::simd::all_t
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
-  using S = BS<E>;
+  using S = BaseStruct<E>;
   using W = typename Wb::template retype<S>;
 
   constexpr std::ptrdiff_t min_n = eve::fundamental_cardinal_v<E>;
@@ -156,7 +156,7 @@ TTS_CASE_TPL("Slice all wides<transparent struct>", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
-  using S = BS<E>;
+  using S = BaseStruct<E>;
   using W = typename Wb::template retype<S>;
 
   if constexpr( W::size() == 1 ) {

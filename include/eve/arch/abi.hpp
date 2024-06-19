@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/expected_cardinal.hpp>
-#include <eve/concept/transparent.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/arch/abi_of.hpp>
 
@@ -78,8 +78,8 @@ namespace eve
     using type = eve::bundle_;
   };
 
-  template<transparent_value Type, typename Lanes>
-  struct abi<Type, Lanes>: abi<transparent_inner_t<Type>, Lanes>
+  template<has_plain_translation Type, typename Lanes>
+  struct abi<Type, Lanes>: abi<translate_t<Type>, Lanes>
   {};
 
   template<typename Type, typename Lanes>
