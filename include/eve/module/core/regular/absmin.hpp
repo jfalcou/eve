@@ -52,45 +52,42 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value... Ts>
-//!      eve::common_value_t<T, Ts ...> absmin( T x, Ts ... xs ) noexcept;
+//!      constexpr auto absmin(value auto x, value auto ... xs)                       noexcept;  // 1
+//!      constexpr auto absmin[conditional auto c](value auto x, value auto ... xs)   noexcept;  // 2
+//!      constexpr auto absmin[logical_value auto m](value auto x, value auto ... xs) noexcept;  // 2
+//!      constexpr auto absmin[saturated](value auto x, value auto ... xs)            noexcept;  // 3
+//!      constexpr auto absmin[numeric] (value auto x, value auto ... xs)             noexcept;  // 4.1
+//!      constexpr auto absmin[pedantic] (value auto x, value auto ... xs)            noexcept;  // 4.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`,  `...xs`: [real arguments](@ref eve::value).
+//!     * `x`,  `...xs`: [real](@ref value) arguments.
+//!     * `c` : [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m` : [Logical value](logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The absolute value of the minimal element
-//!    is returned.
+//!    The absolute value of the minimal element is returned.
+//!    1. equivalent to `abs(min(...)`
+//!    2. masked call
+//!    3. computation uses internally  abs[saturated] instead of abs
+//!    4. with numeric (resp. pedantic) min[numeric] (4.1) (resp. min[pedantic] (4.2)) is used internally
 //!
 //!    @note
-//!     If any element of the inputs is a NaN,
-//!     the corresponding output element is system-dependent.
+//!      - If any element of the inputs is a NaN the corresponding output element is system-dependent.
+//!      - saturated, and  pedantic or numeric are not incompatible,  but first one if of no use if the
+//!        parameter common type is floating point the last two have no influence
+//!        if the parameter common_type is not floating point.
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/absmin.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::absmin[mask](x, ...)` provides a masked version of `eve::absmin` which is
-//!     equivalent to `eve::if_else (mask, absmin(x, ...), x)`
-//!
-//!   * eve::pedantic,  eve::numeric, eve::saturated
-//!
-//!     The call `eve::absmin[d](...)`, where d is one of these two first decorators, is equivalent to
-//!     `eve::abs (d( eve::min )(...))`.
-//!
-//!     The call `eve::absmin[d][saturated](...)`, where d is one of these two first decorators or is not present, is equivalent to
-//!     `eve::abs[saturated](d( eve::min )(...))`.
-//!
 //! @}
 //================================================================================================
+
 inline constexpr auto absmin = functor<absmin_t>;
 }
 
