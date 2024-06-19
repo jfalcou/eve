@@ -53,41 +53,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value... Ts>
-//!      eve::common_value_t<T, Ts ...> absmax( T x, Ts ... xs ) noexcept;
+//!      constexpr auto absmax(value auto x, value auto ... xs)                       noexcept;  // 1
+//!      constexpr auto absmax[conditional auto c](value auto x, value auto ... xs)   noexcept;  // 2
+//!      constexpr auto absmax[logical_value auto m](value auto x, value auto ... xs) noexcept;  // 2
+//!      constexpr auto absmax[saturated](value auto x, value auto ... xs)            noexcept;  // 3
+//!      constexpr auto absmax[numeric] (value auto x, value auto ... xs)             noexcept;  // 4.1
+//!      constexpr auto absmax[pedantic] (value auto x, value auto ... xs)            noexcept;  // 4.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`,  `...xs`: [real](@ref eve::value) arguments.
+//!     * `x`,  `...xs`: [real](@ref value) arguments.
+//!     * `c` : [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m` : [Logical value](logical) masking the operation.
 //!
 //!    **Return value**
 //!
 //!    The absolute value of the maximal element is returned.
+//!    1. equivalent to `abs(max(...)`
+//!    2. masked call
+//!    3. computation uses internally  abs[saturated] instead of abs
+//!    4. with numeric (resp. pedantic) max[numeric] (4.1) (resp. max[pedantic] (4.2)) is used internally
 //!
 //!    @note
-//!     If any element of the inputs is a NaN,
-//!     the corresponding output element is system-dependent.
+//!      - If any element of the inputs is a NaN the corresponding output element is system-dependent.
+//!      - saturated, and  pedantic or numeric are not incompatible,  but first one if of no use if the
+//!        parameter common type is floating point the last two have no influence
+//!        if the parameter common_type is not floating point.
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/absmax.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::absmax[mask](x, ...)` provides a masked version of `eve::absmax` which is
-//!     equivalent to `eve::if_else (mask, absmax(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric, eve::saturated
-//!
-//!     The call `eve::absmax[d](...)`, where d is one of these two first decorators, is equivalent to
-//!     `eve::abs (d( eve::max )(...))`.
-//!
-//!     The call `eve::absmax[d][saturated](...)`, where d is one of these two first decorators or is not present, is equivalent to
-//!     `eve::abs[saturated](d( eve::max )(...))`.
 //!
 //! @}
 //================================================================================================

@@ -39,29 +39,45 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   @groupheader{Callable Signatures}
 //!
+//!   @var abs
+//!   @brief Computes the absolute value of the parameter.
+//!
+//!   Computes the absolute value of the parameter.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto abs(eve::value auto x)                      noexcept;  // 1
-//!      constexpr auto abs[conditional auto m](eve::value auto x)  noexcept;  // 2
-//!      constexpr auto abs[saturated](eve::value auto x)           noexcept;  // 3
+//!      constexpr auto abs(value auto x)                           noexcept;  // 1
+//!      constexpr auto abs[conditional_expr auto c](value auto x)  noexcept;  // 2.1
+//!      constexpr auto abs[logical_value auto m](value auto x)     noexcept;  // 2.2
+//!      constexpr auto abs[saturated](value auto x)                noexcept;  // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [SIMD or scalar value](@ref eve::value).
+//!     * `x` : [SIMD or scalar value](@ref value).
+//!     * `c` : [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m` : [Logical value](logical) masking the operation.
+//!
 //!
 //!   **Return value**
 //!
-//!   `abs` is an [elementwise](@ref glossary_elementwise) callable. returning the absolute value of `x`
+//!   1. the absolute value of `x` if it is representable.
+//!   2. the absolute value of `x` if it is representable only in the lanes where `c` (2.1) or `m` (2.2) is true.
+//!   3. the saturated absolute value of `x`. More specifically, for signed
+//!      integral, `abs[saturated](valmin(as<T>{}))` is eve:valmax(as<T>{}))
 //!
-//!    1.  For signed integral : the absolute value of eve::valmin is not representable and the result is undefined.
-//!
-//!    2.  For signed integral : the absolute value of eve::valmin is valmax as it is the representable value
-//!        nearest to the correct value.
-//!
-//!    3. [masked call](@ref masked_call)
+//!   @note
+//!      the absolute value of `x` is always representable exxcept for the minimum value of integral signed values.
 //!
 //!   @warning
 //!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
