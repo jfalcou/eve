@@ -75,6 +75,9 @@ namespace eve::algo
   //!
   //!   Transforms the range but only keeps the elements that pass a certain predicate.
   //!
+  //!   @note
+  //!   If the scalar operation is cheap enough, `::keep_if` + `views::map` might be slightly faster.
+  //!
   //!   @note See `::transform_copy_if` and `::keep_if` for more details.
   //!
   //!   @groupheader{Callable Signatures}
@@ -100,6 +103,7 @@ namespace eve::algo
   //!   @see `keep_if`
   //!   @see `transform_copy_if`
   //!   @see `transform_inplace`
+  //!   @see `views::map`
   //!
   //! @}
   //================================================================================================

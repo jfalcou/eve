@@ -79,6 +79,9 @@ namespace eve::algo
   //!
   //!   Acts like an in-place version of `::copy_if`, or an eager version of filter.
   //!
+  //!   @note
+  //!   If you need to apply a transformation, you can use `eve::algo::views::map` or `eve::algo::transform_keep_if`.
+  //!
   //!   **Tuning**
   //!
   //!   `::dense_output`/`::sparse_output`: if you expect very sparse output (one or two `true`s per register),
@@ -104,6 +107,7 @@ namespace eve::algo
   //!
   //!   @see `copy_if`
   //!   @see `remove_if`
+  //!   @see `transform_keep_if`
   //!
   //! @}
   //================================================================================================
