@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/category.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 
@@ -20,7 +21,8 @@ template<arithmetic_scalar_value T, typename N, typename Slice>
 EVE_FORCEINLINE wide<T, typename N::split_type>
                 slice(wide<T, N> a, Slice) noexcept requires sve_abi<abi_t<T, N>>
 {
-  if constexpr( !Slice::value ) return a.storage();
+  if constexpr (has_plain_translation<T>) return bit_cast(translate(a).slice(Slice{}), as<as_wide_t<T, typename N::split_type>>{});
+  else if constexpr( !Slice::value ) return a.storage();
   else return svext(a, a, N::value / 2);
 }
 

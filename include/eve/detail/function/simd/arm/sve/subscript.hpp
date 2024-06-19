@@ -23,7 +23,8 @@ template<typename T, typename N>
 EVE_FORCEINLINE T
 insert(wide<T, N>& v, std::size_t i, T x) noexcept requires sve_abi<abi_t<T, N>>
 {
-  return v.storage()[i] = translate(x);
+  auto val = v.storage()[i] = translate(x);
+  return bit_cast(val, as<T>{});
 }
 
 template<typename T, typename N>
