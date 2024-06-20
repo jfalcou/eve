@@ -15,9 +15,16 @@ namespace eve::detail
 {
   template<callable_options O, scalar_value T, typename N, scalar_value U, typename M>
   requires( sve_abi<abi_t<T, N>> )
-  EVE_FORCEINLINE wide<U, M> bit_cast_(EVE_REQUIRES(sve_), O const&, wide<T,N> x, as<wide<U,M>> const&) noexcept
+  EVE_FORCEINLINE wide<U, M> bit_cast_(EVE_REQUIRES(sve_), O const&, wide<T,N> x, as<wide<U, M>> const&) noexcept
   {
     if constexpr( std::is_same_v<wide<T, N>, wide<U, M>> ) return x;
+    else if constexpr(has_plain_translation<T> || has_plain_translation<U>)
+    {
+      auto cast = bit_cast_(EVE_RETARGET(sve_), O{}, translate(x), as<wide<translate_t<U>, M>>{});
+      wide<U, M> that;
+      std::memcpy(&that.storage(), &cast.storage(), sizeof(that.storage()));
+      return that;
+    }
     else
     {
       auto as_byte = [](auto v)
