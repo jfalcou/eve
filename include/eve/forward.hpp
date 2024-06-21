@@ -32,7 +32,7 @@ template<typename T, typename N> auto  constexpr to_logical(wide<T, N> const& v)
 
 template<value T> EVE_FORCEINLINE constexpr  auto to_logical(logical<T> v) noexcept;
 
-template<logical_simd_value Logical>  constexpr Logical to_logical(eve::top_bits<Logical> mmask) noexcept;
+template<logical_simd_value Logical> Logical to_logical(eve::top_bits<Logical> mmask) noexcept;
 
 template<scalar_value T>  constexpr auto to_logical(T v) noexcept;
 
