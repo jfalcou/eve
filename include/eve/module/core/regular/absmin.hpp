@@ -37,9 +37,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var absmin
-//!   @brief Computes the absolute value of the minimal element
-//!
-//!   This is equivalent to eve::abs ( eve::min(...) ). but can be subject to optimizations.
+//!   @brief `tuple_callable` computing The absolute value of the minimal element.
 //!
 //!   **Defined in Header**
 //!
@@ -52,14 +50,23 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto absmin(value auto x, value auto ... xs)                       noexcept;  // 1
-//!      constexpr auto absmin[conditional auto c](value auto x, value auto ... xs)   noexcept;  // 2
-//!      constexpr auto absmin[logical_value auto m](value auto x, value auto ... xs) noexcept;  // 2
-//!      constexpr auto absmin[saturated](value auto x, value auto ... xs)            noexcept;  // 3
-//!      constexpr auto absmin[numeric] (value auto x, value auto ... xs)             noexcept;  // 4.1
-//!      constexpr auto absmin[pedantic] (value auto x, value auto ... xs)            noexcept;  // 4.2
+//!      // Regular overloads
+//!      constexpr auto absmin(eve::value auto x, eve::value auto ... xs)               noexcept;  // 1
+//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)            noexcept;  // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto absmin[conditional   auto c](/* any of the overload above */)   noexcept;  // 3.1
+//!      constexpr auto absmin[logical_value auto m](/* any of the overload above */)   noexcept;  // 3.2
+//!
+//!      // Semantic options
+//!      constexpr auto absmin[saturated](/* any of the overload above */)              noexcept;  // 4
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto absmin[pedantic](/* any of the overload above */)               noexcept;  // 5.1
+//!      constexpr auto absmin[numeric ](/* any of the overload above */)               noexcept;  // 5.2
 //!   }
 //!   @endcode
+//!
 //!
 //!   **Parameters**
 //!
@@ -70,16 +77,12 @@ namespace eve
 //!    **Return value**
 //!
 //!    The absolute value of the minimal element is returned.
-//!    1. equivalent to `abs(min(...)`
-//!    2. masked call
-//!    3. computation uses internally  abs[saturated] instead of abs
-//!    4. with numeric (resp. pedantic) min[numeric] (4.1) (resp. min[pedantic] (4.2)) is used internally
-//!
-//!    @note
-//!      - If any element of the inputs is a NaN the corresponding output element is system-dependent.
-//!      - saturated, and  pedantic or numeric are not incompatible,  but first one if of no use if the
-//!        parameter common type is floating point the last two have no influence
-//!        if the parameter common_type is not floating point.
+//!    1. If any element of the inputs is a NaN the corresponding output element is system-dependent
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. masked calls
+//!    4. computation uses internally `abs[saturated]` instead of `abs`
+//!    6. with `numeric` (resp. `pedantic`) `min[numeric]` (5.1) (resp. `min[pedantic]` (5.2))
+//!       is used internally
 //!
 //!  @groupheader{Example}
 //!
@@ -87,7 +90,6 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-
 inline constexpr auto absmin = functor<absmin_t>;
 }
 

@@ -27,9 +27,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var abs
-//!   @brief Computes the absolute value of the parameter.
-//!
-//!   Computes the absolute value of the parameter.
+//!   @brief `elementwise_callable` computing the absolute value of the parameter.
 //!
 //!   @groupheader{Header file}
 //!
@@ -55,10 +53,15 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto abs(value auto x)                           noexcept;  // 1
-//!      constexpr auto abs[conditional_expr auto c](value auto x)  noexcept;  // 2.1
-//!      constexpr auto abs[logical_value auto m](value auto x)     noexcept;  // 2.2
-//!      constexpr auto abs[saturated](value auto x)                noexcept;  // 3
+//!      // Regular overload
+//!      constexpr auto abs(value auto x)                       noexcept;  // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto abs[conditional auto c](value auto x)   noexcept;  // 2.1
+//!      constexpr auto abs[logical_value auto m](value auto x) noexcept;  // 2.2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[saturated](value auto x)            noexcept;  // 3
 //!   }
 //!   @endcode
 //!
@@ -74,15 +77,15 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   1. the absolute value of `x` if it is representable.
 //!   2. the absolute value of `x` if it is representable only in the lanes where `c` (2.1) or `m` (2.2) is true.
 //!   3. the saturated absolute value of `x`. More specifically, for signed
-//!      integral, `abs[saturated](valmin(as<T>{}))` is eve:valmax(as<T>{}))
+//!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!
 //!   @note
-//!      the absolute value of `x` is always representable exxcept for the minimum value of integral signed values.
+//!      the absolute value of `x` is always representable except for the minimum value of integral signed values.
 //!
 //!   @warning
 //!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
 //!    instead of the EVE version.<br/>
-//!    To avoid confusion, use the eve::abs notation.
+//!    To avoid confusion, use the `eve::abs` notation.
 //!
 //!   @groupheader{Example}
 //!

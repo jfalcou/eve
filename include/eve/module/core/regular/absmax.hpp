@@ -37,9 +37,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var absmax
-//!   @brief Computes the absolute value of the maximal element
-//!
-//!   This is equivalent to eve::abs ( eve::max(...) ). but can be subject to optimizations.
+//!   @brief `tuple_callable` computing The absolute value of the maximal element.
 //!
 //!   **Defined in Header**
 //!
@@ -52,14 +50,23 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto absmax(value auto x, value auto ... xs)                       noexcept;  // 1
-//!      constexpr auto absmax[conditional auto c](value auto x, value auto ... xs)   noexcept;  // 2
-//!      constexpr auto absmax[logical_value auto m](value auto x, value auto ... xs) noexcept;  // 2
-//!      constexpr auto absmax[saturated](value auto x, value auto ... xs)            noexcept;  // 3
-//!      constexpr auto absmax[numeric] (value auto x, value auto ... xs)             noexcept;  // 4.1
-//!      constexpr auto absmax[pedantic] (value auto x, value auto ... xs)            noexcept;  // 4.2
+//!      // Regular overloads
+//!      constexpr auto absmax(eve::value auto x, eve::value auto ... xs)               noexcept;  // 1
+//!      constexpr auto absmax(kumi::non_empty_product_type auto const& tup)            noexcept;  // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto absmax[conditional   auto c](/* any of the overload above */)   noexcept;  // 3.1
+//!      constexpr auto absmax[logical_value auto m](/* any of the overload above */)   noexcept;  // 3.2
+//!
+//!      // Semantic options
+//!      constexpr auto absmax[saturated](/* any of the overload above */)              noexcept;  // 4
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto absmax[pedantic](/* any of the overload above */)               noexcept;  // 5.1
+//!      constexpr auto absmax[numeric ](/* any of the overload above */)               noexcept;  // 5.2
 //!   }
 //!   @endcode
+//!
 //!
 //!   **Parameters**
 //!
@@ -70,16 +77,12 @@ namespace eve
 //!    **Return value**
 //!
 //!    The absolute value of the maximal element is returned.
-//!    1. equivalent to `abs(max(...)`
-//!    2. masked call
-//!    3. computation uses internally  abs[saturated] instead of abs
-//!    4. with numeric (resp. pedantic) max[numeric] (4.1) (resp. max[pedantic] (4.2)) is used internally
-//!
-//!    @note
-//!      - If any element of the inputs is a NaN the corresponding output element is system-dependent.
-//!      - saturated, and  pedantic or numeric are not incompatible,  but first one if of no use if the
-//!        parameter common type is floating point the last two have no influence
-//!        if the parameter common_type is not floating point.
+//!    1. If any element of the inputs is a NaN the corresponding output element is system-dependent
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. masked calls
+//!    4. computation uses internally `abs[saturated]` instead of `abs`
+//!    6. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
+//!       is used internally
 //!
 //!  @groupheader{Example}
 //!

@@ -29,36 +29,31 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      bool all(eve::as_logical<T> x) noexcept;  //1
-//!
-//!      template< eve::top_bits M >
-//!      bool all(M m) noexcept;                   //2
+//!      bool all(value auto x) noexcept;                //1
+//!      bool all(top_bits auto M t) noexcept;           //1
+//!      bool all[auto choice m](value auto x) noexcept; //2
 //!   }
 //!   @endcode
 //!
-//!   *  A bool value which is true if and only if all elements of `x` are not zero.
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::logical_value).
-//!     * `m` :  [argument](@ref eve::top_bits).
+//!     * `x` :  [argument](@ref value).
+//!     * `t` :  [argument](@ref top_bits).
+//!     * `m` :  choice.
 //!
 //!    **Return value**
 //!
-//!    A bool value.
+//!      A bool value.
+//!
+//!      1. A bool value which is true if and only if all elements of `x` are not zero.
+//!      2. A masked version  which is true if and only if all chosen elements of `x` are not zero.
+//!
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/all.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::all[mask](x)` provides a masked
-//!     version of `all` which is
-//!     equivalent to : all not masked elements are not zero.
-//!
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(all_, all);
