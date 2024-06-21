@@ -38,7 +38,7 @@ namespace eve
 //!   @var average
 //!   @brief `tuple_callable` computing the arithmetic mean of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -77,7 +77,6 @@ namespace eve
 //!    **Return value**
 //!
 //!    The value of the arithmetic mean  of the arguments is returned.
-//!
 //!
 //!     1. For two integral parameters half the sum of `x` and `y`. No overflow occurs.
 //!        If the sum is odd, the result is a rounded value at a distance guaranteed

@@ -75,7 +75,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   **Return value**
 //!
 //!   1. the absolute value of `x` if it is representable.
-//!   2. the absolute value of `x` if it is representable only in the lanes where `c` (2.1) or `m` (2.2) is true.
+//!   2. masked calls.
 //!   3. the saturated absolute value of `x`. More specifically, for signed
 //!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!

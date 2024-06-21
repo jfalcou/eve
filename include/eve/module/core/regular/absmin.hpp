@@ -39,7 +39,7 @@ namespace eve
 //!   @var absmin
 //!   @brief `tuple_callable` computing The absolute value of the minimal element.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

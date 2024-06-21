@@ -28,11 +28,10 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //======================================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acos
+//!   @var acos
+//!   @brief `elementwise_callable` object computing the arc cosine.
 //!
-//! @brief Callable object computing the arc cosine.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -43,33 +42,27 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T > T acos(T x) noexcept;
+//!     auto acos(floating_value auto x)      noexcept; // 1
+//!     auto acos[raw](floating_value auto x) noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating ordered value](@ref eve::floating_ordered_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
 //!
 //! **Return value**
 //!
-//!    * Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
 //!      input in the range \f$[0 , \pi]\f$.
-//!
 //!      In particular:
-//!
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
+//!      * If \f$|x| > 1\f$, `NaN` is returned.
+//!      * If `x` is a `NaN`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acos.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::raw
-//!     The call `acos[raw](x)` uses a faster implementation which can be slightly less accurate near 1.
 //!  @}
 //======================================================================================================================
 inline constexpr auto acos = functor<acos_t>;

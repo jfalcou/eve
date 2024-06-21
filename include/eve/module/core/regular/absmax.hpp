@@ -39,7 +39,7 @@ namespace eve
 //!   @var absmax
 //!   @brief `tuple_callable` computing The absolute value of the maximal element.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

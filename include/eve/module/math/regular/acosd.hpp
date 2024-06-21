@@ -26,11 +26,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acosd
+//!   @var acosd
+//!   @brief  `elementwise_callable` object computing the arc cosine in degree.
 //!
-//! @brief Callable object computing the arc cosine from input in degree.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -41,28 +40,26 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acosd(T x) noexcept;
+//!     auto acosd(floating_value auto x)      noexcept; // 1
+//!     auto acosd[raw](floating_value auto x) noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!`x`:   [floating value](@ref eve::floating_value).
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cosine of the
-//! input in the range \f$[0 , 180]\f$.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!   * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cosine of the
+//!      input in the range \f$[0 , 180]\f$.
+//!      In particular:
+//!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
+//!      * If \f$|x| > 1\f$, `NaN` is returned.
+//!      * If `x` is a `NaN`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acosd.cpp}
 //!  @}
 //================================================================================================

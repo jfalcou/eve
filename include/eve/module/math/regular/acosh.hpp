@@ -21,7 +21,7 @@ namespace eve
   template<typename Options>
   struct acosh_t : elementwise_callable<acosh_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acosh_t, acosh_);
@@ -31,10 +31,9 @@ namespace eve
 //! @addtogroup math_invhyper
 //! @{
 //! @var acosh
+//! @brief `elementwise_callable` object computing  \f$\log(x+\sqrt{x^2-1})\f$.
 //!
-//! @brief Callable object computing  \f$\log(x+\sqrt{x^2-1})\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -45,14 +44,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acosh(T x) noexcept;
-//!
+//!       auto acosh(floating_value auto x)      noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!   *  `x`:   [floating value](@ref eve::floating_value).
 //!
 //! **Return value**
 //!

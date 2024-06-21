@@ -36,20 +36,27 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var add
-//!   @brief Computes the sum of its arguments.
+//!   @brief `tuple_callable` computing the sum of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
 //!   @endcode
 //!
+//!   @groupheader{Callable Signatures}
+//!
 //!   @code
 //!   namespace eve
 //!   {
+//!      // Regular overloads
 //!      constexpr auto add(value auto x, value auto ... xs)                       noexcept;  // 1
+//!
+//!      // Lanes masking
 //!      constexpr auto add[conditional auto c](value auto x, value auto ... xs)   noexcept;  // 2
 //!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs) noexcept;  // 2
+//!
+//!      // Semantic options
 //!      constexpr auto add[saturated](value auto x, value auto ... xs)            noexcept;  // 3
 //!   }
 //!   @endcode
@@ -65,7 +72,7 @@ namespace eve
 //!    The value of the sum of the arguments is returned.
 //!    1. Take care that for floating entries, the addition is not perfectly associative due to rounding errors.
 //!       This call performs additions in reverse incoming order.
-//!    2. masked call
+//!    2. Masked calls
 //!    3. The call `add[saturated](...)` computes a saturated version of `add`.
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
