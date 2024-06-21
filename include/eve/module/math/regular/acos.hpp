@@ -42,8 +42,13 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!     auto acos(floating_value auto x)      noexcept; // 1
-//!     auto acos[raw](floating_value auto x) noexcept; // 2
+//!      // Regular overloads
+//!      auto acos(floating_value auto x)      noexcept; // 1
+//!      auto acos[raw](floating_value auto x) noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acos[conditional_expr auto c](value auto x) noexcept;  // 3.1
+//!      constexpr auto acos[logical_value auto m](value auto x)    noexcept;  // 3.2
 //!   }
 //!   @endcode
 //!
@@ -60,6 +65,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!      * If \f$|x| > 1\f$, `NaN` is returned.
 //!      * If `x` is a `NaN`, `NaN` is returned.
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
+//!    3. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acos.cpp}

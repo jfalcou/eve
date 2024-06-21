@@ -44,7 +44,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!       auto acosh(floating_value auto x)      noexcept;
+//!      // Regular overloads
+//!      auto acosh(floating_value auto x)      noexcept; // 1
+//!      auto acosh[raw](floating_value auto x) noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acosh[conditional_expr auto c](value auto x) noexcept;  // 3.1
+//!      constexpr auto acosh[logical_value auto m](value auto x)    noexcept;  // 3.2
 //!   }
 //!   @endcode
 //!
@@ -54,19 +60,16 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   * Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
 //!      For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to
 //!      \f$\log(x+\sqrt{x^2-1})\f$.
-//!
 //!      In particular:
-//!
-//!      * If the element is less than \f$1\f$ or `Nan`, `NaN` is returned.
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element is \f$+\infty\f$, \f$+\infty\f$ is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!      * If `x` is less than \f$1\f$ or `Nan`, `NaN` is returned.
+//!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
+//!      * If `x` is \f$+\infty\f$, \f$+\infty\f$ is returned.
+//!      * If `x` is a `Nan`, `NaN` is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acosh.cpp}
 //!
 //!  @}

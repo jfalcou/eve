@@ -37,7 +37,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var absmax
-//!   @brief `tuple_callable` computing The absolute value of the maximal element.
+//!   @brief `tuple_callable` computing the absolute value of the maximal element.
 //!
 //!   @groupheader{Header file}
 //!
@@ -79,7 +79,7 @@ namespace eve
 //!    The absolute value of the maximal element is returned.
 //!    1. If any element of the inputs is a NaN the corresponding output element is system-dependent
 //!    2. equivalent to the call on the elements of the tuple.
-//!    3. masked calls
+//!    3. [The operation is performed conditionnaly.](@ref conditional)
 //!    4. computation uses internally `abs[saturated]` instead of `abs`
 //!    6. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
 //!       is used internally

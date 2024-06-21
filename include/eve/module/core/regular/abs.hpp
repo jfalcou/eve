@@ -37,11 +37,6 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   @groupheader{Callable Signatures}
 //!
-//!   @var abs
-//!   @brief Computes the absolute value of the parameter.
-//!
-//!   Computes the absolute value of the parameter.
-//!
 //!   @groupheader{Header file}
 //!
 //!   @code
@@ -54,14 +49,14 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto abs(value auto x)                       noexcept;  // 1
+//!      constexpr auto abs(value auto x)                          noexcept;  // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto abs[conditional auto c](value auto x)   noexcept;  // 2.1
-//!      constexpr auto abs[logical_value auto m](value auto x) noexcept;  // 2.2
+//!      constexpr auto abs[conditional_expr auto c](value auto x) noexcept;  // 2.1
+//!      constexpr auto abs[logical_value auto m](value auto x)    noexcept;  // 2.2
 //!
 //!      // Semantic options
-//!      constexpr auto abs[saturated](value auto x)            noexcept;  // 3
+//!      constexpr auto abs[saturated](value auto x)               noexcept;  // 3
 //!   }
 //!   @endcode
 //!
@@ -75,7 +70,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   **Return value**
 //!
 //!   1. the absolute value of `x` if it is representable.
-//!   2. masked calls.
+//!   2. [The operation is performed conditionnaly.](@ref conditional).
 //!   3. the saturated absolute value of `x`. More specifically, for signed
 //!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!

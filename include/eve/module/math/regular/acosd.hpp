@@ -40,8 +40,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     auto acosd(floating_value auto x)      noexcept; // 1
-//!     auto acosd[raw](floating_value auto x) noexcept; // 2
+//!      // Regular overloads
+//!      auto acosd(floating_value auto x)      noexcept; // 1
+//!      auto acosd[raw](floating_value auto x) noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acosd[conditional_expr auto c](value auto x) noexcept;  // 3.1
+//!      constexpr auto acosd[logical_value auto m](value auto x)    noexcept;  // 3.2
 //!   }
 //!   @endcode
 //!
@@ -58,6 +63,7 @@ namespace eve
 //!      * If \f$|x| > 1\f$, `NaN` is returned.
 //!      * If `x` is a `NaN`, `NaN` is returned.
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
+//!    3. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acosd.cpp}

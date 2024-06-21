@@ -50,14 +50,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto add(value auto x, value auto ... xs)                       noexcept;  // 1
+//!      constexpr auto add(value auto x, value auto ... xs)                          noexcept;  // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto add[conditional auto c](value auto x, value auto ... xs)   noexcept;  // 2
-//!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs) noexcept;  // 2
+//!      constexpr auto add[conditional_expr auto c](value auto x, value auto ... xs) noexcept;  // 2
+//!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs)    noexcept;  // 2
 //!
 //!      // Semantic options
-//!      constexpr auto add[saturated](value auto x, value auto ... xs)            noexcept;  // 3
+//!      constexpr auto add[saturated](value auto x, value auto ... xs)               noexcept;  // 3
 //!   }
 //!   @endcode
 //!
