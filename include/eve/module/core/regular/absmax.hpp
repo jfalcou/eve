@@ -58,7 +58,7 @@ namespace eve
 //!      constexpr auto absmax[conditional   auto c](/* any of the overload above */)   noexcept; // 3.1
 //!      constexpr auto absmax[logical_value auto m](/* any of the overload above */)   noexcept; // 3.2
 //!
-//!      // Semantic options
+//!      // Semantic option
 //!      constexpr auto absmax[saturated](/* any of the overload above */)              noexcept; // 4
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once

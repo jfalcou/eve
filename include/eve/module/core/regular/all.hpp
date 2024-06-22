@@ -41,7 +41,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref value).
+//!     * `x`: [argument](@ref value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -54,9 +54,7 @@ namespace eve
 //!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/all.cpp}
-//!  @groupheader{Semantic Modifiers}
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(all_, all);
