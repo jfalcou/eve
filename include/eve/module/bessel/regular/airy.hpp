@@ -50,7 +50,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [ordered floating argument](@ref eve::floating_ordered_value).
+//!     * `x` :  [floating value](@ref eve::floating_value).
 //!
 //!    **Return value**
 //!

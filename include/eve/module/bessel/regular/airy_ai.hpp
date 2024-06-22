@@ -31,7 +31,7 @@ namespace eve
 //!   It is the solution of the differential equation \f$y''-xy = 0\f$ satisfying
 //!   \f$Ai(0) = \frac1{3^{2/3}\Gamma(2/3)}\f$ and \f$Ai'(0) =\frac1{3^{1/3}\Gamma(1/3)}\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/bessel.hpp>
