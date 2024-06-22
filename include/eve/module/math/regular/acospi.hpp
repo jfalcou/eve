@@ -18,7 +18,7 @@ namespace eve
 template<typename Options>
 struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 {
-  template<eve::floating_ordered_value T>
+  template<eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(acospi_t, acospi_);

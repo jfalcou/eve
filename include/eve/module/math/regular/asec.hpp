@@ -18,7 +18,7 @@ namespace eve
 template<typename Options>
 struct asec_t : elementwise_callable<asec_t, Options, raw_option>
 {
-  template<eve::floating_ordered_value T>
+  template<eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(asec_t, asec_);
@@ -99,7 +99,7 @@ struct asec_t : elementwise_callable<asec_t, Options, raw_option>
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!   *  `x`:   [floating real value](@ref eve::floating_value).
 //!
 //! **Return value**
 //!

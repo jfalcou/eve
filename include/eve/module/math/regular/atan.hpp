@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct atan_t : elementwise_callable<atan_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(atan_t, atan_);
@@ -50,7 +50,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!   * `x`:   [floating real value](@ref eve::floating_value).
 //!
 //! **Return value**
 //!
