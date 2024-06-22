@@ -42,8 +42,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      auto acosd(floating_value auto x)      noexcept; // 1
-//!      auto acosd[raw](floating_value auto x) noexcept; // 2
+//!      constexpr auto acosd(floating_value auto x)      noexcept; // 1
+//!      constexpr auto acosd[raw](floating_value auto x) noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto acosd[conditional_expr auto c](value auto x) noexcept;  // 3.1
