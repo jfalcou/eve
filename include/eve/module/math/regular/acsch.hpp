@@ -56,7 +56,7 @@ namespace eve
 //!
 //!     * `x`:  [floating value](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](logical) maskin. The operation.
+//!     * `m`: [Logical value](@ref logical) maskin. The operation.
 //!
 //! **Return value**
 //!

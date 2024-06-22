@@ -64,7 +64,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!     * `x`: [SIMD or scalar value](@ref value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](logical) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!
 //!   **Return value**
