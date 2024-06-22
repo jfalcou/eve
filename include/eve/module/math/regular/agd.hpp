@@ -27,11 +27,11 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
-//! @var agd
+//!   @var agd
+//!   @brief `elementwise_callable` object computing the inverse gudermanian,
+//!   i.e. \f$2\tanh(\tan(x/2))\f$.
 //!
-//! @brief Callable object computing the inverse gudermanian, i.e. \f$2\tanh(\tan(x/2))\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,32 +42,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T agd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto agd(floating_value auto x)                 noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto agd[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto agd[logical_value auto m](value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse
 //!      [gudermanian](@ref eve::gd) of the input.
-//!
 //!      In particular:
-//!
-//!      * If the element is \f$\pm0\f$, 0 is returned.
+//!      * If the element is \f$\pm0\f$, \f$0\f$ is returned.
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
-//!      * If the element is not in a  \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
+//!      * If the element is not in \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/agd.cpp}
-//!
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto agd = functor<agd_t>;
 
   namespace detail
