@@ -43,11 +43,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto acscpi(floating_value auto x)                 noexcept; // 1
+//!      constexpr auto acscpi(floating_value auto x)                         noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acscpi[conditional_expr auto c](value auto x) noexcept; // 2.1
-//!      constexpr auto acscpi[logical_value auto m](value auto x)    noexcept; // 2.2
+//!      constexpr auto acscpi[conditional_expr auto c](floatingvalue auto x) noexcept; // 2.1
+//!      constexpr auto acscpi[logical_value auto m](floatingvalue auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!

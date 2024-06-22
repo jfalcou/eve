@@ -42,13 +42,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overloads
-//!      constexpr auto acsch(floating_value auto x)      noexcept; // 1
-//!      constexpr auto acsch[raw](floating_value auto x) noexcept; // 2
+//!      // Regular overload
+//!      constexpr auto acsch(floating_value auto x)                         noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acsch[conditional_expr auto c](value auto x) noexcept;  // 3.1
-//!      constexpr auto acsch[logical_value auto m](value auto x)    noexcept;  // 3.2
+//!      constexpr auto acsch[conditional_expr auto c](floatingvalue auto x) noexcept;  // 3.1
+//!      constexpr auto acsch[logical_value auto m](floatingvalue auto x)    noexcept;  // 3.2
 //!   }
 //!   @endcode
 //!
