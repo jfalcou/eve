@@ -27,11 +27,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
-//! @var acoth
+//!   @var acoth
+//!   @brief `elementwise_callable` object computing the arc hyperbolic cotangent.
 //!
-//! @brief Callable object computing  \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,30 +41,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acoth(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acoth(floating_value auto x)                 noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acoth[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto acoth[logical_value auto m](value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) maskin. The operation.
+//!     * `m`: [Logical value](logical) maskin. The operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cotangent of the input.
-//!      The inverse hyperbolic sine is semantically equivalent to \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc hyperbolic cotangent of the
+//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
 //!      In particular:
-//!
-//!     * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
-//!     * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
-//!     * If the element is less than one or a `NaN`, `NaN` is returned.
+//!      * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+//!      * If the element is less than one or a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acoth.cpp}
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto acoth = functor<acoth_t>;
 
   namespace detail
