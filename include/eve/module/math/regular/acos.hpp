@@ -44,11 +44,14 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   {
 //!      // Regular overloads
 //!      constexpr auto acos(floating_value auto x)                 noexcept; // 1
+//!
+//!      // Semantic option
 //!      constexpr auto acos[raw](floating_value auto x)            noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto acos[conditional_expr auto c](value auto x) noexcept; // 3.1
 //!      constexpr auto acos[logical_value auto m](value auto x)    noexcept; // 3.2
+
 //!   }
 //!   @endcode
 //!
