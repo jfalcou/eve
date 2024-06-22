@@ -63,7 +63,7 @@ struct atand_t : elementwise_callable<atand_t, Options>
 //!      input in the range \f$[-90 , 90]\f$.
 //!      In particular:
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$\pm\frac\pi2\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm45f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!

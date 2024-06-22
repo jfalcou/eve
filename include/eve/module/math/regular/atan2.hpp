@@ -28,74 +28,79 @@ namespace eve
 };
 
 //================================================================================================
-//! @addtogroup math_invtrig
+//! @addtogroup core_arithmetic
 //! @{
-//! @var atan2
+//!   @var atan2
+//!   @brief `elementwise_callable` object computing the arc tangent using the
+//!   signs of the arguments to determine the correct quadrant.
 //!
-//! @brief Callable object computing the arc tangent using the
-//! signs of arguments to determine the correct quadrant.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
-//!   #include <eve/module/math.hpp>
+//!   #include <eve/module/core.hpp>
 //!   @endcode
 //!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
 //!
 //!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T eve::floating_value U>
-//!      auto atan2(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto atan2(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Semantic option
+//!      constexpr auto atan2[pedantic](floating_value auto x, floating_value auto y)                noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto atan2[conditional_expr auto c][floating_value auto x, floating_value auto y) noexcept; // 3.1
+//!      constexpr auto atan2[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`, `y`:   [floating real values](@ref eve::value)
+//!     * `x`, `y`: [floating values](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Return value**
+//!    **Return value**
 //!
-//! the arc tangent of \f$\frac{y}x\f$  in the range \f$[-\pi , +\pi]\f$ radians, is returned.
-//! The **IEEE** limiting values are almost all satisfied :
+//!    1. The arc tangent of \f$\frac{y}x\f$  in the range \f$[-\pi , +\pi]\f$ radians, is returned.
+//!       The **IEEE** limiting values are almost all satisfied :
 //!
-//!   *  If `x` and `y` are both zero or infinites, Nan is returned (this is not standard
-//!      conforming)
-//!   *  If `y` is \f$\pm0\f$ and `x` is strictly negative or \f$-0\f$, \f$\pm\pi\f$ is returned
-//!   *  If `y` is \f$\pm0\f$ and `x` is strictly positive or \f$+0\f$, \f$\pm0\f$ is returned
-//!   *  If `y` is \f$\pm\infty\f$ and `x` is finite, \f$\pm\frac\pi2\f$ is returned
-//!   *  If `x` is \f$\pm0\f$ and `y` is strictly negative, \f$-\frac\pi2\f$ is returned
-//!   *  If `x` is \f$\pm0\f$ and `y` is strictly positive, \f$+\frac\pi2\f$  is returned
-//!   *  If `x` is \f$-\infty\f$ and `y` is finite and positive, \f$+\pi\f$ is returned
-//!   *  If `x` is \f$-\infty\f$ and `y` is finite and negative, \f$-\pi\f$ is returned
-//!   *  If `x` is \f$+\infty\f$ and `y` is finite and positive, \f$+0\f$ is returned
-//!   *  If `x` is \f$+\infty\f$ and `y` is finite and negative, \f$-0\f$ is returned
-//!   *  If either `x` is Nan or `y` is Nan, Nan is returned
+//!         *  If `x` and `y` are both zero or infinites, Nan is returned (this is not standard conforming)
+//!         *  If `y` is \f$\pm0\f$ and `x` is strictly negative or \f$-0\f$, \f$\pm\pi\f$ is returned
+//!         *  If `y` is \f$\pm0\f$ and `x` is strictly positive or \f$+0\f$, \f$\pm0\f$ is returned
+//!         *  If `y` is \f$\pm\infty\f$ and `x` is finite, \f$\pm\frac\pi2\f$ is returned
+//!         *  If `x` is \f$\pm0\f$ and `y` is strictly negative, \f$-\frac\pi2\f$ is returned
+//!         *  If `x` is \f$\pm0\f$ and `y` is strictly positive, \f$+\frac\pi2\f$  is returned
+//!         *  If `x` is \f$-\infty\f$ and `y` is finite and positive, \f$+\pi\f$ is returned
+//!         *  If `x` is \f$-\infty\f$ and `y` is finite and negative, \f$-\pi\f$ is returned
+//!         *  If `x` is \f$+\infty\f$ and `y` is finite and positive, \f$+0\f$ is returned
+//!         *  If `x` is \f$+\infty\f$ and `y` is finite and negative, \f$-0\f$ is returned
+//!         *  If either `x` is Nan or `y` is Nan, Nan is returned
 //!
 //!    The call will return a NaN if `x` and `y` are both either null or infinite: this result is
-//!    not **IEEE** conformant, but allows to simplify (and
-//!    speed) the implementation. In all other cases, the result is standard conformant.
-//!
-//!    The result type is the [common value type](@ref common_value_t) of the two parameters.
+//!    not **IEEE** conformant, but allows to simplify (and speed) the implementation.
+//!    In all other cases, the result is standard conformant.
+//!    2. Same as 1, except that all **IEEE** limiting values are satisfied :
+//!      *  If `y` is \f$\pm\infty\f$ and `x` is \f$-\infty\f$, \f$\pm\frac{3\pi}4\f$ is returned
+//!      *  If `y` is \f$\pm\infty\f$ and `x` is \f$+\infty\f$, \f$\pm\frac{\pi}4\f$ is returned
+//!      *  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-\frac\pi2\f$ is returned
+//!      *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/atan2.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::pedantic
-//!
-//!     The call `pedantic(atan2)(`x`,`y`)` returns the same results as the regular call, but all
-//!      **IEEE** limiting values are satisfied :
-//!
-//!       *  If `y` is \f$\pm\infty\f$ and `x` is \f$-\infty\f$, \f$\pm\frac{3\pi}4\f$ is returned
-//!       *  If `y` is \f$\pm\infty\f$ and `x` is \f$+\infty\f$, \f$\pm\frac{\pi}4\f$ is returned
-//!       *  If `x` is \f$\pm0\f$ and `y` is \f$\pm-0\f$, \f$-\frac\pi2\f$ is returned
-//!       *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
-//!  @}
+//!  @godbolt{doc/core/atan2.cpp}
+//! @}
 //================================================================================================
   inline constexpr auto atan2 = functor<atan2_t>;
 
