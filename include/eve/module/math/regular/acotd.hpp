@@ -25,6 +25,54 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
+//!   @var acotd
+//!   @brief  `elementwise_callable` object computing the arc cotangent in degree.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      // Regular overloads
+//!      auto acotd(floating_value auto x)      noexcept; // 1
+//!      auto acotd[raw](floating_value auto x) noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acotd[conditional_expr auto c](value auto x) noexcept;  // 2.1
+//!      constexpr auto acotd[logical_value auto m](value auto x)    noexcept;  // 2.2
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) maskin. The operation.
+//!     * `m`: [Logical value](logical) maskin. The operation.
+//!
+//! **Return value**
+//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cotangent of the
+//!      input in the range \f$[-90 , 90]\f$.
+//!      In particular:
+//!      * If the element is \f$\pm0\f$, \f$\pm90\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly.](@ref conditional).
+//!
+//!  @groupheader{Example}
+//!  @godbolt{doc/math/regular/acotd.cpp}
+//!  @}
+//================================================================================================
+
+//================================================================================================
+//! @addtogroup math_invtrig
+//! @{
 //! @var acotd
 //!
 //! @brief Callable object computing arc cotangent in degree.

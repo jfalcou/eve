@@ -23,6 +23,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(acosd_t, acosd_);
   };
+  
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -50,9 +51,11 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) maskin. The operation.
+//!     * `m`: [Logical value](logical) maskin. The operation.
 //!
 //! **Return value**
 //!

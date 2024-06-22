@@ -52,9 +52,11 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) maskin. The operation.
+//!     * `m`: [Logical value](logical) maskin. The operation.
 //!
 //! **Return value**
 //!

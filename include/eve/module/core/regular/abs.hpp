@@ -27,7 +27,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var abs
-//!   @brief `elementwise_callable` computing the absolute value of the parameter.
+//!   @brief `elementwise_callable` computin. The absolute value o. The parameter.
 //!
 //!   @groupheader{Header file}
 //!
@@ -62,25 +62,25 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!
 //!   **Parameters**
 //!
-//!     * `x` : [SIMD or scalar value](@ref value).
-//!     * `c` : [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m` : [Logical value](logical) masking the operation.
+//!     * `x`: [SIMD or scalar value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) maskin. The operation.
+//!     * `m`: [Logical value](logical) maskin. The operation.
 //!
 //!
 //!   **Return value**
 //!
-//!   1. the absolute value of `x` if it is representable.
+//!   1. The absolute value of `x` if it is representable.
 //!   2. [The operation is performed conditionnaly.](@ref conditional).
-//!   3. the saturated absolute value of `x`. More specifically, for signed
+//!   3. The saturated absolute value of `x`. More specifically, for signed
 //!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!
 //!   @note
-//!      the absolute value of `x` is always representable except for the minimum value of integral signed values.
+//!    . The absolute value of `x` is always representable except fo. The minimum value of integral signed values.
 //!
 //!   @warning
-//!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
-//!    instead of the EVE version.<br/>
-//!    To avoid confusion, use the `eve::abs` notation.
+//!   `abs` is also a standard library function name an. There possibly exists a C macro version which may be called
+//!    instead o. The EVE version.<br/>
+//!    To avoid confusion, us. The `eve::abs` notation.
 //!
 //!   @groupheader{Example}
 //!

@@ -26,45 +26,49 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acospi
+//!   @var acospi
+//!   @brief  `elementwise_callable` object computing the arc cosine in \f$\pi\f$ multiples.
 //!
-//! @brief Callable object computing the arc cosine in \f$\pi\f$ multiples.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
 //!   @endcode
-//!
 //!
 //!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
-//!    template< eve::floating_ordered_value T > T acospi(T x) noexcept;
+//!      // Regular overloads
+//!      auto acospi(floating_value auto x)      noexcept; // 1
+//!      auto acospi[raw](floating_value auto x) noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acospi[conditional_expr auto c](value auto x) noexcept;  // 3.1
+//!      constexpr auto acospi[logical_value auto m](value auto x)    noexcept;  // 3.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) maskin. The operation.
+//!     * `m`: [Logical value](logical) maskin. The operation.
 //!
 //! **Return value**
 //!
-//!   * Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
 //!      input in \f$\pi\f$ multiples, in the range \f$[0 , 1]\f$.
-//!
 //!      In particular:
-//!
 //!      * If the element is \f$1\f$, \f$+0\f$ is returned.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
+//!    3. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acospi.cpp}
-//!
 //!  @}
 //================================================================================================
 inline constexpr auto acospi = functor<acospi_t>;
