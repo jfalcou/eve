@@ -65,7 +65,7 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$0\f$ is returned.
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
 //!      * If the element is not in \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly.](@ref conditional).
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/agd.cpp}

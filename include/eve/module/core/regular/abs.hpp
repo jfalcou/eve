@@ -70,7 +70,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   **Return value**
 //!
 //!   1. The absolute value of `x` if it is representable.
-//!   2. [The operation is performed conditionnaly.](@ref conditional).
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!   3. The saturated absolute value of `x`. More specifically, for signed
 //!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!

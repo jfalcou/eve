@@ -67,7 +67,7 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ returned.
 //!      * If the element is \f$\pm1\f$, \f$\pm\infty\f$ is returned.
 //!      * If the element does not belong \f$]0,1[\f$, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly.](@ref conditional).
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acsch.cpp}

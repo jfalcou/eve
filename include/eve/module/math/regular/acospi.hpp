@@ -68,7 +68,7 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
-//!    3. [The operation is performed conditionnaly.](@ref conditional).
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acospi.cpp}

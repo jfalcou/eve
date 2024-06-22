@@ -64,7 +64,7 @@ namespace eve
 //!      * If the element is \f$\pm0\f$, \f$\pm\frac12\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly.](@ref conditional).
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acotpi.cpp}

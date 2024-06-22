@@ -68,7 +68,7 @@ namespace eve
 //!      * If \f$|x| > 1\f$, `NaN` is returned.
 //!      * If `x` is a `NaN`, `NaN` is returned.
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
-//!    3. [The operation is performed conditionnaly.](@ref conditional).
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acosd.cpp}

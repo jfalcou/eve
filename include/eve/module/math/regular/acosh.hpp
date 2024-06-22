@@ -69,7 +69,7 @@ namespace eve
 //!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
 //!      * If `x` is \f$+\infty\f$, \f$+\infty\f$ is returned.
 //!      * If `x` is a `Nan`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly.](@ref conditional).
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acosh.cpp}
