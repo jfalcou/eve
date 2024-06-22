@@ -40,8 +40,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      auto acotd(floating_value auto x)      noexcept; // 1
-//!      auto acotd[raw](floating_value auto x) noexcept; // 2
+//!      constexpr auto acotd(floating_value auto x)                 noexcept;  // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto acotd[conditional_expr auto c](value auto x) noexcept;  // 2.1
@@ -70,51 +69,6 @@ namespace eve
 //!  @}
 //================================================================================================
 
-//================================================================================================
-//! @addtogroup math_invtrig
-//! @{
-//! @var acotd
-//!
-//! @brief Callable object computing arc cotangent in degree.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T acotd(T x) noexcept;
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
-//!
-//! **Return value**
-//!
-//! Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
-//! input in the range \f$]-90, 90]\f$.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, \f$\pm90\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
-//!
-//!
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/acotd.cpp}
-//!  @}
-//================================================================================================
   inline constexpr auto acotd = functor<acotd_t>;
 
   namespace detail

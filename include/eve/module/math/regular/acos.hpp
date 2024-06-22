@@ -43,8 +43,8 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      auto acos(floating_value auto x)      noexcept; // 1
-//!      auto acos[raw](floating_value auto x) noexcept; // 2
+//!      constexpr auto acos(floating_value auto x)      noexcept; // 1
+//!      constexpr auto acos[raw](floating_value auto x) noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto acos[conditional_expr auto c](value auto x) noexcept;  // 3.1
