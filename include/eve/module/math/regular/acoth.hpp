@@ -28,7 +28,7 @@ namespace eve
 //! @addtogroup math_invhyper
 //! @{
 //!   @var acoth
-//!   @brief `elementwise_callable` object computing the arc hyperbolic cotangent.
+//!   @brief `elementwise_callable` object computing the inverse hyperbolic cotangent.
 //!
 //!   @groupheader{Header file}
 //!
@@ -58,7 +58,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) arc hyperbolic cotangent of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cotangent of the
 //!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
 //!      In particular:
 //!      * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.

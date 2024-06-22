@@ -27,7 +27,7 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var abs
-//!   @brief `elementwise_callable` computin. The absolute value o. The parameter.
+//!   @brief `elementwise_callable` computing the absolute value of the parameter.
 //!
 //!   @groupheader{Header file}
 //!

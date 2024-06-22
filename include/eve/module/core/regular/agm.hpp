@@ -43,9 +43,17 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var agm
-//!   @brief Computes the arithmetic-geometric mean.
+//!   @brief `elementwise_callable` computing the the arithmetic-geometric mean.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -56,31 +64,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      eve::common_value_t<T, U> agm(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto agm(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto agm[conditional_expr auto c][floating_value auto x, floating_value auto y) noexcept; // 2.1
+//!      constexpr auto agm[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `x`, `y`: [floating values](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
+//!
 //!
 //!    **Return value**
 //!
-//!      The value of the arithmetic-geometric mean is returned. No overflow can occur.
+//!    1. The value of the arithmetic-geometric mean is returned. No overflow can occur.
 //!      The two parameters must share the same sign.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/agm.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::agm[mask](x, ...)` provides a masked version of `agm` which is
-//!     equivalent to `if_else(mask, agm(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto agm = functor<agm_t>;

@@ -27,12 +27,13 @@ namespace eve
 //! @addtogroup bessel
 //! @{
 //!   @var airy
-//!   @brief Computes simutaneously the airy functions values \f$ Ai(x)\f$ and \f$ Bi(x)\f$.
+//!   @brief `elementwise_callable` object computing simutaneously the airy functions values \f$ Ai(x)\f$
+//!   and \f$ Bi(x)\f$.
 //!
 //!   This function is designed to be faster than two separate calls to
 //!   eve::airy_ai and eve::airy_bi.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/bessel.hpp>
@@ -43,7 +44,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template<eve::floating_value T> constexpr eve::zipped<T,T> airy(T x) noexcept;
+//!      constexpr auto airy(floating_value auto x)                 noexcept;
 //!   }
 //!   @endcode
 //!
@@ -53,7 +54,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The tuple `{eve::airy_ai (x), eve::airy_bi (x)}` is returned.
+//!    The tuple `{airy_ai (x), airy_bi (x)}` is returned.
 //!
 //!  @groupheader{Example}
 //!
