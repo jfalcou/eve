@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct acotd_t : elementwise_callable<acotd_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acotd_t, acotd_);
@@ -40,11 +40,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto acotd(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto acotd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acotd[conditional_expr auto c](floatingvalue auto x) noexcept; // 2.1
-//!      constexpr auto acotd[logical_value auto m](floatingvalue auto x)    noexcept; // 2.2
+//!      constexpr auto acotd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acotd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!

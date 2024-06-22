@@ -24,51 +24,53 @@ namespace eve
     EVE_CALLABLE_OBJECT(asech_t, asech_);
 };
 
+
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
-//! @var asech
+//!   @var asech
+//!   @brief `elementwise_callable` object computing the inverse hyperbolic secant: \f$\log(1/x+\sqrt{1/x^2-1})\f$.
 //!
-//! @brief Callable object computing \f$\log(1/x+\sqrt{1/x^2-1})\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
 //!   @endcode
-//!
 //!
 //!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T asech(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto asech(floating_value auto x)                         noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto asech[conditional_expr auto c](floatingvalue auto x) noexcept; // 2.1
+//!      constexpr auto asech[logical_value auto m](floatingvalue auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *   Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
-//!      The inverse hyperbolic sine is semantically equivalent to   \f$\log(1/x+\sqrt{1/x^2-1})\f$.
-//!
-//!       In particular:
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic secant of the
+//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
+//!      In particular:
 //!       * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
 //!       * If the element is \f$1\f$, \f$+0\f$ returned.
 //!       * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/asech.cpp}
-//!
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto asech = functor<asech_t>;
 
   namespace detail

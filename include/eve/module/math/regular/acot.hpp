@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct acot_t : elementwise_callable<acot_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acot_t, acot_);

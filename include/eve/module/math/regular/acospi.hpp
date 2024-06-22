@@ -42,18 +42,18 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto acospi(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto acospi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto acospi[raw](floating_value auto x)                    noexcept; // 2
+//!      constexpr auto acospi[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto acospi[conditional_expr auto c](floatingvalue auto x) noexcept; // 3.1
-//!      constexpr auto acospi[logical_value auto m](floatingvalue auto x)    noexcept; // 3.2
+//!      constexpr auto acospi[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
+//!      constexpr auto acospi[logical_value auto m](floating_value auto x)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!
-//!   **Parameters**
+//! **Parameters**
 //!
 //!     * `x`: [floating value](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
@@ -74,15 +74,15 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!  @godbolt{doc/math/regular/acospi.cpp}
 //!  @}
 //================================================================================================
-inline constexpr auto acospi = functor<acospi_t>;
+  inline constexpr auto acospi = functor<acospi_t>;
 
-namespace detail
-{
-  template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+  namespace detail
   {
-    if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));
-    else                                return apply_over(acospi[o], a0);
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    {
+      if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));
+      else                                return apply_over(acospi[o], a0);
+    }
   }
-}
 }

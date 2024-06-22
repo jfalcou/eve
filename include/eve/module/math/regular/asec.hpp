@@ -23,12 +23,63 @@ struct asec_t : elementwise_callable<asec_t, Options, raw_option>
 
   EVE_CALLABLE_OBJECT(asec_t, asec_);
 };
+//======================================================================================================================
+//! @addtogroup math_invtrig
+//! @{
+//!   @var asec
+//!   @brief `elementwise_callable` object computing the arc secant.
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      // Regular overloads
+//!      constexpr auto asec(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Semantic option
+//!      constexpr auto asec[raw](floating_value auto x)                     noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto asec[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
+//!      constexpr auto asec[logical_value auto m](floating_value auto x)    noexcept; // 3.2
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
+//! **Return value**
+//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!      input in the range \f$[0 , \pi]\f$.
+//!      In particular:
+//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!      * If the element is \f$0\f$, \f$\pi\f$ is returned.
+//!      * If the element \f$|x| < 1\f$, `NaN` is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
+//!    3. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{Example}
+//!  @godbolt{doc/math/regular/asec.cpp}
+//!  @}
+//======================================================================================================================
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var asec
-//!
-//! @brief Callable object computing the arc secant.
+//!   @var asec
+//!   @brief  `elementwise_callable` object computing the arc secant.
 //!
 //!   **Defined in Header**
 //!

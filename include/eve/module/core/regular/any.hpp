@@ -18,7 +18,7 @@ namespace eve
 //!   @var any
 //!   @brief Computes a bool value which is true if and only if any elements of `x` is not zero.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -29,21 +29,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      bool any(eve::as_logical<T> x) noexcept;  //1
+//!      // Regular overloads
+//!      constexpr bool any(value auto x)                                             noexcept; // 1
+//!      constexpr bool any(top_bits auto M t)                                        noexcept; // 1
 //!
-//!      template< eve::top_bits M >
-//!      bool any(M m) noexcept;                   //2
+//!      // Lanes masking
+//!      constexpr auto any[conditional_expr auto c](/* any of the overload above */) noexcept; // 2
+//!      constexpr auto any[logical_value auto m](/* any of the overload above */)    noexcept; // 2
 //!   }
 //!   @endcode
+//!    **Return value**
+//!
+//!      A bool value.
 //!
 //!   * 1. A bool value which is true if and only if any element of `x` is not zero.
-//!   * 2  A bool value which is true if and only if any top bits element of `x` is not zero.
+//!     2. A masked version  which is true if and only if any retained elements of `x` are not zero.
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::logical_value).
-//!     * `m` :  [argument](@ref eve::top_bits).
+//!     * `x`: [argument](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -51,17 +57,7 @@ namespace eve
 //!    is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/any.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::any[mask](x)` provides a masked
-//!     version of `any` which is
-//!     equivalent to : any not masked elements is not zero.
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(any_, any);

@@ -18,7 +18,7 @@ namespace eve
 //!   @var all
 //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -29,30 +29,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      bool all(value auto x) noexcept;                //1
-//!      bool all(top_bits auto M t) noexcept;           //1
-//!      bool all[auto choice m](value auto x) noexcept; //2
+//!      // Regular overloads
+//!      constexpr bool all(value auto x)                                             noexcept; // 1
+//!      constexpr bool all(top_bits auto M t)                                        noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto all[conditional_expr auto c](/* any of the overload above */) noexcept; // 2
+//!      constexpr auto all[logical_value auto m](/* any of the overload above */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref value).
-//!     * `t` :  [argument](@ref top_bits).
-//!     * `m` :  choice.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
 //!      A bool value.
 //!
 //!      1. A bool value which is true if and only if all elements of `x` are not zero.
-//!      2. A masked version  which is true if and only if all chosen elements of `x` are not zero.
+//!      2. A masked version  which is true if and only if all retained elements of `x` are not zero.
 //!
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/all.cpp}
-//!
 //!  @groupheader{Semantic Modifiers}
 //!  @}
 //================================================================================================

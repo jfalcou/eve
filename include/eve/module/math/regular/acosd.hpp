@@ -42,14 +42,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto acosd(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto acosd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto acosd[raw](floating_value auto x)                    noexcept; // 2
+//!      constexpr auto acosd[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto acosd[conditional_expr auto c](floatingvalue auto x) noexcept; // 3.1
-//!      constexpr auto acosd[logical_value auto m](floatingvalue auto x)    noexcept; // 3.2
+//!      constexpr auto acosd[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
+//!      constexpr auto acosd[logical_value auto m](floating_value auto x)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!
