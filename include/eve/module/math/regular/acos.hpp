@@ -84,34 +84,26 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
     {
       if constexpr(O::contains(raw2))
       {
-        if constexpr( has_native_abi_v<T> )
-        {
-          auto tmp  = pio_2(eve::as(a0))
-            + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));
-          return if_else(a0 == T(1), eve::zero, tmp);
-        }
-        else return apply_over(acos[raw], a0);
+        auto tmp  = pio_2(eve::as(a0))
+          + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));
+        return if_else(a0 == T(1), eve::zero, tmp);
       }
       else
       {
         if constexpr( simd_value<T> )
         {
-          if constexpr( has_native_abi_v<T> )
-          {
-            auto const half  = eve::half(eve::as(a0));
-            auto const mhalf = eve::mhalf(eve::as(a0));
+          auto const half  = eve::half(eve::as(a0));
+          auto const mhalf = eve::mhalf(eve::as(a0));
 
-            auto x           = eve::abs(a0);
-            auto x_larger_05 = x > half;
+          auto x           = eve::abs(a0);
+          auto x_larger_05 = x > half;
 
-            x = if_else(x_larger_05, eve::sqrt(fma(mhalf, x, half)), a0);
-            x = asin(x);
-            x = add[x_larger_05](x, x);
-            x = eve::if_else((a0 < mhalf), eve::pi(eve::as(a0)) - x, x);
+          x = if_else(x_larger_05, eve::sqrt(fma(mhalf, x, half)), a0);
+          x = asin(x);
+          x = add[x_larger_05](x, x);
+          x = eve::if_else((a0 < mhalf), eve::pi(eve::as(a0)) - x, x);
 
-            return eve::if_else(x_larger_05, x, eve::pio_2(eve::as(a0)) - x);
-          }
-          else return apply_over(acos, a0);
+          return eve::if_else(x_larger_05, x, eve::pio_2(eve::as(a0)) - x);
         }
         else if constexpr( scalar_value<T> )
         {

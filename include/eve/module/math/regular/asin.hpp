@@ -50,8 +50,8 @@ namespace eve
 //!      constexpr auto asin(floating_value auto x)                         noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto asin[conditional_expr auto c](floatingvalue auto x) noexcept; // 2.1
-//!      constexpr auto asin[logical_value auto m](floatingvalue auto x)    noexcept; // 2.2
+//!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
