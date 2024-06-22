@@ -23,7 +23,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(acosd_t, acosd_);
   };
-  
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -42,12 +42,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto acosd(floating_value auto x)      noexcept; // 1
-//!      constexpr auto acosd[raw](floating_value auto x) noexcept; // 2
+//!      constexpr auto acosd(floating_value auto x)                 noexcept; // 1
+//!      constexpr auto acosd[raw](floating_value auto x)            noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto acosd[conditional_expr auto c](value auto x) noexcept;  // 3.1
-//!      constexpr auto acosd[logical_value auto m](value auto x)    noexcept;  // 3.2
+//!      constexpr auto acosd[conditional_expr auto c](value auto x) noexcept; // 3.1
+//!      constexpr auto acosd[logical_value auto m](value auto x)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!

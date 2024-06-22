@@ -63,9 +63,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`,  `...xs`: [real](@ref value) arguments.
-//!     * `c` : [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m` : [Logical value](logical) masking the operation.
+//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](logical) masking the operation.
 //!
 //!    **Return value**
 //!

@@ -44,13 +44,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overloads
-//!      constexpr auto acosh(floating_value auto x)      noexcept; // 1
-//!      constexpr auto acosh[raw](floating_value auto x) noexcept; // 2
+//!      // Regular overload
+//!      constexpr auto acosh(floating_value auto x)                 noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acosh[conditional_expr auto c](value auto x) noexcept;  // 3.1
-//!      constexpr auto acosh[logical_value auto m](value auto x)    noexcept;  // 3.2
+//!      constexpr auto acosh[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto acosh[logical_value auto m](value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
@@ -70,6 +69,7 @@ namespace eve
 //!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
 //!      * If `x` is \f$+\infty\f$, \f$+\infty\f$ is returned.
 //!      * If `x` is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acosh.cpp}

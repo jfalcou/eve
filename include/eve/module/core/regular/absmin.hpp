@@ -51,19 +51,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto absmin(eve::value auto x, eve::value auto ... xs)               noexcept;  // 1
-//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)            noexcept;  // 2
+//!      constexpr auto absmin(eve::value auto x, eve::value auto ... xs)               noexcept; // 1
+//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)            noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto absmin[conditional   auto c](/* any of the overload above */)   noexcept;  // 3.1
-//!      constexpr auto absmin[logical_value auto m](/* any of the overload above */)   noexcept;  // 3.2
+//!      constexpr auto absmin[conditional   auto c](/* any of the overload above */)   noexcept; // 3.1
+//!      constexpr auto absmin[logical_value auto m](/* any of the overload above */)   noexcept; // 3.2
 //!
 //!      // Semantic options
-//!      constexpr auto absmin[saturated](/* any of the overload above */)              noexcept;  // 4
+//!      constexpr auto absmin[saturated](/* any of the overload above */)              noexcept; // 4
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto absmin[pedantic](/* any of the overload above */)               noexcept;  // 5.1
-//!      constexpr auto absmin[numeric ](/* any of the overload above */)               noexcept;  // 5.2
+//!      constexpr auto absmin[pedantic](/* any of the overload above */)               noexcept; // 5.1
+//!      constexpr auto absmin[numeric ](/* any of the overload above */)               noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
@@ -71,8 +71,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [real](@ref value) arguments.
-//!     * `c` : [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m` : [Logical value](logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](logical) masking the operation.
 //!
 //!    **Return value**
 //!

@@ -49,14 +49,14 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto abs(value auto x)                          noexcept;  // 1
+//!      constexpr auto abs(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto abs[conditional_expr auto c](value auto x) noexcept;  // 2.1
-//!      constexpr auto abs[logical_value auto m](value auto x)    noexcept;  // 2.2
+//!      constexpr auto abs[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto abs[logical_value auto m](value auto x)    noexcept; // 2.2
 //!
 //!      // Semantic options
-//!      constexpr auto abs[saturated](value auto x)               noexcept;  // 3
+//!      constexpr auto abs[saturated](value auto x)               noexcept; // 3
 //!   }
 //!   @endcode
 //!

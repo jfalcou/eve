@@ -41,12 +41,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overloads
-//!      constexpr auto acot(floating_value auto x)      noexcept; // 1
+//!      // Regular overload
+//!      constexpr auto acot(floating_value auto x)                 noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acot[conditional_expr auto c](value auto x) noexcept;  // 2.1
-//!      constexpr auto acot[logical_value auto m](value auto x)    noexcept;  // 2.2
+//!      constexpr auto acot[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto acot[logical_value auto m](value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
