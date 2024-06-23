@@ -13,15 +13,15 @@
 
 namespace eve
 {
-template<typename Options>
-struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
-{
-  template<eve::value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(abs_t, abs_);
-};
+    EVE_CALLABLE_OBJECT(abs_t, abs_);
+  };
 
 //======================================================================================================================
 //! @addtogroup core_arithmetic
@@ -70,14 +70,17 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!    . The absolute value of `x` is always representable except fo. The minimum value of integral signed values.
 //!
 //!   @warning
-//!   `abs` is also a standard library function name an. There possibly exists a C macro version which may be called
-//!    instead o. The EVE version.<br/>
-//!    To avoid confusion, us. The `eve::abs` notation.
+//!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
+//!    instead of the EVE version.<br/>
+//!    To avoid confusion, use the `eve::abs` notation.
+//!
+//!  @groupheader{External references}
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/abs)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AbsoluteValue.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Absolute_value)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/core/abs.cpp}
-//!
 //! @}
 //======================================================================================================================
 inline constexpr auto abs = functor<abs_t>;

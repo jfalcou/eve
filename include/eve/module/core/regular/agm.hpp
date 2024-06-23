@@ -53,14 +53,6 @@ namespace eve
 //!
 //!   @groupheader{Callable Signatures}
 //!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
 //!   @code
 //!   namespace eve
 //!   {
@@ -79,16 +71,17 @@ namespace eve
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!
-//!
 //!    **Return value**
 //!
 //!    1. The value of the arithmetic-geometric mean is returned. No overflow can occur.
 //!      The two parameters must share the same sign.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Arithmetic-GeometricMean.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Arithmetic-geometric_mean)
 //!
+//!  @groupheader{Example}
 //!  @godbolt{doc/core/agm.cpp}
 //! @}
 //================================================================================================

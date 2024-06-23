@@ -55,11 +55,11 @@ namespace eve
 //!      constexpr auto average(kumi::non_empty_product_type auto const& tup)                      noexcept; // 3
 //!
 //!      // Lanes masking
-//!      constexpr auto average[conditional   auto c](/* any of the overload above */)             noexcept; // 4.1
-//!      constexpr auto average[logical_value auto m](/* any of the overload above */)             noexcept; // 4.2
+//!      constexpr auto average[conditional   auto c](/* any of the above overloads */)             noexcept; // 4.1
+//!      constexpr auto average[logical_value auto m](/* any of the above overloads */)             noexcept; // 4.2
 //!
 //!      // Semantic options
-//!      constexpr auto average[raw] (/* any of the overload above */)                             noexcept; // 5
+//!      constexpr auto average[raw] (/* any of the above overloads */)                             noexcept; // 5
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
 //!      constexpr auto average[upward](eve::integral_value auto x, eve::integral_value auto y)    noexcept; // 6
@@ -70,7 +70,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`, `y`: [integral value](@ref integral_value) arguments.
-//!     * `xs...`: [floating_value](@ref eve::floating_value) arguments.
+//!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -84,37 +84,21 @@ namespace eve
 //!        by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
 //!        simd intrinsics to perform the operation, the scalar results may differ by one unit from
 //!        simd ones which are system dependent. </br>
-//!        However the `dowward` (respectively `upward`) decorators can be used to ensure the result is equivalent to
-//!       `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
+//!        However the `dowward` (respectively `upward`) options can be used to ensure the result is equivalent to
+//!        the integral conversion of `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
 //!     2. the arithmetic mean of its arguments. No overflow occurs.
 //!     3. the arithmetic mean of the tuple arguments. No overflow occurs.
 //!     4. Masked calls
 //!     5. No provision is made to avoid overflows for more than 2 parameters.
-//!     6. similar to `ceil((x+y)/2)`,  but returns an integral value.
-//!     7. similar to `floor((x+y)/2)` but returns an integral value.
+//!     6. similar to `ceil((x+y)/2)`,  but converted to an integral value.
+//!     7. similar to `floor((x+y)/2)` but converted to an integral value.
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Mean)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/average.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::average[mask](x, ...)` provides a masked
-//!     version of `average` which is
-//!     equivalent to `if_else(mask, average(x, ...), x)`
-//!
-//!   * eve::raw
-//!
-//!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid
-//!     overflows for more than 2 parameters.
-//!
-//!   * eve::downward,  eve::upward
-//!
-//!     only for two integral values, see above
-//!
-//!//! @}
+//! @}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;
 

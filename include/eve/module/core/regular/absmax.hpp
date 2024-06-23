@@ -55,15 +55,15 @@ namespace eve
 //!      constexpr auto absmax(kumi::non_empty_product_type auto const& tup)            noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto absmax[conditional   auto c](/* any of the overload above */)   noexcept; // 3.1
-//!      constexpr auto absmax[logical_value auto m](/* any of the overload above */)   noexcept; // 3.2
+//!      constexpr auto absmax[conditional   auto c](/* any of the above overloads */)   noexcept; // 3.1
+//!      constexpr auto absmax[logical_value auto m](/* any of the above overloads */)   noexcept; // 3.2
 //!
 //!      // Semantic option
-//!      constexpr auto absmax[saturated](/* any of the overload above */)              noexcept; // 4
+//!      constexpr auto absmax[saturated](/* any of the above overloads */)              noexcept; // 4
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto absmax[pedantic](/* any of the overload above */)               noexcept; // 5.1
-//!      constexpr auto absmax[numeric ](/* any of the overload above */)               noexcept; // 5.2
+//!      constexpr auto absmax[pedantic](/* any of the above overloads */)               noexcept; // 5.1
+//!      constexpr auto absmax[numeric ](/* any of the above overloads */)               noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
@@ -85,9 +85,7 @@ namespace eve
 //!       is used internally
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/absmax.cpp}
-//!
 //! @}
 //================================================================================================
 inline constexpr auto absmax = functor<absmax_t>;

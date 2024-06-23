@@ -30,12 +30,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr bool all(value auto x)                                             noexcept; // 1
-//!      constexpr bool all(top_bits auto M t)                                        noexcept; // 1
+//!      constexpr bool all(value auto x)                                              noexcept; // 1
+//!      constexpr bool all(top_bits auto M t)                                         noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto all[conditional_expr auto c](/* any of the overload above */) noexcept; // 2
-//!      constexpr auto all[logical_value auto m](/* any of the overload above */)    noexcept; // 2
+//!      constexpr auto all[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto all[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
