@@ -47,7 +47,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto asin(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto asin(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
@@ -66,10 +66,16 @@ namespace eve
 //!    1. Returns the [elementwise](@ref glossary_elementwise) arc sine of the
 //!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
 //!      In particular:
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned unmodified.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!      * If the element is a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/asin)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseSine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/asin.cpp}

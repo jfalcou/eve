@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto agd(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto agd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto agd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
@@ -66,6 +66,11 @@ namespace eve
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
 //!      * If the element is not in \f$[-\pi/2, \pi/2] \f$, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseGudermannian.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Gudermannian_function)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23#viii)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/agd.cpp}

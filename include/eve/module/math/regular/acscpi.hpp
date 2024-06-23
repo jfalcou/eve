@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto acscpi(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto acscpi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto acscpi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
@@ -69,51 +69,6 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acscpi.cpp}
-//!  @}
-//================================================================================================
-
-//================================================================================================
-//! @addtogroup math_invtrig
-//! @{
-//! @var acscpi
-//!
-//! @brief Callable object computing he arc cosecant in \f$\pi\f$ multiples.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T acscpi(T x) noexcept;
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!   *  `x`:   [floating real value](@ref eve::floating_value).
-//!
-//! **Return value**
-//!
-//!   *   Returns the [elementwise](@ref glossary_elementwise) arc cosecant of the
-//!       input in the range \f$[-\frac12, \frac12]\f$.
-//!
-//!       In particular:
-//!
-//!        * If the element is \f$\pm1\f$, \f$\pm\frac12\f$ is returned.
-//!        * If the element \f$|x| < 1\f$, `NaN` is returned.
-//!        * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-//!        * If the element is a `Nan`, `NaN` is returned.
-//!
-//!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acscpi.cpp}
 //!  @}
 //================================================================================================

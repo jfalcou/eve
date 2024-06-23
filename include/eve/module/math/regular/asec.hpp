@@ -15,14 +15,14 @@
 
 namespace eve
 {
-template<typename Options>
-struct asec_t : elementwise_callable<asec_t, Options, raw_option>
-{
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct asec_t : elementwise_callable<asec_t, Options, raw_option>
+  {
+    template<eve::floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(asec_t, asec_);
-};
+    EVE_CALLABLE_OBJECT(asec_t, asec_);
+  };
 //======================================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -70,67 +70,23 @@ struct asec_t : elementwise_callable<asec_t, Options, raw_option>
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseSecant.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/asec.cpp}
 //!  @}
 //======================================================================================================================
+  inline constexpr auto asec = functor<asec_t>;
 
-//================================================================================================
-//! @addtogroup math_invtrig
-//! @{
-//!   @var asec
-//!   @brief  `elementwise_callable` object computing the arc secant.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T asec(T x) noexcept;
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!   *  `x`:   [floating real value](@ref eve::floating_value).
-//!
-//! **Return value**
-//!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) arc secant of the
-//!      input in the range \f$[0 , \pi]\f$.
-//!
-//!      In particular:
-//!
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element is \f$0\f$, \f$\pi\f$ is returned.
-//!      * If the element \f$|x| < 1\f$, `NaN` is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/asec.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::raw
-//!     The call `asec[raw](x)` uses a faster implementation which can be slightly less accurate near 1.
-//!  @}
-//================================================================================================
-inline constexpr auto asec = functor<asec_t>;
-
-namespace detail
-{
-  template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE T asec_(EVE_REQUIRES(cpu_), O const& o, T const& a)
+  namespace detail
   {
-    return acos[o](rec[pedantic2](a));
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T asec_(EVE_REQUIRES(cpu_), O const& o, T const& a)
+    {
+      return acos[o](rec[pedantic2](a));
+    }
   }
-}
 }

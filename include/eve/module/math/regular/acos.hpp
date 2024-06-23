@@ -68,8 +68,14 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
 //!      * If \f$|x| > 1\f$, `NaN` is returned.
 //!      * If `x` is a `NaN`, `NaN` is returned.
-//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
 //!    3. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/acos)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCosine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acos.cpp}

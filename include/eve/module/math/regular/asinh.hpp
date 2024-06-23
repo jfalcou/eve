@@ -48,7 +48,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto asinh(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto asinh(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto asinh[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
@@ -71,6 +71,12 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/asinh)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicSine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/asinh.cpp}

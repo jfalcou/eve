@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto atanh(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto atanh(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto atanh[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
@@ -60,12 +60,18 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic tangent of the
-//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
+//!      input.
 //!      In particular:
 //!      * If the element is \f$\pm1\f$, \f$\pm\infty\f$ is returned.
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is greater than one or a `NaN`, `NaN` is returned.
+//!      * If the absolute value of the element is greater than one or a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/atanh)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicTangent.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/atanh.cpp}

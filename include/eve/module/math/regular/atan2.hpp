@@ -98,6 +98,11 @@ namespace eve
 //!      *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac\pi2\f$  is returned
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/atan2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseTangent.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Atan2)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/atan2.cpp}
 //! @}

@@ -42,7 +42,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto acoth(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto acoth(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto acoth[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
@@ -65,6 +65,11 @@ namespace eve
 //!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
 //!      * If the element is less than one or a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicCotangent.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acoth.cpp}

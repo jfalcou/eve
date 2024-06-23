@@ -66,6 +66,10 @@ namespace eve
 //!       * If the element is a `Nan`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCotangent.html)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/acot.cpp}
 //!  @}
