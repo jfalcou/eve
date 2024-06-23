@@ -67,7 +67,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF](https://dlmf.nist.gov/8.17)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/IncompleteBetaFunction.html
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/IncompleteBetaFunction.html)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Beta_function)
 //!
 //!   @groupheader{Example}

@@ -23,7 +23,7 @@ namespace eve
   template<typename Options>
   struct betainc_inv_t : elementwise_callable<betainc_inv_t, Options>
   {
-    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1, eve::floating_ordered_value T2>
+    template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
     requires (same_lanes_or_scalar<T0, T1, T2>)
     EVE_FORCEINLINE constexpr eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
     { return EVE_DISPATCH_CALL(a, b, c); }
@@ -35,9 +35,10 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var betainc_inv
-//!   @brief Computes the inverse relative to the first parameter of the beta incomplete function.
+//!   @brief `elementwise_callable` object computing the inverse relative to the first parameter
+//!   of the beta incomplete function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -48,27 +49,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template < eve::floating_ordered_value S
-//!               , eve::floating_ordered_value T
-//!               , eve::floating_ordered_value U>
-//!      eve:common_value_t<S, T, U>  betainc_inv(S s, T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto betainc_inv(floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)       noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto betainc_inv[conditional_expr auto c](floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)       noexcept; // 2.1
+//!      constexpr auto betainc_inv[logical_value auto m](floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)       noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `s` :  [real floating argument](@ref eve::floating_ordered_value).
-//!
-//!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_ordered_value).
+//!     * `s`: [floating value](@ref eve::floating_value). \f$ s \in [0, 1]\f$
+//!     * `x`, 'y': [strictly positive floating values](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of inverse of incomplete beta function relative to the first parameter
-//!   is returned.
+//!    1. The value of the inverse of the incomplete beta function is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/8.17)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/IncompleteBetaFunction.html
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Beta_function)
 //!
 //!   @groupheader{Example}
-//!
-//!   @godbolt{doc/special/regular/betainc_inv.cpp}
+//!   @godbolt{doc/special/regular/betainc_inc.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto betainc_inv = functor<betainc_inv_t>;

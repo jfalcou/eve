@@ -38,9 +38,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_andnot
-//!   @brief Computes the bitwise ANDNOT of its arguments.
+//!   @brief `strict_tuple_callable` object computing the bitwise ANDNOT of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -51,37 +51,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      bit_value<T, Ts...> bit_andnot(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_andnot(value auto x, value auto ... xs) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_andnot[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
+//!      constexpr auto bit_andnot[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...`: other [arguments](@ref eve::value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
-//!       to this type and then:  
+//!      1. The return value type is bit_value<T,  Ts...> Each parameter is converted
+//!       to this type and then:
 //!
-//!       * For two parameters it computes the  bitwise ANDNOT of the two parameters
-//!       * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
+//!        * For two parameters it computes the  bitwise ANDNOT of the two parameters
+//!        * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
 //!         bit_and(xs...))`
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bitwise_operation)
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/bit_andnot.cpp}
-//!
 //!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_andnot[mask](x, ...)` provides a masked
-//!     version of `bit_andnot` which is
-//!     equivalent to `if_else(mask, bit_andnot(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_andnot = functor<bit_andnot_t>;

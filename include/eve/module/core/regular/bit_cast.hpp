@@ -17,7 +17,7 @@ namespace eve
   //!   @var bit_cast
   //!   @brief Computes a a bitwise reinterpretation of an object.
   //!
-  //!   **Defined in Header**
+  //!   @groupheader{Header file}
   //!
   //!   @code
   //!   #include <eve/module/core.hpp>
@@ -28,7 +28,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!   {   template<value From, scalar_value To>
+  //!       template<value From, scalar_value To>
   //!       To bit_cast operator()(From x, as<To> t) noexcept;
   //!   }
   //!   @endcode
