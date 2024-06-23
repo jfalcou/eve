@@ -58,7 +58,7 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AiryFunctions.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Airy_function)
 //!   *  [DLMF](https://dlmf.nist.gov/9)
 //!
 //!  @groupheader{Example}
