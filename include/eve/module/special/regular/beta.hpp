@@ -57,8 +57,12 @@ namespace eve
 //!
 //!     *  \f$\displaystyle \mathbf{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
 //!
-//!   @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/5.12)
+//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/beta)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BetaFunction.html)
 //!
+//!  @groupheader{Example}
 //!  @godbolt{doc/special/regular/beta.cpp}
 //!
 //! @}
