@@ -64,15 +64,15 @@ namespace eve
 //!
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
-//!
 //!      1. The return value type is bit_value<T,  Ts...> Each parameter is converted
-//!       to this type and then:
-//!
-//!        * For two parameters it computes the  bitwise ANDNOT of the two parameters
-//!        * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
-//!         bit_and(xs...))`
+//!         to this type and then:
+//!            - For two parameters it computes the  bitwise ANDNOT of the two parameters
+//!            - For more than two parameters the call is  semantically equivalent to
+//!              `bit_andnot(a0, bit_and(xs...))`
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}

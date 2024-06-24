@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_notor
-//!   @brief Computes the bitwise NOTOR of its arguments.
+//!   @brief `strict_tuple_callable` object computing the bitwise NOTOR of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,37 +49,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      bit_value<T, Ts...> bit_notor(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_notor(value auto x, value auto ... xs) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_notor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
+//!      constexpr auto bit_notor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
-//        to this type and then:
-//!
-//!       * For two parameters it computes the  bitwise ANDNOT of the two parameters
-//!       * For more than two parameters the call is  semantically equivalent to to `bit_notand(a0,
-//!         bit_and(xs...))`
+//!      1. The return value type is bit_value<T,  Ts...> Each parameter is converted
+//!         to this type and then:
+//!           - For two parameters it computes the  bitwise NOTOR of the two parameters
+//!           - For more than two parameters the call is semantically equivalent to
+//!             `bit_notor(a0, bit_or(xs...))`
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_notor.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_notor[mask](x, ...)` provides a masked
-//!     version of `bit_notor` which is
-//!     equivalent to `if_else(mask, bit_notor(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_notor = functor<bit_notor_t>;

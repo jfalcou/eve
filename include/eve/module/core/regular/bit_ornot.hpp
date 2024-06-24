@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_ornot
-//!   @brief Computes the bitwise ORNOT of its arguments.
+//!   @brief  `strict_tuple_callable` object Computing the bitwise ORNOT of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,38 +49,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      bit_value<T, Ts...> bit_ornot(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_ornot(value auto x, value auto ... xs) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_ornot[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
+//!      constexpr auto bit_ornot[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
-//!
-//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
-//!       to this type and then:
-//!
-//!       * For two parameters it computes the  bitwise ORNOT of the two parameters
-//!       * For more than two parameters the call is  semantically equivalent to to `bit_andnot(a0,
-//!         bit_and(xs...))`
-//!
+//!   **Return value**
+//!      1. The return value type is bit_value<T,  Ts...> Each parameter is converted
+//!        to this type and then:
+//!           - For two parameters it computes the  bitwise ORNOT of the two parameters
+//!           - For more than two parameters the call is  semantically equivalent to
+//!            `bit_ornot(a0, bit_and(xs...))`
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_ornot.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_ornot[mask](x, ...)` provides a masked
-//!     version of `bit_ornot` which is
-//!     equivalent to `if_else(mask, bit_ornot(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_ornot = functor<bit_ornot_t>;

@@ -44,7 +44,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_shr
-//!   @brief Computes a logical right shift.
+//!   @brief `strict_elementwise_callable` object computing a logical right shift.
 //!
 //!   **Defined in Header**
 //!
@@ -57,21 +57,25 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::integral_value T , integral_value N >
-//!      T bit_shr(T x, N n) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_shr(value auto x, integral_value n) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_shr[conditional_expr auto c](value auto x, integral_value n) noexcept; // 2
+//!      constexpr auto bit_shr[logical_value auto m](value auto x, integral_value n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  argument(@ref eve::integral_value). to be shifted.
-//!
-//!     * `n`:    [shift](@ref eve::integral_value).
+//!     * `x`: argument(@ref eve::integral_value). to be shifted.
+//!     * `n`: [shift](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    The value of the logical right shift
-//!    is returned.
+//!       1. The value of the logical right shift is returned.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note
 //!     * The call `bit_shr(x, n)` is equivalent to `x >> n` if `x`  is
@@ -83,17 +87,7 @@ namespace eve
 //!       interval: \f$[0, N[\f$ or the result is undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_shr.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_shr[mask](x, ...)` provides a masked
-//!     version of `bit_shr` which is
-//!     equivalent to `if_else(mask, bit_shr(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_shr = functor<bit_shr_t>;

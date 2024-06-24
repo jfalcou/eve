@@ -45,9 +45,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_or
-//!   @brief Computes the bitwise OR of its arguments.
+//!   @brief `strict_tuple_callable` object computing the bitwise OR of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -58,19 +58,25 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      T bit_or(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_or(value auto x, value auto ... xs) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_or[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
+//!      constexpr auto bit_or[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
-//!
-//!      The value of the bitwise OR of its arguments converted to the bit_value<T,  Ts...>
+//!   **Return value**
+//!      1. The value of the bitwise OR of its arguments converted to the bit_value<T,  Ts...>
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!    @note
 //!      Although the infix notation with `|` is supported for two parameters, the `|` operator on
@@ -78,17 +84,7 @@ namespace eve
 //!      Moreover, and due to C++ limitations is not available for floating point scalar entries.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_or.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_or[mask](x, ...)` provides a masked
-//!     version of `bit_or` which is
-//!     equivalent to `if_else(mask, bit_or(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_or = functor<bit_or_t>;

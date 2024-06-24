@@ -35,9 +35,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_swap_pairs
-//!   @brief swap_pairs elementwise.
+//!   @brief `strict_elementwise_callable` object swapping pairs.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,34 +48,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<eve::unsigned_value T, integral_value I0, integral_value I1 >
-//!      T bit_swap_pairs(T x, I0 i0, I1 i1);
+//!      // Regular overload
+//!      constexpr auto bit_swap_pairs(value auto x, integral_value, i0 integral_value i1) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_swap_pairs[conditional_expr auto c](value auto x, integral_value i0, integral_value i1) noexcept; // 2
+//!      constexpr auto bit_swap_pairs[logical_value auto m](value auto x,integral_value i0, integral_value i1) noexcept;     // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::integral_value).
-//!     * `i0` : first index
-//!     * `i1` : second index
+//!     * `x`: [argument](@ref eve::integral_value).
+//!     * `i0`: first index
+//!     * `i1`: second index
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    Return x bit i0 and i1 swapped in each element of x.
-//!    Assert if i0 or i1 are out of range.
+//!       1. Return `x` with bit `i0` and `i1` swapped in each element of `x`. Assert if i0 or i1 are out of range.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_swap_pairs.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_swap_pairs[mask](x, ...)` provides a masked
-//!     version of `bit_swap_pairs` which is
-//!     equivalent to `if_else(mask, bit_swap_pairs(x, ...), x)`
-//!
 //! @}
 //================================================================================================
 inline constexpr auto bit_swap_pairs = functor<bit_swap_pairs_t>;

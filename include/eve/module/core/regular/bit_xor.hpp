@@ -46,9 +46,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_xor
-//!   @brief Computes the bitwise XOR of its arguments.
+//!   @brief `strict_tuple_callable` object computing the bitwise XOR of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -59,15 +59,21 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      bit_value<T, Ts...> bit_xor(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_xor(value auto x, value auto ... xs) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_xor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
+//!      constexpr auto bit_xor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...` : other [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -75,17 +81,7 @@ namespace eve
 //!      type is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_xor.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_xor[mask](x, ...)` provides a masked
-//!     version of `bit_xor` which is
-//!     equivalent to `if_else(mask, bit_xor(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_xor = functor<bit_xor_t>;

@@ -36,8 +36,8 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_floor
-//!   @brief If `x` is not zero, computes the largest integral power of two
-//!   that is not greater than `x`.
+//!   @brief  `elementwise_callable` object computing, if `x` is not zero,
+//!   the largest integral power of two that is not greater than `x`.
 //!
 //!   @groupheader{Header file}
 //!
@@ -50,7 +50,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overloads
+//!      // Regular overload
 //!      constexpr auto bit_floor(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking

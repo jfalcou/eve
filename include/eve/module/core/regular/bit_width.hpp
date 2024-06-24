@@ -29,7 +29,8 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_width
-//!   @brief Computes elementwise the number of bits needed to store the parameter.
+//!   @brief  `elementwise_callable` object Computing elementwise the number of bits needed
+//!   to store the parameter.
 //!
 //!   **Defined in Header**
 //!
@@ -42,23 +43,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value T >
-//!      T bit_width(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_width(unsigned_value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_width[conditional_expr auto c](unsigned_value auto x) noexcept; // 2
+//!      constexpr auto bit_width[logical_value auto m](unsigned_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
+//!     * `x`: [unsigned argument](@ref eve::unsigned_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    The value of  number of bits needed to store the value `x`,  i.e.
-//!    \f$1+\lfloor\log2(x)\rfloor\f$
-//!    is returned.
+//!      1. The value of  number of bits needed to store the value `x`,
+//!        i.e. \f$1+\lfloor\log2(x)\rfloor\f$ is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_width.cpp}
 //! @}
 //================================================================================================

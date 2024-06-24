@@ -30,9 +30,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_not
-//!   @brief computes the ones complement of the parameter.
+//!   @brief  `elementwise_callable` object computing the one complement of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -43,35 +43,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bit_not(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_not(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_not[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto bit_not[logical_value auto m](value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the bitwise NOT of the parameter is returned.
+//!      1. The value of the bitwise NOT of the parameter is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_not.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_not[mask](x, ...)` provides a masked
-//!     version of `bit_not` which is
-//!     equivalent to `if_else(mask, bit_not(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_not = functor<bit_not_t>;
-  
+
   namespace detail
   {
     template<value T, callable_options O>

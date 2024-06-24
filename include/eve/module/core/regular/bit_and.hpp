@@ -71,6 +71,8 @@ namespace eve
 //!
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!

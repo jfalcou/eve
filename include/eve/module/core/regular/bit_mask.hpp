@@ -29,7 +29,7 @@ namespace eve
 //!   @var bit_mask
 //!   @brief Computes a bit mask full of zeroes or ones
 //!
-//!   **Defined in Header**
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -40,35 +40,31 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bit_mask(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_mask(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_mask[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto bit_mask[logical_value auto m](value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      For each [elementwise](@ref glossary_elementwise) of `x`:
-//!
+//!      1. For each [elementwise](@ref glossary_elementwise) of `x`:
 //!        *  if the [element](@ref glossary_elementwise) is zero, an element
 //!           with all bits unset is returned.
 //!        *  else an element of the type with all bits set is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_mask.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_mask[mask](x)` provides a masked
-//!     version of `bit_mask` which is
-//!     equivalent to `if_else(mask, bit_mask(x), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_mask = functor<bit_mask_t>;

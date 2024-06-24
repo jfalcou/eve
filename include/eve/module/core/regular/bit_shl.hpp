@@ -16,9 +16,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_shl
-//!   @brief Computes a logical left shift.
+//!   @brief `strict_elementwise_callable` object computing a logical left shift.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -29,43 +29,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T , integral_value N >
-//!      T bit_shl(T x, N n) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_shl(value auto, x integral_value n) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_shl[conditional_expr auto c](value auto x, integral_value n) noexcept; // 2
+//!      constexpr auto bit_shl[logical_value auto m](value auto x, integral_value n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  argument(@ref eve::value). to be shifted.
-//!
-//!     * `n`:    [shift](@ref eve::integral_value).
+//!     * `x`: argument(@ref eve::value). to be shifted.
+//!     * `n`: [shift](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    The value of the logical left shift
-//!    is returned.
+//!       1. The value of the logical left shift is returned.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note
 //!     * The call `bit_shl(x, n)` is equivalent to `x << n` if `x`  is
 //!       an [simd value](@ref eve::simd_value).
 //!
 //!     * The types must share the same cardinal or be scalar and if \f$N\f$
-//!       is the size in bits  of the element type of `T`,
-//!       all elements of n must belong to the
-//!       interval: \f$[0, N[\f$ or the result is undefined.
+//!       is the size in bits  of the element type of `x`, all elements of n must belong to the
+//!       interval \f$[0, N[\f$ or the result is undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_shl.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_shl[mask](x, ...)` provides a masked
-//!     version of `bit_shl` which is
-//!     equivalent to `if_else(mask, bit_shl(x, ...), x)`
-//!
 //! @}
 //================================================================================================
  inline constexpr auto bit_shl = functor<shl_t>;

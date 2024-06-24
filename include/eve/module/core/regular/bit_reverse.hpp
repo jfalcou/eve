@@ -38,9 +38,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_reverse
-//!   @brief  elementwise reverse the bit order.
+//!   @brief `strict_elementwise_callable` object reversing the bit order.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -51,40 +51,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bit_reverse(T x) noexcept;          //1
+//!      // Regular overloads
+//!      constexpr auto reverse(value auto x) noexcept;                                              // 1
+//!      constexpr auto reverse(value auto x integral_scalar_value n) noexcept;                      // 2
 //!
-//!      template< unsignedvalue T,  integral_scalar_value N>
-//!      T bit_reverse(T x , N n) noexcept;    //2
+//!      // Lanes masking
+//!      constexpr auto reverse[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto reverse[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
-//!     * `n` :  n delimit the band to be reversed at both ends of x.
+//!     * `x`: [argument](@ref eve::value).
+//!     * `n`: n delimit the band to be reversed at both ends of x.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    The values of the of the parameter are returned with bits in reversed order.
-//!    if n is present :
-//!      - if n == 0 the call returns x
-//!      - if 2*n >= sizeof(element_type_t<T>)   the call is identical to reverse(x)
-//!      - otherwise the first n bits and the last n bits of each element of x are swapped in
-//!        reverse order and the central remaining bits are unchanged.
+//!      1. The values of the of the parameter are returned with bits in reversed order.
+//!      2. if n is present :
+//!           - if n == 0 the call returns x
+//!           - if 2*n is greater or equal to the size of the element type of `x`,
+//!             the call is identical to `reverse(x)`.
+//!           - otherwise the first n bits and the last n bits of each element of x are swapped in
+//!           reverse order and the central remaining bits are unchanged.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_reverse.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_reverse[mask](x, ...)` provides a masked
-//!     version of `bit_reverse` which is
-//!     equivalent to `if_else(mask, bit_reverse(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_reverse = functor<bit_reverse_t>;
