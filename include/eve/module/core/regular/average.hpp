@@ -50,20 +50,20 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto average(eve::integral_value auto x, eve::integral_value auto y)            noexcept; // 1
-//!      constexpr auto average(eve::floating_value auto x, eve::floating_value auto ... xs)       noexcept; // 2
-//!      constexpr auto average(kumi::non_empty_product_type auto const& tup)                      noexcept; // 3
+//!      constexpr auto average(eve::integral_value auto x, eve::integral_value auto y)             noexcept; // 1
+//!      constexpr auto average(eve::floating_value auto x, eve::floating_value auto ... xs)        noexcept; // 2
+//!      constexpr auto average(kumi::non_empty_product_type auto const& tup)                       noexcept; // 3
 //!
 //!      // Lanes masking
-//!      constexpr auto average[conditional   auto c](/* any of the above overloads */)             noexcept; // 4.1
-//!      constexpr auto average[logical_value auto m](/* any of the above overloads */)             noexcept; // 4.2
+//!      constexpr auto average[conditional   auto c](/* any of the above overloads */)             noexcept; // 4
+//!      constexpr auto average[logical_value auto m](/* any of the above overloads */)             noexcept; // 4
 //!
 //!      // Semantic options
 //!      constexpr auto average[raw] (/* any of the above overloads */)                             noexcept; // 5
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto average[upward](eve::integral_value auto x, eve::integral_value auto y)    noexcept; // 6
-//!      constexpr auto average[downward](eve::integral_value auto x, eve::integral_value auto y)  noexcept; // 7
+//!      constexpr auto average[upward](eve::integral_value auto x, eve::integral_value auto y)     noexcept; // 6
+//!      constexpr auto average[downward](eve::integral_value auto x, eve::integral_value auto y)   noexcept; // 7
 //!   }
 //!   @endcode
 //!
@@ -71,6 +71,7 @@ namespace eve
 //!
 //!     * `x`, `y`: [integral value](@ref integral_value) arguments.
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
+//!     * `tup': [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -88,7 +89,7 @@ namespace eve
 //!        the integral conversion of `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
 //!     2. the arithmetic mean of its arguments. No overflow occurs.
 //!     3. the arithmetic mean of the tuple arguments. No overflow occurs.
-//!     4. Masked calls
+//!     4. [The operation is performed conditionnaly](@ref conditional)
 //!     5. No provision is made to avoid overflows for more than 2 parameters.
 //!     6. similar to `ceil((x+y)/2)`,  but converted to an integral value.
 //!     7. similar to `floor((x+y)/2)` but converted to an integral value.

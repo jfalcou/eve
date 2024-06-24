@@ -51,12 +51,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto absmax(eve::value auto x, eve::value auto ... xs)               noexcept; // 1
-//!      constexpr auto absmax(kumi::non_empty_product_type auto const& tup)            noexcept; // 2
+//!      constexpr auto absmax(eve::value auto x, eve::value auto ... xs)                noexcept; // 1
+//!      constexpr auto absmax(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto absmax[conditional   auto c](/* any of the above overloads */)   noexcept; // 3.1
-//!      constexpr auto absmax[logical_value auto m](/* any of the above overloads */)   noexcept; // 3.2
+//!      constexpr auto absmax[conditional   auto c](/* any of the above overloads */)   noexcept; // 3
+//!      constexpr auto absmax[logical_value auto m](/* any of the above overloads */)   noexcept; // 3
 //!
 //!      // Semantic option
 //!      constexpr auto absmax[saturated](/* any of the above overloads */)              noexcept; // 4
@@ -71,19 +71,19 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [real](@ref value) arguments.
-//!     * `tup': [tuple](@ref kumi::tuple) of arguments.
+//!     * `tup': [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The absolute value of the maximal element is returned.
-//!    1. If any element of the inputs is a NaN the corresponding output element is system-dependent
-//!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
-//!    4. computation internally uses `abs[saturated]` instead of `abs`
-//!    6. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
-//!       is used internally
+//!      The absolute value of the maximal element is returned.
+//!        1. If any element of the inputs is a NaN the corresponding output element is system-dependent
+//!        2. equivalent to the call on the elements of the tuple.
+//!        3. [The operation is performed conditionnaly](@ref conditional)
+//!        4. computation internally uses `abs[saturated]` instead of `abs`
+//!        5. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
+//!           is used internally
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/absmax.cpp}
