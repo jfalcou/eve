@@ -42,11 +42,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_swap(value auto x integral_value n) noexcept;                          // 1
+//!      constexpr auto bit_swap(value auto x, integral_value auto n) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_swap[conditional_expr auto c](value auto x integral_value n) noexcept; // 2
-//!      constexpr auto bit_swap[logical_value auto m](value auto x integral_value n)    noexcept; // 2
+//!      constexpr auto bit_swap[conditional_expr auto c](value auto x, integral_value auto n) noexcept; // 2
+//!      constexpr auto bit_swap[logical_value auto m](value auto x, integral_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -61,7 +61,7 @@ namespace eve
 //!      1. Return `x` with pairs of contiguous groups of N bits swapped in each element.
 //!         - If n is greater or equal to sizeof(x)*8 0 is returned.
 //!         - If n is equal            to 0           x is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

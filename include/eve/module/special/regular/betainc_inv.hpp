@@ -55,9 +55,9 @@ namespace eve
 //!
 //!      // Lanes masking
 //!      constexpr auto betainc_inv[conditional_expr auto c](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)       noexcept; // 2.1
+//!                             floating_value auto x, floating_value auto y)       noexcept; // 2
 //!      constexpr auto betainc_inv[logical_value auto m](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)       noexcept; // 2.2
+//!                             floating_value auto x, floating_value auto y)       noexcept; // 2
 //!   }
 //!   @endcode
 //!

@@ -49,11 +49,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_swap_pairs(value auto x, integral_value, i0 integral_value i1) noexcept;                          // 1
+//!      constexpr auto bit_swap_pairs(value auto x,
+//!                                    integral_value auto i0, integral_value auto i1) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_swap_pairs[conditional_expr auto c](value auto x, integral_value i0, integral_value i1) noexcept; // 2
-//!      constexpr auto bit_swap_pairs[logical_value auto m](value auto x,integral_value i0, integral_value i1) noexcept;     // 2
+//!      constexpr auto bit_swap_pairs[conditional_expr auto c](value auto x,
+//!                                    integral_value auto i0, integral_value auto i1) noexcept; // 2
+//!      constexpr auto bit_swap_pairs[logical_value auto m](value auto x,
+//!                                     integral_value i0, integral_value auto i1) noexcept;     // 2
 //!   }
 //!   @endcode
 //!

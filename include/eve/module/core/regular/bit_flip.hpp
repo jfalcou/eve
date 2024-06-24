@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_flip
-//!   @brief  `elementwise_callable` object fliping the value the ith bit of each element.
+//!   @brief  `strict_elementwise_callable` object fliping the value the ith bit of each element.
 //!
 //!   **Defined in Header**
 //!
@@ -45,17 +45,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto bit_flip(value auto x, integral_value I i)                             noexcept; // 1
+//!      constexpr auto bit_flip(value auto x, integral_value auto i)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_flip[conditional_expr auto c](value auto x, integral_value auto i) noexcept; // 2.1
-//!      constexpr auto bit_flip[logical_value auto m](value auto x, integral_value auto i)    noexcept; // 2.2
+//!      constexpr auto bit_flip[conditional_expr auto c](value auto x, integral_value auto i) noexcept; // 2
+//!      constexpr auto bit_flip[logical_value auto m](value auto x, integral_value auto i)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref eve::value).
+//!     * `x`: [integral argument](@ref eve::integral_value).
 //!     * `i`: index to flip.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.

@@ -15,7 +15,7 @@ namespace eve
   //! @addtogroup core_bitops
   //! @{
   //!   @var bit_cast
-  //!   @brief Computes a a bitwise reinterpretation of an object.
+  //!   @brief Computes a bitwise reinterpretation of an object.
   //!
   //!   @groupheader{Header file}
   //!
@@ -28,8 +28,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!       template<value From, scalar_value To>
-  //!       To bit_cast operator()(From x, as<To> t) noexcept;
+  //!       template<value From, scalar_value To> To bit_cast operator()(From x, as<To> t) noexcept;
   //!   }
   //!   @endcode
   //!
@@ -55,10 +54,11 @@ namespace eve
   //!    representation produced, the behavior is undefined. If there are multiple
   //!    such values, which value is produced is unspecified.
   //!
+  //!  @groupheader{External reference}
+  //!   * [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/bit_cast)
+  //!
   //!  @groupheader{Example}
-  //!
   //!  @godbolt{doc/core/bit_cast.cpp}
-  //!
   //! @}
   //================================================================================================
   inline constexpr auto bit_cast = functor<bit_cast_t>;

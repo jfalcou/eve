@@ -50,11 +50,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto bit_notor(value auto x, value auto ... xs) noexcept;                          // 1
+//!      constexpr auto bit_notor(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto bit_notor(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_notor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
-//!      constexpr auto bit_notor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
+//!      constexpr auto bit_notor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 3
+//!      constexpr auto bit_notor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -62,6 +63,7 @@ namespace eve
 //!
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -72,7 +74,8 @@ namespace eve
 //!           - For two parameters it computes the  bitwise NOTOR of the two parameters
 //!           - For more than two parameters the call is semantically equivalent to
 //!             `bit_notor(a0, bit_or(xs...))`
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. equivalent to the call on the elements of the tuple.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_notor.cpp}

@@ -48,10 +48,15 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value S
-//!              , eve::floating_ordered_value T
-//!              , eve::floating_ordered_value U>
-//!      eve:common_value_t<S, T, U>  $name$(S s, T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto betainc(floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)    noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto betainc[conditional_expr auto c](floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
+//!      constexpr auto betainc[logical_value auto m](floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

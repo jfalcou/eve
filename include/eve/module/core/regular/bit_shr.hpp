@@ -58,11 +58,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_shr(value auto x, integral_value n) noexcept;                          // 1
+//!      constexpr auto bit_shr(value auto x, integral_value auto n) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_shr[conditional_expr auto c](value auto x, integral_value n) noexcept; // 2
-//!      constexpr auto bit_shr[logical_value auto m](value auto x, integral_value n)    noexcept; // 2
+//!      constexpr auto bit_shr[conditional_expr auto c](value auto x, integral_value auto n) noexcept; // 2
+//!      constexpr auto bit_shr[logical_value auto m](value auto x, integral_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

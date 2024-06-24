@@ -27,7 +27,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_mask
-//!   @brief Computes a bit mask full of zeroes or ones
+//!   @brief `elementwise_callable` object computing a bit mask full of zeroes or ones
 //!
 //!   @groupheader{Callable Signatures}
 //!
@@ -44,8 +44,8 @@ namespace eve
 //!      constexpr auto bit_mask(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_mask[conditional_expr auto c](value auto x) noexcept; // 2.1
-//!      constexpr auto bit_mask[logical_value auto m](value auto x)    noexcept; // 2.2
+//!      constexpr auto bit_mask[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto bit_mask[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

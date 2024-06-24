@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup combinatorial
 //! @{
 //!   @var bernouilli
-//!   @brief Computes the nth Bernouilli number \f$b_n\f$ as a double.
+//!   @brief  `elementwise_callable` object computing the nth Bernouilli number \f$b_n\f$ as a double.
 //!
 //!   @groupheader{Header file}
 //!
@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bernouilli(unsigned_value auto x)     noexcept; // 1
+//!      constexpr auto bernouilli(unsigned_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto bernouilli[conditional_expr auto c](floating_value auto x) noexcept; // 2
@@ -56,11 +56,13 @@ namespace eve
 //!     * `n`: unsigned argument.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
-///!
-//!    **Return value**
 //!
-//!    The value of the nth Bernouilli number is returned.
-//!    The result's element type is double to avoid overflow and its cardinal is the same as 'n'.
+//!    **Return value**
+//!       The result's element type is `double` to avoid overflow as possible and
+//!       its cardinal is the same as `n`.
+//!
+//!       1. The value of the nth Bernouilli number is returned.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

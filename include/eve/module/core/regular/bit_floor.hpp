@@ -54,8 +54,8 @@ namespace eve
 //!      constexpr auto bit_floor(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_floor[conditional_expr auto c](value auto x) noexcept; // 2.1
-//!      constexpr auto bit_floor[logical_value auto m](value auto x)    noexcept; // 2.2
+//!      constexpr auto bit_floor[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto bit_floor[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
