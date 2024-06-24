@@ -50,21 +50,22 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto add(value auto x, value auto ... xs)                          noexcept;  // 1
+//!      constexpr auto add(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)          noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto add[conditional_expr auto c](value auto x, value auto ... xs) noexcept;  // 2
-//!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs)    noexcept;  // 2
+//!      constexpr auto add[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 3
+//!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto add[saturated](value auto x, value auto ... xs)               noexcept;  // 3
+//!      constexpr auto add[saturated](value auto x, value auto ... xs)               noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`, `...xs`: [real](@ref value) arguments.
-//!     * `tup': [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -73,8 +74,9 @@ namespace eve
 //!    The value of the sum of the arguments is returned.
 //!    1. Take care that for floating entries, the addition is not perfectly associative due to rounding errors.
 //!       This call performs additions in reverse incoming order.
-//!    2. [The operation is performed conditionnaly](@ref conditional)
-//!    3. The call `add[saturated](...)` computes a saturated version of `add`.
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. The call `add[saturated](...)` computes a saturated version of `add`.
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
 //!

@@ -71,7 +71,7 @@ namespace eve
 //!
 //!     * `x`, `y`: [integral value](@ref integral_value) arguments.
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
-//!     * `tup': [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
