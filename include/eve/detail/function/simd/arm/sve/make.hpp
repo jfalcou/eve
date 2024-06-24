@@ -26,20 +26,27 @@ EVE_FORCEINLINE auto
 make(eve::as<wide<T, N>>, Vs... vs) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
-
-  if constexpr( wide<T, N>::size() < eve::fundamental_cardinal_v<T> )
+  if constexpr (has_plain_translation<T>)
   {
-    return [&]<std::size_t... i>(std::index_sequence<i...>)
-    {
-      return make(as<wide<T, fundamental_cardinal_t<T>>> {}, vs..., ((void)i, 0)...);
-    }
-    (std::make_index_sequence<fundamental_cardinal_v<T> - N::value> {});
+    return make(as<wide<translate_t<T>, N>> {}, translate(vs)...);
   }
   else
   {
-    std::array on_stack {static_cast<T>(vs)...};
-    return load(on_stack.data(), N {});
+    static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
+
+    if constexpr( wide<T, N>::size() < eve::fundamental_cardinal_v<T> )
+    {
+      return [&]<std::size_t... i>(std::index_sequence<i...>)
+      {
+        return make(as<wide<T, fundamental_cardinal_t<T>>> {}, vs..., ((void)i, 0)...);
+      }
+      (std::make_index_sequence<fundamental_cardinal_v<T> - N::value> {});
+    }
+    else
+    {
+      std::array on_stack {static_cast<T>(vs)...};
+      return load(on_stack.data(), N {});
+    }
   }
 }
 
@@ -51,26 +58,33 @@ EVE_FORCEINLINE auto
 make(eve::as<wide<T, N>>, T x) noexcept
 requires sve_abi<abi_t<T, N>> && (N::value > 1)
 {
-  // This may be suboptimal, we a one instruction iota on sve
-  if constexpr( N::value < eve::fundamental_cardinal_v<T> )
+  if constexpr (has_plain_translation<T>)
   {
-    // Use svdup then mask using optimized iota comparison
-    return wide<T>{x} & (iota(as<wide<as_integer_t<T>>>{}) < N::value).mask();
+    return make(as<wide<translate_t<T>, N>> {}, translate(x));
   }
   else
   {
-    constexpr auto c = categorize<wide<T, N>>();
+    // This may be suboptimal, we a one instruction iota on sve
+    if constexpr( N::value < eve::fundamental_cardinal_v<T> )
+    {
+      // Use svdup then mask using optimized iota comparison
+      return wide<T>{x} & (iota(as<wide<as_integer_t<T>>>{}) < N::value).mask();
+    }
+    else
+    {
+      constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr( match(c, category::int8) ) return svdup_s8(x);
-    else if constexpr( match(c, category::uint8) ) return svdup_u8(x);
-    else if constexpr( match(c, category::int16) ) return svdup_s16(x);
-    else if constexpr( match(c, category::uint16) ) return svdup_u16(x);
-    else if constexpr( match(c, category::int32) ) return svdup_s32(x);
-    else if constexpr( match(c, category::uint32) ) return svdup_u32(x);
-    else if constexpr( match(c, category::int64) ) return svdup_s64(x);
-    else if constexpr( match(c, category::uint64) ) return svdup_u64(x);
-    else if constexpr( match(c, category::float32) ) return svdup_f32(x);
-    else if constexpr( match(c, category::float64) ) return svdup_f64(x);
+      if constexpr( match(c, category::int8) ) return svdup_s8(x);
+      else if constexpr( match(c, category::uint8) ) return svdup_u8(x);
+      else if constexpr( match(c, category::int16) ) return svdup_s16(x);
+      else if constexpr( match(c, category::uint16) ) return svdup_u16(x);
+      else if constexpr( match(c, category::int32) ) return svdup_s32(x);
+      else if constexpr( match(c, category::uint32) ) return svdup_u32(x);
+      else if constexpr( match(c, category::int64) ) return svdup_s64(x);
+      else if constexpr( match(c, category::uint64) ) return svdup_u64(x);
+      else if constexpr( match(c, category::float32) ) return svdup_f32(x);
+      else if constexpr( match(c, category::float64) ) return svdup_f64(x);
+    }
   }
 }
 

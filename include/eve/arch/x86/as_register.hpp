@@ -24,7 +24,7 @@ namespace eve
 
 namespace eve
 {
-  template<arithmetic_scalar_value Type, typename Size>
+  template<typename Type, typename Size>
   struct as_register<Type, Size, eve::x86_128_>
   {
     static constexpr auto find()
@@ -42,7 +42,7 @@ namespace eve
     static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
   };
 
-  template<arithmetic_scalar_value Type, typename Size>
+  template<typename Type, typename Size>
   struct as_register<Type, Size, eve::x86_256_>
   {
     static constexpr auto find()
@@ -60,7 +60,7 @@ namespace eve
     static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
   };
 
-  template<arithmetic_scalar_value Type, typename Size>
+  template<typename Type, typename Size>
   struct as_register<Type, Size, eve::x86_512_>
   {
     static constexpr auto find()
@@ -147,7 +147,7 @@ namespace eve
   }
 
   // logical uses different registers in AVX512
-  template<arithmetic_scalar_value Type, typename Size>
+  template<typename Type, typename Size>
   struct as_logical_register<Type, Size, eve::x86_512_>
   {
     static constexpr auto find()
@@ -161,7 +161,7 @@ namespace eve
   };
 
 # if defined(SPY_SIMD_IS_X86_AVX512)
-  template<arithmetic_scalar_value Type, typename Size>
+  template<typename Type, typename Size>
   struct as_logical_register<Type, Size, eve::x86_128_>
   {
     static constexpr auto find()
@@ -178,7 +178,7 @@ namespace eve
     static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
   };
 
-  template<arithmetic_scalar_value Type, typename Size>
+  template<typename Type, typename Size>
   struct as_logical_register<Type, Size, eve::x86_256_>
   {
     static constexpr auto find()
@@ -198,12 +198,12 @@ namespace eve
 
 # else
   // logical uses same registers
-  template<arithmetic_scalar_value T, typename Size>
+  template<typename T, typename Size>
   struct as_logical_register<T, Size, eve::x86_128_> : as_register<T, Size, eve::x86_128_>
   {
   };
 
-  template<arithmetic_scalar_value T, typename Size>
+  template<typename T, typename Size>
   struct as_logical_register<T, Size, eve::x86_256_> : as_register<T, Size, eve::x86_256_>
   {
   };
