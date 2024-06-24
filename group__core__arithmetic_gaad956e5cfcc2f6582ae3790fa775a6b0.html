@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaad956e5cfcc2
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is equivalent to -<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="Computes the absolute value of the parameter.">eve::abs</a> ( <a class="el" href="group__core__arithmetic_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed" title="Computes the minimum of its arguments.">eve::min(...)</a> ). but can be subject to optimizations.</p>
+<p>This is equivalent to -<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="elementwise_callable object computing the absolute value of the parameter.">eve::abs</a> ( <a class="el" href="group__core__arithmetic_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed" title="Computes the minimum of its arguments.">eve::min(...)</a> ). but can be subject to optimizations.</p>
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -206,7 +206,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaad956e5cfcc2
 <p class="startli">The call <code><a class="el" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0" title="Computes the negated absolute value of the minimal element.">eve::negabsmin</a>[mask](x, ...)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0" title="Computes the negated absolute value of the minimal element.">eve::negabsmin</a></code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">eve::if_else</a> (mask, <a class="el" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0" title="Computes the negated absolute value of the minimal element.">negabsmin(x, ...)</a>, x)</code></p>
 </li>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a>, eve::numeric</p>
-<p class="startli">The call <code>d(eve::negabsmin)(...)</code>, where d is one of these two decorators, is equivalent to <code>-<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="Computes the absolute value of the parameter.">eve::abs</a> (d( eve::min )(...))</code>. </p>
+<p class="startli">The call <code>d(eve::negabsmin)(...)</code>, where d is one of these two decorators, is equivalent to <code>-<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="elementwise_callable object computing the absolute value of the parameter.">eve::abs</a> (d( eve::min )(...))</code>. </p>
 </li>
 </ul>
 

@@ -140,31 +140,46 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gadbe6e2312c935fb
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">asecpi</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">asecpi</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">asecpi</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">asecpi</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 3.1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">asecpi</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 3.2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d_html_gadbe6e2312c935fb0b9f54ec66e332b0d"><div class="ttname"><a href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">eve::asecpi</a></div><div class="ttdeci">constexpr auto asecpi</div><div class="ttdoc">Callable object computing the arc secant in  multiples.</div><div class="ttdef"><b>Definition:</b> asecpi.hpp:78</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
+<div class="ttc" id="agroup__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d_html_gadbe6e2312c935fb0b9f54ec66e332b0d"><div class="ttname"><a href="group__math__invtrig_gadbe6e2312c935fb0b9f54ec66e332b0d.html#gadbe6e2312c935fb0b9f54ec66e332b0d">eve::asecpi</a></div><div class="ttdeci">constexpr auto asecpi</div><div class="ttdoc">Callable object computing the arc secant in  multiples.</div><div class="ttdef"><b>Definition:</b> asecpi.hpp:79</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real value</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<ul>
-<li><p class="startli">Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> arc secant of the input in \(\pi\) multiples in the range \([0, 1]\).</p>
-<p class="startli">In particular:</p><ul>
+<ol type="1">
+<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> arc secant of the input in \(\pi\) multiples in the range \([0, 1]\). In particular:<ul>
 <li>If the element is \(1\), \(+0\) is returned.</li>
 <li>If the element is \(0\), \(1\) is returned.</li>
 <li>If the element \(|x| &lt; 1\), <code>NaN</code> is returned.</li>
 <li>If the element is a <code>Nan</code>, <code>NaN</code> is returned.</li>
 </ul>
 </li>
-</ul>
+</ol>
+<p>Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'</p><ol type="1">
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -195,11 +210,7 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gadbe6e2312c935fb
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a> The call <code>asecpi[raw](x)</code> uses a faster implementation which can be slightly less accurate near 1. </li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

@@ -140,30 +140,45 @@ $(document).ready(function(){initNavTree('group__math__invtrig_gab45103e451eacb9
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__invtrig_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">asin</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">asin</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">asin</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2.1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__invtrig_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">asin</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2.2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__invtrig_gab45103e451eacb913e21269c31dd78ac_html_gab45103e451eacb913e21269c31dd78ac"><div class="ttname"><a href="group__math__invtrig_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">eve::asin</a></div><div class="ttdeci">constexpr auto asin</div><div class="ttdoc">Callable object computing the arc sine.</div><div class="ttdef"><b>Definition:</b> asin.hpp:78</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__math__invtrig_gab45103e451eacb913e21269c31dd78ac_html_gab45103e451eacb913e21269c31dd78ac"><div class="ttname"><a href="group__math__invtrig_gab45103e451eacb913e21269c31dd78ac.html#gab45103e451eacb913e21269c31dd78ac">eve::asin</a></div><div class="ttdeci">constexpr auto asin</div><div class="ttdoc">elementwise_callable object computing the arc sine.</div><div class="ttdef"><b>Definition:</b> asin.hpp:84</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real value</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<ul>
-<li><p class="startli">Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> arc sine of the input in the range \([-\frac\pi2 , \frac\pi2]\).</p>
-<p class="startli">In particular:</p><ul>
-<li>If the element is \(1\), \(+0\) is returned.</li>
+<ol type="1">
+<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> arc sine of the input in the range \([-\frac\pi2, \frac\pi2]\). In particular:<ul>
+<li>If the element is \(\pm0\), \(\pm0\) is returned unmodified.</li>
 <li>If the element \(|x| &gt; 1\), <code>NaN</code> is returned.</li>
-<li>If the element is a <code>Nan</code>, <code>NaN</code> is returned.</li>
+<li>If the element is a <code>NaN</code>, <code>NaN</code> is returned.</li>
 </ul>
-<p class="startli">special cases are handled as if the operation was implemented by \(-i \mathrm{asinh}(i z)\)</p>
 </li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/asin">C++ standard reference</a></li>
+<li><a href="https://mathworld.wolfram.com/InverseSine.html">Wolfram MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Inverse_trigonometric_functions">Wikipedia</a></li>
+<li><a href="https://dlmf.nist.gov/4.23">DLMF</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

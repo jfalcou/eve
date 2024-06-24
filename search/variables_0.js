@@ -39,11 +39,10 @@ var searchData=
   ['asinh_36',['asinh',['../group__math__invhyper_gafdd0b4e5414191db4ce95026fdd4efad.html#gafdd0b4e5414191db4ce95026fdd4efad',1,'eve']]],
   ['asinpi_37',['asinpi',['../group__math__invtrig_gac0eea7b91e7d3786328d605b19a44d1d.html#gac0eea7b91e7d3786328d605b19a44d1d',1,'eve']]],
   ['atan_38',['atan',['../group__math__invtrig_gaa4962fd095ca6aa9191e290f27d7f16d.html#gaa4962fd095ca6aa9191e290f27d7f16d',1,'eve']]],
-  ['atan2_39',['atan2',['../group__math__invtrig_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354',1,'eve']]],
-  ['atan2d_40',['atan2d',['../group__math__invtrig_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc',1,'eve']]],
-  ['atan2pi_41',['atan2pi',['../group__math__invtrig_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c',1,'eve']]],
-  ['atand_42',['atand',['../group__math__invtrig_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0',1,'eve']]],
-  ['atanh_43',['atanh',['../group__math__invhyper_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256',1,'eve']]],
-  ['atanpi_44',['atanpi',['../group__math__invtrig_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb',1,'eve']]],
-  ['average_45',['average',['../group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e',1,'eve']]]
+  ['atan2_39',['atan2',['../group__core__arithmetic_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354',1,'eve']]],
+  ['atan2d_40',['atan2d',['../group__core__arithmetic_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc',1,'eve']]],
+  ['atan2pi_41',['atan2pi',['../group__core__arithmetic_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c',1,'eve']]],
+  ['atanh_42',['atanh',['../group__math__invhyper_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256',1,'eve']]],
+  ['atanpi_43',['atanpi',['../group__math__invtrig_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb',1,'eve']]],
+  ['average_44',['average',['../group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e',1,'eve']]]
 ];

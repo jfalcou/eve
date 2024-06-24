@@ -140,34 +140,58 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1d52fbcf5ca3
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U &gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U&gt;</a> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> <span class="keyword">auto</span> y)             <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">eve::floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">eve::floating_value</a> <span class="keyword">auto</span> ... xs)        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>(kumi::non_empty_product_type <span class="keyword">auto</span> <span class="keyword">const</span>&amp; tup)                       <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line"> </div>
-<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1floating__value.html">eve::floating_value</a> Ts ... &gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a>&lt;Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>(Ts ... xs) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>[conditional   <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>)             <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)             <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">raw</a>] (<span class="comment">/* any of the above overloads */</span>)                             <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Exclusive Semantic options - Only one of those can be set at once</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>[<a class="code hl_variable" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">upward</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> <span class="keyword">auto</span> y)     <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">average</a>[<a class="code hl_variable" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">downward</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">eve::integral_value</a> <span class="keyword">auto</span> y)   <span class="keyword">noexcept</span>; <span class="comment">// 7</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
-<div class="ttc" id="agroup__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e_html_ga1d52fbcf5ca3bd73745898c1eca2072e"><div class="ttname"><a href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a></div><div class="ttdeci">constexpr auto average</div><div class="ttdoc">Computes the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition:</b> average.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e_html_ga1d52fbcf5ca3bd73745898c1eca2072e"><div class="ttname"><a href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e">eve::average</a></div><div class="ttdeci">constexpr auto average</div><div class="ttdoc">tuple_callable computing the arithmetic mean of its arguments.</div><div class="ttdef"><b>Definition:</b> average.hpp:104</div></div>
+<div class="ttc" id="agroup__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80_html_ga3b3cda8b6305e7d7e0dbc9da29c6be80"><div class="ttname"><a href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">eve::upward</a></div><div class="ttdeci">constexpr upward_type const upward</div><div class="ttdoc">Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:160</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6_html_gaa9bc64a3f84f5fdc046854ead9bdf7f6"><div class="ttname"><a href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">eve::downward</a></div><div class="ttdeci">constexpr downward_type const downward</div><div class="ttdoc">Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:161</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">real</a> arguments.</li>
-<li><code>xs...</code> : <a class="el" href="concepteve_1_1floating__value.html">real</a> arguments.</li>
+<li><code>x</code>, <code>y</code>: integral value arguments.</li>
+<li><code>xs...</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a> arguments.</li>
+<li><code>tup</code>: non empty tuple of arguments.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>The value of the arithmetic mean of the arguments is returned.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>For two parameters half the sum of <code>x</code> and <code>y</code>. No overflow occurs.</li>
-<li>For more than two parameters only floating entries are allowed. No overflow occurs.</li>
-<li>If <code>x</code> and <code>y</code> are <a class="el" href="concepteve_1_1integral__value.html">integral values</a> and the sum is odd, the result is a rounded value at a distance guaranteed to be less than or equal to 0.5 of the average floating value, but may differ by unity from the truncation given by <code>(x+y)/2</code>. Moreover, as some architectures provide simd intrinsics to perform the operation, the scalar results may differ by one unit from simd ones which are system dependent. However the dowward (respectively upward) decorators can be used to ensure the result is <code>floor((x+y)/2)</code>, (respectively <code>ceil((x+y)/2)</code>).</li>
+<ol type="1">
+<li>For two integral parameters half the sum of <code>x</code> and <code>y</code>. No overflow occurs. If the sum is odd, the result is a rounded value at a distance guaranteed to be less than or equal to 0.5 of the average floating value, but may differ by unity from the truncation given by <code>(x+y)/2</code>. Moreover, as some architectures provide simd intrinsics to perform the operation, the scalar results may differ by one unit from simd ones which are system dependent.  However the <code>dowward</code> (respectively <code>upward</code>) options can be used to ensure the result is equivalent to the integral conversion of <code>floor((x+y)/2)</code>, (respectively <code>ceil((x+y)/2)</code>).</li>
+<li>the arithmetic mean of its arguments. No overflow occurs.</li>
+<li>the arithmetic mean of the tuple arguments. No overflow occurs.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
+<li>No provision is made to avoid overflows for more than 2 parameters.</li>
+<li>similar to <code>ceil((x+y)/2)</code>, but converted to an integral value.</li>
+<li>similar to <code>floor((x+y)/2)</code> but converted to an integral value.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Mean">Wikipedia</a></li>
 </ul>
-</dd></dl>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -205,24 +229,10 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga1d52fbcf5ca3
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:68</div></div>
-<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e" title="Computes the arithmetic mean of its arguments.">eve::average</a>[mask](x, ...)</code> provides a masked version of <code>average</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, average(x, ...), x)</a></code></p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">eve::raw</a></p>
-<p class="startli">when <code><a class="el" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3" title="Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.">raw(average)</a>(x, args, ...)</code> is used, no provision is made to avoid overflows for more than 2 parameters.</p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6" title="Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.">eve::downward</a>, <a class="el" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80" title="Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.">eve::upward</a></p>
-<p class="startli">only for two integral values, see above</p>
-</li>
-</ul>
-<p>//! </p>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

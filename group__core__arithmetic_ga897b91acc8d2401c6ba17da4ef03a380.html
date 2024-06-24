@@ -140,23 +140,39 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga897b91acc8d2
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U &gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U&gt;</a> <a class="code hl_variable" href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">agm</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">agm</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">agm</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c][<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2.1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">agm</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 2.2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380_html_ga897b91acc8d2401c6ba17da4ef03a380"><div class="ttname"><a href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">eve::agm</a></div><div class="ttdeci">constexpr auto agm</div><div class="ttdoc">Computes the arithmetic-geometric mean.</div><div class="ttdef"><b>Definition:</b> agm.hpp:86</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380_html_ga897b91acc8d2401c6ba17da4ef03a380"><div class="ttname"><a href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380">eve::agm</a></div><div class="ttdeci">constexpr auto agm</div><div class="ttdoc">elementwise_callable computing the the arithmetic-geometric mean.</div><div class="ttdef"><b>Definition:</b> agm.hpp:88</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">arguments</a>.</li>
+<li><code>x</code>, <code>y</code>: floating values.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of the arithmetic-geometric mean is returned. No overflow can occur. The two parameters must share the same sign.</p>
+<ol type="1">
+<li>The value of the arithmetic-geometric mean is returned. No overflow can occur. The two parameters must share the same sign.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://mathworld.wolfram.com/Arithmetic-GeometricMean.html">Wolfram MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Arithmetic-geometric_mean">Wikipedia</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -187,13 +203,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga897b91acc8d2
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga897b91acc8d2401c6ba17da4ef03a380.html#ga897b91acc8d2401c6ba17da4ef03a380" title="Computes the arithmetic-geometric mean.">eve::agm</a>[mask](x, ...)</code> provides a masked version of <code>agm</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, agm(x, ...), x)</a></code> </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
