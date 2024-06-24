@@ -13,23 +13,21 @@
 
 namespace eve
 {
-template<typename Options>
-struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
-{
-  template<eve::value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
+  {
+    template<eve::value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(abs_t, abs_);
-};
+    EVE_CALLABLE_OBJECT(abs_t, abs_);
+  };
 
 //======================================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var abs
-//!   @brief Computes the absolute value of the parameter.
-//!
-//!   Computes the absolute value of the parameter.
+//!   @brief `elementwise_callable` object computing the absolute value of the parameter.
 //!
 //!   @groupheader{Header file}
 //!
@@ -42,42 +40,47 @@ struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T > T abs(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto abs(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto abs[conditional_expr auto c](value auto x) noexcept; // 2.1
+//!      constexpr auto abs[logical_value auto m](value auto x)    noexcept; // 2.2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[saturated](value auto x)               noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [SIMD or scalar value](@ref eve::value).
+//!     * `x`: [SIMD or scalar value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
 //!
 //!   **Return value**
 //!
-//!    The [elementwise](@ref glossary_elementwise) absolute value of `x`, if it is representable.
-//!    More specifically, for signed integers : the absolute value of eve::valmin is not representable and
-//!    the result is undefined.
+//!   1. The absolute value of `x` if it is representable.
+//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   3. The saturated absolute value of `x`. More specifically, for signed
+//!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
+//!
+//!   @note
+//!    . The absolute value of `x` is always representable except fo. The minimum value of integral signed values.
 //!
 //!   @warning
-//!   `abs` is also a standard library function name and there possibly
-//!   exists a C macro version which may be called instead of the EVE version.<br/>
-//!   To avoid confusion, use the eve::abs notation.
+//!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
+//!    instead of the EVE version.<br/>
+//!    To avoid confusion, use the `eve::abs` notation.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/abs)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AbsoluteValue.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Absolute_value)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/core/abs.cpp}
-//!
-//!   @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::abs[mask](x)` provides a masked version of `eve::abs` which is
-//!     equivalent to `if_else (mask, abs(x), x)`.
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::abs[eve::saturated](x)` computes a saturated version of eve::abs.
-//!     More specifically, for any signed integer value `x`, the expression
-//!     `eve::abs[eve::saturated](eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
-//!
 //! @}
 //======================================================================================================================
 inline constexpr auto abs = functor<abs_t>;

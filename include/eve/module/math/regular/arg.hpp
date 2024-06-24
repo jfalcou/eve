@@ -27,11 +27,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_trig
 //! @{
-//! @var arg
+//!   @var arg
+//!   @brief `elementwise_callable` object computing the phase angle (in radians).
 //!
-//! @brief Callable object computing the phase angle (in radians).
-//!
-//!   **Defined in Header**
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,23 +41,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T arg(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto arg(floating_value auto x)                  noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto abs[conditional_expr auto c](value auto x)  noexcept; // 2
+//!      constexpr auto abs[logical_value auto m](value auto x)     noexcept; // 2
+//!
+//!      // Semantic option
+//!      constexpr auto absmax[pedantic](floating_value auto x)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    `x`:   [real](@ref eve::floating_value) argument.
+//!     * `x`: [floating value](@ref eve::floating_value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   Returns the [elementwise](@ref glossary_elementwise)
-//!   the phase angle (in radians) of the input (0 or\f$\pi\f$).
+//!    1. Returns [elementwise](@ref glossary_elementwise) the phase angle (in radians) of the
+//!       input (0 or\f$\pi\f$) depending of the bit of sign of the input
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. If the entry is `NaN` the result is `NaN`.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/complex/arg)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/arg.cpp}
-//!
 //!  @}
 //================================================================================================
 inline constexpr auto arg = functor<arg_t>;
@@ -69,17 +81,12 @@ namespace eve::detail
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  arg_(EVE_REQUIRES(cpu_), O const & o, T a) noexcept
+  arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
   {
-    if constexpr( has_native_abi_v<T> )
-    {
-      auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
-      if constexpr( platform::supports_nans && O::contains(pedantic2))
-        return if_else(is_nan(a), eve::allbits, z);
-      else
-        return z;
-    }
+    auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
+    if constexpr( platform::supports_nans && O::contains(pedantic2))
+      return if_else(is_nan(a), eve::allbits, z);
     else
-      return apply_over(arg[o], a);
+      return z;
   }
 }

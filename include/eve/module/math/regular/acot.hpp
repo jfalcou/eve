@@ -18,20 +18,19 @@ namespace eve
   template<typename Options>
   struct acot_t : elementwise_callable<acot_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acot_t, acot_);
 };
 
-//================================================================================================
+//======================================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acot
+//!   @var acot
+//!   @brief `elementwise_callable` object computing the arc cotangent.
 //!
-//! @brief Callable object computing the arc cotangent.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,30 +41,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_value T > T acot(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acot(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *   Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
-//!       input in the range \f$[-\frac\pi2, \frac\pi2]\f$.
-//!
-//!       In particular:
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
+//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
+//!      In particular:
 //!       * If the element is \f$\pm0\f$, \f$\pm\frac\pi2\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!       * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCotangent.html)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acot.cpp}
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto acot = functor<acot_t>;
 
   namespace detail
@@ -73,13 +81,8 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acot_(EVE_REQUIRES(cpu_), O const&, T const& a)
     {
-      if constexpr( has_native_abi_v<T> )
-      {
-        auto x = eve::abs(a);
-        return bit_xor(atan_kernel(rec[pedantic2](x), x), bitofsign(a));
-      }
-      else
-        return apply_over(acot, a);
+      auto x = eve::abs(a);
+      return bit_xor(atan_kernel(rec[pedantic2](x), x), bitofsign(a));
     }
   }
 }

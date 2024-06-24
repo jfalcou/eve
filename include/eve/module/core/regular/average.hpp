@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var average
-//!   @brief Computes the  arithmetic mean  of its arguments.
+//!   @brief `tuple_callable` computing the arithmetic mean of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,60 +49,57 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      eve::common_value_t<T, U> average(T x, U y) noexcept;
+//!      // Regular overloads
+//!      constexpr auto average(eve::integral_value auto x, eve::integral_value auto y)             noexcept; // 1
+//!      constexpr auto average(eve::floating_value auto x, eve::floating_value auto ... xs)        noexcept; // 2
+//!      constexpr auto average(kumi::non_empty_product_type auto const& tup)                       noexcept; // 3
 //!
-//!      template< eve::floating_value Ts ... >
-//!      eve::common_value_t<Ts ...> average(Ts ... xs) noexcept;
+//!      // Lanes masking
+//!      constexpr auto average[conditional   auto c](/* any of the above overloads */)             noexcept; // 4
+//!      constexpr auto average[logical_value auto m](/* any of the above overloads */)             noexcept; // 4
+//!
+//!      // Semantic options
+//!      constexpr auto average[raw] (/* any of the above overloads */)                             noexcept; // 5
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto average[upward](eve::integral_value auto x, eve::integral_value auto y)     noexcept; // 6
+//!      constexpr auto average[downward](eve::integral_value auto x, eve::integral_value auto y)   noexcept; // 7
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [real](@ref eve::value) arguments.
-//!
-//!     * `xs...` :  [real](@ref eve::floating_value) arguments.
+//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
 //!    The value of the arithmetic mean  of the arguments is returned.
 //!
-//!   @note
-//!     * For two parameters half the sum of `x` and `y`. No overflow occurs.
+//!     1. For two integral parameters half the sum of `x` and `y`. No overflow occurs.
+//!        If the sum is odd, the result is a rounded value at a distance guaranteed
+//!        to be less than or equal to 0.5 of the average floating value, but may differ
+//!        by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
+//!        simd intrinsics to perform the operation, the scalar results may differ by one unit from
+//!        simd ones which are system dependent. </br>
+//!        However the `dowward` (respectively `upward`) options can be used to ensure the result is equivalent to
+//!        the integral conversion of `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
+//!     2. the arithmetic mean of its arguments. No overflow occurs.
+//!     3. the arithmetic mean of the tuple arguments. No overflow occurs.
+//!     4. [The operation is performed conditionnaly](@ref conditional)
+//!     5. No provision is made to avoid overflows for more than 2 parameters.
+//!     6. similar to `ceil((x+y)/2)`,  but converted to an integral value.
+//!     7. similar to `floor((x+y)/2)` but converted to an integral value.
 //!
-//!     * For more than two parameters only floating entries are allowed. No overflow occurs.
-//!
-//!     * If `x` and `y` are [integral values](@ref eve::integral_value) and the sum is odd, the
-//!       result is a rounded value at a distance guaranteed
-//!       to be less than or equal to 0.5 of the average floating value, but may differ
-//!       by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
-//!       simd intrinsics to perform the operation, the scalar results may differ by one unit from
-//!       simd ones which are system dependent.
-//!       However the dowward (respectively upward) decorators can be used to ensure the result is
-//!       `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Mean)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/average.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::average[mask](x, ...)` provides a masked
-//!     version of `average` which is
-//!     equivalent to `if_else(mask, average(x, ...), x)`
-//!
-//!   * eve::raw
-//!
-//!     when `raw(average)(x, args, ...)` is used, no provision is made to avoid
-//!     overflows for more than 2 parameters.
-//!
-//!   * eve::downward,  eve::upward
-//!
-//!     only for two integral values, see above
-//!
-//!//! @}
+//! @}
 //================================================================================================
   inline constexpr auto average = functor<average_t>;
 

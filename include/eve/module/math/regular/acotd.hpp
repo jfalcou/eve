@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct acotd_t : elementwise_callable<acotd_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acotd_t, acotd_);
@@ -25,11 +25,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acotd
+//!   @var acotd
+//!   @brief  `elementwise_callable` object computing the arc cotangent in degree.
 //!
-//! @brief Callable object computing arc cotangent in degree.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -40,33 +39,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acotd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acotd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acotd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acotd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
-//! input in the range \f$]-90, 90]\f$.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, \f$\pm90\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
-//!
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cotangent of the
+//!      input in the range \f$[-90 , 90]\f$.
+//!      In particular:
+//!      * If the element is \f$\pm0\f$, \f$\pm90\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acotd.cpp}
 //!  @}
 //================================================================================================
+
   inline constexpr auto acotd = functor<acotd_t>;
 
   namespace detail

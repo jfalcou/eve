@@ -19,20 +19,19 @@ namespace eve
   template<typename Options>
   struct acscd_t : elementwise_callable<acscd_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acscd_t, acscd_);
 };
 
-//================================================================================================
+//======================================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acscd
+//!   @var acscd
+//!   @brief `elementwise_callable` object computing the arc cosecant.
 //!
-//! @brief Callable object computing  the arc cosecant in degrees.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -43,32 +42,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acscd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acscd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acscd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acscd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) arc cosecant in degrees of the
-//! input in the range \f$[-90, 90]\f$.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm1\f$, \f$\pm90\f$ is returned.
-//!   * If the element \f$|x| < 1\f$, `NaN` is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosecant of the
+//!      input in the range \f$[-90, 90]\f$.
+//!      In particular:
+//!      * If the element is \f$\pm1\f$, \f$\pm90\f$ is returned.
+//!      * If the element \f$|x| < 1\f$, `NaN` is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acscd.cpp}
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto acscd = functor<acscd_t>;
 
   namespace detail

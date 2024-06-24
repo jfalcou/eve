@@ -19,7 +19,7 @@ namespace eve
 template<typename Options>
 struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 {
-  template<eve::floating_ordered_value T>
+  template<eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(acos_t, acos_);
@@ -28,11 +28,10 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //======================================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acos
+//!   @var acos
+//!   @brief `elementwise_callable` object computing the arc cosine.
 //!
-//! @brief Callable object computing the arc cosine.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -43,57 +42,61 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T > T acos(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto acos(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Semantic option
+//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acos[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
+//!      constexpr auto acos[logical_value auto m](floating_value auto x)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating ordered value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!    * Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
 //!      input in the range \f$[0 , \pi]\f$.
-//!
 //!      In particular:
+//!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
+//!      * If \f$|x| > 1\f$, `NaN` is returned.
+//!      * If `x` is a `NaN`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/acos)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCosine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acos.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::raw
-//!     The call `acos[raw](x)` uses a faster implementation which can be slightly less accurate near 1.
 //!  @}
 //======================================================================================================================
-inline constexpr auto acos = functor<acos_t>;
+  inline constexpr auto acos = functor<acos_t>;
 
-namespace detail
-{
-  template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+  namespace detail
   {
-    if constexpr(O::contains(raw2))
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr( has_native_abi_v<T> )
+      if constexpr(O::contains(raw2))
       {
         auto tmp  = pio_2(eve::as(a0))
-                  + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));
+          + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));
         return if_else(a0 == T(1), eve::zero, tmp);
       }
-      else return apply_over(acos[raw], a0);
-    }
-    else
-    {
-      if constexpr( simd_value<T> )
+      else
       {
-        if constexpr( has_native_abi_v<T> )
+        if constexpr( simd_value<T> )
         {
           auto const half  = eve::half(eve::as(a0));
           auto const mhalf = eve::mhalf(eve::as(a0));
@@ -108,33 +111,31 @@ namespace detail
 
           return eve::if_else(x_larger_05, x, eve::pio_2(eve::as(a0)) - x);
         }
-        else return apply_over(acos, a0);
-      }
-      else if constexpr( scalar_value<T> )
-      {
-        if( a0 == T(1) )          return T(0);
-        if( eve::abs(a0) > T(1) ) return nan(eve::as<T>());
-
-        if constexpr( std::same_as<T, float> )
+        else if constexpr( scalar_value<T> )
         {
-          if( a0 < -0.5f )      return pi(eve::as<T>()) - 2.0f * eve::asin(eve::sqrt(inc(a0) * 0.5f));
-          else if( a0 > 0.5f )  return 2.0f * eve::asin(eve::sqrt(oneminus(a0) * 0.5f));
-          else                  return pio_2(eve::as<T>()) - eve::asin(a0);
-        }
-        else if constexpr( std::same_as<T, double> )
-        {
-          if( a0 > 0.5 ) return 2.0 * eve::asin(eve::sqrt(fma(-0.5, a0, 0.5)));
+          if( a0 == T(1) )          return T(0);
+          if( eve::abs(a0) > T(1) ) return nan(eve::as<T>());
 
-          T const pio4 = pio_4(eve::as<T>());
+          if constexpr( std::same_as<T, float> )
+          {
+            if( a0 < -0.5f )      return pi(eve::as<T>()) - 2.0f * eve::asin(eve::sqrt(inc(a0) * 0.5f));
+            else if( a0 > 0.5f )  return 2.0f * eve::asin(eve::sqrt(oneminus(a0) * 0.5f));
+            else                  return pio_2(eve::as<T>()) - eve::asin(a0);
+          }
+          else if constexpr( std::same_as<T, double> )
+          {
+            if( a0 > 0.5 ) return 2.0 * eve::asin(eve::sqrt(fma(-0.5, a0, 0.5)));
 
-          T z = pio4 - eve::asin(a0);
-          z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>());
-          z += pio4;
+            T const pio4 = pio_4(eve::as<T>());
 
-          return z;
+            T z = pio4 - eve::asin(a0);
+            z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>());
+            z += pio4;
+
+            return z;
+          }
         }
       }
     }
   }
-}
 }

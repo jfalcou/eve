@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct asinpi_t : elementwise_callable<asinpi_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(asinpi_t, asinpi_);
@@ -27,11 +27,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var asinpi
+//!   @var asinpi
+//!   @brief Callable object computing te arc sine in \f$\pi\f$ multiples.
 //!
-//! @brief Callable object computing computing the arc sine in \f$\pi\f$ multiples.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,26 +41,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T asinpi(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto asinpi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto asinpi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto asinpi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) arc sine of the
-//!      input in the range \f$[-\frac12, \frac12]\f$.
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) value in \f$\pi\f$ multiples
+//!      of the arc sine of the input in the range \f$]-\frac12, \frac12]\f$.
 //!      In particular:
-//!
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!      * If the element is \f$\pm0\f$, \it is returned unmodified.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/asinpi.cpp}
 //!  @}
 //================================================================================================

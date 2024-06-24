@@ -18,64 +18,71 @@ namespace eve
 template<typename Options>
 struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 {
-  template<eve::floating_ordered_value T>
+  template<eve::floating_value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(acospi_t, acospi_);
 };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acospi
+//!   @var acospi
+//!   @brief  `elementwise_callable` object computing the arc cosine in \f$\pi\f$ multiples.
 //!
-//! @brief Callable object computing the arc cosine in \f$\pi\f$ multiples.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
 //!   @endcode
-//!
 //!
 //!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
-//!    template< eve::floating_ordered_value T > T acospi(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto acospi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Semantic option
+//!      constexpr auto acospi[raw](floating_value auto x)                     noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acospi[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
+//!      constexpr auto acospi[logical_value auto m](floating_value auto x)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   * Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosine of the
 //!      input in \f$\pi\f$ multiples, in the range \f$[0 , 1]\f$.
-//!
 //!      In particular:
-//!
 //!      * If the element is \f$1\f$, \f$+0\f$ is returned.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acospi.cpp}
-//!
 //!  @}
 //================================================================================================
-inline constexpr auto acospi = functor<acospi_t>;
+  inline constexpr auto acospi = functor<acospi_t>;
 
-namespace detail
-{
-  template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+  namespace detail
   {
-    if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));
-    else                                return apply_over(acospi[o], a0);
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    {
+      if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));
+      else                                return apply_over(acospi[o], a0);
+    }
   }
-}
 }

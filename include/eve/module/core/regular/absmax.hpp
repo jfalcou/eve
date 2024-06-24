@@ -34,15 +34,12 @@ namespace eve
   };
 
 //================================================================================================
-
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var absmax
-//!   @brief Computes the absolute value of the maximal element
+//!   @brief `tuple_callable` computing the absolute value of the maximal element.
 //!
-//!   This is equivalent to eve::abs ( eve::max(...) ). but can be subject to optimizations.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -53,42 +50,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value... Ts>
-//!      eve::common_value_t<T, Ts ...> absmax( T x, Ts ... xs ) noexcept;
+//!      // Regular overloads
+//!      constexpr auto absmax(eve::value auto x, eve::value auto ... xs)                noexcept; // 1
+//!      constexpr auto absmax(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto absmax[conditional   auto c](/* any of the above overloads */)   noexcept; // 3
+//!      constexpr auto absmax[logical_value auto m](/* any of the above overloads */)   noexcept; // 3
+//!
+//!      // Semantic option
+//!      constexpr auto absmax[saturated](/* any of the above overloads */)              noexcept; // 4
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto absmax[pedantic](/* any of the above overloads */)               noexcept; // 5.1
+//!      constexpr auto absmax[numeric ](/* any of the above overloads */)               noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
+//!
 //!   **Parameters**
 //!
-//!     * `x`,  `...xs`: [real](@ref eve::value) arguments.
+//!     * `x`,  `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The absolute value of the maximal element is returned.
-//!
-//!    @note
-//!     If any element of the inputs is a NaN,
-//!     the corresponding output element is system-dependent.
+//!      The absolute value of the maximal element is returned.
+//!        1. If any element of the inputs is a NaN the corresponding output element is system-dependent
+//!        2. equivalent to the call on the elements of the tuple.
+//!        3. [The operation is performed conditionnaly](@ref conditional)
+//!        4. computation internally uses `abs[saturated]` instead of `abs`
+//!        5. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
+//!           is used internally
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/absmax.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::absmax[mask](x, ...)` provides a masked version of `eve::absmax` which is
-//!     equivalent to `eve::if_else (mask, absmax(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric, eve::saturated
-//!
-//!     The call `eve::absmax[d](...)`, where d is one of these two first decorators, is equivalent to
-//!     `eve::abs (d( eve::max )(...))`.
-//!
-//!     The call `eve::absmax[d][saturated](...)`, where d is one of these two first decorators or is not present, is equivalent to
-//!     `eve::abs[saturated](d( eve::max )(...))`.
-//!
 //! @}
 //================================================================================================
 inline constexpr auto absmax = functor<absmax_t>;

@@ -2,30 +2,35 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
+using eve::saturated;
+using eve::wide;
+using eve::as;
+using std::int32_t;
+
+using wide_ft = wide<float>;
+using wide_it = wide<std::int32_t>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};
-  wide_it pi = {-1, 2, -3, -32768};
+  wide_ft pf([](auto i, auto){ return i%2 ? i : -i;});
+  wide_it pi = -eve::valmax(as<wide_it>()) - eve::iota(as<wide_it>{});
+  wide_it ti([](auto i, auto){ return i < 2 ? 1 : 0;});
 
   std::cout << "---- simd" << '\n'
-            << "<- pf                      = " << pf << '\n'
-            << "-> abs(pf)                 = " << eve::abs(pf) << '\n'
-            << "<- pi                      = " << pi << '\n'
-            << "-> abs(pi)                 = " << eve::abs(pi) << '\n'
-            << "-> eve::abs[saturated](pi) = " << eve::abs[eve::saturated](pi) << '\n'
-            << "-> abs[pi > -2](pi)        = " << eve::abs[pi > -2](pi) << '\n';
-  return 0;
+            << "<- pf                 = " << pf << '\n'
+            << "-> abs(pf)            = " << eve::abs(pf) << '\n'
+            << "<- pi                 = " << pi << '\n'
+            << "-> abs(pi)            = " << eve::abs(pi) << '\n'
+            << "-> abs[saturated](pi) = " << eve::abs[saturated](pi) << '\n'
+            << "-> abs[ti > 0](pi)    = " << eve::abs[ti > 0](pi) << '\n';
 
   float        xf = -32768.0f;
   std::int16_t xi = -32768;
 
   std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> abs(xf)             = " << eve::abs(xf) << '\n'
-            << "<- xi                  = " << xi << '\n'
-            << "-> abs(xi)             = " << eve::abs(xi) << '\n';
+            << "<- xf                 = " << xf << '\n'
+            << "-> abs(xf)            = " << eve::abs(xf) << '\n'
+            << "<- xi                 = " << xi << '\n'
+            << "-> abs(xi)            = " << eve::abs(xi) << '\n';
   return 0;
 }

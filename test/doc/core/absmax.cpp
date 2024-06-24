@@ -2,6 +2,13 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+using eve::saturated;
+using eve::numeric;
+using eve::pedantic; 
+using eve::wide;
+using eve::as;
+using std::int32_t;
+
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()

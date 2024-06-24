@@ -33,6 +33,7 @@ int main()
             << " -> add(kumi::tuple{pf, pf})      = " << eve::add( kumi::tuple{pf, pf})  << '\n'
             << " -> add(kumi::tuple{pf, 1.0f)     = " << eve::add( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> add(kumi::tuple{1.0f, pf)     = " << eve::add( kumi::tuple{1.0f, pf})  << '\n'
-            << " -> add[saturated](pi,12,pi,pi)   = " << eve::add[eve::saturated](pi, 12, pi,pi) << '\n';
+            << " -> add[saturated](pi,12,pi,pi)   = " << eve::add[eve::saturated](pi, 12, pi,pi) << '\n'
+            << " -> add[saturated](kumi::tuple{pi, 12,pi,pi)} = " << eve::add[eve::saturated](kumi::tuple{pi,12,pi,pi})<< '\n';
   return 0;
 }

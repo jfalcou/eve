@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var add
-//!   @brief Computes the sum of its arguments.
+//!   @brief `tuple_callable` computing the sum of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,44 +49,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<eve::value... Ts >
-//!      eve::common_value_t<Ts ...> add(Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto add(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)          noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto add[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 3
+//!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto add[saturated](value auto x, value auto ... xs)               noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` :  [Values](@ref eve::value) to sum.
+//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!   **Return value**
+//!    **Return value**
 //!
-//!     The value of the sum of the arguments.
+//!    The value of the sum of the arguments is returned.
+//!    1. Take care that for floating entries, the addition is not perfectly associative due to rounding errors.
+//!       This call performs additions in reverse incoming order.
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. The call `add[saturated](...)` computes a saturated version of `add`.
+//!       Take care that for signed integral entries this kind of addition is not associative at all.
+//!       This call perform saturated additions in reverse incoming order.
 //!
 //!   @note
-//!
-//!     * Take care that for floating entries, the addition is only 'almost' associative.
-//!       This call performs additions in reverse incoming order.
-//!
-//!     * Although the infix notation with `+` is supported for two parameters, the `+` operator on
-//!       standard scalar types is the original one and so can lead to automatic promotion.
+//!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
+//!      standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/add.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::add[mask](x, ...)` provides a masked
-//!     version of `add` which is equivalent to `if_else(mask, eve::add(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::add[eve::saturated](...)` computes a saturated version of `eve::add`.
-//!
-//!     Take care that for signed integral entries this kind of addition is not associative at all.
-//!     This call perform saturated additions in reverse incoming order.
 //! @}
 //================================================================================================
   inline constexpr auto add = functor<add_t>;
