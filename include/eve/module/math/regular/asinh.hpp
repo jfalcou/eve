@@ -73,7 +73,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/asinh)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/asinh)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicSine.html)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)

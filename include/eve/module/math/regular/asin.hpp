@@ -72,7 +72,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/asin)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/asin)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseSine.html)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)

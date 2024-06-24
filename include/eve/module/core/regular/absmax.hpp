@@ -71,6 +71,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [real](@ref value) arguments.
+//!     * `tup': [tuple](@ref kumi::tuple) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -80,7 +81,7 @@ namespace eve
 //!    1. If any element of the inputs is a NaN the corresponding output element is system-dependent
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)
-//!    4. computation uses internally `abs[saturated]` instead of `abs`
+//!    4. computation internally uses `abs[saturated]` instead of `abs`
 //!    6. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
 //!       is used internally
 //!

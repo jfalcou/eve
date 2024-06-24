@@ -99,7 +99,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/atan2)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/atan2)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseTangent.html)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 //!

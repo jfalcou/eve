@@ -67,7 +67,7 @@ namespace eve
 //!    3. If the entry is `NaN` the result is `NaN`.
 //!
 //!  @groupheader{External references}
-//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/complex/arg)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/complex/arg)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/arg.cpp}

@@ -75,7 +75,7 @@ namespace eve
 //!    To avoid confusion, use the `eve::abs` notation.
 //!
 //!  @groupheader{External references}
-//!   *  [cpp standard reference](https://en.cppreference.com/w/cpp/numeric/math/abs)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/abs)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AbsoluteValue.html)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Absolute_value)
 //!
