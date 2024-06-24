@@ -21,7 +21,7 @@ namespace eve
   template<typename Options>
   struct acosh_t : elementwise_callable<acosh_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acosh_t, acosh_);
@@ -31,10 +31,9 @@ namespace eve
 //! @addtogroup math_invhyper
 //! @{
 //! @var acosh
+//! @brief `elementwise_callable` object computing  \f$\log(x+\sqrt{x^2-1})\f$.
 //!
-//! @brief Callable object computing  \f$\log(x+\sqrt{x^2-1})\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -45,30 +44,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acosh(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acosh(floating_value auto x)                         noexcept; // 1
 //!
+//!      // Lanes masking
+//!      constexpr auto acosh[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acosh[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`:  [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   * Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
 //!      For values in the domain `x>1`, the inverse hyperbolic cosine is semantically equivalent to
 //!      \f$\log(x+\sqrt{x^2-1})\f$.
-//!
 //!      In particular:
+//!      * If `x` is less than \f$1\f$ or `Nan`, `NaN` is returned.
+//!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
+//!      * If `x` is \f$+\infty\f$, \f$+\infty\f$ is returned.
+//!      * If `x` is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the element is less than \f$1\f$ or `Nan`, `NaN` is returned.
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element is \f$+\infty\f$, \f$+\infty\f$ is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/acosh)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicCosine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acosh.cpp}
 //!
 //!  @}

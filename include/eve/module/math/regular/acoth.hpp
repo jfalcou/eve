@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct acoth_t : elementwise_callable<acoth_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acoth_t, acoth_);
@@ -27,11 +27,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
-//! @var acoth
+//!   @var acoth
+//!   @brief `elementwise_callable` object computing the inverse hyperbolic cotangent.
 //!
-//! @brief Callable object computing  \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,30 +41,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acoth(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acoth(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acoth[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acoth[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cotangent of the input.
-//!      The inverse hyperbolic sine is semantically equivalent to \f$\frac{1}{2}\log((x+1)/(x-1))\f$.
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cotangent of the
+//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
 //!      In particular:
+//!      * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+//!      * If the element is less than one or a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!     * If the element is \f$\pm1\f$, \f$\pm0\f$ is returned.
-//!     * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
-//!     * If the element is less than one or a `NaN`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicCotangent.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acoth.cpp}
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto acoth = functor<acoth_t>;
 
   namespace detail

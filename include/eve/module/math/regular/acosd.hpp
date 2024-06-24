@@ -18,19 +18,19 @@ namespace eve
   template<typename Options>
   struct acosd_t : elementwise_callable<acosd_t, Options, raw_option>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acosd_t, acosd_);
   };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acosd
+//!   @var acosd
+//!   @brief  `elementwise_callable` object computing the arc cosine in degree.
 //!
-//! @brief Callable object computing the arc cosine from input in degree.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -41,28 +41,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acosd(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto acosd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Semantic option
+//!      constexpr auto acosd[raw](floating_value auto x)                     noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto acosd[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
+//!      constexpr auto acosd[logical_value auto m](floating_value auto x)    noexcept; // 3.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cosine of the
-//! input in the range \f$[0 , 180]\f$.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!   * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) value in degrees of the arc cosine of the
+//!      input in the range \f$[0 , 180]\f$.
+//!      In particular:
+//!      * If `x` is \f$1\f$, \f$+0\f$ is returned.
+//!      * If \f$|x| > 1\f$, `NaN` is returned.
+//!      * If `x` is a `NaN`, `NaN` is returned.
+//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
+//!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acosd.cpp}
 //!  @}
 //================================================================================================

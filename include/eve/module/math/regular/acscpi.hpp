@@ -19,19 +19,19 @@ namespace eve
   template<typename Options>
   struct acscpi_t : elementwise_callable<acscpi_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acscpi_t, acscpi_);
 };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acscpi
+//!   @var acscpi
+//!   @brief  `elementwise_callable` object computing the arc cosecant in \f$\pi\f$ multiples.
 //!
-//! @brief Callable object computing he arc cosecant in \f$\pi\f$ multiples.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,29 +42,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T acscpi(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto acscpi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acscpi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acscpi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *   Returns the [elementwise](@ref glossary_elementwise) arc cosecant of the
-//!       input in the range \f$[-\frac12, \frac12]\f$.
-//!
-//!       In particular:
-//!
-//!        * If the element is \f$\pm1\f$, \f$\pm\frac12\f$ is returned.
-//!        * If the element \f$|x| < 1\f$, `NaN` is returned.
-//!        * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-//!        * If the element is a `Nan`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) arc cosecant of the
+//!      input in \f$\pi\f$ multiples, in the range \f$[-\frac12, \frac12]\f$.
+//!      In particular:
+//!      * If the element is \f$\pm1\f$, \f$\pm\frac12\f$ is returned.
+//!      * If the element \f$|x| < 1\f$, `NaN` is returned.
+//!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
+//!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acscpi.cpp}
 //!  @}
 //================================================================================================

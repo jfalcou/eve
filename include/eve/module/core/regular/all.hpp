@@ -18,7 +18,7 @@ namespace eve
 //!   @var all
 //!   @brief Computes a bool value which is true if and only if all elements of `x` are not zero.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -29,36 +29,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      bool all(eve::as_logical<T> x) noexcept;  //1
+//!      // Regular overloads
+//!      constexpr bool all(value auto x)                                              noexcept; // 1
+//!      constexpr bool all(top_bits auto M t)                                         noexcept; // 1
 //!
-//!      template< eve::top_bits M >
-//!      bool all(M m) noexcept;                   //2
+//!      // Lanes masking
+//!      constexpr auto all[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto all[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//!   *  A bool value which is true if and only if all elements of `x` are not zero.
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::logical_value).
-//!     * `m` :  [argument](@ref eve::top_bits).
+//!     * `x`: [argument](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    A bool value.
+//!      A bool value.
+//!
+//!      1. A bool value which is true if and only if all elements of `x` are not zero.
+//!      2. A masked version  which is true if and only if all retained elements of `x` are not zero.
+//!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/all.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::all[mask](x)` provides a masked
-//!     version of `all` which is
-//!     equivalent to : all not masked elements are not zero.
-//!
 //!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(all_, all);

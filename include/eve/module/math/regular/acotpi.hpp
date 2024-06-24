@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct acotpi_t : elementwise_callable<acotpi_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acotpi_t, acotpi_);
@@ -27,43 +27,46 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
-//! @var acotpi
+//!   @var acotpi
+//!   @brief Callable object computing te arc cotangent in \f$\pi\f$ multiples.
 //!
-//! @brief Callable object computing te arc cotangent in \f$\pi\f$ multiples.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
 //!   @endcode
-//!
 //!
 //!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T > T acotpi(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto acotpi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto acotpi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto acotpi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   * Returns the [elementwise](@ref glossary_elementwise) arc cotangent of the
-//!      input in the range \f$]-\frac12, \frac12]\f$.
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) value in \f$\pi\f$ multiples
+//!      of the arc cotangent of the input in the range \f$]-\frac12, \frac12]\f$.
 //!      In particular:
-//!
 //!      * If the element is \f$\pm0\f$, \f$\pm\frac12\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/acotpi.cpp}
 //!  @}
 //================================================================================================

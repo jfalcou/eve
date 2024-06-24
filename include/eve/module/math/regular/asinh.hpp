@@ -22,70 +22,66 @@ namespace eve
   template<typename Options>
   struct asinh_t : elementwise_callable<asinh_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(asinh_t, asinh_);
 };
 
+
 //================================================================================================
 //! @addtogroup math_invhyper
 //! @{
-//! @var asinh
+//!   @var asinh
+//!   @brief `elementwise_callable` object computing the inverse hyperbolic
+//!   sine :\f$\log(x+\sqrt{x^2+1})\f$.
 //!
-//! @brief Callable object computing \f$\log(x+\sqrt{x^2+1})\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
 //!   @endcode
-//!
 //!
 //!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T asinh(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto asinh(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto asinh[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto asinh[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic cosine of the input.
-//!      The inverse hyperbolic sine is semantically equivalent to \f$\log(x+\sqrt{x^2+1})\f$.
-//!
+//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic sine of the
+//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
 //!      In particular:
-//!
 //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
 //!      * If the element is a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * for every z: eve::asinh(eve::conj(z)) == eve::conj(std::asinh(z))
-//!      * for every z: eve::asinh(-z) == -eve::asinh(z)
-//!      * If z is \f$+0\f$, the result is \f$+0\f$
-//!      * If z is \f$x+i \infty\f$ (for any positive finite x), the result is \f$+\infty+i \pi/2\f$
-//!      * If z is \f$x,NaN\f$ (for any finite x), the result is \f$NaN+ iNaN\f$
-//!      * If z is \f$+\infty+ iy\f$ (for any positive finite y), the result is \f$+\infty+i 0\f$
-//!      * If z is \f$+\infty+i \infty\f$, the result is \f$+\infty+ i\pi/4\f$
-//!      * If z is \f$+\infty+ iNaN\f$, the result is \f$+\infty+ iNaN\f$
-//!      * If z is \f$NaN+i 0\f$, the result is \f$NaN+i 0\f$
-//!      * If z is \f$NaN+ iy\f$ (for any finite nonzero y), the result is \f$NaN+ iNaN\f$
-//!      * If z is \f$NaN+i \infty\f$, the result is \f$\pm \infty+ iNaN\f$ (the sign of the real part is unspecified)
-//!      * If z is \f$NaN+ iNaN\f$, the result is \f$NaN+ iNaN\f$
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/asinh)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicSine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/asinh.cpp}
-//!
 //!  @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto asinh = functor<asinh_t>;
 
   namespace detail
