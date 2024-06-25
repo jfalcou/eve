@@ -95,7 +95,6 @@
 #include <eve/module/core/regular/is_flint.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_gtz.hpp>
-#include <eve/module/core/regular/is_imag.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
@@ -125,7 +124,6 @@
 #include <eve/module/core/regular/is_ordered.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_pow2.hpp>
-#include <eve/module/core/regular/is_real.hpp>
 #include <eve/module/core/regular/is_unit.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/iterate_selected.hpp>
