@@ -55,7 +55,7 @@ namespace eve
 //!      constexpr auto average(kumi::non_empty_product_type auto const& tup)                       noexcept; // 3
 //!
 //!      // Lanes masking
-//!      constexpr auto average[conditional   auto c](/* any of the above overloads */)             noexcept; // 4
+//!      constexpr auto average[conditional_expr auto c](/* any of the above overloads */)          noexcept; // 4
 //!      constexpr auto average[logical_value auto m](/* any of the above overloads */)             noexcept; // 4
 //!
 //!      // Semantic options

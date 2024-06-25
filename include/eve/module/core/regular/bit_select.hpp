@@ -29,9 +29,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_select
-//!   @brief selects bits from a mask and two entries.
+//!   @brief  `strict_elementwise_callable` object selecting bits from a mask and two entries.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -42,36 +42,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< value T, value U > U bit_select)( T m, U x, U y )
-//!      noexcept;
+//!     template < value M, value T, value U > constexpr auto bit_select((Logical<M> m, T x, U y) noexcept;
 //!   }
 //!   @endcode
 //!
-//!
 //!   **Parameters**
 //!
-//!   * `m`:   mask [value](@ref eve::value)
-//!
-//!   * `y`, `z`:   selection [values](@ref eve::value)
-//!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `m`: [mask](@ref logicalvalue)
+//!     * `x`, `y`:  [selection choices](@ref value)
 //!
 //!    **Return value**
+//!         The value of the selected bits is returned.
 //!
-//!      * In a short way (omitting casting details to bring all bit sizes of the parameters equal),
-//!      it means that the result is
-//!        composed of the bits of `x` for which the corresponding bit of `m` is set
-//!        and the bits of  `y` for which the corresponding bit of `m` is unset.
+//!           * In a short way (omitting casting details to bring all bit sizes of the parameters equal),
+//!             it means that the result is composed of the bits of `x` for which the corresponding
+//!             bit of `m` is set and the bits of  `y` for which the corresponding bit of `m` is unset.
 //!
-//!      * If `T` or `U` is an [simd value](@ref eve::simd_value), the type of the result has the
-//!      element type
-//!        of `T` and the maximum of the cardinals of `M` and `T`, otherwise it is `T`.
-//!        The value of the selected bits is returned.
+//!           * If `T` or `U` is an [simd value](@ref eve::simd_value), the type of the result has the
+//!             element type of the common type of `T` and `U` and the maximum of the cardinals of `M`
+//!             and this type, otherwise it is `T`.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_select.cpp}
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto bit_select = functor<bit_select_t>;

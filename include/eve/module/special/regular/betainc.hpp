@@ -33,7 +33,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //================================================================================================
 //! @addtogroup special
 //! @{
-//!   @var betaincinc
+//!   @var betainc
 //!   @brief Computes the betainc incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =
 //!   \frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
 //!
@@ -48,10 +48,15 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value S
-//!              , eve::floating_ordered_value T
-//!              , eve::floating_ordered_value U>
-//!      eve:common_value_t<S, T, U>  $name$(S s, T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto betainc(floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)    noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto betainc[conditional_expr auto c](floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
+//!      constexpr auto betainc[logical_value auto m](floating_value auto s,
+//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -64,6 +69,11 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!   **Return value**
 //!
 //!   The value of the incomplete betainc function is returned.
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/8.17)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/IncompleteBetaFunction.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Beta_function)
 //!
 //!   @groupheader{Example}
 //!

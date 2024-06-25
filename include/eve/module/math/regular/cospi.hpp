@@ -35,7 +35,7 @@ namespace eve
 //!
 //! @brief Callable object computing the cosine from an input in \f$\pi\f$ multiples.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>

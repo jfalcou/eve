@@ -52,8 +52,8 @@ namespace eve
 //!      constexpr auto atan2d[pedantic](floating_value auto x, floating_value auto y)                noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto atan2d[conditional_expr auto c][floating_value auto x, floating_value auto y) noexcept; // 3.1
-//!      constexpr auto atan2d[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 3.2
+//!      constexpr auto atan2d[conditional_expr auto c][floating_value auto x, floating_value auto y) noexcept; // 3
+//!      constexpr auto atan2d[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 3
 //!   }
 //!   @endcode
 //!

@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_flip
-//!   @brief flip the value the ith bit of each element.
+//!   @brief  `strict_elementwise_callable` object flipping the value the ith bit of each element.
 //!
 //!   **Defined in Header**
 //!
@@ -44,33 +44,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<unsigned_value T, integral_value I>
-//!      T bit_flip(T x, I i) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_flip(value auto x, integral_value auto i)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_flip[conditional_expr auto c](value auto x, integral_value auto i) noexcept; // 2
+//!      constexpr auto bit_flip[logical_value auto m](value auto x, integral_value auto i)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
-//!     * `i` :  index to flip.
+//!     * `x`: [integral argument](@ref eve::integral_value).
+//!     * `i`: index to flip.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the parameter is returned with the ith bit flipped.
-//!    if the index is out of range the call will assert.
+//!      1. The value of the parameter is returned with the ith bit flipped.
+//!         if the index is out of range the call will assert.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_flip.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_flip[mask](x, ...)` provides a masked
-//!     version of `bit_flip` which is
-//!     equivalent to `if_else(mask, bit_flip(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_flip = functor<bit_flip_t>;

@@ -36,7 +36,7 @@ namespace eve
 //!
 //! @brief Callable object computing cosine from an input in degrees.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>

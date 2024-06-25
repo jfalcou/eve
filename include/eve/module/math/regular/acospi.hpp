@@ -48,8 +48,8 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!      constexpr auto acospi[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto acospi[conditional_expr auto c](floating_value auto x) noexcept; // 3.1
-//!      constexpr auto acospi[logical_value auto m](floating_value auto x)    noexcept; // 3.2
+//!      constexpr auto acospi[conditional_expr auto c](floating_value auto x) noexcept; // 3
+//!      constexpr auto acospi[logical_value auto m](floating_value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!

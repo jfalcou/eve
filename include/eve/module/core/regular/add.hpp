@@ -54,11 +54,11 @@ namespace eve
 //!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)          noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto add[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 3
-//!      constexpr auto add[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 3
+//!      constexpr auto add[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto add[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto add[saturated](value auto x, value auto ... xs)               noexcept; // 4
+//!      constexpr auto add[saturated](/*any of the above overloads*/)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
