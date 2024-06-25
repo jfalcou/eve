@@ -45,7 +45,6 @@
 #include <eve/module/core/regular/ceil.hpp>
 #include <eve/module/core/regular/clamp.hpp>
 #include <eve/module/core/regular/combine.hpp>
-#include <eve/module/core/regular/conj.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/count_true.hpp>
