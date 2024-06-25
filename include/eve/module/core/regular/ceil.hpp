@@ -26,7 +26,7 @@ namespace eve
     template<eve::value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const noexcept
     {
-//      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
+      //      static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
       return EVE_DISPATCH_CALL(v, target);
     }
 
@@ -37,7 +37,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var ceil
-//!   @brief Computes the smallest integer not less than the input.
+//!   @brief `elementwise_callable` object computing the smallest integer not less than the input.
 //!
 //!   **Defined in Header**
 //!
@@ -47,49 +47,50 @@ namespace eve
 //!
 //!   @groupheader{Callable Signatures}
 //!
-//!   @code
+//!   @codeabs
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T ceil(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto ceil(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ceil[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto ceil[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto ceil[almost = tol](floating_value auto x)   noexcept; // 3
+//!      constexpr auto ceil[almostl](floating_value auto x)        noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x` :[value](@ref value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol' [scalar_value](@ref value) tolerance.
 //!
 //!   **Return value**
 //!
-//!     The smallest integer not less than `x`.
+//!     1. The smallest integer not less than `x`.
+//!        The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!        `FE_TOWARDZERO`. This function object implements the `FE_UPWARD` version.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. `almost` allows a fuzzy interpretation of ceil associated to a scalar tolerance.
+//!         - with an integral value `tol`: computes the ceil of the previous nth
+//!           representable value in the `x` type.
+//!         - with a floating  value `tol`: computes the ceil with a tolerance `tol`
+//!           using Hagerty's FL5 function.
+//!     4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as(x))(x)`
 //!
-//!     The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!     `FE_TOWARDZERO`. This function object implements the `FE_UPWARD` version.
-//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/ceil)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Floor_and_ceiling_functions)
+//!   *  [Hagerty's FL5](https://dl.acm.org/doi/pdf/10.1145/586032.586036)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/ceil.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::ceil[mask](x)` provides a masked version of `eve::ceil` which is
-//!     equivalent to `if_else (mask, ceil(x), x)`.
-//!
-//!   * eve::almost
-//!
-//!     The expression `ceil[almost = tol](x)` computes a tolerant ceil value for `x`,
-//!     where `x` must be a floating value and tol a scalar value.
-//!
-//!      * If `tol` is a floating value, computes the floor with a tolerance `tol`
-//!        using Hagerty's FL5 function.
-//!      * If `tol` is an integral value n, computes the floor of the next nth
-//!        representable value in the `x` type.
-//!      * ceil[almost](x) is equivalent to `ceil[tolerance = 3*eve::eps(eve::as (x))(x)`).
-//!
-//! @}
+.//! @}
 //================================================================================================
 inline constexpr auto ceil = functor<ceil_t>;
 }

@@ -46,7 +46,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_set(unsigned_value auto x integral_scalar_value n) noexcept;             // 1
+//!      constexpr auto bit_set(unsigned_value auto x integral_scalar_value auto n) noexcept;        // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto bit_set[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2

@@ -55,7 +55,7 @@ namespace eve
 //!      constexpr auto absmax(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto absmax[conditiona_exprl auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto absmax[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
 //!      constexpr auto absmax[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!
 //!      // Semantic option

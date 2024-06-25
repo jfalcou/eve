@@ -58,7 +58,6 @@ namespace eve
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!
 //!   **Return value**
 //!
 //!   1. The absolute value of `x` if it is representable.

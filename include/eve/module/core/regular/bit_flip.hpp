@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_flip
-//!   @brief  `strict_elementwise_callable` object fliping the value the ith bit of each element.
+//!   @brief  `strict_elementwise_callable` object flipping the value the ith bit of each element.
 //!
 //!   **Defined in Header**
 //!
