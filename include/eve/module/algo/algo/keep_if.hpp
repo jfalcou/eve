@@ -66,7 +66,7 @@ namespace eve::algo
   //! @addtogroup algos
   //! @{
   //!   @var keep_if
-  //!   @brief In-place version of `eve::algo::copy_if`
+  //!   @brief In-place version of `std::copy_if`
   //!
   //!   **Defined in Header**
   //!
@@ -77,7 +77,10 @@ namespace eve::algo
   //!   Takes values that pass the predicate, and copies them to the beginning of the range.
   //!   Values past the returned sentinel are to be considered garbage.
   //!
-  //!   Acts like an in-place version of `::copy_if`, or an eager version of filter.
+  //!   Acts like an eager version of filter, or an in-place version of `std::copy_if`:
+  //!   @code
+  //!   std::copy_if(r.begin(), r.end(), r.begin(), predicate);
+  //!   @endcode
   //!
   //!   @note
   //!   If you need to apply a transformation, you can use `eve::algo::views::map` or `eve::algo::transform_keep_if`.

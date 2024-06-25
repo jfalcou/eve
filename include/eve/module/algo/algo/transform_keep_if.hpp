@@ -73,7 +73,9 @@ namespace eve::algo
   //!   #include <eve/module/algo.hpp>
   //!   @endcode
   //!
-  //!   Transforms the range but only keeps the elements that pass a certain predicate.
+  //!   Conditionally copies values that pass a predicate to the beginning of the range,
+  //!   transforming them in the process.
+  //!   Values past the returned sentinel are to be considered garbage.
   //!
   //!   @note
   //!   If the scalar operation is cheap enough, `::keep_if` + `views::map` might be slightly faster.
