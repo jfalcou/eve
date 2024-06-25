@@ -25,8 +25,10 @@ namespace eve::detail
     using t_t = wide<T, typename N::combined_type>;
     using s_t = typename t_t::storage_type;
 
-         if constexpr ( has_plain_translation<T> ) return bit_cast(combine(current_api, translate(l), translate(h)), t_t{});
-         if constexpr ( has_aggregated_abi_v<t_t>                 )  return s_t {l , h};
+    if      constexpr ( has_plain_translation<T> ) return bit_cast(combine( current_api, translate(l), translate(h))
+                                                                          , as<t_t>{}
+                                                                          );
+    else if constexpr ( has_aggregated_abi_v<t_t>                 )  return s_t {l , h};
     else if constexpr ( native_simd_for_abi<wide<T, N>, x86_256_> )  // 256 -> 512 on avx512
     {
       if constexpr( std::same_as<T, double> )
