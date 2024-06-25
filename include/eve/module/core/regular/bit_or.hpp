@@ -63,8 +63,8 @@ namespace eve
 //!      constexpr auto bit_or(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_or[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
-//!      constexpr auto bit_or[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
+//!      constexpr auto bit_or[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 2
+//!      constexpr auto bit_or[logical_value auto m](/*any of the above overloads*/)     noexcept; // 2
 //!   }
 //!   @endcode
 //!

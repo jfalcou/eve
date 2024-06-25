@@ -53,8 +53,8 @@ namespace eve
 //!      constexpr auto bit_ornot(value auto x, value auto ... xs) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_ornot[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
-//!      constexpr auto bit_ornot[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
+//!      constexpr auto bit_ornot[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 2
+//!      constexpr auto bit_ornot[logical_value auto m](/*any of the above overloads*/)     noexcept; // 2
 //!   }
 //!   @endcode
 //!

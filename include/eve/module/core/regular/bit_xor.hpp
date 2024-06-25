@@ -64,8 +64,8 @@ namespace eve
 //!      constexpr auto bit_xor(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_xor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 3
-//!      constexpr auto bit_xor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 3
+//!      constexpr auto bit_xor[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto bit_xor[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
