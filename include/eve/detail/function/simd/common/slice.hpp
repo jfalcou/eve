@@ -151,7 +151,7 @@ namespace eve::detail
     {
       using sub_t = as<as_wide_t<T, typename N::split_type>>;
 
-      return bit_cast(bit_cast(a, as<wide<translate_t<T>, N>>{}).slice(s), sub_t{});
+      return bit_cast(translate(a).slice(s), sub_t{});
     }
     else
     {
