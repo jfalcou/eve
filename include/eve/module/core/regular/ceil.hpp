@@ -47,7 +47,7 @@ namespace eve
 //!
 //!   @groupheader{Callable Signatures}
 //!
-//!   @codeabs
+//!   @code
 //!   namespace eve
 //!   {
 //!      // Regular overload
