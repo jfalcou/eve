@@ -35,9 +35,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var byte_reverse
-//!   @brief elementwise reverses the byte order.
+//!   @brief  `elementwise_callable` object reversing the byte order.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,8 +48,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T byte_reverse(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto  byte_reverse(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto  byte_reverse[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto  byte_reverse[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -59,24 +63,15 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The values of the parameter elements are returned with bytes in reversed order.
+//!      1. The values of the parameter elements are returned with bytes in reversed order.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note eve::byte_reverse is the functional equivalent to std::byte_swap.
 //!   However, we decided to name it byte_reverse in order to keep a proper naming
 //!   scheme aligned with the eve::bit_swap/eve::bit_reverse functions.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/byte_reverse.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::byte_reverse[mask](x, ...)` provides a masked
-//!     version of `byte_reverse` which is
-//!     equivalent to `if_else(mask, byte_reverse(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto byte_reverse = functor<byte_reverse_t>;

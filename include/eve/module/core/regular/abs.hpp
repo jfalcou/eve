@@ -44,8 +44,8 @@ namespace eve
 //!      constexpr auto abs(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto abs[conditional_expr auto c](value auto x) noexcept; // 2.1
-//!      constexpr auto abs[logical_value auto m](value auto x)    noexcept; // 2.2
+//!      constexpr auto abs[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto abs[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
 //!      constexpr auto abs[saturated](value auto x)               noexcept; // 3
