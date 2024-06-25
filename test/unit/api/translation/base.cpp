@@ -14,11 +14,9 @@ TTS_CASE_TPL("Equivalent enum trait impl", eve::test::scalar::integers)
 {
   enum class E: T { };
 
-  static_assert(!eve::has_plain_translation<T>, "T should not have a translated type");
-  static_assert(eve::has_plain_translation<E>, "E should have an translated type");
-  static_assert(std::same_as<eve::translate_t<E>, T>, "The translated type of E should be T");
-
-  TTS_PASS("All checks passed");
+  TTS_CONSTEXPR_EXPECT_NOT((eve::has_plain_translation<T>)) << "T should not have a translated type";
+  TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<E>)) << "E should have a translated type";
+  TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<E>, T>)) << "The translated type of E should be T";
 };
 
 template <typename E>
@@ -32,9 +30,7 @@ TTS_CASE_TPL("Equivalent struct trait impl", eve::test::scalar::all_types)
 {
   using S = BaseStruct<T>;
 
-  static_assert(!eve::has_plain_translation<T>, "T should not have a translated type");
-  static_assert(eve::has_plain_translation<S>, "S should have an translated type");
-  static_assert(std::same_as<eve::translate_t<S>, T>, "The translated type of S should be T");
-
-  TTS_PASS("All checks passed");
+  TTS_CONSTEXPR_EXPECT_NOT((eve::has_plain_translation<T>)) << "T should not have a translated type";
+  TTS_CONSTEXPR_EXPECT((eve::has_plain_translation<S>)) << "S should have a translated type";
+  TTS_CONSTEXPR_EXPECT((std::same_as<eve::translate_t<S>, T>)) << "The translated type of S should be T";
 };
