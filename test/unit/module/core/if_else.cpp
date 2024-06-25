@@ -132,20 +132,22 @@ TTS_CASE_WITH(
 TTS_CASE_WITH("Check behavior of eve::if_else(conditional, a, b)",
               eve::test::wides<tts::types<std::uint8_t>>::type,
               tts::generate(tts::randoms(-10, +10), tts::logicals(0, 3)))
-<typename T, typename L>(T const& a,
-                         L const& l) {{T actual = eve::if_else[eve::ignore_first(1)](a, T(20));
-T expected = a;
-expected.set(0, 20);
-TTS_EQUAL(actual, expected);
-actual = eve::if_else[eve::ignore_first(1)](a, 20);
-TTS_EQUAL(actual, expected);
-}
+<typename T, typename L>(T const& a,L const& l)
 {
-  L actual   = eve::if_else[eve::ignore_first(1)](l, eve::false_(eve::as<L>()));
-  L expected = l;
-  expected.set(0, false);
-  TTS_EQUAL(actual, expected);
-  actual = eve::if_else[eve::ignore_first(1)](l, L{false});
-  TTS_EQUAL(actual, expected);
-}
+  {
+    T actual = eve::if_else(eve::ignore_first(1),a, T(20));
+    T expected = a;
+    expected.set(0, 20);
+    TTS_EQUAL(actual, expected);
+    actual = eve::if_else(eve::ignore_first(1),a, 20);
+    TTS_EQUAL(actual, expected);
+  }
+  {
+    L actual   = eve::if_else(eve::ignore_first(1), l, eve::false_(eve::as<L>()));
+    L expected = l;
+    expected.set(0, false);
+    TTS_EQUAL(actual, expected);
+    actual = eve::if_else(eve::ignore_first(1), l, L{false});
+    TTS_EQUAL(actual, expected);
+  }
 };

@@ -40,7 +40,7 @@ namespace eve::detail
       }
     }
   };
-  
+
   template<typename... Ts>
   using find_common_value_wide = typename decltype((find_common_value_reducer<Ts>{} % ...))::type;
 

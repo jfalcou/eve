@@ -9,7 +9,6 @@
 
 #include <eve/arch/top_bits.hpp>
 #include <eve/concept/compatible.hpp>
-#include <eve/concept/generator.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/allbits.hpp>
@@ -34,40 +33,37 @@ namespace eve::detail
 {
 // Local helper for product_type if_else implementation
 template<typename T, kumi::product_type U, kumi::product_type V>
-EVE_FORCEINLINE auto
-tuple_select(T const& cond, U const& t, V const& f)
+EVE_FORCEINLINE constexpr auto tuple_select(T cond, U const& t, V const& f)
 {
   using r_t = std::conditional_t<simd_value<U>, U, V>;
   return r_t {kumi::map([&](auto const& v, auto const& f) { return if_else(cond, v, f); }, t, f)};
 }
 
-template<scalar_value T, value U, value V>
-EVE_FORCEINLINE auto
-if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& t, V const& f) requires compatible_values<U, V>
+template<scalar_value T, value U, value V, callable_options O>
+EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O, T cond, U const& t, V const& f)
 {
-  if constexpr( simd_value<U> && simd_value<V> ) return is_nez(cond) ? t : f;
-  else if constexpr( simd_value<U> ) return  is_nez(cond) ? t : U(f);
-  else if constexpr( simd_value<V> ) return  is_nez(cond) ? V(t) : f;
-  else return  is_nez(cond) ? t : f;
+  if      constexpr( simd_value<U> && simd_value<V> ) return  is_nez(cond) ? t    : f;
+  else if constexpr( simd_value<U> )                  return  is_nez(cond) ? t    : U(f);
+  else if constexpr( simd_value<V> )                  return  is_nez(cond) ? V(t) : f;
+  else                                                return  is_nez(cond) ? t    : f;
 }
 
-template<simd_value T, value U, value V>
-EVE_FORCEINLINE auto
-if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& t, V const& f) requires compatible_values<U, V>
+template<simd_value T, value U, value V, callable_options O>
+EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& t, V const& f)
 {
-  if constexpr( !is_logical_v<T> ) { return if_else(is_nez(cond), t, f); }
+  if constexpr( !is_logical_v<T> ) return if_else(is_nez(cond), t, f);
   else
   {
-    using e_t = element_type_t<common_compatible_t<U, V>>;
-    using r_t = as_wide_t<e_t, cardinal_t<T>>;
+    using r_t = as_wide_as_t<common_compatible_t<U, V>,T>;
+    using e_t = element_type_t<r_t>;
 
-    if constexpr( kumi::product_type<U> && kumi::product_type<V> ) return tuple_select(cond, t, f);
-    else if constexpr( has_emulated_abi_v<T> ) return map(if_else, cond, r_t(t), r_t(f));
-    else if constexpr( has_aggregated_abi_v<T> ) return aggregate(if_else, cond, r_t(t), r_t(f));
-    else if constexpr( std::same_as<logical<e_t>, element_type_t<T>> )
+    if      constexpr(kumi::product_type<U> && kumi::product_type<V>) return tuple_select(cond, t, f);
+    else if constexpr(has_emulated_abi_v<T>)                          return map(if_else, cond, r_t(t), r_t(f));
+    else if constexpr(has_aggregated_abi_v<T>)                        return aggregate(if_else, cond, r_t(t), r_t(f));
+    else if constexpr(std::same_as<logical<e_t>, element_type_t<T>>)
     {
-      if constexpr( std::same_as<U, V> ) return bit_select(cond.mask(), r_t(t), r_t(f));
-      else return if_else(cond, r_t(t), r_t(f));
+      if constexpr( std::same_as<U, V> )  return bit_select(cond.mask(), r_t(t), r_t(f));
+      else                                return if_else(cond, r_t(t), r_t(f));
     }
     else return if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
   }
@@ -75,44 +71,44 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& t, V const& f) requires com
 
 //------------------------------------------------------------------------------------------------
 // Supports if_else(conditional_expr,a,b)
-template<conditional_expr C, typename U, typename V>
-EVE_FORCEINLINE auto
-if_else_(EVE_SUPPORTS(cpu_),
-         C const& cond,
-         U const& t,
-         V const& f) requires(compatible_values<U, V> || value<U> || value<V>)
+template<conditional_expr C, typename U, typename V, callable_options O>
+EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O, C cond, U const& t, V const& f)
 {
-  using r_t = std::conditional_t<simd_value<U>, U, V>;
-
-  if constexpr( C::is_complete )
+  if constexpr( generator<V> )
   {
-    if constexpr( C::is_inverted ) return r_t(t);
-    else return r_t(f);
+    if      constexpr( C::is_complete && C::is_inverted  ) return t;
+    else if constexpr( C::is_complete && !C::is_inverted ) return f(as<U>());
+    else                                                   return if_else(cond.mask(eve::as<U>()),t,f);
+  }
+  else if constexpr( generator<U> )
+  {
+    if      constexpr( C::is_complete && C::is_inverted  ) return t(as<V>());
+    else if constexpr( C::is_complete && !C::is_inverted ) return f;
+    else                                                   return if_else(cond.mask(eve::as<V>()),t,f);
   }
   else
   {
-    auto const condition = cond.mask(eve::as<r_t>());
-    if constexpr( C::is_inverted ) { return if_else(condition, f, t); }
-    else { return if_else(condition, t, f); }
-  }
-}
+    using r_t = typename std::conditional_t < logical_value<U> || logical_value<V>
+                                            , common_logical<U,V>
+                                            , common_value<U,V>
+                                            >::type;
 
-// Supports bool as condition
-template<std::same_as<bool> C, typename U, typename V>
-EVE_FORCEINLINE auto
-if_else_(EVE_SUPPORTS(cpu_),
-        C cond,
-        U const& t,
-        V const& f) requires(compatible_values<U, V> || value<U> || value<V>)
-{
-  return if_else(logical<std::uint8_t>(cond),t,f);
+    if      constexpr( C::is_complete && C::is_inverted  ) return r_t(t);
+    else if constexpr( C::is_complete && !C::is_inverted ) return r_t(f);
+    else
+    {
+      auto const mask = cond.mask(eve::as<r_t>());
+      if constexpr( C::is_inverted )  return if_else(mask, f, t);
+      else                            return if_else(mask, t, f);
+    }
+  }
 }
 
 //------------------------------------------------------------------------------------------------
 // Optimizes if_else(c,t,constant)
-template<value T, value U, generator<U> Constant>
+template<value T, value U, generator Constant, callable_options O>
 EVE_FORCEINLINE constexpr auto
-if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& u, Constant const& v) noexcept
+if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const& v) noexcept
 {
   using tgt = as<U>;
 
@@ -121,52 +117,35 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, U const& u, Constant const& v) noexc
   else if constexpr( current_api >= avx512 )  return if_else(cond, u, v(tgt {}));
   else
   {
-    using cvt = as<as_logical_t<element_type_t<U>>>;
-    auto mask = convert(to_logical(cond),cvt{});
+    using           cvt   = as<as_logical_t<element_type_t<U>>>;
+    auto            mask  = convert(to_logical(cond),cvt{});
+    constexpr auto  cst   = Constant{};
 
-    if constexpr(
-        std::same_as<
-            Constant,
-            callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
+    if constexpr( cst == eve::zero || (std::is_unsigned_v<U> && cst == eve::valmin) )
     {
       if constexpr(logical_value<U>)  return to_logical(bit_and(u.mask(), bit_mask(mask)));
       else                            return bit_and(u, bit_mask(mask));
     }
-    else if constexpr(
-        std::same_as<
-            Constant,
-            callable_allbits_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
+    else if constexpr( cst == eve::allbits || (std::is_unsigned_v<U> && cst == valmax) )
     {
       if constexpr(logical_value<U>)  return to_logical(bit_ornot(u.mask(), bit_mask(mask)));
       else                            return bit_ornot(u, bit_mask(mask));
     }
-    else if constexpr( integral_value<U> )
+    else if constexpr( integral_value<U> && cst == eve::one)
     {
-      if constexpr( std::same_as<Constant, callable_one_> )
-      {
-        if constexpr(scalar_value<U>)
-        {
-          using r_t = as_wide_as_t<U, decltype(bit_mask(mask))>;
-          return minus(bit_ornot(minus(r_t(u)), bit_mask(mask)));
-        }
-        else
-          return minus(bit_ornot(minus(u), bit_mask(mask)));
-      }
-      else if constexpr( std::same_as<Constant, callable_mone_> )
-      {
-        return bit_ornot(u, bit_mask(mask));
-      }
-      else { return if_else(cond, u, v(tgt {})); }
+      using r_t = as_wide_as_t<U, decltype(bit_mask(mask))>;
+      return minus(bit_ornot(minus(r_t(u)), bit_mask(mask)));
     }
-    else { return if_else(cond, u, v(tgt {})); }
+    else if constexpr( integral_value<U> && cst == eve::mone )  return bit_ornot(u, bit_mask(mask));
+    else                                                        return if_else(cond, u, v(tgt {}));
   }
 }
 
 //------------------------------------------------------------------------------------------------
 // Optimizes if_else(c,constant, t)
-template<value T, value U, generator<U> Constant>
+template<value T, value U, generator Constant, callable_options O>
 EVE_FORCEINLINE constexpr auto
-if_else_(EVE_SUPPORTS(cpu_), T const& cond, Constant const& v, U const& u) noexcept
+if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, Constant const& v, U const& u) noexcept
 {
   using tgt = as<U>;
 
@@ -175,40 +154,27 @@ if_else_(EVE_SUPPORTS(cpu_), T const& cond, Constant const& v, U const& u) noexc
   else if constexpr( current_api >= avx512 )  return if_else(cond, v(tgt {}), u);
   else
   {
-    using cvt = as<as_logical_t<element_type_t<U>>>;
-    auto mask = convert(to_logical(cond),cvt{});
+    using           cvt   = as<as_logical_t<element_type_t<U>>>;
+    auto            mask  = convert(to_logical(cond),cvt{});
+    constexpr auto  cst   = Constant{};
 
-    if constexpr(
-        std::same_as<
-            Constant,
-            callable_zero_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmin_>))
-    // valmin is zero in this case
+    if constexpr( cst == eve::zero || (std::is_unsigned_v<U> && cst == eve::valmin) )
     {
-      if constexpr(logical_value<U>)  return to_logical(bit_andnot(u.mask(), bit_mask(mask)));
+      if constexpr(logical_value<U>)  return to_logical(bit_and(u.mask(), bit_mask(mask)));
       else                            return bit_andnot(u, bit_mask(mask));
     }
-    else if constexpr(
-        std::same_as<
-            Constant,
-            callable_allbits_> || (std::is_unsigned_v<U> && std::same_as<Constant, callable_valmax_>))
-    // valmax is allbits in this case
+    else if constexpr( cst == eve::allbits || (std::is_unsigned_v<U> && cst == valmax) )
     {
-      if constexpr(logical_value<U>)  return to_logical(bit_or(u.mask(), bit_mask(mask)));
+      if constexpr(logical_value<U>)  return to_logical(bit_ornot(u.mask(), bit_mask(mask)));
       else                            return bit_or(u, bit_mask(mask));
     }
-    else if constexpr( integral_value<U> )
+    else if constexpr( integral_value<U> && cst == eve::one)
     {
-      if constexpr( std::same_as<Constant, callable_one_> )
-      {
-        return -bit_or(-u, bit_mask(mask));
-      }
-      else if constexpr( std::same_as<Constant, callable_mone_> )
-      {
-        return bit_or(u, bit_mask(mask));
-      }
-      else { return if_else(cond, v(tgt {}), u); }
+      using r_t = as_wide_as_t<U, decltype(bit_mask(mask))>;
+      return minus(bit_or(minus(r_t(u)), bit_mask(mask)));
     }
-    else { return if_else(cond, v(tgt {}), u); }
+    else if constexpr( integral_value<U> && cst == eve::mone )  return bit_or(u, bit_mask(mask));
+    else                                                        return if_else(cond, u, v(tgt {}));
   }
 }
 }
