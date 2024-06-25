@@ -12,23 +12,18 @@
 
 #include <bit>
 
-namespace eve {
+namespace eve
+{
   template <typename V>
-  constexpr auto translate(V val) {
-    if constexpr (has_plain_translation<V>) {
-      static_assert((sizeof(V) == sizeof(translate_t<V>)) && (alignof(V) == alignof(translate_t<V>)));
-      return std::bit_cast<translate_t<V>>(val);
-    } else {
-      return val;
-    }
-  }
+  constexpr auto translate(V val)
+  {
+    if constexpr (has_plain_translation<element_type_t<V>>)
+    {
+      using type = as<wide<translate_t<element_type_t<V>>, cardinal_t<V>>>;
 
-  template <typename T, typename N>
-  constexpr auto translate(wide<T, N> val) {
-    if constexpr (has_plain_translation<T>) {
-      return bit_cast(val, as<wide<translate_t<T>, N>>{});
-    } else {
-      return val;
+      if constexpr (simd_value<V>)  return bit_cast(val, type{});
+      else                          return std::bit_cast<translate_t<V>>(val);
     }
+    else                            return val;
   }
 }

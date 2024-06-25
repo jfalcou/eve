@@ -17,15 +17,15 @@ namespace eve
       using type = T;
   };
 
-  template <typename T, typename Enable = void>
+  template <typename T>
   struct recursive_translate {
       using type = T;
   };
 
   template <typename T>
-  struct recursive_translate<T, std::enable_if_t<!std::is_same_v<typename translation_of<T>::type, T>>> {
-      using type = typename recursive_translate<typename translation_of<T>::type>::type;
-  };
+  requires (!std::is_same_v<typename translation_of<T>::type, T>)
+  struct recursive_translate<T>: recursive_translate<typename translation_of<T>::type>
+  { };
 
   // Recursively translate the type `T` until `translation_of<T>` is `T`
   template <typename T>
