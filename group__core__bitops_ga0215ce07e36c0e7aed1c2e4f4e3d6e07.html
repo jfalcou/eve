@@ -140,28 +140,42 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga0215ce07e36c0e7a
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
-<div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">unsigned</span>_value T, <span class="keywordtype">int</span>egral_scalar_value N&gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07">byte_swap_adjacent</a>(T x, N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   constexpr auto <a class="code hl_variable" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07">byte_swap_adjacent</a>(<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> auto x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> auto n) noexcept;  <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07">byte_swap_adjacent</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                     <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n) <span class="keyword">noexcept</span>;                         <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07">byte_swap_adjacent</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                     <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n)    <span class="keyword">noexcept</span>;                      <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07_html_ga0215ce07e36c0e7aed1c2e4f4e3d6e07"><div class="ttname"><a href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07">eve::byte_swap_adjacent</a></div><div class="ttdeci">constexpr auto byte_swap_adjacent</div><div class="ttdoc">swap_adjacents elementwise groups of N bytes.</div><div class="ttdef"><b>Definition:</b> byte_swap_adjacent.hpp:81</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1unsigned__value_html"><div class="ttname"><a href="concepteve_1_1unsigned__value.html">eve::unsigned_value</a></div><div class="ttdoc">The concept unsigned_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:71</div></div>
+<div class="ttc" id="agroup__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07_html_ga0215ce07e36c0e7aed1c2e4f4e3d6e07"><div class="ttname"><a href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07">eve::byte_swap_adjacent</a></div><div class="ttdeci">constexpr auto byte_swap_adjacent</div><div class="ttdoc">strict_elementwise_callable object that swap adjacent groups of N bytes.</div><div class="ttdef"><b>Definition:</b> byte_swap_adjacent.hpp:78</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code> : <a class="el" href="concepteve_1_1integral__value.html">argument</a>.</li>
 <li><code>n</code> : size of the groups of bytes to be swapped. Must be a power of 2 and less than the half size of the elements of x</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Return x with elementwise groups of N bytes swap_adjacentped.</p>
-<ul>
+<ol type="1">
+<li>Return x with elementwise groups of N bytes swapped.<ul>
 <li>If N is greater to sizeof(x) 0 is returned.</li>
 <li>If N is equal to sizeof(x) x is returned.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>Take care that <a class="el" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07" title="swap_adjacents elementwise groups of N bytes.">eve::byte_swap_adjacent</a> is NOT the EVE functional equivalent to std::byteswap. <a class="el" href="group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50" title="elementwise reverses the byte order.">eve::byte_reverse</a> IS. As the name does not say, std::byteswap reverse the order of the bytes which is not an adjacent swapping except for 16 bits words.</dd></dl>
+</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Take care that <a class="el" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07" title="strict_elementwise_callable object that swap adjacent groups of N bytes.">eve::byte_swap_adjacent</a> is NOT the EVE functional equivalent to std::byteswap. <a class="el" href="group__core__bitops_gab6113f6728cf86a945967e955479be50.html#gab6113f6728cf86a945967e955479be50" title="elementwise_callable object reversing the byte order.">eve::byte_reverse</a> IS. As the name does not say, std::byteswap reverse the order of the bytes which is not an adjacent swapping except for 16 bits words.</dd></dl>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -191,13 +205,7 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga0215ce07e36c0e7a
 <div class="line">}</div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__bitops_ga0215ce07e36c0e7aed1c2e4f4e3d6e07.html#ga0215ce07e36c0e7aed1c2e4f4e3d6e07" title="swap_adjacents elementwise groups of N bytes.">eve::byte_swap_adjacent</a>[mask](x, ...)</code> provides a masked version of <code>byte_swap_adjacent</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, byte_swap_adjacent(x, ...), x)</a></code> </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

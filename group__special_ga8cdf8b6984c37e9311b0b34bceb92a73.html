@@ -140,60 +140,46 @@ $(document).ready(function(){initNavTree('group__special_ga8cdf8b6984c37e9311b0b
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span> &lt; <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> S</div>
-<div class="line">            , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> T</div>
-<div class="line">            , <a class="code hl_concept" href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a> U&gt;</div>
-<div class="line">   <a class="code hl_namespace" href="namespaceeve.html">eve</a>:<a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">common_value_t&lt;S, T, U&gt;</a>  <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a>(S s, T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> s,</div>
+<div class="line">                          <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> s,</div>
+<div class="line">                          <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">betainc_inv</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> s,</div>
+<div class="line">                          <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1floating__ordered__value_html"><div class="ttname"><a href="concepteve_1_1floating__ordered__value.html">eve::floating_ordered_value</a></div><div class="ttdoc">The concept ordered_value&lt;T&gt; is satisfied if and only if T satisfies eve::ordered_value and the eleme...</div><div class="ttdef"><b>Definition:</b> value.hpp:132</div></div>
-<div class="ttc" id="agroup__special_ga8cdf8b6984c37e9311b0b34bceb92a73_html_ga8cdf8b6984c37e9311b0b34bceb92a73"><div class="ttname"><a href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">eve::betainc_inv</a></div><div class="ttdeci">constexpr auto betainc_inv</div><div class="ttdoc">Computes the inverse relative to the first parameter of the beta incomplete function.</div><div class="ttdef"><b>Definition:</b> betainc_inv.hpp:74</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__special_ga8cdf8b6984c37e9311b0b34bceb92a73_html_ga8cdf8b6984c37e9311b0b34bceb92a73"><div class="ttname"><a href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">eve::betainc_inv</a></div><div class="ttdeci">constexpr auto betainc_inv</div><div class="ttdoc">elementwise_callable object computing the inverse relative to the first parameter of the beta incompl...</div><div class="ttdef"><b>Definition:</b> betainc_inv.hpp:85</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>s</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
-<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">strictly positive real floating arguments</a>.</li>
+<li><code>s</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>. \( s \in [0, 1]\)</li>
+<li><code>x</code>, 'y': <a class="el" href="concepteve_1_1floating__value.html">strictly positive floating values</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of inverse of incomplete beta function relative to the first parameter is returned.</p>
+<ol type="1">
+<li>The value of the inverse of the incomplete beta function is returned.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/8.17">DLMF</a></li>
+<li>[Wolfram MathWorld](<a href="https://mathworld.wolfram.com/IncompleteBetaFunction.html">https://mathworld.wolfram.com/IncompleteBetaFunction.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Beta_function">Wikipedia</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = eve::wide &lt;float, eve::fixed&lt;4&gt;&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  wide_ft pf = { 0.0f, 0.1f, 0.5f, 2.0f};</div>
-<div class="line">  wide_ft qf = { 1.0f, 1.0f, 3.0f, 5.0f};</div>
-<div class="line">  wide_ft rf = { 4.0f, 2.0f, 1.0f, 0.2f};</div>
-<div class="line"> </div>
-<div class="line">  std::cout</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                   = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- qf                   = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- rf                   = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; betainc_inv(pf, qf, rf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">eve::betainc_inv</a>(pf, qf, rf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">float</span> xf = 0.2f;</div>
-<div class="line">  <span class="keywordtype">float</span> yf = 0.5f;</div>
-<div class="line">  <span class="keywordtype">float</span> zf = 2.0f;</div>
-<div class="line"> </div>
-<div class="line">  std::cout</div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span>  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                   = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                   = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;&lt;- zf                   = &quot;</span> &lt;&lt; zf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">    &lt;&lt; <span class="stringliteral">&quot;-&gt; betainc_inv(xf, yf, zf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga8cdf8b6984c37e9311b0b34bceb92a73.html#ga8cdf8b6984c37e9311b0b34bceb92a73">eve::betainc_inv</a>(xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> 
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

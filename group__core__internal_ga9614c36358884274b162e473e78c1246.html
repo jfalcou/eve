@@ -140,26 +140,38 @@ $(document).ready(function(){initNavTree('group__core__internal_ga9614c363588842
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">bitofsign</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">bitofsign</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">bitofsign</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">bitofsign</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__internal_ga9614c36358884274b162e473e78c1246_html_ga9614c36358884274b162e473e78c1246"><div class="ttname"><a href="group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">eve::bitofsign</a></div><div class="ttdeci">constexpr auto bitofsign</div><div class="ttdoc">Computes the value in the input type of the bit of sign.</div><div class="ttdef"><b>Definition:</b> bitofsign.hpp:77</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__internal_ga9614c36358884274b162e473e78c1246_html_ga9614c36358884274b162e473e78c1246"><div class="ttname"><a href="group__core__internal_ga9614c36358884274b162e473e78c1246.html#ga9614c36358884274b162e473e78c1246">eve::bitofsign</a></div><div class="ttdeci">constexpr auto bitofsign</div><div class="ttdoc">elementwise_callable object computing the bit of sign.</div><div class="ttdef"><b>Definition:</b> bitofsign.hpp:83</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of the bit of sign is returned.</p>
+<ol type="1">
+<li>The value of the bit of sign is returned.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>bitofsign does NOT return a <a class="el" href="concepteve_1_1value.html">logical value</a></li>
+<li><code>bitofsign</code> does NOT return a <a class="el" href="concepteve_1_1value.html">logical value</a></li>
 <li>In particular, take care that for <a class="el" href="concepteve_1_1value.html">floating real values</a> bitofsign does NOT return a <a class="el" href="concepteve_1_1value.html">logical value</a> that can be tested, but <code><a class="el" href="group__core__constants_gad55e4457095a43c4efb949e5ba495113.html#gad55e4457095a43c4efb949e5ba495113" title="Computes the negative zero value.">mzero(as(x))</a></code> if <code>x</code> is negative and <code><a class="el" href="group__core__constants_gaa2beec5955f6701b64b3a2e2ef1a6b85.html#gaa2beec5955f6701b64b3a2e2ef1a6b85" title="Computes the constant 0.">zero(as(x))</a></code> if <code>x</code> is positive, which both satisfy the <a class="el" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8" title="Returns a logical true if and only if the element value is zero.">eve::is_eqz</a> predicate.</li>
-<li>If you want to test if the bit of sign is set <a class="el" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15" title="Returns a logical true if and only if the element value is signed and has its sign bit set.">eve::is_negative</a> is the right function to call.</li>
+<li>If you want to test if the bit of sign is set <code>is_negative</code> is the right function to call.</li>
 </ul>
 </dd></dl>
 <h2 class="groupheader">Example </h2>

@@ -140,27 +140,38 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga5280655a988945b0
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span>_value T, <span class="keywordtype">int</span>egral_scalar_value N &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__bitops_ga5280655a988945b0fbad222e80ab3635.html#ga5280655a988945b0fbad222e80ab3635">bit_swap_adjacent</a>(T x, N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> bit_swap(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n) <span class="keyword">noexcept</span>;                          <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> bit_swap[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> bit_swap[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__bitops_ga5280655a988945b0fbad222e80ab3635_html_ga5280655a988945b0fbad222e80ab3635"><div class="ttname"><a href="group__core__bitops_ga5280655a988945b0fbad222e80ab3635.html#ga5280655a988945b0fbad222e80ab3635">eve::bit_swap_adjacent</a></div><div class="ttdeci">constexpr auto bit_swap_adjacent</div><div class="ttdoc">swap_adjacents elementwise groups of n bits.</div><div class="ttdef"><b>Definition:</b> bit_swap_adjacent.hpp:76</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1integral__value.html">argument</a>.</li>
-<li><code>n</code> : size of the groups of bits to be swapped. n MUST be a power of 2 else the call will assert.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1integral__value.html">argument</a>.</li>
+<li><code>n</code>: size of the groups of bits to be swapped. n MUST be a power of 2 else the call will assert.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
-<p><b>Return value</b></p>
-<p>Return x with pairs of contiguous groups of N bits swapped in each element.</p>
-<ul>
-<li>If N is greater or equal to sizeof(x)*8 0 is returned.</li>
-<li>If N is equal to 0 x is returned.</li>
+<p><b>Return value</b></p><ol type="1">
+<li>Return <code>x</code> with pairs of contiguous groups of N bits swapped in each element.<ul>
+<li>If n is greater or equal to sizeof(x)*8 0 is returned.</li>
+<li>If n is equal to 0 x is returned.</li>
 </ul>
+</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -189,12 +200,13 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga5280655a988945b0
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_adjacent(xf, 2) = &quot;</span> &lt;&lt; +<a class="code hl_variable" href="group__core__bitops_ga5280655a988945b0fbad222e80ab3635.html#ga5280655a988945b0fbad222e80ab3635">eve::bit_swap_adjacent</a>(xf, 2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__bitops_ga5280655a988945b0fbad222e80ab3635_html_ga5280655a988945b0fbad222e80ab3635"><div class="ttname"><a href="group__core__bitops_ga5280655a988945b0fbad222e80ab3635.html#ga5280655a988945b0fbad222e80ab3635">eve::bit_swap_adjacent</a></div><div class="ttdeci">constexpr auto bit_swap_adjacent</div><div class="ttdoc">strict_elementwise_callable object swapping adjacent groups of n bits.</div><div class="ttdef"><b>Definition:</b> bit_swap_adjacent.hpp:80</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
 <ul>
 <li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__bitops_ga5280655a988945b0fbad222e80ab3635.html#ga5280655a988945b0fbad222e80ab3635" title="swap_adjacents elementwise groups of n bits.">eve::bit_swap_adjacent</a>[mask](x, ...)</code> provides a masked version of <code>bit_swap_adjacent</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, bit_swap_adjacent(x, ...), x)</a></code> </p>
+<p class="startli">The call <code><a class="el" href="group__core__bitops_ga5280655a988945b0fbad222e80ab3635.html#ga5280655a988945b0fbad222e80ab3635" title="strict_elementwise_callable object swapping adjacent groups of n bits.">eve::bit_swap_adjacent</a>[mask](x, ...)</code> provides a masked version of <code>bit_swap_adjacent</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, bit_swap_adjacent(x, ...), x)</a></code> </p>
 </li>
 </ul>
 

@@ -145,24 +145,43 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gad1d369116a4c
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U,  eve::value V&gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">clamp</a>(T x, U <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>, V <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">ceil</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>,  <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>)  <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">ceil</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                       <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>,  <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>) <span class="keyword">noexcept</span>;                <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">ceil</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                       <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">lo</a>,  <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">hi</a>)    <span class="keyword">noexcept</span>;             <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a_html_gad1d369116a4c78c29e74a36ee641f02a"><div class="ttname"><a href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">eve::clamp</a></div><div class="ttdeci">constexpr auto clamp</div><div class="ttdoc">If the value of v is within [lo, hi], returns v; otherwise returns the nearest boundary.</div><div class="ttdef"><b>Definition:</b> clamp.hpp:84</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750_html_ga1fd0ebf298c8ca222374b621cf059750"><div class="ttname"><a href="group__core__arithmetic_ga1fd0ebf298c8ca222374b621cf059750.html#ga1fd0ebf298c8ca222374b621cf059750">eve::ceil</a></div><div class="ttdeci">constexpr auto ceil</div><div class="ttdoc">elementwise_callable object computing the smallest integer not less than the input.</div><div class="ttdef"><b>Definition:</b> ceil.hpp:95</div></div>
 <div class="ttc" id="agroup__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524_html_ga46f5764b631e4afe92f87ff3ea1e8524"><div class="ttname"><a href="group__core__bitops_ga46f5764b631e4afe92f87ff3ea1e8524.html#ga46f5764b631e4afe92f87ff3ea1e8524">eve::hi</a></div><div class="ttdeci">constexpr auto hi</div><div class="ttdoc">Computes the most significant half of each lane.</div><div class="ttdef"><b>Definition:</b> hi.hpp:74</div></div>
 <div class="ttc" id="agroup__core__bitops_gacc0d377341a45797cc129a4940f24b60_html_gacc0d377341a45797cc129a4940f24b60"><div class="ttname"><a href="group__core__bitops_gacc0d377341a45797cc129a4940f24b60.html#gacc0d377341a45797cc129a4940f24b60">eve::lo</a></div><div class="ttdeci">constexpr auto lo</div><div class="ttdoc">Computes the least significant half of each lane.</div><div class="ttdef"><b>Definition:</b> lo.hpp:76</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : value to clamp.</li>
+<li><code>x</code>: value to clamp.</li>
 <li><code>lo</code>, <code>hi</code>: <a class="el" href="concepteve_1_1value.html">the boundary values</a> to clamp <code>x</code> to.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
-<p><b>Return value</b> Each <a class="el" href="glossary_semantic.html#glossary_elementwise">element</a> of the result contains:</p><ul>
+<p><b>Return value</b></p><ol type="1">
+<li>Each <a class="el" href="glossary_semantic.html#glossary_elementwise">element</a> of the result contains:<ul>
 <li><code>lo</code>, if <code>x</code> is less than <code>lo</code>.</li>
 <li><code>hi</code>, if <code>hi</code> is less than <code>x</code>.</li>
 <li>otherwise <code>x</code>.</li>
 </ul>
-<p>If some lo are not less than the corresponding hi the routine asserts.</p>
+</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>If some lo are not less or equal to the corresponding hi the routine asserts.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/clamp">C++ standard reference</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -191,14 +210,9 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gad1d369116a4c
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; clamp(sxii, slo, shi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">eve::clamp</a>(sxi, slo, shi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a_html_gad1d369116a4c78c29e74a36ee641f02a"><div class="ttname"><a href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a">eve::clamp</a></div><div class="ttdeci">constexpr auto clamp</div><div class="ttdoc">elementwise_callable clamping the value between two bounds.</div><div class="ttdef"><b>Definition:</b> clamp.hpp:87</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a" title="If the value of v is within [lo, hi], returns v; otherwise returns the nearest boundary.">clamp</a>[mask](x, ...)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a" title="If the value of v is within [lo, hi], returns v; otherwise returns the nearest boundary.">eve::clamp</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_gad1d369116a4c78c29e74a36ee641f02a.html#gad1d369116a4c78c29e74a36ee641f02a" title="If the value of v is within [lo, hi], returns v; otherwise returns the nearest boundary.">clamp(x, ...)</a>, x)</code>. </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
