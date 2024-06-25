@@ -32,7 +32,7 @@ namespace eve::detail
         else  if constexpr(match(c, category::int16)  ) return svreinterpret_u8_s16(v);
         else  if constexpr(match(c, category::uint16) ) return svreinterpret_u8_u16(v);
         else  if constexpr(match(c, category::int8)   ) return svreinterpret_u8_s8 (v);
-        else  if constexpr(match(c, category::uint8)  ) return v.storage();
+        else  if constexpr(match(c, category::uint8)  ) return v;
         else     static_assert(std::is_void_v<T>, "Unsupported type for SVE bit_cast");
       }(x.storage());
 
