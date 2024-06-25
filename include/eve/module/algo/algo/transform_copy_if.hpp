@@ -143,8 +143,10 @@ namespace eve::algo
   //!
   //!   @godbolt{doc/algo/transform_copy_if.cpp}
   //!
-  //!   @see `transform_keep_if`
+  //!   @see `keep_if`
   //!   @see `copy_if`
+  //!   @see `remove_if`
+  //!   @see `transform_keep_if`
   //!   @see `transform_to`
   //!   @see `views::map`
   //!

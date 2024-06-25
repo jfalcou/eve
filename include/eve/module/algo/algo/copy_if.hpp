@@ -139,6 +139,9 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
 //!
 //!    relaxed_iterator past the last written element.
 //!
+//!   @see `keep_if`
+//!   @see `remove_if`
+//!   @see `transform_keep_if`
 //!   @see `transform_copy_if`
 //!
 //! @}

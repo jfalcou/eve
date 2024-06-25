@@ -101,6 +101,8 @@ namespace eve::algo
   //!   Iterator past the last written element.
   //!
   //!   @see `keep_if`
+  //!   @see `copy_if`
+  //!   @see `remove_if`
   //!   @see `transform_copy_if`
   //!   @see `transform_inplace`
   //!   @see `views::map`

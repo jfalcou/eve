@@ -108,6 +108,7 @@ namespace eve::algo
   //!   @see `copy_if`
   //!   @see `remove_if`
   //!   @see `transform_keep_if`
+  //!   @see `transform_copy_if`
   //!
   //! @}
   //================================================================================================

@@ -78,6 +78,9 @@ namespace eve::algo
   //!   TODO: docs
   //!
   //!   @see keep_if
+  //!   @see copy_if
+  //!   @see transform_keep_if
+  //!   @see transform_copy_if
   //!
   //! @}
   //================================================================================================
