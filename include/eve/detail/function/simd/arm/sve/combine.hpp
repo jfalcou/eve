@@ -23,7 +23,7 @@ namespace eve::detail
 
     if constexpr (has_plain_translation<T>)
     {
-      return bit_cast(combine(EVE_RETARGET(sve_), translate(l), translate(h)), that_t{});
+      return bit_cast(combine(sve_{}, translate(l), translate(h)), as<that_t>{});
     }
     else if constexpr( N::value  == expected_cardinal_v<T> )
     {
