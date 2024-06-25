@@ -37,7 +37,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_notand
-//!   @brief Computes the bitwise NOTAND of its arguments.
+//!   @brief  `strict_tuple_callable` object computing the bitwise NOTAND of its arguments.
 //!
 //!   **Defined in Header**
 //!
@@ -50,41 +50,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      bit_value<T, Ts...> bit_notand(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_notand(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto bit_notand(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_notand[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto bit_notand[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
-//!
-//!     * The return value type is bit_value<T,  Ts...> Each parameter is converted
-//        to this type and then:
-//!
-//!       * For two parameters it computes the  bitwise NOTAND of the two parameters
-//!       * For more than two parameters the call is  semantically equivalent to to `bit_notand(a0,
-//!         bit_and(xs...))`
+//!   **Return value**
+//!     1. The return value type is the common `bit_value` of the parameters. Each parameter
+//!        is converted to this type and then:
+//!         - For two parameters it computes the  bitwise NOTAND of the two parameters
+//!         - For more than two parameters the call is  semantically equivalent to
+//!           `bit_notand(a0, bit_and(xs...))`
+//!     2. equivalent to the call on the elements of the tuple.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_notand.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_notand[mask](x, ...)` provides a masked
-//!     version of `bit_notand` which is
-//!     equivalent to `if_else(mask, bit_notand(x, ...), x)`
-//!
 //! @}
 //================================================================================================
-inline constexpr auto bit_notand = functor<bit_notand_t>;
-
+  inline constexpr auto bit_notand = functor<bit_notand_t>;
 }
 
 #include <eve/module/core/regular/impl/bit_notand.hpp>

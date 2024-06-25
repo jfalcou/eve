@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_set
-//!   @brief set to 1 the ith bit of each element.
-//!
-//!   **Defined in Header**
+//!   @brief  `strict_elementwise_callable` object setting to 1 the ith bit of each element.
+///!
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,33 +45,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< unsigned_value T, integral_value I>
-//!      T bit_set(T x, I i) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_set(unsigned_value auto x integral_scalar_value auto n) noexcept;        // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_set[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto bit_set[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
-//!     * `i` :  index to set
+//!     * `x`: [argument](@ref eve::value).
+//!     * `i`: index to set
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    The value of the parameter is returned with the ith bit set to 1
-//!    if the index is out of range the call will assert.
+//!      1. The value of the parameter is returned with the ith bit set to 1.
+//!         If the index is out of range the call will assert.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_set.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_set[mask](x, ...)` provides a masked
-//!     version of `bit_set` which is
-//!     equivalent to `if_else(mask, bit_set(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_set = functor<bit_set_t>;

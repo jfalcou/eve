@@ -25,10 +25,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var bit_swap_pairs
-//!   @brief swap chosen pairs of bytes in each vector element.
+//!   @var byte_swap_pairs
+//!   @brief  `strict_elementwise_callable` object swapping chosen pairs of bytes in each vector element.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -39,8 +39,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-//!      T byte_swap_pairs(T x, , index_t<I0> const & i0, index_t<I1> const & i1) noexcept;
+//!      // Regular overload
+//!      constexpr auto byte_swap_pairs(value auto x,
+//!                                    integral_value auto i0, integral_value auto i1) noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto byte_swap_pairs[conditional_expr auto c](value auto x,
+//!                                    integral_value auto i0, integral_value auto i1) noexcept; // 2
+//!      constexpr auto byte_swap_pairs[logical_value auto m](value auto x,
+//!                                     integral_value i0, integral_value auto i1) noexcept;     // 2
 //!   @endcode
 //!
 //!   **Parameters**
@@ -48,24 +55,16 @@ namespace eve
 //!     * `x` :  [argument](@ref eve::integral_value).
 //!     * `i0` : first index
 //!     * `i1` : second index
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    Return x byte i0 and i1 swapped in each element of x.
-//!    Assert if i0 or i1 are out of range.
+//!       1. Return x byte i0 and i1 swapped in each element of x. Assert if i0 or i1 are out of range.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/byte_swap_pairs.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::byte_swap_pairs[mask](x, ...)` provides a masked
-//!     version of `byte_swap_pairs` which is
-//!     equivalent to `if_else(mask, byte_swap_pairs(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto byte_swap_pairs = functor<byte_swap_pairs_t>;

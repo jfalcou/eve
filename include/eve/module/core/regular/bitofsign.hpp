@@ -31,9 +31,9 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var bitofsign
-//!   @brief Computes the value in the input type of the bit of sign.
+//!   @brief `elementwise_callable` object computing the bit of sign.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,21 +44,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bitofsign(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto bitofsign(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bitofsign[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto bitofsign[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the bit of sign is returned.
+//!      1. The value of the bit of sign is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!    @note
-//!      * bitofsign does NOT return a [logical value](@ref eve::value)
+//!      * `bitofsign` does NOT return a [logical value](@ref eve::value)
 //!
 //!      * In particular,  take care that for  [floating real values](@ref eve::value) bitofsign
 //!        does NOT return a [logical value](@ref eve::value) that can be tested, but
@@ -66,11 +73,10 @@ namespace eve
 //!        negative and  `zero(as(x))` if `x` is positive, which both satisfy the eve::is_eqz
 //!        predicate.
 //!
-//!      * If you want to test if the bit of sign is set eve::is_negative is the right function to
+//!      * If you want to test if the bit of sign is set `is_negative` is the right function to
 //!        call.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bitofsign.cpp}
 //! @}
 //================================================================================================

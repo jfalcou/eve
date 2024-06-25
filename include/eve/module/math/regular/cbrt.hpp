@@ -25,11 +25,10 @@ namespace eve
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
-//! @var cbrt
+//!   @var cbrt
+//!   @brief `elementwise_callable` object computing the cubic root.
 //!
-//! @brief Callable object computing the cubic root.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -40,33 +39,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T cbrt(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto cbrt(floating_value auto x)                         noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto cbrt[conditional_expr auto c](loating_value auto x) noexcept; // 2
+//!      constexpr auto cbrt[logical_value auto m](loating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x`:  [floating value](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
+//!   1. Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/cbrt.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::cbrt[mask](x)` provides a masked version of `eve::cbrt` which is
-//!     equivalent to `if_else (mask, abs(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/cbrt.cpp}
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Cube_root)
 //!  @}
 //================================================================================================
 //================================================================================================

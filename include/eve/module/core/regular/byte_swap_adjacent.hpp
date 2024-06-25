@@ -29,9 +29,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var byte_swap_adjacent
-//!   @brief swap_adjacents elementwise groups of N bytes.
+//!   @brief `strict_elementwise_callable` object that swap adjacent groups of N bytes.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -41,9 +41,14 @@ namespace eve
 //!
 //!   @code
 //!   namespace eve
-//!   {
-//!      template< eve::unsigned_value T, integral_scalar_value N>
-//!      T byte_swap_adjacent(T x, N n) noexcept;
+//!      // Regular overload
+//!      constexpr auto byte_swap_adjacent(unsigned_value auto x, integral_value auto n) noexcept;  // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto byte_swap_adjacent[conditional_expr auto c](unsigned_value auto x,
+//!                                        integral_value auto n) noexcept;                         // 2
+//!      constexpr auto byte_swap_adjacent[logical_value auto m](unsigned_value auto x,
+//!                                        integral_value auto n)    noexcept;                      // 2
 //!   }
 //!   @endcode
 //!
@@ -52,30 +57,22 @@ namespace eve
 //!     * `x` :  [argument](@ref eve::integral_value).
 //!     * `n` :  size of the groups of bytes to be swapped. Must be a power of 2 and
 //!              less than the half size of the elements of x
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    Return x with elementwise groups of N bytes swap_adjacentped.
-//!
-//!    - If N is greater to sizeof(x) 0 is returned.
-//!    - If N is equal   to sizeof(x) x is returned.
+//!       1. Return x with elementwise groups of N bytes swapped.
+//!          - If N is greater to sizeof(x) 0 is returned.
+//!          - If N is equal   to sizeof(x) x is returned.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note Take care that eve::byte_swap_adjacent is NOT the EVE functional equivalent to std::byteswap.
 //!   eve::byte_reverse IS. As the name does not say, std::byteswap reverse the order
 //!   of the bytes which is not an adjacent swapping except for 16 bits words.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/byte_swap_adjacent.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::byte_swap_adjacent[mask](x, ...)` provides a masked
-//!     version of `byte_swap_adjacent` which is
-//!     equivalent to `if_else(mask, byte_swap_adjacent(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto byte_swap_adjacent = functor<byte_swap_adjacent_t>;

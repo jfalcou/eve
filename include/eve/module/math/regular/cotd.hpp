@@ -34,7 +34,7 @@ namespace eve
 //!
 //! @brief Callable object computing cotangent from an input in degrees.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>

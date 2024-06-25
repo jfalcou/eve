@@ -36,10 +36,10 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_floor
-//!   @brief If `x` is not zero, computes the largest integral power of two
-//!   that is not greater than `x`.
+//!   @brief  `elementwise_callable` object computing, if `x` is not zero,
+//!   the largest integral power of two that is not greater than `x`.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,34 +50,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bit_floor(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_floor(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_floor[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto bit_floor[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      * The value of the largest integral power of two
-//!        that is not greater than `x` is returned.
-//!
-//!      * If `x` is zero returns zero.
+//!      1. The value of the largest integral power of two that is not greater than `x` is returned.
+//!         If `x` is zero returns zero.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_floor.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_floor[mask](x, ...)` provides a masked
-//!     version of `bit_floor` which is
-//!     equivalent to `if_else(mask, bit_floor(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_floor = functor<bit_floor_t>;

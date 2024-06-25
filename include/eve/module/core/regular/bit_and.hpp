@@ -45,9 +45,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_and
-//!   @brief Computes the bitwise AND of its arguments.
+//!   @brief `strict_tuple_callable` object computing the bitwise AND of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -58,39 +58,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value Ts... >
-//!      bit_value<T, Ts...> bit_and(T x, Ts... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_and(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto bit_and(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_and[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto bit_and[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:       first [argument](@ref eve::value).
-//!     * `xs...` :  other [arguments](@ref eve::value).
+//!     * `x`: first [argument](@ref eve::value).
+//!     * `xs...`: other [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      The value of the bitwise AND of its arguments converted to the bit_value<T,  Ts...>
-//!      type is returned.
+//!     1. The value of the bitwise AND of its arguments converted to the common `bit_value` of the arguments
+//!     2. equivalent to the call on the elements of the tuple.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!    @note
-//!
 //!      Although the infix notation with `&` is supported for two parameters, the `&` operator on
 //!      standard scalar types is the original one and so can lead to automatic promotion.
 //!      Moreover, and due to C++ limitations is not available for floating point scalar entries.
 //!
+//!  @groupheader{External reference}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bitwise_operation)
+//!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_and.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_and[mask](x, ...)` provides a masked
-//!     version of `bit_and` which is
-//!     equivalent to `if_else(mask, bit_and(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_and = functor<bit_and_t>;

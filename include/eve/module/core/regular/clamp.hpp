@@ -20,7 +20,7 @@ namespace eve
   template<typename Options>
   struct clamp_t : elementwise_callable<clamp_t, Options>
   {
-    template<value T,  value U,  value V>
+    template<value T, value U, value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V>
     operator()(T a, U lo, V hi) const noexcept
@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var clamp
-//!   @brief If the value of v is within [lo, hi], returns v; otherwise returns the nearest boundary.
+//!   @brief `elementwise_callable` clamping the value between two bounds.
 //!
 //!   **Defined in Header**
 //!
@@ -49,36 +49,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U,  eve::value V>
-//!      auto clamp(T x, U lo, V hi) noexcept;
+//!      // Regular overload
+//!      constexpr auto ceil(value auto x, value auto lo,  value auto hi)  noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ceil[conditional_expr auto c](value auto x,
+//!                          value auto lo,  value auto hi) noexcept;                // 2
+//!      constexpr auto ceil[logical_value auto m](value auto x,
+//!                          value auto lo,  value auto hi)    noexcept;             // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` : value to clamp.
-//!
+//!     * `x`: value to clamp.
 //!     * `lo`, `hi`: [the boundary values](@ref eve::value) to clamp `x` to.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!      Each [element](@ref glossary_elementwise)  of the result contains:
-//!          *  `lo`, if `x` is less than `lo`.
-//!          *  `hi`, if `hi` is less than `x`.
-//!          *  otherwise `x`.
+//!        1. Each [element](@ref glossary_elementwise)  of the result contains:
+//!           *  `lo`, if `x` is less than `lo`.
+//!           *  `hi`, if `hi` is less than `x`.
+//!           *  otherwise `x`.
+//!        2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      If some lo are not less than the corresponding hi the routine asserts.
+//!   @note
+//!     If some lo are not less or equal to the corresponding hi the routine asserts.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/clamp)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/clamp.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::clamp[mask](x, ...)` provides a masked version of `eve::clamp` which is
-//!     equivalent to `if_else (mask, clamp(x, ...), x)`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto clamp = functor<clamp_t>;

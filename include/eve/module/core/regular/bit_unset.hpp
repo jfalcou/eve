@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_unset
-//!   @brief set to 0 the ith bit of each element.
+//!   @brief  `strict_elementwise_callable` object setting to 01 the ith bit of each element.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,33 +45,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, integral_value I>
-//!      T bit_unset(T x, I i) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_unset(unsigned_value auto x integral_scalar_value n) noexcept;             // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_unset[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto bit_unset[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
-//!     * `i` :  index to unset
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `i`:  index to unset
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    The value of the parameter is returned with the ith bit set to 0
-//!    if the index is out of range the call will assert.
+//!       1. The value of the parameter is returned with the ith bit set to 0
+//!          if the index is out of range the call will assert.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_unset.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_unset[mask](x, ...)` provides a masked
-//!     version of `bit_unset` which is
-//!     equivalent to `if_else(mask, bit_unset(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_unset = functor<bit_unset_t>;

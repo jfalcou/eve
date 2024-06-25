@@ -35,9 +35,10 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_ceil
-//!   @brief Computes the smallest integral power of two that is not smaller than `x`.
+//!   @brief `elementwise_callable` object computing the smallest integral power
+//!   of two that is not smaller than `x`.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,34 +49,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T bit_ceil(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto bit_ceil(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_ceil[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto bit_ceil[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the smallest integral power of two that is not smaller than `x`
-//!    is returned.
-//!
-//!   If that value is not representable in `T`, the behavior is undefined.
+//!      1. The value of the smallest integral power of two that is not smaller than `x`
+//!         is returned. If that value is not representable in the input type,
+//!         the behavior is undefined.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_ceil.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_ceil[mask](x, ...)` provides a masked
-//!     version of `bit_ceil` which is
-//!     equivalent to `if_else(mask, bit_ceil(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_ceil = functor<bit_ceil_t>;

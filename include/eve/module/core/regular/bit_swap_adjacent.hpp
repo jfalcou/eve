@@ -28,9 +28,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_swap_adjacent
-//!   @brief swap_adjacents elementwise groups of n bits.
+//!   @brief `strict_elementwise_callable` object  swapping adjacent groups of n bits.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -41,23 +41,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<unsigned_value T, integral_scalar_value N >
-//!      T bit_swap_adjacent(T x, N n) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_swap(value auto x, integral_value auto n) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto bit_swap[conditional_expr auto c](value auto x, integral_value auto n) noexcept; // 2
+//!      constexpr auto bit_swap[logical_value auto m](value auto x, integral_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::integral_value).
-//!     * `n` :  size of the groups of bits to be swapped. n MUST be a power of 2
-//!              else the call will assert.
+//!     * `x`: [argument](@ref eve::integral_value).
+//!     * `n`: size of the groups of bits to be swapped. n MUST be a power of 2 else the call will assert.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!
-//!    Return x with pairs of contiguous groups of N bits swapped in each element.
-//!
-//!    - If N is greater or equal to sizeof(x)*8 0 is returned.
-//!    - If N is equal            to 0           x is returned.
+//!      1. Return `x` with pairs of contiguous groups of N bits swapped in each element.
+//!         - If n is greater or equal to sizeof(x)*8 0 is returned.
+//!         - If n is equal            to 0           x is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!
