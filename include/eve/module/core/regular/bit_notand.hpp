@@ -69,8 +69,8 @@ namespace eve
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
-//!     1. The return value type is bit_value<T,  Ts...> Each parameter is converted
-//!        to this type and then:
+//!     1. The return value type is the common `bit_value` of the parameters. Each parameter
+//!        is converted to this type and then:
 //!         - For two parameters it computes the  bitwise NOTAND of the two parameters
 //!         - For more than two parameters the call is  semantically equivalent to
 //!           `bit_notand(a0, bit_and(xs...))`

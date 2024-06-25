@@ -33,7 +33,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //================================================================================================
 //! @addtogroup special
 //! @{
-//!   @var betaincinc
+//!   @var betainc
 //!   @brief Computes the betainc incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =
 //!   \frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
 //!

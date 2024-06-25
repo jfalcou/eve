@@ -60,11 +60,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto bit_xor(value auto x, value auto ... xs) noexcept;                          // 1
+//!      constexpr auto bit_xor(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto bit_xor(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_xor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 2
-//!      constexpr auto bit_xor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 2
+//!      constexpr auto bit_xor[conditional_expr auto c](value auto x, value auto ... xs) noexcept; // 3
+//!      constexpr auto bit_xor[logical_value auto m](value auto x, value auto ... xs)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -72,13 +73,16 @@ namespace eve
 //!
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...` : other [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The value of the bitwise XOR of its arguments converted to the bit_value<T,  Ts...>
-//!      type is returned.
+//!      1. The value of the bitwise XOR of its arguments converted to their  common `bit_value`
+//!        is returned.
+//!      2. equivalent to the call on the elements of the tuple.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_xor.cpp}

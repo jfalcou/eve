@@ -45,7 +45,6 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!   {
 //!      // Regular overload
 //!      constexpr auto bit_set(unsigned_value auto x integral_scalar_value n) noexcept;             // 1
 //!

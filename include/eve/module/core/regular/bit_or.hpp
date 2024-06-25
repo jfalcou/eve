@@ -76,7 +76,7 @@ namespace eve
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
-//!      1. The value of the bitwise OR of its arguments converted to the bit_value<T,  Ts...>
+//!      1. The value of the bitwise OR of its arguments converted to the common `bit_value` of the parameters.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!    @note

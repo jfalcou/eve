@@ -69,8 +69,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      1. The return value type is bit_value<T,  Ts...> Each parameter is converted
-//!         to this type and then:
+//!      1. The return value type is the common `bit_value` of the parameters. Each parameter
+//!        is converted to this type and then:
 //!           - For two parameters it computes the  bitwise NOTOR of the two parameters
 //!           - For more than two parameters the call is semantically equivalent to
 //!             `bit_notor(a0, bit_or(xs...))`
