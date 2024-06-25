@@ -13,13 +13,15 @@ namespace eve
 {
   // Default case: normal types do not have specific storage type
   template <typename T>
-  struct translation_of {
-      using type = T;
+  struct translation_of
+  {
+    using type = T;
   };
 
   template <typename T>
-  struct recursive_translate {
-      using type = T;
+  struct recursive_translate
+  {
+    using type = T;
   };
 
   template <typename T>
