@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/category.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 
@@ -16,15 +17,16 @@ namespace eve::detail
 //================================================================================================
 // Single slice
 //================================================================================================
-template<typename T, typename N, typename Slice>
+template<arithmetic_scalar_value T, typename N, typename Slice>
 EVE_FORCEINLINE wide<T, typename N::split_type>
                 slice(wide<T, N> a, Slice) noexcept requires sve_abi<abi_t<T, N>>
 {
-  if constexpr( !Slice::value ) return a.storage();
+  if constexpr (has_plain_translation<T>) return bit_cast(translate(a).slice(Slice{}), as<as_wide_t<T, typename N::split_type>>{});
+  else if constexpr( !Slice::value ) return a.storage();
   else return svext(a, a, N::value / 2);
 }
 
-template<typename T, typename N, typename Slice>
+template<arithmetic_scalar_value T, typename N, typename Slice>
 EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
                 slice(logical<wide<T, N>> a, Slice) noexcept requires sve_abi<abi_t<T, N>>
 {
@@ -39,7 +41,7 @@ EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
 //================================================================================================
 // Both slice
 //================================================================================================
-template<typename T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 slice(wide<T, N> a) noexcept requires sve_abi<abi_t<T, N>>
 {
@@ -47,7 +49,7 @@ slice(wide<T, N> a) noexcept requires sve_abi<abi_t<T, N>>
   return that;
 }
 
-template<typename T, typename N>
+template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE auto
 slice(logical<wide<T, N>> a) noexcept requires sve_abi<abi_t<T, N>>
 {

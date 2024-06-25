@@ -21,22 +21,36 @@ namespace eve::detail
   EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    using type = as_register_t<T, N, ppc_>;
-    type that  = {static_cast<T>(vs)...};
-    return that;
+    if constexpr (has_plain_translation<T>)
+    {
+      return make(eve::as<wide<translate_t<T>, N>>{}, translate(vs)...);
+    }
+    else
+    {
+      using type = as_register_t<T, N, ppc_>;
+      type that  = {static_cast<T>(vs)...};
+      return that;
+    }
   }
 
   template<arithmetic_scalar_value T, typename S, typename V>
   EVE_FORCEINLINE auto make(eve::as<wide<T, S>> const &, V v) noexcept
     requires ppc_abi<abi_t<T, S>>
   {
-    using type = as_register_t<T, S, ppc_>;
-
-    return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+    if constexpr (has_plain_translation<T>)
     {
-      auto val = [](auto vv, auto) { return vv; };
-      return type { val(v, N)... };
-    }(std::make_index_sequence<S::value>());
+      return make(eve::as<wide<translate_t<T>, S>>{}, translate(v));
+    }
+    else
+    {
+      using type = as_register_t<T, S, ppc_>;
+
+      return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+      {
+        auto val = [](auto vv, auto) { return vv; };
+        return type { val(static_cast<T>(v), N)... };
+      }(std::make_index_sequence<S::value>());
+    }
   }
 
   //================================================================================================

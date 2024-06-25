@@ -13,6 +13,9 @@
 #include <eve/detail/kumi.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_wide.hpp>
+#include <eve/traits/as_logical.hpp>
+#include <eve/concept/translation.hpp>
+
 #include <cstring>
 #include <array>
 
@@ -25,10 +28,10 @@ namespace eve
   struct as_logical_register;
 
   template<typename Type, typename Cardinal, typename ABI>
-  using as_register_t = typename as_register<Type, Cardinal, ABI>::type;
+  using as_register_t = typename as_register<translate_t<Type>, Cardinal, ABI>::type;
 
   template<typename Type, typename Cardinal, typename ABI>
-  using as_logical_register_t = typename as_logical_register<Type, Cardinal, ABI>::type;
+  using as_logical_register_t = typename as_logical_register<translate_t<Type>, Cardinal, ABI>::type;
 
   template<typename Type, typename Cardinal>
   struct as_register<Type, Cardinal, eve::emulated_>
@@ -39,7 +42,7 @@ namespace eve
   template<typename Type, typename Cardinal>
   struct as_logical_register<Type, Cardinal, eve::emulated_>
   {
-    using type = std::array<logical<Type>, Cardinal::value>;
+    using type = std::array<as_logical_t<Type>, Cardinal::value>;
   };
 
   //================================================================================================
@@ -122,7 +125,7 @@ namespace eve
   template<typename Type, typename Cardinal>
   struct as_logical_register<Type, Cardinal, eve::aggregated_>
   {
-    using type = detail::blob<logical<Type>,Cardinal>;
+    using type = detail::blob<as_logical_t<Type>,Cardinal>;
   };
 }
 

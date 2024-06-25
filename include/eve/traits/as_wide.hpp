@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/wide_forward.hpp>
 #include <eve/as.hpp>
@@ -24,13 +25,12 @@ namespace eve
     using type = void;
   };
 
-  template<typename Type, typename Size>
-  requires( std::is_arithmetic_v<Type>  || kumi::product_type<Type> )
+  template<arithmetic_scalar_value Type, typename Size>
   struct as_wide<Type,Size>
   {
     using type = eve::wide<Type,Size>;
   };
-
+  
   template<typename T, typename Size>
   struct as_wide<eve::logical<T>,Size>
   {

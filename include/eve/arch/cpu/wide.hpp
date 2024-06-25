@@ -15,6 +15,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
 #include <eve/concept/scalar.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
@@ -61,9 +62,9 @@ namespace eve
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
   struct EVE_MAY_ALIAS wide
-      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+      : detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_plain_translation<Type>>
   {
-    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_plain_translation<Type>>;
 
     public:
     //! The type stored in the register.
@@ -90,6 +91,9 @@ namespace eve
 
     //! Generates a eve::wide type from a different cardinal `N`.
     template<typename N> using rescale = wide<Type, N>;
+
+    //! Generates a eve::wide from a different type `T` and with the same cardinal.
+    template<typename T> using retype = wide<T, Cardinal>;
 
     static EVE_FORCEINLINE constexpr auto alignment() noexcept
     {
@@ -982,8 +986,8 @@ namespace eve
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
         auto           that = bit_cast(p, as<std::array<Type, sz>>());
 
-        os << '(' << +that[0];
-        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +that[i];
+        os << '(' << +translate(that[0]);
+        for( size_type i = 1; i != p.size(); ++i ) os << ", " << +translate(that[i]);
         return os << ')';
       }
     }

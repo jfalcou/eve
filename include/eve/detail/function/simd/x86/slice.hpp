@@ -15,14 +15,18 @@ namespace eve::detail
   //================================================================================================
   // Single slice
   //================================================================================================
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE wide<T, typename N::split_type>
-  slice(wide<T,N> const &a, Slice const &) noexcept
+  slice(wide<T,N> const & a, Slice const &) noexcept
       requires x86_abi<abi_t<T, N>>
   {
     constexpr auto s = Slice::value;
 
-    if constexpr( std::same_as<abi_t<T, N>,x86_128_> )
+    if constexpr (has_plain_translation<T>)
+    {
+      return bit_cast(translate(a).slice(s), as<as_wide_t<T, typename N::split_type>>{});
+    }
+    else if constexpr( std::same_as<abi_t<T, N>,x86_128_> )
     {
       if constexpr( !s )
       {
@@ -73,7 +77,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
   slice(logical<wide<T,N>> const &a, Slice const &) noexcept
       requires x86_abi<abi_t<T, N>> && ( !abi_t<T, N>::is_wide_logical )
@@ -91,15 +95,25 @@ namespace eve::detail
   //================================================================================================
   // Both slice
   //================================================================================================
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
       requires x86_abi<abi_t<T, N>>
   {
-    std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
-    return that;
+    if constexpr (has_plain_translation<T>)
+    {
+      using sub_t = as<as_wide_t<T, typename N::split_type>>;
+
+      auto [l, h] = bit_cast(a, as<wide<translate_t<T>, N>>{}).slice();
+      return std::array{bit_cast(l, sub_t{}), bit_cast(h, sub_t{})};
+    }
+    else
+    {
+      std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};
+      return that;
+    }
   }
 
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(logical<wide<T,N>> const &a) noexcept
       requires x86_abi<abi_t<T, N>> && (!abi_t<T, N>::is_wide_logical)
   {

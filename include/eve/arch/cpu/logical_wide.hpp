@@ -15,6 +15,7 @@
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
+#include <eve/concept/translation.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/function/bit_cast.hpp>
@@ -51,10 +52,10 @@ namespace eve
   //!                   architecture is selected.
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
-  struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
-        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
+  struct  EVE_MAY_ALIAS  logical<wide<Type, Cardinal>>
+        : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>, has_plain_translation<Type>>
   {
-    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
+    using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>,  has_plain_translation<Type>>;
 
     public:
     //! The type stored in the register.

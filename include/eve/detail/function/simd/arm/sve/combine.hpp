@@ -21,7 +21,11 @@ namespace eve::detail
   {
     using that_t = wide<T, typename N::combined_type>;
 
-    if constexpr( N::value  == expected_cardinal_v<T> )
+    if constexpr (has_plain_translation<T>)
+    {
+      return bit_cast(combine(sve_{}, translate(l), translate(h)), as<that_t>{});
+    }
+    else if constexpr( N::value  == expected_cardinal_v<T> )
     {
       that_t that;
       that.storage().assign_parts(l,h);
