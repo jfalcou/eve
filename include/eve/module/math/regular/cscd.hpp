@@ -32,7 +32,7 @@ namespace eve
 //!
 //! @brief Callable object computing the cosecant from an input in degree.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>

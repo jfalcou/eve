@@ -36,7 +36,7 @@ namespace eve
 //!
 //! @brief Callable object computing th cotangent.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>

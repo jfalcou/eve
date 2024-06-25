@@ -37,7 +37,7 @@ namespace eve
 //!
 //! @brief Callable object computing the cosine.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>

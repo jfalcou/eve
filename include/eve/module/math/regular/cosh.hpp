@@ -32,7 +32,7 @@ namespace eve
 //!
 //! @brief Callable object computing \f$\frac{e^x+e^{-x}}2\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
