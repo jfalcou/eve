@@ -14,6 +14,7 @@ var concepts =
       [ "arithmetic_scalar_value", "concepteve_1_1arithmetic__scalar__value.html", null ],
       [ "scalar_value", "concepteve_1_1scalar__value.html", null ],
       [ "logical_simd_value", "concepteve_1_1logical__simd__value.html", null ],
+      [ "has_plain_translation", "concepteve_1_1has__plain__translation.html", null ],
       [ "value", "concepteve_1_1value.html", null ],
       [ "integral_value", "concepteve_1_1integral__value.html", null ],
       [ "signed_value", "concepteve_1_1signed__value.html", null ],

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::pedantic</title>
+<title>E.V.E: eve::has_plain_translation Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('concepteve_1_1has__plain__translation.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -120,51 +120,32 @@ $(document).ready(function(){initNavTree('group__core__decorators_ga8526757ac3b6
 </div>
 </div>
 
+<div class="header">
+  <div class="headertitle"><div class="title">eve::has_plain_translation Concept Reference</div></div>
+</div><!--header-->
 <div class="contents">
-<a id="ga8526757ac3b6797bc68ce2072c549cf3" name="ga8526757ac3b6797bc68ce2072c549cf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8526757ac3b6797bc68ce2072c549cf3">&#9670;&#160;</a></span>pedantic</h2>
 
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">eve::pedantic = {}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<h4><a class="anchor" id="autotoc_md20"></a>
-Synopsis</h4>
-<p>if <a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">pedantic(eve::fname)</a> is to be called then </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-</div><!-- fragment --><p> must be included.</p>
-<h4><a class="anchor" id="autotoc_md21"></a>
-Members Functions</h4>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> operator()(<a class="code hl_struct" href="structeve_1_1callable.html">eve::callable</a> <span class="keyword">auto</span> <span class="keyword">const</span>&amp; f ) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="ttc" id="astructeve_1_1callable_html"><div class="ttname"><a href="structeve_1_1callable.html">eve::callable</a></div><div class="ttdoc">CRTP base class defining an EVE's Callable Object.</div><div class="ttdef"><b>Definition:</b> default_behaviors.hpp:53</div></div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>An instance of <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> performing the same kind of operation but while insuring compatibility with the standard in corner cases, whenever possible. </dd></dl>
+<p>Specify that a type can be translated to a plain scalar value. The concept <code>has_plain_translation&lt;T&gt;</code> is satisfied if and only if calling <code>translate_t&lt;T&gt;</code> returns a type that is different from <code>T</code>.  
+<a href="concepteve_1_1has__plain__translation.html#details">More...</a></p>
 
-</div>
-</div>
-</div><!-- contents -->
+<p><code>#include &lt;eve/concept/translation.hpp&gt;</code></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md12"></a>
+Example Types</h2>
+<ul>
+<li><code>std::byte</code> </li>
+</ul>
+</div><h2 class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1has__plain__translation.html">eve::has_plain_translation</a> =  !std::same_as&lt;translate_t&lt;T&gt;, T&gt;</div>
+<div class="ttc" id="aconcepteve_1_1has__plain__translation_html"><div class="ttname"><a href="concepteve_1_1has__plain__translation.html">eve::has_plain_translation</a></div><div class="ttdoc">Specify that a type can be translated to a plain scalar value. The concept has_plain_translation&lt;T&gt; i...</div><div class="ttdef"><b>Definition:</b> translation.hpp:26</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.20-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li>
+    <li class="navelem"><a class="el" href="namespaceeve.html">eve</a></li><li class="navelem"><a class="el" href="concepteve_1_1has__plain__translation.html">has_plain_translation</a></li>
   </ul>
 </div>
 </div> <!-- DOXYSTRAP RELATED -->
