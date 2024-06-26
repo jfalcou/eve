@@ -23,7 +23,7 @@ struct BaseStruct {
 template<typename E>
 struct eve::translation_of<BaseStruct<E>> { using type = E; };
 
-TTS_CASE_TPL("Create & get function for wide<transparent enum>", eve::test::simd::integers)
+TTS_CASE_TPL("Create & get function for wide<translated enum>", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -34,7 +34,7 @@ TTS_CASE_TPL("Create & get function for wide<transparent enum>", eve::test::simd
   for(int i = 0; i != x.size(); ++i) { TTS_EQUAL(static_cast<E>(i), x.get(i)); }
 };
 
-TTS_CASE_TPL("Create & get function for wide<transparent struct>", eve::test::simd::all_types)
+TTS_CASE_TPL("Create & get function for wide<translated struct>", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
@@ -46,7 +46,7 @@ TTS_CASE_TPL("Create & get function for wide<transparent struct>", eve::test::si
   for(int i = 0; i != x.size(); ++i ) { TTS_EQUAL(S::of(i), x.get(i)); }
 };
 
-TTS_CASE_TPL("All wides<transparent enum>: set", eve::test::simd::integers)
+TTS_CASE_TPL("All wides<translated enum>: set", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -63,7 +63,7 @@ TTS_CASE_TPL("All wides<transparent enum>: set", eve::test::simd::integers)
   }
 };
 
-TTS_CASE_TPL("All wides<transparent struct>: set", eve::test::simd::all_types)
+TTS_CASE_TPL("All wides<translated struct>: set", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
@@ -81,7 +81,7 @@ TTS_CASE_TPL("All wides<transparent struct>: set", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL("Make all wides<transparent enum>, splat", eve::test::simd::integers)
+TTS_CASE_TPL("Make all wides<translated enum>, splat", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -106,7 +106,7 @@ TTS_CASE_TPL("Make all wides<transparent enum>, splat", eve::test::simd::integer
   }
 };
 
-TTS_CASE_TPL("Make all wides<transparent struct>, splat", eve::test::simd::all_types)
+TTS_CASE_TPL("Make all wides<translated struct>, splat", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;
@@ -132,7 +132,7 @@ TTS_CASE_TPL("Make all wides<transparent struct>, splat", eve::test::simd::all_t
   }
 };
 
-TTS_CASE_TPL("Slice all wides<transparent enum>", eve::test::simd::integers)
+TTS_CASE_TPL("Slice all wides<translated enum>", eve::test::simd::integers)
 <typename Wb>(tts::type<Wb>)
 {
   enum class E: eve::element_type_t<Wb> { };
@@ -153,7 +153,7 @@ TTS_CASE_TPL("Slice all wides<transparent enum>", eve::test::simd::integers)
   }
 };
 
-TTS_CASE_TPL("Slice all wides<transparent struct>", eve::test::simd::all_types)
+TTS_CASE_TPL("Slice all wides<translated struct>", eve::test::simd::all_types)
 <typename Wb>(tts::type<Wb>)
 {
   using E = eve::element_type_t<Wb>;

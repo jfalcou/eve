@@ -9,7 +9,7 @@
 
 #include <eve/concept/translation.hpp>
 
-TTS_CASE_TPL("Equivalent enum trait impl", eve::test::scalar::integers)
+TTS_CASE_TPL("Translation enum trait impl", eve::test::scalar::integers)
 <typename T>(tts::type<T>)
 {
   enum class E: T { };
@@ -25,7 +25,7 @@ struct BaseStruct { E value; };
 template<typename E>
 struct eve::translation_of<BaseStruct<E>> { using type = E; };
 
-TTS_CASE_TPL("Equivalent struct trait impl", eve::test::scalar::all_types)
+TTS_CASE_TPL("Translation struct trait impl", eve::test::scalar::all_types)
 <typename T>(tts::type<T>)
 {
   using S = BaseStruct<T>;
