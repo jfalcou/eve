@@ -36,18 +36,32 @@ namespace eve::detail
     }(std::make_index_sequence<s_t{}.size()>{});
   }
 
-  template<typename T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
-    return make_emulated<wide<T, N>>(vs...);
+    if constexpr (has_plain_translation<T>)
+    {
+      return bit_cast(make(eve::as<wide<translate_t<T>, N>>{}, translate(vs)...), as<wide<T, N>>{});
+    }
+    else
+    {
+      return make_emulated<wide<T, N>>(vs...);
+    }
   }
 
-  template<typename T, typename N, typename... Vs>
+  template<arithmetic_scalar_value T, typename N, typename... Vs>
   EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
     requires std::same_as<abi_t<T, N>, emulated_>
   {
-    return make_emulated<logical<wide<T, N>>>(vs...);
+    if constexpr (has_plain_translation<T>)
+    {
+      return bit_cast(make(eve::as<logical<wide<translate_t<T>, N>>>{}, translate(vs)...), as<logical<wide<T, N>>>{});
+    }
+    else
+    {
+      return make_emulated<logical<wide<T, N>>>(vs...);
+    }
   }
 
   //================================================================================================

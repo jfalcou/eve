@@ -9,6 +9,7 @@
 
 #include <eve/detail/kumi.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/concept/translation.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -99,8 +100,8 @@ concept product_scalar_value = detail::scalar_tuple<T>();
 //! @concept arithmetic_scalar_value
 //! @brief Specify that a type represents a type suitable for vectorization
 //! The concept `arithmetic_scalar_value<T>` is satisfied if and only if T can be used as a base
-//! type for @ref eve::wide , i.e it's either satisfying @ref eve::plain_scalar_value or
-//! @ref eve::product_scalar_value
+//! type for @ref eve::wide , i.e it's either satisfying @ref eve::plain_scalar_value,
+//! @ref eve::product_scalar_value or @ref eve::has_plain_translation.
 //!
 //! ## Example Types
 //! - `kumi::tuple<float,int>`
@@ -108,12 +109,12 @@ concept product_scalar_value = detail::scalar_tuple<T>();
 //! - `float`
 //==================================================================================================
 template<typename T>
-concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T>;
+concept arithmetic_scalar_value = plain_scalar_value<T> || product_scalar_value<T> || has_plain_translation<T>;
 
 //================================================================================================
 //! @concept scalar_value
 //! @brief Specify that a type represents a scalar value
-//! The concept `scalar_value<T>` is satisfied if and only if it satisfies either
+//! The concept `scalar_value<T>` is satisfied if and only if T satisfies either
 //! arithmetic_scalar_value or logical_scalar_value.
 //!
 //! @groupheader{Examples}
