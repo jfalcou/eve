@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //! @var cscd
 //!
-//! @brief Callable object computing the cosecant from an input in degree.
+//! @brief `elementwise_callable` object computing the cosecant from an input in degree.
 //!
 //!   @groupheader{Header file}
 //!

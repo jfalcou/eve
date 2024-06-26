@@ -29,7 +29,7 @@ namespace eve
 //! @{
 //! @var csch
 //!
-//! @brief Callable object computing  \f$\frac2{e^x+e^{-x}}\f$.
+//! @brief `elementwise_callable` object computing  \f$\frac2{e^x+e^{-x}}\f$.
 //!
 //!   @groupheader{Header file}
 //!

@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //! @var cscpi
 //!
-//! @brief Callable object computing the cosecant in \f$\pi\f$ multiples.
+//! @brief `elementwise_callable` object computing the cosecant in \f$\pi\f$ multiples.
 //!
 //!   @groupheader{Header file}
 //!

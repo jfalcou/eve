@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //! @var csc
 //!
-//! @brief Callable object computing the cosecant of the input.
+//! @brief `elementwise_callable` object computing the cosecant of the input.
 //!
 //!   @groupheader{Header file}
 //!
