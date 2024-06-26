@@ -59,8 +59,6 @@ namespace eve
 //!      constexpr auto cos[quarter_circle](floating_value auto x)          noexcept; // 3.a
 //!      constexpr auto cos[half_circle](floating_value auto x)             noexcept; // 3.b
 //!      constexpr auto cos[full_circle](floating_value auto x)             noexcept; // 3.c
-//!      constexpr auto cos[medium](floating_value auto x)                  noexcept; // 3.d
-//!      constexpr auto cos[big](floating_value auto x)                     noexcept; // 3.e
 //!   }
 //!   @endcode
 //!
@@ -82,11 +80,11 @@ namespace eve
 //!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
-//!        4. assumes that the inputs elements  are in absolute value less than `2.0e14`
-//!        5. uses the directly the most expansive reduction scheme
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cos)
+//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Cosinus)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosine.html)  
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/math/regular/cos.cpp}

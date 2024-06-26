@@ -65,6 +65,7 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Cube_root)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CubeRoot.html)
 //!  @}
 //================================================================================================
 //================================================================================================

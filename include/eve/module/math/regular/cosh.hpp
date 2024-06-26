@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //! @var cosh
 //!
-//! @brief Callable object computing \f$\frac{e^x+e^{-x}}2\f$.
+//! @brief  `elementwise_callable` object computing the hyperbolic cosine: \f$\frac{e^x+e^{-x}}2\f$.
 //!
 //!   @groupheader{Header file}
 //!
@@ -43,47 +43,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T cosh(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto cosh(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto cosh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto cosh[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
+//!       In particular:
+//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      In particular:
-//!
-//!      * If the element is \f$\pm0\f$, 1 is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!      * for every z: `eve::cosh(eve::conj(z)) == eve::conj(std::cosh(z))`
-//!      * for every z: `eve::cosh(-z)           == eve::cosh(z)`
-//!      *  If z is \f$0\f$, the result is \f$1\f$
-//!      *  If z is \f$i \infty\f$, the result is \f$NaN\f$
-//!      *  If z is \f$i NaN\f$, the result is \f$NaN\f$
-//!      *  If z is \f$x+i \infty\f$ (for any finite non-zero x), the result is \f$NaN+i NaN\f$
-//!      *  If z is \f$x+i NaN\f$ (for any finite non-zero x), the result is \f$NaN+i NaN\f$
-//!      *  If z is \f$\infty+i 0\f$, the result is \f$\infty+i 0\f$
-//!      *  If z is \f$\infty,y\f$ (for any finite non-zero y), the result is \f$\infty \mathrm{cis}\times(y)\f$
-//!      *  If z is \f$\infty+i \infty\f$, the result is \f$\pm \infty+i NaN\f$  (the sign of the real part is unspecified)
-//!      *  If z is \f$\infty+i NaN\f$, the result is \f$\infty+i NaN\f$
-//!      *  If z is \f$NaN\f$, the result is \f$NaN\f$
-//!      *  If z is \f$NaN+i y\f$ (for any finite non-zero y), the result is \f$NaN+i NaN\f$
-//!      *  If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$
-//!
-//!      where \f$\mathrm{cis}(y) =  \cos(y)+i\sin(y)\f$
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cosh)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicCosine.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/cosh.cpp}
-//!
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto cosh = functor<cosh_t>;

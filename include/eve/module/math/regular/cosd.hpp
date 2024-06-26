@@ -34,7 +34,7 @@ namespace eve
 //! @{
 //! @var cosd
 //!
-//! @brief Callable object computing cosine from an input in degrees.
+//! @brief  `elementwise_callable` object object computing cosine from an input in degrees.
 //!
 //!   @groupheader{Header file}
 //!
@@ -47,34 +47,41 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T cosd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto cosd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto cosd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto cosd[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto cosd[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto cosd[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto cosd[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating real value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) cosine of the input expressed in degrees.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `NaN`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) cosine of the input expressed in degrees.
+//!       In particular:
+//!         * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!         * If the element is \f$\pm\infty\f$, Nan is returned.
+//!         * If the element is a `Nan`, `Nan` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-90,  90]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/cosd.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
 //!
 //!  @}
 //================================================================================================
