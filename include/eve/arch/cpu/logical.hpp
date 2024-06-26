@@ -126,16 +126,9 @@ namespace eve
     EVE_FORCEINLINE constexpr bool value()      const noexcept { return !!value_; }
     EVE_FORCEINLINE constexpr auto bitmap()     const noexcept { return std::bitset<1>(value_ & 1); }
     EVE_FORCEINLINE constexpr auto bits()       const noexcept { return value_; }
+    EVE_FORCEINLINE constexpr auto mask()       const noexcept { return std::bit_cast<value_type>(value_); }
 
-    EVE_FORCEINLINE constexpr auto mask() const noexcept
-    {
-      return std::bit_cast<value_type>(value_);
-//       value_type that;
-//       std::memcpy(&that, &value_, sizeof(value_type));
-//       return that;
-    }
-
-    void swap( logical& other ) { std::swap(value_,other.value_); }
+    constexpr void swap( logical& other ) { std::swap(value_,other.value_); }
 
     //==============================================================================================
     // Comparison operators

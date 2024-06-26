@@ -9,7 +9,6 @@
 
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/meta.hpp>
-#include <bit>
 
 namespace eve
 {

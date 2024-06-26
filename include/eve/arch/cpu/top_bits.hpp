@@ -430,8 +430,8 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
     using abi_t     = typename bits_wide::abi_type;
     using fit_wide  = wide<bits_et, expected_cardinal_t<bits_et, abi_t>>;
 
-    constexpr static auto bits_per_element = top_bits<Logical>::bits_per_element;
-    constexpr static auto element_mask = detail::set_lower_n_bits<bits_et>(bits_per_element);
+    static constexpr auto bits_per_element = top_bits<Logical>::bits_per_element;
+    static constexpr auto element_mask = detail::set_lower_n_bits<bits_et>(bits_per_element);
 
     fit_wide true_mmask([&](int i, int) {
       int shift = 0;

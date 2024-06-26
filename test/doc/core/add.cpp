@@ -28,6 +28,8 @@ int main()
             << " -> add(xi, yi) = " << eve::add(xi, yi) << '\n'
             << " -> xi + yi     = " << xi + yi << '\n'; // C++ promotion to int
 
+  std::cout << "-> constexpr_add(1.0f,2.0f)        = " << constexpr_add(1.0f,2.0f) << std::endl;
+
   auto k = kumi::tuple{pf, pf, pf, 1};
   std::cout << "---- multi parameters" << '\n'
             << " -> add(pi,pi,pi,1)               = " << eve::add(pi, pi, pi, 1) << '\n'
