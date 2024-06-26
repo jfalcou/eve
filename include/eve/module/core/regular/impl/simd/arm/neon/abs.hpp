@@ -40,7 +40,9 @@ namespace eve::detail
       {
         if      constexpr( cat == category::float64x2 ) return vabsq_f64(v);
         else if constexpr( cat == category::float64x1 ) return vabs_f64(v);
+        else    EVE_UNREACHABLE();
       }
+      else      EVE_UNREACHABLE();
     }
   }
 }

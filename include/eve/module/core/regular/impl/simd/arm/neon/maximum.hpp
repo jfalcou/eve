@@ -66,6 +66,7 @@ EVE_FORCEINLINE wide<T, N>
       else if constexpr( c == category::uint16x4 ) return vpmax_u16(a, b);
       else if constexpr( c == category::int8x8 ) return vpmax_s8(a, b);
       else if constexpr( c == category::uint8x8 ) return vpmax_u8(a, b);
+      else reject_fallthrough<T>(c);
     };
 
     using type = wide<T, N>;
@@ -94,6 +95,7 @@ EVE_FORCEINLINE wide<T, N>
 
       return wide<T, N>(l, l);
     }
+    else EVE_UNREACHABLE();
   }
 }
 }

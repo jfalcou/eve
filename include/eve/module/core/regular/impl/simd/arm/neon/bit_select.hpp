@@ -43,5 +43,6 @@ namespace eve::detail
     else if constexpr( cat == category::uint32x4  ) return vbslq_u32(m, v0, v1);
     else if constexpr( cat == category::uint16x8  ) return vbslq_u16(m, v0, v1);
     else if constexpr( cat == category::uint8x16  ) return vbslq_u8(m, v0, v1);
+    else                                                   EVE_UNREACHABLE();
   }
 }

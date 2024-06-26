@@ -42,6 +42,7 @@ EVE_FORCEINLINE wide<T, N>
   else if constexpr( c == category::uint16x4 ) return vshl_u16(v0, s1);
   else if constexpr( c == category::int8x8 ) return vshl_s8(v0, s1);
   else if constexpr( c == category::uint8x8 ) return vshl_u8(v0, s1);
+  else    reject_fallthrough<T>(c);
 }
 
 template<integral_scalar_value T, typename N, std::ptrdiff_t S>

@@ -48,7 +48,9 @@ store_(EVE_SUPPORTS(neon128_), wide<T, N> value, T *ptr) noexcept requires arm_a
     {
       if constexpr( cat == category::float64x1 ) vst1_f64(ptr, value);
       else if constexpr( cat == category::float64x2 ) vst1q_f64(ptr, value);
+      else    EVE_UNREACHABLE();
     }
+    else      EVE_UNREACHABLE();
   }
 }
 
@@ -88,7 +90,9 @@ store_(EVE_SUPPORTS(neon128_),
     {
       if constexpr( cat == category::float64x1 ) vst1_f64_ex(ptr, value, 64);
       else if constexpr( cat == category::float64x2 ) vst1_f64_ex(ptr, value, 128);
+      else    EVE_UNREACHABLE();
     }
+    else      EVE_UNREACHABLE();
   }
 }
 #else

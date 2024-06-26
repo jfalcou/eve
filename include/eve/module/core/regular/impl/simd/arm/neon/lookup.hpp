@@ -91,6 +91,10 @@ namespace eve::detail
           }
         }
       }
+      else
+      {
+        EVE_UNREACHABLE();
+      }
     }
   }
 }

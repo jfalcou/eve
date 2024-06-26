@@ -31,6 +31,7 @@ namespace eve::detail
       else if constexpr( cat == category::float64x1 ) return vsqrt_f64(v0);
       else if constexpr( cat == category::float64x2 ) return vsqrtq_f64(v0);
       else if constexpr( cat == category::float32x4 ) return vsqrtq_f32(v0);
+      else    EVE_UNREACHABLE();
     }
     else
     {

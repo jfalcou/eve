@@ -36,6 +36,7 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == category::float64x2 && c_o == category::int32x2   ) return vmovn_s64(vcvtq_s64_f64(v));
   else if constexpr( c_i == category::float64x2 && c_o == category::uint32x2  ) return vmovn_u64(vcvtq_u64_f64(v));
   else if constexpr( c_i == category::float64x2                               ) return convert(convert(v, as<std::int32_t>()), tgt);
+  else                                                                          EVE_UNREACHABLE();
 }
 
 //================================================================================================
@@ -62,6 +63,7 @@ EVE_FORCEINLINE wide<U, N>
     else if constexpr( sizeof(U) == 8                      ) return map(convert, v, tgt);
     else if constexpr( match(c_o, category::signed_   )    ) return convert(convert(v, t_i32), tgt);
     else if constexpr( match(c_o, category::unsigned_ )    ) return convert(convert(v, t_u32), tgt);
+    else                                                     EVE_UNREACHABLE();
   }
   else if constexpr( N {} == 4 )
   {
@@ -75,7 +77,9 @@ EVE_FORCEINLINE wide<U, N>
     else if constexpr( c_o == category::int8x8   ) return convert(convert(v, t_i16), tgt);
     else if constexpr( c_o == category::uint8x8  ) return convert(convert(v, t_u16), tgt);
     else if constexpr( sizeof(U) == 8            ) return convert_slice(v, tgt);
+    else                                           EVE_UNREACHABLE();
   }
+  else EVE_UNREACHABLE();
 }
 
 //================================================================================================

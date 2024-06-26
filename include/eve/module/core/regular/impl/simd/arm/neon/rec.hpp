@@ -29,6 +29,7 @@ namespace eve::detail
       {
         if constexpr( cat == category::float64x1 ) return vrecpe_f64(v);
         else if constexpr( cat == category::float64x2 ) return vrecpeq_f64(v);
+        else    EVE_UNREACHABLE();
       }
       else
         return T {1} / v;

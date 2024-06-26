@@ -45,5 +45,6 @@ requires arm_abi<abi_t<T, N>>
   else if constexpr( cat == category::uint32x2 ) return vhadd_u32(v0, v1);
   else if constexpr( cat == category::uint16x4 ) return vhadd_u16(v0, v1);
   else if constexpr( cat == category::uint8x8 ) return vhadd_u8(v0, v1);
+  else    EVE_UNREACHABLE();
 }
 }
