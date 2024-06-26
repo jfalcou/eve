@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_round(auto a) { return eve::round(a); }
+
 int main()
 {
   wide_ft pf = {-1.0f, -1.3f, -1.5f, -1.7f, 2.0f, 2.3f, 2.5f, 2.7f};
@@ -30,5 +32,8 @@ int main()
             << "-> round[downward](xf)    = " << eve::round[eve::downward](xf) << '\n'
             << "-> round[to_nearest](xf)  = " << eve::round[eve::to_nearest](xf) << '\n'
             << "-> round[toward_zero](xf) = " << eve::round[eve::toward_zero](xf) << '\n';
+
+  std::cout << "-> constexpr_round(1.0f) = " << constexpr_round(1.0f) << std::endl;
+
   return 0;
 }

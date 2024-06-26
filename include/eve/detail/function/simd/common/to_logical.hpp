@@ -24,7 +24,7 @@ namespace eve::detail
 // Wide to Logical
 //================================================================================================
 template<typename T, typename N>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 to_logical(wide<T, N> const& v) noexcept
 {
   if constexpr( is_aggregated_v<abi_t<T, N>> )
@@ -40,21 +40,21 @@ to_logical(wide<T, N> const& v) noexcept
 }
 
 template<value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 to_logical(logical<T> v) noexcept
 {
   return v;
 }
 
 template<scalar_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 to_logical(T v) noexcept
 {
   return logical<T>(v);
 }
 
 template<relative_conditional_expr C, simd_value T>
-EVE_FORCEINLINE auto
+EVE_FORCEINLINE constexpr auto
 to_logical(C c, eve::as<T>) noexcept
 {
   using l_t = typename as_logical<T>::type;

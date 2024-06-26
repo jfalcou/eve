@@ -2,6 +2,8 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+consteval auto constexpr_sub(auto a, auto b) { return eve::sub(a, b); }
+
 int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
@@ -35,6 +37,9 @@ int main()
             << " -> sub(kumi::tuple{pf, 1.0f)     = " << eve::sub( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> sub(kumi::tuple{1.0f, pf)     = " << eve::sub( kumi::tuple{1.0f, pf})  << '\n'
             << " -> sub[saturated](pi,12,pi,pi)   = " << eve::sub[eve::saturated](pi, 12, pi, pi) << '\n';
+
+
+  std::cout << "-> constexpr_sub(1.0f,2.0f) = " << constexpr_sub(1.0f,2.0f) << std::endl;
 
   return 0;
 }

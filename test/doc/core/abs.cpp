@@ -10,6 +10,8 @@ using std::int32_t;
 using wide_ft = wide<float>;
 using wide_it = wide<std::int32_t>;
 
+consteval auto constexpr_abs(auto a) { return eve::abs(a); }
+
 int main()
 {
   wide_ft pf([](auto i, auto){ return i%2 ? i : -i;});

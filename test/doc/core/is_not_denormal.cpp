@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_is_not_denormal(auto a) { return eve::is_not_denormal(a); }
+
 int main()
 {
   wide_ft pf = {0.0f,1.0f, -1.0f, -2.0f,
@@ -23,5 +25,8 @@ int main()
             << "-> is_not_denormal(xf) = " << eve::is_not_denormal(xf) << '\n'
             << "<- yf                  = " << yf << '\n'
             << "-> is_not_denormal(yf) = " << eve::is_not_denormal(yf) << '\n';
+
+  std::cout << "-> constexpr_is_not_denormal(1.0f) = " << constexpr_is_not_denormal(1.0f) << std::endl;
+
   return 0;
 }

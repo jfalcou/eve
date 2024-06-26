@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_sqrt(auto a) { return eve::sqrt(a); }
+
 int main()
 {
   wide_ft pf = {1.0f, 2.0f, -3.0f, eve::inf(eve::as<float>()),
@@ -21,6 +23,9 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf              = " << xf << '\n'
             << "-> sqrt(xf)        = " << eve::sqrt(xf) << '\n';
+
+
+//  std::cout << "-> constexpr_sqrt(1.0f) = " << constexpr_sqrt(1.0f) << std::endl;
 
   return 0;
 }

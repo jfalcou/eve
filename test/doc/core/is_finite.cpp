@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_is_finite(auto a) { return eve::is_finite(a); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, -123.345f,
@@ -18,5 +20,8 @@ int main()
   std::cout << "---- scalar" << '\n'
             << "<- xf            = " << xf << '\n'
             << "-> is_finite(xf) = " << eve::is_finite(xf) << '\n';
+
+  std::cout << "-> constexpr_is_finite(1.0f) = " << constexpr_is_finite(1.0f) << std::endl;
+
   return 0;
 }

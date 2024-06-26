@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_logical_notand(auto a, auto b) { return eve::logical_notand(a, b); }
+
 int main()
 {
   using eve::is_even;
@@ -15,12 +17,15 @@ int main()
             << " <- qf                                           = " << qf << '\n'
             << " -> eve::logical_notand(is_odd(pf), is_even(qf)) = " << eve::logical_notand(is_odd(pf), is_even(qf)) << '\n';
 
-  float xf = 3.0f, yf = 4.5f;
+  constexpr float xf = 3.0f, yf = 4.5f;
 
   std::cout << "---- scalar" << '\n'
             << " xf                                              = " << xf << '\n'
             << " yf                                              = " << yf << '\n'
             << " -> eve::logical_notand(is_odd(xf), is_even(yf)) = " << eve::logical_notand(is_odd(xf), is_even(yf)) << '\n'
             << " -> eve::logical_notand(xf == 3,    is_even(yf)) = " << eve::logical_notand(xf == 3   , is_even(yf)) << '\n' ;
+
+  std::cout << "-> constexpr_logical_notand(xf > 1, yf < 2) = " << constexpr_logical_notand(xf > 1, yf < 2) << std::endl;
+
   return 0;
 }

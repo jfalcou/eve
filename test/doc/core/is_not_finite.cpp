@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_is_not_finite(auto a) { return eve::is_not_finite(a); }
+
 int main()
 {
   wide_ft pf = {0.0f,1.0f, -1.0f, -2.0f,
@@ -22,5 +24,8 @@ int main()
             << "-> is_not_finite(xf) = " << eve::is_not_finite(xf) << '\n'
             << "<- yf                = " << yf << '\n'
             << "-> is_not_finite(yf) = " << eve::is_not_finite(yf) << '\n';
+
+  std::cout << "-> constexpr_is_not_finite(1.0f) = " << constexpr_is_not_finite(1.0f) << std::endl;
+
   return 0;
 }

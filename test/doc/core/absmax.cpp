@@ -11,6 +11,8 @@ using std::int32_t;
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_absmax(auto a, auto b) { return eve::absmax(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
@@ -34,5 +36,8 @@ int main()
             << "-> absmax(xf, yf)            = " << eve::absmax(xf, yf) << '\n'
             << "-> absmax[pedantic](xf, yf)  = " << eve::absmax[eve::pedantic](xf, yf) << '\n'
             << "-> absmax[numeric](xf, yf)   = " << eve::absmax[eve::numeric](xf, yf) << '\n';
+
+  std::cout << "-> constexpr_absmax(1.0f,2.0f)        = " << constexpr_absmax(1.0f,2.0f) << std::endl;
+
    return 0;
 }

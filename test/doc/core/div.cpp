@@ -2,6 +2,8 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+consteval auto constexpr_div(auto a, auto b) { return eve::div(a, b); }
+
 int main()
 {
   using wf_t = eve::wide<float, eve::fixed<4>>;
@@ -42,6 +44,9 @@ int main()
             << " -> div(kumi::tuple{pf, pf})      = " << eve::div( kumi::tuple{pf, pf})    << '\n'
             << " -> div(kumi::tuple{pf, 1.0f)     = " << eve::div( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> div(kumi::tuple{1.0f, pf)     = " << eve::div( kumi::tuple{1.0f, pf})  << '\n';
+
+
+//  std::cout << "-> constexpr_div(1.0f,2.0f) = " << constexpr_div(1.0f,2.0f) << std::endl;
 
   return 0;
 }

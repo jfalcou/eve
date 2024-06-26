@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_negabsmin(auto a, auto b) { return eve::negabsmin(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
@@ -28,6 +30,9 @@ int main()
             << "-> negabsmin(xf, yf)           = " << eve::negabsmin(xf, yf) << '\n'
             << "-> negabsmin[pedantic](xf, yf) = " << eve::negabsmin[eve::pedantic](xf, yf) << '\n'
             << "-> negabsmin[numeric](xf, yf)  = " << eve::negabsmin[eve::numeric](xf, yf) << '\n';
+
+
+  std::cout << "-> constexpr_negabsmin(1.0f,2.0f) = " << constexpr_negabsmin(1.0f,2.0f) << std::endl;
 
    return 0;
 }

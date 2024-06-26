@@ -2,6 +2,8 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
+consteval auto constexpr_rem(auto a, auto b) { return eve::rem(a, b); }
+
 int main()
 {
   using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
@@ -26,5 +28,8 @@ int main()
             << " yi             = " << yi << '\n'
             << " -> rem(xi, yi) = " << eve::rem(xi, yi) << '\n'
             << " -> xi % yi     = " << xi % yi << '\n';
+
+//  std::cout << "-> constexpr_rem(1.0f,2.0f) = " << constexpr_rem(1.0f,2.0f) << std::endl;
+
   return 0;
 }

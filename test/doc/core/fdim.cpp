@@ -4,6 +4,8 @@
 
 using wide_it = eve::wide<float, eve::fixed<4>>;
 
+consteval auto constexpr_fdim(auto a, auto b) { return eve::fdim(a, b); }
+
 int main()
 {
   wide_it pf = {0, 1, -1, -eve::valmax(eve::as<float>())};
@@ -23,5 +25,8 @@ int main()
             << "<- yf           = " << yf << '\n'
             << "-> fdim(xf, yf) = " << eve::fdim(xf, yf) << '\n'
             << '\n';
+
+  std::cout << "-> constexpr_fdim(1.0f,2.0f) = " << constexpr_fdim(1.0f,2.0f) << std::endl;
+
   return 0;
 }

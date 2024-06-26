@@ -4,6 +4,8 @@
 
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 
+consteval auto constexpr_negminabs(auto a, auto b) { return eve::negminabs(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
@@ -29,6 +31,9 @@ int main()
             << "-> negminabs(xf, yf)            = " << eve::negminabs(xf, yf) << '\n'
             << "-> negminabs[pedantic}(xf, yf)  = " << eve::negminabs[eve::pedantic](xf, yf) << '\n'
             << "-> negminabs[numeric](xf, yf)   = " << eve::negminabs[eve::numeric](xf, yf) << '\n';
+
+
+  std::cout << "-> constexpr_negminabs(1.0f,2.0f) = " << constexpr_negminabs(1.0f,2.0f) << std::endl;
 
    return 0;
 }

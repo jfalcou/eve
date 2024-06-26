@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 using eve::pedantic;
 
+consteval auto constexpr_max(auto a, auto b) { return eve::max(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
@@ -40,5 +42,8 @@ int main()
             << " -> max(kumi::tuple{1.0f, pf)             = " << eve::max( kumi::tuple{1.0f, pf}) << '\n'
             << " -> max[numeric](kumi::tuple{1.0f, pf)    = " << eve::max[eve::numeric]( kumi::tuple{1.0f, pf}) << '\n'
             << " -> max(eve::is_greater)(pf, qf)          = " << eve::max(eve::is_greater)(pf, qf) << '\n';
+
+  std::cout << "-> constexpr_max(1.0f,2.0f) = " << constexpr_max(1.0f,2.0f) << std::endl;
+
   return 0;
 }

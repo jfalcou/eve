@@ -5,6 +5,8 @@
 using wide_ft = eve::wide<float, eve::fixed<8>>;
 using eve::pedantic;
 
+consteval auto constexpr_min(auto a, auto b) { return eve::min(a, b); }
+
 int main()
 {
   wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
@@ -39,5 +41,8 @@ int main()
             << " -> min(kumi::tuple{pf, 1.0f)             = " << eve::min( kumi::tuple{pf, 1.0f}) << '\n'
             << " -> min(kumi::tuple{1.0f, pf)             = " << eve::min( kumi::tuple{1.0f, pf}) << '\n'
             << " -> numeric(min(kumi::tuple{1.0f, pf)     = " << eve::min[eve::numeric]( kumi::tuple{1.0f, pf}) << '\n';
+
+  std::cout << "-> constexpr_min(1.0f,2.0f) = " << constexpr_min(1.0f,2.0f) << std::endl;
+
   return 0;
 }
