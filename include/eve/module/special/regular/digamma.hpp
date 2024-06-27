@@ -31,10 +31,10 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //! @addtogroup special
 //! @{
 //!   @var digamma
-//!   @brief Computes the Digamma function i.e. the logarithmic derivative of the \f$\Gamma\f$
-//!   function.
+//!   @brief `elementwise_callable` object computing the Digamma function i.e.
+//!   the logarithmic derivative of the \f$\Gamma\f$  function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -45,22 +45,32 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T digamma(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
+//!     * `x`: [floating_value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the Digamma function: \f$\frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+//!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/5.2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DigammaFunction.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/digamma.cpp}
-//!
-//!
 //! @}
 //================================================================================================
 inline constexpr auto digamma = functor<digamma_t>;

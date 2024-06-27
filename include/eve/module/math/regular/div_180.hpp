@@ -23,6 +23,50 @@ namespace eve
     EVE_CALLABLE_OBJECT(div_180_t, div_180_);
   };
 
+//================================================================================================
+//! @addtogroup math_trig
+//! @{
+//! @var div_180
+//!
+//! @brief `elementwise_callable` object computing the product of the input by \f$1/180\f$.
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   #include <eve/module/math.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      // Regular overload
+//!      constexpr auto div_180(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto div_180[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto div_180[logical_value auto m](value auto x)    noexcept; // 2
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`: [floating_value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
+//!   **Return value**
+//!
+//!     1. Returns the [elementwise](@ref glossary_elementwise) the  input divided by 180.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{Example}
+//!
+//!  @godbolt{doc/math/regular/div_180.cpp}
+//!  @}
+//================================================================================================
+
   inline constexpr auto div_180 = functor<div_180_t>;
 
   namespace detail

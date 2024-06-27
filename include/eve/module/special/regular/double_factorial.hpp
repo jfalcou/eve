@@ -31,12 +31,12 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var double_factorial
-//!   @brief Computes the double factorial of `n`
+//!   @brief elementwise_callable` object computing the double factorial of `n`
 //!
 //!   THe double factorial is defined as \f$\displaystyle (2n)!! =
 //!   \prod_{i=1}^n (2i)\f$ and \f$\displaystyle (2n+1)!! = \prod_{i=0}^n (2i+1)\f$
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -47,18 +47,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N >
-//!      eve::as_double_as<N, double> double_factorial(N n) noexcept;
+//!      // Regular overload
+//!      constexpr auto double_factorial(unsigned_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto double_factorial[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto double_factorial[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [unsigned argument](@ref eve::unsigned_value).
+//!     * `n`: unsigned argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the double factorial of `n` is returned.
+//!      1. The value of the double factorial of `n` is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DoubleFactorial.html)
 //!
 //!   @groupheader{Example}
 //!
