@@ -27,12 +27,12 @@ namespace eve
   //! @addtogroup bessel
   //! @{
   //!   @var cyl_bessel_i1
-  //!   @brief Computes  the modified Bessel function of the first kind,
+  //!   @brief `elementwise_callable` object computing the modified Bessel function of the first kind,
   //!   \f$ I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}\cos\tau\,\mathrm{d}\tau\f$.
   //!
   //!   It is the solution of  \f$ x^{2}y''+xy'-(1+x^2)y=0\f$ for which \f$ y(0) = 0\f$.
   //!
-  //!   **Defined in header**
+  //!   @groupheader{Header file}
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -43,21 +43,33 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     template<eve::floating_value T> constexpr T cyl_bessel_i1(T x) noexcept;
+  //!      // Regular overload
+  //!      constexpr auto cyl_bessel_i1(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto cyl_bessel_i1[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto cyl_bessel_i1[logical_value auto m](floating_value auto x)    noexcept; // 2
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!   * `x` : [Floating argument](@ref eve::floating_value).
+  //!     * `x`: [Floating argument](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
   //!
   //!   **Return value**
   //!
-  //!   The value of  \f$ \displaystyle I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}
-  //!   \cos\tau\,\mathrm{d}\tau\f$ is returned.
+  //!      1. The value of  \f$ \displaystyle I_1(x)=\frac1{\pi}\int_{0}^{\pi}e^{x\cos\tau}
+  //!        \cos\tau\,\mathrm{d}\tau\f$ is returned.
+  //!      2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/cyl_bessel_i)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bessel_function)
+  //!   *  [DLMF](https://dlmf.nist.gov/10.25)
   //!
   //!   @groupheader{Example}
-  //!
   //!   @godbolt{doc/bessel/regular/cyl_bessel_i1.cpp}
   //! @}
   //================================================================================================
