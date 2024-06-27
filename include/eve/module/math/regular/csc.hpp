@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //! @var csc
 //!
-//! @brief Callable object computing the cosecant of the input.
+//! @brief `elementwise_callable` object computing the cosecant of the input.
 //!
 //!   @groupheader{Header file}
 //!
@@ -43,36 +43,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T csc(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto csc(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto csc[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto csc[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto csc[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto csc[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto csc[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Return value**
+//!   **Return value**
 //!
-//!   *   Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
-//!       (the inverse of the sine)
+//!    1. Returns the [elementwise](@ref glossary_elementwise) cosecant of the input.
+//!       (the inverse of the sine). In particular:
+//!         * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!         * If the element is \f$\pm\infty\f$, Nan is returned.
+//!         * If the element is a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
-//!       In particular:
-//!
-//!       * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!       * If the element is \f$\pm\infty\f$, Nan is returned.
-//!       * If the element is a `NaN`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosecant.html)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/csc.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto csc = functor<csc_t>;

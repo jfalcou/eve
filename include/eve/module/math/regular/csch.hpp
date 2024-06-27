@@ -28,8 +28,7 @@ namespace eve
 //! @addtogroup math_hyper
 //! @{
 //! @var csch
-//!
-//! @brief Callable object computing  \f$\frac2{e^x+e^{-x}}\f$.
+//! @brief `elementwise_callable` object computing  \f$\frac2{e^x+e^{-x}}\f$.
 //!
 //!   @groupheader{Header file}
 //!
@@ -42,26 +41,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T csch(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto csch(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto csch[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto csch[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Return value**
+//!   **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
-//!      In particular:
+//!    1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosecant of the input.
+//!       In particular:
+//!          * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!          * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
+//!          * If the element is a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$\pm0\f$ is returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/csch.cpp}
 //!  @}
 //================================================================================================

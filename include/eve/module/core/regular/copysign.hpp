@@ -32,10 +32,10 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var copysign
-//!   @brief Computes the [elementwise](@ref glossary_elementwise) composition of a value
+//!   @brief `elementwise_callable` object computing the composition of a value
 //!   with the magnitude of the first parameter  and the bit of sign of the second one.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,34 +45,32 @@ namespace eve
 //!
 //!   @code
 //!   namespace eve
-//!   {
-//!      template< eve::value T, eve::value T >
-//!      T copysign(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto copysign(floating_value auto x, floating_value auto y)                                 noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto copysign[conditional_expr auto c](floating_value auto x, floating_value auto y)        noexcept; // 2
+//!      constexpr auto copysign[logical_floating_value auto m](floating_value auto x, floating_value auto y)  noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [real](@ref eve::value) arguments.
+//!     * `x`, `y`: [floating valuesl](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The value of the [elementwise](@ref glossary_elementwise) composition of a
-//!      value with the magnitude of `x` and the bit of sign of `y`
-//!      is returned.
+//!       1. The value of the [elementwise](@ref glossary_elementwise) composition of a
+//!          value with the magnitude of `x` and the bit of sign of `y` is returned.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/copysign)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/copysign.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::copysign[mask](x, ...)` provides a masked
-//!     version of `copysign` which is
-//!     equivalent to `if_else(mask, copysign(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto copysign = functor<copysign_t>;
