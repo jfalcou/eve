@@ -28,8 +28,7 @@ namespace eve
 //! @addtogroup math_hyper
 //! @{
 //! @var coth
-//!
-//! @brief Callable object computing \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
+//! @brief `elementwise_callable` object computing the hyperbolic cotangent: \f$\frac{e^x+e^{-x}}{e^x-e^{-x}}\f$.
 //!
 //!   @groupheader{Header file}
 //!
@@ -42,30 +41,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T coth(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto coth(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto coth[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto coth[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
-///!
+//!     * `x`: [floating value](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cotangent of the input.
-//!
-//!      In particular:
-//!
-//!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cotangent of the input.
+//!       In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/coth.cpp}
-//!
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto coth = functor<coth_t>;

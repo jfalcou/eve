@@ -29,8 +29,7 @@ namespace eve
 //! @addtogroup math_trig
 //! @{
 //! @var cscpi
-//!
-//! @brief Callable object computing the cosecant in \f$\pi\f$ multiples.
+//! @brief `elementwise_callable` object computing the cosecant in \f$\pi\f$ multiples.
 //!
 //!   @groupheader{Header file}
 //!
@@ -43,39 +42,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T cscpi(T x) noexcept;
-
+//!      // Regular overload
+//!      constexpr auto cscpi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto cscpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto cscpi[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto cscpi[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto cscpi[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto cscpi[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref eve::floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
+//!   **Return value**
 //!
-//! **Return value**
-//!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) cosecant of the input expressed in
-//!      \f$\pi\f$ multiples.
-//!
-//!      The call `cscpi(x)` is semantically equivalent to \f$\csc(\pi x)\f$.
-//!      In particular:
-//!
-//!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, Nan is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!     1. The call `cscpi(x)` is semantically equivalent to \f$\csc(\pi x)\f$.
+//!       In particular:
+//!         * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!         * If the element is \f$\pm\infty\f$, Nan is returned.
+//!         * If the element is a `Nan`, `NaN` is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/cscpi.cpp}
-//!
 //!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto cscpi = functor<cscpi_t>;

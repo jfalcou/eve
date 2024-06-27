@@ -32,8 +32,7 @@ namespace eve
 //! @addtogroup math_trig
 //! @{
 //! @var cotpi
-//!
-//! @brief Callable object computing the arc cotangent from an input in \f$\pi\f$ multiples.
+//! @brief `elementwise_callable` object computing the cotangent from an input in \f$\pi\f$ multiples.
 //!
 //!   @groupheader{Header file}
 //!
@@ -46,35 +45,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T cotpi(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto cotpi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto cotpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto cotpi[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto cotpi[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto cotpi[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto cotpi[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
-//!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+///!
+//!     * `x`: [floating value](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) cotangent of the input expressed in \f$\pi\f$
-//!      multiples. In particular:
-//!
-//!      * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, Nan is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!    1.   Returns the [elementwise](@ref glossary_elementwise) cosine of the input in \f$\pi\f$ multiples.
+//!       The call `cospi(x)` is semantically equivalent to \f$\cos(\pi x)\f$.
+//!       In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!        * If the element is \f$\pm1/2\f$, \f$0\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, Nan is returned.
+//!        * If the element is a `Nan`, `Nan` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-1/4,1/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-1/2,1/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-1,1]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/cotpi.cpp}
-//!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto cotpi = functor<cotpi_t>;
