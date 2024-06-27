@@ -27,9 +27,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var dec
-//!   @brief return the input decremented by 1.
+//!   @brief `elementwise_callable` object returning the input decremented by 1.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -40,37 +40,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T dec(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto dec(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto dec[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto dec[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto dec[saturated](value auto x)               noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x`: [SIMD or scalar value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `x - 1` is returned.
+//!      1. The value of `x - 1` is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. The saturated decrementation of `x`. More specifically, for signed
+//!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/dec.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::dec[mask](x, ...)` provides a masked
-//!     version of `dec` which is
-//!     equivalent to `if_else(mask, dec(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!       The call `saturated(dec)(x)` computes the saturated decrement of `x`.
-//!       The only interest of this behaviour is that
-//!       for integral type T  the call `saturated(dec)(Valmin<T>())` returns `Valmin<T>()`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto dec = functor<dec_t>;

@@ -37,9 +37,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var div
-//!   @brief Computes the  division of multiple values.
+//!   @brief `elementwise_callable` object computing the  division of multiple values.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,14 +50,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value... Ts >
-//!      eve::common_value_t<T, Ts ...> div(Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto div(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto div(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto div[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto div[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto div[upward](/*any of the above overloads*/)                   noexcept; // 4
+//!      constexpr auto div[downward](/*any of the above overloads*/)                 noexcept; // 5
+//!      constexpr auto div[toward_zero](/*any of the above overloads*/)              noexcept; // 6
+//!      constexpr auto div[to_nearest](/*any of the above overloads*/)               noexcept; // 7
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` :  [real](@ref eve::value) arguments.
+//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!

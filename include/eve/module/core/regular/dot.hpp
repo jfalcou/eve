@@ -27,11 +27,11 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var dot
-//!   @brief Computes elementwise the dot product of the two parameters.
+//!   @brief `elementwise_callable` object computing elementwise the dot product of the two parameters.
 //!
 //!   @warning This is not a reduction ! For reals the dot product is the product
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
