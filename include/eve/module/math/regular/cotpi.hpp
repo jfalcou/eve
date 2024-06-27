@@ -45,7 +45,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-/!      // Regular overload
+//!      // Regular overload
 //!      constexpr auto cotpi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
