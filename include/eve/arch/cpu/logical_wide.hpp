@@ -125,11 +125,11 @@ namespace eve
     //! Constructs a eve::logical by splatting a scalar value in all lanes
     template<scalar_value S>
     EVE_FORCEINLINE explicit logical(S v) noexcept
-                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+                  : storage_base(make(eve::as<logical>{}, v)) {}
 
     //! Construct from a `bool`
     EVE_FORCEINLINE explicit logical(bool v) noexcept
-                  : storage_base(detail::make(eve::as<logical>{}, v)) {}
+                  : storage_base(make(eve::as<logical>{}, v)) {}
 
     //! Constructs a eve::logical from a sequence of scalar values of proper size
     template<typename T0, typename T1, typename... Ts>
@@ -138,7 +138,7 @@ namespace eve
                     &&  (... && std::convertible_to<Ts,logical<Type>>)
                     &&  (Cardinal::value == 2 + sizeof...(Ts))
                   )
-        : storage_base(detail::make(eve::as<logical>{}, v0, v1, vs...))
+        : storage_base(make(eve::as<logical>{}, v0, v1, vs...))
     {}
 
     //==============================================================================================
