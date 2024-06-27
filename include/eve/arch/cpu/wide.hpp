@@ -143,7 +143,7 @@ namespace eve
     template<typename S>
     requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide>{}, Type(v)))
+        : storage_base(make(eve::as<wide>{}, Type(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -153,7 +153,7 @@ namespace eve
                   && std::is_convertible_v<S0,Type>
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
-        : storage_base(detail::make(eve::as<wide> {},
+        : storage_base(make(eve::as<wide> {},
                                     static_cast<Type>(v0),
                                     static_cast<Type>(v1),
                                     static_cast<Type>(vs)...))
