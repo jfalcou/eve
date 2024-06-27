@@ -145,22 +145,50 @@ $(document).ready(function(){initNavTree('group__math__trig_ga39e50b4c59911e463b
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>[<a class="code hl_variable" href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">quarter_circle</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)          <span class="keyword">noexcept</span>; <span class="comment">// 3.a</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>[<a class="code hl_variable" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">half_circle</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)             <span class="keyword">noexcept</span>; <span class="comment">// 3.b</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">cos</a>[<a class="code hl_variable" href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b">full_circle</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)             <span class="keyword">noexcept</span>; <span class="comment">// 3.c</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__trig_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr auto cos</div><div class="ttdoc">Callable object computing the cosine.</div><div class="ttdef"><b>Definition:</b> cos.hpp:82</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__math__trig_ga39e50b4c59911e463be1a11fc958fb86_html_ga39e50b4c59911e463be1a11fc958fb86"><div class="ttname"><a href="group__math__trig_ga39e50b4c59911e463be1a11fc958fb86.html#ga39e50b4c59911e463be1a11fc958fb86">eve::cos</a></div><div class="ttdeci">constexpr auto cos</div><div class="ttdoc">elementwise_callable object computing the cosine.</div><div class="ttdef"><b>Definition:</b> cos.hpp:93</div></div>
+<div class="ttc" id="agroup__math__trig_ga5125fa88aef3909aad8d39e760305c82_html_ga5125fa88aef3909aad8d39e760305c82"><div class="ttname"><a href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82">eve::quarter_circle</a></div><div class="ttdeci">constexpr quarter_circle_type const quarter_circle</div><div class="ttdoc">Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> trigo_tags.hpp:159</div></div>
+<div class="ttc" id="agroup__math__trig_ga582ee61bd6909c6b95af359339d32c2b_html_ga582ee61bd6909c6b95af359339d32c2b"><div class="ttname"><a href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b">eve::full_circle</a></div><div class="ttdeci">constexpr full_circle_type const full_circle</div><div class="ttdoc">Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> trigo_tags.hpp:158</div></div>
+<div class="ttc" id="agroup__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9_html_gad7f9ab92c007e0ae6219cd7c5991ffa9"><div class="ttname"><a href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9">eve::half_circle</a></div><div class="ttdeci">constexpr half_circle_type const half_circle</div><div class="ttdoc">Higher-order Callable Object imbuing a limited range standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> trigo_tags.hpp:160</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
-<ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
-</ul>
-<p><b>Return value</b></p>
-<ul>
+</div><!-- fragment --><p><b>Parameters</b> </p><pre class="fragment">* `x`: [floating value](@ref eve::floating_value).
+* `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+* `m`: [Logical value](@ref logical) masking the operation.
+</pre><p> <b>Return value</b></p>
+<ol type="1">
 <li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> cosine of the input. In particular:<ul>
 <li>If the element is \(\pm0\), \(1\) is returned.</li>
 <li>If the element is \(\pm\infty\), Nan is returned.</li>
 <li>If the element is a <code>Nan</code>, <code>Nan</code> is returned.</li>
 </ul>
+</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>These are optimized calls providing a balance between speed and range limitation.<ol type="a">
+<li>assumes that the inputs elements belong to \([-\pi/4,\pi/4]\) and return NaN outside.</li>
+<li>assumes that the inputs elements belong to \([-\pi/2,\pi/2]\) and return NaN outside.</li>
+<li>assumes that the inputs elements belong to \([-\pi,\pi]\) and return NaN outside.</li>
+</ol>
+</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/cos">C++ standard reference</a></li>
+<li><a href="https://fr.wikipedia.org/wiki/Cosinus">Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/Cosine.html">Wolfram MathWorld</a> <br  />
 </li>
 </ul>
 <h2 class="groupheader">Example </h2>
@@ -190,13 +218,7 @@ $(document).ready(function(){initNavTree('group__math__trig_ga39e50b4c59911e463b
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli"><a class="el" href="group__math__trig_ga5125fa88aef3909aad8d39e760305c82.html#ga5125fa88aef3909aad8d39e760305c82" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::quarter_circle</a>, <a class="el" href="group__math__trig_gad7f9ab92c007e0ae6219cd7c5991ffa9.html#gad7f9ab92c007e0ae6219cd7c5991ffa9" title="Higher-order Callable Object imbuing a limited range standard semantic onto other Callable Objects.">eve::half_circle</a>, <a class="el" href="group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b" title="Higher-order Callable Object imbuing a limited range semantic onto other Callable Objects.">eve::full_circle</a></p>
-<p class="startli">provide a balance between speed and range limitation. </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
