@@ -58,7 +58,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cotangent of the input.
 //!       In particular:
 //!        * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
 //!        * If the element is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
