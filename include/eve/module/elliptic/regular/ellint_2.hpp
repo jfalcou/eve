@@ -38,17 +38,9 @@ namespace eve
 //! @addtogroup elliptic
 //! @{
 //!   @var ellint_2
-//!   @brief Computes the  elliptic integrals of the second kind :
-//!   \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t}
-//!   \scriptstyle\;\mathrm{d}t\f$ and
-//!   \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k^2\sin^2 t}
-//!   \scriptstyle\;\mathrm{d}t\f$.
+//!   @brief `elementwise_callable` object computing the  elliptic integrals of the second kind.
 //!
-//!   Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
-//!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
-//!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/elliptic.hpp>
@@ -59,33 +51,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      constexpr T ellint_2(T k) noexcept;                                       //1
+//!      // Regular overload
+//!      constexpr auto ellint_2(floating_value auto k)                                   noexcept; // 1
+//!      constexpr auto ellint_2(floating_value auto phi, floating_value auto k)          noexcept; // 2
 //!
-//!      template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
-//!      constexpr eve::common_value_t<T, U> ellint_2(T phi, U k) noexcept;        //2
+//!      // Lanes masking
+//!      constexpr auto ellint_2[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto ellint_2[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
-//!    1. complete elliptic integrals of the second kind.
-//!    2. incomplete elliptic integrals of the second kind.
-//!
-//!
 //!   **Parameters**
 //!
-//!     * `phi`:   [floating real Jacobi amplitude](@ref eve::floating_ordered_value).
-//!
-//!     * `k`:  [floating real elliptic modulus](@ref eve::floating_ordered_value).
-//!             `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is NaN. In the complete
-//!             case, this means \f$|k| \le 1\f$.
+//!     * `phi`: [floating Jacobi amplitude](@reffloating_value).
+//!     * `k`: [floating elliptic modulus](@ref floating_value). `k` must satisfy
+//!             \f$k^2\sin^2\phi \le 1\f$ or the result is `NaN`. In the complete case this means
+//!             \f$|k| \le 1\f$.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. the complete ( corresponding to \f$ \phi = \pi/2 \f$ ) is returned.
-//!     2. the incomplete elliptic integrals is returned.
+//!      1. the complete ( corresponding to \f$ \phi = \pi/2 \f$ )of the second kind:
+//!         \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
+//!      2. the incomplete elliptic integrals of the second kind:
+//!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
+//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!
+//!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
+//!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
+//!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_2)
+//!   *  [DLMF](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/EllipticIntegral.html)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/elliptic/regular/ellint_2.cpp}
 //! @}
 //================================================================================================

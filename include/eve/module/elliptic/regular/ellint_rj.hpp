@@ -41,7 +41,7 @@ namespace eve
 //!   \f$ \mathbf{R}_\mathbf{J}(x, y) = \frac32 \int_{0}^{\infty}
 //!   \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/elliptic.hpp>
@@ -52,11 +52,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T
-//!              , eve::floating_ordered_value U
-//!              , eve::floating_ordered_value V
-//!              , eve::floating_ordered_value W>
-//!      constexpr eve::common_value_t<T, U, V, W> ellint_rj(T x, U y, V z, W p) noexcept;
+//!      // Regular overload
+//!      constexpr auto ellint_rf(floating_value auto x, floating_value auto y,
+//!                               floating_value auto z, floating_value auto p)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ellint_rf[conditional_expr auto c](floating_value auto x, floating_value auto y,
+//!                                                        floating_value auto z, floating_value auto p) noexcept; // 2
+//!      constexpr auto ellint_rf[logical_value auto m](floating_value auto x, floating_value auto y,
+//!                                                     floating_value auto z, floating_value auto p)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -64,13 +68,22 @@ namespace eve
 //!
 //!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_ordered_value). `x`, `y` and  `z`
 //!                     must be non negative and at most one of them equal to 0. In any other case,
-//!                     the result is NaN.
+//!                     the result is `NaN`.
 //!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_ordered_value). In any other case,
-//!             the result is NaN.
+//!             the result is `NaN`.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   the value of the \f$\mathbf{R}_\mathbf{J}\f$ Carlson elliptic integral is returned.
+//!     1. the value of the \f$\mathbf{R}_\mathbf{J}\f$ Carlson elliptic integral:
+//!        \f$ \frac32 \int_{0}^{\infty}
+//!        \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\;\mathrm{d}t\f$ is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
 //!
 //!  @groupheader{Example}
 //!

@@ -54,7 +54,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [SIMD or scalar value](@ref value).
+//!     * `x`: [value](@ref value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
