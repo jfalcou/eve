@@ -14,7 +14,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra -fcolor-diagnostics)
 else()
-  target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra -fdiagnostics-color=auto -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow)
+  target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra -fdiagnostics-color=always -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow)
 endif()
 
 target_include_directories( eve_test INTERFACE
