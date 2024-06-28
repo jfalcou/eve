@@ -31,10 +31,9 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var exp10
+//! @brief  `elementwise_callable` object computing \f$10^x\f$.
 //!
-//! @brief Callable object computing  \f$10^x\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -45,39 +44,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T exp10(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto exp10(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto exp10[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto exp10[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [floating real](@ref eve::floating_ordered_value)
+//!     * `x`: [floating value](@ref floating_value)
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
-//!      In particular, for floating inputs:
+//!    1.  Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
+//!        In particular, for floating inputs:
+//!         * If the element is \f$\pm0\f$, \f$1\f$ is returned
+//!         * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+//!         * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!         * If the element is a `NaN`, `NaN` is returned
 //!
-//!      * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!      * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!      * If the element is a `NaN`, `NaN` is returned
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+//!   *  [DLMF](https://dlmf.nist.gov/4.2)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/exp10.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::exp10[mask](x)` provides a masked version of `eve::exp10` which is
-//!     equivalent to `if_else (mask, exp10(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/exp10.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto exp10 = functor<exp10_t>;
