@@ -27,7 +27,7 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var expmx2
-//! @brief Callable object computing \f$e^{-x^2}\f$.
+//! @brief `elementwise_callable` object computing \f$e^{-x^2}\f$.
 //!
 //!   @groupheader{Header file}
 //!
@@ -51,7 +51,7 @@ namespace eve
 //!
 //!  **Parameters**
 //!
-//!     * `x`: [value](@ref value).
+//!     * `x`: [floating value](@ref value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
