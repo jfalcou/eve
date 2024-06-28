@@ -18,22 +18,23 @@
 
 namespace eve
 {
-  template<typename Options>
-  struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
-  {
-    template<eve::floating_ordered_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+template<typename Options>
+struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
+{
+  template<eve::floating_ordered_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-    EVE_CALLABLE_OBJECT(exp10_t, exp10_);
-  };
+  EVE_CALLABLE_OBJECT(exp10_t, exp10_);
+};
 
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
 //! @var exp10
-//! @brief  `elementwise_callable` object computing \f$10^x\f$.
 //!
-//!   @groupheader{Header file}
+//! @brief Callable object computing  \f$10^x\f$.
+//!
+//!   **Defined in Header**
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -44,54 +45,57 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overload
-//!      constexpr auto exp10(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto exp10[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto exp10[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      template< eve::floating_value T >
+//!      T exp10(T x) noexcept;
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!     * `x`: [floating value](@ref floating_value)
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!   * `x`:   [floating real](@ref eve::floating_ordered_value)
 //!
 //! **Return value**
 //!
-//!    1.  Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
-//!        In particular, for floating inputs:
-//!         * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!         * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!         * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!         * If the element is a `NaN`, `NaN` is returned
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
+//!      In particular, for floating inputs:
 //!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
-//!   *  [DLMF](https://dlmf.nist.gov/4.2)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
+//!      * If the element is \f$\pm0\f$, \f$1\f$ is returned
+//!      * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!      * If the element is a `NaN`, `NaN` is returned
 //!
 //!  @groupheader{Example}
+//!
 //!  @godbolt{doc/math/regular/exp10.cpp}
+//!
+//!  @groupheader{Semantic Modifiers}
+//!
+//!   * Masked Call
+//!
+//!     The call `eve::exp10[mask](x)` provides a masked version of `eve::exp10` which is
+//!     equivalent to `if_else (mask, exp10(x), x)`.
+//!
+//!      **Example**
+//!
+//!        @godbolt{doc/math/masked/exp10.cpp}
 //!  @}
 //================================================================================================
-  inline constexpr auto exp10 = functor<exp10_t>;
+inline constexpr auto exp10 = functor<exp10_t>;
 
-  namespace detail
+namespace detail
+{
+  template<typename T, callable_options O>
+  constexpr EVE_FORCEINLINE T exp10_(EVE_REQUIRES(cpu_), O const& , T x)
   {
-    template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T exp10_(EVE_REQUIRES(cpu_), O const& o, T x)
+    if constexpr( has_native_abi_v<T> )
     {
-      using elt_t    = element_type_t<T>;
+      using elt_t  = element_type_t<T>;
 
       // Adapt lower bound depending on options
       auto minlogval = [&]()
         {
           if constexpr((eve::platform::supports_denormals) && O::contains(pedantic2))
-          return minlog10denormal(as(x));
+            return minlog10denormal(as(x));
           else
             return minlog10(as(x));
         };
@@ -153,5 +157,7 @@ namespace eve
 
       return z;
     }
+    else return apply_over(exp10[o], x);
   }
+}
 }
