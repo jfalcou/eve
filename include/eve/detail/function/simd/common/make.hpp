@@ -71,11 +71,11 @@ namespace eve::detail
 
     if constexpr (has_aggregated_abi_v<Target>)
     {
-      return make_aggregated<Target>(vs...);
+      return make_aggregated<Target>(v, vs...);
     }
     else if constexpr (has_emulated_abi_v<Target>)
     {
-      return make_emulated<Target>(vs...);
+      return make_emulated<Target>(v, vs...);
     }
     else if constexpr (kumi::product_type<Target>)
     {
