@@ -26,10 +26,9 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var exp
+//! @brief `elementwise_callable` object computing \f$e^x\f$.
 //!
-//! @brief Callable object computing \f$e^x\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -40,58 +39,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T exp(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto exp(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of the input.
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) natural exponential
+//!       of the input. In particular:
+//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
+//!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+//!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!       * If the element is a `NaN`, `NaN` is returned
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!     In particular:
-//!
-//!     * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!     * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!     * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!     * If the element is a `NaN`, `NaN` is returned
-//!
-//!      * for every z: eve::exp(eve::conj(z)) == eve::conj(std::exp(z))
-//!      * If z is \f$\pm0\f$, the result is \f$1\f$
-//!      * If z is \f$x+i \infty\f$ (for any finite x), the result is \f$NaN+i NaN\f$.
-//!      * If z is \f$x+i NaN\f$ (for any finite x), the result is \f$NaN+i NaN\f$.
-//!      * If z is \f$+\infty+i 0\f$, the result is \f$+\infty\f$
-//!      * If z is \f$-\infty+i y\f$ (for any finite y), the result is \f$+0 \mathrm{cis}(y)\f$.
-//!      * If z is \f$+\infty+i y\f$ (for any finite nonzero y), the result is \f$+\infty \mathrm{cis}(y)\f$.
-//!      * If z is \f$-\infty+i \infty\f$, the result is \f$\pm 0+i \pm 0\f$ (signs are unspecified)
-//!      * If z is \f$+\infty+i \pm\infty\f$, the result is \f$\pm \infty+i NaN\f$ (the sign of the real part is unspecified).
-//!      * If z is \f$-\infty+i NaN\f$, the result is \f$\pm 0+i \pm 0\f$ (signs are unspecified).
-//!      * If z is \f$\pm\infty+i NaN\f$, the result is \f$\pm \infty+i NaN\f$ (the sign of the real part is unspecified).
-//!      * If z is \f$NaN\f$, the result is \f$NaN\f$.
-//!      * If z is \f$NaN+i y\f$ (for any nonzero y), the result is \f$NaN+i NaN\f$.
-//!      * If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$.
-//!
-//!      where \f$\mathrm{cis}(y) = \cos(y)+i \sin(y)\f$
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+//!   *  [DLMF](https://dlmf.nist.gov/4.2)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/exp.cpp}
-//!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::exp[mask](x)` provides a masked version of `eve::exp` which is
-//!     equivalent to `if_else (mask, exp(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/exp.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto exp = functor<exp_t>;
@@ -121,7 +101,7 @@ namespace eve
           return exp(xx).get(0);
         }
       }
-      else if constexpr( has_native_abi_v<T> )
+      else
       {
         using elt_t       = element_type_t<T>;
         const T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
@@ -164,7 +144,6 @@ namespace eve
         }
         return z;
       }
-      else return apply_over(exp[o], x);
     }
   }
 }

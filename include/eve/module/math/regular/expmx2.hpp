@@ -27,10 +27,9 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var expmx2
-//!
 //! @brief Callable object computing \f$e^{-x^2}\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -41,37 +40,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< value T>
-//!      T expmx2(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto expmx2(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto expmx2[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto expmx2[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!  **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Parameters**
+//!  **Return value**
 //!
-//!    `x`:   [floating real value](@ref eve::value).
-//!
-//! **Return value**
-//!
-//!   Returns the [elementwise](@ref glossary_elementwise) exponential of minus the square of `x`
+//!     1. Returns the [elementwise](@ref glossary_elementwise) exponential of minus the square of `x`: \f$e^{-x^2}\f$.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/expmx2.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::expmx2[mask](x, ...)` provides a masked version of `eve::expmx2` which is
-//!     equivalent to `if_else (mask, expmx2(x, ...), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/expmx2.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto expmx2 = functor<expmx2_t>;
