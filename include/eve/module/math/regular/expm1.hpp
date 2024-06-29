@@ -17,22 +17,21 @@
 
 namespace eve
 {
-template<typename Options>
-struct expm1_t : elementwise_callable<expm1_t, Options, pedantic_option>
-{
-  template<eve::floating_ordered_value T>
-  EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct expm1_t : elementwise_callable<expm1_t, Options, pedantic_option>
+  {
+    template<eve::floating_ordered_value T>
+    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(expm1_t, expm1_);
-};
+    EVE_CALLABLE_OBJECT(expm1_t, expm1_);
+  };
 //======================================================================================================================
 //! @addtogroup math_exp
 //! @{
 //! @var expm1
-//!
 //! @brief Callable object computing \f$e^x-1\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -43,52 +42,41 @@ struct expm1_t : elementwise_callable<expm1_t, Options, pedantic_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T > T expm1(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto expm1(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto expm1[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto expm1[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [floating real](@ref eve::floating_ordered_value)
+//!    * `x`: [value](@ref value).
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) exponential of `x-1`, with good
-//!      accuracy, even for small values of `x`.
-//!
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
-//!      * If the element is \f$-\infty\f$, \f$-1\f$ is returned
-//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!      * If the element is a `NaN`, `NaN` is returned
+//!    1. Returns the [elementwise](@ref glossary_elementwise) exponential of `x-1`, with good
+//!      accuracy, even for small values of `x`. In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned
+//!        * If the element is \f$-\infty\f$, \f$-1\f$ is returned
+//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!        * If the element is a `NaN`, `NaN` is returned
+//!    2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/expm1.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::expm1[mask](x)` provides a masked version of `eve::expm1` which is
-//!     equivalent to `if_else (mask, expm1(x), x)`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/math/masked/expm1.cpp}
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::expm1[eve::pedantic](x)` computes `eve::expm1(x)` with additional care for denormals.
 //!  @}
 //======================================================================================================================
-inline constexpr auto expm1 = functor<expm1_t>;
+  inline constexpr auto expm1 = functor<expm1_t>;
 
-namespace detail
-{
-  template<typename T, callable_options O>
-  T  expm1_(EVE_REQUIRES(cpu_), O const& o, T const& xx)
+  namespace detail
   {
-    if constexpr( has_native_abi_v<T> )
+    template<typename T, callable_options O>
+    T  expm1_(EVE_REQUIRES(cpu_), O const& o, T const& xx)
     {
       using elt_t       = element_type_t<T>;
       using i_t         = as_integer_t<T>;
@@ -127,8 +115,8 @@ namespace detail
         T x    = hi - lo;
         T hxs  = sqr(x) * half(eve::as<T>());
         T r1   = eve::reverse_horner(hxs, T(0x1.0000000000000p+0), T(-0x1.11111111110f4p-5), T(0x1.a01a019fe5585p-10)
-                                        , T(-0x1.4ce199eaadbb7p-14), T(0x1.0cfca86e65239p-18), T(-0x1.afdb76e09c32dp-23)
-                                        );
+                                    , T(-0x1.4ce199eaadbb7p-14), T(0x1.0cfca86e65239p-18), T(-0x1.afdb76e09c32dp-23)
+                                    );
         T t    = T(3) - r1 * half(eve::as<T>()) * x;
         T e    = hxs * ((r1 - t) / (T(6) - x * t));
         T c    = (hi - x) - lo;
@@ -148,7 +136,5 @@ namespace detail
       }
       return k;
     }
-    else return apply_over(expm1, xx);
   }
-}
 }

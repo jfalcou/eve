@@ -43,11 +43,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bernouilli(unsigned_value auto x)                          noexcept; // 1
+//!      constexpr auto bernouilli(unsigned_value auto n)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bernouilli[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto bernouilli[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
+//!      constexpr auto bernouilli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

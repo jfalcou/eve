@@ -38,17 +38,9 @@ namespace eve
 //! @addtogroup elliptic
 //! @{
 //!   @var ellint_d
-//!   @brief Computes the \f$\mbox{D}\f$ elliptic integrals  :
-//!        \f$ \mathbf{D}(\phi, k) = \int_0^{\phi} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
-//!        \scriptstyle\;\mathrm{d}t\f$ and
-//!        \f$ \mathbf{D}(k) = \int_0^{\pi/2} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
-//!        \scriptstyle\;\mathrm{d}t\f$.
+//!   @brief `elementwise_callable` object computing the \f$\mbox{D}\f$ elliptic integral.
 //!
-//!   Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
-//!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
-//!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/elliptic.hpp>
@@ -59,11 +51,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      constexpr T ellint_d(T k) noexcept;                                       //1
+//!      // Regular overload
+//!      constexpr auto ellint_d(floating_value auto k)                                   noexcept; // 1
+//!      constexpr auto ellint_d(floating_value auto phi, floating_value auto k)          noexcept; // 2
 //!
-//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
-//!      constexpr eve::common_value_t<T, U> ellint_d(T phi, U k) noexcept;        //2
+//!      // Lanes masking
+//!      constexpr auto ellint_d[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto ellint_d[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -73,16 +67,29 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `phi`: [floating real Jacobi amplitude](@ref eve::floating_ordered_value).
-//!
-//!     * `k`:  [floating real elliptic modulus](@ref eve::floating_ordered_value).
-//!             `k` must verify \f$k^2\sin^2\phi \le 1\f$ or the result is NaN. In the complete case,
-//!             this means \f$|k| \le 1\f$.
+//!     * `phi`: [floating Jacobi amplitude](@ref floating_value).
+//!     * `k`: [floating elliptic modulus](@ref floating_value). `k` must satisfy
+//!             \f$k^2\sin^2\phi \le 1\f$ or the result is `NaN`. In the complete case this means
+//!             \f$|k| \le 1\f$.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. the complete elliptic integral ( corresponding to \f$ \phi = \pi/2 \f$ ) is returned.
-//!     2. the incomplete elliptic integral of the first kind is returned:
+//!     1. the complete elliptic integral ( corresponding to \f$ \phi = \pi/2 \f$ ):
+//!        \f$ \mathbf{D}(k) = \int_0^{\pi/2} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
+//!        \scriptstyle\;\mathrm{d}t\f$ is returned.
+//!     2. the incomplete elliptic integral of the first kind:
+//!         \f$ \mathbf{D}(k) = \int_0^{\pi/2} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
+//!         \scriptstyle\;\mathrm{d}t\f$ is returned:
+//!
+//!  @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
+//!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
+//!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/19.2.6)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/EllipticIntegral.html)
 //!
 //!  @groupheader{Example}
 //!

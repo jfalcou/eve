@@ -29,10 +29,10 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var erf
-//!   @brief Computes the error function: \f$ \displaystyle
+//!   @brief `elementwise_callable` object computing the error function: \f$ \displaystyle
 //!   \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -43,27 +43,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T erf(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto erf(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto erf[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto erf[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the error function is returned. In particular:
+//!     1. The value of the error function is returned: \f$ \displaystyle
+//!        \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
+//!        In particular:
+//!          * If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!          * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+//!          * If the argument is Nan, nan returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
-//!      * If the argument is Nan, nan returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/erf)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Erf.html)
+//!   *  [DLMF](https://dlmf.nist.gov/7.2)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/erf.cpp}
-//!
 //! @}
 //================================================================================================
 inline constexpr auto erf = functor<erf_t>;

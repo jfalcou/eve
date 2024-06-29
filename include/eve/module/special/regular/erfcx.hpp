@@ -33,7 +33,7 @@ namespace eve
 //!   @brief Computes the normalized complementary error function
 //!   \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -44,21 +44,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T erfcx(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto erfcx(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto erfcx[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto erfcx[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the normalized complementary error function is returned.
+//!   1. The value of the normalized complementary error function:
+//!     \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$, is returned.
+//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/erfc)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Erf.html)
+//!   *  [DLMF](https://dlmf.nist.gov/7.2)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/special/regular/erfcx.cpp}
 //! @}
 //================================================================================================

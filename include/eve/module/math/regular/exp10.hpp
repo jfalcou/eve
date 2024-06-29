@@ -18,14 +18,14 @@
 
 namespace eve
 {
-template<typename Options>
-struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
-{
-  template<eve::floating_ordered_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
+  {
+    template<eve::floating_ordered_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
-  EVE_CALLABLE_OBJECT(exp10_t, exp10_);
-};
+    EVE_CALLABLE_OBJECT(exp10_t, exp10_);
+  };
 
 //================================================================================================
 //! @addtogroup math_exp
@@ -80,22 +80,20 @@ struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
 //!        @godbolt{doc/math/masked/exp10.cpp}
 //!  @}
 //================================================================================================
-inline constexpr auto exp10 = functor<exp10_t>;
+  inline constexpr auto exp10 = functor<exp10_t>;
 
-namespace detail
-{
-  template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE T exp10_(EVE_REQUIRES(cpu_), O const& o, T x)
+  namespace detail
   {
-    if constexpr( has_native_abi_v<T> )
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE T exp10_(EVE_REQUIRES(cpu_), O const& , T x)
     {
-      using elt_t    = element_type_t<T>;
+      using elt_t  = element_type_t<T>;
 
       // Adapt lower bound depending on options
       auto minlogval = [&]()
         {
           if constexpr((eve::platform::supports_denormals) && O::contains(pedantic2))
-            return minlog10denormal(as(x));
+          return minlog10denormal(as(x));
           else
             return minlog10(as(x));
         };
@@ -157,7 +155,5 @@ namespace detail
 
       return z;
     }
-    else return apply_over(exp10[o], x);
   }
-}
 }

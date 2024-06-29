@@ -33,11 +33,11 @@ namespace eve
 //! @addtogroup elliptic
 //! @{
 //!   @var ellint_rc
-//!   @brief computes the degenerate Carlson's elliptic integral
+//!   @brief  `elementwise_callable` object computing the degenerate Carlson's elliptic integral
 //!   \f$  \mathbf{R}_\mathbf{C}(x, y) = \frac12 \int_{0}^{\infty}
 //!   \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/elliptic.hpp>
@@ -48,22 +48,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr template< eve::floating_ordered_value T,  eve::floating_ordered_value U >
-//!      eve::common_value_t<T, U> ellint_rc(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto ellint_1(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ellint_1[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto ellint_1[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [floating real arguments](@ref eve::floating_ordered_value). `x` and `y` must be
-//!                 strictly positive and `y` non zero or the result is NaN.
+//!     * `x`, `y`: [floating valuess](@ref floating_value). `x` and `y` must be
+//!                 strictly positive and `y` non zero or the result is `NaN`.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    the value of the \f$\mathbf{R}_\mathbf{C}\f$ elliptic integral is returned.
+//!     1. the value of the Carlson degenerate elliptic integral:
+//!       \f$\mathbf{R}_\mathbf{C}(x, y) = \frac12 \int_{0}^{\infty}
+//!       \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\f$ is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
 //! @}
 //================================================================================================

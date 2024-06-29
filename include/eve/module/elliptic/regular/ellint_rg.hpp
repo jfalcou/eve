@@ -41,7 +41,7 @@ namespace eve
 //!   +y\sin^2\theta\sin^2\phi
 //!   +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/elliptic.hpp>
@@ -52,24 +52,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T
-//!              , eve::floating_ordered_value U
-//!              , eve::floating_ordered_value V >
-//!      constexpr eve::common_value_t<T, U, V> ellint_rg(T x, U y, V z) noexcept;
+//!      // Regular overload
+//!      constexpr auto ellint_rg(floating_value auto x, floating_value auto y, floating_value auto z)   noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ellint_rg[conditional_expr auto c](floating_value auto x, floating_value auto y,
+//!                                                        floating_value auto z)                        noexcept; // 2
+//!      constexpr auto ellint_rg[logical_value auto m](floating_value auto x, floating_value auto y,
+//!                                                     floating_value auto z)                           noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z`:  [floating real arguments](@ref eve::floating_ordered_value).
+//!     * `x`, `y`, `z`:  [floating real arguments](@ref floating_value).
 //!                       All arguments must be non-negative or the result is nan.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   the value of the \f$\mathbf{R}_\mathbf{G}\f$ Carlson elliptic integral is returned:
+//!     1. the value of the \f$\mathbf{R}_\mathbf{G}\f$ Carlson elliptic integral:
+//!       \f$\frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi}
+//!       \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
+//!       +y\sin^2\theta\sin^2\phi
+//!       +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\f$ is returned:
+//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
+//!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/elliptic/regular/ellint_rc.cpp}
 //! @}
 //================================================================================================

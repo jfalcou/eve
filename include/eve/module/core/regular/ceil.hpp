@@ -68,7 +68,7 @@ namespace eve
 //!     * `x` :[value](@ref value) argument.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
-//!     * `tol' [scalar_value](@ref value) tolerance.
+//!     * `tol` [scalar_value](@ref value) tolerance.
 //!
 //!   **Return value**
 //!

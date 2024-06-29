@@ -32,9 +32,10 @@ namespace eve
 //! @addtogroup core_fma_internal
 //! @{
 //!   @var epsilon
-//!   @brief Computes The distance of abs(x) to the next representable element of type T
+//!   @brief `elementwise_callable` object computing the distance of the absolute value of the parameter
+//!    to the next representable element of its type.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,31 +46,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T > T epsilon(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto epsilon(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto epsilon[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto epsilon[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real arguments](@ref eve::value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The distance of abs(x) to the next representable element of type T
+//!      1. The distance of abs(x) to the next representable element of type T
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/epsilon.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::epsilon[mask](x, ...)` provides a masked
-//!     version of `epsilon` which is
-//!     equivalent to `if_else(mask, epsilon(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto epsilon = functor<epsilon_t>;
