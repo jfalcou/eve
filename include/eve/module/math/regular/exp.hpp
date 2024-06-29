@@ -80,7 +80,7 @@ namespace eve
   {
     template<floating_ordered_value T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    exp_(EVE_REQUIRES(cpu_), O const & o, T x) noexcept
+    exp_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
     {
       auto isnan = is_nan(x);
       auto    minlogval = []() {
