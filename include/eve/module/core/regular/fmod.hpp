@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var fmod
-//!   @brief mimick the std::fmod function for floating values.
+//!   @brief `elementwise_callable` object mimicking the std::fmod function for floating values.
 //!
 //!   @groupheader{Header file}
 //!
@@ -44,26 +44,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T,  eve::floating_value U>
-//!      eve::common_value_t<T, U> fmod(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto fmod(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto fmod[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto fmod[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:   [real](@ref eve::floating_value) argumentx.
+//!     * `x`, `y`: [real](@ref eve::floating_value) argumentx.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      Return the remainder after division division of `x` by `y` and mimick
-//!      the behaviour of std::fmod.
+//!     1. Return the remainder after division division of `x` by `y` and mimick
+//!        the behaviour of std::fmod. In particular:
+//!          * If `x` is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!          * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
+//!          * If `y` is \f$\pm0\f$, `NaN` is returned.
+//!          * If `y` is \f$\pm\inf\f$ and `x` is finite, `x`is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      In particular:
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/fmod)
 //!
-//!      * If `x` is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
-//!      * If `y` is \f$\pm0\f$, `NaN` is returned.
-//!      * If `y` is \f$\pm\inf\f$ and `x` is finite, `x`is returned.
+//!  @groupheader{Example}
+//!  @godbolt{doc/core/fmod.cpp}
 //!
 //! @}
 //================================================================================================

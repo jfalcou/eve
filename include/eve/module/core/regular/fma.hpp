@@ -13,20 +13,20 @@
 
 namespace eve
 {
-template<typename Options>
-struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, promote_option>
-{
-  template<eve::value T,eve::value U,eve::value V>
-  requires(Options::contains(promote))
-  constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+  template<typename Options>
+  struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, promote_option>
+  {
+    template<eve::value T,eve::value U,eve::value V>
+    requires(Options::contains(promote))
+      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
-  template<eve::value T,eve::value U,eve::value V>
-  requires(!Options::contains(promote))
-  constexpr EVE_FORCEINLINE
-  common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    template<eve::value T,eve::value U,eve::value V>
+    requires(!Options::contains(promote))
+      constexpr EVE_FORCEINLINE
+    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
 
-  EVE_CALLABLE_OBJECT(fma_t, fma_);
-};
+    EVE_CALLABLE_OBJECT(fma_t, fma_);
+  };
 
 //======================================================================================================================
 //! @addtogroup core_fma_family
@@ -81,7 +81,7 @@ struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, prom
 //!  @godbolt{doc/core/fma.cpp}
 //! @}
 //======================================================================================================================
-inline constexpr auto fma = functor<fma_t>;
+  inline constexpr auto fma = functor<fma_t>;
 }
 
 #include <eve/module/core/regular/impl/fma.hpp>
