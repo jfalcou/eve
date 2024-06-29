@@ -32,10 +32,10 @@ namespace eve
 //! @addtogroup core_accuracy
 //! @{
 //!   @var diff_of_prod
-//!   @brief Computes the difference of products operation with better accuracy
+//!   @brief `elementwise_callable` object computing the difference of products operation with better accuracy
 //!   than the naive formula.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -46,39 +46,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T
-//!              , eve::floating_value U
-//!              , eve::floating_value V
-//!              , eve::floating_value W>
-//!      T diff_of_prod(T x, U y, V z, W t ) noexcept;
+//!      // Regular overload
+//!      constexpr auto diff_of_prod(floating_value auto x, floating_value auto y,
+//!                                  floating_value auto z, floating_value auto t)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto diff_of_prod[conditional_expr auto c](floating_value auto x, floating_value auto y,
+//!                                                           floating_value auto z, floating_value auto t) noexcept; // 2
+//!
+//!      // Semantic exclusive options
+//!      constexpr auto diff_of_prod[raw](floating_value auto x, floating_value auto y,
+//!                                       floating_value auto z, floating_value auto t)                     noexcept; // 3
+//!      constexpr auto diff_of_prod[pedantic](floating_value auto x, floating_value auto y,
+//!                                            floating_value auto z, floating_value auto t)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z`, `t`:  [floating value arguments](@ref eve::floating_value).
+//!     * `x`, `y`, `z`, `t`:  [floating values](@ref floating_value).
 //!
 //!    **Return value**
 //!
-//!    The value of `x*y-z*t`,  with better precision if correct fma is available,
-//!    is returned.
+//!      1. The value of `x*y-z*t`,  with better precision if correct fma is available,
+//!        is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. computes a raw  version of diff_of_prod,  i.e. the naive formula (in fact  `fms(x, y, z*t)`)
+//!      4. computes a pedantic version of `diff_of_prod` ensuring better accuracy in any case.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/diff_of_prod.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * eve::raw
-//!
-//!     The call `eve::raw(eve::diff_of_prod)(x, y, z, t)` computes a raw
-//!     version of eve::diff_of_prod,  i.e. the naive formula (in fact  `fms(x, y, z, t)`)
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::pedantic(eve::diff_of_prod)(x, y, z, t)` computes a pedantic
-//!     version of eve::diff_of_prod ensuring better accuracy in any case.
-//!
 //! @}
 //================================================================================================
  inline constexpr auto diff_of_prod = functor<diff_of_prod_t>;

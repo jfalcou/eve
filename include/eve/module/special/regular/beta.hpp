@@ -60,9 +60,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1.  \f$\displaystyle \mathbf{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
+//!     1. \f$\displaystyle \mathbf{B}(x,y) = \int_0^1 t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
 //!     2. [The operation is performed conditionnaly](@ref conditional).
-///!
+//!
 //!  @groupheader{External references}
 //!   *  [DLMF](https://dlmf.nist.gov/5.12)
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/beta)

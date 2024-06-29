@@ -37,9 +37,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var div
-//!   @brief Computes the  division of multiple values.
+//!   @brief `elementwise_callable` object computing the  division of multiple values.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,19 +50,52 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value... Ts >
-//!      eve::common_value_t<T, Ts ...> div(Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto div(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto div(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto div[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto div[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!
+//!      // Semantic exclusive options
+//!      constexpr auto div[upward](/*any of the above overloads*/)                   noexcept; // 4
+//!      constexpr auto div[downward](/*any of the above overloads*/)                 noexcept; // 4
+//!      constexpr auto div[toward_zero](/*any of the above overloads*/)              noexcept; // 4
+//!      constexpr auto div[to_nearest](/*any of the above overloads*/)               noexcept; // 4
+//!
+//!      // Semantic options
+//!      constexpr auto div[saturated](integral_value auto x, integral_value auto y)) noexcept; // 5
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `xs ...` :  [real](@ref eve::value) arguments.
+//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x/\prod_1^n x_i\f$
+//!      1. If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x/\prod_1^n x_i\f$
 //!      is returned.
+//!      2. equivalent to the call on the elements of the tuple.
+//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      4. If `z` denotes the prduct of the `xs`, the call `div[o](x, xs...)` produces:
+//!
+//!           * `eve::trunc(div(x, z))`, if `d` is `toward_zero`.
+//!           * `eve::floor(div(x, z))`, if `d` is `downward`.
+//!           * `eve::ceil(div(x,  z))`, if `d` is `upward`.
+//!           * `eve::nearest(div(x, z))`, if `d` is `to_nearest`.
+//!      5. computes the saturated division of `x` by  `y`.
+//!         The result is always defined even if the denominator is 0.
+//!
+//!         The relevant cases are just in fact the division by 0 for integral types
+//!         in which case the result is [`eve::valmin(as(x))`](@ref valmin) or
+//!         [`valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
+//!         the division of [`valmin(as(x))`](@ref valmin)
+//!         by -1 that produces [`valmax(as(x))`](@ref valmax).
 //!
 //!    @note
 //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`
@@ -73,39 +106,7 @@ namespace eve
 //!        standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/div.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::div[mask](x, ...)` provides a masked
-//!     version of `div` which is
-//!     equivalent to `if_else(mask, div(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!       The expression `eve::saturated(eve::div)(x, xs...)` computes the saturated
-//!       division of `x` by  all `xs`. The result is semantically equivalent to
-//!       `saturated(div)(x, saturated(mul)(xs...))` but is always defined even if
-//!       the denominator is 0.
-//!
-//!       The relevant cases are just in fact  the division by 0 for integral types
-//!       in which case the result is [`eve::valmin(as(x))`](@ref eve::valmin) or
-//!       [`eve::valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
-//!       the division of [`eve::valmin(as(x))`](@ref eve::valmin)
-//!       by -1 that produces [`eve::valmax(as(x))`](@ref eve::valmax).
-//!
-//!   * eve::toward_zero, eve::downward, eve::upward, eve::to_nearest
-//!
-//!       The calls `d(div)(x, y)` where d is one of these 4 decorators produce respectively
-//!
-//!           * `eve::trunc (div(x, y))` for eve::toward_zero.
-//!           * `eve::floor (div(x, y))` for deve::downward.
-//!           * `eve::ceil (div(x, y))`  for eve::upward.
-//!           * `eve::nearest (div(x,y))`for eve::to_nearest.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto div = functor<div_t>;

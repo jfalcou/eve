@@ -27,9 +27,9 @@ namespace eve
 //! @{
 //! @var deginrad
 //!
-//! @brief Callable object multiplying the input by \f$\pi/180\f$.
+//! @brief `elementwise_callable` object computing the product of the input by \f$\pi/180\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -40,18 +40,25 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T deginrad(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto deginrad(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto deginrad[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto deginrad[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [floating_value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Return value**
+//!   **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) the degree input converted in radian.
+//!     1. Returns the [elementwise](@ref glossary_elementwise) the degree input converted in radian.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

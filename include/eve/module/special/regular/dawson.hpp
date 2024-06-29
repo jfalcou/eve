@@ -29,10 +29,10 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var dawson
-//!   @brief Computes the Dawson function \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x}
-//!   e^{t^2} \mbox{d}t\f$
+//!   @brief `elementwise_callable` object computing the Dawson function:
+//!     \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -43,18 +43,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T dawson(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto dawson(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto dawson[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto dawson[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [floating_value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   the value of the Dawson function for `x` is returned.
+//!     1. the value of the Dawson function:
+//!        \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$ is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/7.2.5)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DawsonsIntegral.html)
 //!
 //!   @groupheader{Example}
 //!

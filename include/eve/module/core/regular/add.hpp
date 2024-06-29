@@ -51,7 +51,7 @@ namespace eve
 //!   {
 //!      // Regular overloads
 //!      constexpr auto add(value auto x, value auto ... xs)                          noexcept; // 1
-//!      constexpr auto absmin(kumi::non_empty_product_type auto const& tup)          noexcept; // 2
+//!      constexpr auto add(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto add[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3

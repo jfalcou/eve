@@ -64,8 +64,10 @@ namespace eve
 //!       1. The value of the nth Bernouilli number is returned.
 //!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BernoulliNumber.html)
 //!
+//!  @groupheader{Example}
 //!  @godbolt{doc/combinatorial/regular/bernouilli.cpp}
 //! @}
 //================================================================================================
