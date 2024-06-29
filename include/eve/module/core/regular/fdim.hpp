@@ -30,9 +30,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var fdim
-//!   @brief Computes the positive difference between the two parameters.
+//!   @brief `elementwise_callable` computing the positive difference between the two parameters.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -43,34 +43,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      T fdim(T x, U y) noexcept;
+//!      // Regular overloads
+//!      constexpr auto fdim(value auto x, value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto fdim[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto fdim[logical_value auto m](value auto x, value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [real](@ref eve::value)  arguments.
+//!     * `x`, `y`: [real](@ref eve::value)  arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     Returns the  [elementwise](@ref glossary_elementwise) positive difference
-//!     between `x` and `y`:
+//!     Returns the positive difference between `x` and `y`:
 //!       * if `x>y`,   `x-y` is returned,
 //!       * if `x<=y`,  `+0` is returned,
 //!       * otherwise a `Nan` is returned.
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/fdim)
+//!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/fdim.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::fdim[mask](x)` provides a masked version of `eve::fdim` which is
-//!     equivalent to `if_else (mask, fdim(x), x)`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto fdim = functor<fdim_t>;

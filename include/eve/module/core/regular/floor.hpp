@@ -39,7 +39,7 @@ namespace eve
 //!   @var floor
 //!   @brief Computes the largest integer not greater than the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

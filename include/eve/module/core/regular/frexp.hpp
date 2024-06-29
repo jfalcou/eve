@@ -30,7 +30,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
 //!   pair of mantissa and exponent of the floating value,
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

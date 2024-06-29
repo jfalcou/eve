@@ -33,7 +33,7 @@ namespace eve
 //!   @var fmod
 //!   @brief mimick the std::fmod function for floating values.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

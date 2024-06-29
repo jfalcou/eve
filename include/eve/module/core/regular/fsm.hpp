@@ -38,7 +38,7 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 //!   The call `fsm(x, y, z)` is similar to `-x+y*z` as if calculated to infinite precision
 //!   and rounded once to fit the result as much as supported by the hardware.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
