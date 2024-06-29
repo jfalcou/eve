@@ -33,7 +33,7 @@ namespace eve
 //!   @var frac
 //!   @brief Computes the fractional part of the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

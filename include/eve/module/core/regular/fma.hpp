@@ -32,12 +32,9 @@ struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, prom
 //! @addtogroup core_fma_family
 //! @{
 //!   @var fma
-//!   @brief Computes the fused multiply add of its three parameters.
+//!   @brief `strict_elementwise_callable` computing the fused multiply add of its three parameters.
 //!
-//!   The call `fma(x, y, z)` is similar to `x*y+z` as if calculated to infinite precision
-//!   and rounded once to fit the result as much as supported by the hardware.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,46 +45,40 @@ struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, prom
 //!   @code
 //!   namespace eve
 //!   {
-//!     template<eve::value T, eve::value U, eve::value V>
-//!     constexpr eve::common_value_t<T,U,V> fma(T x, U y,  V z) noexcept;
+//!      // Regular overload
+//!      constexpr auto fma(value auto x, value auto y, value auto z)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto fma[conditional_expr auto c](value auto x, value auto y, value auto z) noexcept; // 2
+//!      constexpr auto fma[logical_value auto m](value auto x, value auto y, value auto z)    noexcept; // 2
+//!
+//!      // Semantic option
+//!      constexpr auto fma[pedantic](value auto x, value auto y, value auto z)                noexcept; // 3
+//!      constexpr auto fma[promote](value auto x, value auto y, value auto z)                 noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z` :  [real arguments](@ref eve::value).
+//!     * `x`, `y`, `z` : [values](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `x*y+z` as if calculated to infinite precision
-//!    and rounded once is returned,  but only if the hardware is in capacity
-//!    to do it at reasonable cost.
+//!      1. The value of `x*y+z` as if calculated to infinite precision
+//!         and rounded once is returned,  but only if the hardware is in capacity
+//!         to do it at reasonable cost.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      3. `pedantic` option always ensures the full compliance to fam properties. This can be very expensive if the system
+//!         has no hardware capability.
+//!      4. TO DO : DESCRIBE
 //!
-//!    @note
-//!       This `fma` implementation provides those properties for all
-//!       [integral real value](@ref eve::integral_value)
-//!       and when possible for [floating real value](@ref eve::floating_value).
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/fma)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/fma.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::fma[mask](x, ...)` provides a masked
-//!     version of `fma` which is equivalent to `if_else(mask, fma(x, ...), x)`
-//!
-//!   * eve::pedantic
-//!
-//!     * The call `fma[pedantic](x,y,z)` ensures the one rounding property.
-//!       This can be very expensive if the system has no hardware capability.
-//!
-//!   * eve::promote
-//!
-//!     * The call `fma[promote](x,y,z)`promotes all arguments to their common value type
-//!       before computing fma.
 //! @}
 //======================================================================================================================
 inline constexpr auto fma = functor<fma_t>;

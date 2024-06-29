@@ -40,7 +40,7 @@ namespace eve
 //!
 //!   The call is equivalent to `a0-roundscale(a0,scale)`
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
