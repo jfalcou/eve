@@ -34,12 +34,9 @@ namespace eve
 //! @addtogroup core_fma_family
 //! @{
 //!   @var fsnm
-//!   @brief Computes the fused negate substact multiply of its three parameters.
+//!   @brief `strict_elementwise_callable` computing the fused add multiply of its three parameters.
 //!
-//!   The call `fsnm(x, y, z)` is similar to `-x-y*z` as if calculated to infinite precision
-//!   and rounded once to fit the result as much as supported by the hardware.
-//!
-//!   @groupheader{Header file}
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,43 +47,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::common_value_t fsnm(T x, U y,  V z) noexcept;
+//!      // Regular overload
+//!      constexpr auto fsnm(value auto x, value auto y, value auto z)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto fsnm[conditional_expr auto c](value auto x, value auto y, value auto z) noexcept; // 2
+//!      constexpr auto fsnm[logical_value auto m](value auto x, value auto y, value auto z)    noexcept; // 2
+//!
+//!      // Semantic option
+//!      constexpr auto fsnm[pedantic](value auto x, value auto y, value auto z)                noexcept; // 3
+//!      constexpr auto fsnm[promote](value auto x, value auto y, value auto z)                 noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z` :  [real arguments](@ref eve::value).
+//!     * `x`, `y`, `z` : [values](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `-x-y*z` as if calculated to infinite precision
-//!    and rounded once is returned,  but only if the hardware is in capacity
-//!    to do it at reasonnable cost.
+//!    1. The value of `-x-y*z` as if calculated to infinite precision
+//!       and rounded once is returned,  but only if the hardware is in capacity
+//!       to do it at reasonable cost.
+//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    3. `pedantic` option always ensures the full compliance to fsnm properties. This can be very expensive if the system
+//!       has no hardware capability.
+//!    4. TO DO : DESCRIBE
 //!
-//!    @note
-//!       This `fsnm` implementation provides those properties for all
-//!       [integral real value](@ref eve::integral_value)
-//!       and when possible for [floating real value](@ref eve::floating_value).
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/fma)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/fsnm.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::fsnm[mask](x, ...)` provides a masked
-//!     version of `fsnm` which is
-//!     equivalent to `if_else(mask, fsnm(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric
-//!
-//!       * The call `pedantic(fsnm)(x,y,z)` ensures the one rounding property.
-//!       This can be very expensive if the system has no hardware capability.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto fsnm = functor<fsnm_t>;

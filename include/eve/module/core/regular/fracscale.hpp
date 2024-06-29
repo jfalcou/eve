@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var fracscale
-//!   @brief Computes the reduced part of the scaled input.
+//!   @brief `strict_elementwise_callable` object computing the reduced part of the scaled input.
 //!
 //!   The call is equivalent to `a0-roundscale(a0,scale)`
 //!
@@ -51,11 +51,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, auto scale >
-//!      T roundscale(T x,  index_t<scale> ) noexcept;
+//!      // Regular overload
+//!      constexpr auto fracscale(floating_value auto x, index_t<scale>)    noexcept; // 1
+//!      constexpr auto fracscale(floating_value auto x, int scale)         noexcept; // 1
 //!
-//!      template< eve::floating_value T >
-//!      T fracscale(T x, int scale) noexcept;
+//!      // Semantic option
+//!      constexpr auto absmax[downward](/*any of the above overloads*/)    noexcept; // 2
+//!      constexpr auto absmax[upward](/*any of the above overloads*/)      noexcept; // 2
+//!      constexpr auto absmax[to_nearest](/*any of the above overloads*/)  noexcept; // 2
+//!      constexpr auto absmax[toward_zero](/*any of the above overloads*/) noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -64,29 +68,16 @@ namespace eve
 //!      * `x`:      [real floating value](@ref eve::floating_value).
 //!      * `scale` : int or std::integral_constant of int type limited to the range [0, 15].
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!      Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
-//!      The number of fraction bits retained is specified by scale. By default the internal
-//!      rounding after scaling is done to nearest integer.
-//!      The call `fracscale(x, scale)` is equivalent to  `x-eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
+//!      1. Returns the [elementwise](@ref glossary_elementwise) reduced part of the scaled input.
+//!         The number of fraction bits retained is specified by scale. By default the internal
+//!         rounding after scaling is done to nearest integer.
+//!         The call `fracscale(x, scale)` is equivalent to  `x-eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
+//!      2. with `o` denoting one of these options the call is equivalent to `x-d(eve::round[o](x, scale)`
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/fracscale.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::fracscale[mask](x, scale)` provides a masked version of `eve::fracscale`
-//!     which is equivalent to `if_else (mask, eve::fracscale(x, scale), x)`.
-//!
-//!   * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
-//!
-//!     If o is one of these 4 decorators
-//!     The call `eve:fracscale[o](x, scale)` is equivalent to  `a0-d(eve::round[o](a0, scale)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto fracscale = functor<fracscale_t>;

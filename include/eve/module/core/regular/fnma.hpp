@@ -29,14 +29,12 @@ namespace eve
     EVE_CALLABLE_OBJECT(fnma_t, fnma_);
   };
 
-//================================================================================================
-//! @addtogroup core_fma_family
+
+//======================================================================================================================
+//! @addtogroup core_fnma_family
 //! @{
 //!   @var fnma
-//!   @brief Computes the fused negate multiply add of its three parameters.
-//!
-//!   The call `fnma(x, y, z)` is similar to `-x*y+z` as if calculated to infinite precision
-//!   and rounded once to fit the result as much as supported by the hardware.
+//!   @brief `strict_elementwise_callable` computing the fused multiply add of its three parameters.
 //!
 //!   @groupheader{Header file}
 //!
@@ -49,48 +47,42 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::common_value_t fnma(T x, U y,  V z) noexcept;
+//!      // Regular overload
+//!      constexpr auto fnma(value auto x, value auto y, value auto z)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto fnma[conditional_expr auto c](value auto x, value auto y, value auto z) noexcept; // 2
+//!      constexpr auto fnma[logical_value auto m](value auto x, value auto y, value auto z)    noexcept; // 2
+//!
+//!      // Semantic option
+//!      constexpr auto fnma[pedantic](value auto x, value auto y, value auto z)                noexcept; // 3
+//!      constexpr auto fnma[promote](value auto x, value auto y, value auto z)                 noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z` :  [real arguments](@ref eve::value).
+//!     * `x`, `y`, `z` : [values](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `-x*y+z` as if calculated to infinite precision
-//!    and rounded once is returned,  but only if the hardware is in capacity
-//!    to do it at reasonable cost.
+//!      1. The value of `-x*y+z` as if calculated to infinite precision
+//!         and rounded once is returned,  but only if the hardware is in capacity
+//!         to do it at reasonable cost.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      3. `pedantic` option always ensures the full compliance to fam properties. This can be very expensive if the system
+//!         has no hardware capability.
+//!      4. TO DO : DESCRIBE
 //!
-//!    @note
-//!       This `fnma` implementation provides those properties for all
-//!       [integral real value](@ref eve::integral_value)
-//!       and when possible for [floating real value](@ref eve::floating_value).
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/fma)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/fnma.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::fnma[mask](x, ...)` provides a masked
-//!     version of `fnma` which is
-//!     equivalent to `if_else(mask, fnma(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric
-//!
-//!       * The call `pedantic(fnma)(x,y,z)` ensures the one rounding property.
-//!       This can be very expensive if the system has no hardware capability.
-//!
-//!       * The call `numeric(fnma)(x,y,z)` ensures the full compliance to fnma properties.
-//!        This can be very expensive if the system has no hardware capability.
-//!
 //! @}
-//================================================================================================
+//======================================================================================================================
   inline constexpr auto fnma = functor<fnma_t>;
 
   namespace detail
