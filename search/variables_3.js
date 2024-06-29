@@ -10,8 +10,9 @@ var searchData=
   ['digamma_7',['digamma',['../group__special_ga9eae818e09cb161b0209418f0b1166f0.html#ga9eae818e09cb161b0209418f0b1166f0',1,'eve']]],
   ['dist_8',['dist',['../group__core__arithmetic_gaeff40f4fe2a2e24a0b2337002530c452.html#gaeff40f4fe2a2e24a0b2337002530c452',1,'eve']]],
   ['div_9',['div',['../group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5',1,'eve']]],
-  ['divisible_5fby_5fcardinal_10',['divisible_by_cardinal',['../group__algo__traits_ga266dc4246f7e3a43f11992c4c74e48ce.html#ga266dc4246f7e3a43f11992c4c74e48ce',1,'eve::algo']]],
-  ['dot_11',['dot',['../group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c',1,'eve']]],
-  ['double_5ffactorial_12',['double_factorial',['../group__special_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58',1,'eve']]],
-  ['downward_13',['downward',['../group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6',1,'eve']]]
+  ['div_5f180_10',['div_180',['../group__math__trig_ga2a2f713e2f715e4d1199076cb26194a0.html#ga2a2f713e2f715e4d1199076cb26194a0',1,'eve']]],
+  ['divisible_5fby_5fcardinal_11',['divisible_by_cardinal',['../group__algo__traits_ga266dc4246f7e3a43f11992c4c74e48ce.html#ga266dc4246f7e3a43f11992c4c74e48ce',1,'eve::algo']]],
+  ['dot_12',['dot',['../group__core__arithmetic_ga747bad78fe38220bf5fd9ca81edaf80c.html#ga747bad78fe38220bf5fd9ca81edaf80c',1,'eve']]],
+  ['double_5ffactorial_13',['double_factorial',['../group__special_gaf3d9978112857cdad70a9e8e77dbaf58.html#gaf3d9978112857cdad70a9e8e77dbaf58',1,'eve']]],
+  ['downward_14',['downward',['../group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6',1,'eve']]]
 ];
