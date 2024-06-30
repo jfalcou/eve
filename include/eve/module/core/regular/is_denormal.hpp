@@ -49,14 +49,18 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_denormal(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_denormal(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_denormal[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_denormal[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
 //!
 //!   **Return value**
 //!

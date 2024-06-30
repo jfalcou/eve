@@ -42,7 +42,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      eve::as_logical<T> is_not_imag(T x) noexcept;
+//!      constexpr auto is_not_imag(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

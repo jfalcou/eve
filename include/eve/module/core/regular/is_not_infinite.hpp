@@ -43,8 +43,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_not_infinite(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_not_infinite(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

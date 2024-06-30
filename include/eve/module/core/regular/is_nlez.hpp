@@ -44,8 +44,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_nlez(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_nlez(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

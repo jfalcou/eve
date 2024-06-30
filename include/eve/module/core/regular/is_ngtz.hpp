@@ -45,8 +45,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_ngtz(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_ngtz(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

@@ -45,8 +45,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_negative(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_negative(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

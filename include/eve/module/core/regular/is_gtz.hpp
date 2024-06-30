@@ -47,8 +47,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_gtz(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_gtz(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

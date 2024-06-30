@@ -46,7 +46,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      eve::as_logical<T> is_not_flint(T x) noexcept;
+//!      constexpr auto is_not_flint(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

@@ -57,7 +57,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      auto is_not_equal(T x, U y) noexcept;
+//!      auto is_not_equal(value auto x, U y) noexcept;
 //!   }
 //!   @endcode
 //!

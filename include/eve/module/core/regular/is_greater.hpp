@@ -48,7 +48,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      eve::as_logical<T> is_greater(T x,U y) noexcept;
+//!      constexpr auto is_greater(value auto x, value auto y) noexcept;
 //!   }
 //!   @endcode
 //!

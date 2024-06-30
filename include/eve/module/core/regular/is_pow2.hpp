@@ -51,7 +51,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::integral_value T >
-//!      eve::as_logical<T> is_pow2(T x) noexcept;
+//!      constexpr auto is_pow2(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

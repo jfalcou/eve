@@ -46,7 +46,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::signed_value T >
-//!      eve::as_logical<T> is_positive(T x) noexcept;
+//!      constexpr auto is_positive(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

@@ -51,8 +51,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_even(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_even(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

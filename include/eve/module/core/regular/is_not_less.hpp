@@ -52,7 +52,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      eve::as_logical<T> is_not_less(T x,U y) noexcept;
+//!      constexpr auto is_not_less(value auto x, value auto y) noexcept;
 //!   }
 //!   @endcode
 //!

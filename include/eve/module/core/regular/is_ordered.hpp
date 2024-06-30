@@ -46,7 +46,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      eve::as_logical<T> is_ordered(T x,U y) noexcept;
+//!      constexpr auto is_ordered(value auto x, value auto y) noexcept;
 //!   }
 //!   @endcode
 //!

@@ -50,8 +50,8 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_normal(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_normal(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!
