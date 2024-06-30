@@ -79,6 +79,11 @@ namespace eve
 //!    4. The pedantic option`  computes the result without undue overflow or underflow
 //!        at intermediate stages of the computation and can be more accurate than the regulard call.
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
+
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/hypot.cpp}
 //!  @}
