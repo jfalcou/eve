@@ -33,9 +33,9 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 //! @addtogroup special
 //! @{
 //!   @var gamma_p
-//!   @brief Computes the normalized lower incomplete \f$\Gamma\f$ function.
+//!   @brief `elementwise_callable` object computing the normalized lower incomplete \f$\Gamma\f$ function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -46,22 +46,32 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T0,  floating_ordered_value T1>
-//!      T  gamma_p(T1 x, T2 y) noexcept;
+//!      // Regular overload
+//!      constexpr auto gamma_p(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto gamma_p[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto gamma_p[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`, `y`:  [real floating arguments](@ref eve::floating_ordered_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the normalized lower incomplete \f$\Gamma\f$ function is returned as
-//!   \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+//!     1. The value of the normalized lower incomplete \f$\Gamma\f$ function:
+//!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$ is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
+//!   *  [DLMF](https://dlmf.nist.gov/8.2)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/gamma_p.cpp}
 //! @}
 //================================================================================================

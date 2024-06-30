@@ -38,15 +38,8 @@ namespace eve
 //! @addtogroup polynomial
 //! @{
 //!   @var gegenbauer
-//!   @brief Computes the value of a  gegenbauer polynomial \f$ \mathbf{C}_n^\lambda(x)\f$.
-//!
-//!   The Gegenbauer polynomials are a sequence of orthogonal polynomials relative to
-//!   \f$(1-x^2)^{\lambda-1/2\f$ on the \f$[-1, +1]\f$ interval satisfying the following
-//!   recurrence relation:
-//!     * \f$ \mathbf{C}_0^\lambda(x) = 1\f$.
-//!     * \f$ \mathbf{C}_1^\lambda(x) = 2\lambda x\f$.
-//!     * \f$ \mathbf{C}_n^\lambda(x) = \left[(2x+\lambda-1)\mathbf{C}_{n-1}^\lambda(x) -
-//!           (n+2\lambda-2)\mathbf{C}_{n-2}^\lambda(x)\right]/n\f$.
+//!   @brief  `strict_elementwise_callable` object computing the value of a  gegenbauer
+//!           polynomial \f$ \mathbf{C}_n^\lambda(x)\f$.
 //!
 //!   **Defined in header**
 //!
@@ -59,27 +52,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value T eve::floating_value T, eve::floating_ordered_value U >
-//!     constexpr eve::as_wide_as<eve::common_value_t<T, U>, N>
-//!     auto  gegenbauer(N n, T lambda, U x) noexcept;
+//!     // Regular overload
+//!     constexpr auto gegenbauer(integral_value auto n, floating_value auto lambda,
+//!                               floating_value auto x)                                                    noexcept; //1
+//!
+//!      // Lanes masking
+//!      constexpr auto gamma_p[conditional_expr auto c](integral_value auto n, floating_value auto lambda,
+//!                                                      floating_value auto x)                             noexcept; // 2
+//!      constexpr auto gamma_p[logical_value auto m](integral_value auto n, floating_value auto lambda,
+//!                                                   floating_value auto x)                                noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral argument](@ref eve::integral_value).
-//!
-//!     * `lambda` :  [real floating argument](@ref eve::floating_ordered_value).
-//!                   Must be greater than \f$-\frac12\f$.
-//!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value) .
+//!     * `n`: [integral argument](@ref eve::integral_value).
+//!     * `lambda`: [real floating argument](@ref eve::floating_ordered_value). Must be greater than \f$-\frac12\f$.
+//!     * `x`: [real floating argument](@ref eve::floating_ordered_value).
 //!
 //!   **Return value**
 //!
-//!   The value of \f$ \mathbf{C}_n^\lambda(x)\f$ is returned.
+//!     1. The value of \f$ \mathbf{C}_n^\lambda(x)\f$ is returned.
+//!
+//!        The Gegenbauer polynomials are a sequence of orthogonal polynomials relative to
+//!        \f$(1-x^2)^{\lambda-1/2}\f$ on the \f$[-1, +1]\f$ interval satisfying the following
+//!        recurrence relation:
+//!          * \f$ \mathbf{C}_0^\lambda(x) = 1\f$.
+//!          * \f$ \mathbf{C}_1^\lambda(x) = 2\lambda x\f$.
+//!          * \f$ \mathbf{C}_n^\lambda(x) = \left[(2x+\lambda-1)\mathbf{C}_{n-1}^\lambda(x) -
+//!            (n+2\lambda-2)\mathbf{C}_{n-2}^\lambda(x)\right]/n\f$.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
 //! @}
 //================================================================================================

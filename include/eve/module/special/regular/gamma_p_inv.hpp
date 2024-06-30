@@ -35,9 +35,10 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //! @addtogroup special
 //! @{
 //!   @var gamma_p_inv
-//!   @brief Computes the inverse of the normalized lower incomplete \f$\Gamma\f$ function.
+//!   @brief `elementwise_callable` object computing  the inverse of the normalized lower
+//!          incomplete \f$\Gamma\f$ function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -48,23 +49,32 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
-//!      eve:common_value_t<T,U>  gamma_p_inv(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto gamma_p_inv(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto gamma_p_inv[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto gamma_p_inv[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [real floating arguments](@ref eve::floating_ordered_value).
+//!     * `x`, `y`:  [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!  The value of the  inverse of the normalized lower incomplete \f$\Gamma\f$ function
-//!  relative to the first parameter is returned as  :
-//!  \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+//!    1. The value of the  inverse of the normalized lower incomplete \f$\Gamma\f$ function
+//!       relative to the first parameter is returned as  :
+//!       \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
+//!   *  [DLMF](https://dlmf.nist.gov/8.2)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/special/regular/gamma_p.cpp}
 //! @}
 //================================================================================================

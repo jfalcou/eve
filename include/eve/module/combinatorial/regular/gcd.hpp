@@ -31,9 +31,9 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //! @addtogroup combinatorial
 //! @{
 //!   @var gcd
-//!   @brief Computes the greatest common divisor of the inputs.
+//!   @brief `elementwise_callable` object computing the greatest common divisor of the inputs.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/combinatorial.hpp>
@@ -44,28 +44,37 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::value T,  eve::value U >
-//!     constexpr common_value_t<T, U> gcd(T p, U n) noexcept;
+//!      // Regular overload
+//!      constexpr auto gcd(value auto p, value auto n)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto gcd[conditional_expr auto c](value auto p, value auto n) noexcept; // 2
+//!      constexpr auto gcd[logical_value auto m](value auto p, value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   `p`, `n`: [ordered values](@ref eve::value).
+//!     * `p`, `n`:  [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    If both p and n are zero, returns zero. Otherwise, returns the greatest common divisor of |p|
-//!    and |n|.
+//!      1. If both p and n are zero, returns zero. Otherwise, returns the greatest common divisor of |p|
+//!         and |n|.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!    @warning
-//!    `p` and `n` can be of any [ordered values](@ref eve::value) type, but when the types are not
-//!    integral the greatest common divisor is defined only if `p` and `n` elements are [flint](@ref
-//!    eve::is_flint). If any of the arguments is not flint the result is undefined.
+//!    @warning  `p` and `n` can be of any [values](@ref eve::value) type, but when the types are not
+//!      integral the greatest common divisor is defined only if `p` and `n` elements are
+//!      [flint](@ref eve::is_flint). If any of the arguments is not flint the result is undefined.
 //!
-//!   **Example**
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Greatest_common_divisor)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/gcd)
 //!
-//!     @godbolt{doc/combinatorial/regular/gcd.cpp}
+//!   @groupheader{Example}
+//!   @godbolt{doc/combinatorial/regular/gcd.cpp}
 //!
 //! @}
 //================================================================================================
