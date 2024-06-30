@@ -37,7 +37,6 @@ namespace eve
 //! @var hypot
 //! @brief `tuple_callable` computing the \f$l_2\f$ norm of its inputs.
 //!
-//!
 //!   @groupheader{Header file}
 //!
 //!   @code
@@ -72,12 +71,12 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!     1. \f$\sqrt{\sum_1^n |x_i|^2}\f$ is returned.
+//!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$.
 //!        The result type is the [common value type](@ref common_value_t) of the
 //!        absolute values of the parameters.
-//!     2. equivalent to the call on the elements of the tuple.
-//!     3. [The operation is performed conditionnaly](@ref conditional)
-//!     4. The pedantic option`  computes the result without undue overflow or underflow
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. The pedantic option`  computes the result without undue overflow or underflow
 //!        at intermediate stages of the computation and can be more accurate than the regulard call.
 //!
 //!  @groupheader{Example}

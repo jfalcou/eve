@@ -13,11 +13,11 @@
 
 namespace eve
 {
+  // TODO
   //================================================================================================
   //! @addtogroup core_simd
   //! @{
   //!    @var has_equal_in
-  //!
   //!    @brief
   //!    Given two simd_values: `x`, `match_against` returns a logical mask.
   //!    The res[i] == eve::any(x[i] == match_against);
@@ -40,9 +40,7 @@ namespace eve
   //!   logical built as described previously
   //!
   //!  @groupheader{Example}
-  //!
   //!  @godbolt{doc/core/has_equal_in.cpp}
-  //!
   //================================================================================================
   EVE_MAKE_CALLABLE(has_equal_in_, has_equal_in);
 }
