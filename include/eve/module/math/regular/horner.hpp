@@ -36,13 +36,9 @@ namespace eve
 //! @addtogroup math
 //! @{
 //!   @var horner
-//!   @brief Implement the horner scheme to evaluate polynomials/
+//!   @brief Implement the horner scheme to evaluate polynomials
 //!
-//!   If \f$(a_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by decreasing
-//!   power order,  the Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ by :
-//!   \f$\displaystyle p(x) = (((a_0x+a_1)x+ ... )x + a_{n-1})\f$
-//!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -53,12 +49,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T, eve::floating_ordered_value C ...>
-//!     T horner(T x, C ... coefs) noexcept;                                   //1
+//!      // Regular overloads
+//!      constexpr auto horner(value auto x, value auto ... cs)                      noexcept; // 1
+//!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tup)  noexcept; // 2
 //!
-//!     template< eve::floating_ordered_value T, eve::Range R>
-//!     T horner(T x, R r) noexcept;                                           //2
-//!
+//!      // Semantic options
+//!      constexpr auto horner[pedantic](/*any of the above overloads*/)             noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -67,37 +63,35 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!
-//!     * `coefs...` :  [real floating arguments](@ref eve::floating_ordered_value).
-//!        The coefficients by decreasing power order
-//!
-//!     * `r` : Range or kumi::tuple containing The coefficients by decreasing power order.
+//!     * `x`: [evaluation point floating value](@ref floating_value) arguments.
+//!     * `...cs`: [floating values](@ref floating_value) polynom coefficients in decreasing power order,
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the polynom at  `x` is returned.
+//!     If \f$(a_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by decreasing
+//!     power order,  the Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ by :
+//!     \f$\displaystyle p(x) = (((a_0x+a_1)x+ ... )x + a_{n-1})\f$
 //!
-//!    **Notes**
 //!
-//!      If the coefficients are simd values of cardinal N, this means you simultaneously
+//!     1. The value of the polynom at  `x` is returned.
+//!     2. same as the call with the elements of the tuple.
+//!     3.`fma[pedantic]` instead of `fma` is used in internal computations.
+//!        This is intended to insure more accurate computations where needed. This has no cost (and is
+//!        automatically done) if the system has hard wired `fma` but is very expansive if it is not the case.
+//!
+//!    @note If the coefficients are simd values of cardinal N, this means you simultaneously
 //!      compute the values of N polynomials.
 //!        *  If x is scalar, the polynomials are all computed at the same point
 //!        *  If x is simd, the nth polynomial is computed on the nth value of x
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Horner's_method)
+//!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/math/horner.cpp}
-//!
-//!   @groupheader{Semantic Modifiers}
-//!
-//!   * eve::pedantic
-//!
-//!      The expression `eve::horner[pedantic](...)`
-//!      computes the result using `fma[pedantic]` instead of `eve::fma` in internal computations.
-//!
-//!      This is intended to insure more accurate computations where needed. This has no cost (and is
-//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
 //! @}
 //================================================================================================
   inline constexpr auto horner = functor<horner_t>;

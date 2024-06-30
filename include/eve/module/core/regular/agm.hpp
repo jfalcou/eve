@@ -43,7 +43,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var agm
-//!   @brief `elementwise_callable` computing the the arithmetic-geometric mean.
+//!   @brief `elementwise_callable` object computing the the arithmetic-geometric mean.
 //!
 //!   @groupheader{Header file}
 //!
