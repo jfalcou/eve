@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_lessgreater
-//!   @brief Returns a logical true  if and only if the elements pair are not equal or unordered.
+//!   @brief `elementwise callable` returning a logical true  if and only if the elements pair are not equal or unordered.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -27,9 +27,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var inc
-//!   @brief return the input incremented by one.
+//!   @brief `elementwise_callable` object returning the input incremented by 1.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -40,37 +40,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T inc(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto inc(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto inc[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto inc[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto inc[saturated](value auto x)               noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x`: [SIMD or scalar value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `x + 1` is returned.
+//!      1. The value of `x + 1` is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. The saturated incrementation of `x`. More specifically, for signed
+//!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/inc.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::inc[mask](x, ...)` provides a masked
-//!     version of `inc` which is
-//!     equivalent to `if_else(mask, inc(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!       The call `saturated(inc)(x)` computes the saturated increment of `x`.
-//!       The only interest of this behaviour is that
-//!       for integral type T the call  `saturated(inc)(Valmax<T>())` returns `Valmax<T>()`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto inc = functor<inc_t>;

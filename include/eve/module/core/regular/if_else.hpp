@@ -18,7 +18,7 @@ namespace eve
 //!   @var if_else
 //!   @brief Computes the results of a choice under condition
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -29,15 +29,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U, eve::value V >
-//!      auto if_else(T x, U, y, V z ) noexcept;
+//!      constexpr auto if_else(value auto x, value auto y, value auto z ) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`: condition
-//!     * `y`, `z`:  choice [arguments](@ref eve::value).
+//!     * `y`, `z`:  choice [value](@ref value).
 //!
 //!   **Return value**
 //!
@@ -49,19 +48,17 @@ namespace eve
 //!
 //!     The following calls where `x`, `y` and `z` are values can be optimized:
 //!
-//!        * `if_else(x, y, allbits< T >()) ` writing: `if_else(x, y, eve::allbits_)`
-//!        * `if_else(x, y, one< T >()    ) ` writing: `if_else(x, y, eve::one_    )`
-//!        * `if_else(x, y, mone< T >()   ) ` writing: `if_else(x, y, eve::mone_   )`
-//!        * `if_else(x, y, zero< T >()   ) ` writing: `if_else(x, y, eve::zero_   )`
-//!        * `if_else(x, allbits< T >(), z) ` writing: `if_else(x, eve::allbits_, z)`
-//!        * `if_else(x, one< T >(), z    ) ` writing: `if_else(x, eve::one_, z    )`
-//!        * `if_else(x, mone< T >(), z   ) ` writing: `if_else(x, eve::mone_, z   )`
-//!        * `if_else(x, zero< T >(), z   ) ` writing: `if_else(x, eve::zero_, z   )`
+//!        * `if_else(x, y, allbits< T >())` writing: `if_else(x, y, allbits)`
+//!        * `if_else(x, y, one< T >()    )` writing: `if_else(x, y, one    )`
+//!        * `if_else(x, y, mone< T >()   )` writing: `if_else(x, y, mone   )`
+//!        * `if_else(x, y, zero< T >()   )` writing: `if_else(x, y, zero   )`
+//!        * `if_else(x, allbits< T >(), z)` writing: `if_else(x, allbits, z)`
+//!        * `if_else(x, one< T >(), z    )` writing: `if_else(x, one, z    )`
+//!        * `if_else(x, mone< T >(), z   )` writing: `if_else(x, mone, z   )`
+//!        * `if_else(x, zero< T >(), z   )` writing: `if_else(x, zero, z   )`
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/if_else.cpp}
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(if_else_, if_else);

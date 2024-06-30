@@ -28,9 +28,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_nan
-//!   @brief Returns a logical true  if and only if the element value is not NaN
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is not NaN
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

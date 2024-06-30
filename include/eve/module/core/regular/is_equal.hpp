@@ -44,9 +44,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_equal
-//!   @brief Returns a logical true  if and only if the element values are equal.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element values are equal.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

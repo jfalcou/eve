@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_eqz
-//!   @brief Returns a logical true  if and only if the element value is zero.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is zero.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

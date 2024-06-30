@@ -30,9 +30,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_infinite
-//!   @brief Returns a logical true  if and only if the element is not an infinite value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element is not an infinite value
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -26,11 +26,11 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_imag
-//!   @brief Returns a logical true  if and only if the element value is not imaginary.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is not imaginary.
 //!
 //!   For real entries 0 is the only imaginary number: its real part is 0!
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

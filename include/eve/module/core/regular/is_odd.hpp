@@ -34,9 +34,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_odd
-//!   @brief Returns a logical true  if and only if the element value is odd.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is odd.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

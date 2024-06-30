@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_denormal
-//!   @brief Returns a logical true if and only if the element value is not denormal.
+//!   @brief `elementwise callable` returning a logical true if and only if the element value is not denormal.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

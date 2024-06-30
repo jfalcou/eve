@@ -38,9 +38,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_even
-//!   @brief Returns a logical true  if and only if the element value is even.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is even.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

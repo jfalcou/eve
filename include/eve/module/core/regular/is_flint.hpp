@@ -33,10 +33,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_flint
-//!   @brief Returns a logical true  if and only if the element value is a floating value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is a floating value
 //!   representing an integer
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -30,9 +30,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_unordered
-//!   @brief Returns a logical true  if and only if at least one of the parameters is NaN.
+//!   @brief `elementwise callable` returning a logical true  if and only if at least one of the parameters is NaN.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

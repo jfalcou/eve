@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_finite
-//!   @brief Returns a logical true  if and only if the element is a finite value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element is a finite value
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -31,10 +31,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_negative
-//!   @brief Returns a logical true  if and only if the element  value is signed and
+//!   @brief `elementwise callable` returning a logical true  if and only if the element  value is signed and
 //!   has its sign bit set
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

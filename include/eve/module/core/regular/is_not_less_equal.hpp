@@ -36,10 +36,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_less_equal
-//!   @brief Returns a logical true  if and only if the element value of the first parameter is
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value of the first parameter is
 //!          not less or equal to the second one.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
