@@ -53,10 +53,10 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto epsilon(value auto x)       noexcept; // 1
+//!      constexpr auto exponent(value auto x)       noexcept; // 1
 //!
 //!      // Semantic options
-//!      constexpr auto epsilon[raw](value auto x)  noexcept; // 2
+//!      constexpr auto exponent[raw](value auto x)  noexcept; // 2
 //!   }
 //!   @endcode
 //!
