@@ -58,9 +58,9 @@ namespace eve
 //!
 //!      // Lanes masking
 //!      constexpr auto gegenbauer[conditional_expr auto c](integral_value auto n, floating_value auto lambda,
-//!                                                      floating_value auto x)                             noexcept; // 2
+//!                                                         floating_value auto x)                          noexcept; // 2
 //!      constexpr auto gegenbauer[logical_value auto m](integral_value auto n, floating_value auto lambda,
-//!                                                   floating_value auto x)                                noexcept; // 2
+//!                                                      floating_value auto x)                             noexcept; // 2
 //!   }
 //!   @endcode
 //!
