@@ -15,25 +15,23 @@
 #include <eve/module/algo/algo/preprocess_range.hpp>
 #include <eve/module/algo/algo/traits.hpp>
 
-
 #include <array>
 
 namespace eve::algo
 {
   template <typename TraitsSupport>
-  struct remove_if_ : TraitsSupport
+  struct transform_keep_if_ : TraitsSupport
   {
-    template <typename UnalignedI, typename P>
+    template <typename UnalignedI, typename Func>
     struct delegate
     {
-      explicit delegate(UnalignedI out, P p) : out(out), p(p) {}
+      explicit delegate(UnalignedI out, Func func) : out(out), func(func) {}
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
-        auto loaded = eve::load[ignore](it);
-        auto mask   = !p(loaded); // we decied that ! can be optimized well enough
-        auto density   = density_for_compress_copy<typename TraitsSupport::traits_type>();
-        out            = compress_copy[unsafe][density][ignore](it, loaded, mask, out);
+        auto loaded       = eve::load[ignore](it);
+        auto [vals, mask] = func(loaded);
+        out               = compress_store[unsafe][ignore](vals, mask, out);
         return false;
       }
 
@@ -45,11 +43,11 @@ namespace eve::algo
       }
 
       UnalignedI out;
-      P p;
+      Func func;
     };
 
-    template <relaxed_range Rng, typename P>
-    EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+    template <relaxed_range Rng, typename Func>
+    EVE_FORCEINLINE auto operator()(Rng&& rng, Func func) const
     {
       if (rng.begin() == rng.end()) return unalign(rng.begin());
 
@@ -57,7 +55,7 @@ namespace eve::algo
 
       auto iteration = algo::for_each_iteration(processed.traits(), processed.begin(), processed.end());
       auto out = iteration.base;
-      delegate<unaligned_t<decltype(out)>, P> d{unalign(out), p};
+      delegate<unaligned_t<decltype(out)>, Func> d{unalign(out), func};
       iteration(d);
       return unalign(rng.begin()) + (d.out - processed.begin());
     }
@@ -66,8 +64,8 @@ namespace eve::algo
   //================================================================================================
   //! @addtogroup algos
   //! @{
-  //!  @var remove_if
-  //!  @brief SIMD version of std::remove_if
+  //!   @var transform_keep_if
+  //!   @brief In-place version of `eve::algo::transform_copy_if`
   //!
   //!   **Defined in Header**
   //!
@@ -75,42 +73,43 @@ namespace eve::algo
   //!   #include <eve/module/algo.hpp>
   //!   @endcode
   //!
-  //!   TODO: docs
+  //!   Conditionally copies values that pass a predicate to the beginning of the range,
+  //!   transforming them in the process.
+  //!   Values past the returned sentinel are to be considered garbage.
   //!
-  //!   @see keep_if
-  //!   @see copy_if
-  //!   @see transform_keep_if
-  //!   @see transform_copy_if
+  //!   @note
+  //!   If the scalar operation is cheap enough, `::keep_if` + `views::map` might be slightly faster.
   //!
-  //! @}
-  //================================================================================================
-  inline constexpr auto remove_if = function_with_traits<remove_if_>[no_traits];
-
-  template <typename TraitsSupport>
-  struct remove_ : TraitsSupport
-  {
-    template <relaxed_range Rng, typename T>
-    EVE_FORCEINLINE auto operator()(Rng&& rng, T v) const
-    {
-      return remove_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to{v});
-    }
-  };
-
- //================================================================================================
-  //! @addtogroup algos
-  //! @{
-  //!  @var remove
-  //!  @brief SIMD version of std::remove
+  //!   @note See `::transform_copy_if` and `::keep_if` for more details.
   //!
-  //!   **Defined in Header**
-  //!
+  //!   @groupheader{Callable Signatures}
+  //!   
   //!   @code
-  //!   #include <eve/module/algo.hpp>
+  //!   {
+  //!     template<relaxed_range Rng, typename Func>
+  //!     auto transform_keep_if(Rng&& rng, Func func) -> unaligned_iterator_t<Rng>
+  //!   }
   //!   @endcode
   //!
-  //!   TODO: docs
+  //!   **Parameters**
+  //!
+  //!    * `rng`: Range to modify
+  //!    * `func`: Function that takes elements from `rng` as SIMD registers and returns a pair of:
+  //!        - the transformed values
+  //!        - a logical mask
+  //!
+  //!   **Return value**
+  //!
+  //!   Iterator past the last written element.
+  //!
+  //!   @see `keep_if`
+  //!   @see `copy_if`
+  //!   @see `remove_if`
+  //!   @see `transform_copy_if`
+  //!   @see `transform_inplace`
+  //!   @see `views::map`
   //!
   //! @}
   //================================================================================================
-  inline constexpr auto remove = function_with_traits<remove_>[no_traits];
+  inline constexpr auto transform_keep_if = function_with_traits<transform_keep_if_>[no_traits];
 }

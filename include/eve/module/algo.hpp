@@ -39,6 +39,7 @@
 #include <eve/module/algo/algo/inclusive_scan.hpp>
 #include <eve/module/algo/algo/iota.hpp>
 #include <eve/module/algo/algo/iterator_helpers.hpp>
+#include <eve/module/algo/algo/keep_if.hpp>
 #include <eve/module/algo/algo/max_element.hpp>
 #include <eve/module/algo/algo/max_value.hpp>
 #include <eve/module/algo/algo/min_element.hpp>
@@ -56,6 +57,7 @@
 #include <eve/module/algo/algo/traits.hpp>
 #include <eve/module/algo/algo/transform.hpp>
 #include <eve/module/algo/algo/transform_copy_if.hpp>
+#include <eve/module/algo/algo/transform_keep_if.hpp>
 #include <eve/module/algo/algo/transform_reduce.hpp>
 #include <eve/module/algo/algo/two_stage_iteration.hpp>
 #include <eve/module/algo/views/backward.hpp>
