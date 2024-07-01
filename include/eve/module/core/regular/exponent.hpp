@@ -39,9 +39,9 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var exponent
-//!   @brief Computes the IEEE exponent of the floating value.
+//!   @brief `elementwise_callable` object computing the integral IEEE exponent of the floating value.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -52,8 +52,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_integer_t<T> exponent(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto exponent(value auto x)       noexcept; // 1
+//!
+//!      // Semantic options
+//!      constexpr auto exponent[raw](value auto x)  noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -63,26 +66,15 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    The value of the IEEE exponent is returned.
-//!
-//!    In particular:
-//!      *  `inf`,  `minf` and `nan` return maxexponent plus 1
-//!      *  zero returns zero
+//!      1. The value of the IEEE exponent is returned. In particular:
+//!        *  `inf`,  `minf` and `nan` return `maxexponent` plus 1
+//!        *  zero returns zero
+//!      2 identical except that results for zero, nan and infinite  inputs are unspecified
 //!
 //! @note
 //!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
 //!       \f$x =  m\times 2^e\f$, with  \f$|m| \in \{0\} \cup [1, 2[\f$.
-//!
-//!   @groupheader{Semantic Modifiers}
-//!
-//!   * raw Call
-//!
-//!     The call `eve::exponent[raw](x)` is identical except that results for zero, nan and infinite
-//!     inputs are unspecified
-//!
-//!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/exponent.cpp}
 //! @}
 //================================================================================================

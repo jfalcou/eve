@@ -31,7 +31,7 @@ namespace eve
 //!   @var erfc_inv
 //!   @brief Computes the inverse of the complementary error function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -42,27 +42,31 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T erfc_inv(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto erfc_inv(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto erfc_inv[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto erfc_inv[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`:  [real floating argument](@ref eve::floating_ordered_value).
 //!       Must be in interval  \f$[0, 2]\f$ else nan is returned.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the inverse complementary error function is returned. In particular:
-//!
-//!      * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
-//!      * If the argument is \f$2\f$, \f$-\infty\f$ is returned.
-//!      * If the argument is \f$0\f$,\f$\infty\f$ is returned.
-//!      * If the argument is NaN, NaN is returned.
+//!      1. The value of the inverse complementary error function is returned. In particular:
+//!        * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
+//!        * If the argument is \f$2\f$, \f$-\infty\f$ is returned.
+//!        * If the argument is \f$0\f$,\f$\infty\f$ is returned.
+//!        * If the argument is `NaN`, `NaN` is returned.
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/erfc_inv.cpp}
 //! @}
 //================================================================================================

@@ -40,10 +40,9 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var exp2
+//! @brief  `elementwise_callable` object computing \f$2^x\f$.
 //!
-//! @brief Callable object computing \f$2^x\f$.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -54,39 +53,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value T >
-//!      T exp2(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto exp2(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto exp2[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto exp2[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [ordered value](@ref eve::ordered_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *   Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
-//!       In particular, for floating inputs:
+//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
+//!      In particular, for floating inputs:
+//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned
+//!        * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+//!        * If the element is a `NaN`, `NaN` is returned
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!       * If the element is a `NaN`, `NaN` is returned
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+//!   *  [DLMF](https://dlmf.nist.gov/4.2)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/exp2.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::exp2[mask](x)` provides a masked version of `eve::exp2` which is
-//!     equivalent to `if_else (mask, exp2(x), x)`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/math/masked/exp2.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto exp2 = functor<exp2_t>;

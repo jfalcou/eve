@@ -25,10 +25,9 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var expx2
-//!
 //! @brief Callable object computing \f$e^{x^2}\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -39,34 +38,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< floating_value T>
-//!      T expx2(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto expx2(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto expx2[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto expx2[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!  **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Return value**
+//!  **Return value**
 //!
-//!   Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
-//!   trying to avoid overflow as possible in the real case.
+//!     1. Returns the [elementwise](@ref glossary_elementwise) exponential of the square of `x`
+//!        trying to avoid overflow as possible.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/expx2.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::expx2[mask](x, ...)` provides a masked version of `eve::expx2` which is
-//!     equivalent to `if_else (mask, expx2(x, ...), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/expx2.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto expx2 = functor<expx2_t>;
