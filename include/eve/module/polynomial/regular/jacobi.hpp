@@ -36,15 +36,7 @@ namespace eve
 //! @addtogroup polynomial
 //! @{
 //!   @var jacobi
-//!   @brief Computes the value of the Jacobi polynomials \f$P^{\alpha, \beta}_n(x)\f$.
-//!
-//!   The Jacobi  polynomials are a sequence of orthogonal polynomials relative
-//!   to \f$(1-x)^{\alpha}(1+x)^{\beta}\f$, for \f$\alpha \f$ and \f$\beta \f$ greater than -1,
-//!   on the \f$[-1, +1]\f$ interval.
-//!
-//!   They can be defined via a Rodrigues formula:
-//!    \f$\displaystyle P^{\alpha, \beta}_n(x) = \frac{(-1)^n}{2^n n!}(1-x)^{-\alpha}
-//!    (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\f$.
+//!   @brief `strict_elementwise_callable` object computing the value of the Jacobi polynomials \f$P^{\alpha, \beta}_n(x)\f$.
 //!
 //!   **Defined in header**
 //!
@@ -57,29 +49,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value N
-//!             , eve::floating_ordered_value T
-//!             , eve::floating_ordered_value A
-//!             , eve::floating_ordered_value B>
-//!       constexpr eve::as_wide_as<common_value_t<T, A, B>, N>
-//!      jacobi(N n, T x, A alpha,  B beta) noexcept;
+//!     // Regular overload
+//!     constexpr auto jacobi(integral_value auto n, floating_value auto x,
+//!                               floating_value auto alpha, floating_value auto beta)                         noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto jacobi[conditional_expr auto c](integral_value auto n, floating_value auto x,
+//!                                                      floating_value auto alpha,  floating_value auto beta) noexcept; // 2
+//!      constexpr auto jacobi[logical_value auto m](integral_value auto n, floating_value auto x,
+//!                                                   floating_value auto alpha,  floating_value auto beta)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `n` :  [integral positive argument](@ref eve::integral_value).
-//!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!
-//!     * `alpha`, `beta`:   [floating arguments](@ref eve::floating_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_value).
+//!     * `alpha`, `beta`: [floating arguments](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!
-//!   The value of the polynomial \f$P^{\alpha, \beta}_n(x)\f$ is returned.
+//!     The Jacobi  polynomials are a sequence of orthogonal polynomials relative
+//!     to \f$(1-x)^{\alpha}(1+x)^{\beta}\f$, for \f$\alpha \f$ and \f$\beta \f$ greater than -1,
+//!     on the \f$[-1, +1]\f$ interval.
+//!
+//!     They can be defined via a Rodrigues formula:
+//!      \f$\displaystyle P^{\alpha, \beta}_n(x) = \frac{(-1)^n}{2^n n!}(1-x)^{-\alpha}
+//!     (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\f$.
+//!
+//!    1. The value of the polynomial \f$P^{\alpha, \beta}_n(x)\f$ is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/polynomial/regular/jacobi.cpp}
 //!
 //! @}
