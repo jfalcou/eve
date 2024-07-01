@@ -208,7 +208,7 @@ Handling eve::wide</h1>
 <h1><a class="anchor" id="autotoc_md127"></a>
 Mathematical Epilogue</h1>
 <p>As stated earlier, we are currently using a slightly brutal computation for \(\rho\). Indeed, if the magnitudes of <code>x</code> and <code>y</code> vary greatly, we may end up with overflow or cancellation, both classic IEEE 754 floating-point issues.</p>
-<p>Computing the square root of the sum of the squares of x and y, without undue overflow or underflow at intermediate stages of the computation is the job of a very specific function: <code>std::hypot</code>. Quite handily, <b>EVE</b> also proposes a SIMD implementation via <a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="Callable object computing the  norm of its inputs.">eve::hypot</a>.</p>
+<p>Computing the square root of the sum of the squares of x and y, without undue overflow or underflow at intermediate stages of the computation is the job of a very specific function: <code>std::hypot</code>. Quite handily, <b>EVE</b> also proposes a SIMD implementation via <a class="el" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9" title="tuple_callable computing the  norm of its inputs.">eve::hypot</a>.</p>
 <p>A better implementation is then given as:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
@@ -217,7 +217,7 @@ Mathematical Epilogue</h1>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span>  <a class="code hl_variable" href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a>(x, y);</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr auto hypot</div><div class="ttdoc">Callable object computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:90</div></div>
+<div class="ttc" id="agroup__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9_html_ga1f3f9f62c04251ff83111a058c2e64b9"><div class="ttname"><a href="group__math__exp_ga1f3f9f62c04251ff83111a058c2e64b9.html#ga1f3f9f62c04251ff83111a058c2e64b9">eve::hypot</a></div><div class="ttdeci">constexpr auto hypot</div><div class="ttdoc">tuple_callable computing the  norm of its inputs.</div><div class="ttdef"><b>Definition:</b> hypot.hpp:91</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md128"></a>
 Conclusion</h1>
 <p>In this first tutorial, we managed to:</p><ul>
