@@ -11,7 +11,7 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename Slice>
+  template<arithmetic_scalar_value T, typename N, typename Slice>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
@@ -35,7 +35,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N>
+  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
     requires ppc_abi<abi_t<T, N>>
   {

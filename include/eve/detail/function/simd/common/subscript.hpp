@@ -63,8 +63,8 @@ namespace eve::detail
 
       if constexpr( abi_t::is_wide_logical )
       {
-        auto ptr = reinterpret_cast<detail::alias_t<type>*>(&p.storage());
-        ptr[i] = v;
+        auto ptr = reinterpret_cast<detail::alias_t<translate_t<type>>*>(&p.storage());
+        ptr[i] = translate(v);
       }
       else
       {
@@ -79,7 +79,7 @@ namespace eve::detail
     }
     else if constexpr( has_emulated_abi_v<Wide> )
     {
-      p.storage()[i] = v;
+      p.storage()[i] = translate(v);
     }
     else if constexpr( has_bundle_abi_v<Wide> )
     {

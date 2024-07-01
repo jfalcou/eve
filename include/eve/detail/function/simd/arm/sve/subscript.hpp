@@ -16,14 +16,14 @@ template<typename T, typename N>
 EVE_FORCEINLINE T
 extract(wide<T, N> const& v, std::size_t i) noexcept requires sve_abi<abi_t<T, N>>
 {
-  return v.storage()[i];
+  return bit_cast(v.storage()[i], as<T>());;
 }
 
 template<typename T, typename N>
-EVE_FORCEINLINE T
+EVE_FORCEINLINE void
 insert(wide<T, N>& v, std::size_t i, T x) noexcept requires sve_abi<abi_t<T, N>>
 {
-  return v.storage()[i] = x;
+  v.storage()[i] = translate(x);
 }
 
 template<typename T, typename N>

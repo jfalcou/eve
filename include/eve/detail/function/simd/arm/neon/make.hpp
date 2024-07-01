@@ -46,10 +46,10 @@ namespace eve::detail
   };
 
   template<arithmetic_scalar_value T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const & tgt, Vs... vs) noexcept
       requires arm_abi<abi_t<T, N>>
   {
-    return neon_maker<T, N> {}(vs...);
+    return bit_cast(neon_maker<translate_t<T>, N> {}(translate(vs)...), tgt);
   }
 
   //================================================================================================
