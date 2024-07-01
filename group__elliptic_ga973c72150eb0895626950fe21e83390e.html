@@ -140,36 +140,45 @@ $(document).ready(function(){initNavTree('group__elliptic_ga973c72150eb089562695
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Be aware that as \(\pi/2\) is not exactly represented by floating point values the result of the incomplete function with a \(\phi\) floating point value representing \(\pi/2\) can differ a lot with the result of the complete call.</p>
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
-<div class="line">   <span class="keyword">constexpr</span> T <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>(T k) <span class="keyword">noexcept</span>;                                       <span class="comment">//1</span></div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)                                   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__constants_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line"> </div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T,  eve::<span class="keywordtype">float</span>ing_ordered_value U &gt;</div>
-<div class="line">   <span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U&gt;</a> <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>(T <a class="code hl_variable" href="group__math__constants_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">phi</a>, U k) <span class="keyword">noexcept</span>;        <span class="comment">//2</span></div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">ellint_1</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__elliptic_ga973c72150eb0895626950fe21e83390e_html_ga973c72150eb0895626950fe21e83390e"><div class="ttname"><a href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">eve::ellint_1</a></div><div class="ttdeci">constexpr auto ellint_1</div><div class="ttdoc">Computes the elliptic integrals of the first kind :  and .</div><div class="ttdef"><b>Definition:</b> ellint_1.hpp:89</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__elliptic_ga973c72150eb0895626950fe21e83390e_html_ga973c72150eb0895626950fe21e83390e"><div class="ttname"><a href="group__elliptic_ga973c72150eb0895626950fe21e83390e.html#ga973c72150eb0895626950fe21e83390e">eve::ellint_1</a></div><div class="ttdeci">constexpr auto ellint_1</div><div class="ttdoc">elementwise_callable object computing the elliptic integrals of the first kind.</div><div class="ttdef"><b>Definition:</b> ellint_1.hpp:95</div></div>
 <div class="ttc" id="agroup__math__constants_ga25a5a4327793847943fd76abc0af6f17_html_ga25a5a4327793847943fd76abc0af6f17"><div class="ttname"><a href="group__math__constants_ga25a5a4327793847943fd76abc0af6f17.html#ga25a5a4327793847943fd76abc0af6f17">eve::phi</a></div><div class="ttdeci">constexpr auto phi</div><div class="ttdoc">Callable object computing the golden ratio : .</div><div class="ttdef"><b>Definition:</b> phi.hpp:77</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
-</div><!-- fragment --><ol type="1">
-<li>complete elliptic integrals of the first kind.</li>
-<li>incomplete elliptic integrals of the first kind.</li>
-</ol>
-<p><b>Parameters</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>phi</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real Jacobi amplitude</a>.</li>
-<li><code>k</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real elliptic modulus</a>. <code>k</code> must verify \(k^2\sin^2\phi \le 1\) or the result is NaN. In the complete case this means \(|k| \le 1\).</li>
+<li><code>phi</code>: <a class="el" href="concepteve_1_1floating__value.html">floating Jacobi amplitude</a>.</li>
+<li><code>k</code>: floating elliptic modulus. <code>k</code> must satisfy \(k^2\sin^2\phi \le 1\) or the result is <code>NaN</code>. In the complete case this means \(|k| \le 1\).</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>the complete elliptic integral (corresponding to \( \phi = \pi/2 \)) is returned.</li>
-<li>the incomplete elliptic integral is returned:</li>
+<li>the complete elliptic integral of the first kind \(\mathbf{K}(k) = \int_0^{\pi/2} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\). (corresponding to \( \phi = \pi/2 \)) is returned.</li>
+<li>the incomplete elliptic integral of the first kind is returned: \(\mathbf{F}(\phi, k) = \int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\)</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
 </ol>
+<dl class="section note"><dt>Note</dt><dd>Be aware that as \(\pi/2\) is not exactly represented by floating point values the result of the incomplete function with a \(\phi\) floating point value representing \(\pi/2\) can differ a lot with the result of the complete call.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1">C++ standard reference</a></li>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF</a></li>
+<li><a href="https://mathworld.wolfram.com/EllipticIntegral.html">Wolfram MathWorld</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
