@@ -47,32 +47,29 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_infinite(value auto x) noexcept;
+//!      constexpr auto is_infinite(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_infinite[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_infinite[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     For real entries the call `is_infinite(x)` is semantically  equivalent to
-//!     `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
-//!     in particular this is always false for integral types.
+//!     1. For floating  entries the call `is_infinite(x)` is semantically  equivalent to
+//!       `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
+//!       and is always false for integral types.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_infinite.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_infinite[mask](x)` provides a masked
-//!     version of `eve::is_infinite` which
-//!     is equivalent to `if_else (mask, is_infinite(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_infinite = functor<is_infinite_t>;

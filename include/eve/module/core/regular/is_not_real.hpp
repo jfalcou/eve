@@ -48,7 +48,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      constexpr auto is_not_real(value auto x) noexcept;
+//!      constexpr auto is_not_real(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_real[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_not_real[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
@@ -59,6 +63,8 @@ namespace eve
 //!   **Return value**
 //!
 //!    Returns false for all floating entries.
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

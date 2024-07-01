@@ -31,8 +31,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_negative
-//!   @brief `elementwise callable` returning a logical true  if and only if the element  value is signed and
-//!   has its sign bit set
+//!   @brief `elementwise callable` returning a logical true if and only if the element
+//!    value is signed and has its sign bit set
 //!
 //!   @groupheader{Header file}
 //!
@@ -46,19 +46,26 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_negative(value auto x) noexcept;
+//!      constexpr auto is_negative(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_negative[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_negative[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      For signed types The call `is_negative(x)`
-//!      [elementwise](@ref glossary_elementwise) returns true
-//!      if and only if the bit of sign (most significant bit) is set.
+//!     1.For signed types The call `is_negative(x)`
+//!       [elementwise](@ref glossary_elementwise) returns true
+//!       if and only if the bit of sign (most significant bit) is set.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note
 //!     this function coincides with `is_ltz` on [integral real values](@ref eve::value),
@@ -67,16 +74,7 @@ namespace eve
 //!     although not undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_negative.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_negative[mask](x)` provides a masked version of `eve::is_negative` which
-//!     is equivalent to `if_else (mask, is_negative(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
  inline constexpr auto is_negative = functor<is_negative_t>;

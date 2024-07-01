@@ -46,30 +46,28 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_finite(value auto x) noexcept;
+//!      constexpr auto is_finite(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_finite[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_finite[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x`: [real argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     `is_finite(x)` is semantically  equivalent to `eve::is_not_nan(x-x)`, in particular
-//!     this is always true for integral types.
+//!      1. `is_finite(x)` is semantically  equivalent to `is_not_nan(x-x)`, in particular
+//!         this is always true for integral types.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_finite.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_finite[mask](x)` provides a masked version of `eve::is_finite` which is
-//!     equivalent to `if_else (mask, is_finite(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_finite = functor<is_finite_t>;

@@ -46,33 +46,30 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      constexpr auto is_not_flint(value auto x) noexcept;
+//!      constexpr auto is_not_flint(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_flint[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_not_flint[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::floating_value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The call `eve;::is_not_flint[mask](x)` is semantically  equivalent to: `eve::is_nez
-//!     (eve::frac (x))`;
-//!
-//!     This means that x is a [floating real value](@ref eve::floating_value) not representing an
-//!     integer (flint is a shorcut for 'floating integer').
+//!      1. The call `eve;::is_not_flint[mask](x)` is semantically  equivalent to: `eve::is_nez
+//!        (eve::frac (x))`;
+//!        This means that x is a [floating real value](@ref eve::floating_value) not representing an
+//!        integer (flint is a shorcut for 'floating integer').
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_not_flint.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_not_flint[mask](x)` provides a masked version of `eve::is_not_flint`
-//!     which is equivalent to `if_else (mask, is_not_flint(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_not_flint = functor<is_not_flint_t>;

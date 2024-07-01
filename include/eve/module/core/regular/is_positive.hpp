@@ -46,13 +46,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::signed_value T >
-//!      constexpr auto is_positive(value auto x) noexcept;
+//!      constexpr auto is_positive(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_positive[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_positive[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -65,6 +71,8 @@ namespace eve
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false
 //!     and if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control
 //!     although not undefined.
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

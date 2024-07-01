@@ -50,33 +50,29 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_not_denormal(value auto x) noexcept;
+//!      constexpr auto is_not_denormal(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_denormal[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_not_denormal[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The call `is_not_denormal(x)` is semantically  equivalent to:
-//!     `(eve::abs(x) >=  eve::smallestposval(eve::as(x))) || eve::is_eqz(x)`,
-//!     in particular this is always true for integral types.
+//!     1. The call `is_not_denormal(x)` is semantically  equivalent to:
+//!       `(eve::abs(x) >=  eve::smallestposval(eve::as(x))) || eve::is_eqz(x)`,
+//!       in particular this is always true for integral types.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_not_denormal.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_not_denormal[mask](x)` provides a masked version
-//!     of `eve::is_not_denormal` which is
-//!     equivalent to `if_else (mask, is_not_denormal(x), eve::false( eve::as(x)))`.
-//!
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_not_denormal = functor<is_not_denormal_t>;

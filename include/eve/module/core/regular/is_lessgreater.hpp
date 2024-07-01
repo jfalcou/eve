@@ -58,6 +58,8 @@ namespace eve
 //!
 //!    The call `eve::is_lessgreater(x, y)`  is semantically  equivalent to `x < y || x > y`:
 //!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/is_lessgreater.cpp}

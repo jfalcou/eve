@@ -74,6 +74,8 @@ namespace eve
 //!      Although the infix notation with `==` is supported, the `!=` operator on
 //!      standard scalar types is the original one and so returns bool result, not `eve::logical`.
 //!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/is_not_equal.cpp}

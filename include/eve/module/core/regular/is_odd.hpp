@@ -48,13 +48,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_odd(value auto x) noexcept;
+//!      constexpr auto is_odd(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_odd[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_odd[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -63,6 +69,8 @@ namespace eve
 //!      if constexpr(floating_value<T>)   return (x != dec(x)) && eve::is_odd(dec(x));
 //!      else constexpr(integral_value<T>) return eve::is_nez (x & one(as(x));
 //!      @endcode
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

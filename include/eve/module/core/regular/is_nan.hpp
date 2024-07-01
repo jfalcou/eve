@@ -45,36 +45,31 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_nan(value auto x) noexcept;
+//!      constexpr auto is_nan(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_nan[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_nan[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argumentargument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!       For eal entries the call `eve::is_nan(x)`  is semantically  equivalent to:
-//!
-//!       @code
+//!      1.  For eal entries the call `eve::is_nan(x)`  is semantically  equivalent to:
+//!         @code
 //!         if   constexpr(floating_value<T>) return is_not_equal(x, x);
 //!         else constexpr(integral_value<T>) return false_(as(x));
-//!       @endcode
-//!
-//!       `eve::is_nan(real(z)) || eve::is_nan(imag(z))`,
+//!         @endcode
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_nan.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_nan[mask](x)` provides a masked version of `eve::is_nan` which is
-//!     equivalent to `if_else (mask, is_nan(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_nan = functor<is_nan_t>;

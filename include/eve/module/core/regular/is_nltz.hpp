@@ -46,32 +46,29 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_nltz(value auto x) noexcept;
+//!      constexpr auto is_nltz(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_nltz[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_nltz[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    Returns [elementwise](@ref glossary_elementwise) `!(x < 0)`.
+//!     1.Returns [elementwise](@ref glossary_elementwise) `!(x < 0)`.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!   @note
-//!    This is not equivalent to `(x < >= 0)` for floating values.
+//!   @note This is not equivalent to `(x < >= 0)` for floating values because of `NaN` properties..
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_nltz.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_nltz[mask](x)` provides a masked version of `eve::is_nltz` which is
-//!     equivalent to `if_else (mask, is_nltz(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
  inline constexpr auto is_nltz = functor<is_nltz_t>;

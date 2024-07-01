@@ -48,28 +48,27 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_gtz(value auto x) noexcept;
+//!      constexpr auto is_gtz(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_gtz[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_gtz[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!
-//!    Returns [elementwise](@ref glossary_elementwise) `x > 0`.
+//!     1. Returns [elementwise](@ref glossary_elementwise) `x > 0`.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_gtz[mask](x)` provides a masked version of `eve::is_gtz` which is
-//!     equivalent to `if_else (mask, is_gtz(x), eve::false( eve::as(x)))`.
-//!
+//!  @godbolt{doc/core/is_gtz.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto is_gtz = functor<is_gtz_t>;

@@ -42,7 +42,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      constexpr auto is_not_imag(value auto x) noexcept;
+//!      constexpr auto is_not_imag(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_imag[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_not_imag[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
@@ -53,6 +57,8 @@ namespace eve
 //!   **Return value**
 //!
 //!    Returns [elementwise](@ref glossary_elementwise) `x != 0` for real entries.
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

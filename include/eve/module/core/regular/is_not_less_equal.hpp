@@ -63,6 +63,8 @@ namespace eve
 //!
 //!    The call `eve::is_not_less_equal(x,y)`  is semantically  equivalent to `!(x <= y)`:
 //!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/is_not_less_equal.cpp}

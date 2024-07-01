@@ -44,7 +44,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_not_infinite(value auto x) noexcept;
+//!      constexpr auto is_not_infinite(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_infinite[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_not_infinite[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
@@ -61,6 +65,8 @@ namespace eve
 //!     @endcode
 //!
 //!     `eve::is_not_infinite(real(z)) && eve::is_not_infinite(imag(z))`,
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

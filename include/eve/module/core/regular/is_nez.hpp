@@ -44,29 +44,27 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_nez(value auto x) noexcept;
+//!      constexpr auto is_nez(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_nez[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_nez[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    The truth value of x != 0
-//!    is returned.
+//!     1. The truth value of x != 0 is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_nez.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_nez[mask](x)` provides a masked version of `eve::is_nez` which is
-//!     equivalent to `if_else (mask, is_nez(x), eve::false( eve::as(x)))`.
 //! @}
 //================================================================================================
   inline constexpr auto is_nez = functor<is_nez_t>;
