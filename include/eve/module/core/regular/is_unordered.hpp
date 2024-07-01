@@ -30,7 +30,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_unordered
-//!   @brief `elementwise callable` returning a logical true  if and only if at least one of the parameters is NaN.
+//!   @brief `elementwise callable` returning a logical true  if and only if at least one of the
+//!   parameters is `NaN`.
 //!
 //!   @groupheader{Header file}
 //!
@@ -43,33 +44,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      constexpr auto is_unordered(value auto x, value auto y) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_unordered(value auto x, value auto y) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_unordered[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_unordered[logical_value auto m](value auto x, value auto y) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [argument](@ref eve::value).
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    The call `eve::is_unordered(x,y)`  is semantically  equivalent
-//!    to `eve::is_nan(x) || eve::is_nan(y)`:
-//!
+//!     1. The call `eve::is_unordered(x,y)`  is semantically  equivalent to `is_nan(x) || is_nan(y)`:
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_unordered.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_unordered[mask](x,y)` provides a masked version of `eve::is_unordered`
-//!     which is equivalent to `if_else (mask, is_unordered(x), eve::false( eve::as(x,y)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_unordered = functor<is_unordered_t>;

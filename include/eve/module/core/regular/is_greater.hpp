@@ -47,43 +47,39 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      constexpr auto is_greater(value auto x, value auto y) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_greater(value auto x, value auto y) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_greater[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_greater[logical_value auto m](value auto x, value auto y) noexcept;    // 2
+//!
+//!      // Semantic option
+//!      constexpr auto absmax[definitely](/*any of the above overloads*/)              noexcept; // 3
+//!      constexpr auto absmax[definitely = tol](/*any of the above overloads*/)        noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [argument](@ref eve::value).
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol`: [scalar value](@ref value) tolerance.
 //!
 //!   **Return value**
 //!
-//!    The call `eve::is_greater(x,y)`  is semantically  equivalent to `x > y`:
-//!
+//!     1. The call `eve::is_greater(x,y)`  is semantically  equivalent to `x > y`:
 //!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. The expression `is_greater[definitely = tol](x, y)` where `x` and `y` must be
+//!         floating point values, evals to true if and only if `x` is definitely greater than `y`.
+//!         This means that:
+//!            - if `tol` is a floating value then  \f$x > y + \mbox{tol}\cdot \max(|x|, |y|)\f$
+//!            - if `tol` is a positive integral value then \f$x > \mbox{next}(y, \mbox{tol})\f$;
+//!            - if `tol` is omitted then the tolerance `tol` default to `3*eps(as(x))`.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_greater.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_greater[mask](x,y)` provides a masked version of `eve::is_greater` which
-//!     is equivalent to `if_else (mask, is_greater(x), eve::false( eve::as(x,y)))`.
-//!
-//!   * `definitely`
-//!
-//!     The expression `is_greater[definitely = t](x, y)` where `x` and `y` must be
-//!     floating point values, evals to true if and only if `x` is definitely greater than `y`.
-//!     This means that:
-//!
-//!       - if `t` is a floating_value then  \f$x > y + t \max(|x|, |y|)\f$
-//!       - if `t` is a positive integral_value then \f$x > \mbox{next}(y, t)\f$;
-//!       - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-//!       - if t is an simd value x or y must also be simd.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_greater = functor<is_greater_t>;

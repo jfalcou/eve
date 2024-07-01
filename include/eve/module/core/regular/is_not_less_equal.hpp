@@ -51,7 +51,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      constexpr auto is_not_less_equal(value auto x, value auto y) noexcept;
+//!      constexpr auto is_not_less_equal(value auto x, value auto y) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_less_equal[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_not_less_equal[logical_value auto m](value auto x, value auto y) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
@@ -62,6 +66,8 @@ namespace eve
 //!   **Return value**
 //!
 //!    The call `eve::is_not_less_equal(x,y)`  is semantically  equivalent to `!(x <= y)`:
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!

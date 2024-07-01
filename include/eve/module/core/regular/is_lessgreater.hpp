@@ -45,32 +45,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      constexpr auto is_lessgreater(value auto x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_lessgreater(value auto x, value auto y) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_lessgreater[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_lessgreater[logical_value auto m](value auto x, value auto y) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [arguments](@ref eve::value).
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    The call `eve::is_lessgreater(x, y)`  is semantically  equivalent to `x < y || x > y`:
-//!
+//!     1. The call `eve::is_lessgreater(x, y)`  is semantically  equivalent to `x < y || x > y`:
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_lessgreater.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_lessgreater[mask](x, y)` provides a masked version of
-//!     `eve::is_lessgreater` which is equivalent to `if_else (mask, is_lessgreater(x, y),
-//!     eve::false( eve::as(x)))`.
 //!
 //! @}
 //================================================================================================
