@@ -57,16 +57,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto is_equal(value auto x, value auto y) noexcept;                          // 1
+//!      constexpr auto is_not_equal(value auto x, value auto y) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_equal[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
-//!      constexpr auto is_equal[logical_value auto m](value auto x, value auto y) noexcept;    // 2
+//!      constexpr auto is_not_equal[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_not_equal[logical_value auto m](value auto x, value auto y) noexcept;    // 2
 //!
 //!      // Semantic option
-//!      constexpr auto is_equal[numeric](/*any of the above overloads*/)             noexcept; // 3
-//!      constexpr auto is_equal[definitely](/*any of the above overloads*/)          noexcept; // 4
-//!      constexpr auto is_equal[definitely = tol](/*any of the above overloads*/)    noexcept; // 4
+//!      constexpr auto is_not_equal[numeric](/*any of the above overloads*/)             noexcept; // 3
+//!      constexpr auto is_not_equal[definitely](/*any of the above overloads*/)          noexcept; // 4
+//!      constexpr auto is_not_equal[definitely = tol](/*any of the above overloads*/)    noexcept; // 4
 //!   }
 //!   @endcode
 //!

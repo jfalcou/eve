@@ -62,8 +62,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. The call `eve;::is_not_flint[mask](x)` is semantically  equivalent to: `eve::is_nez
-//!        (eve::frac (x))`;
+//!      1. The call `eve;::is_not_flint(x)` is semantically  equivalent to: `eve::is_nez(eve::frac (x))`;
 //!        This means that x is a [floating real value](@ref eve::floating_value) not representing an
 //!        integer (flint is a shorcut for 'floating integer').
 //!      2. [The operation is performed conditionnaly](@ref conditional).

@@ -62,9 +62,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1.For signed types The call `is_negative(x)`
-//!       [elementwise](@ref glossary_elementwise) returns true
-//!       if and only if the bit of sign (most significant bit) is set.
+//!     1. For signed types The call `is_negative(x)`
+//!        [elementwise](@ref glossary_elementwise) returns true
+//!        if and only if the bit of sign (most significant bit) is set.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note

@@ -69,8 +69,8 @@ namespace eve
 //!
 //!     1. The call `is_normal(x)` is semantically  equivalent to:
 //!       @code
-//!       if   constexpr(floating_value<T>) return (eve::abs(x) >= eve::smallestposval(as(x)));
-//!       else constexpr(integral_value<T>) return eve::false_(as(x));
+//!       if   constexpr(floating_value<T>) return (abs(x) >= smallestposval(as(x))) && is_finite(x);
+//!       else constexpr(integral_value<T>) return false_(as(x));
 //!       @endcode
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!

@@ -61,7 +61,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1.Returns [elementwise](@ref glossary_elementwise) `x <=  0`.
+//!     1. Returns [elementwise](@ref glossary_elementwise) `x <=  0`.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

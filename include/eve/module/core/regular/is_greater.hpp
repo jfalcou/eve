@@ -55,8 +55,8 @@ namespace eve
 //!      constexpr auto is_greater[logical_value auto m](value auto x, value auto y) noexcept;    // 2
 //!
 //!      // Semantic option
-//!      constexpr auto absmax[definitely](/*any of the above overloads*/)              noexcept; // 3
-//!      constexpr auto absmax[definitely = tol](/*any of the above overloads*/)        noexcept; // 3
+//!      constexpr auto is_greater[definitely](/*any of the above overloads*/)          noexcept; // 3
+//!      constexpr auto is_greater[definitely = tol](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
