@@ -49,7 +49,7 @@ namespace eve
 //!      constexpr auto is_positive(value auto x) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_positive[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_positive[conditional_expr auto c](value auto x) noexcept; // 2
 //!      constexpr auto is_positive[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
@@ -62,29 +62,18 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      For signed types The call `is_positive(x)`
-//!      [elementwise](@ref glossary_elementwise) returns true
-//!      if and only if the bit of sign (most significant bit) is not set.
+//!      1. For signed types The call `is_positive(x)`
+//!        [elementwise](@ref glossary_elementwise) returns true
+//!        if and only if the bit of sign (most significant bit) is not set.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!   @note
-//!     this function coincides with `is_gez` on [integral real values](@ref eve::value),
+//!   @note   this function coincides with `is_gez` on [integral real values](@ref eve::value),
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false
 //!     and if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control
 //!     although not undefined.
 //!
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_positive.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_positive[mask](x)` provides a masked version of `eve::is_positive` which
-//!     is equivalent to `if_else (mask, is_positive(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_positive = functor<is_positive_t>;

@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/traits/as_logical.hpp>
-
+//TODO pedantic -> almost
 namespace eve
 {
   template<typename Options>
@@ -50,35 +50,24 @@ namespace eve
 //!      constexpr auto is_unit(value auto x) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_unit[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_unit[conditional_expr auto c](value auto x) noexcept; // 2
 //!      constexpr auto is_unit[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    The truth value of eve;; abs(x) == 1
-//!    is returned.
-//!
+//!     1.The truth value of eve;; abs(x) == 1 is (almost) returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_unit.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_unit[mask](x)` provides a masked version of `eve::is_unit` which is
-//!     equivalent to `if_else (mask, is_unit(x), eve::false(eve::as<decltype(is_unit(x))>())`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_unit = functor<is_unit_t>;
