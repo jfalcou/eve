@@ -35,9 +35,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var hi
-//!   @brief Computes the most significant half of each lane.
+//!   @brief  `elementwise_callable` computing the most significant half of each lane.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,14 +48,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      auto hi(T x) noexcept;
+//!      constexpr auto hi(value auto x)                           noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!
 //!    **Return value**
 //!
@@ -67,7 +66,6 @@ namespace eve
 //!      If you also need the lower part `lohi` is more efficient.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/hi.cpp}
 //! @}
 //================================================================================================

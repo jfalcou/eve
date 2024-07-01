@@ -35,11 +35,9 @@ namespace eve
 //! @addtogroup math_exp
 //! @{
 //! @var hypot
+//! @brief `tuple_callable` computing the \f$l_2\f$ norm of its inputs.
 //!
-//! @brief Callable object computing the \f$l_2\f$ norm of its inputs.
-//!
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -50,41 +48,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< value T, value ... Ts>
-//!      auto hypot( T x,Ts ... args ) const noexcept
+//!      // Regular overloads
+//!      constexpr auto hypot(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto hypot(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto hypot[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto hypot[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!
 //! **Parameters**
 //!
-//!   `x`, `... args`:   [floating real values](@ref eve::floating_value)
+//!    * `x`, `...xs`: [real](@ref value) arguments.
+//!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   \f$\sqrt{\sum_1^n |x_i|^2}\f$ is returned.
-//!   The result type is the [common value type](@ref common_value_t) of the
-//!   absolute values of the parameters.
+//!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$.
+//!        The result type is the [common value type](@ref common_value_t) of the
+//!        absolute values of the parameters.
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. The pedantic option`  computes the result without undue overflow or underflow
+//!        at intermediate stages of the computation and can be more accurate than the regulard call.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
+
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/hypot.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!    * eve::pedantic
-//!
-//!      The call `pedantic(hypot)(x,args...)`  computes the square root of the sum of
-//!      the absolute squares of the parameters
-//!      without undue overflow or underflow at intermediate stages of the computation
-//!      and can be more accurate than the non-decorated call.
-//!
-//!      Morever it returns \f$\infty\f$ as soon as one of its parameter is infinite,
-//!      regardless of possible `Nan` values.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/pedantic/hypot.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto hypot = functor<hypot_t>;
