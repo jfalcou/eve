@@ -40,21 +40,27 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      T log_abs(T x) noexcept;
+//!      constexpr auto log_abs(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto log_abs[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto log[logical_value auto m](floating_value auto x)        noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!    * `x`: [floating value](@ref eve::floating_value).
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
-//!   the absolute value of the input.
+//!    1. Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
+//!       the absolute value of the input.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/log_abs.cpp}
 //!  @}
 //================================================================================================

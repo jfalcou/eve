@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      auto log10(floating_value auto x)                                    noexcept; // 1
+//!      constexpr auto log10(floating_value auto x)                         noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2

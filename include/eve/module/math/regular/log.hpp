@@ -29,7 +29,6 @@ namespace eve
 //! @addtogroup math_log
 //! @{
 //! @var log
-//!
 //! @brief `elementwise_callable` object computing the natural logarithm: \f$\log x\f$.
 //!
 //!   **Defined in Header**
@@ -44,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      auto log(floating_value auto x)                                    noexcept; // 1
+//!      constexpr auto log(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto log[conditional_expr auto c](floating_value auto x) noexcept; // 2
