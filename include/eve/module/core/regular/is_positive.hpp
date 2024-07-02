@@ -45,12 +45,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::signed_value T >
-//!      constexpr auto is_positive(value auto x) noexcept;                          // 1
+//!      constexpr auto is_positive(signed_value auto x) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_positive[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_positive[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_positive[conditional_expr auto c](signed_value auto x) noexcept; // 2
+//!      constexpr auto is_positive[logical_value auto m](signed_value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
@@ -62,9 +61,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. For signed types The call `is_positive(x)`
-//!        [elementwise](@ref glossary_elementwise) returns true
-//!        if and only if the bit of sign (most significant bit) is not set.
+//!      1. this function coincides with `is_gtz` on [integral values](@ref eve::value),
+//!         but The call `is_positive(x)` [elementwise](@ref glossary_elementwise) returns true
+//!         if and only if the bit of sign (most significant bit) is not set.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note   this function coincides with `is_gez` on [integral real values](@ref eve::value),
