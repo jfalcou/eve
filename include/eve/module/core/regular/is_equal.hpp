@@ -85,7 +85,7 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The expression `is_equal[numeric](x,y)` considers that `Nan` values are equal.
 //!      4. The expression `is_equal[almost = tol](x, y)` where `x` and `y` must be
-//!         floating point values, evals to true if and only if `x` is almost equal to `y`.
+//!         floating point values, evaluates to true if and only if `x` is almost equal to `y`.
 //!         This means that:
 //!            - if `tol` is a floating value then  \f$|x - y| \le \mbox{tol}\cdot \max(|x|, |y|)\f$
 //!            - if `tol` is a positive integral value then there are not more than `tol` values of the type

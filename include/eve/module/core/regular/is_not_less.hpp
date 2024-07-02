@@ -76,7 +76,7 @@ namespace eve
 //!      1. The call `eve::is_not_less(x,y)`  is semantically  equivalent to `!(x < y)`:
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The expression `is_less[almost = tol](x, y)` where `x` and `y` must be
-//!         floating point values, evals to true if and only if `x` is almost not less than `y`.
+//!         floating point values, evaluates to true if and only if `x` is almost not less than `y`.
 //!         This means that:
 //!            - if `tol` is a floating value then  \f$x \ge y - \mbox{tol}\cdot \max(|x|, |y|)\f$
 //!            - if `tol` is a positive integral value then \f$x \ge  \mbox{prev}(y, \mbox{tol})\f$;
