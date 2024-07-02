@@ -35,9 +35,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var lohi
-//!   @brief Computes the the lohi pair of values.
+//!   @brief `elementwise_callable` computing the the lohi pair of values.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,7 +48,6 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
 //!      auto lohi(T x) noexcept;
 //!   }
 //!   @endcode
@@ -60,9 +59,9 @@ namespace eve
 //!    **Return value**
 //!
 //!      * Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
-//!        the input values, as a pair of unsigned integers
+//!        the input values, as a pair of unsigned integers of half size
 //!
-//!      * The call lohi(x) is_semantically equivalent to [eve::lo(x), eve::hi(x)]
+//!      * The call `[l, h] = lohi(x)` is_semantically equivalent to `l = lo(x); h = hi(x);`
 //!
 //!  @groupheader{Example}
 //!

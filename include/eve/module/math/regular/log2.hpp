@@ -30,9 +30,9 @@ namespace eve
 //! @{
 //! @var log2
 //!
-//! @brief Callable object computing the base 2 logarithm: \f$\log_2 x\f$.
+//! @brief `elementwise_callable` object computing the base 2 logarithm: \f$\log_2 x\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -43,24 +43,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T log2(T x) noexcept;
+//!      // Regular overload
+//!      auto log2(floating_value auto x)                                    noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto log2[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto log2[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!    * `x`: [floating value](@ref eve::floating_value).
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) the base 2 logarithm  of `x`
+//!    1.  Returns the [elementwise](@ref glossary_elementwise) the base 2 logarithm  of `x`
 //!      In particular, for floating inputs:
+//!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+//!        * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+//!        * If the element is less than 0, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-//!      * If the element is less than 0, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log2)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BinaryLogarithm.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
 //!

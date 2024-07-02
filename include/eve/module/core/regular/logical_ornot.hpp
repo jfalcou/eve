@@ -42,7 +42,7 @@ namespace eve
 //!   @var logical_ornot
 //!   @brief Computes the logical ORNOT of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -53,8 +53,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      auto logical_ornot(T x, U y) noexcept;
+//!      auto logical_ornot(auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!

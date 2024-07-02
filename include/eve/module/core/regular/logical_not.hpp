@@ -35,7 +35,7 @@ namespace eve
 //!   @var logical_not
 //!   @brief Computes the logical NOT of its argument.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -46,8 +46,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical_t<T> logical_or(T x) noexcept;
+//!      eve::as_logical_t<T> logical_or(auto value x) noexcept;
 //!   }
 //!   @endcode
 //!

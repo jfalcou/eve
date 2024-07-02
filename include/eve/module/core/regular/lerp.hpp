@@ -33,7 +33,7 @@ namespace eve
 //!   @var lerp
 //!   @brief Computes the  linear interpolation.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,36 +44,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U, eve::floating_value V >
-//!      eve::common_value_t<T, U> lerp(T x, U y, V t) noexcept;
+//!      // Regular overload
+//!      constexpr auto lerp(floating_value auto x, floating_value auto y, floating_value auto t)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto lerp[conditional_expr auto c](floating_value auto x, floating_value auto y, floating_value auto t) noexcept; // 2
+//!      constexpr auto lerp[logical_value auto m](floating_value auto x, floating_value auto y, floating_value auto t)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[pedantic](floating_value auto x, floating_value auto y, floating_value auto t)                 noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:   [real](@ref eve::value) arguments.
-//!     * `t`:  [real floating](@ref eve::floating_value).  argument
+//!     * `x`, `y`, `t`: [floating](@ref floating_value) arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the interpolation (or extrapolation)  between `x` and `y` is returned.
-//!    The call is semantically equivalent to `x+t*(y-x)` but uses fma opportunities.
+//!      1.The value of the interpolation (or extrapolation)  between `x` and `y` is returned.
+//!        The call is semantically equivalent to `x+t*(y-x)` but uses fma opportunities.
+//!      2 `pedantic` version of fma is used internally.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/lerp.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::lerp[mask](x, ...)` provides a masked
-//!     version of `lerp` which is
-//!     equivalent to `if_else(mask, lerp(x, ...), x)`
-//!
-//!   * eve::pedantic
-//!
-//!     when `lerp[pedantic](a, b, t)` pedantic version of fma is used internally
 //! @}
 //================================================================================================
   inline constexpr auto lerp = functor<lerp_t>;

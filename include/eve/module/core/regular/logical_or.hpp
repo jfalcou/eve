@@ -42,7 +42,7 @@ namespace eve
 //!   @var logical_or
 //!   @brief Computes the logical OR of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -53,8 +53,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      auto logical_or(T x, U y) noexcept;
+//!      auto logical_or(auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!

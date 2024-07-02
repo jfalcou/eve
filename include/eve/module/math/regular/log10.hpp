@@ -29,7 +29,7 @@ namespace eve
 //! @{
 //! @var log10
 //!
-//! @brief Callable object computing the base 10  logarithm: \f$\log_{10} x\f$.
+//! @brief `elementwise_callable` object computing the base 10  logarithm: \f$\log_{10} x\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -42,40 +42,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T log10(T x) noexcept;
+//!      // Regular overload
+//!      auto log10(floating_value auto x)                                    noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto log10[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!    * `x`: [floating value](@ref eve::floating_value).
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
+//!    1.  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
 //!      In particular, for floating inputs:
+//!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+//!        * If the element is \f$1\f$, \f$+0\f$ is returned.
+//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+//!        * If the element is less than 0, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-//!      * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-//!      * If the element is less than 0, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log10)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CommonLogarithm.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/log10.cpp}
-//!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::log10[mask](x)` provides a masked version of `eve::log10` which is
-//!     equivalent to `if_else (mask, log10(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/log10.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto log10 = functor<log10_t>;
@@ -223,7 +221,7 @@ namespace eve
                                           , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
             T R    = t2 + t1;
             T hfsq = half(eve::as<T>()) * sqr(f);
-            T dk   = convert(k, as<double>()); 
+            T dk   = convert(k, as<double>());
             //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
             T hi     = f - hfsq;
             hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));

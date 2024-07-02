@@ -41,7 +41,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
+//!      // Regular overload
 //!      T log1p(T x) noexcept;
 //!   }
 //!   @endcode
