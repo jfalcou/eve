@@ -36,7 +36,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_denormal
-//!   @brief `elementwise callable` returning a logical true if and only if the element value is denormal.
+//!   @brief `elementwise callable` returning a logical true if and only if the element value
+//!         is [denormal](https://en.wikipedia.org/wiki/Subnormal_number)
 //!
 //!   @groupheader{Header file}
 //!
@@ -49,12 +50,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overload
-//!      constexpr auto is_denormal(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_denormal(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_denormal(integral value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_denormal[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_denormal[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_denormal[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_denormal[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
@@ -66,14 +68,10 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. The call `is_denormal(x)` is semantically  equivalent to:
-//!         @code
-//!         if constexpr(floating_value<T>)
-//!           return (eve::abs(x) < eve::smallestposval(as(x))) && is_nez(x);
-//!         else if constexpr(integral_value<T>)
-//!           return eve::false_(as(x));
-//!         @endcode
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      1. returns true if and only if `x` is
+//!         [denormal](https://mathworld.wolfram.com/SubnormalNumber.html).
+//!      2. always return `false`.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_denormal.cpp}

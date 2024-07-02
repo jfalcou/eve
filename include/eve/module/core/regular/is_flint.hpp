@@ -47,31 +47,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      constexpr auto is_flint(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_flint(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_flint(integer_value auto x) noexcept;                  // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_flint[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_flint[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto is_flint[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_flint[logical_value auto m](value auto x)    noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto is_flint[pedantic](floating_value auto x)       noexcept; // 3
+//!      constexpr auto is_flint[pedantic](floating_value auto x)       noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. The call `eve;::is_flint[mask](x)` is semantically  equivalent to:
-//!          `is_eqz (eve::frac(x))`;
-//!          This means that x is a [floating real value](@ref eve::floating_value) representing an
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. the condition `x != x+1` is added
+//!     1. The call `is_flint(x)` is semantically  equivalent to `is_eqz (eve::frac(x))`;
+//!        This means that x represents an integral value.
+//!     2. Always returns `true`
+//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     4. The call `is_flint[pedantic](x)` also check that the input is not greater or equal to the
+//!        largest consecutive integer in the element type of `x` (`maxflint(as(x))`).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_flint.cpp}

@@ -62,7 +62,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. Returns [elementwise](@ref glossary_elementwise) `!(x > 0)`.
+//!     1. `is_ngtz(x)` is semantically equivalent to `!(x > 0)`.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note  This is not equivalent to `(x <= 0)` for floating values because of `NaN` properties.

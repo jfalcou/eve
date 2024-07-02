@@ -49,27 +49,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overload
-//!      constexpr auto is_not_denormal(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_not_denormal(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_not_denormal(integral value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_not_denormal[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_not_denormal[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_not_denormal[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_not_denormal[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. The call `is_not_denormal(x)` is semantically  equivalent to:
-//!       `(eve::abs(x) >=  eve::smallestposval(eve::as(x))) || eve::is_eqz(x)`,
-//!       in particular this is always true for integral types.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     1. returns true if and only if `x` is not
+//!         [denormal](https://mathworld.wolfram.com/SubnormalNumber.html).
+//!     2. always return `true`.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_denormal.cpp}

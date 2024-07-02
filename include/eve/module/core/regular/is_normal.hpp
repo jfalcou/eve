@@ -50,29 +50,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overload
-//!      constexpr auto is_normal(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_normal(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_normal(integral value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_normal[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_normal[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_normal[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_normal[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. The call `is_normal(x)` is semantically  equivalent to:
-//!       @code
-//!       if   constexpr(floating_value<T>) return (abs(x) >= smallestposval(as(x))) && is_finite(x);
-//!       else constexpr(integral_value<T>) return false_(as(x));
-//!       @endcode
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     1. returns true if and only if `x` is [normal](https://mathworld.wolfram.com/Floating-PointNormalNumber.html)
+//!     2. returns `x != 0`.
+//!     3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_normal.cpp}

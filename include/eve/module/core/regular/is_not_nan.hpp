@@ -58,8 +58,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. For real entries the call `eve::is_not_nan(x)`  is semantically  equivalent to:
-//!        `eve::is_equal(x, x)` in particular this is always true for integral types.
+//!      1. `is_not_nan(x)`  is semantically  equivalent to:
+//!        `is_equal(x, x)` in particular this is always true for integral types.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

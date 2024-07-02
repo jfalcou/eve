@@ -63,7 +63,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1.The truth value of eve;; abs(x) == 1 is (almost) returned.
+//!     1.The call `is_unit(x)` is semantically  equivalent to  `abs(x) == 1`
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
@@ -78,7 +78,7 @@ namespace eve
     EVE_FORCEINLINE as_logical_t<T>
     is_unit_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return is_equal[almost](sqr(a), one(as<T>()));
+      return is_equal(abs(a), one(as<T>()));
     }
   }
 }

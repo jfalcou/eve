@@ -68,11 +68,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. The call `is_even(x)` is semantically  equivalent to:
-//!        @code
-//!        if constexpr(floating_value<T>)   return eve::is_flint (x) && eve::is_flint (x/2);
-//!        else constexpr(integral_value<T>) return eve::is_equal (x, (x/2)*2);
-//!        @endcode
+//!     1. a logical true if and only the input is even.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

@@ -45,12 +45,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overload
-//!      constexpr auto is_finite(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_finite(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_finite(integral value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_finite[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_finite[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto is_finite[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_finite[logical_value auto m](value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -62,9 +63,9 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. `is_finite(x)` is semantically  equivalent to `is_not_nan(x-x)`, in particular
-//!         this is always true for integral types.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      1. `is_finite(x)` is semantically  equivalent to `is_not_nan(x-x)`,
+//!      2. Always returns true.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_finite.cpp}

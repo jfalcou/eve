@@ -48,12 +48,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overload
-//!      constexpr auto is_not_finite(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_not_finite(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_not_finite(integral value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_not_finite[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_not_finite[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_not_finite[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_not_finite[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
@@ -65,11 +66,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. For real entries the call `is_not_finite(x)` is semantically  equivalent to:
-//!        @code
-//!        if   constexpr(floating_value<T>) return is_nan(x-x);
-//!        else constexpr(integral_value<T>) return false_(as(x));
-//!        @endcode
+//!      1. `is_not_finite(x)` is semantically  equivalent to `is_nan(x-x)`.
+//!      2. Always returns false.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

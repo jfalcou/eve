@@ -62,7 +62,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. The truth value of x == 0 is returned.
+//!     1. a logical true if and only if the element value is zero.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

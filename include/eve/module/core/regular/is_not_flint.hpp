@@ -45,27 +45,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      constexpr auto is_not_flint(value auto x) noexcept;                          // 1
+//!      // Regular overloads
+//!      constexpr auto is_not_flint(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_not_flint(integer_value auto x) noexcept;                  // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_not_flint[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_not_flint[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_not_flint[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_not_flint[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
 //!      1. The call `eve;::is_not_flint(x)` is semantically  equivalent to: `eve::is_nez(eve::frac (x))`;
-//!        This means that x is a [floating real value](@ref eve::floating_value) not representing an
-//!        integer (flint is a shorcut for 'floating integer').
-//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!         This means that x  does not represent an integer (flint is a shorcut for 'floating integer').
+//!      2. Always returns `false`
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_not_flint.cpp}

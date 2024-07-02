@@ -64,8 +64,7 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. For floating  entries the call `is_infinite(x)` is semantically  equivalent to
-//!       `eve::is_equal(eve::abs(x), eve::inf(as(x))`,
-//!       and is always false for integral types.
+//!       `eve::is_equal(eve::abs(x), eve::inf(as(x))`, and is always false for integral types.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

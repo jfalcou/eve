@@ -55,13 +55,13 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. Returns [elementwise](@ref glossary_elementwise) `!(x <= 0)`.
+//!     1. `is_nlez(x)` is semantically equivalen to `!(x < 0)`.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @note  This is not equivalent to `(x >=   0)` for floating values because of `NaN` properties.

@@ -56,7 +56,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -69,7 +69,7 @@ namespace eve
 //!
 //!   @note   this function coincides with `is_gez` on [integral real values](@ref eve::value),
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false
-//!     and if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control
+//!     and if `x` is a `Nan` the result depends of the bit of sign of `x` which can be out of control
 //!     although not undefined.
 //!
 //!  @groupheader{Example}

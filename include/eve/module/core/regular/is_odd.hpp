@@ -58,17 +58,13 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. The call `is_odd(x)` is semantically  equivalent to:
-//!       @code
-//!       if constexpr(floating_value<T>)   return (x != dec(x)) && eve::is_odd(dec(x));
-//!       else constexpr(integral_value<T>) return eve::is_nez (x & one(as(x));
-//!       @endcode
+//!     1. returns `true`  if and only is `x` is an odd integer.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

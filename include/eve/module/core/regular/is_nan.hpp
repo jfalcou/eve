@@ -48,7 +48,7 @@ namespace eve
 //!      constexpr auto is_nan(value auto x) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_nan[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_nan[conditional_expr auto c](value auto x) noexcept; // 2
 //!      constexpr auto is_nan[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
@@ -61,11 +61,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1.  For eal entries the call `eve::is_nan(x)`  is semantically  equivalent to:
-//!         @code
-//!         if   constexpr(floating_value<T>) return is_not_equal(x, x);
-//!         else constexpr(integral_value<T>) return false_(as(x));
-//!         @endcode
+//!      1.  For eal entries the call `eve::is_nan(x)`  is semantically  equivalent to `x` !=  `x`
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
