@@ -62,7 +62,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. a logical true if and only if the element value is zero.
+//!     1. returns [elementwise](@ref glossary_elementwise) true if and only
+//!        if the element value is zero.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

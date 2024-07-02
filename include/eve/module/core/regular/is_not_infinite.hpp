@@ -54,19 +54,13 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!   **Parameters**
-//!
-//!     * `x`:  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      1. The call `is_not_infinite(x)` is semantically  equivalent to:
-//!        @code
-//!        if   constexpr(floating_value<T>) return is_not_equal(abs(x), inf(as(x));
-//!        else constexpr(integral_value<T>) return true_(as(x));
-//!        @endcode
+//!      1. The call `is_not_infinite(x)` is semantically  equivalent to `is_finite(x) || is_nan(x)`
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
