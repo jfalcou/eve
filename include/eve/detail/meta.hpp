@@ -15,6 +15,8 @@
 #include <cstdint>
 #include <cstddef>
 
+#define EVE_UNREACHABLE() []<bool c=false>(){static_assert(c, "[EVE] Fallthrough rejected");}()
+
 namespace eve::detail
 {
   // Values list helper

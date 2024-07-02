@@ -34,6 +34,8 @@ minus_(EVE_SUPPORTS(neon128_), wide<T, N> const& v) noexcept requires arm_abi<ab
   {
     if constexpr( cat == category::float64x2 ) return vnegq_f64(v);
     else if constexpr( cat == category::float64x1 ) return vneg_f64(v);
+    else    EVE_UNREACHABLE();
   }
+  else      EVE_UNREACHABLE();
 }
 }

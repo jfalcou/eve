@@ -27,6 +27,7 @@ requires arm_abi<abi_t<T, N>>
     else if constexpr( cat == category::float64x2 ) return vrndnq_f64(v);
     else if constexpr( cat == category::float32x2 ) return vrndn_f32(v);
     else if constexpr( cat == category::float32x4 ) return vrndnq_f32(v);
+    else    EVE_UNREACHABLE();
   }
   else return map(nearest, v);
 }

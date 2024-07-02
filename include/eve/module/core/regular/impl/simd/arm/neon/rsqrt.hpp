@@ -29,6 +29,7 @@ namespace eve::detail
       {
         if constexpr( cat == category::float64x1 ) return vrsqrte_f64(v0);
         else if constexpr( cat == category::float64x2 ) return vrsqrteq_f64(v0);
+        else    EVE_UNREACHABLE();
       }
       else return map(rsqrt, v0);
     }
@@ -62,6 +63,7 @@ namespace eve::detail
           inv        = vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv);
           return that_t(vmulq_f64(vrsqrtsq_f64(v0, inv * inv), inv));
         }
+        else EVE_UNREACHABLE();
       }
       else return map(rsqrt, v0);
     }

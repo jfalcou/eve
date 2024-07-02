@@ -48,6 +48,8 @@ requires arm_abi<abi_t<T, N>>
       return vreinterpret_f64_u64(vbic_u64(vreinterpret_u64_f64(v1), vreinterpret_u64_f64(v0)));
     else if constexpr( cat == category::float64x2 )
       return vreinterpretq_f64_u64(vbicq_u64(vreinterpretq_u64_f64(v1), vreinterpretq_u64_f64(v0)));
+    else     EVE_UNREACHABLE();
   }
+  else       EVE_UNREACHABLE();
 }
 }

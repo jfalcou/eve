@@ -64,6 +64,7 @@ template<typename T, typename N, std::ptrdiff_t G>
     else if constexpr( c == category::uint8x16 ) return vuzp1q_u8(v, swapped);
     else if constexpr( c == category::int8x8 ) return vuzp1_s8(v, swapped);
     else if constexpr( c == category::uint8x8 ) return vuzp1_u8(v, swapped);
+    else reject_fallthrough<T>(c);
   }
 }
 
@@ -148,6 +149,8 @@ template<typename T, typename N, std::ptrdiff_t G>
     auto s = wide_to_neon_struct(v0, v1);
     if constexpr( c == category::int8x8 ) return vtbl2_s8(s, idx);
     else if constexpr( c == category::uint8x8 ) return vtbl2_u8(s, idx);
+    else EVE_UNREACHABLE();
   }
+  else EVE_UNREACHABLE();
 }
 }
