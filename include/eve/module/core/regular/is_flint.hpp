@@ -33,10 +33,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_flint
-//!   @brief Returns a logical true  if and only if the element value is a floating value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is a floating value
 //!   representing an integer
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -47,34 +47,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      eve::as_logical<T> is_flint(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto is_flint(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_flint(integer_value auto x) noexcept;                  // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto is_flint[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_flint[logical_value auto m](value auto x)    noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto is_flint[pedantic](floating_value auto x)       noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The call `eve;::is_flint[mask](x)` is semantically  equivalent to: `eve::is_eqz (eve::frac
-//!     (x))`;
-//!
-//!     This means that x is a [floating real value](@ref eve::floating_value) representing an
-//!     integer (flint is a shortcut for 'floating integer').
+//!     1. The call `is_flint(x)` is semantically  equivalent to `is_eqz (eve::frac(x))`;
+//!        This means that x represents an integral value.
+//!     2. Always returns `true`
+//!     3. [The operation is performed conditionnaly](@ref conditional).
+//!     4. The call `is_flint[pedantic](x)` also check that the input is not greater or equal to the
+//!        largest consecutive integer in the element type of `x` (`maxflint(as(x))`).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_flint.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_flint[mask](x)` provides a masked version of `eve::is_flint` which is
-//!     equivalent to `if_else (mask, is_flint(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_flint = functor<is_flint_t>;

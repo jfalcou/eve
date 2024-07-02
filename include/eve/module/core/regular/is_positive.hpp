@@ -31,10 +31,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_positive
-//!   @brief Returns a logical true  if and only if the element value is signed and
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is signed and
 //!   has its sign bit not set
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,38 +45,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::signed_value T >
-//!      eve::as_logical<T> is_positive(T x) noexcept;
+//!      constexpr auto is_positive(signed_value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_positive[conditional_expr auto c](signed_value auto x) noexcept; // 2
+//!      constexpr auto is_positive[logical_value auto m](signed_value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      For signed types The call `is_positive(x)`
-//!      [elementwise](@ref glossary_elementwise) returns true
-//!      if and only if the bit of sign (most significant bit) is not set.
+//!      1. this function coincides with `is_gtz` on [integral values](@ref eve::value),
+//!         but The call `is_positive(x)` [elementwise](@ref glossary_elementwise) returns true
+//!         if and only if the bit of sign (most significant bit) is not set.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!   @note
-//!     this function coincides with `is_gez` on [integral real values](@ref eve::value),
+//!   @note   this function coincides with `is_gez` on [integral real values](@ref eve::value),
 //!     but for [floating values](@ref eve::floating_value) `T`, `is_positive(mzero<`T`>)` is false
-//!     and if `n` is a Nan the result depends of the bit of sign of `n` which can be out of control
+//!     and if `x` is a `Nan` the result depends of the bit of sign of `x` which can be out of control
 //!     although not undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_positive.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_positive[mask](x)` provides a masked version of `eve::is_positive` which
-//!     is equivalent to `if_else (mask, is_positive(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_positive = functor<is_positive_t>;

@@ -32,11 +32,11 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_real
-//!   @brief Returns a logical true  if and only if the element value is not real (never).
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is not real (never).
 //!
 //!   Always return false.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,7 +48,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::floating_value T >
-//!      eve::as_logical<T> is_not_real(T x) noexcept;
+//!      constexpr auto is_not_real(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_real[conditional_expr auto c](value auto x) noexcept; //2
+//!      constexpr auto is_not_real[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
@@ -59,6 +63,8 @@ namespace eve
 //!   **Return value**
 //!
 //!    Returns false for all floating entries.
+//!
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!

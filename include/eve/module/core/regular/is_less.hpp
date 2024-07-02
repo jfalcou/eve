@@ -40,10 +40,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_less
-//!   @brief Returns a logical true  if and only if the element value of the first parameter is
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value of the first parameter is
 //!          less than the second one.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -54,40 +54,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      eve::as_logical<T> is_less(T x,U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_less(value auto x, value auto y) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_less[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_less[logical_value auto m](value auto x, value auto y) noexcept;    // 2
+//!
+//!      // Semantic option
+//!      constexpr auto is_less[definitely](/*any of the above overloads*/)          noexcept; // 3
+//!      constexpr auto is_less[definitely = tol](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [argument](@ref eve::value).
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol`: [scalar value](@ref value) tolerance.
 //!
 //!   **Return value**
 //!
-//!    The call `eve::is_less(x,y)`  is semantically  equivalent to `x < y`:
+//!      1. The call `eve::is_less(x,y)`  is semantically  equivalent to `x < y`:
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. The expression `is_greater[definitely = tol](x, y)` where `x` and `y` must be
+//!         floating point values, evaluates to true if and only if `x` is definitely greater than `y`.
+//!         This means that:
+//!            - if `tol` is a floating value then  \f$x < y - \mbox{tol}\cdot \max(|x|, |y|)\f$
+//!            - if `tol` is a positive integral value then \f$x < \mbox{prev}(y, \mbox{tol})\f$;
+//!            - if `tol` is omitted then the tolerance `tol` default to `3*eps(as(x))`.
+//!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_less.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_less[mask](x,y)` provides a masked version of `eve::is_less` which is
-//!     equivalent to `if_else (mask, is_less(x), eve::false( eve::as(x,y)))`.
-//!
-//!   * `definitely`
-//!
-//!     The expression `definitely(is_less)(x, y, t)` where `x` and `y` must be
-//!      floating point values, evals to true if and only if `x` is definitely less than `y`.
-//!      This means that:
-//!
-//!      - if `t` is a floating_value then  \f$x <  y - t \max(|x|, |y|)\f$
-//!      - if `t` is a positive integral_value then \f$x < \mbox{prev}(y, t)\f$;
-//!      - if `t` is omitted then the tolerance `t` default to `3*eps(as(x))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_less = functor<is_less_t>;

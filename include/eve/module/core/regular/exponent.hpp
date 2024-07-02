@@ -71,9 +71,9 @@ namespace eve
 //!        *  zero returns zero
 //!      2 identical except that results for zero, nan and infinite  inputs are unspecified
 //!
-//! @note
-//!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
+//! @note  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$ are related by
 //!       \f$x =  m\times 2^e\f$, with  \f$|m| \in \{0\} \cup [1, 2[\f$.
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/exponent.cpp}
 //! @}
