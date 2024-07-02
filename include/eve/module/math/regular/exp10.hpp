@@ -152,7 +152,6 @@ namespace eve
         z = if_else(xltminlog10, zero, z);
         z = if_else(xgemaxlog10, inf(as(x)), z);
       }
-
       return z;
     }
   }

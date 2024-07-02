@@ -29,7 +29,7 @@ namespace eve
 //!   @brief Computes [elementwise](@ref glossary_elementwise) the bit pattern
 //!   in which the only bit set (if it exists) is the first bit set in the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -40,33 +40,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value T >
-//!      T firstbitset(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto firstbitset(integral_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto firstbitset[conditional_expr auto c](integral_value auto x) noexcept; // 2
+//!      constexpr auto firstbitset[logical_value auto m](integral_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [integral value](@ref integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!       Computes [elementwise](@ref glossary_elementwise) the bit pattern in
-//!       which the only bit set (if it exists) is
-//!       the first bit set (beginning with the least significant bit) in the input.
+//!      1. Computes [elementwise](@ref glossary_elementwise) the bit pattern in
+//!         which the only bit set (if it exists) is
+//!         the first bit set (beginning with the least significant bit) in the input.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/firstbitset.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::firstbitset[mask](x)` provides a masked
-//!     version of `firstbitset` which is
-//!     equivalent to `if_else(mask, firstbitset(x), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto firstbitset = functor<firstbitset_t>;

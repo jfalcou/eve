@@ -37,9 +37,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var floor
-//!   @brief Computes the largest integer not greater than the input.
+//!   @brief `elementwise_callable` object computing the largest integer not greater than the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,46 +50,46 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T floor(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto floor(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto floor[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto floor[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto floor[almost = tol](floating_value auto x)   noexcept; // 3
+//!      constexpr auto floor[almostl](floating_value auto x)        noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x` :[value](@ref value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol` [scalar valued](@ref value) tolerance.
 //!
 //!   **Return value**
 //!
-//!       The largest integer not greater than `x`.
+//!       1. The largest integer not greater than `x`.
+//!          The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!          `FE_TOWARDZERO`. This function object implements the `FE_DOWNWARD` version.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       3. `almost` allows a fuzzy interpretation of ceil associated to a scalar tolerance.
+//!           - with an integral value `tol`: computes the floor of the next nth
+//!             representable value in the `x` type.
+//!           - with a floating  value `tol`: computes the floor with a tolerance `tol`
+//!             using Hagerty's FL5 function.
+//!       4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as(x))(x)`
 //!
-//!       The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!       `FE_TOWARDZERO`. This function object implements the `FE_DOWNWARD` version.
-//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/ceil)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Floor_and_ceiling_functions)
+//!   *  [Hagerty's FL5](https://dl.acm.org/doi/pdf/10.1145/586032.586036)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/floor.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::floor[mask](x)` provides a masked version of `eve::floor` which is
-//!     equivalent to `if_else (mask, floor(x), x)`.
-//!
-//!   * eve::almost
-//!
-//!     The expression `floor[almost = tol](x)` computes a tolerant floor value for `x`,
-//!     where `x` must be a floating value and tol a scalar value.
-//!
-//!      * If `tol` is a floating value, computes the floor with
-//!        a tolerance `tol` using Hagerty's FL5 function.
-//!      * If `tol` is an integral value n, computes the floor of
-//!        the next nth representable value in the `x` type.
-//!      * the call `floor[almost](x)` takes tol as  3 times
-//!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-//!
 //! @}
 //================================================================================================
   inline constexpr auto floor = functor<floor_t>;
