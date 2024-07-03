@@ -33,10 +33,10 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var lfactorial
-//!   @brief Computes the natural logarithm of the factorial of unsigned integer values
+//!   @brief `elementwise_callable` object computing the natural logarithm of the factorial of unsigned integer values
 //!   \f$\displaystyle \log n! = \sum_{i=1}^n \log i\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -47,20 +47,19 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::ordered_value N >
-//!      auto lfactorial(N x) noexcept;
+//!      constexpr auto lfactorial(value N x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integer or flint argument](@ref eve::ordered_value).
+//!     * `n` :  [integral or flint argument](@ref eve::value).
 //!
 //!   **Return value**
 //!
 //!   The value of \f$ \log n!\f$ is returned with the following considerations:
 //!     * If the entry is an [integral value](eve::integral_value), the result
-//!       [element type](eve::element_type) is always double to try to avoid overflow.
+//!       [element type](eve::element_type) is always double to try to avoid overflow as possible.
 //!     * If the entry is a [floating point value](eve::floating_point_value)
 //!       which must be a flint,  the result is of the same type as the entry.
 //!     * If `n` elements are nor integer nor flint the result is undefined.

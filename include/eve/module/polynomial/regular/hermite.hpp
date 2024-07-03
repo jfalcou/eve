@@ -97,6 +97,11 @@ namespace eve
 //!        This call can be used to create a sequence of values evaluated at the same `x`,
 //!        and for rising `n`.
 //!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/18.3)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/hermite)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HermitePolynomial.html)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/hermite.cpp}
 //! @}

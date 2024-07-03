@@ -28,9 +28,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var log_gamma
-//!   @brief Computes the natural logarithm of the \f$\Gamma\f$ function.
+//!   @brief `elementwise_callable` object computing the natural logarithm of the \f$\Gamma\f$ function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -41,25 +41,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T log_gamma(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto log_gamma(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto log_gamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto log_gamma[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
+//!     * `x`: [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the  logarithm of the \f$\Gamma\f$ function is returned.
-//!
-//!   @warning
-//!       For real floating inputs this callable returns NaN if `eve::gamma(x)` is less than zero
+//!     1.The value of the  logarithm of the \f$\Gamma\f$ function is returned.
+//!        this callable returns NaN if `eve::gamma(x)` is less than zero.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!
-//!  @godbolt{doc/special/regular/log_gamma.cpp}
-//!
+//!   @godbolt{doc/special/regular/log_gamma.cpp}
 //! @}
 //================================================================================================
 inline constexpr auto log_gamma = functor<log_gamma_t>;

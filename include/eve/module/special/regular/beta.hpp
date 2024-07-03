@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var beta
-//!   @brief Computes the beta function: \f$\displaystyle \mathbf{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
+//!   @brief `elementwise_callable` object computing the beta function: \f$\displaystyle \mathbf{B}(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -56,7 +56,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     `x`, `y`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`, `y`: [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -66,7 +68,7 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [DLMF](https://dlmf.nist.gov/5.12)
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/beta)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BetaFunction.html)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/LaguerrePolynomial.html)https://mathworld.wolfram.com/BetaFunction.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/regular/beta.cpp}

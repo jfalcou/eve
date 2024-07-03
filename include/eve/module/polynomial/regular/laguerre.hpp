@@ -37,7 +37,7 @@ namespace eve
 //! @addtogroup polynomial
 //! @{
 //!   @var laguerre
-//!   @brief Computes the value of the Laguerre and associated
+//!   @brief `strict_elementwise_callable` object computing the value of the Laguerre and associated
 //!   Laguerre polynomials of order `n` at `x`:
 //!
 //!    * The Laguerre polynomial of order n is given by \f$\displaystyle \mbox{L}_{n}(x)
@@ -45,7 +45,7 @@ namespace eve
 //!    *  The associated laguerre polynomial is given by  \f$\displaystyle \mbox{L}_{n}^{m} =
 //!      (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/polynomial.hpp>
@@ -56,50 +56,41 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::integral_value N, eve::floating_value T >
-//!     constexpr eve::as_wide_as_t<T, N> laguerre(N n, T x) noexcept;                                              // 1
+//!      // Regular overload
+//!      constexpr auto laguerre(integral_value auto n, floating_value auto x)             noexcept; //1
 //!
-//!     template< eve::integral_value N, eve::integral_value M, eve::floating_value T >
-//!     constexpr eve::eve::as_wide_as_t<T, eve::common_type_t<M,N>> laguerre[associated](N n, M m, T x) noexcept;  // 2
+//!      // Semantic options
+//!      constexpr auto laguerre[associated](integral_value auto n, integral_value auto m,
+//!                                          floating_value auto x)                        noexcept; // 2
+//!      constexpr auto laguerre[successor](integral_value auto n, integral_value auto m,
+//!                                          floating_value auto x)                        noexcept; // 3
+//!      constexpr auto laguerre[associated][successor](integral_value auto n,
+//!                                          integral_value auto m, floating_value auto x) noexcept; // 4
 //!   }
 //!   @endcode
 //!
-//!   1. Evaluate the laguerre polynomial of order n
-//!   2. Evaluate the associated laguerre polynomial of orders n, m.
-//!
 //!   **Parameters**
 //!
-//!     * `n`, m` :  [integral positive arguments](@ref eve::integral_value).
-//!     * `x` :  [real floating argument](@ref eve::floating_value).
+//!     * `n`, m` :  [integral positive arguments](@ref integral_value).
+//!     * `x` :  [real floating argument](@ref floating_value).
 //!
 //!    **Return value**
 //!
-//!    The value of the polynomial at `x` is returned.
+//!      1. The value of the Laguerre polynomial of order `n` at `x` is returned.
+//!      2. The value of the associated Laguerre polynomial of orders `n`, `m` at `x` is returned.
+//!      constexpr auto legendre(integral_value auto n, floating_value auto x)             noexcept; //1
+//!      3. implements the three term  recurrence relation for the Laguerre polynomials,
+//!        \f$\displaystyle \mbox{L}_{n+1} = \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\f$
+//!      4. implements the three term  recurrence relation for the associated Laguerre polynomials,
+//!        \f$\displaystyle \mbox{L}_{n+1}^m = \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$
+//!
+//!  @groupheader{External references}
+//!   *  [DLMF](https://dlmf.nist.gov/18.3)
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/laguerre)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BetaFunction.html)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/polynomial/regular/laguerre.cpp}
-//!
-//!   @groupheader{Semantic Modifier}
-//!
-//!   * eve::successor
-//!
-//!     The expression `laguerre[successor](n, x, ln, lnm1)` implements the three term
-//!     recurrence relation for the Laguerre polynomials,
-//!     \f$\displaystyle \mbox{L}_{n+1} =
-//!     \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\f$
-//!
-//!     The expression `laguerre[associated][successor](n, m, x, ln, lnmm1)` implements the three term
-//!     recurrence relation for the associated Laguerre polynomials,
-//!     \f$\displaystyle \mbox{L}_{n+1}^m =
-//!     \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$
-//!
-//!     These functions can be used to create a sequence of values evaluated at the same `x` (and
-//!     `m`) and for rising `n`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/polynomial/successor/laguerre.cpp}
 //! @}
 //================================================================================================
  inline constexpr auto laguerre = functor<laguerre_t>;

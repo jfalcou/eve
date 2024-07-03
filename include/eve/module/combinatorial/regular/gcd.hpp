@@ -31,7 +31,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //! @addtogroup combinatorial
 //! @{
 //!   @var gcd
-//!   @brief Computes the greatest common divisor of the inputs.
+//!   @brief `elementwise_callable` object computing Computes the greatest common divisor of the inputs.
 //!
 //!   **Defined in header**
 //!

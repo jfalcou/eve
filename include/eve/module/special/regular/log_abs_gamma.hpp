@@ -27,9 +27,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var log_abs_gamma
-//!   @brief Computes the natural logarithm of the absolute value of the \f$\Gamma\f$ function.
+//!   @brief `elementwise_callable` object computing the natural logarithm of the absolute value of the \f$\Gamma\f$ function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -40,21 +40,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T log_abs_gamma(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto log_abs_gamma(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto log_abs_gamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto log_abs_gamma[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::floating_ordered_value).
+//!     * `x`: [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   In the two cases, the value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
+//!     1. the value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/log_abs_gamma.cpp}
 //! @}
 //================================================================================================
