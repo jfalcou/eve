@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/traits/as_logical.hpp>
-//TODO pedantic -> almost
+
 namespace eve
 {
   template<typename Options>

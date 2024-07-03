@@ -114,12 +114,10 @@
 #include <eve/module/core/regular/is_not_flint.hpp>
 #include <eve/module/core/regular/is_not_greater.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
-#include <eve/module/core/regular/is_not_imag.hpp>
 #include <eve/module/core/regular/is_not_infinite.hpp>
 #include <eve/module/core/regular/is_not_less.hpp>
 #include <eve/module/core/regular/is_not_less_equal.hpp>
 #include <eve/module/core/regular/is_not_nan.hpp>
-#include <eve/module/core/regular/is_not_real.hpp>
 #include <eve/module/core/regular/is_odd.hpp>
 #include <eve/module/core/regular/is_ordered.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
