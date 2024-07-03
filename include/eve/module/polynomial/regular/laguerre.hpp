@@ -57,24 +57,28 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto laguerre(integral_value auto n, floating_value auto x)             noexcept; //1
+//!      constexpr auto laguerre(integral_value auto n, floating_value auto x)                 noexcept; //1
 //!
 //!      // Semantic options
 //!      constexpr auto laguerre[associated](integral_value auto n, integral_value auto m,
-//!                                          floating_value auto x)                        noexcept; // 2
-//!      constexpr auto laguerre[successor](integral_value auto n, integral_value auto m,
-//!                                          floating_value auto x)                        noexcept; // 3
+//!                                          floating_value auto x)                            noexcept; // 2
+//!      constexpr auto laguerre[successor](integral_value auto n,
+//!                                          floating_value auto x,
+//!                                          integral_value auto ln, integral_value auto lnm1) noexcept; // 3
+//!      constexpr auto laguerre[successor](integral_value auto n, integral_value auto l,
+//!                                          floating_value auto x,
+//!                                          integral_value auto ln, integral_value auto lnm1) noexcept; // 3
 //!      constexpr auto laguerre[associated][successor](integral_value auto n,
-//!                                          integral_value auto m, floating_value auto x) noexcept; // 4
+//!                                          integral_value auto m, floating_value auto x)     noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n`, m` :  [integral positive arguments](@ref integral_value).
-//!     * `x` :  [real floating argument](@ref floating_value).
+//!     * `n`, `m`, `l`, `ln`, `lnm1` : [integral positive arguments](@ref integral_value).
+//!     * `x` : [floating argument](@ref floating_value).
 //!
-//!    **Return value**
+//!   **Return value**
 //!
 //!      1. The value of the Laguerre polynomial of order `n` at `x` is returned.
 //!      2. The value of the associated Laguerre polynomial of orders `n`, `m` at `x` is returned.

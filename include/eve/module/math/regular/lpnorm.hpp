@@ -41,7 +41,7 @@ namespace eve
 //! @{
 //! @var lpnorm
 //!
-//! @brief Callable object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n
+//! @brief `strict_elementwise_callable` object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n
 //! |x_i|^p\right)^{\frac1p} \f$.
 //!
 //!   **Defined in Header**
@@ -55,21 +55,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< floating_value P, floating_value T, floating_value ... Ts>
-//!      auto operator()(P p, T x,Ts ... args ) const noexcept
+//!      // Regular overload
+//!      constexpr auto lpnorm(floating_value auto p, floating_value auto x,floating_value auto... xs )                         noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto lpnorm[conditional_expr auto c](loating_value auto p, floating_value auto x,floating_value auto... xs)  noexcept; // 2
+//!      constexpr auto lpnorm[logical_value auto m](loating_value auto p, floating_value auto x,floating_value auto... xs)     noexcept; // 2
+//!
 //!   }
 //!   @endcode
 //!
 //!
 //! **Parameters**
 //!
-//!   *  `p`            :   [floating values](@ref eve::floating_value)
-//!   *  `x`, `... args`:   [floating real values](@ref eve::floating_value)
+//!   * `p`: [floating value](@ref floating_value)
+//!   * `x`, `... xs`: [floating values](@ref floating_value)
+//!   * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!   * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   The result type is the [common value type](@ref common_value_t) of the absolute
-//!   values of the  parameters.
+//!   1. \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
+//!   2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!

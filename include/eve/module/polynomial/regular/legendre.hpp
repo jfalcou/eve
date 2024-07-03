@@ -78,7 +78,8 @@ namespace eve
 //!                                          floating_value auto x)                        noexcept; // 3
 //!      constexpr auto legendre[condon_shortley](integral_value auto n,
 //!                                               floating_value auto x)                   noexcept; // 4
-//!      constexpr auto legendre[sph](integral_value auto n, floating_value auto x)        noexcept; // 5
+//!      constexpr auto legendre[sph](integral_value auto l, integral_value auto m,
+//!                                   floating_value auto theta)                           noexcept; // 5
 //!      constexpr auto legendre[successor](integral_value auto l,
 //!                                         floating_value auto x,
 //!                                         integral_value auto ln, integral_value lnm1)   noexcept; // 6
@@ -90,20 +91,20 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n`, `m` : [integral positive arguments](@ref integral_value).
+//!     * `n`, `m`, `ln`, `lnm1` : [integral positive arguments](@ref integral_value).
 //!     * `x` : [floating argument](@ref floating_value).
 //!
 //!    **Return value**
 //!
 //!      1. The value of the Legendre polynomial  of order `n` at `x` is returned.
 //!      2. The value of the Legendre polynomial  of order `n` at `x` of the  second kind is returned.
-//!      3 The value of the associated legendre polynomial of orders `n`, `m` at `x` is returned.
+//!      3. The value of the associated legendre polynomial of orders `n`, `m` at `x` is returned.
 //!      4. multiplies the associated legendre polynomial value by the Condon-Shortley phase \f$(-1)^m\f$
 //!        to match the definition given by Abramowitz and Stegun (8.6.6). This is currently
 //!        the version implemented in boost::math.
 //!      5. returns the spherical associated Legendre function of degree l, order m, and polar angle theta in radian
 //!         (that is the classical spherical harmonic with \f$\phi = 0\f$),
-//!         i.e. \f$\displaystyle (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
+//!         i.e. \f$\displaystyle (-1)^m\frac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\f$
 //!      6. The `successor` option implements the three term recurrence relation for the
 //!         (associated) Legendre polynomials, \f$\displaystyle \mbox{P}^m_{l+1} =
 //!         \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\f$

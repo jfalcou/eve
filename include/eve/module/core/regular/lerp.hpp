@@ -64,9 +64,9 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      1.The value of the interpolation (or extrapolation)  between `x` and `y` is returned.
-//!        The call is semantically equivalent to `x+t*(y-x)` but uses fma opportunities.
-//!      2 `pedantic` version of fma is used internally.
+//!      1. The value of the interpolation (or extrapolation)  between `x` and `y` is returned.
+//!         The call is semantically equivalent to `x+t*(y-x)` but uses fma opportunities.
+//!      2. `pedantic` version of fma is used internally.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/lerp.cpp}

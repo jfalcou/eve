@@ -62,13 +62,13 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `a`, `x`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `a`, `x`:  [floating arguments](@ref eve::floating_ordered_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1. The value of the natural logarithm of the rising_factorial is returned.
+//!     1. The value of the natural logarithm of the rising_factorial is returned( `a` and `x` must be strictly positive).
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
 //!        not both positive.
