@@ -69,6 +69,10 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
 //!     1. The value of \f$\textstyle x 2^n\f$ is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!     3. Takes extra care to handling limit values.
+//!         * If `x` is \f$\pm0\f$, it is returned, unmodified.
+//!         * If `x` is \f$\pm\infty\f$, it is returned, unmodified.
+//!         * If `n` is 0, then `x` is returned, unmodified.
+//!         * If `x` is NaN, NaN is returned.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/ldexp)

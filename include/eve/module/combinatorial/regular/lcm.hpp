@@ -63,10 +63,10 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!    Returns the least common multiple of |p| and |n|.
+//!      1. Returns the least common multiple of |p| and |n|.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
 //!
-//!    @warning
-//!    `p` and `n` can be of any [values](@ref value) type, but when the types are not
+//!    @warning `p` and `n` can be of any [values](@ref value) type, but when the types are not
 //!    integral the least common multiple is defined only if `p` and `n` elements are [flint](@ref
 //!    is_flint). For any element of the arguments Which is not flint the result is undefined.
 //!
