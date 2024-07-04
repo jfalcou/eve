@@ -68,12 +68,10 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. The fractional part of `x` with the same sign as `x`: `x-trunc(x)`. In particular:
-//!        * If an [element](@ref glossary_elementwise) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is
-//!          returned.
-//!        * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a
-//!          `Nan` is returned.
+//!     1. The fractional part of `x` with the same sign as `x`: `x-trunc(x)`, but keeping the zero sign.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. just `x-trunc(x)`.
+//!     4. zeros and not finite values are all handled properly.
 //!     5. `almost` allows a fuzzy interpretation of `frac` using internally the `almost` version of `trunc`.
 //!     6. with no tolerance value, the call is equivalent to `frac[tolerance = 3*eps(as(x))(x)`
 //!

@@ -74,6 +74,7 @@ namespace eve
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/fma.cpp}
 //! @}
+//================================================================================================
   inline constexpr auto fms = functor<fms_t>;
 }
 

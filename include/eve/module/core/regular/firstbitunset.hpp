@@ -58,8 +58,8 @@ namespace eve
 //!   **Return value**
 //!
 //!      1. Computes [elementwise](@ref glossary_elementwise) the bit pattern in
-//!         which the only bit set (if it exists) is
-//!         the first bit unset (beginning with the least significant bit) in the input.
+//!         which the only bit set (if it exists) is the first bit unset (beginning with the least
+//!         significant bit) in the input.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
