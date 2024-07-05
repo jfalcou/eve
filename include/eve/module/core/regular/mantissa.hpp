@@ -25,9 +25,9 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var mantissa
-//!   @brief Computes the IEEE mantissa of the floating value.
+//!   @brief  `elementwise_callable` object computing the IEEE mantissa of the floating value.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -38,36 +38,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T mantissa(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto mantissa(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto mantissa[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto mantissa[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto mantissa[raw](value auto x)                              noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
-//!
-//!    In particular:
-//!      *  `nan` returns nan
-//!      *  zero returns zero
+//!     * `x`: [real argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the IEEE mantissa is returned.
+//!      1. The value of the IEEE mantissa is returned. In particular:
+//!        *  `nan` returns nan
+//!        *  zero returns zero//!
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. The results for zero and nan are unspecified.
 //!
-//! @note
-//!    *  The exponent \f$e\f$ and mantissa \f$m\f$ of a floating point entry \f$x\f$
+//!
+//! @note The `exponent` \f$e\f$ and `mantissa` \f$m\f$ of a floating point entry \f$x\f$
 //!       are related by \f$x =  m\times 2^e\f$, with  \f$|m| \in \{0, nan\} \cup [1, 2[\f$.
 //!
-//!   @groupheader{Semantic Modifiers}
-//!
-//!   * raw Call
-//!
-//!     The call `eve::mantissa[raw](x)` is identical except that results for zero and nan
-//!     outputs are unspecified.
-//!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/mantissa.cpp}
 //! @}
 //================================================================================================

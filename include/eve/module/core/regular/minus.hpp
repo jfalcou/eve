@@ -33,7 +33,7 @@ namespace eve
 //!   @var minus
 //!   @brief Computes the opposite of the parameter that must be signed.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,44 +44,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T minus(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto minus(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto minus[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto minus[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto minus[saturated](value auto x)               noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real](@ref eve::value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     *  The result is  the opposite of `x` if this value is representable in the type of `x`.
+//!      1. The result is  the opposite of `x` if this value is representable in the type of `x`.
+//!          More specifically, for signed integers the opposite value of [their lowest finite value](@ref valmin)
+//!          is not representable and the result is undefined behaviour.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. The saturated version of eve::minus. More specifically, for any signed integer value `x`, the expression
+//!         `minus[saturated](valmin(as(x)))` evaluates to `valmax(as(x))`.
 //!
-//!     *  More specifically, for signed integers the opposite value of [their lowest finite value](@ref eve::valmin)
-//!        is not representable and the result is undefined behaviour.
-//!
-//!  @note
-//!   * Although the operator notation with `-` is supported, the `-` operator on
+//!  @note  Although the operator notation with `-` is supported, the `-` operator on
 //!     standard scalar type is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/minus.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::minus[mask](x)` provides a masked version of `eve::minus` which is
-//!     equivalent to `if_else (mask, eve::minus(x), x)`.
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::saturated(eve::minus)(x)` computes a saturated version of eve::minus.
-//!
-//!     More specifically, for any signed integer value `x`, the expression
-//!     `eve::saturated(eve::minus)(eve::valmin(as(x)))` evaluates to `eve::valmax(as(x))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto minus = functor<minus_t>;

@@ -11,13 +11,14 @@
 
 namespace eve
 {
+//DOC TODO
 //================================================================================================
 //! @addtogroup core_reduction
 //! @{
 //!   @var minimum
 //!   @brief Computes the minimal value in a simd vector
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -55,7 +56,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(minimum_, minimum);
+  EVE_MAKE_CALLABLE(minimum_, minimum);
 }
 
 #include <eve/module/core/regular/impl/minimum.hpp>

@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var mul
-//!   @brief Computes the product of its arguments.
+//!   @brief tuple_callable` computing the product of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,43 +49,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value... Ts >
-//!      eve::common_value_t<Ts ...> mul(Ts ... x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto mul(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto mul(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto mul[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto mul[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto mul[saturated](/*any of the above overloads*/)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `... xs` : [real](@ref eve::value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the product of the arguments is returned.
+//!      The value of the product of the arguments is returned.
+//!    1. Take care that for floating entries, the multiplication is not perfectly associative due to rounding errors.
+//!       This call performs multiplications in reverse incoming order.
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. The call `mul[saturated](...)` computes a saturated version of `mul`.
+//!       Take care that for signed integral entries this kind of multiplication is not associative at all.
+//!       This call perform saturated multiplications in reverse incoming order.
 //!
 //!   @note
-//!     Take care that for floating entries, the multiplication is only 'almost' associative.
-//!     This call performs multiplications in reverse incoming order.
+//!      Although the infix notation with `*` is supported for two parameters, the `*` operator on
+//!      standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/mul.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::mul[mask](x, ...)` provides a masked
-//!     version of `mul` which is
-//!     equivalent to `if_else(mask, mul(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!     The call `mul[saturated](args...)` computes the saturated  multiplication `of the arguments.
-//!     The saturation is obtained in the [common value](@ref common_value_t)
-//!     of the N parameters. The computation is done as if all arguments were
-//!     converted to this type and the saturated multiplication applied recursively on all
-//!     parameters. No overflow occurs.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto mul = functor<mul_t>;

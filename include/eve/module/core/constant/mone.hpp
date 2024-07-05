@@ -32,7 +32,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
-//!   @var mmone
+//!   @var mone
 //!   @brief Computes the constant \f$-1\f$
 //!
 //!   **Defined in Header**
@@ -47,7 +47,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T >
-//!      T mmone(as<T> x) noexcept;
+//!      T mone(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -57,14 +57,14 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::mmone(as<T>())` is semantically equivalent to  `T(-1)`
+//!      The call `eve::mone(as<T>())` is semantically equivalent to  `T(-1)`
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/mmone.cpp}
+//!  @godbolt{doc/core/constant/mone.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(mmone_, mmone);
+EVE_MAKE_CALLABLE(mone_, mone);
 inline constexpr auto mone = functor<mone_t>;
 
 // Required for if_else optimisation detections
