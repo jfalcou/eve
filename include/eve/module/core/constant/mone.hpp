@@ -64,7 +64,6 @@ namespace eve
 //!  @godbolt{doc/core/constant/mone.cpp}
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(mone_, mone);
 inline constexpr auto mone = functor<mone_t>;
 
 // Required for if_else optimisation detections
