@@ -91,7 +91,7 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    manhattan_(EVE_REQUIRES(cpu_), O const & o , T a0) noexcept
+    manhattan_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
     {
       if constexpr (!O::contains(saturated2) || floating_value<T>)
         return eve::abs(a0);
