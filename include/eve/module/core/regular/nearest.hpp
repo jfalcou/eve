@@ -35,9 +35,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var nearest
-//!   @brief Computes the nearest integer to the input.
+//!   @brief  `strict_elementwise_callable` object computing the nearest integer to the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,36 +48,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T nearest(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto nearest(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto nearest[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto nearest[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//!   **Parameters**
+//!     * `x` :[value](@ref value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol' [scalar_value](@ref value) tolerance.
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!   **Return value**
 //!
-//!    **Return value**
+//!     1. the integer nearest to `x`. If `x` is an exact half-integer the rounding is made to the
+//!        nearest even integer.The smallest integer not less than `x`.
+//!        The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!        `FE_TOWARDZERO`. This function object implements the `FE_TONEAREST` version.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      Computes  [elementwise](@ref glossary_elementwise) the integer nearest to `x`.
-//!
-//!      If `x` is an exact half-integer the rounding is made to the nearest even integer.
-//!
-//!      The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!      `FE_TOWARDZERO`. This function object implements the `FE_TONEAREST` version.
-//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/round)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/nearest.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::nearest[mask](x)` provides a masked version of `eve::nearest` which is
-//!     equivalent to `if_else (mask, nearest(x), x)`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto nearest = functor<nearest_t>;

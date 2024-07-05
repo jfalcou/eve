@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct negate_t : elementwise_callable<negate_t, Options, raw_option>
+  struct negate_t : elementwise_callable<negate_t, Options>
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -28,10 +28,10 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var negate
-//!   @brief Computes the [elementwise](@ref glossary_elementwise) product of the first parameter
+//!   @brief `elementwise_callable` object computing the product of the first parameter
 //!   by the sign of the second.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -42,31 +42,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      eve::common_value_t<T, U> negate(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto negate(value auto x, value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto negate[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto negate[logical_value auto m](value auto , value auto yx)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      The [elementwise](@ref glossary_elementwise) product of the first parameter
-//!      by the sign of the second is returned.
+//!      1. The [elementwise](@ref glossary_elementwise) product of the first parameter
+//!         by the sign of the second is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/negate.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::negate[mask](x, ...)` provides a masked
-//!     version of `negate` which is equivalent to `if_else(mask, negate(x, ...), x)`
-//!
 //! @}
 //================================================================================================
  inline constexpr auto negate = functor<negate_t>;

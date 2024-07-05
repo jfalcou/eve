@@ -33,7 +33,7 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var nb_values
-//!   @brief Computes the  number of values representable in the type between the
+//!   @brief `elementwise_callable` object computing the number of values representable in the type between the
 //!   [arguments](@ref eve::value).
 //!
 //!   **Defined in Header**
@@ -47,21 +47,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      as_integer_t<common_value_t<T, U>, unsigned> nb_values(T x, T y) noexcept;
+//!      // Regular overloads
+//!      constexpr auto nb_values(eve::value auto x, eve::value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto nb_values[conditional_expr auto c](eve::value auto x, eve::value auto y) noexcept; // 2
+//!      constexpr auto nb_values[logical_value auto m](eve::value auto x, eve::value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `x`, `y`: [values](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      Returns the number of values representable in the type in the interval `[x, y[`
+//!      1. Returns the number of values representable in the type in the interval `[x, y[`
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/nb_values.cpp}
 //================================================================================================
   inline constexpr auto nb_values = functor<nb_values_t>;

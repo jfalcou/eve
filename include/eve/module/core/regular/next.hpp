@@ -46,9 +46,9 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var next
-//!   @brief Computes the nth next representable element
+//!   @brief `strict_elementwise_callable` computing the nth next representable element
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -59,45 +59,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::integral_value N >
-//!      eve::common_value_t<T, U> next(T x, N n = 1) noexcept;
+//!      // Regular overloads
+//!      constexpr auto next(value auto x)                        noexcept;             noexcept; // 1
+//!      constexpr auto next(value auto x, integral_value auto n) noexcept;             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto next[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto next[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto negmaxabs[pedantic](/* any of the above overloads */)           noexcept; // 5.1
+//!      constexpr auto negmaxabs[saturated ](/* any of the above overloads */)         noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`:  [floating argument](@ref eve::floating_value).
-//!
 //!     * `n` :  [integral value argument](@ref eve::integral_value).
-//!
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+///!
 //!    **Return value**
 //!
-//!    The value of the nth representable value greater than `x` is returned.
-//!    If `n` is zero returns `x`.
+//!       1. the least representable value greater than `x` is returned.
+//!       2. the nth representable value greater than `x` is returned. If `n` is zero returns `x`.
+//!       3. [The operation is performed conditionnaly](@ref conditional)
+//!       4. if `x` is floating the call with mzero returns zero
+//!       5. ensures that the input is never greater than the result of the call.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/next.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::next[mask](x, ...)` provides a masked
-//!     version of `next` which is
-//!     equivalent to `if_else(mask, next(x, ...), x)`
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::next[eve::pedantic](x, ...)` provides a pedantic
-//!     version of `next` which ensures that the successor of eve::mzero is  eve::zero
-//!     for floating points entries
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::next[eve::saturated](x, ...)` provides a saturated
-//!     version of `next` which ensures that x is never less than the result of the call.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto next = functor<next_t>;
