@@ -63,7 +63,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. For floating entries returns true if x is equals to eve::inf(as(x)) or eve::minf(as(x));`,
+//!     1. For floating entries returns true if x is equals to `eve::inf(as(x))` or `eve::minf(as(x))`,
 //!       and is always false for integral types.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
