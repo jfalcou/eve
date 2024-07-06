@@ -29,9 +29,9 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var popcount
-//!   @brief Computes elementwise the number of bits set in the parameter.
+//!   @brief `elementwise_callable` object computing elementwise the number of bits set in the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -42,22 +42,19 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value T >
-//!      T popcount(T x) noexcept;
+//!      constexpr auto popcount(unsigned_value auto x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
+//!     * `x`: [unsigned argument](@ref eve::unsigned_value).
 //!
 //!    **Return value**
 //!
-//!    The value of  number of bits set in the value `x`
-//!    is returned.
+//!    The value of  number of bits set in the value `x` is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/popcount.cpp}
 //! @}
 //================================================================================================

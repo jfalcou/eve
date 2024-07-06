@@ -60,44 +60,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::integral_value N >
-//!      eve::common_value_t<T, U> prev(T x, N n = 1) noexcept;
+//!      // Regular overloads
+//!      constexpr auto prev(value auto x)                                              noexcept; // 1
+//!      constexpr auto prev(value auto x, integral_value auto n)                       noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto prev[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto prev[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto prev[pedantic](/* any of the above overloads */)                noexcept; // 5.1
+//!      constexpr auto prev[saturated ](/* any of the above overloads */)              noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [floating argument](@ref eve::floating_value).
-//!
-//!     * `n` :  [integral value argument](@ref eve::integral_value).
+//!     * `x`: [floating argument](@ref eve::floating_value).
+//!     * `n`: [integral value argument](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
+//!
+//!       1. the greatest representable value less than `x` is returned.
+//!       2. the nth representable value less than `x` is returned. If `n` is zero returns `x`.
+//!       3. [The operation is performed conditionnaly](@ref conditional)
+//!       4. if `x` is floating  zero and mzero are considered distinct.
+//!       5. ensures that the input is never less than the result of the call.
 //!
 //!    The value of the nth representable value less than `x` is returned.
 //!    If `n` is zero returns `x`.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/prev.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::prev[mask](x, ...)` provides a masked
-//!     version of `prev` which is
-//!     equivalent to `if_else(mask, prev(x, ...), x)`
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::prev[eve::pedantic](x, ...)` provides a pedantic
-//!     version of `prev` which ensures that the predecessor of eve::zero is  eve::mzero
-//!     for floating points entries
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::prev[eve::saturated](x, ...)` provides a saturated
-//!     version of `prev` which ensures that that x is never greater than the result of the call.
 //!//! @}
 //================================================================================================
   inline constexpr auto prev = functor<prev_t>;

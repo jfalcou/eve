@@ -38,7 +38,7 @@ namespace eve
 //!
 //! @brief Callable object computing pow1p: \f$(1+x)^y\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -46,37 +46,36 @@ namespace eve
 //!
 //!   @groupheader{Callable Signatures}
 //!
-//!
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto pow1p(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto pow1p(value auto x, value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto pow1p[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto pow1p[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto pow1p[raw](value auto x, value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
+//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) \f$(1+x)^y\f$, with good accuracy,
-//! even when `x` is  small.
+//!     1. Returns the [elementwise](@ref glossary_elementwise) \f$(1+x)^y\f$, with good accuracy,
+//!        even when `x` is  small.
+//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     3. speedier must less accurate call.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/pow1p.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::pow1p[mask](x, y)` provides a masked version of `eve::pow1p` which is
-//!     equivalent to `if_else (mask, pow1p(x, y), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/pow1p.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto pow1p = functor<pow1p_t>;
