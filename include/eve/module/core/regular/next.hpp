@@ -68,8 +68,8 @@ namespace eve
 //!      constexpr auto next[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto negmaxabs[pedantic](/* any of the above overloads */)           noexcept; // 5.1
-//!      constexpr auto negmaxabs[saturated ](/* any of the above overloads */)         noexcept; // 5.2
+//!      constexpr auto next[pedantic](/* any of the above overloads */)                noexcept; // 5.1
+//!      constexpr auto next[saturated ](/* any of the above overloads */)              noexcept; // 5.2
 //!   }
 //!   @endcode
 //!

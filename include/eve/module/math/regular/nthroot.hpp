@@ -36,7 +36,7 @@ namespace eve
 //!
 //! @brief Callable object computing the nth root: \f$x^{1/n}\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -47,24 +47,31 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      T nthroot(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto nthroot(floating_value auto x, value auto n) noexcept;             noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto nthroot[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto nthroot[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto nthroot[raw](/* any of the above overloads */)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   * `x`:   [floating real value](@ref eve::floating_ordered_value).
-//!
-//!   * `n`:   [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref
-//!   eve::is_flint).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `n`: [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref is_flint).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!  Returns [elementwise](@ref glossary_elementwise) the value of \f$x^{1/n}\f$.
-//!  For negative `x` the value returned is a Nan as soon as `n` is not an odd integer.
-//!
-//!  The result type is of the compatibility type of the  parameters.
+//!    1. Returns the value of \f$x^{1/n}\f$. For negative `x` the value returned is a Nan as soon as `n`
+//!      is not an odd integer.
+//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    3. Speedier but less accurate computation.
 //!
 //!  @groupheader{Example}
 //!
