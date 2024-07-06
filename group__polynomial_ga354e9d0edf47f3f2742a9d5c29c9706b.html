@@ -146,29 +146,49 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 <li>The associated laguerre polynomial is given by \(\displaystyle \mbox{L}_{n}^{m} =
      (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\).</li>
 </ul>
-<p><b>Defined in header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as_t&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>(N n, T x) <span class="keyword">noexcept</span>;                                              <span class="comment">// 1</span></div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                 <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> eve::eve::as_wide_as_t&lt;T, eve::common_type_t&lt;M,N&gt;&gt; <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[associated](N n, M m, T x) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[associated](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">successor</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> lnm1) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">successor</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> lnm1) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">laguerre</a>[associated][<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">successor</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)     <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b_html_ga354e9d0edf47f3f2742a9d5c29c9706b"><div class="ttname"><a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a></div><div class="ttdeci">constexpr auto laguerre</div><div class="ttdoc">Computes the value of the Laguerre and associated Laguerre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> laguerre.hpp:105</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="agroup__core__decorators_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr auto successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:57</div></div>
+<div class="ttc" id="agroup__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b_html_ga354e9d0edf47f3f2742a9d5c29c9706b"><div class="ttname"><a href="group__polynomial_ga354e9d0edf47f3f2742a9d5c29c9706b.html#ga354e9d0edf47f3f2742a9d5c29c9706b">eve::laguerre</a></div><div class="ttdeci">constexpr auto laguerre</div><div class="ttdoc">strict_elementwise_callable object computing the value of the Laguerre and associated Laguerre polyno...</div><div class="ttdef"><b>Definition:</b> laguerre.hpp:100</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-</div><!-- fragment --><ol type="1">
-<li>Evaluate the laguerre polynomial of order n</li>
-<li>Evaluate the associated laguerre polynomial of orders n, m.</li>
-</ol>
-<p><b>Parameters</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>n</code>, m<code>: [integral positive arguments](@ref <a class="el" href="concepteve_1_1integral__value.html" title="The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...">eve::integral_value</a>). *</code>x` : <a class="el" href="concepteve_1_1floating__value.html">real floating argument</a>.</li>
+<li><code>n</code>, <code>m</code>, <code>l</code>, <code>ln</code>, <code>lnm1</code> : integral positive arguments.</li>
+<li><code>x</code> : floating argument.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of the polynomial at <code>x</code> is returned.</p>
+<ol type="1">
+<li>The value of the Laguerre polynomial of order <code>n</code> at <code>x</code> is returned.</li>
+<li>The value of the associated Laguerre polynomial of orders <code>n</code>, <code>m</code> at <code>x</code> is returned. constexpr auto <a class="el" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e" title="Computes the value of the Legendre and associated Legendre polynomials of order n at x:">legendre(integral_value auto n, floating_value auto x)</a> noexcept; //1</li>
+<li>implements the three term recurrence relation for the Laguerre polynomials, \(\displaystyle \mbox{L}_{n+1} = \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\)</li>
+<li>implements the three term recurrence relation for the associated Laguerre polynomials, \(\displaystyle \mbox{L}_{n+1}^m = \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\)</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/18.3">DLMF</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/laguerre">C++ standard reference</a></li>
+<li><a href="https://mathworld.wolfram.com/BetaFunction.html">Wolfram MathWorld</a></li>
+</ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -202,18 +222,7 @@ $(document).ready(function(){initNavTree('group__polynomial_ga354e9d0edf47f3f274
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifier </h2>
-<ul>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
-<p class="startli">The expression <code>laguerre[successor](n, x, ln, lnm1)</code> implements the three term recurrence relation for the Laguerre polynomials,  \(\displaystyle \mbox{L}_{n+1} =
-    \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\)</p>
-<p class="startli">The expression <code>laguerre[associated][successor](n, m, x, ln, lnmm1)</code> implements the three term recurrence relation for the associated Laguerre polynomials,  \(\displaystyle \mbox{L}_{n+1}^m =
-    \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\)</p>
-<p class="startli">These functions can be used to create a sequence of values evaluated at the same <code>x</code> (and <code>m</code>) and for rising <code>n</code>.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"></div><!-- fragment --> </li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

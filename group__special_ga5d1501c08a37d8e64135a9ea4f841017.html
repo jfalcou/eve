@@ -140,24 +140,24 @@ $(document).ready(function(){initNavTree('group__special_ga5d1501c08a37d8e64135a
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::ordered_value N &gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">lfactorial</a>(N x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">lfactorial</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> N x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_ga5d1501c08a37d8e64135a9ea4f841017_html_ga5d1501c08a37d8e64135a9ea4f841017"><div class="ttname"><a href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a></div><div class="ttdeci">constexpr auto lfactorial</div><div class="ttdoc">Computes the natural logarithm of the factorial of unsigned integer values .</div><div class="ttdef"><b>Definition:</b> lfactorial.hpp:73</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__special_ga5d1501c08a37d8e64135a9ea4f841017_html_ga5d1501c08a37d8e64135a9ea4f841017"><div class="ttname"><a href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a></div><div class="ttdeci">constexpr auto lfactorial</div><div class="ttdoc">elementwise_callable object computing the natural logarithm of the factorial of unsigned integer valu...</div><div class="ttdef"><b>Definition:</b> lfactorial.hpp:72</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>n</code> : <a class="el" href="concepteve_1_1ordered__value.html">integer or flint argument</a>.</li>
+<li><code>n</code> : <a class="el" href="concepteve_1_1value.html">integral or flint argument</a>.</li>
 </ul>
 <p><b>Return value</b></p>
 <p>The value of \( \log n!\) is returned with the following considerations:</p><ul>
-<li>If the entry is an [integral value](<a class="el" href="concepteve_1_1integral__value.html" title="The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...">eve::integral_value</a>), the result [element type](<a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>) is always double to try to avoid overflow.</li>
-<li>If the entry is a [floating point value](eve::floating_point_value) which must be a flint, the result is of the same type as the entry.</li>
+<li>If the entry is an integral value, the result element type is always double to try to avoid overflow as possible.</li>
+<li>If the entry is a floating point value which must be a flint, the result is of the same type as the entry.</li>
 <li>If <code>n</code> elements are nor integer nor flint the result is undefined.</li>
 </ul>
 <h2 class="groupheader">Example </h2>

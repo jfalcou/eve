@@ -151,25 +151,46 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>(N n, T x) <span class="keyword">noexcept</span>;                               <span class="comment">//1</span></div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)             <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt; eve::<span class="keywordtype">int</span>egral_value N, eve::<span class="keywordtype">int</span>egral_value M, eve::<span class="keywordtype">float</span>ing_ordered_value T &gt;</div>
-<div class="line">  <span class="keyword">constexpr</span> eve::as_wide_as&lt;T, N&gt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>(N n, M m, T x) <span class="keyword">noexcept</span>;                          <span class="comment">//2</span></div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[p_kind](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)     <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[q_kind](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[associated](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                        <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[condon_shortley](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                            <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[sph](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> theta)                           <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">successor</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> lnm1)   <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">legendre</a>[<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">successor</a>](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l,<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> lnm1)   <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e_html_gab7e6a80c12091ba2b3db86eed90fb15e"><div class="ttname"><a href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a></div><div class="ttdeci">constexpr auto legendre</div><div class="ttdoc">Computes the value of the Legendre and associated Legendre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> legendre.hpp:148</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="agroup__core__decorators_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr auto successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:57</div></div>
+<div class="ttc" id="agroup__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e_html_gab7e6a80c12091ba2b3db86eed90fb15e"><div class="ttname"><a href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a></div><div class="ttdeci">constexpr auto legendre</div><div class="ttdoc">Computes the value of the Legendre and associated Legendre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> legendre.hpp:121</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-</div><!-- fragment --><ol type="1">
-<li>Legendre polynomial of order n</li>
-<li>Associated Legendre polynomial of orders m, n</li>
-</ol>
-<p><b>Parameters</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>n</code>, <code>m</code> : <a class="el" href="concepteve_1_1integral__value.html">integral positive arguments</a>.</li>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__ordered__value.html">real floating argument</a>.</li>
+<li><code>n</code>, <code>m</code>, <code>ln</code>, <code>lnm1</code> : integral positive arguments.</li>
+<li><code>x</code> : floating argument.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of the polynomial at <code>x</code> is returned.</p>
+<ol type="1">
+<li>The value of the Legendre polynomial of order <code>n</code> at <code>x</code> is returned.</li>
+<li>The value of the Legendre polynomial of order <code>n</code> at <code>x</code> of the second kind is returned.</li>
+<li>The value of the associated legendre polynomial of orders <code>n</code>, <code>m</code> at <code>x</code> is returned.</li>
+<li>multiplies the associated legendre polynomial value by the Condon-Shortley phase \((-1)^m\) to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math.</li>
+<li>returns the spherical associated Legendre function of degree l, order m, and polar angle theta in radian (that is the classical spherical harmonic with \(\phi = 0\)), i.e. \(\displaystyle (-1)^m\frac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\)</li>
+<li>The <code>successor</code> option implements the three term recurrence relation for the (associated) Legendre polynomials, \(\displaystyle \mbox{P}^m_{l+1} =
+        \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\) ( \(m = 0\) and no \(m\) in call are equivalent here).</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -204,13 +225,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">eve::p_kind, eve::q_kind</p>
-<p class="startli">The expression <code>legendre[p_kind](n,x)</code> is equivalent to <code><a class="el" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e" title="Computes the value of the Legendre and associated Legendre polynomials of order n at x:">legendre(n,x)</a></code>.</p>
-<p class="startli">The expression <code>legendre[q_kind](n,x)</code> return the value at <code>x</code> of the second kind legendre function of order <code>n</code>.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
@@ -242,12 +257,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --></li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">eve::successor</a></p>
-<p class="startli">The expression <code><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">successor(legendre)</a>(l, x, ln, lnm1)</code> (or <code><a class="el" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09" title="Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.">successor(legendre)</a>(l, m, x, ln, lnm1)</code>) implements the three term recurrence relation for the (associated) Legendre polynomials,  \(\displaystyle \mbox{P}^m_{l+1} =
-      \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\) These functions can be used to create a sequence of values evaluated at the same <code>x</code> and for rising <code>l</code>. ( \(m = 0\) and no \(m\) in call are equivalent here).</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
@@ -277,12 +287,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line"> }</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr auto successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:57</div></div>
-</div><!-- fragment --></li>
-<li><p class="startli">eve::condon_shortley</p>
-<p class="startli">The expression <code>condon_shortley(legendre)(l, m, x)</code> multiplies the associated legendre polynomial value by the Condon-Shortley phase \((-1)^m\) to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math 1.79.</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
@@ -309,12 +314,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --></li>
-<li><p class="startli">eve::sph</p>
-<p class="startli">The expression <code>sph(legendre)(l, m, theta)</code> returns the spherical associated Legendre function of degree l, order m, and polar angle theta in radian (that is the classical spherical harmonic with \(\phi = 0\)), i.e. \(\displaystyle
-      (-1)^mfrac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\)</p>
-<p class="startli"><b>Example</b></p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
@@ -342,9 +342,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__decorators_ga884b4910b05380e3672d7cf9262a17e7_html_ga884b4910b05380e3672d7cf9262a17e7"><div class="ttname"><a href="group__core__decorators_ga884b4910b05380e3672d7cf9262a17e7.html#ga884b4910b05380e3672d7cf9262a17e7">eve::spherical</a></div><div class="ttdeci">constexpr auto spherical</div><div class="ttdoc">Higher-order Callable Object imbuing spherical semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:56</div></div>
-</div><!-- fragment --> </li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

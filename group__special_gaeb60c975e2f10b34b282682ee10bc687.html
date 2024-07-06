@@ -140,20 +140,42 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::<span class="keywordtype">float</span>ing_ordered_value U &gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">lrising_factorial</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">lrising_factorial</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">lrising_factorial</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">lrising_factorial</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                         <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                    <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_gaeb60c975e2f10b34b282682ee10bc687_html_gaeb60c975e2f10b34b282682ee10bc687"><div class="ttname"><a href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a></div><div class="ttdeci">constexpr auto lrising_factorial</div><div class="ttdoc">Computes the natural logarithm of the Rising Factorial function i.e. .</div><div class="ttdef"><b>Definition:</b> lrising_factorial.hpp:91</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
+<div class="ttc" id="agroup__special_gaeb60c975e2f10b34b282682ee10bc687_html_gaeb60c975e2f10b34b282682ee10bc687"><div class="ttname"><a href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a></div><div class="ttdeci">constexpr auto lrising_factorial</div><div class="ttdoc">elementwise_callable object computing the natural logarithm of the Rising Factorial function i....</div><div class="ttdef"><b>Definition:</b> lrising_factorial.hpp:108</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
-<p><code>a</code>, <code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">strictly positive real floating argument</a>.</p>
+<ul>
+<li><code>a</code>, <code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating arguments</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
+</ul>
 <p><b>Return value</b></p>
-<p>The value of the natural logarithm of the rising_factorial is returned.</p>
+<ol type="1">
+<li>The value of the natural logarithm of the rising_factorial is returned( <code>a</code> and <code>x</code> must be strictly positive).</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>The <code>raw</code> option uses the crude formula with all its limitations and inacurracies and return a Nan if <code>a</code> and <code>a+x</code> are not both positive.</li>
+<li>The <code>pedantic</code> option uses reflection tricks and computes the function for all real <code>a</code> and <code>x</code>, and in fact computes the logarithm of the absolute value of the Pochammer symbol \(\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\) returning nan only if the result is really undefined.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -204,7 +226,6 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 </div><!-- fragment --></li>
 <li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a></p>
 <p class="startli">The expression <code><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">pedantic(lrising_factorial)</a>(a,x)</code> uses reflection tricks and computes the function for all real <code>a</code> and <code>x</code>, and in fact computes the logarithm of the absolute value of the Pochammer symbol \(\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\) returning nan if the result is really undefined.</p>
@@ -227,7 +248,6 @@ $(document).ready(function(){initNavTree('group__special_gaeb60c975e2f10b34b2826
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; pedantic(lrising_factorial(n, x))   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_gaeb60c975e2f10b34b282682ee10bc687.html#gaeb60c975e2f10b34b282682ee10bc687">eve::lrising_factorial</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](n, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">   <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
 </div><!-- fragment --> </li>
 </ul>
 

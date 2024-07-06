@@ -140,19 +140,35 @@ $(document).ready(function(){initNavTree('group__special_gaa289441c55c386f94ed03
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_ordered_value T, eve::<span class="keywordtype">float</span>ing_ordered_value U &gt;</div>
-<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">lbeta</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">lbeta</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">lbeta</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">lbeta</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__special_gaa289441c55c386f94ed03b0091e8884a_html_gaa289441c55c386f94ed03b0091e8884a"><div class="ttname"><a href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">eve::lbeta</a></div><div class="ttdeci">constexpr auto lbeta</div><div class="ttdoc">Computes the natural logarithm of the beta function.</div><div class="ttdef"><b>Definition:</b> lbeta.hpp:62</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__special_gaa289441c55c386f94ed03b0091e8884a_html_gaa289441c55c386f94ed03b0091e8884a"><div class="ttname"><a href="group__special_gaa289441c55c386f94ed03b0091e8884a.html#gaa289441c55c386f94ed03b0091e8884a">eve::lbeta</a></div><div class="ttdeci">constexpr auto lbeta</div><div class="ttdoc">elementwise_callable object computing the natural logarithm of the beta function.</div><div class="ttdef"><b>Definition:</b> lbeta.hpp:70</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
-<p><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">strictly positive real floating argument</a>.</p>
+<ul>
+<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">strictly positive real floating argument</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
+</ul>
 <p><b>Return value</b></p>
+<ol type="1">
+<li>the natural logarithm of the <a class="el" href="group__special_ga28cfdcc15a0eb0150019bbc1e6652ceb.html#ga28cfdcc15a0eb0150019bbc1e6652ceb">beta</a> function.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
