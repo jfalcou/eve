@@ -60,8 +60,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto next(value auto x)                        noexcept;             noexcept; // 1
-//!      constexpr auto next(value auto x, integral_value auto n) noexcept;             noexcept; // 2
+//!      constexpr auto next(value auto x)                                              noexcept; // 1
+//!      constexpr auto next(value auto x, integral_value auto n)                       noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto next[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
@@ -75,11 +75,11 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [floating argument](@ref eve::floating_value).
-//!     * `n` :  [integral value argument](@ref eve::integral_value).
+//!     * `x`: [floating argument](@ref eve::floating_value).
+//!     * `n`: [integral value argument](@ref eve::integral_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
-///!
+//!
 //!    **Return value**
 //!
 //!       1. the least representable value greater than `x` is returned.
