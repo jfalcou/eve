@@ -140,22 +140,45 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga66885a956677
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T, eve::value U &gt;</div>
-<div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>(T x,U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>;                          <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>;    <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>[almost](<span class="comment">/*any of the above overloads*/</span>)              <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">is_less_equal</a>[almost = tol](<span class="comment">/*any of the above overloads*/</span>)        <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga66885a9566770fea8e7e3f79f56d2705_html_ga66885a9566770fea8e7e3f79f56d2705"><div class="ttname"><a href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">eve::is_less_equal</a></div><div class="ttdeci">constexpr auto is_less_equal</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is less or equal to th...</div><div class="ttdef"><b>Definition:</b> is_less_equal.hpp:87</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__predicates_ga66885a9566770fea8e7e3f79f56d2705_html_ga66885a9566770fea8e7e3f79f56d2705"><div class="ttname"><a href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705">eve::is_less_equal</a></div><div class="ttdeci">constexpr auto is_less_equal</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value of the first parameter...</div><div class="ttdef"><b>Definition:</b> is_less_equal.hpp:86</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">arguments</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
+<li><code>tol</code>: scalar value tolerance.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The call <code><a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">eve::is_less_equal(x,y)</a></code> is semantically equivalent to <code>x &gt;= y</code>:</p>
+<ol type="1">
+<li>The call <code><a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_less_equal(x,y)</a></code> is semantically equivalent to <code>x &lt;= y</code>:</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>The expression <code>is_less_equal[almost = tol](x, y)</code> where <code>x</code> and <code>y</code> must be floating point values, evaluates to true if and only if <code>x</code> is almost less than <code>y</code>. This means that:<ul>
+<li>if <code>tol</code> is a floating value then \(x \le y + \mbox{tol}\cdot \max(|x|, |y|)\)</li>
+<li>if <code>tol</code> is a positive integral value then \(x \le \mbox{next}(y, \mbox{tol})\);</li>
+<li>if <code>tol</code> is omitted then the tolerance <code>tol</code> default to <code>3*eps(as(x))</code>.</li>
+</ul>
+</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -184,22 +207,9 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga66885a956677
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; is_less(xf, yf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>(xf, yf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099_html_ga419057bf1a8ca5f46624a28a0ea47099"><div class="ttname"><a href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a></div><div class="ttdeci">constexpr auto is_less</div><div class="ttdoc">Returns a logical true if and only if the element value of the first parameter is less than the secon...</div><div class="ttdef"><b>Definition:</b> is_less.hpp:93</div></div>
+<div class="ttc" id="agroup__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099_html_ga419057bf1a8ca5f46624a28a0ea47099"><div class="ttname"><a href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a></div><div class="ttdeci">constexpr auto is_less</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value of the first parameter...</div><div class="ttdef"><b>Definition:</b> is_less.hpp:93</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">is_less_equal</a>[mask](x,y)</code> provides a masked version of <code><a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">eve::is_less_equal</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__predicates_ga66885a9566770fea8e7e3f79f56d2705.html#ga66885a9566770fea8e7e3f79f56d2705" title="Returns a logical true if and only if the element value of the first parameter is less or equal to th...">is_less_equal(x)</a>, eve::false( eve::as(x,y)))</code>.</p>
-</li>
-<li><p class="startli"><code>almost</code></p>
-<p class="startli">The expression <code>definitely(is_less_equal)(x, y, t)</code> where <code>x</code> and <code>y</code> must be floating point values, evaluates to true if and only if <code>x</code> is almost less than <code>y</code>. This means that:</p><ul>
-<li>if <code>t</code> is a floating_value then \(x &lt;  y + t \max(|x|, |y|)\)</li>
-<li>if <code>t</code> is a positive integral_value then \(x &lt;  \mbox{next}(y, t)\);</li>
-<li>if <code>t</code> is omitted then the tolerance <code>t</code> default to <code>3*eps(as(x))</code>. </li>
-</ul>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

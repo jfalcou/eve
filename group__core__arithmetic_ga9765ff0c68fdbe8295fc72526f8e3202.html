@@ -140,22 +140,39 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>[<a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">saturated</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)               <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr auto inc</div><div class="ttdoc">return the input incremented by one.</div><div class="ttdef"><b>Definition:</b> inc.hpp:76</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr auto inc</div><div class="ttdoc">elementwise_callable object returning the input incremented by 1.</div><div class="ttdef"><b>Definition:</b> inc.hpp:72</div></div>
+<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> argument.</li>
+<li><code>x</code>: SIMD or scalar value.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of <code>x + 1</code> is returned.</p>
+<ol type="1">
+<li>The value of <code>x + 1</code> is returned.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>The saturated incrementation of <code>x</code>. More specifically, for signed integral, <code>abs[saturated](valmin(as&lt;T&gt;{}))</code> returns <code>eve:valmin(as&lt;T&gt;{}))</code></li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -184,19 +201,9 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202" title="return the input incremented by one.">eve::inc</a>[mask](x, ...)</code> provides a masked version of <code>inc</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, inc(x, ...), x)</a></code></p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">eve::saturated</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">saturated(inc)</a>(x)</code> computes the saturated increment of <code>x</code>. The only interest of this behaviour is that for integral type T the call <code><a class="el" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e" title="Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.">saturated(inc)</a>(Valmax&lt;T&gt;())</code> returns <code>Valmax&lt;T&gt;()</code>. </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

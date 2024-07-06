@@ -140,23 +140,42 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga362321d34c65
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   eve::as_logical&lt;T&gt; <a class="code hl_variable" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;                 <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a>(integer_value <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;                  <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">is_flint</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)       <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga362321d34c6537526509b337c67febe1_html_ga362321d34c6537526509b337c67febe1"><div class="ttname"><a href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">eve::is_flint</a></div><div class="ttdeci">constexpr auto is_flint</div><div class="ttdoc">Returns a logical true if and only if the element value is a floating value representing an integer.</div><div class="ttdef"><b>Definition:</b> is_flint.hpp:80</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
+<div class="ttc" id="agroup__core__predicates_ga362321d34c6537526509b337c67febe1_html_ga362321d34c6537526509b337c67febe1"><div class="ttname"><a href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1">eve::is_flint</a></div><div class="ttdeci">constexpr auto is_flint</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is a floating value re...</div><div class="ttdef"><b>Definition:</b> is_flint.hpp:82</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The call <code>eve;<a class="el" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1" title="Returns a logical true if and only if the element value is a floating value representing an integer.">is_flint</a>[mask](x)</code> is semantically equivalent to: <code><a class="el" href="group__core__predicates_ga6deb0e67d130c1f8417f3de5b54273d8.html#ga6deb0e67d130c1f8417f3de5b54273d8" title="Returns a logical true if and only if the element value is zero.">eve::is_eqz</a> (<a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="elementwise_callable computing the fractional part of the input.">eve::frac</a> (x))</code>;</p>
-<p>This means that x is a <a class="el" href="concepteve_1_1floating__value.html">floating real value</a> representing an integer (flint is a shortcut for 'floating integer').</p>
+<ol type="1">
+<li>The call <code><a class="el" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1" title="elementwise callable returning a logical true if and only if the element value is a floating value re...">is_flint(x)</a></code> is semantically equivalent to <code>is_eqz (<a class="el" href="group__core__arithmetic_gaa581d6441ab304517b9849ab3c5ce732.html#gaa581d6441ab304517b9849ab3c5ce732" title="elementwise_callable computing the fractional part of the input.">eve::frac(x)</a>)</code>; This means that x represents an integral value.</li>
+<li>Always returns <code>true</code></li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>The call <code>is_flint[pedantic](x)</code> also check that the input is not greater or equal to the largest consecutive integer in the element type of <code>x</code> (<code><a class="el" href="group__core__constants_ga27166fb22ddd73e9cb6c19b9ab7054a6.html#ga27166fb22ddd73e9cb6c19b9ab7054a6" title="Computes the the greatest floating point representing an integer and such that n !...">maxflint(as(x))</a></code>).</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -186,16 +205,9 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga362321d34c65
 <div class="ttc" id="agroup__core__constants_ga27166fb22ddd73e9cb6c19b9ab7054a6_html_ga27166fb22ddd73e9cb6c19b9ab7054a6"><div class="ttname"><a href="group__core__constants_ga27166fb22ddd73e9cb6c19b9ab7054a6.html#ga27166fb22ddd73e9cb6c19b9ab7054a6">eve::maxflint</a></div><div class="ttdeci">constexpr auto maxflint</div><div class="ttdoc">Computes the the greatest floating point representing an integer and such that n !...</div><div class="ttdef"><b>Definition:</b> maxflint.hpp:74</div></div>
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
-<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1" title="Returns a logical true if and only if the element value is a floating value representing an integer.">is_flint</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1" title="Returns a logical true if and only if the element value is a floating value representing an integer.">eve::is_flint</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__predicates_ga362321d34c6537526509b337c67febe1.html#ga362321d34c6537526509b337c67febe1" title="Returns a logical true if and only if the element value is a floating value representing an integer.">is_flint(x)</a>, eve::false( eve::as(x)))</code>. </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
