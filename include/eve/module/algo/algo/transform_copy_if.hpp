@@ -107,6 +107,9 @@ namespace eve::algo
   //!   @note
   //!   If the scalar operation is cheap enough, `::copy_if` + `views::map` might be slightly faster.
   //!
+  //!   @note
+  //!   For an in-place version, see `::transform_keep_if`.
+  //!
   //!   Conditionally copies values from an input range to an output range,
   //!   transforming them in the process.
   //!
@@ -140,7 +143,10 @@ namespace eve::algo
   //!
   //!   @godbolt{doc/algo/transform_copy_if.cpp}
   //!
+  //!   @see `keep_if`
   //!   @see `copy_if`
+  //!   @see `remove_if`
+  //!   @see `transform_keep_if`
   //!   @see `transform_to`
   //!   @see `views::map`
   //!
