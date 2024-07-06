@@ -11,13 +11,14 @@
 
 namespace eve
 {
+//DOC TODO
 //================================================================================================
 //! @addtogroup core_reduction
 //! @{
 //!   @var maximum
 //!   @brief Computes the maximal value in a simd vector
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -55,7 +56,7 @@ namespace eve
 //!
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(maximum_, maximum);
+  EVE_MAKE_CALLABLE(maximum_, maximum);
 }
 
 #include <eve/module/core/regular/impl/maximum.hpp>

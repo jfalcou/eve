@@ -38,7 +38,7 @@ namespace eve
 //!   @var maxabs
 //!   @brief Computes the maximum  of the absolute value norm  (\f$l_\infty\f$) of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,52 +49,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value... Ts >
-//!      auto maxabs(T x, Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto maxabs(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!      constexpr auto maxabs(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
 //!
+//!      // Lanes masking
+//!      constexpr auto maxabs[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto maxabs[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto maxabs[pedantic](/* any of the above overloads */)                noexcept; // 4
+//!      constexpr auto maxabs[numeric ](/* any of the above overloads */)                noexcept; // 5
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`, `xs...` : [real](@ref eve::value) arguments
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the maximum of the absolute value of the arguments is returned.
-//!
-//!   @note
-//!     * If any element of the inputs is a `Nan`, the corresponding output element
-//!       is system-dependent.
+//!     1. the value of the maximum of the absolute values is returned. If one of the elements
+//!        is `NaN` the result is system dependant.
+//!     2. equivalent to the call on the elements of the tuple.
+//!     3. [The operation is performed conditionnaly](@ref conditional)
+//!     4. Ensures conformity to the standard. That is for two parameters to be equivalent to:
+//!        `(|x| < |y|) ? |y| : |x|` and this behaviour is also ensured on n parameters calls
+//!        as if this scheme is recursively used.
+//!     5. `NaNs` are considered less than anything else.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/maxabs.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::maxabs[mask](x, ...)` provides a masked
-//!     version of `maxabs` which is
-//!     equivalent to `if_else(mask, maxabs(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric
-//!
-//!     * The call `pedantic(maxabs)(x,args,...)`  ensures the conformity
-//!       to the standard behaviour, that is
-//!       for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
-//!       to be semanticaly equivalent to:
-//!       `(|x| < |y|) ? |y| : |x|` and this behaviour is also ensured on n parameters calls
-//!       as if this scheme was recursively used.
-//!
-//!     *  The call `numeric(maxabs)(x,args,...)`  ensures that  if any element of the
-//!        inputs is not a `Nan`, the corresponding
-//!        output element will not be a `Nan`.
-//!
 //! @}
 //================================================================================================
-inline constexpr auto maxabs = functor<maxabs_t>;
+  inline constexpr auto maxabs = functor<maxabs_t>;
 }
 
 #include <eve/module/core/regular/impl/maxabs.hpp>

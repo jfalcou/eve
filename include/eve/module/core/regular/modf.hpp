@@ -34,10 +34,10 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var modf
-//!   @brief Computes the [elementwise](@ref glossary_elementwise)
+//!   @brief `elementwise_callable` object computing the [elementwise](@ref glossary_elementwise)
 //!   pair of  fractional and integral parts of the value,
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,8 +48,17 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      zipped<T,T> modf(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto modf(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto modf[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto modf[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto modf[raw](value auto x)                     noexcept; // 3
+//!      constexpr auto modf[pedantic](value auto x)                noexcept; // 3
+//!      constexpr auto modf[almost](value auto x)                  noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -59,32 +68,13 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     A pair of values containing respectively the [elementwise](@ref glossary_elementwise)
-//!     fractional and integral parts of `x`, each having the type and sign of `x`.
-//!
-//!     In particular:
-//!       * If `x` is infinite `{Nan, x}` is returned. (this is not standard conformant: see pedantic)
-//!       * If `x` is a `Nan`  `{Nan, Nan}` is returned.
+//!     1. A `kumi::tuple` of values containing respectively the `frac(x)` and trunc(x)`,
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. A `kumi::tuple` of values containing respectively the `frac[o](x)` and trunc[o](x)`
+//!        where `o` is the chosen option.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/modf.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * eve::raw
-//!
-//!     The call `modf[raw](x)` does care about limits nor zero sign.
-//!
-//!   * eve::pedantic
-//!
-//!     The call `modf[pedantic](x)` ensures standard conformity : if `x` is infinite,
-//!     `{0, x}` is returned.
-//!
-//!   * eve::almost
-//!
-//!     The call `modf[almost [= tol}](x)` use `trunc[almost [= tol}](x)` to compute the integral part
-
 //! @}
 //================================================================================================
 

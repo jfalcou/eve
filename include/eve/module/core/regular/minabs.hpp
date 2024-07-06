@@ -38,7 +38,7 @@ namespace eve
 //!   @var minabs
 //!   @brief Computes the  minimum  of the absolute value of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,49 +49,41 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value... Ts >
-//!      auto minabs(T x, Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto minabs(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!      constexpr auto minabs(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto minabs[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto minabs[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto minabs[pedantic](/* any of the above overloads */)                noexcept; // 4
+//!      constexpr auto minabs[numeric ](/* any of the above overloads */)                noexcept; // 5
 //!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...` : [real](@ref eve::value) arguments.
+//!     * `x`, `xs...`: [real](@ref eve::value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the minimum of the absolute value of the arguments is returned.
-//!
-//!   @note
-//!     * If any element of the inputs is a `Nan`, the corresponding output element
-//!       is system-dependent.
+//!     1. the value of the minimum of the absolute values is returned. If one of the elements
+//!        is `NaN` the result is system dependant.
+//!     2. equivalent to the call on the elements of the tuple.
+//!     3. [The operation is performed conditionnaly](@ref conditional)
+//!     4. Ensures conformity to the standard. That is for two parameters to be equivalent to:
+//!        `(|x| < |y|) ? |x| : |y|` and this behaviour is also ensured on n parameters calls
+//!        as if this scheme is recursively used.
+//!     5. `NaNs` are considered less than anything else.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/minabs.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::minabs[mask](x, ...)` provides a masked
-//!     version of `minabs` which is
-//!     equivalent to `if_else(mask, minabs(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric
-//!
-//!     * The call `pedantic(minabs)(x,args,...)`  ensures the conformity
-//!       to the standard behaviour, that is
-//!       for two parameters  (on an  [elementwise](@ref glossary_elementwise) basis)
-//!       to be semanticaly equivalent to:
-//!       `(|x| < |y|) ? |x| : |y|` and this behaviour is also ensured on n parameters calls
-//!       as if this scheme was recursively used.
-//!
-//!     *  The call `numeric(minabs)(x,args,...)`  ensures that  if any element of the
-//!        inputs is not a `Nan`, the corresponding
-//!        output element will not be a `Nan`.
-//!
 //! @}
 //================================================================================================
 inline constexpr auto minabs = functor<minabs_t>;

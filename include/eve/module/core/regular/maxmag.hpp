@@ -39,7 +39,7 @@ namespace eve
 //!   @var maxmag
 //!   @brief Computes the value for which the  maximum  of the absolute value of its arguments is obtained.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,50 +50,41 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value... Ts >
-//!      eve::common_value_t<T, Ts...> maxmag(T x, Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto maxmag(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!      constexpr auto maxmag(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
 //!
+//!      // Lanes masking
+//!      constexpr auto maxmag[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto maxmag[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto maxmag[pedantic](/* any of the above overloads */)                noexcept; // 4
+//!      constexpr auto maxmag[numeric ](/* any of the above overloads */)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...` :  [real](@ref eve::value) arguments.
+//!     * `x`, `xs...`: [real](@ref eve::value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The [elementwise](@ref glossary_elementwise) element of greatest absolute value is
-//!      returned.
-//!
-//!      For instance for two elements:
-//!
-//!        * If `|x| >  |y|`,  `x` is returned.
-//!        * If `|x| <  |y|`,  `y` is returned.
-//!        * Otherwise `max(x, y)` is returned.
-//!
-//!      For n parameters the result is computed as if this scheme was recursively used.
-//!
-//!   @note
-//!     * If any element of the inputs is a `Nan`, the corresponding output element
-//!       is system-dependent.
+//!      1. The  element of greatest absolute value is returned. For instance for two elements:
+//!            * If `|x| > |y|`,  `x` is returned.
+//!            * If `|x| < |y|`,  `y` is returned.
+//!            * Otherwise `max(x, y)` is returned.
+//!         For n parameters the result is computed as if this scheme was recursively used.
+//!      2. equivalent to the call on the elements of the tuple.
+//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      4. The behaviour of eve::maxmag[o](x, y) (where o is one of these two options)
+//!        is identical except that if  `|x| == |y|`, `max[o]` is used.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/maxmag.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::maxmag[mask](x, ...)` provides a masked
-//!     version of `maxmag` which is
-//!     equivalent to `if_else(mask, maxmag(x, ...), x)`
-//!
-//!   * eve::pedantic, eve::numeric
-//!
-//!     The behaviour of d(eve::maxmag)(x, y) (where d is one of these two decorators
-//!     is identical except that if  `|x| == |y|`, `d(max)` is used.
-//!
 //! @}
 //================================================================================================
 inline constexpr auto maxmag = functor<maxmag_t>;

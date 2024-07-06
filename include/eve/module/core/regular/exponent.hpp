@@ -53,16 +53,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto exponent(value auto x)       noexcept; // 1
+//!      constexpr auto exponent(floating_value auto x)       noexcept; // 1
 //!
 //!      // Semantic options
-//!      constexpr auto exponent[raw](value auto x)  noexcept; // 2
+//!      constexpr auto exponent[raw](floating_value auto x)  noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [argument](@ref eve::floating_value).
 //!
 //!    **Return value**
 //!

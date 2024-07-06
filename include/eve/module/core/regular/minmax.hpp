@@ -53,7 +53,7 @@ namespace eve
 //!   @var minmax
 //!   @brief Computes the minimum and maximum of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -64,19 +64,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<eve::value T, eve::value... Ts >
-//!      auto minmax(T x, Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto minmax(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!      constexpr auto minmax(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto minmax[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto minmax[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto minmax[pedantic](/* any of the above overloads */)                noexcept; // 4
+//!      constexpr auto minmax[numeric ](/* any of the above overloads */)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `xs...` :  [arguments](@ref eve::value).
+//!     * `x`, `xs...`: [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    A tuple containing the value of the minimum and the maximum of the arguments.
+//!      1. A `kumi::tuple` containing the value of the minimum and the maximum of the arguments.
+//!      2. Equivalent to the call on the elements of the tuple.
+//!      3. [The operation is performed conditionnaly](@ref conditional)
+//!      4. Equivalent to `{min[o], max[o]}` where `o` is one of these two options.
 //!
+//!   @note
 //!   @note
 //!     * If any element of the inputs is a `Nan`, the corresponding output element
 //!       is system-dependent.
