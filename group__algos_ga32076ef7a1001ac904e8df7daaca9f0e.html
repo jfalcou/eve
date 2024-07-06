@@ -144,7 +144,9 @@ $(document).ready(function(){initNavTree('group__algos_ga32076ef7a1001ac904e8df7
 <p><code>#include &lt;eve/module/algo/algo/transform_copy_if.hpp&gt;</code></p>
 <p><b>Defined in header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If the scalar operation is cheap enough, <code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> + <code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">views::map</a></code> might be slightly faster.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If the scalar operation is cheap enough, <code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> + <code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">views::map</a></code> might be slightly faster.</dd>
+<dd>
+For an in-place version, see <code><a class="el" href="group__algos_gacfea675f12aadb2462572e1372325845.html#gacfea675f12aadb2462572e1372325845" title="In-place version of eve::algo::transform_copy_if">transform_keep_if</a></code>.</dd></dl>
 <p>Conditionally copies values from an input range to an output range, transforming them in the process.</p>
 <p>If the output range is too small, fills all the available space and then stops.</p>
 <p>If the output range's element type is different from the type of the values returned by the transforming function, performs the appropriate conversions.</p>
@@ -155,7 +157,7 @@ $(document).ready(function(){initNavTree('group__algos_ga32076ef7a1001ac904e8df7
 <div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">transform_copy_if</a>(In&amp;&amp; in, Out&amp;&amp; out, Func func) <span class="keyword">const</span> -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Out&gt;</a></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition:</b> ranges_types.hpp:68</div></div>
-<div class="ttc" id="agroup__algos_ga32076ef7a1001ac904e8df7daaca9f0e_html_ga32076ef7a1001ac904e8df7daaca9f0e"><div class="ttname"><a href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">eve::algo::transform_copy_if</a></div><div class="ttdeci">constexpr auto transform_copy_if</div><div class="ttdoc">Similar to applying eve::transform_to and eve::copy_if at the same time.</div><div class="ttdef"><b>Definition:</b> transform_copy_if.hpp:149</div></div>
+<div class="ttc" id="agroup__algos_ga32076ef7a1001ac904e8df7daaca9f0e_html_ga32076ef7a1001ac904e8df7daaca9f0e"><div class="ttname"><a href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e">eve::algo::transform_copy_if</a></div><div class="ttdeci">constexpr auto transform_copy_if</div><div class="ttdoc">Similar to applying eve::transform_to and eve::copy_if at the same time.</div><div class="ttdef"><b>Definition:</b> transform_copy_if.hpp:155</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>in</code>: Input range</li>
@@ -202,7 +204,13 @@ $(document).ready(function(){initNavTree('group__algos_ga32076ef7a1001ac904e8df7
 <div class="ttc" id="aconcepteve_1_1like_html"><div class="ttname"><a href="concepteve_1_1like.html">eve::like</a></div><div class="ttdoc">Specifies semantic compatibility between wrapper/wrapped types.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:107</div></div>
 <div class="ttc" id="agroup__algos_gaca4936fc6b0b70ef06e72b118dce7c7a_html_gaca4936fc6b0b70ef06e72b118dce7c7a"><div class="ttname"><a href="group__algos_gaca4936fc6b0b70ef06e72b118dce7c7a.html#gaca4936fc6b0b70ef06e72b118dce7c7a">eve::algo::iota</a></div><div class="ttdeci">constexpr auto iota</div><div class="ttdoc">SIMD version of std::iota For conversion/overflow behaviour, should follow the standard.</div><div class="ttdef"><b>Definition:</b> iota.hpp:38</div></div>
 <div class="ttc" id="agroup__core__predicates_gaf47a88cced054b2d5bc4b4f4ed8debd1_html_gaf47a88cced054b2d5bc4b4f4ed8debd1"><div class="ttname"><a href="group__core__predicates_gaf47a88cced054b2d5bc4b4f4ed8debd1.html#gaf47a88cced054b2d5bc4b4f4ed8debd1">eve::is_even</a></div><div class="ttdeci">constexpr auto is_even</div><div class="ttdoc">Returns a logical true if and only if the element value is even.</div><div class="ttdef"><b>Definition:</b> is_even.hpp:84</div></div>
-</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> </dd>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga392231d168d36c8efdaa564de2c8c498.html#ga392231d168d36c8efdaa564de2c8c498" title="In-place version of std::copy_if">keep_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_gad5165d2d2860b87c94861f62014efe5f.html#gad5165d2d2860b87c94861f62014efe5f" title="SIMD version of std::remove_if.">remove_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_gacfea675f12aadb2462572e1372325845.html#gacfea675f12aadb2462572e1372325845" title="In-place version of eve::algo::transform_copy_if">transform_keep_if</a></code> </dd>
 <dd>
 <code><a class="el" href="group__algos_ga023d457444697194cbb8dcf21bcb236e.html#ga023d457444697194cbb8dcf21bcb236e" title="SIMD version of std::transform.">transform_to</a></code> </dd>
 <dd>

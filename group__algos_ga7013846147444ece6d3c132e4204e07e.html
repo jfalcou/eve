@@ -159,7 +159,7 @@ $(document).ready(function(){initNavTree('group__algos_ga7013846147444ece6d3c132
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e">copy_if</a>(In&amp;&amp; in, Out&amp;&amp; out, P p) -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Out&gt;</a></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition:</b> ranges_types.hpp:68</div></div>
-<div class="ttc" id="agroup__algos_ga7013846147444ece6d3c132e4204e07e_html_ga7013846147444ece6d3c132e4204e07e"><div class="ttname"><a href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e">eve::algo::copy_if</a></div><div class="ttdeci">constexpr auto copy_if</div><div class="ttdoc">SIMD variation on std::copy_if.</div><div class="ttdef"><b>Definition:</b> copy_if.hpp:146</div></div>
+<div class="ttc" id="agroup__algos_ga7013846147444ece6d3c132e4204e07e_html_ga7013846147444ece6d3c132e4204e07e"><div class="ttname"><a href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e">eve::algo::copy_if</a></div><div class="ttdeci">constexpr auto copy_if</div><div class="ttdoc">SIMD variation on std::copy_if.</div><div class="ttdef"><b>Definition:</b> copy_if.hpp:149</div></div>
 </div><!-- fragment --><p>** Parameters **</p>
 <ul>
 <li>in - <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> input</li>
@@ -168,7 +168,13 @@ $(document).ready(function(){initNavTree('group__algos_ga7013846147444ece6d3c132
 </ul>
 <p>** Return value **</p>
 <p><a class="el" href="structrelaxed__iterator.html" title="anything that can be reasonably converted to an iterator: std::contigious_iterator,...">relaxed_iterator</a> past the last written element.</p>
-<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a></code> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga392231d168d36c8efdaa564de2c8c498.html#ga392231d168d36c8efdaa564de2c8c498" title="In-place version of std::copy_if">keep_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_gad5165d2d2860b87c94861f62014efe5f.html#gad5165d2d2860b87c94861f62014efe5f" title="SIMD version of std::remove_if.">remove_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_gacfea675f12aadb2462572e1372325845.html#gacfea675f12aadb2462572e1372325845" title="In-place version of eve::algo::transform_copy_if">transform_keep_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a></code> </dd></dl>
 
 </div>
 </div>

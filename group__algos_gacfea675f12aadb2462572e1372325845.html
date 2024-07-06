@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::algo::remove_if</title>
+<title>E.V.E: eve::algo::transform_keep_if</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__algos_gad5165d2d2860b87c94861f62014efe5f.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__algos_gacfea675f12aadb2462572e1372325845.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__algos_gad5165d2d2860b87c94861f6
 </div>
 
 <div class="contents">
-<a id="gad5165d2d2860b87c94861f62014efe5f" name="gad5165d2d2860b87c94861f62014efe5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad5165d2d2860b87c94861f62014efe5f">&#9670;&#160;</a></span>remove_if</h2>
+<a id="gacfea675f12aadb2462572e1372325845" name="gacfea675f12aadb2462572e1372325845"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacfea675f12aadb2462572e1372325845">&#9670;&#160;</a></span>transform_keep_if</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__algos_gad5165d2d2860b87c94861f6
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::algo::remove_if = function_with_traits&lt;remove_if_&gt;[no_traits]</td>
+          <td class="memname">eve::algo::transform_keep_if = function_with_traits&lt;transform_keep_if_&gt;[no_traits]</td>
         </tr>
       </table>
   </td>
@@ -141,17 +141,42 @@ $(document).ready(function(){initNavTree('group__algos_gad5165d2d2860b87c94861f6
 </table>
 </div><div class="memdoc">
 
-<p><code>#include &lt;eve/module/algo/algo/remove.hpp&gt;</code></p>
+<p><code>#include &lt;eve/module/algo/algo/transform_keep_if.hpp&gt;</code></p>
 <p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-</div><!-- fragment --><p>TODO: docs</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__algos_ga392231d168d36c8efdaa564de2c8c498.html#ga392231d168d36c8efdaa564de2c8c498" title="In-place version of std::copy_if">keep_if</a> </dd>
+</div><!-- fragment --><p>Conditionally copies values that pass a predicate to the beginning of the range, transforming them in the process. Values past the returned sentinel are to be considered garbage.</p>
+<dl class="section note"><dt>Note</dt><dd>If the scalar operation is cheap enough, <code><a class="el" href="group__algos_ga392231d168d36c8efdaa564de2c8c498.html#ga392231d168d36c8efdaa564de2c8c498" title="In-place version of std::copy_if">keep_if</a></code> + <code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">views::map</a></code> might be slightly faster.</dd>
 <dd>
-<a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a> </dd>
+See <code><a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a></code> and <code><a class="el" href="group__algos_ga392231d168d36c8efdaa564de2c8c498.html#ga392231d168d36c8efdaa564de2c8c498" title="In-place version of std::copy_if">keep_if</a></code> for more details.</dd></dl>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;relaxed_range Rng, <span class="keyword">typename</span> Func&gt;</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__algos_gacfea675f12aadb2462572e1372325845.html#gacfea675f12aadb2462572e1372325845">transform_keep_if</a>(Rng&amp;&amp; rng, Func func) -&gt; <a class="code hl_typedef" href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">unaligned_iterator_t&lt;Rng&gt;</a></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4_html_ga00d2830217f2d03fa59157dc17d66fe4"><div class="ttname"><a href="group__algo__concepts_ga00d2830217f2d03fa59157dc17d66fe4.html#ga00d2830217f2d03fa59157dc17d66fe4">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition:</b> ranges_types.hpp:68</div></div>
+<div class="ttc" id="agroup__algos_gacfea675f12aadb2462572e1372325845_html_gacfea675f12aadb2462572e1372325845"><div class="ttname"><a href="group__algos_gacfea675f12aadb2462572e1372325845.html#gacfea675f12aadb2462572e1372325845">eve::algo::transform_keep_if</a></div><div class="ttdeci">constexpr auto transform_keep_if</div><div class="ttdoc">In-place version of eve::algo::transform_copy_if</div><div class="ttdef"><b>Definition:</b> transform_keep_if.hpp:114</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><code>rng</code>: Range to modify</li>
+<li><code>func</code>: Function that takes elements from <code>rng</code> as SIMD registers and returns a pair of:<ul>
+<li>the transformed values</li>
+<li>a logical mask</li>
+</ul>
+</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Iterator past the last written element.</p>
+<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="group__algos_ga392231d168d36c8efdaa564de2c8c498.html#ga392231d168d36c8efdaa564de2c8c498" title="In-place version of std::copy_if">keep_if</a></code> </dd>
 <dd>
-<a class="el" href="group__algos_gacfea675f12aadb2462572e1372325845.html#gacfea675f12aadb2462572e1372325845" title="In-place version of eve::algo::transform_copy_if">transform_keep_if</a> </dd>
+<code><a class="el" href="group__algos_ga7013846147444ece6d3c132e4204e07e.html#ga7013846147444ece6d3c132e4204e07e" title="SIMD variation on std::copy_if.">copy_if</a></code> </dd>
 <dd>
-<a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a> </dd></dl>
+<code><a class="el" href="group__algos_gad5165d2d2860b87c94861f62014efe5f.html#gad5165d2d2860b87c94861f62014efe5f" title="SIMD version of std::remove_if.">remove_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_ga32076ef7a1001ac904e8df7daaca9f0e.html#ga32076ef7a1001ac904e8df7daaca9f0e" title="Similar to applying eve::transform_to and eve::copy_if at the same time.">transform_copy_if</a></code> </dd>
+<dd>
+<code><a class="el" href="group__algos_gabcfe49a76c53b5567df06523ded73cc0.html#gabcfe49a76c53b5567df06523ded73cc0" title="same as;">transform_inplace</a></code> </dd>
+<dd>
+<code><a class="el" href="group__views_ga9d242249cc89dfa9637ae866b9df151a.html#ga9d242249cc89dfa9637ae866b9df151a" title="Given a relaxed iterator/range and an operation return relaxed iterator/range that has no store and a...">views::map</a></code> </dd></dl>
 
 </div>
 </div>
