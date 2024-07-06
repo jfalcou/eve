@@ -29,8 +29,7 @@ namespace eve
 //! @addtogroup math_hyper
 //! @{
 //! @var gd
-//!
-//! @brief Callable object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.
+//! @brief `elementwise_callable` object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -43,29 +42,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T gd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto gd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto gd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto gd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
-//! **Parameters**
+//!   **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!      * `x`: [floating value](@ref eve::floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//! **Return value**
+//!   **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) gudermanian of the input.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, 0 is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
-//!   * If the element is a `NaN`, `NaN` is returned.
+//!     1.  Returns the [elementwise](@ref glossary_elementwise) gudermanian of the input.
+//!         In particular:
+//!            * If the element is \f$\pm0\f$, \f$0\f$ is returned.
+//!            * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
+//!            * If the element is a `NaN`, `NaN` is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/gd.cpp}
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto gd = functor<gd_t>;

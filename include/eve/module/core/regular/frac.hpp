@@ -31,9 +31,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var frac
-//!   @brief Computes the fractional part of the input.
+//!   @brief `elementwise_callable` computing the fractional part of the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,51 +44,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T frac(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto frac(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto frac[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto frac[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto frac[raw](floating_value auto x)            noexcept; // 3
+//!      constexpr auto frac[pedantic](floating_value auto x)       noexcept  // 4
+//!      constexpr auto frac[almost = tol](floating_value auto x)   noexcept; // 5
+//!      constexpr auto frac[almostl](floating_value auto x)        noexcept; // 6
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x` :[value](@ref value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol` [scalar_value](@ref value) tolerance.
 //!
 //!   **Return value**
 //!
-//!     Returns a value with the same type as `x`  containing the
-//!     [elementwise](@ref glossary_elementwise) fractional part of `x`
-//!     with the same sign as `x`.
+//!     1. The fractional part of `x` with the same sign as `x`: `x-trunc(x)`, but keeping the zero sign.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. just `x-trunc(x)`.
+//!     4. zeros and not finite values are all handled properly.
+//!     5. `almost` allows a fuzzy interpretation of `frac` using internally the `almost` version of `trunc`.
+//!     6. with no tolerance value, the call is equivalent to `frac[tolerance = 3*eps(as(x))(x)`
 //!
-//!     In particular:
-//!       * If an [element](@ref glossary_elementwise) of `x` is \f$\pm0\f$,  \f$\pm0\f$ is
-//!         returned.
-//!       * If an [element](@ref glossary_elementwise) of `x` is \f$\pm\infty\f$ or `Nan`, a
-//!        `Nan` is returned.
-//!
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/core/frac.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * raw Call
-//!
-//!     The call `eve;::frac[raw](x)` does not guaranties the bit of sign
-//!     conservation when the input is \f$\pm0\f$.
-//!
-//!   * pedantic Call
-//!
-//!     The call `eve;::frac[pedantic](x)` return zero if x is infinite, and preserves the sign bit.
-//!
-//!   * almost Call
-//!
-//!     If the The call `eve;::frac[almost { = tolerance }](x)` computes `x-trunc[almost { = tolerance }(x)`
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::frac[mask](x)` provides a masked version of `eve::frac` which is
-//!     equivalent to `if_else (mask, frac(x), x)`.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/modf)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Fractional_part)
 //!
 //! @}
 //================================================================================================
