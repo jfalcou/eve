@@ -33,10 +33,10 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var lrising_factorial
-//!   @brief Computes the natural logarithm of the Rising Factorial function i.e.
+//!   @brief `elementwise_callable` object computing the natural logarithm of the Rising Factorial function i.e.
 //!   \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -47,18 +47,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
-//!      auto lrising_factorial(T x,U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto lrising_factorial(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto lrising_factorial[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto lrising_factorial[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto logical_value[raw](floating_value auto x, floating_value auto y)                         noexcept; // 3
+//!      constexpr auto logical_value[pedantic](floating_value auto x, floating_value auto y)                    noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     `a`, `x`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `a`, `x`:  [floating arguments](@ref eve::floating_ordered_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The value of the natural logarithm of the rising_factorial is returned.
+//!     1. The value of the natural logarithm of the rising_factorial is returned( `a` and `x` must be strictly positive).
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
+//!        not both positive.
+//!     4. The `pedantic` option  uses reflection tricks and computes
+//!        the function for all real `a` and `x`, and in fact computes the logarithm of the absolute
+//!        value of the Pochammer symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$
+//!        returning nan only if the result is really undefined.
 //!
 //!   @groupheader{Example}
 //!

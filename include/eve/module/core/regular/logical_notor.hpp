@@ -44,7 +44,7 @@ namespace eve
 //!   @var logical_notor
 //!   @brief Computes the logical NOTOR of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -55,8 +55,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      auto logical_notor(T x, U y) noexcept;
+//!      auto logical_notor(auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!

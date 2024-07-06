@@ -32,9 +32,9 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
 //! @addtogroup core_internal
 //! @{
 //!   @var ldexp
-//!   @brief Computes \f$\textstyle x 2^n\f$.
+//!   @brief `strict_elementwise callable` computing \f$\textstyle x 2^n\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,34 +45,40 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::integral_value N >
-//!      eve::common_value_t<T, N> ldexp(T x, N n) noexcept;
+//!      // Regular overload
+//!      constexpr auto ldexp(value auto x, integral_value N)                           noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ldexp[conditional_expr auto c](value auto x), integral_value N) noexcept; // 2
+//!      constexpr auto ldexp[logical_value auto m](value auto x, integral_value N)     noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[pedantic](value auto x, integral_value N)                   noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [real argument](@ref eve::floating_value).
-//!
-//!     * `n` :  [integral value argument](@ref eve::integral_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `n`: [integral value argument](@ref eve::integral_value).
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of \f$\textstyle x 2^n\f$ is returned.
+//!     1. The value of \f$\textstyle x 2^n\f$ is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. Takes extra care to handling limit values.
+//!         * If `x` is \f$\pm0\f$, it is returned, unmodified.
+//!         * If `x` is \f$\pm\infty\f$, it is returned, unmodified.
+//!         * If `n` is 0, then `x` is returned, unmodified.
+//!         * If `x` is NaN, NaN is returned.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/ldexp)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/ldexp.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::ldexp[mask](x, n)` computes a value equivalent to `if_else(mask, ldexp(x, n), x)`
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::ldexp[pedantic](x,n)` computes `eve::ldexp` but takes extra care to handling limit values.
 //! @}
 //================================================================================================
 inline constexpr auto ldexp = functor<ldexp_t>;

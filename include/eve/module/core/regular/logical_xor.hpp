@@ -43,7 +43,7 @@ namespace eve
 //!   @var logical_xor
 //!   @brief Computes the logical XOR of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -54,8 +54,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      auto logical_xor(T x, U y) noexcept;
+//!      auto logical_xor(auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!

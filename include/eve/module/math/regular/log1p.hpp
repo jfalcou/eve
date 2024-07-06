@@ -27,8 +27,7 @@ namespace eve
 //! @addtogroup math_log
 //! @{
 //! @var log1p
-//!
-//! @brief Callable object computing the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.
+//! @brief `elementwise_callable` object computing the natural logarithm of \f$1+x\f$: \f$\log(1+x)\f$.
 //!
 //!   **Defined in Header**
 //!
@@ -41,39 +40,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T log1p(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto log1p(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto log1p[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto log1p[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!    * `x`: [floating value](@ref eve::floating_value).
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) the natural logarithm of `1+x`
-//!      This function is more precise than the expression `log(1+x)` if  `x` is close to zero.
+//!    1.  Returns the [elementwise](@ref glossary_elementwise) the natural logarithm of `1+x`
+//!      This function is more accurate than the expression `log(1+x)` if `x` is close to zero.
 //!      In particular:
+//!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+//!        * If the element is \f$\pm0\f$, \f$+0\f$ is returned.
+//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+//!        * If the element is less than -1, `NaN` is returned.
 //!
-//!      * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-//!      * If the element is \f$\pm0\f$, \f$+0\f$ is returned.
-//!      * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-//!      * If the element is less than -1, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log1p)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/log1p.cpp}
-//!
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::log1p[mask](x)` provides a masked version of `eve::log1p` which is
-//!     equivalent to `if_else (mask, log1p(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/log1p.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto log1p = functor<log1p_t>;

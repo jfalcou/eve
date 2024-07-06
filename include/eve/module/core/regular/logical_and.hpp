@@ -39,9 +39,9 @@ namespace eve
 //! @addtogroup core_logical
 //! @{
 //!   @var logical_and
-//!   @brief Computes the logical AND of its arguments.
+//!   @brief `strict_elementwise_callable` computing the logical AND of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -52,8 +52,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      auto logical_and(T x, U y) noexcept;
+//!      auto logical_and(auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -75,7 +74,6 @@ namespace eve
 //!      eve::logical_value.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/logical_and.cpp}
 //! @}
 //================================================================================================

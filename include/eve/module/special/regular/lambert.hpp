@@ -30,7 +30,7 @@ namespace eve
 //!   @var lambert
 //!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -41,26 +41,31 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      zipped<T,T> lambert(T x) noexcept;
-//!   }
+//!      // Regular overload
+//!      constexpr auto lambert(floating_value auto x) noexcept;                 // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto lambert[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto lambert[logical_value auto m](value auto x)    noexcept; // 2
+///!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   A tuple of the two branch values of the Lambert function is returned with the following
-//!   considerations:
-//!
-//!     * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
-//!       returned are NaN.
-//!     * If the inputs are positive, only one branch exist and the two returned values are equal.
+//!     1. A tuple of the two branch values of the Lambert function is returned with the following
+//!       considerations:
+//!        * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
+//!          returned are NaN.
+//!        * If the inputs are positive, only one branch exist and the two returned values are equal.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/lambert.cpp}
 //! @}
 //================================================================================================

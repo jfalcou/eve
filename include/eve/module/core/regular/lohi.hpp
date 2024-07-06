@@ -24,20 +24,20 @@ namespace eve
       using base = as_wide_as_t<detail::downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
       using type = zipped<base, base>;
     };
-    
+
     template<eve::value T>
     constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
-    
+
     EVE_CALLABLE_OBJECT(lohi_t, lohi_);
   };
-  
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
 //!   @var lohi
-//!   @brief Computes the the lohi pair of values.
+//!   @brief `elementwise_callable` computing the the lohi pair of values.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      auto lohi(T x) noexcept;
+//!      constexpr auto lohi(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -60,9 +59,9 @@ namespace eve
 //!    **Return value**
 //!
 //!      * Computes the [elementwise](@ref glossary_elementwise) the lower and higher parts of
-//!        the input values, as a pair of unsigned integers
+//!        the input values, as a pair of unsigned integers of half size
 //!
-//!      * The call lohi(x) is_semantically equivalent to [eve::lo(x), eve::hi(x)]
+//!      * The call `[l, h] = lohi(x)` is_semantically equivalent to `l = lo(x); h = hi(x);`
 //!
 //!  @groupheader{Example}
 //!
@@ -70,7 +69,7 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto lohi = functor<lohi_t>;
-  
+
   namespace detail
   {
     template<typename T, callable_options O>
@@ -87,17 +86,17 @@ namespace eve
       else
       {
         using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
-        
+
         constexpr auto is_le  = (std::endian::native == std::endian::little);
         constexpr auto lo_idx = is_le ? 0 : 1;
         constexpr auto hi_idx = is_le ? 1 : 0;
-        
+
         if constexpr( simd_value<T> )
         {
           using ui_t = wide<si_t, typename cardinal_t<T>::combined_type>;
           using vi_t = wide<si_t, cardinal_t<T>>;
           auto constexpr p = as_pattern([](auto i, auto c) { return (i < c/2) ? 2*i : 2*(i - c/2) + 1; });
-          
+
           auto uia0 = bit_cast(a0, as<ui_t>());
           auto z    = eve::shuffle(uia0, p).slice();
           return zip(bit_cast(z[lo_idx], as<vi_t>()), bit_cast(z[hi_idx], as<vi_t>()));

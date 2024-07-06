@@ -42,7 +42,7 @@ namespace eve
 //! @{
 //! @var logspace_add
 //!
-//! @brief Callable object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n
+//! @brief `tuple_callable` object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n
 //! e^{\log x_i}\right)\f$
 //!
 //!   **Defined in Header**
@@ -56,24 +56,31 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U, eve::floating_value ... Ts >
-//!      auto logspace_add(T arg0, U arg1, Ts ... args) noexcept;
+//!      // Regular overloads
+//!      constexpr auto logspace_add(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto logspace_add(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto logspace_add[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto logspace_add[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`arg0`, `arg1`, `args`, ...:   [floating values](@ref eve::floating_value).
+//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! The call `logspace_add(arg0, arg1, args...)` is semantically equivalent to
-//!`log(exp(log(arg0)) + exp(log(arg1)) + exp(log(args))...)`.
-//!
-//! The result type is the [common value type](@ref common_value_t) of the parameters.
+//!    1. The call `logspace_add(x, xs...)` is semantically equivalent to `log(exp(log(x)) +  + exp(log(xs))...)`
+//!      without causing unnecessary overflows or throwing away too much accuracy.
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/logspace_add.cpp}
 //!  @}
 //================================================================================================

@@ -39,7 +39,7 @@ namespace eve
 //!   @var lo
 //!   @brief Computes the least significant half of each lane.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,8 +50,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      auto lo(T x) noexcept;
+//!      constexpr auto lo(value auto x)                           noexcept;
 //!   }
 //!   @endcode
 //!
@@ -69,7 +68,6 @@ namespace eve
 //!      If you also need the lower part `hilo` is more efficient.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/lo.cpp}
 //! @}
 //================================================================================================
