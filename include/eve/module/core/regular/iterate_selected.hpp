@@ -46,7 +46,7 @@ struct iterate_selected_t
 //!
 //!    @see eve::algo::for_each_selected
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

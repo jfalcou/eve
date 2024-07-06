@@ -37,9 +37,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_pow2
-//!   @brief Returns a logical true  if and only if the element value is a power of 2.
+//!   @brief `elementwise callable` returning a logical true if and only if the element value is a power of 2.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -51,29 +51,27 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::integral_value T >
-//!      eve::as_logical<T> is_pow2(T x) noexcept;
+//!      constexpr auto is_pow2(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_pow2[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_pow2[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    Checks [elementwise](@ref glossary_elementwise) if `x` is an integral power of two.
+//!     1. returns  `true` if and only if `x` is an integral power of two.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_pow2.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_pow2[mask](x)` provides a masked version of `eve::is_pow2` which is
-//!     equivalent to `if_else (mask, is_pow2(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_pow2 = functor<is_pow2_t>;

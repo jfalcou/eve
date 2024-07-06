@@ -30,9 +30,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_infinite
-//!   @brief Returns a logical true  if and only if the element is not an infinite value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element is not an infinite value
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -43,37 +43,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_not_infinite(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_not_infinite(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_infinite[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_not_infinite[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The call `is_not_infinite(x)` is semantically  equivalent to:
-//!     @code
-//!     if   constexpr(floating_value<T>) return is_not_equal(abs(x), inf(as(x));
-//!     else constexpr(integral_value<T>) return true_(as(x));
-//!     @endcode
-//!
-//!     `eve::is_not_infinite(real(z)) && eve::is_not_infinite(imag(z))`,
+//!      1. The call `is_not_infinite(x)` is semantically  equivalent to `is_finite(x) || is_nan(x)`
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_not_infinite.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_not_infinite[mask](x)` provides a masked version of
-//!     `eve::is_not_infinite` which is equivalent to `if_else (mask, is_not_infinite(x),
-//!     eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
  inline constexpr auto is_not_infinite = functor<is_not_infinite_t>;

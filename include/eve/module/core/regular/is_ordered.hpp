@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_ordered
-//!   @brief Returns a logical true  if and only no parameter is NaN.
+//!   @brief `elementwise callable` returning a logical true  if and only no parameter is NaN.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -46,30 +46,27 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value T, eve::value U >
-//!      eve::as_logical<T> is_ordered(T x,U y) noexcept;
+//!      constexpr auto is_ordered(value auto x, value auto y) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_ordered[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto is_ordered[logical_value auto m](value auto x, value auto y) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [argument](@ref eve::value).
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    The call `eve::is_ordered(x,y)`  is semantically  equivalent
-//!    to `eve::is_not_nan(x) && eve::is_not_nan(y)`:
+//!     1. The call `eve::is_ordered(x,y)`  is semantically  equivalent to `is_not_nan(x) && is_not_nan(y)`:
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_ordered.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_ordered[mask](x,y)` provides a masked version of `eve::is_ordered` which
-//!     is equivalent to `if_else (mask, is_ordered(x), eve::false( eve::as(x,y)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_ordered = functor<is_ordered_t>;

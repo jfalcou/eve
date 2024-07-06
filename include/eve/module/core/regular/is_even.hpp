@@ -38,9 +38,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_even
-//!   @brief Returns a logical true  if and only if the element value is even.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is even.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -51,34 +51,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_even(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_even(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_even[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_even[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The call `is_even(x)` is semantically  equivalent to:
-//!      @code
-//!      if constexpr(floating_value<T>)   return eve::is_flint (x) && eve::is_flint (x/2);
-//!      else constexpr(integral_value<T>) return eve::is_equal (x, (x/2)*2);
-//!      @endcode
+//!     1. returns [elementwise](@ref glossary_elementwise) true if and only
+//!        if the element value is even.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_even.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_even[mask](x)` provides a masked version of `eve::is_even` which is
-//!     equivalent to `if_else (mask, is_even(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_even = functor<is_even_t>;

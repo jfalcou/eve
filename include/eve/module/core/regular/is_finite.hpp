@@ -32,9 +32,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_finite
-//!   @brief Returns a logical true  if and only if the element is a finite value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element is a finite value
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -45,31 +45,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_finite(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto is_finite(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_finite(integral value auto x) noexcept;                 // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto is_finite[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_finite[logical_value auto m](value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x`: [real argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     `is_finite(x)` is semantically  equivalent to `eve::is_not_nan(x-x)`, in particular
-//!     this is always true for integral types.
+//!      1. `is_finite(x)` is semantically  equivalent to `is_not_nan(x-x)`,
+//!      2. Always returns true.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_finite.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_finite[mask](x)` provides a masked version of `eve::is_finite` which is
-//!     equivalent to `if_else (mask, is_finite(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_finite = functor<is_finite_t>;

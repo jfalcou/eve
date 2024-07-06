@@ -34,9 +34,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_odd
-//!   @brief Returns a logical true  if and only if the element value is odd.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is odd.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -47,34 +47,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_odd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_odd(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_odd[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_odd[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     The call `is_odd(x)` is semantically  equivalent to:
-//!      @code
-//!      if constexpr(floating_value<T>)   return (x != dec(x)) && eve::is_odd(dec(x));
-//!      else constexpr(integral_value<T>) return eve::is_nez (x & one(as(x));
-//!      @endcode
+//!     1. returns `true`  if and only is `x` is an odd integer.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_odd.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_odd[mask](x)` provides a masked version of `eve::is_odd` which is
-//!     equivalent to `if_else (mask, is_odd(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_odd = functor<is_odd_t>;

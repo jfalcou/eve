@@ -66,7 +66,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!     // Regular overload
-//!     constexpr auto gegenbauer(integral_value auto n, floating_value auto x)                       noexcept; //1
+//!     constexpr auto hermite(integral_value auto n, floating_value auto x)                          noexcept; //1
 //!
 //!     // Lanes masking
 //!     constexpr auto hermite[conditional_expr auto c](integral_value auto n, floating_value auto x) noexcept; // 2

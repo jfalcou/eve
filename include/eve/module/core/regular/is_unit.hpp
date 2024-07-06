@@ -33,9 +33,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_unit
-//!   @brief Returns a logical true  if and only if the element value is zero.
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is zero.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -46,31 +46,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_unit(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_unit(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_unit[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_unit[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!    The truth value of eve;; abs(x) == 1
-//!    is returned.
+//!     1. The call `is_unit(x)` is semantically  equivalent to  `abs(x) == 1`
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_unit.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_unit[mask](x)` provides a masked version of `eve::is_unit` which is
-//!     equivalent to `if_else (mask, is_unit(x), eve::false(eve::as<decltype(is_unit(x))>())`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_unit = functor<is_unit_t>;
@@ -81,7 +78,7 @@ namespace eve
     EVE_FORCEINLINE as_logical_t<T>
     is_unit_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      return is_equal[almost](sqr(a), one(as<T>()));
+      return is_equal(abs(a), one(as<T>()));
     }
   }
 }

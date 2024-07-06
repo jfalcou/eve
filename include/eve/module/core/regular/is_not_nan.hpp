@@ -28,9 +28,9 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_nan
-//!   @brief Returns a logical true  if and only if the element value is not NaN
+//!   @brief `elementwise callable` returning a logical true  if and only if the element value is not NaN
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -41,31 +41,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_not_nan(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto is_not_nan(value auto x) noexcept;                          // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_nan[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_not_nan[logical_value auto m](value auto x) noexcept;    // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!       For real entries the call `eve::is_not_nan(x)`  is semantically  equivalent to:
-//!       `eve::is_equal(x, x)` in particular this is always true for integral types.
+//!      1. `is_not_nan(x)`  is semantically  equivalent to:
+//!        `is_equal(x, x)` in particular this is always true for integral types.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_not_nan.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::is_not_nan[mask](x)` provides a masked version of `eve::is_not_nan` which is
-//!     equivalent to `if_else (mask, is_not_nan(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_not_nan = functor<is_not_nan_t>;

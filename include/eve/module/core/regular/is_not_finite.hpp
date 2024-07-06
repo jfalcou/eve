@@ -34,10 +34,10 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var is_not_finite
-//!   @brief Returns a logical true  if and only if the element is not a finite value
+//!   @brief `elementwise callable` returning a logical true  if and only if the element is not a finite value
 //!
 
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -48,36 +48,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_logical<T> is_not_finite(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto is_not_finite(floating value auto x) noexcept;                 // 1
+//!      constexpr auto is_not_finite(integral value auto x) noexcept;                 // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto is_not_finite[conditional_expr auto c](value auto x) noexcept; // 3
+//!      constexpr auto is_not_finite[logical_value auto m](value auto x) noexcept;    // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real argument](@ref eve::value).
+//!     * `x`:  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     For real entries the call `is_not_finite(x)` is semantically  equivalent to:
-//!     @code
-//!     if   constexpr(floating_value<T>) return is_nan(x-x);
-//!     else constexpr(integral_value<T>) return false_(as(x));
-//!     @endcode
-//!
-//!     `eve::is_not_finite(real(z)) || eve::is_not_finite(imag(z))`,
+//!      1. `is_not_finite(x)` is semantically  equivalent to `is_nan(x-x)`.
+//!      2. Always returns false.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/is_not_finite.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `is_not_finite[mask](x)` provides a masked version of eve::is_not_finite
-//!     which is equivalent to `if_else (mask, is_not_finite(x), eve::false( eve::as(x)))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto is_not_finite = functor<is_not_finite_t>;

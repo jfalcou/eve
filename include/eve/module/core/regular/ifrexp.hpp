@@ -30,7 +30,7 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
 //!   pair of mantissa and exponent of the floating value,
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
