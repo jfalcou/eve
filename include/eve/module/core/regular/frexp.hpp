@@ -27,10 +27,9 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //! @addtogroup core_internal
 //! @{
 //!   @var frexp
-//!   @brief Computes the [elementwise](@ref glossary_elementwise) ieee
-//!   pair of mantissa and exponent of the floating value,
+//!   @brief `tuple_callable` computing the ieee  pair of mantissa and exponent of a floating value,
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -41,35 +40,30 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      eve::zipped<T,T> frexp(T x) noexcept;
+//!      template< eve::floating_value T >  eve::zipped<T,T> frexp(T x) noexcept;           //1
+//!      template< eve::floating_value T >  eve::zipped<T,T> frexp[pedantic](T x) noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x` :  [floating value](@ref floating_value).
 //!
 //!   **Return value**
 //!
-//!     Computes the [elementwise](@ref glossary_elementwise) ieee frexp of the floating value,
-//!     returning a pair `{m,e}`  of values ` of the same type as `x`, which are related by
-//!     \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
+//!     1. returns a kumi::tuple `{m,e}`  of values ` of the same type as `x`, which are related by
+//!       \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
+//!       However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
 //!
-//!     However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
+//!     2. the pedanic option takes also properly care of the cases where
+//!        \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
+//!        denormal cases.
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/frexp)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/frexp.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::pedantic(eve::frexp)(x)` takes also properly care of the cases where
-//!     \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
-//!     denormal cases.
-//!
 //! @}
 //================================================================================================
 inline constexpr auto frexp = functor<frexp_t>;

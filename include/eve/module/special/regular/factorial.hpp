@@ -20,7 +20,7 @@ namespace eve
     as_wide_as_t<double, T >
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
@@ -31,9 +31,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var factorial
-//!   @brief Computes \f$\displaystyle n! = \prod_{i=1}^n i\f$.
+//!   @brief `elementwise_callable` computing \f$\displaystyle n! = \prod_{i=1}^n i\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Callable Signatures}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -44,21 +44,26 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::integral_value N >
-//!      as_wide_as<N, double> factorial(N x) noexcept;
+//!      // Regular overload
+//!      constexpr auto factorial(value auto n)                          noexcept; // 1
 //!
-//!      template< eve::floating_ordered_value T >
-//!      T factorial(T x) noexcept;
+//!      // Lanes masking
+//!      constexpr auto fsm[conditional_expr auto c](value auto n) noexcept; // 2
+//!      constexpr auto fsm[logical_value auto m](value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  must be of integral type or flint.
+//!     * `n` : must be integral or flint.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!  The value of \f$ n!\f$ is returned.
+//!     1. The value of \f$ n!\f$ is returned. If the entry is of integral type a double based floating_value
+//!        is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @warning
 //!    This function will overflow as soon as the input is greater than 171 for integral or double
