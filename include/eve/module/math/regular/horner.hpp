@@ -57,12 +57,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto horner(value auto x, value auto ...ci)                         noexcept; // 1
+//!      constexpr auto horner(value auto x, value auto ci...)                         noexcept; // 1
 //!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tci)    noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto horner[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto horner[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)    noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto horner[pedantic](/*any of the above overloads*/)               noexcept; // 4
