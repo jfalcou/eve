@@ -29,9 +29,9 @@ namespace eve
 
 #include <eve/detail/function/simd/common/make.hpp>
 
-// #if defined(EVE_INCLUDE_X86_HEADER)
-// #  include <eve/detail/function/simd/x86/make.hpp>
-// #endif
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/detail/function/simd/x86/make.hpp>
+#endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/make.hpp>
