@@ -57,8 +57,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto horner(value auto x, value auto ... cmi)                       noexcept; // 1
-//!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto ci
+//!      constexpr auto newton(value auto x, value auto ... cmi)                       noexcept; // 1
+//!      constexpr auto newton(value auto x, kumi::non_empty_product_type auto ci
 //!                                          kumi::non_empty_product_type auto mi)     noexcept; // 2
 //!
 //!      // Lanes masking
@@ -66,7 +66,7 @@ namespace eve
 //!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto horner[pedantic](/*any of the above overloads*/)               noexcept; // 2
+//!      constexpr auto newton[pedantic](/*any of the above overloads*/)               noexcept; // 2
 //!   }
 //!   @endcode
 //!
