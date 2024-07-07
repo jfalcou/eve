@@ -9,11 +9,12 @@
 
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/concept/options.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &) noexcept
+  template<callable_options O, typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(arm_abi_), O const&, wide<T, N> const &a, Slice const &) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     using type = wide<T, typename N::split_type>;
@@ -64,8 +65,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(arm_abi_), O const&, wide<T, N> const &a) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     std::array<wide<T, typename N::split_type>, 2> that{ slice(a, lower_), slice(a, upper_) };
