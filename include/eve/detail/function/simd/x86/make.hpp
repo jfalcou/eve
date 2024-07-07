@@ -192,7 +192,7 @@ namespace eve::detail
   //================================================================================================
   template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
-  EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<logical<wide<T, N>>> tgt, V0 v, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<logical<wide<T, N>>>, V0 v, Vs... vs) noexcept
   {
     if constexpr( !abi_t<T, N>::is_wide_logical )
     {
