@@ -43,7 +43,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var rat
-//!   @brief Computes a rational approximation.
+//!   @brief `elementwise_callable` object computing a rational approximation.
 //!
 //!   **Defined in Header**
 //!
@@ -56,8 +56,9 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<eve::floating_value T>
-//!      eve::zipped<T,T> rat(T x, T tol = T(1.0e-6)*eve::abs(x)) noexcept;
+//!      // Regular overloads
+//!      constexpr auto rat(floating_value auto x)                           noexcept;
+//!      constexpr auto rat(floating_value auto x, floating_value auto tol)  noexcept;
 //!   }
 //!   @endcode
 //!
@@ -65,16 +66,14 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!
 //!     * `x` :  [argument](@ref eve::value).
 //!     * `tol`: [floating_value](@ref eve::value). By  default `tol`
-//!       is equal to `T(1.0e-6)*``eve::abs``(x)`.
+//!        is equal to `T(1.0e-6)*``eve::abs``(x)`.
 //!
 //!   **Return value**
 //!
-//!     A tuple of values with the same type as `x` containing the
-//!     [elementwise](@ref glossary_elementwise) numerator and denominator of the rational
-//!     number approximating `x`.
+//!     A tuple-like of values with the same type as `x` containing the
+//!     numerator and denominator of the rational number approximating `x`.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/rat.cpp}
 //! @}
 //================================================================================================
