@@ -267,7 +267,13 @@ shuffle_v2_overly_large_groups(NativeSelector        selector,
   }
   else if constexpr( G == T::size() )
   {
-    auto l     = eve::index < ((I == na_) || ...) ? 1 : 0 > ;
+    // This section is not technically necessary, we could've done G <= T::size(),
+    // but it helps to simplify some code.
+    //
+    // Level: if we just shuffle, then it's 0. If we need a 0 constant - that's 1 but
+    //        not on emulated, on emulated we don't count anything.
+    constexpr bool has_zeroes = ((I == na_) || ...);
+    auto l     = eve::index < (has_zeroes && !has_emulated_abi_v<T>) ? 1 : 0 > ;
     auto get_i = [&]<std::ptrdiff_t i>(eve::index_t<i>)
     {
       if constexpr( i == na_ ) return eve::zero(eve::as<T> {});

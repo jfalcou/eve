@@ -297,9 +297,18 @@ TTS_CASE_TPL("arm-v7, emulate double", tts::types<double>)
   {
     auto shuffle = eve::detail::make_shuffle_v2([] { TTS_FAIL("should not be reached"); });
     eve::wide<T> x {1, 2};
-    auto [shuffled, l] = shuffle(x, [](int i, int size) { return size - i - 1; });
-    TTS_EQUAL(l(), 0);
-    TTS_EQUAL(shuffled, (eve::wide<T> {2, 1}));
+    {
+      auto [shuffled, l] = shuffle(x, [](int i, int size) { return size - i - 1; });
+      TTS_EQUAL(l(), 0);
+      TTS_EQUAL(shuffled, (eve::wide<T> {2, 1}));
+    }
+
+    // Special case - shuffle one constant
+    {
+      auto [shuffled, l] = shuffle(x, eve::lane<2>, [](int, int) { return eve::na_; });
+      TTS_EQUAL(l(), 0);
+      TTS_EQUAL(shuffled, (eve::wide<T> {0.0, 0.0}));
+    }
   }
 };
 
