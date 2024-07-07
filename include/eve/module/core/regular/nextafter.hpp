@@ -31,9 +31,10 @@ namespace eve
 //! @addtogroup core_internal
 //! @{
 //!   @var nextafter
-//!   @brief Computes the nth next representable element
+//!   @brief `elementwise_callable` object computing the next representable element  element in
+//!    the second parameter direction.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,38 +45,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      eve::common_value_t<T, U> nextafter(T x, U y) noexcept;
+//!      // Regular overloads
+//!      constexpr auto nextafter(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto nextafter[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto nextafter[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto nextafter[pedantic](/* any of the above overloads */)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `x`, `y`: [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The value of the next representable value greater than `x` in the `y` direction
-//!      is returned.
-//!      If `y == x` returns `x`.
+//!      1. the next representable value after  `x` in the `y` direction is returned.
+//!         If `y == x` returns `x`.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      3. Provides a version of `nextafter` for which floating plus zero and minus zero are distinct.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/nextafter.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * pedantic Call
-//!
-//!     The call `eve::nextafter[pedantic](x, ...)` provides a
-//!     version of `nextafter` for which floating plus zero and minus zero are distinct
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::nextafter[mask](x, ...)` provides a masked
-//!     version of `nextafter` which is
-//!     equivalent to `if_else(mask, nextafter(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto nextafter = functor<nextafter_t>;

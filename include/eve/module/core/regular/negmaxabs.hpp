@@ -36,9 +36,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var negmaxabs
-//!   @brief Computes the negated value of the element of  the maximal absolute value.
+//!   @brief `tuple_callable` object computing the negated value of the element of maximal absolute value.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,40 +49,41 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value... Ts>
-//!      eve::common_value_t<T, Ts ...> negmaxabs( T x, Ts ... xs ) noexcept;
+//!      // Regular overloads
+//!      constexpr auto negmaxabs(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!      constexpr auto negmaxabs(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto negmaxabs[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto negmaxabs[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Semantic option
+//!      constexpr auto negmaxabs[saturated](/* any of the above overloads */)               noexcept; // 4
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto negmaxabs[pedantic](/* any of the above overloads */)                noexcept; // 5.1
+//!      constexpr auto negmaxabs[numeric ](/* any of the above overloads */)                noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`,  `...xs`: [arguments](@ref eve::value).
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The negated negated value of the element of the maximal  absolute value
-//!    is returned.
-//!
-//!    @note
-//!     If any element of the inputs is a NaN,
-//!     the corresponding output element is system-dependent.
-//!
+//!      The negated value of the element of maximal absolute value is returned.
+//!        1. If any element of the inputs is a NaN the corresponding output element is system-dependent
+//!        2. equivalent to the call on the elements of the tuple.
+//!        3. [The operation is performed conditionnaly](@ref conditional)
+//!        4. computation internally uses `abs[saturated]` instead of `abs`
+//!        5. with `numeric` (resp. `pedantic`) `max[numeric]` (5.1) (resp. `max[pedantic]` (5.2))
+//!           is used internally
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/negmaxabs.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::negmaxabs[mask](x, ...)` provides a masked version of `eve::negmaxabs` which
-//!     is equivalent to `eve::if_else (mask, negmaxabs(x, ...), x)`
-//!
-//!   * eve::pedantic,  eve::numeric
-//!
-//!     The call `d(eve::negmaxabs)(...)`, where d is one of these two decorators has the
-//!     same behaviour,  but internally `d(eve::max)` is used.
-//!
 //! @}
 //================================================================================================
 inline constexpr auto negmaxabs = functor<negmaxabs_t>;

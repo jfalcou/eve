@@ -18,7 +18,7 @@ namespace eve
 //!   @var none
 //!   @brief Computes a bool value which is true if and only if all elements of `x` are 0.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

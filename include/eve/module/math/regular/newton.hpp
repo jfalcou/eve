@@ -39,13 +39,13 @@ namespace eve
 //!   @var newton
 //!   @brief Implement the Newton scheme to evaluate polynomials.
 //!
-//!   If \f$(a_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by decreasing
-//!   power order,  and \f$(c_i)_{0\le i\le n-2}\f$ the nodes, the Newton scheme evaluates
+//!   If \f$(c_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by decreasing
+//!   power order,  and \f$(m_i)_{0\le i\le n-2}\f$ the nodes, the Newton scheme evaluates
 //!   the polynom \f$p\f$ at \f$x\f$ using the following formula :
 //!
-//!   \f$ \displaystyle p(x) = (((a_0(x-c_0)+a_1)(x-c_1)+ ... )(x-c_{n-2}) + a_{n-1})\f$
+//!   \f$\qquad\displaystyle p(x) = (((c_0(x-m_0)+c_1)(x-m_1)+ ... )(x-m_{n-2}) + c_{n-1})\f$
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -56,47 +56,45 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T, kumi::tuple C, kumi::tuple N>
-//!     T newton(T x, C c, N n) noexcept;                                      //1
-//!     template< eve::floating_ordered_value T, value... CN>
-//!     T newton(T x, CN.. cn) noexcept;                                       //2
-
+//!      // Regular overloads
+//!      constexpr auto newton(value auto x, value auto ... cmi)                       noexcept; // 1
+//!      constexpr auto newton(value auto x, kumi::non_empty_product_type auto ci
+//!                                          kumi::non_empty_product_type auto mi)     noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/) noexcept; // 2
+//!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto newton[pedantic](/*any of the above overloads*/)               noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!     * `c` :  tuple  containing The coefficients by decreasing power order.
-//!     * `n` :  tuple  containing The nodes by decreasing power order.
-//!     * `cn`:  coefficients followed by nodes. Unless empty the total number of values
-//!              is to be odd. If s is this number, the (s+1)/2 first are taken as the coefs
-//!              and the others are the nodes,  both in decreasing power order
+//!     * `x`:  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `ci`:  tuple  containing the coefficients by decreasing power order.
+//!     * `cm`:  tuple  containing the nodes by decreasing power order.
+//!     * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.
+//!                The total number of values is to be odd. If s is this number, the (s+1)/2 first
+//!                are taken as the coefs and the others are the nodes
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
 //!    **Return value**
 //!
-//!    The value of the polynom at  `x` is returned.
+//!      1. The value of the polynom at  `x` is returned.
+//!      2. same as the call with the elements of the tuples.
+//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      4. `fma[pedantic]` instead of `fma` is used in internal computations.
 //!
-//!    **Notes**
-//!
-//!      If the coefficients or nodes are simd values of cardinal N, this means you simultaneously
+//!   @note If the coefficients or nodes are simd values of cardinal N, this means you simultaneously
 //!      compute the values of N polynomials.
 //!        *  If x is scalar, the polynomials are all computed at the same point
 //!        *  If x is simd, the nth polynomial is computed on the nth value of x
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/newton.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::pedantic
-//!
-//!      the expression `eve::newton[pedantic](...)`
-//!      computes the result using `eve::fma[pedantic]` instead of `eve::fma` in
-//!      internal computation.
-//!
-//!      This is intended to insure more accurate computations where needed. This has no cost (and is
-//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
 //! @}
 //================================================================================================
   inline constexpr auto newton = functor<newton_t>;

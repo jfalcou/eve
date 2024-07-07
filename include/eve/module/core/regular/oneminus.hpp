@@ -31,9 +31,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var oneminus
-//!   @brief Computes the value of one minus the input.
+//!   @brief `elementwise_callable` computing the value of one minus the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,18 +44,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T oneminus(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto oneminus(value auto x)                                              noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto oneminus[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto oneminus[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+//!
+//!      // Semantic option
+//!      constexpr auto oneminus[saturated ](/* any of the above overloads */)              noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x`: [real](@ref eve::value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `1-x` is returned.
+//!      1. The value of `1-x` is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. saturated version.
 //!
 //!    @note
 //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
@@ -63,22 +74,7 @@ namespace eve
 //!      undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/oneminus.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::oneminus[mask](x, ...)` provides a masked
-//!     version of `oneminus` which is
-//!     equivalent to `if_else(mask, oneminus(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!      The call `saturated(oneminus)(x)` is semantically equivalent to `eve::saturated(eve::sub)(
-//!      eve::one (as(x)), x)` and is never undefined.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto oneminus = functor<oneminus_t>;

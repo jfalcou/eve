@@ -37,7 +37,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var ceil
-//!   @brief `elementwise_callable` object computing the smallest integer not less than the input.
+//!   @brief `strict_elementwise_callable` object computing the smallest integer not less than the input.
 //!
 //!   **Defined in Header**
 //!

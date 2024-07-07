@@ -37,11 +37,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var negabsmin
-//!   @brief Computes the negated absolute value of the minimal element
+//!   @brief `tuple_callable` computing the absolute value of the minimal element.
 //!
-//!   This is equivalent to -eve::abs ( eve::min(...) ). but can be subject to optimizations.
-//!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -52,43 +50,47 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value... Ts>
-//!      eve::common_value_t<T, Ts ...> negabsmin( T x, Ts ... xs ) noexcept;
+//!      // Regular overloads
+//!      constexpr auto negabsmin(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+//!      constexpr auto negabsmin(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto negabsmin[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto negabsmin[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto negabsmin[saturated](/* any of the above overloads */)               noexcept; // 4
+//!
+//!      // Exclusive Semantic options - Only one of those can be set at once
+//!      constexpr auto negabsmin[pedantic](/* any of the above overloads */)                noexcept; // 5.1
+//!      constexpr auto negabsmin[numeric ](/* any of the above overloads */)                noexcept; // 5.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`,  `...xs`: [arguments](@ref eve::value).
+//!     * `x`,  `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The negated absolute value of the minimal element
-//!    is returned.
-//!
-//!    @note
-//!     If any element of the inputs is a NaN,
-//!     the corresponding output element is system-dependent.
+//!       The negated absolute value of the minimal element is returned.
+//!         1. If any element of the inputs is a NaN the corresponding output element is system-dependent
+//!         2. equivalent to the call on the elements of the tuple.
+//!         3. [The operation is performed conditionnaly](@ref conditional)
+//!         4. computation internally uses `abs[saturated]` instead of `abs`
+//!         5. with `numeric` (resp. `pedantic`) `min[numeric]` (5.1) (resp. `min[pedantic]` (5.2))
+//!            is used internally
 //!
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/negabsmin.cpp}
 //!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::negabsmin[mask](x, ...)` provides a masked version of `eve::negabsmin` which
-//!     is equivalent to `eve::if_else (mask, negabsmin(x, ...), x)`
-//!
-//!   * eve::pedantic,  eve::numeric
-//!
-//!     The call `d(eve::negabsmin)(...)`, where d is one of these two decorators, is equivalent to
-//!     `-eve::abs (d( eve::min )(...))`.
-//!
 //! @}
 //================================================================================================
-inline constexpr auto negabsmin = functor<negabsmin_t>;
+ inline constexpr auto negabsmin = functor<negabsmin_t>;
 }
 
 #include <eve/module/core/regular/impl/negabsmin.hpp>
