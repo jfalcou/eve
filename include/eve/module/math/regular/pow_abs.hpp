@@ -90,7 +90,7 @@ namespace eve
 //!      *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
 //!      *  except where specified above, if any argument is NaN, NaN is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional)
-//!     3. speedier must less accurate call.
+//!     3. faster must less accurate call.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/pow_abs.cpp}
