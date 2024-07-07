@@ -140,26 +140,48 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaad956e5cfcc2
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is equivalent to -<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="elementwise_callable object computing the absolute value of the parameter.">eve::abs</a> ( <a class="el" href="group__core__arithmetic_gae716abe66da175d9affa742c7f3446ed.html#gae716abe66da175d9affa742c7f3446ed" title="Computes the minimum of its arguments.">eve::min(...)</a> ). but can be subject to optimizations.</p>
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> T,  <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a>... Ts&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a>&lt;T, Ts ...&gt; <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>( T x, Ts ... xs ) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>(<a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> ... xs)                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>(kumi::non_empty_product_type <span class="keyword">auto</span> <span class="keyword">const</span>&amp; tup)              <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>[<a class="code hl_variable" href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">saturated</a>](<span class="comment">/* any of the above overloads */</span>)               <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Exclusive Semantic options - Only one of those can be set at once</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">pedantic</a>](<span class="comment">/* any of the above overloads */</span>)                <span class="keyword">noexcept</span>; <span class="comment">// 5.1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">negabsmin</a>[numeric ](<span class="comment">/* any of the above overloads */</span>)                <span class="keyword">noexcept</span>; <span class="comment">// 5.2</span></div>
 <div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0_html_gaad956e5cfcc2f6582ae3790fa775a6b0"><div class="ttname"><a href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">eve::negabsmin</a></div><div class="ttdeci">constexpr auto negabsmin</div><div class="ttdoc">Computes the negated absolute value of the minimal element.</div><div class="ttdef"><b>Definition:</b> negabsmin.hpp:91</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0_html_gaad956e5cfcc2f6582ae3790fa775a6b0"><div class="ttname"><a href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0">eve::negabsmin</a></div><div class="ttdeci">constexpr auto negabsmin</div><div class="ttdoc">tuple_callable computing the absolute value of the minimal element.</div><div class="ttdef"><b>Definition:</b> negabsmin.hpp:93</div></div>
+<div class="ttc" id="agroup__core__decorators_ga65d424f34f684af47b6e2d2653be632e_html_ga65d424f34f684af47b6e2d2653be632e"><div class="ttname"><a href="group__core__decorators_ga65d424f34f684af47b6e2d2653be632e.html#ga65d424f34f684af47b6e2d2653be632e">eve::saturated</a></div><div class="ttdeci">constexpr saturated_type const saturated</div><div class="ttdoc">Higher-order Callable Object imbuing saturation semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> saturated.hpp:68</div></div>
+<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>...xs</code>: <a class="el" href="concepteve_1_1value.html">arguments</a>.</li>
+<li><code>x</code>, <code>...xs</code>: real arguments.</li>
+<li><code>tup</code>: non empty tuple of arguments.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The negated absolute value of the minimal element is returned.</p>
-<dl class="section note"><dt>Note</dt><dd>If any element of the inputs is a NaN, the corresponding output element is system-dependent.</dd></dl>
+<p>The negated absolute value of the minimal element is returned.</p><ol type="1">
+<li>If any element of the inputs is a NaN the corresponding output element is system-dependent</li>
+<li>equivalent to the call on the elements of the tuple.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
+<li>computation internally uses <code>abs[saturated]</code> instead of <code>abs</code></li>
+<li>with <code>numeric</code> (resp. <code>pedantic</code>) <code>min[numeric]</code> (5.1) (resp. <code>min[pedantic]</code> (5.2)) is used internally</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -197,19 +219,9 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gaad956e5cfcc2
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr auto minf</div><div class="ttdoc">Computes the -infinity ieee value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>
-<div class="ttc" id="agroup__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3_html_ga8526757ac3b6797bc68ce2072c549cf3"><div class="ttname"><a href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a></div><div class="ttdeci">constexpr pedantic_type const pedantic</div><div class="ttdoc">Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> pedantic.hpp:52</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0" title="Computes the negated absolute value of the minimal element.">eve::negabsmin</a>[mask](x, ...)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0" title="Computes the negated absolute value of the minimal element.">eve::negabsmin</a></code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">eve::if_else</a> (mask, <a class="el" href="group__core__arithmetic_gaad956e5cfcc2f6582ae3790fa775a6b0.html#gaad956e5cfcc2f6582ae3790fa775a6b0" title="Computes the negated absolute value of the minimal element.">negabsmin(x, ...)</a>, x)</code></p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3" title="Higher-order Callable Object imbuing more standard semantic onto other Callable Objects.">eve::pedantic</a>, eve::numeric</p>
-<p class="startli">The call <code>d(eve::negabsmin)(...)</code>, where d is one of these two decorators, is equivalent to <code>-<a class="el" href="group__core__arithmetic_gaf9bc648f57be07a02903259faabd2df1.html#gaf9bc648f57be07a02903259faabd2df1" title="elementwise_callable object computing the absolute value of the parameter.">eve::abs</a> (d( eve::min )(...))</code>. </p>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
