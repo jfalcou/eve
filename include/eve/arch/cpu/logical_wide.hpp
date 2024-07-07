@@ -369,7 +369,7 @@ namespace eve
     requires(Cardinal::value > 1)
 #endif
     {
-      return detail::slice(*this);
+      return slice(*this);
     }
 
     //==============================================================================================
@@ -409,7 +409,7 @@ namespace eve
     requires(Cardinal::value > 1)
 #endif
     {
-      return detail::slice(*this, s);
+      return slice(*this, s);
     }
 
     //==============================================================================================
