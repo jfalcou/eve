@@ -24,7 +24,7 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
   requires x86_abi<abi_t<T, N>>
-  EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<wide<T, N>> tgt, V0 v, Vs... vs) noexcept
+  EVE_FORCEINLINE auto make_(EVE_REQUIRES(sse2_), O const&, as<wide<T, N>>, V0 v, Vs... vs) noexcept
   {
     static_assert((sizeof...(Vs) + 1) <= N::value, "[eve::make] - Invalid number of arguments");
 
