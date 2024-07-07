@@ -29,9 +29,9 @@ namespace eve
 //! @{
 //! @var radinpi
 //!
-//! @brief Callable object multiplying the input by \f$1/\pi\f$.
+//! @brief `elementwise_callable` object multiplying the input by \f$1/\pi\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,22 +42,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T radinpi(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto radinpi(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto radinpi[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto radinpi[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) the radian input converted in \f$\pi\f$
-//! multiples.
+//!    1. Returns the radian input converted in \f$\pi\f$ multiples.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/radinpi.cpp}
 //!  @}
 //================================================================================================

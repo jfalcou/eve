@@ -29,9 +29,9 @@ namespace eve
 //! @{
 //! @var radindeg
 //!
-//! @brief Callable object multiplying the input by \f$180/\pi\f$.
+//! @brief `elementwise_callable` object multiplying the input by \f$180/\pi\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,21 +42,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T radindeg(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto radindeg(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto radindeg[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto radindeg[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) the radian input converted in degree.
+//!    1. Returns the radian input converted in degree.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/radindeg.cpp}
 //!  @}
 //================================================================================================

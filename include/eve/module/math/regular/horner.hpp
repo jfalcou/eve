@@ -36,7 +36,8 @@ namespace eve
 //! @addtogroup math
 //! @{
 //!   @var horner
-//!   @brief Implement the horner scheme to evaluate polynomials
+//!   @brief Implement the horner scheme to evaluate polynomials with coefficients
+//!   in decreasing power order
 //!
 //!
 //!   If \f$(c_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by decreasing
@@ -56,12 +57,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto horner(value auto x, value auto ... ci)                        noexcept; // 1
+//!      constexpr auto horner(value auto x, value auto ci...)                         noexcept; // 1
 //!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tci)    noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/) noexcept; // 2
-//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)    noexcept; // 2
+//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)    noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto horner[pedantic](/*any of the above overloads*/)               noexcept; // 4
@@ -71,12 +72,16 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`: [evaluation point floating value](@ref floating_value) arguments.
-//!     * `...ci`: [floating values](@ref floating_value) polynom coefficients in decreasing power order,
+//!     * `ci...`: [floating values](@ref floating_value) polynom coefficients in decreasing power order,
 //!     * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
+//!
+//!     If \f$(c_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by decreasing
+//!     power order,  the Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ by :
+//!     \f$\qquad\qquad\displaystyle p(x) = (((c_0x+c_1)x+ ... )x + c_{n-1})\f$
 //!
 //!     1. The value of the polynom at  `x` is returned.
 //!     2. same as the call with the elements of the tuple.

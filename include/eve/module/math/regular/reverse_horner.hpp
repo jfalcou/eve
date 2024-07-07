@@ -40,13 +40,7 @@ namespace eve
 //!   @brief implement the horner scheme to evaluate polynomials with coefficients
 //!   in increasing power order
 //!
-//!   If \f$(a_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by increasing
-//!   power order,  the Reverse Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ using the
-//!   following formula:
-//!
-//!   \f$\displaystyle p(x) = (((a_{n-1}x+a_{n-2})x+ ... )x + a_0)\f$
-//!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -57,11 +51,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template< eve::floating_ordered_value T, eve::floating_ordered_value C ...>
-//!     T reverse_horner(T x, C ... coefs) noexcept;                                   //1
+//!      // Regular overloads
+//!      constexpr auto reverse_horner(value auto x, value auto ci...)                       noexcept; // 1
+//!      constexpr auto reverse_horner(value auto x, kumi::non_empty_product_type auto tci)  noexcept; // 2
 //!
-//!     template< eve::floating_ordered_value T, eve::Range R>
-//!     T reverse_horner(T x, R r) noexcept;                                           //2
+//!      // Semantic options
+//!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)             noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -70,36 +65,36 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!     * `coefs...` :  [real floating arguments](@ref eve::floating_ordered_value).
-//!        The coefficients by increasing power order
-//!     * `r` :  Range  or kumi::tuplecontaining The coefficients by increasing power order.
+//!     * `x`: [evaluation point floating value](@ref floating_value) arguments.
+//!     * `ci...`: [floating values](@ref floating_value) polynom coefficients in increasing power order,
+//!     * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of the polynom at `x` is returned.
+//!      If \f$(c_i)_{0\le i\le n-1}\f$ denotes the coefficients of the polynomial by increasing
+//!      power order,  the Reverse Horner scheme evaluates the polynom \f$p\f$ at \f$x\f$ using the
+//!      following formula:
 //!
-//!    **Notes**
+//!     \f$\qquad\qquad\displaystyle p(x) = (((c_{n-1}x+c_{n-2})x+ ... )x + c_0)\f$
 //!
-//!      If the coefficients are simd values of cardinal N, this means you simultaneously
+//!     1. The value of the polynom at  `x` is returned.
+//!     2. same as the call with the elements of the tuple.
+//!     3.`fma[pedantic]` instead of `fma` is used in internal computations.
+//!        This is intended to insure more accurate computations where needed. This has no cost (and is
+//!        automatically done) if the system has hard wired `fma` but is very expansive if it is not the case.
+//!
+//!    @note If the coefficients are simd values of cardinal N, this means you simultaneously
 //!      compute the values of N polynomials.
 //!        *  If x is scalar, the polynomials are all computed at the same point
-//!        *  If x is SIMD, the nth polynomial is computed on the nth value of x
+//!        *  If x is simd, the nth polynomial is computed on the nth value of x
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Horner's_method)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/reverse_horner.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::pedantic
-//!
-//!      The expression `eve::reverse_horner[pedantic](...)`
-//!      computes the result using `d(eve::fma)` instead of `eve::fma` in internal computation.
-//!
-//!      This is intended to insure more accurate computations where needed. This has no cost (and is
-//!      automatically done) if the system has hard wired fma but is very expansive if it is not the case.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto reverse_horner = functor<reverse_horner_t>;
