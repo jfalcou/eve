@@ -18,30 +18,6 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace eve
-{
-  template<std::size_t Slice>
-  struct  slice_t
-        : std::integral_constant<std::size_t, Slice>
-  {};
-
-  using upper_slice_t = slice_t<1>;
-  using lower_slice_t = slice_t<0>;
-
-  //================================================================================================
-  //! @addtogroup simd
-  //! @{
-  //================================================================================================
-  //! @brief Tag to select the upper slice of a simd_value
-  inline constexpr upper_slice_t const upper_ = {};
-
-  //! @brief Tag to select the lower slice of a simd_value
-  inline constexpr lower_slice_t const lower_ = {};
-  //================================================================================================
-  //! @}
-  //================================================================================================
-}
-
 namespace eve::detail
 {
   //================================================================================================

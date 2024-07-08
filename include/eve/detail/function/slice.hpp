@@ -10,22 +10,51 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve 
+namespace eve
 {
-  template<typename Options>
-  struct slice_callable_t : callable<slice_callable_t, Options>
+  template<std::size_t Slice>
+  struct  slice_t
+        : std::integral_constant<std::size_t, Slice>
+  {};
+
+  using upper_slice_t = slice_t<1>;
+  using lower_slice_t = slice_t<0>;
+
+  //================================================================================================
+  //! @addtogroup simd
+  //! @{
+  //================================================================================================
+  //! @brief Tag to select the upper slice of a simd_value
+  inline constexpr upper_slice_t const upper_ = {};
+
+  //! @brief Tag to select the lower slice of a simd_value
+  inline constexpr lower_slice_t const lower_ = {};
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
+  namespace detail
   {
-    template<typename T, typename Target>
-    requires (sizeof(T) == sizeof(Target))
-    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> const& tgt) const noexcept
+    template<typename Options>
+    struct slice_callable_t : callable<slice_callable_t, Options>
     {
-      return EVE_DISPATCH_CALL(a,tgt);
-    }
+      template<typename W>
+      EVE_FORCEINLINE constexpr auto operator()(W v) const noexcept
+      {
+        return EVE_DISPATCH_CALL(v);
+      }
 
-    EVE_CALLABLE_OBJECT(slice_callable_t, slice_);
-  };
+      template<typename W, typename Slice>
+      EVE_FORCEINLINE constexpr auto operator()(W v, Slice s) const noexcept
+      {
+        return EVE_DISPATCH_CALL(v, s);
+      }
 
-  inline constexpr auto slice = functor<slice_callable_t>;
+      EVE_CALLABLE_OBJECT(slice_callable_t, slice_);
+    };
+
+    inline constexpr auto slice = functor<detail::slice_callable_t>;
+  }
 }
 
 #include <eve/detail/function/simd/common/slice.hpp>
