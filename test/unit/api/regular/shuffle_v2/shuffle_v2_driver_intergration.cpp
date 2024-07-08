@@ -123,9 +123,7 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
   auto tst  = [call]<std::ptrdiff_t... I>(auto expected, std::ptrdiff_t expected_l, auto... args)
   {
     auto [shuffled, l] = call(args...);
-    if( eve::supports_simd ) TTS_EQUAL(l(), expected_l);
-    else TTS_EQUAL(l(), 0);
-
+    TTS_EQUAL(l(), expected_l);
     TTS_EQUAL(expected, shuffled);
   };
 
@@ -143,7 +141,7 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
         eve::lane<T::size() * 2>,
         eve::pattern<0, 0>);
     tst(TxTxTxT {T {1}, T {2}, T {0}, T {0}},
-        1,
+        eve::has_emulated_abi_v<T> ? 0 : 1,
         T {1},
         T {2},
         eve::lane<T::size() * 2>,
@@ -175,7 +173,7 @@ TTS_CASE_TPL("G >= T::size()", eve::test::simd::all_types)
         eve::lane<T::size() * 2>,
         eve::pattern<0, 0>);
     tst(UxUxUxU {U {1, false}, U {2, true}, U {0, false}, U {0, false}},
-        1,
+        eve::has_emulated_abi_v<T> && eve::has_emulated_abi_v<eve::wide<std::uint8_t>> ? 0 : 1,
         U {1, false},
         U {2, true},
         eve::lane<T::size() * 2>,
