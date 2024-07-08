@@ -288,7 +288,7 @@ namespace eve
     //==============================================================================================
     EVE_FORCEINLINE auto slice() const requires(Cardinal::value > 1)
     {
-      return slice(*this);
+      return detail::slice(*this);
     }
 
     //==============================================================================================
@@ -322,7 +322,7 @@ namespace eve
     template<std::size_t Slice>
     EVE_FORCEINLINE auto slice(slice_t<Slice> s) const requires(Cardinal::value > 1)
     {
-      return slice(*this, s);
+      return detail::slice(*this, s);
     }
 
     //! Exchange this value with another eve::wide
