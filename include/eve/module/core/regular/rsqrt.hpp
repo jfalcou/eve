@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct rsqrt_t : elementwise_callable<rsqrt_t, Options, raw_option>
+  struct rsqrt_t : elementwise_callable<rsqrt_t, Options, raw_option, pedantic_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
