@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve
+namespace eve::detail
 {
   template<typename Options>
   struct make_t : callable<make_t, Options>
