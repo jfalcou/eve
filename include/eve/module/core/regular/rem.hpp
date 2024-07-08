@@ -33,7 +33,7 @@ namespace eve
 //!   @var rem
 //!   @brief Computes the  remainder after division.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

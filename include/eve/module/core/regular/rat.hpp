@@ -45,7 +45,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!   @var rat
 //!   @brief `elementwise_callable` object computing a rational approximation.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

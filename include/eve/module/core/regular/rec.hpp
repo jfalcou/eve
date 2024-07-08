@@ -29,7 +29,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!   @var rec
 //!   @brief Computes the inverse of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -40,50 +40,41 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T rec(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto rec(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto rec[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto rec[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto rec[raw](value auto x)                     noexcept; // 3
+//!      constexpr auto rec[pedantic](value auto x)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x`:  [real](@ref eve::value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    value containing the [elementwise](@ref glossary_elementwise)
-//!    inverse value of `x`.
-//!
-//!  @warning
-//!     regular rec does not take care of denormals.
-//!     If you need them use the pedantic option or the division operator
-//!
+//!      1. The value of the inverse of `x` is returned but does not take care of denormals.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. call a proper system intrinsic if one exists, but with possibly
+//!         very poor accuracy in return (circa 12 bits). Otherwise it uses the non regular call.
+//!      4. equivalent to the division operation of `one(as(x))` by `x`.
 //!
 //!  @note
-//!     For [real integral value](@ref eve::value) `x` is semantically equivalent to:
+//!     For [integral value](@ref integral_value) `rec(x)` is equivalent to:
 //!       * If x==1 or x==-1, x is returned.
 //!       * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.
 //!       * Otherwise 0 is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/rec.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::rec[mask](x)` provides a masked version of `eve::rec` which is
-//!     equivalent to `if_else (mask, rec(x), x)`.
-//!
-//!   * eve::raw
-//!
-//!     The call `raw(rec)(x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return (circa 12 bits). Otherwise it uses the non decorated call.
-//!
-//!   * eve::pedantic
-//!
-//!     The call `rec[pedantic](x)` is equivalent to one(as(x)/x.
 //! @}
 //================================================================================================
   inline constexpr auto rec = functor<rec_t>;

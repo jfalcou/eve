@@ -35,7 +35,7 @@ namespace eve
 //!   @var round
 //!   @brief Computes the integer nearest to the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -46,47 +46,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T round(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto round(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto round[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto round[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto round[upward](floating_value auto x)         noexcept; // 3
+//!      constexpr auto round[downward](floating_value auto x)       noexcept; // 4
+//!      constexpr auto round[to_nearest](floating_value auto x)     noexcept; // 5
+//!      constexpr auto round[toward_zero](floating_value auto x)    noexcept; // 6
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
-//!
+//!     * `x`: [real](@ref eve::value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+///!
 //!    **Return value**
 //!
-//!    The integer nearest to `x`.
-//!
+//!     1. The integer nearest to `x`.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. equivalent to `ceil(x)`.
+//!     4. equivalent to `floor(x)`.
+//!     5. equivalent to `nearest(x)`.
+//!     6. equivalent to `trunc(x)`.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/round.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::round[mask](x)` provides a masked version of `eve::round` which is
-//!     equivalent to `if_else (mask, round(x), x)`.
-//!
-//!   * eve::downward
-//!
-//!     The expression `eve::roun[eve::downward](x)` is equivalent to `eve::floor(x)`.
-//!
-//!   * eve::upward
-//!
-//!     The expression `eve::round[eve::upward](x)` is equivalent to `eve::ceil(x)`.
-//!
-//!   * eve::to_nearest
-//!
-//!     The expression `eve::round[to_nearest](x)` is equivalent to `eve::nearest(x)`.
-//!
-//!   * eve::toward_zero
-//!
-//!     The expression `eve::round[eve::toward_zero](x)` is equivalent to `eve::trunc(x)`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto round = functor<round_t>;

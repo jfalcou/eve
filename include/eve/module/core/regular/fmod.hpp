@@ -61,7 +61,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. Return the remainder after division division of `x` by `y` and mimick
+//!     1. Returns the remainder after division division of `x` by `y` and mimick
 //!        the behaviour of std::fmod. In particular:
 //!          * If `x` is \f$\pm0\f$, \f$\pm0\f$ is returned.
 //!          * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
