@@ -37,7 +37,7 @@ namespace eve
 //!
 //! @brief Callable object computing powm1: \f$x^y-1\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -48,34 +48,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto powm1(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto powm1(value auto x, value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto powm1[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto powm1[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto powm1[raw](value auto x, value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`, `y`:   [floating real values](@ref eve::floating_ordered_value).
+//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
-//! even when `y` is very small, or when `x` is close to 1.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
+//!       even when `y` is very small, or when `x` is close to 1.
+//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     3. faster but less accurate call.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/powm1.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::powm1[mask](x, y)` provides a masked version of `eve::powm1` which is
-//!     equivalent to `if_else (mask, powm1(x, y), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/powm1.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto powm1 = functor<powm1_t>;

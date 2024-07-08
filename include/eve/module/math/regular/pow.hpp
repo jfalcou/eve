@@ -57,7 +57,7 @@ namespace eve
 //!
 //! @brief Callable object computing the pow operation \f$x^y\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -68,8 +68,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U >
-//!      auto pow(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto pow(value auto x, value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto pow[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto pow[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto pow[raw](value auto x, value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -78,10 +85,7 @@ namespace eve
 //!
 //! **Return value**
 //!
-//!   Returns [elementwise](@ref glossary_elementwise) \f$x^y\f$.
-//!
-//!   *  The result type is the [common value type](@ref common_value_t) of the two parameters.
-//!      In particular we have (IEC 60559):
+//!    1. Returns [elementwise](@ref glossary_elementwise) \f$x^y\f$. In particular we have (IEC 60559):
 //!
 //!       * pow(+0, y), where y is a negative odd integer, returns \f$+\infty\f$
 //!       * pow(-0, y), where y is a negative odd integer, returns \f$-\infty\f$
@@ -106,21 +110,11 @@ namespace eve
 //!       * pow(\f$+\infty\f$, y) returns +0 for any y less than 0
 //!       * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
 //!       * except where specified above, if any argument is NaN, NaN is returned
+//!     2. [The operation is performed conditionnaly](@ref conditional)
+//!     3. faster but less accurate call
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/pow.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::pow[mask](x, y)` provides a masked version of `eve::pow` which is
-//!     equivalent to `if_else (mask, pow(x, y), x)`.
-//!
-//!     **Example**
-//!
-//!     @godbolt{doc/math/masked/pow.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto pow = functor<pow_t>;

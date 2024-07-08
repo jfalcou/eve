@@ -41,9 +41,9 @@ namespace eve
 //! @addtogroup combinatorial
 //! @{
 //!   @var prime_ceil
-//!   @brief Returns the smallest prime greater or equal to the input.
+//!   @brief `strict_elementwise_callable` object computing the smallest prime greater or equal to the input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/combinatorial.hpp>
@@ -54,8 +54,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N >
-//!      constexpr N prime_ceil(N n) noexcept;
+//!      constexpr auto prime_ceil(unsigned_value auto x) noexcept; 
 //!   }
 //!   @endcode
 //!
@@ -64,23 +63,11 @@ namespace eve
 //!     * `n` :  unsigned argument. If `n` is greater than 104'729, behavior is undefined.
 //!
 //!   **Return value**
-//!   The smallest prime greater or equal to `n`.
-//!   The result type is the same as the input one unless a converter is applied (see below).
+//!      The smallest prime greater or equal to `n`.
+//!      The result type is the same as the input one unless a converter is applied (see below).
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/combinatorial/regular/prime_ceil.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Optimized Conversion Call
-//!
-//!     The converters eve::float_,  eve::double_, eve::floating_ can be applied to
-//!     produce a floating point output.
-//!
-//!    **Example**
-//!
-//!    @godbolt{doc/combinatorial/conversion/prime_ceil.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto prime_ceil = functor<prime_ceil_t>;
