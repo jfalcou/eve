@@ -68,7 +68,6 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto rotr[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
 //!      constexpr auto rotr[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
-//!      template<unsigned_value T, integral_value N>
 //!   }
 //!   @endcode
 //!

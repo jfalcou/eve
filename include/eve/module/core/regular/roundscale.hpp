@@ -68,29 +68,14 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!       *  Returns the [elementwise](@ref glossary_elementwise) scaled input.
+//!      1.  Returns the [elementwise](@ref glossary_elementwise) scaled input.
 //!          The number of fraction bits retained is specified by scale. By default the internal
 //!          rounding after scaling is done to nearest integer.
 //!          The call `roundscale(x, scale)` is equivalent to  `ldexp(eve::nearest(ldexp(x,scale), -scale))`
 //!      2. with `o` denoting one of these options the call is equivalent to ldexp(round[o](ldexp(x,scale), -scale))`
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/roundscale.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::roundscale[mask](x, scale)` provides a masked version of `eve::roundscale`
-//!     which is equivalent to `if_else (mask, roundscale(x, scale), x)`.
-//!
-//!    * eve::to_nearest, eve::toward_zero, eve::upward,  eve::downward
-//!
-//!      If o is one of these 4 decorators
-//!      The call `roundscale[o](x)` is equivalent to
-//!      `eve::ldexp(eve::round[o](eve::ldexp(x,scale), -scale))`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto roundscale = functor<roundscale_t>;

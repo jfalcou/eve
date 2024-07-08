@@ -65,8 +65,8 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
-//!     * `tol`: [floating_value](@ref eve::value). By  default `tol`
-//!        is equal to `T(1.0e-6)*``eve::abs``(x)`.
+//!     * `tol`: [floating value](@ref eve::value). By  default `tol`
+//!        is equal to `1.0e-6*eve::abs(x)`.
 //!
 //!   **Return value**
 //!

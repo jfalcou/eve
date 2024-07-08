@@ -34,7 +34,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var rising_factorial
-//!   @brief Computes the Rising Factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(x)}\f$.
+//!   @brief  `elementwise_callable` object computing the rising Factorial function i.e. \f$\frac{\Gamma(x+a)}{\Gamma(x)}\f$.
 //!
 //!   **Defined in header**
 //!
@@ -47,47 +47,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T, eve::floating_ordered_value U >
-//!      auto rising_factorial(T x,U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto rising_factorial(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto rising_factorial[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto rising_factorial[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto lrising_factorial[raw](floating_value auto x, floating_value auto y)                    noexcept; // 3
+//!      constexpr auto rising_factorial[pedantic](floating_value auto x, floating_value auto y)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     `a`, `x`:  [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `a`, `x`:  [floating arguments](@ref eve::floating_ordered_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the natural logarithm of the rising_factorial is returned.
+//!     1. The value of the  rising_factorial is returned( `a` and `x` must be strictly positive).
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
+//!        not both positive.
+//!     4. The `pedantic` option  uses reflection tricks and computes
+//!        the function for all real `a` and `x`, returning nan if the result is really undefined.
 //!
 //!   @groupheader{Example}
-//!
 //!  @godbolt{doc/special/regular/rising_factorial.cpp}
-//!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   @groupheader{Semantic Modifiers}
-//!
-//!   * eve::raw
-//!
-//!     The expression `raw(rising_factorial)(a,x)` uses the crude formula with all
-//!     its limitations and innacuracies and return a Nan if `a` and `a+x` are
-//!     not both positive.
-//!
-//!      **Example**
-//!
-//!     @godbolt{doc/special/raw/rising_factorial.cpp}
-//!
-//!   * eve::pedantic
-//!
-//!     The expression `pedantic(rising_factorial)(a,x)` uses reflection tricks and computes
-//!     the function for all real `a` and `x`, returning nan if the result is really undefined.
-//!
-//!      **Example**
-//!
-//!      @godbolt{doc/special/pedantic/rising_factorial.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto rising_factorial = functor<rising_factorial_t>;
