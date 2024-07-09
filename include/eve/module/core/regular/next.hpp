@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/inf.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/if_else.hpp>
@@ -119,7 +120,10 @@ namespace eve
           else return z;
         }
         else
-          return bitfloating(bitinteger(a)+1);
+        {
+          auto bi = bitinteger(a);
+          return bitfloating(bi+one(as(bi)));
+        }
       }
       else
       {
@@ -143,7 +147,8 @@ namespace eve
         if constexpr(O::contains(pedantic2))
         {
           using i_t = as_integer_t<T>;
-          auto pz   = dec(bitinteger(a) + convert(n, as<element_type_t<i_t>>(n)));
+          i_t vz   = bitinteger(a) + convert(n, as<element_type_t<i_t>>(n));
+          auto pz   = vz - one(as(vz));
           auto z    = bitfloating(pz+one(as(pz)));
           auto test = is_negative(a) && is_positive(z);
           if constexpr( scalar_value<T> && scalar_value<N> )

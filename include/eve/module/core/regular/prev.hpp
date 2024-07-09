@@ -14,6 +14,7 @@
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/minf.hpp>
+#include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
@@ -107,7 +108,7 @@ namespace eve
         if constexpr(O::contains(pedantic2))
         {
           auto pz   = bitinteger(a);
-          auto z    = bitfloating(dec(pz));
+          auto z    = bitfloating(pz-one(as(pz)));
           auto test = is_negative(z) && is_positive(a);
           auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
           prv =  if_else(is_nan(a), eve::allbits, prv);
@@ -126,17 +127,20 @@ namespace eve
           else return z;
         }
         else
-          return bitfloating(dec(bitinteger(a)));
+        {
+          auto bi = bitinteger(a);
+          return bitfloating(bi - one(as(bi)));
+        }
       }
       else
       {
         if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
         {
-          return if_else(a == valmin(as(a)), a, dec(a));
+          return if_else(a == valmin(as(a)), a, a-one(as(a)));
         }
         else
         {
-          return dec(a);
+          return a-one(as(a));
         }
       }
     }
@@ -150,8 +154,9 @@ namespace eve
         if constexpr(O::contains(pedantic2))
         {
           using i_t = as_integer_t<T>;
-          auto pz   = inc(bitinteger(a) - convert(n, as<element_type_t<i_t>>()));
-          auto z    = bitfloating(dec(pz));
+          auto vz   = bitinteger(a) - convert(n, as<element_type_t<i_t>>());
+          auto pz   = vz + one(as(vz));
+          auto z    = bitfloating(pz-one(as(pz)));
           auto test = is_negative(z) && is_positive(a);
           if constexpr( scalar_value<T> && scalar_value<N> )
           {
