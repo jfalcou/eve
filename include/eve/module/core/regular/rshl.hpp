@@ -81,7 +81,7 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of the arithmetic left/right shift operation according to shift
-//!         sign is returned. This is equivalent to `if_else(n>0, shl(x, n), shr(x, n))`
+//!         sign is returned. This is equivalent to `if_else(n>0, shl(x, n), shr(x, -n))`
 //!         If `N`is the size in bits  of the element type of `x`, all
 //!         [elements](@ref glossary_elementwise) of n must belong to the
 //!         interval: `]-N, N[` or the result is undefined.
