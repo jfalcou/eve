@@ -36,7 +36,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var sub
-//!   @brief Computes the difference of its first argument with the sum of the others.
+//!   @brief `tuple_callable` computing the difference of its first argument with the sum of the others.
 //!
 //!   @groupheader{Header file}
 //!
@@ -49,41 +49,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value... Ts>
-//!      eve::common_value_t<Ts ...> sub(Ts ... xs) noexcept;
+//!      // Regular overloads
+//!      constexpr auto sub(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto sub(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto sub[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto sub[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!
+//!      // Semantic options
+//!      constexpr auto sub[saturated](/*any of the above overloads*/)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `... xs` :  [real](@ref eve::value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      If the arguments are \f$(x_i)_{0\le i\le n}\f$ The value of \f$x_0-\sum_1^n x_i\f$
-//!      is returned.
+//!    The value of the difference of its first argument with the sum of the others
+//!    1. Take care that for floating entries, the addition is not perfectly associative due to rounding errors.
+//!       This call performs additions in reverse incoming order.
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
+//!    4. The call `sub[saturated](...)` computes a saturated version of `add`.
+//!       Take care that for signed integral entries this kind of a is highly order dependant.
+//!       This call perform saturated additions in reverse incoming order.
+//!        We do not advise to use it for more than 2 parameters.
+//!
+//!   @note
+//!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
+//!      standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sub.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::sub[mask](x, ...)` provides a masked
-//!     version of `sub` which is
-//!     equivalent to `if_else(mask, sub(x, ...), x)`
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::saturated(eve::sub)(...)` computes
-//!     a saturated version of `eve::sub`.
-//!
-//!     Take care that for signed integral
-//!     entries this kind of operation is highly order dependant. We do not advise
-//!     to use it for more than 2 parameters.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto sub = functor<sub_t>;

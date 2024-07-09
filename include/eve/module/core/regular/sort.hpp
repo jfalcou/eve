@@ -26,7 +26,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(sort_t, sort_);
   };
-
+// TODO DOC
 //================================================================================================
 //! @addtogroup core_simd
 //! @{

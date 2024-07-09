@@ -32,7 +32,7 @@ namespace eve
 //! @addtogroup core_accuracy
 //! @{
 //!   @var sum_of_prod
-//!   @brief Computes the sum of products operation with better accuracy
+//!   @brief `elementwise_callable` object computing the sum of products operation with better accuracy
 //!   than the naive formula.
 //!
 //!   @groupheader{Header file}
@@ -46,39 +46,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T
-//!              , eve::floating_value U
-//!              , eve::floating_value V
-//!              , eve::floating_value W>
-//!      T sum_of_prod(T x, U y, V z, W t ) noexcept;
+//!      // Regular overload
+//!      constexpr auto sum_of_prod(floating_value auto x, floating_value auto y,
+//!                                  floating_value auto z, floating_value auto t)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sum_of_prod[conditional_expr auto c](floating_value auto x, floating_value auto y,
+//!                                                           floating_value auto z, floating_value auto t) noexcept; // 2
+//!
+//!      // Semantic exclusive options
+//!      constexpr auto sum_of_prod[raw](floating_value auto x, floating_value auto y,
+//!                                       floating_value auto z, floating_value auto t)                     noexcept; // 3
+//!      constexpr auto sum_of_prod[pedantic](floating_value auto x, floating_value auto y,
+//!                                            floating_value auto z, floating_value auto t)                noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`, `y`, `z`, `t`:  [floating value arguments](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    The value of `x*y+z*t`,  with better precision if correct fma is available,
-//!    is returned.
+//!      1. The value of `x*y-z*t`,  with better precision if correct fma is available, is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. computes a raw  version of sum_of_prod,  i.e. the naive formula (in fact  `fma(x, y, z*t)`)
+//!      4. computes a pedantic version of `diff_of_prod` ensuring better accuracy in any case.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sum_of_prod.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * eve::raw
-//!
-//!     The call `eve::raw(eve::sum_of_prod)(x, y, z, t)` computes a raw
-//!     version of eve::sum_of_prod,  i.e. the naive formula (in fact  `fma(x, y, z, t)`)
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::pedantic(eve::sum_of_prod)(x, y, z, t)` computes a pedantic
-//!     version of eve::sum_of_prod ensuring better accuracy in any case.
-//!
 //! @}
 //================================================================================================
  inline constexpr auto sum_of_prod = functor<sum_of_prod_t>;

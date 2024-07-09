@@ -1,4 +1,4 @@
-//==================================================================================================
+ //==================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
@@ -33,7 +33,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var sign
-//!   @brief Computes the sign of the parameter.
+//!   @brief `elementwise_callable` object computing the sign of the parameter.
 //!
 //!   @groupheader{Header file}
 //!
@@ -46,36 +46,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T sign(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sign(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sign[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto sign[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
-//!     - `+1` , if `x` is greater than 0
-//!     - `-1` , if `x` is less than 0
-//!     -  `0` , if `x` is equal to 0
-//!     - `-0.`, if `x` is equal -0
-//!
-//!   If called on `Nan`, the result is the actual sign of `Nan`.
+//!     1;  The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
+//!        - `+1` , if `x` is greater than 0
+//!        - `-1` , if `x` is less than 0
+//!        -  `0` , if `x` is equal to 0
+//!        - `-0.`, if `x` is equal -0
+//!        -  If called on `Nan`, the result is the actual sign of `Nan`.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sign.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::sign[mask](x)` provides a masked version of `eve::sign` which is
-//!     equivalent to `if_else (mask, sign(x), x)`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto sign = functor<sign_t>;

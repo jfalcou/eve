@@ -31,7 +31,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var signnz
-//!   @brief Computes the never zero sign of the parameter.
+//!   @brief `elementwise_callable` object computing the never zero sign of the parameter.
 //!
 //!   @groupheader{Header file}
 //!
@@ -44,42 +44,38 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T signnz(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto signnz(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto signnz[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto signnz[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[pedantic](value auto x)                   noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      * Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
+//!      1. Computes  [elementwise](@ref glossary_elementwise) the never zero sign of `x`.
+//!          - If x is [positive](@ref eve::is_positive), 1 is returned.
+//!          - If x is [negative](@ref eve::is_negative), -1 is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. `eve;::signnz[pedantic](x)` returns nan for nan input
 //!
-//!      * For [real](@ref eve::value) `x`,  the call is semantically equivalent to:
-//!        * If x is [positive](@ref eve::is_positive), 1 is returned.
-//!        * If x is [negative](@ref eve::is_negative), -1 is returned.
-//!
-//!      * Note that is_negative and is_positive only look at the sign bit and a Nan has
+//!      @note `is_negative` and `is_positive` only look at the sign bit and a Nan has
 //!        generally unpredicable sign bit.
 //!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/signnz.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::signnz[mask](x)` provides a masked version of `eve::signnz` which is
-//!     equivalent to `if_else (mask, signnz(x), x)`.
-//!
-//!   * pedantic Call
-//!
-//!     The call `eve;::signnz[pedantic](x)` returns nan for nan input`.
-//!
 //! @}
 //================================================================================================
  inline constexpr auto signnz = functor<signnz_t>;

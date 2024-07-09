@@ -40,36 +40,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sqrt(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sqrt(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sqrt[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto sqrt[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[raw](value auto x)               noexcept; // 3
+//!
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x` :  [real](@ref eve::floating_value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     * value containing the [elementwise](@ref glossary_elementwise)
-//!       square root of `x` or Nan if `x` is less than zero.
+//!     1. value containing the [elementwise](@ref glossary_elementwise)
+//!        square root of `x` or Nan if `x` is less than zero.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. call a proper system intrinsic if one exists, but with possibly
+//!        very poor accuracy in return. Otherwise it uses the regular call
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sqrt.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::sqrt[mask](x)` provides a masked version of `eve::sqrt` which is
-//!     equivalent to `if_else (mask, sqrt(x), x)`.
-//!
-//!   * eve::raw
-//!
-//!     The call `sqrt[raw](x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return. Otherwise it uses the non-decorated call.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto sqrt = functor<sqrt_t>;

@@ -20,6 +20,7 @@ struct splat_
 
 using splat_type = decorated<splat_()>;
 
+//  TODO DOC
 //================================================================================================
 //! @addtogroup core_simd
 //! @{

@@ -46,31 +46,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::signed_value T >
-//!      T sign_alternate(T n) noexcept;
+//!      // Regular overload
+//!      constexpr auto sign_alternate(signed_value auto n)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sign_alternate[conditional_expr auto c](signed_value auto n) noexcept; // 2
+//!      constexpr auto sign_alternate[logical_value auto m](signed_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `n` :  [argument](@ref eve::value). Must be signed integral or flint.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      \f$(-1)^n\f$ is returned.
-//!
+//!      1. \f$(-1)^n\f$ is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sign_alternate.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::sign_alternate[mask](x)` provides a masked version of `eve::sign_alternate`
-//!     which is equivalent to `if_else (mask, sign_alternate(x), x)`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto sign_alternate = functor<sign_alternate_t>;

@@ -46,19 +46,34 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T sqr(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sqr(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sqr[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto sqr[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto sqr[saturated](value auto x)               noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    value containing the [elementwise](@ref glossary_elementwise)
-//!    square of `x` if it is representable in this type.
+//!     1. value containing the [elementwise](@ref glossary_elementwise)
+//!        square of `x` if it is representable in this type.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3.  Contrary to the  non-decorated case, it guarantees
+//!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More
+//!      specifically, for any integer value `x`, the call evaluates to:
+//!      [`valmax(as(x))`](@ref valmax) as soon as `abs[saturated](x)`
+//!      is greater than `sqrtvalmax(as(x))`.
 //!
 //!  @note
 //!      For  [integral signed values](@ref eve::value)   if `eve::abs[eve::saturated](x)`
@@ -66,31 +81,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
 //!      is undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sqr.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::sqr[mask](x)` provides a masked version of `eve::sqr` which is
-//!     equivalent to `if_else (mask, sqr(x), x)`.
-//!
-//!   * eve::saturated
-//!
-//!     The call `eve::saturated(eve::sqr)(x)` computes a saturated version of eve::sqr.
-//!
-//!     Contrary to the  non-decorated case, it guarantees
-//!      that the result is [elementwise](@ref glossary_elementwise) greater or equal than 0. More
-//!      specifically, for any signed integer value `x`, the expression:
-//!
-//!      `saturated(sqr)(x)`
-//!
-//!      evaluates to:
-//!
-//!      [`eve::valmax(as(x))`](@ref eve::valmax) as soon as `eve::abs[eve::saturated](x)`
-//!      is greater than `eve::sqrtvalmax(as(x))`.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto sqr = functor<sqr_t>;
