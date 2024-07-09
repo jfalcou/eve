@@ -19,8 +19,6 @@
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
-#include <eve/module/core/regular/dec.hpp>
-#include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 
 namespace eve
