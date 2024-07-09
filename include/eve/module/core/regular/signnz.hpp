@@ -33,7 +33,7 @@ namespace eve
 //!   @var signnz
 //!   @brief Computes the never zero sign of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

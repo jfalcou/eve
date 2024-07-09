@@ -26,7 +26,7 @@ using splat_type = decorated<splat_()>;
 //!   @var splat
 //!   @brief Computes the TODO
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

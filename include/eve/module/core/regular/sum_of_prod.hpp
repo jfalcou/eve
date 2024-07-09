@@ -35,7 +35,7 @@ namespace eve
 //!   @brief Computes the sum of products operation with better accuracy
 //!   than the naive formula.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -29,7 +29,7 @@ namespace eve
 //!   @var sqrt
 //!   @brief Computes the square root of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

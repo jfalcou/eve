@@ -38,7 +38,7 @@ namespace eve
 //!   @var sub
 //!   @brief Computes the difference of its first argument with the sum of the others.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

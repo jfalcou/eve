@@ -33,7 +33,7 @@ namespace eve
 //!   @var sort
 //!   @brief sorts a register in a accedning order accroding to a comparator.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

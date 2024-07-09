@@ -45,7 +45,7 @@ namespace eve
 //!   @var shl
 //!   @brief Computes the arithmetic left shift operation.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

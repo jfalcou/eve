@@ -35,7 +35,7 @@ namespace eve
 //!   @var sign
 //!   @brief Computes the sign of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -35,7 +35,7 @@ namespace eve
 //!   @var sign_alternate
 //!   @brief Computes \f$(-1)^n\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

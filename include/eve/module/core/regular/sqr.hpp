@@ -35,7 +35,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
 //!   @var sqr
 //!   @brief Computes the square of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

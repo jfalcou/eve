@@ -45,7 +45,7 @@ namespace eve
 //!   @var shr
 //!   @brief Computes the arithmetic right shift operation.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
