@@ -70,7 +70,7 @@ struct rat_t : elementwise_callable<rat_t, Options>
 //!
 //!   **Return value**
 //!
-//!     A tuple-like of values with the same type as `x` containing the
+//!     A tuple-like whose members have the same type as `x`, containing the
 //!     numerator and denominator of the rational number approximating `x`.
 //!
 //!  @groupheader{Example}

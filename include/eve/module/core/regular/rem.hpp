@@ -68,7 +68,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. Return the remainder after division division of `x` by `y` and is
+//!      1. Return the remainder after division of `x` by `y` and is
 //!         equivalent to  `x-div[toward_zero](x, y)*y`.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The call is equivalent to  `x-div[o](x, y)*y` where `o` is the chosen option.

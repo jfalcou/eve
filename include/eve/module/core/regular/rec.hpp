@@ -64,7 +64,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!      1. The value of the inverse of `x` is returned but does not take care of denormals.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. call a proper system intrinsic if one exists, but with possibly
-//!         very poor accuracy in return (circa 12 bits). Otherwise it uses the non regular call.
+//!         very poor accuracy in return (circa 12 bits). Otherwise it uses the regular call.
 //!      4. equivalent to the division operation of `one(as(x))` by `x`.
 //!
 //!  @note
