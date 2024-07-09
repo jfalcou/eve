@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/constant/true.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/traits/as_logical.hpp>
 
