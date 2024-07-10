@@ -38,7 +38,7 @@ namespace eve
 //!   @var ulpdist
 //!   @brief Computes the unit in the last place distance of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -49,26 +49,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value U >
-//!      eve::common_value_t<T, U> ulpdist(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto ulpdist(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto ulpdist[conditional_expr auto c][floating_value auto x, floating_value auto y) noexcept; // 3
+//!      constexpr auto ulpdist[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y` :  [arguments](@ref eve::value).
+//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      Computes [elementwise](@ref glossary_elementwise) the
-//!      'units in the last place' distance
-//!      between `x` and `y`. This is semantically equivalent to:`
-//!
-//!      * if is_ordered(x,y), nb_values(x,y)/2.0 is returned
-//!      * otherwise a `Nan` is returned
+//!      1. Computes [elementwise](@ref glossary_elementwise) the 'units in the last place' distance
+//!         between `x` and `y`.
+//!           * if is_ordered(x,y), nb_values(x,y)/2.0 is returned
+//!           * otherwise a `Nan` is returned
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/ulpdist.cpp}
 //!
 //! @}
