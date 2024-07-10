@@ -26,9 +26,10 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var signgam
-//!   @brief Computes the sign of the \f$\Gamma\f$ function.
+//!   @brief
+//! @brief `elementwise_callable` object computing the sign of the \f$\Gamma\f$ function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -39,21 +40,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T signgam(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto signgam(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto signgam[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto signgam[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of `eve::sign(eve::tgamma(x))` is returned (without computing `eve::tgamma(x)`);
+//!     1. The value of `eve::sign(eve::tgamma(x))` is returned (without computing `eve::tgamma(x)`);
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/signgam.cpp}
 //! @}
 //================================================================================================

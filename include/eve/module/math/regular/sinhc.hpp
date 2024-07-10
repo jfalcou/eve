@@ -30,9 +30,9 @@ namespace eve
 //! @{
 //! @var sinhc
 //!
-//! @brief Callable object computing \f$\frac{e^x-e^{-x}}{2x}\f$.
+//! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}{2x}\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -43,8 +43,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sinhc(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sinhc(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sinhc[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sinhc[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -54,17 +58,14 @@ namespace eve
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input divided by the
-//! input.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input divided by the
+//!      input. In particular:
+//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
+//!        * If the element is a `Nan`, `NaN` is returned.
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sinhc.cpp}
 //!
 //!  @}

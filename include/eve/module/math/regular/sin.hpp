@@ -35,9 +35,9 @@ namespace eve
 //! @{
 //! @var sin
 //!
-//! @brief Callable object computing the sine.
+//! @brief `elementwise_callable` object computing the sine.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -48,35 +48,45 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sin(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sin(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sin[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sin[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto sin[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto sin[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto sin[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) sine of the input.
-//!      In particular:
+//!    1. Returns the [elementwise](@ref glossary_elementwise) sine of the input. In particular:
+//!       * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!       * If the element is \f$\pm\infty\f$, Nan is returned.
+//!       * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, Nan is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/sin)
+//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Sine.html)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sin.cpp}
-//!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
  inline constexpr auto sin = functor<sin_t>;

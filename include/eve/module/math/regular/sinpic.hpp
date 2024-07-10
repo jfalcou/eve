@@ -29,9 +29,9 @@ namespace eve
 //! @{
 //! @var sinpic
 //!
-//! @brief Callable object computing the normalized cardinal sine.
+//! @brief `elementwise_callable` object computing the normalized cardinal sine.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,32 +42,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sinpic(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sinpic(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sinpic[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sinpic[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) sine of the input times \f$\pi\f$  divided
-//! by the input times \f$\pi\f$.
-//!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, 0 is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) sine of the input times \f$\pi\f$  divided
+//!       by the input times \f$\pi\f$. In particular:
+//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, 0 is returned.
+//!        * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sinpic.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
 //!  @}
 //================================================================================================
  inline constexpr auto sinpic = functor<sinpic_t>;

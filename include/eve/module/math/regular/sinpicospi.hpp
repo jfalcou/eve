@@ -39,10 +39,10 @@ namespace eve
 //! @{
 //! @var sinpicospi
 //!
-//! @brief Callable object computing the simultaneous  computation of sin an cos from
+//! @brief `elementwise_callable` object computing the simultaneous  computation of sin an cos from
 //! an argument in \f$\pi\f$ multiples.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -53,29 +53,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      zipped<T,T> sinpicospi(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sinpicospi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sinpicospi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sinpicospi[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto sinpicospi[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto sinpicospi[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto sinpicospi[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
-//!
-//! The computation returns a pair and is semantically equivalent to `{sinpi(x), cospi(x)}`
+//!   1 .The computation returns a tuple-like whose elements are `sinpi(x)` and `cospi(x)`
+//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sinpicospi.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
  inline constexpr auto sinpicospi = functor<sinpicospi_t>;

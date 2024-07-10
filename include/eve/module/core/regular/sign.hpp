@@ -66,8 +66,7 @@ namespace eve
 //!     1;  The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
 //!        - `+1` , if `x` is greater than 0
 //!        - `-1` , if `x` is less than 0
-//!        -  `0` , if `x` is equal to 0
-//!        - `-0.`, if `x` is equal -0
+//!        -  \f$\pm0\f$, if `x` is \f$\pm0\f$
 //!        -  If called on `Nan`, the result is the actual sign of `Nan`.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
