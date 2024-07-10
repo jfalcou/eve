@@ -31,9 +31,9 @@ namespace eve
 //! @{
 //! @var sech
 //!
-//! @brief Callable object computing \f$\frac2{e^x-e^{-x}}\f$.
+//! @brief `elementwise_callable` object computing \f$\frac2{e^x-e^{-x}}\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -44,27 +44,35 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sech(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sech(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sech[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sech[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
-//!
+//!    1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic secant of the input.
 //!      In particular:
+//!        * If the element is \f$\pm0\f$, 1 is returned.
+//!        * If the element is \f$\pm\infty\f$, \f$+0\f$ is returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      * If the element is \f$\pm0\f$, 1 is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$+0\f$ is returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicSecant.html)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sech.cpp}
 //!  @}
 //================================================================================================

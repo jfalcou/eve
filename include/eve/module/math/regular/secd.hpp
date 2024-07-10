@@ -31,9 +31,9 @@ namespace eve
 //! @{
 //! @var secd
 //!
-//! @brief Callable object computing the secant from an input in degree.
+//! @brief `elementwise_callable` object computing the secant from an input in degree.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -44,36 +44,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T secd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto secd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto secd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto secd[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto secd[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto secd[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto secd[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) secant of the input in degree.
-//! (the inverse of the sine)
+//!    1. Returns the [elementwise](@ref glossary_elementwise) secant of the input in degree.
+//!       (the inverse of the sine). In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, Nan is returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
-//! In particular:
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
-//!   * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, Nan is returned.
-//!   * If the element is a `NaN`, `NaN` is returned.
-//!
+//!   @groupheader{Example}
 //!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/secd.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto secd = functor<secd_t>;
