@@ -33,9 +33,9 @@ namespace eve
 //! @{
 //! @var tanpi
 //!
-//! @brief Callable object computing the tangent from an input in \f$\pi\f$ multiples.
+//! @brief `elementwise_callable` object computing the tangent from an input in \f$\pi\f$ multiples.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -46,35 +46,41 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T tanpi(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto tanpi(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto tanpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto tanpi[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto tanpi[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto tanpi[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto tanpi[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
-//!      multiples. In particular:
-//!
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, Nan is returned.
-//!      * If the element is a `Nan`, `NaN` is returned.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
+//!       multiples. In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, Nan is returned.
+//!        * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
+//!    3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-1/4,1/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-1/2,1/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-1,1]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/tanpi.cpp}
-//!
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto tanpi = functor<tanpi_t>;

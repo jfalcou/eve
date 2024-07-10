@@ -35,7 +35,7 @@ struct two_prod_t : elementwise_callable<two_prod_t, Options>
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  product and error,
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -39,10 +39,10 @@ namespace eve
 //! @{
 //! @var sindcosd
 //!
-//! @brief Callable object computing the simultaneous  computation of sine an cosine
+//! @brief `elementwise_callable` object computing the simultaneous  computation of sine an cosine
 //! from an argument in degrees.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -53,29 +53,37 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      zipped<T,T> sindcosd(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sindcosd(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sindcosd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sindcosd[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto sindcosd[quarter_circle](floating_value auto x)          noexcept; // 3.a
+//!      constexpr auto sindcosd[half_circle](floating_value auto x)             noexcept; // 3.b
+//!      constexpr auto sindcosd[full_circle](floating_value auto x)             noexcept; // 3.c
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating real value](@ref eve::floating_ordered_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! The computation returns a pair and is semantically equivalent to `{sind(x), cosd(x)}`
+//!   1 .The computation returns a tuple-like whose elements are `sind(x)` and `cosd(x)`
+//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!   3. These are optimized calls providing a balance between speed and range limitation.
+//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sindcosd.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::quarter_circle, eve::half_circle, eve::full_circle,
-//!
-//!     provide a balance between speed and range limitation.
-//!
 //!  @}
 //================================================================================================
  inline constexpr auto sindcosd = functor<sindcosd_t>;

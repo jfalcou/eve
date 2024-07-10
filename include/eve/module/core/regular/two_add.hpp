@@ -37,7 +37,7 @@ struct two_add_t : elementwise_callable<two_add_t, Options>
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  sum and error,
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

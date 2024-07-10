@@ -71,9 +71,9 @@ namespace eve
 //!        * If the element is a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!    3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!        1. assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
+//!        2. assumes that the inputs elements  belong to \f$[-90,  90]\f$ and return NaN outside.
+//!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/cscd.cpp}
