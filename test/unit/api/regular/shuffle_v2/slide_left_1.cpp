@@ -57,9 +57,9 @@ TTS_CASE("Explicit") {
 TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  static constexpr std::ptrdiff_t reg_size = sizeof(eve::element_type_t<T>) * T::size();
+  // static constexpr std::ptrdiff_t reg_size = sizeof(eve::element_type_t<T>) * T::size();
   if constexpr( eve::current_api <= eve::sse4_2 || eve::current_api >= eve::neon ||
-    ( eve::current_api >= eve::avx2 && reg_size <= 32 ) ||
+    ( eve::current_api == eve::avx2 ) ||
     ( eve::current_api >= eve::avx512 && sizeof(eve::element_type_t<T>) >= 2 ) ||
     ( eve::current_api >= eve::sve) )
   {
