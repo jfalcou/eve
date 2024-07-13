@@ -255,6 +255,7 @@ shuffle_within_n(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t n)
     std::ptrdiff_t ub = part + n;
     for (std::ptrdiff_t i = part; i != ub; ++i) {
       std::ptrdiff_t x = idxs[i];
+      if (x >= ssize) x -= ssize;
       if (x < 0) continue;
       if (x < part) return false;
       if (x >= ub) return false;

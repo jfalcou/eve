@@ -166,6 +166,11 @@ TTS_CASE("shuffle_within_halves")
   test(std::array {1, we_, 3, na_}, true);
   test(std::array {we_, we_, we_, 0}, false);
   test(std::array {3, we_, we_, we_}, false);
+
+  // Two registers shuffle
+  test(std::array {0, 4, we_, we_}, true);
+  test(std::array {0, 4, 7, 3}, true);
+  test(std::array {0, 6, 7, 3}, false);
 };
 
 TTS_CASE("shuffle_within_n")
