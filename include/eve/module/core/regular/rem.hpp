@@ -72,12 +72,12 @@ namespace eve
 //!         equivalent to  `x-div[toward_zero](x, y)*y`.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The call is equivalent to  `x-div[o](x, y)*y` where `o` is the chosen option.
-//!         For unsigned integral the options upward and nearest are ub as the result could
+//!         For unsigned integral the options upward and nearest are undefined behaviour as the result could
 //!         be negative.
 //!
 //!    @notes Although the infix notation with `%` is supported, the `%` operator on
 //!     standard integral scalar type is the original one and so can lead to automatic
-//!     promotion. Moreover due to C++ limitations `%` is not available for scalar floating
+//!     promotion. Moreover due to C++ limitations, `%` is not available for scalar floating
 //!     point values.
 //!
 //!  @groupheader{Example}
