@@ -95,8 +95,7 @@ namespace eve
   namespace detail
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
+    EVE_FORCEINLINE constexpr T next_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     {
       if constexpr( floating_value<T> )
       {
@@ -129,11 +128,11 @@ namespace eve
       {
         if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
         {
-          return if_else(a == valmax(as(a)), a, a+one(as(a)));
+          return if_else(a == valmax(as(a)), a, T(a+one(as(a))));
         }
         else
         {
-          return a+one(as(a));
+          return T(a+one(as(a)));
         }
       }
     }
@@ -180,7 +179,7 @@ namespace eve
         }
         else
         {
-          return a+convert(n, as<element_type_t<T>>());
+          return T(a+convert(n, as<element_type_t<T>>()));
         }
       }
     }

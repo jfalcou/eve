@@ -136,11 +136,11 @@ namespace eve
       {
         if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
         {
-          return if_else(a == valmin(as(a)), a, a-one(as(a)));
+          return if_else(a == valmin(as(a)), a, T(a-one(as(a))));
         }
         else
         {
-          return a-one(as(a));
+          return T(a-one(as(a)));
         }
       }
     }
