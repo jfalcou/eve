@@ -136,9 +136,14 @@ namespace eve
       static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");
 
       // Shush any other cascading errors
-      if constexpr(!compatible_mask) return ignore{};
-      // Or proceed to find the proper way to handle this masked call
+      if      constexpr(!compatible_mask) return ignore{};
+      // Handle masking SIMD with scalar with ?: to prevent issues in masking optimizations
+      else if constexpr( scalar_value<decltype(cond.mask(as(x0)))> )
+      {
+        return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
+      }
       else
+      // Or proceed to find the proper way to handle this masked call
       {
         // Check if func_(arch, cond, opts, ...) exists
         constexpr bool supports_mask  = requires(cond_t c){ func_t::deferred_call(arch, c, opts, x0, xs...); };

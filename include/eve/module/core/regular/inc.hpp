@@ -89,12 +89,11 @@ namespace eve
     {
       if constexpr(simd_value<T>)
       {
-        using           m_t = as_logical_t<T>;
         constexpr bool  iwl = T::abi_type::is_wide_logical;
+        using           m_t = as_logical_t<T>;
 
         if      constexpr(O::contains(saturated2))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
-        else if constexpr(integral_value<T> && iwl && sizeof(cond.mask(as<m_t>{})) == sizeof(m_t))
-                                                    return a - bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
+        else if constexpr(integral_value<T> && iwl) return a - bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
         else                                        return add[cond](a,one(eve::as(a)));
       }
       else

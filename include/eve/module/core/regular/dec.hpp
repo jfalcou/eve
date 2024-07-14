@@ -90,8 +90,7 @@ namespace eve
         constexpr bool  iwl = T::abi_type::is_wide_logical;
 
         if      constexpr(O::contains(saturated2))  return dec[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
-        else if constexpr(integral_value<T> && iwl && sizeof(cond.mask(as<m_t>{})) == sizeof(m_t))
-                                                    return a + bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
+        else if constexpr(integral_value<T> && iwl) return a + bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
         else                                        return sub[cond](a,one(eve::as(a)));
       }
       else
