@@ -55,7 +55,7 @@ namespace eve
 //!      constexpr auto rising_factorial[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto lrising_factorial[raw](floating_value auto x, floating_value auto y)                    noexcept; // 3
+//!      constexpr auto rising_factorial[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!      constexpr auto rising_factorial[pedantic](floating_value auto x, floating_value auto y)                noexcept; // 4
 //!   }
 //!   @endcode

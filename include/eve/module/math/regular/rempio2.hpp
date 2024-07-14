@@ -78,7 +78,7 @@ namespace eve
 //!         4. \f$|x| \le 10^4\f$
 //!         5. no conditions,  will directly use the most expansive reduction algorithm
 //!
-//!       If the conditon is  not met the result is undefined.
+//!       For each option, if the respective above conditon is not met the result is undefined.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/rempio2.cpp}
