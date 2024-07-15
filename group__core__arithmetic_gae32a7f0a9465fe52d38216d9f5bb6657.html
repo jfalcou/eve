@@ -140,28 +140,48 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae32a7f0a9465
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T,  eve::value U&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U&gt;</a> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, index_t&lt;scale&gt;)       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <span class="keywordtype">int</span> scale)            <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>[<a class="code hl_variable" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">downward</a>](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>[<a class="code hl_variable" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">upward</a>](<span class="comment">/*any of the above overloads*/</span>)      <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>[<a class="code hl_variable" href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">to_nearest</a>](<span class="comment">/*any of the above overloads*/</span>)  <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>[<a class="code hl_variable" href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028">toward_zero</a>](<span class="comment">/*any of the above overloads*/</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657_html_gae32a7f0a9465fe52d38216d9f5bb6657"><div class="ttname"><a href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">eve::rem</a></div><div class="ttdeci">constexpr auto rem</div><div class="ttdoc">Computes the remainder after division.</div><div class="ttdef"><b>Definition:</b> rem.hpp:115</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657_html_gae32a7f0a9465fe52d38216d9f5bb6657"><div class="ttname"><a href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">eve::rem</a></div><div class="ttdeci">constexpr auto rem</div><div class="ttdoc">elementwise_callable object computing the remainder after division.</div><div class="ttdef"><b>Definition:</b> rem.hpp:87</div></div>
+<div class="ttc" id="agroup__core__decorators_ga0c470f9154d0e71ce66562f945b01028_html_ga0c470f9154d0e71ce66562f945b01028"><div class="ttname"><a href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028">eve::toward_zero</a></div><div class="ttdeci">constexpr toward_zero_type const toward_zero</div><div class="ttdoc">Higher-order Callable Object imbuing rounding toward zero semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:163</div></div>
+<div class="ttc" id="agroup__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80_html_ga3b3cda8b6305e7d7e0dbc9da29c6be80"><div class="ttname"><a href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">eve::upward</a></div><div class="ttdeci">constexpr upward_type const upward</div><div class="ttdoc">Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:160</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6_html_gaa9bc64a3f84f5fdc046854ead9bdf7f6"><div class="ttname"><a href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">eve::downward</a></div><div class="ttdeci">constexpr downward_type const downward</div><div class="ttdoc">Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:161</div></div>
+<div class="ttc" id="agroup__core__decorators_gac2364bc5fee398715edefffe3c260223_html_gac2364bc5fee398715edefffe3c260223"><div class="ttname"><a href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">eve::to_nearest</a></div><div class="ttdeci">constexpr to_nearest_type const to_nearest</div><div class="ttdoc">Higher-order Callable Object imbuing rounding to nearest semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:162</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">real</a> argumentx.</li>
+<li><code>x</code>, <code>y</code>: values argumentx.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Return the remainder after division division of <code>x</code> by <code>y</code> and is semantically equivalent to <code>x- <a class="el" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701" title="Computes the integral part of x with the same sign as x.">eve::trunc</a> ( eve:<a class="el" href="group__core__arithmetic_gae0ef9200ab790a71835ff39ff61061a5.html#gae0ef9200ab790a71835ff39ff61061a5" title="elementwise_callable object computing the division of multiple values.">div(x, y)</a> )*y</code>.</p>
-<p>The call <code><a class="el" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657" title="Computes the remainder after division.">rem(x, y)</a></code> is equivalent to <code>x % y</code> if <code>x</code> or <code>y</code> is an <a class="el" href="concepteve_1_1simd__value.html">simd value</a>.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>Although the infix notation with <code>%</code> is supported, the <code>%</code> operator on standard integral scalar type is the original one and so can lead to automatic promotion. Moreover due to C++ limitations <code>%</code> is not available for scalar floating point values.</li>
-</ul>
-</dd></dl>
+<ol type="1">
+<li>Return the remainder after division of <code>x</code> by <code>y</code> and is equivalent to <code>x-div[toward_zero](x, y)*y</code>.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li>The call is equivalent to <code>x-div[o](x, y)*y</code> where <code>o</code> is the chosen option. For unsigned integral the options upward and nearest are undefined behaviour as the result could be negative.</li>
+</ol>
+<p>@notes Although the infix notation with <code>%</code> is supported, the <code>%</code> operator on standard integral scalar type is the original one and so can lead to automatic promotion. Moreover due to C++ limitations, <code>%</code> is not available for scalar floating point values.</p>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -193,41 +213,9 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gae32a7f0a9465
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; xi % yi     = &quot;</span> &lt;&lt; xi % yi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga0c470f9154d0e71ce66562f945b01028_html_ga0c470f9154d0e71ce66562f945b01028"><div class="ttname"><a href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028">eve::toward_zero</a></div><div class="ttdeci">constexpr toward_zero_type const toward_zero</div><div class="ttdoc">Higher-order Callable Object imbuing rounding toward zero semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:163</div></div>
-<div class="ttc" id="agroup__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80_html_ga3b3cda8b6305e7d7e0dbc9da29c6be80"><div class="ttname"><a href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80">eve::upward</a></div><div class="ttdeci">constexpr upward_type const upward</div><div class="ttdoc">Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:160</div></div>
-<div class="ttc" id="agroup__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6_html_gaa9bc64a3f84f5fdc046854ead9bdf7f6"><div class="ttname"><a href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6">eve::downward</a></div><div class="ttdeci">constexpr downward_type const downward</div><div class="ttdoc">Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:161</div></div>
-<div class="ttc" id="agroup__core__decorators_gac2364bc5fee398715edefffe3c260223_html_gac2364bc5fee398715edefffe3c260223"><div class="ttname"><a href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223">eve::to_nearest</a></div><div class="ttdeci">constexpr to_nearest_type const to_nearest</div><div class="ttdoc">Higher-order Callable Object imbuing rounding to nearest semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> roundings.hpp:162</div></div>
 <div class="ttc" id="agroup__math__constants_gaa262556a49cd7daf77138a7a636e737f_html_gaa262556a49cd7daf77138a7a636e737f"><div class="ttname"><a href="group__math__constants_gaa262556a49cd7daf77138a7a636e737f.html#gaa262556a49cd7daf77138a7a636e737f">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition:</b> pi.hpp:77</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code><a class="el" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657" title="Computes the remainder after division.">eve::rem</a>[mask](x, ...)</code> provides a masked version of <code>rem</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, rem(x, ...), x)</a></code></p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028" title="Higher-order Callable Object imbuing rounding toward zero semantic onto other Callable Objects.">eve::toward_zero</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_ga0c470f9154d0e71ce66562f945b01028.html#ga0c470f9154d0e71ce66562f945b01028" title="Higher-order Callable Object imbuing rounding toward zero semantic onto other Callable Objects.">toward_zero(rem)</a>(x, y)</code> computes <code>x-towardzero_(div)(x, y)*y</code>. For floating point entries this call is similar to std::fmod. In particular:</p><ul>
-<li>If <code>x</code> is \(\pm0\) and y is not zero, \(\pm0\) is returned.</li>
-<li>If <code>x</code> is \(\pm\infty\), and y is not NaN, NaN is returned.</li>
-<li>If <code>y</code> is \(\pm0\), NaN is returned.</li>
-<li>If <code>y</code> is \(\pm\infty\) and <code>x</code> is finite, <code>x</code> is returned.</li>
-<li>If either argument is a Nan, NaN is returned.</li>
-</ul>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6" title="Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.">eve::downward</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_gaa9bc64a3f84f5fdc046854ead9bdf7f6.html#gaa9bc64a3f84f5fdc046854ead9bdf7f6" title="Higher-order Callable Object imbuing rounding downard semantic onto other Callable Objects.">downward(rem)</a>(x, y)</code> computes <code>x-downward(div)(x, y)*y</code>.</p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80" title="Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.">eve::upward</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80" title="Higher-order Callable Object imbuing upward rounding semantic onto other Callable Objects.">upward(rem)</a>(x, y)</code> computes <code>x-upward(div)(x, y)*y</code>. It is not defined for unsigned values as the result can be negative.</p>
-</li>
-<li><p class="startli"><a class="el" href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223" title="Higher-order Callable Object imbuing rounding to nearest semantic onto other Callable Objects.">eve::to_nearest</a></p>
-<p class="startli">The call <code><a class="el" href="group__core__decorators_gac2364bc5fee398715edefffe3c260223.html#gac2364bc5fee398715edefffe3c260223" title="Higher-order Callable Object imbuing rounding to nearest semantic onto other Callable Objects.">to_nearest(rem)</a>(x, y)</code> computes <code>x-to_nearest(div)(x,y)*y</code>. It is not defined for unsigned values as the result can be negative. For floating point entries this call is similar to std::remainder. In particular:</p><ul>
-<li>If <code>x</code> is \(\pm\infty\), NaN is returned</li>
-<li>If <code>y</code> is \(\pm0\), NaN is returned</li>
-<li>If either argument is a Nan, NaN is returned </li>
-</ul>
-</li>
-</ul>
-
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

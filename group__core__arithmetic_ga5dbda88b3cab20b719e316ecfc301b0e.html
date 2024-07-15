@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga5dbda88b3cab
   </tr>
 </table>
 </div><div class="memdoc">
-<p>mimick the std::fmod function for floating values.</p>
+<p>mimick the std::remainder function for floating values.</p>
 <h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
@@ -166,7 +166,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga5dbda88b3cab
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>Return the remainder after division division of <code>x</code> by <code>y</code> and mimick the behaviour of std::fmod. In particular:<ul>
+<li>Returns the remainder after division division of <code>x</code> by <code>y</code> and mimick the behaviour of std::fmod. In particular:<ul>
 <li>If <code>x</code> is \(\pm0\), \(\pm0\) is returned.</li>
 <li>If <code>x</code> is \(\pm\inf\) or <code>NaN</code>, <code>NaN</code> is returned.</li>
 <li>If <code>y</code> is \(\pm0\), <code>NaN</code> is returned.</li>
@@ -210,29 +210,36 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga5dbda88b3cab
 <div class="ttc" id="agroup__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2_html_ga062b9f19ac5294101b1ca1a70583b2a2"><div class="ttname"><a href="group__core__constants_ga062b9f19ac5294101b1ca1a70583b2a2.html#ga062b9f19ac5294101b1ca1a70583b2a2">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the the greatest representable value.</div><div class="ttdef"><b>Definition:</b> valmax.hpp:68</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><p><b>Defined in Header</b></p>
+</div><!-- fragment --><h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T,  eve::value U&gt;</div>
-<div class="line">   <a class="code hl_typedef" href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t&lt;T, U&gt;</a> <a class="code hl_variable" href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">rem</a>(T x, U y) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> remainder(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> remainder[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> remainder[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657_html_gae32a7f0a9465fe52d38216d9f5bb6657"><div class="ttname"><a href="group__core__arithmetic_gae32a7f0a9465fe52d38216d9f5bb6657.html#gae32a7f0a9465fe52d38216d9f5bb6657">eve::rem</a></div><div class="ttdeci">constexpr auto rem</div><div class="ttdoc">Computes the remainder after division.</div><div class="ttdef"><b>Definition:</b> rem.hpp:115</div></div>
-<div class="ttc" id="anamespaceeve_html_af8e498b268c1b3dad8c2ab481a35c0bc"><div class="ttname"><a href="namespaceeve.html#af8e498b268c1b3dad8c2ab481a35c0bc">eve::common_value_t</a></div><div class="ttdeci">typename eve::detail::common_value_impl&lt; void, Ts... &gt;::type common_value_t</div><div class="ttdoc">Computes the SIMD-compatible common type between all Ts.</div><div class="ttdef"><b>Definition:</b> common_value.hpp:43</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1value.html">real</a> arguments.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Return the remainder after division division of <code>x</code> by <code>y</code> and is semantically equivalent to <code>x- <a class="el" href="group__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7.html#ga3fe2cd9f450620121afe84a493f45aa7" title="strict_elementwise_callable object computing the nearest integer to the input.">eve::nearest(eve:div(x, y))</a>*y</code>.</p>
-<p>In particular:</p>
-<ul>
+<ol type="1">
+<li>Returns the remainder after division division of <code>x</code> by <code>y</code> and is equivalent to <code>x- <a class="el" href="group__core__arithmetic_ga3fe2cd9f450620121afe84a493f45aa7.html#ga3fe2cd9f450620121afe84a493f45aa7" title="strict_elementwise_callable object computing the nearest integer to the input.">eve::nearest(eve:div(x, y))</a>*y</code>. In particular:<ul>
 <li>If <code>x</code> is \(\pm\inf\) or <code>NaN</code>, <code>NaN</code> is returned.</li>
 <li>If <code>y</code> is \(\pm0\) \(\pm0\) is returned</li>
-<li>If <code>y</code> is <code>NaN</code>, <code>NaN</code> is returned. </li>
+<li>If <code>y</code> is <code>NaN</code>, <code>NaN</code> is returned.</li>
 </ul>
-
+</li>
+</ol>
+<p><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

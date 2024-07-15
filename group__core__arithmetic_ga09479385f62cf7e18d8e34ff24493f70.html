@@ -140,33 +140,41 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga09479385f62c
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span>_value T, <span class="keywordtype">int</span>egral_value N&gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">rotr</a>(T x, N n) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">rotr</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                              <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">rotr</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n)                       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">rotr</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">rotr</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70_html_ga09479385f62cf7e18d8e34ff24493f70"><div class="ttname"><a href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">eve::rotr</a></div><div class="ttdeci">constexpr auto rotr</div><div class="ttdoc">Bitwise rotation to the right.</div><div class="ttdef"><b>Definition:</b> rotr.hpp:98</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70_html_ga09479385f62cf7e18d8e34ff24493f70"><div class="ttname"><a href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70">eve::rotr</a></div><div class="ttdeci">constexpr auto rotr</div><div class="ttdoc">Bitwise rotation to the right.</div><div class="ttdef"><b>Definition:</b> rotr.hpp:93</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>x</code>: <a class="el" href="concepteve_1_1unsigned__value.html">argument</a> to be rotated.</li>
 <li><code>n</code>: <a class="el" href="concepteve_1_1integral__value.html">shift</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>Bitwise rotation of each lane of <code>x</code> by <code>n</code> bits to the right.</p>
-<p>The call <code><a class="el" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70" title="Bitwise rotation to the right.">rotr(x, n)</a></code> is equivalent to <code>std::rotr(x, n)</code> if <code>x</code> is an [simd value](<a class="el" href="concepteve_1_1simd__value.html">eve::simd_value</a>).</p>
-<p>The types must share the same cardinal or be scalar and if <code>N</code> is the size in bits of the element type of <code>T</code>, all <a class="el" href="glossary_semantic.html#glossary_elementwise">elements</a> of n must belong to the interval: <code>[0, N[</code> or the result is undefined.</p>
-<h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The expression <code><a class="el" href="group__core__arithmetic_ga09479385f62cf7e18d8e34ff24493f70.html#ga09479385f62cf7e18d8e34ff24493f70" title="Bitwise rotation to the right.">eve::rotr</a>[mask](x, ...)</code> is a masked version of <code>rotr</code> which is equivalent to <code><a class="el" href="group__core__logical_ga74b9090a23d420d6382270233e66f7ac.html#ga74b9090a23d420d6382270233e66f7ac" title="Computes the results of a choice under condition.">if_else(mask, rotr(x, ...), x)</a></code> </p>
+<ol type="1">
+<li>Bitwise rotation of each lane of <code>x</code> by <code>n</code> bits to the right. The types must share the same cardinal or be scalar and if <code>N</code> is the size in bits of the element type of <code>T</code>, all <a class="el" href="glossary_semantic.html#glossary_elementwise">elements</a> of n must belong to the interval: <code>[0, N[</code> or the result is undefined.<ol type="a">
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
+</ol>
 </li>
-</ul>
-
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
