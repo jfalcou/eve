@@ -63,7 +63,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      1. \f$(-1)^n\f$ is returned.
+//!      1.  [elementwise](@ref glossary_elementwise) \f$(-1)^n\f$ is returned.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}

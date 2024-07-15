@@ -68,9 +68,9 @@ namespace eve
 //!          - If x is [positive](@ref eve::is_positive), 1 is returned.
 //!          - If x is [negative](@ref eve::is_negative), -1 is returned.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
-//!      3. `eve;::signnz[pedantic](x)` returns nan for nan input
+//!      3. same as 1. but returns NaN for NaN input
 //!
-//!      @note `is_negative` and `is_positive` only look at the sign bit and a Nan has
+//!      @note `is_negative` and `is_positive` only look at the sign bit and a NaN has
 //!        generally unpredicable sign bit.
 //!
 //!

@@ -48,17 +48,17 @@ namespace eve
 //!   {
 //!      // Regular overload
 //!      constexpr auto sum_of_prod(floating_value auto x, floating_value auto y,
-//!                                  floating_value auto z, floating_value auto t)                          noexcept; // 1
+//!                                 floating_value auto z, floating_value auto t)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto sum_of_prod[conditional_expr auto c](floating_value auto x, floating_value auto y,
-//!                                                           floating_value auto z, floating_value auto t) noexcept; // 2
+//!                                                          floating_value auto z, floating_value auto t) noexcept; // 2
 //!
 //!      // Semantic exclusive options
 //!      constexpr auto sum_of_prod[raw](floating_value auto x, floating_value auto y,
-//!                                       floating_value auto z, floating_value auto t)                     noexcept; // 3
+//!                                      floating_value auto z, floating_value auto t)                     noexcept; // 3
 //!      constexpr auto sum_of_prod[pedantic](floating_value auto x, floating_value auto y,
-//!                                            floating_value auto z, floating_value auto t)                noexcept; // 4
+//!                                           floating_value auto z, floating_value auto t)                noexcept; // 4
 //!   }
 //!   @endcode
 //!

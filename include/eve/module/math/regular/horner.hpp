@@ -57,7 +57,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto horner(value auto x, value auto ci...)                         noexcept; // 1
+//!      constexpr auto horner(value auto x, value auto ...ci)                         noexcept; // 1
 //!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tci)    noexcept; // 2
 //!
 //!      // Lanes masking
@@ -84,7 +84,7 @@ namespace eve
 //!     \f$\qquad\qquad\displaystyle p(x) = (((c_0x+c_1)x+ ... )x + c_{n-1})\f$
 //!
 //!     1. The value of the polynom at  `x` is returned.
-//!     2. same as the call with the elements of the tuple.
+//!     2. Same as the call with the elements of the tuple.
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!     4. `fma[pedantic]` instead of `fma` is used in internal computations.
 //!

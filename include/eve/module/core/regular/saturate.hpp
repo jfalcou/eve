@@ -57,7 +57,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!   {   template<value U, scalar_value T> U operator()(U x, as<T> t) noexcept;
+//!      template<value U, scalar_value T> U operator()(U x, as<T> t) noexcept;
 //!   }
 //!   @endcode
 //!
