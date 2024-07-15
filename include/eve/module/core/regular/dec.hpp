@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/sub.hpp>
 
 namespace eve
 {
@@ -76,10 +77,26 @@ namespace eve
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr(integral_value<T> && O::contains(saturated2))
-        return dec[a != valmin(eve::as(a))](a);
+      if constexpr(integral_value<T> && O::contains(saturated2))  return dec[a != valmin(eve::as(a))](a);
+      else                                                        return a - one(eve::as(a));
+    }
+
+    template<conditional_expr C, value T, callable_options O>
+    EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), C cond, O const&, T const& a) noexcept
+    {
+      if constexpr(simd_value<T>)
+      {
+        using           m_t = as_logical_t<T>;
+        constexpr bool  iwl = T::abi_type::is_wide_logical;
+
+        if      constexpr(O::contains(saturated2))  return dec[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
+        else if constexpr(integral_value<T> && iwl) return a + bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
+        else                                        return sub[cond](a,one(eve::as(a)));
+      }
       else
-        return a - one(eve::as(a));
+      {
+        return sub[cond](a,one(eve::as(a)));
+      }
     }
   }
 }

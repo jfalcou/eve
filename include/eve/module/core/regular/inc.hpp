@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/add.hpp>
 
 namespace eve
 {
@@ -80,6 +81,25 @@ namespace eve
         return inc[a != valmax(eve::as(a))](a);
       else
         return a + one(eve::as(a));
+    }
+
+
+    template<conditional_expr C, value T, callable_options O>
+    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), C cond, O const&, T const& a) noexcept
+    {
+      if constexpr(simd_value<T>)
+      {
+        constexpr bool  iwl = T::abi_type::is_wide_logical;
+        using           m_t = as_logical_t<T>;
+
+        if      constexpr(O::contains(saturated2))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
+        else if constexpr(integral_value<T> && iwl) return a - bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
+        else                                        return add[cond](a,one(eve::as(a)));
+      }
+      else
+      {
+        return add[cond](a,one(eve::as(a)));
+      }
     }
   }
 }

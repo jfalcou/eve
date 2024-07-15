@@ -13,6 +13,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 
 namespace eve
 {
