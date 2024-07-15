@@ -155,4 +155,38 @@ slide_2_left_in_16_pattern(std::ptrdiff_t g_size, std::ptrdiff_t slide)
   return res;
 }
 
+template <std::ptrdiff_t g_size, std::size_t N>
+constexpr std::optional<int> x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> idxs_)
+{
+  auto idxs = expand_group<g_size / 4>(idxs_);
+  std::ptrdiff_t size  = std::ssize(idxs);
+  std::ptrdiff_t res = 0;
+
+  for (std::ptrdiff_t i = 0; i != size; ++i) {
+    if (idxs[i] < 0) {
+      continue;
+    }
+
+    // 2 indexes from x, 2 indexes from y
+    std::ptrdiff_t active_register_offset = (i & 2) * size / 2;
+    std::ptrdiff_t within_register_offset = i / 4;
+    std::ptrdiff_t offset = active_register_offset + within_register_offset;
+
+    std::ptrdiff_t selected = idxs[i] - offset;
+
+    if (selected < 0 || selected >= 4) {
+      return std::nullopt;
+    }
+
+    res |= selected << (i * 2);
+  }
+
+  return static_cast<int>(res);
+}
+
+template <std::ptrdiff_t g_size, std::size_t N>
+constexpr std::optional<int> x86_shuffle_ps_2(const std::array<std::ptrdiff_t, N> idxs) {
+  return x86_shuffle_ps_2<g_size>(std::span<const std::ptrdiff_t, N>(idxs));
+}
+
 }

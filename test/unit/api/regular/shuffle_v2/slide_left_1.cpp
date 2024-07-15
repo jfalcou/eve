@@ -17,7 +17,7 @@ test_indexes()
   // still will be tested through G == 1
   if constexpr( G > 1 ) return kumi::tuple {eve::index<1>};
   // just reducing compile times a bit
-  else if constexpr ( !eve::unsigned_simd_value<T> ) return kumi::tuple{eve::index<1>};
+  else if constexpr( !eve::unsigned_simd_value<T> ) return kumi::tuple {eve::index<1>};
   else
   {
     return []<std::size_t... i>(std::index_sequence<i...>)
@@ -27,9 +27,10 @@ test_indexes()
 
 #if 0
 TTS_CASE("Slide left 1, example") {
-  using w_i = eve::wide<int, eve::fixed<4>>;
-  w_i x{1, 2, 3, 4};
-  TTS_EQUAL(eve::slide_left2(x, eve::index<1>), w_i({2, 3, 4, 0}));
+  using w_i =  eve::wide<unsigned int, eve::fixed<8>>;
+  w_i x{[](int i, int) { return i; } };
+  std::cerr << eve::shuffle_v2(x, eve::pattern<3, 4, 5, 6, 7, -1, -1, -1>) << std::endl;
+  TTS_PASS();
 };
 #endif
 
@@ -41,7 +42,7 @@ TTS_CASE("Explicit") {
   auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1>);
   TTS_EQUAL(l(), 4);
   (void)y;
-#if 0
+#  if 0
   TTS_EQUAL(y, w_i({2, 0}));
 
   TTS_EQUAL(eve::slide_left2.level(eve::as<w_i>{}, eve::fixed<1>{}, eve::index<1>), 2);
@@ -50,7 +51,7 @@ TTS_CASE("Explicit") {
   auto [y, l] = eve::shuffle_v2_core(x, eve::pattern<7, na_, na_, na_, na_, na_, na_, na_>);
   TTS_EQUAL(y, w_i({8, 0, 0, 0, 0, 0, 0, 0}));
   TTS_EQUAL(l(), 4);
-#endif
+#  endif
 };
 #endif
 
@@ -58,10 +59,14 @@ TTS_CASE_TPL("Check slide_left, 1 arg, generic", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   static constexpr std::ptrdiff_t reg_size = sizeof(eve::element_type_t<T>) * T::size();
-  if constexpr( eve::current_api <= eve::sse4_2 || eve::current_api >= eve::neon ||
-    ( eve::current_api >= eve::avx2 && reg_size <= 32 ) ||
-    ( eve::current_api >= eve::avx512 && sizeof(eve::element_type_t<T>) >= 2 ) ||
-    ( eve::current_api >= eve::sve) )
+  static constexpr std::ptrdiff_t e_t_size = sizeof(eve::element_type_t<T>);
+  if constexpr(                                                                 //
+      (eve::current_api <= eve::sse4_2) ||                                      //
+      (eve::current_api == eve::avx && (reg_size <= 16)) ||                     //
+      (eve::current_api == eve::avx2) ||                                        //
+      (eve::current_api >= eve::avx512 && (e_t_size >= 2 || reg_size <= 32)) || //
+      (eve::current_api >= eve::neon) ||                                        //
+      (eve::current_api >= eve::sve) )
   {
     shuffle_test::named_shuffle1_test<
         /*supports_G_eq_T_Size*/ true>(eve::as<T> {},

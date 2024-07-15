@@ -14,7 +14,7 @@ namespace eve::detail
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128_shifts_and_slides(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_128_shifts_and_slides(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
   else if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
@@ -40,7 +40,7 @@ shuffle_l2_x86_within_128_shifts_and_slides(P p, fixed<G> g, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128_4_shorts(P, fixed<G>, wide<T, N> x)
+shuffle_l2_x86_repeated_128_4_shorts(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( sizeof(T) == 1 ) return no_matching_shuffle;
   else if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
@@ -79,7 +79,7 @@ shuffle_l2_x86_within_128_4_shorts(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128_4x32(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( sizeof(T) * G < 4 ) return no_matching_shuffle;
   else if constexpr( !P::has_zeroes )
@@ -109,7 +109,7 @@ shuffle_l2_x86_within_128_4x32(P p, fixed<G> g, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128_alignr(P, fixed<G>, wide<T, N> x)
+shuffle_l2_x86_repeated_128_alignr(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
   else if constexpr( current_api < ssse3 ) return no_matching_shuffle;
@@ -134,25 +134,25 @@ shuffle_l2_x86_within_128_alignr(P, fixed<G>, wide<T, N> x)
  */
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_128(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( !P::repeated_16 ) return no_matching_shuffle;
-  else if constexpr( auto r = shuffle_l2_x86_within_128_shifts_and_slides(p, g, x);
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128_shifts_and_slides(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_within_128_4x32(p, g, x);
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128_4x32(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_within_128_4_shorts(p, g, x);
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128_4_shorts(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_within_128_alignr(p, g, x);
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128_alignr(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
     return r;
@@ -184,7 +184,7 @@ shuffle_l2_x86_128_insert_one_zero(P, fixed<G>, wide<T, N> x)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( P::g_size < 8 ) return no_matching_shuffle;
   else if constexpr( P::has_zeroes && current_api < avx512 ) return no_matching_shuffle;
@@ -232,10 +232,10 @@ shuffle_l2_x86_within_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
  */
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_256(P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_x86_repeated_256(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( !P::repeated_32 ) return no_matching_shuffle;
-  else if constexpr( auto r = shuffle_l2_x86_within_256_permute4x64(p, g, x);
+  else if constexpr( auto r = shuffle_l2_x86_repeated_256_permute4x64(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
     return r;
@@ -323,7 +323,7 @@ EVE_FORCEINLINE auto
 shuffle_l2_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
-  if constexpr( auto r = shuffle_l2_x86_within_128(p, g, x); matched_shuffle<decltype(r)> )
+  if constexpr( auto r = shuffle_l2_x86_repeated_128(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
@@ -332,7 +332,7 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_within_256(p, g, x); matched_shuffle<decltype(r)> )
+  else if constexpr( auto r = shuffle_l2_x86_repeated_256(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
@@ -393,28 +393,7 @@ shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128x2_shuffle_pd(P, fixed<G>, wide<T, N> x, wide<T, N> y)
-{
-  if constexpr( sizeof(T) < 8 ) return no_matching_shuffle;
-  else
-  {
-    // half from x, half from y
-    // No w/e or zeroes are possible here, because it wouldn't be 2 registers.
-    // (repeating with 16 bytes 8 byte element).
-    static_assert(!P::has_zeroes, "verifyig assumption");
-    auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
-    auto y_f64 = bit_cast(y, eve::as<eve::wide<double, N>> {});
-
-    constexpr int mm = _MM_SHUFFLE2(P::idxs[1] - 2, P::idxs[0]);
-    if constexpr( P::reg_size == 16 ) return _mm_shuffle_pd(x_f64, y_f64, mm);
-    else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_pd(x_f64, y_f64, mm);
-    else return _mm512_shuffle_pd(x_f64, y_f64, mm);
-  }
-}
-
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128x2_alignr(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l2_x86_repeated_128x2_alignr(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( current_api == avx && P::reg_size == 32 ) return no_matching_shuffle;
   else if constexpr( current_api < ssse3 ) return no_matching_shuffle;
@@ -437,15 +416,60 @@ shuffle_l2_x86_within_128x2_alignr(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_x86_within_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_x86_repeated_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !P::repeated_16 ) return no_matching_shuffle;
-  else if constexpr( auto r = shuffle_l2_x86_within_128x2_shuffle_pd(p, g, x, y);
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128x2_alignr(p, g, x, y);
                      matched_shuffle<decltype(r)> )
   {
     return r;
   }
-  else if constexpr( auto r = shuffle_l2_x86_within_128x2_alignr(p, g, x, y);
+  else return no_matching_shuffle;
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_x86_within_128x2_shuffle_ps(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( sizeof(T) < 4 ) return no_matching_shuffle;
+  else if constexpr( P::has_zeroes && current_api < avx512 ) return no_matching_shuffle;
+  else if constexpr( constexpr auto opt_mm = idxm::x86_shuffle_ps_2<P::g_size>(P::idxs); !opt_mm )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    using floats_t = eve::wide<float, eve::fixed<N::value * sizeof(T) / sizeof(float)>>;
+    auto x_f32     = bit_cast(x, eve::as<floats_t> {});
+    auto y_f32     = bit_cast(y, eve::as<floats_t> {});
+
+    constexpr int mm = *opt_mm;
+    if constexpr( !P::has_zeroes )
+    {
+      if constexpr( P::reg_size == 16 ) return _mm_shuffle_ps(x_f32, y_f32, mm);
+      else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_ps(x_f32, y_f32, mm);
+      else return _mm512_shuffle_ps(x_f32, y_f32, mm);
+    }
+    else
+    {
+      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+
+      if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
+      else if constexpr( P::reg_size == 32 ) return _mm256_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
+      else return _mm512_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
+    }
+  }
+}
+
+template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+EVE_FORCEINLINE auto
+shuffle_l2_x86_within_128x2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( !idxm::shuffle_within_n(P::idxs, 16 / sizeof(T)) )
+  {
+    return no_matching_shuffle;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_within_128x2_shuffle_ps(p, g, x, y);
                      matched_shuffle<decltype(r)> )
   {
     return r;
@@ -564,6 +588,11 @@ shuffle_l2_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_x86_blend(p, g, x, y); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128x2(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
   {
     return r;
   }
