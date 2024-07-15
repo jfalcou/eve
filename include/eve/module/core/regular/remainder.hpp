@@ -31,9 +31,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var fmod
-//!   @brief mimick the std::fmod function for floating values.
+//!   @brief mimick the std::remainder function for floating values.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,27 +44,33 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value U>
-//!      eve::common_value_t<T, U> rem(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto remainder(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto remainder[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto remainder[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`, `y`:   [real](@ref eve::value) arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      Return the remainder after division division of `x` by `y` and is
-//!      semantically equivalent to  `x- eve::nearest(eve:div(x, y))*y`.
+//!      1. Returns the remainder after division division of `x` by `y` and is
+//!         equivalent to  `x- eve::nearest(eve:div(x, y))*y`. In particular:
+//!        * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
+//!        * If `y` is \f$\pm0\f$  \f$\pm0\f$ is returned
+//!        * If `y` is `NaN`, `NaN` is returned.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      In particular:
-//!
-//!      * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
-//!      * If `y` is \f$\pm0\f$  \f$\pm0\f$ is returned
-//!      * If `y` is `NaN`, `NaN` is returned.
-//!
-//! @}
+//!  @groupheader{Example}
+//!  @godbolt{doc/core/remainder.cpp}
+///! @}
 //================================================================================================
   inline constexpr auto remainder = functor<remainder_t>;
 

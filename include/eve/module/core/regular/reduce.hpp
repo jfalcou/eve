@@ -17,7 +17,7 @@ namespace eve
 //!   @var reduce
 //!   @brief Computes the TODO
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

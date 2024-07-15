@@ -43,57 +43,52 @@ namespace eve
     EVE_CALLABLE_OBJECT(rotl_t, rotl_);
   };
 
-  //================================================================================================
-  //! @addtogroup core_arithmetic
-  //! @{
-  //!   @var rotl
-  //!   @brief Bitwise rotation to the left
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      template<unsigned_value T, integral_value N>
-  //!      T rotl(T x, N n) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `x`:  [argument](@ref eve::unsigned_value) to be rotated.
-  //!     * `n`:  [shift](@ref eve::integral_value).
-  //!
-  //!    **Return value**
-  //!
-  //!      Bitwise rotation of each lane of `x` by `n` bits to the left.
-  //!
-  //!      The call `rotl(x, n)` is equivalent to `std::rotl(x, n)` if `x` is an [simd value](@ref
-  //!      eve::simd_value).
-  //!
-  //!      The types must share the same cardinal or be scalar and if `N` is the size in bits of
-  //!      the element type of `T`, all [elements](@ref glossary_elementwise) of n must belong to the
-  //!      interval: `[0, N[` or the result is undefined.
-  //!
-  //!  @groupheader{Example}
-  //!
-  //!  @godbolt{doc/core/rotl.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * Masked Call
-  //!
-  //!     The expression `eve::rotl[mask](x, ...)` is a masked version of `rotl` which is
-  //!     equivalent to `if_else(mask, rotl(x, ...), x)`
-  //!
-  //! @}
-  //================================================================================================
+//================================================================================================
+//! @addtogroup core_arithmetic
+//! @{
+//!   @var rotl
+//!   @brief Bitwise rotation to the left
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      // Regular overloads
+//!      constexpr auto rotl(value auto x)                                              noexcept; // 1
+//!      constexpr auto rotl(value auto x, integral_value auto n)                       noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto rotl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto rotl[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x`: [argument](@ref eve::unsigned_value) to be rotated.
+//!     * `n`: [shift](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
+//!    **Return value**
+//!
+//!       1. Bitwise rotation of each lane of `x` by `n` bits to the left.
+//!          The types must share the same cardinal or be scalar and if `N` is the size in bits of
+//!          the element type of `T`, all [elements](@ref glossary_elementwise) of n must belong to the
+//!          interval: `[0, N[` or the result is undefined.
+//!       2. [The operation is performed conditionnaly](@ref conditional)
+//!
+//!  @groupheader{Example}
+//!  @godbolt{doc/core/rotl.cpp}
+//! @}
+//================================================================================================
   inline constexpr auto rotl = functor<rotl_t>;
 }
 

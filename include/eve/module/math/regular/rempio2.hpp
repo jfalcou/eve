@@ -34,9 +34,9 @@ namespace eve
 //! @{
 //! @var rempio2
 //!
-//! @brief Callable object computing the remainder of the division by \f$\pi/2\f$.
+//! @brief `elementwise_callable` object computing the remainder of the division by \f$\pi/2\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -47,23 +47,40 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      zipped<T,T,T> rempio2(T x) noexcept;
+//!   {
+//!      // Regular overload
+//!      constexpr auto rempio2(value auto x)                          noexcept; // 1
+//!
+//!      // Semantic options
+//!      constexpr auto rempio2[quarter_circle](value auto x)          noexcept; // 2.a
+//!      constexpr auto rempio2[half_circle](value auto x)             noexcept; // 2.b
+//!      constexpr auto rempio2[full_circle](value auto x)             noexcept; // 2.c
+//!      constexpr auto rempio2[medium](value auto x)                  noexcept; // 2.d
+//!      constexpr auto rempio2[big](value auto x)                     noexcept; // 2.e
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_ordered_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!    A tuple consisting of an [flint](@ref eve::is_flint) value designing the quadrant and two
-//!    floating values of type `T` giving the remainder of `x` modulo \f$\pi/2\f$ and a corrective
-//!    to the rounding error on the first result.
+//!    1. A tuple-like consisting of an [flint](@ref eve::is_flint) value designing the quadrant and two
+//!       floating values of type `T` giving the remainder of `x` modulo \f$\pi/2\f$ and a corrective
+//!       to the rounding error on the first result.
+//!    2. These options enable faster computations by assuming that the input satisfies the following respective condition:
+//!         1. \f$|x| \le \pi/4\f$
+//!         2. \f$|x| \le \pi/2\f$
+//!         3. \f$|x| \le \pi\f$
+//!         4. \f$|x| \le 10^4\f$
+//!         5. no conditions,  will directly use the most expansive reduction algorithm
+//!
+//!       For each option, if the respective above conditon is not met the result is undefined.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/rempio2.cpp}
 //!  @}
 //================================================================================================

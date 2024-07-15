@@ -52,14 +52,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto fracscale(floating_value auto x, index_t<scale>)    noexcept; // 1
-//!      constexpr auto fracscale(floating_value auto x, int scale)         noexcept; // 1
+//!      constexpr auto fracscale(floating_value auto x, index_t<scale>)       noexcept; // 1
+//!      constexpr auto fracscale(floating_value auto x, int scale)            noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto absmax[downward](/*any of the above overloads*/)    noexcept; // 2
-//!      constexpr auto absmax[upward](/*any of the above overloads*/)      noexcept; // 2
-//!      constexpr auto absmax[to_nearest](/*any of the above overloads*/)  noexcept; // 2
-//!      constexpr auto absmax[toward_zero](/*any of the above overloads*/) noexcept; // 2
+//!      constexpr auto fracscale[downward](/*any of the above overloads*/)    noexcept; // 2
+//!      constexpr auto fracscale[upward](/*any of the above overloads*/)      noexcept; // 2
+//!      constexpr auto fracscale[to_nearest](/*any of the above overloads*/)  noexcept; // 2
+//!      constexpr auto fracscale[toward_zero](/*any of the above overloads*/) noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!         The number of fraction bits retained is specified by scale. By default the internal
 //!         rounding after scaling is done to nearest integer.
 //!         The call `fracscale(x, scale)` is equivalent to  `x-eve::ldexp(eve::nearest(eve::ldexp(x,scale), -scale))`
-//!      2. with `o` denoting one of these options the call is equivalent to `x-d(eve::round[o](x, scale)`
+//!      2. with `o` denoting one of these options the call is equivalent to `x-eve::roundscale[o](x, scale)`
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/fracscale.cpp}

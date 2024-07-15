@@ -15,14 +15,14 @@
 
 namespace eve
 {
-
+// TODO DOC is it to be in user interface ?
 //================================================================================================
 //! @addtogroup core_logical
 //! @{
 //!    @var replace_ignored
 //!    @brief A small helper to replace ignored values
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!   @code
 //!   #include <eve/module/core.hpp>
 //!   @endcode

@@ -29,7 +29,7 @@ namespace eve
 //!   @var rsqrt
 //!   @brief Computes the inverse of the square root of the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -40,36 +40,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T rsqrt(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto rsqrt(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto rsqrt[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto rsqrt[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto rsqrt[raw](floating_value auto x)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::floatingvalue) argument.
+//!     * `x`: [real](@ref eve::floating_value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    value containing the [elementwise](@ref glossary_elementwise)
-//!    inverse of the square root of `x`.
+//!       1. value containing the [elementwise](@ref glossary_elementwise)
+//!          inverse of the square root of `x`.
+//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!       3. call a proper system intrinsic if one exists, but with possibly
+//!          very poor accuracy in return. Otherwise it uses the regular call.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/rsqrt.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::rsqrt[mask](x)` provides a masked version of `eve::rsqrt` which is
-//!     equivalent to `if_else (mask, rsqrt(x), x)`.
-//!
-//!   * eve::raw
-//!
-//!     The call `rsqr[raw](x)`, call a proper system intrinsic if one exists, but with possibly
-//!     very poor accuracy in return. Otherwise it uses the non-decorated call.
-//!
 //! @}
 //================================================================================================
   inline constexpr auto rsqrt = functor<rsqrt_t>;

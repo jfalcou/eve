@@ -50,7 +50,7 @@ namespace eve
 //!   @var rshl
 //!   @brief Computes the arithmetic left/right shift operation according to shift sign.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -61,45 +61,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value T , integral_value N >
-//!      T rshl(T x, N n) noexcept;
+//!      // Regular overloads
+//!      constexpr auto rshl(value auto x)                                              noexcept; // 1
+//!      constexpr auto rshl(value auto x, integral_value auto n)                       noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto rshl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto rshl[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value) to be shifted.
-//!     * `n`:   [shift](@ref eve::integral_value).
+//!     * `x`: [argument](@ref eve::value) to be shifted.
+//!     * `n`: [shift](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The value of the arithmetic left/right shift operation according to shift
-//!      sign is returned
-//!
-//!   @note
-//!     *  the call `rshl(x, n)` is equivalent to `if_else(n>0, shl(x, n), shr(x, n))`
-//!        if `x`  is an  [simd value](@ref eve::simd_value).
-//!
-//!     *  The types must share the same cardinal or be scalar and if `N`
-//!        is the size in bits  of the element type of `T`, all
-//!        [elements](@ref glossary_elementwise) of n must belong to the
-//!        interval: `]-N, N[` or the result is undefined.
-//!
-//!     * The call `rshl(x, n)` is equivalent to `x << n` if `x`  is
-//!       an [simd value](@ref eve::simd_value).
+//!      1. The value of the arithmetic left/right shift operation according to shift
+//!         sign is returned. This is equivalent to `if_else(n>0, shl(x, n), shr(x, -n))`
+//!         If `N`is the size in bits  of the element type of `x`, all
+//!         [elements](@ref glossary_elementwise) of n must belong to the
+//!         interval: `]-N, N[` or the result is undefined.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/rshl.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::rshl[mask](x, ...)` provides a masked
-//!     version of `rshl` which is
-//!     equivalent to `if_else(mask, rshl(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto rshl = functor<rshl_t>;

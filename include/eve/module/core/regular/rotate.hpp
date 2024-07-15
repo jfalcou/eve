@@ -17,6 +17,7 @@
 
 namespace eve
 {
+// TODO DOC is it to be in user inteface ?
 //================================================================================================
 //! @addtogroup core
 //! @{

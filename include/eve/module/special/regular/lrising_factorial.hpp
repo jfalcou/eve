@@ -33,7 +33,7 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var lrising_factorial
-//!   @brief `elementwise_callable` object computing the natural logarithm of the Rising Factorial function i.e.
+//!   @brief `elementwise_callable` object computing the natural logarithm of the rising Factorial function i.e.
 //!   \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
 //!
 //!   @groupheader{Header file}
@@ -55,8 +55,8 @@ namespace eve
 //!      constexpr auto lrising_factorial[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto logical_value[raw](floating_value auto x, floating_value auto y)                         noexcept; // 3
-//!      constexpr auto logical_value[pedantic](floating_value auto x, floating_value auto y)                    noexcept; // 4
+//!      constexpr auto lrising_factoriale[raw](floating_value auto x, floating_value auto y)                    noexcept; // 3
+//!      constexpr auto lrising_factorialee[pedantic](floating_value auto x, floating_value auto y)              noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -80,29 +80,7 @@ namespace eve
 //!   @groupheader{Example}
 //!
 //!  @godbolt{doc/special/regular/lrising_factorial.cpp}
-//!
-//!
 //!  @groupheader{Semantic Modifiers}
-//!
-//!  * eve::raw
-//!
-//!     The expression `raw(lrising_factorial)(a,x)` uses the crude formula with all
-//!     its limitations and inacurracies and return a Nan if `a` and `a+x` are
-//!     not both positive.
-//!
-//!     @godbolt{doc/special/raw/lrising_factorial.cpp}
-//!
-//!  * eve::pedantic
-//!
-//!     The expression `pedantic(lrising_factorial)(a,x)` uses reflection tricks and computes
-//!     the function for all real `a` and `x`, and in fact computes the logarithm of the absolute
-//!     value of the Pochammer symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$
-//!     returning nan if the result is really undefined.
-//!
-//!      **Example**
-//!
-//!      @godbolt{doc/special/pedantic/lrising_factorial.cpp}
-//!
 //! @}
 //================================================================================================
   inline constexpr auto lrising_factorial = functor<lrising_factorial_t>;

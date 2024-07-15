@@ -31,9 +31,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var rem
-//!   @brief Computes the  remainder after division.
+//!   @brief `elementwise_callable` object computing the  remainder after division.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -44,72 +44,44 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T,  eve::value U>
-//!      eve::common_value_t<T, U> rem(T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto rem(floating_value auto x, index_t<scale>)       noexcept; // 1
+//!      constexpr auto rem(floating_value auto x, int scale)            noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto rem[conditional_expr auto c](value auto x)       noexcept; // 2
+//!      constexpr auto rem[logical_value auto m](value auto x)          noexcept; // 2
+//!
+//!      // Semantic option
+//!      constexpr auto rem[downward](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto rem[upward](/*any of the above overloads*/)      noexcept; // 3
+//!      constexpr auto rem[to_nearest](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto rem[toward_zero](/*any of the above overloads*/) noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:   [real](@ref eve::value) argumentx.
+//!     * `x`, `y`: [values](@ref value) argumentx.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!      Return the remainder after division division of `x` by `y` and is
-//!      semantically equivalent to  `x- eve::trunc ( eve:div(x, y) )*y`.
+//!      1. Return the remainder after division of `x` by `y` and is
+//!         equivalent to  `x-div[toward_zero](x, y)*y`.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. The call is equivalent to  `x-div[o](x, y)*y` where `o` is the chosen option.
+//!         For unsigned integral the options upward and nearest are undefined behaviour as the result could
+//!         be negative.
 //!
-//!      The call `rem(x, y)` is equivalent to `x % y` if `x` or  `y` is an
-//!      [simd value](@ref eve::simd_value).
-//!
-//!    @note
-//!       * Although the infix notation with `%` is supported, the `%` operator on
-//!         standard integral scalar type is the original one and so can lead to automatic
-//!         promotion. Moreover due to C++ limitations `%` is not available for scalar floating
-//!         point values.
+//!    @notes Although the infix notation with `%` is supported, the `%` operator on
+//!     standard integral scalar type is the original one and so can lead to automatic
+//!     promotion. Moreover due to C++ limitations, `%` is not available for scalar floating
+//!     point values.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/rem.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::rem[mask](x, ...)` provides a masked
-//!     version of `rem` which is
-//!     equivalent to `if_else(mask, rem(x, ...), x)`
-//!
-//!   * eve::toward_zero
-//!
-//!       The call `toward_zero(rem)(x, y)`  computes  `x-towardzero_(div)(x, y)*y`.
-//!        For floating point entries this call is similar to std::fmod. In particular:
-//!
-//!        * If `x` is  \f$\pm0\f$ and y is not zero,  \f$\pm0\f$ is returned.
-//!        * If `x` is \f$\pm\infty\f$, and y is not NaN, NaN is returned.
-//!        * If `y` is  \f$\pm0\f$, NaN is returned.
-//!        * If `y` is  \f$\pm\infty\f$ and `x` is finite, `x` is returned.
-//!        * If either argument is a Nan, NaN is returned.
-//!
-//!   * eve::downward
-//!
-//!       The call `downward(rem)(x, y)`  computes  `x-downward(div)(x, y)*y`.
-//!
-//!   * eve::upward
-//!
-//!       The call `upward(rem)(x, y)`  computes  `x-upward(div)(x, y)*y`.
-//!        It is not defined for unsigned values as the result can be negative.
-//!
-//!   * eve::to_nearest
-//!
-//!       The call `to_nearest(rem)(x, y)`  computes  `x-to_nearest(div)(x,y)*y`.
-//!        It is not defined for unsigned values as the result can be negative.
-//!        For floating point entries this call is similar to std::remainder.
-//!        In particular:
-//!
-//!        * If `x` is \f$\pm\infty\f$, NaN is returned
-//!        * If `y` is \f$\pm0\f$, NaN is returned
-//!        * If either argument is a Nan, NaN is returned
-//!
 //! @}
 //================================================================================================
   inline constexpr auto rem = functor<rem_t>;
