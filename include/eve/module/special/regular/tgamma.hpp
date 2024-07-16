@@ -30,9 +30,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var tgamma
-//!   @brief Computes \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$.
+//!   @brief `elementwise_callable` object computing \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -43,24 +43,34 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T tgamma(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto tgamma(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto tgamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto tgamma[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!      * `x`: [floating real value](@ref eve::floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of \f$\Gamma\f$ is returned.
+//!      1. The value of \f$\Gamma\f$ is returned.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/tgamma)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Gamma_function)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/GammaFunction.html)
+//!   *  [DLMF](https://dlmf.nist.gov/5.2)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/tgamma.cpp}
-//!
-//!
 //! @}
 //================================================================================================
 inline constexpr auto tgamma = functor<tgamma_t>;
@@ -87,7 +97,7 @@ inline constexpr auto tgamma = functor<tgamma_t>;
                              , T(0x1.1ae8a29152573p-11), T(-0x1.8487a8400d3afp-16));
         }
       };
-      
+
       if constexpr( scalar_value<T> )
       {
         auto inftest = [](T a0)
@@ -155,7 +165,7 @@ inline constexpr auto tgamma = functor<tgamma_t>;
           z           = abs(z);
           return sgngam * pi(eve::as(q)) / (z * st);
         };
-        
+
         auto other = [tgamma1](T q, const auto& test){
           auto x = if_else(test, T(2), q);
           if constexpr( eve::platform::supports_nans )
@@ -196,7 +206,7 @@ inline constexpr auto tgamma = functor<tgamma_t>;
           }
           else return x;
         };
-        
+
         auto nan_result = is_ltz(a0) && is_flint(a0);
         //       if constexpr(eve::platform::supports_nans) nan_result = is_nan(a0) || nan_result;
         auto        q    = abs(a0);

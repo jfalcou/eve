@@ -29,9 +29,9 @@ namespace eve
 //! @{
 //! @var tanh
 //!
-//! @brief Callable object computing \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
+//! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,43 +42,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T tanh(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto tanh(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto tanh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto tanh[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating real value](@ref eve::floating_ordered_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic tangent of the input.
-//!
+//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic tangent of the input.
 //!      In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
 //!
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!      * for every z: `eve::tanh(eve::conj(z)) == eve::conj(std::tanh(z))`
-//!      * for every z: `eve::tanh(-z)           == -eve::tanh(z)`
-//!      * If z is \f$+0\f$, the result is \f$+0\f$
-//!      * If z is \f$x+i \infty\f$ (for any non zero finite x), the result is \f$NaN+i NaN\f$
-//!      * If z is \f$i \infty\f$  the result is \f$i NaN\f$
-//!      * If z is \f$x,NaN\f$ (for any non zero finite x), the result is \f$NaN+i NaN\f$
-//!      * If z is \f$i NaN\f$  the result is \f$i NaN\f$
-//!      * If z is \f$+\infty,y\f$ (for any finite positive y), the result is \f$1\f$
-//!      * If z is \f$+\infty+i \infty\f$, the result is \f$1,\pm 0\f$ (the sign of the imaginary part is unspecified)
-//!      * If z is \f$+\infty+i NaN\f$, the result is \f$1\f$ (the sign of the imaginary part is unspecified)
-//!      * If z is \f$NaN\f$, the result is \f$NaN\f$
-//!      * If z is \f$NaN+i y\f$ (for any non-zero y), the result is \f$NaN+i NaN\f$
-//!      * If z is \f$NaN+i NaN\f$, the result is \f$NaN+i NaN\f$
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/tanh)
+//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Hyperbolic_functions)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicTangent.html)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/tanh.cpp}
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto tanh = functor<tanh_t>;

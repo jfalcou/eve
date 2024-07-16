@@ -37,9 +37,9 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var trunc
-//!   @brief Computes  the integral part of `x` with the same sign as  `x`.
+//!   @brief `elementwise_callable` object computing  the integral part of `x` with the same sign as  `x`.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -50,46 +50,43 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T trunc(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto trunc(value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto trunc[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto trunc[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto trunc[almost = tol](floating_value auto x)   noexcept; // 3
+//!      constexpr auto trunc[almostl](floating_value auto x)        noexcept; // 4
+//!      constexpr auto trunc[raw](floating_value auto x)            noexcept; // 5
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real](@ref eve::value) argument.
+//!     * `x` :[value](@ref value) argument.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `tol` [scalar_value](@ref value) tolerance.
 //!
 //!   **Return value**
 //!
-//!     The integral part of `x` with the same sign as  `x`.
+//!     1. The integral part of `x` with the same sign as  `x`.
+//!        The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
+//!        `FE_TOWARDZERO`. This function object implements the `FE_TOWARDZERO` version.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. `almost` allows a fuzzy interpretation of ceil associated to a scalar tolerance.
+//!         - with an integral value `tol`: computes the ceil of the previous nth
+//!           representable value in the `x` type.
+//!         - with a floating  value `tol`: computes the ceil with a tolerance `tol`.
+//!     4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as(x))(x)`
+//!     5. Faster for floating inputs, but only correct if as an integer, the truncation  that can be
+//!        exactly represented in the associated integral type.
 //!
-//!
-//!     The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-//!     `FE_TOWARDZERO`. This function object implements the `FE_TOWARDZERO` version.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/core/trunc.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve;::trunc[mask](x)` provides a masked version of `eve::trunc` which is
-//!     equivalent to `if_else (mask, trunc(x), x)`.
-//!
-//!   * eve::almost
-//!
-//!     The expression `trunc[almost = tol](x)` computes a tolerant truncated
-//!     value for `x`, where `x` must be a floating value and tol a scalar value.
-//!
-//!        * If `tol` is a floating_value computes the truncation with
-//!          a tolerance `tol` using Hagerty's FL5 function.
-//!        * If `tol` is an integral_value n compute the truncation of
-//!          the next or previous nth representable value in the `x` type.
-//!        * the call `trunc[almost](x)` takes tol as  3 times
-//!          the machine \f$\epsilon\f$ in the `x` type (`3*eps(as(x))`).
-//!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/trunc)
 //! @}
 //================================================================================================
   inline constexpr auto trunc = functor<trunc_t>;
