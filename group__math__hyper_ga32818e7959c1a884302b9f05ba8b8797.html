@@ -140,42 +140,40 @@ $(document).ready(function(){initNavTree('group__math__hyper_ga32818e7959c1a8843
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">tanh</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">tanh</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">tanh</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">tanh</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__math__hyper_ga32818e7959c1a884302b9f05ba8b8797_html_ga32818e7959c1a884302b9f05ba8b8797"><div class="ttname"><a href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">eve::tanh</a></div><div class="ttdeci">constexpr auto tanh</div><div class="ttdoc">Callable object computing .</div><div class="ttdef"><b>Definition:</b> tanh.hpp:84</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="agroup__math__hyper_ga32818e7959c1a884302b9f05ba8b8797_html_ga32818e7959c1a884302b9f05ba8b8797"><div class="ttname"><a href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797">eve::tanh</a></div><div class="ttdeci">constexpr auto tanh</div><div class="ttdoc">elementwise_callable object computing .</div><div class="ttdef"><b>Definition:</b> tanh.hpp:77</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b></p>
-<ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1floating__ordered__value.html">floating real value</a>.</li>
-</ul>
-<p><b>Return value</b></p>
-<ul>
-<li><p class="startli">Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> hyperbolic tangent of the input.</p>
-<p class="startli">In particular:</p><ul>
+</div><!-- fragment --><p><b>Parameters</b> </p><pre class="fragment">* `x`: [floating value](@ref eve::floating_value).
+* `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+* `m`: [Logical value](@ref logical) masking the operation.
+</pre><p> <b>Return value</b></p>
+<ol type="1">
+<li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> hyperbolic tangent of the input. In particular:<ul>
 <li>If the element is \(\pm0\), \(\pm0\) is returned.</li>
 <li>If the element is \(\pm\infty\), \(\pm1\) returned.</li>
 <li>If the element is a <code>NaN</code>, <code>NaN</code> is returned.</li>
-<li>for every z: <code><a class="el" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797" title="Callable object computing .">eve::tanh(eve::conj(z))</a> == eve::conj(std::tanh(z))</code></li>
-<li>for every z: <code><a class="el" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797" title="Callable object computing .">eve::tanh</a>(-z) == -<a class="el" href="group__math__hyper_ga32818e7959c1a884302b9f05ba8b8797.html#ga32818e7959c1a884302b9f05ba8b8797" title="Callable object computing .">eve::tanh(z)</a></code></li>
-<li>If z is \(+0\), the result is \(+0\)</li>
-<li>If z is \(x+i \infty\) (for any non zero finite x), the result is \(NaN+i NaN\)</li>
-<li>If z is \(i \infty\) the result is \(i NaN\)</li>
-<li>If z is \(x,NaN\) (for any non zero finite x), the result is \(NaN+i NaN\)</li>
-<li>If z is \(i NaN\) the result is \(i NaN\)</li>
-<li>If z is \(+\infty,y\) (for any finite positive y), the result is \(1\)</li>
-<li>If z is \(+\infty+i \infty\), the result is \(1,\pm 0\) (the sign of the imaginary part is unspecified)</li>
-<li>If z is \(+\infty+i NaN\), the result is \(1\) (the sign of the imaginary part is unspecified)</li>
-<li>If z is \(NaN\), the result is \(NaN\)</li>
-<li>If z is \(NaN+i y\) (for any non-zero y), the result is \(NaN+i NaN\)</li>
-<li>If z is \(NaN+i NaN\), the result is \(NaN+i NaN\)</li>
 </ul>
 </li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/tanh">C++ standard reference</a></li>
+<li><a href="https://fr.wikipedia.org/wiki/Hyperbolic_functions">Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/HyperbolicTangent.html">Wolfram MathWorld</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>

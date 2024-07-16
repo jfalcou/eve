@@ -140,79 +140,52 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gafde17ae255fe
   </tr>
 </table>
 </div><div class="memdoc">
-<p><b>Defined in Header</b></p>
+<h2 class="groupheader">Header file </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
-<div class="line">   T <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>[almost = tol](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)   <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>[almostl](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)        <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">trunc</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)            <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gafde17ae255fef25fc9015dabc599c701_html_gafde17ae255fef25fc9015dabc599c701"><div class="ttname"><a href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a></div><div class="ttdeci">constexpr auto trunc</div><div class="ttdoc">Computes the integral part of x with the same sign as x.</div><div class="ttdef"><b>Definition:</b> trunc.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gafde17ae255fef25fc9015dabc599c701_html_gafde17ae255fef25fc9015dabc599c701"><div class="ttname"><a href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a></div><div class="ttdeci">constexpr auto trunc</div><div class="ttdoc">elementwise_callable object computing the integral part of x with the same sign as x.</div><div class="ttdef"><b>Definition:</b> trunc.hpp:92</div></div>
+<div class="ttc" id="agroup__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3_html_gaa19d9ce08b61f17096366e2e638e6cc3"><div class="ttname"><a href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a></div><div class="ttdeci">constexpr raw_type const raw</div><div class="ttdoc">Higher-order Callable Object imbuing quick and dirty behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> raw.hpp:43</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1value.html">real</a> argument.</li>
+<li><code>x</code> :value argument.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
+<li><code>tol</code> scalar_value tolerance.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The integral part of <code>x</code> with the same sign as <code>x</code>.</p>
-<pre class="fragment">The standard proposes 4 rounding modes namely: `FE_TONEAREST`, `FE_DOWNWARD`, `FE_UPWARD`,
-`FE_TOWARDZERO`. This function object implements the `FE_TOWARDZERO` version.
-</pre> <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordtype">float</span> decr = <a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
-<div class="line">  wide_ft pf = {-1.0f, -1.3f, -1.5f, -1.7f, 1.0f, 2.3f, 2.5f, 2.7f};</div>
-<div class="line">  <span class="keyword">auto</span>  pf1 = <a class="code hl_variable" href="group__core__internal_gad1c74accad79dc78f0147991c3e2b9ae.html#gad1c74accad79dc78f0147991c3e2b9ae">eve::prev</a>[pf &gt;  0](pf, 7);</div>
-<div class="line">  pf1 = <a class="code hl_variable" href="group__core__internal_gabd39aa0f7b4d3220b9af85691fb09a8c.html#gabd39aa0f7b4d3220b9af85691fb09a8c">eve::next</a>[pf &lt; 0](pf1, 7);</div>
-<div class="line">  <span class="keyword">auto</span>  pf2 = pf-<a class="code hl_variable" href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a>(pf)*4.0f*decr;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(9) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                               = &quot;</span> &lt;&lt; pf  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf1                              = &quot;</span> &lt;&lt; pf1 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf2                              = &quot;</span> &lt;&lt; pf2 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc(pf)                        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost](pf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost](pf)           &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost = 6](pf1)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost = 6](pf1)      &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost](pf1)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost](pf1)           &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost = 8](pf1)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost = 8](pf1)      &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost = 2.0f*decr](pf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost = 2.0f*decr](pf2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost](pf2)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost](pf2)           &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc[almost = 5.0f*decr](pf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>[eve::almost = 5.0f*decr](pf2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">float</span> xf = -32.768f;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf        = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; trunc(xf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701">eve::trunc</a>(xf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4_html_gaaf372d425d7522a4a661bf070ef442a4"><div class="ttname"><a href="group__core__arithmetic_gaaf372d425d7522a4a661bf070ef442a4.html#gaaf372d425d7522a4a661bf070ef442a4">eve::signnz</a></div><div class="ttdeci">constexpr auto signnz</div><div class="ttdoc">elementwise_callable object computing the never zero sign of the parameter.</div><div class="ttdef"><b>Definition:</b> signnz.hpp:81</div></div>
-<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:76</div></div>
-<div class="ttc" id="agroup__core__internal_gabd39aa0f7b4d3220b9af85691fb09a8c_html_gabd39aa0f7b4d3220b9af85691fb09a8c"><div class="ttname"><a href="group__core__internal_gabd39aa0f7b4d3220b9af85691fb09a8c.html#gabd39aa0f7b4d3220b9af85691fb09a8c">eve::next</a></div><div class="ttdeci">constexpr auto next</div><div class="ttdoc">strict_elementwise_callable computing the nth next representable element</div><div class="ttdef"><b>Definition:</b> next.hpp:93</div></div>
-<div class="ttc" id="agroup__core__internal_gad1c74accad79dc78f0147991c3e2b9ae_html_gad1c74accad79dc78f0147991c3e2b9ae"><div class="ttname"><a href="group__core__internal_gad1c74accad79dc78f0147991c3e2b9ae.html#gad1c74accad79dc78f0147991c3e2b9ae">eve::prev</a></div><div class="ttdeci">constexpr auto prev</div><div class="ttdoc">Computes the nth previous representable element.</div><div class="ttdef"><b>Definition:</b> prev.hpp:98</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --><h2 class="groupheader">Semantic Modifiers </h2>
-<ul>
-<li><p class="startli">Masked Call</p>
-<p class="startli">The call <code>eve;<a class="el" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701" title="Computes the integral part of x with the same sign as x.">trunc</a>[mask](x)</code> provides a masked version of <code><a class="el" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701" title="Computes the integral part of x with the same sign as x.">eve::trunc</a></code> which is equivalent to <code>if_else (mask, <a class="el" href="group__core__arithmetic_gafde17ae255fef25fc9015dabc599c701.html#gafde17ae255fef25fc9015dabc599c701" title="Computes the integral part of x with the same sign as x.">trunc(x)</a>, x)</code>.</p>
-</li>
-<li><p class="startli">eve::almost</p>
-<p class="startli">The expression <code>trunc[almost = tol](x)</code> computes a tolerant truncated value for <code>x</code>, where <code>x</code> must be a floating value and tol a scalar value.</p><ul>
-<li>If <code>tol</code> is a floating_value computes the truncation with a tolerance <code>tol</code> using Hagerty's FL5 function.</li>
-<li>If <code>tol</code> is an integral_value n compute the truncation of the next or previous nth representable value in the <code>x</code> type.</li>
-<li>the call <code>trunc[almost](x)</code> takes tol as 3 times the machine \(\epsilon\) in the <code>x</code> type (<code>3*eps(as(x))</code>). </li>
+<ol type="1">
+<li>The integral part of <code>x</code> with the same sign as <code>x</code>. The standard proposes 4 rounding modes namely: <code>FE_TONEAREST</code>, <code>FE_DOWNWARD</code>, <code>FE_UPWARD</code>, <code>FE_TOWARDZERO</code>. This function object implements the <code>FE_TOWARDZERO</code> version.</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
+<li><code>almost</code> allows a fuzzy interpretation of ceil associated to a scalar tolerance.<ul>
+<li>with an integral value <code>tol</code>: computes the ceil of the previous nth representable value in the <code>x</code> type.</li>
+<li>with a floating value <code>tol</code>: computes the ceil with a tolerance <code>tol</code>.</li>
 </ul>
 </li>
+<li>with no tolerance value, the call is equivalent to <code>ceil[tolerance = 3*eps(as(x))(x)</code></li>
+<li>Faster for floating inputs, but only correct if as an integer, the truncation that can be exactly represented in the associated integral type.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/trunc">C++ standard reference</a> </li>
 </ul>
 
 </div>
