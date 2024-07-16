@@ -28,9 +28,9 @@ namespace eve
 //! @addtogroup special
 //! @{
 //!   @var stirling
-//!   @brief Computes the Stirling approximation of the \f$\Gamma\f$ function.
+//!   @brief `elementwise_callable` object computing the Stirling approximation of the \f$\Gamma\f$ function.
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -41,26 +41,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T stirling(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto stirling(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto stirling[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto stirling[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
-//!
-//!     * `y` :  [real floating argument](@ref eve::floating_ordered_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of an approximation of the
-//!   \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12}
-//!   e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$, where \f$P\f$ is a polynomial,
-//!   is returned.
+//!     1. The value of an approximation of the \f$\Gamma\f$ function by \f$\displaystyle \Gamma(x) \approx \sqrt{2 \pi} x^{x-\frac12}
+//!        e^{-x} \left( 1 + \frac1{x} P(\frac1{x})\right)\f$, where \f$P\f$ is a polynomial,
+//!        is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/regular/stirling.cpp}
 //! @}
 //================================================================================================

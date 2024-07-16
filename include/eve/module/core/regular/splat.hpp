@@ -20,13 +20,14 @@ struct splat_
 
 using splat_type = decorated<splat_()>;
 
+//  TODO DOC
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
 //!   @var splat
 //!   @brief Computes the TODO
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

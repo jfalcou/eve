@@ -31,9 +31,9 @@ namespace eve
 //! @{
 //! @var sinh
 //!
-//! @brief Callable object computing \f$\frac{e^x-e^{-x}}2\f$.
+//! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}2\f$.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -44,44 +44,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sinh(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sinh(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sinh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sinh[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
+//!    1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
+//!       In particular:
+//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+//!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
+//!        * If the element is a `NaN`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      In particular:
-//!
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
-//!
-//!      * for every z: `eve::sinh(eve::conj(z)) == eve::conj(std::sinh(z))`
-//!      * for every z: `eve::sinh(-z)           == -eve::sinh(z)`
-//!      * If z is \f$+0\f$, the result is \f$+0\f$
-//!      * If z is \f$i \infty\f$, the result is \f$i NaN\f$ (the sign of the real part is unspecified)
-//!      * If z is \f$i NaN\f$, the result is \f$NaN\f$
-//!      * If z is \f$x+i \infty\f$ (for any positive finite x), the result is \f$NaN+i NaN\f$
-//!      * If z is \f$x+i NaN\f$ (for any positive finite x), the result is \f$NaN+i NaN\f$
-//!      * If z is \f$+\infty\f$, the result is \f$+\infty\f$
-//!      * If z is \f$+\infty+i y\f$ (for any positive finite y), the result is \f$\infty\times cis(y)\f$
-//!      * If z is \f$+\infty+i \infty\f$, the result is \f$\pm \infty+i NaN\f$ (the sign of the real part is unspecified)
-//!      * If z is \f$+\infty+i NaN\f$, the result is \f$\pm \infty+i NaN\f$ (the sign of the real part is unspecified)
-//!      * If z is \f$NaN\f$, the result is \f$NaN\f$
-//!      * If z is \f$NaN+i y\f$ (for any finite nonzero y), the result is \f$NaN+i NaN\f$
-//!
-//!      where \f$\mathrm{cis}(y) =  \cos(y)+i\sin(y)\f$
-//!
+//!  @groupheader{Example}
 //!  @godbolt{doc/math/regular/sinh.cpp}
-//!
-//!
 //!  @}
 //================================================================================================
   inline constexpr auto sinh = functor<sinh_t>;

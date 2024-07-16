@@ -29,9 +29,9 @@ namespace eve
 //! @{
 //! @var sinc
 //!
-//! @brief Callable object computing the sine cardinal.
+//! @brief `elementwise_callable` object computing the sine cardinal.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -42,31 +42,36 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T sinc(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sinc(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sinc[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sinc[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`x`:   [floating value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) sine of the input divided by the input.
+//!   1. Returns the [elementwise](@ref glossary_elementwise) sine of the input divided by the input.
+//!      In particular:
+//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+//!       * If the element is \f$\pm\infty\f$, 0 is returned.
+//!       * If the element is a `Nan`, `NaN` is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//! In particular:
-//!
-//!   * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!   * If the element is \f$\pm\infty\f$, 0 is returned.
-//!   * If the element is a `Nan`, `NaN` is returned.
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_cardinal)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sinc.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
 //!  @}
 //================================================================================================
  inline constexpr auto sinc = functor<sinc_t>;

@@ -33,7 +33,7 @@ namespace eve
 //!   @var significants
 //!   @brief Computes the rounding to n significants digits of the first input.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

@@ -26,14 +26,14 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(sort_t, sort_);
   };
-
+// TODO DOC
 //================================================================================================
 //! @addtogroup core_simd
 //! @{
 //!   @var sort
 //!   @brief sorts a register in a accedning order accroding to a comparator.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>

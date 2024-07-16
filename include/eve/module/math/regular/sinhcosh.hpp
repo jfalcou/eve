@@ -41,7 +41,7 @@ namespace eve
 //! @brief Callable object performing the simultaneous computations of
 //! the hyperbolic sine and cosine.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -52,24 +52,29 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      zipped<T,T> sinhcosh(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto sincos(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sincos[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sincos[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!   *  `x`:   [floating value](@ref eve::floating_value).
+//!      * `x`: [floating value](@ref floating_value).
+//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   }
 //!
 //! **Return value**
 //!
-//! Returns the [elementwise](@ref glossary_elementwise) pair of values containing the
-//! hyperbolic sine and the hyperbolic cosine of the input.
+//!   1 .The computation returns a tuple-like whose elements are `sinh(x)` and `cosh(x)`
+//!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/sinhcosh.cpp}
 //!  @}
 //================================================================================================

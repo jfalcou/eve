@@ -45,7 +45,7 @@ namespace eve
 //!   @var shr
 //!   @brief Computes the arithmetic right shift operation.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -56,28 +56,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T , integral_value N >
-//!      T shr(T x, N n) noexcept;
+//!      // Regular overloads
+//!      constexpr auto shr(value auto x)                                              noexcept; // 1
+//!      constexpr auto shr(value auto x, integral_value auto n)                       noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto shr[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto shr[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value) to be shifted.
-//!
-//!     * `n`:   [shift](@ref eve::integral_value).
+//!     * `x`: [argument](@ref eve::integral_value) to be shifted.
+//!     * `n`: [shift](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The [elementwise](@ref glossary_elementwise) arithmetic right shift of the first
-//!         parameter by the second one is returned.
-//!
-//!      The call `shr(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
-//!          eve::simd_value).
-//!
-//!      The types must share the same cardinal or be scalar and if `N` is the size in bits  of
-//!      the element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
-//!      interval: `[0, N[` or the result is undefined.
+//!      1. The [elementwise](@ref glossary_elementwise) arithmetic right shift of the first
+//!         parameter by the second one is returned. If `N`is the size in bits  of the element type of `x`, all
+//!         [elements](@ref glossary_elementwise) of n must belong to the
+//!         interval: `]0, N[` or the result is undefined.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!    @note
 //!      Although the infix notation with `<<` is supported, the `<<` operator on
@@ -85,17 +87,7 @@ namespace eve
 //!      parameters due to **C++** limitations.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/shr.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::shr[mask](x, ...)` provides a masked
-//!     version of `shr` which is
-//!     equivalent to `if_else(mask, shr(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto shr = functor<shr_t>;

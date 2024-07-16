@@ -45,7 +45,7 @@ namespace eve
 //!   @var shl
 //!   @brief Computes the arithmetic left shift operation.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -56,27 +56,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::integral_value T , integral_value N >
-//!      T shl(T x, N n) noexcept;
+//!      // Regular overloads
+//!      constexpr auto shl(value auto x)                                              noexcept; // 1
+//!      constexpr auto shl(value auto x, integral_value auto n)                       noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto shl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+//!      constexpr auto shl[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::integral_value) to be shifted.
-//!     * `n`:   [shift](@ref eve::integral_value).
+//!     * `x`: [argument](@ref eve::integral_value) to be shifted.
+//!     * `n`: [shift](@ref eve::integral_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      The [elementwise](@ref glossary_elementwise) arithmetic left shift of the first
-//!      parameter by the second one is returned.
-//!
-//!      The call `shl(x, n)` is equivalent to `x << n` if `x`  is an  [simd value](@ref
-//!      eve::simd_value).
-//!
-//!      The types must share the same cardinal or be scalar and if `N` is the size in bits  of
-//!      the element type of `T`, all  [elements](@ref glossary_elementwise) of n must belong to the
-//!      interval: `[0, N[` or the result is undefined.
+//!      1. The [elementwise](@ref glossary_elementwise) arithmetic left shift of the first
+//!         parameter by the second one is returned. If `N`is the size in bits  of the element type of `x`, all
+//!         [elements](@ref glossary_elementwise) of n must belong to the
+//!         interval: `]0, N[` or the result is undefined.
+//!      2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!    @note
 //!     Although the infix notation with `<<` is supported, the `<<` operator on
@@ -84,17 +87,7 @@ namespace eve
 //!     parameters due to **C++** limitations.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/shl.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::shl[mask](x, ...)` provides a masked
-//!     version of `shl` which is
-//!     equivalent to `if_else(mask, shl(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto shl = functor<shl_t>;

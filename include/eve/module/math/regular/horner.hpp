@@ -61,8 +61,8 @@ namespace eve
 //!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tci)    noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto horner[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto horner[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)    noexcept; // 3
 //!
 //!      // Semantic options
 //!      constexpr auto horner[pedantic](/*any of the above overloads*/)               noexcept; // 4
@@ -84,7 +84,7 @@ namespace eve
 //!     \f$\qquad\qquad\displaystyle p(x) = (((c_0x+c_1)x+ ... )x + c_{n-1})\f$
 //!
 //!     1. The value of the polynom at  `x` is returned.
-//!     2. same as the call with the elements of the tuple.
+//!     2. Same as the call with the elements of the tuple.
 //!     3. [The operation is performed conditionnaly](@ref conditional).
 //!     4. `fma[pedantic]` instead of `fma` is used in internal computations.
 //!

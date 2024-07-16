@@ -57,8 +57,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!   {   template<value U, scalar_value T>
-//!       U operator()(U x, as<T> t) noexcept;
+//!      template<value U, scalar_value T> U operator()(U x, as<T> t) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -83,7 +82,6 @@ namespace eve
 //!      Undefined Behaviors if it implies conversions that are themselves U.B.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/saturate.cpp}
 //!
 //! @}

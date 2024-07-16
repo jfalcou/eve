@@ -11,13 +11,14 @@
 
 namespace eve
 {
+//TODO DOC and DEF
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
 //!   @var swap_pairs
 //!   @brief swap chosen pair of elements.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
