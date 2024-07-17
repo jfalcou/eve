@@ -41,11 +41,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto countr_zero(value auto x)                          noexcept; // 1
+//!      constexpr auto countr_zero(unsigned_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto countr_zero[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto countr_zero[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto countr_zero[conditional_expr auto c](unsigned_value auto x) noexcept; // 2
+//!      constexpr auto countr_zero[logical_value auto m](unsigned_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

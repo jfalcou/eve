@@ -50,12 +50,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::integral_value T >
-//!      constexpr auto is_pow2(value auto x) noexcept;                          // 1
+//!      constexpr auto is_pow2(integral_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_pow2[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto is_pow2[logical_value auto m](value auto x) noexcept;    // 2
+//!      constexpr auto is_pow2[conditional_expr auto c](integral_value auto x) noexcept; // 2
+//!      constexpr auto is_pow2[logical_value auto m](integral_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

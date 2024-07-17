@@ -19,7 +19,7 @@ namespace eve
   template<typename Options>
   struct rotl_t : strict_elementwise_callable<rotl_t, Options>
   {
-    template<eve::unsigned_value T, eve::integral_value S>
+    template<eve::integral_value T, eve::integral_value S>
     requires(eve::same_lanes_or_scalar<T, S>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T,S> operator()(T v, S s) const
     {
@@ -31,7 +31,7 @@ namespace eve
       return EVE_DISPATCH_CALL(v, s);
     }
 
-    template<eve::unsigned_value T, auto S>
+    template<eve::integral_value T, auto S>
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
     {
       constexpr int l = sizeof(element_type_t<T>) * 8;
@@ -61,12 +61,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto rotl(value auto x)                                              noexcept; // 1
-//!      constexpr auto rotl(value auto x, integral_value auto n)                       noexcept; // 2
+//!      constexpr auto rotl(integral_value auto x, integral_value auto n)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto rotl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
-//!      constexpr auto rotl[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!      constexpr auto rotl[conditional_expr auto c](integral_value auto x, integral_value auto n) noexcept; // 3
+//!      constexpr auto rotl[logical_value auto m](integral_value auto x, integral_value auto n)    noexcept; // 3
 //!   }
 //!   @endcode
 //!

@@ -15,7 +15,7 @@ namespace eve
   template<typename Options>
   struct byte_swap_pairs_t : strict_elementwise_callable<byte_swap_pairs_t, Options>
   {
-    template<unsigned_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
+    template<integral_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
     EVE_FORCEINLINE T operator()(T a, index_t<I0> const & i0,  index_t<I1> const & i1) const noexcept
     { return EVE_DISPATCH_CALL(a, i0, i1); }
 
@@ -40,14 +40,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto byte_swap_pairs(value auto x,
-//!                                    integral_value auto i0, integral_value auto i1) noexcept; // 1
+//!      constexpr auto byte_swap_pairs(integral_value auto x,
+//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto byte_swap_pairs[conditional_expr auto c](value auto x,
-//!                                    integral_value auto i0, integral_value auto i1) noexcept; // 2
-//!      constexpr auto byte_swap_pairs[logical_value auto m](value auto x,
-//!                                     integral_value i0, integral_value auto i1) noexcept;     // 2
+//!      constexpr auto byte_swap_pairs[conditional_expr auto c](integral_value auto x,
+//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 1
+//!      constexpr auto byte_swap_pairs[logical_value auto m](integral_value auto x,
+//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 1
 //!   @endcode
 //!
 //!   **Parameters**

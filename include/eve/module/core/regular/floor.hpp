@@ -59,7 +59,7 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto floor[almost = tol](floating_value auto x)   noexcept; // 3
-//!      constexpr auto floor[almostl](floating_value auto x)        noexcept; // 4
+//!      constexpr auto floor[almost](floating_value auto x)         noexcept; // 4
 //!   }
 //!   @endcode
 //!

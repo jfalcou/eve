@@ -30,17 +30,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_shl(value auto, x integral_value auto n) noexcept;                          // 1
+//!      constexpr auto bit_shl(integral_value auto, x integral_value auto n)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_shl[conditional_expr auto c](value auto x, integral_value auto n) noexcept; // 2
-//!      constexpr auto bit_shl[logical_value auto m](value auto x, integral_value auto n)    noexcept; // 2
+//!      constexpr auto bit_shl[conditional_expr auto c](integral_value auto x, integral_value auto n) noexcept; // 2
+//!      constexpr auto bit_shl[logical_value auto m](integral_value auto x, integral_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`: argument(@ref eve::value). to be shifted.
+//!     * `x`: argument(@ref eve::integral_value). to be shifted.
 //!     * `n`: [shift](@ref eve::integral_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.

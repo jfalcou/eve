@@ -46,8 +46,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto is_finite(floating value auto x) noexcept;                 // 1
-//!      constexpr auto is_finite(integral value auto x) noexcept;                 // 2
+//!      constexpr auto is_finite(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_finite(integral_value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto is_finite[conditional_expr auto c](value auto x) noexcept; // 3

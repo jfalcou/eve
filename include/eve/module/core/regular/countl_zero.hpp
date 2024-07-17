@@ -43,17 +43,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto countl_zero(value auto x)                          noexcept; // 1
+//!      constexpr auto countl_zero(unsigned_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto countl_zero[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto countl_zero[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto countl_zero[conditional_expr auto c](unsigned_value auto x) noexcept; // 2
+//!      constexpr auto countl_zero[logical_value auto m](unsigned_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::unsigned_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

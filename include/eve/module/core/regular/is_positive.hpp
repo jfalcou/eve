@@ -45,11 +45,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto is_positive(signed_value auto x) noexcept;                          // 1
+//!      constexpr auto is_positive(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto is_positive[conditional_expr auto c](signed_value auto x) noexcept; // 2
-//!      constexpr auto is_positive[logical_value auto m](signed_value auto x) noexcept;    // 2
+//!      constexpr auto is_positive[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto is_positive[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

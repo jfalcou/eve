@@ -45,18 +45,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto rem(floating_value auto x, index_t<scale>)       noexcept; // 1
-//!      constexpr auto rem(floating_value auto x, int scale)            noexcept; // 1
+//!      constexpr auto rem(value auto x, value auto y)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto rem[conditional_expr auto c](value auto x)       noexcept; // 2
-//!      constexpr auto rem[logical_value auto m](value auto x)          noexcept; // 2
+//!      constexpr auto rem[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
+//!      constexpr auto rem[logical_value auto m](value auto x, value auto y)    noexcept; // 2
 //!
 //!      // Semantic option
-//!      constexpr auto rem[downward](/*any of the above overloads*/)    noexcept; // 3
-//!      constexpr auto rem[upward](/*any of the above overloads*/)      noexcept; // 3
-//!      constexpr auto rem[to_nearest](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto rem[toward_zero](/*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto rem[downward](/*any of the above overloads*/)            noexcept; // 3
+//!      constexpr auto rem[upward](/*any of the above overloads*/)              noexcept; // 3
+//!      constexpr auto rem[to_nearest](/*any of the above overloads*/)          noexcept; // 3
+//!      constexpr auto rem[toward_zero](/*any of the above overloads*/)         noexcept; // 3
 //!   }
 //!   @endcode
 //!

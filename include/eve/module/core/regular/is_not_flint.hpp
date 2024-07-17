@@ -46,12 +46,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto is_not_flint(floating_value auto x) noexcept;                 // 1
-//!      constexpr auto is_not_flint(integer_value auto x) noexcept;                  // 2
+//!      constexpr auto is_not_flint(floating_value auto x) ;               noexcept  // 1
+//!      constexpr auto is_not_flint(integer_value auto x)                  noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto is_not_flint[conditional_expr auto c](value auto x) noexcept; // 3
-//!      constexpr auto is_not_flint[logical_value auto m](value auto x) noexcept;    // 3
+//!      constexpr auto is_not_flint[logical_value auto m](value auto x)    noexcept; // 3
 //!   }
 //!   @endcode
 //!

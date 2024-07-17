@@ -17,11 +17,7 @@ namespace eve
   template<typename Options>
   struct bit_unset_t : strict_elementwise_callable<bit_unset_t, Options>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
-
-    template<eve::value T, integral_scalar_value I >
+    template<eve::integral_value T, integral_value I >
     constexpr EVE_FORCEINLINE T operator()(T v, I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
@@ -46,11 +42,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_unset(unsigned_value auto x integral_scalar_value n) noexcept;             // 1
+//!      constexpr auto bit_unset(integral_value auto x, integral_value auto n)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_unset[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-//!      constexpr auto bit_unset[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+//!      constexpr auto bit_unset[conditional_expr auto c](integral_value, auto x integral_value auto n) noexcept; // 2
+//!      constexpr auto bit_unset[logical_value auto m](integral_value auto x, integral_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

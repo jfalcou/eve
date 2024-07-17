@@ -17,7 +17,7 @@ namespace eve
   template<typename Options>
   struct bit_swap_adjacent_t : strict_elementwise_callable<bit_swap_adjacent_t, Options>
   {
-    template<eve::value T, integral_value I>
+    template<eve::integral_value T, integral_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
@@ -64,17 +64,9 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_swap_adjacent.cpp}
 //!
 //!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::bit_swap_adjacent[mask](x, ...)` provides a masked
-//!     version of `bit_swap_adjacent` which is
-//!     equivalent to `if_else(mask, bit_swap_adjacent(x, ...), x)`
-//!
 //! @}
 //================================================================================================
   inline constexpr auto bit_swap_adjacent = functor<bit_swap_adjacent_t>;
