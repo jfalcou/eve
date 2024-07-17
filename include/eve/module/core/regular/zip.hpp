@@ -42,6 +42,7 @@ namespace eve
     struct filler { EVE_FORCEINLINE auto operator()(auto in, auto *ptr) const { *ptr = in; } };
   };
 
+  // TODO DOC
   //================================================================================================
   //! @addtogroup core_simd
   //! @{
