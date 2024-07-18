@@ -32,7 +32,7 @@ namespace eve
 //!  \f$Ai(0) = \frac1{3^{1/6}\Gamma(2/3)}\f$ and
 //!  \f$Ai'(0) =\frac{3^{1/6}}{\Gamma(1/3)}\f$.
 //!
-//!   **Defined in header**
+ //!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/bessel.hpp>
@@ -43,26 +43,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!    // Regular overload
-//!    constexpr auto airy_bi(floating_value auto x)                          noexcept; // 1
+//!      // Regular overload
+//!      constexpr auto airy_bi(floating_value auto x)                          noexcept; // 1
 //!
-//!    // Lanes masking
-//!    constexpr auto airy_bi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!    constexpr auto airy_bi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      // Lanes masking
+//!      constexpr auto airy_bi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
+//!      constexpr auto airy_bi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   * `x` :  [floating value](@ref eve::floating_value).
+//!     * `x`: positive [floating argument](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   1. The value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
-//!   \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
-//!   \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
-//!   is returned.
-//!   2. [The operation is performed conditionnaly.](@ref conditional).
+//!    1. The value of \f$ \displaystyle Bi(x) = \frac1{\pi}\int_{0}^{\infty}
+//!      \left[\exp\left(-{\frac{t^{3}}{3}}+xt\right)+
+//!      \sin\left({\frac{t^{3}}{3}}+xt\right)\,\right]dt\f$
+//!      is returned.
+//!    2. [The operation is performed conditionnaly.](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AiryFunctions.html)

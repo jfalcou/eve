@@ -33,7 +33,7 @@ namespace eve
   //!
   //!   It is the solution of \f$ x^{2}y''+2xy'+x^2 y=0\f$ for which \f$ y(0) = -\infty\f$.
   //!
-  //!   **Defined in header**
+  //!   @groupheader{Header file}
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -44,20 +44,27 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     template<eve::floating_value T> constexpr T sph_bessel_y0(T x) noexcept;
+  //!      // Regular overload
+  //!      constexpr auto sph_bessel_y0(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sph_bessel_y0[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sph_bessel_y0[logical_value auto m](floating_value auto x)    noexcept; // 2
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!   * `x`: [floating argument](@ref eve::floating_value).
+  //!     * `x`: positive [floating argument](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
   //!
   //!   **Return value**
   //!
-  //!   The value of \f$\displaystyle y_{0}(x)=-\frac{\cos x }{x}\f$ is returned.
+  //!     1.The value of \f$\displaystyle y_{0}(x)=-\frac{\cos x }{x}\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
   //!
   //!   @groupheader{Example}
-  //!
   //!   @godbolt{doc/bessel/regular/sph_bessel_y0.cpp}
   //! @}
   //================================================================================================
