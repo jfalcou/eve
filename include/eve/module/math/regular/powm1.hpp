@@ -49,20 +49,20 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto powm1(value auto x, value auto y)                          noexcept; // 1
+//!      constexpr auto powm1(floating_value auto x, floating_value auto y)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto powm1[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
-//!      constexpr auto powm1[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!      constexpr auto powm1[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto powm1[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto powm1[raw](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto powm1[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `x`, `y`: [floating value](@ref floating_value) arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

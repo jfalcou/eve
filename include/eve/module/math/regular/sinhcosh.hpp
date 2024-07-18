@@ -53,11 +53,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto sincos(floating_value auto x)                          noexcept; // 1
+//!      constexpr auto sinhcosh(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto sincos[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto sincos[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto sinhcosh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sinhcosh[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

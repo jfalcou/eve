@@ -17,7 +17,7 @@ namespace eve
   template<typename Options>
   struct horner_t : callable<horner_t, Options, pedantic_option>
   {
-    template<floating_value X, value T, value... Ts>
+    template<floating_value X, floating_value T, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<X, T, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
     operator()(X x, T t,  Ts...ts) const noexcept
@@ -57,15 +57,15 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto horner(value auto x, value auto ...ci)                         noexcept; // 1
-//!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tci)    noexcept; // 2
+//!      constexpr auto horner(floating_value auto x, floating_value auto ...ci)             noexcept; // 1
+//!      constexpr auto horner(floating_value auto x, kumi::non_empty_product_type auto tci) noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
+//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)          noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto horner[pedantic](/*any of the above overloads*/)               noexcept; // 4
+//!      constexpr auto horner[pedantic](/*any of the above overloads*/)                     noexcept; // 4
 //!   }
 //!   @endcode
 //!

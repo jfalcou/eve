@@ -52,8 +52,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto reverse_horner(value auto x, value auto ci...)                       noexcept; // 1
-//!      constexpr auto reverse_horner(value auto x, kumi::non_empty_product_type auto tci)  noexcept; // 2
+//!      constexpr auto reverse_horner(floating_value auto x, floating_value auto ci...)                       noexcept; // 1
+//!      constexpr auto reverse_horner(floating_value auto x, kumi::non_empty_product_type auto tci)  noexcept; // 2
 //!
 //!      // Semantic options
 //!      constexpr auto reverse_horner[pedantic](/*any of the above overloads*/)             noexcept; // 3

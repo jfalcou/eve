@@ -44,16 +44,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T, eve::value N >
-//!      eve::common_value_t<T, N> significants(T x, N n) noexcept;
+//!      constexpr auto significants(auto floating_value x, auto value n) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [floating argument](@ref eve::floating_value).
-//!
-//!     * `n` :  [value argument](@ref eve::integral_value). Must be positive and integral or flint.
+//!      * `x`: [floating argument](@ref eve::floating_value).
+//!      * `n` : [value argument](@ref eve::integral_value). Must be positive and integral or flint.
 //!
 //!    **Return value**
 //!
@@ -61,12 +59,10 @@ namespace eve
 //!      significants digits of `x`.
 //!      With null n the result is a NaN.
 //!
-//! @warning
-//!   Floating numbers are not stored in decimal form. So if you try significants with
+//! @warning Floating numbers are not stored in decimal form. So if you try `significants` with
 //!   a not exactly representable number the result can be not exactly what you expect.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/significants.cpp}
 //! @}
 //================================================================================================

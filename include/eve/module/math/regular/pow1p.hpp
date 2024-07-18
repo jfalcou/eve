@@ -23,7 +23,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
-    template<eve::value T, eve::value U>
+    template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
@@ -50,20 +50,20 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto pow1p(value auto x, value auto y)                          noexcept; // 1
+//!      constexpr auto pow1p(floating_value auto x, floating_value auto y)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto pow1p[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
-//!      constexpr auto pow1p[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!      constexpr auto pow1p[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto pow1p[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow1p[raw](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto pow1p[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `x`, `y`: [floating values](@ref floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -99,15 +99,10 @@ namespace eve
        else
        {
          using r_t =  common_value_t<T, U>;
-         if constexpr(has_native_abi_v<r_t>)
-         {
-           auto x =  r_t(a);
-           auto y =  r_t(b);
-           auto incx = inc(x);
-           return if_else(abs(x) > half(as(x)), pow[o](incx, y), exp(y*log1p(x)));
-         }
-         else
-           return arithmetic_call(pow1p[o], a, b);
+         auto x =  r_t(a);
+         auto y =  r_t(b);
+         auto incx = inc(x);
+         return if_else(abs(x) > half(as(x)), pow[o](incx, y), exp(y*log1p(x)));
        }
     }
   }

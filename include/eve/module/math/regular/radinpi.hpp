@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct radinpi_t : elementwise_callable<radinpi_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(radinpi_t, radinpi_);
@@ -43,17 +43,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto radinpi(value auto x)                          noexcept; // 1
+//!      constexpr auto radinpi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto radinpi[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto radinpi[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto radinpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto radinpi[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!    * `x`: [value](@ref value).
+//!    * `x`: [floating value](@ref floating_value).
 //!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!    * `m`: [Logical value](@ref logical) masking the operation.
 //!

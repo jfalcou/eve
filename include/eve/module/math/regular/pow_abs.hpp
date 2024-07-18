@@ -21,7 +21,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
-    template<eve::value T, eve::value U>
+    template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
@@ -48,20 +48,20 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto powm1(value auto x, value auto y)                          noexcept; // 1
+//!      constexpr auto pow_abs(floating_value auto x, floating_value auto y)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto powm1[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
-//!      constexpr auto powm1[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!      constexpr auto pow_abs[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+//!      constexpr auto pow_abs[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto powm1[raw](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto pow_abs[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!     * `x`, `y`: [value](@ref value) arguments.
+//!     * `x`, `y`: [floating_value](@ref floating_value) arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -119,45 +119,41 @@ namespace eve
         return std::pow(eve::abs(x), y);
       else
       {
-        if constexpr( has_native_abi_v<T> )
-        {
-          using i_t              = as_integer_t<r_t, unsigned>;
-          using eli_t            = element_type_t<i_t>;
-          auto        iseqzx     = is_eqz(x);
-          auto        ylt0       = y < zero(as(y));
-          auto        ax         = eve::abs(x);
-          auto        ax_is1     = ax == eve::one(as(x));
-          eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
-          auto [yf, yi]          = eve::modf(eve::abs(y));
-          auto test              = yf > r_t(0.5);
-          yf                     = dec[test](yf);
-          auto z                 = eve::exp(yf*eve::log(ax));
-          yi                     = inc[test](yi);
-          yi                     = if_else(ax_is1, eve::one, yi);
-          auto large             = (yi > r_t(largelimit));
-          yi                     = if_else(large, eve::one, yi);
+        using i_t              = as_integer_t<r_t, unsigned>;
+        using eli_t            = element_type_t<i_t>;
+        auto        iseqzx     = is_eqz(x);
+        auto        ylt0       = y < zero(as(y));
+        auto        ax         = eve::abs(x);
+        auto        ax_is1     = ax == eve::one(as(x));
+        eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
+        auto [yf, yi]          = eve::modf(eve::abs(y));
+        auto test              = yf > r_t(0.5);
+        yf                     = dec[test](yf);
+        auto z                 = eve::exp(yf*eve::log(ax));
+        yi                     = inc[test](yi);
+        yi                     = if_else(ax_is1, eve::one, yi);
+        auto large             = (yi > r_t(largelimit));
+        yi                     = if_else(large, eve::one, yi);
 
-          auto russian = [](auto base, auto expo){
-            r_t result(1);
-            while( eve::any(is_nez(expo)) )
-            {
-              result *= if_else(is_odd(expo), base, T(1));
-              expo = (expo >> 1);
-              base = sqr(base);
-            }
-            return result;
-          };
-          z *= russian(ax, convert(yi, uint_from<T>()));
-          z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
-          z = if_else(iseqzx && ylt0, zero, z);
-          z = if_else(is_infinite(ax), inf(as(x)), z);
-          z = if_else(ylt0, rec[pedantic2](z), z);
-          z = if_else(ax_is1 || is_eqz(y), one, z);
-          z = if_else(iseqzx && is_gtz(y), zero, z);
-          z = if_else(is_nan(x) && is_nan(y), allbits, z);
-          return z;
-        }
-        else return apply_over(pow_abs[o], x, y);
+        auto russian = [](auto base, auto expo){
+          r_t result(1);
+          while( eve::any(is_nez(expo)) )
+          {
+            result *= if_else(is_odd(expo), base, T(1));
+            expo = (expo >> 1);
+            base = sqr(base);
+          }
+          return result;
+        };
+        z *= russian(ax, convert(yi, uint_from<T>()));
+        z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
+        z = if_else(iseqzx && ylt0, zero, z);
+        z = if_else(is_infinite(ax), inf(as(x)), z);
+        z = if_else(ylt0, rec[pedantic2](z), z);
+        z = if_else(ax_is1 || is_eqz(y), one, z);
+        z = if_else(iseqzx && is_gtz(y), zero, z);
+        z = if_else(is_nan(x) && is_nan(y), allbits, z);
+        return z;
       }
     }
   }

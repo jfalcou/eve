@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option>
   {
-    template<eve::value T0, eve::value T1, value... Ts>
+    template<eve::floating_value T0, eve::floating_value T1, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<T0,T1, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
@@ -42,7 +42,7 @@ namespace eve
 //! x_i\right)^{1/n} \f$.
 //!
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -53,36 +53,32 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<floating_value T, floating_value ... Ts>
-//!      auto geommean( T x, Ts ... args ) const noexcept
+//!      // Regular overloads
+//!      constexpr auto geommean(floating_value auto x, floating_value auto ... xs)        noexcept; // 1
+//!      constexpr auto geommean(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+//!
+//!      // Lanes masking
+//!      constexpr auto geommean[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+//!      constexpr auto geommean[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!
 //! **Parameters**
 //!
-//!   ``x`, `... args`:   [floating real values](@ref eve::floating_value)
+//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   *  The geometric mean of the inputs is returned
-//!
-//!   *  The result type is the [common value type](@ref common_value_t) of the parameters.
+//!    1. The geometric mean of the inputs is returned
+//!    2. equivalent to the call on the elements of the tuple.
+//!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/geommean.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::geommean[mask](x, ...)` provides a masked version of `eve::geommean` which is
-//!     equivalent to `if_else (mask, geommean(x, ...), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/geommean.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto geommean = functor<geommean_t>;

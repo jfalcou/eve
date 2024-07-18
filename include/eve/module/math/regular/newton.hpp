@@ -17,13 +17,13 @@ namespace eve
   template<typename Options>
   struct newton_t : callable<newton_t, Options, pedantic_option>
   {
-    template<floating_value X, value... CsNs>
+    template<floating_value X, floating_value... CsNs>
     requires(eve::same_lanes_or_scalar<X, CsNs...>)
     EVE_FORCEINLINE constexpr common_value_t<X, CsNs...>
     operator()(X x, CsNs... csns) const noexcept
     { return EVE_DISPATCH_CALL(x, csns...); }
 
-    template<floating_value X, value... Cs, value... Ns>
+    template<floating_value X, floating_value... Cs, floating_value... Ns>
     requires(eve::same_lanes_or_scalar<X, Cs..., Ns...>)
     EVE_FORCEINLINE constexpr
     eve::common_value_t<X, Cs...,  Ns...>
@@ -57,16 +57,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto newton(value auto x, value auto ... cmi)                       noexcept; // 1
-//!      constexpr auto newton(value auto x, kumi::non_empty_product_type auto ci
-//!                                          kumi::non_empty_product_type auto mi)     noexcept; // 2
+//!      constexpr auto newton(floating_value auto x, floating_value auto ... cmi)         noexcept; // 1
+//!      constexpr auto newton(floating_value auto x, kumi::non_empty_product_type auto ci
+//!                                          kumi::non_empty_product_type auto mi)         noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/) noexcept; // 2
-//!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)    noexcept; // 2
+//!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)        noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto newton[pedantic](/*any of the above overloads*/)               noexcept; // 2
+//!      constexpr auto newton[pedantic](/*any of the above overloads*/)                   noexcept; // 4
 //!   }
 //!   @endcode
 //!

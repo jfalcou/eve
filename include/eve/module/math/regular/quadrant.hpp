@@ -27,10 +27,9 @@ namespace eve
 //! @addtogroup math_trig
 //! @{
 //! @var quadrant
-//!
 //! @brief Callable object computing the quadrant value.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/math.hpp>
@@ -41,15 +40,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T quadrant(T n) noexcept;
+//!      constexpr auto quadrant(value auto n) noexcept;   // 1
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!`n`:   [ordered integral value](@ref eve::ordered_value). Must be of  integral type or a [flint](@ref
-//!eve::is_flint) value
+//!   `n`:   [value](@ref eve::value). Must be of  integral type or a [flint](@ref is_flint)
 //!
 //! **Return value**
 //!
@@ -57,7 +54,6 @@ namespace eve
 //!    integer) lies.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/regular/quadrant.cpp}
 //!  @}
 //================================================================================================
