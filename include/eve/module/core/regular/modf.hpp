@@ -85,8 +85,8 @@ namespace detail
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto modf_(EVE_REQUIRES(cpu_), O const& o, T a) noexcept
   {
-//     if constexpr(floating_value<T>)
-//     {
+    if constexpr(floating_value<T>)
+    {
       auto t = trunc[o.drop(pedantic2)](a);
       if constexpr(O::contains(raw2))
       {
@@ -99,7 +99,7 @@ namespace detail
           f = if_else(is_infinite(a), eve::zero, f);
         return eve::zip(f, t);
       }
-//     }
-//     else return eve::zip(zero(eve::as(a)), a);
+    }
+    else return eve::zip(zero(eve::as(a)), a);
   }
 }}
