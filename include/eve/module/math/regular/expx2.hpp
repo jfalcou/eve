@@ -39,11 +39,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto expx2(floating_value auto x)                                   noexcept; // 1
+//!      constexpr auto expx2(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto expx2[conditional_expr auto c](floating_value auto x)          noexcept; // 2
-//!      constexpr auto expx2[logical_floating_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto expx2[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto expx2[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
