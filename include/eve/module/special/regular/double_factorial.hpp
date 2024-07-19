@@ -51,8 +51,8 @@ namespace eve
 //!      constexpr auto double_factorial(unsigned_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto double_factorial[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto double_factorial[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!      constexpr auto double_factorial[conditional_expr auto c](unsigned_value auto x) noexcept; // 2
+//!      constexpr auto double_factorial[logical_value auto m](unsigned_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

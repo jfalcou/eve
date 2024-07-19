@@ -32,7 +32,7 @@ namespace eve
 //!   @brief Computes the Wright \f$\omega\f$ the inverse function of \f$ x \rightarrow \log
 //!   x+x\f$
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/special.hpp>
@@ -43,18 +43,26 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_ordered_value T >
-//!      T omega(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto omega(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto omega[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto omega[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [floating_value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
-//!   The value of the Wright \f$\omega\f$ function is returned.
+//!     1. The value of the Wright \f$\omega\f$ function is returne
+//!        (the inverse function of \f$ x \rightarrow \log x+x\f$) is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!
