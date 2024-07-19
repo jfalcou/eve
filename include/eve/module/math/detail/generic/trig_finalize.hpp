@@ -20,7 +20,7 @@ namespace eve
 
   namespace detail
   {
-    template<floating_ordered_value T>
+    template<floating_value T>
     EVE_FORCEINLINE constexpr auto
     cos_eval(T const& z) noexcept
     {
@@ -42,7 +42,7 @@ namespace eve
       }
     }
 
-    template<floating_ordered_value T>
+    template<floating_value T>
     EVE_FORCEINLINE constexpr auto
     sin_eval(const T& z, const T& x) noexcept
     {
@@ -64,7 +64,7 @@ namespace eve
       }
     }
 
-    template<floating_ordered_value T>
+    template<floating_value T>
     EVE_FORCEINLINE constexpr auto
     tancot_eval(const T& z) noexcept
     {
@@ -88,7 +88,7 @@ namespace eve
     }
 
 
-    template<floating_ordered_value T>
+    template<floating_value T>
     EVE_FORCEINLINE constexpr auto
     cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
@@ -103,7 +103,7 @@ namespace eve
       return sign*z;
     }
 
-    template<floating_ordered_value T>
+    template<floating_value T>
     EVE_FORCEINLINE auto
     sincos_finalize(T a0, const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
@@ -121,7 +121,7 @@ namespace eve
                              , if_else(swap, se, ce)*cos_sign);
     }
 
-    template<ordered_value T>
+    template<value T>
     EVE_FORCEINLINE constexpr auto
     sin_finalize(T a0,  T fn,  T xr, T dxr = T(0)) noexcept
     {

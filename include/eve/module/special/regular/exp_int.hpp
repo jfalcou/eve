@@ -20,12 +20,12 @@ namespace eve
   template<typename Options>
   struct exp_int_t : strict_elementwise_callable<exp_int_t, Options, saturated_option>
   {
-    template<eve::floating_ordered_value T, eve::ordered_value I>
+    template<eve::floating_value T, eve::value I>
     requires (same_lanes_or_scalar<I, T>)
       EVE_FORCEINLINE  constexpr eve::as_wide_as_t<T, I>  operator()(I n, T v) const noexcept
     { return EVE_DISPATCH_CALL(n, v); }
 
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exp_int_t, exp_int_);
@@ -62,7 +62,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n`: [unsigned argument](@ref eve::unsigned_value). If not present taken to be 1.
-//!     * `x`: [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [real floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

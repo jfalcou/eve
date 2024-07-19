@@ -106,29 +106,4 @@ namespace eve
   //================================================================================================
   template<typename T> concept logical_value         = value<T> && is_logical_v<T>;
 
-
-  //================================================================================================
-  //! @ingroup simd_concepts
-  //! @concept ordered_value
-  //! @brief The concept `ordered_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the element_type satisfies std::totally_ordered
-  //!
-  //! @groupheader{Examples}
-  //! - `double`
-  //! - `eve::wide<int, eve::fixed<2>>`
-  //================================================================================================
-  template<typename T> concept ordered_value = value<T> && std::totally_ordered<element_type_t<T>>;
-
-  //================================================================================================
-  //! @ingroup simd_concepts
-  //! @concept floating_ordered_value
-  //! @brief The concept `ordered_value<T>` is satisfied if and only if T satisfies
-  //! `eve::ordered_value` and the element_type satisfies std::floating_point
-  //!
-  //! @groupheader{Examples}
-  //! - `double`
-  //! - `eve::wide<float, eve::fixed<2>>`
-  //================================================================================================
-  template<typename T> concept floating_ordered_value = ordered_value<T> && std::floating_point<element_type_t<T>>;
-
 }

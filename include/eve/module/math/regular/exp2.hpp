@@ -92,7 +92,7 @@ namespace eve
 
   namespace detail
   {
-    template<ordered_value T, callable_options O>
+    template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T
     exp2_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
@@ -158,7 +158,7 @@ namespace eve
       }
     }
 
-    template<ordered_value T, floating_scalar_value U, callable_options O>
+    template<value T, floating_scalar_value U, callable_options O>
     EVE_FORCEINLINE constexpr as_wide_as_t<U, T>
     exp2_(EVE_REQUIRES(cpu_), O const&, T xx, as<U> const & ) noexcept
     {

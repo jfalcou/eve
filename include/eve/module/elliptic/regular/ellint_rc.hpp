@@ -20,7 +20,7 @@ namespace eve
   template<typename Options>
   struct ellint_rc_t : elementwise_callable<ellint_rc_t, Options>
   {
-    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+    template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
     constexpr EVE_FORCEINLINE
     eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept

@@ -26,7 +26,7 @@
 
 namespace eve::detail
 {
-template<ordered_value T, ordered_value U>
+template<value T, value U>
 EVE_FORCEINLINE auto
 nb_values_(EVE_SUPPORTS(cpu_),
            T const& a,

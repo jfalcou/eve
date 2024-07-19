@@ -70,7 +70,7 @@ namespace eve
 
   namespace detail
   {
-    template<floating_ordered_value T, callable_options O>
+    template<floating_value T, callable_options O>
     EVE_FORCEINLINE constexpr T
     radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {

@@ -53,7 +53,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!   * `n`: order of the function. Order must be positive,
-  //!   * `x`: [floating argument](@ref eve::floating_ordered_value).
+  //!   * `x`: [floating argument](@ref eve::floating_value).
   //!
   //!   **Return value**
   //!

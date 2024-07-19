@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-template<typename T, floating_ordered_value U, callable_options O>
+template<typename T, floating_value U, callable_options O>
 constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)
 requires(std::same_as<element_type_t<T>, element_type_t<U>>)
 {

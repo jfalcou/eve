@@ -17,7 +17,7 @@ namespace eve
   template<typename Options>
   struct log_gamma_t : elementwise_callable<log_gamma_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     { return EVE_DISPATCH_CALL(v); }
 
@@ -52,7 +52,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [strictly positive real floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

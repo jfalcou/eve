@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T, floating_ordered_value U>
+template<floating_value T, floating_value U>
 EVE_FORCEINLINE constexpr auto
 remainder_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept
 {

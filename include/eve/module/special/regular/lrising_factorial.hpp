@@ -22,7 +22,7 @@ namespace eve
                                                             , raw_option, pedantic_option
                                                             >
   {
-    template<ordered_value I, floating_ordered_value T>
+    template<value I, floating_value T>
     requires (same_lanes_or_scalar<I, T>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 
@@ -62,7 +62,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `a`, `x`:  [floating arguments](@ref eve::floating_ordered_value).
+//!     * `a`, `x`:  [floating arguments](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

@@ -34,7 +34,7 @@ namespace eve
 //! ---
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template <auto f, auto d, floating_ordered_value T> T operator()(as<T> target) const
+//!  template <auto f, auto d, floating_value T> T operator()(as<T> target) const
 //!  noexcept;
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //!

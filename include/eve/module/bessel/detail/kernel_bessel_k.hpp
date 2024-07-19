@@ -24,7 +24,7 @@
 namespace eve::detail
 {
 
-template<ordered_value I, floating_ordered_value T>
+template<value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
 {
@@ -60,14 +60,14 @@ kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
   }
 }
 
-template<ordered_value I, floating_ordered_value T>
+template<value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_k_int_small(I n, T x) noexcept
 {
   return bessel_k_small_z_series(T(n), x);
 }
 
-template<ordered_value I, floating_ordered_value T>
+template<value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_k_int_medium(I n, T x) noexcept
 {
@@ -77,7 +77,7 @@ kernel_bessel_k_int_medium(I n, T x) noexcept
 
 /////////////////////////////////////////////////////////////////////////
 // bessel_k of integer order
-template<ordered_value I, floating_ordered_value T>
+template<value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_k_int(I n, T x) noexcept
 {
@@ -115,7 +115,7 @@ kernel_bessel_k_int(I n, T x) noexcept
   }
 }
 
-template<floating_ordered_value T>
+template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_k_flt(T n, T x) noexcept
 {

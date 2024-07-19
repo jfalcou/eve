@@ -18,14 +18,14 @@ namespace eve
                                                     , successor_option, kind_1_option, kind_2_option
                                                     >
   {
-    template<eve::floating_ordered_value ...Ts>
+    template<eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<Ts...>)
     constexpr EVE_FORCEINLINE
     eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(b...);
     }
-    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    template<eve::integral_value T0, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, Ts...>)
     constexpr EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
@@ -74,7 +74,7 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n` :  [integral positive arguments](@ref eve::integral_value).
-//!     * `x` :  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!
 //!    **Return value**
 //!

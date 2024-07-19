@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct sinpic_t : elementwise_callable<sinpic_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sinpic_t, sinpic_);

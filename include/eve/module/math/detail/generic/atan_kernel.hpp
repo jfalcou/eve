@@ -20,7 +20,7 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE auto
   atan_kernel(T const& x, T const& recx) noexcept
   {

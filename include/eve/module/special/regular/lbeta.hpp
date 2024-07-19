@@ -17,7 +17,7 @@ namespace eve
 template<typename Options>
 struct lbeta_t : elementwise_callable<lbeta_t, Options>
 {
-  template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+  template<eve::floating_value T0, eve::floating_value T1>
   requires (same_lanes_or_scalar<T0, T1>)
   EVE_FORCEINLINE constexpr
   eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept
@@ -54,7 +54,7 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`, `y`: [strictly positive real floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

@@ -27,7 +27,7 @@ namespace eve::detail
   }
 
   // basic legendre (legendre_p)
-  template<ordered_value L, floating_value T, callable_options O>
+  template<value L, floating_value T, callable_options O>
   as_wide_as_t<T, L>
   constexpr legendre_(EVE_REQUIRES(cpu_), O const& o, L l, T x)
   {

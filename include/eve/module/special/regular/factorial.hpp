@@ -271,7 +271,7 @@ inline constexpr auto factorial = functor<factorial_t>;
       }
     }
 
-    template<floating_ordered_value T, callable_options O>
+    template<floating_value T, callable_options O>
     constexpr EVE_FORCEINLINE
     T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {

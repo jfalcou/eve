@@ -23,8 +23,8 @@ namespace eve
   template<typename Options>
   struct ellint_rj_t : elementwise_callable<ellint_rj_t, Options, raw_option>
   {
-    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1,
-             eve::floating_ordered_value T2, eve::floating_ordered_value T3>
+    template<eve::floating_value T0, eve::floating_value T1,
+             eve::floating_value T2, eve::floating_value T3>
     requires (same_lanes_or_scalar<T0, T1, T2, T3>)
     constexpr EVE_FORCEINLINE
     eve::common_value_t<T0, T1, T2, T3> operator()(T0 a, T1 b, T2 c, T3 d) const noexcept
@@ -66,10 +66,10 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_ordered_value). `x`, `y` and  `z`
+//!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_value). `x`, `y` and  `z`
 //!                     must be non negative and at most one of them equal to 0. In any other case,
 //!                     the result is `NaN`.
-//!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_ordered_value). In any other case,
+//!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_value). In any other case,
 //!             the result is `NaN`.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.

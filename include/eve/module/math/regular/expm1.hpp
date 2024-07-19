@@ -20,7 +20,7 @@ namespace eve
   template<typename Options>
   struct expm1_t : elementwise_callable<expm1_t, Options, pedantic_option>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(expm1_t, expm1_);
