@@ -18,11 +18,14 @@ namespace eve
   template<typename Options>
   struct logspace_add_t : tuple_callable<logspace_add_t, Options>
   {
-    template<eve::floating_ordered_value T, floating_ordered_value U>
+    template<eve::floating_value T, floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t, u);
+    }
 
-    template<eve::floating_ordered_value T0, floating_ordered_value T1, floating_ordered_value... Ts>
+    template<eve::floating_value T0, floating_value T1, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
@@ -57,7 +60,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto logspace_add(value auto x, value auto ... xs)                          noexcept; // 1
+//!      constexpr auto logspace_add(floating_value auto x, floating_value auto ... xs)                          noexcept; // 1
 //!      constexpr auto logspace_add(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
@@ -68,7 +71,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`, `...xs`: [real](@ref value) arguments.
+//!     * `x`, `...xs`: [real](@ref floating_value) arguments.
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.

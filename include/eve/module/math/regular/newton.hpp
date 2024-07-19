@@ -57,16 +57,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto newton(value auto x, value auto ... cmi)                       noexcept; // 1
-//!      constexpr auto newton(value auto x, kumi::non_empty_product_type auto ci
-//!                                          kumi::non_empty_product_type auto mi)     noexcept; // 2
+//!      constexpr auto newton(floating_value auto x, floating_value auto ... cmi)         noexcept; // 1
+//!      constexpr auto newton(floating_value auto x, kumi::non_empty_product_type auto ci
+//!                                          kumi::non_empty_product_type auto mi)         noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/) noexcept; // 2
-//!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)    noexcept; // 2
+//!      constexpr auto newton[conditional_expr auto c](*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto newton[logical_value auto m](*any of the above overloads*/)        noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto newton[pedantic](/*any of the above overloads*/)               noexcept; // 2
+//!      constexpr auto newton[pedantic](/*any of the above overloads*/)                   noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -77,7 +77,9 @@ namespace eve
 //!     * `cm`:  tuple  containing the nodes by decreasing power order.
 //!     * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.
 //!                The total number of values is to be odd. If s is this number, the (s+1)/2 first
-//!                are taken as the coefs and the others are the nodes
+//!                are taken as the coefs and the others are the nodes.
+//!                Note that the values of the cmi are not necessarily floating but the non floating ones
+//!                are to be scalar
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

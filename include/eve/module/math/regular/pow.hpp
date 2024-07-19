@@ -256,7 +256,7 @@ namespace eve
         r_t base = a0;
         U expo = a1;
 
-        r_t result = one(as<r_t>());
+        r_t result = eve::one(as<r_t>());
         while( eve::any(to_logical(expo)) )
         {
           result *= if_else(is_odd(expo), base, one);

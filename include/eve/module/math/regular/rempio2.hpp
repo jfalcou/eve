@@ -49,20 +49,20 @@ namespace eve
 //!   {
 //!   {
 //!      // Regular overload
-//!      constexpr auto rempio2(value auto x)                          noexcept; // 1
+//!      constexpr auto rempio2(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic options
-//!      constexpr auto rempio2[quarter_circle](value auto x)          noexcept; // 2.a
-//!      constexpr auto rempio2[half_circle](value auto x)             noexcept; // 2.b
-//!      constexpr auto rempio2[full_circle](value auto x)             noexcept; // 2.c
-//!      constexpr auto rempio2[medium](value auto x)                  noexcept; // 2.d
-//!      constexpr auto rempio2[big](value auto x)                     noexcept; // 2.e
+//!      constexpr auto rempio2[quarter_circle](floating_value auto x)          noexcept; // 2.a
+//!      constexpr auto rempio2[half_circle](floating_value auto x)             noexcept; // 2.b
+//!      constexpr auto rempio2[full_circle](floating_value auto x)             noexcept; // 2.c
+//!      constexpr auto rempio2[medium](floating_value auto x)                  noexcept; // 2.d
+//!      constexpr auto rempio2[big](floating_value auto x)                     noexcept; // 2.e
 //!   }
 //!   @endcode
 //!
 //! **Parameters**
 //!
-//!     * `x`: [value](@ref value).
+//!     * `x`: [floating value](@ref floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

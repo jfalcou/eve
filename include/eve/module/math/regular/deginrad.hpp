@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct deginrad_t : elementwise_callable<deginrad_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(deginrad_t, deginrad_);
@@ -41,11 +41,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto deginrad(value auto x)                          noexcept; // 1
+//!      constexpr auto deginrad(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto deginrad[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto deginrad[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto deginrad[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto deginrad[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

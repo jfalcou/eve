@@ -17,7 +17,7 @@ namespace eve
   template<typename Options>
   struct div_180_t : elementwise_callable<div_180_t, Options>
   {
-    template<eve::value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(div_180_t, div_180_);
@@ -42,11 +42,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto div_180(value auto x)                          noexcept; // 1
+//!      constexpr auto div_180(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto div_180[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto div_180[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto div_180[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto div_180[logical_floating_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

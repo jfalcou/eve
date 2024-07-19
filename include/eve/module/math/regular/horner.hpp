@@ -57,15 +57,15 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto horner(value auto x, value auto ...ci)                         noexcept; // 1
-//!      constexpr auto horner(value auto x, kumi::non_empty_product_type auto tci)    noexcept; // 2
+//!      constexpr auto horner(floating_value auto x, value auto ...ci)                      noexcept; // 1
+//!      constexpr auto horner(floating_value auto x, kumi::non_empty_product_type auto tci) noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)    noexcept; // 3
+//!      constexpr auto horner[conditional_expr auto c](*any of the above overloads*/)       noexcept; // 3
+//!      constexpr auto horner[logical_value auto m](*any of the above overloads*/)          noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto horner[pedantic](/*any of the above overloads*/)               noexcept; // 4
+//!      constexpr auto horner[pedantic](/*any of the above overloads*/)                     noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -73,6 +73,8 @@ namespace eve
 //!
 //!     * `x`: [evaluation point floating value](@ref floating_value) arguments.
 //!     * `ci...`: [floating values](@ref floating_value) polynom coefficients in decreasing power order,
+//!        Note that the values of the `ci` are not necessarily floating but the non floating ones
+//!        are to be scalar
 //!     * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
