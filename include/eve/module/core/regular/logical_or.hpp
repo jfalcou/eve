@@ -53,13 +53,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      auto logical_or(auto value x, auto value y) noexcept;
+//!      constexpr auto logical_or(auto logical_value x, auto logical_value y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`:  [arguments](@ref eve::value).
+//!     * `x`, `y`:  [logical_ rguments](@ref eve::logical_value).
 //!
 //!    **Return value**
 //!

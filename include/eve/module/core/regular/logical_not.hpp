@@ -46,7 +46,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      eve::as_logical_t<T> logical_or(auto value x) noexcept;
+//!      constexpr auto logical_not(auto logical_value x) noexcept;
 //!   }
 //!   @endcode
 //!

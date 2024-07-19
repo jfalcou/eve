@@ -30,20 +30,14 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr bool any(value auto x)                                              noexcept; // 1
-//!      constexpr bool any(top_bits auto M t)                                         noexcept; // 1
+//!      constexpr auto any(logical_value auto x)                                      noexcept; // 1
+//!      constexpr auto any(top_bits auto M t)                                         noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto any[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
 //!      constexpr auto any[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
-//!    **Return value**
-//!
-//!      A bool value.
-//!
-//!   * 1. A bool value which is true if and only if any element of `x` is not zero.
-//!     2. A masked version  which is true if and only if any retained elements of `x` are not zero.
 //!
 //!   **Parameters**
 //!
@@ -51,10 +45,10 @@ namespace eve
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    A bool value which is true if and only if any elements of `x` is not zero
-//!    is returned.
+//!     1. A bool value which is true if and only if any element of `x` is true.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/any.cpp}

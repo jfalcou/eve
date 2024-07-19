@@ -30,8 +30,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr bool all(value auto x)                                              noexcept; // 1
-//!      constexpr bool all(top_bits auto M t)                                         noexcept; // 1
+//!      constexpr auto all(logical_value auto x)                                      noexcept; // 1
+//!      constexpr auto all(top_bits auto t)                                           noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto all[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
@@ -41,13 +41,12 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref value).
+//!     * `x`: [argument](@ref logical_value).
+//!     * `t`: [top bits](@ref top_bits).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
-//!
-//!      A bool value.
+//!   **Return value**
 //!
 //!      1. A bool value which is true if and only if all elements of `x` are not zero.
 //!      2. A masked version  which is true if and only if all retained elements of `x` are not zero.

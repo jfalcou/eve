@@ -48,7 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     constexpr auto hi(value auto x) noexcept;
+//!      constexpr auto hi(value auto x) noexcept;
 //!   }
 //!   @endcode
 //!

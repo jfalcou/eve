@@ -42,13 +42,14 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template < value M, value T, value U > constexpr auto bit_select((Logical<M> m, T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_select((auto Logical_value auto  m, auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `m`: [mask](@ref logicalvalue)
+//!     * `m`: [mask](@ref value)
 //!     * `x`, `y`:  [selection choices](@ref value)
 //!
 //!    **Return value**

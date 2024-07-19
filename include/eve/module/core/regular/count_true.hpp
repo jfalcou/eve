@@ -17,7 +17,7 @@ namespace eve
 //!   @var count_true
 //!   @brief Computes the number of non 0 elements
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -28,16 +28,27 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T count_true(T x) noexcept;                 //1
-//!   }
-//!      template< eve::top_bits M >
-//!      as_wide_as<unsigned, M> any(M m) noexcept;  //2
+//!      // Regular overloads
+//!      constexpr auto count_true(logical_value auto x)                                      noexcept; // 1
+//!      constexpr auto count_true(top_bits auto t)                                           noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto count_true[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto count_true[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//!   * 1. The T value  of the number of non 0 elements.
-//!   * 2  The unsigned  value  of the number of non 0 elements.
+//!   **Parameters**
+//!
+//!     * `x`: [argument](@ref logical_value).
+//!     * `t`: [top bits](@ref top_bits).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
+//!   **Return value**
+//!
+//!      1. The value in the element type of `x`  of the number of non 0 elements.
+//!      2. A masked version  which return the number of true retained elements.
 //!
 //!   **Parameters**
 //!
