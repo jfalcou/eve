@@ -65,15 +65,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     // Regular overload
-//!     constexpr auto hermite(integral_value auto n, floating_value auto x)                          noexcept; //1
+//!      // Regular overload
+//!      constexpr auto hermite(integral_value auto n, floating_value auto x)                          noexcept; //1
 //!
-//!     // Lanes masking
-//!     constexpr auto hermite[conditional_expr auto c](integral_value auto n, floating_value auto x) noexcept; // 2
-//!     constexpr auto hermite[logical_value auto m](integral_value auto n, floating_value auto x)    noexcept; // 2
+//!      // Lanes masking
+//!      constexpr auto hermite[conditional_expr auto c](integral_value auto n, floating_value auto x) noexcept; // 2
+//!      constexpr auto hermite[logical_value auto m](integral_value auto n, floating_value auto x)    noexcept; // 2
 //!
-//!     // Semantic option
-//!     constexpr auto hermite(integral_value auto n, floating_value auto x,
+//!      // Semantic option
+//!      constexpr auto hermite(integral_value auto n, floating_value auto x,
 //!                            floating_value auto hn, floating_value auto hnm1)                      noexcept; // 3
 //!   }
 //!   @endcode

@@ -37,13 +37,14 @@ namespace eve
     EVE_CALLABLE_OBJECT(nth_prime_t, nth_prime_);
   };
 
+//TODO express the target case
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
 //!   @var nth_prime
 //!   @brief Returns the nth prime number.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/combinatorial.hpp>
@@ -54,8 +55,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N >
-//!      constexpr eve::as_wide_as< double, N > nth_prime(N n) noexcept;
+//!      constexpr auto nth_prime(unsigned_value auto n) noexcept;
 //!   }
 //!   @endcode
 //!

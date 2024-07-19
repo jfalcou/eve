@@ -154,7 +154,7 @@ namespace eve::detail
       p0 = eve::legendre[associated](l, m, eve::cos(p0));
       p0 *= sqrt(((2 * ll + 1) / (4 * pi(as(x))))
                  * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
-      return if_else(is_odd(m), -p0, p0);
+       return if_else(is_odd(m), -p0, p0);
     }
     else if constexpr(O::contains(condon_shortley))
     {

@@ -43,7 +43,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 //!   but is computed using the
 //!   [Binet formula](https://mathworld.wolfram.com/BinetsFibonacciNumberFormula.html).
 //!
-//!   **Defined in header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/combinatorial.hpp>
@@ -54,20 +54,18 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value N, eve::floating_value T, eve::floating_value U>
-//!      constexpr eve::common_value_t<T, U> fibonacci(N n, T x, U y) noexcept
+//!      constexpr auto fibonacci(unsigned_value n, floating_value x, floating_value y) noexcept;  //1
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   `n`: [index](@ref eve::unsigned_value) of the value to be returned
-//!
-//!   `x`, `y`: [floating point arguments](@ref eve::floating_value) : \f$f_0\f$ and \f$f_1\f$.
+//!     * `n`: [index](@ref eve::unsigned_value) of the value to be returned
+//!   ` * `x`, `y`: [floating point arguments](@ref eve::floating_value) : \f$f_0\f$ and \f$f_1\f$.
 //!
 //!    **Return value**
 //!
-//!    The value of the  nth element of the Fibonacci sequence beginning by `x` and `y` is returned.
+//!      1. The value of the  nth element of the Fibonacci sequence beginning by `x` and `y` is returned.
 //!
 //!  @groupheader{Example}
 //!
