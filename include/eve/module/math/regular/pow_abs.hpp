@@ -110,7 +110,7 @@ namespace eve
 
     template<typename T,  typename U, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
+    pow_abs_(EVE_REQUIRES(cpu_), O const &, T a, U b) noexcept
     {
       using r_t = common_value_t<T, U>;
       auto x =  r_t(a);
