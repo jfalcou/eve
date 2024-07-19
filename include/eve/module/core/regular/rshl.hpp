@@ -20,7 +20,7 @@ namespace eve
   template<typename Options>
   struct rshl_t : strict_elementwise_callable<rshl_t, Options>
   {
-    template<unsigned_value T, integral_value N>
+    template<integral_value T, integral_value N>
     requires(eve::same_lanes_or_scalar<T, N>)
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
     {
@@ -31,7 +31,7 @@ namespace eve
       return EVE_DISPATCH_CALL(t0, s);
     }
 
-    template<unsigned_value T, std::ptrdiff_t S>
+    template<integral_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
       EVE_ASSERT(detail::assert_good_shift<T>(S),
@@ -62,12 +62,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto rshl(value auto x)                                              noexcept; // 1
-//!      constexpr auto rshl(value auto x, integral_value auto n)                       noexcept; // 2
+//!      constexpr auto rshl(integral_value auto x, integral_value auto n)                          noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto rshl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
-//!      constexpr auto rshl[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!      constexpr auto rshl[conditional_expr auto c](integral_value auto x, integral_value auto n) noexcept; // 3
+//!      constexpr auto rshl[logical_value auto m](integral_value auto x, integral_value auto n)    noexcept; // 3
 //!   }
 //!   @endcode
 //!

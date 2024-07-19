@@ -24,7 +24,7 @@ namespace eve
   template<typename Options>
   struct bit_swap_pairs_t : strict_elementwise_callable<bit_swap_pairs_t, Options>
   {
-    template<eve::value T, integral_value I0, integral_value I1>
+    template<eve::integral_value T, integral_value I0, integral_value I1>
     constexpr EVE_FORCEINLINE T operator()(T v, I0 i0,  I1 i1) const noexcept
     { return EVE_DISPATCH_CALL(v, i0, i1); }
 
@@ -49,13 +49,13 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_swap_pairs(value auto x,
+//!      constexpr auto bit_swap_pairs(integral_value auto x,
 //!                                    integral_value auto i0, integral_value auto i1) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_swap_pairs[conditional_expr auto c](value auto x,
+//!      constexpr auto bit_swap_pairs[conditional_expr auto c](integral_value auto x,
 //!                                    integral_value auto i0, integral_value auto i1) noexcept; // 2
-//!      constexpr auto bit_swap_pairs[logical_value auto m](value auto x,
+//!      constexpr auto bit_swap_pairs[logical_value auto m](integral_value auto x,
 //!                                     integral_value i0, integral_value auto i1) noexcept;     // 2
 //!   }
 //!   @endcode

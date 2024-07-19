@@ -51,8 +51,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto is_normal(floating value auto x) noexcept;                 // 1
-//!      constexpr auto is_normal(integral value auto x) noexcept;                 // 2
+//!      constexpr auto is_normal(floating_value auto x) noexcept;                 // 1
+//!      constexpr auto is_normal(integral_value auto x) noexcept;                 // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto is_normal[conditional_expr auto c](value auto x) noexcept; // 3

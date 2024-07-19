@@ -45,11 +45,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto bit_flip(value auto x, integral_value auto i)                          noexcept; // 1
+//!      constexpr auto bit_flip(integral_value auto x, integral_value auto i)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_flip[conditional_expr auto c](value auto x, integral_value auto i) noexcept; // 2
-//!      constexpr auto bit_flip[logical_value auto m](value auto x, integral_value auto i)    noexcept; // 2
+//!      constexpr auto bit_flip[conditional_expr auto c](integral_value auto x, integral_value auto i) noexcept; // 2
+//!      constexpr auto bit_flip[logical_value auto m](integral_value auto x, integral_value auto i)    noexcept; // 2
 //!   }
 //!   @endcode
 //!

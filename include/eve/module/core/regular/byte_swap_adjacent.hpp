@@ -18,7 +18,7 @@ namespace eve
   template<typename Options>
   struct byte_swap_adjacent_t : strict_elementwise_callable<byte_swap_adjacent_t, Options>
   {
-    template<eve::value T, integral_value I>
+    template<eve::integral_value T, integral_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
@@ -42,13 +42,13 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!      // Regular overload
-//!      constexpr auto byte_swap_adjacent(unsigned_value auto x, integral_value auto n) noexcept;  // 1
+//!      constexpr auto byte_swap_adjacent(integral_value auto x, integral_value auto n)   noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto byte_swap_adjacent[conditional_expr auto c](unsigned_value auto x,
-//!                                        integral_value auto n) noexcept;                         // 2
-//!      constexpr auto byte_swap_adjacent[logical_value auto m](unsigned_value auto x,
-//!                                        integral_value auto n)    noexcept;                      // 2
+//!      constexpr auto byte_swap_adjacent[conditional_expr auto c](integral_value auto x,
+//!                                        integral_value auto n)                          noexcept; // 2
+//!      constexpr auto byte_swap_adjacent[logical_value auto m](integral_value auto x,
+//!                                        integral_value auto n)                          noexcept; // 2
 //!   }
 //!   @endcode
 //!

@@ -61,12 +61,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto rotl(value auto x)                                              noexcept; // 1
-//!      constexpr auto rotl(value auto x, integral_value auto n)                       noexcept; // 2
+//!      constexpr auto rotl(unsigned_value auto x, integral_value auto n)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto rotl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
-//!      constexpr auto rotl[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!      constexpr auto rotl[conditional_expr auto c](unsigned_value auto x, integral_value auto n) noexcept; // 3
+//!      constexpr auto rotl[logical_value auto m](unsigned_value auto x, integral_value auto n)    noexcept; // 3
 //!   }
 //!   @endcode
 //!

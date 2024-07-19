@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct average_t : elementwise_callable<average_t, Options, raw_option, upward_option, downward_option>
+  struct average_t : tuple_callable<average_t, Options, raw_option, upward_option, downward_option>
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -27,6 +27,15 @@ namespace eve
     operator()(T0 t0, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, ts...);
+    }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    EVE_FORCEINLINE constexpr
+    kumi::apply_traits_t<eve::common_value,Tup>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
+    {
+      return EVE_DISPATCH_CALL(t);
     }
 
     EVE_CALLABLE_OBJECT(average_t, average_);

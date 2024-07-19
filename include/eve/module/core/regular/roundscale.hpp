@@ -51,7 +51,7 @@ namespace eve
 //!   {
 //!      // Regular overload
 //!      constexpr auto roundscale(floating_value auto x, index_t<scale>)       noexcept; // 1
-//!      constexpr auto roundscale(floating_value auto x, int scale)            noexcept; // 1
+//!      constexpr auto roundscale(floating_value auto x, integral_value scale) noexcept; // 1
 //!
 //!      // Semantic option
 //!      constexpr auto roundscale[downward](/*any of the above overloads*/)    noexcept; // 2

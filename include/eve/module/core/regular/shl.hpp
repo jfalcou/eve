@@ -57,8 +57,9 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto shl(value auto x)                                              noexcept; // 1
-//!      constexpr auto shl(value auto x, integral_value auto n)                       noexcept; // 2
+//!      constexpr auto shl(integral_value auto x, integral_value auto n)              noexcept; // 1
+//!      template< auto N >
+//!      constexpr auto shl(integral_value auto x, index_t<N> auto n)                  noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto shl[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
@@ -79,7 +80,9 @@ namespace eve
 //!         parameter by the second one is returned. If `N`is the size in bits  of the element type of `x`, all
 //!         [elements](@ref glossary_elementwise) of n must belong to the
 //!         interval: `]0, N[` or the result is undefined.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!      2. This call allows optimization for architectures that have an intrinsic requiring
+//!         an immediate parameter
+//!      3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!    @note
 //!     Although the infix notation with `<<` is supported, the `<<` operator on

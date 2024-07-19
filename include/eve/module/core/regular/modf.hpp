@@ -49,16 +49,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto modf(value auto x)                          noexcept; // 1
+//!      constexpr auto modf(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto modf[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto modf[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto modf[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto modf[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto modf[raw](value auto x)                     noexcept; // 3
-//!      constexpr auto modf[pedantic](value auto x)                noexcept; // 3
-//!      constexpr auto modf[almost](value auto x)                  noexcept; // 3
+//!      constexpr auto modf[raw](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto modf[pedantic](floating_value auto x)                noexcept; // 3
+//!      constexpr auto modf[almost](floating_value auto x)                  noexcept; // 3
 //!   }
 //!   @endcode
 //!

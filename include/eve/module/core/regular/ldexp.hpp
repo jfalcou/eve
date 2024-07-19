@@ -46,14 +46,14 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto ldexp(value auto x, integral_value N)                           noexcept; // 1
+//!      constexpr auto ldexp(floating_value auto x, integral_value N)                           noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto ldexp[conditional_expr auto c](value auto x), integral_value N) noexcept; // 2
-//!      constexpr auto ldexp[logical_value auto m](value auto x, integral_value N)     noexcept; // 2
+//!      constexpr auto ldexp[conditional_expr auto c](floating_value auto x), integral_value N) noexcept; // 2
+//!      constexpr auto ldexp[logical_value auto m](floating_value auto x, integral_value N)     noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto abs[pedantic](value auto x, integral_value N)                   noexcept; // 3
+//!      constexpr auto abs[pedantic](floating_value auto x, integral_value N)                   noexcept; // 3
 //!   }
 //!   @endcode
 //!

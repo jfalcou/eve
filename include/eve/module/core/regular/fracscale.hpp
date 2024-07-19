@@ -15,7 +15,7 @@ namespace eve
 {
   template<typename Options>
   struct fracscale_t : strict_elementwise_callable<fracscale_t, Options, upward_option, downward_option,
-                                                      to_nearest_option, toward_zero_option, pedantic_option>
+                                                      to_nearest_option, toward_zero_option>
   {
     template<floating_value T0, integral_value T1>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
@@ -53,7 +53,7 @@ namespace eve
 //!   {
 //!      // Regular overload
 //!      constexpr auto fracscale(floating_value auto x, index_t<scale>)       noexcept; // 1
-//!      constexpr auto fracscale(floating_value auto x, int scale)            noexcept; // 1
+//!      constexpr auto fracscale(floating_value auto x, integral_value scale) noexcept; // 1
 //!
 //!      // Semantic option
 //!      constexpr auto fracscale[downward](/*any of the above overloads*/)    noexcept; // 2

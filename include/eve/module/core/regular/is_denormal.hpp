@@ -51,12 +51,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto is_denormal(floating value auto x) noexcept;                 // 1
-//!      constexpr auto is_denormal(integral value auto x) noexcept;                 // 2
+//!      constexpr auto is_denormal(floating_value auto x)                                  noexcept; // 1
+//!      constexpr auto is_denormal(integral_value auto x)                                  noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto is_denormal[conditional_expr auto c](value auto x) noexcept; // 3
-//!      constexpr auto is_denormal[logical_value auto m](value auto x) noexcept;    // 3
+//!      constexpr auto is_denormal[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto is_denormal[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
