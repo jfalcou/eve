@@ -17,13 +17,13 @@ namespace eve
   template<typename Options>
   struct newton_t : callable<newton_t, Options, pedantic_option>
   {
-    template<floating_value X, floating_value... CsNs>
+    template<floating_value X, value... CsNs>
     requires(eve::same_lanes_or_scalar<X, CsNs...>)
     EVE_FORCEINLINE constexpr common_value_t<X, CsNs...>
     operator()(X x, CsNs... csns) const noexcept
     { return EVE_DISPATCH_CALL(x, csns...); }
 
-    template<floating_value X, floating_value... Cs, floating_value... Ns>
+    template<floating_value X, value... Cs, value... Ns>
     requires(eve::same_lanes_or_scalar<X, Cs..., Ns...>)
     EVE_FORCEINLINE constexpr
     eve::common_value_t<X, Cs...,  Ns...>
@@ -77,7 +77,9 @@ namespace eve
 //!     * `cm`:  tuple  containing the nodes by decreasing power order.
 //!     * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.
 //!                The total number of values is to be odd. If s is this number, the (s+1)/2 first
-//!                are taken as the coefs and the others are the nodes
+//!                are taken as the coefs and the others are the nodes.
+//!                Note that the values of the cmi are not necessarily floating but the non floating ones
+//!                are to be scalar
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
