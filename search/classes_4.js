@@ -38,7 +38,7 @@ var searchData=
   ['elementwise_5fcallable_3c_20atan_5ft_2c_20options_20_3e_35',['elementwise_callable&lt; atan_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20atanh_5ft_2c_20options_20_3e_36',['elementwise_callable&lt; atanh_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20atanpi_5ft_2c_20options_20_3e_37',['elementwise_callable&lt; atanpi_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
-  ['elementwise_5fcallable_3c_20average_5ft_2c_20options_2c_20raw_5foption_2c_20upward_5foption_2c_20downward_5foption_20_3e_38',['elementwise_callable&lt; average_t, Options, raw_option, upward_option, downward_option &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
+  ['elementwise_5fcallable_3c_20average_5ft_2c_20options_2c_20options_2e_2e_2e_20_3e_38',['elementwise_callable&lt; average_t, Options, Options... &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20bernouilli_5ft_2c_20options_20_3e_39',['elementwise_callable&lt; bernouilli_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20beta_5ft_2c_20options_20_3e_40',['elementwise_callable&lt; beta_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
   ['elementwise_5fcallable_3c_20betainc_5finv_5ft_2c_20options_20_3e_41',['elementwise_callable&lt; betainc_inv_t, Options &gt;',['../structeve_1_1elementwise__callable.html',1,'eve']]],
