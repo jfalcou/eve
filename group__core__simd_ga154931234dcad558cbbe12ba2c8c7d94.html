@@ -145,35 +145,27 @@ $(document).ready(function(){initNavTree('group__core__simd_ga154931234dcad558cb
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a>... Ts&gt;</div>
-<div class="line">  <span class="keyword">auto</span> operator()(Ts... parts) <span class="keyword">const</span> <span class="keyword">noexcept</span>;               <span class="comment">//1</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;product_type Target, <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a>... Ts&gt;</div>
-<div class="line">  <span class="keyword">auto</span> operator()(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;Target&gt;</a> t, Ts... parts) <span class="keyword">const</span> <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a>... Ts&gt;</div>
-<div class="line">  <span class="keyword">auto</span> operator()(Ts... parts) <span class="keyword">const</span> <span class="keyword">noexcept</span>;               <span class="comment">//3</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;product_type Target, <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a>... Ts&gt;</div>
-<div class="line">  <span class="keyword">auto</span> operator()(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;Target&gt;</a> t, Ts... parts) <span class="keyword">const</span> <span class="keyword">noexcept</span>; <span class="comment">//4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">zip</a>(<a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a> <span class="keyword">auto</span>... parts)               <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;Target&gt;</a> t, <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a> <span class="keyword">auto</span>... parts) <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">zip</a>()(<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> <span class="keyword">auto</span>... parts)               <span class="keyword">noexcept</span>; <span class="comment">//3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;Target&gt;</a> t, <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> <span class="keyword">auto</span>... parts)   <span class="keyword">noexcept</span>; <span class="comment">//4</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...</div><div class="ttdef"><b>Definition:</b> scalar.hpp:126</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
+<div class="ttc" id="agroup__core__simd_ga154931234dcad558cbbe12ba2c8c7d94_html_ga154931234dcad558cbbe12ba2c8c7d94"><div class="ttname"><a href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Callable for SoA value constructions.</div><div class="ttdef"><b>Definition:</b> zip.hpp:86</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
-</div><!-- fragment --><ol type="1">
-<li>Construct a kumi::tuple made from all the scalars passed as argument.</li>
-<li>Construct a <code>Target</code> instance made from all the scalars passed as argument.</li>
-<li>Construct a kumi::tuple made from all the SIMD values passed as argument.</li>
-<li>Construct a <code>Target</code> instance made from all the SIMD values passed as argument.</li>
-</ol>
-<p><b>Parameters</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>parts</code>: Variadic list of <a class="el" href="concepteve_1_1value.html">value</a> to zip together.</li>
 <li><code>t</code>: <a class="el" href="structeve_1_1as.html">Type wrapper</a> instance embedding the type to construct from <code>parts</code>.</li>
 </ul>
-<p><b>Return value</b></p>
-<p>A product type containing all values each <code>parts</code>....</p>
+<p><b>Return value</b></p><ol type="1">
+<li>a kumi::tuple made from all the scalars passed as argument.</li>
+<li>a <code>Target</code> instance made from all the scalars passed as argument.</li>
+<li>a kumi::tuple made from all the SIMD values passed as argument.</li>
+<li>a <code>Target</code> instance made from all the SIMD values passed as argument.</li>
+</ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
@@ -207,7 +199,6 @@ $(document).ready(function(){initNavTree('group__core__simd_ga154931234dcad558cb
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__simd_ga154931234dcad558cbbe12ba2c8c7d94_html_ga154931234dcad558cbbe12ba2c8c7d94"><div class="ttname"><a href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Callable for SoA value constructions.</div><div class="ttdef"><b>Definition:</b> zip.hpp:97</div></div>
 <div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:154</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
