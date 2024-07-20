@@ -29,31 +29,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::element_type_t<T> maximum(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto maximum(value auto x)                          noexcept; // 1;
+//!
+//!      // Lanes masking
+//!      constexpr auto maximum[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto maximum[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameter**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The scalar maximal value.
+//!     1. The  maximal value of all lanes.
+//!     2. The maximal value of the retained lanes.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/maximum.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::maximum[mask](x)` provides a masked
-//!     version of `maximum` which is
-//!     equivalent to : ``maximum(if_else(mask, x, valmin(as(x))))`.
-//!
 //! @}
 //================================================================================================
   EVE_MAKE_CALLABLE(maximum_, maximum);

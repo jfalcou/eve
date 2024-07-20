@@ -24,7 +24,7 @@ namespace eve
   template<typename Options>
   struct byte_reverse_t : elementwise_callable<byte_reverse_t, Options>
   {
-    template<eve::integral_value T>
+    template<eve::unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     { return EVE_DISPATCH_CALL(v); }
 
@@ -49,17 +49,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto  byte_reverse(value auto x)                          noexcept; // 1
+//!      constexpr auto byte_reverse(unsigned_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto  byte_reverse[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto  byte_reverse[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto byte_reverse[conditional_expr auto c](unsigned_value auto x) noexcept; // 2
+//!      constexpr auto byte_reverse[logical_value auto m](unsigned_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref logical_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!

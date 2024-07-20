@@ -11,13 +11,14 @@
 
 namespace eve
 {
+// TODO DOC
 //================================================================================================
 // Function decorator - safe mode
-struct safe_
-{
-  template<typename D> static constexpr auto combine(D const&) noexcept = delete;
-};
+  struct safe_
+  {
+    template<typename D> static constexpr auto combine(D const&) noexcept = delete;
+  };
 
-using safe_type                       = decorated<safe_()>;
-inline constexpr safe_type const safe = {};
+  using safe_type                       = decorated<safe_()>;
+  inline constexpr safe_type const safe = {};
 }

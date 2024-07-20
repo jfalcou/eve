@@ -11,6 +11,7 @@
 
 namespace eve
 {
+//TODO DOC
 //================================================================================================
 // Function decorator - unsafe mode
 struct unsafe_

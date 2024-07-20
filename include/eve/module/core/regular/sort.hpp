@@ -68,25 +68,22 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template <simd_value T, typename Less>
-//!     T sort(T x, Less less);               // (1)
-//!
-//!     template <simd_value T>
-//!     T sort(T x);                          // (2)
+//!      // Regular overloads
+//!      constexpr auto sort(value auto  x);                    noexcept; // 1
+//!      constexpr auto sort(value auto  x, ordering auto less) noexcept; // 1
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   * x - simd_value to sort
-//!   * less - simd strick weak ordering. Defaults to eve::is_less.
+//!     * x - simd_value to sort
+//!     * less - simd strict weak ordering. Defaults to eve::is_less.
 //!
-//!  **Return value**
+//!   **Return value**
 //!
-//!  sorted x.
+//!     1. sorted x.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/sort.cpp}
 //!
 //! @}

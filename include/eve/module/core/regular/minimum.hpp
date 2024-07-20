@@ -29,31 +29,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::element_type_t<T> minimum(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto minimum(value auto x)                          noexcept; // 1;
+//!
+//!      // Lanes masking
+//!      constexpr auto minimum[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto minimum[logical_value auto m](value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameter**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    The scalar minimal value.
+//!     1. The minimal value of all lanes.
+//!     2. The  minimal value of the retained lanes
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/minimum.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::minimum[mask](x)` provides a masked
-//!     version of `minimum` which is
-//!     equivalent to : ``minimum(if_else(mask, x, valmax(as(x))))`.
-//!
 //! @}
 //================================================================================================
   EVE_MAKE_CALLABLE(minimum_, minimum);

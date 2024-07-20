@@ -10,7 +10,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of byte_reverse", eve::test::simd::integers)
+TTS_CASE_TPL("Check return types of byte_reverse", eve::test::simd::unsigned_integers)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -22,7 +22,7 @@ TTS_CASE_TPL("Check return types of byte_reverse", eve::test::simd::integers)
 //  byte_reverse simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of byte_reverse(simd) on integral types",
-              eve::test::simd::integers,
+              eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename U>(T const& a0, U const& t)
 {
@@ -41,7 +41,7 @@ TTS_CASE_WITH("Check behavior of byte_reverse(simd) on integral types",
 // Tests for masked byte_reverse
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::byte_reverse)(eve::wide)",
-              eve::test::simd::integers,
+              eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,

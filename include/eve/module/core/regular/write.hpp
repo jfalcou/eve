@@ -31,6 +31,7 @@ namespace eve
     EVE_CALLABLE_OBJECT(write_t, write_);
   };
 
+// TODO DOC
   //================================================================================================
   //! @addtogroup memory
   //! @{

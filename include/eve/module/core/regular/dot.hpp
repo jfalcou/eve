@@ -42,23 +42,22 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< value T1, value T2>  auto dot(T1 x, T2 y) noexcept;
+//!      constexpr auto dot(auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`  :  [real arguments](@ref eve::value).
+//!     * `x`, `y`  :  [value arguments](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!    dot product: real(x)*real(y)+imag(x)*imag(y). For real numbers it is just the product.
+//!    dot product. For values it is just the product.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/dot.cpp}
-//!
-//!
 //! @}
 //================================================================================================
   inline constexpr auto dot = functor<dot_t>;

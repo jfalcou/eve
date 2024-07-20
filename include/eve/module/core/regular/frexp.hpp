@@ -27,7 +27,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //! @addtogroup core_internal
 //! @{
 //!   @var frexp
-//!   @brief `tuple_callable` computing the ieee  pair of mantissa and exponent of a floating value,
+//!   @brief `elementwise_callable` computing the ieee  pair of mantissa and exponent of a floating value,
 //!
 //!   @groupheader{Header file}
 //!
@@ -40,27 +40,36 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >  eve::zipped<T,T> frexp(T x) noexcept;           //1
-//!      template< eve::floating_value T >  eve::zipped<T,T> frexp[pedantic](T x) noexcept; //2
+//!      // Regular overload
+//!      constexpr auto frexp(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto frexp[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto frexp[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto frexp[pedantic](floating_value x)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [floating value](@ref floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
 //!     1. returns a kumi::tuple `{m,e}`  of values ` of the same type as `x`, which are related by
 //!       \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
 //!       However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
-//!
-//!     2. the pedanic option takes also properly care of the cases where
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. this option takes also properly care of the cases where
 //!        \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
 //!        denormal cases.
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/frexp)
+//!    *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/frexp)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/frexp.cpp}

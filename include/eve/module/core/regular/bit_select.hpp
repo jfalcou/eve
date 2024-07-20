@@ -42,14 +42,15 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template < value M, value T, value U > constexpr auto bit_select((Logical<M> m, T x, U y) noexcept;
+//!      // Regular overload
+//!      constexpr auto bit_select((auto value auto  m, auto value x, auto value y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `m`: [mask](@ref logicalvalue)
-//!     * `x`, `y`:  [selection choices](@ref value)
+//!     * `m`: [mask](@ref value)
+//!     * `x`, `y`: [selection choices](@ref value)
 //!
 //!    **Return value**
 //!         The value of the selected bits is returned.
@@ -58,9 +59,9 @@ namespace eve
 //!             it means that the result is composed of the bits of `x` for which the corresponding
 //!             bit of `m` is set and the bits of  `y` for which the corresponding bit of `m` is unset.
 //!
-//!           * If `T` or `U` is an [simd value](@ref eve::simd_value), the type of the result has the
-//!             element type of the common type of `T` and `U` and the maximum of the cardinals of `M`
-//!             and this type, otherwise it is `T`.
+//!           * If `x` or `y` is an [simd value](@ref eve::simd_value), the type of the result has the
+//!             element type of the common type of `x` and `y` and the maximum of the cardinals of `m`
+//!             and this type, otherwise it is the type of `x`.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_select.cpp}

@@ -52,19 +52,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto reverse(value auto x) noexcept;                                              // 1
-//!      constexpr auto reverse(value auto x integral_scalar_value n) noexcept;                      // 2
+//!      constexpr auto bit_reverse(unsigned_value auto x)                                   noexcept; // 1
+//!      constexpr auto bit_reverse(unsigned_value auto x integral_scalar_value n)           noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto reverse[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
-//!      constexpr auto reverse[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+//!      constexpr auto bit_reverse[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto bit_reverse[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`: [argument](@ref eve::value).
-//!     * `n`: n delimit the band to be reversed at both ends of x.
+//!     * `n`: n scalar delimiting the band to be reversed at both ends of x.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

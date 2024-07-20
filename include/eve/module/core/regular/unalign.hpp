@@ -46,7 +46,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(unalign_t, unalign_);
   };
-  // TODO DOC
+  // TODO DOC is this to be there : there is no simd parameter involved. Perhaps better in algo ?
   //================================================================================================
   //! @addtogroup memory
   //! @{
