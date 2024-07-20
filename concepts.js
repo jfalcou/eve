@@ -22,8 +22,6 @@ var concepts =
       [ "signed_integral_value", "concepteve_1_1signed__integral__value.html", null ],
       [ "floating_value", "concepteve_1_1floating__value.html", null ],
       [ "logical_value", "concepteve_1_1logical__value.html", null ],
-      [ "ordered_value", "concepteve_1_1ordered__value.html", null ],
-      [ "floating_ordered_value", "concepteve_1_1floating__ordered__value.html", null ],
       [ "integral_scalar_value", "concepteve_1_1integral__scalar__value.html", null ],
       [ "signed_scalar_value", "concepteve_1_1signed__scalar__value.html", null ],
       [ "unsigned_scalar_value", "concepteve_1_1unsigned__scalar__value.html", null ],
