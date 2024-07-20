@@ -12,7 +12,6 @@
 namespace eve
 {
 // TODO DOC
-// is this decorator still in use ? Perhaps must be in kyosu
 //================================================================================================
 // Function decorator - safe mode
   struct safe_

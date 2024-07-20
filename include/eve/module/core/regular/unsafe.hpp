@@ -11,7 +11,7 @@
 
 namespace eve
 {
-//TODO DOC is this still used ? Perhaps must be in kyosu
+//TODO DOC
 //================================================================================================
 // Function decorator - unsafe mode
 struct unsafe_

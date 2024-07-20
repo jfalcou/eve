@@ -78,7 +78,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     bit_swap_adjacent_(EVE_REQUIRES(cpu_), O const&, T const& x, N const & n) noexcept
     {
-      EVE_ASSERT(eve::is_pow2(n),  "n is not a power of 2");
+      EVE_ASSERT(eve::is_pow2(n) || (n == 0),  "n is not a power of 2");
       using e_t =  element_type_t<T>;
       constexpr auto S = sizeof(e_t);
       auto  mk_ct = [](uint8_t C){

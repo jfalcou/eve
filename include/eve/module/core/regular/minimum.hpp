@@ -46,8 +46,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. The scalar minimal value.
-//!     2. The scalar minimal value of the retained elements
+//!     1. The minimal value of all lanes.
+//!     2. The  minimal value of the retained lanes
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minimum.cpp}

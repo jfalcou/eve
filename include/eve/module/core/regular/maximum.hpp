@@ -46,8 +46,8 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. The scalar maximal value.
-//!     2. The scalar maximal value of the retained elements.
+//!     1. The  maximal value of all lanes.
+//!     2. The maximal value of the retained lanes.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/maximum.cpp}
