@@ -15,7 +15,7 @@
 namespace eve
 {
 template<typename Options>
-struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_option>
+struct ifrexp_t : strict_elementwise_callable<ifrexp_t, Options, pedantic_option, raw_option>
 {
   template<eve::floating_value T>
   constexpr EVE_FORCEINLINE zipped<T,eve::as_integer_t<T>> operator()(T v) const { return EVE_DISPATCH_CALL(v); }
@@ -41,36 +41,31 @@ struct ifrexp_t : elementwise_callable<ifrexp_t, Options, pedantic_option, raw_o
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      eve::zipped<T,eve::as_integer_t<T>> ifrexp(T x) noexcept;
+//!      // Regular overload
+//!      constexpr auto ifrexp(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Semantic options
+//!      constexpr auto ifrexp[pedantic](floating_value x)                     noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [value](@ref value).
 //!
 //!   **Return value**
 //!
-//!     Computes the [elementwise](@ref glossary_elementwise) ieee ifrexp of the floating value,
-//!     returning a pair `{m,e}`  of values `m` being of the same type as `x` and `e` of
-//!     the associated integral type, which are related by
-//!     \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
-//!
-//!     However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
+//!     1. Computes the [elementwise](@ref glossary_elementwise) ieee ifrexp of the floating value,
+//!        returning a pair `{m,e}`  of values `m` being of the same type as `x` and `e` of
+//!        the associated integral type, which are related by
+//!        \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
+//!        However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
+//!     2. This call takes also properly care of the cases where
+//!        \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
+//!        denormal cases.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/ifrexp.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * eve::pedantic
-//!
-//!     The call `eve::pedantic(eve::ifrexp)(x)` takes also properly care of the cases where
-//!     \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
-//!     denormal cases.
-//!
 //! @}
 //================================================================================================
 inline constexpr auto ifrexp = functor<ifrexp_t>;

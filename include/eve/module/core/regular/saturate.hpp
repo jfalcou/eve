@@ -44,7 +44,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var saturate
-//!   @brief Computes the saturation of a value in a type.
+//!   @brief `strict_elementwise_callable` computing the saturation of a value in a type.
 //!
 //!   **Defined in Header**
 //!
@@ -57,7 +57,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto saturate(value auto  x, as<scalar_value> t) noexcept;
+//!      constexpr auto saturate(value auto  x, as<value> t) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -66,10 +66,6 @@ namespace eve
 //!     * `x` :  [argument](@ref eve::value).
 //!     * `t` :  [Type wrapper](@ref eve::as) instance embedding the clamping type.
 //!
-//!  **Template parameters**
-//!
-//!     * T: scalar type to which each element of `x` is saturated
-//!
 //!    **Return value**
 //!
 //!      For an  `x` type `U`, the
@@ -77,8 +73,8 @@ namespace eve
 //!      a value of element type U which is `x` clamped between the smallest and largest values of the Target
 //!
 //!   @note
-//!      Saturation operated by [eve::saturate](#eve::saturate) may lead to
-//!      Undefined Behaviors if it implies conversions that are themselves U.B.
+//!      Saturation operated by [eve::saturate](@ref eve::saturate) may lead to
+//!      Undefined Behaviors if it implies conversions that are themselves Undefined Behavior.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/saturate.cpp}

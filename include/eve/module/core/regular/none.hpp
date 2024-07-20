@@ -29,38 +29,30 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      bool none(T x) noexcept;
+//!      // Regular overloads
+//!      constexpr auto none(logical_value auto x)                                      noexcept; // 1
+//!      constexpr auto none(top_bits auto t)                                           noexcept; // 1
 //!
-//!      template< eve::top_bits M > //1
-//!      bool none(M m) noexcept;    //2
+//!      // Lanes masking
+//!      constexpr auto none[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+//!      constexpr auto none[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
-//!   * 1. A bool value which is true if and only if all elements of `x` are  zero.
-//!   * 2  A bool value which is true if and only if all top bits elements of `x` are zero.
-//!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::logical_value).
-//!     * `m` :  [argument](@ref eve::top_bits).
+//!     * `x`: [argument](@ref logical_value).
+//!     * `t`: [top bits](@ref top_bits).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
-//!    A bool value.
+//!      1. A bool value which is true if and only if all elements of `x` are zero.
+//!      2. A masked version  which is true if and only if all retained elements of `x` are zero.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/none.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::none[mask](x)` provides a masked
-//!     version of `none` which is
-//!     equivalent to : all not masked elements are  zero.
-//!
 //! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(none_, none);

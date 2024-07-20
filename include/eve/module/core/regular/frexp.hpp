@@ -54,20 +54,22 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [floating value](@ref floating_value).
+//!     * `x`: [value](@ref value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!
 //!     1. returns a kumi::tuple `{m,e}`  of values ` of the same type as `x`, which are related by
 //!       \f$x =  m\times 2^e\f$, with  \f$|m| \in [0.5, 1.5[\f$.
 //!       However, the cases \f$x = \pm\infty\f$ or is a Nan or a denormal are undefined.
-//!
-//!     2. the pedanic option takes also properly care of the cases where
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. this option takes also properly care of the cases where
 //!        \f$x = \pm0, \pm\infty\f$ or is a Nan, where \f$m=x\f$ and \f$e=0\f$ and of the
 //!        denormal cases.
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/frexp)
+//!    *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/frexp)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/frexp.cpp}

@@ -50,12 +50,12 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto ceil(value auto x, value auto lo,  value auto hi)  noexcept; // 1
+//!      constexpr auto clamp(value auto x, value auto lo,  value auto hi)  noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto ceil[conditional_expr auto c](value auto x,
+//!      constexpr auto clamp[conditional_expr auto c](value auto x,
 //!                          value auto lo,  value auto hi) noexcept;                // 2
-//!      constexpr auto ceil[logical_value auto m](value auto x,
+//!      constexpr auto clamp[logical_value auto m](value auto x,
 //!                          value auto lo,  value auto hi)    noexcept;             // 2
 //!   }
 //!   @endcode

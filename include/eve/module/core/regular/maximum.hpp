@@ -40,9 +40,11 @@ namespace eve
 //!
 //!   **Parameter**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
-//!    **Return value**
+//!   **Return value**
 //!
 //!     1. The scalar maximal value.
 //!     2. The scalar maximal value of the retained elements.

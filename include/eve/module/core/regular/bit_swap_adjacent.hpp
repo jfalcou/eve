@@ -17,7 +17,7 @@ namespace eve
   template<typename Options>
   struct bit_swap_adjacent_t : strict_elementwise_callable<bit_swap_adjacent_t, Options>
   {
-    template<eve::integral_value T, integral_value I>
+    template<eve::unsigned_value T, integral_scalar_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
@@ -42,11 +42,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bit_swap(value auto x, integral_value auto n) noexcept;                          // 1
+//!      constexpr auto bit_swap_adjacent(unsigned_value auto x, integral_scalar_value auto n) noexcept;                          // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_swap[conditional_expr auto c](value auto x, integral_value auto n) noexcept; // 2
-//!      constexpr auto bit_swap[logical_value auto m](value auto x, integral_value auto n)    noexcept; // 2
+//!      constexpr auto bit_swap_adjacent[conditional_expr auto c](unsigned_value auto x, integral_scalar_value auto n) noexcept; // 2
+//!      constexpr auto bit_swap_adjacent[logical_value auto m](unsigned_value auto x, integral_scalar_value auto n)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -73,11 +73,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, integral_value N, callable_options O>
+    template<typename T, integral_scalar_value N, callable_options O>
     EVE_FORCEINLINE constexpr T
     bit_swap_adjacent_(EVE_REQUIRES(cpu_), O const&, T const& x, N const & n) noexcept
     {
-      EVE_ASSERT(eve::all(n >= 0),  "some n elements are less than 0");
+      EVE_ASSERT(eve::is_pow2(n),  "n is not a power of 2");
       using e_t =  element_type_t<T>;
       constexpr auto S = sizeof(e_t);
       auto  mk_ct = [](uint8_t C){
@@ -91,7 +91,7 @@ namespace eve
         }
         return r;
       };
-      auto swp = [](auto x, auto m, int n)->T{
+      auto swp = [](auto x, auto m, auto n)->T{
         return bit_or(bit_shl(bit_and(x, T(m)), n), bit_shr(bit_andnot(x, T(m)), n));
       };
 

@@ -18,6 +18,8 @@
 namespace eve
 {
 // TODO DOC is it to be in user inteface ?
+// Why is the implementation splitted ?
+// Why is this function still old-style ?
 //================================================================================================
 //! @addtogroup core
 //! @{
@@ -54,36 +56,35 @@ namespace eve
 //!
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(rotate_, rotate);
+  EVE_MAKE_CALLABLE(rotate_, rotate);
 
-template<std::ptrdiff_t M, std::ptrdiff_t N>
-inline constexpr auto rotate_pattern = fix_pattern<N>(
-  [](auto i, auto) {
-    if (i < N - M) return M + i;
-    else           return i + M - N;
-  }
-);
-
-namespace detail
-{
-  template<std::ptrdiff_t N, std::ptrdiff_t... I>
-  inline constexpr auto is_rotate = []() -> std::ptrdiff_t
-  {
-    std::array actual  = {I...};
-    if (actual.size() != N) return 0;
-
-    std::ptrdiff_t rotation = actual[0];
-    for ( auto x : actual ) {
-      if (x != rotation) {
-        return 0;
-      }
-      rotation = (rotation + 1) % actual.size();
+  template<std::ptrdiff_t M, std::ptrdiff_t N>
+  inline constexpr auto rotate_pattern = fix_pattern<N>(
+    [](auto i, auto) {
+      if (i < N - M) return M + i;
+      else           return i + M - N;
     }
+  );
 
-    return rotation;
-  }();
-}
+  namespace detail
+  {
+    template<std::ptrdiff_t N, std::ptrdiff_t... I>
+    inline constexpr auto is_rotate = []() -> std::ptrdiff_t
+    {
+      std::array actual  = {I...};
+      if (actual.size() != N) return 0;
 
+      std::ptrdiff_t rotation = actual[0];
+      for ( auto x : actual ) {
+        if (x != rotation) {
+          return 0;
+        }
+        rotation = (rotation + 1) % actual.size();
+      }
+
+      return rotation;
+    }();
+  }
 }
 
 #include <eve/module/core/regular/impl/rotate.hpp>

@@ -28,7 +28,7 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!       template<value From, scalar_value To> To bit_cast operator()(From x, as<To> t) noexcept;
+  //!      constexpr auto bit_cast operator()(value x, as<scalar_value> t) noexcept;
   //!   }
   //!   @endcode
   //!
