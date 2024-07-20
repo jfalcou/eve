@@ -25,6 +25,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
   EVE_CALLABLE_OBJECT(scatter_t, scatter_);
 };
 
+//TODO complete DOC
 //======================================================================================================================
 //! @addtogroup core_simd
 //! @{

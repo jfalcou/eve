@@ -27,7 +27,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //! @addtogroup core_internal
 //! @{
 //!   @var frexp
-//!   @brief `tuple_callable` computing the ieee  pair of mantissa and exponent of a floating value,
+//!   @brief `elementwise_callable` computing the ieee  pair of mantissa and exponent of a floating value,
 //!
 //!   @groupheader{Header file}
 //!
@@ -40,8 +40,15 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >  eve::zipped<T,T> frexp(T x) noexcept;           //1
-//!      template< eve::floating_value T >  eve::zipped<T,T> frexp[pedantic](T x) noexcept; //2
+//!      // Regular overload
+//!      constexpr auto frexp(floating_value auto x)                          noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto frexp[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto frexp[logical_value auto m](floating_value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto frexp[pedantic](floating_value x)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!

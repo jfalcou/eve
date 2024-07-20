@@ -60,24 +60,12 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     template<scalar_value... Ts>
-  //!     auto operator()(Ts... parts) const noexcept;               //1
-  //!
-  //!     template<product_type Target, scalar_value... Ts>
-  //!     auto operator()(as<Target> t, Ts... parts) const noexcept; //2
-  //!
-  //!     template<simd_value... Ts>
-  //!     auto operator()(Ts... parts) const noexcept;               //3
-  //!
-  //!     template<product_type Target, simd_value... Ts>
-  //!     auto operator()(as<Target> t, Ts... parts) const noexcept; //4
+  //!      constexpr auto zip(scalar_value auto... parts)               noexcept; //1
+  //!      constexpr auto zip(as<Target> t, scalar_value auto... parts) noexcept; //2
+  //!      constexpr auto zip()(simd_value auto... parts)               noexcept; //3
+  //!      constexpr auto zip(as<Target> t, simd_value auto... parts)   noexcept; //4
   //!   }
   //!   @endcode
-  //!
-  //!   1. Construct a kumi::tuple made from all the scalars passed as argument.
-  //!   2. Construct a `Target` instance made from all the scalars passed as argument.
-  //!   3. Construct a kumi::tuple made from all the SIMD values passed as argument.
-  //!   4. Construct a `Target` instance made from all the SIMD values passed as argument.
   //!
   //!   **Parameters**
   //!
@@ -85,11 +73,12 @@ namespace eve
   //!   * `t`:   [Type wrapper](@ref eve::as) instance embedding the type to construct from `parts`.
   //!
   //!   **Return value**
-  //!
-  //!   A product type containing all values each `parts`....
+  //!     1. a kumi::tuple made from all the scalars passed as argument.
+  //!     2. a `Target` instance made from all the scalars passed as argument.
+  //!     3. a kumi::tuple made from all the SIMD values passed as argument.
+  //!     4. a `Target` instance made from all the SIMD values passed as argument.
   //!
   //!   @groupheader{Example}
-  //!
   //!   @godbolt{doc/core/zip.cpp}
   //!
   //! @}

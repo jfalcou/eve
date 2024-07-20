@@ -45,9 +45,9 @@ namespace eve
 //!
 //!      // Lanes masking
 //!      constexpr auto byte_swap_pairs[conditional_expr auto c](integral_value auto x,
-//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 1
+//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 2
 //!      constexpr auto byte_swap_pairs[logical_value auto m](integral_value auto x,
-//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 1
+//!                                    index_t<I0> auto i0, index_t<I1> auto i1) noexcept; // 2
 //!   @endcode
 //!
 //!   **Parameters**

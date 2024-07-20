@@ -48,29 +48,24 @@ struct two_add_t : elementwise_callable<two_add_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T, eve::floating_value U  >
-//!      auto two_add(T x, U y) noexcept;
+//!      constexpr auto two_add(floating_value auto x, floating_value auto y) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [argument](@ref eve::value).
+//!     * `x`, `y`:  [floating arguments](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!
 //!     Computes [elementwise](@ref glossary_elementwise) a pair of values `[a,e]` such that:
-//!
-//!     * `a` is `x+y`
-//!     * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`
-//!
-//! where \f$\oplus\f$ adds its two parameters with infinite precision.
+//!       * `a` is `x+y`
+//!       * `e` is a value such that `a`\f$\oplus\f$`e` is equal to `x`\f$\oplus\f$`y`,
+//!          where \f$\oplus\f$ adds its two parameters with infinite precision.
 //!
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/two_add.cpp}
-//!
 //! @}
 //================================================================================================
 

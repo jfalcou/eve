@@ -57,7 +57,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template<value U, scalar_value T> U operator()(U x, as<T> t) noexcept;
+//!      constexpr auto saturate(value auto  x, as<scalar_value> t) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -72,10 +72,9 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      For an  `x` of [value](@ref eve::value) `U`, the
-//!      call `saturate(x, as_<T>{})` returns [elementwise](@ref glossary_elementwise)
-//!      a value of element type U which is
-//!      `x` clamped between the smallest and largest values of Target
+//!      For an  `x` type `U`, the
+//!      call `saturate(x, as_<Target>{})` returns [elementwise](@ref glossary_elementwise)
+//!      a value of element type U which is `x` clamped between the smallest and largest values of the Target
 //!
 //!   @note
 //!      Saturation operated by [eve::saturate](#eve::saturate) may lead to

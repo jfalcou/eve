@@ -34,7 +34,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(read_t, read_);
   };
-// TODO DOC
+// TODO DOC 
 //================================================================================================
 //! @addtogroup memory
 //! @{

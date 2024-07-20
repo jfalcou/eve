@@ -13,7 +13,7 @@
 
 namespace eve
 {
-  // TODO DOC
+  // TODO DOC is this to be in the use interface ?
   //================================================================================================
   //! @addtogroup core
   //! @{
