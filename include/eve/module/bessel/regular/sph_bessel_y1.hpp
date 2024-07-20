@@ -33,7 +33,7 @@ namespace eve
   //!
   //!   It is a solution of \f$ x^{2}y''+2xy'+(x^2-2)y=0\f$ for which \f$ y(0) = -\infty\f$.
   //!
-  //!   **Defined in header**
+  //!   @groupheader{Header file}
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -44,18 +44,26 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template<eve::floating_value T> constexpr T sph_bessel_y1(T x) noexcept;
+  //!      // Regular overload
+  //!      constexpr auto sph_bessel_y1(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sph_bessel_y1[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sph_bessel_y1[logical_value auto m](floating_value auto x)    noexcept; // 2
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!   * `x`: [floating argument](@ref eve::floating_value).
+  //!     * `x`: positive [floating argument](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
   //!
   //!   **Return value**
   //!
-  //!   The value of \f$\displaystyle y_{1}(x)=-\frac{\cos x }{x^2}-\frac{\sin x }x\f$
-  //!   is returned.
+  //!     1. The value of \f$\displaystyle y_{1}(x)=-\frac{\cos x }{x^2}-\frac{\sin x }x\f$
+  //!       is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
   //!
   //!   @groupheader{Example}
   //!

@@ -49,7 +49,7 @@ namespace eve
   //!
   //!      // Lanes masking
   //!      constexpr auto cyl_bessel_j0[conditional_expr auto c](floating_value auto x) noexcept; // 2
-  //!      constexpr auto cyl_bessel_j0[logical_value auto m]floating_(value auto x)    noexcept; // 2
+  //!      constexpr auto cyl_bessel_j0[logical_value auto m](floating_value auto x)    noexcept; // 2
   //!   }
   //!   @endcode
   //!

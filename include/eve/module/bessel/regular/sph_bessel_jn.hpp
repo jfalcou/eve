@@ -34,7 +34,7 @@ namespace eve
   //!   It is the solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = 0\f$
   //!   if \f$n \ne 0\f$ else \f$1\f$.
   //!
-  //!   **Defined in header**
+  //!   @groupheader{Header file}
   //!
   //!   @code
   //!   #include <eve/module/bessel.hpp>
@@ -45,20 +45,27 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!     template<eve::value N, eve::floating_value T >
-  //!     constexpr T sph_bessel_jn(N n, T x) noexcept;
+  //!      // Regular overload
+  //!      constexpr auto sph_bessel_jn(value auto n, floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sph_bessel_jn[conditional_expr auto c](value auto n, floating_value auto x) noexcept; // 2
+  //!      constexpr auto sph_bessel_jn[logical_value auto m](value auto n, floating_value auto x)    noexcept; // 2
   //!   }
   //!   @endcode
   //!
   //!   **Parameters**
   //!
-  //!   * `n`: order of the function. Order must be positive,
-  //!   * `x`: [floating argument](@ref eve::floating_value).
+  //!     * `n`: Order of the function.
+  //!     * `x`: [Floating argument](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
   //!
   //!   **Return value**
   //!
-  //!   The value of \f$ \displaystyle j_{n}(x)=
-  //!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\sin x}x\f$ is returned.
+  //!     1.The value of \f$ \displaystyle j_{n}(x)=
+  //!      (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\sin x}x\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
   //!
   //!   @groupheader{Example}
   //!
