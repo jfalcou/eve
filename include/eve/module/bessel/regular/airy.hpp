@@ -44,7 +44,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto airy(floating_value auto x)                 noexcept;
+//!      constexpr auto airy(eve::floating_value auto x) -> decltype(eve::zip(x,x)) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -64,9 +64,9 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/bessel/regular/airy.cpp}
+  inline constexpr auto airy = functor<airy_t>;
 //! @}
 //================================================================================================
-  inline constexpr auto airy = functor<airy_t>;
 }
 
 #include <eve/module/bessel/regular/impl/airy.hpp>

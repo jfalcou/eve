@@ -18,7 +18,7 @@ glob_unit("doc" ${doc_root} "algo/*.cpp")
 ##==================================================================================================
 add_custom_target(doc.bessel.exe        )
 add_dependencies(doc.exe doc.bessel.exe )
-glob_unit("doc" ${doc_root} "bessel/regular/*.cpp")
+glob_unit("doc" ${doc_root} "bessel/*.cpp")
 
 ##==================================================================================================
 ## GLOB and process combinatorial doc tests

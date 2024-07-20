@@ -2,9 +2,9 @@
 #include <eve/module/bessel.hpp>
 #include <iostream> 
  
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+eve::wide<double> wf([](auto i, auto c)->double{ return 2*(i-c/2);});
+eve::wide<std::int64_t> wi([](auto i, auto c)->std::int64_t{ return i-c/2;});
+eve::wide<std::uint64_t> wu([](auto i, auto )->std::uint64_t{ return i;}); 
  
 int main(){ 
    std::cout << "<- wf = " << wf << "\n";
