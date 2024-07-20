@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-template<floating_ordered_value T>
+template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 bessel_jy(T n, T x) noexcept
 requires(scalar_value<T>)
@@ -214,7 +214,7 @@ requires(scalar_value<T>)
   return kumi::make_tuple(jnu, jpnu, nnu, npnu);
 }
 
-template<floating_ordered_value T>
+template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 bessel_jy(T nu, T x) noexcept
 requires(simd_value<T>)

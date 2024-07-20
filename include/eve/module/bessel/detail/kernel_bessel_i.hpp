@@ -26,7 +26,7 @@ namespace eve::detail
 
 /////////////////////////////////////////////////////////////////////////
 // bessel_i
-template<floating_ordered_value T>
+template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_i(T n, T x) noexcept
 {

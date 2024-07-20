@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct log_abs_gamma_t : elementwise_callable<log_abs_gamma_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
@@ -51,7 +51,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [strictly positive real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`: [strictly positive real floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -70,7 +70,7 @@ inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
   {
     namespace helpers
     {
-      template<floating_ordered_value T>  constexpr EVE_FORCEINLINE T large_negative(T q)
+      template<floating_value T>  constexpr EVE_FORCEINLINE T large_negative(T q)
       {
         T    w     = eve::log_abs_gamma(q);
         T    p     = floor(q);
@@ -82,7 +82,7 @@ inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
         return T(1.1447298858494001741434273513530587116472948129153) - log(z) - w;
       }
 
-      template<floating_ordered_value T> constexpr EVE_FORCEINLINE T log_abs_gammaB(T x) noexcept
+      template<floating_value T> constexpr EVE_FORCEINLINE T log_abs_gammaB(T x) noexcept
       {
         // log gamma(x+2), -.5 < x < .5
         return
@@ -90,7 +90,7 @@ inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
                              , T(-0x1.e2c9fap-8f), T(0x1.775106p-9f), T(-0x1.57d562p-10f), T(0x1.3d7728p-11f));
       }
 
-      template<floating_ordered_value T> constexpr EVE_FORCEINLINE T log_abs_gammaC(T x) noexcept
+      template<floating_value T> constexpr EVE_FORCEINLINE T log_abs_gammaC(T x) noexcept
       {
         // log gamma(x+1), -.25 < x < .25
         return
@@ -98,12 +98,12 @@ inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
                              , T(-0x1.a7809ep-3f), T(0x1.5a9b56p-3f), T(-0x1.45a652p-3f), T(0x1.18789ep-3f));
       }
 
-      template<floating_ordered_value T> constexpr EVE_FORCEINLINE T log_abs_gamma2(T p) noexcept
+      template<floating_value T> constexpr EVE_FORCEINLINE T log_abs_gamma2(T p) noexcept
       {
         return  eve::reverse_horner(p, T(0x1.555528p-4f), T(-0x1.6b0e02p-9f), T(0x1.63fad2p-11f));
       }
 
-      template<floating_ordered_value T>
+      template<floating_value T>
       constexpr EVE_FORCEINLINE T
       log_abs_gamma1(T x) noexcept
       {
@@ -114,7 +114,7 @@ inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
                              , T(0x1.0000000000000p+0));
       }
 
-      template<floating_ordered_value T> constexpr EVE_FORCEINLINE T log_abs_gammaA(const T& p) noexcept
+      template<floating_value T> constexpr EVE_FORCEINLINE T log_abs_gammaA(const T& p) noexcept
       {
         return
           eve::reverse_horner(p, T(0x1.555555555554bp-4), T(-0x1.6c16c16b0a5a1p-9), T(0x1.a019f20dc5ebbp-11)

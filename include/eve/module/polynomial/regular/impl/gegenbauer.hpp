@@ -17,7 +17,7 @@ namespace eve::detail
   template<typename I, typename T, typename U, callable_options O>
   constexpr as_wide_as_t<common_value_t<T, U>, I>
   gegenbauer_(EVE_REQUIRES(cpu_), O const&, I nn, U lambda, T x)
-    requires(ordered_value<U>)
+    requires(value<U>)
   {
     using c_t   = as_wide_as_t<common_value_t<T, U>, I>;
     using elt_t = element_type_t<c_t>;

@@ -19,7 +19,7 @@ namespace eve
   template<typename Options>
   struct erf_t : elementwise_callable<erf_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(erf_t, erf_);

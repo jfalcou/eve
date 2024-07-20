@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct signgam_t : elementwise_callable<signgam_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(signgam_t, signgam_);

@@ -16,14 +16,14 @@ namespace eve
   template<typename Options>
   struct gegenbauer_t : strict_elementwise_callable<gegenbauer_t, Options>
   {
-    template<eve::floating_ordered_value ...Ts>
+    template<eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<Ts...>)
     constexpr EVE_FORCEINLINE
     eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(b...);
     }
-    template<eve::integral_value T0, eve::floating_ordered_value ...Ts>
+    template<eve::integral_value T0, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, Ts...>)
     constexpr EVE_FORCEINLINE
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
@@ -67,8 +67,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n`: [integral argument](@ref eve::integral_value).
-//!     * `lambda`: [real floating argument](@ref eve::floating_ordered_value). Must be greater than \f$-\frac12\f$.
-//!     * `x`: [real floating argument](@ref eve::floating_ordered_value).
+//!     * `lambda`: [real floating argument](@ref eve::floating_value). Must be greater than \f$-\frac12\f$.
+//!     * `x`: [real floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

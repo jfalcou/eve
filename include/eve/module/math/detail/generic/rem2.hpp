@@ -13,7 +13,7 @@
 
 namespace eve::detail
 {
-template<ordered_value T>
+template<value T>
 EVE_FORCEINLINE auto
 rem2(T const& x) noexcept
 {

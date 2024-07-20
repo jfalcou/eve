@@ -22,7 +22,7 @@ namespace eve
     as_wide_as_t<double, T >
     operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE constexpr
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 

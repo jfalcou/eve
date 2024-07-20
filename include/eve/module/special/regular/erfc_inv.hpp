@@ -19,7 +19,7 @@ namespace eve
   template<typename Options>
   struct erfc_inv_t : elementwise_callable<erfc_inv_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(erfc_inv_t, erfc_inv_);
@@ -53,7 +53,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`:  [real floating argument](@ref eve::floating_value).
 //!       Must be in interval  \f$[0, 2]\f$ else nan is returned.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.

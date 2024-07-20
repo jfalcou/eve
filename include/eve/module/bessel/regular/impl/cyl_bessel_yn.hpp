@@ -18,7 +18,7 @@ namespace eve::detail
   // nu is floating
   //////////////////////////////////////////////////////////////////
   // floating scalar,  floating simd -> floating simd,  floating simd
-  template<floating_ordered_value I, floating_ordered_value T, callable_options O> constexpr
+  template<floating_value I, floating_value T, callable_options O> constexpr
   EVE_FORCEINLINE auto
   cyl_bessel_yn_(EVE_REQUIRES(cpu_), O const&, I nu, T x) noexcept
   requires(scalar_value<I> && simd_value<T>)
@@ -27,7 +27,7 @@ namespace eve::detail
     return flintx ? kernel_bessel_y_int(nu, x) : kernel_bessel_y_flt(T(nu), x);
   }
 
-  template<floating_ordered_value T, callable_options O> constexpr
+  template<floating_value T, callable_options O> constexpr
   EVE_FORCEINLINE T
   cyl_bessel_yn_(EVE_REQUIRES(cpu_), O const&, T nu, T x) noexcept
   {
@@ -53,7 +53,7 @@ namespace eve::detail
   // nu is integral
   //////////////////////////////////////////////////////////////////
   // integral simd,  floating scalar -> integral simd, floating simd
-  template<integral_value I, floating_ordered_value T, callable_options O> constexpr
+  template<integral_value I, floating_value T, callable_options O> constexpr
   EVE_FORCEINLINE auto
   cyl_bessel_yn_(EVE_REQUIRES(cpu_), O const&, I nu, T x) noexcept
   {

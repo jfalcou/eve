@@ -125,7 +125,7 @@ template<typename T> struct bessel_i_small_z_series_term
   T        mult;
 };
 
-template<floating_ordered_value T>
+template<floating_value T>
 EVE_FORCEINLINE T
 bessel_i_small_z_series(T v, T x)
 {

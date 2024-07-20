@@ -72,7 +72,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [real floating argument](@ref eve::floating_ordered_value).
+//!     * `x`:  [real floating argument](@ref eve::floating_value).
 //!     * `ci`:  tuple  containing the coefficients by decreasing power order.
 //!     * `cm`:  tuple  containing the nodes by decreasing power order.
 //!     * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.

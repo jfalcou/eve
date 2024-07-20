@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct cbrt_t : elementwise_callable<cbrt_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(cbrt_t, cbrt_);
@@ -74,7 +74,7 @@ inline constexpr auto cbrt = functor<cbrt_t>;
 
 namespace eve::detail
 {
-  template<eve::floating_ordered_value T, callable_options O>
+  template<eve::floating_value T, callable_options O>
   EVE_FORCEINLINE constexpr auto
   cbrt_(EVE_REQUIRES(cpu_), O const & , T x) noexcept
   {

@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-  template<floating_ordered_value T, callable_options O> constexpr
+  template<floating_value T, callable_options O> constexpr
   T cyl_bessel_y0_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
   {
     using elt_t = element_type_t<T>;

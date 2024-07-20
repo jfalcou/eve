@@ -20,11 +20,11 @@ namespace eve
   template<typename Options>
   struct ellint_d_t : elementwise_callable<ellint_d_t, Options>
   {
-    template<eve::floating_ordered_value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE
     T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
-    template<eve::floating_ordered_value T0, eve::floating_ordered_value T1>
+    template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
     constexpr EVE_FORCEINLINE
     eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept

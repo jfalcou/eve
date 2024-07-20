@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 
-template<floating_ordered_value T>
+template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 inner_lrising_factorial(T a, T x) noexcept
 {

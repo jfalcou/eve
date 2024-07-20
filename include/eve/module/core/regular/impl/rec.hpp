@@ -20,7 +20,7 @@
 namespace eve::detail
 {
 
-  template<ordered_value T, callable_options O>
+  template<value T, callable_options O>
   constexpr T  rec_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
   {
     if constexpr( floating_value<T> )

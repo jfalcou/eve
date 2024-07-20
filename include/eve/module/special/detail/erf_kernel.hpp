@@ -26,7 +26,7 @@ namespace eve::detail
 
 // computes erf(a0) for double or double vectors
 // x is a0, y is abs(a0) and 0 <= abs(a0) <= 0.46875
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE constexpr T
   kernel1_erf1(const T& x, const T& ysq) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -42,7 +42,7 @@ namespace eve::detail
 
 // computes erf(x) for double or double vectors
 //  0.46875 <= abs(a0) <= 4.0
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE constexpr T
   kernel1_erf2(const T&, const T& y) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -55,7 +55,7 @@ namespace eve::detail
   }
 
 // finalize for erf and erfc
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel1_finalize2(T& res, const T& y) noexcept
   {
@@ -68,7 +68,7 @@ namespace eve::detail
 
 // computes erf(x) for double or double vectors
 // 4 < abs(x)
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel1_erf3(const T&, const T& y) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -88,7 +88,7 @@ namespace eve::detail
   }
 
 //  finalize for erfcx if x < 0
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel1_finalize3(T res, const T& x) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -110,7 +110,7 @@ namespace eve::detail
 
 // computes erf(a0)/a0 for float or float vectors
 // xx is sqr(a0) and 0 <= abs(x) <= 2/3
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel_erf1(const T& xx) noexcept requires(std::same_as<element_type_t<T>, float>)
   {
@@ -121,7 +121,7 @@ namespace eve::detail
 
 // computes erfc(x)*exp(sqr(x)) for float or float vectors
 // x >=  2/3
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel_erfc2(const T& z) noexcept requires(std::same_as<element_type_t<T>, float>)
   {
@@ -137,7 +137,7 @@ namespace eve::detail
 
 // computes erfc(x)*exp(sqr(x)) for float or float vectors
 // x >=  2/3
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel_erfc3(const T& z) noexcept requires(std::same_as<element_type_t<T>, float>)
   {
@@ -153,7 +153,7 @@ namespace eve::detail
 
 // computes erf(a0)/a0 for double or double vectors
 // xx is sqr(a0) and 0 <= abs(a0) <= 0.65
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE  constexpr T
   kernel_erf1(const T& xx) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -167,7 +167,7 @@ namespace eve::detail
 
 // computes erfc(x)*exp(x*x) for double or double vectors
 // 0.65 <= abs(x) <= 2.2
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE constexpr T
   kernel_erfc2(const T& x) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -182,7 +182,7 @@ namespace eve::detail
 
 // computes erfc(x)*exp(x*x) for double or double vectors
 // 2.2 <= abs(x) <= 6
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE constexpr T
   kernel_erfc3(const T& x) noexcept requires(std::same_as<element_type_t<T>, double>)
   {
@@ -196,7 +196,7 @@ namespace eve::detail
 
 // computes erfc(rx)*exp(rx*rx) for double or double vectors
 // x >=  6 rx = 1/x
-  template<floating_ordered_value T>
+  template<floating_value T>
   EVE_FORCEINLINE constexpr T
   erfc4(const T& rx) noexcept requires(std::same_as<element_type_t<T>, double>)
   {

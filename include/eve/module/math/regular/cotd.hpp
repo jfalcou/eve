@@ -60,7 +60,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`:[floating real value](@ref eve::floating_ordered_value).
+//!     * `x`:[floating real value](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

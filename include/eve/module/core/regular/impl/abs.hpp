@@ -22,7 +22,7 @@
 
 namespace eve::detail
 {
-  template<ordered_value T, callable_options O>
+  template<value T, callable_options O>
   constexpr T  abs_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
   {
     if constexpr(O::contains(saturated2))
