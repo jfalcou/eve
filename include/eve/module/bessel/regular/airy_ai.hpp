@@ -43,17 +43,19 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto airy_ai(floating_value auto x)                          noexcept; // 1
+//!      constexpr auto airy_ai(floating_value auto x) -> decltype(x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto airy_ai[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto airy_ai[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto airy_ai[conditional_expr auto c](floating_value auto x) -> decltype(x) noexcept; // 2
+//!      constexpr auto airy_ai[logical_value auto m](floating_value auto x) -> decltype(x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!   * `x` :  [floating value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!   **Return value**
 //!

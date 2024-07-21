@@ -44,11 +44,11 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      // Regular overload
-  //!      constexpr auto cyl_bessel_i0(floating_value auto x)                          noexcept; // 1
+  //!      constexpr auto cyl_bessel_i0(floating_value auto x) -> decltype(x)                          noexcept; // 1
   //!
   //!      // Lanes masking
-  //!      constexpr auto cyl_bessel_i0[conditional_expr auto c](floating_value auto x) noexcept; // 2
-  //!      constexpr auto cyl_bessel_i0[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!      constexpr auto cyl_bessel_i0[conditional_expr auto c](floating_value auto x) -> decltype(x) noexcept; // 2
+  //!      constexpr auto cyl_bessel_i0[logical_value auto m](floating_value auto x) -> decltype(x)    noexcept; // 2
   //!   }
   //!   @endcode
   //!

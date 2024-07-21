@@ -46,7 +46,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      // Regular overload
-  //!      constexpr auto cyl_bessel_kn(value auto n, floating_value auto x)                          noexcept; // 1
+  //!      template<value N, floating_value T> constexpr as_wide_as_t<T,N> cyl_bessel_kn(N n, T x)    noexcept; // 1
   //!
   //!      // Lanes masking
   //!      constexpr auto cyl_bessel_kn[conditional_expr auto c](value auto n, floating_value auto x) noexcept; // 2
