@@ -43,7 +43,8 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto bernouilli(unsigned_value auto n)                          noexcept; // 1
+//!      template<unsigned_value  N, floating_value T>
+//!      constexpr as_wide_as_t<T,N> bernouilli(unsigned_value auto n)             noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
@@ -68,10 +69,10 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BernoulliNumber.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/regular/bernouilli.cpp}
+//!  @godbolt{doc/combinatorial/bernouilli.cpp}
+inline constexpr auto bernouilli = functor<bernouilli_t>;
 //! @}
 //================================================================================================
-inline constexpr auto bernouilli = functor<bernouilli_t>;
 
   namespace detail
   {

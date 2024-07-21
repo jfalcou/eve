@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/combinatorial/regular/nth_prime.hpp>
+#include <eve/module/core.hpp>
 
 namespace eve
 {
@@ -20,13 +22,13 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::integral_value T, floating_scalar_value U>
+    template<eve::unsigned_value T, floating_scalar_value U>
     EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
     {
       return EVE_DISPATCH_CALL(v, target);
     }
 
-    template<eve::integral_value T, unsigned_scalar_value U>
+    template<eve::unsigned_value T, unsigned_scalar_value U>
     EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
     {
       return EVE_DISPATCH_CALL(v, target);
@@ -52,23 +54,28 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto prime_floor(unsigned_value auto x) noexcept;
+//!      constexpr auto prime_floor(unsigned_value auto x) -> decltype(x) noexcept; //1
+//!      template < integral_value T,  floating_scalar_value U>
+//!      constexpr as_wide_as_t<U, T> prime_floor(T x, as<U>)             noexcept; //2
+//!      template < integral_value T,  unsigned_scalar_value U>
+//!      constexpr as_wide_as_t<U, T> prime_floor(T x, as<U>)             noexcept; //2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  unsigned argument. If `n` is greater than 104'729, behavior is undefined.
+//!     * `n`: unsigned argument. If `n` is greater than 104'729, or less than 2 returns 0.
 //!
 //!   **Return value**
-//!     The greatest prime less or equal to `n`.
-//!     The result type is the same as the input one unless a converter is applied (see below).
+//!
+//!     1. The greatest prime less or equal to `n`.
+//!     2. Same, but the element of the result type is deduced from U.
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/combinatorial/regular/prime_floor.cpp}
+//!   @godbolt{doc/combinatorial/prime_floor.cpp}
+  inline constexpr auto prime_floor = functor<prime_floor_t>;
 //! @}
 //================================================================================================
-  inline constexpr auto prime_floor = functor<prime_floor_t>;
 
   namespace detail
   {
