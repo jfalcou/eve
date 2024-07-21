@@ -7,7 +7,8 @@ eve::wide<std::uint64_t> wu([](auto i, auto )->std::uint64_t{ return 2*i;});
 eve::wide x{0.5, 1.5, 0.1, 1.0, 19.0, 25.0, 21.5, 10000.0};
 eve::wide n{0.5, -1.0, 1.5, -2.0, 2.5, -2.6, 3.2, -12.0};
 
-int main(){
+int main()
+{
    std::cout << "<- wf = " << wf << "\n";
    std::cout << "<- wu = " << wu << "\n";
    std::cout << "<- n  = " << n << "\n";
