@@ -67,10 +67,10 @@ namespace eve
   //!
   //!   @groupheader{Example}
   //!
-  //!   @godbolt{doc/bessel/regular/sph_bessel_j1.cpp}
+  //!   @godbolt{doc/bessel/sph_bessel_j1.cpp}
+  inline constexpr auto sph_bessel_j1 = functor<sph_bessel_j1_t>;
   //! @}
   //================================================================================================
-  inline constexpr auto sph_bessel_j1 = functor<sph_bessel_j1_t>;
 
   namespace detail
   {

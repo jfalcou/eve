@@ -72,7 +72,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/9)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/bessel/regular/airy_bi.cpp}
+//!   @godbolt{doc/bessel/airy_bi.cpp}
 //! @}
 //================================================================================================
   inline constexpr auto airy_bi = functor<airy_bi_t>;

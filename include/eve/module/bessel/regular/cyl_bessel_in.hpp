@@ -63,7 +63,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!      1. The value of \f$\displaystyle I_{n}(x)=\left(\frac12z\right)^n\sum_{k=0}^{\infty}
+  //!      1. The value of \f$\displaystyle I_{n}(x)=\left(\frac12z\right)^{\!\!n}\sum_{k=0}^{\infty}
   //!         {\frac{(x^2/4)^k}{k!\,\Gamma (k+n +1)}}\f$ is returned.
   //!      2. [The operation is performed conditionnaly](@ref conditional).
   //!
@@ -73,11 +73,10 @@ namespace eve
   //!   *  [DLMF](https://dlmf.nist.gov/10.2)
   //!
   //!   @groupheader{Example}
-  //!
-  //!   @godbolt{doc/bessel/regular/cyl_bessel_in.cpp}
+  //!   @godbolt{doc/bessel/cyl_bessel_in.cpp}
+  inline constexpr auto cyl_bessel_in = functor<cyl_bessel_in_t>;
   //! @}
   //================================================================================================
-inline constexpr auto cyl_bessel_in = functor<cyl_bessel_in_t>;
 }
 
 #include <eve/module/bessel/regular/impl/cyl_bessel_in.hpp>

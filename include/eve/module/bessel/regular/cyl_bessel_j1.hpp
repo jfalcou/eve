@@ -53,7 +53,7 @@ namespace eve
   //!   @endcode
   //!
   //!   **Parameters**
- //!
+  //!
   //!     * `x`: positive [floating argument](@ref eve::floating_value).
   //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
   //!     * `m`: [Logical value](@ref logical) masking the operation.
@@ -70,11 +70,10 @@ namespace eve
   //!   *  [DLMF](https://dlmf.nist.gov/10.2)
   //!
   //!   @groupheader{Example}
-  //!
-  //!   @godbolt{doc/bessel/regular/cyl_bessel_j1.cpp}
+  //!   @godbolt{doc/bessel/cyl_bessel_j1.cpp}
+  inline constexpr auto cyl_bessel_j1 = functor<cyl_bessel_j1_t>;
   //! @}
   //================================================================================================
- inline constexpr auto cyl_bessel_j1 = functor<cyl_bessel_j1_t>;
 }
 
 #include <eve/module/bessel/regular/impl/cyl_bessel_j1.hpp>

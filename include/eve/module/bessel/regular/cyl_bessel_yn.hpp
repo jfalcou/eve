@@ -76,10 +76,10 @@ namespace eve
   //!
   //!   @groupheader{Example}
   //!
-  //!   @godbolt{doc/bessel/regular/cyl_bessel_yn.cpp}
+  //!   @godbolt{doc/bessel/cyl_bessel_yn.cpp}
+  inline constexpr auto cyl_bessel_yn = functor<cyl_bessel_yn_t>;
   //! @}
   //================================================================================================
- inline constexpr auto cyl_bessel_yn = functor<cyl_bessel_yn_t>;
 }
 
 #include <eve/module/bessel/regular/impl/cyl_bessel_yn.hpp>

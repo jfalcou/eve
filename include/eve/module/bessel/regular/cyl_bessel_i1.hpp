@@ -70,7 +70,7 @@ namespace eve
   //!   *  [DLMF](https://dlmf.nist.gov/10.25)
   //!
   //!   @groupheader{Example}
-  //!   @godbolt{doc/bessel/regular/cyl_bessel_i1.cpp}
+  //!   @godbolt{doc/bessel/cyl_bessel_i1.cpp}
   //! @}
   //================================================================================================
   inline constexpr auto cyl_bessel_i1 = functor<cyl_bessel_i1_t>;

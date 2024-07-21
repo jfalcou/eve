@@ -66,11 +66,10 @@ namespace eve
   //!     2. [The operation is performed conditionnaly](@ref conditional).
   //!
   //!   @groupheader{Example}
-  //!
-  //!   @godbolt{doc/bessel/regular/sph_bessel_y1.cpp}
+  //!   @godbolt{doc/bessel/sph_bessel_y1.cpp}
+  inline constexpr auto sph_bessel_y1 = functor<sph_bessel_y1_t>;
   //! @}
   //================================================================================================
-  inline constexpr auto sph_bessel_y1 = functor<sph_bessel_y1_t>;
 
   namespace detail
   {

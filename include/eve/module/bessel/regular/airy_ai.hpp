@@ -69,10 +69,10 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/9)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/bessel/regular/airy_ai.cpp}
+//!   @godbolt{doc/bessel/airy_ai.cpp}
+  inline constexpr auto airy_ai = functor<airy_ai_t>;
 //! @}
 //================================================================================================
-  inline constexpr auto airy_ai = functor<airy_ai_t>;
 }
 
 #include <eve/module/bessel/regular/impl/airy_ai.hpp>

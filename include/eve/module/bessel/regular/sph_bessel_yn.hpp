@@ -66,13 +66,12 @@ namespace eve
   //!   The value of \f$ \displaystyle y_{n}(x)=
   //!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\cos x}x\f$
   //!   is returned.
-  //!
   //!   @groupheader{Example}
   //!
-  //!   @godbolt{doc/bessel/regular/sph_bessel_yn.cpp}
+  //!   @godbolt{doc/bessel/sph_bessel_yn.cpp}
+  inline constexpr auto sph_bessel_yn = functor<sph_bessel_yn_t>;
   //! @}
   //================================================================================================
- inline constexpr auto sph_bessel_yn = functor<sph_bessel_yn_t>;
 
   namespace detail
   {
