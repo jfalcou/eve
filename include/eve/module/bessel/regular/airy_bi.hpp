@@ -44,11 +44,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto airy_bi(floating_value auto x) -> decltype(x)                          noexcept; // 1
+//!      constexpr auto airy_bi(floating_value auto x) -> decltype(x)           noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto airy_bi[conditional_expr auto c](floating_value auto x) -> decltype(x) noexcept; // 2
-//!      constexpr auto airy_bi[logical_value auto m](floating_value auto x) -> decltype(x)    noexcept; // 2
+//!      constexpr auto airy_bi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto airy_bi[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!   @endcode
 //!
