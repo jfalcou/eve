@@ -70,7 +70,9 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/combinatorial/bernouilli.cpp}
-inline constexpr auto bernouilli = functor<bernouilli_t>;
+//================================================================================================
+  inline constexpr auto bernouilli = functor<bernouilli_t>;
+//================================================================================================
 //! @}
 //================================================================================================
 

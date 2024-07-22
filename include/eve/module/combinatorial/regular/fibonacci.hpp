@@ -79,7 +79,9 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/combinatorial/fibonacci.cpp}
+//================================================================================================
   inline constexpr auto fibonacci = functor<fibonacci_t>;
+//================================================================================================
 //! @}
 //================================================================================================
 
