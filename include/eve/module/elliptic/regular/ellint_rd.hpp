@@ -78,10 +78,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/elliptic/regular/ellint_rc.cpp}
+//!   @godbolt{doc/elliptic/ellint_rc.cpp}
+//================================================================================================
+  inline constexpr auto ellint_rd = functor<ellint_rd_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto ellint_rd = functor<ellint_rd_t>;
 
   namespace detail
   {

@@ -61,10 +61,6 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!    1. complete \f$\mbox{D}\f$  elliptic integrals.
-//!    2. incomplete\f$\mbox{D}\f$ elliptic integrals.
-//!
-//!
 //!   **Parameters**
 //!
 //!     * `phi`: [floating Jacobi amplitude](@ref floating_value).
@@ -93,10 +89,12 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/elliptic/regular/ellint_d.cpp}
-//! @}
+//!  @godbolt{doc/elliptic/ellint_d.cpp}
 //================================================================================================
   inline constexpr auto ellint_d = functor<ellint_d_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {
