@@ -59,11 +59,7 @@ glob_unit("doc" ${doc_root} "math/regular/*.cpp"  )
 ##==================================================================================================
 add_custom_target(doc.polynomial.exe        )
 add_dependencies(doc.exe doc.polynomial.exe )
-glob_unit("doc" ${doc_root} "polynomial/condon_shortley/*.cpp" )
-glob_unit("doc" ${doc_root} "polynomial/kind/*.cpp"            )
-glob_unit("doc" ${doc_root} "polynomial/regular/*.cpp"         )
-glob_unit("doc" ${doc_root} "polynomial/sph/*.cpp"             )
-glob_unit("doc" ${doc_root} "polynomial/successor/*.cpp"       )
+glob_unit("doc" ${doc_root} "polynomial/*.cpp" )
 
 ##==================================================================================================
 ## GLOB and process special doc tests
