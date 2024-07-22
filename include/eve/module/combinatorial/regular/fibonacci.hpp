@@ -17,7 +17,7 @@
 namespace eve
 {
 template<typename Options>
-struct fibonacci_t : elementwise_callable<fibonacci_t, Options>
+struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 {
   template<eve::unsigned_value N, floating_value T0,  floating_value T1>
   requires (same_lanes_or_scalar<N, T0, T1>)
