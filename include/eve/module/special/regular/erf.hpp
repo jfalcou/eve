@@ -75,7 +75,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/erf.cpp}
+//!   @godbolt{doc/special/erf.cpp}
 //================================================================================================
   inline constexpr auto erf = functor<erf_t>;
 //================================================================================================

@@ -66,7 +66,7 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/lambert.cpp}
+//!   @godbolt{doc/special/lambert.cpp}
 //================================================================================================
   inline constexpr auto lambert = functor<lambert_t>;
 //================================================================================================

@@ -70,7 +70,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/5.2)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/tgamma.cpp}
+//!   @godbolt{doc/special/tgamma.cpp}
 //================================================================================================
   inline constexpr auto tgamma = functor<tgamma_t>;
 //================================================================================================

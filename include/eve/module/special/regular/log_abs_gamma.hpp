@@ -51,7 +51,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [strictly positive real floating argument](@ref eve::floating_value).
+//!     * `x`: [floating argument](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -61,7 +61,7 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/log_abs_gamma.cpp}
+//!   @godbolt{doc/special/log_abs_gamma.cpp}
 //================================================================================================
   inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
 //================================================================================================

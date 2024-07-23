@@ -79,7 +79,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_integral)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/special/regular/exp_int.cpp}
+//!  @godbolt{doc/special/exp_int.cpp}
 //================================================================================================
   inline constexpr auto exp_int = functor<exp_int_t>;
 //================================================================================================

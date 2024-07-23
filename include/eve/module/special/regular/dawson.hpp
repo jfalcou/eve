@@ -70,7 +70,7 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/special/regular/dawson.cpp}
+//!   @godbolt{doc/special/dawson.cpp}
 //================================================================================================
   inline constexpr auto dawson = functor<dawson_t>;
 //================================================================================================

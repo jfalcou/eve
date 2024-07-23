@@ -67,15 +67,15 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //!   **Return value**
 //!
 //!    1. The value of the  inverse of the normalized lower incomplete \f$\Gamma\f$ function
-//!       relative to the first parameter is returned as  :
-//!       \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$
+//!       relative to the first parameter is returned.
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
 //!   *  [DLMF](https://dlmf.nist.gov/8.2)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/special/regular/gamma_p.cpp}
+//!  @godbolt{doc/special/gamma_p.cpp}
 //================================================================================================
   inline constexpr auto gamma_p_inv = functor<gamma_p_inv_t>;
 //================================================================================================

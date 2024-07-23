@@ -48,21 +48,22 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto rising_factorial(floating_value auto x, floating_value auto y)                          noexcept; // 1
+//!      template<typename I, typename T> constexpr as_wide_as_t<T, I> rising_factorial(I a, T x) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto rising_factorial[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
-//!      constexpr auto rising_factorial[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+//!      constexpr auto rising_factorial[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 2
+//!      constexpr auto rising_factorial[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto rising_factorial[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
-//!      constexpr auto rising_factorial[pedantic](floating_value auto x, floating_value auto y)                noexcept; // 4
+//!      constexpr auto rising_factoriale[raw]/*any of the above overloads*/)                     noexcept; // 3
+//!      constexpr auto rising_factorialee[pedantic](/*any of the above overloads*/)              noexcept; // 4
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `a`, `x`:  [floating arguments](@ref eve::floating_value).
+//!     * `a`: [value](@ref eve::floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -76,7 +77,7 @@ namespace eve
 //!        the function for all real `a` and `x`, returning nan if the result is really undefined.
 //!
 //!   @groupheader{Example}
-//!  @godbolt{doc/special/regular/rising_factorial.cpp}
+//!  @godbolt{doc/special/rising_factorial.cpp}
 //================================================================================================
   inline constexpr auto rising_factorial = functor<rising_factorial_t>;
 //================================================================================================

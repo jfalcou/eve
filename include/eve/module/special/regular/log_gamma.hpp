@@ -58,12 +58,12 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1.The value of the  logarithm of the \f$\Gamma\f$ function is returned.
-//!        this callable returns NaN if `eve::gamma(x)` is less than zero.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!      1. The value of the  logarithm of the \f$\Gamma\f$ function is returned.
+//!         this callable returns NaN if `eve::gamma(x)` is less than zero.
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/log_gamma.cpp}
+//!   @godbolt{doc/special/log_gamma.cpp}
 //================================================================================================
   inline constexpr auto log_gamma = functor<log_gamma_t>;
 //================================================================================================

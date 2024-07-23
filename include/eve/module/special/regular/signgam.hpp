@@ -61,7 +61,7 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/signgam.cpp}
+//!   @godbolt{doc/special/signgam.cpp}
 //================================================================================================
   inline constexpr auto signgam = functor<signgam_t>;
 //================================================================================================
