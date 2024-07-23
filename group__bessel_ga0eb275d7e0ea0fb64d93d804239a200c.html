@@ -147,20 +147,22 @@ $(document).ready(function(){initNavTree('group__bessel_ga0eb275d7e0ea0fb64d93d8
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overload</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) -&gt; <span class="keyword">decltype</span>(x)           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2.1</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2.2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">airy_ai</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
-<div class="ttc" id="agroup__bessel_ga0eb275d7e0ea0fb64d93d804239a200c_html_ga0eb275d7e0ea0fb64d93d804239a200c"><div class="ttname"><a href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a></div><div class="ttdeci">constexpr auto airy_ai</div><div class="ttdoc">elementwise_callable object computing the airy function .</div><div class="ttdef"><b>Definition:</b> airy_ai.hpp:73</div></div>
+<div class="ttc" id="agroup__bessel_ga0eb275d7e0ea0fb64d93d804239a200c_html_ga0eb275d7e0ea0fb64d93d804239a200c"><div class="ttname"><a href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a></div><div class="ttdeci">constexpr auto airy_ai</div><div class="ttdoc">elementwise_callable object computing the airy function .</div><div class="ttdef"><b>Definition:</b> airy_ai.hpp:74</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code> : <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1floating__value.html">floating value</a>.</li>
+<li><code>c</code>: Conditional expression masking the operation.</li>
+<li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
@@ -175,31 +177,25 @@ $(document).ready(function(){initNavTree('group__bessel_ga0eb275d7e0ea0fb64d93d8
 <li><a href="https://dlmf.nist.gov/9">DLMF</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wf0([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">double</span>{ <span class="keywordflow">return</span> 2*(i-c/2);});</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a>         wf1{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  wide_ft pf = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                 = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; airy_ai(pf)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            ;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; airy_ai(wf0)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; airy_ai[ignore_last(2)](wf0)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; airy_ai[wf0 != -2.0f](wf0)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a>[wf0 != -2.0f](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; airy_ai(wf1)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a>(wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xd = -1.0;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd          = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; airy_ai(xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__bessel_ga0eb275d7e0ea0fb64d93d804239a200c.html#ga0eb275d7e0ea0fb64d93d804239a200c">eve::airy_ai</a>(xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>
