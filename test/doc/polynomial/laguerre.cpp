@@ -2,13 +2,27 @@
 #include <eve/module/polynomial.hpp>
 #include <iostream>
 
-eve::wide<float> wf(0.1); 
-eve::wide<std::int32_t> wi([](auto i, auto)->std::int32_t{ return i;});
+int main()
+{
+  eve::wide n{0, 1, 2, 3, 4, 5, 6, 7};
+  eve::wide m{0, 1, 2, 3, 4, 5, 6, 7};
+  eve::wide xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};
+  double    x(0.5);
 
-int main(){
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
+  std::cout << "<- n                                = " << n  << '\n';
+  std::cout << "<- m                                = " << m  << '\n';
+  std::cout << "<- xd                               = " << xd << '\n';
+  std::cout << "<- x                                = " << x  << '\n';
 
-   std::cout << "-> laguerre(wi, 2*wf)                             = " << eve::laguerre(wi, 2*wf) << "\n";
-   std::cout << "-> laguerre[associated](wi, 2*wi, 3*wf)           = " << eve::laguerre[eve::associated](wi, 2*wi, 3*wf) << "\n";
+  std::cout << "-> laguerre(n, xd)                  = " << eve::laguerre(n, xd)  << '\n';
+  std::cout << "-> laguerre[ignore_last(2)](n, xd)  = " << eve::laguerre[eve::ignore_last(2)](n, xd)  << '\n';
+  std::cout << "-> laguerre[n > 3](n, xd)           = " << eve::laguerre[n > 3](n, xd)  << '\n';
+  std::cout << "-> laguerre(3, xd)                  = " << eve::laguerre(3, xd)  << '\n';
+  std::cout << "-> laguerre(n, x)                   = " << eve::laguerre(n, x)   << '\n';
+
+  std::cout << "-> laguerre[associated](n, m, xd)   = " << eve::laguerre[eve::associated](n, m, xd) << '\n';
+  std::cout << "-> laguerre[associated](3, m, xd)   = " << eve::laguerre[eve::associated](3, m, xd) << '\n';
+  std::cout << "-> laguerre[associated](n, 3, xd)   = " << eve::laguerre[eve::associated](n, 3, xd) << '\n';
+  std::cout << "-> laguerre[associated](n, m, x)    = " << eve::laguerre[eve::associated](n, m, x) << '\n';
+
 }
