@@ -8,11 +8,11 @@ int main()
   eve::wide wi = {93, 25, 32, 180, 1, 2, 3, 4};
   eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
 
-  std::cout << "<- wf = " << wf << "\n";
-  std::cout << "<- wi = " << wi << "\n";
-  std::cout << "<- wu = " << wu << "\n";
+  std::cout << "<- wf            = " << wf << "\n";
+  std::cout << "<- wi            = " << wi << "\n";
+  std::cout << "<- wu            = " << wu << "\n";
 
-  std::cout << "-> factorial(wf)= " << eve::factorial(wf) << "\n";
-  std::cout << "-> factorial(wi)= " << eve::factorial(wi) << "\n";
-  std::cout << "-> factorial(wu)= " << eve::factorial(wu) << "\n";
+  std::cout << "-> factorial(wf) = " << eve::factorial(wf) << "\n";
+  std::cout << "-> factorial(wi) = " << eve::factorial(wi) << "\n";
+  std::cout << "-> factorial(wu) = " << eve::factorial(wu) << "\n";
 }

@@ -12,5 +12,5 @@ int main()
 
   std::cout << "-> beta(pf, qf)                = " << eve::beta(pf, qf) << "\n";
   std::cout << "-> beta[ignore_last(2)](pf, qf)= " << eve::beta[eve::ignore_last(2)](pf, qf) << "\n";
-  std::cout << "-> beta[qf != 3.0f](pf, qf)   = " << eve::beta[qf != 3.0f](pf, qf) << "\n";
+  std::cout << "-> beta[qf != 3.0f](pf, qf)    = " << eve::beta[qf != 3.0f](pf, qf) << "\n";
 }
