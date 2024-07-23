@@ -95,9 +95,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/laguerre.cpp}
+//================================================================================================
+  inline constexpr auto laguerre = functor<laguerre_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto laguerre = functor<laguerre_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/laguerre.hpp>

@@ -104,9 +104,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/hermite.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto hermite = functor<hermite_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/polynomial/regular/impl/hermite.hpp>

@@ -112,13 +112,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/legendre.cpp}
-//!   @godbolt{doc/polynomial/kind/legendre.cpp}
-//!   @godbolt{doc/polynomial/successor/legendre.cpp}
-//!   @godbolt{doc/polynomial/condon_shortley/legendre.cpp}
-//!   @godbolt{doc/polynomial/sph/legendre.cpp}
-//!@}
 //================================================================================================
   inline constexpr auto legendre = functor<legendre_t>;
+//================================================================================================
+//!@}
+//================================================================================================
 }
 
 #include <eve/module/polynomial/regular/impl/legendre.hpp>
