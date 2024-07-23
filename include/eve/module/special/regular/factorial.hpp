@@ -72,9 +72,11 @@ namespace eve
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/special/regular/factorial.cpp}
+//================================================================================================
+  inline constexpr auto factorial = functor<factorial_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto factorial = functor<factorial_t>;
 
   namespace detail
   {

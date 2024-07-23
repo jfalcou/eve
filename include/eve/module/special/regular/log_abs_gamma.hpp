@@ -62,9 +62,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/log_abs_gamma.cpp}
+//================================================================================================
+  inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto log_abs_gamma = functor<log_abs_gamma_t>;
 
   namespace detail
   {

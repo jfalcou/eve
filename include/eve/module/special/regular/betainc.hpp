@@ -78,9 +78,11 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/special/regular/betaincinc.cpp}
-//! @}
 //================================================================================================
  inline constexpr auto betainc = functor<betainc_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

@@ -62,9 +62,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/signgam.cpp}
+//================================================================================================
+  inline constexpr auto signgam = functor<signgam_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto signgam = functor<signgam_t>;
 
   namespace detail
   {

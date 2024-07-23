@@ -65,9 +65,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/stirling.cpp}
+//================================================================================================
+  inline constexpr auto stirling = functor<stirling_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto stirling = functor<stirling_t>;
 
   namespace detail
   {

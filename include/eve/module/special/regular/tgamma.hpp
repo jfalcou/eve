@@ -71,9 +71,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/tgamma.cpp}
+//================================================================================================
+  inline constexpr auto tgamma = functor<tgamma_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto tgamma = functor<tgamma_t>;
 
   namespace detail
   {

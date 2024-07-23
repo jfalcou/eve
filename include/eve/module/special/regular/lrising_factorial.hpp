@@ -81,9 +81,11 @@ namespace eve
 //!
 //!  @godbolt{doc/special/regular/lrising_factorial.cpp}
 //!  @groupheader{Semantic Modifiers}
-//! @}
 //================================================================================================
   inline constexpr auto lrising_factorial = functor<lrising_factorial_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

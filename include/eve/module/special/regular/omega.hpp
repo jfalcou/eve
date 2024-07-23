@@ -67,9 +67,11 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/special/regular/omega.cpp}
+//================================================================================================
+  inline constexpr auto omega = functor<omega_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto omega = functor<omega_t>;
 
   namespace detail
   {

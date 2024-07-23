@@ -73,9 +73,11 @@ namespace eve
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/special/regular/double_factorial.cpp}
+//================================================================================================
+  inline constexpr auto double_factorial = functor<double_factorial_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto double_factorial = functor<double_factorial_t>;
 
   namespace detail
   {

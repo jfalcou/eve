@@ -73,9 +73,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/regular/erfcx.cpp}
+//================================================================================================
+  inline constexpr auto erfcx = functor<erfcx_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto erfcx = functor<erfcx_t>;
 
   namespace detail
   {

@@ -72,9 +72,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/erf_inv.cpp}
+//================================================================================================
+  inline constexpr auto erf_inv = functor<erf_inv_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto erf_inv = functor<erf_inv_t>;
 
   namespace detail
   {

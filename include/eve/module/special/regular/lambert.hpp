@@ -67,9 +67,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/lambert.cpp}
+//================================================================================================
+  inline constexpr auto lambert = functor<lambert_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto lambert = functor<lambert_t>;
 
   namespace detail
   {

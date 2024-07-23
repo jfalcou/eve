@@ -71,9 +71,11 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/regular/digamma.cpp}
+//================================================================================================
+  inline constexpr auto digamma = functor<digamma_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto digamma = functor<digamma_t>;
 
   namespace detail
   {

@@ -76,9 +76,11 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/regular/gamma_p.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto gamma_p_inv = functor<gamma_p_inv_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

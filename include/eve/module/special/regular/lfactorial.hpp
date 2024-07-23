@@ -67,9 +67,11 @@ namespace eve
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/special/regular/lfactorial.cpp}
+//================================================================================================
+  inline constexpr auto lfactorial = functor<lfactorial_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto lfactorial = functor<lfactorial_t>;
 
   namespace detail
   {
