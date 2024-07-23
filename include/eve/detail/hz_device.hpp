@@ -28,7 +28,7 @@ namespace eve
   template <typename F, typename L, typename L1, typename R, typename ...Ts>
   auto next_interval(F const & f, L notdone, L1 test, R& r, Ts ... ts) noexcept
   {
-   auto todo = notdone && test;
+    auto todo = logical_and(notdone, test);
     if constexpr(eve::scalar_value<R>)
     {
       if(todo) { r =  f(ts...); return false_(as(todo)); }
