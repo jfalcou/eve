@@ -70,9 +70,7 @@ glob_unit("doc" ${doc_root} "polynomial/successor/*.cpp"       )
 ##==================================================================================================
 add_custom_target(doc.special.exe        )
 add_dependencies(doc.exe doc.special.exe )
-glob_unit("doc" ${doc_root} "special/pedantic/*.cpp" )
-glob_unit("doc" ${doc_root} "special/raw/*.cpp"      )
-glob_unit("doc" ${doc_root} "special/regular/*.cpp"  )
+glob_unit("doc" ${doc_root} "special/*.cpp"  )
 
 ##==================================================================================================
 ## GLOB and process traits doc tests
