@@ -25,54 +25,55 @@ namespace eve
     EVE_CALLABLE_OBJECT(sph_bessel_yn_t, sph_bessel_yn_);
   };
 
-  //================================================================================================
-  //! @addtogroup bessel
-  //! @{
-  //!   @var sph_bessel_yn
-  //!   @brief Computes the the spherical Bessel functions of the second kind,
-  //!   \f$ y_{n}(x)= \sqrt{\frac\pi{2x}}Y_{n+1/2}(x)\f$.
-  //!
-  //!   It is a solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = -\infty\f$
-  //!
-  //!   @groupheader{Header file}
-  //!
-  //!   @code
-  //!   #include <eve/module/bessel.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      // Regular overload
-  //!      constexpr auto sph_bessel_yn(value auto n, floating_value auto x)                          noexcept; // 1
-  //!
-  //!      // Lanes masking
-  //!      constexpr auto sph_bessel_yn[conditional_expr auto c](value auto n, floating_value auto x) noexcept; // 2
-  //!      constexpr auto sph_bessel_yn[logical_value auto m](value auto n, floating_value auto x)    noexcept; // 2
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `n`: Order of the function.
-  //!     * `x`: [Floating argument](@ref eve::floating_value).
-  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-  //!     * `m`: [Logical value](@ref logical) masking the operation.
-  //!
-  //!   **Return value**
-  //!
-  //!   The value of \f$ \displaystyle y_{n}(x)=
-  //!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\cos x}x\f$
-  //!   is returned.
-  //!
-  //!   @groupheader{Example}
-  //!
-  //!   @godbolt{doc/bessel/regular/sph_bessel_yn.cpp}
-  //! @}
-  //================================================================================================
- inline constexpr auto sph_bessel_yn = functor<sph_bessel_yn_t>;
+//================================================================================================
+//! @addtogroup bessel
+//! @{
+//!   @var sph_bessel_yn
+//!   @brief Computes the the spherical Bessel functions of the second kind,
+//!   \f$ y_{n}(x)= \sqrt{\frac\pi{2x}}Y_{n+1/2}(x)\f$.
+//!
+//!   It is a solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = -\infty\f$
+//!
+//!   @groupheader{Header file}
+//!
+//!   @code
+//!   #include <eve/module/bessel.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      // Regular overload
+//!      template<value  N, floating_value T> constexpr as_wide_as_t<T,N> cyl_bessel_yn(N n, T x)   noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto sph_bessel_yn[conditional_expr auto c](value auto n, floating_value auto x) noexcept; // 2
+//!      constexpr auto sph_bessel_yn[logical_value auto m](value auto n, floating_value auto x)    noexcept; // 2
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `n`: Order of the function.
+//!     * `x`: [Floating argument](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!
+//!   **Return value**
+//!
+//!   The value of \f$ \displaystyle y_{n}(x)=
+//!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\cos x}x\f$
+//!   is returned.
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/bessel/sph_bessel_yn.cpp}
+//================================================================================================
+  inline constexpr auto sph_bessel_yn = functor<sph_bessel_yn_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {
