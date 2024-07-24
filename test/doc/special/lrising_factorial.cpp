@@ -12,7 +12,7 @@ int main()
 
   std::cout << "-> lrising_factorial(n, p)                = " << eve::lrising_factorial(n, p) << "\n";
   std::cout << "-> lrising_factorial[ignore_last(2)](n, p)= " << eve::lrising_factorial[eve::ignore_last(2)](n, p) << "\n";
-  std::cout << "-> lrising_factorial[wf != -2.0f](n, p)   = " << eve::lrising_factorial[wf != -2.0f](n, p) << "\n";
+  std::cout << "-> lrising_factorial[n != 2](n, p)        = " << eve::lrising_factorial[n != 2](n, p) << "\n";
   std::cout << "-> lrising_factorial[raw](n, p)           = " << eve::lrising_factorial[eve::raw](n, p) << "\n";
   std::cout << "-> lrising_factorial[pedantic](n, p)      = " << eve::lrising_factorial[eve::pedantic](n, p) << "\n";
 }
