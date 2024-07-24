@@ -4,7 +4,8 @@
 
 eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
 
-int main(){
+int main()
+{
    std::cout << "<- wf = " << wf << "\n";
 
    std::cout << "-> sindcosd(wf)                = " << eve::sindcosd(wf) << "\n";

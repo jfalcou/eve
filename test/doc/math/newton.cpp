@@ -8,7 +8,8 @@ kumi::tuple wtc{wf,2*wf,3*wf};
 kumi::tuple wtn{4*wf, 5*wf};
 
 
-int main(){
+int main()
+{
    std::cout << std::setprecision(10);
    std::cout << "<- wf  = " << wf << "\n";
    std::cout << "<- wtc = " << wtc << "\n";

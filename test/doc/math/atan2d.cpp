@@ -1,14 +1,17 @@
-// revision 0
+// revision 1
 #include <eve/module/math.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n"; 
- 
-   std::cout << "-> atan2d(wf, 2*wf)                = " << eve::atan2d(wf, 2*wf) << "\n";
-   std::cout << "-> atan2d[pedantic](wf, 2*wf)      = " << eve::atan2d[eve::pedantic](wf, 2*wf) << "\n";
-   std::cout << "-> atan2d[ignore_last(2)](wf, 2*wf)= " << eve::atan2d[eve::ignore_last(2)](wf, 2*wf) << "\n";
-   std::cout << "-> atan2d[wf != -2.0f](wf, 2*wf)   = " << eve::atan2d[wf != -2.0f](wf, 2*wf) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide pf = { 0.0f, 1.0f, 4.0f, -2.0f, eve::inf(eve::as<float>()), 0.0f, eve::minf(eve::as<float>()), 1.0f};
+  eve::wide qf = { 1.0f, -1.0f, 3.0f, -0.0f, 1.0f, 0.0f, 0.0f, -0.0f};
+
+  std::cout << "<- pf                           = " << pf << "\n";
+  std::cout << "<- qf                           = " << qf << "\n";
+
+  std::cout << "-> atan2d(pf, qf)                = " << eve::atan2d(pf, qf) << "\n";
+  std::cout << "-> atan2d[pedantic](pf, qf)      = " << eve::atan2d[eve::pedantic](pf, qf) << "\n";
+  std::cout << "-> atan2d[ignore_last(2)](pf, qf)= " << eve::atan2d[eve::ignore_last(2)](pf, qf) << "\n";
+  std::cout << "-> atan2d[pf != -2.0f](pf, qf)   = " << eve::atan2d[pf != -2.0f](pf, qf) << "\n";
 }

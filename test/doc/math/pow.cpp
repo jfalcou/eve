@@ -6,7 +6,8 @@ eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
 eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
 eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
 
-int main(){
+int main()
+{
    std::cout << "<- wf = " << wf << "\n";
    std::cout << "<- wu = " << wu << "\n";
 

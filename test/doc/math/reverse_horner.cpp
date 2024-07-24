@@ -6,7 +6,8 @@
 eve::wide<float> wf([](auto i, auto c)->float{ return (1+eve::eps(eve::as<float>()))*(i-c/2);});
 kumi::tuple wt{wf,2*wf,3*wf};
 
-int main(){
+int main()
+{
    std::cout << std::setprecision(10);
    std::cout << "<- wf = " << wf << "\n";
    std::cout << "<- wt = " << wt << "\n";

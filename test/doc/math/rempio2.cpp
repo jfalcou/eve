@@ -4,7 +4,8 @@
 
 eve::wide<float> wf([](auto i, auto c)->float{ return eve::pi(eve::as < float>())*2*(i-c/2);});
 
-int main(){
+int main()
+{
    std::cout << "<- wf = " << wf << "\n";
 
    std::cout << "-> rempio2(wf)                = " << eve::rempio2(wf) << "\n";

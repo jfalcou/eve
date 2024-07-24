@@ -6,7 +6,8 @@
 eve::wide<float> wf(2.3456789f);
 eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
 
-int main(){
+int main()
+{
    std::cout << std::setprecision(10);
    std::cout << "<- wf = " << wf << "\n";
    std::cout << "<- wu = " << wu << "\n";

@@ -4,7 +4,8 @@
 
 eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
 
-int main(){
+int main()
+{
    std::cout << "<- wf = " << wf << "\n";
 
    std::cout << "-> sinpicospi(wf)                = " << eve::sinpicospi(wf) << "\n";

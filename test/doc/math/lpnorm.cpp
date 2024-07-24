@@ -4,7 +4,8 @@
 
 eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
 
-int main(){
+int main()
+{
    std::cout << "<- wf = " << wf << "\n";
 
    std::cout << "-> lpnorm(wf, 2*wf, 3*wf)            = " << eve::lpnorm(wf, 2*wf, 3*wf) << "\n";
