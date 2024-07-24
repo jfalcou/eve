@@ -59,18 +59,17 @@ namespace eve
 //!   1. Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math//cbrt.cpp}
-//!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Cube_root)
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CubeRoot.html)
-//!  @}
+//!
+//!  @groupheader{Example}
+//!  @godbolt{doc/math//cbrt.cpp}
 //================================================================================================
   inline constexpr auto cbrt = functor<cbrt_t>;
 //================================================================================================
-//================================================================================================
+//!  @}
 //================================================================================================
 }
 

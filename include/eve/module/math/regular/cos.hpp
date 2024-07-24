@@ -84,7 +84,7 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cos)
 //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Cosinus)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosine.html)  
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosine.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/math//cos.cpp}
