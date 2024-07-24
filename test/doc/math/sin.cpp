@@ -1,0 +1,16 @@
+// revision 0
+#include <eve/module/math.hpp>
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n"; 
+ 
+   std::cout << "-> sin(wf)                = " << eve::sin(wf) << "\n";
+   std::cout << "-> sin[ignore_last(2)](wf)= " << eve::sin[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> sin[wf != -2.0f](wf)   = " << eve::sin[wf != -2.0f](wf) << "\n";
+   std::cout << "-> sin[quarter_circle](wf)= " << eve::sin[eve::quarter_circle](wf) << "\n";
+   std::cout << "-> sin[half_circle](wf)   = " << eve::sin[eve::half_circle](wf) << "\n";
+   std::cout << "-> sin[full_circle](wf)   = " << eve::sin[eve::full_circle](wf) << "\n";
+}
