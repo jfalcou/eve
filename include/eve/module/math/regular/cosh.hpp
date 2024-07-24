@@ -73,10 +73,12 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cosh.cpp}
-//!  @}
+//!  @godbolt{doc/math//cosh.cpp}
 //================================================================================================
   inline constexpr auto cosh = functor<cosh_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

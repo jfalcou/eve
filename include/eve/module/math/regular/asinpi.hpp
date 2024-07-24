@@ -67,10 +67,12 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asinpi.cpp}
-//!  @}
+//!  @godbolt{doc/math//asinpi.cpp}
 //================================================================================================
   inline constexpr auto asinpi = functor<asinpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

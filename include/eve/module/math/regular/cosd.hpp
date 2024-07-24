@@ -81,11 +81,13 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cosd.cpp}
+//!  @godbolt{doc/math//cosd.cpp}
 //!
-//!  @}
 //================================================================================================
   inline constexpr auto cosd = functor<cosd_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

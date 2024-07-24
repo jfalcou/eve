@@ -61,10 +61,12 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/expmx2.cpp}
-//!  @}
+//!  @godbolt{doc/math//expmx2.cpp}
 //================================================================================================
   inline constexpr auto expmx2 = functor<expmx2_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

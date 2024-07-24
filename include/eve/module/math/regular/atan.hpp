@@ -74,10 +74,12 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/atan.cpp}
+//!  @godbolt{doc/math//atan.cpp}
+//================================================================================================
+ inline constexpr auto atan = functor<atan_t>;
+//================================================================================================
 //!  @}
 //======================================================================================================================
- inline constexpr auto atan = functor<atan_t>;
 
   namespace detail
   {

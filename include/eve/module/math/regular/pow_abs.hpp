@@ -93,10 +93,12 @@ namespace eve
 //!     3. faster but less accurate call.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/pow_abs.cpp}
-//!  @}
+//!  @godbolt{doc/math//pow_abs.cpp}
 //================================================================================================
   inline constexpr auto pow_abs = functor<pow_abs_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

@@ -64,9 +64,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/significants.cpp}
+//================================================================================================
+  inline constexpr auto significants = functor<significants_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto significants = functor<significants_t>;
 
 namespace detail
 {

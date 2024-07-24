@@ -60,7 +60,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cbrt.cpp}
+//!  @godbolt{doc/math//cbrt.cpp}
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
@@ -68,8 +68,10 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CubeRoot.html)
 //!  @}
 //================================================================================================
+  inline constexpr auto cbrt = functor<cbrt_t>;
 //================================================================================================
-inline constexpr auto cbrt = functor<cbrt_t>;
+//================================================================================================
+//================================================================================================
 }
 
 namespace eve::detail

@@ -85,10 +85,12 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/exp2.cpp}
-//!  @}
+//!  @godbolt{doc/math//exp2.cpp}
 //================================================================================================
   inline constexpr auto exp2 = functor<exp2_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

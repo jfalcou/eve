@@ -71,10 +71,12 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acot.cpp}
+//!  @godbolt{doc/math//acot.cpp}
+//================================================================================================
+  inline constexpr auto acot = functor<acot_t>;
+//================================================================================================
 //!  @}
 //======================================================================================================================
-  inline constexpr auto acot = functor<acot_t>;
 
   namespace detail
   {

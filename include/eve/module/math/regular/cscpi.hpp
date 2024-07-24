@@ -72,11 +72,13 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cscpi.cpp}
+//!  @godbolt{doc/math//cscpi.cpp}
 //!  @groupheader{Semantic Modifiers}
-//!  @}
 //================================================================================================
   inline constexpr auto cscpi = functor<cscpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

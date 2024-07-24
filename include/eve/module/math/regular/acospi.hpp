@@ -71,10 +71,12 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acospi.cpp}
-//!  @}
+//!  @godbolt{doc/math//acospi.cpp}
 //================================================================================================
   inline constexpr auto acospi = functor<acospi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

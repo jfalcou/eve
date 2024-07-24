@@ -68,10 +68,12 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asind.cpp}
-//!  @}
+//!  @godbolt{doc/math//asind.cpp}
 //================================================================================================
   inline constexpr auto asind = functor<asind_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

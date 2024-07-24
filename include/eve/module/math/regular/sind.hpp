@@ -80,10 +80,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Sine.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sind.cpp}
-//!  @}
+//!  @godbolt{doc/math//sind.cpp}
 //================================================================================================
   inline constexpr auto sind = functor<sind_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

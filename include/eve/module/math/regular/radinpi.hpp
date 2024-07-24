@@ -63,10 +63,12 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/radinpi.cpp}
-//!  @}
+//!  @godbolt{doc/math//radinpi.cpp}
 //================================================================================================
   inline constexpr auto radinpi = functor<radinpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

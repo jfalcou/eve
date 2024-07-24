@@ -76,10 +76,12 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asec.cpp}
+//!  @godbolt{doc/math//asec.cpp}
+//================================================================================================
+  inline constexpr auto asec = functor<asec_t>;
+//================================================================================================
 //!  @}
 //======================================================================================================================
-  inline constexpr auto asec = functor<asec_t>;
 
   namespace detail
   {

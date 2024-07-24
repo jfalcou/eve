@@ -73,10 +73,12 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asecpi.cpp}
-//!  @}
+//!  @godbolt{doc/math//asecpi.cpp}
 //================================================================================================
   inline constexpr auto asecpi = functor<asecpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

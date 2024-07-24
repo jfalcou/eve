@@ -83,10 +83,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cotangent.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cot.cpp}
-//!  @}
+//!  @godbolt{doc/math//cot.cpp}
 //================================================================================================
  inline constexpr auto cot = functor<cot_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

@@ -79,10 +79,12 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/tand.cpp}
-//!  @}
+//!  @godbolt{doc/math//tand.cpp}
 //================================================================================================
   inline constexpr auto tand = functor<tand_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

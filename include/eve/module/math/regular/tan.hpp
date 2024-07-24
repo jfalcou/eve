@@ -86,10 +86,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Tangent.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/tan.cpp}
-//!  @}
+//!  @godbolt{doc/math//tan.cpp}
 //================================================================================================
  inline constexpr auto tan = functor<tan_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

@@ -78,10 +78,12 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asin.cpp}
+//!  @godbolt{doc/math//asin.cpp}
+//================================================================================================
+  inline constexpr auto asin = functor<asin_t>;
+//================================================================================================
 //!  @}
 //======================================================================================================================
-  inline constexpr auto asin = functor<asin_t>;
 
   namespace detail
   {

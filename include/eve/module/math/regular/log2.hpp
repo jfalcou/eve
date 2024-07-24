@@ -75,7 +75,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/log2.cpp}
+//!  @godbolt{doc/math//log2.cpp}
 //!
 //!
 //!   * Masked Call
@@ -86,9 +86,11 @@ namespace eve
 //!      **Example**
 //!
 //!        @godbolt{doc/math/masked/log2.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto log2 = functor<log2_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
 
   namespace detail

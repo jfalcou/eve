@@ -80,10 +80,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosecant.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/csc.cpp}
-//!  @}
+//!  @godbolt{doc/math//csc.cpp}
 //================================================================================================
   inline constexpr auto csc = functor<csc_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

@@ -74,11 +74,13 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/math/regular/lentz_b.cpp}
+//!   @godbolt{doc/math//lentz_b.cpp}
 //!
+//================================================================================================
+  inline constexpr auto lentz_b = functor<lentz_b_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto lentz_b = functor<lentz_b_t>;
 
 }
 

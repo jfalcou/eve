@@ -69,10 +69,12 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinh.cpp}
-//!  @}
+//!  @godbolt{doc/math//sinh.cpp}
 //================================================================================================
   inline constexpr auto sinh = functor<sinh_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

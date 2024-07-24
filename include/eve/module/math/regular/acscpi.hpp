@@ -69,10 +69,12 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acscpi.cpp}
-//!  @}
+//!  @godbolt{doc/math//acscpi.cpp}
 //================================================================================================
   inline constexpr auto acscpi = functor<acscpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

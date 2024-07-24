@@ -81,10 +81,12 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-1,1]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cotpi.cpp}
-//!  @}
+//!  @godbolt{doc/math//cotpi.cpp}
 //================================================================================================
   inline constexpr auto cotpi = functor<cotpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {
