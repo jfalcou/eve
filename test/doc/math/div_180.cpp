@@ -1,14 +1,14 @@
 // revision 1
 #include <eve/module/math.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);}); 
- 
+#include <iostream>
+
 int main()
-{ 
-   std::cout << "<- wf = " << wf << "\n"; 
- 
-   std::cout << "-> div_180(wf)                = " << eve::div_180(wf) << "\n";
-   std::cout << "-> div_180[ignore_last(2)](wf)= " << eve::div_180[eve::ignore_last(2)](wf) << "\n";
-   std::cout << "-> div_180[wf != -2.0f](wf)   = " << eve::div_180[wf != -2.0f](wf) << "\n";
+{
+  eve::wide wf{0.0, 200.0, 40.0, -17.0};
+
+  std::cout << "<- wf = " << wf << "\n";
+
+  std::cout << "-> div_180(wf)                = " << eve::div_180(wf) << "\n";
+  std::cout << "-> div_180[ignore_last(2)](wf)= " << eve::div_180[eve::ignore_last(2)](wf) << "\n";
+  std::cout << "-> div_180[wf > 0.0](wf)      = " << eve::div_180[wf > 0.0](wf) << "\n";
 }
