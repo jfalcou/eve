@@ -60,7 +60,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto logspace_add(floating_value auto x, floating_value auto ... xs)                          noexcept; // 1
+//!      constexpr auto logspace_add(floating_value auto lx, floating_value auto ... lxs)      noexcept; // 1
 //!      constexpr auto logspace_add(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
 //!
 //!      // Lanes masking
@@ -71,14 +71,14 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`, `...xs`: [real](@ref floating_value) arguments.
+//!     * `lx`, `...lxs`: [real](@ref floating_value) arguments.
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!    1. The call `logspace_add(x, xs...)` is semantically equivalent to `log(exp(log(x)) +  + exp(log(xs))...)`
+//!    1. The call `logspace_add(lx, lxs, ...)` is equivalent to `log(exp(lx) + exp(lxs) + ...)`
 //!      without causing unnecessary overflows or throwing away too much accuracy.
 //!    2. equivalent to the call on the elements of the tuple.
 //!    3. [The operation is performed conditionnaly](@ref conditional)

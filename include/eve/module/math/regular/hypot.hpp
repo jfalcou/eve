@@ -57,7 +57,7 @@ namespace eve
 //!      constexpr auto hypot[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
 //!
 //!      // Semantic options
-//!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                noexcept; // 4
+//!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                 noexcept; // 4
 //!   }
 //!   @endcode
 //!
@@ -82,7 +82,6 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
-
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math//hypot.cpp}

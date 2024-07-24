@@ -74,18 +74,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math//log2.cpp}
-//!
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::log2[mask](x)` provides a masked version of `eve::log2` which is
-//!     equivalent to `if_else (mask, log2(x), x)`.
-//!
-//!      **Example**
-//!
-//!        @godbolt{doc/math/masked/log2.cpp}
 //================================================================================================
   inline constexpr auto log2 = functor<log2_t>;
 //================================================================================================

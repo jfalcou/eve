@@ -2,7 +2,6 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-
 template <class T>
 struct const_fraction
 {

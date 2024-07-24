@@ -53,9 +53,9 @@ namespace eve
 //!
 //!   The generator type should be an invocable  which supports the following operations:
 //!   *  The call to g()  returns a floating  value or a pair (kumi::tuple) of such.
-//!      Each time this operator is called then the next pair of a and b values  has to be returned,
-//!      or, if result_type is not a pair type, then the next b value
-//!       has to be returned and all the a values are assumed to be equal to one.
+//!      Each time this operator is called then the next pair of \f$a_i\f$ and \f$b_i\f$ values  has to be returned,
+//!      or, if result_type is not a pair type, then the next \f$b_i\f$ value
+//!       has to be returned and all the \f$a_i\f$ values are assumed to be equal to one.
 //!
 //!   * In all the continued fraction evaluation functions the  effective tol parameter
 //!     is the relative precision desired in the result,
@@ -67,14 +67,13 @@ namespace eve
 //!     The value of the continued fraction is returned.
 //!     \f$\displaystyle b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\frac{a_3}{b_3+\cdots\vphantom{\frac{1}{1}} }}}\f$
 //!
-//!     Note that the the first a value (a0) generated is not used here.
+//!     Note that the first of the \f$a_i\f$ values (\f$a_0\f$) generated is not used here.
 //!
 //!   @note the implementation is largely inspired by the boost/math/fraction one, with less requirements on the invocable.
 //!         Peculiarly lambda functions can be used.
 //!
 //!   @groupheader{Example}
-//!
-//!   @godbolt{doc/math//lentz_b.cpp}
+//!   @godbolt{doc/math/lentz_b.cpp}
 //!
 //================================================================================================
   inline constexpr auto lentz_b = functor<lentz_b_t>;

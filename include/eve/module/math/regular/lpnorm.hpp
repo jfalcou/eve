@@ -65,7 +65,6 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!
 //! **Parameters**
 //!
 //!   * `p`: [floating value](@ref floating_value)
