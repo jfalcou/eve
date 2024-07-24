@@ -2,8 +2,6 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-using w_t = eve::wide<double, eve::fixed<8>>;
-
 template <class T>
 struct const_fraction
 {
@@ -11,19 +9,16 @@ struct const_fraction
 
    result_type operator()()
    {
-     return T{1, 2, 3, 4, 5, 6, 7, 8};
+     return T{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};
    }
 };
 
-
 int main()
 {
-  w_t z{1, 2, 3, 4, 5, 6, 7, 8};
+  eve::wide z{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};
   auto ref = (-z+eve::sqrt(eve::sqr(z)+4))/2;
   std::cout << "ref constant fracs are: " << ref << std::endl;
-  const_fraction<w_t> func;
+  const_fraction<decltype(z)> func;
   auto gr = eve::lentz_a(func,eve::eps(eve::as<double>()), 100);
   std::cout << "    constant fracs are: " << gr << std::endl;
-
-  return 0;
 }

@@ -1,14 +1,20 @@
 // revision 1
 #include <eve/module/math.hpp>
 #include <iostream>
-
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
+#include <iomanip>
 
 int main()
 {
-   std::cout << "<- wf = " << wf << "\n";
+  eve::wide x = {eve::nan(eve::as<float>()), 1.0f, 1.0f, 1.0f};
+  eve::wide y = {-1.5f, 2.9f, 3.5f, -11.0f};
+  eve::wide z = { eve::inf(eve::as(1.0f)), -2.0f, 1.0f, 15.0f};
+  eve::wide p = { 3.2f, 3.0f, 2.0f, eve::inf(eve::as(1.0f))};
 
-   std::cout << "-> lpnorm(wf, 2*wf, 3*wf)            = " << eve::lpnorm(wf, 2*wf, 3*wf) << "\n";
-//    std::cout << "-> lpnorm[ignore_last(2)](2*wf, 3*wf)= " << eve::lpnorm[eve::ignore_last(2)](2*wf, 3*wf) << "\n";
-//    std::cout << "-> lpnorm[wf != -2.0f](2*wf, 3*wf)   = " << eve::lpnorm[wf != -2.0f](2*wf, 3*wf) << "\n";
+  std::cout << std::setprecision(5) << '\n';
+  std::cout << "<- p                            = " << p  << '\n';
+  std::cout << "<- x                            = " << x  << '\n';
+  std::cout << "<- y                            = " << y  << '\n';
+  std::cout << "<- z                            = " << z  << '\n';
+  std::cout << "-> lpnorm(p, x, y, z)           = " << eve::lpnorm(p, x, y, z) << '\n';
+  std::cout << "-> lpnorm[pedantic](p, x, y, z) = " << eve::lpnorm[eve::pedantic](p, x, y, z) << '\n';
 }

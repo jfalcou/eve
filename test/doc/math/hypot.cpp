@@ -19,6 +19,6 @@ int main()
    std::cout << "-> hypot[ignore_last(2)](pf,qf)= " << eve::hypot[eve::ignore_last(2)](pf,qf) << "\n";
    std::cout << "-> hypot[pf > 0.0](pf,qf)      = " << eve::hypot[pf > 0.0](pf,qf) << "\n";
    std::cout << "-> hypot[pedantic](pf,qf)      = " << eve::hypot[eve::pedantic](pf,qf) << "\n";
-   std::cout << "-> hypot(pf,qf, rf)            = " << eve::hypot(pf,qf, rf) << "\n";
+   std::cout << "-> hypot(pf,qf,rf)             = " << eve::hypot(pf,qf,rf) << "\n";
    std::cout << "-> hypot[pedantic](pf,qf,rf)   = " << eve::hypot[eve::pedantic](pf,qf,rf) << "\n";
 }
