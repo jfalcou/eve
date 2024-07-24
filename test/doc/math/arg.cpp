@@ -10,6 +10,7 @@ int main()
   std::cout << "<- wf                      = " << wf << "\n";
 
   std::cout << "-> arg(wf)                 = " << eve::arg(wf) << "\n";
+  std::cout << "-> arg[pedantic](wf)       = " << eve::arg[eve::pedantic](wf) << "\n";
   std::cout << "-> arg[ignore_last(2)](wf) = " << eve::arg[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> arg[wf != 0.5f](wf)     = " << eve::arg[wf != 0.5f](wf) << "\n";
 }
