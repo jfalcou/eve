@@ -104,7 +104,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Atan2)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/atan2.cpp}
+//!  @godbolt{doc/math/atan2.cpp}
 //================================================================================================
   inline constexpr auto atan2 = functor<atan2_t>;
 //================================================================================================

@@ -91,7 +91,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/atan2d.cpp}
+//!  @godbolt{doc/math/atan2d.cpp}
 //================================================================================================
   inline constexpr auto atan2d = functor<atan2d_t>;
 //================================================================================================
