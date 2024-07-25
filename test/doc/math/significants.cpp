@@ -3,14 +3,14 @@
 #include <iostream>
 #include <iomanip>
 
-eve::wide<float> wf(2.3456789f);
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
-
 int main()
 {
-   std::cout << std::setprecision(10);
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wu = " << wu << "\n";
+  eve::wide qi = {0, 1, 2, 3, 4, 5, 6, 7};
+  float pf = 1.2345678901f;
 
-   std::cout << "-> significants(wf, 2*wf)= " << eve::significants(wf, 2*wu) << "\n";
+   std::cout << std::setprecision(10);
+   std::cout << "<- pf = " << pf << "\n";
+   std::cout << "<- qi = " << qi << "\n";
+
+   std::cout << "-> significants(pf, qi)= " << eve::significants(pf, qi) << "\n";
 }

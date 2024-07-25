@@ -2,16 +2,15 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-
 int main()
 {
-   std::cout << "<- wf = " << wf << "\n";
+  eve::wide wf = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25, -0.5, -2.0};
+  wf *= eve::pi[eve::downward](eve::as(wf));
 
-   std::cout << "-> sincos(wf)                = " << eve::sincos(wf) << "\n";
-//    std::cout << "-> sincos[ignore_last(2)](wf)= " << eve::sincos[eve::ignore_last(2)](wf) << "\n";
-//    std::cout << "-> sincos[wf != -2.0f](wf)   = " << eve::sincos[wf != -2.0f](wf) << "\n";
-   std::cout << "-> sincos[quarter_circle](wf)= " << eve::sincos[eve::quarter_circle](wf) << "\n";
-   std::cout << "-> sincos[half_circle](wf)   = " << eve::sincos[eve::half_circle](wf) << "\n";
-   std::cout << "-> sincos[full_circle](wf)   = " << eve::sincos[eve::full_circle](wf) << "\n";
+  std::cout << "<- wf = " << wf << "\n";
+
+  std::cout << "-> sincos(wf)                = " << eve::sincos(wf) << "\n";
+  std::cout << "-> sincos[quarter_circle](wf)= " << eve::sincos[eve::quarter_circle](wf) << "\n";
+  std::cout << "-> sincos[half_circle](wf)   = " << eve::sincos[eve::half_circle](wf) << "\n";
+  std::cout << "-> sincos[full_circle](wf)   = " << eve::sincos[eve::full_circle](wf) << "\n";
 }

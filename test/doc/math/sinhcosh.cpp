@@ -2,13 +2,12 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-
 int main()
 {
-   std::cout << "<- wf = " << wf << "\n";
+  eve::wide wf = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25,
+                  eve::minf(eve::as<double>()), eve::nan(eve::as<double>())};
 
-   std::cout << "-> sinhcosh(wf)                = " << eve::sinhcosh(wf) << "\n";
-//    std::cout << "-> sinhcosh[ignore_last(2)](wf)= " << eve::sinhcosh[eve::ignore_last(2)](wf) << "\n";
-//    std::cout << "-> sinhcosh[wf != -2.0f](wf)   = " << eve::sinhcosh[wf != -2.0f](wf) << "\n";
+  std::cout << "<- wf           = " << wf << "\n";
+
+  std::cout << "-> sinhcosh(wf) = " << eve::sinhcosh(wf) << "\n";
 }
