@@ -174,7 +174,7 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
 <div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:46</div></div>
 <div class="ttc" id="agroup__core__decorators_ga37ae7275dffa6350a54dad217041ab09_html_ga37ae7275dffa6350a54dad217041ab09"><div class="ttname"><a href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a></div><div class="ttdeci">constexpr auto successor</div><div class="ttdoc">Higher-order Callable Object imbuing incrementation behaviour onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:57</div></div>
-<div class="ttc" id="agroup__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e_html_gab7e6a80c12091ba2b3db86eed90fb15e"><div class="ttname"><a href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a></div><div class="ttdeci">constexpr auto legendre</div><div class="ttdoc">Computes the value of the Legendre and associated Legendre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> legendre.hpp:121</div></div>
+<div class="ttc" id="agroup__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e_html_gab7e6a80c12091ba2b3db86eed90fb15e"><div class="ttname"><a href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a></div><div class="ttdeci">constexpr auto legendre</div><div class="ttdoc">Computes the value of the Legendre and associated Legendre polynomials of order n at x:</div><div class="ttdef"><b>Definition:</b> legendre.hpp:116</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -225,123 +225,6 @@ $(document).ready(function(){initNavTree('group__polynomial_gab7e6a80c12091ba2b3
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line"> </div>
-<div class="line">  wide_ft xd = {-0.1, -0.2, -0.3, -0.5, 0.0, 0.2, 0.3, 2.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  wide_ft x(0.5);</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                       = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                        = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                        = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[eve::q_kind](n, xd)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::q_kind](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[eve::q_kind](3, xd)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::q_kind](3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[eve::q_kind](n, 0.5)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::q_kind](n, 0.5) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[eve::q_kind](n, x)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::q_kind](n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            ;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xs = 0.1;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs               = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::legendre[eve::q_kind](4, xs)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::q_kind](4, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line"> </div>
-<div class="line">  wide_ft xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd             = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n              = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::array&lt;wide_ft, 8&gt; h;</div>
-<div class="line">  h[0] = <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>(0, xd);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[0]          =  &quot;</span> &lt;&lt;  h[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  h[1] = <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>(1, xd);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[1]          = &quot;</span> &lt;&lt;  h[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
-<div class="line">  {</div>
-<div class="line">    h[i] = <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[<a class="code hl_variable" href="group__core__decorators_ga37ae7275dffa6350a54dad217041ab09.html#ga37ae7275dffa6350a54dad217041ab09">eve::successor</a>](i-1, xd, h[i-1], h[i-2]);</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]           = &quot;</span> &lt;&lt;  h[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> }</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line"> </div>
-<div class="line">  wide_ft xd = {-0.1, -0.2, -0.3, -0.5, 0.0, 0.2, 0.3, 2.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  wide_it z(0);</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                      = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                       = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[eve::condon_shortley](n, z, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::condon_shortley](n, z, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xs = 0.1;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xs               = &quot;</span> &lt;&lt; xs &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::legendre[eve::condon_shortley](4, xs)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[eve::condon_shortley](4, 0, xs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-</div><!-- fragment --> <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int   , eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line"> </div>
-<div class="line">  wide_ft xd = {-0.1, -0.2, -0.3, -0.5, 0.0, 0.2, 0.3, 2.0};</div>
-<div class="line">  wide_it n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
-<div class="line">  wide_it z(0);</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                      = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                       = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[spherical](n, z, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_gab7e6a80c12091ba2b3db86eed90fb15e.html#gab7e6a80c12091ba2b3db86eed90fb15e">eve::legendre</a>[<a class="code hl_variable" href="group__core__decorators_ga884b4910b05380e3672d7cf9262a17e7.html#ga884b4910b05380e3672d7cf9262a17e7">eve::spherical</a>](n, z, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">//  double xs = 0.1;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="comment">//   std::cout &lt;&lt; &quot;---- scalar&quot; &lt;&lt; &#39;\n&#39;</span></div>
-<div class="line"><span class="comment">//             &lt;&lt; &quot;&lt;- xs               = &quot; &lt;&lt; xs &lt;&lt; &#39;\n&#39;</span></div>
-<div class="line"><span class="comment">//             &lt;&lt; &quot;-&gt; eve::legendre[spherical](4,0,xs)   = &quot; &lt;&lt; eve::legendre[eve::spherical](4, 0.0, xs) &lt;&lt; &#39;\n&#39;;</span></div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__core__decorators_ga884b4910b05380e3672d7cf9262a17e7_html_ga884b4910b05380e3672d7cf9262a17e7"><div class="ttname"><a href="group__core__decorators_ga884b4910b05380e3672d7cf9262a17e7.html#ga884b4910b05380e3672d7cf9262a17e7">eve::spherical</a></div><div class="ttdeci">constexpr auto spherical</div><div class="ttdoc">Higher-order Callable Object imbuing spherical semantic onto other Callable Objects.</div><div class="ttdef"><b>Definition:</b> core.hpp:56</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
