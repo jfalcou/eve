@@ -42,7 +42,7 @@ glob_unit("doc" ${doc_root} "core/*.cpp"                )
 ##==================================================================================================
 add_custom_target(doc.elliptic.exe        )
 add_dependencies(doc.exe doc.elliptic.exe )
-glob_unit("doc" ${doc_root} "elliptic/regular/*.cpp")
+glob_unit("doc" ${doc_root} "elliptic/*.cpp")
 
 ##==================================================================================================
 ## GLOB and process math doc tests

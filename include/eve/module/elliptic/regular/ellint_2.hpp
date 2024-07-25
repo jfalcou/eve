@@ -88,10 +88,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/EllipticIntegral.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/elliptic/regular/ellint_2.cpp}
-//! @}
+//!  @godbolt{doc/elliptic/ellint_2.cpp}
 //================================================================================================
   inline constexpr auto ellint_2 = functor<ellint_2_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {
