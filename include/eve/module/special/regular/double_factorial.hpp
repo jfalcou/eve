@@ -48,11 +48,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template <unsigned_value T> constexpr as_wide_as_t<double,T>double_factorial(T x) noexcept; // 1
+//!      template <unsigned_value T> constexpr as_wide_as_t<double,T> double_factorial(T x) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto double_factorial[conditional_expr auto c](unsigned_value auto x)   noexcept; // 2
-//!      constexpr auto double_factorial[logical_value auto m](unsigned_value auto x)      noexcept; // 2
+//!      constexpr auto double_factorial[conditional_expr auto c](unsigned_value auto x)    noexcept; // 2
+//!      constexpr auto double_factorial[logical_value auto m](unsigned_value auto x)       noexcept; // 2
 //!   }
 //!   @endcode
 //!
