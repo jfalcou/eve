@@ -1,13 +1,14 @@
 // revision 1
 #include <eve/module/math.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);}); 
- 
+#include <iostream>
+
 int main()
-{ 
-   std::cout << "<- wf = " << wf << "\n"; 
- 
+{
+  eve::wide wf = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25, -0.5, -2.0};
+  wf *= eve::pi[eve::downward](eve::as(wf));
+
+   std::cout << "<- wf = " << wf << "\n";
+
    std::cout << "-> tan(wf)                = " << eve::tan(wf) << "\n";
    std::cout << "-> tan[ignore_last(2)](wf)= " << eve::tan[eve::ignore_last(2)](wf) << "\n";
    std::cout << "-> tan[wf != -2.0f](wf)   = " << eve::tan[wf != -2.0f](wf) << "\n";

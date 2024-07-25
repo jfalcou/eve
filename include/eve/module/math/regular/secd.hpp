@@ -80,8 +80,8 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
-//!   @groupheader{Example}
 //!  @groupheader{Example}
+//!  @godbolt{doc/math//secd.cpp}
 //================================================================================================
   inline constexpr auto secd = functor<secd_t>;
 //================================================================================================

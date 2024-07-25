@@ -63,16 +63,14 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!      * `x`: [floating value](@ref floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   }
+//!    * `x`: [floating value](@ref floating_value).
+//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //! **Return value**
 //!
-//!   1 .The computation returns a tuple-like whose elements are `sinh(x)` and `cosh(x)`
-//!   2. [The operation is performed conditionnaly](@ref conditional).
+//!    1. The computation returns a tuple-like whose elements are `sinh(x)` and `cosh(x)`
+//!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math//sinhcosh.cpp}
