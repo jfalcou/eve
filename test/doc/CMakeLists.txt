@@ -25,8 +25,7 @@ glob_unit("doc" ${doc_root} "bessel/*.cpp")
 ##==================================================================================================
 add_custom_target(doc.combinatorial.exe        )
 add_dependencies(doc.exe doc.combinatorial.exe )
-glob_unit("doc" ${doc_root} "combinatorial/regular/*.cpp"    )
-glob_unit("doc" ${doc_root} "combinatorial/conversion/*.cpp" )
+glob_unit("doc" ${doc_root} "combinatorial/*.cpp"    )
 
 ##==================================================================================================
 ## GLOB and process core doc tests

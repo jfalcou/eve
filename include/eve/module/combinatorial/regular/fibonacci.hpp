@@ -54,25 +54,36 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto fibonacci(unsigned_value n, floating_value x, floating_value y) noexcept;  //1
+//!      // Regular overload
+//!      template <floating_value T0,  floating_value T1, unsigned_value N>
+//!      constexpr as_wide_as_t<common_value_t<T0, T1>, N> fibonacci(unsigned_value n,
+//!                                                    floating_value x, floating_value y) noexcept; //1
+//!
+//!      // Lanes masking
+//!      constexpr auto fibonacci[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 2
+//!      constexpr auto fibonacci[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n`: [index](@ref eve::unsigned_value) of the value to be returned
-//!   ` * `x`, `y`: [floating point arguments](@ref eve::floating_value) : \f$f_0\f$ and \f$f_1\f$.
+//!     * `n`: [indexes](@ref eve::unsigned_value) of the value to be returned.
+//!     * `x`, `y`: [floating point arguments](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      1. The value of the  nth element of the Fibonacci sequence beginning by `x` and `y` is returned.
+//!     1. The value of the  nth element of the Fibonacci sequence beginning by `x` and `y` is returned.
+//!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
-//!  @godbolt{doc/combinatorial/regular/fibonacci.cpp}
+//!  @godbolt{doc/combinatorial/fibonacci.cpp}
+//================================================================================================
+  inline constexpr auto fibonacci = functor<fibonacci_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto fibonacci = functor<fibonacci_t>;
 
   namespace detail
   {

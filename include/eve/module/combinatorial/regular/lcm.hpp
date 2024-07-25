@@ -47,17 +47,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto lcm(value auto p, value auto n)                          noexcept; // 1
+//!      template <value T0, value T1> constexpr common_value_t<T0, T1> lcm(T0 p, T1 n) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto lcm[conditional_expr auto c](value auto p, value auto n) noexcept; // 2
-//!      constexpr auto lcm[logical_value auto m](value auto p, value auto n)    noexcept; // 2
+//!      constexpr auto lcm[conditional_expr auto c](value auto p, value auto n)        noexcept; // 2
+//!      constexpr auto lcm[logical_value auto m](value auto p, value auto n)           noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `p`, `n`: [ordered arguments](@ref eve::value).
+//!     * `p`, `n`: [values](@ref value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -66,15 +66,17 @@ namespace eve
 //!      1. Returns the least common multiple of |p| and |n|.
 //!      2. [The operation is performed conditionnaly](@ref conditional)
 //!
-//!    @warning `p` and `n` can be of any [values](@ref value) type, but when the types are not
-//!    integral the least common multiple is defined only if `p` and `n` elements are [flint](@ref
-//!    is_flint). For any element of the arguments Which is not flint the result is undefined.
+//!    @warning  `p` and `n` can be of any [values](@ref eve::value) type, but when the types are not
+//!      integral the least common multiple is defined only if `p` and `n` elements are
+//!      [flint](@ref eve::is_flint). If any of the arguments is not flint the result is undefined.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/regular/lcm.cpp}
-//!  @}
+//!  @godbolt{doc/combinatorial/lcm.cpp}
 //================================================================================================
   inline constexpr auto lcm = functor<lcm_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

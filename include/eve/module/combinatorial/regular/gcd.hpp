@@ -45,17 +45,17 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto gcd(value auto p, value auto n)                          noexcept; // 1
+//!      template <value T0, value T1> constexpr common_value_t<T0, T1> gcd(T0 p, T1 n) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto gcd[conditional_expr auto c](value auto p, value auto n) noexcept; // 2
-//!      constexpr auto gcd[logical_value auto m](value auto p, value auto n)    noexcept; // 2
+//!      constexpr auto gcd[conditional_expr auto c](value auto p, value auto n)        noexcept; // 2
+//!      constexpr auto gcd[logical_value auto m](value auto p, value auto n)           noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `p`, `n`:  [floating value](@ref eve::floating_value).
+//!     * `p`, `n`: [values](@ref value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -74,11 +74,12 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/gcd)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/combinatorial/regular/gcd.cpp}
-//!
+//!   @godbolt{doc/combinatorial/gcd.cpp}
+//================================================================================================
+  inline constexpr auto gcd = functor<gcd_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto gcd = functor<gcd_t>;
 
   namespace detail
   {

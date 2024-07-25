@@ -22,13 +22,13 @@ namespace eve
     constexpr EVE_FORCEINLINE
     T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
 
-    template<eve::integral_value T, floating_scalar_value U>
+    template<eve::unsigned_value T, floating_scalar_value U>
     EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
     {
       return EVE_DISPATCH_CALL(v, target);
     }
 
-    template<eve::integral_value T, unsigned_scalar_value U>
+    template<eve::unsigned_value T, unsigned_scalar_value U>
     EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
     {
       return EVE_DISPATCH_CALL(v, target);
@@ -37,7 +37,6 @@ namespace eve
     EVE_CALLABLE_OBJECT(nth_prime_t, nth_prime_);
   };
 
-//TODO express the target case
 //================================================================================================
 //! @addtogroup combinatorial
 //! @{
@@ -55,7 +54,11 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto nth_prime(unsigned_value auto n) noexcept;
+//!      constexpr auto nth_prime(unsigned_value auto x) -> decltype(x) noexcept; //1
+//!      template < integral_value T,  floating_scalar_value U>
+//!      constexpr as_wide_as_t<U, T> nth_prime(T x, as<U>)             noexcept; //2
+//!      template < integral_value T,  unsigned_scalar_value U>
+//!      constexpr as_wide_as_t<U, T> nth_prime(T x, as<U>)             noexcept; //2
 //!   }
 //!   @endcode
 //!
@@ -65,33 +68,22 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     The value of the nth prime number is returned.
+//!     1. The nth prime is returned.
+//!     2. Same, but the element type of the result is deduced from U.
 //!
 //!   **Notes**
 //!
 //!     * 2 is the first prime. It is returned for n=0.
 //!
 //!     * Almost no computations are made, the results are from a lookup table.
-//!       The result element type is the same as the input one unless a converter
-//!       is applied to eve::nth_prime (see below).
 //!
 //!   **Example**
-//!
-//!     @godbolt{doc/combinatorial/regular/nth_prime.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Optimized Conversion Call
-//!
-//!     If the input types are integral, the result is susceptible not to be representable in the
-//!     input type. A converter can be applied to choose the output type and get the correct result.
-//!
-//!    **Example**
-//!
-//!      @godbolt{doc/combinatorial/conversion/nth_prime.cpp}
+//!     @godbolt{doc/combinatorial/nth_prime.cpp}
+//================================================================================================
+  inline constexpr auto nth_prime = functor<nth_prime_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto nth_prime = functor<nth_prime_t>;
 
   namespace detail
   {
