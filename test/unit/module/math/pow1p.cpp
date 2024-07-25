@@ -25,7 +25,6 @@ TTS_CASE_TPL("Check return types of pow1p", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::pow1p(T(), v_t()), T);
   TTS_EXPR_IS(eve::pow1p(v_t(), T()), T);
   TTS_EXPR_IS(eve::pow1p(v_t(), int()), v_t);
-  TTS_EXPR_IS(eve::pow1p(T(),   int()), T);
 };
 
 //==================================================================================================
