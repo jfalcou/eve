@@ -55,8 +55,6 @@ namespace eve
 //!      constexpr auto rempio2[quarter_circle](floating_value auto x)          noexcept; // 2.a
 //!      constexpr auto rempio2[half_circle](floating_value auto x)             noexcept; // 2.b
 //!      constexpr auto rempio2[full_circle](floating_value auto x)             noexcept; // 2.c
-//!      constexpr auto rempio2[medium](floating_value auto x)                  noexcept; // 2.d
-//!      constexpr auto rempio2[big](floating_value auto x)                     noexcept; // 2.e
 //!   }
 //!   @endcode
 //!
@@ -75,8 +73,6 @@ namespace eve
 //!         1. \f$|x| \le \pi/4\f$
 //!         2. \f$|x| \le \pi/2\f$
 //!         3. \f$|x| \le \pi\f$
-//!         4. \f$|x| \le 10^4\f$
-//!         5. no conditions,  will directly use the most expansive reduction algorithm
 //!
 //!       For each option, if the respective above conditon is not met the result is undefined.
 //!
