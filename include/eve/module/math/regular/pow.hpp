@@ -69,14 +69,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto pow(value auto x, value auto y)                          noexcept; // 1
+//!      template<floating_value T, value U>
+//!                                  constexpr as_wide_as_t<T, U >  pow(T x, U y) noexcept; // 1
+//!      template<integral_value T, integral_value U>
+//!                                  constexpr common_value_t<T, U> pow(T x, U y) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto pow[conditional_expr auto c](value auto x, value auto y) noexcept; // 2
-//!      constexpr auto pow[logical_value auto m](value auto x, value auto y)    noexcept; // 2
+//!      constexpr auto pow[conditional_expr auto c](/*any of above overloads*/)  noexcept; // 2
+//!      constexpr auto pow[logical_value auto m](/*any of above overloads*/)     noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow[raw](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto pow[raw](/*any of above overloads*/)                      noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -110,8 +113,8 @@ namespace eve
 //!       * pow(\f$+\infty\f$, y) returns +0 for any y less than 0
 //!       * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
 //!       * except where specified above, if any argument is NaN, NaN is returned
-//!     2. [The operation is performed conditionnaly](@ref conditional)
-//!     3. faster but less accurate call
+//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    3. sometimes faster but with less accurate results
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math//pow.cpp}
