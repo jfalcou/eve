@@ -95,10 +95,11 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/tchebytchev.cpp}
-//!   @godbolt{doc/polynomial/successor/tchebytchev.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto tchebytchev = functor<tchebytchev_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/polynomial/regular/impl/tchebytchev.hpp>

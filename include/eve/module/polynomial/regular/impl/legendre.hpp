@@ -20,7 +20,7 @@ namespace eve::detail
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, T x, T pl, T plm1)
     requires(O::contains(successor))
   {
-    EVE_ASSERT(eve::all(l >= 0 && is_flint(l)),
+    EVE_ASSERT(eve::all(logical_and(l >= 0, is_flint(l))),
                "successor(legendre)(l, x, pl, plm1): l is negative or not integral");
     auto lp1 = inc(l);
     return fms((lp1 + l) * x, pl, l * plm1) / lp1;
@@ -143,8 +143,8 @@ namespace eve::detail
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x)
     requires(O::contains(associated)||O::contains(condon_shortley)||O::contains(spherical))
   {
-    EVE_ASSERT(eve::all(l >= 0 && is_flint(l)), "legendre(l, m, x): l is negative or not integral");
-    EVE_ASSERT(eve::all(m >= 0 && is_flint(l)), "legendre(l, m, x): m is negative or not integral");
+    EVE_ASSERT(eve::all(logical_and(l >= 0, is_flint(l))), "legendre(l, m, x): l is negative or not integral");
+    EVE_ASSERT(eve::all(logical_and(m >= 0, is_flint(l))), "legendre(l, m, x): m is negative or not integral");
     if constexpr(O::contains(spherical))
     {
       auto ll   = convert(l, as_element(x));

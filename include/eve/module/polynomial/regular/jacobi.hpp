@@ -82,10 +82,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/polynomial/regular/jacobi.cpp}
-//!
+//================================================================================================
+  inline constexpr auto jacobi = functor<jacobi_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto jacobi = functor<jacobi_t>;
 }
 
 #include <eve/module/polynomial/regular/impl/jacobi.hpp>
