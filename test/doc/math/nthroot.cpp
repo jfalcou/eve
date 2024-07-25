@@ -1,21 +1,18 @@
 // revision 1
 #include <eve/module/math.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
- 
+#include <iostream>
+
 int main()
-{ 
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
-   std::cout << "<- wu = " << wu << "\n"; 
- 
-   std::cout << "-> nthroot(wf, 2*wf)                = " << eve::nthroot(wf, 2*wf) << "\n";
-   std::cout << "-> nthroot(wf, 2*wi)                = " << eve::nthroot(wf, 2*wi) << "\n";
-   std::cout << "-> nthroot(wf, 2*wu)                = " << eve::nthroot(wf, 2*wu) << "\n";
-   std::cout << "-> nthroot[ignore_last(2)](wf, 2*wf)= " << eve::nthroot[eve::ignore_last(2)](wf, 2*wf) << "\n";
-   std::cout << "-> nthroot[wf != -2.0f](wf, 2*wf)   = " << eve::nthroot[wf != -2.0f](wf, 2*wf) << "\n";
-   std::cout << "-> nthroot[raw](wf, 2*wf)           = " << eve::nthroot[eve::raw](wf, 2*wf) << "\n";
+{
+  eve::wide wf = {2.0f, 64.0f, 4.0f, 2.0f, 2.0f,
+                  eve::minf(eve::as<float>()), eve::eps(eve::as<float>()), eve::nan(eve::as<float>())};
+  eve::wide wn = {4, 3, 2, 1, 0,  4, 3, 2};
+
+  std::cout << "<- wf                              = " << wf << "\n";
+  std::cout << "<- wn                              = " << wn << "\n";
+
+   std::cout << "-> nthroot(wf, wn)                = " << eve::nthroot(wf, wn) << "\n";
+   std::cout << "-> nthroot[ignore_last(2)](wf, wn)= " << eve::nthroot[eve::ignore_last(2)](wf, wn) << "\n";
+   std::cout << "-> nthroot[wf != 2.0f](wf, wn)    = " << eve::nthroot[wf != 2.0f](wf, wn) << "\n";
+   std::cout << "-> nthroot[raw](wf, wn)           = " << eve::nthroot[eve::raw](wf, wn) << "\n";
 }

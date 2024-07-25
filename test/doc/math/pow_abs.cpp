@@ -2,14 +2,17 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-
 int main()
 {
-   std::cout << "<- wf = " << wf << "\n";
+  eve::wide pf = {2.0f, 3.0f, -4.0f, 2.0f, 2.0f,
+                  eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
+  eve::wide qf = {4.0f, 1.0f, -1.0f,  0.5f,  0.0f, 2.0f, -3.0f,  2.5f};
 
-   std::cout << "-> pow_abs(wf, 2*wf)                = " << eve::pow_abs(wf, 2*wf) << "\n";
-   std::cout << "-> pow_abs[ignore_last(2)](wf, 2*wf)= " << eve::pow_abs[eve::ignore_last(2)](wf, 2*wf) << "\n";
-   std::cout << "-> pow_abs[wf != -2.0f](wf, 2*wf)   = " << eve::pow_abs[wf != -2.0f](wf, 2*wf) << "\n";
-   std::cout << "-> pow_abs[raw](wf, 2*wf)           = " << eve::pow_abs[eve::raw](wf, 2*wf) << "\n";
+   std::cout << "<- pf                             = " << pf << "\n";
+   std::cout << "<- qf                             = " << qf << "\n";
+
+   std::cout << "-> pow_abs(pf, qf)                = " << eve::pow_abs(pf, qf) << "\n";
+   std::cout << "-> pow_abs[ignore_last(2)](pf, qf)= " << eve::pow_abs[eve::ignore_last(2)](pf, qf) << "\n";
+   std::cout << "-> pow_abs[qf > 0.0f](pf, qf)     = " << eve::pow_abs[qf > 0.0f](pf, qf) << "\n";
+   std::cout << "-> pow_abs[raw](pf, qf)           = " << eve::pow_abs[eve::raw](pf, qf) << "\n";
 }
