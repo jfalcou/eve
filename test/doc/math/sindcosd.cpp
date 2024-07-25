@@ -11,6 +11,4 @@ int main()
 
   std::cout << "-> sindcosd(wf)                = " << eve::sindcosd(wf) << "\n";
   std::cout << "-> sindcosd[quarter_circle](wf)= " << eve::sindcosd[eve::quarter_circle](wf) << "\n";
-  std::cout << "-> sindcosd[half_circle](wf)   = " << eve::sindcosd[eve::half_circle](wf) << "\n";
-  std::cout << "-> sindcosd[full_circle](wf)   = " << eve::sindcosd[eve::full_circle](wf) << "\n";
 }
