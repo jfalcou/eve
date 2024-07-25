@@ -146,7 +146,8 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga24dd00ac2795c25
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overload</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">bernouilli</a>(<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">template</span>&lt;<span class="keywordtype">unsigned</span>_value  N, <span class="keywordtype">float</span>ing_value T&gt;</div>
+<div class="line">   <span class="keyword">constexpr</span> as_wide_as_t&lt;T,N&gt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">bernouilli</a>(<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n)             <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">bernouilli</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1unsigned__value.html">unsigned_value</a> <span class="keyword">auto</span> n) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
@@ -173,29 +174,22 @@ $(document).ready(function(){initNavTree('group__combinatorial_ga24dd00ac2795c25
 <li><a href="https://mathworld.wolfram.com/BernoulliNumber.html">Wolfram MathWorld</a></li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/combinatorial.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span></div>
-<div class="line">main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  w32_t pi32  = {93, 25, 32, 180, 1, 2, 3, 4};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint32_t{ <span class="keywordflow">return</span> i;});</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{90u, 25u, 32u, 180u, 8u, 10u, 12u, 14u};</div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n  = &quot;</span> &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(17) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi32               = &quot;</span> &lt;&lt; pi32 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; bernouilli(pi32)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">eve::bernouilli</a>(pi32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  std::uint32_t xi = 18;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; xi                    = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; bernouilli(xi)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">eve::bernouilli</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bernouilli(wu)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">eve::bernouilli</a>(wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bernouilli[ignore_last(2)](wu)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">eve::bernouilli</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bernouilli[wu != 2u](wu)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">eve::bernouilli</a>[wu != 2u](wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bernouilli(n)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__combinatorial_ga24dd00ac2795c25bc9ae228c657133ba.html#ga24dd00ac2795c25bc9ae228c657133ba">eve::bernouilli</a>(n) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>
