@@ -13,6 +13,4 @@ int main()
   std::cout << "-> sind[ignore_last(2)](wf)= " << eve::sind[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> sind[wf != -2.0f](wf)   = " << eve::sind[wf != -2.0f](wf) << "\n";
   std::cout << "-> sind[quarter_circle](wf)= " << eve::sind[eve::quarter_circle](wf) << "\n";
-  std::cout << "-> sind[half_circle](wf)   = " << eve::sind[eve::half_circle](wf) << "\n";
-  std::cout << "-> sind[full_circle](wf)   = " << eve::sind[eve::full_circle](wf) << "\n";
 }

@@ -13,6 +13,4 @@ int main()
   std::cout << "-> cosd[ignore_last(2)](wf)= " << eve::cosd[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> cosd[wf > 0.0](wf)      = " << eve::cosd[wf > 0.0](wf) << "\n";
   std::cout << "-> cosd[quarter_circle](wf)= " << eve::cosd[eve::quarter_circle](wf) << "\n";
-  std::cout << "-> cosd[half_circle](wf)   = " << eve::cosd[eve::half_circle](wf) << "\n";
-  std::cout << "-> cosd[full_circle](wf)   = " << eve::cosd[eve::full_circle](wf) << "\n";
 }

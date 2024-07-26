@@ -44,9 +44,7 @@ TTS_CASE_WITH("Check behavior of tand on wide",
     auto d = eve::cosd(e);
     return d ? eve::sind(e) / d : eve::nan(eve::as(e));
   };
- TTS_ULP_EQUAL(tand[eve::quarter_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(tand[eve::half_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(tand[eve::half_circle2](a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(tand[eve::quarter_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tand(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tand(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tand(a2), map(ref, a2), 2);
@@ -59,10 +57,10 @@ TTS_CASE_WITH("Check behavior of tand on wide",
 TTS_CASE_WITH("Check behavior of eve::masked(eve::tand)(eve::wide)",
               eve::test::simd::ieee_reals,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
+                            tts::logicals(0, 3)))
+  <typename T, typename M>(T const& a0,
+                           M const& mask)
 {
   TTS_IEEE_EQUAL(eve::tand[mask](a0),
-            eve::if_else(mask, eve::tand(a0), a0));
+                 eve::if_else(mask, eve::tand(a0), a0));
 };

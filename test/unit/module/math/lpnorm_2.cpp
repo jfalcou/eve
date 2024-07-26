@@ -27,11 +27,11 @@ TTS_CASE_WITH("Check behavior of lpnorm on wide",
 {
   using eve::detail::map;
 
-  TTS_ULP_EQUAL(eve::lpnorm(2, a0, a1), eve::hypot(a0, a1), 2);
-  TTS_ULP_EQUAL(eve::lpnorm(2, a2, a3), eve::hypot(a2, a3), 2);
+  TTS_ULP_EQUAL(eve::lpnorm(2.0, a0, a1), eve::hypot(a0, a1), 2);
+  TTS_ULP_EQUAL(eve::lpnorm(2.0, a2, a3), eve::hypot(a2, a3), 2);
 
-  TTS_ULP_EQUAL(eve::lpnorm(2, a0, a1, a4), eve::hypot(a0, a1, a4), 2);
-  TTS_ULP_EQUAL(eve::lpnorm(2, a2, a3, a5), eve::hypot(a2, a3, a5), 2);
+  TTS_ULP_EQUAL(eve::lpnorm(2.0, a0, a1, a4), eve::hypot(a0, a1, a4), 2);
+  TTS_ULP_EQUAL(eve::lpnorm(2.0, a2, a3, a5), eve::hypot(a2, a3, a5), 2);
 };
 
 #if !defined(EVE_NO_DENORMALS)

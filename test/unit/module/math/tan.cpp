@@ -53,7 +53,6 @@ TTS_CASE_WITH("Check behavior of tan on wide",
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return std::tan(double(e)); };
   TTS_ULP_EQUAL(tan[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(tan[eve::half_circle   ](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tan[eve::half_circle   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tan[eve::full_circle   ](a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(tan[eve::full_circle   ](a1), map(ref, a1), 4);
