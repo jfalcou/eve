@@ -22,11 +22,11 @@ rem180(T x) noexcept
   x        = fma(xi, T(-90), x);
   T    fn  = quadrant(xi);
   T    xr  = x;
-  auto tst = x >= 45;
+  auto tst = x > 45;
   xr       = if_else(tst, xr - T(45), xr);
-  tst      = xr >= 45;
+  tst      = xr > 45;
   xr       = if_else(tst, xr - T(45), xr);
-  tst      = xr >= 45;
+  tst      = xr > 45;
   xr       = if_else(tst, x - T(45), xr);
   xr       = div_180(xr) * pi(as(xr));
   return kumi::make_tuple(fn, xr, zero(as(xr)));
