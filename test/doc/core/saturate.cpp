@@ -1,32 +1,17 @@
+// revision 1
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int64_t, eve::fixed<4>>;
-using int_16 = eve::as<std::int16_t>;
-using uint_16 = eve::as<std::uint16_t>;
-using int_64 = eve::as<std::int64_t>;
+eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2)+32767;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2+32767;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i+32764;});
 
-int main()
-{
-  wide_ft pf = {-1.0f, 2.3f, 45000.7f, -64768.6f};
-  wide_it pi = {-1, 2, -3, eve::valmax(eve::as<std::int64_t>())};
+int main(){
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n";
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                                  = " << pf << '\n'
-            << "-> saturate(pf, int_64())              = " << eve::saturate(pf, int_64()) << '\n'
-            << "-> saturate(pf, int_16())              = " << eve::saturate(pf, int_16()) << '\n'
-            << "<- pi                                  = " << pi << '\n'
-            << "-> saturate(pi, as(eve::as<double>())) = " << eve::saturate(pi, eve::as<double>()) << '\n';
-
-  double        xf = -64768.4f;
-  std::int64_t xi =  -1;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "-> saturate(xf, int_16())    = " << eve::saturate(xf, int_16()) << '\n'
-            << "<- xi                        = " << xi << '\n'
-            << "-> saturate(xi, uint16_t>()) = " << eve::saturate(xi, eve::as<uint16_t>()) << '\n';
-  return 0;
+   std::cout << "-> saturate(wf, as(wu))= " << eve::saturate(wf, eve::as<std::int16_t>()) << "\n";
+   std::cout << "-> saturate(wi, as(wu))= " << eve::saturate(wi, eve::as<std::int16_t>()) << "\n";
+   std::cout << "-> saturate(wu, as(wi))= " << eve::saturate(wu, eve::as<std::int16_t>()) << "\n";
 }

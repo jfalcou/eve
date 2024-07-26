@@ -1,31 +1,25 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};
-  wide_it pi = {-1, 2, -3, -32768};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "-> minus(pf)            = " << eve::minus(pf) << '\n'
-
-            << "<- pi                   = " << pi << '\n'
-            << "-> minus(pi)            = " << eve::minus(pi) << '\n'
-            << "-> minus[saturated](pi) = " << eve::minus[eve::saturated](pf) << '\n'
-            << "-> minus[pf > -2](pf)   = " << eve::minus[pf > -2](pf) << '\n';
-
-  float        xf = -32768.0f;
-  std::int16_t xi = -32768;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf        = " << xf << '\n'
-            << "-> minus(xf) = " << eve::minus(xf) << '\n'
-            << "<- xi        = " << xi << '\n'
-            << "-> minus(xi) = " << eve::minus(xi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> minus(wf)                = " << eve::minus(wf) << "\n";
+   std::cout << "-> minus(wi)                = " << eve::minus(wi) << "\n";
+   std::cout << "-> minus(wu)                = " << eve::minus(wu) << "\n";
+   std::cout << "-> minus[ignore_last(2)](wf)= " << eve::minus[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> minus[ignore_last(2)](wi)= " << eve::minus[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> minus[ignore_last(2)](wu)= " << eve::minus[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> minus[wf != 0](wf)       = " << eve::minus[wf != 0](wf) << "\n";
+   std::cout << "-> minus[wi != 0](wi)       = " << eve::minus[wi != 0](wi) << "\n";
+   std::cout << "-> minus[wu != 0](wu)       = " << eve::minus[wu != 0](wu) << "\n";
+   std::cout << "-> minus[saturated](wi)     = " << eve::minus[eve::saturated](wi) << "\n";
+   std::cout << "-> minus[saturated](wu)     = " << eve::minus[eve::saturated](wu) << "\n";
 }

@@ -1,31 +1,23 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {-0.0f, 2.0f, -3.0f, -32768.0f,
-                 0.0f, -2.0f, 3.0f, 32768.0f};
-  wide_it pi = { 0, 2, -3, -32768};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "-> signnz(pf)           = " << eve::signnz(pf) << '\n'
-            << "-> signnz(pedantic2](pf) = " << eve::signnz[eve::pedantic2](pf) << '\n'
-            << "-> signnz[abs(pf)<2](pf)= " << eve::signnz[eve::abs(pf)<2](pf) << '\n'
-            << "<- pi                   = " << pi << '\n'
-            << "-> signnz(pi)           = " << eve::signnz(pi) << '\n';
-
-  float        xf = -327.68f;
-  std::int16_t xi = -328;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf         = " << xf << '\n'
-            << "-> signnz(xf) = " << eve::signnz(xf) << '\n'
-            << "<- xi         = " << xi << '\n'
-            << "-> signnz(xi) = " << eve::signnz(xi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> signnz(wf)                = " << eve::signnz(wf) << "\n";
+   std::cout << "-> signnz(wi)                = " << eve::signnz(wi) << "\n";
+   std::cout << "-> signnz(wu)                = " << eve::signnz(wu) << "\n";
+   std::cout << "-> signnz[ignore_last(2)](wf)= " << eve::signnz[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> signnz[ignore_last(2)](wi)= " << eve::signnz[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> signnz[ignore_last(2)](wu)= " << eve::signnz[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> signnz[wf != 0](wf)       = " << eve::signnz[wf != 0](wf) << "\n";
+   std::cout << "-> signnz[wi != 0](wi)       = " << eve::signnz[wi != 0](wi) << "\n";
+   std::cout << "-> signnz[wu != 0](wu)       = " << eve::signnz[wu != 0](wu) << "\n";
 }

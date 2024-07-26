@@ -1,21 +1,11 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {-1.0f, -1.3f, -0.0f, -1.7f, 0.0f, 2.3f, 2.5f, 2.7f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                  = " << pf << '\n'
-            << "-> logical_not(pf > 0) = " << eve::logical_not(pf > 0) << '\n';
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> logical_not(xf > 0) = " << eve::logical_not(xf > 0) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> logical_not(wu <= maximum(wu)/2)= " << eve::logical_not(wu <= eve::maximum(wu)/2) << "\n";
 }

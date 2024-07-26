@@ -1,28 +1,12 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = { 0.0f, 0.0f, -0.0f, -0.0f};
-  wide_it qi = {-1.0f, 02.0f, -3.0f, -0.0f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                                = " << pf << '\n'
-            << "-> any(pf != 0)                      = " << eve::any(pf != 0) << '\n'
-             << "-> any[ignore_first(1)](pf > 0.5f)  = " << eve::any[eve::ignore_first(1)](pf > 0.5f) << '\n'
-            << "<- qi                                = " << qi << '\n'
-            << "-> any(qi != 0)                      = " << eve::any(qi != 0) << '\n';
-
-  float        xf = -0.0f;
-  float        yf = -3.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf           = " << xf << '\n'
-            << "-> any(xf != 0) = " << eve::any(xf != 0) << '\n'
-            << "<- yf           = " << yf << '\n'
-            << "-> any(yf != 0) = " << eve::any(yf != 0) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> any(wu <= maximum(wu)/2)                = " << eve::any(wu <= eve::maximum(wu)/2) << "\n";
+   std::cout << "-> any[ignore_last(2)](wu <= maximum(wu)/2)= " << eve::any[eve::ignore_last(2)](wu <= eve::maximum(wu)/2) << "\n";
 }

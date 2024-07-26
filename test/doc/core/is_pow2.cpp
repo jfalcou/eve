@@ -1,22 +1,13 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
-
-int main()
-{
-  wide_it pi = {14, 1, 3, 0, 16, 23000, 0, 27};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pi                   = " << pi << '\n'
-            << "-> is_pow2(pi)          = " << eve::is_pow2(pi) << '\n'
-            << "-> is_pow2[pi < 10](pi) = " << eve::is_pow2[pi < 10](pi) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> is_pow2(xf) = " << eve::is_pow2(xf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
+ 
+int main(){ 
+   std::cout << "<- wi = " << wi << "\n"; 
+ 
+   std::cout << "-> is_pow2(wi)                = " << eve::is_pow2(wi) << "\n";
+   std::cout << "-> is_pow2[ignore_last(2)](wi)= " << eve::is_pow2[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> is_pow2[wi != 0](wi)       = " << eve::is_pow2[wi != 0](wi) << "\n";
 }

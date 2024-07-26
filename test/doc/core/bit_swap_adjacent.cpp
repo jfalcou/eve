@@ -1,27 +1,13 @@
-
-#include <eve/wide.hpp>
-#include <iostream>
-#include <bit>
+// revision 0
 #include <eve/module/core.hpp>
+#include <iostream>
 
-using wide_it = eve::wide<std::uint16_t, eve::fixed<8>>;
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
 
-int main()
-{
-  wide_it pi = {1, 3, 7, 15, 31, 63, 127, 255};
+int main(){
+   std::cout << "<- wu = " << wu << "\n";
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                        = " << pi << '\n'
-            << "-> bit_swap_adjacent(pi, 0) = " << eve::bit_swap_adjacent(pi, 0) << '\n'
-            << "-> bit_swap_adjacent(pi, 2) = " << eve::bit_swap_adjacent(pi, 2) << '\n'
-            << "-> bit_swap_adjacent(pi, 4) = " << eve::bit_swap_adjacent(pi, 4) << '\n'
-            << "-> bit_swap_adjacent(pi, 8) = " << eve::bit_swap_adjacent(pi, 8) << '\n';
-
-
-  std::uint8_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << +xf << '\n'
-            << "-> bit_swap_adjacent(xf, 2) = " << +eve::bit_swap_adjacent(xf, 2) << '\n';
-  return 0;
+   std::cout << "-> bit_swap_adjacent(wi, 2)                = " << eve::bit_swap_adjacent(wu, 2) << "\n";
+   std::cout << "-> bit_swap_adjacent[ignore_last(2)](wu, 2)= " << eve::bit_swap_adjacent[eve::ignore_last(2)](wu, 2) << "\n";
+   std::cout << "-> bit_swap_adjacent[wu != 2u](wu, 2)      = " << eve::bit_swap_adjacent[wu != 2u](wu, 2) << "\n";
 }

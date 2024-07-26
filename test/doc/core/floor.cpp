@@ -1,27 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  float decr = -eve::eps(eve::as<float>());
-  wide_ft pf = {-1.0f+decr, -1.0f+3*decr, -1.0f+5*decr, -1.7f, 2.0f, 2.0f+2*decr, 2.0f+5*decr, 2.7f};
-
-  std::cout << "---- simd"  << std::setprecision(8) << '\n'
-            << "<- pf                            = " << pf << '\n'
-            << "-> floor(pf)                     = " << eve::floor(pf) << '\n'
-            << "-> floor[almost](pf)           = " << eve::floor[eve::almost](pf)           << '\n'
-            << "-> floor[almost = 2*decr](pf) = " << eve::floor[eve::almost = 2*decr](pf) << '\n'
-            << "-> floor[almost = 4](pf)      = " << eve::floor[eve::almost = 4](pf)      << '\n'
-            << "-> floor[pf>1.5](pf)             = " << eve::floor[pf>1.5](pf) << '\n';
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf        = " << xf << '\n'
-            << "-> floor(xf) = " << eve::floor(xf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> floor(wf)                = " << eve::floor(wf) << "\n";
+   std::cout << "-> floor(wi)                = " << eve::floor(wi) << "\n";
+   std::cout << "-> floor(wu)                = " << eve::floor(wu) << "\n";
+   std::cout << "-> floor[ignore_last(2)](wf)= " << eve::floor[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> floor[ignore_last(2)](wi)= " << eve::floor[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> floor[ignore_last(2)](wu)= " << eve::floor[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> floor[wf != 0](wf)       = " << eve::floor[wf != 0](wf) << "\n";
+   std::cout << "-> floor[wi != 0](wi)       = " << eve::floor[wi != 0](wi) << "\n";
+   std::cout << "-> floor[wu != 0](wu)       = " << eve::floor[wu != 0](wu) << "\n";
+   std::cout << "-> floor[almost](wf)        = " << eve::floor[eve::almost](wf) << "\n";
 }

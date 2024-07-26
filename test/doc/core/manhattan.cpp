@@ -1,35 +1,23 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, eve::inf(eve::as<float>())};
-  wide_ft qf = {-4, 3, -2, eve::nan(eve::as<float>())};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                     = " << pf << '\n'
-            << "<- qf                     = " << qf << '\n'
-            << "-> eve::manhattan(pf, qf) = " << eve::manhattan(pf, qf) << '\n';
-
-  float        xf = -32768.0f;
-  float        yf = 2.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                             = " << xf << '\n'
-            << "<- yf                             = " << yf << '\n'
-            << "-> eve::manhattan(xf, yf)         = " << eve::manhattan(xf, yf) << '\n'
-            << "-> manhattan[pedantic](pf, qf)    = " << eve::manhattan[eve::pedantic](pf, qf) << '\n'
-            << "-> eve::manhattan[pf > 0](pf, qf) = " << eve::manhattan[pf > 0](pf, qf) << '\n';
-
-  auto k = kumi::tuple{pf, qf, pf+qf, 1.0f};
-  std::cout << "---- multi parameters" << '\n'
-            << " -> manhattan(k)                                = " << eve::manhattan(k) << '\n'
-            << " -> manhattan(kumi::tuple{pf, pf, 1.0f})        = " << eve::manhattan( kumi::tuple{pf, qf, 1}) << '\n'
-            << " -> manhattan(kumi::tuple{1, pf, pf})           = " << eve::manhattan( kumi::tuple{1, pf, qf}) << '\n'
-            << " -> manhattan(kumi::tuple{pf, 1.0f)             = " << eve::manhattan( kumi::tuple{pf, 1.0f}) << '\n'
-            << " -> manhattan(kumi::tuple{1.0f, pf)             = " << eve::manhattan( kumi::tuple{1.0f, pf}) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> manhattan(wf, 2*wf)                = " << eve::manhattan(wf, 2*wf) << "\n";
+   std::cout << "-> manhattan(wi, 2*wi)                = " << eve::manhattan(wi, 2*wi) << "\n";
+   std::cout << "-> manhattan(wu, 2*wu)                = " << eve::manhattan(wu, 2*wu) << "\n";
+   std::cout << "-> manhattan(wt)                      = " << eve::manhattan(wt) << "\n";
+   std::cout << "-> manhattan[ignore_last(2)](wf, 2*wf)= " << eve::manhattan[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> manhattan[wf != 0](wf, 2*wf)       = " << eve::manhattan[wf != 0](wf, 2*wf) << "\n";
+   std::cout << "-> manhattan[pedantic](wf, 2*wf)      = " << eve::manhattan[eve::pedantic](wf, 2*wf) << "\n";
 }

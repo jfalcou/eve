@@ -1,24 +1,21 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, eve::valmax(eve::as<float>()),
-                eve::inf(eve::as<float>()), eve::maxflint(eve::as<float>())*2, eve::nan(eve::as<float>())};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                               = " << pf << '\n'
-            << "-> is_not_flint(pf)                 = " << eve::is_not_flint(pf) << '\n'
-            << "-> is_not_flint[eve::pedantic](pf)  = " << eve::is_not_flint[eve::pedantic](pf) << '\n'
-            << "-> is_not_flint[pf > 0](pf)         = " << eve::is_not_flint[pf > 0](pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                          = " << xf << '\n'
-            << "-> is_not_flint(xf)            = " << eve::is_not_flint(xf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> is_not_flint(wf)                = " << eve::is_not_flint(wf) << "\n";
+   std::cout << "-> is_not_flint[ignore_last(2)](wf)= " << eve::is_not_flint[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> is_not_flint[ignore_last(2)](wi)= " << eve::is_not_flint[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> is_not_flint[ignore_last(2)](wu)= " << eve::is_not_flint[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> is_not_flint[wf != 0](wf)       = " << eve::is_not_flint[wf != 0](wf) << "\n";
+   std::cout << "-> is_not_flint[wi != 0](wi)       = " << eve::is_not_flint[wi != 0](wi) << "\n";
+   std::cout << "-> is_not_flint[wu != 0](wu)       = " << eve::is_not_flint[wu != 0](wu) << "\n";
 }

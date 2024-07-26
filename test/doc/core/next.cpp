@@ -1,34 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {-0.0f, 2.0f, eve::eps(eve::as<float>()), 0.0f, 30.0f,eve::mindenormal(eve::as<float>()),
-                eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_it pi = {-1, 2, -3, 32767};
-
-  std::cout << "---- simd" << std::setprecision(12) << '\n'
-            << "<- pf                    = "  << pf << '\n'
-            << "-> next(pf)              = " << eve::next(pf) << '\n'
-            << "-> next[pedantic2](pf)   = " << eve::next[eve::pedantic2](pf) << '\n'
-            << "-> next[pf > 0](pf)      = " << eve::next[pf > 0](pf) << '\n'
-            << "-> next[saturated2](pf)  = " << eve::next[eve::saturated2](pf) << '\n'
-            << "<- pi                    = " << pi << '\n'
-            << "-> next(pi)              = " << eve::next(pi) << '\n'
-            << "-> next[saturated2](pi)   = " << eve::next[eve::saturated2](pi) << '\n';
-
-  float        xf = 0.0f;
-  std::int16_t xi = -3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> next(xf, 3)         = " << eve::next(xf, 3) << '\n'
-            << "<- xi                  = " << xi << '\n'
-            << "-> next(xi)            = " << eve::next(xi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> next(wf)                = " << eve::next(wf) << "\n";
+   std::cout << "-> next(wi)                = " << eve::next(wi) << "\n";
+   std::cout << "-> next(wu)                = " << eve::next(wu) << "\n";
+   std::cout << "-> next(wf, 2*wi)          = " << eve::next(wf, 2*wi) << "\n";
+   std::cout << "-> next(wi, 2*wi)          = " << eve::next(wi, 2*wi) << "\n";
+   std::cout << "-> next(wu, 2*wi)          = " << eve::next(wu, 2*wi) << "\n";
+   std::cout << "-> next[ignore_last(2)](wf)= " << eve::next[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> next[wf != 0](wf)       = " << eve::next[wf != 0](wf) << "\n";
+   std::cout << "-> next[pedantic](wf)      = " << eve::next[eve::pedantic](wf) << "\n";
+   std::cout << "-> next[saturated ](wf)    = " << eve::next[eve::saturated ](wf) << "\n";
 }

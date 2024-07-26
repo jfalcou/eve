@@ -1,25 +1,18 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;
-
-int main()
-{
-  wide_it pi = { 0, 1, 2, 3, -1, -32766, 32767, -32768};
-
-  std::cout
-    << "---- simd" << '\n'
-    << "<- pi                   = " << pi << '\n'
-    << "-> sign_alternate(pi)   = " << eve::sign_alternate(pi) << '\n';
-
-
-  float xf = 2.0f;
-
-  std::cout
-    << "---- scalar"  << '\n'
-    << "<- xf                   = " << xf << '\n'
-    << "-> sign_alternate(xf)   = " << eve::sign_alternate(xf) << '\n';
-
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n"; 
+ 
+   std::cout << "-> sign_alternate(wf)                = " << eve::sign_alternate(wf) << "\n";
+   std::cout << "-> sign_alternate(wi)                = " << eve::sign_alternate(wi) << "\n";
+   std::cout << "-> sign_alternate[ignore_last(2)](wf)= " << eve::sign_alternate[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> sign_alternate[ignore_last(2)](wi)= " << eve::sign_alternate[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> sign_alternate[wf != 0](wf)       = " << eve::sign_alternate[wf != 0](wf) << "\n";
+   std::cout << "-> sign_alternate[wi != 0](wi)       = " << eve::sign_alternate[wi != 0](wi) << "\n";
 }

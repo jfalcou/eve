@@ -1,26 +1,13 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <iostream>
-
-int main()
-{
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 4}, qi = {4, 1, 2, 0};
-  std::uint32_t z = 5;
-  std::cout << "---- simd" << '\n'
-            << " <- pi                      = " << pi << '\n'
-            << " <- qi                      = " << qi << '\n'
-            << " <- z                       = " << z  << '\n'
-            << " -> bit_shl(pi, qi)         = " << eve::bit_shl(pi, qi) << '\n'
-            << " -> bit_shl(z,  qi)         = " << eve::bit_shl(z,  qi) << '\n'
-            << " -> bit_shl(pi, z )         = " << eve::bit_shl(pi, z) << '\n'
-            << " -> bit_shl[pi<qi]((pi, qi) = " << eve::bit_shl[pi<qi](pi, qi) << '\n';
-
-  std::uint32_t a = 1;
-  std::uint32_t n = 4;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- a             = " << a << '\n'
-            << " <- n             = " << n << '\n'
-            << " -> bit_shl(a, n) = " << eve::bit_shl(a, n) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
+ 
+int main(){ 
+   std::cout << "<- wi = " << wi << "\n"; 
+ 
+   std::cout << "-> bit_shl(wi, 2*wi)                = " << eve::bit_shl(wi, 2*wi) << "\n";
+   std::cout << "-> bit_shl[ignore_last(2)](wi, 2*wi)= " << eve::bit_shl[eve::ignore_last(2)](wi, 2*wi) << "\n";
+   std::cout << "-> bit_shl[wi != 0](wi, 2*wi)       = " << eve::bit_shl[wi != 0](wi, 2*wi) << "\n";
 }

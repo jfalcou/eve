@@ -1,33 +1,13 @@
-
-#include <eve/wide.hpp>
-#include <iostream>
+// revision 0
 #include <eve/module/core.hpp>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
-
-int main()
-{
-  wide_it pi = {1, 3, 7, 15, 31, 63, 127, 255};
-  pi = eve::inc(pi);
-  constexpr auto _0 = eve::index<0>;
-  constexpr auto _1 = eve::index<1>;
-  constexpr auto _2 = eve::index<2>;
-  constexpr auto _3 = eve::index<3>;
-  std::cout << "---- simd" << '\n'
-            << "<- pi                          = " << pi << '\n'
-            << "-> byte_swap_pairs(pi, _0, _3) = " << eve::byte_swap_pairs(pi, _0, _3) << '\n'
-            << "-> byte_swap_pairs(pi, _1, _2) = " << eve::byte_swap_pairs(pi, _1, _2) << '\n';
-
-
-  std::uint32_t xf = 0xffeeddcc;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                            = " << std::hex << xf << '\n'
-            << "-> byte_swap_pairs(xf, _0, _3)   = " << std::hex << eve::byte_swap_pairs(xf, _0, _3) << '\n'
-            << "-> byte_swap_pairs(xf, _1, _3)   = " << std::hex << eve::byte_swap_pairs(xf, _1, _3) << '\n'
-            << "-> byte_swap_pairs(xf, _1, _2)   = " << std::hex << eve::byte_swap_pairs(xf, _1, _2) << '\n'
-            << "-> byte_swap_pairs(xf, _0, _2)   = " << std::hex << eve::byte_swap_pairs(xf, _0, _2) << '\n'
-    ;
-
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
+ 
+int main(){ 
+   std::cout << "<- wi = " << wi << "\n"; 
+ 
+   std::cout << "-> byte_swap_pairs(wi, index_t<0>(), index_t<1>())                = " << eve::byte_swap_pairs(wi, eve::index_t<0>(), eve::index_t<1>()) << "\n";
+   std::cout << "-> byte_swap_pairs[ignore_last(2)](wi, index_t<0>(), index_t<1>())= " << eve::byte_swap_pairs[eve::ignore_last(2)](wi, eve::index_t<0>(), eve::index_t<1>()) << "\n";
+   std::cout << "-> byte_swap_pairs[wi != 0](wi, index_t<0>(), index_t<1>())       = " << eve::byte_swap_pairs[wi != 0](wi, eve::index_t<0>(), eve::index_t<1>()) << "\n";
 }

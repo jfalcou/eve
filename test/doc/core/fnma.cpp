@@ -1,39 +1,29 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_t = eve::wide<float, eve::fixed<4>>;
-
-int main()
-{
-  float es  = eve::eps(eve::as<float>());
-  float esm1 = es-1.0f;
-  float esp1 = es+1.0f;
-  float vm  = eve::valmax(eve::as<float>());
-  wide_t of = {-2, 3, -esp1, -vm};
-  wide_t pf = {3, -2, esm1,  2 };
-  wide_t qf = {4, -1, 1.0f, -vm};
-
-  std::cout << "---- simd" << '\n'
-            << " <- of                                = " << of << '\n'
-            << " <- pf                                = " << pf << '\n'
-            << " <- qf                                = " << qf << '\n'
-            << " -> of*pf+qf                          = " << of*pf+qf << '\n'
-            << " -> fnma[pedantic2](of, pf, qf)         = " << eve::fnma[eve::pedantic2](of, pf, qf) << '\n'
-            << " -> fnma(of, pf, qf)                   = " << eve::fnma(of, pf, qf) << '\n'
-            << "\n if the previous fnma result ends by '0, inf}', it is because\n"
-            << " the system has no simd fnma fnmaily intrinsics\n"
-            << " or is not configured to use them.\n\n"
-            << " -> fnma[pf < qf](of, pf, qf)  = " << eve::fnma[pf < qf](of, pf, qf) << '\n';
-
-  std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << " <- vm                                = " << vm << '\n'
-            << " -> fnma[pedantic2](fnma)(vm, 2.0f, -vm)      = " << eve::fnma[eve::pedantic2](vm, 2.0f, -vm) << '\n'
-            << " -> fnma(vm, 2.0f, -vm)                = " << eve::fnma(vm, 2.0f, -vm) << '\n'
-            << " <- esm1                              = " << esm1 << '\n'
-            << " <- esp1                              = " << esp1 << '\n'
-            << " -> fnma[pedantic2](esp1, esm1, 1.0f)   = " << eve::fnma[eve::pedantic2](esp1, esm1, 1.0f) << '\n'
-            << " -> fnma(esp1, esm1, -1.0f)            = " << eve::fnma(esp1, esm1, 1.0f) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> fnma(wf, 2*wf, 3*wf)                = " << eve::fnma(wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fnma(wi, 2*wi, 3*wi)                = " << eve::fnma(wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fnma(wu, 2*wu, 3*wu)                = " << eve::fnma(wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fnma[ignore_last(2)](wf, 2*wf, 3*wf)= " << eve::fnma[eve::ignore_last(2)](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fnma[ignore_last(2)](wi, 2*wi, 3*wi)= " << eve::fnma[eve::ignore_last(2)](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fnma[ignore_last(2)](wu, 2*wu, 3*wu)= " << eve::fnma[eve::ignore_last(2)](wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fnma[wf != 0](wf, 2*wf, 3*wf)       = " << eve::fnma[wf != 0](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fnma[wi != 0](wi, 2*wi, 3*wi)       = " << eve::fnma[wi != 0](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fnma[wu != 0](wu, 2*wu, 3*wu)       = " << eve::fnma[wu != 0](wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fnma[pedantic](wf, 2*wf, 3*wf)      = " << eve::fnma[eve::pedantic](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fnma[pedantic](wi, 2*wi, 3*wi)      = " << eve::fnma[eve::pedantic](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fnma[pedantic](wu, 2*wu, 3*wu)      = " << eve::fnma[eve::pedantic](wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fnma[promote](wf, 2*wf, 3*wf)       = " << eve::fnma[eve::promote](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fnma[promote](wi, 2*wi, 3*wi)       = " << eve::fnma[eve::promote](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fnma[promote](wu, 2*wu, 3*wu)       = " << eve::fnma[eve::promote](wu, 2*wu, 3*wu) << "\n";
 }

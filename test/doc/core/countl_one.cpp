@@ -1,21 +1,13 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_it pi = {14, 1, 3, 0};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pi             = " << pi << '\n'
-            << "-> countl_one(pi) = " << eve::countl_one(pi) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf             = " << xf << '\n'
-            << "-> countl_one(xf) = " << eve::countl_one(xf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> countl_one(wu)                = " << eve::countl_one(wu) << "\n";
+   std::cout << "-> countl_one[ignore_last(2)](wu)= " << eve::countl_one[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> countl_one[wu != 0](wu)       = " << eve::countl_one[wu != 0](wu) << "\n";
 }

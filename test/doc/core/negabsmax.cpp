@@ -1,33 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f,  -3.0f,
-                eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                              = " << pf << '\n'
-            << "<- qf                              = " << qf << '\n'
-            << "-> negabsmax(pf, qf)               = " << eve::negabsmax(pf, qf) << '\n'
-            << "-> negabsmax[pedantic](pf, qf)     = " << eve::negabsmax[eve::pedantic](pf, qf) << '\n'
-            << "-> negabsmax[numeric](pf, qf)      = " << eve::negabsmax[eve::numeric](pf, qf) << '\n'
-            << "-> negabsmax[pf < -1.0f](pf, qf)   = " << eve::negabsmax[pf < -1.0f](pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> negabsmax(xf, yf)            = " << eve::negabsmax(xf, yf) << '\n'
-            << "-> negabsmax[pedantic](xf, yf) = " << eve::negabsmax[eve::pedantic](xf, yf) << '\n'
-            << "-> negabsmax[numeric](xf, yf)  = " << eve::negabsmax[eve::numeric](xf, yf) << '\n';
-
-   return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> negabsmax(wf, 2*wf)                = " << eve::negabsmax(wf, 2*wf) << "\n";
+   std::cout << "-> negabsmax(wi, 2*wi)                = " << eve::negabsmax(wi, 2*wi) << "\n";
+   std::cout << "-> negabsmax(wu, 2*wu)                = " << eve::negabsmax(wu, 2*wu) << "\n";
+   std::cout << "-> negabsmax(wt)                      = " << eve::negabsmax(wt) << "\n";
+   std::cout << "-> negabsmax[ignore_last(2)](wf, 2*wf)= " << eve::negabsmax[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> negabsmax[wf != 0](wf, 2*wf)       = " << eve::negabsmax[wf != 0](wf, 2*wf) << "\n";
+   std::cout << "-> negabsmax[pedantic](wf, 2*wf)      = " << eve::negabsmax[eve::pedantic](wf, 2*wf) << "\n";
+   std::cout << "-> negabsmax[numeric ](wf, 2*wf)      = " << eve::negabsmax[eve::numeric ](wf, 2*wf) << "\n";
 }

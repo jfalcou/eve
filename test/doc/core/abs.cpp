@@ -1,36 +1,25 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using eve::saturated;
-using eve::wide;
-using eve::as;
-using std::int32_t;
-
-using wide_ft = wide<float>;
-using wide_it = wide<std::int32_t>;
-
-int main()
-{
-  wide_ft pf([](auto i, auto){ return i%2 ? i : -i;});
-  wide_it pi = -eve::valmax(as<wide_it>()) - eve::iota(as<wide_it>{});
-  wide_it ti([](auto i, auto){ return i < 2 ? 1 : 0;});
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                 = " << pf << '\n'
-            << "-> abs(pf)            = " << eve::abs(pf) << '\n'
-            << "<- pi                 = " << pi << '\n'
-            << "-> abs(pi)            = " << eve::abs(pi) << '\n'
-            << "-> abs[saturated](pi) = " << eve::abs[saturated](pi) << '\n'
-            << "-> abs[ti > 0](pi)    = " << eve::abs[ti > 0](pi) << '\n';
-
-  float        xf = -32768.0f;
-  std::int16_t xi = -32768;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                 = " << xf << '\n'
-            << "-> abs(xf)            = " << eve::abs(xf) << '\n'
-            << "<- xi                 = " << xi << '\n'
-            << "-> abs(xi)            = " << eve::abs(xi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> abs(wf)                = " << eve::abs(wf) << "\n";
+   std::cout << "-> abs(wi)                = " << eve::abs(wi) << "\n";
+   std::cout << "-> abs(wu)                = " << eve::abs(wu) << "\n";
+   std::cout << "-> abs[ignore_last(2)](wf)= " << eve::abs[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> abs[ignore_last(2)](wi)= " << eve::abs[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> abs[ignore_last(2)](wu)= " << eve::abs[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> abs[wf != 0](wf)       = " << eve::abs[wf != 0](wf) << "\n";
+   std::cout << "-> abs[wi != 0](wi)       = " << eve::abs[wi != 0](wi) << "\n";
+   std::cout << "-> abs[wu != 0](wu)       = " << eve::abs[wu != 0](wu) << "\n";
+   std::cout << "-> abs[saturated](wi)     = " << eve::abs[eve::saturated](wi) << "\n";
+   std::cout << "-> abs[saturated](wu)     = " << eve::abs[eve::saturated](wu) << "\n";
 }

@@ -1,27 +1,22 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {0.0f,1.0f, -1.0f, -2.0f,
-                eve::mindenormal(eve::as<float>()), eve::inf(eve::as<float>()),
-                eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                  = " << pf << '\n'
-            << "-> is_normal(pf)       = " << eve::is_normal(pf) << '\n'
-            << "-> is_normal[pf>0](pf) = " << eve::is_normal[pf > 0](pf) << '\n';
-
-  float xf = 1.0f;
-  float yf = eve::mindenormal(eve::as<float>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf            = " << xf << '\n'
-            << "-> is_normal(xf) = " << eve::is_normal(xf) << '\n'
-            << "<- yf            = " << yf << '\n'
-            << "-> is_normal(yf) = " << eve::is_normal(yf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> is_normal(wf)                = " << eve::is_normal(wf) << "\n";
+   std::cout << "-> is_normal(wi)                = " << eve::is_normal(wi) << "\n";
+   std::cout << "-> is_normal[ignore_last(2)](wf)= " << eve::is_normal[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> is_normal[ignore_last(2)](wi)= " << eve::is_normal[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> is_normal[ignore_last(2)](wu)= " << eve::is_normal[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> is_normal[wf != 0](wf)       = " << eve::is_normal[wf != 0](wf) << "\n";
+   std::cout << "-> is_normal[wi != 0](wi)       = " << eve::is_normal[wi != 0](wi) << "\n";
+   std::cout << "-> is_normal[wu != 0](wu)       = " << eve::is_normal[wu != 0](wu) << "\n";
 }

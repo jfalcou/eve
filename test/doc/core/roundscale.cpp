@@ -1,37 +1,18 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float>;
-
-int main()
-{
-  wide_ft pf( [](auto i, auto) { return 1.2345678+i; } );
-
-  std::cout << "---- simd" << '\n'
-            << " <- pf                              = " << pf << '\n'
-            << " -> roundscale(pf, 4)               = " << eve::roundscale(pf, 4) << '\n'
-            << " -> roundscale[downward2  ](pf, 4)  = " << eve::roundscale[eve::downward2  ](pf, 4) << '\n'
-            << " -> roundscale[upward2    ](pf, 4)  = " << eve::roundscale[eve::upward2    ](pf, 4) << '\n'
-            << " -> roundscale[to_nearest2](pf, 4)  = " << eve::roundscale[eve::to_nearest2](pf, 4) << '\n'
-            << " -> roundscale[toward_zero2](pf, 4) = " << eve::roundscale[eve::toward_zero2](pf, 4) << '\n'   ;
-
- constexpr eve::index_t<4> four;
-
-  std::cout << "---- simd" << '\n'
-            << " <- pf                                 = " << pf << '\n'
-            << " -> roundscale(pf, four)               = " << eve::roundscale(pf, four) << '\n'
-            << " -> roundscale[downward2  ](pf, four)  = " << eve::roundscale[eve::downward2  ](pf, four) << '\n'
-            << " -> roundscale[upward2    ](pf, four)  = " << eve::roundscale[eve::upward2    ](pf, four) << '\n'
-            << " -> roundscale[to_nearest2](pf, four)  = " << eve::roundscale[eve::to_nearest2](pf, four) << '\n'
-            << " -> roundscale[toward_zero2](pf, four) = " << eve::roundscale[eve::toward_zero2](pf, four) << '\n'   ;
-
-  float xf = 0x1.fffffep0f;
-
-  std::cout << "---- scalar" << '\n'
-                << "<- xf                             = " << std::hexfloat << xf << '\n';
-    for (int i = 0;  i < 20; ++i)
-      std::cout << "-> roundscale[toward_zero](xf," << std::setw(2) << i << ")  = " << std::hexfloat << eve::roundscale[eve::toward_zero](xf, i) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n"; 
+ 
+   std::cout << "-> roundscale(wf, index_t<0>())             = " << eve::roundscale(wf, eve::index_t<0>()) << "\n";
+   std::cout << "-> roundscale(wf, 2*wi)                     = " << eve::roundscale(wf, 2*wi) << "\n";
+   std::cout << "-> roundscale[downward](wf, index_t<0>())   = " << eve::roundscale[eve::downward](wf, eve::index_t<0>()) << "\n";
+   std::cout << "-> roundscale[upward](wf, index_t<0>())     = " << eve::roundscale[eve::upward](wf, eve::index_t<0>()) << "\n";
+   std::cout << "-> roundscale[to_nearest](wf, index_t<0>()) = " << eve::roundscale[eve::to_nearest](wf, eve::index_t<0>()) << "\n";
+   std::cout << "-> roundscale[toward_zero](wf, index_t<0>())= " << eve::roundscale[eve::toward_zero](wf, eve::index_t<0>()) << "\n";
 }

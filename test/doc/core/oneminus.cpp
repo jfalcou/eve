@@ -1,30 +1,20 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_it = eve::wide <std::int16_t, eve::fixed<8>>;
-using wide_ft = eve::wide <float, eve::fixed<8>>;
-
-int main()
-{
-  wide_it pi = { 0, 1, 2, 3, -1, -32766, -32767, -32768};
-  wide_ft pf = { 0.2, 1, 2.4, 3, -1, -3.7, -327.67, -32768.4};
-
-  std::cout
-    << "---- simd" << '\n'
-    << "<- pi                       = " << pi << '\n'
-    << "-> oneminus(pi)             = " << eve::oneminus(pi) << '\n'
-    << "-> oneminus(pf))            = " << eve::oneminus(pf) << '\n'
-    << "-> oneminus[pi < 0](pi)     = " << eve::oneminus[pi < 0](pi) << '\n'
-    << "-> oneminus[pf < 0](pf))    = " << eve::oneminus[pf < 0](pf) << '\n';
-;
-
-  float xf = 2.0f;
-
-  std::cout
-    << "---- scalar"  << '\n'
-    << "<- xf                       = " << xf << '\n'
-    << "-> oneminus(xf)             = " << eve::oneminus(xf) << '\n';
-
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> oneminus(wf)                = " << eve::oneminus(wf) << "\n";
+   std::cout << "-> oneminus(wi)                = " << eve::oneminus(wi) << "\n";
+   std::cout << "-> oneminus(wu)                = " << eve::oneminus(wu) << "\n";
+   std::cout << "-> oneminus[ignore_last(2)](wf)= " << eve::oneminus[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> oneminus[wf != 0](wf)       = " << eve::oneminus[wf != 0](wf) << "\n";
+   std::cout << "-> oneminus[saturated ](wf)    = " << eve::oneminus[eve::saturated ](wf) << "\n";
 }

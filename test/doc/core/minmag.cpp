@@ -1,30 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f,  -3.0f,
-                eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                        = " << pf << '\n'
-            << "<- qf                        = " << qf << '\n'
-            << "-> minmag(pf, qf)            = " << eve::minmag(pf, qf) << '\n'
-            << "-> minmag[pedantic}(pf, qf)  = " << eve::minmag[eve::pedantic](pf, qf) << '\n'
-            << "-> minmag[numeric](pf, qf)   = " << eve::minmag[eve::numeric](pf, qf) << '\n'
-            << "-> minmag[pf <  0](pf, qf) = " << eve::minmag[pf <  0](pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> minmag(xf, yf)            = " << eve::minmag(xf, yf) << '\n';
-   return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> minmag(wf, 2*wf)                = " << eve::minmag(wf, 2*wf) << "\n";
+   std::cout << "-> minmag(wi, 2*wi)                = " << eve::minmag(wi, 2*wi) << "\n";
+   std::cout << "-> minmag(wu, 2*wu)                = " << eve::minmag(wu, 2*wu) << "\n";
+   std::cout << "-> minmag(wt)                      = " << eve::minmag(wt) << "\n";
+   std::cout << "-> minmag[ignore_last(2)](wf, 2*wf)= " << eve::minmag[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> minmag[wf != 0](wf, 2*wf)       = " << eve::minmag[wf != 0](wf, 2*wf) << "\n";
+   std::cout << "-> minmag[pedantic](wf, 2*wf)      = " << eve::minmag[eve::pedantic](wf, 2*wf) << "\n";
+   std::cout << "-> minmag[numeric ](wf, 2*wf)      = " << eve::minmag[eve::numeric ](wf, 2*wf) << "\n";
 }

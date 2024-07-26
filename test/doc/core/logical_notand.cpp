@@ -1,26 +1,11 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-
-int main()
-{
-  using eve::is_even;
-  using eve::is_odd;
-  wide_ft pf = {3.0f, -2.0f, -3.0f, 51.04f};
-  wide_ft qf = {4.0f, -1.0f, -3.0f, 0.0f};
-  std::cout << "---- simd" << '\n'
-            << " <- pf                                           = " << pf << '\n'
-            << " <- qf                                           = " << qf << '\n'
-            << " -> eve::logical_notand(is_odd(pf), is_even(qf)) = " << eve::logical_notand(is_odd(pf), is_even(qf)) << '\n';
-
-  float xf = 3.0f, yf = 4.5f;
-
-  std::cout << "---- scalar" << '\n'
-            << " xf                                              = " << xf << '\n'
-            << " yf                                              = " << yf << '\n'
-            << " -> eve::logical_notand(is_odd(xf), is_even(yf)) = " << eve::logical_notand(is_odd(xf), is_even(yf)) << '\n'
-            << " -> eve::logical_notand(xf == 3,    is_even(yf)) = " << eve::logical_notand(xf == 3   , is_even(yf)) << '\n' ;
-  return 0;
+#include <iostream> 
+ 
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> logical_notand(wu <= maximum(wu)/2, wu >= maximum(wu)/2)= " << eve::logical_notand(wu <= eve::maximum(wu)/2, wu >= eve::maximum(wu)/2) << "\n";
 }

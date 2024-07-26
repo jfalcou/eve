@@ -1,23 +1,23 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f, -1.5f, -2.0f, -123.345f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                      = " << pf << '\n'
-            << "-> is_infinite(pf)         = " << eve::is_infinite(pf) << '\n'
-            << "-> is_infinite[pf > 0](pf) = " << eve::is_infinite[pf > 0](pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> is_infinite(xf) = " << eve::is_infinite(xf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> is_infinite(wf)                = " << eve::is_infinite(wf) << "\n";
+   std::cout << "-> is_infinite(wi)                = " << eve::is_infinite(wi) << "\n";
+   std::cout << "-> is_infinite(wu)                = " << eve::is_infinite(wu) << "\n";
+   std::cout << "-> is_infinite[ignore_last(2)](wf)= " << eve::is_infinite[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> is_infinite[ignore_last(2)](wi)= " << eve::is_infinite[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> is_infinite[ignore_last(2)](wu)= " << eve::is_infinite[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> is_infinite[wf != 0](wf)       = " << eve::is_infinite[wf != 0](wf) << "\n";
+   std::cout << "-> is_infinite[wi != 0](wi)       = " << eve::is_infinite[wi != 0](wi) << "\n";
+   std::cout << "-> is_infinite[wu != 0](wu)       = " << eve::is_infinite[wu != 0](wu) << "\n";
 }

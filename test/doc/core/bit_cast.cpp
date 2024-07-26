@@ -1,23 +1,17 @@
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using iT      = std::int32_t;
-using wide_it = eve::wide<iT, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {1.0f, 2.0f, -1.0f, 0.5f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf =                              " << pf << '\n'
-            << "-> eve::bit_cast(pf,as<wide_it>()) = " << std::hex << eve::bit_cast(pf, eve::as<wide_it>()) << '\n';
-
-  float xf = 2.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf =                               " << xf << '\n'
-            << "-> eve::bit_cast(xf, as<iT>()) =      " << std::hex << eve::bit_cast(xf, eve::as<iT>()) << '\n';
-  return 0;
+// revision 0
+#include <eve/module/core.hpp>
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> bit_cast(wf, as(wu))= " << eve::bit_cast(wf, eve::as(wu)) << "\n";
+   std::cout << "-> bit_cast(wi, as(wu))= " << eve::bit_cast(wi, eve::as(wu)) << "\n";
+   std::cout << "-> bit_cast(wu, as(wi))= " << eve::bit_cast(wu, eve::as(wi)) << "\n";
 }

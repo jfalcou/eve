@@ -1,6 +1,5 @@
+// revision 1
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <eve/traits/product_type.hpp>
 #include <iostream>
 
 struct data_block : eve::struct_support<data_block, float, std::int16_t,double>
@@ -19,14 +18,11 @@ int main()
   eve::wide<float       , card_t> wf = [](auto i, auto) { return 1.f/(1+i); };
   eve::wide<std::int16_t, card_t> wi = [](auto i, auto) { return i+1; };
 
-  std::cout << "---- values"  << std::endl
-            << "wf  = " << wf << std::endl
-            << "wi  = " << wi << std::endl
-            << "wd  = " << wd << std::endl << std::endl;
-  std::cout << "---- zip as tuple"  << std::endl
-            << "-> zip(wf,wi,wd) = " << eve::zip(wf,wi,wd)  << std::endl << std::endl;
-  std::cout << "---- zip as UDT"  << std::endl
-            << "-> zip(wf,wi,wd) = " << eve::zip(eve::as<data_block>(), wf,wi,wd)  << std::endl;
+  std::cout << "wf                                      = " << wf << std::endl;
+  std::cout << "wi                                      = " << wi << std::endl;
+  std::cout << "wd                                      = " << wd << std::endl;
+  std::cout << "-> zip(wf,wi,wd)                        = " << eve::zip(wf,wi,wd)  << std::endl;
+  std::cout << "-> zip(eve::as<data_block>(),wf,wi,wd)) = " << eve::zip(eve::as<data_block>(),wf,wi,wd)  << std::endl;
 
   return 0;
 }

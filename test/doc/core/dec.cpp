@@ -1,26 +1,25 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int8_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f};
-  wide_it pi = {0, 1, -127, -128};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                 = " << pf << '\n'
-            << "-> dec(pf)            = " << eve::dec(pf) << '\n'
-            << "-> dec[pf > 0.0f](pf) = " << eve::dec[pf > 0.0f](pf) << '\n'
-            << "-> dec[saturated]pi)  = " << eve::dec[eve::saturated](pi) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf           = " << xf << '\n'
-            << "-> eve::dec(xf) = " << eve::dec(xf) << '\n';
-
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> dec(wf)                = " << eve::dec(wf) << "\n";
+   std::cout << "-> dec(wi)                = " << eve::dec(wi) << "\n";
+   std::cout << "-> dec(wu)                = " << eve::dec(wu) << "\n";
+   std::cout << "-> dec[ignore_last(2)](wf)= " << eve::dec[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> dec[ignore_last(2)](wi)= " << eve::dec[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> dec[ignore_last(2)](wu)= " << eve::dec[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> dec[wf != 0](wf)       = " << eve::dec[wf != 0](wf) << "\n";
+   std::cout << "-> dec[wi != 0](wi)       = " << eve::dec[wi != 0](wi) << "\n";
+   std::cout << "-> dec[wu != 0](wu)       = " << eve::dec[wu != 0](wu) << "\n";
+   std::cout << "-> dec[saturated](wi)     = " << eve::dec[eve::saturated](wi) << "\n";
+   std::cout << "-> dec[saturated](wu)     = " << eve::dec[eve::saturated](wu) << "\n";
 }

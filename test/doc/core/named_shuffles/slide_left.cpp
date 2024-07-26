@@ -1,5 +1,0 @@
-int
-main()
-{
-  // in progress
-}

@@ -1,39 +1,29 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_t = eve::wide<float, eve::fixed<4>>;
-
-int main()
-{
-  float es  = eve::eps(eve::as<float>());
-  float esm1 = es-1.0f;
-  float esp1 = es+1.0f;
-  float vm  = eve::valmax(eve::as<float>());
-  wide_t pf = {2, -3, esp1,  vm};
-  wide_t qf = {3, -2, esm1,  2 };
-  wide_t of = {-4, 1, -1.0f, vm};
-
-  std::cout << "---- simd" << '\n'
-            << " <- of                                = " << of << '\n'
-            << " <- pf                                = " << pf << '\n'
-            << " <- qf                                = " << qf << '\n'
-            << " -> of*pf+qf                          = " << of*pf+qf << '\n'
-            << " -> fsm[pedantic](of, pf, qf)         = " << eve::fsm[eve::pedantic](of, pf, qf) << '\n'
-            << " -> fsm(of, pf, qf)                   = " << eve::fsm(of, pf, qf) << '\n'
-            << "\n if the previous fsm result ends by '0, inf}', it is because\n"
-            << " the system has no simd fsm fsmily intrinsics\n"
-            << " or is not configured to use them.\n\n"
-            << " -> fsm[pf < qf](of, pf, qf)  = " << eve::fsm[pf < qf](of, pf, qf) << '\n';
-
-  std::cout << "---- scalar" << std::setprecision(10) << '\n'
-            << " <- vm                                = " << vm << '\n'
-            << " -> fsm[pedantic](vm, 2.0f, -vm)      = " << eve::fsm[eve::pedantic](vm, 2.0f, -vm) << '\n'
-            << " -> fsm(vm, 2.0f, -vm)                = " << eve::fsm(vm, 2.0f, -vm) << '\n'
-            << " <- esm1                              = " << esm1 << '\n'
-            << " <- esp1                              = " << esp1 << '\n'
-            << " -> fsm[pedantic](esp1, esm1, 1.0f)   = " << eve::fsm[eve::pedantic](esp1, esm1, 1.0f) << '\n'
-            << " -> fsm(esp1, esm1, -1.0f)            = " << eve::fsm(esp1, esm1, 1.0f) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> fsm(wf, 2*wf, 3*wf)                = " << eve::fsm(wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fsm(wi, 2*wi, 3*wi)                = " << eve::fsm(wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fsm(wu, 2*wu, 3*wu)                = " << eve::fsm(wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fsm[ignore_last(2)](wf, 2*wf, 3*wf)= " << eve::fsm[eve::ignore_last(2)](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fsm[ignore_last(2)](wi, 2*wi, 3*wi)= " << eve::fsm[eve::ignore_last(2)](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fsm[ignore_last(2)](wu, 2*wu, 3*wu)= " << eve::fsm[eve::ignore_last(2)](wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fsm[wf != 0](wf, 2*wf, 3*wf)       = " << eve::fsm[wf != 0](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fsm[wi != 0](wi, 2*wi, 3*wi)       = " << eve::fsm[wi != 0](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fsm[wu != 0](wu, 2*wu, 3*wu)       = " << eve::fsm[wu != 0](wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fsm[pedantic](wf, 2*wf, 3*wf)      = " << eve::fsm[eve::pedantic](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fsm[pedantic](wi, 2*wi, 3*wi)      = " << eve::fsm[eve::pedantic](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fsm[pedantic](wu, 2*wu, 3*wu)      = " << eve::fsm[eve::pedantic](wu, 2*wu, 3*wu) << "\n";
+   std::cout << "-> fsm[promote](wf, 2*wf, 3*wf)       = " << eve::fsm[eve::promote](wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> fsm[promote](wi, 2*wi, 3*wi)       = " << eve::fsm[eve::promote](wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> fsm[promote](wu, 2*wu, 3*wu)       = " << eve::fsm[eve::promote](wu, 2*wu, 3*wu) << "\n";
 }

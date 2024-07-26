@@ -1,40 +1,22 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-int main()
-{
-  using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
-  w_t pi = {3, 2, -32700, 32700}, qi = {4, 1, 100, -100};
-  using wf_t = eve::wide<float, eve::fixed<4>>;
-  wf_t pf = {3, 2.5, -32.7, 1327.43}, qf = {-4.2, -1.5, 100.834, -10.02};
-
-  std::cout << "---- simd" << '\n'
-            << " <- pi                      = " << pi << '\n'
-            << " <- qi                      = " << qi << '\n'
-            << " -> sub(pi, qi)             = " << eve::sub(pi, qi) << '\n'
-            << " -> pi - qi                 = " << pi - qi << '\n'
-            << " -> pf - qf                 = " << pf - qf << '\n'
-            <<  " -> sub[pi > qi](pi, qi)   = " << eve::sub[pi > qi](pi, qi) << '\n'
-            <<  " -> sub[saturated](pi, qi) = " <<eve::sub[eve::saturated](pi, qi) << '\n';
-
-  std::int16_t xi = 100, yi = 32700;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- xi          = " << xi << '\n'
-            << " <- yi          = " << yi << '\n'
-            << " -> sub(xi, yi) = " << eve::sub(xi, yi) << '\n'
-            << " -> xi - yi     = " << xi - yi << '\n'; // C++ promotion to int
-
-
-  auto k = kumi::tuple{pf, pf, pf, 1};
-  std::cout << "---- multi parameters" << '\n'
-            << " -> sub(pi,pi,pi,1)               = " << eve::sub(pi, pi, pi, 1) << '\n'
-            << " -> sub(k)                        = " << eve::sub(k)               << '\n'
-            << " -> sub(kumi::tuple{pf, pf})      = " << eve::sub( kumi::tuple{pf, pf})  << '\n'
-            << " -> sub(kumi::tuple{pf, 1.0f)     = " << eve::sub( kumi::tuple{pf, 1.0f})  << '\n'
-            << " -> sub(kumi::tuple{1.0f, pf)     = " << eve::sub( kumi::tuple{1.0f, pf})  << '\n'
-            << " -> sub[saturated](pi,12,pi,pi)   = " << eve::sub[eve::saturated](pi, 12, pi, pi) << '\n';
-
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> sub(wf, 2*wf)                = " << eve::sub(wf, 2*wf) << "\n";
+   std::cout << "-> sub(wi, 2*wi)                = " << eve::sub(wi, 2*wi) << "\n";
+   std::cout << "-> sub(wu, 2*wu)                = " << eve::sub(wu, 2*wu) << "\n";
+   std::cout << "-> sub(wt)                      = " << eve::sub(wt) << "\n";
+   std::cout << "-> sub[ignore_last(2)](wf, 2*wf)= " << eve::sub[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> sub[wf != 0](wf, 2*wf)       = " << eve::sub[wf != 0](wf, 2*wf) << "\n";
 }

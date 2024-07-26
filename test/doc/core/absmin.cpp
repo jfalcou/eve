@@ -1,38 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using eve::saturated;
-using eve::numeric;
-using eve::pedantic;
-using eve::wide;
-using eve::as;
-using std::int32_t;
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f,  -3.0f,
-                eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                        = " << pf << '\n'
-            << "<- qf                        = " << qf << '\n'
-            << "-> absmin(pf, qf)            = " << eve::absmin(pf, qf) << '\n'
-            << "-> absmin[pedantic](pf, qf)  = " << eve::absmin[eve::pedantic](pf, qf) << '\n'
-            << "-> absmin[numeric](pf, qf)   = " << eve::absmin[eve::numeric](pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> absmin(xf, yf)            = " << eve::absmin(xf, yf) << '\n'
-            << "-> absmin[pedantic](xf, yf)  = " << eve::absmin[eve::pedantic](xf, yf) << '\n'
-            << "-> absmin[numeric](xf, yf)   = " << eve::absmin[eve::numeric](xf, yf) << '\n';
-   return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> absmin(wf, 2*wf)                = " << eve::absmin(wf, 2*wf) << "\n";
+   std::cout << "-> absmin(wi, 2*wi)                = " << eve::absmin(wi, 2*wi) << "\n";
+   std::cout << "-> absmin(wu, 2*wu)                = " << eve::absmin(wu, 2*wu) << "\n";
+   std::cout << "-> absmin(wt)                      = " << eve::absmin(wt) << "\n";
+   std::cout << "-> absmin[ignore_last(2)](wf, 2*wf)= " << eve::absmin[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> absmin[wf != 0](wf, 2*wf)       = " << eve::absmin[wf != 0](wf, 2*wf) << "\n";
+   std::cout << "-> absmin[pedantic](wf, 2*wf)      = " << eve::absmin[eve::pedantic](wf, 2*wf) << "\n";
+   std::cout << "-> absmin[numeric ](wf, 2*wf)      = " << eve::absmin[eve::numeric ](wf, 2*wf) << "\n";
 }

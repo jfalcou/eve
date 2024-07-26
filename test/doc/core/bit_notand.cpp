@@ -1,27 +1,22 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-int main()
-{
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 4}, qi = {4, 1, 1, ~0};
-  std::uint32_t z = 5;
-  std::cout << "---- simd" << '\n'
-            << " <- pi                        = " << pi << '\n'
-            << " <- qi                        = " << qi << '\n'
-            << " <- z                         = " << z  << '\n'
-            << " -> bit_notand(pi, qi)        = " << eve::bit_notand(pi, qi) << '\n'
-            << " -> bit_notand(pi, z )        = " << eve::bit_notand(pi, z) << '\n'
-            << " -> bit_notand[pi<qi](pi, qi) = " << eve::bit_notand[pi<qi](pi, qi) << '\n';
-    ;
-
-  std::uint32_t mask = 1 >> 31;
-  float xi = -3.4565;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- xi                   = " << xi << '\n'
-            << " <- mask                 = " << mask << '\n'
-            << " -> bit_notand(xi, mask) = " << eve::bit_notand(xi, mask) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> bit_notand(wf, 2*wf)                = " << eve::bit_notand(wf, 2*wf) << "\n";
+   std::cout << "-> bit_notand(wi, 2*wi)                = " << eve::bit_notand(wi, 2*wi) << "\n";
+   std::cout << "-> bit_notand(wu, 2*wu)                = " << eve::bit_notand(wu, 2*wu) << "\n";
+   std::cout << "-> bit_notand(wt)                      = " << eve::bit_notand(wt) << "\n";
+   std::cout << "-> bit_notand[ignore_last(2)](wf, 2*wf)= " << eve::bit_notand[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> bit_notand[wf != 0](wf, 2*wf)       = " << eve::bit_notand[wf != 0](wf, 2*wf) << "\n";
 }

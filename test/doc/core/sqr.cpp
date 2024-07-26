@@ -1,31 +1,25 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, 182.0f};
-  wide_it pi = {-1, 2, -3, 182};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                  = " << pf << '\n'
-            << "-> sqr(pf)             = " << eve::sqr(pf) << '\n'
-            << "-> sqr[pf < 0](pf)     = " << eve::sqr[pf < 0](pf) << '\n'
-            << "<- pi                  = " << pi << '\n'
-            << "-> sqr[saturated2](pi)  = " << eve::sqr[eve::saturated2](pi) << '\n'
-            << "-> sqr(pi)             = " << eve::sqr(pi) << '\n';
-
-  float        xf = -32768.0f;
-  std::int16_t xi = -32768;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> sqr(xf)             = " << eve::sqr(xf) << '\n'
-            << "<- xi                  = " << xi << '\n'
-            << "-> sqr[saturated2](xi)  = " << eve::sqr[eve::saturated2](xi) << '\n'
-            << "-> sqr(xi)             = " << eve::sqr(xi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> sqr(wf)                = " << eve::sqr(wf) << "\n";
+   std::cout << "-> sqr(wi)                = " << eve::sqr(wi) << "\n";
+   std::cout << "-> sqr(wu)                = " << eve::sqr(wu) << "\n";
+   std::cout << "-> sqr[ignore_last(2)](wf)= " << eve::sqr[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> sqr[ignore_last(2)](wi)= " << eve::sqr[eve::ignore_last(2)](wi) << "\n";
+   std::cout << "-> sqr[ignore_last(2)](wu)= " << eve::sqr[eve::ignore_last(2)](wu) << "\n";
+   std::cout << "-> sqr[wf != 0](wf)       = " << eve::sqr[wf != 0](wf) << "\n";
+   std::cout << "-> sqr[wi != 0](wi)       = " << eve::sqr[wi != 0](wi) << "\n";
+   std::cout << "-> sqr[wu != 0](wu)       = " << eve::sqr[wu != 0](wu) << "\n";
+   std::cout << "-> sqr[saturated](wi)     = " << eve::sqr[eve::saturated](wi) << "\n";
+   std::cout << "-> sqr[saturated](wu)     = " << eve::sqr[eve::saturated](wu) << "\n";
 }

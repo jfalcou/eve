@@ -1,17 +1,11 @@
+// revision 1
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
-int main()
-{
-  using wf_t = eve::wide<float, eve::fixed<4>>;
-  wf_t pf = {3, 2.5, -32.7, 1.0}, qf = {4.2, 1.5, -100.834, eve::eps(eve::as<float>())/2};
-  auto [s, eps] = eve::two_prod(pf, qf);
-  std::cout << "---- simd" << '\n'
-            << " <- pf          = " << pf << '\n'
-            << " <- qf          = " << qf << '\n'
-            << " -> {s, eps] = two_prod(pf, qf)\n"
-            << " -> s           = " << s << '\n'
-            << " -> eps         = " << eps << '\n';
-  return 0;
+eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2)*(1+eve::eps(eve::as<float>()));});
+
+int main(){
+   std::cout << "<- wf = " << wf << "\n";
+
+   std::cout << "-> two_prod(wf, 2*wf)= " << eve::two_prod(wf, 2*wf) << "\n";
 }

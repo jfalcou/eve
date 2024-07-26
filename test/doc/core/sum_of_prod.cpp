@@ -1,23 +1,14 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-int main()
-{
-  using wf_t = eve::wide<float, eve::fixed<4>>;
-  wf_t xf = {3, 2, 1, 0}, zf = {4, 1, 2, 100};
-  wf_t tf = -(xf+4*eve::eps(eve::as<float>())), yf = zf-4*eve::eps(eve::as<float>());
-
-  std::cout << "---- simd" << std::setprecision(8) << '\n'
-            << " <- xf                                    = " << xf << '\n'
-            << " <- yf                                    = " << yf << '\n'
-            << " <- tf                                    = " << tf << '\n'
-            << " <- zf                                    = " << zf << '\n'
-            << " -> xf*yf+tf*zf                           = " << (xf*yf)+(tf*zf) << '\n'
-            << " -> sum_of_prod(xf, yf, tf, zf)           = " << eve::sum_of_prod(xf, yf, tf, zf) << '\n'
-            << " -> sum_of_prod[pedantic2](xf, yf, tf, zf) = " << eve::sum_of_prod[eve::pedantic2](xf, yf, tf, zf) << '\n'
-            << " -> sum_of_prod[raw2](xf, yf, tf, zf)      = " << eve::sum_of_prod[eve::raw2](xf, yf, tf, zf) << '\n';
-
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n"; 
+ 
+   std::cout << "-> sum_of_prod(wf, 2*wf, 3*wf, 4*wf)                = " << eve::sum_of_prod(wf, 2*wf, 3*wf, 4*wf) << "\n";
+   std::cout << "-> sum_of_prod[ignore_last(2)](wf, 2*wf, 3*wf, 4*wf)= " << eve::sum_of_prod[eve::ignore_last(2)](wf, 2*wf, 3*wf, 4*wf) << "\n";
+   std::cout << "-> sum_of_prod[raw](wf, 2*wf, 3*wf, 4*wf)           = " << eve::sum_of_prod[eve::raw](wf, 2*wf, 3*wf, 4*wf) << "\n";
+   std::cout << "-> sum_of_prod[pedantic](wf, 2*wf, 3*wf, 4*wf)      = " << eve::sum_of_prod[eve::pedantic](wf, 2*wf, 3*wf, 4*wf) << "\n";
 }

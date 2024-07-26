@@ -1,40 +1,17 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using iT      = std::int32_t;
-using wide_it = eve::wide<iT, eve::fixed<4>>;
-using wide_lt = eve::as_logical_t<wide_it>;
-
-int main()
-{
-  wide_it pi  = {3, -2, -10, 0};
-  wide_it qi  = {4, -1, 0, 5};
-  wide_it si  = {2, -3, 0, 4};
-  wide_lt lsi = {true, false, false, true};
-
-  std::cout << "---- simd" << '\n'
-            << " <- si                             = " << si << '\n'
-            << " <- lsi                            = " << lsi << '\n'
-            << " <- pi                             = " << pi << '\n'
-            << " <- qi                             = " << qi << '\n'
-            << " -> eve::if_else(si, pi, qi)       = " << eve::if_else(si, pi, qi) << '\n'
-            << " -> eve::if_else(lsi, pi, qi)      = " << eve::if_else(lsi, pi, qi) << '\n'
-            << " -> eve::if_else(lsi, pi, allbits) = " << eve::if_else(lsi, pi, eve::allbits) << '\n'
-            << " -> eve::if_else(lsi, pi, one)     = " << eve::if_else(lsi, pi, eve::one) << '\n'
-            << " -> eve::if_else(lsi, pi, mone)    = " << eve::if_else(lsi, pi, eve::mone) << '\n'
-            << " -> eve::if_else(lsi, pi, zero)    = " << eve::if_else(lsi, pi, eve::zero) << '\n';
-
-
-  iT               ssi = 3, xi = 3, yi = 4;
-  eve::logical<iT> lssi = false;
-
-  std::cout << "---- scalar" << '\n'
-            << " ssi =                         = " << ssi << '\n'
-            << " lssi =                        = " << lssi << '\n'
-            << " xi =                          = " << xi << '\n'
-            << " yi =                          = " << yi << '\n'
-            << " -> eve::if_else(ssi, xi, yi)  = " << eve::if_else(ssi, xi, yi) << '\n'
-            << " -> eve::if_else(lssi, xi, yi) = " << eve::if_else(lssi, xi, yi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> if_else(wf, 2*wf, 3*wf)= " << eve::if_else(wf, 2*wf, 3*wf) << "\n";
+   std::cout << "-> if_else(wi, 2*wi, 3*wi)= " << eve::if_else(wi, 2*wi, 3*wi) << "\n";
+   std::cout << "-> if_else(wu, 2*wu, 3*wu)= " << eve::if_else(wu, 2*wu, 3*wu) << "\n";
 }

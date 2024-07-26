@@ -1,44 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using eve::pedantic;
-
-int main()
-{
-  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f, eve::nan(eve::as<float>()),
-                -0.0f, eve::nan(eve::as<float>()), -2.0f};
-
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                         = " << pf << '\n'
-            << "<- qf                         = " << qf << '\n'
-            << "-> max(pf, qf)                = " << eve::max(pf, qf) << '\n'
-            << "-> max[eve::numeric](pf, qf)  = " << eve::max[eve::numeric](pf, qf) << '\n'
-            << "-> max[eve::pedantic](pf, qf) = " << eve::max[eve::pedantic](pf, qf) << '\n'
-            << "-> max[eve::pedantic](qf, pf) = " << eve::max[eve::pedantic](qf, pf) << '\n'
-            << "-> max[pf <  0](pf, qf)       = " << eve::max[pf <  0](pf, qf) << '\n';
-
-  float xf = 1.0f;
-  float yf = eve::nan(eve::as<float>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                     = " << xf << '\n'
-            << "<- yf                     = " << yf << '\n'
-            << "-> max(xf, yf) =          = " << eve::max(xf, yf) << '\n';
-
-  auto k = kumi::tuple{pf, qf, pf+qf, 1.0f};
-  std::cout << "---- multi parameters" << '\n'
-            << " -> max(k)                                = " << eve::max(k) << '\n'
-            << " -> max(kumi::tuple{pf, pf, 1.0f})        = " << eve::max( kumi::tuple{pf, qf, 1.0f}) << '\n'
-            << " -> max(kumi::tuple{1.0f, pf, pf})        = " << eve::max( kumi::tuple{1.0f, pf, qf}) << '\n'
-            << " -> max[numeric](kumi::tuple{1.0f, pf, qf)= " << eve::max[eve::numeric]( kumi::tuple{1.0f, pf,qf}) << '\n'
-            << " -> max(kumi::tuple{pf, 1.0f)             = " << eve::max( kumi::tuple{pf, 1.0f}) << '\n'
-            << " -> max(kumi::tuple{1.0f, pf)             = " << eve::max( kumi::tuple{1.0f, pf}) << '\n'
-            << " -> max[numeric](kumi::tuple{1.0f, pf)    = " << eve::max[eve::numeric]( kumi::tuple{1.0f, pf}) << '\n'
-            << " -> max(eve::is_greater)(pf, qf)          = " << eve::max(eve::is_greater)(pf, qf) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> max(wf, 2*wf)                = " << eve::max(wf, 2*wf) << "\n";
+   std::cout << "-> max(wi, 2*wi)                = " << eve::max(wi, 2*wi) << "\n";
+   std::cout << "-> max(wu, 2*wu)                = " << eve::max(wu, 2*wu) << "\n";
+   std::cout << "-> max(wt)                      = " << eve::max(wt) << "\n";
+   std::cout << "-> max[ignore_last(2)](wf, 2*wf)= " << eve::max[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> max[wf != 0](wf, 2*wf)       = " << eve::max[wf != 0](wf, 2*wf) << "\n";
+   std::cout << "-> max[pedantic](wf, 2*wf)      = " << eve::max[eve::pedantic](wf, 2*wf) << "\n";
+   std::cout << "-> max[numeric ](wf, 2*wf)      = " << eve::max[eve::numeric ](wf, 2*wf) << "\n";
 }

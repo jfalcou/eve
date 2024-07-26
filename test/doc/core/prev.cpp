@@ -1,33 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-
-int main()
-{
-  wide_ft pf = {-0.0f, 2.0f, eve::eps(eve::as<float>()), 0.0f,
-                30.0f, 2.0f, eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_it pi = {-1, 2, -3, -32768};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                  =" << std::setprecision(12) << pf << '\n'
-            << "-> prev(pf)            =" << eve::prev(pf) << '\n'
-            << "-> prev[pedantic2](pf) =" << eve::prev[eve::pedantic2](pf) << '\n'
-            << "-> prev[saturated2](pf)= " <<eve::prev[eve::saturated2](pf) << '\n'
-            << "<- pi                  =" << pi << '\n'
-            << "-> prev(pi)            =" << eve::prev(pi) << '\n'
-            << "-> prev[saturated2](pf)= " <<eve::prev[eve::saturated2](pf) << '\n';
-
-  float        xf = 0.0f;
-  std::int16_t xi = -3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                  = " << xf << '\n'
-            << "-> prev(xf, 3)         = " << eve::prev(xf, 3) << '\n'
-            << "<- xi                  = " << xi << '\n'
-            << "-> prev(xi)            = " << eve::prev(xi) << '\n';
-  return 0;
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> prev(wf)                = " << eve::prev(wf) << "\n";
+   std::cout << "-> prev(wi)                = " << eve::prev(wi) << "\n";
+   std::cout << "-> prev(wu)                = " << eve::prev(wu) << "\n";
+   std::cout << "-> prev(wf, 2*wi)          = " << eve::prev(wf, 2*wi) << "\n";
+   std::cout << "-> prev(wi, 2*wi)          = " << eve::prev(wi, 2*wi) << "\n";
+   std::cout << "-> prev(wu, 2*wi)          = " << eve::prev(wu, 2*wi) << "\n";
+   std::cout << "-> prev[ignore_last(2)](wf)= " << eve::prev[eve::ignore_last(2)](wf) << "\n";
+   std::cout << "-> prev[wf != 0](wf)       = " << eve::prev[wf != 0](wf) << "\n";
+   std::cout << "-> prev[pedantic](wf)      = " << eve::prev[eve::pedantic](wf) << "\n";
+   std::cout << "-> prev[saturated ](wf)    = " << eve::prev[eve::saturated ](wf) << "\n";
 }

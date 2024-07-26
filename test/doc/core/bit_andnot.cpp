@@ -1,27 +1,22 @@
-
-#include <eve/wide.hpp>
-#include <iostream>
-
-int main()
-{
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 4}, qi = {4, 1, 1, ~0};
-  std::uint32_t z = 5;
-  std::cout << "---- simd" << '\n'
-            << " <- pi                        = " << pi << '\n'
-            << " <- qi                        = " << qi << '\n'
-            << " <- z                         = " << z  << '\n'
-            << " -> bit_andnot(pi, qi)        = " << eve::bit_andnot(pi, qi) << '\n'
-            << " -> bit_andnot(qi, z )        = " << eve::bit_andnot(qi, z) << '\n'
-            << " -> bit_andnot(pi, z )        = " << eve::bit_andnot(pi, z) << '\n'
-            << " -> bit_andnot[pi<qi](pi, qi) = " << eve::bit_andnot[pi<qi](pi, qi) << '\n';
-
-  std::uint32_t mask = 1 << 31;
-  float xi = -3.4565f;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- xi                   = " << xi << '\n'
-            << " <- mask                 = " << mask << '\n'
-            << " -> bit_andnot(xi, mask) = " << eve::bit_andnot(xi, mask) << '\n';
-  return 0;
+// revision 0
+#include <eve/module/core.hpp>
+#include <iostream> 
+ 
+eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
+eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
+eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;});
+kumi::tuple wt{wf,2*wf,3*wf}; 
+ 
+int main(){ 
+   std::cout << "<- wf = " << wf << "\n";
+   std::cout << "<- wi = " << wi << "\n";
+   std::cout << "<- wt = " << wt << "\n";
+   std::cout << "<- wu = " << wu << "\n"; 
+ 
+   std::cout << "-> bit_andnot(wf, 2*wf)                = " << eve::bit_andnot(wf, 2*wf) << "\n";
+   std::cout << "-> bit_andnot(wi, 2*wi)                = " << eve::bit_andnot(wi, 2*wi) << "\n";
+   std::cout << "-> bit_andnot(wu, 2*wu)                = " << eve::bit_andnot(wu, 2*wu) << "\n";
+   std::cout << "-> bit_andnot(wt)                      = " << eve::bit_andnot(wt) << "\n";
+   std::cout << "-> bit_andnot[ignore_last(2)](wf, 2*wf)= " << eve::bit_andnot[eve::ignore_last(2)](wf, 2*wf) << "\n";
+   std::cout << "-> bit_andnot[wf != 0](wf, 2*wf)       = " << eve::bit_andnot[wf != 0](wf, 2*wf) << "\n";
 }
