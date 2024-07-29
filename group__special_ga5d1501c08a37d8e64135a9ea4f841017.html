@@ -145,43 +145,51 @@ $(document).ready(function(){initNavTree('group__special_ga5d1501c08a37d8e64135a
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">lfactorial</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> N x) <span class="keyword">noexcept</span>;</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;value T&gt; <span class="keyword">constexpr</span> as_wide_as_t&lt;double,T&gt; <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">lfactorial</a>(T x) <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n)     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">factorial</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> n)        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__special_ga5d1501c08a37d8e64135a9ea4f841017_html_ga5d1501c08a37d8e64135a9ea4f841017"><div class="ttname"><a href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a></div><div class="ttdeci">constexpr auto lfactorial</div><div class="ttdoc">elementwise_callable object computing the natural logarithm of the factorial of unsigned integer valu...</div><div class="ttdef"><b>Definition:</b> lfactorial.hpp:72</div></div>
+<div class="ttc" id="agroup__special_ga5d1501c08a37d8e64135a9ea4f841017_html_ga5d1501c08a37d8e64135a9ea4f841017"><div class="ttname"><a href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a></div><div class="ttdeci">constexpr auto lfactorial</div><div class="ttdoc">elementwise_callable object computing the natural logarithm of the factorial of unsigned integer valu...</div><div class="ttdef"><b>Definition:</b> lfactorial.hpp:76</div></div>
+<div class="ttc" id="agroup__special_ga6941228238dd401d770993cc6f5309f2_html_ga6941228238dd401d770993cc6f5309f2"><div class="ttname"><a href="group__special_ga6941228238dd401d770993cc6f5309f2.html#ga6941228238dd401d770993cc6f5309f2">eve::factorial</a></div><div class="ttdeci">constexpr auto factorial</div><div class="ttdoc">elementwise_callable computing .</div><div class="ttdef"><b>Definition:</b> factorial.hpp:76</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>n</code> : <a class="el" href="concepteve_1_1value.html">integral or flint argument</a>.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The value of \( \log n!\) is returned with the following considerations:</p><ul>
+<ol type="1">
+<li>The value of \( \log n!\) is returned with the following considerations:<ul>
 <li>If the entry is an integral value, the result element type is always double to try to avoid overflow as possible.</li>
 <li>If the entry is a floating point value which must be a flint, the result is of the same type as the entry.</li>
 <li>If <code>n</code> elements are nor integer nor flint the result is undefined.</li>
 </ul>
+</li>
+<li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
+</ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w32_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line">  w32_t pi32 = {93, 25, 32, 180, 1, 2, 3, 4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> 2*(i+c/2);});</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi = {93, 25, 32, 180, 1, 2, 3, 4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint32_t{ <span class="keywordflow">return</span> i;});</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(17) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; &lt;- pi32               = &quot;</span> &lt;&lt; pi32 &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lfactorial(pi32)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a>(pi32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf             = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi             = &quot;</span> &lt;&lt; wi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu             = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::uint32_t xi = 18;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; xi                    = &quot;</span> &lt;&lt; xi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot; -&gt; lfactorial(xi)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a>(xi) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lfactorial(wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lfactorial(wi) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a>(wi) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lfactorial(wu) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga5d1501c08a37d8e64135a9ea4f841017.html#ga5d1501c08a37d8e64135a9ea4f841017">eve::lfactorial</a>(wu) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 

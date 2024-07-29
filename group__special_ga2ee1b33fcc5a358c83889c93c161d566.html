@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('group__special_ga2ee1b33fcc5a358c83889
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
 <div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_t...</div><div class="ttdef"><b>Definition:</b> value.hpp:95</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
-<div class="ttc" id="agroup__special_ga2ee1b33fcc5a358c83889c93c161d566_html_ga2ee1b33fcc5a358c83889c93c161d566"><div class="ttname"><a href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a></div><div class="ttdeci">constexpr auto omega</div><div class="ttdoc">Computes the Wright  the inverse function of .</div><div class="ttdef"><b>Definition:</b> omega.hpp:72</div></div>
+<div class="ttc" id="agroup__special_ga2ee1b33fcc5a358c83889c93c161d566_html_ga2ee1b33fcc5a358c83889c93c161d566"><div class="ttname"><a href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a></div><div class="ttdeci">constexpr auto omega</div><div class="ttdoc">Computes the Wright  the inverse function of .</div><div class="ttdef"><b>Definition:</b> omega.hpp:71</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -169,28 +169,21 @@ $(document).ready(function(){initNavTree('group__special_ga2ee1b33fcc5a358c83889
 <li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/special.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {-10.0, -2.0, -0.5, 0.0, 0.2, 0.5, 10.0, 100.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{-10.0, -2.0, -0.5, 0.0, 0.2, 0.5, 10.0, 100.0};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf             = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::omega(pf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a>(pf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            ;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">float</span>        xf = -0.2f;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf              = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; eve::omega(xf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a>(xf)&lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; omega(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; omega[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; omega[wf != -2.0f](wf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__special_ga2ee1b33fcc5a358c83889c93c161d566.html#ga2ee1b33fcc5a358c83889c93c161d566">eve::omega</a>[wf != -2.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>
