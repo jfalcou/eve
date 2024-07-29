@@ -64,10 +64,12 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/stirling.cpp}
+//!   @godbolt{doc/special/stirling.cpp}
+//================================================================================================
+  inline constexpr auto stirling = functor<stirling_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto stirling = functor<stirling_t>;
 
   namespace detail
   {

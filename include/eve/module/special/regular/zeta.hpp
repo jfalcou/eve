@@ -59,14 +59,17 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. The value of the Riemann function defined as
-//!        \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$ is returned.
+//!        \f$\displaystyle \zeta(s)=\sum_{n=0}^\infty \frac1{n^s}\f$ for \f$s > 1\f$
+//!        and using analytic continuation elsewhere, is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/zeta.cpp}
+//!   @godbolt{doc/special/zeta.cpp}
+//================================================================================================
+  inline constexpr auto zeta = functor<zeta_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto zeta = functor<zeta_t>;
 
   namespace detail
   {

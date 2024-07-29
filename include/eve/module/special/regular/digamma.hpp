@@ -70,10 +70,12 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DigammaFunction.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/digamma.cpp}
+//!   @godbolt{doc/special/digamma.cpp}
+//================================================================================================
+  inline constexpr auto digamma = functor<digamma_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto digamma = functor<digamma_t>;
 
   namespace detail
   {

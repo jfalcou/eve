@@ -64,10 +64,12 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/special/regular/lbeta.cpp}
-//! @}
+//!  @godbolt{doc/special/lbeta.cpp}
 //================================================================================================
  inline constexpr auto lbeta = functor<lbeta_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

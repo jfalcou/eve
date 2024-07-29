@@ -72,10 +72,12 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 //!   *  [DLMF](https://dlmf.nist.gov/8.2)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/gamma_p.cpp}
-//! @}
+//!   @godbolt{doc/special/gamma_p.cpp}
 //================================================================================================
   inline constexpr auto gamma_p = functor<gamma_p_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

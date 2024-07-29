@@ -67,10 +67,12 @@ namespace eve
 //!        * If the argument is `NaN`, `NaN` is returned.
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/erfc_inv.cpp}
+//!   @godbolt{doc/special/erfc_inv.cpp}
+//================================================================================================
+  inline constexpr auto erfc_inv = functor<erfc_inv_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto erfc_inv = functor<erfc_inv_t>;
 
   namespace detail
   {

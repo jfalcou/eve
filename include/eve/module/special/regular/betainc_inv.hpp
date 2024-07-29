@@ -79,10 +79,12 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Beta_function)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/special/regular/betainc_inc.cpp}
-//! @}
+//!   @godbolt{doc/special/betainc_inv.cpp}
 //================================================================================================
   inline constexpr auto betainc_inv = functor<betainc_inv_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

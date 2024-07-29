@@ -47,7 +47,12 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      constexpr auto lfactorial(value N x) noexcept;
+//!      // Regular overload
+//!      template <value T> constexpr as_wide_as_t<double,T> lfactorial(T x) noexcept; // 1
+//!
+//!      // Lanes masking
+//!      constexpr auto factorial[conditional_expr auto c](value auto n)     noexcept; // 2
+//!      constexpr auto factorial[logical_value auto m](value auto n)        noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -57,19 +62,21 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!   The value of \f$ \log n!\f$ is returned with the following considerations:
-//!     * If the entry is an integral value, the result
-//!       element type is always double to try to avoid overflow as possible.
-//!     * If the entry is a floating point value which must be a flint,
-//!       the result is of the same type as the entry.
-//!     * If `n` elements are nor integer nor flint the result is undefined.
+//!     1. The value of \f$ \log n!\f$ is returned with the following considerations:
+//!        * If the entry is an integral value, the result
+//!          element type is always double to try to avoid overflow as possible.
+//!        * If the entry is a floating point value which must be a flint,
+//!          the result is of the same type as the entry.
+//!        * If `n` elements are nor integer nor flint the result is undefined.
+//!     2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!   @groupheader{Example}
-//!
-//!   @godbolt{doc/special/regular/lfactorial.cpp}
+//!   @godbolt{doc/special/lfactorial.cpp}
+//================================================================================================
+  inline constexpr auto lfactorial = functor<lfactorial_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto lfactorial = functor<lfactorial_t>;
 
   namespace detail
   {

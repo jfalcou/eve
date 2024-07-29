@@ -45,17 +45,17 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto factorial(value auto n)                          noexcept; // 1
+//!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x) noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto fsm[conditional_expr auto c](value auto n) noexcept; // 2
-//!      constexpr auto fsm[logical_value auto m](value auto n)    noexcept; // 2
+//!      constexpr auto factorial[conditional_expr auto c](value auto n)    noexcept; // 2
+//!      constexpr auto factorial[logical_value auto m](value auto n)       noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `n` : must be integral or flint.
+//!     * `n`: must be integral or flint.
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -71,10 +71,12 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/special/regular/factorial.cpp}
+//!   @godbolt{doc/special/factorial.cpp}
+//================================================================================================
+  inline constexpr auto factorial = functor<factorial_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto factorial = functor<factorial_t>;
 
   namespace detail
   {

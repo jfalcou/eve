@@ -71,11 +71,12 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/LaguerrePolynomial.html)https://mathworld.wolfram.com/BetaFunction.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/special/regular/beta.cpp}
-//!
-//! @}
+//!  @godbolt{doc/special/beta.cpp}
 //================================================================================================
   inline constexpr auto beta = functor<beta_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {
