@@ -63,7 +63,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//radindeg.cpp}
+//!  @godbolt{doc/math/radindeg.cpp}
 //================================================================================================
   inline constexpr auto radindeg = functor<radindeg_t>;
 //================================================================================================

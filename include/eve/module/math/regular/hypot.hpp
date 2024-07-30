@@ -84,7 +84,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//hypot.cpp}
+//!  @godbolt{doc/math/hypot.cpp}
 //================================================================================================
   inline constexpr auto hypot = functor<hypot_t>;
 //================================================================================================

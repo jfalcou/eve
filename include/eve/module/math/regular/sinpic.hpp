@@ -67,7 +67,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//sinpic.cpp}
+//!  @godbolt{doc/math/sinpic.cpp}
 //================================================================================================
  inline constexpr auto sinpic = functor<sinpic_t>;
 //================================================================================================

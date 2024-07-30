@@ -74,7 +74,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//atanh.cpp}
+//!  @godbolt{doc/math/atanh.cpp}
 //================================================================================================
   inline constexpr auto atanh = functor<atanh_t>;
 //================================================================================================

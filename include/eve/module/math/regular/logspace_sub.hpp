@@ -85,7 +85,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//logspace_sub.cpp}
+//!  @godbolt{doc/math/logspace_sub.cpp}
 //================================================================================================
   inline constexpr auto logspace_sub = functor<logspace_sub_t>;
 //================================================================================================

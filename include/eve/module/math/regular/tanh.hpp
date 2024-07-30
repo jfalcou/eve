@@ -71,7 +71,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicTangent.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//tanh.cpp}
+//!  @godbolt{doc/math/tanh.cpp}
 //================================================================================================
   inline constexpr auto tanh = functor<tanh_t>;
 //================================================================================================

@@ -74,7 +74,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//log2.cpp}
+//!  @godbolt{doc/math/log2.cpp}
 //================================================================================================
   inline constexpr auto log2 = functor<log2_t>;
 //================================================================================================

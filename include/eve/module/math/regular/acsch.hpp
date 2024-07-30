@@ -69,7 +69,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//acsch.cpp}
+//!  @godbolt{doc/math/acsch.cpp}
 //!
 //!  @}
 //================================================================================================
@@ -114,7 +114,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math//acsch.cpp}
+//!  @godbolt{doc/math/acsch.cpp}
 //================================================================================================
   inline constexpr auto acsch = functor<acsch_t>;
 //================================================================================================

@@ -81,7 +81,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//secd.cpp}
+//!  @godbolt{doc/math/secd.cpp}
 //================================================================================================
   inline constexpr auto secd = functor<secd_t>;
 //================================================================================================

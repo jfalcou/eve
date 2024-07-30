@@ -82,7 +82,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//secpi.cpp}
+//!  @godbolt{doc/math/secpi.cpp}
 //================================================================================================
   inline constexpr auto secpi = functor<secpi_t>;
 //================================================================================================

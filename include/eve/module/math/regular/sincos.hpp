@@ -81,7 +81,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//sincos.cpp}
+//!  @godbolt{doc/math/sincos.cpp}
 //================================================================================================
  inline constexpr auto sincos = functor<sincos_t>;
 //================================================================================================

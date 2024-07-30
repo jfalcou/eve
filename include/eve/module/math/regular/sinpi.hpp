@@ -79,7 +79,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-1,1]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//sinpi.cpp}
+//!  @godbolt{doc/math/sinpi.cpp}
 //================================================================================================
   inline constexpr auto sinpi = functor<sinpi_t>;
 //================================================================================================

@@ -87,7 +87,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosine.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/math//cos.cpp}
+//!   @godbolt{doc/math/cos.cpp}
 //================================================================================================
  inline constexpr auto cos = functor<cos_t>;
 //================================================================================================

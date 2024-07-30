@@ -72,7 +72,7 @@ struct asecd_t : elementwise_callable<asecd_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//asecd.cpp}
+//!  @godbolt{doc/math/asecd.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto asecd = functor<asecd_t>;

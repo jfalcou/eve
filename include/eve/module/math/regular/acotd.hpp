@@ -65,7 +65,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//acotd.cpp}
+//!  @godbolt{doc/math/acotd.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto acotd = functor<acotd_t>;

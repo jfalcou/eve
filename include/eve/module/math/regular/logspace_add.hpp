@@ -84,7 +84,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//logspace_add.cpp}
+//!  @godbolt{doc/math/logspace_add.cpp}
 //================================================================================================
   inline constexpr auto logspace_add = functor<logspace_add_t>;
 //================================================================================================

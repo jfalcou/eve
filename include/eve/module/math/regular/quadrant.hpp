@@ -54,7 +54,7 @@ namespace eve
 //!    integer) lies.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//quadrant.cpp}
+//!  @godbolt{doc/math/quadrant.cpp}
 //================================================================================================
   inline constexpr auto quadrant = functor<quadrant_t>;
 //================================================================================================

@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math//div_180.cpp}
+//!  @godbolt{doc/math/div_180.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto div_180 = functor<div_180_t>;

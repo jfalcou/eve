@@ -83,7 +83,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//sindcosd.cpp}
+//!  @godbolt{doc/math/sindcosd.cpp}
 //================================================================================================
  inline constexpr auto sindcosd = functor<sindcosd_t>;
 //================================================================================================

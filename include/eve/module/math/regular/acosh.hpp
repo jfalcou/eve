@@ -78,7 +78,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//acosh.cpp}
+//!  @godbolt{doc/math/acosh.cpp}
 //!
 //================================================================================================
   inline constexpr auto acosh = functor<acosh_t>;

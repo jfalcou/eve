@@ -68,7 +68,7 @@ struct atand_t : elementwise_callable<atand_t, Options>
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//atand.cpp}
+//!  @godbolt{doc/math/atand.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto atand = functor<atand_t>;

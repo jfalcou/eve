@@ -75,7 +75,7 @@ namespace eve
 //!     3. faster but less accurate call.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//pow1p.cpp}
+//!  @godbolt{doc/math/pow1p.cpp}
 //================================================================================================
   inline constexpr auto pow1p = functor<pow1p_t>;
 //================================================================================================

@@ -79,7 +79,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math//lpnorm.cpp}
+//!  @godbolt{doc/math/lpnorm.cpp}
 //!
 //================================================================================================
   inline constexpr auto lpnorm = functor<lpnorm_t>;

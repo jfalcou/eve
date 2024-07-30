@@ -67,7 +67,7 @@ namespace eve
 //!
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//csch.cpp}
+//!  @godbolt{doc/math/csch.cpp}
 //================================================================================================
   inline constexpr auto csch = functor<csch_t>;
 //================================================================================================

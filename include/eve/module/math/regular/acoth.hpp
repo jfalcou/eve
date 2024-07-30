@@ -72,7 +72,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//acoth.cpp}
+//!  @godbolt{doc/math/acoth.cpp}
 //================================================================================================
   inline constexpr auto acoth = functor<acoth_t>;
 //================================================================================================

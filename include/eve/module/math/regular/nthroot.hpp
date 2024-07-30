@@ -75,7 +75,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math//nthroot.cpp}
+//!  @godbolt{doc/math/nthroot.cpp}
 //!
 //================================================================================================
   inline constexpr auto nthroot = functor<nthroot_t>;

@@ -66,7 +66,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//sinhc.cpp}
+//!  @godbolt{doc/math/sinhc.cpp}
 //!
 //================================================================================================
  inline constexpr auto sinhc = functor<sinhc_t>;

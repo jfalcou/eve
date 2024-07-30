@@ -68,7 +68,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//asech.cpp}
+//!  @godbolt{doc/math/asech.cpp}
 //================================================================================================
   inline constexpr auto asech = functor<asech_t>;
 //================================================================================================

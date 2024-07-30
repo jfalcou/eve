@@ -78,7 +78,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//geommean.cpp}
+//!  @godbolt{doc/math/geommean.cpp}
 //================================================================================================
  inline constexpr auto geommean = functor<geommean_t>;
 //================================================================================================

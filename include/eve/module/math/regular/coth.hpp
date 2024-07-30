@@ -66,7 +66,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//coth.cpp}
+//!  @godbolt{doc/math/coth.cpp}
 //================================================================================================
   inline constexpr auto coth = functor<coth_t>;
 //================================================================================================

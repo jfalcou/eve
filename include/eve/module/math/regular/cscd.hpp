@@ -76,7 +76,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//cscd.cpp}
+//!  @godbolt{doc/math/cscd.cpp}
 //================================================================================================
   inline constexpr auto cscd = functor<cscd_t>;
 //================================================================================================

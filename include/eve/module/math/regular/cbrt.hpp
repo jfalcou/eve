@@ -65,7 +65,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CubeRoot.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//cbrt.cpp}
+//!  @godbolt{doc/math/cbrt.cpp}
 //================================================================================================
   inline constexpr auto cbrt = functor<cbrt_t>;
 //================================================================================================

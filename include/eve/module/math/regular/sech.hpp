@@ -73,7 +73,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math//sech.cpp}
+//!  @godbolt{doc/math/sech.cpp}
 //================================================================================================
   inline constexpr auto sech = functor<sech_t>;
 //================================================================================================
