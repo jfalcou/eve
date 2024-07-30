@@ -1,13 +1,18 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n"; 
- 
-   std::cout << "-> lerp(wf, 2*wf, 3*wf)                = " << eve::lerp(wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> lerp[ignore_last(2)](wf, 2*wf, 3*wf)= " << eve::lerp[eve::ignore_last(2)](wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> lerp[wf != 0](wf, 2*wf, 3*wf)       = " << eve::lerp[wf != 0](wf, 2*wf, 3*wf) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
+
+  std::cout << "<- wf0                                 = " << wf0 << "\n";
+  std::cout << "<- wf1                                 = " << wf1 << "\n";
+  std::cout << "<- wf2                                 = " << wf2 << "\n";
+                                                       
+  std::cout << "-> lerp(wf0, wf1, wf2)                 = " << eve::lerp(wf0, wf1, wf2) << "\n";
+  std::cout << "-> lerp[ignore_last(2)](wf0, wf1, wf2) = " << eve::lerp[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
+  std::cout << "-> lerp[wf0 != 0](wf0, wf1, wf2)       = " << eve::lerp[wf0 != 0](wf0, wf1, wf2) << "\n";
 }

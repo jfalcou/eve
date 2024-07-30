@@ -1,11 +1,12 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
- 
-int main(){ 
-   std::cout << "<- wu = " << wu << "\n"; 
- 
-   std::cout << "-> popcount(wu)= " << eve::popcount(wu) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+
+  std::cout << "<- wu0           = " << wu0 << "\n";
+                                 
+  std::cout << "-> popcount(wu0) = " << eve::popcount(wu0) << "\n";
 }

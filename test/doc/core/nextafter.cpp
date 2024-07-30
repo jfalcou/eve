@@ -1,20 +1,27 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
-   std::cout << "<- wu = " << wu << "\n"; 
- 
-   std::cout << "-> nextafter(wf, 2*wf)                = " << eve::nextafter(wf, 2*wf) << "\n";
-   std::cout << "-> nextafter(wi, 2*wi)                = " << eve::nextafter(wi, 2*wi) << "\n";
-   std::cout << "-> nextafter(wu, 2*wu)                = " << eve::nextafter(wu, 2*wu) << "\n";
-   std::cout << "-> nextafter[ignore_last(2)](wf, 2*wf)= " << eve::nextafter[eve::ignore_last(2)](wf, 2*wf) << "\n";
-   std::cout << "-> nextafter[wf != 0](wf, 2*wf)       = " << eve::nextafter[wf != 0](wf, 2*wf) << "\n";
-   std::cout << "-> nextafter[pedantic](wf, 2*wf)      = " << eve::nextafter[eve::pedantic](wf, 2*wf) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
+
+  std::cout << "<- wf0                                 = " << wf0 << "\n";
+  std::cout << "<- wf1                                 = " << wf1 << "\n";
+  std::cout << "<- wi0                                 = " << wi0 << "\n";
+  std::cout << "<- wi1                                 = " << wi1 << "\n";
+  std::cout << "<- wu0                                 = " << wu0 << "\n";
+  std::cout << "<- wu1                                 = " << wu1 << "\n";
+                                                       
+  std::cout << "-> nextafter(wf0, wf1)                 = " << eve::nextafter(wf0, wf1) << "\n";
+  std::cout << "-> nextafter[ignore_last(2)](wf0, wf1) = " << eve::nextafter[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> nextafter[wf0 != 0](wf0, wf1)       = " << eve::nextafter[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> nextafter[pedantic](wf0, wf1)       = " << eve::nextafter[eve::pedantic](wf0, wf1) << "\n";
+  std::cout << "-> nextafter(wu0, wu1)                 = " << eve::nextafter(wu0, wu1) << "\n";
+  std::cout << "-> nextafter(wi0, wi1)                 = " << eve::nextafter(wi0, wi1) << "\n";
 }

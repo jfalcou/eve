@@ -1,22 +1,24 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-kumi::tuple wt{wf,2*wf,3*wf}; 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
-   std::cout << "<- wt = " << wt << "\n"; 
- 
-   std::cout << "-> average(wi, 2*wi)                = " << eve::average(wi, 2*wi) << "\n";
-   std::cout << "-> average(wf, 2*wf)                = " << eve::average(wf, 2*wf) << "\n";
-   std::cout << "-> average(wt)                      = " << eve::average(wt) << "\n";
-   std::cout << "-> average[ignore_last(2)](wi, 2*wi)= " << eve::average[eve::ignore_last(2)](wi, 2*wi) << "\n";
-   std::cout << "-> average[wi != 0](wi, 2*wi)       = " << eve::average[wi != 0](wi, 2*wi) << "\n";
-   std::cout << "-> average[raw](wi, 2*wi)           = " << eve::average[eve::raw](wi, 2*wi) << "\n";
-   std::cout << "-> average[upward](wi, 2*wi)        = " << eve::average[eve::upward](wi, 2*wi) << "\n";
-   std::cout << "-> average[downward](wi, 2*wi)      = " << eve::average[eve::downward](wi, 2*wi) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+
+  std::cout << "<- wf0                               = " << wf0 << "\n";
+  std::cout << "<- wf1                               = " << wf1 << "\n";
+  std::cout << "<- wi0                               = " << wi0 << "\n";
+  std::cout << "<- wi1                               = " << wi1 << "\n";
+                                                     
+  std::cout << "-> average(wf0, wf1)                 = " << eve::average(wf0, wf1) << "\n";
+  std::cout << "-> average(wi0, wi1)                 = " << eve::average(wi0, wi1) << "\n";
+  std::cout << "-> average[ignore_last(2)](wi0, wi1) = " << eve::average[eve::ignore_last(2)](wi0, wi1) << "\n";
+  std::cout << "-> average[wi0 != 0](wi0, wi1)       = " << eve::average[wi0 != 0](wi0, wi1) << "\n";
+  std::cout << "-> average[raw](wi0, wi1)            = " << eve::average[eve::raw](wi0, wi1) << "\n";
+  std::cout << "-> average[upward](wi0, wi1)         = " << eve::average[eve::upward](wi0, wi1) << "\n";
+  std::cout << "-> average[downward](wi0, wi1)       = " << eve::average[eve::downward](wi0, wi1) << "\n";
 }

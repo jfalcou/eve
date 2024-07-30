@@ -1,16 +1,17 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n"; 
- 
-   std::cout << "-> is_denormal(wf)                = " << eve::is_denormal(wf) << "\n";
-   std::cout << "-> is_denormal(wi)                = " << eve::is_denormal(wi) << "\n";
-   std::cout << "-> is_denormal[ignore_last(2)](wf)= " << eve::is_denormal[eve::ignore_last(2)](wf) << "\n";
-   std::cout << "-> is_denormal[wf != 0](wf)       = " << eve::is_denormal[wf != 0](wf) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+
+  std::cout << "<- wf0                              = " << wf0 << "\n";
+  std::cout << "<- wi0                              = " << wi0 << "\n";
+                                                    
+  std::cout << "-> is_denormal(wf0)                 = " << eve::is_denormal(wf0) << "\n";
+  std::cout << "-> is_denormal[ignore_last(2)](wf0) = " << eve::is_denormal[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> is_denormal[wf0 != 0](wf0)       = " << eve::is_denormal[wf0 != 0](wf0) << "\n";
+  std::cout << "-> is_denormal(wi0)                 = " << eve::is_denormal(wi0) << "\n";
 }

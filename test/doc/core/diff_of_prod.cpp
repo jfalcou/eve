@@ -1,14 +1,13 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n"; 
- 
-   std::cout << "-> diff_of_prod(wf, 2*wf, 3*wf, 4*wf)                = " << eve::diff_of_prod(wf, 2*wf, 3*wf, 4*wf) << "\n";
-   std::cout << "-> diff_of_prod[ignore_last(2)](wf, 2*wf, 3*wf, 4*wf)= " << eve::diff_of_prod[eve::ignore_last(2)](wf, 2*wf, 3*wf, 4*wf) << "\n";
-   std::cout << "-> diff_of_prod[raw](wf, 2*wf, 3*wf, 4*wf)           = " << eve::diff_of_prod[eve::raw](wf, 2*wf, 3*wf, 4*wf) << "\n";
-   std::cout << "-> diff_of_prod[pedantic](wf, 2*wf, 3*wf, 4*wf)      = " << eve::diff_of_prod[eve::pedantic](wf, 2*wf, 3*wf, 4*wf) << "\n";
+#include <iostream>
+
+int main()
+{
+
+                                                                    
+  std::cout << "-> diff_of_prod(wf0, wf1, wf2, wf3)                 = " << eve::diff_of_prod(wf0, wf1, wf2, wf3) << "\n";
+  std::cout << "-> diff_of_prod[ignore_last(2)](wf0, wf1, wf2, wf3) = " << eve::diff_of_prod[eve::ignore_last(2)](wf0, wf1, wf2, wf3) << "\n";
+  std::cout << "-> diff_of_prod[raw](wf0, wf1, wf2, wf3)            = " << eve::diff_of_prod[eve::raw](wf0, wf1, wf2, wf3) << "\n";
+  std::cout << "-> diff_of_prod[pedantic](wf0, wf1, wf2, wf3)       = " << eve::diff_of_prod[eve::pedantic](wf0, wf1, wf2, wf3) << "\n";
 }

@@ -1,29 +1,42 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
-   std::cout << "<- wu = " << wu << "\n"; 
- 
-   std::cout << "-> fam(wf, 2*wf, 3*wf)                = " << eve::fam(wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> fam(wi, 2*wi, 3*wi)                = " << eve::fam(wi, 2*wi, 3*wi) << "\n";
-   std::cout << "-> fam(wu, 2*wu, 3*wu)                = " << eve::fam(wu, 2*wu, 3*wu) << "\n";
-   std::cout << "-> fam[ignore_last(2)](wf, 2*wf, 3*wf)= " << eve::fam[eve::ignore_last(2)](wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> fam[ignore_last(2)](wi, 2*wi, 3*wi)= " << eve::fam[eve::ignore_last(2)](wi, 2*wi, 3*wi) << "\n";
-   std::cout << "-> fam[ignore_last(2)](wu, 2*wu, 3*wu)= " << eve::fam[eve::ignore_last(2)](wu, 2*wu, 3*wu) << "\n";
-   std::cout << "-> fam[wf != 0](wf, 2*wf, 3*wf)       = " << eve::fam[wf != 0](wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> fam[wi != 0](wi, 2*wi, 3*wi)       = " << eve::fam[wi != 0](wi, 2*wi, 3*wi) << "\n";
-   std::cout << "-> fam[wu != 0](wu, 2*wu, 3*wu)       = " << eve::fam[wu != 0](wu, 2*wu, 3*wu) << "\n";
-   std::cout << "-> fam[pedantic](wf, 2*wf, 3*wf)      = " << eve::fam[eve::pedantic](wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> fam[pedantic](wi, 2*wi, 3*wi)      = " << eve::fam[eve::pedantic](wi, 2*wi, 3*wi) << "\n";
-   std::cout << "-> fam[pedantic](wu, 2*wu, 3*wu)      = " << eve::fam[eve::pedantic](wu, 2*wu, 3*wu) << "\n";
-   std::cout << "-> fam[promote](wf, 2*wf, 3*wf)       = " << eve::fam[eve::promote](wf, 2*wf, 3*wf) << "\n";
-   std::cout << "-> fam[promote](wi, 2*wi, 3*wi)       = " << eve::fam[eve::promote](wi, 2*wi, 3*wi) << "\n";
-   std::cout << "-> fam[promote](wu, 2*wu, 3*wu)       = " << eve::fam[eve::promote](wu, 2*wu, 3*wu) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wi2{0, 1, 2 ,3, 4, 5, 6, 7};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
+  eve::wide wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};
+
+  std::cout << "<- wf0                                = " << wf0 << "\n";
+  std::cout << "<- wf1                                = " << wf1 << "\n";
+  std::cout << "<- wf2                                = " << wf2 << "\n";
+  std::cout << "<- wi0                                = " << wi0 << "\n";
+  std::cout << "<- wi1                                = " << wi1 << "\n";
+  std::cout << "<- wi2                                = " << wi2 << "\n";
+  std::cout << "<- wu0                                = " << wu0 << "\n";
+  std::cout << "<- wu1                                = " << wu1 << "\n";
+  std::cout << "<- wu2                                = " << wu2 << "\n";
+                                                      
+  std::cout << "-> fam(wf0, wf1, wf2)                 = " << eve::fam(wf0, wf1, wf2) << "\n";
+  std::cout << "-> fam[ignore_last(2)](wf0, wf1, wf2) = " << eve::fam[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
+  std::cout << "-> fam[wf0 != 0](wf0, wf1, wf2)       = " << eve::fam[wf0 != 0](wf0, wf1, wf2) << "\n";
+  std::cout << "-> fam[pedantic](wf0, wf1, wf2)       = " << eve::fam[eve::pedantic](wf0, wf1, wf2) << "\n";
+  std::cout << "-> fam[promote](wf0, wf1, wf2)        = " << eve::fam[eve::promote](wf0, wf1, wf2) << "\n";
+  std::cout << "-> fam(wu0, wu1, wu2)                 = " << eve::fam(wu0, wu1, wu2) << "\n";
+  std::cout << "-> fam[ignore_last(2)](wu0, wu1, wu2) = " << eve::fam[eve::ignore_last(2)](wu0, wu1, wu2) << "\n";
+  std::cout << "-> fam[wu0 != 0](wu0, wu1, wu2)       = " << eve::fam[wu0 != 0](wu0, wu1, wu2) << "\n";
+  std::cout << "-> fam[pedantic](wu0, wu1, wu2)       = " << eve::fam[eve::pedantic](wu0, wu1, wu2) << "\n";
+  std::cout << "-> fam[promote](wu0, wu1, wu2)        = " << eve::fam[eve::promote](wu0, wu1, wu2) << "\n";
+  std::cout << "-> fam(wi0, wi1, wi2)                 = " << eve::fam(wi0, wi1, wi2) << "\n";
+  std::cout << "-> fam[ignore_last(2)](wi0, wi1, wi2) = " << eve::fam[eve::ignore_last(2)](wi0, wi1, wi2) << "\n";
+  std::cout << "-> fam[wi0 != 0](wi0, wi1, wi2)       = " << eve::fam[wi0 != 0](wi0, wi1, wi2) << "\n";
+  std::cout << "-> fam[pedantic](wi0, wi1, wi2)       = " << eve::fam[eve::pedantic](wi0, wi1, wi2) << "\n";
+  std::cout << "-> fam[promote](wi0, wi1, wi2)        = " << eve::fam[eve::promote](wi0, wi1, wi2) << "\n";
 }

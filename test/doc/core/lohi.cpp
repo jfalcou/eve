@@ -1,17 +1,18 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
-   std::cout << "<- wu = " << wu << "\n"; 
- 
-   std::cout << "-> lohi(wf)= " << eve::lohi(wf) << "\n";
-   std::cout << "-> lohi(wi)= " << eve::lohi(wi) << "\n";
-   std::cout << "-> lohi(wu)= " << eve::lohi(wu) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+
+  std::cout << "<- wf0       = " << wf0 << "\n";
+  std::cout << "<- wi0       = " << wi0 << "\n";
+  std::cout << "<- wu0       = " << wu0 << "\n";
+                             
+  std::cout << "-> lohi(wf0) = " << eve::lohi(wf0) << "\n";
+  std::cout << "-> lohi(wu0) = " << eve::lohi(wu0) << "\n";
+  std::cout << "-> lohi(wi0) = " << eve::lohi(wi0) << "\n";
 }

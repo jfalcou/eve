@@ -1,13 +1,14 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;}); 
- 
-int main(){ 
-   std::cout << "<- wi = " << wi << "\n"; 
- 
-   std::cout << "-> firstbitunset(wi)                = " << eve::firstbitunset(wi) << "\n";
-   std::cout << "-> firstbitunset[ignore_last(2)](wi)= " << eve::firstbitunset[eve::ignore_last(2)](wi) << "\n";
-   std::cout << "-> firstbitunset[wi != 0](wi)       = " << eve::firstbitunset[wi != 0](wi) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+
+  std::cout << "<- wi0                                = " << wi0 << "\n";
+                                                      
+  std::cout << "-> firstbitunset(wi0)                 = " << eve::firstbitunset(wi0) << "\n";
+  std::cout << "-> firstbitunset[ignore_last(2)](wi0) = " << eve::firstbitunset[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> firstbitunset[wi0 != 0](wi0)       = " << eve::firstbitunset[wi0 != 0](wi0) << "\n";
 }

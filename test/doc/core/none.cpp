@@ -1,12 +1,13 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i;}); 
- 
-int main(){ 
-   std::cout << "<- wu = " << wu << "\n"; 
- 
-   std::cout << "-> none(wu <= maximum(wu)/2)                = " << eve::none(wu <= eve::maximum(wu)/2) << "\n";
-   std::cout << "-> none[ignore_last(2)](wu <= maximum(wu)/2)= " << eve::none[eve::ignore_last(2)](wu <= eve::maximum(wu)/2) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+
+  std::cout << "<- wu0                                         = " << wu0 << "\n";
+                                                               
+  std::cout << "-> none(wu0 <= maximum(wu0)/2)                 = " << eve::none(wu0 <= eve::maximum(wu0)/2) << "\n";
+  std::cout << "-> none[ignore_last(2)](wu0 <= maximum(wu0)/2) = " << eve::none[eve::ignore_last(2)](wu0 <= eve::maximum(wu0)/2) << "\n";
 }

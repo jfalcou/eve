@@ -2,10 +2,13 @@
 #include <eve/module/core.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2)*(1+eve::eps(eve::as<float>()));});
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
 
-int main(){
-   std::cout << "<- wf = " << wf << "\n";
-
-   std::cout << "-> two_prod(wf, 2*wf)= " << eve::two_prod(wf, 2*wf) << "\n";
+  std::cout << "<- wf0                = " << wf0 << "\n";
+  std::cout << "<- wf1                = " << wf1 << "\n";
+                                      
+  std::cout << "-> two_prod(wf0, wf1) = " << eve::two_prod(wf0, wf1) << "\n";
 }

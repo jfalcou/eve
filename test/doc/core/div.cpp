@@ -2,27 +2,28 @@
 #include <eve/module/core.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;});
-eve::wide<std::int32_t> wi([](auto i, auto c)->std::int32_t{ return i-c/2;});
-eve::wide<std::uint32_t> wu([](auto i, auto )->std::uint32_t{ return i+1;});
-kumi::tuple wt{8*wf,2*wf,4*wf};
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-int main(){
-   std::cout << "<- wf = " << wf << "\n";
-   std::cout << "<- wi = " << wi << "\n";
-   std::cout << "<- wt = " << wt << "\n";
-   std::cout << "<- wu = " << wu << "\n";
-
-   auto nz = [](auto wi){return eve::if_else(wi, wi, eve::one); };
-   std::cout << "-> div(3*wf, 2*wf)              = " << eve::div(3*wf, 2*wf) << "\n";
-   std::cout << "-> div(3*wi, 2*nz(wi))          = " << eve::div(3*wi, 2*nz(wi)) << "\n";
-   std::cout << "-> div(3*wu, 2*nz(wu))          = " << eve::div(3*wu, 2*nz(wu)) << "\n";
-   std::cout << "-> div(wt)                      = " << eve::div(wt) << "\n";
-   std::cout << "-> div[ignore_last(2)](wf, 2*wf)= " << eve::div[eve::ignore_last(2)](wf, 2*wf) << "\n";
-   std::cout << "-> div[wf != 0](wf, 2*wf)       = " << eve::div[wf != 0](wf, 2*wf) << "\n";
-   std::cout << "-> div[upward](3*wf, 2*wf)      = " << eve::div[eve::upward](wf, 2*wf) << "\n";
-   std::cout << "-> div[downward]3*(wf, 2*wf)    = " << eve::div[eve::downward](wf, 2*wf) << "\n";
-   std::cout << "-> div[toward_zero](3*wf, 2*wf) = " << eve::div[eve::toward_zero](wf, 2*wf) << "\n";
-   std::cout << "-> div[to_nearest](3*wf, 2*wf)  = " << eve::div[eve::to_nearest](wf, 2*wf) << "\n";
-   std::cout << "-> div[saturated](3*wi, 2*wi)   = " << eve::div[eve::saturated](wi, 2*wi) << "\n";
+  std::cout << "<- wf0                           = " << wf0 << "\n";
+  std::cout << "<- wf1                           = " << wf1 << "\n";
+  std::cout << "<- wi0                           = " << wi0 << "\n";
+  std::cout << "<- wi1                           = " << wi1 << "\n";
+  std::cout << "<- wu0                           = " << wu0 << "\n";
+                                                 
+  std::cout << "-> div(wf2, wf1)                 = " << eve::div(wf2, wf1) << "\n";
+  std::cout << "-> div[ignore_last(2)](wf0, wf1) = " << eve::div[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> div[wf0 != 0](wf0, wf1)       = " << eve::div[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> div[upward](wf2, wf1)         = " << eve::div[eve::upward](wf0, wf1) << "\n";
+  std::cout << "-> div[downward]3*(wf0, wf1)     = " << eve::div[eve::downward](wf0, wf1) << "\n";
+  std::cout << "-> div[toward_zero](wf2, wf1)    = " << eve::div[eve::toward_zero](wf0, wf1) << "\n";
+  std::cout << "-> div[to_nearest](wf2, wf1)     = " << eve::div[eve::to_nearest](wf0, wf1) << "\n";
+  std::cout << "-> div(wu2, 2*nz(wu0))           = " << eve::div(wu2, 2*nz(wu0)) << "\n";
+  std::cout << "-> div(wi2, 2*nz(wi0))           = " << eve::div(wi2, 2*nz(wi0)) << "\n";
+  std::cout << "-> div[saturated](wi2, wi1)      = " << eve::div[eve::saturated](wi0, wi1) << "\n";
 }

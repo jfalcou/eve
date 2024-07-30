@@ -1,13 +1,16 @@
 // revision 0
 #include <eve/module/core.hpp>
-#include <iostream> 
- 
-eve::wide<float> wf([](auto i, auto c)->float{ return i-c/2;}); 
- 
-int main(){ 
-   std::cout << "<- wf = " << wf << "\n"; 
- 
-   std::cout << "-> remainder(wf, 2*wf)                = " << eve::remainder(wf, 2*wf) << "\n";
-   std::cout << "-> remainder[ignore_last(2)](wf, 2*wf)= " << eve::remainder[eve::ignore_last(2)](wf, 2*wf) << "\n";
-   std::cout << "-> remainder[wf != 0](wf, 2*wf)       = " << eve::remainder[wf != 0](wf, 2*wf) << "\n";
+#include <iostream>
+
+int main()
+{
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+
+  std::cout << "<- wf0                                 = " << wf0 << "\n";
+  std::cout << "<- wf1                                 = " << wf1 << "\n";
+                                                       
+  std::cout << "-> remainder(wf0, wf1)                 = " << eve::remainder(wf0, wf1) << "\n";
+  std::cout << "-> remainder[ignore_last(2)](wf0, wf1) = " << eve::remainder[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> remainder[wf0 != 0](wf0, wf1)       = " << eve::remainder[wf0 != 0](wf0, wf1) << "\n";
 }
