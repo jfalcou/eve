@@ -7,7 +7,7 @@ int main()
 {
   eve::wide wf = { 0.0f, 0.99f, -1.0f, -0.5f, -0.0f, 0.25f, 1.0f, -2.0f};
 
-  std::cout << "<- wf = " << wf << "\n";
+  std::cout << "<- wf                       = " << wf << "\n";
 
   std::cout << std::setprecision(10);
   std::cout << "-> acosd(wf)                = " << eve::acosd(wf) << "\n";

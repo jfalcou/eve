@@ -1,5 +1,6 @@
 // revision 1
 #include <eve/module/math.hpp>
+#include <iostream>
 
 int main()
 {
