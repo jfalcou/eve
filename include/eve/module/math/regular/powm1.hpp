@@ -70,8 +70,8 @@ namespace eve
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
 //!       even when `y` is very small, or when `x` is close to 1.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
-//!     3. faster but less accurate call.
+//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    3. faster but less accurate call.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/powm1.cpp}
