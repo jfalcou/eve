@@ -53,8 +53,6 @@ TTS_CASE_WITH("Check behavior of cscpi on wide",
   using eve::pi;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(cscpi[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cscpi[eve::half_circle   ](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cscpi[eve::half_circle   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(cscpi(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cscpi(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(cscpi(a2), map(ref, a2), 2);

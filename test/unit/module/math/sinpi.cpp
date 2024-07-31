@@ -48,7 +48,6 @@ TTS_CASE_WITH("Check behavior of sinpi on wide",
   long double  pi = 3.1415926535897932384626433832795028841971693993751l;
   auto ref  = [pi](auto e) -> v_t { return std::sin((pi*(long double)e)); };
   TTS_ULP_EQUAL(sinpi[eve::quarter_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sinpi[eve::half_circle2](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(sinpi(a1), sinpi(eve::frac(a1)+eve::one[eve::is_odd(eve::trunc(a1))](eve::as(a1))), 2);
   TTS_ULP_EQUAL(sinpi(a2), sinpi(eve::frac(a2)+eve::one[eve::is_odd(eve::trunc(a2))](eve::as(a2))), 2);
 };

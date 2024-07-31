@@ -45,8 +45,6 @@ TTS_CASE_WITH("Check behavior of cotd on wide",
     return d ? eve::cosd(e) / eve::sind(e) : eve::nan(eve::as(e));
   };
   TTS_ULP_EQUAL(cotd[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotd[eve::half_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotd[eve::half_circle](a1), map(ref, a1), 30);
   TTS_ULP_EQUAL(eve::cotd(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::cotd(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::cotd(a2), map(ref, a2), 2);

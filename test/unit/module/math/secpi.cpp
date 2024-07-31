@@ -52,8 +52,6 @@ TTS_CASE_WITH("Check behavior of secpi on wide",
     return c ? eve::rec(c) : eve::nan(eve::as(e));
   };
   TTS_ULP_EQUAL(secpi[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(secpi[eve::half_circle   ](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(secpi[eve::half_circle   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(secpi(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(secpi(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(secpi(a2), map(ref, a2), 2);

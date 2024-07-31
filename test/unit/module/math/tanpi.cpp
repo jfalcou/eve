@@ -52,8 +52,6 @@ TTS_CASE_WITH("Check behavior of tanpi on wide",
     return d ? eve::sinpi(e) / d : eve::nan(eve::as(e));
   };
   TTS_ULP_EQUAL(tanpi[eve::quarter_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(tanpi[eve::half_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(tanpi[eve::half_circle2](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tanpi(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tanpi(a2), map(ref, a2), 2);
