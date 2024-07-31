@@ -74,9 +74,7 @@ namespace eve
 //!    3. Speedier but less accurate computation.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/nthroot.cpp}
-//!
 //================================================================================================
   inline constexpr auto nthroot = functor<nthroot_t>;
 //================================================================================================
