@@ -23,9 +23,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sindcosd_t : elementwise_callable< sindcosd_t, Options
-                                          , quarter_circle_option, half_circle_option
-                                          , full_circle_option, medium_option, big_option
+  struct sindcosd_t : elementwise_callable< sindcosd_t, Options, quarter_circle_option
                                           >
   {
     template<eve::floating_value T>
@@ -61,9 +59,7 @@ namespace eve
 //!      constexpr auto sindcosd[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto sindcosd[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto sindcosd[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto sindcosd[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto sindcosd[quarter_circle](floating_value auto x)          noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -77,16 +73,15 @@ namespace eve
 //!
 //!   1 .The computation returns a tuple-like whose elements are `sind(x)` and `cosd(x)`
 //!   2. [The operation is performed conditionnaly](@ref conditional).
-//!   3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!   3. Assumes that the inputs elements  belong to \f$[-45, 45]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sindcosd.cpp}
-//!  @}
 //================================================================================================
  inline constexpr auto sindcosd = functor<sindcosd_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {
@@ -98,8 +93,9 @@ namespace eve
       {
         return sinpicospi[eve::quarter_circle](div_180(a0));
       }
-      else if constexpr(O::contains(big2) )
+      else
       {
+        if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle2](a0);
         if constexpr( scalar_value<T> )
           if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
         auto x             = eve::abs(a0);
@@ -107,11 +103,6 @@ namespace eve
         auto [fn, xr, dxr] = rem180(x);
         auto[s,c] = sincos_finalize(bitofsign(a0), fn, xr, dxr);
         return eve::zip(s,c);
-      }
-      else
-      {
-        if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle2](a0);
-        else                                  return sindcosd[big2](a0);
       }
     }
   }

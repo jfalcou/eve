@@ -16,8 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct secpi_t : elementwise_callable<secpi_t, Options, quarter_circle_option, half_circle_option,
-             full_circle_option, medium_option, big_option>
+  struct secpi_t : elementwise_callable<secpi_t, Options, quarter_circle_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
@@ -52,9 +51,7 @@ namespace eve
 //!      constexpr auto secpi[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto secpi[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto secpi[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto secpi[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto secpi[quarter_circle](floating_value auto x)          noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -73,19 +70,18 @@ namespace eve
 //!         * If the element is \f$\pm\infty\f$, Nan is returned.
 //!         * If the element is a `Nan`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!    3. Assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/secpi.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto secpi = functor<secpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {
@@ -106,8 +102,7 @@ namespace eve
         auto x2 = sqr(a0);
         return rec[pedantic2](cos_eval(x2));
       }
-      else if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
-                        || O::contains(medium2) || O::contains(big2))
+      else
       {
         const T x = eve::abs(a0);
         if constexpr( scalar_value<T> )
@@ -119,10 +114,6 @@ namespace eve
         T z = cospi[o](x);
         if constexpr( scalar_value<T> ) { return (z) ? rec[pedantic2](z) : nan(eve::as<T>()); }
         else { return if_else(is_nez(z) && is_finite(a0), rec[pedantic2](z), eve::allbits); }
-      }
-      else
-      {
-        return secpi[big2](a0);
       }
     }
   }

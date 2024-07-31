@@ -23,10 +23,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sinpicospi_t : elementwise_callable< sinpicospi_t, Options
-                                            , quarter_circle_option, half_circle_option
-                                            , full_circle_option, medium_option, big_option
-                                            >
+  struct sinpicospi_t : elementwise_callable< sinpicospi_t, Options, quarter_circle_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -61,9 +58,7 @@ namespace eve
 //!      constexpr auto sinpicospi[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto sinpicospi[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto sinpicospi[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto sinpicospi[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto sinpicospi[quarter_circle](floating_value auto x)          noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -76,16 +71,15 @@ namespace eve
 //! **Return value**
 //!   1 .The computation returns a tuple-like whose elements are `sinpi(x)` and `cospi(x)`
 //!   2. [The operation is performed conditionnaly](@ref conditional).
-//!   3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-\pi/4,\pi/4]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-\pi/2,\pi/2]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
+//!   3. Assumes that the inputs elements  belong to \f$[-1/4,\1/4]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/sinpicospi.cpp}
-//!  @}
 //================================================================================================
  inline constexpr auto sinpicospi = functor<sinpicospi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {
@@ -97,13 +91,14 @@ namespace eve
       {
         return sincos[eve::quarter_circle](a0 * pi(eve::as<T>()));
       }
-      else if constexpr( O::contains(big2) )
+      else
       {
         if constexpr( scalar_value<T> )
         {
           if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
         }
         T x = abs(a0);
+        if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle2](a0);
         if constexpr( scalar_value<T> )
         {
           if( x > maxflint(eve::as<T>()) ) return eve::zip(T(0), T(1));
@@ -117,12 +112,6 @@ namespace eve
         auto [fn, xr, dxr] = rem2(x);
         auto [s, c]        = sincos_finalize(bitofsign(a0), fn, xr, dxr);
         return eve::zip(s, c);
-      }
-      else
-      {
-        auto x = abs(a0);
-        if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle2](a0);
-        else  return sinpicospi[big2](a0);
       }
     }
   }
