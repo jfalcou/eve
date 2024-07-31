@@ -171,44 +171,25 @@ $(document).ready(function(){initNavTree('group__math__exp_gaf28f3373821c092b091
 <li><a class="el" href="conditional.html">The operation is performed conditionnaly</a></li>
 </ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft x = {<a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 1.0f, 1.0f, 1.0f};</div>
-<div class="line">  wide_ft y = {-1.5f, 2.9f, 3.5f, -11.0f};</div>
-<div class="line">  wide_ft z = { <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f)), -2.0f, 1.0f, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line">  wide_ft p = { 3.2f, 3.0f, 2.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> x = {<a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 1.0f, 1.0f, 1.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> y = {-1.5f, 2.9f, 3.5f, -11.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> z = { <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f)), -2.0f, 1.0f, 15.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> p = { 3.2f, 3.0f, 2.0f, <a class="code hl_variable" href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))};</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(5) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;&lt;- p                            = &quot;</span> &lt;&lt; p  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;&lt;- x                            = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;&lt;- y                            = &quot;</span> &lt;&lt; y  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;&lt;- z                            = &quot;</span> &lt;&lt; z  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm(p, x, y, z)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>(p, x, y, z) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">              &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm[pedantic](p, x, y, z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](p, x, y, z) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line">              ;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span>        xf = 10.0;</div>
-<div class="line">  <span class="keywordtype">double</span>        yf = 1.0;</div>
-<div class="line">  <span class="keywordtype">double</span>        zf = 111.0;</div>
-<div class="line">  <span class="keywordtype">double</span>        pf = 2.0;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                               = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                               = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- yf                               = &quot;</span> &lt;&lt; yf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- zf                               = &quot;</span> &lt;&lt; zf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm(pf, xf, yf, zf)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>(pf, xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm[pedantic](pf, xf, yf, zf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](pf, xf, yf, zf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(5) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- p                            = &quot;</span> &lt;&lt; p  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                            = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- y                            = &quot;</span> &lt;&lt; y  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- z                            = &quot;</span> &lt;&lt; z  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm(p, x, y, z)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>(p, x, y, z) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; lpnorm[pedantic](p, x, y, z) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaf28f3373821c092b0910e29d8aa8138c.html#gaf28f3373821c092b0910e29d8aa8138c">eve::lpnorm</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](p, x, y, z) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gaf750842e89385d68afd663f5a9cd0c08_html_gaf750842e89385d68afd663f5a9cd0c08"><div class="ttname"><a href="group__core__constants_gaf750842e89385d68afd663f5a9cd0c08.html#gaf750842e89385d68afd663f5a9cd0c08">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition:</b> inf.hpp:70</div></div>

@@ -192,7 +192,38 @@ $(document).ready(function(){initNavTree('group__math_ga90f1fb37df377d7fd9f95282
 <li>[Wikipedia](<a href="https://en.wikipedia.org/wiki/Horner's_method">https://en.wikipedia.org/wiki/Horner's_method</a>)</li>
 </ul>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"></div><!-- fragment --> 
+<div class="fragment"><div class="line"><span class="comment">// revision 1 TODO</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd = {-0.3, 0.5, 0.0, 2.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> b  = {-2.0, 10.5, -4.0, 0.1};</div>
+<div class="line">  <span class="keywordtype">double</span> x(0.2);</div>
+<div class="line">  kumi::tuple v {1.0, -2.0, 3.0, -4.0};</div>
+<div class="line">  <span class="keyword">using </span>w_t = <span class="keyword">decltype</span>(xd);</div>
+<div class="line">  kumi::tuple wv{ w_t{1.5, 1, 2, 3}, w_t{4, 5, 6, 7}, w_t{8, 9, 10, 11} };</div>
+<div class="line">  <span class="keyword">auto</span> t = kumi::tuple{1.5,4.0,8.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                               = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- v                                = &quot;</span> &lt;&lt; v  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wv                               = &quot;</span> &lt;&lt; wv &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, 1.0, -2.0, 3.0, -4.0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, 1.0, -2.0, 3.0, -4.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5, 1, b, 3, -4)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(0.5, 1, b, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, 1, -2, 3, -4)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, 1, -2, 3, -4)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, v)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, v)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, t)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, t)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, t)                     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(x, t)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, wv)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(x, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5f, wv)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(0.5, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, wv)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(xd, wv) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(1.0, t)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math_ga90f1fb37df377d7fd9f95282ec3c70cb.html#ga90f1fb37df377d7fd9f95282ec3c70cb">eve::horner</a>(1.0, t) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

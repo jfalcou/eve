@@ -162,13 +162,9 @@ $(document).ready(function(){initNavTree('group__contfrac_ga3c4aa5af49d6693847a3
 <p><b>Return value</b></p>
 <p>The value of the continued fraction is returned. \(\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots\vphantom{\frac{1}{1}} }}}\)</p>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
 <div class="line"><span class="keyword">struct </span>const_fraction</div>
@@ -177,21 +173,18 @@ $(document).ready(function(){initNavTree('group__contfrac_ga3c4aa5af49d6693847a3
 <div class="line"> </div>
 <div class="line">   result_type operator()()</div>
 <div class="line">   {</div>
-<div class="line">     <span class="keywordflow">return</span> T{1, 2, 3, 4, 5, 6, 7, 8};</div>
+<div class="line">     <span class="keywordflow">return</span> T{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
 <div class="line">   }</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  w_t z{1, 2, 3, 4, 5, 6, 7, 8};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> z{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
 <div class="line">  <span class="keyword">auto</span> ref = (-z+<a class="code hl_variable" href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a>(<a class="code hl_variable" href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a>(z)+4))/2;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ref constant fracs are: &quot;</span> &lt;&lt; ref &lt;&lt; std::endl;</div>
-<div class="line">  const_fraction&lt;w_t&gt; func;</div>
+<div class="line">  const_fraction&lt;<span class="keyword">decltype</span>(z)&gt; func;</div>
 <div class="line">  <span class="keyword">auto</span> gr = <a class="code hl_variable" href="group__contfrac_ga3c4aa5af49d6693847a3594710e46e3a.html#ga3c4aa5af49d6693847a3594710e46e3a">eve::lentz_a</a>(func,<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), 100);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;    constant fracs are: &quot;</span> &lt;&lt; gr &lt;&lt; std::endl;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7_html_ga6745422ee3727af1a6e34182e8efbcb7"><div class="ttname"><a href="group__core__arithmetic_ga6745422ee3727af1a6e34182e8efbcb7.html#ga6745422ee3727af1a6e34182e8efbcb7">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the square root of the parameter.</div><div class="ttdef"><b>Definition:</b> sqrt.hpp:74</div></div>
 <div class="ttc" id="agroup__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf_html_gacb015917b1a95c38dab29df14695c1bf"><div class="ttname"><a href="group__core__arithmetic_gacb015917b1a95c38dab29df14695c1bf.html#gacb015917b1a95c38dab29df14695c1bf">eve::sqr</a></div><div class="ttdeci">constexpr auto sqr</div><div class="ttdoc">Computes the square of the parameter.</div><div class="ttdef"><b>Definition:</b> sqr.hpp:87</div></div>

@@ -173,39 +173,29 @@ $(document).ready(function(){initNavTree('group__math__exp_gaa0b5a64467474bf1d37
 <li>Speedier but less accurate computation.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_nt = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  wide_ft pf = {2.0f, 64.0f, 4.0f, 2.0f, 2.0f,</div>
-<div class="line">                <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
-<div class="line">  wide_nt qn = {4, 3, 2, 1, 0,  4, 3, 2};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = {2.0f, 64.0f, 4.0f, 2.0f, 2.0f,</div>
+<div class="line">                  <a class="code hl_variable" href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wn = {4, 3, 2, 1, 0,  4, 3, 2};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>&lt;&lt; std::setprecision(20)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                   = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qn                   = &quot;</span> &lt;&lt; qn &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot(pf, qn)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>(pf, qn) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot[raw](pf, qn) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>](pf, qn) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf                              = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wn                              = &quot;</span> &lt;&lt; wn &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keywordtype">double</span> xf = 64.0f;</div>
-<div class="line">  <span class="keywordtype">int</span> n = 3;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span> &lt;&lt; std::setprecision(20)</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xf                   = &quot;</span> &lt;&lt; xf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n                    = &quot;</span> &lt;&lt; n &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot(xf, n)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>(xf, n) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot[raw](xf, n)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>](xf, n) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot(wf, wn)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>(wf, wn) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot[ignore_last(2)](wf, wn)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf, wn) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot[wf != 2.0f](wf, wn)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>[wf != 2.0f](wf, wn) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nthroot[raw](wf, wn)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__math__exp_gaa0b5a64467474bf1d37bf7130958946a.html#gaa0b5a64467474bf1d37bf7130958946a">eve::nthroot</a>[<a class="code hl_variable" href="group__core__decorators_gaa19d9ce08b61f17096366e2e638e6cc3.html#gaa19d9ce08b61f17096366e2e638e6cc3">eve::raw</a>](wf, wn) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:76</div></div>
 <div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
 <div class="ttc" id="agroup__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8_html_gac58acf7f9ac1efeb685eb66d3a49aaf8"><div class="ttname"><a href="group__core__constants_gac58acf7f9ac1efeb685eb66d3a49aaf8.html#gac58acf7f9ac1efeb685eb66d3a49aaf8">eve::minf</a></div><div class="ttdeci">constexpr auto minf</div><div class="ttdoc">Computes the -infinity ieee value.</div><div class="ttdef"><b>Definition:</b> minf.hpp:69</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>

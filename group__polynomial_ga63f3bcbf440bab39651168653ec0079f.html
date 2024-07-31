@@ -188,33 +188,28 @@ $(document).ready(function(){initNavTree('group__polynomial_ga63f3bcbf440bab3965
 </ul>
 </dd></dl>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;list&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"> </div>
-<div class="line"> <span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c){ <span class="keywordflow">return</span> (1+<a class="code hl_variable" href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()))*(i-c/2);});</div>
+<div class="line">  kumi::tuple wtc{wf,2*wf,3*wf};</div>
+<div class="line">  kumi::tuple wtn{4*wf, 5*wf};</div>
 <div class="line"> </div>
-<div class="line">  wide_ft xd = {-0.3, 0.5, 0.0, 2.0};</div>
-<div class="line">  std::vector&lt;float&gt; v {1, -2, 3, -4};</div>
-<div class="line">  std::list&lt;float&gt;   l {1, -2, 3, -4};</div>
-<div class="line">  kumi::tuple   t {1.0f, -2.0f, 3.0f, -4.0f};</div>
-<div class="line">  std::vector&lt;float&gt; n {1.0f, 2.0f, 6.0f};</div>
-<div class="line">  kumi::tuple  tn {1.0f, 2.0f, 6.0f};</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(10);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf  = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wtc = &quot;</span> &lt;&lt; wtc &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wtn = &quot;</span> &lt;&lt; wtn &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                          = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- l, v and t contain  {1, -2, 3, -4} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- n and tn   contain  { 1, 2, 6} &quot;</span>&lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, l, n)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, l, n)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, v, n)                            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, v, n)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(xd, t, tn)                           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(xd, t, tn)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(wf,wf,2*wf,3*wf,4*wf,5*wf)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(wf,wf,2*wf,3*wf,4*wf,5*wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(wf,wtc,wtn)                          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>(wf, wtc,wtn) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; newton[pedantic](wf,wf,2*wf,3*wf,4*wf, 5*wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__polynomial_ga63f3bcbf440bab39651168653ec0079f.html#ga63f3bcbf440bab39651168653ec0079f">eve::newton</a>[<a class="code hl_variable" href="group__core__decorators_ga8526757ac3b6797bc68ce2072c549cf3.html#ga8526757ac3b6797bc68ce2072c549cf3">eve::pedantic</a>](wf,wf,2*wf,3*wf,4*wf, 5*wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga09f150f349426116160f46376d5f9063_html_ga09f150f349426116160f46376d5f9063"><div class="ttname"><a href="group__core__constants_ga09f150f349426116160f46376d5f9063.html#ga09f150f349426116160f46376d5f9063">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition:</b> eps.hpp:76</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>
