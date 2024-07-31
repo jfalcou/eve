@@ -75,8 +75,10 @@ struct asecd_t : elementwise_callable<asecd_t, Options, raw_option>
 //!  @godbolt{doc/math/asecd.cpp}
 //!  @}
 //================================================================================================
+  inline constexpr auto asecd = functor<asecd_t>;
+//================================================================================================
+//================================================================================================
 
-inline constexpr auto asecd = functor<asecd_t>;
 
 namespace detail
 {

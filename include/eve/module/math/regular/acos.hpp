@@ -79,9 +79,11 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acos.cpp}
+//================================================================================================
+  inline constexpr auto acos = functor<acos_t>;
+//================================================================================================
 //!  @}
 //======================================================================================================================
-  inline constexpr auto acos = functor<acos_t>;
 
   namespace detail
   {
