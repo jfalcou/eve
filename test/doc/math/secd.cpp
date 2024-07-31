@@ -13,6 +13,4 @@ int main()
   std::cout << "-> secd[ignore_last(2)](wf)= " << eve::secd[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> secd[wf > 0.0](wf)      = " << eve::secd[wf > 0.0](wf) << "\n";
   std::cout << "-> secd[quarter_circle](wf)= " << eve::secd[eve::quarter_circle](wf) << "\n";
-  std::cout << "-> secd[half_circle](wf)   = " << eve::secd[eve::half_circle](wf) << "\n";
-  std::cout << "-> secd[full_circle](wf)   = " << eve::secd[eve::full_circle](wf) << "\n";
 }
