@@ -68,7 +68,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/atanpi.cpp}
+//!  @godbolt{doc/math/atanpi.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto atanpi = functor<atanpi_t>;

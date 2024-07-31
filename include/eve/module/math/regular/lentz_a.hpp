@@ -69,7 +69,7 @@ struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/math/regular/lentz_a.cpp}
+//!   @godbolt{doc/math/lentz_a.cpp}
 //!
 //! @}
 //================================================================================================

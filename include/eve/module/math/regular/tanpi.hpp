@@ -80,7 +80,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-1,1]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/tanpi.cpp}
+//!  @godbolt{doc/math/tanpi.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto tanpi = functor<tanpi_t>;

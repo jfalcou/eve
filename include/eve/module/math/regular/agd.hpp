@@ -73,7 +73,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23#viii)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/agd.cpp}
+//!  @godbolt{doc/math/agd.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto agd = functor<agd_t>;

@@ -73,7 +73,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acsc.cpp}
+//!  @godbolt{doc/math/acsc.cpp}
 //!  @}
 //======================================================================================================================
 

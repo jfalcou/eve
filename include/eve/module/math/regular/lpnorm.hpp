@@ -80,7 +80,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/lpnorm.cpp}
+//!  @godbolt{doc/math/lpnorm.cpp}
 //!
 //!  @}
 //================================================================================================

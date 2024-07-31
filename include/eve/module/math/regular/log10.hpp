@@ -73,7 +73,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/log10.cpp}
+//!  @godbolt{doc/math/log10.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto log10 = functor<log10_t>;

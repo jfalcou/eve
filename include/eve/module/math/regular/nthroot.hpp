@@ -75,7 +75,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/nthroot.cpp}
+//!  @godbolt{doc/math/nthroot.cpp}
 //!
 //!  @}
 //================================================================================================

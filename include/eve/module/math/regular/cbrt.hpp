@@ -60,7 +60,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cbrt.cpp}
+//!  @godbolt{doc/math/cbrt.cpp}
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)

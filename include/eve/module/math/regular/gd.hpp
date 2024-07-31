@@ -67,7 +67,7 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/gd.cpp}
+//!  @godbolt{doc/math/gd.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto gd = functor<gd_t>;

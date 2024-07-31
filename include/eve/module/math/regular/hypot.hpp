@@ -85,7 +85,7 @@ namespace eve
 
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/hypot.cpp}
+//!  @godbolt{doc/math/hypot.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto hypot = functor<hypot_t>;

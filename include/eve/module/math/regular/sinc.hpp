@@ -71,7 +71,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinc.cpp}
+//!  @godbolt{doc/math/sinc.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto sinc = functor<sinc_t>;

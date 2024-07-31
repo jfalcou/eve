@@ -69,7 +69,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acscd.cpp}
+//!  @godbolt{doc/math/acscd.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto acscd = functor<acscd_t>;

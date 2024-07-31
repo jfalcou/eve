@@ -1,27 +1,20 @@
-#include <eve/module/polynomial.hpp>
-#include <eve/wide.hpp>
+// revision 1
+#include <eve/module/math.hpp>
 #include <iostream>
-#include <list>
-#include <vector>
-
- using wide_ft = eve::wide<float, eve::fixed<4>>;
+#include <iomanip>
 
 int main()
 {
+  eve::wide<float> wf([](auto i, auto c){ return (1+eve::eps(eve::as<float>()))*(i-c/2);});
+  kumi::tuple wtc{wf,2*wf,3*wf};
+  kumi::tuple wtn{4*wf, 5*wf};
 
-  wide_ft xd = {-0.3, 0.5, 0.0, 2.0};
-  std::vector<float> v {1, -2, 3, -4};
-  std::list<float>   l {1, -2, 3, -4};
-  kumi::tuple   t {1.0f, -2.0f, 3.0f, -4.0f};
-  std::vector<float> n {1.0f, 2.0f, 6.0f};
-  kumi::tuple  tn {1.0f, 2.0f, 6.0f};
+  std::cout << std::setprecision(10);
+  std::cout << "<- wf  = " << wf << "\n";
+  std::cout << "<- wtc = " << wtc << "\n";
+  std::cout << "<- wtn = " << wtn << "\n";
 
-  std::cout << "---- simd" << '\n'
-            << "<- xd                                          = " << xd << '\n'
-            << "<- l, v and t contain  {1, -2, 3, -4} "<< '\n'
-            << "<- n and tn   contain  { 1, 2, 6} "<< '\n'
-            << "-> newton(xd, l, n)                            = " << eve::newton(xd, l, n)  << '\n'
-            << "-> newton(xd, v, n)                            = " << eve::newton(xd, v, n)  << '\n'
-            << "-> newton(xd, t, tn)                           = " << eve::newton(xd, t, tn)  << '\n';
-  return 0;
+  std::cout << "-> newton(wf,wf,2*wf,3*wf,4*wf,5*wf)           = " << eve::newton(wf,wf,2*wf,3*wf,4*wf,5*wf) << "\n";
+  std::cout << "-> newton(wf,wtc,wtn)                          = " << eve::newton(wf, wtc,wtn) << "\n";
+  std::cout << "-> newton[pedantic](wf,wf,2*wf,3*wf,4*wf, 5*wf)= " << eve::newton[eve::pedantic](wf,wf,2*wf,3*wf,4*wf, 5*wf) << "\n";
 }

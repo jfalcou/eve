@@ -74,7 +74,7 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/math/regular/lentz_b.cpp}
+//!   @godbolt{doc/math/lentz_b.cpp}
 //!
 //! @}
 //================================================================================================

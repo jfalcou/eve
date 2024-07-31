@@ -62,7 +62,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/deginrad.cpp}
+//!  @godbolt{doc/math/deginrad.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto deginrad = functor<deginrad_t>;

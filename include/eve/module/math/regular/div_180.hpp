@@ -63,7 +63,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/div_180.cpp}
+//!  @godbolt{doc/math/div_180.cpp}
 //!  @}
 //================================================================================================
 

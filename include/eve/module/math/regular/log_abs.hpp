@@ -61,7 +61,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/log_abs.cpp}
+//!  @godbolt{doc/math/log_abs.cpp}
 //!  @}
 //================================================================================================
 inline constexpr auto log_abs = functor<log_abs_t>;

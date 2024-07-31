@@ -75,7 +75,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/log2.cpp}
+//!  @godbolt{doc/math/log2.cpp}
 //!
 //!
 //!   * Masked Call
