@@ -25,7 +25,7 @@ namespace eve
   };
 
 
-//======================================================================================================================
+//================================================================================================
 //! @addtogroup math_invtrig
 //! @{
 //!   @var atan
@@ -46,8 +46,8 @@ namespace eve
 //!      constexpr auto atan(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto atan[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto atan[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -79,7 +79,7 @@ namespace eve
  inline constexpr auto atan = functor<atan_t>;
 //================================================================================================
 //!  @}
-//======================================================================================================================
+//================================================================================================
 
   namespace detail
   {

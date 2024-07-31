@@ -24,7 +24,7 @@ namespace eve
     EVE_CALLABLE_OBJECT(acot_t, acot_);
 };
 
-//======================================================================================================================
+//================================================================================================
 //! @addtogroup math_invtrig
 //! @{
 //!   @var acot
@@ -45,8 +45,8 @@ namespace eve
 //!      constexpr auto acot(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto acot[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto acot[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -76,7 +76,7 @@ namespace eve
   inline constexpr auto acot = functor<acot_t>;
 //================================================================================================
 //!  @}
-//======================================================================================================================
+//================================================================================================
 
   namespace detail
   {

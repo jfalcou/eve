@@ -46,8 +46,8 @@ struct atand_t : elementwise_callable<atand_t, Options>
 //!      constexpr auto atand(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto atand[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto atand[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto atand[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto atand[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -69,12 +69,11 @@ struct atand_t : elementwise_callable<atand_t, Options>
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/atand.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto atand = functor<atand_t>;
 //================================================================================================
+//!  @}
 //================================================================================================
-
 
   namespace detail
   {

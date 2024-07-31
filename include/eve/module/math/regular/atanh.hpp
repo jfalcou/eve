@@ -46,8 +46,8 @@ namespace eve
 //!      constexpr auto atanh(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto atanh[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto atanh[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto atanh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto atanh[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -79,7 +79,7 @@ namespace eve
   inline constexpr auto atanh = functor<atanh_t>;
 //================================================================================================
 //!  @}
-//======================================================================================================================
+//================================================================================================
 
   namespace detail
   {

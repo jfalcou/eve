@@ -46,8 +46,8 @@ namespace eve
 //!      constexpr auto agd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto agd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto agd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto agd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto agd[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -78,7 +78,7 @@ namespace eve
   inline constexpr auto agd = functor<agd_t>;
 //================================================================================================
 //!  @}
-//======================================================================================================================
+//================================================================================================
 
   namespace detail
   {

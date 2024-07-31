@@ -45,8 +45,8 @@ namespace eve
 //!      constexpr auto acsc(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acsc[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto acsc[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto acsc[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto acsc[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -74,12 +74,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acsc.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto acsc = functor<acsc_t>;
 //================================================================================================
-//======================================================================================================================
-
+//!  @}
+//================================================================================================
 
   namespace detail
   {
