@@ -49,9 +49,7 @@ glob_unit("doc" ${doc_root} "elliptic/*.cpp")
 ##==================================================================================================
 add_custom_target(doc.math.exe        )
 add_dependencies(doc.exe doc.math.exe )
-glob_unit("doc" ${doc_root} "math/pedantic/*.cpp" )
-glob_unit("doc" ${doc_root} "math/masked/*.cpp"   )
-glob_unit("doc" ${doc_root} "math/regular/*.cpp"  )
+glob_unit("doc" ${doc_root} "math/*.cpp"  )
 
 ##==================================================================================================
 ## GLOB and process polynomial doc tests
