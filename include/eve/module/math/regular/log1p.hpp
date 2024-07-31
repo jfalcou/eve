@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/reverse_horner.hpp>
 
 namespace eve
 {
@@ -69,7 +69,7 @@ namespace eve
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log1p)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/log1p.cpp}
+//!  @godbolt{doc/math/log1p.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto log1p = functor<log1p_t>;

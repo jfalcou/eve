@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/sin.hpp>
+#include <eve/module/math/sin.hpp>
 
 namespace eve
 {
@@ -71,7 +71,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinc.cpp}
+//!  @godbolt{doc/math/sinc.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto sinc = functor<sinc_t>;

@@ -81,7 +81,7 @@ namespace eve
 //!       For each option, if the respective above conditon is not met the result is undefined.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/rempio2.cpp}
+//!  @godbolt{doc/math/rempio2.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto rempio2 = functor<rempio2_t>;

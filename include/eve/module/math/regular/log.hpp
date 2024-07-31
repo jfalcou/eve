@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/horner.hpp>
 #include <eve/module/math/constant/invsqrt_2.hpp>
 
 namespace eve
@@ -73,7 +73,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/log.cpp}
+//!  @godbolt{doc/math/log.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto log = functor<log_t>;

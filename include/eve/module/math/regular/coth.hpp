@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/expm1.hpp>
 
 namespace eve
 {
@@ -66,7 +66,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/coth.cpp}
+//!  @godbolt{doc/math/coth.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto coth = functor<coth_t>;

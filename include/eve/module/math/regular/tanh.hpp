@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/expm1.hpp>
 
 namespace eve
 {
@@ -71,7 +71,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicTangent.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/tanh.cpp}
+//!  @godbolt{doc/math/tanh.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto tanh = functor<tanh_t>;

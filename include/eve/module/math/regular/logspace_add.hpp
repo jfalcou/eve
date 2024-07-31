@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/exp.hpp>
-#include <eve/module/math/regular/log1p.hpp>
+#include <eve/module/math/exp.hpp>
+#include <eve/module/math/log1p.hpp>
 #include <eve/traits/common_value.hpp>
 
 
@@ -84,7 +84,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/logspace_add.cpp}
+//!  @godbolt{doc/math/logspace_add.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto logspace_add = functor<logspace_add_t>;

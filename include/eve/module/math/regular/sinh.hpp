@@ -12,8 +12,8 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
-#include <eve/module/math/regular/exp.hpp>
-#include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/exp.hpp>
+#include <eve/module/math/expm1.hpp>
 
 namespace eve
 {
@@ -69,7 +69,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinh.cpp}
+//!  @godbolt{doc/math/sinh.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto sinh = functor<sinh_t>;

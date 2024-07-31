@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/pow_abs.hpp>
+#include <eve/module/math/pow_abs.hpp>
 
 namespace eve
 {
@@ -78,7 +78,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/geommean.cpp}
+//!  @godbolt{doc/math/geommean.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto geommean = functor<geommean_t>;

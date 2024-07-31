@@ -10,8 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/acos.hpp>
-#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/acos.hpp>
+#include <eve/module/math/radindeg.hpp>
 
 namespace eve
 {
@@ -71,7 +71,7 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acosd.cpp}
+//!  @godbolt{doc/math/acosd.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto acosd = functor<acosd_t>;

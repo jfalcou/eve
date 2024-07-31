@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/sinh.hpp>
+#include <eve/module/math/sinh.hpp>
 
 namespace eve
 {
@@ -67,7 +67,7 @@ namespace eve
 //!
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/csch.cpp}
+//!  @godbolt{doc/math/csch.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto csch = functor<csch_t>;

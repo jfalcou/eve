@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/asin.hpp>
+#include <eve/module/math/asin.hpp>
 
 namespace eve
 {
@@ -73,7 +73,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acsc.cpp}
+//!  @godbolt{doc/math/acsc.cpp}
 //!  @}
 //======================================================================================================================
 

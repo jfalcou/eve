@@ -13,8 +13,8 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/inv_2eps.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/regular/log.hpp>
-#include <eve/module/math/regular/log1p.hpp>
+#include <eve/module/math/log.hpp>
+#include <eve/module/math/log1p.hpp>
 
 namespace eve
 {
@@ -78,7 +78,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acosh.cpp}
+//!  @godbolt{doc/math/acosh.cpp}
 //!
 //!  @}
 //================================================================================================

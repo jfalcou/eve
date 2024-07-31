@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/acos.hpp>
+#include <eve/module/math/acos.hpp>
 
 namespace eve
 {
@@ -76,7 +76,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asec.cpp}
+//!  @godbolt{doc/math/asec.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto asec = functor<asec_t>;

@@ -17,7 +17,7 @@
 #include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/regular/rempio2.hpp>
+#include <eve/module/math/rempio2.hpp>
 
 namespace eve
 {
@@ -75,7 +75,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinhcosh.cpp}
+//!  @godbolt{doc/math/sinhcosh.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto sinhcosh = functor<sinhcosh_t>;

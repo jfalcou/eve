@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/atan.hpp>
-#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/atan.hpp>
+#include <eve/module/math/radindeg.hpp>
 
 namespace eve
 {
@@ -68,7 +68,7 @@ struct atand_t : elementwise_callable<atand_t, Options>
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/atand.cpp}
+//!  @godbolt{doc/math/atand.cpp}
 //!  @}
 //================================================================================================
 

@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/asin.hpp>
-#include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/asin.hpp>
+#include <eve/module/math/reverse_horner.hpp>
 
 namespace eve
 {
@@ -78,7 +78,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acos.cpp}
+//!  @godbolt{doc/math/acos.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto acos = functor<acos_t>;

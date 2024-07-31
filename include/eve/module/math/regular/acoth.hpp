@@ -11,7 +11,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/atanh.hpp>
+#include <eve/module/math/atanh.hpp>
 
 namespace eve
 {
@@ -72,7 +72,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acoth.cpp}
+//!  @godbolt{doc/math/acoth.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto acoth = functor<acoth_t>;

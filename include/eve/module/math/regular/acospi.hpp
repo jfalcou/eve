@@ -10,8 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/acos.hpp>
-#include <eve/module/math/regular/radinpi.hpp>
+#include <eve/module/math/acos.hpp>
+#include <eve/module/math/radinpi.hpp>
 
 namespace eve
 {
@@ -71,7 +71,7 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acospi.cpp}
+//!  @godbolt{doc/math/acospi.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto acospi = functor<acospi_t>;

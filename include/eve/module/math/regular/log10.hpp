@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/horner.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
 namespace eve
@@ -73,7 +73,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/log10.cpp}
+//!  @godbolt{doc/math/log10.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto log10 = functor<log10_t>;

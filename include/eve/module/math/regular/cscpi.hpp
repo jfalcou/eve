@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/csc.hpp>
+#include <eve/module/math/csc.hpp>
 
 namespace eve
 {
@@ -72,7 +72,7 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cscpi.cpp}
+//!  @godbolt{doc/math/cscpi.cpp}
 //!  @groupheader{Semantic Modifiers}
 //!  @}
 //================================================================================================

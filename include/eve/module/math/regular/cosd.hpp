@@ -13,8 +13,8 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/decorator/trigo_tags.hpp>
-#include <eve/module/math/regular/cospi.hpp>
-#include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/cospi.hpp>
+#include <eve/module/math/div_180.hpp>
 #include <eve/module/math/detail/generic/rem180.hpp>
 
 namespace eve
@@ -81,7 +81,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cosd.cpp}
+//!  @godbolt{doc/math/cosd.cpp}
 //!
 //!  @}
 //================================================================================================

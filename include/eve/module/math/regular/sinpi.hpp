@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/sin.hpp>
+#include <eve/module/math/sin.hpp>
 
 namespace eve
 {
@@ -79,7 +79,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-1,1]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinpi.cpp}
+//!  @godbolt{doc/math/sinpi.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto sinpi = functor<sinpi_t>;

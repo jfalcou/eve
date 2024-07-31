@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/acos.hpp>
-#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/acos.hpp>
+#include <eve/module/math/radindeg.hpp>
 
 namespace eve
 {
@@ -72,7 +72,7 @@ struct asecd_t : elementwise_callable<asecd_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asecd.cpp}
+//!  @godbolt{doc/math/asecd.cpp}
 //!  @}
 //================================================================================================
 

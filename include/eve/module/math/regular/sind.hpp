@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/sinpi.hpp>
+#include <eve/module/math/sinpi.hpp>
 
 namespace eve
 {
@@ -80,7 +80,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Sine.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sind.cpp}
+//!  @godbolt{doc/math/sind.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto sind = functor<sind_t>;

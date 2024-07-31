@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/sin.hpp>
+#include <eve/module/math/sin.hpp>
 
 namespace eve
 {
@@ -80,7 +80,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosecant.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/csc.cpp}
+//!  @godbolt{doc/math/csc.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto csc = functor<csc_t>;

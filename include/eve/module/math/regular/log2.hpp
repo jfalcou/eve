@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/horner.hpp>
+#include <eve/module/math/horner.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/math/constant/invlog_2.hpp>
 
@@ -75,7 +75,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/log2.cpp}
+//!  @godbolt{doc/math/log2.cpp}
 //!
 //!
 //!   * Masked Call

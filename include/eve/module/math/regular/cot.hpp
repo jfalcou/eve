@@ -15,7 +15,7 @@
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/regular/rempio2.hpp>
+#include <eve/module/math/rempio2.hpp>
 
 namespace eve
 {
@@ -83,7 +83,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cotangent.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cot.cpp}
+//!  @godbolt{doc/math/cot.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto cot = functor<cot_t>;

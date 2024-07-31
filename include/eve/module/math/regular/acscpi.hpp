@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/radinpi.hpp>
-#include <eve/module/math/regular/acsc.hpp>
+#include <eve/module/math/radinpi.hpp>
+#include <eve/module/math/acsc.hpp>
 
 namespace eve
 {
@@ -69,7 +69,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acscpi.cpp}
+//!  @godbolt{doc/math/acscpi.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto acscpi = functor<acscpi_t>;

@@ -69,7 +69,7 @@ struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 //!
 //!   @groupheader{Example}
 //!
-//!   @godbolt{doc/math/regular/lentz_a.cpp}
+//!   @godbolt{doc/math/lentz_a.cpp}
 //!
 //! @}
 //================================================================================================
@@ -77,4 +77,4 @@ inline constexpr auto lentz_a = functor<lentz_a_t>;
 
 }
 
-#include <eve/module/math/regular/impl/lentz.hpp>
+#include <eve/module/math/impl/lentz.hpp>

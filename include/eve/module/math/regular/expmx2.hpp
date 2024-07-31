@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/expx2.hpp>
+#include <eve/module/math/expx2.hpp>
 
 namespace eve
 {
@@ -61,7 +61,7 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/expmx2.cpp}
+//!  @godbolt{doc/math/expmx2.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto expmx2 = functor<expmx2_t>;

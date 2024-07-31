@@ -11,9 +11,9 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/cotpi.hpp>
-#include <eve/module/math/regular/deginrad.hpp>
-#include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/cotpi.hpp>
+#include <eve/module/math/deginrad.hpp>
+#include <eve/module/math/div_180.hpp>
 
 namespace eve
 {
@@ -78,7 +78,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cotd.cpp}
+//!  @godbolt{doc/math/cotd.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto cotd = functor<cotd_t>;

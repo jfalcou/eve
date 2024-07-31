@@ -12,10 +12,10 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/regular/hypot.hpp>
-#include <eve/module/math/regular/log.hpp>
-#include <eve/module/math/regular/log1p.hpp>
-#include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/hypot.hpp>
+#include <eve/module/math/log.hpp>
+#include <eve/module/math/log1p.hpp>
+#include <eve/module/math/reverse_horner.hpp>
 
 namespace eve
 {
@@ -79,7 +79,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asinh.cpp}
+//!  @godbolt{doc/math/asinh.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto asinh = functor<asinh_t>;

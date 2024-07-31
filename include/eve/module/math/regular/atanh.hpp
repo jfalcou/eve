@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/log1p.hpp>
+#include <eve/module/math/log1p.hpp>
 
 namespace eve
 {
@@ -74,7 +74,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/atanh.cpp}
+//!  @godbolt{doc/math/atanh.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto atanh = functor<atanh_t>;

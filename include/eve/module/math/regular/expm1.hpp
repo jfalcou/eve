@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/reverse_horner.hpp>
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 
@@ -68,7 +68,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/expm1.cpp}
+//!  @godbolt{doc/math/expm1.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto expm1 = functor<expm1_t>;

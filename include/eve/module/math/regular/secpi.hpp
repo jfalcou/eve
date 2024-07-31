@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/cospi.hpp>
+#include <eve/module/math/cospi.hpp>
 
 namespace eve
 {
@@ -82,7 +82,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/secpi.cpp}
+//!  @godbolt{doc/math/secpi.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto secpi = functor<secpi_t>;

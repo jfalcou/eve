@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/acos.hpp>
-#include <eve/module/math/regular/radinpi.hpp>
+#include <eve/module/math/acos.hpp>
+#include <eve/module/math/radinpi.hpp>
 
 namespace eve
 {
@@ -73,7 +73,7 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asecpi.cpp}
+//!  @godbolt{doc/math/asecpi.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto asecpi = functor<asecpi_t>;

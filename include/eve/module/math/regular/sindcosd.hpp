@@ -17,8 +17,8 @@
 #include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/regular/rempio2.hpp>
-#include <eve/module/math/regular/sinpicospi.hpp>
+#include <eve/module/math/rempio2.hpp>
+#include <eve/module/math/sinpicospi.hpp>
 
 namespace eve
 {
@@ -83,7 +83,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-\pi,\pi]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sindcosd.cpp}
+//!  @godbolt{doc/math/sindcosd.cpp}
 //!  @}
 //================================================================================================
  inline constexpr auto sindcosd = functor<sindcosd_t>;

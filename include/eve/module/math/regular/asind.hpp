@@ -10,8 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/asin.hpp>
-#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/asin.hpp>
+#include <eve/module/math/radindeg.hpp>
 
 namespace eve
 {
@@ -68,7 +68,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/asind.cpp}
+//!  @godbolt{doc/math/asind.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto asind = functor<asind_t>;

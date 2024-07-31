@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/pow.hpp>
+#include <eve/module/math/pow.hpp>
 
 namespace eve
 {
@@ -75,7 +75,7 @@ namespace eve
 //!     3. faster but less accurate call.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/pow1p.cpp}
+//!  @godbolt{doc/math/pow1p.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto pow1p = functor<pow1p_t>;

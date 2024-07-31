@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/exp.hpp>
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 
@@ -73,7 +73,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sech.cpp}
+//!  @godbolt{doc/math/sech.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto sech = functor<sech_t>;

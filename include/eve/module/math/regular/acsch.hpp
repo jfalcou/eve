@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/asinh.hpp>
+#include <eve/module/math/asinh.hpp>
 
 namespace eve
 {
@@ -69,7 +69,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/acsch.cpp}
+//!  @godbolt{doc/math/acsch.cpp}
 //!
 //!  @}
 //================================================================================================
@@ -114,7 +114,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/math/regular/acsch.cpp}
+//!  @godbolt{doc/math/acsch.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto acsch = functor<acsch_t>;

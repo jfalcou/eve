@@ -10,8 +10,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/tan.hpp>
-#include <eve/module/math/regular/atan.hpp>
+#include <eve/module/math/tan.hpp>
+#include <eve/module/math/atan.hpp>
 
 namespace eve
 {
@@ -73,7 +73,7 @@ namespace eve
 //!   *  [DLMF](https://dlmf.nist.gov/4.23#viii)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/agd.cpp}
+//!  @godbolt{doc/math/agd.cpp}
 //!  @}
 //======================================================================================================================
   inline constexpr auto agd = functor<agd_t>;

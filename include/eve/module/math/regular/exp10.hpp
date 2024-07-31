@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/reverse_horner.hpp>
+#include <eve/module/math/reverse_horner.hpp>
 #include <eve/module/math/constant/invlog10_2.hpp>
 #include <eve/module/math/constant/maxlog10.hpp>
 #include <eve/module/math/constant/minlog10.hpp>
@@ -70,7 +70,7 @@ namespace eve
 //!       * If the element is a `NaN`, `NaN` is returned
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/exp10.cpp}
+//!  @godbolt{doc/math/exp10.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto exp10 = functor<exp10_t>;

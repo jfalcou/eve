@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/regular/sinh.hpp>
-#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/sinh.hpp>
+#include <eve/module/math/exp.hpp>
 
 namespace eve
 {
@@ -66,7 +66,7 @@ namespace eve
 //!   2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sinhc.cpp}
+//!  @godbolt{doc/math/sinhc.cpp}
 //!
 //!  @}
 //================================================================================================

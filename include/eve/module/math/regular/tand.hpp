@@ -13,9 +13,9 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/regular/deginrad.hpp>
-#include <eve/module/math/regular/div_180.hpp>
-#include <eve/module/math/regular/tanpi.hpp>
+#include <eve/module/math/deginrad.hpp>
+#include <eve/module/math/div_180.hpp>
+#include <eve/module/math/tanpi.hpp>
 
 namespace eve
 {
@@ -79,7 +79,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/tand.cpp}
+//!  @godbolt{doc/math/tand.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto tand = functor<tand_t>;

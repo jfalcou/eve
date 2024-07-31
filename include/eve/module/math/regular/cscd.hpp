@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/sind.hpp>
+#include <eve/module/math/sind.hpp>
 
 namespace eve
 {
@@ -76,7 +76,7 @@ namespace eve
 //!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cscd.cpp}
+//!  @godbolt{doc/math/cscd.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto cscd = functor<cscd_t>;

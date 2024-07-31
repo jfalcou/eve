@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/exp.hpp>
 
 namespace eve
 {
@@ -73,7 +73,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/cosh.cpp}
+//!  @godbolt{doc/math/cosh.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto cosh = functor<cosh_t>;

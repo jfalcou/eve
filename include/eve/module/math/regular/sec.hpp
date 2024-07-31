@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/regular/cos.hpp>
+#include <eve/module/math/cos.hpp>
 
 namespace eve
 {
@@ -80,7 +80,7 @@ namespace eve
 //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Secant.html)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/math/regular/sec.cpp}
+//!  @godbolt{doc/math/sec.cpp}
 //!  @}
 //================================================================================================
   inline constexpr auto sec = functor<sec_t>;
