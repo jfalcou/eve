@@ -11,9 +11,9 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/cotpi.hpp>
-#include <eve/module/math/deginrad.hpp>
-#include <eve/module/math/div_180.hpp>
+#include <eve/module/math/regular/cotpi.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
+#include <eve/module/math/regular/div_180.hpp>
 
 namespace eve
 {

@@ -15,4 +15,4 @@ namespace eve
   EVE_MAKE_CALLABLE(rem_pio2_, rem_pio2);
 }
 
-#include <eve/module/math/impl/rem_pio2.hpp>
+#include <eve/module/math/regular/impl/rem_pio2.hpp>

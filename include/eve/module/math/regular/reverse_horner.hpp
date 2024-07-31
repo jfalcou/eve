@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/horner.hpp>
+#include <eve/module/math/regular/horner.hpp>
 
 namespace eve
 {

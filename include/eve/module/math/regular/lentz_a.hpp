@@ -77,4 +77,4 @@ inline constexpr auto lentz_a = functor<lentz_a_t>;
 
 }
 
-#include <eve/module/math/impl/lentz.hpp>
+#include <eve/module/math/regular/impl/lentz.hpp>

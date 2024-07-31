@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/radinpi.hpp>
-#include <eve/module/math/acsc.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
+#include <eve/module/math/regular/acsc.hpp>
 
 namespace eve
 {

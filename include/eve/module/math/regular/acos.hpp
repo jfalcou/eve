@@ -11,8 +11,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/asin.hpp>
-#include <eve/module/math/reverse_horner.hpp>
+#include <eve/module/math/regular/asin.hpp>
+#include <eve/module/math/regular/reverse_horner.hpp>
 
 namespace eve
 {

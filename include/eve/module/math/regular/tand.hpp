@@ -13,9 +13,9 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/decorator/trigo_tags.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
-#include <eve/module/math/deginrad.hpp>
-#include <eve/module/math/div_180.hpp>
-#include <eve/module/math/tanpi.hpp>
+#include <eve/module/math/regular/deginrad.hpp>
+#include <eve/module/math/regular/div_180.hpp>
+#include <eve/module/math/regular/tanpi.hpp>
 
 namespace eve
 {

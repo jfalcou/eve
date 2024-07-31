@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/reverse_horner.hpp>
+#include <eve/module/math/regular/reverse_horner.hpp>
 #include <eve/module/math/constant/invlog10_2.hpp>
 #include <eve/module/math/constant/maxlog10.hpp>
 #include <eve/module/math/constant/minlog10.hpp>

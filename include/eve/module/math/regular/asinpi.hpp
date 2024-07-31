@@ -10,8 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/asin.hpp>
-#include <eve/module/math/radinpi.hpp>
+#include <eve/module/math/regular/asin.hpp>
+#include <eve/module/math/regular/radinpi.hpp>
 
 namespace eve
 {

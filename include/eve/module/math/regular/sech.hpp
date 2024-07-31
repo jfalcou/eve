@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/exp.hpp>
+#include <eve/module/math/regular/exp.hpp>
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 

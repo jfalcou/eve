@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/cos.hpp>
+#include <eve/module/math/regular/cos.hpp>
 
 namespace eve
 {

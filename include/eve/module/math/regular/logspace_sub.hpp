@@ -9,10 +9,10 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/log_2.hpp>
-#include <eve/module/math/exp.hpp>
-#include <eve/module/math/expm1.hpp>
-#include <eve/module/math/log.hpp>
-#include <eve/module/math/log1p.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/expm1.hpp>
+#include <eve/module/math/regular/log.hpp>
+#include <eve/module/math/regular/log1p.hpp>
 
 namespace eve
 {

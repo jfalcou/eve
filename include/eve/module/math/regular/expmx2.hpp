@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/expx2.hpp>
+#include <eve/module/math/regular/expx2.hpp>
 
 namespace eve
 {

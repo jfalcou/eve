@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/sinpi.hpp>
+#include <eve/module/math/regular/sinpi.hpp>
 
 namespace eve
 {

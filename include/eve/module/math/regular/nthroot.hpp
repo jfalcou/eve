@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/pow_abs.hpp>
+#include <eve/module/math/regular/pow_abs.hpp>
 
 namespace eve
 {

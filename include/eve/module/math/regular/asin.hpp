@@ -14,9 +14,9 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/module/math/acos.hpp>
-#include <eve/module/math/radindeg.hpp>
-#include <eve/module/math/reverse_horner.hpp>
+#include <eve/module/math/regular/acos.hpp>
+#include <eve/module/math/regular/radindeg.hpp>
+#include <eve/module/math/regular/reverse_horner.hpp>
 namespace eve
 {
   template<typename Options>

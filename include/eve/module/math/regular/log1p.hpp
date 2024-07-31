@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/math/reverse_horner.hpp>
+#include <eve/module/math/regular/reverse_horner.hpp>
 
 namespace eve
 {

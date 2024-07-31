@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-#include <eve/module/math/exp.hpp>
-#include <eve/module/math/log1p.hpp>
+#include <eve/module/math/regular/exp.hpp>
+#include <eve/module/math/regular/log1p.hpp>
 #include <eve/traits/common_value.hpp>
 
 

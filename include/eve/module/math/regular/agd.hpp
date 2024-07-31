@@ -10,8 +10,8 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/tan.hpp>
-#include <eve/module/math/atan.hpp>
+#include <eve/module/math/regular/tan.hpp>
+#include <eve/module/math/regular/atan.hpp>
 
 namespace eve
 {
