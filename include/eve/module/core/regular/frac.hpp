@@ -79,9 +79,11 @@ namespace eve
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/modf)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Fractional_part)
 //!
-//! @}
 //================================================================================================
   inline constexpr auto frac = functor<frac_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {
