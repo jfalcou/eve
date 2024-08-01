@@ -69,9 +69,11 @@ namespace eve
 //! Returns a signle value read at the memory location specified by `ptr`. If `ptr` is
 //! equivalent to `nullptr`, the behavior is undefined.
 //!
-//!  @}
 //================================================================================================
   inline constexpr auto read = functor<read_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 }
 namespace eve::detail
 {
