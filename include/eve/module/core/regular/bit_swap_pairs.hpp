@@ -74,9 +74,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_swap_pairs.cpp}
+//================================================================================================
+  inline constexpr auto bit_swap_pairs = functor<bit_swap_pairs_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto bit_swap_pairs = functor<bit_swap_pairs_t>;
 
   namespace detail
   {
