@@ -26,11 +26,9 @@ namespace eve
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(interleave_shuffle_t, interleave_shuffle_);
-//================================================================================================
-  inline constexpr auto interleave_shuffle = functor<interleave_shuffle_t>;
-//================================================================================================
   };
 
+  inline constexpr auto interleave_shuffle = functor<interleave_shuffle_t>;
 
   namespace detail
   {

@@ -57,11 +57,9 @@ namespace eve
 //!  @}
 //================================================================================================
   EVE_MAKE_CALLABLE(rotate_, rotate);
-//================================================================================================
-  inline constexpr auto rotate_pattern = fix_pattern<N>(
-//================================================================================================
 
   template<std::ptrdiff_t M, std::ptrdiff_t N>
+  inline constexpr auto rotate_pattern = fix_pattern<N>(
     [](auto i, auto) {
       if (i < N - M) return M + i;
       else           return i + M - N;
