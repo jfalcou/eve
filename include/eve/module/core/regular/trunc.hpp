@@ -87,9 +87,11 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/trunc)
-//! @}
 //================================================================================================
   inline constexpr auto trunc = functor<trunc_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/regular/impl/trunc.hpp>
