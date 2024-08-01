@@ -74,9 +74,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_negative.cpp}
+//================================================================================================
+  inline constexpr auto is_negative = functor<is_negative_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto is_negative = functor<is_negative_t>;
 
   namespace detail
   {

@@ -33,7 +33,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
     {
-  //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_equal] simd tolerance requires at least one simd parameter." );
+//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_equal] simd tolerance requires at least one simd parameter." );
     return EVE_DISPATCH_CALL(a, b);
     }
 
@@ -97,10 +97,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_equal.cpp}
-//!
-//! @}
 //================================================================================================
   inline constexpr auto is_equal = functor<is_equal_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {
