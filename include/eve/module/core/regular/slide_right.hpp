@@ -19,15 +19,17 @@
 namespace eve
 {
 EVE_MAKE_CALLABLE(slide_right_, slide_right);
+//================================================================================================
+  inline constexpr auto slide_right_pattern = fix_pattern<N>([](auto i, auto)
+//================================================================================================
 
 template<std::ptrdiff_t Shift, std::ptrdiff_t N>
-inline constexpr auto slide_right_pattern = fix_pattern<N>([](auto i, auto)
                                                            { return i < Shift ? na_ : i - Shift; });
 
 namespace detail
 {
-  //==============================================================================================
-  // Classify a pattern as a slide_right
+//==============================================================================================
+// Classify a pattern as a slide_right
   template<std::ptrdiff_t... I>
   inline constexpr std::ptrdiff_t is_slide_right = []()
   {
