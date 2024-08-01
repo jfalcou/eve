@@ -22,9 +22,11 @@ namespace eve
     constexpr EVE_FORCEINLINE V operator()(V v, I i) const noexcept { return EVE_DISPATCH_CALL(v,i); }
 
     EVE_CALLABLE_OBJECT(lookup_t, lookup_);
+//================================================================================================
+  inline constexpr auto lookup = functor<lookup_t>;
+//================================================================================================
   };
 
-  inline constexpr auto lookup = functor<lookup_t>;
 }
 
 #include <eve/module/core/regular/impl/lookup.hpp>

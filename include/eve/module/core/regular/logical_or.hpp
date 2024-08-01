@@ -77,9 +77,11 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/logical_or.cpp}
+//================================================================================================
+  inline constexpr auto logical_or = functor<logical_or_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto logical_or = functor<logical_or_t>;
 
   namespace detail
   {
