@@ -4,16 +4,13 @@
 
 int main()
 {
-  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
-  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wf0 = {-1.0f, 2.3f, 45000.7f, -64768.6f};
+  eve::wide wi0 = {-1l, 2l, -3l, eve::valmax(eve::as<std::int64_t>())};
 
+
+  std::cout << "<- wf0                   = " << wf0 << "\n";
   std::cout << "<- wi0                   = " << wi0 << "\n";
-  std::cout << "<- wu0                   = " << wu0 << "\n";
-                                         
+
   std::cout << "-> saturate(wf0, as(wu)) = " << eve::saturate(wf0, eve::as<std::int16_t>()) << "\n";
-  std::cout << "-> saturate(wf, as(wu0)) = " << eve::saturate(wf, eve::as<std::int16_t>()) << "\n";
-  std::cout << "-> saturate(wi, as(wu0)) = " << eve::saturate(wi, eve::as<std::int16_t>()) << "\n";
-  std::cout << "-> saturate(wu0, as(wi)) = " << eve::saturate(wu0, eve::as<std::int16_t>()) << "\n";
-  std::cout << "-> saturate(wi0, as(wu)) = " << eve::saturate(wi0, eve::as<std::int16_t>()) << "\n";
-  std::cout << "-> saturate(wu, as(wi0)) = " << eve::saturate(wu, eve::as<std::int16_t>()) << "\n";
+  std::cout << "-> saturate(wi, as(wu0)) = " << eve::saturate(wi0, eve::as<std::int16_t>()) << "\n";
 }

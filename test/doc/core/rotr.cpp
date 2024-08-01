@@ -4,13 +4,13 @@
 
 int main()
 {
-  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
-  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::cout << "<- wi0                            = " << wi0 << "\n";
-  std::cout << "<- wi1                            = " << wi1 << "\n";
-                                                  
-  std::cout << "-> rotr(wi0, wi1)                 = " << eve::rotr(wi0, wi1) << "\n";
-  std::cout << "-> rotr[ignore_last(2)](wi0, wi1) = " << eve::rotr[eve::ignore_last(2)](wi0, wi1) << "\n";
-  std::cout << "-> rotr[wi0 != 0](wi0, wi1)       = " << eve::rotr[wi0 != 0](wi0, wi1) << "\n";
+  std::cout << "<- wu0                            = " << wu0 << "\n";
+  std::cout << "<- wu1                            = " << wu1 << "\n";
+
+  std::cout << "-> rotr(wu0, wu1)                 = " << eve::rotr(wu0, wu1) << "\n";
+  std::cout << "-> rotr[ignore_last(2)](wu0, wu1) = " << eve::rotr[eve::ignore_last(2)](wu0, wu1) << "\n";
+  std::cout << "-> rotr[wu0 != 0](wu0, wu1)       = " << eve::rotr[wu0 != 0](wu0, wu1) << "\n";
 }

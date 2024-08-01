@@ -4,6 +4,8 @@
 
 int main()
 {
+  auto nz =  [](auto z){ return eve::if_else(eve::is_eqz(z), eve::one(eve::as(z)), z); };
+
   eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
   eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
   eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
@@ -17,7 +19,7 @@ int main()
   std::cout << "<- wi1                           = " << wi1 << "\n";
   std::cout << "<- wu0                           = " << wu0 << "\n";
   std::cout << "<- wu1                           = " << wu1 << "\n";
-                                                 
+
   std::cout << "-> rem(wf0, wf1)                 = " << eve::rem(wf0, wf1) << "\n";
   std::cout << "-> rem[ignore_last(2)](wf0, wf1) = " << eve::rem[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> rem[wf0 != 0](wf0, wf1)       = " << eve::rem[wf0 != 0](wf0, wf1) << "\n";
