@@ -90,9 +90,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/ceil.cpp}
+//================================================================================================
+  inline constexpr auto ceil = functor<ceil_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto ceil = functor<ceil_t>;
 }
 
 #include <eve/module/core/regular/impl/ceil.hpp>
