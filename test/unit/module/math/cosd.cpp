@@ -44,8 +44,6 @@ TTS_CASE_WITH("Check behavior of cosd on wide",
   auto ref  = [](auto e) -> v_t { return eve::cospi(double(e / 180.0l)); };
 
   TTS_ULP_EQUAL(cosd[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cosd[eve::half_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cosd[eve::half_circle](a1), map(ref, a1), 30);
   TTS_ULP_EQUAL(cosd(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(cosd(a1), map(ref, a1), 30);
   TTS_ULP_EQUAL(cosd(a2), map(ref, a2), 420);
@@ -57,9 +55,17 @@ TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::cosd(T(1)), T(0.9998476951563912391570115588139148516927403105832), 0.5);
   TTS_ULP_EQUAL(eve::cosd(T(-1)), T(0.9998476951563912391570115588139148516927403105832), 0.5);
   TTS_ULP_EQUAL(eve::cosd(T(45.0)), T(0.70710678118654752440084436210484903928483593768847), 0.5);
-  TTS_ULP_EQUAL(eve::cosd(-T(45.0)), T(0.70710678118654752440084436210484903928483593768847), 0.5);
+  TTS_ULP_EQUAL(eve::cosd(T(-45.0)), T(0.70710678118654752440084436210484903928483593768847), 0.5);
+  TTS_ULP_EQUAL(eve::cosd(T(135.0)), T(-0.70710678118654752440084436210484903928483593768847), 0.5);
+  TTS_ULP_EQUAL(eve::cosd(T(-135.0)), T(-0.70710678118654752440084436210484903928483593768847), 0.5);
   TTS_ULP_EQUAL(eve::cosd(T(-500.0)), T(-0.7660444431189780352023926505554166739358324570804), 3.5);
   TTS_ULP_EQUAL(eve::cosd(T(500.0)), T(-0.7660444431189780352023926505554166739358324570804), 3.5);
+
+  eve::wide wf = {22.5, 45.0, 67.5, 90.0, 112.5, 157.5, 180.0, 202.5};
+  TTS_RELATIVE_EQUAL(eve::cosd(wf), eve::cos(eve::deginrad(wf)), 0.01);
+
+
+
 };
 
 

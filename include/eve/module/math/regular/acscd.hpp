@@ -25,7 +25,7 @@ namespace eve
     EVE_CALLABLE_OBJECT(acscd_t, acscd_);
 };
 
-//======================================================================================================================
+//================================================================================================
 //! @addtogroup math_invtrig
 //! @{
 //!   @var acscd
@@ -46,8 +46,8 @@ namespace eve
 //!      constexpr auto acscd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acscd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto acscd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto acscd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto acscd[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -70,9 +70,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acscd.cpp}
-//!  @}
-//======================================================================================================================
+//================================================================================================
   inline constexpr auto acscd = functor<acscd_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

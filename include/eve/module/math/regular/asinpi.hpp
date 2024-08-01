@@ -45,8 +45,8 @@ namespace eve
 //!      constexpr auto asinpi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto asinpi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto asinpi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto asinpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto asinpi[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -68,9 +68,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asinpi.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto asinpi = functor<asinpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

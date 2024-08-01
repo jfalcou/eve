@@ -61,7 +61,6 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!
 //! **Parameters**
 //!
 //!    * `x`, `...xs`: [real](@ref value) arguments.
@@ -82,13 +81,14 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
-
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/hypot.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto hypot = functor<hypot_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

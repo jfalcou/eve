@@ -43,8 +43,8 @@ namespace eve
 //!      constexpr auto acotd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto acotd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto acotd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto acotd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto acotd[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -66,10 +66,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acotd.cpp}
+//================================================================================================
+  inline constexpr auto acotd = functor<acotd_t>;
+//================================================================================================
 //!  @}
 //================================================================================================
-
-  inline constexpr auto acotd = functor<acotd_t>;
 
   namespace detail
   {

@@ -46,8 +46,8 @@ namespace eve
 //!      constexpr auto atanpi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto atanpi[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto atanpi[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto atanpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto atanpi[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -69,9 +69,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/atanpi.cpp}
-//!  @}
 //================================================================================================
  inline constexpr auto atanpi = functor<atanpi_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

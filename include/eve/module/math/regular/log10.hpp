@@ -43,7 +43,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto log10(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto log10(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
 //!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2
@@ -74,9 +74,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/log10.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto log10 = functor<log10_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

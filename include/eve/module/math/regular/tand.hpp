@@ -20,8 +20,7 @@
 namespace eve
 {
   template<typename Options>
-  struct tand_t : elementwise_callable<tand_t, Options, quarter_circle_option, half_circle_option,
-                                        full_circle_option, medium_option, big_option>
+  struct tand_t : elementwise_callable<tand_t, Options, quarter_circle_option>
   {
     template<eve::floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -55,9 +54,7 @@ namespace eve
 //!      constexpr auto tand[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto tand[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto tand[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto tand[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto tand[quarter_circle](floating_value auto x)          noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -73,26 +70,29 @@ namespace eve
 //!         * If the element is \f$\pm\infty\f$, Nan is returned.
 //!         * If the element is a `NaN`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-90,  90]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
+//!    3. Assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/tand.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto tand = functor<tand_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T tand_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
-                   ||  O::contains(medium2) || O::contains(big2))
+      if constexpr(O::contains(quarter_circle2))
       {
-        auto x      = eve::abs(a0);
+        return tanpi[eve::quarter_circle](div_180(a0));
+      }
+      else
+      {
+        auto x = eve::abs(a0);
+        if( eve::all(x <= T(45)) ) return tand[eve::quarter_circle2](a0);
         auto a0_180 = div_180(a0);
         auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as(a0_180)));
         if constexpr( scalar_value<T> )
@@ -104,16 +104,6 @@ namespace eve
           x = if_else(test, eve::allbits, x);
         auto [fn, xr, dxr] = rem180(x);
         return tan_finalize(deginrad(a0), fn, xr, dxr);
-      }
-      else if constexpr(O::contains(quarter_circle2))
-      {
-        return tanpi[eve::quarter_circle](div_180(a0));
-      }
-      else
-      {
-        auto x = abs(a0);
-        if( eve::all(eve::abs(x) <= T(45)) ) return tand[eve::quarter_circle2](a0);
-        else return tand[big2](a0);
       }
     }
   }

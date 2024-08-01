@@ -12,6 +12,4 @@ int main()
 
   std::cout << "-> sinpicospi(wf)                = " << eve::sinpicospi(wf) << "\n";
   std::cout << "-> sinpicospi[quarter_circle](wf)= " << eve::sinpicospi[eve::quarter_circle](wf) << "\n";
-  std::cout << "-> sinpicospi[half_circle](wf)   = " << eve::sinpicospi[eve::half_circle](wf) << "\n";
-  std::cout << "-> sinpicospi[full_circle](wf)   = " << eve::sinpicospi[eve::full_circle](wf) << "\n";
 }

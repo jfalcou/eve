@@ -52,14 +52,6 @@ TTS_CASE_WITH("Check behavior of cos on wide",
     TTS_ULP_EQUAL(c, map(refc, a0), 2);
   }
   {
-    auto [s, c] =  sinpicospi[eve::half_circle2](a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
-    auto [s1, c1] = sinpicospi[eve::half_circle2](a1);
-    TTS_ULP_EQUAL(s1, map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1, map(refc, a1), 2);
-  }
-  {
     auto [s, c] = sinpicospi(a0);
     TTS_ULP_EQUAL(s, map(refs, a0), 2);
     TTS_ULP_EQUAL(c, map(refc, a0), 2);

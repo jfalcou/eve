@@ -46,8 +46,8 @@ namespace eve
 //!      constexpr auto gd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto gd[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto gd[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto gd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto gd[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -68,9 +68,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/gd.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto gd = functor<gd_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

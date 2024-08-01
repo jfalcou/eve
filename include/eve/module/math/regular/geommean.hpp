@@ -63,7 +63,6 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!
 //! **Parameters**
 //!
 //!     * `x`, `...xs`: [real](@ref value) arguments.
@@ -79,9 +78,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/geommean.cpp}
+//================================================================================================
+  inline constexpr auto geommean = functor<geommean_t>;
+//================================================================================================
 //!  @}
 //================================================================================================
- inline constexpr auto geommean = functor<geommean_t>;
 
   namespace detail
   {

@@ -18,8 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct cotd_t : elementwise_callable<cotd_t, Options, quarter_circle_option, half_circle_option,
-                                        full_circle_option, medium_option, big_option>
+  struct cotd_t : elementwise_callable<cotd_t, Options, quarter_circle_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -52,9 +51,7 @@ namespace eve
 //!      constexpr auto cotd[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto cotd[quarter_circle](floating_value auto x)          noexcept; // 3.a
-//!      constexpr auto cotd[half_circle](floating_value auto x)             noexcept; // 3.b
-//!      constexpr auto cotd[full_circle](floating_value auto x)             noexcept; // 3.c
+//!      constexpr auto cotd[quarter_circle](floating_value auto x)          noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -72,16 +69,15 @@ namespace eve
 //!         * If the element is \f$\pm\infty\f$, Nan is returned.
 //!         * If the element is a `Nan`, `Nan` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. These are optimized calls providing a balance between speed and range limitation.
-//!        1. assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
-//!        2. assumes that the inputs elements  belong to \f$[-90,  90]\f$ and return NaN outside.
-//!        3. assumes that the inputs elements  belong to \f$[-180, 180]\f$ and return NaN outside.
+//!    3. Assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/cotd.cpp}
-//!  @}
 //================================================================================================
   inline constexpr auto cotd = functor<cotd_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {
@@ -105,9 +101,9 @@ namespace eve
             if_else(is_not_less_equal(x, T(45)), eve::allbits, rec[pedantic2](tancot_eval(deginrad(a0)))));
         }
       }
-      else if constexpr(O::contains(half_circle2) || O::contains(full_circle2)
-                   ||  O::contains(medium2) || O::contains(big2))
+      else
       {
+        if( eve::all(x <= T(45)) ) return cotd[quarter_circle2](a0);
         T    a0_180 = div_180(a0);
         auto test   = is_nez(a0_180) && is_flint(a0_180);
         if constexpr( scalar_value<T> ) // early return for nans in scalar case
@@ -117,13 +113,6 @@ namespace eve
         else { x = if_else(test, eve::allbits, x); }
         auto [fn, xr, dxr] = rem180(x);
         return cot_finalize(deginrad(a0), fn, xr, dxr);
-      }
-      else
-      {
-        if( eve::all(eve::abs(x) <= T(45)) )
-          return cotd[quarter_circle2](a0);
-        else
-          return cotd[big2](a0);
       }
     }
   }

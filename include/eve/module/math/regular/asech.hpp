@@ -43,11 +43,11 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto asech(floating_value auto x)                         noexcept; // 1
+//!      constexpr auto asech(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto asech[conditional_expr auto c](floating_value auto x) noexcept; // 2.1
-//!      constexpr auto asech[logical_value auto m](floating_value auto x)    noexcept; // 2.2
+//!      constexpr auto asech[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto asech[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -69,9 +69,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asech.cpp}
-//!  @}
-//======================================================================================================================
+//================================================================================================
   inline constexpr auto asech = functor<asech_t>;
+//================================================================================================
+//!  @}
+//================================================================================================
 
   namespace detail
   {

@@ -62,12 +62,13 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/math/div_180.cpp}
+//================================================================================================
+  inline constexpr auto div_180 = functor<div_180_t>;
+//================================================================================================
 //!  @}
 //================================================================================================
 
-  inline constexpr auto div_180 = functor<div_180_t>;
 
   namespace detail
   {
