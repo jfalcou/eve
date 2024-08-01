@@ -85,9 +85,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/maxmag.cpp}
+//================================================================================================
+  inline constexpr auto maxmag = functor<maxmag_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto maxmag = functor<maxmag_t>;
 }
 
 #include <eve/module/core/regular/impl/maxmag.hpp>

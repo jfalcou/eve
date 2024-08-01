@@ -84,9 +84,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minabs.cpp}
+//================================================================================================
+  inline constexpr auto minabs = functor<minabs_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto minabs = functor<minabs_t>;
 }
 
 #include <eve/module/core/regular/impl/minabs.hpp>

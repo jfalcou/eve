@@ -83,9 +83,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minmag.cpp}
+//================================================================================================
+  inline constexpr auto minmag = functor<minmag_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto minmag = functor<minmag_t>;
 }
 
 #include <eve/module/core/regular/impl/minmag.hpp>
