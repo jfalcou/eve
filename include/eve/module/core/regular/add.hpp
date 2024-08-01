@@ -87,11 +87,13 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/add.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto add = functor<add_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
-  // Required for optimisation detections
+// Required for optimisation detections
   using callable_add_ = tag_t<add>;
 }
 
