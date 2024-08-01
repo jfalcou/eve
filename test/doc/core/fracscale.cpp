@@ -4,8 +4,9 @@
 
 int main()
 {
-  eve::wide<float> wf0( [](auto i, auto) { return 1.2345678+i; } );
-  eve::wide<std::uint32_t>  wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wf0(0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f);
+  wf0+= 1.2345678;
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
   std::cout << "<- wf0                                       = " << wf0 << "\n";
   std::cout << "<- wu0                                       = " << wu0 << "\n";
