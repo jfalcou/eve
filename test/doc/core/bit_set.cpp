@@ -4,13 +4,18 @@
 
 int main()
 {
-  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
-  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide pi = {1, 3, 7, 15, 31, 63, 127, 255};
 
-  std::cout << "<- wi0                               = " << wi0 << "\n";
-  std::cout << "<- wi1                               = " << wi1 << "\n";
-                                                     
-  std::cout << "-> bit_set(wi0, wi1)                 = " << eve::bit_set(wi0, wi1) << "\n";
-  std::cout << "-> bit_set[ignore_last(2)](wi0, wi1) = " << eve::bit_set[eve::ignore_last(2)](wi0, wi1) << "\n";
-  std::cout << "-> bit_set[wi0 != 0](wi0, wi1)       = " << eve::bit_set[wi0 != 0](wi0, wi1) << "\n";
+  std::cout << "<- pi                      = " << pi << '\n';
+  std::cout << "-> bit_set(pi, 1)          = " << eve::bit_set(pi, 1) << '\n';
+  std::cout << "-> bit_set(pi, 2)          = " << eve::bit_set(pi, 2) << '\n';
+  std::cout << "-> bit_set(pi, 3)          = " << eve::bit_set(pi, 3) << '\n';
+  std::cout << "-> bit_set(pi, 4)          = " << eve::bit_set(pi, 4) << '\n';
+  std::cout << "-> bit_set(pi, 8)          = " << eve::bit_set(pi, 8) << '\n';
+  std::cout << "-> bit_set[pi > 15](pi, 1) = " << eve::bit_set[pi > 15](pi, 1) << '\n';
+  std::cout << "-> bit_set[pi > 15](pi, 2) = " << eve::bit_set[pi > 15](pi, 2) << '\n';
+  std::cout << "-> bit_set[pi > 15](pi, 3) = " << eve::bit_set[pi > 15](pi, 3) << '\n';
+  std::cout << "-> bit_set[pi > 15](pi, 4) = " << eve::bit_set[pi > 15](pi, 4) << '\n';
+  std::cout << "-> bit_set[pi > 15](pi, 8) = " << eve::bit_set[pi > 15](pi, 8) << '\n';
+
 }
