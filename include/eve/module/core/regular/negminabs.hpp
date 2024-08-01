@@ -84,9 +84,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/negminabs.cpp}
+//================================================================================================
+  inline constexpr auto negminabs = functor<negminabs_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto negminabs = functor<negminabs_t>;
 }
 
 #include <eve/module/core/regular/impl/negminabs.hpp>

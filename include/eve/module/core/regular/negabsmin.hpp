@@ -88,9 +88,11 @@ namespace eve
 //!
 //!  @godbolt{doc/core/negabsmin.cpp}
 //!
+//================================================================================================
+  inline constexpr auto negabsmin = functor<negabsmin_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto negabsmin = functor<negabsmin_t>;
 }
 
 #include <eve/module/core/regular/impl/negabsmin.hpp>
