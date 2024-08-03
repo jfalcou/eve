@@ -86,6 +86,7 @@
 #include <eve/module/math/regular/secd.hpp>
 #include <eve/module/math/regular/sech.hpp>
 #include <eve/module/math/regular/secpi.hpp>
+#include <eve/module/math/regular/sigmoid.hpp>
 #include <eve/module/math/regular/significants.hpp>
 #include <eve/module/math/regular/sin.hpp>
 #include <eve/module/math/regular/sinc.hpp>
