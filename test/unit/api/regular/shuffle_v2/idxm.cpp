@@ -39,10 +39,11 @@ TTS_CASE("are_below_ignoring_specials")
   test(std::array {we_, we_}, 1, true);
 };
 
-TTS_CASE("upscale_pattern") {
+TTS_CASE("upscale_pattern")
+{
   auto yes_test = [](auto _in, auto _expected)
   {
-    auto in     = to_idxs(_in);
+    auto in       = to_idxs(_in);
     auto expected = to_idxs(_expected);
 
     auto actual = eve::detail::idxm::upscale_pattern(in);
@@ -59,18 +60,17 @@ TTS_CASE("upscale_pattern") {
     TTS_EXPECT_NOT(actual);
   };
 
-  yes_test(std::array{0, 1, 2, 3}, std::array{0, 1});
-  yes_test(std::array{2, 3, 0, 1}, std::array{1, 0});
-  yes_test(std::array{2, 3, 2, 3}, std::array{1, 1});
-  yes_test(std::array{2, 3, we_, 1}, std::array{1, 0});
-  yes_test(std::array{2, 3, na_, na_}, std::array{1, na_});
-  yes_test(std::array{2, 3, we_, we_}, std::array{1, we_});
+  yes_test(std::array {0, 1, 2, 3}, std::array {0, 1});
+  yes_test(std::array {2, 3, 0, 1}, std::array {1, 0});
+  yes_test(std::array {2, 3, 2, 3}, std::array {1, 1});
+  yes_test(std::array {2, 3, we_, 1}, std::array {1, 0});
+  yes_test(std::array {2, 3, na_, na_}, std::array {1, na_});
+  yes_test(std::array {2, 3, we_, we_}, std::array {1, we_});
 
-  no_test(std::array{na_, 1, 2, 3});
-  no_test(std::array{1, 0, 2, 3});
-  no_test(std::array{0, 1, 3, 2});
+  no_test(std::array {na_, 1, 2, 3});
+  no_test(std::array {1, 0, 2, 3});
+  no_test(std::array {0, 1, 3, 2});
 };
-
 
 TTS_CASE("to_pattern")
 {
@@ -723,6 +723,83 @@ TTS_CASE("is_blend")
   test(std::array {4, 5, 2, 3}, 2, false);
 };
 
+TTS_CASE("extract_blends")
+{
+  using eve::detail::idxm::extracted_blends_info;
+  auto test = []<std::size_t NumRegs, std::size_t N>(std::array<int, N>                idxs,
+                                                     std::ptrdiff_t                    cardinal,
+                                                     extracted_blends_info<NumRegs, N> expected)
+  {
+    extracted_blends_info<NumRegs, N> actual =
+        eve::detail::idxm::extract_blends<NumRegs>(to_idxs(idxs), cardinal);
+
+    TTS_EQUAL(expected.finished_pattern, actual.finished_pattern, REQUIRED);
+    TTS_EQUAL(expected.zeroes.present_in_blend, actual.zeroes.present_in_blend, REQUIRED);
+    TTS_EQUAL(expected.zeroes.present_in_shuffle, actual.zeroes.present_in_shuffle, REQUIRED);
+
+    for( std::size_t i = 0; i != NumRegs; ++i )
+    {
+      const auto& e = expected.register_blends[i];
+      const auto& a = actual.register_blends[i];
+
+      TTS_EQUAL(e.idxs, a.idxs, REQUIRED);
+      TTS_EQUAL(e.present_in_blend, a.present_in_blend, REQUIRED) << tts::as_string(idxs);
+      TTS_EQUAL(e.present_in_shuffle, a.present_in_shuffle, REQUIRED) << tts::as_string(idxs);
+    }
+  };
+
+  test(std::array {0, 0, 1, 3},
+       4,
+       extracted_blends_info<1, 4> {.finished_pattern = {we_, 0, 1, we_},
+                                    .zeroes           = {},
+                                    .register_blends  = {{true, true, {1, 0, 0, 1}}}});
+  test(std::array {0, na_, na_, 3},
+       4,
+       extracted_blends_info<1, 4> {.finished_pattern = {we_, we_, we_, we_},
+                                    .zeroes           = {true, false, {0, 1, 1, 0}},
+                                    .register_blends  = {{true, false, {1, 0, 0, 1}}}});
+
+  test(std::array {0, 5, 2, 7},
+       4,
+       extracted_blends_info<2, 4> {
+           .finished_pattern = {we_, we_, we_, we_},
+           .zeroes           = {},
+           .register_blends  = {{{true, false, {1, 0, 1, 0}}, {true, false, {0, 1, 0, 1}}}}});
+
+  test(std::array {0, 2, 5, 7},
+       4,
+       extracted_blends_info<2, 4> {
+           .finished_pattern = {we_, 2, 5, we_},
+           .zeroes           = {},
+           .register_blends  = {{{true, true, {1, 0, 0, 0}}, {true, true, {0, 0, 0, 1}}}}});
+
+  test(std::array {0, 2, 5, 11},
+       4,
+       extracted_blends_info<3, 4> {.finished_pattern = {we_, 2, 5, we_},
+                                    .zeroes           = {},
+                                    .register_blends  = {{{true, true, {1, 0, 0, 0}},
+                                                          {false, true, {0, 0, 0, 0}},
+                                                          {true, false, {0, 0, 0, 1}}}}});
+
+  // offsets fixup, no first
+  test(std::array {0, 1, 5, 11},
+       4,
+       extracted_blends_info<3, 4> {.finished_pattern = {we_, we_, 1, we_},
+                                    .zeroes           = {},
+                                    .register_blends  = {{{true, false, {1, 1, 0, 0}},
+                                                          {false, true, {0, 0, 0, 0}},
+                                                          {true, false, {0, 0, 0, 1}}}}});
+
+  // offsets, no first 2
+  test(std::array {11, 1, 5, 3},
+       4,
+       extracted_blends_info<3, 4> {.finished_pattern = {7, we_, 1, we_},
+                                    .zeroes           = {},
+                                    .register_blends  = {{{true, false, {0, 1, 0, 1}},
+                                                          {false, true, {0, 0, 0, 0}},
+                                                          {false, true, {0, 0, 0, 0}}}}});
+};
+
 TTS_CASE("expand_group")
 {
   auto test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _expected)
@@ -829,14 +906,13 @@ TTS_CASE("is_slide_left2")
   test(std::array {2, we_, 3, 16}, 16, -1);
 };
 
-
 TTS_CASE("slide_as_slide2_with_0")
 {
   auto yes_test = [](auto _in, auto _expected)
   {
-    auto in     = to_idxs(_in);
+    auto in       = to_idxs(_in);
     auto expected = to_idxs(_expected);
-    auto actual = eve::detail::idxm::slide_as_slide2_with_0(in);
+    auto actual   = eve::detail::idxm::slide_as_slide2_with_0(in);
     TTS_EXPECT(actual) << tts::as_string(in);
     TTS_EQUAL(expected, *actual) << tts::as_string(in);
   };
@@ -849,10 +925,10 @@ TTS_CASE("slide_as_slide2_with_0")
     TTS_EXPECT_NOT(actual);
   };
 
-  yes_test(std::array {0, 1, 2, 3}, std::array{0, 1, 2, 3});
-  yes_test(std::array {1, 2, 3, na_}, std::array{1, 2, 3, 4});
-  yes_test(std::array {na_, 0, 1, 2}, std::array{7, 0, 1, 2});
-  yes_test(std::array {na_, na_, 0, 1}, std::array{6, 7, 0, 1});
+  yes_test(std::array {0, 1, 2, 3}, std::array {0, 1, 2, 3});
+  yes_test(std::array {1, 2, 3, na_}, std::array {1, 2, 3, 4});
+  yes_test(std::array {na_, 0, 1, 2}, std::array {7, 0, 1, 2});
+  yes_test(std::array {na_, na_, 0, 1}, std::array {6, 7, 0, 1});
 
   no_test(std::array {na_, na_, 1, 2});
   no_test(std::array {1, 2, na_, na_});
@@ -923,10 +999,11 @@ TTS_CASE("add shuffle levels")
   TTS_EQUAL(7, add(eve::index<4>, eve::index<3>, eve::index<1>));
 };
 
-TTS_CASE("group_within_group") {
+TTS_CASE("group_within_group")
+{
   auto yes_test = []<std::ptrdiff_t G>(auto _in, eve::fixed<G>, auto _s0, auto _s1)
   {
-    auto in     = to_idxs(_in);
+    auto in = to_idxs(_in);
     auto s0 = to_idxs(_s0);
     auto s1 = to_idxs(_s1);
 
@@ -948,10 +1025,18 @@ TTS_CASE("group_within_group") {
   yes_test(std::array {3, 2, 0, 1}, eve::lane<2>, std::array {0, 1, 3, 2}, std::array {2, 3, 0, 1});
   yes_test(std::array {3, 2, 0, 1}, eve::lane<4>, std::array {3, 2, 0, 1}, std::array {0, 1, 2, 3});
   yes_test(std::array {3, 2, 0, 1}, eve::lane<1>, std::array {0, 1, 2, 3}, std::array {3, 2, 0, 1});
-  yes_test(std::array {3, 2, na_, 1}, eve::lane<2>, std::array {na_, 1, 3, 2}, std::array {2, 3, 0, 1});
-  yes_test(std::array {3, 2, na_, na_}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, na_, na_});
-  yes_test(std::array {3, 2, we_, we_}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, we_, we_});
-  yes_test(std::array {3, 2, 3, 2}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, 2, 3});
+  yes_test(
+      std::array {3, 2, na_, 1}, eve::lane<2>, std::array {na_, 1, 3, 2}, std::array {2, 3, 0, 1});
+  yes_test(std::array {3, 2, na_, na_},
+           eve::lane<2>,
+           std::array {we_, we_, 3, 2},
+           std::array {2, 3, na_, na_});
+  yes_test(std::array {3, 2, we_, we_},
+           eve::lane<2>,
+           std::array {we_, we_, 3, 2},
+           std::array {2, 3, we_, we_});
+  yes_test(
+      std::array {3, 2, 3, 2}, eve::lane<2>, std::array {we_, we_, 3, 2}, std::array {2, 3, 2, 3});
   yes_test(std::array {3, 2, 6, 7, 6, 7, 0, 1},
            eve::lane<2>,
            std::array {0, 1, 3, 2, we_, we_, 6, 7},
@@ -960,17 +1045,19 @@ TTS_CASE("group_within_group") {
            eve::lane<4>,
            std::array {we_, we_, we_, we_, 7, na_, na_, na_},
            std::array {4, 5, 6, 7, na_, na_, na_, na_});
-  yes_test(
-    std::array{1, 1, 2, 3, 4, 5, 6, 7, 8},
-    eve::lane<1>,
-    std::array{-2, 1, 2, 3, 4, 5, 6, 7, 8},
-    std::array{1, 1, 2, 3, 4, 5, 6, 7, 8}
-  );
+  yes_test(std::array {1, 1, 2, 3, 4, 5, 6, 7, 8},
+           eve::lane<1>,
+           std::array {-2, 1, 2, 3, 4, 5, 6, 7, 8},
+           std::array {1, 1, 2, 3, 4, 5, 6, 7, 8});
 
   // group then in group
   yes_test(std::array {3, 2, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, 0, 2, 3});
-  yes_test(std::array {3, we_, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, we_, 2, 3});
-  yes_test(std::array {3, we_, na_, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, we_, na_, 3});
+  yes_test(
+      std::array {3, we_, 2, 3}, eve::lane<2>, std::array {2, 3, 2, 3}, std::array {1, we_, 2, 3});
+  yes_test(std::array {3, we_, na_, 3},
+           eve::lane<2>,
+           std::array {2, 3, 2, 3},
+           std::array {1, we_, na_, 3});
   yes_test(std::array {6, na_, na_, na_, 7, na_, na_, na_},
            eve::lane<4>,
            std::array {4, 5, 6, 7, 4, 5, 6, 7},

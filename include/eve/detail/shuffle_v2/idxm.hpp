@@ -156,7 +156,7 @@ upscale_pattern(std::span<const std::ptrdiff_t, N> idxs)
           res[i] = na_;
           continue;
         }
-        return res_t{};
+        return res_t {};
       }
 
       if( i0 == we_ && i1 == we_ )
@@ -168,12 +168,12 @@ upscale_pattern(std::span<const std::ptrdiff_t, N> idxs)
       if( i0 == we_ ) i0 = i1 - 1;
       if( i1 == we_ ) i1 = i0 + 1;
 
-      if( i0 + 1 != i1 || i0 % 2 != 0 ) return res_t{};
+      if( i0 + 1 != i1 || i0 % 2 != 0 ) return res_t {};
 
       res[i] = i0 / 2;
     }
 
-    return res_t{res};
+    return res_t {res};
   }
 }
 
@@ -249,16 +249,18 @@ constexpr bool
 shuffle_within_n(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t n)
 {
   const std::ptrdiff_t ssize = std::ssize(idxs);
-  if (ssize % n) return false;
+  if( ssize % n ) return false;
 
-  for (std::ptrdiff_t part = 0; part != ssize; part += n) {
+  for( std::ptrdiff_t part = 0; part != ssize; part += n )
+  {
     std::ptrdiff_t ub = part + n;
-    for (std::ptrdiff_t i = part; i != ub; ++i) {
+    for( std::ptrdiff_t i = part; i != ub; ++i )
+    {
       std::ptrdiff_t x = idxs[i];
-      if (x >= ssize) x -= ssize;
-      if (x < 0) continue;
-      if (x < part) return false;
-      if (x >= ub) return false;
+      if( x >= ssize ) x -= ssize;
+      if( x < 0 ) continue;
+      if( x < part ) return false;
+      if( x >= ub ) return false;
     }
   }
 
@@ -561,7 +563,8 @@ slice_pattern(pattern_t<I...>)
       return res;
     }();
 
-    return [&]<std::size_t... i>(std::index_sequence<i...>) {
+    return [&]<std::size_t... i>(std::index_sequence<i...>)
+    {
       return kumi::tuple {to_pattern<sliced_array[i]>()...};
     }(std::make_index_sequence<sizeof...(I) / Part> {});
   }
@@ -747,6 +750,97 @@ is_blend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t cardinal)
   return true;
 }
 
+/*
+ * For architectures supporting masks, we assume that `blend` with a register is free.
+ * So - we strip out all the blends and assume compiler can optimize them.
+ */
+
+template<std::size_t NumRegisters, std::size_t N> struct extracted_blends_info
+{
+  struct blend_pattern
+  {
+    bool present_in_blend              = false; // idxs all zero
+    bool present_in_shuffle            = false; // ever mentioned in shuffle after blend
+    std::array<std::ptrdiff_t, N> idxs = {};    // 0, 1 - where 1 means blend reg in
+  };
+
+  // This pattern should already index without removed registers
+  std::array<std::ptrdiff_t, N>           finished_pattern = {};
+  blend_pattern                           zeroes;
+  std::array<blend_pattern, NumRegisters> register_blends;
+};
+
+template<std::size_t NumRegisters, std::size_t N>
+constexpr void
+adjust_indexes_to_skip_unusued_inputs(extracted_blends_info<NumRegisters, N>& res,
+                                      std::ptrdiff_t                          cardinal)
+{
+  std::array<std::ptrdiff_t, NumRegisters> offsets        = {};
+  std::ptrdiff_t                           current_offset = 0;
+  for( std::size_t i = 0; i != NumRegisters; ++i )
+  {
+    const auto& blend = res.register_blends[i];
+    offsets[i]        = current_offset;
+    current_offset    += blend.present_in_shuffle ? 0 : cardinal;
+  }
+
+  for( auto& idx : res.finished_pattern )
+  {
+    auto wide_i = static_cast<std::size_t>(idx / cardinal);
+    idx -= offsets[wide_i];
+  }
+}
+
+template<std::size_t NumRegisters, std::size_t N>
+constexpr extracted_blends_info<NumRegisters, N>
+extract_blends(std::span<const std::ptrdiff_t, N> idxs, std::ptrdiff_t cardinal)
+{
+  extracted_blends_info<NumRegisters, N> res;
+
+  for( std::size_t i = 0; i != N; ++i )
+  {
+    if( idxs[i] == we_ )
+    {
+      res.finished_pattern[i] = we_;
+      continue;
+    }
+
+    if( idxs[i] == na_ )
+    {
+      res.finished_pattern[i]     = we_;
+      res.zeroes.present_in_blend = true;
+      res.zeroes.idxs[i]          = 1;
+      continue;
+    }
+
+    auto wide_i      = static_cast<std::size_t>(idxs[i] / cardinal);
+    auto pos_in_wide = static_cast<std::size_t>(idxs[i] % cardinal);
+
+    if( i == pos_in_wide )
+    {
+      res.register_blends[wide_i].present_in_blend  = true;
+      res.register_blends[wide_i].idxs[pos_in_wide] = 1;
+      res.finished_pattern[i] = we_;
+    }
+    else
+    {
+      res.register_blends[wide_i].present_in_shuffle = true;
+      res.finished_pattern[i]                        = idxs[i];
+    }
+  }
+
+  adjust_indexes_to_skip_unusued_inputs(res, cardinal);
+
+  return res;
+}
+
+template<std::size_t NumRegisters, std::size_t N>
+constexpr extracted_blends_info<NumRegisters, N>
+extract_blends(const std::array<std::ptrdiff_t, N>& idxs, std::ptrdiff_t cardinal)
+{
+  return extract_blends<NumRegisters>(std::span<const std::ptrdiff_t, N>(idxs), cardinal);
+}
+
 template<std::ptrdiff_t G, std::size_t N>
 constexpr std::array<std::ptrdiff_t, N * G>
 expand_group(std::span<const std::ptrdiff_t, N> idxs)
@@ -857,27 +951,27 @@ is_slide_right(std::span<const std::ptrdiff_t> idxs)
 constexpr std::optional<std::ptrdiff_t>
 is_slide_left_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups)
 {
-  if (idxs.empty()) return std::nullopt;
-  const auto *f = idxs.data();
-  const auto *l = idxs.data() + idxs.size();
+  if( idxs.empty() ) return std::nullopt;
+  const auto *f      = idxs.data();
+  const auto *l      = idxs.data() + idxs.size();
   const auto *start2 = l;
 
-  while (*--start2 == we_);
+  while( *--start2 == we_ );
 
   std::ptrdiff_t slide = 0;
 
   // start2 is not l by construction
-  if (*start2 >= reg_groups) {
-    slide = l - start2 + (*start2 - reg_groups);
-  } else {
+  if( *start2 >= reg_groups ) { slide = l - start2 + (*start2 - reg_groups); }
+  else
+  {
     start2 = l;
-    slide = 0;
+    slide  = 0;
   }
 
   start2 = l - slide;
 
-  if (!is_in_order_from({start2, l}, reg_groups)) return std::nullopt;
-  if (!is_in_order_from({f, start2}, slide)) return std::nullopt;
+  if( !is_in_order_from({start2, l}, reg_groups) ) return std::nullopt;
+  if( !is_in_order_from({f, start2}, slide) ) return std::nullopt;
   return slide;
 }
 
