@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/polynomial/regular/abel.hpp>
 #include <eve/module/polynomial/regular/gegenbauer.hpp>
 #include <eve/module/polynomial/regular/hermite.hpp>
 #include <eve/module/polynomial/regular/jacobi.hpp>
