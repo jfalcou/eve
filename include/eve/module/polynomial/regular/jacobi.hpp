@@ -80,6 +80,10 @@ namespace eve
 //!    1. The value of the polynomial \f$P^{\alpha, \beta}_n(x)\f$ is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Jacobi_polynomials)
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/JacobiPolynomial.html)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/polynomial/regular/jacobi.cpp}
 //================================================================================================

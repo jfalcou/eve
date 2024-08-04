@@ -85,6 +85,10 @@ namespace eve
 //!            (n+2\lambda-2)\mathbf{C}_{n-2}^\lambda(x)\right]/n\f$.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Abel_polynomials)
+//!   *  [Wolfram MathWorld](https://en.wikipedia.org/wiki/Gegenbauer_polynomials)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
 //! @}
