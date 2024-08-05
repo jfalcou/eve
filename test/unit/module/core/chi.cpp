@@ -13,20 +13,19 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// TTS_CASE_TPL("Check return types of chi", eve::test::simd::all_types)
-// <typename T>(tts::type<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
+TTS_CASE_TPL("Check return types of chi", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
 
-//   // multi
-//   TTS_EXPR_IS(eve::chi(T(), T(), T()), T);
-//   TTS_EXPR_IS(eve::chi(T(), v_t(), T()), T);
-//   TTS_EXPR_IS(eve::chi(v_t(), T(), T()), T);
-//   TTS_EXPR_IS(eve::chi(T(), T(), v_t()), T);
-//   TTS_EXPR_IS(eve::chi(v_t(), v_t(), T()), T);
-//   TTS_EXPR_IS(eve::chi(v_t(), T(), v_t()), T);
-//   TTS_EXPR_IS(eve::chi(v_t(), v_t(), v_t()), v_t);
-// };
+  TTS_EXPR_IS(eve::chi(T(), T(), T()), T);
+  TTS_EXPR_IS(eve::chi(T(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::chi(v_t(), T(), T()), T);
+  TTS_EXPR_IS(eve::chi(T(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::chi(v_t(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::chi(v_t(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::chi(v_t(), v_t(), v_t()), v_t);
+};
 
 //==================================================================================================
 // chi simd tests
@@ -55,7 +54,6 @@ TTS_CASE_WITH("Check behavior of chi(wide) and diff  on all types",
              map([&](auto e, auto f, auto g) -> v_t { return e >= f && e < g; }, a0, a1, a2));
 
   auto b = [a1, a2](auto x){return (x <  a1) || (x >= a2); };
-  //  std::cout << chi(a0, b) << std::endl;
   TTS_EQUAL(chi(a0, b),
              map([](auto e, auto f, auto g) -> v_t { return (e < f || e >=  g); }, a0, a1, a2));
   TTS_EQUAL(chi(a0, a1, 2),
@@ -78,8 +76,8 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::chi)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::chi[mask](a0, eve::dec(a1), a1),
                  eve::if_else(mask, eve::chi(a0, eve::dec(a1), a1), a0));
-//   auto b = [a1](auto x){return (x >=   eve::dec(a1)) || (x <  a1); };
-//   TTS_IEEE_EQUAL(eve::chi[mask](a0, b),
-//                  eve::if_else(mask, eve::chi(a0, b), a0));
+  auto b = [a1](auto x){return (x >=   eve::dec(a1)) || (x <  a1); };
+  TTS_IEEE_EQUAL(eve::chi[mask](a0, b),
+                 eve::if_else(mask, eve::chi(a0, b), a0));
 
 };

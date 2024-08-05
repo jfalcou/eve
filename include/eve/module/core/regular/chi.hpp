@@ -34,20 +34,6 @@ namespace eve
       return EVE_DISPATCH_CALL(a, belongs);
     }
 
-//     template<conditional_expr C, value T, typename  B>
-//     constexpr EVE_FORCEINLINE T
-//     operator()(C mask, T a, B const & belongs) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(mask, a, belongs);
-//     }
-
-//     template<conditional_expr C, value T, value T1, value T2>
-//     constexpr EVE_FORCEINLINE T
-//     operator()(C mask, T a, T1 l, T2 h) const noexcept
-//     {
-//       return EVE_DISPATCH_CALL(mask, a, l,  h);
-//     }
-
     EVE_CALLABLE_OBJECT(chi_t, chi_);
   };
 
@@ -73,8 +59,8 @@ namespace eve
 //!      constexpr auto chi(value auto x, auto belongs)                              noexcept; // 2
 //!
 //!      // Lanes masking
-//!      constexpr auto chi[conditional_expr auto c](/*any of the above overloads*/) noexcept;// 3
-//!      constexpr auto chi[logical_value auto m](/*any of the above overloads*/)    noexcept;// 3
+//!      constexpr auto chi[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+//!      constexpr auto chi[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -82,7 +68,7 @@ namespace eve
 //!
 //!     * `x`: value to chi.
 //!     * `lo`, `hi`: [the boundary values](@ref eve::value) of the interval.
-//!     * `belongs`: predicate
+//!     * `belongs`: predicate function
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
@@ -103,7 +89,6 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto chi = functor<chi_t>;
-//  inline constexpr auto internal_chi = functor<internal_chi_t>;
 
   namespace detail
   {
@@ -114,9 +99,7 @@ namespace eve
       using r_t =  common_value_t<T0, T1, T2>;
       auto z = if_else( r_t(a) < r_t(h) && r_t(a) >= r_t(l), one(as<r_t>()), zero);
       if constexpr(O::contains(eve::condition_key))
-      {
         return mask_op(c[eve::condition_key], return_2nd, a, z);
-      }
       else
         return z;
     }
