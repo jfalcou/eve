@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('group__core__simd_ga154931234dcad558cb
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...</div><div class="ttdef"><b>Definition:</b> scalar.hpp:126</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition:</b> vectorized.hpp:33</div></div>
-<div class="ttc" id="agroup__core__simd_ga154931234dcad558cbbe12ba2c8c7d94_html_ga154931234dcad558cbbe12ba2c8c7d94"><div class="ttname"><a href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Callable for SoA value constructions.</div><div class="ttdef"><b>Definition:</b> zip.hpp:86</div></div>
+<div class="ttc" id="agroup__core__simd_ga154931234dcad558cbbe12ba2c8c7d94_html_ga154931234dcad558cbbe12ba2c8c7d94"><div class="ttname"><a href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Callable for SoA value constructions.</div><div class="ttdef"><b>Definition:</b> zip.hpp:85</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -167,9 +167,8 @@ $(document).ready(function(){initNavTree('group__core__simd_ga154931234dcad558cb
 <li>a <code>Target</code> instance made from all the SIMD values passed as argument.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;eve/traits/product_type.hpp&gt;</span></div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">struct </span>data_block : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;data_block, float, std::int16_t,double&gt;</div>
@@ -182,22 +181,15 @@ $(document).ready(function(){initNavTree('group__core__simd_ga154931234dcad558cb
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line"> </div>
 <div class="line">  <span class="keyword">using </span>card_t = eve::cardinal_t&lt;eve::wide&lt;double&gt;&gt;;</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wd = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> 1.25 * (i+1); };</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float       , card_t&gt;</a> wf = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> 1.f/(1+i); };</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, card_t&gt;</a> wi = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span>) { <span class="keywordflow">return</span> i+1; };</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- values&quot;</span>  &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;wf  = &quot;</span> &lt;&lt; wf &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;wi  = &quot;</span> &lt;&lt; wi &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;wd  = &quot;</span> &lt;&lt; wd &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- zip as tuple&quot;</span>  &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf,wi,wd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(wf,wi,wd)  &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- zip as UDT&quot;</span>  &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf,wi,wd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;data_block&gt;</a>(), wf,wi,wd)  &lt;&lt; std::endl;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf0,wi,wd)                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(wf,wi,wd)  &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(eve::as&lt;data_block&gt;(),wf,wi,wd)) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_ga154931234dcad558cbbe12ba2c8c7d94.html#ga154931234dcad558cbbe12ba2c8c7d94">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;data_block&gt;</a>(),wf,wi,wd)  &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition:</b> product_type.hpp:154</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>

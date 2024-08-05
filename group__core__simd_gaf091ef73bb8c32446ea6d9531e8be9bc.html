@@ -156,7 +156,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gaf091ef73bb8c32446e
 <div class="ttc" id="aconcepteve_1_1irregular__predicate_html"><div class="ttname"><a href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a></div><div class="ttdoc">std::predicate but doesn't require regularity</div><div class="ttdef"><b>Definition:</b> invocable.hpp:94</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition:</b> simd.hpp:45</div></div>
 <div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:47</div></div>
-<div class="ttc" id="agroup__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc_html_gaf091ef73bb8c32446ea6d9531e8be9bc"><div class="ttname"><a href="group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc">eve::iterate_selected</a></div><div class="ttdeci">constexpr auto iterate_selected</div><div class="ttdoc">a utility to do scalar iteration over all true elements in a logical.</div><div class="ttdef"><b>Definition:</b> iterate_selected.hpp:86</div></div>
+<div class="ttc" id="agroup__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc_html_gaf091ef73bb8c32446ea6d9531e8be9bc"><div class="ttname"><a href="group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc">eve::iterate_selected</a></div><div class="ttdeci">constexpr auto iterate_selected</div><div class="ttdoc">a utility to do scalar iteration over all true elements in a logical.</div><div class="ttdef"><b>Definition:</b> iterate_selected.hpp:85</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition:</b> top_bits.hpp:80</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
@@ -169,52 +169,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gaf091ef73bb8c32446e
 <li>true iff the user broke the exuction (f returned true).</li>
 </ul>
 <p>@groupheader {Example}</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> outputFor(<span class="keyword">auto</span> l) {</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;\n\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;l: &quot;</span> &lt;&lt; l &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  <span class="keywordtype">bool</span> was_interupted = <span class="keyword">false</span>;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;all selected: [ &quot;</span>;</div>
-<div class="line">  was_interupted = <a class="code hl_variable" href="group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc">eve::iterate_selected</a>(l,</div>
-<div class="line">    [](std::ptrdiff_t i) {</div>
-<div class="line">      std::cout &lt;&lt; i &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line">      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">    });</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;] was interupted: &quot;</span> &lt;&lt; was_interupted &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ignore first: [ &quot;</span>;</div>
-<div class="line">  was_interupted = <a class="code hl_variable" href="group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc">eve::iterate_selected</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(1)](l,</div>
-<div class="line">    [](std::ptrdiff_t i) {</div>
-<div class="line">      std::cout &lt;&lt; i &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line">      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">    });</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;] was interupted: &quot;</span> &lt;&lt; was_interupted &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;break after second: [ &quot;</span>;</div>
-<div class="line">  was_interupted = <a class="code hl_variable" href="group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc">eve::iterate_selected</a>(l, [count = 0](std::ptrdiff_t i) <span class="keyword">mutable</span> {</div>
-<div class="line">    std::cout &lt;&lt; i &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
-<div class="line">    <span class="keywordflow">return</span> ++count == 2;</div>
-<div class="line">  });</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;] was interupted: &quot;</span> &lt;&lt; was_interupted &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line">  outputFor(eve::logical&lt;w_t&gt;{ <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span> });</div>
-<div class="line">  outputFor(<a class="code hl_struct" href="structeve_1_1top__bits.html">eve::top_bits</a>{eve::logical&lt;w_t&gt;{ <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span> }});</div>
-<div class="line">  outputFor(<span class="keyword">true</span>);</div>
-<div class="line">}</div>
-<div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:417</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
-</div><!-- fragment --> 
+<div class="fragment"></div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

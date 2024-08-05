@@ -161,7 +161,7 @@ $(document).ready(function(){initNavTree('group__core__simd_gae7b27b48927ea3e9aa
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">sort</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span>  x, ordering <span class="keyword">auto</span> less) <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__core__simd_gae7b27b48927ea3e9aad82f702a388b28_html_gae7b27b48927ea3e9aad82f702a388b28"><div class="ttname"><a href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a></div><div class="ttdeci">constexpr auto sort</div><div class="ttdoc">sorts a register in a accedning order accroding to a comparator.</div><div class="ttdef"><b>Definition:</b> sort.hpp:91</div></div>
+<div class="ttc" id="agroup__core__simd_gae7b27b48927ea3e9aad82f702a388b28_html_gae7b27b48927ea3e9aad82f702a388b28"><div class="ttname"><a href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a></div><div class="ttdeci">constexpr auto sort</div><div class="ttdoc">sorts a register in a accedning order accroding to a comparator.</div><div class="ttdef"><b>Definition:</b> sort.hpp:90</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -173,53 +173,29 @@ $(document).ready(function(){initNavTree('group__core__simd_gae7b27b48927ea3e9aa
 <li>sorted x.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> basic()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line">  w_t x{2, 3, 1, 4};</div>
-<div class="line"> </div>
-<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t{1, 2, 3, 4} == <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(x)));</div>
-<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t{1, 2, 3, 4} == <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(x, <a class="code hl_variable" href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a>)));</div>
-<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(w_t{4, 3, 2, 1} == <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(x, <a class="code hl_variable" href="group__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a>)));</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> sort_by_key()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>k_v = kumi::tuple&lt;int, double&gt;;</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;k_v, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"> </div>
-<div class="line">  w_t x {</div>
-<div class="line">    k_v{ 12, 0.3 },</div>
-<div class="line">    k_v{ 4,  0.1 },</div>
-<div class="line">    k_v{ 8,  0.2 },</div>
-<div class="line">    k_v{ 2,  0.3 },</div>
-<div class="line">  };</div>
-<div class="line">  w_t expected {</div>
-<div class="line">    k_v{ 2,  0.3 },</div>
-<div class="line">    k_v{ 4,  0.1 },</div>
-<div class="line">    k_v{ 8,  0.2 },</div>
-<div class="line">    k_v{ 12, 0.3 },</div>
-<div class="line">  };</div>
-<div class="line">  w_t x_sorted = <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(x, [](w_t k_v0, w_t k_v1) {</div>
-<div class="line">    <span class="keywordflow">return</span> get&lt;0&gt;(k_v0) &lt; get&lt;0&gt;(k_v1);</div>
-<div class="line">  });</div>
-<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a>(expected == x_sorted));</div>
-<div class="line">}</div>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  basic();</div>
-<div class="line">  sort_by_key();</div>
+<div class="line">  <span class="keyword">auto</span> myless =  [](<span class="keyword">auto</span> z1, <span class="keyword">auto</span> z2){ <span class="keywordflow">return</span> z1 &gt; z2; };</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0               = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0               = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0               = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wf0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wf0, myless) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(wf0, myless)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wu0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wu0, myless) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(wu0, myless)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wi0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wi0, myless) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__simd_gae7b27b48927ea3e9aad82f702a388b28.html#gae7b27b48927ea3e9aad82f702a388b28">eve::sort</a>(wi0, myless)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099_html_ga419057bf1a8ca5f46624a28a0ea47099"><div class="ttname"><a href="group__core__predicates_ga419057bf1a8ca5f46624a28a0ea47099.html#ga419057bf1a8ca5f46624a28a0ea47099">eve::is_less</a></div><div class="ttdeci">constexpr auto is_less</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value of the first parameter...</div><div class="ttdef"><b>Definition:</b> is_less.hpp:93</div></div>
-<div class="ttc" id="agroup__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384_html_gac8e72f365c26b0d3373799e5e3a5f384"><div class="ttname"><a href="group__core__predicates_gac8e72f365c26b0d3373799e5e3a5f384.html#gac8e72f365c26b0d3373799e5e3a5f384">eve::is_greater</a></div><div class="ttdeci">constexpr auto is_greater</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value of the first parameter...</div><div class="ttdef"><b>Definition:</b> is_greater.hpp:85</div></div>
-<div class="ttc" id="agroup__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf_html_gaba39938f8cf3fdaaf2380b88b3f646cf"><div class="ttname"><a href="group__core__reduction_gaba39938f8cf3fdaaf2380b88b3f646cf.html#gaba39938f8cf3fdaaf2380b88b3f646cf">eve::all</a></div><div class="ttdeci">constexpr callable_all_ all</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x are not zero.</div><div class="ttdef"><b>Definition:</b> all.hpp:59</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:65</div></div>
 </div><!-- fragment --> 
 </div>
