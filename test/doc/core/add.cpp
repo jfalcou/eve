@@ -1,39 +1,26 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
 int main()
 {
-  using w_t = eve::wide<std::int16_t, eve::fixed<4>>;
-  w_t pi = {3, 2, -32700, 32700}, qi = {4, 1, -100, 100};
-  using wf_t = eve::wide<float, eve::fixed<4>>;
-  wf_t pf = {3, 2.5, -32.7, 1327.43}, qf = {4.2, 1.5, -100.834, 10.02};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::cout << "---- simd" << '\n'
-            << " <- pi                      = " << pi << '\n'
-            << " <- qi                      = " << qi << '\n'
-            << " -> add(pi, qi)             = " << eve::add(pi, qi) << '\n'
-            << " -> pi + qi                 = " << pi + qi << '\n'
-            << " -> add[pi < qi](pi, qi)    = " << eve::add[pi < qi](pi, qi) << '\n'
-            <<  " -> add[saturated](pi, qi) = " << eve::add[eve::saturated](pi, qi) << '\n'
-            << " -> pf + qf                 = " << pf + qf << '\n';
-
-  std::int16_t xi = 100, yi = 32700;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- xi          = " << xi << '\n'
-            << " <- yi          = " << yi << '\n'
-            << " -> add(xi, yi) = " << eve::add(xi, yi) << '\n'
-            << " -> xi + yi     = " << xi + yi << '\n'; // C++ promotion to int
-
-  auto k = kumi::tuple{pf, pf, pf, 1};
-  std::cout << "---- multi parameters" << '\n'
-            << " -> add(pi,pi,pi,1)               = " << eve::add(pi, pi, pi, 1) << '\n'
-            << " -> add(k)                        = " << eve::add(k)               << '\n'
-            << " -> add(kumi::tuple{pf, pf})      = " << eve::add( kumi::tuple{pf, pf})  << '\n'
-            << " -> add(kumi::tuple{pf, 1.0f)     = " << eve::add( kumi::tuple{pf, 1.0f})  << '\n'
-            << " -> add(kumi::tuple{1.0f, pf)     = " << eve::add( kumi::tuple{1.0f, pf})  << '\n'
-            << " -> add[saturated](pi,12,pi,pi)   = " << eve::add[eve::saturated](pi, 12, pi,pi) << '\n'
-            << " -> add[saturated](kumi::tuple{pi, 12,pi,pi)} = " << eve::add[eve::saturated](kumi::tuple{pi,12,pi,pi})<< '\n';
-  return 0;
+  std::cout << "<- wf0                           = " << wf0 << "\n";
+  std::cout << "<- wf1                           = " << wf1 << "\n";
+  std::cout << "<- wi0                           = " << wi0 << "\n";
+  std::cout << "<- wi1                           = " << wi1 << "\n";
+  std::cout << "<- wu0                           = " << wu0 << "\n";
+  std::cout << "<- wu1                           = " << wu1 << "\n";
+                                                 
+  std::cout << "-> add(wf0, wf1)                 = " << eve::add(wf0, wf1) << "\n";
+  std::cout << "-> add[ignore_last(2)](wf0, wf1) = " << eve::add[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> add[wf0 != 0](wf0, wf1)       = " << eve::add[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> add(wu0, wu1)                 = " << eve::add(wu0, wu1) << "\n";
+  std::cout << "-> add(wi0, wi1)                 = " << eve::add(wi0, wi1) << "\n";
 }

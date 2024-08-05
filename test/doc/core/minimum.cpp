@@ -1,20 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};
-  wide_it pi = {-1, 2, -32768, 3};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                    = " << pf << '\n'
-            << "-> minimum(pf)           = " << eve::minimum(pf) << '\n'
-            << "<- pi                    = " << pi << '\n'
-            << "-> minimum(pi)           = " << eve::minimum(pi) << '\n'
-            << "-> minimum[pi > -2](pi)  = " << eve::minimum[pi > -2](pi) << '\n';
-  return 0;
+  std::cout << "<- wf0                          = " << wf0 << "\n";
+  std::cout << "<- wi0                          = " << wi0 << "\n";
+  std::cout << "<- wu0                          = " << wu0 << "\n";
+                                                
+  std::cout << "-> minimum(wf0)                 = " << eve::minimum(wf0) << "\n";
+  std::cout << "-> minimum[ignore_last(2)](wf0) = " << eve::minimum[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> minimum[wf0 != -2.0f](wf0)   = " << eve::minimum[wf0 != -2.0f](wf0) << "\n";
+  std::cout << "-> minimum(wu0)                 = " << eve::minimum(wu0) << "\n";
+  std::cout << "-> minimum[ignore_last(2)](wu0) = " << eve::minimum[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> minimum[wu0 != 2u](wu0)      = " << eve::minimum[wu0 != 2u](wu0) << "\n";
+  std::cout << "-> minimum(wi0)                 = " << eve::minimum(wi0) << "\n";
+  std::cout << "-> minimum[ignore_last(2)](wi0) = " << eve::minimum[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> minimum[wi0 != -2](wi0)      = " << eve::minimum[wi0 != -2](wi0) << "\n";
 }

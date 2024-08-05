@@ -1,28 +1,16 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using iT       = std::int32_t;
-using uiT      = std::uint32_t;
-using wide_it  = eve::wide<iT, eve::fixed<4>>;
-using wide_uit = eve::wide<uiT, eve::fixed<4>>;
 
 int main()
 {
-  wide_uit pi = {100, 200, 2, 3};
-  wide_it  qi = {1, -2, 3, -1};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                     = " << pi << '\n'
-            << "<- qi                     = " << qi << '\n'
-            << "-> shl(pi, qi)            = " << eve::rshl(pi, qi) << '\n'
-            << "-> rshl[pi!= 200](pi, qi) = " << eve::rshl[pi!= 200](pi, qi) << '\n';
-
-  uiT xi = 2, yi = 3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xi            = " << xi << '\n'
-            << "<- yi            = " << yi << '\n'
-            << "-> rshl(xi, yi)  = " << eve::rshl(xi, yi) << '\n';
-  return 0;
+  std::cout << "<- wi0                            = " << wi0 << "\n";
+  std::cout << "<- wi1                            = " << wi1 << "\n";
+                                                  
+  std::cout << "-> rshl(wi0, wi1)                 = " << eve::rshl(wi0, wi1) << "\n";
+  std::cout << "-> rshl[ignore_last(2)](wi0, wi1) = " << eve::rshl[eve::ignore_last(2)](wi0, wi1) << "\n";
+  std::cout << "-> rshl[wi0 != 0](wi0, wi1)       = " << eve::rshl[wi0 != 0](wi0, wi1) << "\n";
 }

@@ -1,23 +1,22 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-#include <iomanip>
 
 int main()
 {
-  using wf_t = eve::wide<float, eve::fixed<4>>;
-  wf_t xf = {3, 2, 1, 0}, zf = {4, 1, 2, 100};
-  wf_t tf = xf+4*eve::eps(eve::as<float>()), yf = zf-4*eve::eps(eve::as<float>());
-
-  std::cout << "---- simd" << std::setprecision(8) << '\n'
-            << " <- xf                                     = " << xf << '\n'
-            << " <- yf                                     = " << yf << '\n'
-            << " <- tf                                     = " << tf << '\n'
-            << " <- zf                                     = " << zf << '\n'
-            << " -> xf*yf-tf*zf                            = " << (xf*yf)-(tf*zf) << '\n'
-            << " -> diff_of_prod(xf, yf, tf, zf)           = " << eve::diff_of_prod(xf, yf, tf, zf) << '\n'
-            << " -> diff_of_prod[pedantic2](xf, yf, tf, zf) = " << eve::diff_of_prod[eve::pedantic2](xf, yf, tf, zf) << '\n'
-            << " -> diff_of_prod[raw2](xf, yf, tf, zf)      = " << eve::diff_of_prod[eve::raw2](xf, yf, tf, zf) << '\n';
-
-  return 0;
+  
+  eve::wide wf0 = {3, 2, 1, 0};
+  eve::wide wf1 = {4, 1, 2, 100};
+  eve::wide wf2 = wf0+4*eve::eps(eve::as<float>());
+  eve::wide wf3 = wf1-4*eve::eps(eve::as<float>());
+  
+  std::cout << "<- wf0                                              = " << wf0 << "\n";
+  std::cout << "<- wf1                                              = " << wf1 << "\n";
+  std::cout << "<- wf2                                              = " << wf2 << "\n";
+  std::cout << "<- wf3                                              = " << wf3 << "\n";
+  
+  std::cout << "-> diff_of_prod(wf0, wf1, wf2, wf3)                 = " << eve::diff_of_prod(wf0, wf1, wf2, wf3) << "\n";
+  std::cout << "-> diff_of_prod[ignore_last(2)](wf0, wf1, wf2, wf3) = " << eve::diff_of_prod[eve::ignore_last(2)](wf0, wf1, wf2, wf3) << "\n";
+  std::cout << "-> diff_of_prod[raw](wf0, wf1, wf2, wf3)            = " << eve::diff_of_prod[eve::raw](wf0, wf1, wf2, wf3) << "\n";
+  std::cout << "-> diff_of_prod[pedantic](wf0, wf1, wf2, wf3)       = " << eve::diff_of_prod[eve::pedantic](wf0, wf1, wf2, wf3) << "\n";
 }

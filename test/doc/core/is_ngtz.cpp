@@ -1,22 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 1.0f, -1.0f, -0.0f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                  = " << pf << '\n'
-            << "-> is_ngtz(pf)         = " << eve::is_ngtz(pf) << '\n'
-           << "-> is_ngtz[pf<-0.5](pf) = " << eve::is_ngtz[pf<-0.5](pf) << '\n';
-
-  float xf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> is_ngtz(xf) = " << eve::is_ngtz(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                          = " << wf0 << "\n";
+  std::cout << "<- wi0                          = " << wi0 << "\n";
+  std::cout << "<- wu0                          = " << wu0 << "\n";
+                                                
+  std::cout << "-> is_ngtz(wf0)                 = " << eve::is_ngtz(wf0) << "\n";
+  std::cout << "-> is_ngtz[ignore_last(2)](wf0) = " << eve::is_ngtz[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> is_ngtz[wf0 != 0](wf0)       = " << eve::is_ngtz[wf0 != 0](wf0) << "\n";
+  std::cout << "-> is_ngtz(wu0)                 = " << eve::is_ngtz(wu0) << "\n";
+  std::cout << "-> is_ngtz[ignore_last(2)](wu0) = " << eve::is_ngtz[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> is_ngtz[wu0 != 0](wu0)       = " << eve::is_ngtz[wu0 != 0](wu0) << "\n";
+  std::cout << "-> is_ngtz(wi0)                 = " << eve::is_ngtz(wi0) << "\n";
+  std::cout << "-> is_ngtz[ignore_last(2)](wi0) = " << eve::is_ngtz[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> is_ngtz[wi0 != 0](wi0)       = " << eve::is_ngtz[wi0 != 0](wi0) << "\n";
 }

@@ -1,35 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <vector>
 #include <iostream>
 
 int main()
 {
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 3};
-  w_t qi = {4, 1, 1, eve::valmax(eve::as<float>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
 
-  std::cout << "---- simd" << '\n'
-            << " <- pi                       = " << pi << '\n'
-            << " <- qi                       = " << qi << '\n'
-            << " -> average(pi, qi)          = " << eve::average(pi, qi) << '\n';
-
-
-  std::uint32_t xi = 3, yi = 4;
-
-  std::cout << "---- scalar" << '\n'
-            << " xi                 = " << xi << '\n'
-            << " yi                 = " << yi << '\n'
-            << " -> average(xi, yi) = " << eve::average(xi, yi) << '\n';
-
-  using w_ft = eve::wide<float, eve::fixed<4>>;
-  w_ft pf = {3, 4, 3, 10}, qf = {4, 1, 1, 15};;
-  std::cout << "---- multi" << '\n'
-            << " <- pf                                    = " << pf << '\n'
-            << " <- qf                                    = " << qf << '\n'
-            << " -> average(pf, 0.0f, qf, pf, 11.0f)      = " << eve::average(pf, 0.0f, qf, pf, 11.0f) <<  '\n'
-            << " -> average[raw](pf, 0.0f, pf, qf, 11.0f) = " << eve::average[eve::raw](pf, 0.0f, pf, qf, 11.0f) << '\n';
-
-  std::cout << "---- multi parameters" << '\n';
-  return 0;
+  std::cout << "<- wf0                               = " << wf0 << "\n";
+  std::cout << "<- wf1                               = " << wf1 << "\n";
+  std::cout << "<- wi0                               = " << wi0 << "\n";
+  std::cout << "<- wi1                               = " << wi1 << "\n";
+                                                     
+  std::cout << "-> average(wf0, wf1)                 = " << eve::average(wf0, wf1) << "\n";
+  std::cout << "-> average(wi0, wi1)                 = " << eve::average(wi0, wi1) << "\n";
+  std::cout << "-> average[ignore_last(2)](wi0, wi1) = " << eve::average[eve::ignore_last(2)](wi0, wi1) << "\n";
+  std::cout << "-> average[wi0 != 0](wi0, wi1)       = " << eve::average[wi0 != 0](wi0, wi1) << "\n";
+  std::cout << "-> average[raw](wi0, wi1)            = " << eve::average[eve::raw](wi0, wi1) << "\n";
+  std::cout << "-> average[upward](wi0, wi1)         = " << eve::average[eve::upward](wi0, wi1) << "\n";
+  std::cout << "-> average[downward](wi0, wi1)       = " << eve::average[eve::downward](wi0, wi1) << "\n";
 }

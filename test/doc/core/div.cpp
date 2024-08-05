@@ -1,5 +1,5 @@
+// revision 1
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
 int main()
@@ -12,19 +12,8 @@ int main()
             << " <- qf                    = " << qf << '\n'
             << " -> div(pf, qf)           = " << eve::div(pf, qf) << '\n'
             << " -> pf / qf               = " << pf / qf << '\n'
-            << " -> div[pf> qf](pf, qf)    = " << eve::div[pf>qf](pf, qf)          << '\n'
-   ;
+            << " -> div[pf> qf](pf, qf)    = " << eve::div[pf>qf](pf, qf) << '\n';
 
-  std::int16_t xi = -32768, yi = -1;
-
-  std::cout << "---- scalar" << '\n'
-            << " xi                        = " << xi                               << '\n'
-            << " yi                        = " << yi                               << '\n'
-            << " -> div(xi, yi)            = " << eve::div(xi, yi)                 << '\n'
-            << " -> xi / yi                = " << xi / yi << " //C++ promotion to int\n"
-            << " -> std::int16_t( xi / yi) = " << std::int16_t( xi / yi)           << '\n'
-            << " -> div[saturated](xi, yi) = " << eve::div[eve::saturated2](xi, yi) << '\n'
-    ;
 
   wf_t rf = {3034, 200, 333, 32700}, sf = {4, 7, 13, 100};
 
@@ -42,6 +31,4 @@ int main()
             << " -> div(kumi::tuple{pf, pf})      = " << eve::div( kumi::tuple{pf, pf})    << '\n'
             << " -> div(kumi::tuple{pf, 1.0f)     = " << eve::div( kumi::tuple{pf, 1.0f})  << '\n'
             << " -> div(kumi::tuple{1.0f, pf)     = " << eve::div( kumi::tuple{1.0f, pf})  << '\n';
-
-  return 0;
 }

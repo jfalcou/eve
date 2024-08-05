@@ -67,9 +67,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/negatenz.cpp}
+//================================================================================================
+  inline constexpr auto negatenz = functor<negatenz_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto negatenz = functor<negatenz_t>;
 
   namespace detail
   {

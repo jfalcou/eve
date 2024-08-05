@@ -87,9 +87,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/absmax.cpp}
+//================================================================================================
+  inline constexpr auto absmax = functor<absmax_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto absmax = functor<absmax_t>;
 }
 
 #include <eve/module/core/regular/impl/absmax.hpp>

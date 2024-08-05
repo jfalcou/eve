@@ -1,21 +1,18 @@
-
-#include <eve/wide.hpp>
-#include <iostream>
-#include <bit>
+// revision 0
 #include <eve/module/core.hpp>
-
-using wide_it = eve::wide<std::uint16_t, eve::fixed<8>>;
+#include <iostream>
 
 int main()
 {
-  wide_it pi = {1, 3, 7, 15, 31, 63, 127, 255};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wi2{0, 1, 2 ,3, 4, 5, 6, 7};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                                   = " << pi << '\n'
-            << "-> bit_swap_pairs(pi, 0, 15)            = " << eve::bit_swap_pairs(pi, 0, 15) << '\n'
-            << "-> bit_swap_pairs(pi, 2, 7 )            = " << eve::bit_swap_pairs(pi, 2, 7) << '\n'
-            << "-> bit_swap_pairs[pi > 7](pi, 0u, 15u)) = " << eve::bit_swap_pairs[pi > 7](pi, 0u, 15u) << '\n';
-
-
-  return 0;
+  std::cout << "<- wi0                                           = " << wi0 << "\n";
+  std::cout << "<- wi1                                           = " << wi1 << "\n";
+  std::cout << "<- wi2                                           = " << wi2 << "\n";
+                                                                 
+  std::cout << "-> bit_swap_pairs(wi0, wi1, wi2)                 = " << eve::bit_swap_pairs(wi0, wi1, wi2) << "\n";
+  std::cout << "-> bit_swap_pairs[ignore_last(2)](wi0, wi1, wi2) = " << eve::bit_swap_pairs[eve::ignore_last(2)](wi0, wi1, wi2) << "\n";
+  std::cout << "-> bit_swap_pairs[wi0 != 0](wi0, wi1, wi2)       = " << eve::bit_swap_pairs[wi0 != 0](wi0, wi1, wi2) << "\n";
 }

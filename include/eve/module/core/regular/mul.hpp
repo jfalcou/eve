@@ -86,11 +86,13 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/mul.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto mul = functor<mul_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
-  // Required for optimisation detections
+// Required for optimisation detections
   using callable_mul_ = tag_t<mul>;
 }
 

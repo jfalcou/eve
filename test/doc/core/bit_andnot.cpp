@@ -1,27 +1,26 @@
-
-#include <eve/wide.hpp>
+// revision 0
+#include <eve/module/core.hpp>
 #include <iostream>
 
 int main()
 {
-  using w_t = eve::wide<std::int32_t, eve::fixed<4>>;
-  w_t pi = {3, 2, 3, 4}, qi = {4, 1, 1, ~0};
-  std::uint32_t z = 5;
-  std::cout << "---- simd" << '\n'
-            << " <- pi                        = " << pi << '\n'
-            << " <- qi                        = " << qi << '\n'
-            << " <- z                         = " << z  << '\n'
-            << " -> bit_andnot(pi, qi)        = " << eve::bit_andnot(pi, qi) << '\n'
-            << " -> bit_andnot(qi, z )        = " << eve::bit_andnot(qi, z) << '\n'
-            << " -> bit_andnot(pi, z )        = " << eve::bit_andnot(pi, z) << '\n'
-            << " -> bit_andnot[pi<qi](pi, qi) = " << eve::bit_andnot[pi<qi](pi, qi) << '\n';
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::uint32_t mask = 1 << 31;
-  float xi = -3.4565f;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- xi                   = " << xi << '\n'
-            << " <- mask                 = " << mask << '\n'
-            << " -> bit_andnot(xi, mask) = " << eve::bit_andnot(xi, mask) << '\n';
-  return 0;
+  std::cout << "<- wf0                                  = " << wf0 << "\n";
+  std::cout << "<- wf1                                  = " << wf1 << "\n";
+  std::cout << "<- wi0                                  = " << wi0 << "\n";
+  std::cout << "<- wi1                                  = " << wi1 << "\n";
+  std::cout << "<- wu0                                  = " << wu0 << "\n";
+  std::cout << "<- wu1                                  = " << wu1 << "\n";
+                                                        
+  std::cout << "-> bit_andnot(wf0, wf1)                 = " << eve::bit_andnot(wf0, wf1) << "\n";
+  std::cout << "-> bit_andnot[ignore_last(2)](wf0, wf1) = " << eve::bit_andnot[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> bit_andnot[wf0 != 0](wf0, wf1)       = " << eve::bit_andnot[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> bit_andnot(wu0, wu1)                 = " << eve::bit_andnot(wu0, wu1) << "\n";
+  std::cout << "-> bit_andnot(wi0, wi1)                 = " << eve::bit_andnot(wi0, wi1) << "\n";
 }

@@ -1,36 +1,26 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  float decr = eve::eps(eve::as<float>());
-  wide_ft pf = {-1.0f, -1.3f, -1.5f, -1.7f, 1.0f, 2.3f, 2.5f, 2.7f};
-  auto  pf1 = eve::prev[pf >  0](pf, 7);
-  pf1 = eve::next[pf < 0](pf1, 7);
-  auto  pf2 = pf-eve::signnz(pf)*4.0f*decr;
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << std::setprecision(9) << '\n'
-            << "<- pf                               = " << pf  << '\n'
-            << "<- pf1                              = " << pf1 << '\n'
-            << "<- pf2                              = " << pf2 << '\n'
-            << "-> trunc(pf)                        = " << eve::trunc(pf) << '\n'
-            << "-> trunc[almost](pf)                = " << eve::trunc[eve::almost](pf)           << '\n'
-            << "-> trunc[almost = 6](pf1)           = " << eve::trunc[eve::almost = 6](pf1)      << '\n'
-            << "-> trunc[almost](pf1)               = " << eve::trunc[eve::almost](pf1)           << '\n'
-            << "-> trunc[almost = 8](pf1)           = " << eve::trunc[eve::almost = 8](pf1)      << '\n'
-            << "-> trunc[almost = 2.0f*decr](pf2)   = " << eve::trunc[eve::almost = 2.0f*decr](pf2) << '\n'
-            << "-> trunc[almost](pf2)               = " << eve::trunc[eve::almost](pf2)           << '\n'
-            << "-> trunc[almost = 5.0f*decr](pf2)   = " << eve::trunc[eve::almost = 5.0f*decr](pf2) << '\n';
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf        = " << xf << '\n'
-            << "-> trunc(xf) = " << eve::trunc(xf) << '\n';
-
-  return 0;
+  std::cout << "<- wf0                        = " << wf0 << "\n";
+  std::cout << "<- wi0                        = " << wi0 << "\n";
+  std::cout << "<- wu0                        = " << wu0 << "\n";
+                                              
+  std::cout << "-> trunc(wf0)                 = " << eve::trunc(wf0) << "\n";
+  std::cout << "-> trunc[ignore_last(2)](wf0) = " << eve::trunc[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> trunc[wf0 != 0](wf0)       = " << eve::trunc[wf0 != 0](wf0) << "\n";
+  std::cout << "-> trunc[almost](wf0)         = " << eve::trunc[eve::almost](wf0) << "\n";
+  std::cout << "-> trunc[raw](wf0)            = " << eve::trunc[eve::raw](wf0) << "\n";
+  std::cout << "-> trunc(wu0)                 = " << eve::trunc(wu0) << "\n";
+  std::cout << "-> trunc[ignore_last(2)](wu0) = " << eve::trunc[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> trunc[wu0 != 0](wu0)       = " << eve::trunc[wu0 != 0](wu0) << "\n";
+  std::cout << "-> trunc(wi0)                 = " << eve::trunc(wi0) << "\n";
+  std::cout << "-> trunc[ignore_last(2)](wi0) = " << eve::trunc[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> trunc[wi0 != 0](wi0)       = " << eve::trunc[wi0 != 0](wi0) << "\n";
 }

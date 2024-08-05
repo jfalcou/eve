@@ -1,21 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, 2.0f, -3.0f, -68.0f};
-  wide_it pi = {-1, 2, -3268, 3};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                    = " << pf << '\n'
-            << "-> maximum(pf)           = " << eve::maximum(pf) << '\n'
-            << "<- pi                    = " << pi << '\n'
-            << "-> maximum(pi)           = " << eve::maximum(pi) << '\n'
-            << "-> maximum[pi > -2](pi)  = " << eve::maximum[pi > -2](pi) << '\n';
-
-  return 0;
+  std::cout << "<- wf0                          = " << wf0 << "\n";
+  std::cout << "<- wi0                          = " << wi0 << "\n";
+  std::cout << "<- wu0                          = " << wu0 << "\n";
+                                                
+  std::cout << "-> maximum(wf0)                 = " << eve::maximum(wf0) << "\n";
+  std::cout << "-> maximum[ignore_last(2)](wf0) = " << eve::maximum[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> maximum[wf0 != -2.0f](wf0)   = " << eve::maximum[wf0 != -2.0f](wf0) << "\n";
+  std::cout << "-> maximum(wu0)                 = " << eve::maximum(wu0) << "\n";
+  std::cout << "-> maximum[ignore_last(2)](wu0) = " << eve::maximum[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> maximum[wu0 != 2u](wu0)      = " << eve::maximum[wu0 != 2u](wu0) << "\n";
+  std::cout << "-> maximum(wi0)                 = " << eve::maximum(wi0) << "\n";
+  std::cout << "-> maximum[ignore_last(2)](wi0) = " << eve::maximum[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> maximum[wi0 != -2](wi0)      = " << eve::maximum[wi0 != -2](wi0) << "\n";
 }

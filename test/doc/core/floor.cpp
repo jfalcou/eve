@@ -1,27 +1,25 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  float decr = -eve::eps(eve::as<float>());
-  wide_ft pf = {-1.0f+decr, -1.0f+3*decr, -1.0f+5*decr, -1.7f, 2.0f, 2.0f+2*decr, 2.0f+5*decr, 2.7f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd"  << std::setprecision(8) << '\n'
-            << "<- pf                            = " << pf << '\n'
-            << "-> floor(pf)                     = " << eve::floor(pf) << '\n'
-            << "-> floor[almost](pf)           = " << eve::floor[eve::almost](pf)           << '\n'
-            << "-> floor[almost = 2*decr](pf) = " << eve::floor[eve::almost = 2*decr](pf) << '\n'
-            << "-> floor[almost = 4](pf)      = " << eve::floor[eve::almost = 4](pf)      << '\n'
-            << "-> floor[pf>1.5](pf)             = " << eve::floor[pf>1.5](pf) << '\n';
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf        = " << xf << '\n'
-            << "-> floor(xf) = " << eve::floor(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                        = " << wf0 << "\n";
+  std::cout << "<- wi0                        = " << wi0 << "\n";
+  std::cout << "<- wu0                        = " << wu0 << "\n";
+                                              
+  std::cout << "-> floor(wf0)                 = " << eve::floor(wf0) << "\n";
+  std::cout << "-> floor[ignore_last(2)](wf0) = " << eve::floor[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> floor[wf0 != 0](wf0)       = " << eve::floor[wf0 != 0](wf0) << "\n";
+  std::cout << "-> floor[almost](wf0)         = " << eve::floor[eve::almost](wf0) << "\n";
+  std::cout << "-> floor(wu0)                 = " << eve::floor(wu0) << "\n";
+  std::cout << "-> floor[ignore_last(2)](wu0) = " << eve::floor[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> floor[wu0 != 0](wu0)       = " << eve::floor[wu0 != 0](wu0) << "\n";
+  std::cout << "-> floor(wi0)                 = " << eve::floor(wi0) << "\n";
+  std::cout << "-> floor[ignore_last(2)](wi0) = " << eve::floor[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> floor[wi0 != 0](wi0)       = " << eve::floor[wi0 != 0](wi0) << "\n";
 }

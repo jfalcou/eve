@@ -1,27 +1,16 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
 int main()
 {
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-  w_t pi = {3, 602, 3, 4001}, qi = {4, 1, 2, 0};
-  std::uint32_t z = 5;
-  std::cout << "---- simd" << '\n'
-            << " <- pi                      = " << pi << '\n'
-            << " <- qi                      = " << qi << '\n'
-            << " <- z                       = " << z  << '\n'
-            << " -> bit_shr(pi, qi)         = " << eve::bit_shr(pi, qi) << '\n'
-            << " -> bit_shr(z,  qi)         = " << eve::bit_shr(z,  qi) << '\n'
-            << " -> bit_shr(pi, z )         = " << eve::bit_shr(pi, z) << '\n'
-            << " -> bit_shr[pi<qi]((pi, qi) = " << eve::bit_shr[pi<qi](pi, qi) << '\n';
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
 
-  std::uint32_t a = 1;
-  std::uint32_t n = 4;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- a             = " << a << '\n'
-            << " <- n             = " << n << '\n'
-            << " -> bit_shr(a, n) = " << eve::bit_shr(a, n) << '\n';
-  return 0;
+  std::cout << "<- wi0                               = " << wi0 << "\n";
+  std::cout << "<- wi1                               = " << wi1 << "\n";
+                                                     
+  std::cout << "-> bit_shr(wi0, wi1)                 = " << eve::bit_shr(wi0, wi1) << "\n";
+  std::cout << "-> bit_shr[ignore_last(2)](wi0, wi1) = " << eve::bit_shr[eve::ignore_last(2)](wi0, wi1) << "\n";
+  std::cout << "-> bit_shr[wi0 != 0](wi0, wi1)       = " << eve::bit_shr[wi0 != 0](wi0, wi1) << "\n";
 }

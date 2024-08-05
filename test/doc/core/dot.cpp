@@ -1,25 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_it = eve::wide<int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pf = {0, 1, -1, -eve::valmax(eve::as<int16_t>())};
-  wide_it qf = {1, -1, 0, eve::valmax(eve::as<int16_t>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                       = " << pf << '\n'
-            << "<- qf                       = " << qf << '\n'
-            << "-> dot(pf, qf)             = " << eve::dot(pf, qf) << '\n';
-
-  int16_t xf = -eve::valmax(eve::as<int16_t>());
-  int16_t yf = eve::valmax(eve::as<int16_t>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                       = " << xf << '\n'
-            << "<- yf                       = " << yf << '\n'
-            << "-> dot(xf, yf)             = " << eve::dot(xf, yf) << '\n';
-  return 0;
+  std::cout << "<- wf0           = " << wf0 << "\n";
+  std::cout << "<- wf1           = " << wf1 << "\n";
+  std::cout << "<- wi0           = " << wi0 << "\n";
+  std::cout << "<- wi1           = " << wi1 << "\n";
+  std::cout << "<- wu0           = " << wu0 << "\n";
+  std::cout << "<- wu1           = " << wu1 << "\n";
+                                 
+  std::cout << "-> dot(wf0, wf1) = " << eve::dot(wf0, wf1) << "\n";
+  std::cout << "-> dot(wu0, wu1) = " << eve::dot(wu0, wu1) << "\n";
+  std::cout << "-> dot(wi0, wi1) = " << eve::dot(wi0, wi1) << "\n";
 }

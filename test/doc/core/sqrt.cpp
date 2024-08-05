@@ -1,26 +1,27 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {1.0f, 2.0f, -3.0f, eve::inf(eve::as<float>()),
-                eve::inf(eve::as<float>()), eve::nan(eve::as<float>()), -0.0f, 0.0f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf              = " << pf << '\n'
-            << "-> sqrt(pf)        = " << eve::sqrt(pf) << '\n'
-            << "-> sqrt[raw](pf)   = " << eve::sqrt[eve::raw2](pf) << '\n'
-            << "-> sqrt[pf > 0](pf)= " << eve::sqrt[pf > 0](pf) << '\n';
-
-
-  float xf = 32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> sqrt(xf)        = " << eve::sqrt(xf) << '\n';
-
-  return 0;
+  std::cout << "<- wf0                       = " << wf0 << "\n";
+  std::cout << "<- wi0                       = " << wi0 << "\n";
+  std::cout << "<- wu0                       = " << wu0 << "\n";
+                                             
+  std::cout << "-> sqrt(wf0)                 = " << eve::sqrt(wf0) << "\n";
+  std::cout << "-> sqrt[ignore_last(2)](wf0) = " << eve::sqrt[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> sqrt[wf0 != 0](wf0)       = " << eve::sqrt[wf0 != 0](wf0) << "\n";
+  std::cout << "-> sqrt[raw](wf0)            = " << eve::sqrt[eve::raw](wf0) << "\n";
+  std::cout << "-> sqrt(wu0)                 = " << eve::sqrt(wu0) << "\n";
+  std::cout << "-> sqrt[ignore_last(2)](wu0) = " << eve::sqrt[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> sqrt[wu0 != 0](wu0)       = " << eve::sqrt[wu0 != 0](wu0) << "\n";
+  std::cout << "-> sqrt[raw](wu0)            = " << eve::sqrt[eve::raw](wu0) << "\n";
+  std::cout << "-> sqrt(wi0)                 = " << eve::sqrt(wi0) << "\n";
+  std::cout << "-> sqrt[ignore_last(2)](wi0) = " << eve::sqrt[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> sqrt[wi0 != 0](wi0)       = " << eve::sqrt[wi0 != 0](wi0) << "\n";
+  std::cout << "-> sqrt[raw](wi0)            = " << eve::sqrt[eve::raw](wi0) << "\n";
 }

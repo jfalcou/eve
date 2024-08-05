@@ -1,26 +1,16 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
-#include <vector>
 #include <iostream>
-
 
 int main()
 {
-  using wf_t = eve::wide<float, eve::fixed<4>>;
-  wf_t pf = {3, 2, 3, 3};
-  wf_t qf = {4, 1, 1, eve::inf(eve::as<float>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
 
-  std::cout << "---- simd" << '\n'
-            << " <- pf                   = " << pf << '\n'
-            << " <- qf                   = " << qf << '\n'
-            << " -> agm(pf, qf)          = " << eve::agm(pf, qf) << '\n'
-            << " -> agm[pf < qf](pf, qf) = " << eve::agm[pf < qf](pf, qf) << '\n';
-
-  double xi = 3, yi = 4;
-
-  std::cout << "---- scalar" << '\n'
-            << " xi                 = " << xi << '\n'
-            << " yi                 = " << yi << '\n'
-            << " -> agm(xi, yi)     = " << eve::agm(xi, yi) << '\n';
-  return 0;
+  std::cout << "<- wf0                           = " << wf0 << "\n";
+  std::cout << "<- wf1                           = " << wf1 << "\n";
+                                                 
+  std::cout << "-> agm(wf0, wf1)                 = " << eve::agm(wf0, wf1) << "\n";
+  std::cout << "-> agm[ignore_last(2)](wf0, wf1) = " << eve::agm[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> agm[wf0 != 0](wf0, wf1)       = " << eve::agm[wf0 != 0](wf0, wf1) << "\n";
 }

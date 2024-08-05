@@ -1,24 +1,15 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {1.0f, 0.5f, -3.0f, eve::inf(eve::as<float>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf               = " << pf << '\n'
-            << "-> rsqrt(pf)        = " << eve::rsqrt(pf) << '\n'
-            << "-> rsqrt[raw](pf)   = " << eve::rsqrt[eve::raw2](pf) << '\n'
-            << "-> rsqrt[pf > 0](pf)= " << eve::rsqrt[pf > 0](pf) << '\n';
-
-  float xf = 32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf               = " << xf << '\n'
-            << "-> rsqrt(xf)        = " << eve::rsqrt(xf) << '\n';
-
-  return 0;
+  std::cout << "<- wf0                        = " << wf0 << "\n";
+                                              
+  std::cout << "-> rsqrt(wf0)                 = " << eve::rsqrt(wf0) << "\n";
+  std::cout << "-> rsqrt[ignore_last(2)](wf0) = " << eve::rsqrt[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> rsqrt[wf0 != 0](wf0)       = " << eve::rsqrt[wf0 != 0](wf0) << "\n";
+  std::cout << "-> rsqrt[raw](wf0)            = " << eve::rsqrt[eve::raw](wf0) << "\n";
 }

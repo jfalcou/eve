@@ -1,37 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
-using wide_uit = eve::wide<std::uint16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {-0.0f, 2.0f, -3.0f, -32768.0f,
-                 0.0f, -2.0f, 3.0f, 32768.0f};
-  wide_it pi = { 0, 2, -3, -32768};
-  wide_uit pui = { 0, 2, 3, 32768};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                    = " << pf << '\n'
-            << "-> sign(pf)              = " << eve::sign(pf) << '\n'
-            << "-> sign[abs(pf) < 2](pf) = " << eve::sign[eve::abs(pf) < 2](pf) << '\n'
-            << "<- pi                    = " << pi << '\n'
-            << "<- pui                   = " << pui << '\n'
-            << "-> sign(pi)              = " << eve::sign(pi) << '\n'
-            << "-> sign(pui)             = " << eve::sign(pui) << '\n';
-
-  float        xf = -327.68f;
-  std::int16_t xi = -328;
-  std::uint8_t xui = 0;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf       = " << xf << '\n'
-            << "-> sign(xf) = " << eve::sign(xf) << '\n'
-            << "<- xi       = " << xi << '\n'
-            << "-> sign(xi) = " << eve::sign(xi) << '\n'
-            << "<- xui       = " << +xui << '\n'
-            << "-> sign(xui) = " << +eve::sign(xui) << '\n';
-  return 0;
+  std::cout << "<- wf0                       = " << wf0 << "\n";
+  std::cout << "<- wi0                       = " << wi0 << "\n";
+  std::cout << "<- wu0                       = " << wu0 << "\n";
+                                             
+  std::cout << "-> sign(wf0)                 = " << eve::sign(wf0) << "\n";
+  std::cout << "-> sign[ignore_last(2)](wf0) = " << eve::sign[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> sign[wf0 != 0](wf0)       = " << eve::sign[wf0 != 0](wf0) << "\n";
+  std::cout << "-> sign(wu0)                 = " << eve::sign(wu0) << "\n";
+  std::cout << "-> sign[ignore_last(2)](wu0) = " << eve::sign[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> sign[wu0 != 0](wu0)       = " << eve::sign[wu0 != 0](wu0) << "\n";
+  std::cout << "-> sign(wi0)                 = " << eve::sign(wi0) << "\n";
+  std::cout << "-> sign[ignore_last(2)](wi0) = " << eve::sign[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> sign[wi0 != 0](wi0)       = " << eve::sign[wi0 != 0](wi0) << "\n";
 }

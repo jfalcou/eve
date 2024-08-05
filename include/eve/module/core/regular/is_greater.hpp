@@ -21,7 +21,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
     {
-  //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
+//      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
     return EVE_DISPATCH_CALL(a, b);
     }
 
@@ -80,11 +80,13 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_greater.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto is_greater = functor<is_greater_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
-  // Required for if_else optimisation detections
+// Required for if_else optimisation detections
   using callable_is_greater_ = tag_t<is_greater>;
 }
 //These include are there because max must see is_greater

@@ -77,9 +77,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sum_of_prod.cpp}
+//================================================================================================
+  inline constexpr auto sum_of_prod = functor<sum_of_prod_t>;
+//================================================================================================
 //! @}
 //================================================================================================
- inline constexpr auto sum_of_prod = functor<sum_of_prod_t>;
 
   namespace detail
   {

@@ -68,9 +68,11 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/nb_values.cpp}
 //================================================================================================
   inline constexpr auto nb_values = functor<nb_values_t>;
+//================================================================================================
+//!  @godbolt{doc/core/nb_values.cpp}
+//================================================================================================
 
   namespace detail
   {

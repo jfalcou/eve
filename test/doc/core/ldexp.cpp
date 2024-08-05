@@ -1,30 +1,21 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using iT      = std::int32_t;
-using wide_it = eve::wide<iT, eve::fixed<4>>;
-using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_it qi = {12, 2, -2, 3 };
-  wide_ft pf = {1.0f, -1.0f, 0.0f, -2.0f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, 1, 2, 3, 4, 5, 6, 7};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                    = " << pf << '\n'
-            << "<- qi                    = " << qi << '\n'
-            << "-> ldexp[pf<0.0](pf, qi) = " << eve::ldexp[pf < 0.0](pf, qi) << '\n'
-            << "-> ldexp(pf, qi)         = " << eve::ldexp(pf, qi) << '\n';
+  std::cout << "<- wf0                      = " << wf0 << "\n";
+  std::cout << "<- wi0                      = " << wi0 << "\n";
+  std::cout << "<- wi1                      = " << wi1 << "\n";
 
-  float xf = 2, mxf = -2;
-  iT yi = 3;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf             = " << xf << '\n'
-            << "<- mxf            = " << mxf << '\n'
-            << "<- yi             = " << yi << '\n'
-            << "-> ldexp(xf, yi)  = " << eve::ldexp(xf, yi) << '\n'
-            << "-> ldexp(mxf, yi) = " << eve::ldexp(mxf, yi) << '\n';
-  return 0;
+  std::cout << "-> ldexp(wf0, wi0)                 = " << eve::ldexp(wf0, wi0) << "\n";
+  std::cout << "-> ldexp[ignore_last(2)](wf0, wi0) = " << eve::ldexp[eve::ignore_last(2)](wf0, 2*wi0) << "\n";
+  std::cout << "-> ldexp[wf0 != 0](wf0, wi0)       = " << eve::ldexp[wf0 != 0](wf0, wi0) << "\n";
+  std::cout << "-> ldexp(wf0, wi1)                 = " << eve::ldexp(wf0, wi1) << "\n";
+  std::cout << "-> ldexp[ignore_last(2)](wf0, wi1  = " << eve::ldexp[eve::ignore_last(2)](wf0, wi1) << "\n";
+  std::cout << "-> ldexp[wi1 != 2](wf0, wi1)        = " << eve::ldexp[wi1 != 2](wf0, wi1) << "\n";
 }

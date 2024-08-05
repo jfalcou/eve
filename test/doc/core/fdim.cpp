@@ -1,27 +1,30 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_it = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pf = {0, 1, -1, -eve::valmax(eve::as<float>())};
-  wide_it qf = {1, -1, 0, eve::valmax(eve::as<float>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                     = " << pf << '\n'
-            << "<- qf                     = " << qf << '\n'
-            << "-> fdim(pf, qf)           = " << eve::fdim(pf, qf) << '\n'
-            << "-> fdim[pf > qf](pf, qf)  = " << eve::fdim[pf > qf](pf, qf) << '\n';
-
-  float xf = -eve::valmax(eve::as<float>());
-  float yf = eve::valmax(eve::as<float>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf           = " << xf << '\n'
-            << "<- yf           = " << yf << '\n'
-            << "-> fdim(xf, yf) = " << eve::fdim(xf, yf) << '\n'
-            << '\n';
-  return 0;
+  std::cout << "<- wf0                            = " << wf0 << "\n";
+  std::cout << "<- wf1                            = " << wf1 << "\n";
+  std::cout << "<- wi0                            = " << wi0 << "\n";
+  std::cout << "<- wi1                            = " << wi1 << "\n";
+  std::cout << "<- wu0                            = " << wu0 << "\n";
+  std::cout << "<- wu1                            = " << wu1 << "\n";
+                                                  
+  std::cout << "-> fdim(wf0, wf1)                 = " << eve::fdim(wf0, wf1) << "\n";
+  std::cout << "-> fdim[ignore_last(2)](wf0, wf1) = " << eve::fdim[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> fdim[wf0 != 0](wf0, wf1)       = " << eve::fdim[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> fdim(wu0, wu1)                 = " << eve::fdim(wu0, wu1) << "\n";
+  std::cout << "-> fdim[ignore_last(2)](wu0, wu1) = " << eve::fdim[eve::ignore_last(2)](wu0, wu1) << "\n";
+  std::cout << "-> fdim[wu0 != 0](wu0, wu1)       = " << eve::fdim[wu0 != 0](wu0, wu1) << "\n";
+  std::cout << "-> fdim(wi0, wi1)                 = " << eve::fdim(wi0, wi1) << "\n";
+  std::cout << "-> fdim[ignore_last(2)](wi0, wi1) = " << eve::fdim[eve::ignore_last(2)](wi0, wi1) << "\n";
+  std::cout << "-> fdim[wi0 != 0](wi0, wi1)       = " << eve::fdim[wi0 != 0](wi0, wi1) << "\n";
 }

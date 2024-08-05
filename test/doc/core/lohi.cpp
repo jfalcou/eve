@@ -1,40 +1,18 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_uit = eve::wide<std::uint16_t, eve::fixed<4>>;
-using wide_ui8t= eve::wide<std::uint8_t , eve::fixed<8>>;
 
 int main()
 {
-  wide_uit i32 = {0, 1, 2, 3}; //, 65536+1, 65536+8, 65536+16, 65536+32};
-  wide_ui8t i8  = {0, 1, 2, 3, 16+0, 16+2, 16+4, 16+8};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  auto [m, e]    = eve::lohi(i32);
-  auto [m8, e8]  = eve::lohi(i8);
-  std::cout << "---- simd (hexadecimal output)" << '\n'
-            << std::hex
-            << "<- i32             = " << i32 << '\n'
-            << "-> lohi(i32)       = [" << '\n'
-            << "                     " << m << ", \n"
-            << "                     " << e << '\n'
-            << "                     ]\n"
-            << std::hex << "<- i8  = " << i8 << '\n'
-            << "-> lohi(i8 )       = [" << '\n'
-            << "                     " << m8 << ", \n"
-            << "                     " << e8 << '\n'
-            << "                     ]\n";
-
-  std::int32_t x = 100000;
-  std::int8_t  y = 100;
-  auto [sm0, se0] =  eve::lohi(x);
-  auto [sm1, se1] =  eve::lohi(y);
-  std::cout << "---- scalar (hexadecimal output)" << '\n'
-            <<  std::hex << "<- x        = " << x << '\n'
-            << "-> lohi(x)  = [" << sm0 << ", " << se0 << "]\n"
-            << "<- y        = " << y << '\n'
-            << "-> lohi(y)  = [" << int(sm1) << ", " << int(se1) << "]\n"
-
-    ;
-  return 0;
+  std::cout << "<- wf0       = " << wf0 << "\n";
+  std::cout << "<- wi0       = " << wi0 << "\n";
+  std::cout << "<- wu0       = " << wu0 << "\n";
+                             
+  std::cout << "-> lohi(wf0) = " << eve::lohi(wf0) << "\n";
+  std::cout << "-> lohi(wu0) = " << eve::lohi(wu0) << "\n";
+  std::cout << "-> lohi(wi0) = " << eve::lohi(wi0) << "\n";
 }

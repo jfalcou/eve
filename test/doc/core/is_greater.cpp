@@ -1,27 +1,31 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f};
-  wide_ft qf = {1.0f, -1.0f, -1.0f, -2.0f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                             = " << pf << '\n'
-            << "<- qf                             = " << qf << '\n'
-            << "-> is_greater(pf, qf)             = " << eve::is_greater(pf, qf) << '\n'
-            << "-> is_greater[definitely](pf, qf) = " << eve::is_greater[eve::definitely](pf, qf) << '\n'
-            << "-> is_greater[pf > 0](pf, qf)     = " << eve::is_greater[pf > 0](pf, qf) << '\n';
-
-  float xf = 1.0f;
-  float yf = 2.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "<- yf              = " << yf << '\n'
-            << "-> is_greater(xf, yf) = " << eve::is_greater(xf, yf) << '\n';
-  return 0;
+  std::cout << "<- wf0                                  = " << wf0 << "\n";
+  std::cout << "<- wf1                                  = " << wf1 << "\n";
+  std::cout << "<- wi0                                  = " << wi0 << "\n";
+  std::cout << "<- wi1                                  = " << wi1 << "\n";
+  std::cout << "<- wu0                                  = " << wu0 << "\n";
+  std::cout << "<- wu1                                  = " << wu1 << "\n";
+                                                        
+  std::cout << "-> is_greater(wf0, wf1)                 = " << eve::is_greater(wf0, wf1) << "\n";
+  std::cout << "-> is_greater[ignore_last(2)](wf0, wf1) = " << eve::is_greater[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> is_greater[wf0 != 0](wf0, wf1)       = " << eve::is_greater[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> is_greater[definitely](wf0, wf1)     = " << eve::is_greater[eve::definitely](wf0, wf1) << "\n";
+  std::cout << "-> is_greater(wu0, wu1)                 = " << eve::is_greater(wu0, wu1) << "\n";
+  std::cout << "-> is_greater[ignore_last(2)](wu0, wu1) = " << eve::is_greater[eve::ignore_last(2)](wu0, wu1) << "\n";
+  std::cout << "-> is_greater[wu0 != 0](wu0, wu1)       = " << eve::is_greater[wu0 != 0](wu0, wu1) << "\n";
+  std::cout << "-> is_greater(wi0, wi1)                 = " << eve::is_greater(wi0, wi1) << "\n";
+  std::cout << "-> is_greater[ignore_last(2)](wi0, wi1) = " << eve::is_greater[eve::ignore_last(2)](wi0, wi1) << "\n";
+  std::cout << "-> is_greater[wi0 != 0](wi0, wi1)       = " << eve::is_greater[wi0 != 0](wi0, wi1) << "\n";
 }

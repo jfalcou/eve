@@ -1,38 +1,28 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using eve::saturated;
-using eve::numeric;
-using eve::pedantic;
-using eve::wide;
-using eve::as;
-using std::int32_t;
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 1.0f,  1.0f, -2.0f, 2.0f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f,  -3.0f,
-                eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                        = " << pf << '\n'
-            << "<- qf                        = " << qf << '\n'
-            << "-> absmin(pf, qf)            = " << eve::absmin(pf, qf) << '\n'
-            << "-> absmin[pedantic](pf, qf)  = " << eve::absmin[eve::pedantic](pf, qf) << '\n'
-            << "-> absmin[numeric](pf, qf)   = " << eve::absmin[eve::numeric](pf, qf) << '\n';
-
-  float xf = -4.0f;
-  float yf = 1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf                        = " << xf << '\n'
-            << "<- yf                        = " << yf << '\n'
-            << "-> absmin(xf, yf)            = " << eve::absmin(xf, yf) << '\n'
-            << "-> absmin[pedantic](xf, yf)  = " << eve::absmin[eve::pedantic](xf, yf) << '\n'
-            << "-> absmin[numeric](xf, yf)   = " << eve::absmin[eve::numeric](xf, yf) << '\n';
-   return 0;
+  std::cout << "<- wf0                              = " << wf0 << "\n";
+  std::cout << "<- wf1                              = " << wf1 << "\n";
+  std::cout << "<- wi0                              = " << wi0 << "\n";
+  std::cout << "<- wi1                              = " << wi1 << "\n";
+  std::cout << "<- wu0                              = " << wu0 << "\n";
+  std::cout << "<- wu1                              = " << wu1 << "\n";
+                                                    
+  std::cout << "-> absmin(wf0, wf1)                 = " << eve::absmin(wf0, wf1) << "\n";
+  std::cout << "-> absmin[ignore_last(2)](wf0, wf1) = " << eve::absmin[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> absmin[wf0 != 0](wf0, wf1)       = " << eve::absmin[wf0 != 0](wf0, wf1) << "\n";
+  std::cout << "-> absmin[pedantic](wf0, wf1)       = " << eve::absmin[eve::pedantic](wf0, wf1) << "\n";
+  std::cout << "-> absmin[numeric ](wf0, wf1)       = " << eve::absmin[eve::numeric ](wf0, wf1) << "\n";
+  std::cout << "-> absmin(wu0, wu1)                 = " << eve::absmin(wu0, wu1) << "\n";
+  std::cout << "-> absmin(wi0, wi1)                 = " << eve::absmin(wi0, wi1) << "\n";
 }

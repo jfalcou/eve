@@ -88,9 +88,11 @@ namespace eve
 //!
 //!  @godbolt{doc/core/absmin.cpp}
 //!
+//================================================================================================
+  inline constexpr auto absmin = functor<absmin_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto absmin = functor<absmin_t>;
 }
 
 #include <eve/module/core/regular/impl/absmin.hpp>

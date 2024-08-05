@@ -1,21 +1,24 @@
-#include <eve/wide.hpp>
+// revision 0
+#include <eve/module/core.hpp>
 #include <iostream>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_it pi = {14, 1, 3, 0};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                  = " << pi << '\n'
-            << "-> bit_not(pi)         = " << eve::bit_not(pi) << '\n'
-            << "-> bit_not[pi > 2](pi) = " << eve::bit_not[pi > 2](pi) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> bit_not(xf) = " << eve::bit_not(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                          = " << wf0 << "\n";
+  std::cout << "<- wi0                          = " << wi0 << "\n";
+  std::cout << "<- wu0                          = " << wu0 << "\n";
+                                                
+  std::cout << "-> bit_not(wf0)                 = " << eve::bit_not(wf0) << "\n";
+  std::cout << "-> bit_not[ignore_last(2)](wf0) = " << eve::bit_not[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> bit_not[wf0 != 0](wf0)       = " << eve::bit_not[wf0 != 0](wf0) << "\n";
+  std::cout << "-> bit_not(wu0)                 = " << eve::bit_not(wu0) << "\n";
+  std::cout << "-> bit_not[ignore_last(2)](wu0) = " << eve::bit_not[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> bit_not[wu0 != 0](wu0)       = " << eve::bit_not[wu0 != 0](wu0) << "\n";
+  std::cout << "-> bit_not(wi0)                 = " << eve::bit_not(wi0) << "\n";
+  std::cout << "-> bit_not[ignore_last(2)](wi0) = " << eve::bit_not[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> bit_not[wi0 != 0](wi0)       = " << eve::bit_not[wi0 != 0](wi0) << "\n";
 }

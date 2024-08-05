@@ -1,27 +1,18 @@
+// revision 2 TODO investigate last result
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_t = eve::wide<float, eve::fixed<4>>;
 
 int main()
 {
-  wide_t xi = {2, -3, 0, 4};
-  wide_t lo = {3, -2, -10, 0};
-  wide_t hi = {4, -1, 0, 5};
+  eve::wide wi = {2, -3, 0, 4};
+  eve::wide mi = {3, -2, -10, 0};
+  eve::wide ma = {4, -1, 0, 5};
 
-  std::cout << "---- ximd" << '\n'
-            << " <- xi                          = " << xi << '\n'
-            << " <- lo                          = " << lo << '\n'
-            << " <- hi                          = " << hi << '\n'
-            << " -> clamp(xi, lo, hi)           = " << eve::clamp(xi, lo, hi) << '\n'
-            << " -> clamp[xi > -2](xi, lo, hi)  = " << eve::clamp[xi > -2](xi, lo, hi) << '\n';
+  std::cout << "<- wi                                 = " << wi << "\n";
+  std::cout << "<- mi                                 = " << mi << "\n";
+  std::cout << "<- ma                                 = " << ma << "\n";
 
-  float sxi = 3, slo = 3, shi = 4;
-  std::cout << "---- scalar" << '\n'
-            << " sxi                      = " << sxi << '\n'
-            << " slo                      = " << slo << '\n'
-            << " shi                      = " << shi << '\n'
-            << " -> clamp(sxii, slo, shi) = " << eve::clamp(sxi, slo, shi) << '\n';
-  return 0;
+  std::cout << "-> clamp(wi, mi, ma)                  = " << eve::clamp(wi, mi, ma)  << "\n";
+  std::cout << "-> clamp[ignore_last(2)](wi, mi, ma)  = " << eve::clamp[eve::ignore_last(2)](wi, mi, ma)  << "\n";
+  std::cout << "-> clamp[wi != -4.0f](wi, mi, ma)     = " << eve::clamp[wi != -2.0f](wi, mi, ma)  << "\n";
 }

@@ -1,27 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_it pi = {14, 1, 3, 0, 16, 23000, 0, 27};
-  wide_ft pf = {14.0, 1.0, -0.0, 0.0, 16.0, 23000.0, eve::inf(eve::as<float>()), 27.0};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                   = " << pi << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "-> bit_mask(pi)         = " << eve::bit_mask(pi) << '\n'
-            << "-> bit_mask(pf)         = " << eve::bit_mask(pf) << '\n'
-            << "-> bit_mask[pi > 4](pi) = " << eve::bit_mask[pi > 4](pi) << '\n'
-            << "-> bit_mask[pf > 4](pf) = " << eve::bit_mask[pf > 4](pf) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf           = " << xf << '\n'
-            << "-> bit_mask(xf) = " << eve::bit_mask(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                           = " << wf0 << "\n";
+  std::cout << "<- wi0                           = " << wi0 << "\n";
+  std::cout << "<- wu0                           = " << wu0 << "\n";
+                                                 
+  std::cout << "-> bit_mask(wf0)                 = " << eve::bit_mask(wf0) << "\n";
+  std::cout << "-> bit_mask[ignore_last(2)](wf0) = " << eve::bit_mask[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> bit_mask[wf0 != 0](wf0)       = " << eve::bit_mask[wf0 != 0](wf0) << "\n";
+  std::cout << "-> bit_mask(wu0)                 = " << eve::bit_mask(wu0) << "\n";
+  std::cout << "-> bit_mask[ignore_last(2)](wu0) = " << eve::bit_mask[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> bit_mask[wu0 != 0](wu0)       = " << eve::bit_mask[wu0 != 0](wu0) << "\n";
+  std::cout << "-> bit_mask(wi0)                 = " << eve::bit_mask(wi0) << "\n";
+  std::cout << "-> bit_mask[ignore_last(2)](wi0) = " << eve::bit_mask[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> bit_mask[wi0 != 0](wi0)       = " << eve::bit_mask[wi0 != 0](wi0) << "\n";
 }

@@ -1,22 +1,14 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 
 int main()
 {
-  wide_it pi = {14, 1, 3, 7, 20, 23000, 0, 27};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                      = " << pi << '\n'
-            << "-> firstbitset(pi)         = " << eve::firstbitset(pi) << '\n'
-            << "-> firstbitset[pi > 4](pi) = " << eve::firstbitset[pi > 4](pi) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> firstbitset(xf) = " << eve::firstbitset(xf) << '\n';
-  return 0;
+  std::cout << "<- wi0                              = " << wi0 << "\n";
+                                                    
+  std::cout << "-> firstbitset(wi0)                 = " << eve::firstbitset(wi0) << "\n";
+  std::cout << "-> firstbitset[ignore_last(2)](wi0) = " << eve::firstbitset[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> firstbitset[wi0 != 0](wi0)       = " << eve::firstbitset[wi0 != 0](wi0) << "\n";
 }

@@ -1,25 +1,18 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
 
 int main()
 {
-  using wf_t = eve::wide<double, eve::fixed<4>>;
-  wf_t pf = {3, 2.5, -32.7, 1327.43}, qf = {4.2, 1.5, -100.834, 10.02}, tf = {0, 0.1, -3, 1.0};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};
 
-  std::cout << "---- simd" << '\n'
-            << " <- pf                       = " << pf << '\n'
-            << " <- qf                       = " << qf << '\n'
-            << " <- tf                       = " << tf << '\n'
-            << " -> lerp[pf > 0](pf, qf, tf) = " << eve::lerp[pf > 0](pf, qf, tf) << '\n'
-            << " -> lerp(pf, qf, tf)         = " << eve::lerp(pf, qf, tf) << '\n';
-
-  double x = 10000, y = 32700, t = 0.5;
-
-  std::cout << "---- scalar" << '\n'
-            << " <- x             = " << x << '\n'
-            << " <- y             = " << y << '\n'
-            << " <- t             = " << t  << '\n'
-            << " -> lerp(x, y, t) = " << eve::lerp(x, y, t) << '\n';
-  return 0;
+  std::cout << "<- wf0                                 = " << wf0 << "\n";
+  std::cout << "<- wf1                                 = " << wf1 << "\n";
+  std::cout << "<- wf2                                 = " << wf2 << "\n";
+                                                       
+  std::cout << "-> lerp(wf0, wf1, wf2)                 = " << eve::lerp(wf0, wf1, wf2) << "\n";
+  std::cout << "-> lerp[ignore_last(2)](wf0, wf1, wf2) = " << eve::lerp[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
+  std::cout << "-> lerp[wf0 != 0](wf0, wf1, wf2)       = " << eve::lerp[wf0 != 0](wf0, wf1, wf2) << "\n";
 }

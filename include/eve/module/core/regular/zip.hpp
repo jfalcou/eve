@@ -42,50 +42,52 @@ namespace eve
     struct filler { EVE_FORCEINLINE auto operator()(auto in, auto *ptr) const { *ptr = in; } };
   };
 
-  // TODO DOC
-  //================================================================================================
-  //! @addtogroup core_simd
-  //! @{
-  //!   @var zip
-  //!   @brief Callable for SoA value constructions.
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!      constexpr auto zip(scalar_value auto... parts)               noexcept; //1
-  //!      constexpr auto zip(as<Target> t, scalar_value auto... parts) noexcept; //2
-  //!      constexpr auto zip()(simd_value auto... parts)               noexcept; //3
-  //!      constexpr auto zip(as<Target> t, simd_value auto... parts)   noexcept; //4
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!   * `parts`: Variadic list of [value](@ref eve::value) to zip together.
-  //!   * `t`:   [Type wrapper](@ref eve::as) instance embedding the type to construct from `parts`.
-  //!
-  //!   **Return value**
-  //!     1. a kumi::tuple made from all the scalars passed as argument.
-  //!     2. a `Target` instance made from all the scalars passed as argument.
-  //!     3. a kumi::tuple made from all the SIMD values passed as argument.
-  //!     4. a `Target` instance made from all the SIMD values passed as argument.
-  //!
-  //!   @groupheader{Example}
-  //!   @godbolt{doc/core/zip.cpp}
-  //!
-  //! @}
-  //================================================================================================
+// TODO DOC
+//================================================================================================
+//! @addtogroup core_simd
+//! @{
+//!   @var zip
+//!   @brief Callable for SoA value constructions.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!      constexpr auto zip(scalar_value auto... parts)               noexcept; //1
+//!      constexpr auto zip(as<Target> t, scalar_value auto... parts) noexcept; //2
+//!      constexpr auto zip()(simd_value auto... parts)               noexcept; //3
+//!      constexpr auto zip(as<Target> t, simd_value auto... parts)   noexcept; //4
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!   * `parts`: Variadic list of [value](@ref eve::value) to zip together.
+//!   * `t`:   [Type wrapper](@ref eve::as) instance embedding the type to construct from `parts`.
+//!
+//!   **Return value**
+//!     1. a kumi::tuple made from all the scalars passed as argument.
+//!     2. a `Target` instance made from all the scalars passed as argument.
+//!     3. a kumi::tuple made from all the SIMD values passed as argument.
+//!     4. a `Target` instance made from all the SIMD values passed as argument.
+//!
+//!   @groupheader{Example}
+//!   @godbolt{doc/core/zip.cpp}
+//!
+//================================================================================================
   inline constexpr auto zip = functor<zip_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
-  /// @brief Type helper to compute tuple-like result-type
+/// @brief Type helper to compute tuple-like result-type
   template<typename... Vs>
   using zipped = eve::result_t<zip,Vs...>;
 }

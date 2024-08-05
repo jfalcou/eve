@@ -1,24 +1,13 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::logical<eve::wide<float, eve::fixed<4>>>;
 
 int main()
 {
-  eve::logical<float>  xf = true;
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> count_true(xf)  = " << eve::count_true(xf) << '\n';
-
-  wide_ft pf = {true,false,true,false};
-
-  std::cout << "---- simd" << '\n'
-            << "<- pf                              = " << pf << '\n'
-            << "-> count_true(pf)                  = " << eve::count_true(pf) << '\n'
-            << "-> count_true[ignore_first(2)](pf) = " << eve::count_true[eve::ignore_first(2)](pf) << '\n';
-
-
-  return 0;
+  std::cout << "<- wu0                                               = " << wu0 << "\n";
+                                                                     
+  std::cout << "-> count_true(wu0 <= maximum(wu0)/2)                 = " << eve::count_true(wu0 <= eve::maximum(wu0)/2) << "\n";
+  std::cout << "-> count_true[ignore_last(2)](wu0 <= maximum(wu0)/2) = " << eve::count_true[eve::ignore_last(2)](wu0 <= eve::maximum(wu0)/2) << "\n";
 }

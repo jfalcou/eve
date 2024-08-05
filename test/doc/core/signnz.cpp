@@ -1,31 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
-using wide_it = eve::wide<std::int16_t, eve::fixed<4>>;
 
 int main()
 {
-  wide_ft pf = {-0.0f, 2.0f, -3.0f, -32768.0f,
-                 0.0f, -2.0f, 3.0f, 32768.0f};
-  wide_it pi = { 0, 2, -3, -32768};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "-> signnz(pf)           = " << eve::signnz(pf) << '\n'
-            << "-> signnz(pedantic2](pf) = " << eve::signnz[eve::pedantic2](pf) << '\n'
-            << "-> signnz[abs(pf)<2](pf)= " << eve::signnz[eve::abs(pf)<2](pf) << '\n'
-            << "<- pi                   = " << pi << '\n'
-            << "-> signnz(pi)           = " << eve::signnz(pi) << '\n';
-
-  float        xf = -327.68f;
-  std::int16_t xi = -328;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf         = " << xf << '\n'
-            << "-> signnz(xf) = " << eve::signnz(xf) << '\n'
-            << "<- xi         = " << xi << '\n'
-            << "-> signnz(xi) = " << eve::signnz(xi) << '\n';
-  return 0;
+  std::cout << "<- wf0                         = " << wf0 << "\n";
+  std::cout << "<- wi0                         = " << wi0 << "\n";
+  std::cout << "<- wu0                         = " << wu0 << "\n";
+                                               
+  std::cout << "-> signnz(wf0)                 = " << eve::signnz(wf0) << "\n";
+  std::cout << "-> signnz[ignore_last(2)](wf0) = " << eve::signnz[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> signnz[wf0 != 0](wf0)       = " << eve::signnz[wf0 != 0](wf0) << "\n";
+  std::cout << "-> signnz(wu0)                 = " << eve::signnz(wu0) << "\n";
+  std::cout << "-> signnz[ignore_last(2)](wu0) = " << eve::signnz[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> signnz[wu0 != 0](wu0)       = " << eve::signnz[wu0 != 0](wu0) << "\n";
+  std::cout << "-> signnz(wi0)                 = " << eve::signnz(wi0) << "\n";
+  std::cout << "-> signnz[ignore_last(2)](wi0) = " << eve::signnz[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> signnz[wi0 != 0](wi0)       = " << eve::signnz[wi0 != 0](wi0) << "\n";
 }

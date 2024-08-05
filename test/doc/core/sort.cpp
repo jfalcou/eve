@@ -1,44 +1,23 @@
+// revision 1
 #include <eve/module/core.hpp>
-#include <tts/tts.hpp>
-
-
-
-void basic()
-{
-  using w_t = eve::wide<std::uint32_t, eve::fixed<4>>;
-
-  w_t x{2, 3, 1, 4};
-
-  TTS_EXPECT(eve::all(w_t{1, 2, 3, 4} == eve::sort(x)));
-  TTS_EXPECT(eve::all(w_t{1, 2, 3, 4} == eve::sort(x, eve::is_less)));
-  TTS_EXPECT(eve::all(w_t{4, 3, 2, 1} == eve::sort(x, eve::is_greater)));
-}
-
-void sort_by_key()
-{
-  using k_v = kumi::tuple<int, double>;
-  using w_t = eve::wide<k_v, eve::fixed<4>>;
-
-  w_t x {
-    k_v{ 12, 0.3 },
-    k_v{ 4,  0.1 },
-    k_v{ 8,  0.2 },
-    k_v{ 2,  0.3 },
-  };
-  w_t expected {
-    k_v{ 2,  0.3 },
-    k_v{ 4,  0.1 },
-    k_v{ 8,  0.2 },
-    k_v{ 12, 0.3 },
-  };
-  w_t x_sorted = eve::sort(x, [](w_t k_v0, w_t k_v1) {
-    return get<0>(k_v0) < get<0>(k_v1);
-  });
-  TTS_EXPECT(eve::all(expected == x_sorted));
-}
+#include <iostream>
 
 int main()
 {
-  basic();
-  sort_by_key();
+  auto myless =  [](auto z1, auto z2){ return z1 > z2; };
+
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
+
+  std::cout << "<- wf0               = " << wf0 << "\n";
+  std::cout << "<- wi0               = " << wi0 << "\n";
+  std::cout << "<- wu0               = " << wu0 << "\n";
+
+  std::cout << "-> sort(wf0)         = " << eve::sort(wf0) << "\n";
+  std::cout << "-> sort(wf0, myless) = " << eve::sort(wf0, myless)  << "\n";
+  std::cout << "-> sort(wu0)         = " << eve::sort(wu0) << "\n";
+  std::cout << "-> sort(wu0, myless) = " << eve::sort(wu0, myless)  << "\n";
+  std::cout << "-> sort(wi0)         = " << eve::sort(wi0) << "\n";
+  std::cout << "-> sort(wi0, myless) = " << eve::sort(wi0, myless)  << "\n";
 }

@@ -1,22 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_it = eve::wide<std::uint32_t, eve::fixed<8>>;
 
 int main()
 {
-  wide_it pi = {14, 1, 3, 7, 20, 23000, 0, 27};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                    = " << pi << '\n'
-            << "-> bit_floor(pi)         = " << eve::bit_floor(pi) << '\n'
-            << "-> bit_floor[pi > 4](pi) = " << eve::bit_floor[pi > 4](pi) << '\n';
-
-  std::uint32_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf            = " << xf << '\n'
-            << "-> bit_floor(xf) = " << eve::bit_floor(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                            = " << wf0 << "\n";
+  std::cout << "<- wi0                            = " << wi0 << "\n";
+  std::cout << "<- wu0                            = " << wu0 << "\n";
+                                                  
+  std::cout << "-> bit_floor(wf0)                 = " << eve::bit_floor(wf0) << "\n";
+  std::cout << "-> bit_floor[ignore_last(2)](wf0) = " << eve::bit_floor[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> bit_floor[wf0 != 0](wf0)       = " << eve::bit_floor[wf0 != 0](wf0) << "\n";
+  std::cout << "-> bit_floor(wu0)                 = " << eve::bit_floor(wu0) << "\n";
+  std::cout << "-> bit_floor[ignore_last(2)](wu0) = " << eve::bit_floor[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> bit_floor[wu0 != 0](wu0)       = " << eve::bit_floor[wu0 != 0](wu0) << "\n";
+  std::cout << "-> bit_floor(wi0)                 = " << eve::bit_floor(wi0) << "\n";
+  std::cout << "-> bit_floor[ignore_last(2)](wi0) = " << eve::bit_floor[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> bit_floor[wi0 != 0](wi0)       = " << eve::bit_floor[wi0 != 0](wi0) << "\n";
 }

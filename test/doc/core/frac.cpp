@@ -1,30 +1,27 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-#include <iomanip>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, -1.3f, -0.0f, 0.0f,
-                2.0f,  eve::prev(2.0f, 4), eve::inf(eve::as<float>()), eve::nan(eve::as<float>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << std::setprecision(8) << '\n'
-            << "<- pf                         = " << pf << '\n'
-            << "-> frac(pf)                   = " << eve::frac(pf) << '\n'
-            << "-> frac[pf!=2.3f](pf)         = " << eve::frac[pf !=  2.3f](pf) << '\n'
-            << "-> frac[pedantic](pf)         = " << eve::frac[eve::pedantic](pf)<< '\n'
-            << "-> frac[raw](pf)              = " << eve::frac[eve::raw](pf)<< '\n'
-            << "-> frac[almost](pf)           = " << eve::frac[eve::almost](pf)<< '\n'
-            << "-> frac[almost = 1](pf)       = " << eve::frac[eve::almost = 1](pf)<< '\n'
-            << "-> frac[almost][pedantic](pf) = " << eve::frac[eve::almost][eve::pedantic](pf)<< '\n'
-    ;
-
-  float xf = -327.68f;
-
-  std::cout << "---- scalar" << std::setprecision(8) << '\n'
-            << "<- xf             = " << xf << '\n'
-            << "-> frac(xf)       = " << eve::frac(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                       = " << wf0 << "\n";
+  std::cout << "<- wi0                       = " << wi0 << "\n";
+  std::cout << "<- wu0                       = " << wu0 << "\n";
+                                             
+  std::cout << "-> frac(wf0)                 = " << eve::frac(wf0) << "\n";
+  std::cout << "-> frac[ignore_last(2)](wf0) = " << eve::frac[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> frac[wf0 != 0](wf0)       = " << eve::frac[wf0 != 0](wf0) << "\n";
+  std::cout << "-> frac[raw](wf0)            = " << eve::frac[eve::raw](wf0) << "\n";
+  std::cout << "-> frac[pedantic](wf0)       = " << eve::frac[eve::pedantic](wf0) << "\n";
+  std::cout << "-> frac[almost](wf0)         = " << eve::frac[eve::almost](wf0) << "\n";
+  std::cout << "-> frac(wu0)                 = " << eve::frac(wu0) << "\n";
+  std::cout << "-> frac[ignore_last(2)](wu0) = " << eve::frac[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> frac[wu0 != 0](wu0)       = " << eve::frac[wu0 != 0](wu0) << "\n";
+  std::cout << "-> frac(wi0)                 = " << eve::frac(wi0) << "\n";
+  std::cout << "-> frac[ignore_last(2)](wi0) = " << eve::frac[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> frac[wi0 != 0](wi0)       = " << eve::frac[wi0 != 0](wi0) << "\n";
 }

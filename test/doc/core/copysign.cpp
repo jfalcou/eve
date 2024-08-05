@@ -1,28 +1,16 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {0.0f, 1.0f, -1.0f, -2.0f, 2.0f,
-                eve::inf(eve::as<float>()), eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
-  wide_ft qf = {4.0f, 1.0f, -1.0f,  0.0f,  -0.0f,
-                eve::nan(eve::as<float>()),  -eve::nan(eve::as<float>()), -2.0f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                      = " << pf << '\n'
-            << "<- qf                      = " << qf << '\n'
-            << "-> copysign(pf, qf)        = " << eve::copysign(pf, qf) << '\n'
-            << "-> copysign[pf<qf](pf, qf) = " << eve::copysign[pf<qf](pf, qf) << '\n';
-
-  float xf = 4.0f;
-  float yf = -1.0f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf               = " << xf << '\n'
-            << "<- yf               = " << yf << '\n'
-            << "-> copysign(xf, yf) = " << eve::copysign(xf, yf) << '\n';
-  return 0;
+  std::cout << "<- wf0                                = " << wf0 << "\n";
+  std::cout << "<- wf1                                = " << wf1 << "\n";
+                                                      
+  std::cout << "-> copysign(wf0, wf1)                 = " << eve::copysign(wf0, wf1) << "\n";
+  std::cout << "-> copysign[ignore_last(2)](wf0, wf1) = " << eve::copysign[eve::ignore_last(2)](wf0, wf1) << "\n";
+  std::cout << "-> copysign[wf0 != 0](wf0, wf1)       = " << eve::copysign[wf0 != 0](wf0, wf1) << "\n";
 }

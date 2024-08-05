@@ -1,28 +1,18 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_uit = eve::wide<std::uint32_t, eve::fixed<8>>;
-using wide_ui8t= eve::wide<std::uint8_t , eve::fixed<8>>;
 
 int main()
 {
-  wide_uit i32 = {0, 1, 2, 3, 65536+1, 65536+8, 65536+16, 65536+32};
-  wide_ui8t i8 = {0, 1, 2, 3, 16+0, 16+2, 16+4, 16+8};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd (hexadecimal output)" << '\n'
-            << std::hex
-            << "<- i32             = " << i32 << '\n'
-            << "-> hi(i32)         = " << eve::hi(i32)   << '\n'
-            << std::hex << "<- i8  = " << i8  << '\n'
-            << "-> hi(i8 )         = " << eve::hi(i8)  << '\n';
-
-  std::int32_t x = 100000;
-  std::int8_t  y = 100;
-  std::cout << "---- scalar (hexadecimal output)" << '\n'
-            <<  std::hex << "<- x      = " << x   << '\n'
-            << "-> hi(x)  = " << eve::hi(x) << '\n'
-            << "<- y      = " << y   << '\n'
-            << "-> hi(y)  = " << int(eve::hi(y)) << '\n';
-  return 0;
+  std::cout << "<- wf0     = " << wf0 << "\n";
+  std::cout << "<- wi0     = " << wi0 << "\n";
+  std::cout << "<- wu0     = " << wu0 << "\n";
+                           
+  std::cout << "-> hi(wf0) = " << eve::hi(wf0) << "\n";
+  std::cout << "-> hi(wu0) = " << eve::hi(wu0) << "\n";
+  std::cout << "-> hi(wi0) = " << eve::hi(wi0) << "\n";
 }

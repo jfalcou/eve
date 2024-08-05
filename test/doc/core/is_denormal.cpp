@@ -1,27 +1,17 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {0.0f,1.0f, -1.0f, -2.0f,
-                eve::mindenormal(eve::as<float>()), eve::inf(eve::as<float>()),
-                eve::minf(eve::as<float>()), eve::nan(eve::as<float>())};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf              = " << pf << '\n'
-            << "-> is_denormal(pf) = " << eve::is_denormal(pf) << '\n'
-            << "-> is_denormal[pf > 0](pf) = " << eve::is_denormal[pf > 0](pf) << '\n';
- 
-  float xf = 1.0f;
-  float yf = eve::mindenormal(eve::as<float>());
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << xf << '\n'
-            << "-> is_denormal(xf) = " << eve::is_denormal(xf) << '\n'
-            << "<- yf              = " << yf << '\n'
-            << "-> is_denormal(yf) = " << eve::is_denormal(yf) << '\n';
-  return 0;
+  std::cout << "<- wf0                              = " << wf0 << "\n";
+  std::cout << "<- wi0                              = " << wi0 << "\n";
+                                                    
+  std::cout << "-> is_denormal(wf0)                 = " << eve::is_denormal(wf0) << "\n";
+  std::cout << "-> is_denormal[ignore_last(2)](wf0) = " << eve::is_denormal[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> is_denormal[wf0 != 0](wf0)       = " << eve::is_denormal[wf0 != 0](wf0) << "\n";
+  std::cout << "-> is_denormal(wi0)                 = " << eve::is_denormal(wi0) << "\n";
 }

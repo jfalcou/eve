@@ -1,22 +1,24 @@
+// revision 0
 #include <eve/module/core.hpp>
-#include <eve/wide.hpp>
 #include <iostream>
-
-using wide_ft = eve::wide<float, eve::fixed<8>>;
 
 int main()
 {
-  wide_ft pf = {-1.0f, -1.3f, -1.5f, -1.7f, 2.0f, 2.3f, 2.5f, 2.7f};
+  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pf                   = " << pf << '\n'
-            << "-> nearest(pf)          = " << eve::nearest(pf) << '\n'
-            << "-> nearest[pf > -1](pf) = " << eve::nearest[pf > -1](pf) << '\n';
-
-  float xf = -32.768f;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf          = " << xf << '\n'
-            << "-> nearest(xf) = " << eve::nearest(xf) << '\n';
-  return 0;
+  std::cout << "<- wf0                          = " << wf0 << "\n";
+  std::cout << "<- wi0                          = " << wi0 << "\n";
+  std::cout << "<- wu0                          = " << wu0 << "\n";
+                                                
+  std::cout << "-> nearest(wf0)                 = " << eve::nearest(wf0) << "\n";
+  std::cout << "-> nearest[ignore_last(2)](wf0) = " << eve::nearest[eve::ignore_last(2)](wf0) << "\n";
+  std::cout << "-> nearest[wf0 != 0](wf0)       = " << eve::nearest[wf0 != 0](wf0) << "\n";
+  std::cout << "-> nearest(wu0)                 = " << eve::nearest(wu0) << "\n";
+  std::cout << "-> nearest[ignore_last(2)](wu0) = " << eve::nearest[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> nearest[wu0 != 0](wu0)       = " << eve::nearest[wu0 != 0](wu0) << "\n";
+  std::cout << "-> nearest(wi0)                 = " << eve::nearest(wi0) << "\n";
+  std::cout << "-> nearest[ignore_last(2)](wi0) = " << eve::nearest[eve::ignore_last(2)](wi0) << "\n";
+  std::cout << "-> nearest[wi0 != 0](wi0)       = " << eve::nearest[wi0 != 0](wi0) << "\n";
 }

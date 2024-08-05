@@ -84,9 +84,11 @@ namespace eve
 //!           is used internally
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/negmaxabs.cpp}
+//================================================================================================
+  inline constexpr auto negmaxabs = functor<negmaxabs_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto negmaxabs = functor<negmaxabs_t>;
 }
 
 #include <eve/module/core/regular/impl/negmaxabs.hpp>

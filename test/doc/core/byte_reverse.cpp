@@ -1,24 +1,14 @@
+// revision 1
 #include <eve/module/core.hpp>
 #include <iostream>
 
-using wide_it = eve::wide<std::uint32_t, eve::fixed<4>>;
-
 int main()
 {
-  wide_it pi = {257, 1, 3, 0};
+  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
-  std::cout << "---- simd" << '\n'
-            << "<- pi                               = " << pi << '\n'
-            << "-> byte_reverse(pi)                 = " << eve::byte_reverse(pi) << '\n'
-            << "-> bit_reverse[pi>0](pi)            = " << eve::bit_reverse[pi>0](pi) << '\n'
-            << "-> bit_reverse[pi>0](pi, 4)         = " << eve::bit_reverse[pi>0](pi, 4)<< '\n'
-            << "-> bit_reverse[pi>0](pi)            = " << eve::bit_reverse[pi>0](pi)<< '\n'
-            << "-> bit_reverse[pi>0][pi > 2](pi, 4) = " << eve::bit_reverse[pi>0](pi, 4)<< '\n';
-
-  std::uint16_t xf = 48;
-
-  std::cout << "---- scalar" << '\n'
-            << "<- xf              = " << +xf << '\n'
-            << "-> byte_reverse(xf) = " << +eve::byte_reverse(xf) << '\n';
-  return 0;
+  std::cout << "<- wu0                               = " << wu0 << "\n";
+                                                     
+  std::cout << "-> byte_reverse(wu0)                 = " << eve::byte_reverse(wu0) << "\n";
+  std::cout << "-> byte_reverse[ignore_last(2)](wu0) = " << eve::byte_reverse[eve::ignore_last(2)](wu0) << "\n";
+  std::cout << "-> byte_reverse[wu0 != 2u](wu0)      = " << eve::byte_reverse[wu0 != 2u](wu0) << "\n";
 }

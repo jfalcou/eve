@@ -88,11 +88,13 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_less.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto is_less = functor<is_less_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
-  // Required for if_else optimisation detections
+// Required for if_else optimisation detections
   using callable_is_less_ = tag_t<is_less>;
 
   namespace detail
