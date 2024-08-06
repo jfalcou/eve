@@ -43,6 +43,7 @@
 #include <eve/module/core/regular/byte_swap_adjacent.hpp>
 #include <eve/module/core/regular/byte_swap_pairs.hpp>
 #include <eve/module/core/regular/ceil.hpp>
+#include <eve/module/core/regular/chi.hpp>
 #include <eve/module/core/regular/clamp.hpp>
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/convert.hpp>
