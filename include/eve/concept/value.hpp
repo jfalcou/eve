@@ -12,7 +12,6 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/traits/is_logical.hpp>
 #include <eve/traits/translation.hpp>
-#include <eve/traits/element_type.hpp>
 
 #include <concepts>
 #include <type_traits>
@@ -44,7 +43,7 @@ namespace eve
   //! - `int`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept integral_value        = value<T> && std::integral<translate_t<element_type_t<T>>>;
+  template<typename T> concept integral_value        = value<T> && std::integral<translate_element_type_t<T>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -57,7 +56,7 @@ namespace eve
   //! - `float`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_value          = value<T> && std::is_signed_v<translate_t<element_type_t<T>>>;
+  template<typename T> concept signed_value          = value<T> && std::is_signed_v<translate_element_type_t<T>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -69,7 +68,7 @@ namespace eve
   //! - `unsigned int`
   //! - `eve::wide<std::uint8_t, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<translate_t<element_type_t<T>>>;
+  template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<translate_element_type_t<T>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -81,7 +80,7 @@ namespace eve
   //! - `short int`
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
-  template<typename T> concept signed_integral_value = value<T> && std::signed_integral<translate_t<element_type_t<T>>>;
+  template<typename T> concept signed_integral_value = value<T> && std::signed_integral<translate_element_type_t<T>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -93,7 +92,7 @@ namespace eve
   //! - `double`
   //! - `eve::wide<float, eve::fixed<2>>`
   //================================================================================================
-  template<typename T> concept floating_value        = value<T> && std::floating_point<translate_t<element_type_t<T>>>;
+  template<typename T> concept floating_value        = value<T> && std::floating_point<translate_element_type_t<T>>;
 
   //================================================================================================
   //! @ingroup simd_concepts

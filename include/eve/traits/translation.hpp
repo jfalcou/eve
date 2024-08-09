@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/element_type.hpp>
 #include <type_traits>
 
 namespace eve
@@ -32,7 +33,11 @@ namespace eve
   // Recursively translate the type `T` until `translation_of<T>` is `T`
   template <typename T>
   using translate_t = typename recursive_translate<T>::type;
-  
+
+  // Translate an element_type directly
+  template <typename T>
+  using translate_element_type_t = translate_t<element_type_t<T>>;
+
   // Covers every enum
   template <typename T>
   requires (std::is_enum_v<T>)
