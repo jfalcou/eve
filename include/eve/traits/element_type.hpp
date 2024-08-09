@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/wide_forward.hpp>
+#include <eve/traits/translation.hpp>
 #include <type_traits>
 
 namespace eve
@@ -53,4 +54,8 @@ namespace eve
 
   template<typename T>
   using element_type_t = typename element_type<T>::type;
+
+  // Translate an element_type directly
+  template <typename T>
+  using translate_element_type_t = translate_t<element_type_t<T>>;
 }
