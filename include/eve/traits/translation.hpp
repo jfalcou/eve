@@ -8,7 +8,6 @@
 #pragma once
 
 #include <type_traits>
-
 namespace eve
 {
   // Default case: normal types do not have specific storage type
@@ -32,7 +31,7 @@ namespace eve
   // Recursively translate the type `T` until `translation_of<T>` is `T`
   template <typename T>
   using translate_t = typename recursive_translate<T>::type;
-  
+
   // Covers every enum
   template <typename T>
   requires (std::is_enum_v<T>)
