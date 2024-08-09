@@ -8,6 +8,8 @@
 #pragma once
 
 #include <eve/concept/scalar.hpp>
+#include <eve/traits/translation.hpp>
+#include <eve/traits/element_type.hpp>
 #include <concepts>
 
 namespace eve
@@ -23,7 +25,7 @@ namespace eve
   //! - `std::int32_t`
   //================================================================================================
   template<typename T>
-  concept integral_scalar_value  = arithmetic_scalar_value<T> && std::integral<T>;
+  concept integral_scalar_value  = arithmetic_scalar_value<T> && std::integral<translate_t<element_type_t<T>>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -37,7 +39,7 @@ namespace eve
   //! - `float`
   //================================================================================================
   template<typename T>
-  concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<T>;
+  concept signed_scalar_value  = arithmetic_scalar_value<T> && std::is_signed_v<translate_t<element_type_t<T>>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -50,7 +52,7 @@ namespace eve
   //! - `std::uint32_t`
   //================================================================================================
   template<typename T>
-  concept unsigned_scalar_value = arithmetic_scalar_value<T> && std::unsigned_integral<T>;
+  concept unsigned_scalar_value = arithmetic_scalar_value<T> && std::unsigned_integral<translate_t<element_type_t<T>>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -63,7 +65,7 @@ namespace eve
   //! - `std::int32_t`
   //================================================================================================
   template<typename T>
-  concept signed_integral_scalar_value = arithmetic_scalar_value<T> && std::signed_integral<T>;
+  concept signed_integral_scalar_value = arithmetic_scalar_value<T> && std::signed_integral<translate_t<element_type_t<T>>>;
 
   //================================================================================================
   //! @ingroup simd_concepts
@@ -77,5 +79,5 @@ namespace eve
   //! - `double`
   //================================================================================================
   template<typename T>
-  concept floating_scalar_value = arithmetic_scalar_value<T> && std::floating_point<T>;
+  concept floating_scalar_value = arithmetic_scalar_value<T> && std::floating_point<translate_t<element_type_t<T>>>;
 }
