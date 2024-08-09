@@ -76,7 +76,7 @@ namespace eve
     requires( !callable_options<T> && !requires(base const& b) { b[t];} && !decorator<T>) =delete;
 
     template<typename... Args>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, Args&&... args) const
+    EVE_FORCEINLINE constexpr decltype(auto) behavior(auto arch, Args&&... args) const
     {
       return Func<OptionsValues>::deferred_call(arch, EVE_FWD(args)...);
     }
