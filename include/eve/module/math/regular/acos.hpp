@@ -46,7 +46,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!      constexpr auto acos(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[raw2](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto acos[conditional_expr auto c](floating_value auto x) noexcept; // 3

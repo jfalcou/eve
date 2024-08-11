@@ -11,7 +11,7 @@ int main()
 
   std::cout << std::setprecision(10);
   std::cout << "-> asecpi(wf)                = " << eve::asecpi(wf) << "\n";
-  std::cout << "-> asecpi[raw](wf)           = " << eve::asecpi[eve::raw](wf) << "\n";
+  std::cout << "-> asecpi[raw2](wf)           = " << eve::asecpi[eve::raw2](wf) << "\n";
   std::cout << "-> asecpi[ignore_last(2)](wf)= " << eve::asecpi[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> asecpi[wf != -2.0f](wf)   = " << eve::asecpi[wf != -2.0f](wf) << "\n";
 }

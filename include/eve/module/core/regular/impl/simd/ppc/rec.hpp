@@ -47,14 +47,14 @@ namespace eve::detail
 
       if constexpr( std::is_same_v<double, T> )
       {
-        auto estimate = refine_rec(v0, rec[raw](v0));
+        auto estimate = refine_rec(v0, rec[raw2](v0));
         estimate      = refine_rec(v0, estimate);
         estimate      = if_else(is_eqz(v0), v0 | inf(eve::as(v0)), estimate);
         return fix_inf(v0, estimate);
       }
       else if constexpr( std::is_same_v<float, T> )
       {
-        auto estimate = refine_rec(v0, rec[raw](v0));
+        auto estimate = refine_rec(v0, rec[raw2](v0));
         estimate      = if_else(is_eqz(v0), v0 | inf(eve::as(v0)), estimate);
         return fix_inf(v0, estimate);
       }

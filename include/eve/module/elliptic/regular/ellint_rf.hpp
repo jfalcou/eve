@@ -150,7 +150,7 @@ namespace eve
         auto notdone =
           is_nltz(x) && is_nltz(y) && is_nltz(z) && is_nez(x + y) && is_nez(y + z) && is_nez(z + x);
         // any parameter nan or less than zero or more than one parameter zero implies nan
-        auto br0 = [x, y, z]() { return ellint_rf[raw](x, y, z); };
+        auto br0 = [x, y, z]() { return ellint_rf[raw2](x, y, z); };
         last_interval(br0, notdone, r);
         return r;
       }

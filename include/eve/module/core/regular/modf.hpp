@@ -56,7 +56,7 @@ namespace eve
 //!      constexpr auto modf[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto modf[raw](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto modf[raw2](floating_value auto x)                     noexcept; // 3
 //!      constexpr auto modf[pedantic](floating_value auto x)                noexcept; // 3
 //!      constexpr auto modf[almost](floating_value auto x)                  noexcept; // 3
 //!   }

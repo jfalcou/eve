@@ -11,7 +11,7 @@ int main()
 
   std::cout << std::setprecision(10);
   std::cout << "-> asecd(wf)                = " << eve::asecd(wf) << "\n";
-  std::cout << "-> asecd[raw](wf)           = " << eve::asecd[eve::raw](wf) << "\n";
+  std::cout << "-> asecd[raw2](wf)           = " << eve::asecd[eve::raw2](wf) << "\n";
   std::cout << "-> asecd[ignore_last(2)](wf)= " << eve::asecd[eve::ignore_last(2)](wf) << "\n";
   std::cout << "-> asecd[wf != 2.0f](wf)    = " << eve::asecd[wf != 2.0f](wf) << "\n";
 }

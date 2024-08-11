@@ -68,7 +68,7 @@ namespace eve
 //!      constexpr auto average[logical_value auto m](/* any of the above overloads */)             noexcept; // 4
 //!
 //!      // Semantic options
-//!      constexpr auto average[raw] (/* any of the above overloads */)                             noexcept; // 5
+//!      constexpr auto average[raw2] (/* any of the above overloads */)                             noexcept; // 5
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
 //!      constexpr auto average[upward](eve::integral_value auto x, eve::integral_value auto y)     noexcept; // 6

@@ -48,7 +48,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option>
 //!      constexpr auto rec[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto rec[raw](value auto x)                     noexcept; // 3
+//!      constexpr auto rec[raw2](value auto x)                     noexcept; // 3
 //!      constexpr auto rec[pedantic](value auto x)                noexcept; // 4
 //!   }
 //!   @endcode

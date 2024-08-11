@@ -55,7 +55,7 @@ namespace eve
 //!      constexpr auto lrising_factorial[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto lrising_factoriale[raw]/*any of the above overloads*/)                     noexcept; // 3
+//!      constexpr auto lrising_factoriale[raw2]/*any of the above overloads*/)                     noexcept; // 3
 //!      constexpr auto lrising_factorialee[pedantic](/*any of the above overloads*/)              noexcept; // 4
 //!   }
 //!   @endcode

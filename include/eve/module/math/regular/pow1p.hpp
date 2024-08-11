@@ -57,7 +57,7 @@ namespace eve
 //!      constexpr auto pow1p[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow1p[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
+//!      constexpr auto pow1p[raw2](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!

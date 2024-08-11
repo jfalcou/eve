@@ -56,7 +56,7 @@ namespace eve
 //!      constexpr auto exponent(floating_value auto x)       noexcept; // 1
 //!
 //!      // Semantic options
-//!      constexpr auto exponent[raw](floating_value auto x)  noexcept; // 2
+//!      constexpr auto exponent[raw2](floating_value auto x)  noexcept; // 2
 //!   }
 //!   @endcode
 //!

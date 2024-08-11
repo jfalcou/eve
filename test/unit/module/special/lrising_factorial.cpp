@@ -18,7 +18,7 @@
 TTS_CASE_TPL("Check return types of eve::lrising_factorial", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
-  TTS_EXPR_IS(eve::lrising_factorial[eve::raw](int(), T()), T);
+  TTS_EXPR_IS(eve::lrising_factorial[eve::raw2](int(), T()), T);
   TTS_EXPR_IS(eve::lrising_factorial(int(), T()), T);
   TTS_EXPR_IS(eve::lrising_factorial[eve::pedantic](int(), T()), T);
 };

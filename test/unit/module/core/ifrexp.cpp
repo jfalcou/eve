@@ -58,7 +58,7 @@ TTS_CASE_TPL("Check (eve::ifrexp behavior", eve::test::simd::ieee_reals)
     TTS_EQUAL(r1, i_t(eve::minexponent(eve::as<T>()) - eve::nbmantissabits(eve::as<T>()) + 1));
   }
   {
-    auto [p0, p1] = eve::ifrexp[eve::raw](T(1));
+    auto [p0, p1] = eve::ifrexp[eve::raw2](T(1));
     TTS_EQUAL(p0, T(0.5));
     TTS_EQUAL(p1, i_t(1));
   }

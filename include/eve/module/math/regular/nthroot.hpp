@@ -55,7 +55,7 @@ namespace eve
 //!      constexpr auto nthroot[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto nthroot[raw](/* any of the above overloads */)                     noexcept; // 3
+//!      constexpr auto nthroot[raw2](/* any of the above overloads */)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -115,7 +115,7 @@ namespace eve
       {
         auto an   = eve::abs(n);
         auto ax   = eve::abs(x);
-        auto y    = nthroot[raw](ax, an);
+        auto y    = nthroot[raw2](ax, an);
         auto p    = pow(y, an);
         auto yinc = -((p-ax)/(an*p))*y;
         y         = add[is_nez(y) && is_finite(x)](y, yinc);

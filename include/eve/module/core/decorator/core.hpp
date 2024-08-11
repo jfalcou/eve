@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/raberu.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/raw.hpp>
+//#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/as_element.hpp>
@@ -102,7 +102,7 @@ namespace eve
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
-  inline constexpr auto as_option(raw_type          const&) { return raw2;          }
+//  inline constexpr auto as_option(raw_type          const&) { return raw2;          }
   inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }
   inline constexpr auto as_option(to_nearest_type   const&) { return to_nearest2;   }
   inline constexpr auto as_option(toward_zero_type  const&) { return toward_zero2;  }

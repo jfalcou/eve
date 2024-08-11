@@ -46,7 +46,7 @@ namespace eve
 //!      constexpr auto mantissa[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto mantissa[raw](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto mantissa[raw2](floating_value auto x)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!

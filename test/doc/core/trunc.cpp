@@ -16,7 +16,7 @@ int main()
   std::cout << "-> trunc[ignore_last(2)](wf0) = " << eve::trunc[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> trunc[wf0 != 0](wf0)       = " << eve::trunc[wf0 != 0](wf0) << "\n";
   std::cout << "-> trunc[almost](wf0)         = " << eve::trunc[eve::almost](wf0) << "\n";
-  std::cout << "-> trunc[raw](wf0)            = " << eve::trunc[eve::raw](wf0) << "\n";
+  std::cout << "-> trunc[raw2](wf0)            = " << eve::trunc[eve::raw2](wf0) << "\n";
   std::cout << "-> trunc(wu0)                 = " << eve::trunc(wu0) << "\n";
   std::cout << "-> trunc[ignore_last(2)](wu0) = " << eve::trunc[eve::ignore_last(2)](wu0) << "\n";
   std::cout << "-> trunc[wu0 != 0](wu0)       = " << eve::trunc[wu0 != 0](wu0) << "\n";

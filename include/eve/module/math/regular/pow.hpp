@@ -76,7 +76,7 @@ namespace eve
 //!      constexpr auto pow[logical_value auto m](value auto x, value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow[raw](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto pow[raw2](value auto x, value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!

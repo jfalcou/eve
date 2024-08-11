@@ -20,5 +20,5 @@ TTS_CASE_TPL("wide random check on acosd", EVE_TYPE)
   double th = std::is_same_v<v_t, double> ? 8192.0 : 1024.0;
 
   eve::exhaustive_producer<T> p(-1, 1);
-  TTS_ULP_RANGE_CHECK(p, std_acosd, eve::acosd[eve::raw]), th);
+  TTS_ULP_RANGE_CHECK(p, std_acosd, eve::acosd[eve::raw2]), th);
 }

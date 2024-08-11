@@ -15,13 +15,13 @@ int main()
   std::cout << "-> sqrt(wf0)                 = " << eve::sqrt(wf0) << "\n";
   std::cout << "-> sqrt[ignore_last(2)](wf0) = " << eve::sqrt[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> sqrt[wf0 != 0](wf0)       = " << eve::sqrt[wf0 != 0](wf0) << "\n";
-  std::cout << "-> sqrt[raw](wf0)            = " << eve::sqrt[eve::raw](wf0) << "\n";
+  std::cout << "-> sqrt[raw2](wf0)            = " << eve::sqrt[eve::raw2](wf0) << "\n";
   std::cout << "-> sqrt(wu0)                 = " << eve::sqrt(wu0) << "\n";
   std::cout << "-> sqrt[ignore_last(2)](wu0) = " << eve::sqrt[eve::ignore_last(2)](wu0) << "\n";
   std::cout << "-> sqrt[wu0 != 0](wu0)       = " << eve::sqrt[wu0 != 0](wu0) << "\n";
-  std::cout << "-> sqrt[raw](wu0)            = " << eve::sqrt[eve::raw](wu0) << "\n";
+  std::cout << "-> sqrt[raw2](wu0)            = " << eve::sqrt[eve::raw2](wu0) << "\n";
   std::cout << "-> sqrt(wi0)                 = " << eve::sqrt(wi0) << "\n";
   std::cout << "-> sqrt[ignore_last(2)](wi0) = " << eve::sqrt[eve::ignore_last(2)](wi0) << "\n";
   std::cout << "-> sqrt[wi0 != 0](wi0)       = " << eve::sqrt[wi0 != 0](wi0) << "\n";
-  std::cout << "-> sqrt[raw](wi0)            = " << eve::sqrt[eve::raw](wi0) << "\n";
+  std::cout << "-> sqrt[raw2](wi0)            = " << eve::sqrt[eve::raw2](wi0) << "\n";
 }

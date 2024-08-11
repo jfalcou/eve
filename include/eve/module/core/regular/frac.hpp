@@ -52,7 +52,7 @@ namespace eve
 //!      constexpr auto frac[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto frac[raw](floating_value auto x)            noexcept; // 3
+//!      constexpr auto frac[raw2](floating_value auto x)            noexcept; // 3
 //!      constexpr auto frac[pedantic](floating_value auto x)       noexcept  // 4
 //!      constexpr auto frac[almost = tol](floating_value auto x)   noexcept; // 5
 //!      constexpr auto frac[almost](floating_value auto x)         noexcept; // 6

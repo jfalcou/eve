@@ -189,7 +189,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
         {
           auto a         = x;
           x              = oneminus[test](x);
-          auto remainder = frac[raw](x);
+          auto remainder = frac[raw2](x);
           remainder      = dec[remainder > 0.5](remainder);
           remainder      = if_else(is_eqz(remainder), nan(as(x)), remainder);
           remainder      = if_else(remainder == T(0.5), zero, pi(as(x)) * cotpi(remainder));

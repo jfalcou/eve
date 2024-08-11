@@ -262,7 +262,7 @@ namespace eve
                 y            = if_else(notdone, y, one);
                 z            = if_else(notdone, z, one);
                 p            = if_else(notdone, p, one);
-                auto br_last = [](auto x, auto y, auto z, auto p) { return ellint_rj[raw](x, y, z, p); };
+                auto br_last = [](auto x, auto y, auto z, auto p) { return ellint_rj[raw2](x, y, z, p); };
                 last_interval(br_last, notdone, r, x, y, z, p);
               }
             }

@@ -12,7 +12,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/raw.hpp>
+//#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/any.hpp>
@@ -41,7 +41,7 @@ namespace eve::detail
     auto c3  = Pack(v_t {3});
     auto c10 = Pack(v_t {10});
     auto c15 = Pack(v_t {15});
-    auto a0  = rsqrt[raw](x);
+    auto a0  = rsqrt[raw2](x);
     auto y   = sqr(a0) * x;
 
     // Perform one Halley cubically convergent iteration

@@ -15,7 +15,7 @@ int main()
             << "<- pf                   = " << pf << '\n'
             << "<- qn                   = " << qn << '\n'
             << "-> nthroot(pf, qn)      = " << eve::nthroot(pf, qn) << '\n'
-            << "-> nthroot[raw](pf, qn) = " << eve::nthroot[eve::raw](pf, qn) << '\n';
+            << "-> nthroot[raw2](pf, qn) = " << eve::nthroot[eve::raw2](pf, qn) << '\n';
 
   double xf = 64.0f;
   int n = 3;
@@ -24,7 +24,7 @@ int main()
             << "<- xf                   = " << xf << '\n'
             << "<- n                    = " << n << '\n'
             << "-> nthroot(xf, n)       = " << eve::nthroot(xf, n) << '\n'
-            << "-> nthroot[raw](xf, n)  = " << eve::nthroot[eve::raw](xf, n) << '\n';
+            << "-> nthroot[raw2](xf, n)  = " << eve::nthroot[eve::raw2](xf, n) << '\n';
 
   return 0;
 }
