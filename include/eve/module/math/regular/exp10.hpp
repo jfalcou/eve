@@ -87,7 +87,7 @@ namespace eve
       // Adapt lower bound depending on options
       auto minlogval = [&]()
         {
-          if constexpr((eve::platform::supports_denormals) && O::contains(pedantic2))
+          if constexpr((eve::platform::supports_denormals) && O::contains(pedantic))
           return minlog10denormal(as(x));
           else
             return minlog10(as(x));

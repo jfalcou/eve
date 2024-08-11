@@ -20,7 +20,7 @@ EVE_FORCEINLINE wide<T, N> min_(EVE_REQUIRES(vmx_),
                                 wide<T, N> const &v0,
                                 wide<T, N> const &v1) noexcept requires ppc_abi<abi_t<T, N>>
 {
-  if constexpr(O::contains(numeric) || O::contains(pedantic2))
+  if constexpr(O::contains(numeric) || O::contains(pedantic))
     return min_(EVE_TARGETS(cpu_), opts, v0, v1);
   else
     return vec_min(v0.storage(), v1.storage());

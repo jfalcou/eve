@@ -61,7 +61,7 @@ namespace eve::detail
         }
       }
     }
-    else if constexpr(O::contains(pedantic2) || current_api < avx512)
+    else if constexpr(O::contains(pedantic) || current_api < avx512)
     {
       if (current_api >= avx512)
       {
@@ -123,7 +123,7 @@ namespace eve::detail
         else if constexpr( c == category::float32x4 ) return _mm_mask_rcp14_ps(src, m, a0);
         else if constexpr( c == category::float64x2 ) return _mm_mask_rcp14_pd(src, m, a0);
       }
-      else  if constexpr(O::contains(pedantic2))
+      else  if constexpr(O::contains(pedantic))
       {
         if constexpr( c == category::float32x16 )
           return _mm512_mask_div_ps(src, m, one(eve::as(a0)), a0);

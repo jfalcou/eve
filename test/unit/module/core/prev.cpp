@@ -63,7 +63,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev variants on wide",
              eve::test::simd::all_types)
 <typename T>(tts::type<T> const& tgt)
 {
-  using eve::pedantic2;
+  using eve::pedantic;
   using eve::prev;
   using eve::saturated2;
 
@@ -80,15 +80,15 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev variants on wide",
     TTS_EQUAL(prev(T(1)), T(1) - eve::eps(eve::as<T>()) / 2);
     TTS_EQUAL(prev(T(-1)), T(-1) - eve::eps(eve::as<T>()));
 
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.nan), cases.nan);
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.inf), cases.valmax);
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.minf), cases.nan);
-    TTS_EQUAL(prev[pedantic2](cases.zero), cases.mzero);
-    TTS_EQUAL(prev[pedantic2](cases.mzero), -cases.mindenormal);
-    TTS_EQUAL(prev[pedantic2](cases.mindenormal), cases.zero);
-    TTS_EQUAL(prev[pedantic2](cases.valmin), cases.minf);
-    TTS_EQUAL(prev[pedantic2](T(1)), T(1) - eve::eps(eve::as<T>()) / 2);
-    TTS_EQUAL(prev[pedantic2](T(-1)), T(-1) - eve::eps(eve::as<T>()));
+    TTS_IEEE_EQUAL(prev[pedantic](cases.nan), cases.nan);
+    TTS_IEEE_EQUAL(prev[pedantic](cases.inf), cases.valmax);
+    TTS_IEEE_EQUAL(prev[pedantic](cases.minf), cases.nan);
+    TTS_EQUAL(prev[pedantic](cases.zero), cases.mzero);
+    TTS_EQUAL(prev[pedantic](cases.mzero), -cases.mindenormal);
+    TTS_EQUAL(prev[pedantic](cases.mindenormal), cases.zero);
+    TTS_EQUAL(prev[pedantic](cases.valmin), cases.minf);
+    TTS_EQUAL(prev[pedantic](T(1)), T(1) - eve::eps(eve::as<T>()) / 2);
+    TTS_EQUAL(prev[pedantic](T(-1)), T(-1) - eve::eps(eve::as<T>()));
   }
   else
   {
@@ -104,7 +104,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
              eve::test::simd::all_types)
 <typename T>(tts::type<T> const& tgt)
 {
-  using eve::pedantic2;
+  using eve::pedantic;
   using eve::prev;
   using eve::saturated2;
 
@@ -122,15 +122,15 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
     TTS_EQUAL(prev(T(1), 2), T(1) - eve::eps(eve::as<T>()));
     TTS_EQUAL(prev(T(-1), 2), T(-1) - eve::eps(eve::as<T>()) * 2);
 
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.nan, 2), cases.nan);
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.inf, 2), prev(cases.valmax));
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.minf, 2), cases.nan);
-    TTS_EQUAL(prev[pedantic2](cases.zero, 2), -cases.mindenormal);
-    TTS_EQUAL(prev[pedantic2](cases.mzero, 2), prev(-cases.mindenormal));
-    TTS_EQUAL(prev[pedantic2](cases.mindenormal, 2), cases.zero);
-    TTS_IEEE_EQUAL(prev[pedantic2](cases.valmin, 2), cases.nan);
-    TTS_EQUAL(prev[pedantic2](T(1), 2), T(1) - eve::eps(eve::as<T>()));
-    TTS_EQUAL(prev[pedantic2](T(-1), 2), T(-1) - eve::eps(eve::as<T>()) * 2);
+    TTS_IEEE_EQUAL(prev[pedantic](cases.nan, 2), cases.nan);
+    TTS_IEEE_EQUAL(prev[pedantic](cases.inf, 2), prev(cases.valmax));
+    TTS_IEEE_EQUAL(prev[pedantic](cases.minf, 2), cases.nan);
+    TTS_EQUAL(prev[pedantic](cases.zero, 2), -cases.mindenormal);
+    TTS_EQUAL(prev[pedantic](cases.mzero, 2), prev(-cases.mindenormal));
+    TTS_EQUAL(prev[pedantic](cases.mindenormal, 2), cases.zero);
+    TTS_IEEE_EQUAL(prev[pedantic](cases.valmin, 2), cases.nan);
+    TTS_EQUAL(prev[pedantic](T(1), 2), T(1) - eve::eps(eve::as<T>()));
+    TTS_EQUAL(prev[pedantic](T(-1), 2), T(-1) - eve::eps(eve::as<T>()) * 2);
   }
   else
   {

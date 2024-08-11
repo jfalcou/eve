@@ -105,7 +105,7 @@ namespace eve
             T t = fms(w, e, x);
             t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
             w -= t;
-            T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec[pedantic2](eve::abs(p) * e));
+            T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
             if( eve::all(eve::abs(t) < tol) ) break;
           }
           return w;

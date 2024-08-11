@@ -197,7 +197,7 @@ namespace eve
           pn = (pn + lambda) * T(0.25); // / 4;
           delta *= T(0.015625);         // /= 64;
         }
-        auto fmninvan = fmn * rec[pedantic2](an);
+        auto fmninvan = fmn * rec[pedantic](an);
         auto xx       = (a0 - x) * fmninvan;
         auto yy       = (a0 - y) * fmninvan;
         auto zz       = (a0 - z) * fmninvan;

@@ -94,7 +94,7 @@ namespace eve
       else
       {
         auto r = is_eqz(frac[raw](a));
-        if constexpr( O::contains(pedantic2) )
+        if constexpr( O::contains(pedantic) )
           return r && (a <= eve::maxflint(eve::as<T>()));
         else
           return r;

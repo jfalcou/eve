@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/detail/raberu.hpp>
-#include <eve/module/core/decorator/pedantic.hpp>
+//#include <eve/module/core/decorator/pedantic.hpp>
 //#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
@@ -57,7 +57,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto successor        = ::rbr::flag( successor_mode{}       );
 
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
-  [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
+  [[maybe_unused]] inline constexpr auto pedantic     = ::rbr::flag( pedantic_mode{}    );
   [[maybe_unused]] inline constexpr auto raw          = ::rbr::flag( raw_mode{}         );
   [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{}   );
   [[maybe_unused]] inline constexpr auto to_nearest2  = ::rbr::flag( to_nearest_mode{}  );
@@ -77,7 +77,7 @@ namespace eve
   struct successor_option       : detail::exact_option<successor>       {};
 
   struct downward_option     : detail::exact_option<downward2>    {};
-  struct pedantic_option     : detail::exact_option<pedantic2>    {};
+  struct pedantic_option     : detail::exact_option<pedantic>     {};
   struct raw_option          : detail::exact_option<raw>          {};
   struct saturated_option    : detail::exact_option<saturated2>   {};
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
@@ -101,7 +101,7 @@ namespace eve
   // [TEMPORARY] Will be removed when all decorator have been converted
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
-  inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
+//  inline constexpr auto as_option(pedantic_type     const&) { return pedantic;     }
   inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }
   inline constexpr auto as_option(to_nearest_type   const&) { return to_nearest2;   }
   inline constexpr auto as_option(toward_zero_type  const&) { return toward_zero2;  }

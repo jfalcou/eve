@@ -98,7 +98,7 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
   template<floating_value T, callable_options O>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
   {
-    if constexpr(O::contains(pedantic2))
+    if constexpr(O::contains(pedantic))
     {
       return pedantic_frexp(a0);
     }

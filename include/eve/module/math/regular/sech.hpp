@@ -88,7 +88,7 @@ namespace eve
       //////////////////////////////////////////////////////////////////////////////
       // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
       // respectively computed
-      // *  in the first case sech (e+rec[pedantic2](e))/2
+      // *  in the first case sech (e+rec[pedantic](e))/2
       // *  in the second     sech is (e/2)*e (avoiding undue overflow)
       // Threshold is maxlog - Log_2
       //////////////////////////////////////////////////////////////////////////////

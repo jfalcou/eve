@@ -94,7 +94,7 @@ namespace eve
           if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
           auto x = abs(a0);
           if( is_not_less_equal(x, T(0.25)) ) return nan(eve::as<T>());
-          return rec[pedantic2](tancot_eval(pi(eve::as<T>()) * a0));
+          return rec[pedantic](tancot_eval(pi(eve::as<T>()) * a0));
         }
         else
         {
@@ -103,7 +103,7 @@ namespace eve
                          bit_or(a0, inf(eve::as(a0))),
                          if_else(is_not_less_equal(x, T(0.25)),
                                  eve::allbits,
-                                 rec[pedantic2](tancot_eval(pi(eve::as<T>()) * a0))));
+                                 rec[pedantic](tancot_eval(pi(eve::as<T>()) * a0))));
         }
       }
       else

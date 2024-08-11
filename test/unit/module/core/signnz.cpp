@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of eve::signnz(eve::wide)",
   TTS_EQUAL(eve::signnz[mask](a0), eve::if_else(mask, eve::signnz(a0), a0));
   if constexpr( eve::floating_value<T> )
   {
-    TTS_IEEE_EQUAL(eve::signnz[eve::pedantic2](eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::signnz[eve::pedantic](eve::nan(eve::as<T>())), eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::abs(eve::signnz(eve::nan(eve::as<T>()))), T(1));
 
   }

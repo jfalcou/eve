@@ -35,7 +35,7 @@ namespace eve::detail
       {
         auto aaa = if_else(is_nan(a), b, a);
         auto bbb = if_else(is_nan(b), a, b);
-        return eve::minmag[pedantic2](aaa, bbb);
+        return eve::minmag[pedantic](aaa, bbb);
       }
       if constexpr( has_native_abi_v<r_t> )
       {

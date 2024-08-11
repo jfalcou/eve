@@ -84,7 +84,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acoth_(EVE_REQUIRES(cpu_), O const&, T const& x)
     {
-      return eve::atanh(rec[pedantic2](x));
+      return eve::atanh(rec[pedantic](x));
     }
   }
 }

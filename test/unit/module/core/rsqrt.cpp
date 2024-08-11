@@ -23,8 +23,8 @@ TTS_CASE_TPL("Check return types of rsqrt", eve::test::simd::ieee_reals)
   TTS_EXPR_IS(eve::rsqrt(v_t()), v_t);
   TTS_EXPR_IS(eve::rsqrt[eve::raw](T()), T);
   TTS_EXPR_IS(eve::rsqrt[eve::raw](v_t()), v_t);
-  TTS_EXPR_IS(eve::rsqrt[eve::pedantic2](T()), T);
-  TTS_EXPR_IS(eve::rsqrt[eve::pedantic2](v_t()), v_t);
+  TTS_EXPR_IS(eve::rsqrt[eve::pedantic](T()), T);
+  TTS_EXPR_IS(eve::rsqrt[eve::pedantic](v_t()), v_t);
   TTS_EXPR_IS(eve::rsqrt[eve::logical<T>()](T()), T);
   TTS_EXPR_IS(eve::rsqrt[eve::logical<v_t>()](T()), T);
   TTS_EXPR_IS(eve::rsqrt[eve::logical<v_t>()](v_t()), v_t);
@@ -51,20 +51,20 @@ TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals)
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_IEEE_EQUAL((eve::rsqrt[eve::pedantic2](eve::nan(eve::as<T>()))), (eve::nan(eve::as<T>())));
-  TTS_EQUAL(eve::rsqrt[eve::pedantic2]((T(0))), eve::inf(eve::as<T>()));
+  TTS_IEEE_EQUAL((eve::rsqrt[eve::pedantic](eve::nan(eve::as<T>()))), (eve::nan(eve::as<T>())));
+  TTS_EQUAL(eve::rsqrt[eve::pedantic]((T(0))), eve::inf(eve::as<T>()));
 
   if constexpr( eve::platform::supports_denormals )
   {
     auto z = eve::mindenormal(eve::as<v_t>());
 
     TTS_ULP_EQUAL(
-        eve::rsqrt[eve::pedantic2](eve::mindenormal(eve::as<T>())), T(eve::rec(std::sqrt(z))), 2.0);
-    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic2](2 * eve::mindenormal(eve::as<T>())),
+        eve::rsqrt[eve::pedantic](eve::mindenormal(eve::as<T>())), T(eve::rec(std::sqrt(z))), 2.0);
+    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic](2 * eve::mindenormal(eve::as<T>())),
                   T(eve::rec(std::sqrt(2 * z))),
                   2.0);
-    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic2]((z)), (eve::rec(std::sqrt(z))), 2.0);
-    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic2]((2 * z)), (eve::rec(std::sqrt(2 * z))), 2.0);
+    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic]((z)), (eve::rec(std::sqrt(z))), 2.0);
+    TTS_ULP_EQUAL(eve::rsqrt[eve::pedantic]((2 * z)), (eve::rec(std::sqrt(2 * z))), 2.0);
   }
 };
 

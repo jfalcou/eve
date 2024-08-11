@@ -20,6 +20,6 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(std__is_flint) , xp, std__is_flint, arg0);
-  run<EVE_VALUE> (EVE_NAME(is_flint[eve::pedantic2]) , xp, eve::is_flint[eve::pedantic2], arg0);
-  run<EVE_TYPE>  (EVE_NAME(is_flint[eve::pedantic2]) , xp, eve::is_flint[eve::pedantic2], arg0);
+  run<EVE_VALUE> (EVE_NAME(is_flint[eve::pedantic]) , xp, eve::is_flint[eve::pedantic], arg0);
+  run<EVE_TYPE>  (EVE_NAME(is_flint[eve::pedantic]) , xp, eve::is_flint[eve::pedantic], arg0);
 }

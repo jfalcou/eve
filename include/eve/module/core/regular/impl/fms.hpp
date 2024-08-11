@@ -70,7 +70,7 @@ namespace eve::detail
     // We promote before going pedantic in case it changes the behavior
     if constexpr(O::contains(promote)) return fms[o.drop(promote)](a,b,c);
     // PEDANTIC ---------------------
-    else if constexpr(O::contains(pedantic2))
+    else if constexpr(O::contains(pedantic))
     {
       if constexpr( std::same_as<element_type_t<T>, float> )
       {

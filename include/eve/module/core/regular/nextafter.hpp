@@ -88,7 +88,7 @@ namespace eve
         return (a < b) ? next[o](a) : ((a > b) ? prev[o](a) : a);
       else if constexpr( simd_value<T> )
       {
-        if constexpr(O::contains(pedantic2))
+        if constexpr(O::contains(pedantic))
         {
           return if_else(a < b, next[o](a), if_else(a > b, prev[o](a), a));
         }

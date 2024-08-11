@@ -121,7 +121,7 @@ namespace eve
           fn *= T(4);
           if( eve::all(q < eve::abs(an)) ) break;
         }
-        T denom = rec[pedantic2](an * fn);
+        T denom = rec[pedantic](an * fn);
         T xx    = (a0 - x) * denom;
         T yy    = (a0 - y) * denom;
         T zz    = -xx - yy;

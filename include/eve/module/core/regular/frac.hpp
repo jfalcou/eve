@@ -97,7 +97,7 @@ namespace eve
         else
         {
           auto f = if_else(is_eqz(a), a, a - trunc[o](a));
-          if constexpr(platform::supports_infinites && O::contains(pedantic2))
+          if constexpr(platform::supports_infinites && O::contains(pedantic))
             return if_else(is_infinite(a), bit_and(a, signmask(as(a))), f);
           else
             return f;

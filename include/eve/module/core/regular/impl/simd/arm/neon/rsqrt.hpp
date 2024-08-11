@@ -17,7 +17,7 @@ namespace eve::detail
   {
     using that_t       = wide<T, N>;
     constexpr auto cat = categorize<that_t>();
-    if constexpr(O::contains(pedantic2))
+    if constexpr(O::contains(pedantic))
     {
       return rsqrt.behavior(cpu_{}, o, v0);
     }

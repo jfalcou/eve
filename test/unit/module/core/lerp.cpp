@@ -45,7 +45,7 @@ TTS_CASE_WITH("Check behavior of lerp on ieee floating",
   TTS_ULP_EQUAL(lerp(a0, a1, a2),
                 map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
                 8);
-  TTS_ULP_EQUAL(lerp[eve::pedantic2](a0, a1, a2),
+  TTS_ULP_EQUAL(lerp[eve::pedantic](a0, a1, a2),
                 map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
                 8);
 };

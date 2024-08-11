@@ -94,7 +94,7 @@ namespace eve
       T d = eve::max(a, b) - eve::min(a, b);
       if constexpr(O::contains(saturated2) && signed_integral_value<T>)
         return if_else(is_ltz(d), valmax(eve::as(d)), d);
-      else if constexpr(O::contains(pedantic2) && floating_value<T>)
+      else if constexpr(O::contains(pedantic) && floating_value<T>)
         return if_else(is_unordered(a, b), allbits, if_else(is_nan(d), inf(as(d)), d));
       else
         return d;

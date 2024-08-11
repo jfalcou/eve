@@ -87,7 +87,7 @@ namespace eve
       {
         if constexpr( scalar_value<T> )
         {
-          if( is_eqz(a0) ) return rec[pedantic2](a0);
+          if( is_eqz(a0) ) return rec[pedantic](a0);
           if( is_flint(a0) || is_not_finite(a0) ) return nan(eve::as<T>()); // nan or Inf input
         }
         T x = abs(a0);
@@ -96,7 +96,7 @@ namespace eve
           x = if_else(is_nez(a0) && (is_not_finite(x) || is_flint(x)), eve::allbits, x);
         }
         auto [fn, xr, dxr] = rem2(x);
-        return rec[pedantic2](sin_finalize(bitofsign(a0), quadrant(fn), xr, dxr));
+        return rec[pedantic](sin_finalize(bitofsign(a0), quadrant(fn), xr, dxr));
       }
     }
   }

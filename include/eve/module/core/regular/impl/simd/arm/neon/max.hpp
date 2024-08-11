@@ -20,7 +20,7 @@ namespace eve::detail
                                   wide<T, N> const & v1) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric) || O::contains(pedantic2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic))
     {
       return max_(EVE_TARGETS(cpu_), opts, v0, v1);
     }

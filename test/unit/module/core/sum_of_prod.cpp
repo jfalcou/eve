@@ -17,7 +17,7 @@ TTS_CASE_TPL( "Check sum_of_prod", eve::test::scalar::ieee_reals)
   auto test = [](auto a,  auto b, auto c, auto d){return a*b+c*d; };
   auto rsop = [](auto a,  auto b, auto c, auto d){return eve::sum_of_prod[eve::raw](a, b, c, d);};
   auto sop = [](auto a,  auto b, auto c, auto d){return eve::sum_of_prod(a, b, c, d);};
-  auto psop = [](auto a,  auto b, auto c, auto d){return eve::sum_of_prod[eve::pedantic2](a, b, c, d);};
+  auto psop = [](auto a,  auto b, auto c, auto d){return eve::sum_of_prod[eve::pedantic](a, b, c, d);};
   int i1 = 1;
   float f1 = 2.0f;
   double d1 = 1.0f;

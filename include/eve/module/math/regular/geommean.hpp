@@ -98,10 +98,10 @@ namespace eve
       {
         auto a = r_t(a0);
         auto b = r_t(a1);
-        if (O::contains(pedantic2))
+        if (O::contains(pedantic))
         {
           auto m  = max(a, b);
-          auto im = if_else(is_nez(m), rec[pedantic2](m), m);
+          auto im = if_else(is_nez(m), rec[pedantic](m), m);
           auto z  = min(a, b) * im;
           return if_else(is_nltz(a) || is_nltz(b), sqrt(z) * m, allbits);
         }
@@ -112,8 +112,8 @@ namespace eve
       }
       else
       {
-        elt_t invn  = rec[pedantic2](elt_t(sizeof...(args) + 2u));
-        if (O::contains(pedantic2))
+        elt_t invn  = rec[pedantic](elt_t(sizeof...(args) + 2u));
+        if (O::contains(pedantic))
         { //perhaps this is always more efficient TODO bench it
           auto e  = -maxmag(exponent(r_t(a0)), exponent(r_t(a1)), exponent(r_t(args))...);
           auto p  = mul( r_t(ldexp[o](a0, e)), r_t(ldexp[o](a1, e)), r_t(ldexp[o](args, e))...);

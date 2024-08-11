@@ -47,7 +47,7 @@ TTS_CASE_TPL("Random check for eve::next", eve::test::simd::all_types)
       return e == eve::valmax(eve::as(e)) ? e : e+1;
     }
   };
-  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_pedantic_next, eve::next[eve::pedantic2] );
+  EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax),  std_pedantic_next, eve::next[eve::pedantic] );
 
   auto std_saturated_next = [](auto e) -> e_t {
     if constexpr(eve::floating_value<T>)

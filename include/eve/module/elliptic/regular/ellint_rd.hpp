@@ -123,7 +123,7 @@ namespace eve
           if( eve::all(q < eve::abs(an)) ) break;
         }
 
-        T invan = rec[pedantic2](an);
+        T invan = rec[pedantic](an);
         T xx    = fn * (a0 - x) * invan;
         T yy    = fn * (a0 - y) * invan;
         T zz    = -(xx + yy) / 3;
