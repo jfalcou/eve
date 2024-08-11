@@ -21,14 +21,14 @@ struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.f5f162p-3);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.f5f16p-3);
+      if constexpr(Opts::contains(upward))        return T(0x1.f5f162p-3);
+      else if constexpr(Opts::contains(downward)) return T(0x1.f5f16p-3);
       else                                         return T(0x1.f5f162p-3);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.f5f161186c5f2p-3);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.f5f161186c5f1p-3);
+      if constexpr(Opts::contains(upward))        return T(0x1.f5f161186c5f2p-3);
+      else if constexpr(Opts::contains(downward)) return T(0x1.f5f161186c5f1p-3);
       else                                         return T(0x1.f5f161186c5f2p-3);
     }
   }

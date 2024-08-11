@@ -82,7 +82,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto
     remainder_(EVE_REQUIRES(cpu_), O const &, T const& a, T const& b) noexcept
     {
-      return rem[to_nearest2](a, b);
+      return rem[to_nearest](a, b);
     }
   }
 }

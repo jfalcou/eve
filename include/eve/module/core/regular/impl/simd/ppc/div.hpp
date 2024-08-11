@@ -19,7 +19,7 @@ namespace eve::detail
                                   wide<T, N> const& v1) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(toward_zero2) || O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
+    if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
       return round[o](div(v0, v1));
     else
     {

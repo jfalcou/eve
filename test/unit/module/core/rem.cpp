@@ -88,7 +88,7 @@ TTS_CASE_TPL("Check fixed-cases behavior of eve::rem", eve::test::simd::all_type
 
   TTS_EQUAL(rem(T(12), v_t(4)), T(0));
   TTS_EQUAL(rem(T(1), v_t(2)), T(1));
-  TTS_EQUAL(rem[eve::toward_zero2](T(4), v_t(3)), T(1));
+  TTS_EQUAL(rem[eve::toward_zero](T(4), v_t(3)), T(1));
   if constexpr( eve::floating_value<T> )
     TTS_IEEE_EQUAL(rem(T(4), T(0)), eve::nan(eve::as<T>()));
 };

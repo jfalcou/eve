@@ -21,14 +21,14 @@ struct invlog_2_t : constant_callable<invlog_2_t, Options, downward_option, upwa
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.715478p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.715476p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.715478p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.715476p+0);
       else                                         return T(0x1.715476p+0);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.71547652b82ffp+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.71547652b82fep+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.71547652b82ffp+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.71547652b82fep+0);
       else                                         return T(0x1.71547652b82fep+0);
     }
   }

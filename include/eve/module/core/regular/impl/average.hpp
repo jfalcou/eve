@@ -24,7 +24,7 @@ namespace eve::detail
   {
     if constexpr(integral_value <T>)
     {
-      if constexpr(O::contains(upward2))
+      if constexpr(O::contains(upward))
         return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
       else
         return (a & b) + ((a ^ b) >> 1);   //compute floor( (x+y)/2 )

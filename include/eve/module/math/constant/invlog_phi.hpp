@@ -21,14 +21,14 @@ struct invlog_phi_t : constant_callable<invlog_phi_t, Options, downward_option, 
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.09fec2p+1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.09fecp+1);
+      if constexpr(Opts::contains(upward))        return T(0x1.09fec2p+1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.09fecp+1);
       else                                         return T(0x1.09fecp+1);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.09fec09279922p+1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.09fec09279921p+1);
+      if constexpr(Opts::contains(upward))        return T(0x1.09fec09279922p+1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.09fec09279921p+1);
       else                                         return T(0x1.09fec09279922p+1);
     }
   }

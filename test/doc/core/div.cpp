@@ -20,10 +20,10 @@ int main()
   std::cout << "---- simd" << '\n'
             << " <- rf                       = " << rf << '\n'
             << " <- sf                       = " << sf << '\n'
-            << " -> toward_zero(div)(rf, sf) = " << eve::div[eve::toward_zero2](rf, sf) << '\n'
-            << " -> downward(div)(rf, sf)    = " << eve::div[eve::downward2](rf, sf)    << '\n'
-            << " -> upward(div)(rf, sf)      = " << eve::div[eve::upward2](rf, sf)      << '\n'
-            << " -> to_nearest(div)(rf, sf)  = " << eve::div[eve::to_nearest2](rf, sf)  << '\n';
+            << " -> toward_zero(div)(rf, sf) = " << eve::div[eve::toward_zero](rf, sf) << '\n'
+            << " -> downward(div)(rf, sf)    = " << eve::div[eve::downward](rf, sf)    << '\n'
+            << " -> upward(div)(rf, sf)      = " << eve::div[eve::upward](rf, sf)      << '\n'
+            << " -> to_nearest(div)(rf, sf)  = " << eve::div[eve::to_nearest](rf, sf)  << '\n';
 
   auto k = kumi::tuple{pf, pf, pf, 1};
   std::cout << "---- multi parameters" << '\n'

@@ -21,14 +21,14 @@ struct rsqrt_e_t : constant_callable<rsqrt_e_t, Options, downward_option, upward
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.368b3p-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.368b2ep-1);
+      if constexpr(Opts::contains(upward))        return T(0x1.368b3p-1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.368b2ep-1);
       else                                         return T(0x1.368b3p-1);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.368b2fc6f960ap-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.368b2fc6f9609p-1);
+      if constexpr(Opts::contains(upward))        return T(0x1.368b2fc6f960ap-1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.368b2fc6f9609p-1);
       else                                         return T(0x1.368b2fc6f960ap-1);
     }
   }

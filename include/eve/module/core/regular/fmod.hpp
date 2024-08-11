@@ -88,7 +88,7 @@ namespace eve
     {
       return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
                      allbits,
-                     if_else(is_eqz(a)||is_infinite(b), a, fnma(b, div[toward_zero2](a, b), a)));
+                     if_else(is_eqz(a)||is_infinite(b), a, fnma(b, div[toward_zero](a, b), a)));
     }
 
   }

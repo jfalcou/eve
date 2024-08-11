@@ -14,7 +14,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
@@ -87,15 +86,15 @@ namespace eve::detail
           return if_else(is_nez(b), div(a, b), allbits);
       }
     }
-    else if constexpr(O::contains(toward_zero2) || O::contains(upward2) ||
-                      O::contains(downward2) || O::contains(to_nearest2))
+    else if constexpr(O::contains(toward_zero) || O::contains(upward) ||
+                      O::contains(downward) || O::contains(to_nearest))
     {
       using elt_t = element_type_t<T>;
       if constexpr(floating_value<T>)
       {
         return round[o](div(a, b));
       }
-      else if  constexpr(O::contains(downward2))
+      else if  constexpr(O::contains(downward))
       {
         EVE_ASSERT(eve::all((b != 0)), "[eve] - div[downward](a, 0) is undefined");
         if constexpr( signed_value<T> )
@@ -114,11 +113,11 @@ namespace eve::detail
           return div(a, b);
         }
       }
-      else if  constexpr(O::contains(toward_zero2))
+      else if  constexpr(O::contains(toward_zero))
       {
         return div(a, b);
       }
-      else if  constexpr(O::contains(upward2) )
+      else if  constexpr(O::contains(upward) )
       {
         EVE_ASSERT(eve::all((b != 0)), "[eve] - div[upward](a, 0) is undefined");
         if constexpr( signed_value<T> )
@@ -138,7 +137,7 @@ namespace eve::detail
           return inc[is_nez(fms(q, b, a))](q);
         }
       }
-      else if  constexpr(O::contains(to_nearest2))
+      else if  constexpr(O::contains(to_nearest))
       {
         EVE_ASSERT(eve::all((b != 0)), "[eve] - div[to_nearest](a, 0) is undefined");
         using v_t = element_type_t<T>;

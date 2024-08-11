@@ -21,14 +21,14 @@ struct rsqrt_pi_t : constant_callable<rsqrt_pi_t, Options, downward_option, upwa
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.20dd76p-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.20dd74p-1);
+      if constexpr(Opts::contains(upward))        return T(0x1.20dd76p-1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.20dd74p-1);
       else                                         return T(0x1.20dd76p-1);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.20dd750429b6ep-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.20dd750429b6dp-1);
+      if constexpr(Opts::contains(upward))        return T(0x1.20dd750429b6ep-1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.20dd750429b6dp-1);
       else                                         return T(0x1.20dd750429b6dp-1);
     }
   }
