@@ -15,5 +15,5 @@ int main()
    std::cout << "-> powm1(pf, qf)                = " << eve::powm1(pf, qf) << "\n";
    std::cout << "-> powm1[ignore_last(2)](pf, qf)= " << eve::powm1[eve::ignore_last(2)](pf, qf) << "\n";
    std::cout << "-> powm1[qf > 0.0f](pf, qf)     = " << eve::powm1[qf > 0.0f](pf, qf) << "\n";
-   std::cout << "-> powm1[raw2](pf, qf)           = " << eve::powm1[eve::raw2](pf, qf) << "\n";
+   std::cout << "-> powm1[raw](pf, qf)           = " << eve::powm1[eve::raw](pf, qf) << "\n";
 }

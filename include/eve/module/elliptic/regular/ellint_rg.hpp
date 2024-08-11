@@ -97,7 +97,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr T ellint_rg_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z)
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         swap_if(x < y, x, y);
         swap_if(x < z, x, z);
@@ -110,7 +110,7 @@ namespace eve
         auto r       = nan(as(x));
         auto notdone = is_nltz(x) && is_nltz(y) && is_nltz(z);
         // any parameter nan or less than zero implies nan
-        auto br0 = [x, y, z]() { return ellint_rg[raw2](x, y, z); };
+        auto br0 = [x, y, z]() { return ellint_rg[raw](x, y, z); };
         last_interval(br0, notdone, r);
         return r;
       }

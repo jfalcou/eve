@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__acos) , xp, std__acos , arg0);
-  run<EVE_VALUE>(EVE_NAME(acos[eve::raw2]) , xp, eve::acos[eve::raw2] , arg0);
-  run<EVE_TYPE> (EVE_NAME(acos[eve::raw2]) , xp, eve::acos[eve::raw2] , arg0);
+  run<EVE_VALUE>(EVE_NAME(acos[eve::raw]) , xp, eve::acos[eve::raw] , arg0);
+  run<EVE_TYPE> (EVE_NAME(acos[eve::raw]) , xp, eve::acos[eve::raw] , arg0);
 
 }

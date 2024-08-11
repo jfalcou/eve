@@ -14,5 +14,5 @@ int main()
    std::cout << "-> pow_abs(pf, qf)                = " << eve::pow_abs(pf, qf) << "\n";
    std::cout << "-> pow_abs[ignore_last(2)](pf, qf)= " << eve::pow_abs[eve::ignore_last(2)](pf, qf) << "\n";
    std::cout << "-> pow_abs[qf > 0.0f](pf, qf)     = " << eve::pow_abs[qf > 0.0f](pf, qf) << "\n";
-   std::cout << "-> pow_abs[raw2](pf, qf)           = " << eve::pow_abs[eve::raw2](pf, qf) << "\n";
+   std::cout << "-> pow_abs[raw](pf, qf)           = " << eve::pow_abs[eve::raw](pf, qf) << "\n";
 }

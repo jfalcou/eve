@@ -21,7 +21,7 @@ namespace eve::detail
     {
       return rsqrt.behavior(cpu_{}, o, v0);
     }
-    else if constexpr(O::contains(raw2))
+    else if constexpr(O::contains(raw))
     {
       if      constexpr( cat == category::float32x2 ) return vrsqrte_f32(v0);
       else if constexpr( cat == category::float32x4 ) return vrsqrteq_f32(v0);

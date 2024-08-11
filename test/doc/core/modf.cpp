@@ -10,7 +10,7 @@ int main()
   std::cout << "<- wf0                          = " << wf0 << "\n";
 
   std::cout << "-> modf(wf0)                    = " << eve::modf(wf0) << "\n";
-  std::cout << "-> modf[raw2](wf0)               = " << eve::modf[eve::raw2](wf0) << "\n";
+  std::cout << "-> modf[raw](wf0)               = " << eve::modf[eve::raw](wf0) << "\n";
   std::cout << "-> modf[pedantic](wf0)          = " << eve::modf[eve::pedantic](wf0) << "\n";
   std::cout << "-> modf[almost](wf0)            = " << eve::modf[eve::almost](wf0) << "\n";
 }

@@ -16,7 +16,7 @@
 //== Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of eve::rising_factorial", eve::test::simd::ieee_reals)
-<typename T>(tts::type<T>) { TTS_EXPR_IS(eve::rising_factorial[eve::raw2](int(), T()), T); };
+<typename T>(tts::type<T>) { TTS_EXPR_IS(eve::rising_factorial[eve::raw](int(), T()), T); };
 
 //==================================================================================================
 //== Test for corner-cases values

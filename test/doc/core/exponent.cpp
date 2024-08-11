@@ -9,5 +9,5 @@ int main()
   std::cout << "<- wf0                = " << wf0 << "\n";
                                       
   std::cout << "-> exponent(wf0)      = " << eve::exponent(wf0) << "\n";
-  std::cout << "-> exponent[raw2](wf0) = " << eve::exponent[eve::raw2](wf0) << "\n";
+  std::cout << "-> exponent[raw](wf0) = " << eve::exponent[eve::raw](wf0) << "\n";
 }

@@ -48,7 +48,7 @@ namespace eve
 //!      constexpr auto sqrt[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto sqrt[raw2](value auto x)                     noexcept; // 3
+//!      constexpr auto sqrt[raw](value auto x)                     noexcept; // 3
 //!
 //!   }
 //!   @endcode

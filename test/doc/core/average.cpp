@@ -18,7 +18,7 @@ int main()
   std::cout << "-> average(wi0, wi1)                 = " << eve::average(wi0, wi1) << "\n";
   std::cout << "-> average[ignore_last(2)](wi0, wi1) = " << eve::average[eve::ignore_last(2)](wi0, wi1) << "\n";
   std::cout << "-> average[wi0 != 0](wi0, wi1)       = " << eve::average[wi0 != 0](wi0, wi1) << "\n";
-  std::cout << "-> average[raw2](wi0, wi1)            = " << eve::average[eve::raw2](wi0, wi1) << "\n";
+  std::cout << "-> average[raw](wi0, wi1)            = " << eve::average[eve::raw](wi0, wi1) << "\n";
   std::cout << "-> average[upward](wi0, wi1)         = " << eve::average[eve::upward](wi0, wi1) << "\n";
   std::cout << "-> average[downward](wi0, wi1)       = " << eve::average[eve::downward](wi0, wi1) << "\n";
 }

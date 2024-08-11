@@ -46,7 +46,7 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 //!      constexpr auto asecpi(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto asecpi[raw2](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto asecpi[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto asecpi[conditional_expr auto c](floating_value auto x) noexcept; // 3

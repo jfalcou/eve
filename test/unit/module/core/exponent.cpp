@@ -75,9 +75,9 @@ TTS_CASE_TPL("Check return types of eve::exponent(simd)", eve::test::simd::ieee_
   TTS_IEEE_EQUAL(eve::ldexp(eve::mantissa( eve::nan(eve::as<T>())),eve::exponent( eve::nan(eve::as<T>())) ), eve::nan(eve::as<T>()));
 
 
-  TTS_EQUAL(eve::exponent[eve::raw2](T(1)), i_t(0));
-  TTS_EQUAL(eve::exponent[eve::raw2](v_t(1)), vi_t(0));
-  TTS_EQUAL(eve::exponent[eve::raw2](T(2.5)), i_t(1));
-  TTS_EQUAL(eve::exponent[eve::raw2](v_t(2.5)), vi_t(1));
+  TTS_EQUAL(eve::exponent[eve::raw](T(1)), i_t(0));
+  TTS_EQUAL(eve::exponent[eve::raw](v_t(1)), vi_t(0));
+  TTS_EQUAL(eve::exponent[eve::raw](T(2.5)), i_t(1));
+  TTS_EQUAL(eve::exponent[eve::raw](v_t(2.5)), vi_t(1));
 
 };

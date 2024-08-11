@@ -44,7 +44,7 @@ namespace eve::detail
       return r0;
     else
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return add(r0, args...)/(sizeof...(args) + 1);
       }

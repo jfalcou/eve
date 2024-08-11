@@ -45,7 +45,7 @@ struct asecd_t : elementwise_callable<asecd_t, Options, raw_option>
 //!      constexpr auto asecd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto asecd[raw2](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto asecd[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto asecd[conditional_expr auto c](floating_value auto x) noexcept; // 3

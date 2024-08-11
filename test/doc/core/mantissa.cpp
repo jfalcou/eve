@@ -11,5 +11,5 @@ int main()
   std::cout << "-> mantissa(wf0)                 = " << eve::mantissa(wf0) << "\n";
   std::cout << "-> mantissa[ignore_last(2)](wf0) = " << eve::mantissa[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> mantissa[wf0 != 0](wf0)       = " << eve::mantissa[wf0 != 0](wf0) << "\n";
-  std::cout << "-> mantissa[raw2](wf0)            = " << eve::mantissa[eve::raw2](wf0) << "\n";
+  std::cout << "-> mantissa[raw](wf0)            = " << eve::mantissa[eve::raw](wf0) << "\n";
 }

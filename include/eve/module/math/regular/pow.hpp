@@ -76,7 +76,7 @@ namespace eve
 //!      constexpr auto pow[logical_value auto m](value auto x, value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow[raw2](value auto x, value auto y)                     noexcept; // 3
+//!      constexpr auto pow[raw](value auto x, value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -154,7 +154,7 @@ namespace eve
     pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return exp(a1*log(a0));
       }

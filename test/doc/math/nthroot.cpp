@@ -14,5 +14,5 @@ int main()
    std::cout << "-> nthroot(wf, wn)                = " << eve::nthroot(wf, wn) << "\n";
    std::cout << "-> nthroot[ignore_last(2)](wf, wn)= " << eve::nthroot[eve::ignore_last(2)](wf, wn) << "\n";
    std::cout << "-> nthroot[wf != 2.0f](wf, wn)    = " << eve::nthroot[wf != 2.0f](wf, wn) << "\n";
-   std::cout << "-> nthroot[raw2](wf, wn)           = " << eve::nthroot[eve::raw2](wf, wn) << "\n";
+   std::cout << "-> nthroot[raw](wf, wn)           = " << eve::nthroot[eve::raw](wf, wn) << "\n";
 }

@@ -19,14 +19,14 @@ TTS_CASE_TPL("Check return types of acospi", eve::test::simd::ieee_reals)
 
   TTS_EXPR_IS(eve::acospi(T())                        , T   );
   TTS_EXPR_IS(eve::acospi(v_t())                      , v_t );
-  TTS_EXPR_IS(eve::acospi[eve::raw2](T())              , T   );
-  TTS_EXPR_IS(eve::acospi[eve::raw2](v_t())            , v_t );
+  TTS_EXPR_IS(eve::acospi[eve::raw](T())              , T   );
+  TTS_EXPR_IS(eve::acospi[eve::raw](v_t())            , v_t );
   TTS_EXPR_IS(eve::acospi[T() < 0](T())               , T   );
   TTS_EXPR_IS(eve::acospi[v_t() < 0](v_t())           , v_t );
-  TTS_EXPR_IS(eve::acospi[eve::raw2][T() < 0](T())     , T   );
-  TTS_EXPR_IS(eve::acospi[eve::raw2][v_t() < 0](v_t()) , v_t );
-  TTS_EXPR_IS(eve::acospi[T() < 0][eve::raw2](T())     , T   );
-  TTS_EXPR_IS(eve::acospi[v_t() < 0][eve::raw2](v_t()) , v_t );
+  TTS_EXPR_IS(eve::acospi[eve::raw][T() < 0](T())     , T   );
+  TTS_EXPR_IS(eve::acospi[eve::raw][v_t() < 0](v_t()) , v_t );
+  TTS_EXPR_IS(eve::acospi[T() < 0][eve::raw](T())     , T   );
+  TTS_EXPR_IS(eve::acospi[v_t() < 0][eve::raw](v_t()) , v_t );
 };
 
 //======================================================================================================================
@@ -40,15 +40,15 @@ TTS_CASE_WITH("Check behavior of acospi", eve::test::simd::ieee_reals, tts::gene
   TTS_ULP_EQUAL(eve::acospi(a0), map([](auto e) -> v_t { return eve::radinpi(std::acos(e)); }, a0), 2);
 };
 
-TTS_CASE_WITH("Check behavior of acospi[raw2]", eve::test::simd::ieee_reals, tts::generate(tts::randoms(1.-1e-6, 1.0)))
+TTS_CASE_WITH("Check behavior of acospi[raw]", eve::test::simd::ieee_reals, tts::generate(tts::randoms(1.-1e-6, 1.0)))
 <typename T>(T const& a0)
 {
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ABSOLUTE_EQUAL( eve::acospi[eve::raw2](a0), map([](auto e) -> v_t { return eve::radinpi(std::acos(e)); }, a0)
+  TTS_ABSOLUTE_EQUAL( eve::acospi[eve::raw](a0), map([](auto e) -> v_t { return eve::radinpi(std::acos(e)); }, a0)
                     , 200 * eve::eps(eve::as<v_t>())
                     );
-  TTS_ABSOLUTE_EQUAL( eve::acospi[eve::raw2](-a0), map([](auto e) -> v_t { return eve::radinpi(std::acos(e)); }, -a0)
+  TTS_ABSOLUTE_EQUAL( eve::acospi[eve::raw](-a0), map([](auto e) -> v_t { return eve::radinpi(std::acos(e)); }, -a0)
                     , 200 * eve::eps(eve::as<v_t>())
                     );
 };

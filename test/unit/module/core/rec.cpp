@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
                 2.5);
 
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask, eve::rec(a0), a0));
-  TTS_EQUAL(eve::rec[eve::raw2][mask](a0), eve::if_else(mask, eve::rec[eve::raw2](a0), a0));
+  TTS_EQUAL(eve::rec[eve::raw][mask](a0), eve::if_else(mask, eve::rec[eve::raw](a0), a0));
   TTS_EQUAL(eve::rec[eve::pedantic2][mask](a0), eve::if_else(mask, eve::rec[eve::pedantic2](a0), a0));
 };
 

@@ -58,7 +58,7 @@ namespace eve
 
   [[maybe_unused]] inline constexpr auto downward2    = ::rbr::flag( downward_mode{}    );
   [[maybe_unused]] inline constexpr auto pedantic2    = ::rbr::flag( pedantic_mode{}    );
-  [[maybe_unused]] inline constexpr auto raw2         = ::rbr::flag( raw_mode{}         );
+  [[maybe_unused]] inline constexpr auto raw          = ::rbr::flag( raw_mode{}         );
   [[maybe_unused]] inline constexpr auto saturated2   = ::rbr::flag( saturated_mode{}   );
   [[maybe_unused]] inline constexpr auto to_nearest2  = ::rbr::flag( to_nearest_mode{}  );
   [[maybe_unused]] inline constexpr auto toward_zero2 = ::rbr::flag( toward_zero_mode{} );
@@ -78,7 +78,7 @@ namespace eve
 
   struct downward_option     : detail::exact_option<downward2>    {};
   struct pedantic_option     : detail::exact_option<pedantic2>    {};
-  struct raw_option          : detail::exact_option<raw2>         {};
+  struct raw_option          : detail::exact_option<raw>          {};
   struct saturated_option    : detail::exact_option<saturated2>   {};
   struct to_nearest_option   : detail::exact_option<to_nearest2>  {};
   struct toward_zero_option  : detail::exact_option<toward_zero2> {};
@@ -102,7 +102,6 @@ namespace eve
   // ----------------------------------------------------------------------------------
   inline constexpr auto as_option(downward_type     const&) { return downward2;     }
   inline constexpr auto as_option(pedantic_type     const&) { return pedantic2;     }
-//  inline constexpr auto as_option(raw_type          const&) { return raw2;          }
   inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }
   inline constexpr auto as_option(to_nearest_type   const&) { return to_nearest2;   }
   inline constexpr auto as_option(toward_zero_type  const&) { return toward_zero2;  }

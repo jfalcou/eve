@@ -15,7 +15,7 @@ int main()
   std::cout << "-> frac(wf0)                 = " << eve::frac(wf0) << "\n";
   std::cout << "-> frac[ignore_last(2)](wf0) = " << eve::frac[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> frac[wf0 != 0](wf0)       = " << eve::frac[wf0 != 0](wf0) << "\n";
-  std::cout << "-> frac[raw2](wf0)            = " << eve::frac[eve::raw2](wf0) << "\n";
+  std::cout << "-> frac[raw](wf0)            = " << eve::frac[eve::raw](wf0) << "\n";
   std::cout << "-> frac[pedantic](wf0)       = " << eve::frac[eve::pedantic](wf0) << "\n";
   std::cout << "-> frac[almost](wf0)         = " << eve::frac[eve::almost](wf0) << "\n";
   std::cout << "-> frac(wu0)                 = " << eve::frac(wu0) << "\n";

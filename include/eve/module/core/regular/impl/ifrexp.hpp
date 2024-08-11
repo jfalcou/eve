@@ -112,7 +112,7 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
                             , bit_shr(r1, nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>())
                             );
 
-      if constexpr(O::contains(raw2)) return res;
+      if constexpr(O::contains(raw)) return res;
       else
       {
         auto a0eqz  = is_eqz(a0);

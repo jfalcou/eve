@@ -41,7 +41,7 @@ namespace eve::detail
     auto c3  = Pack(v_t {3});
     auto c10 = Pack(v_t {10});
     auto c15 = Pack(v_t {15});
-    auto a0  = rsqrt[raw2](x);
+    auto a0  = rsqrt[raw](x);
     auto y   = sqr(a0) * x;
 
     // Perform one Halley cubically convergent iteration
@@ -91,7 +91,7 @@ namespace eve::detail
                                     wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -117,7 +117,7 @@ namespace eve::detail
                                      wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -141,7 +141,7 @@ namespace eve::detail
                                      O const&,
                                      wide<T, N> a0) noexcept
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       constexpr auto c = categorize<wide<T, N>>();
       if      constexpr( c == category::float32x16) return _mm512_rsqrt14_ps(a0);
@@ -168,7 +168,7 @@ namespace eve::detail
     auto src = alternative(cx, v, as<wide<T, N>> {});
 
     if constexpr( C::is_complete) return src;
-    else if constexpr(O::contains(raw2))
+    else if constexpr(O::contains(raw))
     {
       constexpr auto c = categorize<wide<T, N>>();
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;

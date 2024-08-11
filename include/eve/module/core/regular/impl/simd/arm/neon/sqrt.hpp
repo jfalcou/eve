@@ -35,7 +35,7 @@ namespace eve::detail
     else
     {
       auto that = if_else(v0, v0 * rsqrt(v0), v0);
-      if constexpr( platform::supports_invalids || O::contains(raw2))
+      if constexpr( platform::supports_invalids || O::contains(raw))
         return if_else(v0 == inf(as(v0)), v0, that);
       else
         return that;

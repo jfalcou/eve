@@ -15,16 +15,16 @@ int main()
   std::cout << "-> rec(wf0)                 = " << eve::rec(wf0) << "\n";
   std::cout << "-> rec[ignore_last(2)](wf0) = " << eve::rec[eve::ignore_last(2)](wf0) << "\n";
   std::cout << "-> rec[wf0 != 0](wf0)       = " << eve::rec[wf0 != 0](wf0) << "\n";
-  std::cout << "-> rec[raw2](wf0)            = " << eve::rec[eve::raw2](wf0) << "\n";
+  std::cout << "-> rec[raw](wf0)            = " << eve::rec[eve::raw](wf0) << "\n";
   std::cout << "-> rec[pedantic](wf0)       = " << eve::rec[eve::pedantic](wf0) << "\n";
   std::cout << "-> rec(wu0)                 = " << eve::rec(wu0) << "\n";
   std::cout << "-> rec[ignore_last(2)](wu0) = " << eve::rec[eve::ignore_last(2)](wu0) << "\n";
   std::cout << "-> rec[wu0 != 0](wu0)       = " << eve::rec[wu0 != 0](wu0) << "\n";
-  std::cout << "-> rec[raw2](wu0)            = " << eve::rec[eve::raw2](wu0) << "\n";
+  std::cout << "-> rec[raw](wu0)            = " << eve::rec[eve::raw](wu0) << "\n";
   std::cout << "-> rec[pedantic](wu0)       = " << eve::rec[eve::pedantic](wu0) << "\n";
   std::cout << "-> rec(wi0)                 = " << eve::rec(wi0) << "\n";
   std::cout << "-> rec[ignore_last(2)](wi0) = " << eve::rec[eve::ignore_last(2)](wi0) << "\n";
   std::cout << "-> rec[wi0 != 0](wi0)       = " << eve::rec[wi0 != 0](wi0) << "\n";
-  std::cout << "-> rec[raw2](wi0)            = " << eve::rec[eve::raw2](wi0) << "\n";
+  std::cout << "-> rec[raw](wi0)            = " << eve::rec[eve::raw](wi0) << "\n";
   std::cout << "-> rec[pedantic](wi0)       = " << eve::rec[eve::pedantic](wi0) << "\n";
 }

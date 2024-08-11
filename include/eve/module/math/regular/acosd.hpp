@@ -45,7 +45,7 @@ namespace eve
 //!      constexpr auto acosd(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto acosd[raw2](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acosd[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto acosd[conditional_expr auto c](floating_value auto x) noexcept; // 3

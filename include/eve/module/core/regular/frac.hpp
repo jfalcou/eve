@@ -52,7 +52,7 @@ namespace eve
 //!      constexpr auto frac[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto frac[raw2](floating_value auto x)            noexcept; // 3
+//!      constexpr auto frac[raw](floating_value auto x)            noexcept; // 3
 //!      constexpr auto frac[pedantic](floating_value auto x)       noexcept  // 4
 //!      constexpr auto frac[almost = tol](floating_value auto x)   noexcept; // 5
 //!      constexpr auto frac[almost](floating_value auto x)         noexcept; // 6
@@ -93,7 +93,7 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(raw2))      return a-trunc[o](a);
+        if constexpr(O::contains(raw))      return a-trunc[o](a);
         else
         {
           auto f = if_else(is_eqz(a), a, a - trunc[o](a));

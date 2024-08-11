@@ -13,6 +13,6 @@ int main()
   std::cout << "-> rising_factorial(n, p)                = " << eve::rising_factorial(n, p) << "\n";
   std::cout << "-> rising_factorial[ignore_last(2)](n, p)= " << eve::rising_factorial[eve::ignore_last(2)](n, p) << "\n";
   std::cout << "-> rising_factorial[n != 2.0f](n, p)     = " << eve::rising_factorial[n != 2.0f](n, p) << "\n";
-  std::cout << "-> rising_factorial[raw2](n, p)           = " << eve::rising_factorial[eve::raw2](n, p) << "\n";
+  std::cout << "-> rising_factorial[raw](n, p)           = " << eve::rising_factorial[eve::raw](n, p) << "\n";
   std::cout << "-> rising_factorial[pedantic](n, p)      = " << eve::rising_factorial[eve::pedantic](n, p) << "\n";
 }

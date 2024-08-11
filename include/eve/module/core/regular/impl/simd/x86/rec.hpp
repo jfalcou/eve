@@ -30,7 +30,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
      if      constexpr( c == category::float32x16) return _mm512_rcp14_ps(v);
       else if constexpr( c == category::float64x8 ) return _mm512_rcp14_pd(v);
@@ -82,7 +82,7 @@ namespace eve::detail
     }
     else
     {
-      auto x = rec[raw2](v);
+      auto x = rec[raw](v);
       x = fma(fnma(x, v, one(eve::as(v))), x, x);
       if constexpr(std::same_as<T, double>)
       {
@@ -114,7 +114,7 @@ namespace eve::detail
     else
     {
       auto m   = expand_mask(mask, as(a0)).storage().value;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         if      constexpr( c == category::float32x16) return _mm512_mask_rcp14_ps(src, m, a0);
         else if constexpr( c == category::float64x8 ) return _mm512_mask_rcp14_pd(src, m, a0);
@@ -140,7 +140,7 @@ namespace eve::detail
       }
       else
       {
-        auto x = rec[mask][raw2](a0);
+        auto x = rec[mask][raw](a0);
         x = if_else(mask, fma(fnma(x, a0, one(eve::as(a0))), x, x), a0);
         if constexpr(std::same_as<T, double>)
         {

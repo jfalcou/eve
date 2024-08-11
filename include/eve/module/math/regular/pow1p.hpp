@@ -57,7 +57,7 @@ namespace eve
 //!      constexpr auto pow1p[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto pow1p[raw2](floating_value auto x, floating_value auto y)                     noexcept; // 3
+//!      constexpr auto pow1p[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -96,7 +96,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<T, U>
     pow1p_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
-      if constexpr(O::contains(raw2) || integral_value<U>)
+      if constexpr(O::contains(raw) || integral_value<U>)
          return pow[o](inc(a), b);
        else
        {

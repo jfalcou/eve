@@ -61,14 +61,14 @@ TTS_CASE_TPL("Check behavior of mantissa on wide", eve::test::simd::ieee_reals)
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_EQUAL(eve::mantissa[eve::raw2](eve::inf(eve::as<T>())), eve::one(eve::as<T>()));
-    TTS_EQUAL(eve::mantissa[eve::raw2](eve::minf(eve::as<T>())), eve::mone(eve::as<T>()));
+    TTS_EQUAL(eve::mantissa[eve::raw](eve::inf(eve::as<T>())), eve::one(eve::as<T>()));
+    TTS_EQUAL(eve::mantissa[eve::raw](eve::minf(eve::as<T>())), eve::mone(eve::as<T>()));
   }
-  TTS_EQUAL(eve::mantissa[eve::raw2](T(-1)), T(-1));
-  TTS_EQUAL(eve::mantissa[eve::raw2](T(1)), T(1));
-  TTS_EQUAL(eve::mantissa[eve::raw2](T(2)), T(1));
-  TTS_EQUAL(eve::mantissa[eve::raw2](T(1.5)), T(1.5));
-  TTS_EQUAL(eve::mantissa[eve::raw2](T(2.5)), T(1.25));
+  TTS_EQUAL(eve::mantissa[eve::raw](T(-1)), T(-1));
+  TTS_EQUAL(eve::mantissa[eve::raw](T(1)), T(1));
+  TTS_EQUAL(eve::mantissa[eve::raw](T(2)), T(1));
+  TTS_EQUAL(eve::mantissa[eve::raw](T(1.5)), T(1.5));
+  TTS_EQUAL(eve::mantissa[eve::raw](T(2.5)), T(1.25));
 };
 
 

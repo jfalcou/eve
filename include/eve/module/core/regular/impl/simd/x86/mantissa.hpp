@@ -38,7 +38,7 @@ namespace eve::detail
     else if constexpr( c == category::float32x8 ) r = _mm256_getmant_ps(a0, interval, sign);
     else if constexpr( c == category::float64x2 ) r = _mm_getmant_pd(a0, interval, sign);
     else if constexpr( c == category::float32x4 ) r = _mm_getmant_ps(a0, interval, sign);
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
       return r;
     else
       return if_else(is_nan(a0)||is_eqz(a0), a0, r);
@@ -53,7 +53,7 @@ namespace eve::detail
                                        wide<T, N> const &v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       auto src                  = alternative(cx, v, as<wide<T, N>> {});
       if constexpr( C::is_complete ) return src;

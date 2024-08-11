@@ -90,7 +90,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr auto  ellint_rd_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         using elt_t = element_type_t<T>;
         T    xn     = x;
@@ -159,7 +159,7 @@ namespace eve
         auto notdone = is_nltz(x) && is_nltz(y) && is_nlez(z) && is_nez(x + y);
         // z equal to zero or any parameter nan or less than zero or more than one of x and y zero implies
         // nan
-        auto br0 = [x, y, z]() { return ellint_rd[raw2](x, y, z); }; // o+raw
+        auto br0 = [x, y, z]() { return ellint_rd[raw](x, y, z); }; // o+raw
         last_interval(br0, notdone, r);
         return r;
       }

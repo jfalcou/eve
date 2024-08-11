@@ -48,7 +48,7 @@ namespace eve
 //!      constexpr auto rsqrt[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto rsqrt[raw2](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto rsqrt[raw](floating_value auto x)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!

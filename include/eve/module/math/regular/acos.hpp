@@ -46,7 +46,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!      constexpr auto acos(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Semantic option
-//!      constexpr auto acos[raw2](floating_value auto x)                     noexcept; // 2
+//!      constexpr auto acos[raw](floating_value auto x)                     noexcept; // 2
 //!
 //!      // Lanes masking
 //!      constexpr auto acos[conditional_expr auto c](floating_value auto x) noexcept; // 3
@@ -90,7 +90,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         auto tmp  = pio_2(eve::as(a0))
           + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));

@@ -56,7 +56,7 @@ namespace eve
 //!      constexpr auto powm1[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto powm1[raw2](floating_value auto x, floating_value auto y)                     noexcept; // 3
+//!      constexpr auto powm1[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -96,7 +96,7 @@ namespace eve
     powm1_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return dec(pow[o](a, b));
       }

@@ -92,7 +92,7 @@ namespace eve
         auto           test      = is_less(eve::abs(x), T(100) * smallestposval(eve::as<T>()));
         ax                       = ldexp[test](ax, 54);
         /* Reduce x.  xm now is an range  [0.5, 1.0].  */
-        auto [xm, xe] = ifrexp[raw2](ax);
+        auto [xm, xe] = ifrexp[raw](ax);
         T u;
         if constexpr( std::is_same_v<vt_t, double> )
           u = eve::reverse_horner(xm, T(0x1.6b69cba168ff2p-2), T(0x1.8218dde9028b4p+0), T(-0x1.0eb8277cd8d5dp+1)

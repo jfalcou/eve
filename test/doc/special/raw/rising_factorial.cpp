@@ -13,6 +13,6 @@ int main()
   std::cout << "---- simd" << std::setprecision(17) << '\n'
             << " <- n                                  = " << n << '\n'
             << " <- x                                  = " << x << '\n'
-            << " -> raw(rising_factorial)(n, x)   = " << eve::rising_factorial[eve::raw2](n, x) << '\n';
+            << " -> raw(rising_factorial)(n, x)   = " << eve::rising_factorial[eve::raw](n, x) << '\n';
   return 0;
 }

@@ -15,7 +15,7 @@ TTS_CASE_TPL( "Check diff_of_prod", eve::test::scalar::ieee_reals)
   using we_t  = eve::wide<e_t>;
 
   auto test = [](auto a,  auto b, auto c, auto d){return a*b-c*d; };
-  auto rdop = [](auto a,  auto b, auto c, auto d){return eve::diff_of_prod[eve::raw2](a, b, c, d);};
+  auto rdop = [](auto a,  auto b, auto c, auto d){return eve::diff_of_prod[eve::raw](a, b, c, d);};
   auto dop = [](auto a,  auto b, auto c, auto d){return eve::diff_of_prod(a, b, c, d);};
   auto pdop = [](auto a,  auto b, auto c, auto d){return eve::diff_of_prod[eve::pedantic2](a, b, c, d);};
   int i1 = 1;

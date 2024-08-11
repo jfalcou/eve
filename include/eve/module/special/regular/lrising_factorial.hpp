@@ -55,7 +55,7 @@ namespace eve
 //!      constexpr auto lrising_factorial[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto lrising_factoriale[raw2]/*any of the above overloads*/)                     noexcept; // 3
+//!      constexpr auto lrising_factoriale[raw]/*any of the above overloads*/)                     noexcept; // 3
 //!      constexpr auto lrising_factorialee[pedantic](/*any of the above overloads*/)              noexcept; // 4
 //!   }
 //!   @endcode
@@ -171,7 +171,7 @@ namespace eve
       }
       else
       {
-        if constexpr(O::contains(raw2))
+        if constexpr(O::contains(raw))
         {
           // raw direct computation not matter why. nan if a+x or x is non positive
           auto notdone = is_nlez(x) && is_nlez(a + x);

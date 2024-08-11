@@ -55,7 +55,7 @@ namespace eve
 //!                                                          floating_value auto z, floating_value auto t) noexcept; // 2
 //!
 //!      // Semantic exclusive options
-//!      constexpr auto sum_of_prod[raw2](floating_value auto x, floating_value auto y,
+//!      constexpr auto sum_of_prod[raw](floating_value auto x, floating_value auto y,
 //!                                      floating_value auto z, floating_value auto t)                     noexcept; // 3
 //!      constexpr auto sum_of_prod[pedantic](floating_value auto x, floating_value auto y,
 //!                                           floating_value auto z, floating_value auto t)                noexcept; // 4
@@ -92,7 +92,7 @@ namespace eve
                   T const &c,  T const &d) noexcept
     {
       T cd =  c*d;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return fma(a, b, cd);
       }

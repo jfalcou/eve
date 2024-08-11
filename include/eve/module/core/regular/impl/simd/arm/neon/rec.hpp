@@ -19,7 +19,7 @@ namespace eve::detail
   rec_(EVE_REQUIRES(neon128_), O const&, wide<T, N> v) noexcept
   requires (arm_abi<abi_t<T, N>>)
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       constexpr auto cat = categorize<wide<T, N>>();
 

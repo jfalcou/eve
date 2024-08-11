@@ -56,7 +56,7 @@ namespace eve
 //!      constexpr auto modf[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto modf[raw2](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto modf[raw](floating_value auto x)                     noexcept; // 3
 //!      constexpr auto modf[pedantic](floating_value auto x)                noexcept; // 3
 //!      constexpr auto modf[almost](floating_value auto x)                  noexcept; // 3
 //!   }
@@ -90,7 +90,7 @@ namespace detail
     if constexpr(floating_value<T>)
     {
       auto t = trunc[o.drop(pedantic2)](a);
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return eve::zip(a-t, t);
       }
