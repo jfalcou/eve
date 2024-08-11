@@ -12,6 +12,7 @@
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve
 {

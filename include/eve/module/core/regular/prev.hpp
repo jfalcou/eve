@@ -15,16 +15,19 @@
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
+#include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
+#include <eve/module/core/regular/is_normal.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct prev_t : strict_elementwise_callable<prev_t, Options, pedantic_option,  saturated_option>
+  struct prev_t : strict_elementwise_callable<prev_t, Options, pedantic_option,  saturated_option, raw_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -69,6 +72,7 @@ namespace eve
 //!      // Exclusive Semantic options - Only one of those can be set at once
 //!      constexpr auto prev[pedantic](/* any of the above overloads */)                noexcept; // 5.1
 //!      constexpr auto prev[saturated ](/* any of the above overloads */)              noexcept; // 5.2
+//!      constexpr auto prev[raw](value auto x)                                         noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -86,8 +90,9 @@ namespace eve
 //!       3. [The operation is performed conditionnaly](@ref conditional)
 //!       4. if `x` is floating  zero and mzero are considered distinct.
 //!       5. ensures that the input is never less than the result of the call.
+//!       6. works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite).
+//!          the option has no influence on the two parameters calls
 //!
-//!    The value of the nth representable value less than `x` is returned.
 //!    If `n` is zero returns `x`.
 //!
 //!  @groupheader{Example}
@@ -106,7 +111,13 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(pedantic))
+        if constexpr(O::contains(raw2))
+        {
+          auto s = ieee_constant<0x1.000002p-24f, 0x1.0000000000001p-53>(as(a));
+          return fnma(a, eve::abs(a), a);
+        }
+        if (eve::all( eve::is_normal(a))) return prev[raw2](a);
+        if constexpr(O::contains(pedantic2))
         {
           auto pz   = bitinteger(a);
           auto z    = bitfloating(pz-one(as(pz)));
