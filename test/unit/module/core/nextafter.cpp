@@ -40,9 +40,9 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
   {
     auto n = [](auto e, auto f) -> v_t { return std::nextafter(e, f); };
     TTS_EQUAL(eve::nextafter(a0, a1), map(n, a0, a1));
-    TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic2](eve::nan(eve::as<T>()), T(1)),
+    TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic](eve::nan(eve::as<T>()), T(1)),
                    eve::nan(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic2](T(1), eve::nan(eve::as<T>())),
+    TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic](T(1), eve::nan(eve::as<T>())),
                    T(1));
   }
   else

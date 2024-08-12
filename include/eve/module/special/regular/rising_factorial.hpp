@@ -107,12 +107,12 @@ namespace eve
       }
       else
       {
-        if constexpr(O::contains(raw2))
+        if constexpr(O::contains(raw))
         {
           // raw direct computation not matter why. nan if a+x or x is non positive
           return eve::tgamma(x + a) / tgamma(a);
         }
-        else if constexpr(O::contains(pedantic2))
+        else if constexpr(O::contains(pedantic))
         {
           auto sga   = if_else(is_flint(a), one, signgam(a));
            auto sgapx = if_else(is_flint(a + x), one, signgam(a + x));

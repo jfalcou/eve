@@ -16,6 +16,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE> (EVE_NAME(frexp[eve::pedantic2]) , xp, eve::frexp[eve::pedantic2], arg0);
-  run<EVE_TYPE>  (EVE_NAME(frexp[eve::pedantic2]) , xp, eve::frexp[eve::pedantic2], arg0);
+  run<EVE_VALUE> (EVE_NAME(frexp[eve::pedantic]) , xp, eve::frexp[eve::pedantic], arg0);
+  run<EVE_TYPE>  (EVE_NAME(frexp[eve::pedantic]) , xp, eve::frexp[eve::pedantic], arg0);
 }

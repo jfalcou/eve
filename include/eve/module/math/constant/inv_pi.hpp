@@ -21,14 +21,14 @@ struct inv_pi_t : constant_callable<inv_pi_t, Options, downward_option, upward_o
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.45f308p-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.45f306p-2);
+      if constexpr(Opts::contains(upward))        return T(0x1.45f308p-2);
+      else if constexpr(Opts::contains(downward)) return T(0x1.45f306p-2);
       else                                         return T(0x1.45f306p-2);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.45f306dc9c883p-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.45f306dc9c882p-2);
+      if constexpr(Opts::contains(upward))        return T(0x1.45f306dc9c883p-2);
+      else if constexpr(Opts::contains(downward)) return T(0x1.45f306dc9c882p-2);
       else                                         return T(0x1.45f306dc9c883p-2);
     }
   }

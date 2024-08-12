@@ -120,8 +120,8 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
         // if we're above the lower-limit for the asymptotic expansion then use it:
         x = dec(x);
         result += log(x);
-        result += rec[pedantic2](x + x);
-        auto z = rec[pedantic2](sqr(x));
+        result += rec[pedantic](x + x);
+        auto z = rec[pedantic](sqr(x));
         T    y(0);
         if constexpr( std::is_same_v<elt_t, double> )
         {
@@ -208,13 +208,13 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
             while( eve::any(cond) )
             {
               x      = dec[cond](x);
-              result = add[cond](result, rec[pedantic2](x));
+              result = add[cond](result, rec[pedantic](x));
               cond   = x > T(2);
             }
             cond = x < T(1);
             while( eve::any(cond) )
             {
-              result = add[cond](result, -rec[pedantic2](x));
+              result = add[cond](result, -rec[pedantic](x));
               x      = inc[cond](x);
               cond   = x < T(1);
             }

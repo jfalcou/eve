@@ -13,7 +13,6 @@
 #include <eve/module/core/constant/mzero.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
@@ -29,7 +28,7 @@ namespace eve::detail
   rec_(EVE_REQUIRES(neon128_), O const&, wide<T, N> v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
       return vec_re(v0.storage());
     else
     {

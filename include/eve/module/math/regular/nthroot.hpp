@@ -99,7 +99,7 @@ namespace eve
       using r_t =  common_value_t<T, U>;
       r_t x = r_t(xx);
       r_t n = r_t(nn);
-      if constexpr( O::contains(raw2))
+      if constexpr( O::contains(raw))
       {
         auto r      = pow(abs(x), rec[pedantic](n));
         auto islezx = is_lez(x);

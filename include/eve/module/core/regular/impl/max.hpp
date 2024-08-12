@@ -26,7 +26,7 @@ namespace eve::detail
   {
     if constexpr(sizeof...(Ts) == 0) // 2 parameters
     {
-      if constexpr(O::contains(pedantic2)) //pedantic
+      if constexpr(O::contains(pedantic)) //pedantic
       {
         if      constexpr( integral_value<T> ) return max(a0, a1);
         else if constexpr( eve::platform::supports_invalids )

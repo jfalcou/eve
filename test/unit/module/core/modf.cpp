@@ -98,15 +98,15 @@ TTS_CASE_WITH("Check behavior of eve::modf(eve::wide)",
 <typename T>(T const& a0)
 {
   auto [f, t] = eve::modf(a0);
-  auto [fp, tp] = eve::modf[eve::pedantic2](a0);
-  auto [fr, tr] = eve::modf[eve::raw2](a0);
+  auto [fp, tp] = eve::modf[eve::pedantic](a0);
+  auto [fr, tr] = eve::modf[eve::raw](a0);
   auto [fa, ta] = eve::modf[eve::almost = 10](a0);
   TTS_IEEE_EQUAL(f, eve::frac(a0));
   TTS_IEEE_EQUAL(t, eve::trunc(a0));
-  TTS_IEEE_EQUAL(fp, eve::frac[eve::pedantic2](a0));
+  TTS_IEEE_EQUAL(fp, eve::frac[eve::pedantic](a0));
   TTS_IEEE_EQUAL(tp, eve::trunc(a0));
-  TTS_IEEE_EQUAL(fr, eve::frac[eve::raw2](a0));
-  TTS_IEEE_EQUAL(tr, eve::trunc[eve::raw2](a0));
+  TTS_IEEE_EQUAL(fr, eve::frac[eve::raw](a0));
+  TTS_IEEE_EQUAL(tr, eve::trunc[eve::raw](a0));
   TTS_IEEE_EQUAL(fa, eve::frac[eve::almost = 10](a0));
   TTS_IEEE_EQUAL(ta, eve::trunc[eve::almost = 10](a0));
 };

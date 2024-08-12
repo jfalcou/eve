@@ -53,8 +53,8 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
                 2.5);
 
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask, eve::rec(a0), a0));
-  TTS_EQUAL(eve::rec[eve::raw2][mask](a0), eve::if_else(mask, eve::rec[eve::raw2](a0), a0));
-  TTS_EQUAL(eve::rec[eve::pedantic2][mask](a0), eve::if_else(mask, eve::rec[eve::pedantic2](a0), a0));
+  TTS_EQUAL(eve::rec[eve::raw][mask](a0), eve::if_else(mask, eve::rec[eve::raw](a0), a0));
+  TTS_EQUAL(eve::rec[eve::pedantic][mask](a0), eve::if_else(mask, eve::rec[eve::pedantic](a0), a0));
 };
 
 //==================================================================================================
@@ -78,17 +78,17 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
     TTS_ULP_EQUAL(eve::rec(eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()), 0.5);
     TTS_ULP_EQUAL(eve::rec(2*eve::mindenormal(eve::as<T>())), T(0.5)/eve::mindenormal(eve::as<T>()), 0.5);
 
-    TTS_ULP_EQUAL(eve::rec[eve::pedantic2](cases.valmin), T(1)/cases.valmin, 0.5);
-    TTS_ULP_EQUAL(eve::rec[eve::pedantic2](cases.valmax), T(1)/cases.valmax, 0.5);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](cases.nan), cases.nan);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](cases.minf), cases.mzero);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](cases.inf) , cases.zero);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](cases.mzero), cases.minf);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](cases.zero), cases.inf);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](2*eve::mindenormal(eve::as<T>())), T(1)/(2*eve::mindenormal(eve::as<T>())));
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](eve::smallestposval(eve::as<T>())), T(1)/eve::smallestposval(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic2](2*eve::smallestposval(eve::as<T>())), T(1)/(2*eve::smallestposval(eve::as<T>())));
+    TTS_ULP_EQUAL(eve::rec[eve::pedantic](cases.valmin), T(1)/cases.valmin, 0.5);
+    TTS_ULP_EQUAL(eve::rec[eve::pedantic](cases.valmax), T(1)/cases.valmax, 0.5);
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.nan), cases.nan);
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.minf), cases.mzero);
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.inf) , cases.zero);
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.mzero), cases.minf);
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.zero), cases.inf);
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::mindenormal(eve::as<T>())), T(1)/(2*eve::mindenormal(eve::as<T>())));
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::smallestposval(eve::as<T>())), T(1)/eve::smallestposval(eve::as<T>()));
+    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::smallestposval(eve::as<T>())), T(1)/(2*eve::smallestposval(eve::as<T>())));
   }
   else TTS_EQUAL(0, 0);
 

@@ -137,7 +137,7 @@ namespace eve
           T s               = if_else(oddm, mone, one(as(k)));
           rphi              = if_else(oddm, pio_2(as(phi0)) - rphi, rphi);
           auto [sinp, cosp] = sincos(rphi);
-          T    c            = rec[pedantic2](sqr(sinp));
+          T    c            = rec[pedantic](sqr(sinp));
           T    cm1          = sqr(cosp) * c; // c - 1
           T    k2           = sqr(k);
           auto br_reg       = [c, cm1, k2, s, m](auto k){

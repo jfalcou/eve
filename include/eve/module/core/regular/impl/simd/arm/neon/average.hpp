@@ -28,7 +28,7 @@ requires arm_abi<abi_t<T, N>>
 {
   constexpr auto cat = categorize<wide<T, N>>();
 
-  if constexpr( O::contains(upward2) && integral_value<T>)
+  if constexpr( O::contains(upward) && integral_value<T>)
     return average_(EVE_TARGETS(cpu_), opts, v0, v1);
   if constexpr( std::is_floating_point_v<T> )
     return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v1)));

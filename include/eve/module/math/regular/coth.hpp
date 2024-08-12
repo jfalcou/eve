@@ -79,7 +79,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T coth_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       auto x = eve::abs(a0 + a0);
-      auto t = rec[pedantic2](expm1(x));
+      auto t = rec[pedantic](expm1(x));
       auto r = fma(T(2), t, T(1));
       return copysign(r, a0);
     }

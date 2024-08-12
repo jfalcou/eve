@@ -87,7 +87,7 @@ namespace detail
       EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
       auto e      = floor(inc(log10(eve::abs(a)) - n));
       auto factor = exp10(abs(e));
-      auto rfactor = rec[pedantic2](factor);
+      auto rfactor = rec[pedantic](factor);
       auto tmp    = if_else(is_gez(e), nearest(a*rfactor)*factor, nearest(a*factor)*rfactor);
       tmp         = if_else(is_eqz(a), a, tmp);
       return if_else(is_nez(n), tmp, allbits);

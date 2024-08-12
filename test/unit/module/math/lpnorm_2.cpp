@@ -47,94 +47,94 @@ TTS_CASE_TPL("Check behavior of pedantic(lpnorm(2, ...))", eve::test::simd::ieee
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, eve::nan(eve::as<T>()), eve::inf(eve::as<T>())),
+    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, eve::nan(eve::as<T>()), eve::inf(eve::as<T>())),
                    eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, eve::inf(eve::as<T>()), eve::nan(eve::as<T>())),
+    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, eve::inf(eve::as<T>()), eve::nan(eve::as<T>())),
                    eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, eve::nan(eve::as<v_t>()), eve::inf(eve::as<T>())),
+    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, eve::nan(eve::as<v_t>()), eve::inf(eve::as<T>())),
                    eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, eve::inf(eve::as<v_t>()), eve::nan(eve::as<T>())),
+    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, eve::inf(eve::as<v_t>()), eve::nan(eve::as<T>())),
                    eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, eve::nan(eve::as<T>()), eve::inf(eve::as<v_t>())),
+    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, eve::nan(eve::as<T>()), eve::inf(eve::as<v_t>())),
                    eve::inf(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, eve::inf(eve::as<T>()), eve::nan(eve::as<v_t>())),
+    TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, eve::inf(eve::as<T>()), eve::nan(eve::as<v_t>())),
                    eve::inf(eve::as<T>()));
   }
 
-  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, tmax, T(0)), tmax);
-  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, T(0), tmax), tmax);
-  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, vmax, T(0)), tmax);
-  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, v_t(0), tmax), tmax);
-  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, tmax, v_t(0)), tmax);
-  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic2](2, T(0), vmax), tmax);
+  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, tmax, T(0)), tmax);
+  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, T(0), tmax), tmax);
+  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, vmax, T(0)), tmax);
+  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, v_t(0), tmax), tmax);
+  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, tmax, v_t(0)), tmax);
+  TTS_IEEE_EQUAL(eve::lpnorm[eve::pedantic](2, T(0), vmax), tmax);
 
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, tmax / 2, tmax / 2), tmax / sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, vmax / 2, tmax / 2), tmax / sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, tmax / 2, vmax / 2), tmax / sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, tmax / 2, tmax / 2), tmax / sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, vmax / 2, tmax / 2), tmax / sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, tmax / 2, vmax / 2), tmax / sqrt2, 1.0);
 
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, v_t(-1), T(-1)), sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, v_t(1), T(1)), sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, v_t(0), T(0)), T(0), 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, vsqrt2, sqrt2), T(2), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, v_t(-1), T(-1)), sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, v_t(1), T(1)), sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, v_t(0), T(0)), T(0), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, vsqrt2, sqrt2), T(2), 1.0);
 
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(-1), v_t(-1)), sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(1), v_t(1)), sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(0), v_t(0)), T(0), 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, sqrt2, vsqrt2), T(2), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(-1), v_t(-1)), sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(1), v_t(1)), sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(0), v_t(0)), T(0), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, sqrt2, vsqrt2), T(2), 1.0);
 
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(-1), T(-1)), sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(1), T(1)), sqrt2, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(0), T(0)), T(0), 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, sqrt2, sqrt2), T(2), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(-1), T(-1)), sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(1), T(1)), sqrt2, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(0), T(0)), T(0), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, sqrt2, sqrt2), T(2), 1.0);
 
   if constexpr( eve::platform::supports_invalids )
   {
-    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](
+    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](
                       2, eve::inf(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())),
                   eve::inf(eve::as<T>()),
                   0);
-    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](
+    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](
                       2, eve::inf(eve::as<T>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())),
                   eve::inf(eve::as<T>()),
                   0);
 
-    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](
+    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](
                       2, eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())),
                   eve::inf(eve::as<T>()),
                   0);
-    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](
+    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](
                       2, eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>()), eve::inf(eve::as<T>())),
                   eve::inf(eve::as<T>()),
                   0);
 
-    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](
+    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](
                       2, eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>())),
                   eve::inf(eve::as<T>()),
                   0);
-    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](
+    TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](
                       2, eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<T>())),
                   eve::inf(eve::as<T>()),
                   0);
 
     TTS_ULP_EQUAL(
-        eve::lpnorm[eve::pedantic2](
+        eve::lpnorm[eve::pedantic](
             2, eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<v_t>())),
         eve::inf(eve::as<T>()),
         0);
     TTS_ULP_EQUAL(
-        eve::lpnorm[eve::pedantic2](
+        eve::lpnorm[eve::pedantic](
             2, eve::inf(eve::as<T>()), eve::inf(eve::as<v_t>()), eve::inf(eve::as<v_t>())),
         eve::inf(eve::as<T>()),
         0);
   }
 
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, tmax, T(0), T(0)), tmax, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(0), tmax, T(0)), tmax, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(-1), T(-1), sqrt2), T(2), 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(1), T(1), sqrt2), T(2), 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(0), T(0), T(0)), T(0), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, tmax, T(0), T(0)), tmax, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(0), tmax, T(0)), tmax, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(-1), T(-1), sqrt2), T(2), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(1), T(1), sqrt2), T(2), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(0), T(0), T(0)), T(0), 1.0);
 
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(1), T(1), T(1)), sqrt3, 1.0);
-  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic2](2, T(1), T(1), T(1), T(1)), T(2), 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(1), T(1), T(1)), sqrt3, 1.0);
+  TTS_ULP_EQUAL(eve::lpnorm[eve::pedantic](2, T(1), T(1), T(1), T(1)), T(2), 1.0);
 };
 #endif

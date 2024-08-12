@@ -95,7 +95,7 @@ namespace eve
       else if constexpr( floating_value<T> )
       {
         auto r = bit_or(one(eve::as(a)), bitofsign(a));
-        if constexpr( eve::platform::supports_nans && O::contains(pedantic2))
+        if constexpr( eve::platform::supports_nans && O::contains(pedantic))
         {
           if constexpr( scalar_value<T> )
             return is_nan(a) ? a : r;

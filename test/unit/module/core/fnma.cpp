@@ -58,8 +58,8 @@ TTS_CASE_WITH("Check precision behavior of fnma on real types",
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      fnma[eve::pedantic2](a0, a1, eve::one(eve::as<T>())),
-      map([&](auto e, auto f) -> v_t { return fnma[eve::pedantic2](e, f, v_t(1)); }, a0, a1),
+      fnma[eve::pedantic](a0, a1, eve::one(eve::as<T>())),
+      map([&](auto e, auto f) -> v_t { return fnma[eve::pedantic](e, f, v_t(1)); }, a0, a1),
       2);
 };
 
@@ -80,10 +80,10 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
 
   if( eve::all(
           eve::fnma(onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))
-          == eve::fnma[eve::pedantic2](onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
+          == eve::fnma[eve::pedantic](onemmileps(eve::as(a0)), onepmileps(eve::as(a0)), T(1))) )
   {
     TTS_ULP_EQUAL(fnma((a0), (a1), (a2)),
-                  map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic2](e, f, g); },
+                  map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic](e, f, g); },
                       a0,
                       a1,
                       a2),
@@ -96,8 +96,8 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
                   2);
   }
   TTS_ULP_EQUAL(
-      fnma[eve::pedantic2]((a0), (a1), (a2)),
-      map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic2](e, f, g); }, a0, a1, a2),
+      fnma[eve::pedantic]((a0), (a1), (a2)),
+      map([&](auto e, auto f, auto g) -> v_t { return fnma[eve::pedantic](e, f, g); }, a0, a1, a2),
       2);
  };
 

@@ -24,7 +24,7 @@ namespace eve::detail
   {
     if constexpr(integral_value <T>)
     {
-      if constexpr(O::contains(upward2))
+      if constexpr(O::contains(upward))
         return (a | b) - ((a ^ b) >> 1);   //compute ceil( (x+y)/2 )
       else
         return (a & b) + ((a ^ b) >> 1);   //compute floor( (x+y)/2 )
@@ -44,13 +44,13 @@ namespace eve::detail
       return r0;
     else
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return add(r0, args...)/(sizeof...(args) + 1);
       }
       else
       {
-        T invn  = rec[pedantic2](T(sizeof...(args) + 1u));
+        T invn  = rec[pedantic](T(sizeof...(args) + 1u));
         T that(r0 * invn);
         auto  next = [invn](auto avg, auto x) { return fma(x, invn, avg); };
         ((that = next(that, args)), ...);

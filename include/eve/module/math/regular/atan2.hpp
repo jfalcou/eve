@@ -120,7 +120,7 @@ namespace eve
       using r_t = common_value_t<T, U>;
       r_t a00(a0);
       r_t a10(a1);
-      if constexpr(O::contains(pedantic2))
+      if constexpr(O::contains(pedantic))
       {
         if constexpr(scalar_value<r_t> && platform::supports_nans)
         {
@@ -134,7 +134,7 @@ namespace eve
         }
 
         r_t q = eve::abs(a00/a10);
-        r_t z = atan_kernel(q, rec[pedantic2](q));
+        r_t z = atan_kernel(q, rec[pedantic](q));
         r_t sgn = signnz(a00);
         if constexpr(scalar_value<r_t>)
         {
@@ -156,7 +156,7 @@ namespace eve
       else
       {
         auto q = eve::abs(a00/a10);
-        auto z = detail::atan_kernel(q, eve::rec[pedantic2](q));
+        auto z = detail::atan_kernel(q, eve::rec[pedantic](q));
         return if_else(is_positive(a10), z, (pi(eve::as(a00)) - z))*signnz(a00);
       }
     }

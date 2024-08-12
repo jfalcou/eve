@@ -28,7 +28,7 @@ namespace eve::detail
       return a0;
     else
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         using elt_t = element_type_t<T>;
         using i_t   = as_integer_t<elt_t>;
@@ -46,9 +46,9 @@ namespace eve::detail
       {
         auto not_already_integral = is_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
         if constexpr( scalar_value<T> )
-          return not_already_integral ? trunc[raw2](a0) : a0;
+          return not_already_integral ? trunc[raw](a0) : a0;
         else if constexpr( simd_value<T> )
-          return trunc[not_already_integral][raw2](a0);
+          return trunc[not_already_integral][raw](a0);
       }
     }
   }

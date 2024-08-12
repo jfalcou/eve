@@ -145,7 +145,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         T tmp   = pow(a0, u_t(eve::abs(a1)));
-        return a1<0 ? rec[pedantic2](tmp) : tmp;
+        return a1<0 ? rec[pedantic](tmp) : tmp;
       }
     }
 
@@ -154,7 +154,7 @@ namespace eve
     pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return exp(a1*log(a0));
       }
@@ -217,7 +217,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp   = pow(r_t(a0), u_t(eve::abs(a1)));
-        return rec[pedantic2][is_ltz(a1)](tmp);
+        return rec[pedantic][is_ltz(a1)](tmp);
       }
     }
 
@@ -244,7 +244,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-        return if_else(is_ltz(a1), rec[pedantic2](tmp), tmp);
+        return if_else(is_ltz(a1), rec[pedantic](tmp), tmp);
       }
     }
 
@@ -271,7 +271,7 @@ namespace eve
       {
         using u_t = as_integer_t<U, unsigned>;
         r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
-        return if_else(is_ltz(a1), rec[pedantic2](tmp), tmp);
+        return if_else(is_ltz(a1), rec[pedantic](tmp), tmp);
       }
     }
   }

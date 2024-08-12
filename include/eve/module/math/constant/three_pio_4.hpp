@@ -21,14 +21,14 @@ struct three_pio_4_t : constant_callable<three_pio_4_t, Options, downward_option
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.2d97c8p+1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.2d97c6p+1);
+      if constexpr(Opts::contains(upward))        return T(0x1.2d97c8p+1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.2d97c6p+1);
       else                                         return T(0x1.2d97c8p+1);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.2d97c7f3321d3p+1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.2d97c7f3321d2p+1);
+      if constexpr(Opts::contains(upward))        return T(0x1.2d97c7f3321d3p+1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.2d97c7f3321d2p+1);
       else                                         return T(0x1.2d97c7f3321d2p+1);
     }
   }

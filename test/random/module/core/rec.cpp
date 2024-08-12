@@ -19,6 +19,6 @@ TTS_CASE_TPL("Random check for eve::rec", eve::test::simd::ieee_reals)
   auto vmin = eve::valmin(eve::as<e_t>());
   auto vmax = eve::valmax(eve::as<e_t>());
   EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>(vmin,vmax), std_rec, eve::rec );
-  EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>(vmin,vmax), std_rec, eve::rec[eve::pedantic2]);
+  EVE_ULP_RANGE_CHECK ( T, eve::uniform_prng<e_t>(vmin,vmax), std_rec, eve::rec[eve::pedantic]);
 
 };

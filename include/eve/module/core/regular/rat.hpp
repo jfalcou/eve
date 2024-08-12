@@ -104,7 +104,7 @@ namespace detail
 
       while( abs(x - n / d) >= tol )
       {
-        auto flip   = rec[pedantic2](frac);
+        auto flip   = rec[pedantic](frac);
         auto step   = nearest(flip);
         frac        = flip - step;
         auto savedn = n;
@@ -132,7 +132,7 @@ namespace detail
       {
         auto notdone = is_nez(y) && (abs(y - n / d) >= tol);
         if( none(notdone) ) break;
-        auto flip   = rec[notdone][pedantic2](frac);
+        auto flip   = rec[notdone][pedantic](frac);
         auto step   = if_else(notdone, nearest(flip), zero);
         frac        = flip - step;
         auto savedn = n;

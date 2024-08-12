@@ -93,11 +93,11 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(raw2))      return a-trunc[o](a);
+        if constexpr(O::contains(raw))      return a-trunc[o](a);
         else
         {
           auto f = if_else(is_eqz(a), a, a - trunc[o](a));
-          if constexpr(platform::supports_infinites && O::contains(pedantic2))
+          if constexpr(platform::supports_infinites && O::contains(pedantic))
             return if_else(is_infinite(a), bit_and(a, signmask(as(a))), f);
           else
             return f;

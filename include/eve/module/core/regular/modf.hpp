@@ -89,15 +89,15 @@ namespace detail
   {
     if constexpr(floating_value<T>)
     {
-      auto t = trunc[o.drop(pedantic2)](a);
-      if constexpr(O::contains(raw2))
+      auto t = trunc[o.drop(pedantic)](a);
+      if constexpr(O::contains(raw))
       {
         return eve::zip(a-t, t);
       }
       else
       {
         auto f = if_else(is_eqz(a), a, a-t);
-        if constexpr(O::contains(pedantic2)  && platform::supports_infinites)
+        if constexpr(O::contains(pedantic)  && platform::supports_infinites)
           f = if_else(is_infinite(a), eve::zero, f);
         return eve::zip(f, t);
       }

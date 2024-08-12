@@ -27,10 +27,10 @@ int main()
   run<EVE_VALUE> (EVE_NAME(std__rec) , xp, std__rec, arg0);
   run<EVE_VALUE> (EVE_NAME(eve__div) , xp, eve__div, arg0);
   run<EVE_TYPE>  (EVE_NAME(eve__div) , xp, eve__div, arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec[eve::raw2]) , xp, eve::rec[eve::raw2], arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec[eve::raw2]) , xp, eve::rec[eve::raw2], arg0);
+  run<EVE_VALUE> (EVE_NAME(eve:rec[eve::raw]) , xp, eve::rec[eve::raw], arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve:rec[eve::raw]) , xp, eve::rec[eve::raw], arg0);
   run<EVE_VALUE> (EVE_NAME(eve:rec           ) , xp, eve::rec           , arg0);
   run<EVE_TYPE>  (EVE_NAME(eve:rec           ) , xp, eve::rec           , arg0);
-  run<EVE_VALUE> (EVE_NAME(eve:rec[eve::pedantic2]) , xp, eve::rec[eve::pedantic2], arg0);
-  run<EVE_TYPE>  (EVE_NAME(eve:rec[eve::pedantic2]) , xp, eve::rec[eve::pedantic2], arg0);
+  run<EVE_VALUE> (EVE_NAME(eve:rec[eve::pedantic]) , xp, eve::rec[eve::pedantic], arg0);
+  run<EVE_TYPE>  (EVE_NAME(eve:rec[eve::pedantic]) , xp, eve::rec[eve::pedantic], arg0);
 }

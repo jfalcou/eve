@@ -102,7 +102,7 @@ namespace eve
       {
         if constexpr(sizeof...(Ts) == 0) // 2 parameters
         {
-          if constexpr(O::contains(pedantic2))
+          if constexpr(O::contains(pedantic))
           {
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             //  This implementation is inspired by
@@ -138,7 +138,7 @@ namespace eve
         }
         else //N parameters
         {
-          if constexpr(O::contains(pedantic2))
+          if constexpr(O::contains(pedantic))
           {
             r_t that(hypot[o](r_t(r0), r_t(r1)));
             ((that = hypot[o](that, r_t(rs))), ...);

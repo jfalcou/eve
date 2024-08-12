@@ -21,14 +21,14 @@ struct pi3_t : constant_callable<pi3_t, Options, downward_option, upward_option>
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.f019b6p+4);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.f019b4p+4);
+      if constexpr(Opts::contains(upward))        return T(0x1.f019b6p+4);
+      else if constexpr(Opts::contains(downward)) return T(0x1.f019b4p+4);
       else                                         return T(0x1.f019b6p+4);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.f019b59389d7dp+4);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.f019b59389d7cp+4);
+      if constexpr(Opts::contains(upward))        return T(0x1.f019b59389d7dp+4);
+      else if constexpr(Opts::contains(downward)) return T(0x1.f019b59389d7cp+4);
       else                                         return T(0x1.f019b59389d7cp+4);
     }
   }

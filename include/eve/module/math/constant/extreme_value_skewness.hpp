@@ -21,14 +21,14 @@ struct extreme_value_skewness_t : constant_callable<extreme_value_skewness_t, Op
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.23b95cp+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.23b95ap+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.23b95cp+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.23b95ap+0);
       else                                         return T(0x1.23b95cp+0);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.23b95bd431d32p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.23b95bd431d31p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.23b95bd431d32p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.23b95bd431d31p+0);
       else                                         return T(0x1.23b95bd431d31p+0);
     }
   }

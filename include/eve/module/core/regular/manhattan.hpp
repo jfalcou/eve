@@ -112,7 +112,7 @@ namespace eve
           return eve::abs;
       };
       auto r = eve::add[o](l_abs()(r_t(a0)), l_abs()(r_t(a1)), l_abs()(r_t(args))...);
-      if constexpr(O::contains(pedantic2))
+      if constexpr(O::contains(pedantic))
       {
         auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1));
         inf_found =  (inf_found || ... || is_infinite(r_t(args)));

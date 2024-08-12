@@ -21,14 +21,14 @@ struct egamma_sqr_t : constant_callable<egamma_sqr_t, Options, downward_option, 
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.552c98p-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.552c96p-2);
+      if constexpr(Opts::contains(upward))        return T(0x1.552c98p-2);
+      else if constexpr(Opts::contains(downward)) return T(0x1.552c96p-2);
       else                                         return T(0x1.552c98p-2);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.552c97fa03696p-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.552c97fa03695p-2);
+      if constexpr(Opts::contains(upward))        return T(0x1.552c97fa03696p-2);
+      else if constexpr(Opts::contains(downward)) return T(0x1.552c97fa03695p-2);
       else                                         return T(0x1.552c97fa03695p-2);
     }
   }

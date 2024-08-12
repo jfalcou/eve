@@ -133,7 +133,7 @@ namespace eve
           {
             T xr = reduce(x);
             T y  = tancot_eval(xr);
-            return bit_xor(bitofsign(a0), -rec[pedantic2](y));
+            return bit_xor(bitofsign(a0), -rec[pedantic](y));
           }
           else { return tancot_eval(a0); }
         }
@@ -142,7 +142,7 @@ namespace eve
           auto test = is_not_less_equal(x, pio_4(eve::as(a0)));
           T    xr   = if_else(test, reduce(x), x);
           auto y    = tancot_eval(xr);
-          y         = if_else(is_not_finite(a0), eve::allbits, if_else(test, -rec[pedantic2](y), y));
+          y         = if_else(is_not_finite(a0), eve::allbits, if_else(test, -rec[pedantic](y), y));
           return if_else(x <= eps(as<T>()), a0, bit_xor(bitofsign(a0), y));
         }
       }

@@ -21,14 +21,14 @@ struct sqrtlog_4_t : constant_callable<sqrtlog_4_t, Options, downward_option, up
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.2d6acp+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.2d6abep+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.2d6acp+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.2d6abep+0);
       else                                         return T(0x1.2d6abep+0);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.2d6abe44afc44p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.2d6abe44afc43p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.2d6abe44afc44p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.2d6abe44afc43p+0);
       else                                         return T(0x1.2d6abe44afc43p+0);
     }
   }

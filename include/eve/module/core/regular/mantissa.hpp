@@ -82,7 +82,7 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr T  mantissa_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
         return   bit_or(bit_and(a, mantissamask(eve::as<T>())), one(eve::as<T>()));
       else
         return  if_else(is_nan(a), allbits,  bit_or(bit_and(a, mantissamask(eve::as<T>())), one[is_nez(a)](eve::as<T>())));

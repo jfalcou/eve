@@ -90,7 +90,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr auto  ellint_rd_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         using elt_t = element_type_t<T>;
         T    xn     = x;
@@ -123,7 +123,7 @@ namespace eve
           if( eve::all(q < eve::abs(an)) ) break;
         }
 
-        T invan = rec[pedantic2](an);
+        T invan = rec[pedantic](an);
         T xx    = fn * (a0 - x) * invan;
         T yy    = fn * (a0 - y) * invan;
         T zz    = -(xx + yy) / 3;

@@ -106,7 +106,7 @@ namespace eve
         else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
         else
         {
-          if (O::contains(pedantic2))
+          if (O::contains(pedantic))
           {
             auto rp = r_t(p);
             auto any_is_inf = is_infinite(r_t(a0)) || (is_infinite(r_t(a1)) || ... || is_infinite(r_t(args)));

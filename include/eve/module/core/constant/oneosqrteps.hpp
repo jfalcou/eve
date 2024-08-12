@@ -22,7 +22,7 @@ namespace eve
       using e_t = element_type_t<T>;
 
       if constexpr(std::same_as<e_t, float>  )     {
-        if constexpr(Opts::contains(upward2))
+        if constexpr(Opts::contains(upward))
           return T(0x1.6a09e8p+11f);
         else
           return T(0x1.6a09e6p+11f);

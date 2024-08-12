@@ -32,8 +32,8 @@ namespace eve::detail
                                          T const & a0,
                                          S const & scale) noexcept
   {
-    auto tmp =  a0 - ldexp(round[o.drop(pedantic2)](ldexp(a0, scale)), -scale);
-    if constexpr(O::contains(pedantic2) && platform::supports_infinites)
+    auto tmp =  a0 - ldexp(round[o.drop(pedantic)](ldexp(a0, scale)), -scale);
+    if constexpr(O::contains(pedantic) && platform::supports_infinites)
       return if_else(is_infinite(a0), zero, tmp);
     else
       return tmp;

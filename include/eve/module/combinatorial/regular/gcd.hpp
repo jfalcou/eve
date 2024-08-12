@@ -88,7 +88,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
     {
       a = eve::abs(a);
       b = eve::abs(b);
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         if constexpr( scalar_value<T> )
         {

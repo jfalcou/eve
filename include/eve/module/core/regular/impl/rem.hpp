@@ -14,7 +14,6 @@
 #include <eve/detail/function/conditional.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/skeleton_calls.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/fnma.hpp>
@@ -35,8 +34,8 @@ namespace eve::detail
   {
     if constexpr(integral_value<T>)
     {
-      if constexpr(O::contains(downward2) ||
-                   (( O::contains(upward2) || O::contains(to_nearest2)) && !(unsigned_value<T>)))
+      if constexpr(O::contains(downward) ||
+                   (( O::contains(upward) || O::contains(to_nearest)) && !(unsigned_value<T>)))
       {
         return fnma(b, eve::div[o](a, b), a);;
       }
@@ -47,13 +46,13 @@ namespace eve::detail
     }
     else if constexpr(floating_value<T>)
     {
-      if constexpr(O::contains(to_nearest2))
+      if constexpr(O::contains(to_nearest))
       {
         return if_else(is_eqz(b) || is_unordered(a, b),
                        if_else(is_eqz(a) || is_infinite(b), a, allbits),
-                       fnma(b, eve::div[to_nearest2](a, b), a)); // as remainder
+                       fnma(b, eve::div[to_nearest](a, b), a)); // as remainder
       }
-      else if constexpr(O::contains(upward2) || O::contains(downward2))
+      else if constexpr(O::contains(upward) || O::contains(downward))
       {
         return  fnma(b, eve::div[o](a, b), a);
       }
@@ -64,7 +63,7 @@ namespace eve::detail
         {
           return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
                          allbits,
-                         if_else(is_eqz(a), a, fnma(b, div[toward_zero2](a, b), a)));
+                         if_else(is_eqz(a), a, fnma(b, div[toward_zero](a, b), a)));
         }
       }
     }

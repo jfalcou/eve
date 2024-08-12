@@ -25,7 +25,7 @@ namespace eve::detail
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
     // PEDANTIC ---
-    else if constexpr(O::contains(pedantic2) )
+    else if constexpr(O::contains(pedantic) )
     {
       if constexpr( supports_fma3 ) return fma(a, b, c);
       else                          return fma.behavior(cpu_{}, opts, a, b, c);

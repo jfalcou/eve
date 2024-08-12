@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
@@ -35,7 +34,7 @@ namespace eve::detail
     else
     {
       auto that = if_else(v0, v0 * rsqrt(v0), v0);
-      if constexpr( platform::supports_invalids || O::contains(raw2))
+      if constexpr( platform::supports_invalids || O::contains(raw))
         return if_else(v0 == inf(as(v0)), v0, that);
       else
         return that;

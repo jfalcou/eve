@@ -21,7 +21,7 @@ namespace eve::detail
                                   wide<T, N> const &v,
                                   wide<T, N> const &w) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(toward_zero2) || O::contains(upward2) || O::contains(downward2) || O::contains(to_nearest2))
+    if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
       return round[o](div[cx](v, w));
     else
     {

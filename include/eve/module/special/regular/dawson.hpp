@@ -172,7 +172,7 @@ namespace eve
       auto r       = nan(as<T>());
       auto notdone = is_not_nan(x);
       notdone      = next_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
-      rx           = rec[pedantic2](x);
+      rx           = rec[pedantic](x);
       xx           = sqr(rx);
       if( eve::any(notdone) )
       {

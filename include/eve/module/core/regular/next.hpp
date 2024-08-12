@@ -101,7 +101,7 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(pedantic2))
+        if constexpr(O::contains(pedantic))
         {
           auto pz   = bitinteger(a);
           auto z    = bitfloating(pz+one(as(pz)));
@@ -128,7 +128,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
+        if  constexpr(O::contains(saturated2) || O::contains(pedantic))
         {
           return if_else(a == valmax(as(a)), a, T(a+one(as(a))));
         }
@@ -145,7 +145,7 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(pedantic2))
+        if constexpr(O::contains(pedantic))
         {
           using i_t = as_integer_t<T>;
           i_t vz   = bitinteger(a) + convert(n, as<element_type_t<i_t>>(n));
@@ -174,7 +174,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2) || O::contains(pedantic2))
+        if  constexpr(O::contains(saturated2) || O::contains(pedantic))
         {
           auto tmp = next(a, n);
           return if_else(a > tmp, a, tmp);

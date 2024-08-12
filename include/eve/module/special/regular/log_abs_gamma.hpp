@@ -181,7 +181,7 @@ namespace eve
               T q = fma((x - 0.5f), log(x), Logsqrt2pi - x);
               if( x <= 1.0e4f )
               {
-                T z = rec[pedantic2](x);
+                T z = rec[pedantic](x);
                 T p = sqr(z);
                 q   = fma(z, helpers::log_abs_gamma2(p), q);
               }
@@ -299,7 +299,7 @@ namespace eve
               T m  = log(r0z);
               r1   = fma(r0x, p, r0s * m);
               T r2 = fma(x - half(as<T>()), m, Logsqrt2pi - x);
-              r2 += helpers::log_abs_gamma2(rec[pedantic2](sqr(x))) / x;
+              r2 += helpers::log_abs_gamma2(rec[pedantic](sqr(x))) / x;
               return if_else(xlt650, r1, r2);
             };
           T r1 = other(q);
@@ -360,7 +360,7 @@ namespace eve
               T q = fma((x - 0.5), log(x), Logsqrt2pi - x);
               if( x > 1.0e8 ) return q;
 
-              T p = rec[pedantic2](sqr(x));
+              T p = rec[pedantic](sqr(x));
               q += helpers::log_abs_gammaA(p) / x;
               return q;
             };
@@ -423,7 +423,7 @@ namespace eve
                 if( nb >= T::size() ) return r1;
               }
               T r2 = fma(xx - half(as<T>()), log(xx), Logsqrt2pi - xx);
-              T p  = rec[pedantic2](sqr(xx));
+              T p  = rec[pedantic](sqr(xx));
               r2 += helpers::log_abs_gammaA(p) / xx;
               return if_else(test, r1, r2);
             };

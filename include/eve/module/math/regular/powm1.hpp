@@ -96,7 +96,7 @@ namespace eve
     powm1_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return dec(pow[o](a, b));
       }

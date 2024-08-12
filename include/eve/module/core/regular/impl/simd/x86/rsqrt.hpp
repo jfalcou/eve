@@ -11,8 +11,6 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/valmax.hpp>
-#include <eve/module/core/decorator/pedantic.hpp>
-#include <eve/module/core/decorator/raw.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/any.hpp>
@@ -91,7 +89,7 @@ namespace eve::detail
                                     wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -117,7 +115,7 @@ namespace eve::detail
                                      wide<T, N> const& a0) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       if constexpr( std::is_same_v<T, double> )
       {
@@ -141,7 +139,7 @@ namespace eve::detail
                                      O const&,
                                      wide<T, N> a0) noexcept
   {
-    if constexpr(O::contains(raw2))
+    if constexpr(O::contains(raw))
     {
       constexpr auto c = categorize<wide<T, N>>();
       if      constexpr( c == category::float32x16) return _mm512_rsqrt14_ps(a0);
@@ -168,7 +166,7 @@ namespace eve::detail
     auto src = alternative(cx, v, as<wide<T, N>> {});
 
     if constexpr( C::is_complete) return src;
-    else if constexpr(O::contains(raw2))
+    else if constexpr(O::contains(raw))
     {
       constexpr auto c = categorize<wide<T, N>>();
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;

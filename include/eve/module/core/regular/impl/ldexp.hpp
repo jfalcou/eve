@@ -31,7 +31,7 @@ requires(std::same_as<element_type_t<T>, element_type_t<U>>)
 template<typename T, integral_value U, callable_options O>
 constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
 {
-  if constexpr(O::contains(pedantic2))
+  if constexpr(O::contains(pedantic))
   {
     // No denormal supported at platform level means pedantic is no-op
     if constexpr( !eve::platform::supports_denormals ) return ldexp(a,b);

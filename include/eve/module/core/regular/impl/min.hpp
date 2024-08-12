@@ -36,7 +36,7 @@ namespace eve::detail
         constexpr bool is_scalar = scalar_value<r_t>;
         auto a0 = r_t(r0);
         auto a1 = r_t(r1);
-        if constexpr(O::contains(pedantic2)) //pedantic
+        if constexpr(O::contains(pedantic)) //pedantic
         {
           if constexpr( eve::platform::supports_invalids )
           {

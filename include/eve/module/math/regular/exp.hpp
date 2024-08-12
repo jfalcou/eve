@@ -86,7 +86,7 @@ namespace eve
     {
       auto isnan = is_nan(x);
       auto    minlogval = []() {
-        if constexpr(O::contains(pedantic2) && eve::platform::supports_denormals)
+        if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
         return minlogdenormal(eve::as<T>());
         else
           return minlog(eve::as<T>());

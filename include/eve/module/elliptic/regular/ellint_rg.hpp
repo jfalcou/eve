@@ -97,7 +97,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr T ellint_rg_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z)
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         swap_if(x < y, x, y);
         swap_if(x < z, x, z);

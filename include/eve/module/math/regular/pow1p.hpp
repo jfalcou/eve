@@ -96,7 +96,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<T, U>
     pow1p_(EVE_REQUIRES(cpu_), O const & o, T a, U b) noexcept
     {
-      if constexpr(O::contains(raw2) || integral_value<U>)
+      if constexpr(O::contains(raw) || integral_value<U>)
          return pow[o](inc(a), b);
        else
        {

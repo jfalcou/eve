@@ -26,7 +26,7 @@ namespace eve::detail
                                  wide<T, N> const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if  constexpr(O::contains(raw2))
+    if  constexpr(O::contains(raw))
     {
       using r_t    = wide<T, N>;
       constexpr auto c = categorize<r_t>();
@@ -55,7 +55,7 @@ namespace eve::detail
     constexpr auto        c = categorize<wide<T, N>>();
 
     if constexpr( C::is_complete ) return s;
-    else if  constexpr(O::contains(raw2))
+    else if  constexpr(O::contains(raw))
     {
       using r_t        = wide<T, N>;
 

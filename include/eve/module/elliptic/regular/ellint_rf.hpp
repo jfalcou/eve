@@ -93,7 +93,7 @@ namespace eve
     template<typename T, callable_options O >
     constexpr auto ellint_rf_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
     {
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         T    xn   = x;
         T    yn   = y;
@@ -121,7 +121,7 @@ namespace eve
           fn *= T(4);
           if( eve::all(q < eve::abs(an)) ) break;
         }
-        T denom = rec[pedantic2](an * fn);
+        T denom = rec[pedantic](an * fn);
         T xx    = (a0 - x) * denom;
         T yy    = (a0 - y) * denom;
         T zz    = -xx - yy;

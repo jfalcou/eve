@@ -85,7 +85,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T acsc_(EVE_REQUIRES(cpu_), O const&, T const& a)
     {
-      return eve::asin(rec[pedantic2](a));
+      return eve::asin(rec[pedantic](a));
     }
   }
 }

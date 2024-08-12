@@ -103,7 +103,7 @@ namespace eve
         using elt_t    = element_type_t<T>;
         auto minlogval = []()
           {
-            if constexpr(O::contains(pedantic2) && eve::platform::supports_denormals)
+            if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
             return minlog2denormal(eve::as<T>());
             else
               return minlog2(eve::as<T>());

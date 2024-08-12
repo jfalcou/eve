@@ -92,7 +92,7 @@ namespace eve
                   T const &c,  T const &d) noexcept
     {
       T cd =  c*d;
-      if constexpr(O::contains(raw2))
+      if constexpr(O::contains(raw))
       {
         return fma(a, b, cd);
       }

@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/decorator/roundings.hpp>
 #include <eve/module/core/regular/ceil.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/nearest.hpp>
@@ -92,11 +91,11 @@ namespace eve
     {
       if constexpr(integral_value<T>)
         return x;
-      else if constexpr(O::contains(downward2 ))
+      else if constexpr(O::contains(downward ))
         return eve::floor(x);
-      else if constexpr(O::contains(upward2)  )
+      else if constexpr(O::contains(upward)  )
         return eve::ceil(x);
-      else if constexpr(O::contains(toward_zero2 ))
+      else if constexpr(O::contains(toward_zero ))
         return eve::trunc(x);
       else
         return nearest(x);

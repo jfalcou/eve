@@ -64,7 +64,7 @@
  <typename T>(tts::type<T> const& tgt)
  {
    using eve::next;
-   using eve::pedantic2;
+   using eve::pedantic;
    using eve::saturated2;
 
    auto cases = tts::limits(tgt);
@@ -86,20 +86,20 @@
      TTS_EQUAL(next(T(-1)), T(-1) + eve::eps(eve::as<T>()) / 2);
      TTS_EQUAL(next(T(1)), T(1) + eve::eps(eve::as<T>()));
 
-     TTS_IEEE_EQUAL(next[pedantic2](cases.nan), cases.nan);
-     TTS_IEEE_EQUAL(next[pedantic2](cases.minf), cases.valmin);
-     TTS_IEEE_EQUAL(next[pedantic2](cases.inf), cases.nan);
-     TTS_EQUAL(next[pedantic2](cases.mzero), cases.zero);
+     TTS_IEEE_EQUAL(next[pedantic](cases.nan), cases.nan);
+     TTS_IEEE_EQUAL(next[pedantic](cases.minf), cases.valmin);
+     TTS_IEEE_EQUAL(next[pedantic](cases.inf), cases.nan);
+     TTS_EQUAL(next[pedantic](cases.mzero), cases.zero);
 
      if constexpr( eve::platform::supports_denormals )
      {
-       TTS_EQUAL(next[pedantic2](cases.zero), cases.mindenormal);
-       TTS_EQUAL(next[pedantic2](-cases.mindenormal), cases.mzero);
+       TTS_EQUAL(next[pedantic](cases.zero), cases.mindenormal);
+       TTS_EQUAL(next[pedantic](-cases.mindenormal), cases.mzero);
      }
 
-     TTS_EQUAL(next[pedantic2](cases.valmax), cases.inf);
-     TTS_EQUAL(next[pedantic2](T(-1)), T(-1) + eve::eps(eve::as<T>()) / 2);
-     TTS_EQUAL(next[pedantic2](T(1)), T(1) + eve::eps(eve::as<T>()));
+     TTS_EQUAL(next[pedantic](cases.valmax), cases.inf);
+     TTS_EQUAL(next[pedantic](T(-1)), T(-1) + eve::eps(eve::as<T>()) / 2);
+     TTS_EQUAL(next[pedantic](T(1)), T(1) + eve::eps(eve::as<T>()));
    }
    else
    {
@@ -116,7 +116,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
 <typename T>(tts::type<T> const& tgt)
 {
   using eve::next;
-  using eve::pedantic2;
+  using eve::pedantic;
   using eve::saturated2;
 
   auto cases = tts::limits(tgt);
@@ -138,19 +138,19 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
     TTS_EQUAL(next(T(-1), 2), T(-1) + eve::eps(eve::as<T>()));
     TTS_EQUAL(next(T(1), 2), T(1) + eve::eps(eve::as<T>()) * 2);
 
-    TTS_IEEE_EQUAL(next[pedantic2](cases.nan, 2), cases.nan);
-    TTS_IEEE_EQUAL(next[pedantic2](cases.minf, 2), next(cases.valmin));
-    TTS_IEEE_EQUAL(next[pedantic2](cases.inf, 2), cases.nan);
+    TTS_IEEE_EQUAL(next[pedantic](cases.nan, 2), cases.nan);
+    TTS_IEEE_EQUAL(next[pedantic](cases.minf, 2), next(cases.valmin));
+    TTS_IEEE_EQUAL(next[pedantic](cases.inf, 2), cases.nan);
     if constexpr( eve::platform::supports_denormals )
     {
-      TTS_EQUAL(next[pedantic2](cases.mzero, 2), cases.mindenormal);
-      TTS_EQUAL(next[pedantic2](cases.zero, 2), next(cases.mindenormal));
-      TTS_EQUAL(next[pedantic2](-cases.mindenormal, 2), cases.mzero);
+      TTS_EQUAL(next[pedantic](cases.mzero, 2), cases.mindenormal);
+      TTS_EQUAL(next[pedantic](cases.zero, 2), next(cases.mindenormal));
+      TTS_EQUAL(next[pedantic](-cases.mindenormal, 2), cases.mzero);
     }
 
-    TTS_IEEE_EQUAL(next[pedantic2](cases.valmax, 2), cases.nan);
-    TTS_EQUAL(next[pedantic2](T(-1), 2), T(-1) + eve::eps(eve::as<T>()));
-    TTS_EQUAL(next[pedantic2](T(1), 2), T(1) + eve::eps(eve::as<T>()) * 2);
+    TTS_IEEE_EQUAL(next[pedantic](cases.valmax, 2), cases.nan);
+    TTS_EQUAL(next[pedantic](T(-1), 2), T(-1) + eve::eps(eve::as<T>()));
+    TTS_EQUAL(next[pedantic](T(1), 2), T(1) + eve::eps(eve::as<T>()) * 2);
   }
   else
   {

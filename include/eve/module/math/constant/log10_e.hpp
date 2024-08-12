@@ -21,14 +21,14 @@ struct log10_e_t : constant_callable<log10_e_t, Options, downward_option, upward
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.bcb7b2p-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.bcb7bp-2 );
+      if constexpr(Opts::contains(upward))        return T(0x1.bcb7b2p-2);
+      else if constexpr(Opts::contains(downward)) return T(0x1.bcb7bp-2 );
       else                                         return T(0x1.bcb7b2p-2);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.bcb7b1526e50fp-2);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.bcb7b1526e50ep-2);
+      if constexpr(Opts::contains(upward))        return T(0x1.bcb7b1526e50fp-2);
+      else if constexpr(Opts::contains(downward)) return T(0x1.bcb7b1526e50ep-2);
       else                                         return T(0x1.bcb7b1526e50ep-2);
     }
   }

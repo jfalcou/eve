@@ -21,14 +21,14 @@ struct cosh_1_t : constant_callable<cosh_1_t, Options, downward_option, upward_o
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.8b0756p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.8b0754p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.8b0756p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.8b0754p+0);
       else                                         return T(0x1.8b0756p+0);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.8b07551d9f551p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.8b07551d9f55p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.8b07551d9f551p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.8b07551d9f55p+0);
       else                                         return T(0x1.8b07551d9f55p+0);
     }
   }

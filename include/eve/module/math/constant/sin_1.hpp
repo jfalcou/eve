@@ -21,14 +21,14 @@ struct sin_1_t : constant_callable<sin_1_t, Options, downward_option, upward_opt
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.aed54ap-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.aed548p-1);
+      if constexpr(Opts::contains(upward))        return T(0x1.aed54ap-1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.aed548p-1);
       else                                         return T(0x1.aed548p-1);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.aed548f090cefp-1);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.aed548f090ceep-1);
+      if constexpr(Opts::contains(upward))        return T(0x1.aed548f090cefp-1);
+      else if constexpr(Opts::contains(downward)) return T(0x1.aed548f090ceep-1);
       else                                         return T(0x1.aed548f090ceep-1);
     }
   }

@@ -21,14 +21,14 @@ struct sqrt_pio_2_t : constant_callable<sqrt_pio_2_t, Options, downward_option, 
   {
     if constexpr(std::same_as<element_type_t<T>, float>)
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.40d932p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.40d93p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.40d932p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.40d93p+0);
       else                                         return T(0x1.40d932p+0);
     }
     else
     {
-      if constexpr(Opts::contains(upward2))        return T(0x1.40d931ff62706p+0);
-      else if constexpr(Opts::contains(downward2)) return T(0x1.40d931ff62705p+0);
+      if constexpr(Opts::contains(upward))        return T(0x1.40d931ff62706p+0);
+      else if constexpr(Opts::contains(downward)) return T(0x1.40d931ff62705p+0);
       else                                         return T(0x1.40d931ff62706p+0);
     }
   }

@@ -97,7 +97,7 @@ namespace eve
     template<typename T, callable_options O >
     constexpr auto ellint_rj_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z, T p)
     {
-      if (O::contains(raw2))
+      if (O::contains(raw))
       {
         auto xn    = x;
         auto yn    = y;
@@ -197,7 +197,7 @@ namespace eve
           pn = (pn + lambda) * T(0.25); // / 4;
           delta *= T(0.015625);         // /= 64;
         }
-        auto fmninvan = fmn * rec[pedantic2](an);
+        auto fmninvan = fmn * rec[pedantic](an);
         auto xx       = (a0 - x) * fmninvan;
         auto yy       = (a0 - y) * fmninvan;
         auto zz       = (a0 - z) * fmninvan;
