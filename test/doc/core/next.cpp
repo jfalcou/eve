@@ -1,6 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
@@ -9,6 +10,7 @@ int main()
   eve::wide wi0 = {-1, 2, -3, -4, 327654, 32765, 32766, 32767 };
   eve::wide wu0 = {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
 
+  std::cout << std::hexfloat;
   std::cout << "<- wf0                       = " << wf0 << "\n";
   std::cout << "<- wi0                       = " << wi0 << "\n";
   std::cout << "<- wu0                       = " << wu0 << "\n";

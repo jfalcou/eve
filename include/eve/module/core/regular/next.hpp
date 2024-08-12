@@ -108,13 +108,13 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(raw2))
+        if constexpr(O::contains(raw))
         {
           auto s = ieee_constant<0x1.000002p-24f, 0x1.0000000000001p-53>(as(a));
           return fma(s, eve::abs(a), a);
         }
-        if (eve::all( eve::is_normal(a))) return next[raw2](a);
-        if constexpr(O::contains(pedantic2))
+        if (eve::all( eve::is_normal(a))) return next[raw](a);
+        if constexpr(O::contains(pedantic))
         {
           auto pz   = bitinteger(a);
           auto z    = bitfloating(pz+one(as(pz)));

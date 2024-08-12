@@ -15,6 +15,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 #include <type_traits>
 

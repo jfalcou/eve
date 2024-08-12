@@ -23,6 +23,7 @@
 #include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/is_normal.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 namespace eve
 {
@@ -70,8 +71,8 @@ namespace eve
 //!      constexpr auto prev[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto prev[pedantic](/* any of the above overloads */)                noexcept; // 5.1
-//!      constexpr auto prev[saturated ](/* any of the above overloads */)              noexcept; // 5.2
+//!      constexpr auto prev[pedantic](/* any of the above overloads */)                noexcept; // 4
+//!      constexpr auto prev[saturated ](/* any of the above overloads */)              noexcept; // 5
 //!      constexpr auto prev[raw](value auto x)                                         noexcept; // 6
 //!   }
 //!   @endcode
@@ -111,13 +112,13 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr(O::contains(raw2))
+        if constexpr(O::contains(raw))
         {
           auto s = ieee_constant<0x1.000002p-24f, 0x1.0000000000001p-53>(as(a));
-          return fnma(a, eve::abs(a), a);
+          return fnma[pedantic](s, eve::abs(a), a);
         }
-        if (eve::all( eve::is_normal(a))) return prev[raw2](a);
-        if constexpr(O::contains(pedantic2))
+        if (eve::all( eve::is_normal(a))) return prev[raw](a);
+        if constexpr(O::contains(pedantic))
         {
           auto pz   = bitinteger(a);
           auto z    = bitfloating(pz-one(as(pz)));

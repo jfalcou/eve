@@ -19,7 +19,7 @@
 namespace eve
 {
   template<typename Options>
-  struct epsilon_t : elementwise_callable<epsilon_t, Options>
+  struct epsilon_t : elementwise_callable<epsilon_t, Options, upward_option, downward_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
@@ -52,6 +52,10 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto epsilon[conditional_expr auto c](value auto x) noexcept; // 2
 //!      constexpr auto epsilon[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto abs[downward](value auto x)                    noexcept; // 1
+//!      constexpr auto abs[upward](value auto x)                      noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -63,9 +67,10 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!      1. The distance of abs(x) to the next representable element of type T
+//!      1. The distance of abs(x) to the next representable element in the type of `x`. (Kahan-Harrisson definition)
 //!      2. [The operation is performed conditionnaly](@ref conditional).
-//!
+//!      3. The distance of abs(x) to the previous representable element in the type of `x`. (Goldberg definition)
+///!
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/epsilon.cpp}
@@ -80,8 +85,16 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto epsilon_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      auto aa = abs(a0);
-      return dist[is_not_nan(a0)](aa, next(aa));
+      if constexpr(integral_value<T>)
+        return T(1);
+      else
+      {
+        auto aa = eve::abs(a0);
+        if constexpr(O::contains(downward))
+          return dist[is_finite(aa)](aa, prev(aa));
+        else // upward is the default
+          return dist[is_finite(aa)](aa, next(aa));
+      }
     }
   }
 }
