@@ -7,6 +7,5 @@ var searchData=
   ['under_4',['under',['../structeve_1_1pattern__t.html#aef70581b6e3b30db25467efcc08eff1c',1,'eve::pattern_t::under()'],['../group__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047',1,'eve::under()']]],
   ['underlying_5ftype_5',['underlying_type',['../structeve_1_1underlying__type.html',1,'eve']]],
   ['underlying_5ftype_3c_20t_20_3e_6',['underlying_type&lt; T &gt;',['../structeve_1_1underlying__type.html',1,'eve']]],
-  ['unroll_7',['unroll',['../group__algo__traits_gacdfe3fb0999d566d02a71a0297b8bb88.html#gacdfe3fb0999d566d02a71a0297b8bb88',1,'eve::algo']]],
-  ['upward_8',['upward',['../group__core__decorators_ga3b3cda8b6305e7d7e0dbc9da29c6be80.html#ga3b3cda8b6305e7d7e0dbc9da29c6be80',1,'eve']]]
+  ['unroll_7',['unroll',['../group__algo__traits_gacdfe3fb0999d566d02a71a0297b8bb88.html#gacdfe3fb0999d566d02a71a0297b8bb88',1,'eve::algo']]]
 ];
