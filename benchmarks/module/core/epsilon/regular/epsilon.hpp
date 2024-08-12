@@ -18,6 +18,4 @@ int main()
   eve::bench::experiment xp;
   run<EVE_VALUE> (EVE_NAME(epsilon) , xp, eve::epsilon, arg0);
   run<EVE_TYPE>  (EVE_NAME(epsilon) , xp, eve::epsilon, arg0);
-  run<EVE_VALUE> (EVE_NAME(ulp) , xp, eve::ulp, arg0);
-  run<EVE_TYPE>  (EVE_NAME(ulp) , xp, eve::ulp, arg0);
 }
