@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
@@ -14,6 +15,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
 
 #include <type_traits>
 

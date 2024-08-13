@@ -25,6 +25,13 @@ int main()
   run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(next) , xp, eve::next, arg0, arg1);
   run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(next) , xp, eve::next, arg0, arg1);
   run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(next) , xp, eve::next, arg0, arg1);
+  run<eve::bench::types<EVE_VALUE, I_VALUE>>(EVE_NAME(next[raw]) , xp, eve::next[eve::raw], arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_VALUE>> (EVE_NAME(next[raw]) , xp, eve::next[eve::raw], arg0, arg1);
+  run<eve::bench::types<EVE_TYPE,  I_TYPE>> (EVE_NAME(next[raw]) , xp, eve::next[eve::raw], arg0, arg1);
 
+  run<EVE_VALUE>(EVE_NAME(next) , xp, eve::next, arg0);
+  run<EVE_TYPE> (EVE_NAME(next) , xp, eve::next, arg0);
+  run<EVE_VALUE>(EVE_NAME(next[raw]) , xp, eve::next[eve::raw], arg0);
+  run<EVE_TYPE> (EVE_NAME(next[raw]) , xp, eve::next[eve::raw], arg0);
 
 }

@@ -13,7 +13,6 @@
 #include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_finite.hpp>
-#include <eve/module/core/regular/is_greater_equal.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
@@ -89,7 +88,7 @@ namespace eve
       if constexpr( integral_value<T> )
         return is_nez(a);
       else
-        return is_finite(a) && is_greater_equal(eve::abs(a), smallestposval(eve::as(a)));
+        return is_finite(a) && (eve::abs(a) >= smallestposval(eve::as(a)));
     }
   }
 }

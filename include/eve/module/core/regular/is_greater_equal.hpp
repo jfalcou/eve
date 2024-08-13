@@ -12,6 +12,10 @@
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/regular/prev.hpp>
+
 
 namespace eve
 {
@@ -107,7 +111,7 @@ namespace eve
         auto b = w_t(bb);
 
         auto tol = o[almost].value(w_t{});
-        if constexpr(integral_value<decltype(tol)>) return a >=  eve::prev(b, tol);
+        if constexpr(integral_value<decltype(tol)>) return a >= eve::prev(b, tol);
         else              return a >= fam(b, -tol, eve::max(eve::abs(a), eve::abs(b)));
       }
       else

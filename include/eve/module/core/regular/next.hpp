@@ -15,15 +15,17 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
+#include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
+#include <eve/module/core/regular/is_normal.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct next_t : strict_elementwise_callable<next_t, Options, pedantic_option,  saturated_option>
+  struct next_t : strict_elementwise_callable<next_t, Options, pedantic_option,  saturated_option, raw_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -68,6 +70,7 @@ namespace eve
 //!      // Exclusive Semantic options - Only one of those can be set at once
 //!      constexpr auto next[pedantic](/* any of the above overloads */)                noexcept; // 5.1
 //!      constexpr auto next[saturated ](/* any of the above overloads */)              noexcept; // 5.2
+//!      constexpr auto next[raw](value auto x)                                         noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -85,6 +88,10 @@ namespace eve
 //!       3. [The operation is performed conditionnaly](@ref conditional)
 //!       4. if `x` is floating the call with mzero returns zero
 //!       5. ensures that the input is never greater than the result of the call.
+//!       6. works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite)
+//!          the option has no influence on the two parameters calls
+//!
+//!    If `n` is zero returns `x`.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/next.cpp}
@@ -101,6 +108,12 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
+        if constexpr(O::contains(raw))
+        {
+          auto s = ieee_constant<0x1.000002p-24f, 0x1.0000000000001p-53>(as(a));
+          return fma(s, eve::abs(a), a);
+        }
+        if (eve::all( eve::is_normal(a))) return next[raw](a);
         if constexpr(O::contains(pedantic))
         {
           auto pz   = bitinteger(a);
