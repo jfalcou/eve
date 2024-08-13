@@ -70,7 +70,10 @@ namespace eve
 //!      1. The distance of abs(x) to the next representable element in the type of `x`. (Kahan-Harrisson definition)
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The distance of abs(x) to the previous representable element in the type of `x`. (Goldberg definition)
-///!
+//!
+//!  @groupheader{External references}
+//!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
+//!   *  [HAL: On the definition of ulp(x)](https://hal.science/inria-00070503)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/epsilon.cpp}
