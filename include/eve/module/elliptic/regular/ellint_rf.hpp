@@ -77,8 +77,8 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/19.2)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
+//!   *  [DLMF: Elliptic Integral](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/elliptic/ellint_rf.cpp}
