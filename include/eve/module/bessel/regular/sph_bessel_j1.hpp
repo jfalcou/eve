@@ -28,10 +28,7 @@ namespace eve
 //! @addtogroup bessel
 //! @{
 //!   @var sph_bessel_j1
-//!   @brief Computes the spherical Bessel function of the first kind,
-//!   \f$ j_{1}(x)= \sqrt{\frac\pi{2x}}J_{3/2}(x) \f$.
-//!
-//!   It is the  solution of \f$ x^{2}y''+2xy'+(x^2-2)y=0\f$ for which \f$ y(0) = 0\f$
+//!   @brief Computes the spherical Bessel function of the first kind of order 1,
 //!
 //!   @groupheader{Header file}
 //!
@@ -65,8 +62,12 @@ namespace eve
 //!        is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!   @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Spherical Bessel Functions](https://en.wikipedia.org/wiki/Bessel_function#Spherical_Bessel_functions)
+//!   *  [Wolfram Mathwold: Spherical Bessel Function of the First Kind](https://mathworld.wolfram.com/SphericalBesselFunctionoftheFirstKind.html)
+//!   *  [DLMF: Spherical Bessel Functions](https://dlmf.nist.gov/10.47)
 //!
+//!   @groupheader{Example}
 //!   @godbolt{doc/bessel/sph_bessel_j1.cpp}
 //================================================================================================
   inline constexpr auto sph_bessel_j1 = functor<sph_bessel_j1_t>;

@@ -28,7 +28,7 @@ namespace eve
 //! @addtogroup bessel
 //! @{
 //!   @var sph_bessel_y1
-//!   @brief Computes the spherical Bessel function of the second kind,
+//!   @brief Computes the spherical Bessel function of the second kind of order 1,
 //!   \f$ y_{1}(x)= \sqrt{\frac\pi{2x}}Y_{3/2}(x) \f$.
 //!
 //!   It is a solution of \f$ x^{2}y''+2xy'+(x^2-2)y=0\f$ for which \f$ y(0) = -\infty\f$.
@@ -64,6 +64,11 @@ namespace eve
 //!     1. The value of \f$\displaystyle y_{1}(x)=-\frac{\cos x }{x^2}-\frac{\sin x }x\f$
 //!       is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Spherical Bessel Functions](https://en.wikipedia.org/wiki/Bessel_function#Spherical_Bessel_functions)
+//!   *  [Wolfram Mathwold: Spherical Bessel Function of the Second Kind](https://mathworld.wolfram.com/SphericalBesselFunctionoftheSecondKind.html)
+//!   *  [DLMF: Spherical Bessel Functions](https://dlmf.nist.gov/10.47)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/bessel/sph_bessel_y1.cpp}

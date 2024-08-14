@@ -29,7 +29,7 @@ namespace eve
 //! @addtogroup bessel
 //! @{
 //!   @var sph_bessel_yn
-//!   @brief Computes the the spherical Bessel functions of the second kind,
+//!   @brief Computes the the spherical Bessel functions of the second kind of order n,
 //!   \f$ y_{n}(x)= \sqrt{\frac\pi{2x}}Y_{n+1/2}(x)\f$.
 //!
 //!   It is a solution of \f$ x^{2}y''+2xy'+(x^2-n(n+1))y=0\f$ for which \f$ y(0) = -\infty\f$
@@ -66,8 +66,13 @@ namespace eve
 //!   The value of \f$ \displaystyle y_{n}(x)=
 //!   (-x)^n\left(\frac1x\frac{d}{dx}\right)^n \frac{\cos x}x\f$
 //!   is returned.
-//!   @groupheader{Example}
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Spherical Bessel Functions](https://en.wikipedia.org/wiki/Bessel_function#Spherical_Bessel_functions)
+//!   *  [Wolfram Mathwold: Spherical Bessel Function of the Second Kind](https://mathworld.wolfram.com/SphericalBesselFunctionoftheSecondKind.html)
+//!   *  [DLMF: Spherical Bessel Functions](https://dlmf.nist.gov/10.47)
+//!
+//!   @groupheader{Example}
 //!   @godbolt{doc/bessel/sph_bessel_yn.cpp}
 //================================================================================================
   inline constexpr auto sph_bessel_yn = functor<sph_bessel_yn_t>;
