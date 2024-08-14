@@ -89,9 +89,9 @@ namespace eve
 //!         and for rising `n`.
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia]( https://en.wikipedia.org/wiki/Chebyshev_polynomials)
-//!   *  [Wolfram MathWorld first kind](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html)
-//!   *  [Wolfram MathWorld second kind](https://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html)
+//!   *  [Wikipedia: Chebyshev_polynomials]( https://en.wikipedia.org/wiki/Chebyshev_polynomials)
+//!   *  [Wolfram MathWorld: first kind](https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html)
+//!   *  [Wolfram MathWorld: second kind](https://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/tchebytchev.cpp}
