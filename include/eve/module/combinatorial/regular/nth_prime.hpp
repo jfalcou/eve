@@ -77,6 +77,9 @@ namespace eve
 //!
 //!     * Almost no computations are made, the results are from a lookup table.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
+//!
 //!   **Example**
 //!     @godbolt{doc/combinatorial/nth_prime.cpp}
 //================================================================================================

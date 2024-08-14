@@ -70,6 +70,10 @@ namespace eve
 //!      integral the least common multiple is defined only if `p` and `n` elements are
 //!      [flint](@ref eve::is_flint). If any of the arguments is not flint the result is undefined.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor)
+//!   *  [C++ standard reference: gcd](https://en.cppreference.com/w/cpp/numeric/gcd)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/combinatorial/lcm.cpp}
 //================================================================================================
