@@ -82,8 +82,7 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [DLMF: Classical Orthogonal Polynomials](https://dlmf.nist.gov/18.3)
-//!   *  [Wikipedia:Jacobi
-   _polynomial](https://en.wikipedia.org/wiki/Jacobi_polynomials)
+//!   *  [Wikipedia:Jacobi polynomial](https://en.wikipedia.org/wiki/Jacobi_polynomials)
 //!   *  [Wolfram MathWorld:Jacobi Polynomial](https://mathworld.wolfram.com/JacobiPolynomial.html)
 //!
 //!  @groupheader{Example}
