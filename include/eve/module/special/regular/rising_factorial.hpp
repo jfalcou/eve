@@ -76,7 +76,11 @@ namespace eve
 //!     4. The `pedantic` option  uses reflection tricks and computes
 //!        the function for all real `a` and `x`, returning nan if the result is really undefined.
 //!
-//!   @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Rising Factorial](https://mathworld.wolfram.com/RisingFactorial.html)
+//!   *  [Wikipedia: Falling and rising factorials](https://en.wikipedia.org/wiki/Falling_and_rising_factorials
+//!
+//!  @groupheader{Example}
 //!  @godbolt{doc/special/rising_factorial.cpp}
 //================================================================================================
   inline constexpr auto rising_factorial = functor<rising_factorial_t>;

@@ -63,6 +63,10 @@ namespace eve
 //!        and using analytic continuation elsewhere, is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Riemann zeta function](https://en.wikipedia.org/wiki/Riemann_zeta_function)
+//!   *  [Wolfram MathWorld: Riemann Zeta Function](https://mathworld.wolfram.com/RiemannZetaFunction.html)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/zeta.cpp}
 //================================================================================================

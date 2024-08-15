@@ -63,6 +63,10 @@ namespace eve
 //!        is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Stirling approximation](https://en.wikipedia.org/wiki/Stirling%27s_approximation)
+//!   *  [Wolfram MathWorld: Stirling's Approximation](https://mathworld.wolfram.com/StirlingsApproximation.html)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/stirling.cpp}
 //================================================================================================

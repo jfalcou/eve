@@ -78,10 +78,12 @@ namespace eve
 //!        value of the Pochammer symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$
 //!        returning nan only if the result is really undefined.
 //!
-//!   @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Rising Factorial](https://mathworld.wolfram.com/RisingFactorial.html)
+//!   *  [Wikipedia: Falling and rising factorials](https://en.wikipedia.org/wiki/Falling_and_rising_factorials
 //!
+//!  @groupheader{Example}
 //!  @godbolt{doc/special/regular/lrising_factorial.cpp}
-//!  @groupheader{Semantic Modifiers}
 //================================================================================================
   inline constexpr auto lrising_factorial = functor<lrising_factorial_t>;
 //================================================================================================

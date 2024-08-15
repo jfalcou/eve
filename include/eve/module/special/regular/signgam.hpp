@@ -60,6 +60,12 @@ namespace eve
 //!     1. The value of `eve::sign(eve::tgamma(x))` is returned (without computing `eve::tgamma(x)`);
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference: tgamma](https://en.cppreference.com/w/cpp/numeric/math/tgamma)
+//!   *  [Wikipedia: Gamma function](https://en.wikipedia.org/wiki/Gamma_function)
+//!   *  [Wolfram MathWorld: Gamma Function](https://mathworld.wolfram.com/GammaFunction.html)
+//!   *  [DLMF: gamma function](https://dlmf.nist.gov/5.2)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/signgam.cpp}
 //================================================================================================
