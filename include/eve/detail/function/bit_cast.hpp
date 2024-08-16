@@ -21,6 +21,15 @@ namespace eve
     {
       return EVE_DISPATCH_CALL(a,tgt);
     }
+    // In riscv we may have different underlay type sizes
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+    template<typename T, typename Target>
+    requires(sizeof(T) != sizeof(Target))
+    EVE_FORCEINLINE Target operator()(T const& a, as<Target> const& tgt) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, tgt);
+    }
+#endif
 
     EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);
   };
@@ -32,4 +41,8 @@ namespace eve
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/bit_cast.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/detail/function/simd/riscv/bit_cast.hpp>
 #endif

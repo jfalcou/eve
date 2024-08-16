@@ -65,6 +65,7 @@ namespace eve
             else                                   return emulated_{};
           }
         }
+        else if constexpr( spy::simd_instruction_set == spy::rvv_ ) { return riscv_rvv_dyn_ {}; }
         else
         {
           return emulated_{};
