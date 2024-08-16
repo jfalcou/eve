@@ -77,3 +77,7 @@ EVE_MAKE_CALLABLE(first_true_, first_true);
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/first_true.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/first_true.hpp>
+#endif
