@@ -83,3 +83,7 @@ EVE_CALLABLE_API(convert_, convert)
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/convert.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/convert.hpp>
+#endif
