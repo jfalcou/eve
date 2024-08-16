@@ -84,32 +84,21 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    bit_ceil_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    bit_ceil_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
     {
       auto vle1 = v <= one(eve::as(v));
-      if constexpr( scalar_value<T> )
-      {
-        if( vle1 ) return one(eve::as(v));
-      }
       if constexpr( floating_value<T> )
       {
-        auto [m, e] = ifrexp(v);
-        e           = dec(e);
+        auto e      = exponent(v);
         auto tmp    = ldexp(one(eve::as(v)), e);
         auto tmpltv = tmp < v;
-        if constexpr( scalar_value<T> )
-          return tmpltv ? tmp + tmp : tmp;
-        else
-          return if_else(vle1, one(eve::as(v)), add[tmpltv](tmp, tmp));
+        return if_else(vle1, one(eve::as(v)), add[tmpltv](tmp, tmp));
       }
       else
       {
         auto tmp    = bit_floor(v);
         auto tmpltv = tmp < v;
-        if constexpr( scalar_value<T> )
-          return T(tmpltv ? tmp + tmp : tmp);
-        else
-          return if_else(vle1, one, add[tmpltv](tmp, tmp));
+        return if_else(vle1, one, add[tmpltv](tmp, tmp));
       }
     }
   }

@@ -16,6 +16,6 @@ int main()
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
   eve::bench::experiment xp;
-  run<EVE_VALUE> (EVE_NAME(bit_ceil) , xp, eve::bit_ceil, arg0);
-  run<EVE_TYPE>  (EVE_NAME(bit_ceil) , xp, eve::bit_ceil, arg0);
+  run<EVE_VALUE> (EVE_NAME(bit_width) , xp, eve::bit_width, arg0);
+  run<EVE_TYPE>  (EVE_NAME(bit_width) , xp, eve::bit_width, arg0);
 }

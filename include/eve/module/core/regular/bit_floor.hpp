@@ -85,16 +85,12 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     bit_floor_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
-      auto vlt1 = v < one(eve::as(v));
-      if constexpr( scalar_value<T> )
-        if( vlt1 ) return zero(eve::as(v));
       if constexpr( floating_value<T> )
       {
-        auto [m, e] = ifrexp(v);
-        e           = dec(e);
-        auto r      = eve::ldexp(one(eve::as(v)), e);
-        if constexpr( scalar_value<T> ) return r;
-        else return if_else(vlt1, eve::zero, r);
+        auto vlt1 = v < one(eve::as(v));
+        auto e = exponent(v);
+        auto r = eve::ldexp(one(eve::as(v)), e);
+        return if_else(vlt1, eve::zero, r);
       }
       else if constexpr( signed_integral_value<T> )
       {
