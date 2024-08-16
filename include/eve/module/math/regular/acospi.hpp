@@ -70,6 +70,12 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near `x = 1`
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference: acos](https://en.cppreference.com/w/cpp/numeric/math/acos)
+//!   *  [Wolfram MathWorld: Inverse Cosine](https://mathworld.wolfram.com/InverseCosine.html)
+//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2#i)
+//!   *  [Wikipedia: Arc cosinus](https://fr.wikipedia.org/wiki/Arc_cosinus)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acospi.cpp}
 //================================================================================================

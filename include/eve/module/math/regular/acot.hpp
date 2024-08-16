@@ -67,8 +67,8 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCotangent.html)
-//!   *  [DLMF](https://dlmf.nist.gov/4.23)
+//!   *  [Wolfram MathWorld: Inverse Cotangent](https://mathworld.wolfram.com/InverseCotangent.html)
+//!   *  [DLMF: ](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acot.cpp}

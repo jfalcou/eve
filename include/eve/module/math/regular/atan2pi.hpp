@@ -91,6 +91,11 @@ namespace eve
 //!       *  If `x` is \f$\pm0\f$ and `y` is \f$\pm+0\f$, \f$+\frac12\f$  is returned
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference:atan2](https://en.cppreference.com/w/cpp/numeric/math/atan2)
+//!   *  [Wolfram MathWorld: Inverse Tangent](https://mathworld.wolfram.com/InverseTangent.html)
+//!   *  [Wikipedia: Atan2](https://en.wikipedia.org/wiki/Atan2)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/atan2pi.cpp}
 //================================================================================================

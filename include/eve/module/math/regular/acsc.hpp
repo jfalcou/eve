@@ -68,8 +68,8 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCosecant.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [Wolfram MathWorld: Inverse Cosecant](https://mathworld.wolfram.com/InverseCosecant.html)
+//!   *  [Wikipedia: Inverse trigonometricfunctions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
 //!   *  [DLMF](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}

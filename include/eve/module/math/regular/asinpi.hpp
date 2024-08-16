@@ -56,6 +56,12 @@ namespace eve
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)
+//!   *  [Wolfram MathWorld: InverseSine](https://mathworld.wolfram.com/InverseSine.html)
+//!   *  [Wikipedia:Inverse trigonometric functions ](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF:Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+//!
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) value in \f$\pi\f$ multiples
