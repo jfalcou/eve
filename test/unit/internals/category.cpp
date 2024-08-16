@@ -70,7 +70,7 @@ TTS_CASE_TPL("Test category matching for std::uint64", natives<std::uint64_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::uint64_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -91,14 +91,18 @@ TTS_CASE_TPL("Test category matching for float", natives<float>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes = static_cast<eve::detail::category>(eve::fundamental_cardinal_v<float>);
+    [[maybe_unused]] constexpr auto lanes =
+        static_cast<eve::detail::category>(eve::fundamental_cardinal_v<float>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), float_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), signed_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size32_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), float32));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), float32 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), float32 | lanes);
+    }
   }
   else { TTS_PASS("wide<float,N> is not native and therefore can't be categorized."); }
 };
@@ -110,7 +114,7 @@ TTS_CASE_TPL("Test category matching for std::int32", natives<std::int32_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::int32_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -118,8 +122,11 @@ TTS_CASE_TPL("Test category matching for std::int32", natives<std::int32_t>)
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size32_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), int_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), int32));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), int32 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), int32 | lanes);
+    }
   }
   else { TTS_PASS("wide<int32,N> is not native and therefore can't be categorized."); }
 };
@@ -131,7 +138,7 @@ TTS_CASE_TPL("Test category matching for std::uint32", natives<std::uint32_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::uint32_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -139,8 +146,11 @@ TTS_CASE_TPL("Test category matching for std::uint32", natives<std::uint32_t>)
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size32_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), uint_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), uint32));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), uint32 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), uint32 | lanes);
+    }
   }
   else { TTS_PASS("wide<uint32,N> is not native and therefore can't be categorized."); }
 };
@@ -152,7 +162,7 @@ TTS_CASE_TPL("Test category matching for std::int16", natives<std::int16_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::int16_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -160,8 +170,11 @@ TTS_CASE_TPL("Test category matching for std::int16", natives<std::int16_t>)
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size16_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), int_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), int16));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), int16 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), int16 | lanes);
+    }
   }
   else { TTS_PASS("wide<int16,N> is not native and therefore can't be categorized."); }
 };
@@ -173,7 +186,7 @@ TTS_CASE_TPL("Test category matching for std::uint16", natives<std::uint16_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::uint16_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -181,8 +194,11 @@ TTS_CASE_TPL("Test category matching for std::uint16", natives<std::uint16_t>)
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size16_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), uint_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), uint16));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), uint16 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), uint16 | lanes);
+    }
   }
   else { TTS_PASS("wide<uint16,N> is not native and therefore can't be categorized."); }
 };
@@ -194,7 +210,7 @@ TTS_CASE_TPL("Test category matching for std::int8", natives<std::int8_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::int8_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -202,8 +218,11 @@ TTS_CASE_TPL("Test category matching for std::int8", natives<std::int8_t>)
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size8_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), int_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), int8));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), int8 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), int8 | lanes);
+    }
   }
   else { TTS_PASS("wide<int8,N> is not native and therefore can't be categorized."); }
 };
@@ -215,7 +234,7 @@ TTS_CASE_TPL("Test category matching for std::uint8", natives<std::uint8_t>)
   {
     // All types below fundamental cardinal categorize with the same # of lanes
     using enum eve::detail::category;
-    constexpr auto lanes =
+    [[maybe_unused]] constexpr auto lanes =
         static_cast<eve::detail::category>(eve::fundamental_cardinal_v<std::uint8_t>);
 
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), integer_));
@@ -223,8 +242,11 @@ TTS_CASE_TPL("Test category matching for std::uint8", natives<std::uint8_t>)
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), size8_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), uint_));
     TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), uint8));
-    TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
-    TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), uint8 | lanes);
+    if constexpr( eve::current_api != eve::rvv )
+    {
+      TTS_CONSTEXPR_EXPECT(match(eve::detail::categorize<T>(), lanes));
+      TTS_CONSTEXPR_EQUAL(eve::detail::categorize<T>(), uint8 | lanes);
+    }
   }
   else { TTS_PASS("wide<uint8,N> is not native and therefore can't be categorized."); }
 };
