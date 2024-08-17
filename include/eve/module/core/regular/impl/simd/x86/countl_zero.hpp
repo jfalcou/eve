@@ -30,6 +30,13 @@ namespace eve::detail
     using r_t        = wide<T, N>;
     constexpr auto c = categorize<r_t>();
 
+//     if constexpr( sizeof(T) < 4)
+//     {
+//       using up_t = eve::detail::upgrade_t<eve::element_type_t<T>>;
+//       auto v = eve::convert(a0, eve::as<up_t>() );
+//       v = countl_zero(v)-sizeof(v)*4;
+//       return eve::convert(v, eve::as<T>() );
+//     }
     if constexpr(sizeof(T) >=  4)
     {
       if constexpr( current_api == avx512)
@@ -45,9 +52,8 @@ namespace eve::detail
       {
         //Inspired from: https://stackoverflow.com/questions/58823140/count-leading-zero-bits-for-each-element-in-avx2-vector-emulate-mm256-lzcnt-ep
         using ri_t       = wide<std::int32_t,N>;
-        using ri_t2      = downgrade_t<ri_t>;
         using ru_t2      = downgrade_t<r_t>;
-        if constexpr( c == category::uint32x8 ||  c == category::uint32x4 )
+        if constexpr( match(c, category::uint32x8, category::uint32x4 ))
         {
           auto    v   = bit_notand(bit_shr(a0, 8), a0);
           v   = bit_cast(convert(bit_cast(v, as<ri_t>{}), as<float>{}), as<r_t>{});
@@ -55,7 +61,6 @@ namespace eve::detail
           auto w   = bit_cast(v, as<ru_t2>{});
           w   = sub[saturated2](158, w);                    // undo bias
           auto v32 = bit_cast(r_t(32u), as<ru_t2>{});
-//          return r_t(eve::min(w,v32)); // clamp at 32
           return bit_cast(eve::min(w,v32), as<r_t>());
         }
         else return countl_zero.behavior(cpu_{}, opts, a0);
@@ -64,7 +69,9 @@ namespace eve::detail
         return countl_zero.behavior(cpu_{}, opts, a0);
     }
     else
+    {
       return countl_zero.behavior(cpu_{}, opts, a0);
+    }
   }
 
 // -----------------------------------------------------------------------------------------------
