@@ -62,6 +62,9 @@ namespace eve
 //!         this callable returns NaN if `eve::gamma(x)` is less than zero.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Log Gamma Function](https://mathworld.wolfram.com/LogGammaFunction.html
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/log_gamma.cpp}
 //================================================================================================

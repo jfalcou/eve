@@ -64,8 +64,10 @@ namespace eve
 //!        (the inverse function of \f$ x \rightarrow \log x+x\f$) is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Wright omega function](https://en.wikipedia.org/wiki/Wright_omega_function)
 //!
+//!  @groupheader{Example}
 //!  @godbolt{doc/special/omega.cpp}
 //================================================================================================
   inline constexpr auto omega = functor<omega_t>;

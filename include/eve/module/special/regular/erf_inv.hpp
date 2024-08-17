@@ -65,10 +65,8 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/erf)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Erf.html)
-//!   *  [DLMF](https://dlmf.nist.gov/7.2)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)
+//!   *  [Wolfram MathWorld: Inverse Erf](https://mathworld.wolfram.com/InverseErf.html)
+//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/erf_inv.cpp}

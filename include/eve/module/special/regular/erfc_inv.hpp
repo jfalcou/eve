@@ -66,6 +66,12 @@ namespace eve
 //!        * If the argument is \f$0\f$,\f$\infty\f$ is returned.
 //!        * If the argument is `NaN`, `NaN` is returned.
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference: erf](https://en.cppreference.com/w/cpp/numeric/math/erf)
+//!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Erf.html)
+//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2#i)
+//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/erfc_inv.cpp}
 //================================================================================================

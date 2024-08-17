@@ -66,8 +66,8 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/5.2)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DigammaFunction.html)
+//!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
+//!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/digamma.cpp}

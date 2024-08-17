@@ -70,6 +70,10 @@ namespace eve
 //!        * If `n` elements are nor integer nor flint the result is undefined.
 //!     2. [The operation is performed conditionnaly](@ref conditional)
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)
+//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Factorial)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/lfactorial.cpp}
 //================================================================================================

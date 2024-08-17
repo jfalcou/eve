@@ -71,9 +71,9 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
 //!   The value of the incomplete betainc function is returned.
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/8.17)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/IncompleteBetaFunction.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Beta_function)
+//!   *  [DLMF: Incomplete Beta Function](https://dlmf.nist.gov/8.17)
+//!   *  [Wolfram MathWorld: Beta Incomplete Function](https://mathworld.wolfram.com/IncompleteBetaFunction.html)
+//!   *  [Wikipedia: Beta Function](https://en.wikipedia.org/wiki/Beta_function)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/betainc.cpp}
