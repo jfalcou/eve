@@ -86,8 +86,8 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Abel_polynomials)
-//!   *  [Wolfram MathWorld](https://en.wikipedia.org/wiki/Gegenbauer_polynomials)
+//!   *  [Wikipedia: Gegenbauer polynomials](https://en.wikipedia.org/wiki/Gegenbauer_polynomials)
+//!   *  [Wolfram MathWorld: Gegenbauer polynomial](https://mathworld.wolfram.com/GegenbauerPolynomial.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}

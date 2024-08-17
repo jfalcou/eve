@@ -64,8 +64,8 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Abel_polynomials)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AbelPolynomial.html)
+//!   *  [Wikipedia: Abel Polynomials](https://en.wikipedia.org/wiki/Abel_polynomials)
+//!   *  [Wolfram MathWorld: Abel Polynomial](https://mathworld.wolfram.com/AbelPolynomial.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/abel.cpp}

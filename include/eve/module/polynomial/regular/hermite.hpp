@@ -98,9 +98,9 @@ namespace eve
 //!        and for rising `n`.
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/18.3)
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/hermite)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HermitePolynomial.html)
+//!   *  [DLMF: Classical Orthogonal Polynomials](https://dlmf.nist.gov/18.3)
+//!   *  [C++ standard reference: hermite](https://en.cppreference.com/w/cpp/numeric/special_functions/hermite)
+//!   *  [Wolfram MathWorld: Hermite Polynomial](https://mathworld.wolfram.com/HermitePolynomial.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/hermite.cpp}

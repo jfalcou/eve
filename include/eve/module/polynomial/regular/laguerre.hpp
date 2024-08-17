@@ -89,9 +89,9 @@ namespace eve
 //!        \f$\displaystyle \mbox{L}_{n+1}^m = \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\f$
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/18.3)
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/laguerre)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BetaFunction.html)
+//!   *  [DLMF: Classical Orthogonal Polynomials](https://dlmf.nist.gov/18.3)
+//!   *  [C++ standard reference: laguerre](https://en.cppreference.com/w/cpp/numeric/special_functions/laguerre)
+//!   *  [Wolfram MathWorld: Laguerre Polynomial](https://mathworld.wolfram.com/LaguerrePolynomial.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/laguerre.cpp}

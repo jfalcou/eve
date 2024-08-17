@@ -110,6 +110,11 @@ namespace eve
 //!         \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\f$
 //!         (\f$m = 0\f$ and no \f$m\f$ in call are equivalent here).
 //!
+//!  @groupheader{External references}
+//!   *  [DLMF: Classical Orthogonal Polynomials](https://dlmf.nist.gov/18.3)
+//!   *  [C++ standard reference: legendre](https://en.cppreference.com/w/cpp/numeric/special_functions/legendre)
+//!   *  [Wolfram MathWorld: Legendre Polynomial](https://mathworld.wolfram.com/LegendrePolynomial.html)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/legendre.cpp}
 //================================================================================================

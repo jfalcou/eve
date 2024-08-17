@@ -70,9 +70,8 @@ namespace eve
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/cyl_neumann)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bessel_function)
-//!   *  [DLMF](https://dlmf.nist.gov/10.2)
-//!
+//!   *  [Wikipedia: Bessel Functions](https://en.wikipedia.org/wiki/Bessel_function)
+//!   *  [DLMF: Bessel Functions](https://dlmf.nist.gov/10.2)
 //!
 //!   @groupheader{Example}
 //!
