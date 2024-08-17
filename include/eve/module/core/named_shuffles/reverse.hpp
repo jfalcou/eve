@@ -88,6 +88,8 @@ struct reverse_t
       return level(detail::mask_type(tgt), g) + 4;
     }
 
+    if( current_api == rvv ) return logical_simd_value<T> ? 6 : 2;
+
     if (current_api >= neon) {
       if ( reg_size <= 8 ) return 2;
       if ( g_size == 8 ) return 2;

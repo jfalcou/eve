@@ -78,6 +78,7 @@ struct broadcast_lane_t
       using half_t = decltype(T {}.slice(lower_));
       return level(as<half_t> {}, g, i);
     }
+    if( current_api == rvv ) return logical_simd_value<T> ? 6 : 2;
     else if constexpr( current_api >= vmx ) return 2;
     else if constexpr( current_api >= sve )
     {

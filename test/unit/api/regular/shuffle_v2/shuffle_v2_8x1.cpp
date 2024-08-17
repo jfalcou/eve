@@ -28,6 +28,8 @@ TTS_CASE("shuffle_v2: 8x1")
       return 3;
     }
 
+    if( eve::current_api == eve::rvv ) return 2;
+
     if (eve::current_api >= eve::sve)
     {
       if (idxm::is_lane_broadcast(p)) return 2;

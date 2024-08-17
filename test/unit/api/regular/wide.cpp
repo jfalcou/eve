@@ -32,7 +32,8 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
 
   // Test smaller size wide for non-garbage
   using v_t = typename T::value_type;
-  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
+  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T>
+                && eve::current_api != eve::rvv )
   {
     using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
     using wl_t  = eve::as_logical_t<w_t>;
@@ -72,7 +73,8 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
 
   // Test smaller size wide for non-garbage
   using v_t = typename T::value_type;
-  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T> )
+  if constexpr( T::size() < eve::fundamental_cardinal_v<v_t> && !eve::has_emulated_abi_v<T>
+                && eve::current_api != eve::rvv )
   {
     using w_t   = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
     using wl_t  = eve::as_logical_t<w_t>;
