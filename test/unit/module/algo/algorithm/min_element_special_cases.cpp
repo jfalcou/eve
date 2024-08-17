@@ -13,10 +13,17 @@
 
 TTS_CASE("Min element one pass, uint8 index")
 {
-  auto alg = eve::algo::min_element         //
+  auto alg0 = eve::algo::min_element        //
       [eve::algo::single_pass]              //
       [eve::algo::index_type<std::uint8_t>] //
       [eve::algo::unroll<2>];
+
+  auto alg = [&]
+  {
+    if constexpr( eve::expected_cardinal_v<std::uint8_t> < 128 ) { return alg0; }
+    else { return alg0[eve::algo::force_cardinal<64>]; }
+  }();
+
   {
     std::vector v {1, 2, 3};
     TTS_EQUAL(0, alg(v) - v.begin());
@@ -60,10 +67,15 @@ TTS_CASE("Min element one pass, uint8 index")
 };
 
 TTS_CASE("Min element one pass, uint8 index, first one is the answer") {
-  auto alg = eve::algo::min_element         //
+  auto alg0 = eve::algo::min_element        //
       [eve::algo::single_pass]              //
       [eve::algo::index_type<std::uint8_t>] //
       [eve::algo::unroll<2>];
+  auto alg = [&]
+  {
+    if constexpr( eve::expected_cardinal_v<std::uint8_t> < 128 ) { return alg0; }
+    else { return alg0[eve::algo::force_cardinal<64>]; }
+  }();
 
   std::vector<std::int8_t> v;
   v.resize(300);
