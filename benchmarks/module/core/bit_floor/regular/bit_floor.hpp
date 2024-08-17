@@ -25,8 +25,6 @@ int main()
   using v_t = EVE_VALUE;
   if constexpr(std::is_integral_v<v_t>)
   {
-    std::cout << std::is_integral_v<EVE_VALUE> << std::endl;
-//    auto const std__bit_floor = [](EVE_VALUE x) { return std::bit_floor(x); };
     run<EVE_VALUE> (EVE_NAME(std__bit_floor) , xp, std__bit_floor, arg0);
   }
   run<EVE_VALUE> (EVE_NAME(bit_floor) , xp, eve::bit_floor, arg0);

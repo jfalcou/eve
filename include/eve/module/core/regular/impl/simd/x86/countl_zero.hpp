@@ -15,8 +15,6 @@
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-
-#include <iostream>
 #include <type_traits>
 
 namespace eve::detail
@@ -29,14 +27,6 @@ namespace eve::detail
   {
     using r_t        = wide<T, N>;
     constexpr auto c = categorize<r_t>();
-
-//     if constexpr( sizeof(T) < 4)
-//     {
-//       using up_t = eve::detail::upgrade_t<eve::element_type_t<T>>;
-//       auto v = eve::convert(a0, eve::as<up_t>() );
-//       v = countl_zero(v)-sizeof(v)*4;
-//       return eve::convert(v, eve::as<T>() );
-//     }
     if constexpr(sizeof(T) >=  4)
     {
       if constexpr( current_api == avx512)
