@@ -67,6 +67,12 @@ namespace eve
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [C++ standard reference: atan](https://en.cppreference.com/w/cpp/numeric/math/atan)
+//!   *  [Wolfram MathWorld: Inverse Tangent](https://mathworld.wolfram.com/InverseTangent.html)
+//!   *  [Wikipedia: Inverse trigonometric functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF: Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/atanpi.cpp}
 //================================================================================================

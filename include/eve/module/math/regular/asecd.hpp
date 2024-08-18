@@ -71,6 +71,11 @@ struct asecd_t : elementwise_callable<asecd_t, Options, raw_option>
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Inverse Secant](https://mathworld.wolfram.com/InverseSecant.html)
+//!   *  [Wikipedia: Inverse trigonometric functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF: Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asecd.cpp}
 //================================================================================================
