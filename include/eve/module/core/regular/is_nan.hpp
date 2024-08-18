@@ -85,3 +85,7 @@ namespace eve
     }
   }
 }
+
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/core/regular/impl/simd/x86/is_nan.hpp>
+// #endif
