@@ -91,7 +91,7 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<logical<wide<T, N>>>
     using bits_type = typename logical<wide<T, N>>::bits_type;
     using e_t       = element_type_t<bits_type>;
 
-    auto bits = make(as<bits_type> {}, v, (vs ? e_t{-1} : e_t{0})...);
+    auto bits = make(as<bits_type> {}, static_cast<e_t>(v ? -1 : 0), static_cast<e_t>(vs ? -1 : 0)...);
     return svcmpne(sve_true<T>(), bits, e_t{0});
   }
 }
