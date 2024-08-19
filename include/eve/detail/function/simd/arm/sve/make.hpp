@@ -20,7 +20,7 @@ namespace eve::detail
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
-requires sve_abi<abi_t<T, N>> && (N::value > 1)
+requires sve_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, Vs... vs) noexcept
 {
   if constexpr (sizeof...(Vs) == 0)
@@ -68,7 +68,7 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, V
 }
 
 template<callable_options O, arithmetic_scalar_value T, typename N, typename V0, typename... Vs>
-requires sve_abi<abi_t<T, N>> && (N::value > 1)
+requires sve_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<logical<wide<T, N>>>, V0 v, Vs... vs) noexcept
 {
   if constexpr (sizeof...(Vs) == 0)
