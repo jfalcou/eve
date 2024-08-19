@@ -49,19 +49,19 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<wide<T, N>>, V0 v, V
   }
   else
   {
-    static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
+    static_assert((sizeof...(Vs) + 1) == N::value, "[eve::make] - Invalid number of arguments");
 
     if constexpr( wide<T, N>::size() < eve::fundamental_cardinal_v<T> )
     {
       return [&]<std::size_t... i>(std::index_sequence<i...>)
       {
-        return make(as<wide<T, fundamental_cardinal_t<T>>> {}, vs..., ((void)i, 0)...);
+        return make(as<wide<T, fundamental_cardinal_t<T>>> {}, v, vs..., ((void)i, 0)...);
       }
       (std::make_index_sequence<fundamental_cardinal_v<T> - N::value> {});
     }
     else
     {
-      std::array on_stack {static_cast<T>(vs)...};
+      std::array on_stack {v, static_cast<T>(vs)...};
       return load(on_stack.data(), N {});
     }
   }
@@ -91,8 +91,8 @@ EVE_FORCEINLINE auto make_(EVE_REQUIRES(sve_), O const&, as<logical<wide<T, N>>>
     using bits_type = typename logical<wide<T, N>>::bits_type;
     using e_t       = element_type_t<bits_type>;
 
-    auto bits = make(as<bits_type> {}, (vs ? (e_t)-1 : 0)...);
-    return svcmpne(sve_true<T>(), bits, (e_t)0);
+    auto bits = make(as<bits_type> {}, v, (vs ? e_t{-1} : e_t{0})...);
+    return svcmpne(sve_true<T>(), bits, e_t{0});
   }
 }
 
