@@ -44,8 +44,8 @@ namespace eve
         return EVE_DISPATCH_CALL(v);
       }
 
-      template<typename W, typename Slice>
-      EVE_FORCEINLINE constexpr auto operator()(W v, Slice s) const noexcept
+      template<typename W, std::size_t Slice>
+      EVE_FORCEINLINE constexpr auto operator()(W v, slice_t<Slice> s) const noexcept
       {
         return EVE_DISPATCH_CALL(v, s);
       }
@@ -59,18 +59,18 @@ namespace eve
 
 #include <eve/detail/function/simd/common/slice.hpp>
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/detail/function/simd/x86/slice.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/detail/function/simd/x86/slice.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/detail/function/simd/ppc/slice.hpp>
-#endif
+// #if defined(EVE_INCLUDE_POWERPC_HEADER)
+// #  include <eve/detail/function/simd/ppc/slice.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/detail/function/simd/arm/neon/slice.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/detail/function/simd/arm/neon/slice.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/detail/function/simd/arm/sve/slice.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/detail/function/simd/arm/sve/slice.hpp>
+// #endif
