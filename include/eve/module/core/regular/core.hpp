@@ -33,6 +33,7 @@
 #include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/bit_swap_adjacent.hpp>
 #include <eve/module/core/regular/bit_swap_pairs.hpp>
+#include <eve/module/core/regular/bit_ternary.hpp>
 #include <eve/module/core/regular/bit_unset.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
