@@ -75,8 +75,6 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
     TTS_ULP_EQUAL(eve::rec(cases.zero), cases.inf, 0.5);
     TTS_ULP_EQUAL(eve::rec(eve::smallestposval(eve::as<T>())), T(1)/eve::smallestposval(eve::as<T>()), 0.5);
     TTS_ULP_EQUAL(eve::rec(2*eve::smallestposval(eve::as<T>())), T(0.5)/eve::smallestposval(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(eve::rec(eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()), 0.5);
-    TTS_ULP_EQUAL(eve::rec(2*eve::mindenormal(eve::as<T>())), T(0.5)/eve::mindenormal(eve::as<T>()), 0.5);
 
     TTS_ULP_EQUAL(eve::rec[eve::pedantic](cases.valmin), T(1)/cases.valmin, 0.5);
     TTS_ULP_EQUAL(eve::rec[eve::pedantic](cases.valmax), T(1)/cases.valmax, 0.5);
@@ -85,10 +83,18 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.inf) , cases.zero);
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.mzero), cases.minf);
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.zero), cases.inf);
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()));
-    TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::mindenormal(eve::as<T>())), T(1)/(2*eve::mindenormal(eve::as<T>())));
+    
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::smallestposval(eve::as<T>())), T(1)/eve::smallestposval(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::smallestposval(eve::as<T>())), T(1)/(2*eve::smallestposval(eve::as<T>())));
+
+    if constexpr (eve::platform::supports_denormals)
+    {
+      TTS_ULP_EQUAL(eve::rec(eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()), 0.5);
+      TTS_ULP_EQUAL(eve::rec(2*eve::mindenormal(eve::as<T>())), T(0.5)/eve::mindenormal(eve::as<T>()), 0.5);
+
+      TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()));
+      TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::mindenormal(eve::as<T>())), T(1)/(2*eve::mindenormal(eve::as<T>())));
+    }
   }
   else TTS_EQUAL(0, 0);
 
