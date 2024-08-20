@@ -20,11 +20,15 @@ namespace eve::detail
   {
     if constexpr(scalar_value<S>)
     {
-      constexpr S width = sizeof(element_type_t<T>) * 8 - 1;
-      int         n     = s & width;
+      const auto rotl_apply = [=](auto s) {
+        constexpr S width = sizeof(element_type_t<T>) * 8 - 1;
+        int         n     = s & width;
 
-      if( n >= 0 ) return (v << n) | (v >> (-n & width));
-      else         return rotl_(EVE_TARGETS(cpu_), o, v, -s);
+        return (v << n) | (v >> (-n & width));
+      };
+
+      if( s >= 0 ) return rotl_apply(s);
+      else         return rotl_apply(-s);
     }
     else if constexpr( scalar_value<T> )                            return rotl[o](as_wide_as_t<T,S>(v), s);
     else if constexpr( has_native_abi_v<T> && has_native_abi_v<S>)  return map(rotl[o], v, s);
