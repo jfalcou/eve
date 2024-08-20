@@ -18,9 +18,9 @@ namespace eve::detail
 //================================================================================================
 // convert: logical -> logical
 //================================================================================================
-template<signed_integral_scalar_value T, typename N, signed_integral_scalar_value U>
+template<callable_options O, signed_integral_scalar_value T, typename N, signed_integral_scalar_value U>
 EVE_FORCEINLINE logical<wide<U, N>>
-convert_impl(EVE_SUPPORTS(sse2_), logical<wide<T, N>> v, as<logical<U>> const& tgt) noexcept
+convert_impl(EVE_REQUIRES(sse2_), logical<wide<T, N>> v, as<logical<U>> const& tgt) noexcept
 {
   using out_t         = logical<wide<U, N>>;
   constexpr auto c_in = categorize<wide<T, N>>();
@@ -55,15 +55,15 @@ convert_impl(EVE_SUPPORTS(sse2_), logical<wide<T, N>> v, as<logical<U>> const& t
   else if constexpr( c_in == category::int32x8 && sizeof(U) == 2 ) return _mm_packs_epi32(v.slice(lower_), v.slice(upper_));
   //==============================================================================================
   // All other cases go to the generic implementation
-  else return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: float64 -> U
 //================================================================================================
-template<typename N, arithmetic_scalar_value U>
+template<callable_options O, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<double, N> v, as<U> const &tgt) noexcept
+                convert_impl(EVE_REQUIRES(sse2_), wide<double, N> v, as<U> const &tgt) noexcept
 {
   constexpr auto c_i  = categorize<wide<double, N>>();
   constexpr auto c_o  = categorize<wide<U, N>>();
@@ -85,15 +85,15 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == category::float64x2 && c_o == category::uint32x4 && a512 ) return _mm_cvttpd_epu32(v);
   else if constexpr( c_i == category::float64x8 && c_o == category::uint32x8         ) return _mm512_cvttpd_epu32(v);
   else if constexpr( sizeof(U) <= 2                                                  ) return convert(convert(v, t_t {}), tgt);
-  else return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: float32 -> U
 //================================================================================================
-template<typename N, arithmetic_scalar_value U>
+template<callable_options O, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<float, N> v, as<U> const &tgt) noexcept
+                convert_impl(EVE_REQUIRES(sse2_), wide<float, N> v, as<U> const &tgt) noexcept
 {
   constexpr auto c_i  = categorize<wide<float, N>>();
   constexpr auto c_o  = categorize<wide<U, N>>();
@@ -117,15 +117,15 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( c_i == category::float32x8  && c_o == category::uint32x8 && a512 ) return _mm256_cvttps_epu32(v);
   else if constexpr( c_i == category::float32x16 && c_o == category::uint32x16        ) return _mm512_cvttps_epu32(v);
   else if constexpr( sizeof(U) <= 2                                                   ) return convert(convert(v, i32_t {}), tgt);
-  else                                                                                  return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else                                                                                  return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: (u)int64 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
+                convert_impl(EVE_REQUIRES(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
     requires(sizeof(T) == 8)
 {
   constexpr auto c_i    = categorize<wide<T, N>>();
@@ -148,7 +148,7 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( N {} <= 2 && mo32x4 && a512                    ) return _mm_cvtepi64_epi32(v);
   else if constexpr( N {} <= 2 && mo32x4                            ) return convert_integers_shuffle(v, tgt);
   else if constexpr( N {} <= 2 && (match(c_o, category::integer_))  ) return convert(convert(v, as<upgrade_t<U>> {}), tgt);
-  else if constexpr( N {} <= 2                                      ) return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else if constexpr( N {} <= 2                                      ) return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   // ===============================================================================================================
   else if constexpr( c_i == category::int64x4  && c_o == category::float64x4 && a512 ) return _mm256_cvtepi64_pd(v);
   else if constexpr( c_i == category::uint64x4 && c_o == category::float64x4 && a512 ) return _mm256_cvtepu64_pd(v);
@@ -192,7 +192,7 @@ EVE_FORCEINLINE wide<U, N>
 #endif
   }
   else if constexpr ( mi64x4 && mo32x4                                        ) return convert_slice(v, tgt);
-  else if constexpr ( mi64x4                                                  ) return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else if constexpr ( mi64x4                                                  ) return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   else if constexpr ( c_i == category::int64x8  && c_o == category::float64x8 ) return _mm512_cvtepi64_pd(v);
   else if constexpr ( c_i == category::uint64x8 && c_o == category::float64x8 ) return _mm512_cvtepu64_pd(v);
   else if constexpr ( c_i == category::int64x8  && c_o == category::float32x8 ) return _mm512_cvtepi64_ps(v);
@@ -201,15 +201,15 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr ( mi64x8 && sizeof(U) == 2                                ) return _mm512_cvtepi64_epi16(v);
   else if constexpr ( mi64x8 && sizeof(U) == 1                                ) return _mm512_cvtepi64_epi8(v);
   else if constexpr ( (sizeof(U) == 1) && (N::value >= 4)                     ) return convert(convert(v, as<upgrade_t<U>> {}), tgt);
-  else return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: (u)int32 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
+                convert_impl(EVE_REQUIRES(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
     requires(sizeof(T) == 4)
 {
   constexpr auto c_i   = categorize<wide<T, N>>();
@@ -263,9 +263,9 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 // convert: (u)int16 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
+                convert_impl(EVE_REQUIRES(sse2_), wide<T, N> const &v, as<U> const &tgt) noexcept
     requires(sizeof(T) == 2)
 {
   constexpr auto c_i     = categorize<wide<T, N>>();
@@ -312,15 +312,15 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( mi16x16                                     ) return convert_slice(v, tgt);
   else if constexpr( mi16x32 && sizeof(U) == 1                   ) return _mm512_cvtepi16_epi8(v);
   else if constexpr( mi16x32                                     ) return convert_slice(v, tgt);
-  else return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: (u)int8 -> U
 //================================================================================================
-template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(sse2_), wide<T, N> const& v, as<U> const& tgt) noexcept
+                convert_impl(EVE_REQUIRES(sse2_), wide<T, N> const& v, as<U> const& tgt) noexcept
     requires(sizeof(T) == 1)
 {
   constexpr auto c_i     = categorize<wide<T, N>>();
@@ -369,7 +369,7 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr ( mi8x16 && mo64x2                             ) return convert(convert(v, d_t {}), tgt);
   else if constexpr ( mi8x16 && mo64x4                             ) return convert(convert(v, d_t {}), tgt);
   else if constexpr ( mi8x16 && (sizeof(U) * N {} >= 16)           ) return convert_slice(v, tgt);
-  else if constexpr ( mi8x16                                       ) return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else if constexpr ( mi8x16                                       ) return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   else                                                               return convert_slice(v, tgt);
 }
 }

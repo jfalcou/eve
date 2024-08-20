@@ -106,7 +106,7 @@ namespace eve::detail
             auto test = if_else(is_ltz(b), is_ltz(r), is_gtz(r));
             return dec[test](q);
           }
-          else { return saturated(convert)(floor(convert(a, as<double>()) / convert(b, as<double>())), as<elt_t>()); }
+          else { return convert[saturated](floor(convert(a, as<double>()) / convert(b, as<double>())), as<elt_t>()); }
         }
         else if constexpr( unsigned_value<T> )
         {
@@ -129,7 +129,7 @@ namespace eve::detail
             auto test = if_else(is_gtz(b), is_ltz(r), is_gtz(r));
             return inc[test](q);
           }
-          else { return saturated(convert)(ceil(convert(a,as<double>()) / convert(b,as<double>())), as<elt_t>()); }
+          else { return convert[saturated](ceil(convert(a,as<double>()) / convert(b,as<double>())), as<elt_t>()); }
         }
         else if constexpr( unsigned_value<T> )
         {
@@ -165,7 +165,7 @@ namespace eve::detail
         }
         else
         {
-          return saturated(convert)(nearest(convert(a,as<double>()) / convert(b,as<double>())), as<v_t>());
+          return convert[saturated](nearest(convert(a,as<double>()) / convert(b,as<double>())), as<v_t>());
         }
       }
     }
