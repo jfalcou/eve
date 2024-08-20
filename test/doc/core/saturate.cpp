@@ -5,7 +5,7 @@
 int main()
 {
   eve::wide wf0 = {-1.0f, 2.3f, 45000.7f, -64768.6f};
-  eve::wide wi0 = {-1l, 2l, -3l, eve::valmax(eve::as<std::int64_t>())};
+  eve::wide wi0 = {-1l, 2l, -3l, eve::valmax(eve::as<long>())};
 
 
   std::cout << "<- wf0                   = " << wf0 << "\n";
