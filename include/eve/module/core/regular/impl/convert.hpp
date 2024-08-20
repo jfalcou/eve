@@ -87,7 +87,6 @@ convert_(EVE_SUPPORTS(cpu_),
   if constexpr( std::same_as<element_type_t<In>, Out> ) return v;
   else if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
   {
-    // void* a = v.slice(lower_);
     // If input or output are aggregated, we slice and combine without lose of performance
     return out_t {eve::convert(v.slice(lower_), tgt), eve::convert(v.slice(upper_), tgt)};
   }

@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(arm_abi_), O const&, wide<T, N> a, Slice) noexcept
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a, Slice) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     using type = wide<T, typename N::split_type>;
@@ -66,7 +66,7 @@ namespace eve::detail
   }
 
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(arm_abi_), O const&, wide<T, N> a) noexcept
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     std::array<wide<T, typename N::split_type>, 2> that{ slice(a, lower_), slice(a, upper_) };

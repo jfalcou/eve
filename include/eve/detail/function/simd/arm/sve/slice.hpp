@@ -18,7 +18,7 @@ namespace eve::detail
 // Single slice
 //================================================================================================
 template<callable_options O, typename T, typename N, typename Slice>
-EVE_FORCEINLINE wide<T, typename N::split_type> slice_(EVE_REQUIRES(sve_abi_), O const&, wide<T, N> a, Slice) noexcept
+EVE_FORCEINLINE wide<T, typename N::split_type> slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, Slice) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   if constexpr( !Slice::value ) return a.storage();
@@ -26,7 +26,7 @@ EVE_FORCEINLINE wide<T, typename N::split_type> slice_(EVE_REQUIRES(sve_abi_), O
 }
 
 template<callable_options O, typename T, typename N, typename Slice>
-EVE_FORCEINLINE logical<wide<T, typename N::split_type>> slice_(EVE_REQUIRES(sve_abi_), O const&, logical<wide<T, N>> a, Slice) noexcept
+EVE_FORCEINLINE logical<wide<T, typename N::split_type>> slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a, Slice) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   if constexpr( !Slice::value ) return a.storage();
@@ -42,7 +42,7 @@ EVE_FORCEINLINE logical<wide<T, typename N::split_type>> slice_(EVE_REQUIRES(sve
 //================================================================================================
 template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE auto
-slice_(EVE_REQUIRES(sve_abi_), O const&, wide<T, N> a) noexcept
+slice_(EVE_REQUIRES(sve_), O const&, wide<T, N> a) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   std::array<wide<T, typename N::split_type>, 2> that {slice(a, lower_), slice(a, upper_)};
@@ -51,7 +51,7 @@ slice_(EVE_REQUIRES(sve_abi_), O const&, wide<T, N> a) noexcept
 
 template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE auto
-slice_(EVE_REQUIRES(sve_abi_), O const&, logical<wide<T, N>> a) noexcept
+slice_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   std::array<logical<wide<T, typename N::split_type>>, 2> that {slice(a, lower_), slice(a, upper_)};
