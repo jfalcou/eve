@@ -37,7 +37,7 @@ EVE_FORCEINLINE auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) n
 template <callable_options Options>
 struct convert_lambda
 {
-  Options const& opts;
+  Options opts;
 
   template <typename T, typename M>
   EVE_FORCEINLINE constexpr void operator()(T const& in, M *res_m) const noexcept
