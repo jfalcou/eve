@@ -35,11 +35,13 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, ev
 
 template<callable_options O, value In, scalar_value Out>
 requires (!product_type<In>)
- auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
+EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
 {
   constexpr maybe_saturated<O, Out> maybe_saturate;
 
-  if constexpr (std::same_as<element_type_t<In>, Out>)
+  using e_t = element_type_t<In>;
+
+  if constexpr (std::same_as<e_t, Out>)
   {
     return v0;
   }
@@ -91,12 +93,12 @@ requires (!product_type<In>)
       using N = cardinal_t<In>;
 
       // Converting between integral of different signs is just a bit_cast away
-      if constexpr (std::signed_integral<In> && std::unsigned_integral<Out>)
+      if constexpr (std::signed_integral<e_t> && std::unsigned_integral<Out>)
       {
         auto s_res = convert(maybe_saturate(v0), eve::as<std::make_signed_t<Out>> {});
         return bit_cast(s_res, eve::as<wide<Out, N>> {});
       }
-      else if constexpr (std::unsigned_integral<In> && std::signed_integral<Out>)
+      else if constexpr (std::unsigned_integral<e_t> && std::signed_integral<Out>)
       {
         auto u_res = convert(maybe_saturate(v0), eve::as<std::make_unsigned_t<Out>> {});
         return bit_cast(u_res, eve::as<wide<Out, N>> {});
