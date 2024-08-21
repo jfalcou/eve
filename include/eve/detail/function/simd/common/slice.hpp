@@ -18,30 +18,6 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace eve
-{
-  template<std::size_t Slice>
-  struct  slice_t
-        : std::integral_constant<std::size_t, Slice>
-  {};
-
-  using upper_slice_t = slice_t<1>;
-  using lower_slice_t = slice_t<0>;
-
-  //================================================================================================
-  //! @addtogroup simd
-  //! @{
-  //================================================================================================
-  //! @brief Tag to select the upper slice of a simd_value
-  inline constexpr upper_slice_t const upper_ = {};
-
-  //! @brief Tag to select the lower slice of a simd_value
-  inline constexpr lower_slice_t const lower_ = {};
-  //================================================================================================
-  //! @}
-  //================================================================================================
-}
-
 namespace eve::detail
 {
   //================================================================================================
@@ -59,7 +35,7 @@ namespace eve::detail
   // Partial slice
   //================================================================================================
   template<typename P, typename Slice>
-  EVE_FORCEINLINE auto slice_impl(P const &a, Slice const & s) noexcept
+  EVE_FORCEINLINE auto slice_impl(P const &a, Slice s) noexcept
   {
     using abi_t   = typename P::abi_type;
     using card_t  = typename P::cardinal_type;
@@ -86,54 +62,50 @@ namespace eve::detail
   //================================================================================================
   // Logical slices
   //================================================================================================
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto
-  slice(logical<wide<T, N>> const& a) noexcept
-    requires (is_native_v<abi_t<T, N>>) && abi_t<T, N>::is_wide_logical
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a) noexcept
   {
-    using l_t   = logical<wide<T, typename N::split_type>>;
-    using s_t   = typename l_t::storage_type;
-    using t_t   = std::array<l_t, 2>;
-    auto [l, h] = a.mask().slice();
-    return t_t {l_t(bit_cast(l.storage(), as<s_t>())), l_t(bit_cast(h.storage(), as<s_t>()))};
+    if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
+    {
+      using l_t   = logical<wide<T, typename N::split_type>>;
+      using s_t   = typename l_t::storage_type;
+      using t_t   = std::array<l_t, 2>;
+      auto [l, h] = a.mask().slice();
+      return t_t{ l_t{ bit_cast(l.storage(), as<s_t>()) }, l_t{ bit_cast(h.storage(), as<s_t>()) } };
+    }
+    else if constexpr (non_native_abi<abi_t<T, N>>)
+    {
+      return slice_impl(a);
+    }
   }
 
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE logical<wide<T, typename N::split_type>>
-  slice(logical<wide<T, N>> const &a, Slice const &s) noexcept
-    requires (is_native_v<abi_t<T, N>>) && abi_t<T, N>::is_wide_logical
+  template<callable_options O, typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, logical<wide<T, N>> a, Slice s) noexcept
   {
-    using l_t = logical<wide<T, typename N::split_type>>;
-    using s_t = typename l_t::storage_type;
-    return l_t( bit_cast(a.mask().slice(s).storage(), as<s_t>()) );
-  }
-
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto slice(logical<wide<T, N>> const &a) noexcept
-    requires non_native_abi<abi_t<T, N>>
-  {
-    return slice_impl(a);
-  }
-
-  template<arithmetic_scalar_value T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(logical<wide<T, N>> const &a, Slice const &s) noexcept
-    requires non_native_abi<abi_t<T, N>>
-  {
-    return slice_impl(a, s);
+    if constexpr (is_native_v<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
+    {
+      using l_t = logical<wide<T, typename N::split_type>>;
+      using s_t = typename l_t::storage_type;
+      return l_t{ bit_cast(a.mask().slice(s).storage(), as<s_t>()) };
+    }
+    else if constexpr (non_native_abi<abi_t<T, N>>)
+    {
+      return slice_impl(a, s);
+    }
   }
 
   //================================================================================================
   // Arithmetic slices
   //================================================================================================
-  template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a);
   }
 
-  template<arithmetic_scalar_value T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &s) noexcept
+  template<callable_options O, arithmetic_scalar_value T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(cpu_), O const&, wide<T, N> a, Slice s) noexcept
       requires non_native_abi<abi_t<T, N>>
   {
     return slice_impl(a, s);
