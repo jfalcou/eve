@@ -39,10 +39,21 @@ struct convert_lambda
 {
   Options const& opts;
 
-  template<typename T, typename M>
+  template <typename T, typename M>
   EVE_FORCEINLINE constexpr void operator()(T const& in, M *res_m) const noexcept
   {
     *res_m = eve::convert[opts](in, eve::as_element<M>{});
+  }
+};
+
+template <callable_options O, typename Tgt>
+struct maybe_saturated
+{
+  template <typename T>
+  EVE_FORCEINLINE constexpr auto operator()(T const& v) const noexcept
+  {
+    if constexpr (O::contains(saturated2)) return saturated(v, as<Tgt>{});
+    else                                   return v;
   }
 };
 

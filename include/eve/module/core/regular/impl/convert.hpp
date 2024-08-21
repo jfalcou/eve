@@ -37,10 +37,7 @@ template<callable_options O, value In, scalar_value Out>
 requires (!product_type<In>)
 EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
 {
-  constexpr auto maybe_saturated = [=](auto v) [[always_inline]] {
-    if constexpr (O::contains(saturated2)) return saturated(v, tgt);
-    else                                   return v;
-  };
+  constexpr maybe_saturated<O, Out> maybe_saturate;
 
   if constexpr (std::same_as<In, Out>)
   {
@@ -52,7 +49,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
   }
   else if constexpr (plain_scalar_value<In>)
   {
-    return static_cast<Out>(maybe_saturated(v0));
+    return static_cast<Out>(maybe_saturate(v0));
   }
   else // simd_value
   {
@@ -96,12 +93,12 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       // Converting between integral of different signs is just a bit_cast away
       if constexpr (std::signed_integral<In> && std::unsigned_integral<Out>)
       {
-        auto s_res = convert(maybe_saturated(v0), eve::as<std::make_signed_t<Out>> {});
+        auto s_res = convert(maybe_saturate(v0), eve::as<std::make_signed_t<Out>> {});
         return bit_cast(s_res, eve::as<wide<Out, N>> {});
       }
       else if constexpr (std::unsigned_integral<In> && std::signed_integral<Out>)
       {
-        auto u_res = convert(maybe_saturated(v0), eve::as<std::make_unsigned_t<Out>> {});
+        auto u_res = convert(maybe_saturate(v0), eve::as<std::make_unsigned_t<Out>> {});
         return bit_cast(u_res, eve::as<wide<Out, N>> {});
       }
       else if constexpr (O::contains(saturated2))
