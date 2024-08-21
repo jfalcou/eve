@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/interleave.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
+#include <eve/module/core/regular/saturate.hpp>
 #include <eve/traits/product_type.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <eve/as_element.hpp>
