@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/arch/platform.hpp>
 
