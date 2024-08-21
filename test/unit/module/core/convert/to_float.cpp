@@ -20,7 +20,7 @@ TTS_CASE_TPL("Check eve::convert return type", eve::test::simd::all_types)
   using t_t = eve::wide<float, eve::cardinal_t<T>>;
 
   TTS_EXPR_IS(eve::convert(T(), eve::as<float>()), t_t);
-  TTS_EXPR_IS(eve::convert[saturated](T(), eve::as<float>()), t_t);
+  TTS_EXPR_IS(eve::convert[eve::saturated](T(), eve::as<float>()), t_t);
 };
 
 //==================================================================================================
@@ -54,24 +54,24 @@ TTS_CASE_TPL("Check saturated eve::convert arithmetic behavior", eve::test::simd
 
   if constexpr( std::is_same_v<v_t, double> )
   {
-    TTS_EQUAL(eve::convert[saturated](eve::valmin(eve::as<T>()), tgt),
+    TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt),
               (eve::valmin(eve::as<t_t>())));
-    TTS_EQUAL(eve::convert[saturated](eve::valmax(eve::as<T>()), tgt),
+    TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
               (eve::valmax(eve::as<t_t>())));
   }
   else
   {
     if constexpr( sizeof(v_t) <= sizeof(float) )
     {
-      TTS_EQUAL(eve::convert[saturated](eve::valmin(eve::as<T>()), tgt),
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmin(eve::as<T>()), tgt),
                 static_cast<t_t>(eve::valmin(eve::as<v_t>())));
-      TTS_EQUAL(eve::convert[saturated](eve::valmax(eve::as<T>()), tgt),
+      TTS_EQUAL(eve::convert[eve::saturated](eve::valmax(eve::as<T>()), tgt),
                 static_cast<t_t>(eve::valmax(eve::as<v_t>())));
     }
   }
 
-  TTS_EQUAL(eve::convert[saturated]((T(0)), tgt), static_cast<t_t>(0));
-  TTS_EQUAL(eve::convert[saturated]((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
+  TTS_EQUAL(eve::convert[eve::saturated]((T(0)), tgt), static_cast<t_t>(0));
+  TTS_EQUAL(eve::convert[eve::saturated]((T(42.69)), tgt), static_cast<t_t>(v_t(42.69)));
 };
 
 TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types)
