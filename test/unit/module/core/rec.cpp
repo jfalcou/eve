@@ -89,8 +89,8 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
 
     if constexpr (eve::platform::supports_denormals)
     {
-      TTS_ULP_EQUAL(eve::rec(eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()), 0.5);
-      TTS_ULP_EQUAL(eve::rec(2*eve::mindenormal(eve::as<T>())), T(0.5)/eve::mindenormal(eve::as<T>()), 0.5);
+      TTS_ULP_EQUAL(eve::rec[eve::pedantic](eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()), 0.5);
+      TTS_ULP_EQUAL(eve::rec[eve::pedantic](2*eve::mindenormal(eve::as<T>())), T(0.5)/eve::mindenormal(eve::as<T>()), 0.5);
 
       TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::mindenormal(eve::as<T>())), T(1)/eve::mindenormal(eve::as<T>()));
       TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::mindenormal(eve::as<T>())), T(1)/(2*eve::mindenormal(eve::as<T>())));
