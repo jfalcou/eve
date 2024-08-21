@@ -12,11 +12,13 @@
 namespace eve::detail
 {
 
-//todo saturated
 template<callable_options O, product_type T, product_type U>
-EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, T const& v0, eve::as<U>)
+EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
 {
-  if constexpr( std::same_as<element_type_t<T>, U> ) { return v0; }
+  if constexpr( std::same_as<element_type_t<T>, U> )
+  {
+    return v0;
+  }
   else
   {
     using out_t = std::conditional_t<scalar_value<T>, U, as_wide_t<U, cardinal_t<T>>>;
@@ -25,7 +27,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, T const& v0, eve::as
     auto outs = kumi::flatten_all(res, [](auto& m) { return &m; });
     auto ins  = kumi::flatten_all(v0);
 
-    kumi::for_each(convert_lambda {}, ins, outs);
+    kumi::for_each(convert_lambda<O> {opts}, ins, outs);
 
     return res;
   }
@@ -35,6 +37,11 @@ template<callable_options O, value In, scalar_value Out>
 requires (!product_type<In>)
 EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
 {
+  constexpr auto maybe_saturated = [=](auto v) [[always_inline]] {
+    if constexpr (O::contains(saturated2)) return saturated(v, tgt);
+    else                                   return v;
+  };
+
   if constexpr (std::same_as<In, Out>)
   {
     return v0;
@@ -45,7 +52,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
   }
   else if constexpr (plain_scalar_value<In>)
   {
-    return static_cast<Out>(v0);
+    return static_cast<Out>(maybe_saturated(v0));
   }
   else // simd_value
   {
@@ -53,7 +60,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
     {
       using out_t = as_wide_as_t<Out, In>;
 
-      if constexpr( has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t> )
+      if constexpr (has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t>)
       {
         // If input or output are aggregated, we slice and combine without lose of performance
         return out_t {eve::convert(v0.slice(lower_), tgt), eve::convert(v0.slice(upper_), tgt)};
@@ -62,18 +69,24 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       {
         using in_t = element_type_t<In>;
 
-        if constexpr( sizeof(Out) == sizeof(in_t) ) return bit_cast(v0, as<out_t> {});
-        else if constexpr( std::is_unsigned_v<in_t> || std::is_floating_point_v<in_t> )
+        if constexpr (sizeof(Out) == sizeof(in_t)) 
+        {
+          return bit_cast(v0, as<out_t> {});
+        }
+        else if constexpr (std::is_unsigned_v<in_t> || std::is_floating_point_v<in_t>)
         {
           using i_t = as<logical<wide<as_integer_t<in_t, signed>, cardinal_t<In>>>>;
           return convert(bit_cast(v0, i_t {}), tgt);
         }
-        else if constexpr( std::is_unsigned_v<Out> || std::is_floating_point_v<Out> )
+        else if constexpr (std::is_unsigned_v<Out> || std::is_floating_point_v<Out>)
         {
           using i_t = as<logical<as_integer_t<Out, signed>>>;
           return bit_cast(convert(v0, i_t {}), as<out_t> {});
         }
-        else return convert_impl(EVE_TARGETS(current_api_type), v0, tgt);
+        else 
+        {
+          return convert_impl(EVE_TARGETS(current_api_type), v0, tgt);
+        }
       }
     }
     else // wide
@@ -81,15 +94,19 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       using N = cardinal_t<In>;
 
       // Converting between integral of different signs is just a bit_cast away
-      if constexpr( std::signed_integral<In> && std::unsigned_integral<Out> )
+      if constexpr (std::signed_integral<In> && std::unsigned_integral<Out>)
       {
-        auto s_res = convert(v0, eve::as<std::make_signed_t<Out>> {});
+        auto s_res = convert(maybe_saturated(v0), eve::as<std::make_signed_t<Out>> {});
         return bit_cast(s_res, eve::as<wide<Out, N>> {});
       }
-      else if constexpr( std::unsigned_integral<In> && std::signed_integral<Out> )
+      else if constexpr (std::unsigned_integral<In> && std::signed_integral<Out>)
       {
-        auto u_res = convert(v0, eve::as<std::make_unsigned_t<Out>> {});
+        auto u_res = convert(maybe_saturated(v0), eve::as<std::make_unsigned_t<Out>> {});
         return bit_cast(u_res, eve::as<wide<Out, N>> {});
+      }
+      else if constexpr (O::contains(saturated2))
+      {
+        return convert_saturated(EVE_TARGETS(current_api_type), v0, tgt);
       }
       else
       {

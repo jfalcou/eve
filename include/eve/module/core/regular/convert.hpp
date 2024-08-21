@@ -92,18 +92,18 @@ namespace eve
 
 #include <eve/module/core/regular/impl/convert.hpp>
 
-// #if defined(EVE_INCLUDE_X86_HEADER)
-// #  include <eve/module/core/regular/impl/simd/x86/convert.hpp>
-// #endif
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/convert.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_POWERPC_HEADER)
-// #  include <eve/module/core/regular/impl/simd/ppc/convert.hpp>
-// #endif
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/convert.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_ARM_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/neon/convert.hpp>
-// #endif
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/convert.hpp>
+#endif
 
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/convert.hpp>
-// #endif
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/convert.hpp>
+#endif

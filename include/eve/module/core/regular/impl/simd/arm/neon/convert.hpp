@@ -15,14 +15,13 @@
 
 namespace eve::detail
 {
+
 //================================================================================================
 // convert: float64 -> U
 //================================================================================================
 template<typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(neon128_),
-                             wide<double, N> const                &v,
-                             as<U> const                          &tgt) noexcept requires arm_abi<abi_t<double, N>>
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<double, N> v, as<U> tgt) noexcept
+requires arm_abi<abi_t<double, N>>
 {
   constexpr auto c_i = categorize<wide<double, N>>();
   constexpr auto c_o = categorize<wide<U, N>>();
@@ -42,10 +41,8 @@ EVE_FORCEINLINE wide<U, N>
 // convert: float32 -> U
 //================================================================================================
 template<typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(neon128_),
-                             wide<float, N> const                &v,
-                             as<U> const                         &tgt) noexcept requires arm_abi<abi_t<float, N>>
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<float, N> v, as<U> tgt) noexcept
+requires arm_abi<abi_t<float, N>>
 {
   constexpr auto c_o   = categorize<wide<U, N>>();
   constexpr auto api64 = current_api >= asimd;
@@ -82,10 +79,8 @@ EVE_FORCEINLINE wide<U, N>
 // convert: (u)int64 -> U
 //================================================================================================
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(neon128_),
-                             wide<T, N> const                &v,
-                             as<U> const                     &tgt) noexcept requires arm_abi<abi_t<T, N>> &&(sizeof(T) == 8)
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+requires arm_abi<abi_t<T, N>> && (sizeof(T) == 8)
 {
   constexpr auto c_i     = categorize<wide<T, N>>();
   constexpr auto c_o     = categorize<wide<U, N>>();
@@ -109,10 +104,8 @@ EVE_FORCEINLINE wide<U, N>
 // convert: (u)int32 -> U
 //================================================================================================
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(neon128_),
-                             wide<T, N> const                &v,
-                             as<U> const                     &tgt) noexcept requires arm_abi<abi_t<T, N>> &&(sizeof(T) == 4)
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+requires arm_abi<abi_t<T, N>> && (sizeof(T) == 4)
 {
   constexpr auto c_i = categorize<wide<T, N>>();
   constexpr auto c_o = categorize<wide<U, N>>();
@@ -136,10 +129,8 @@ EVE_FORCEINLINE wide<U, N>
 //================================================================================================
 // convert: (u)int16 -> U
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(neon128_),
-                             wide<T, N> const                &v,
-                             as<U> const                     &tgt) noexcept requires arm_abi<abi_t<T, N>> &&(sizeof(T) == 2)
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+requires arm_abi<abi_t<T, N>> && (sizeof(T) == 2)
 {
   constexpr auto c_o = categorize<wide<U, N>>();
   constexpr auto c_i = categorize<wide<T, N>>();
@@ -172,10 +163,8 @@ EVE_FORCEINLINE wide<U, N>
 // convert: (u)int8 -> U
 //================================================================================================
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N>
-                convert_impl(EVE_SUPPORTS(neon128_),
-                             wide<T, N> const                &v,
-                             as<U> const                     &tgt) noexcept requires arm_abi<abi_t<T, N>> &&(sizeof(T) == 1)
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+requires arm_abi<abi_t<T, N>> && (sizeof(T) == 1)
 {
   constexpr auto c_o = categorize<wide<U, N>>();
   constexpr auto c_i = categorize<wide<T, N>>();
@@ -188,4 +177,5 @@ EVE_FORCEINLINE wide<U, N>
   else if constexpr( sizeof(U) != 2                                        ) return convert(convert(v, as<upgrade_t<T>> {}), tgt);
   else return convert_slice(v, tgt);
 }
+
 }

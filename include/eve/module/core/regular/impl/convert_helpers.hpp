@@ -26,14 +26,23 @@
 namespace eve::detail
 {
 
+template<value In, scalar_value Out>
+EVE_FORCEINLINE auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
+{
+  return convert(saturate(v0, tgt), tgt);
+}
+
 //================================================================================================
 // tuple<->tuple convert
+template <callable_options Options>
 struct convert_lambda
 {
+  Options const& opts;
+
   template<typename T, typename M>
   EVE_FORCEINLINE constexpr void operator()(T const& in, M *res_m) const noexcept
   {
-    *res_m = eve::convert(in, eve::as_element<M>{});
+    *res_m = eve::convert[opts](in, eve::as_element<M>{});
   }
 };
 
