@@ -16,6 +16,7 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/clamp.hpp>
 #include <eve/module/core/regular/is_not_infinite.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/min.hpp>
 
 namespace eve
