@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/arm/sve/sve_true.hpp>
+#include <eve/module/core/regular/convert.hpp>
 
 namespace eve::detail
 {
@@ -59,8 +60,7 @@ requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 {
   if constexpr(!is_aggregated_v<abi_t<T, N>>)
   {
-    callable_object<tag::convert_> const cvt{};
-    return svmov_z(v, cvt(w, as<logical<T>>{}));
+    return svmov_z(v, convert(w, as<logical<T>>{}));
   }
   else
   {
@@ -77,8 +77,7 @@ requires(sve_abi<abi_t<T, N>> || sve_abi<abi_t<U, N>>)
 {
   if constexpr(!is_aggregated_v<abi_t<T, N>>)
   {
-    callable_object<tag::convert_> const cvt{};
-    return svorr_z(sve_true<T>(), v, cvt(w, as<logical<T>>{}));
+    return svorr_z(sve_true<T>(), v, convert(w, as<logical<T>>{}));
   }
   else
   {
