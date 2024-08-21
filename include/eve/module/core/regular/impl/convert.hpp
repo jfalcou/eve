@@ -35,11 +35,11 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, ev
 
 template<callable_options O, value In, scalar_value Out>
 requires (!product_type<In>)
-EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
+ auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
 {
   constexpr maybe_saturated<O, Out> maybe_saturate;
 
-  if constexpr (std::same_as<In, Out>)
+  if constexpr (std::same_as<element_type_t<In>, Out>)
   {
     return v0;
   }
