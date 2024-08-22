@@ -70,8 +70,8 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!      [flint](@ref eve::is_flint). If any of the arguments is not flint the result is undefined.
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Greatest_common_divisor)
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/gcd)
+//!   *  [Wikipedia: Least common multiple](https://en.wikipedia.org/wiki/Greatest_common_divisor)
+//!   *  [C++ standard reference: lcm](https://en.cppreference.com/w/cpp/numeric/gcd)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/combinatorial/gcd.cpp}

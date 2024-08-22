@@ -66,9 +66,9 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/5.12)
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/beta)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/LaguerrePolynomial.html)https://mathworld.wolfram.com/BetaFunction.html)
+//!   *  [DLMF: Beta Function](https://dlmf.nist.gov/5.12)
+//!   *  [C++ standard reference: beta](https://en.cppreference.com/w/cpp/numeric/special_functions/beta)
+//!   *  [Wolfram MathWorld: Beta Function](https://mathworld.wolfram.com/LaguerrePolynomial.html)https://mathworld.wolfram.com/BetaFunction.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/beta.cpp}

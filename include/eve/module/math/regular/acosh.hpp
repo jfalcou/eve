@@ -72,9 +72,9 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/acosh)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicCosine.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [C++ standard reference: acosh](https://en.cppreference.com/w/cpp/numeric/math/acosh)
+//!   *  [Wolfram MathWorld: Inverse Hyperbolic Cosine](https://mathworld.wolfram.com/InverseHyperbolicCosine.html)
+//!   *  [Wikipedia: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}

@@ -77,6 +77,9 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
 //!     1. The value of the  nth element of the Fibonacci sequence beginning by `x` and `y` is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/combinatorial/fibonacci.cpp}
 //================================================================================================

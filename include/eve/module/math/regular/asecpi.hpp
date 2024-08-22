@@ -72,6 +72,11 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 //!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Inverse Hyperbolic Secant](https://mathworld.wolfram.com/InverseHyperbolicSecant.html)
+//!   *  [Wikipedia: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF: Inverse hyperbolic functions](https://dlmf.nist.gov/4.37)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asecpi.cpp}
 //================================================================================================

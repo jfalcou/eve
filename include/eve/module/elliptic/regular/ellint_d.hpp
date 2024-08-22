@@ -84,8 +84,8 @@ namespace eve
 //!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/19.2.6)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/EllipticIntegral.html)
+//!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/EllipticIntegral.html)
 //!
 //!  @groupheader{Example}
 //!

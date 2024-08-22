@@ -67,8 +67,8 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicCotangent.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [Wolfram MathWorld: Inverse Hyperbolic Cotangent](https://mathworld.wolfram.com/InverseHyperbolicCotangent.html)
+//!   *  [Wikipedia: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
 //!   *  [DLMF](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}

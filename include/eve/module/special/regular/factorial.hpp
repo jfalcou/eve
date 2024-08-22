@@ -69,8 +69,11 @@ namespace eve
 //!    This function will overflow as soon as the input is greater than 171 for integral or double
 //!    entries and if the entry is greater than 34 for float.
 //!
-//!   @groupheader{Example}
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)
+//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Factorial)
 //!
+//!   @groupheader{Example}
 //!   @godbolt{doc/special/factorial.cpp}
 //================================================================================================
   inline constexpr auto factorial = functor<factorial_t>;

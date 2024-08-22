@@ -71,7 +71,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
+//!   *  [Wikipedia: Incomplete gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
 //!   *  [DLMF](https://dlmf.nist.gov/8.2)
 //!
 //!  @groupheader{Example}

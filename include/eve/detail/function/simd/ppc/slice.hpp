@@ -8,11 +8,12 @@
 #pragma once
 
 #include <eve/detail/implementation.hpp>
+#include <eve/concept/options.hpp>
 
 namespace eve::detail
 {
-  template<typename T, typename N, typename Slice>
-  EVE_FORCEINLINE auto slice(wide<T, N> const &a, Slice const &) noexcept
+  template<callable_options O, typename T, typename N, typename Slice>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, Slice) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     if constexpr( Slice::value )
@@ -35,8 +36,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto slice(wide<T, N> const &a) noexcept
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE auto slice_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     std::array<wide<T, typename N::split_type>, 2> that{slice(a, lower_), slice(a, upper_)};

@@ -66,7 +66,8 @@ namespace eve
 //!       2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/BernoulliNumber.html)
+//!   *  [Wolfram MathWorld: Bernoulli Number](https://mathworld.wolfram.com/BernoulliNumber.html)
+//!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/combinatorial/bernouilli.cpp}

@@ -84,9 +84,9 @@ namespace eve
 //!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1)
-//!   *  [DLMF](https://dlmf.nist.gov/19.2)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/EllipticIntegral.html)
+//!   *  [C++ standard reference: ellint_1](https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1)
+//!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
+//!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/EllipticIntegral.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/elliptic/ellint_1.cpp}

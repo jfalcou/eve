@@ -60,6 +60,9 @@ namespace eve
 //!     1. the value of the  logarithm of the absolute value of the \f$\Gamma\f$ function is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Log Gamma Function](https://mathworld.wolfram.com/LogGammaFunction.html
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/log_abs_gamma.cpp}
 //================================================================================================

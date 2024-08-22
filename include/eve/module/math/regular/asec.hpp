@@ -71,9 +71,9 @@ namespace eve
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseSecant.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
-//!   *  [DLMF](https://dlmf.nist.gov/4.23)
+//!   *  [Wolfram MathWorld: Inverse Secant](https://mathworld.wolfram.com/InverseSecant.html)
+//!   *  [Wikipedia: Inverse trigonometric functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF: Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asec.cpp}

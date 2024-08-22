@@ -28,7 +28,7 @@ namespace eve
 //! @addtogroup math_invhyper
 //! @{
 //!   @var agd
-//!   @brief `elementwise_callable` object computing the inverse gudermanian,
+//!   @brief `elementwise_callable` object computing the inverse gudermannian,
 //!   i.e. \f$2\tanh(\tan(x/2))\f$.
 //!
 //!   @groupheader{Header file}
@@ -60,7 +60,7 @@ namespace eve
 //! **Return value**
 //!
 //!    1. Returns the [elementwise](@ref glossary_elementwise) inverse
-//!      [gudermanian](@ref eve::gd) of the input.
+//!      [gudermannian](@ref eve::gd) of the input.
 //!      In particular:
 //!      * If the element is \f$\pm0\f$, \f$0\f$ is returned.
 //!      * If the element is \f$\pm\pi/2\f$, \f$\infty\f$ is returned.
@@ -68,9 +68,9 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseGudermannian.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Gudermannian_function)
-//!   *  [DLMF](https://dlmf.nist.gov/4.23#viii)
+//!   *  [Wolfram MathWorld: Inverse Gudermannian](https://mathworld.wolfram.com/InverseGudermannian.html)
+//!   *  [Wikipedia: Gudermannian function](https://en.wikipedia.org/wiki/Gudermannian_function)
+//!   *  [DLMF: gudermannian functions](https://dlmf.nist.gov/4.23#viii)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/agd.cpp}

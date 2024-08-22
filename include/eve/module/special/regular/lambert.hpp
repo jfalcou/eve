@@ -65,6 +65,10 @@ namespace eve
 //!        * If the inputs are positive, only one branch exist and the two returned values are equal.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)
+//!   *  [DLMF](https://dlmf.nist.gov/4.13)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/special/lambert.cpp}
 //================================================================================================

@@ -72,10 +72,10 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 //!    3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/acos)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseCosine.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
-//!   *  [DLMF](https://dlmf.nist.gov/4.23)
+//!   *  [C++ standard reference: acos](https://en.cppreference.com/w/cpp/numeric/math/acos)
+//!   *  [Wolfram MathWorld: Inverse Cosine](https://mathworld.wolfram.com/InverseCosine.html)
+//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/4.23)
+//!   *  [Wikipedia: Arc cosinus](https://fr.wikipedia.org/wiki/Arc_cosinus)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/acos.cpp}

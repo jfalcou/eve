@@ -57,9 +57,9 @@ namespace eve
 //!    The tuple `{airy_ai (x), airy_bi (x)}` is returned.
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/AiryFunctions.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Airy_function)
-//!   *  [DLMF](https://dlmf.nist.gov/9)
+//!   *  [Wolfram MathWorld: Airy Functions](https://mathworld.wolfram.com/AiryFunctions.html)
+//!   *  [Wikipedia: Airy function](https://en.wikipedia.org/wiki/Airy_function)
+//!   *  [DLMF: Airy and Related Functions](https://dlmf.nist.gov/9)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/bessel/airy.cpp}

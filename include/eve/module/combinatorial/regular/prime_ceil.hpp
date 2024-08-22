@@ -71,6 +71,9 @@ namespace eve
 //!     1. The smallest prime greater or equal to `n`.
 //!     2. Same, but the element type of the result is deduced from U.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/combinatorial/prime_ceil.cpp}
 //================================================================================================

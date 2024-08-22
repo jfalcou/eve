@@ -71,6 +71,9 @@ namespace eve
 //!     1. The greatest prime less or equal to `n`.
 //!     2. Same, but the element of the result type is deduced from U.
 //!
+//!  @groupheader{External references}
+//!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
+//!
 //!   @groupheader{Example}
 //!   @godbolt{doc/combinatorial/prime_floor.cpp}
 //================================================================================================

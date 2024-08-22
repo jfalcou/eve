@@ -65,8 +65,8 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [DLMF](https://dlmf.nist.gov/7.2.5)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DawsonsIntegral.html)
+//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2.5)
+//!   *  [Wolfram MathWorld: dawson Integral](https://mathworld.wolfram.com/DawsonsIntegral.html)
 //!
 //!   @groupheader{Example}
 //!

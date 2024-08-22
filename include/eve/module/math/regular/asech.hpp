@@ -67,6 +67,11 @@ namespace eve
 //!       * If the element does not belong to \f$[0,1]\f$, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Inverse Hyperbolic Secant](https://mathworld.wolfram.com/InverseHyperbolicSecant.html)
+//!   *  [Wikipedia: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+//!   *  [DLMF](https://dlmf.nist.gov/4.37)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/asech.cpp}
 //================================================================================================

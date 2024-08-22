@@ -16,7 +16,7 @@
 namespace eve::detail
 {
   //================================================================================================
-  // Emulation
+  // Emulation Helpers
   //================================================================================================
   template<typename Pack, typename V0, typename... Vs>
   EVE_FORCEINLINE auto make_emulated(V0 v0, Vs... vs) noexcept
@@ -36,53 +36,8 @@ namespace eve::detail
     }(std::make_index_sequence<s_t{}.size()>{});
   }
 
-  template<arithmetic_scalar_value T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as<wide<T, N>> const &, Vs... vs) noexcept
-    requires std::same_as<abi_t<T, N>, emulated_>
-  {
-    if constexpr (has_plain_translation<T>)
-    {
-      return bit_cast(make(eve::as<wide<translate_t<T>, N>>{}, translate(vs)...), as<wide<T, N>>{});
-    }
-    else
-    {
-      return make_emulated<wide<T, N>>(vs...);
-    }
-  }
-
-  template<arithmetic_scalar_value T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as<logical<wide<T, N>>> const &, Vs... vs) noexcept
-    requires std::same_as<abi_t<T, N>, emulated_>
-  {
-    if constexpr (has_plain_translation<T>)
-    {
-      return bit_cast(make(eve::as<logical<wide<translate_t<T>, N>>>{}, translate(vs)...), as<logical<wide<T, N>>>{});
-    }
-    else
-    {
-      return make_emulated<logical<wide<T, N>>>(vs...);
-    }
-  }
-
   //================================================================================================
-  // Bundle
-  //================================================================================================
-  template<typename T, typename N, kumi::product_type... Vs>
-  EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
-    requires std::same_as<abi_t<T, N>, bundle_>
-  {
-    using kumi::get;
-    typename wide<T,N>::storage_type that;
-
-    kumi::for_each_index( [&]<typename I, typename M>(I, M& m) { m = M{ get<I::value>(vs)... }; }
-                        , that
-                        );
-
-    return that;
-  }
-
-  //================================================================================================
-  // Aggregation
+  // Aggregation Helpers
   //================================================================================================
   template<typename Pack, typename V0, typename... Vs>
   EVE_FORCEINLINE Pack make_aggregated(V0 v0, Vs... vs) noexcept
@@ -108,17 +63,51 @@ namespace eve::detail
     return that;
   }
 
-  template<typename T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as<wide<T,N>> const &, Vs... vs) noexcept
-    requires std::same_as<abi_t<T, N>, aggregated_>
+  template<callable_options O, typename Target, typename T0, typename... TS>
+  EVE_FORCEINLINE constexpr auto make_(EVE_REQUIRES(cpu_), O const&, as<Target>, T0 v, TS... vs) noexcept
   {
-    return make_aggregated<wide<T, N>>(vs...);
-  }
+    using type = typename Target::storage_type;
+    using v_type = typename Target::value_type;
 
-  template<typename T, typename N, typename... Vs>
-  EVE_FORCEINLINE auto make(eve::as<logical<wide<T,N>>> const &, Vs... vs) noexcept
-    requires std::same_as<abi_t<T, N>, aggregated_>
-  {
-    return make_aggregated<logical<wide<T, N>>>(vs...);
+    if constexpr (has_aggregated_abi_v<Target>)
+    {
+      return make_aggregated<Target>(v, vs...);
+    }
+    else if constexpr (has_emulated_abi_v<Target>)
+    {
+      return make_emulated<Target>(v, vs...);
+    }
+    else if constexpr (kumi::product_type<Target>)
+    {
+      using kumi::get;
+      type that;
+
+      kumi::for_each_index( [&]<typename I, typename M>(I, M& m) { m = M{ get<I::value>(v), get<I::value>(vs)... }; }
+                          , that
+                          );
+
+      return that;
+    }
+    else
+    {
+      if constexpr (sizeof...(vs) == 0)
+      {
+        return [&]<std::size_t... N>(std::index_sequence<N...> const&)
+        {
+          auto val = [](auto vv, auto)
+          {
+            if constexpr (logical_value<Target>) return as_logical_t<v_type>(vv).bits();
+            else                                 return vv;
+          };
+
+          return type { val(v, N)... };
+        }(std::make_index_sequence<Target::cardinal_type::value>());
+      }
+      else
+      {
+        if constexpr (logical_value<Target>) return type {as_logical_t<v_type>(v).bits(), as_logical_t<v_type>(vs).bits()...};
+        else                                 return type {v, vs...};
+      }
+    }
   }
 }

@@ -68,10 +68,10 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/atanh)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/InverseHyperbolicTangent.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
-//!   *  [DLMF](https://dlmf.nist.gov/4.37)
+//!   *  [C++ standard reference: atanh](https://en.cppreference.com/w/cpp/numeric/math/atanh)
+//!   *  [Wolfram MathWorld: Inverse Hyperbolic Tangent](https://mathworld.wolfram.com/InverseHyperbolicTangent.html)
+//!   *  [Wikipedia: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+//!   *  [DLMF: Inverse hyperbolic functions](https://dlmf.nist.gov/4.37)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/atanh.cpp}

@@ -68,10 +68,10 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/DoubleFactorial.html)
+//!   *  [Wolfram MathWorld: Double Factorial](https://mathworld.wolfram.com/DoubleFactorial.html)
+//!   *  [Wikipedia: Double factorial](https://en.wikipedia.org/wiki/Double_factorial)
 //!
 //!   @groupheader{Example}
-//!
 //!   @godbolt{doc/special/double_factorial.cpp}
 //================================================================================================
   inline constexpr auto double_factorial = functor<double_factorial_t>;

@@ -66,6 +66,11 @@ namespace eve
 //!            * If the element is a `NaN`, `NaN` is returned.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [Wolfram MathWorld: Gudermannian](https://mathworld.wolfram.com/Gudermannian.html)
+//!   *  [Wikipedia: Gudermannian function](https://en.wikipedia.org/wiki/Gudermannian_function)
+//!   *  [DLMF: gudermannian functions: gudermannian functions](https://dlmf.nist.gov/4.23#viii)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/gd.cpp}
 //================================================================================================

@@ -81,8 +81,9 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Jacobi_polynomials)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/JacobiPolynomial.html)
+//!   *  [DLMF: Classical Orthogonal Polynomials](https://dlmf.nist.gov/18.3)
+//!   *  [Wikipedia:Jacobi polynomial](https://en.wikipedia.org/wiki/Jacobi_polynomials)
+//!   *  [Wolfram MathWorld:Jacobi Polynomial](https://mathworld.wolfram.com/JacobiPolynomial.html)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/polynomial/regular/jacobi.cpp}

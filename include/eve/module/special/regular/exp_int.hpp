@@ -73,10 +73,9 @@ namespace eve
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/erf)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialIntegral.html)
-//!   *  [DLMF](https://dlmf.nist.gov/7.2)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_integral)
+//!   *  [Wolfram MathWorld:Exponential Integral ](https://mathworld.wolfram.com/ExponentialIntegral.html)
+//!   *  [DLMF: Generalized Exponential Integral](https://dlmf.nist.gov/8.19#i)
+//!   *  [Wikipedia: Exponential integral](https://en.wikipedia.org/wiki/Exponential_integral)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/exp_int.cpp}

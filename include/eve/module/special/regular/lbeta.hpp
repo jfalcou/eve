@@ -63,6 +63,11 @@ struct lbeta_t : elementwise_callable<lbeta_t, Options>
 //!     1. the natural logarithm of the [beta](@ref beta) function.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
+//!  @groupheader{External references}
+//!   *  [DLMF: Beta Function](https://dlmf.nist.gov/5.12)
+//!   *  [C++ standard reference: beta](https://en.cppreference.com/w/cpp/numeric/special_functions/beta)
+//!   *  [Wolfram MathWorld: Beta Function](https://mathworld.wolfram.com/LaguerrePolynomial.html)https://mathworld.wolfram.com/BetaFunction.html)
+//!
 //!  @groupheader{Example}
 //!  @godbolt{doc/special/lbeta.cpp}
 //================================================================================================
