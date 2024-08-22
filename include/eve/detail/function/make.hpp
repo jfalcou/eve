@@ -36,3 +36,7 @@ namespace eve::detail
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/make.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/detail/function/simd/riscv/make.hpp>
+#endif

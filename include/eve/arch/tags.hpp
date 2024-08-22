@@ -12,3 +12,4 @@
 #include <eve/arch/ppc/tags.hpp>
 #include <eve/arch/arm/sve/tags.hpp>
 #include <eve/arch/arm/neon/tags.hpp>
+#include <eve/arch/riscv/tags.hpp>
