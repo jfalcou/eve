@@ -20,7 +20,7 @@ namespace eve::detail
   // Extract value
   //================================================================================================
   template<callable_options O, typename Wide>
-  EVE_FORCEINLINE auto extract_(EVE_REQUIRES(cpu_), O const&, Wide const& p, std::size_t i) noexcept
+  EVE_FORCEINLINE auto extract_(EVE_REQUIRES(cpu_), O const&, Wide p, std::size_t i) noexcept
   {
     using abi_t = typename Wide::abi_type;
 
