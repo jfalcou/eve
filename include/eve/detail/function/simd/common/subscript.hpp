@@ -19,8 +19,8 @@ namespace eve::detail
   //================================================================================================
   // Extract value
   //================================================================================================
-  template<typename Wide>
-  EVE_FORCEINLINE auto extract(Wide const& p, std::size_t i) noexcept
+  template<callable_options O, typename Wide>
+  EVE_FORCEINLINE auto extract_(EVE_REQUIRES(cpu_), O const&, Wide const& p, std::size_t i) noexcept
   {
     using abi_t = typename Wide::abi_type;
 
@@ -52,8 +52,8 @@ namespace eve::detail
   //================================================================================================
   // Insert value
   //================================================================================================
-  template<typename Wide, typename Value>
-  EVE_FORCEINLINE void insert(Wide& p, std::size_t i, Value v) noexcept
+  template<callable_options O, typename Wide, typename Value>
+  EVE_FORCEINLINE void insert_(EVE_REQUIRES(cpu_), O const&, Wide& p, std::size_t i, Value v) noexcept
   {
     using type = element_type_t<Wide>;
 
