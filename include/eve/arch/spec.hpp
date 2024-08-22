@@ -12,6 +12,7 @@
 #  include <eve/arch/ppc/spec.hpp>
 #  include <eve/arch/arm/sve/spec.hpp>
 #  include <eve/arch/arm/neon/spec.hpp>
+#  include <eve/arch/riscv/spec.hpp>
 #endif
 
 #include <eve/arch/cpu/spec.hpp>

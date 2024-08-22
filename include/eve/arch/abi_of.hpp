@@ -65,6 +65,11 @@ namespace eve
             else                                   return emulated_{};
           }
         }
+        else if constexpr( spy::simd_instruction_set == spy::fixed_rvv_
+                           && spy::simd_instruction_set.width >= 64 )
+        {
+          return riscv_ {};
+        }
         else
         {
           return emulated_{};

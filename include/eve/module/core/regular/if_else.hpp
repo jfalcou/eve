@@ -81,3 +81,7 @@ EVE_MAKE_CALLABLE(if_else_, if_else);
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/if_else.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/if_else.hpp>
+#endif
