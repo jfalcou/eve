@@ -12,7 +12,6 @@ int main()
   eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
   eve::wide wu1{7u, 3u, 5u, 4u, 3u, 2u, 1u, 0u};
   eve::wide wu2{6u, 5u, 4u, 3u, 2u, 1u, 0u, ~0u};
-  std::integral_constant<int, 0 > i0;
   std::integral_constant<int, 0xff> iff;
   std::integral_constant<int, 0x80> i80;
   std::integral_constant<int, 0xac> iac;
