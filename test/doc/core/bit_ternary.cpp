@@ -2,6 +2,11 @@
 #include <eve/module/core.hpp>
 #include <iostream>
 
+template < int a, int b, int c, int d, int e, int f , int g, int h>
+constexpr auto makefrombits(){
+  return std::integral_constant<int, (a << 7) + (b << 6) + (c << 5) + (d << 4) + (e << 3) + (f << 2) + (g << 1) + h>();
+}
+
 int main()
 {
   eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
@@ -21,11 +26,14 @@ int main()
   std::cout << "<- wu1                               = " << wu1 << "\n";
   std::cout << "<- wu2                               = " << wu2 << "\n";
 
-  std::cout << "-> bit_ternary(i0 , wu0, wu1, wu2)   = " << (eve::bit_ternary(i0,  wu0, wu1, wu2)) << "\n";
-//  std::cout << "-> bit_ternary(i1 , wu0, wu1, wu2)        return a & b & c;
-
-  std::cout << "-> bit_ternary(iff, wu0, wu1, wu2)   = " << (eve::bit_ternary(iff, wu0, wu1, wu2)) << "\n";
-  std::cout << "-> bit_ternary(i80, wu0, wu1, wu2)   = " << (eve::bit_ternary(i80, wu0, wu1, wu2)) << "\n";
-  std::cout << "-> bit_ternary(iac, wu0, wu1, wu2)   = " << (eve::bit_ternary(iac, wu0, wu1, wu2)) << "\n";
-  std::cout << "-> bit_select(wu0, wu2, wu1)         = " << (eve::bit_select(wu0, wu2, wu1))       << "\n";
+  constexpr auto myff = makefrombits<1, 1, 1, 1, 1, 1, 1, 1 >();
+  constexpr auto my80 = makefrombits<1, 0, 0, 0, 0, 0, 0, 0 >();
+  constexpr auto myac = makefrombits<1, 0, 1, 0, 1, 1, 0, 0 >();
+  std::cout << "-> bit_ternary(myff, wu0, wu1, wu2)   = " << (eve::bit_ternary(myff, wu0, wu1, wu2)) << "\n";
+  std::cout << "-> bit_ternary(iff, wu0, wu1, wu2)    = " << (eve::bit_ternary(iff, wu0, wu1, wu2)) << "\n";
+  std::cout << "-> bit_ternary(i80, wu0, wu1, wu2)    = " << (eve::bit_ternary(i80, wu0, wu1, wu2)) << "\n";
+  std::cout << "-> bit_ternary(my80, wu0, wu1, wu2)   = " << (eve::bit_ternary(my80, wu0, wu1, wu2)) << "\n";
+  std::cout << "-> bit_ternary(iac, wu0, wu1, wu2)    = " << (eve::bit_ternary(iac, wu0, wu1, wu2)) << "\n";
+  std::cout << "-> bit_ternary(myac, wu0, wu1, wu2)   = " << (eve::bit_ternary(myac, wu0, wu1, wu2)) << "\n";
+  std::cout << "-> bit_select(wu0, wu2, wu1)          = " << (eve::bit_select(wu0, wu2, wu1))       << "\n";
 }
