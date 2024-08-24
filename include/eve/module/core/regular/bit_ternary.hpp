@@ -102,7 +102,7 @@ namespace eve
 //!  1  1   1   h
 //!
 //!  A programmer supplies only the result column, i.e. defines values of bits a through h, this is a single 8-bit value.
-//!  (makefrombits can be used)
+//!  (makefrombits can be used see the example)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_xor.cpp}
