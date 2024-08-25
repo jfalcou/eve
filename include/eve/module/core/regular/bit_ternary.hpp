@@ -78,12 +78,12 @@ namespace eve
 //!      2. equivalent to the call on the elements of the tuple.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      The pattern of a truth table:
+//!      This is the pattern of a truth table:
 //!
 //!       |  x  |  y  |  z  | result |
 //!       | :-: | :-: | :-: | :----: |
 //!       |  0  |  0  |  0  |    a   |
-//!       |  0  |  0  |  1  1    b   |
+//!       |  0  |  0  |  1  |    b   |
 //!       |  0  |  1  |  0  |    c   |
 //!       |  0  |  1  |  1  |    d   |
 //!       |  1  |  0  |  0  |    e   |
@@ -91,7 +91,7 @@ namespace eve
 //!       |  1  |  1  |  0  |    g   |
 //!       |  1  |  1  |  1  |    h   |
 //!
-//!  A programmer supplies only the result column, i.e. defines values of bits a through h, this is a single 8-bit value
+//!  A programmer as only to supply the result column, i.e. defines values of bits a through h, this is a single 8-bit value
 //!
 //!  `     k = .(a << 7) + (b << 6) + (c << 5) + (d << 4) + (e << 3) + (f << 2) + (g << 1) + h`
 //!
