@@ -37,8 +37,8 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
-//!   @var bit_xor
-//!   @brief `strict_callable` object implementing ternary logic.
+//!   @var bit_ternary
+//!   @brief `strict_elementwise_callable` object implementing ternary logic.
 //!
 //!   @groupheader{Header file}
 //!
@@ -63,40 +63,42 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: first [argument](@ref eve::value).
-//!     * `xs...` : other [arguments](@ref eve::value).
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!     * `k`: integral constant whose bits are the resultat of a lookup table for the ternary operation.
+//!       The consteval function mfb (make from bits) can be use to generate this constant from its bits (see below).
+//!     * `x`, `y`, `z`, : first [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
-//!      Bitwise ternary logic that provides the capability to implement any three-operand binary function;
-//!      the specific binary function is specified by value of k.
-//!      For each bit in each packed 32-bit integer, the corresponding bit from a, b, and c are used according
-//!      to k, and the result isoutput.
-//!      1. The value of the bitwise XOR of its arguments converted to their  common `bit_value`
-//!        is returned.
+//!
+//!      1. Bitwise ternary logic that provides the capability to implement any three-operand binary function;
+//!        the specific binary function is specified by value of k.
+//!        For each bit in each integer, the corresponding bit from a, b, and c are used according
+//!        to ik, and the result is output.
 //!      2. equivalent to the call on the elements of the tuple.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  The pattern of a truth table:
+//!      The pattern of a truth table:
 //!
-//!    inputs     result
-//!  A  B   C
-//!  0  0   0   a
-//!  0  0   1   b
-//!  0  1   0   c
-//!  0  1   1   d
-//!  1  0   0   e
-//!  1  0   1   f
-//!  1  1   0   g
-//!  1  1   1   h
+//!       |  x  |  y  |  z  | result |
+//!       | :-: | :-: | :-: | :----: |
+//!       |  0  |  0  |  0  |    a   |
+//!       |  0  |  0  |  1  1    b   |
+//!       |  0  |  1  |  0  |    c   |
+//!       |  0  |  1  |  1  |    d   |
+//!       |  1  |  0  |  0  |    e   |
+//!       |  1  |  0  |  1  |    f   |
+//!       |  1  |  1  |  0  |    g   |
+//!       |  1  |  1  |  1  |    h   |
 //!
-//!  A programmer supplies only the result column, i.e. defines values of bits a through h, this is a single 8-bit value.
-//!  (makefrombits can be used see the example)
+//!  A programmer supplies only the result column, i.e. defines values of bits a through h, this is a single 8-bit value
+//!
+//!  `     k = .(a << 7) + (b << 6) + (c << 5) + (d << 4) + (e << 3) + (f << 2) + (g << 1) + h`
+//!
+//!  (a consteval function can be used to do that operation: see the example)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/bit_xor.cpp}
+//!  @godbolt{doc/core/bit_ternary.cpp}
 //================================================================================================
   inline constexpr auto bit_ternary = functor<bit_ternary_t>;
 //================================================================================================
