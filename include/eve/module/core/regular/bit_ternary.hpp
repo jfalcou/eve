@@ -122,8 +122,7 @@ namespace eve
       auto a = T(aa);
       auto b = T(bb);
       auto c = T(cc);
-      auto ao =  eve::allbits(eve::as(a));
-      if constexpr(K == 0x00)      return zero(as(a));
+      if constexpr(K == 0x00) return zero(as(a));
       if constexpr(K == 0x01) return bit_not(bit_or(a, b, c));
       if constexpr(K == 0x02) return bit_notand(bit_or(a, b), c);
       if constexpr(K == 0x03) return bit_not(bit_or(a, b));
