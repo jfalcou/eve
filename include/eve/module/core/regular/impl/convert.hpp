@@ -39,9 +39,9 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
 {
   constexpr maybe_saturated<O, Out> maybe_saturate;
 
-  using e_t = element_type_t<In>;
+  using in_e_t = element_type_t<In>;
 
-  if constexpr (std::same_as<e_t, Out>)
+  if constexpr (std::same_as<in_e_t, Out>)
   {
     return v0;
   }
@@ -57,6 +57,8 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
   {
     if constexpr (logical_simd_value<In>)
     {
+      using in_ea_t = as_arithmetic_t<in_e_t>;
+      using out_ae_t = as_arithmetic_t<Out>;
       using out_t = as_wide_as_t<Out, In>;
 
       if constexpr (has_aggregated_abi_v<In> || has_aggregated_abi_v<out_t>)
@@ -66,20 +68,18 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       }
       else
       {
-        using in_t = element_type_t<In>;
-
-        if constexpr (sizeof(Out) == sizeof(in_t)) 
+        if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t)) 
         {
           return bit_cast(v0, as<out_t> {});
         }
-        else if constexpr (std::is_unsigned_v<in_t> || std::is_floating_point_v<in_t>)
+        else if constexpr (std::is_unsigned_v<in_ea_t> || std::is_floating_point_v<in_ea_t>)
         {
-          using i_t = as<logical<wide<as_integer_t<in_t, signed>, cardinal_t<In>>>>;
+          using i_t = as<logical<wide<as_integer_t<in_ea_t, signed>, cardinal_t<In>>>>;
           return convert(bit_cast(v0, i_t {}), tgt);
         }
-        else if constexpr (std::is_unsigned_v<Out> || std::is_floating_point_v<Out>)
+        else if constexpr (std::is_unsigned_v<out_ae_t> || std::is_floating_point_v<out_ae_t>)
         {
-          using i_t = as<logical<as_integer_t<Out, signed>>>;
+          using i_t = as<logical<as_integer_t<out_ae_t, signed>>>;
           return bit_cast(convert(v0, i_t {}), as<out_t> {});
         }
         else 
@@ -93,12 +93,12 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       using N = cardinal_t<In>;
 
       // Converting between integral of different signs is just a bit_cast away
-      if constexpr (std::signed_integral<e_t> && std::unsigned_integral<Out>)
+      if constexpr (std::signed_integral<in_e_t> && std::unsigned_integral<Out>)
       {
         auto s_res = convert(maybe_saturate(v0), eve::as<std::make_signed_t<Out>> {});
         return bit_cast(s_res, eve::as<wide<Out, N>> {});
       }
-      else if constexpr (std::unsigned_integral<e_t> && std::signed_integral<Out>)
+      else if constexpr (std::unsigned_integral<in_e_t> && std::signed_integral<Out>)
       {
         auto u_res = convert(maybe_saturate(v0), eve::as<std::make_unsigned_t<Out>> {});
         return bit_cast(u_res, eve::as<wide<Out, N>> {});

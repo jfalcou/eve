@@ -372,7 +372,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
 //================================================================================================
 // convert: (u)int32 -> U
 //================================================================================================
-template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 4)
 {
@@ -427,7 +427,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
 //================================================================================================
 // convert: (u)int16 -> U
 //================================================================================================
-template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 2)
 {
@@ -481,7 +481,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
 //================================================================================================
 // convert: (u)int8 -> U
 //================================================================================================
-template<callable_options O, integral_scalar_value T, typename N, arithmetic_scalar_value U>
+template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
 EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U> tgt) noexcept
     requires(sizeof(T) == 1)
 {
