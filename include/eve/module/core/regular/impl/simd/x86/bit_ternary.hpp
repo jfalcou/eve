@@ -19,9 +19,9 @@
 
 namespace eve::detail
 {
-  template<int K, arithmetic_scalar_value T, typename N, callable_options O>
+  template<std::uint8_t K, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  bit_ternary_(EVE_REQUIRES(avx512_), O const& opts, std::integral_constant<int, K> const & ik,
+  bit_ternary_(EVE_REQUIRES(avx512_), O const& opts, std::integral_constant<std::uint8_t, K> const & ik,
                wide<T, N> const& x, wide<T, N> const &y, wide<T, N> const &z) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -35,9 +35,9 @@ namespace eve::detail
     else  return bit_ternary.behavior(cpu_{}, opts, ik, x, y, z);
   }
 
-  template<int K, arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
+  template<std::uint8_t K, arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N>
-  abs_(EVE_REQUIRES(avx512_), C const& mask, O const& opts, std::integral_constant<int, K> const & ik,
+  abs_(EVE_REQUIRES(avx512_), C const& mask, O const& opts, std::integral_constant<std::uint8_t, K> const & ik,
        wide<T, N> const& x, wide<T, N> const& y, wide<T, N> const& z) noexcept requires x86_abi<abi_t<T, N>>
   {
     auto const            s = alternative(mask, x, as(x));

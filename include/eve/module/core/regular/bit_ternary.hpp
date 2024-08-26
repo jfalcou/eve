@@ -23,10 +23,10 @@ namespace eve
   template<typename Options>
   struct bit_ternary_t : callable<bit_ternary_t, Options>
   {
-    template<int K, value T0, value T1, value T2>
+    template<std::uint8_t K, value T0, value T1, value T2>
     requires(eve::same_lanes_or_scalar<T0, T1, T2> && 0 <= K && K <= 255)
       EVE_FORCEINLINE constexpr bit_value_t<T0, T1, T2>
-    operator()( std::integral_constant<int, K> k, T0 t0, T1 t1, T2 t2) const noexcept
+    operator()( std::integral_constant<std::uint8_t, K> k, T0 t0, T1 t1, T2 t2) const noexcept
     {
       return EVE_DISPATCH_CALL(k, t0,  t1, t2);
     }
@@ -78,7 +78,8 @@ namespace eve
 //!      2. equivalent to the call on the elements of the tuple.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      This is the pattern of a truth table:
+//!      This is the pattern of a truth table: if f is a ternary bit operator the result column
+//!      is the desired bit output when calling f pn the x, y and z bit values.
 //!
 //!       |  x  |  y  |  z  | result |
 //!       | :-: | :-: | :-: | :----: |
@@ -95,7 +96,7 @@ namespace eve
 //!
 //!  `     k = .(a << 7) + (b << 6) + (c << 5) + (d << 4) + (e << 3) + (f << 2) + (g << 1) + h`
 //!
-//!  (a consteval function can be used to do that operation: see the example)
+//!  (the consteval function `eve::truth_table` can be used to do that operation: see the example)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_ternary.cpp}
@@ -109,15 +110,14 @@ namespace eve
   {
 
     // this is adapted from Samuel neves ternary logic for sse avx etc.
-    template < int K, typename T0, typename T1, typename T2, callable_options O>
-    EVE_FORCEINLINE  /*bit_value_t<T0, T1, T2>*/ auto bit_ternary_(EVE_REQUIRES(cpu_)
+    template < std::uint8_t K, typename T0, typename T1, typename T2, callable_options O>
+    EVE_FORCEINLINE  bit_value_t<T0, T1, T2> bit_ternary_(EVE_REQUIRES(cpu_)
                                                                   , O const &
-                                                                  , std::integral_constant<int, K> const &
+                                                              , std::integral_constant<std::uint8_t, K> const &
                                                                   , [[maybe_unused]] T0 const & aa
                                                                   , [[maybe_unused]] T1 const & bb
                                                                   , [[maybe_unused]] T2 const & cc
                                                                   ) noexcept
-    //    requires(K <= 255)
     {
 
       using T = bit_value_t<T0, T1, T2>;
@@ -382,6 +382,13 @@ namespace eve
       if constexpr(K == 0xff) return eve::allbits(as(a));
     }
   }
+
+  template < int a, int b, int c, int d, int e, int f , int g, int h>
+  consteval auto truth_table(){
+    return std::integral_constant<std::uint8_t, std::uint8_t((a << 7) + (b << 6) + (c << 5) +
+                                                           (d << 4) + (e << 3) + (f << 2) + (g << 1) + h)>();
+  }
+
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
