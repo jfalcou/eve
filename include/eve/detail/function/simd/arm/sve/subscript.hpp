@@ -18,21 +18,21 @@ namespace eve::detail
 {
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE T extract_(EVE_REQUIRES(sve_), O const&, wide<T, N> const& v, std::size_t i) noexcept
+EVE_FORCEINLINE T extract_(EVE_REQUIRES(sve_), O const&, wide<T, N> v, std::size_t i) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   return v.storage()[i];
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE T insert_(EVE_REQUIRES(sve_), O const&, wide<T, N>& v, std::size_t i, T x) noexcept
+EVE_FORCEINLINE void insert_(EVE_REQUIRES(sve_), O const&, wide<T, N>& v, std::size_t i, T x) noexcept
   requires sve_abi<abi_t<T, N>>
 {
-  return v.storage()[i] = x;
+  v.storage()[i] = x;
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE logical<T> extract_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> const& v, std::size_t i) noexcept
+EVE_FORCEINLINE logical<T> extract_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> v, std::size_t i) noexcept
   requires sve_abi<abi_t<T, N>>
 {
   auto bits = [&]() -> typename logical<wide<T, N>>::bits_type
