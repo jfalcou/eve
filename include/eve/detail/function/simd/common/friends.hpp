@@ -11,6 +11,7 @@
 #include <eve/concept/compatible.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 #include <eve/module/core/constant/signmask.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/detail/apply_over.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/is_native.hpp>
@@ -22,8 +23,6 @@ namespace eve
 {
   EVE_REGISTER_CALLABLE(is_equal_)
   EVE_REGISTER_CALLABLE(is_not_equal_)
-  EVE_REGISTER_CALLABLE(convert_)
-  EVE_DECLARE_CALLABLE(convert_, convert)
 }
 
 namespace eve::detail
@@ -91,8 +90,7 @@ namespace eve::detail
       }
       else
       {
-        callable_object<tag::convert_> const cvt{};
-        return self_logand(cpu_{}, v, cvt(w, as<logical<T>>()));
+        return self_logand(cpu_{}, v, convert(w, as<logical<T>>()));
       }
     }
   }
@@ -121,8 +119,7 @@ namespace eve::detail
       }
       else
       {
-        callable_object<tag::convert_> const cvt{};
-        return self_logor(cpu_{}, v, cvt(w, as<logical<T>>()));
+        return self_logor(cpu_{}, v, convert(w, as<logical<T>>()));
       }
     }
   }

@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
@@ -23,7 +22,6 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
-#include <eve/module/core/regular/sub.hpp>
 
 namespace eve::detail
 {

@@ -7,15 +7,11 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/overload.hpp>
-#include <eve/module/core/constant/smallestposval.hpp>
-#include <eve/module/core/regular/abs.hpp>
-#include <eve/module/core/regular/is_finite.hpp>
-#include <eve/module/core/regular/is_greater_equal.hpp>
-#include <eve/module/core/regular/is_nez.hpp>
-#include <eve/module/core/regular/logical_and.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/dec.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -24,8 +20,7 @@ namespace eve
   struct is_pow2_t : elementwise_callable<is_pow2_t, Options>
   {
     template<eve::integral_value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
     }

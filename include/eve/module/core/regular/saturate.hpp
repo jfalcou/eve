@@ -15,16 +15,9 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/clamp.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/inc.hpp>
-#include <eve/module/core/regular/is_gtz.hpp>
-#include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/is_not_infinite.hpp>
-#include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/logical_and.hpp>
-#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/is_infinite.hpp>
 #include <eve/module/core/regular/min.hpp>
-
 
 namespace eve
 {
