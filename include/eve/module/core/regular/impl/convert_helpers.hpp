@@ -97,7 +97,10 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexce
     // If input is aggregated, we can slice and combine without lose of performance
     return out_t {eve::convert(v0.slice(lower_), tgt), eve::convert(v0.slice(upper_), tgt)};
   }
-  else { return map(convert, v0, tgt); }
+  else
+  {
+    return map(convert, v0, tgt);
+  }
 }
 
 //================================================================================================

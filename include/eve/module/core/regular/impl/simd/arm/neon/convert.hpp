@@ -20,7 +20,7 @@ namespace eve::detail
 // convert: float64 -> U
 //================================================================================================
 template<typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<double, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<double, N> v, as<U> tgt) noexcept
 requires arm_abi<abi_t<double, N>>
 {
   constexpr auto c_i = categorize<wide<double, N>>();
@@ -41,7 +41,7 @@ requires arm_abi<abi_t<double, N>>
 // convert: float32 -> U
 //================================================================================================
 template<typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<float, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<float, N> v, as<U> tgt) noexcept
 requires arm_abi<abi_t<float, N>>
 {
   constexpr auto c_o   = categorize<wide<U, N>>();
@@ -79,7 +79,7 @@ requires arm_abi<abi_t<float, N>>
 // convert: (u)int64 -> U
 //================================================================================================
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
 requires arm_abi<abi_t<T, N>> && (sizeof(T) == 8)
 {
   constexpr auto c_i     = categorize<wide<T, N>>();
@@ -104,7 +104,7 @@ requires arm_abi<abi_t<T, N>> && (sizeof(T) == 8)
 // convert: (u)int32 -> U
 //================================================================================================
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
 requires arm_abi<abi_t<T, N>> && (sizeof(T) == 4)
 {
   constexpr auto c_i = categorize<wide<T, N>>();
@@ -123,13 +123,13 @@ requires arm_abi<abi_t<T, N>> && (sizeof(T) == 4)
   else if constexpr( sizeof(U) == 2                                          ) return convert_integers_shuffle(v, tgt);
   else if constexpr( sizeof(U) == 1                                          ) return convert_integers_chain(v, tgt);
   else if constexpr( std::same_as<double, U>                                 ) return convert(convert(v, as<upgrade_t<T>> {}), tgt);
-  else                                                                         return convert_impl(EVE_RETARGET(cpu_), v, tgt);
+  else                                                                         return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
 //================================================================================================
 // convert: (u)int16 -> U
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
 requires arm_abi<abi_t<T, N>> && (sizeof(T) == 2)
 {
   constexpr auto c_o = categorize<wide<U, N>>();
@@ -163,7 +163,7 @@ requires arm_abi<abi_t<T, N>> && (sizeof(T) == 2)
 // convert: (u)int8 -> U
 //================================================================================================
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(neon128_), wide<T, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(neon128_), wide<T, N> v, as<U> tgt) noexcept
 requires arm_abi<abi_t<T, N>> && (sizeof(T) == 1)
 {
   constexpr auto c_o = categorize<wide<U, N>>();

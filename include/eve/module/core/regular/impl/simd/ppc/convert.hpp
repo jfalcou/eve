@@ -16,7 +16,7 @@ namespace eve::detail
 {
 
 template<typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(vsx_), wide<double, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(vsx_), wide<double, N> v, as<U> tgt) noexcept
 requires ppc_abi<abi_t<double, N>>
 {
   constexpr auto c_o = categorize<wide<U, N>>();
@@ -28,7 +28,7 @@ requires ppc_abi<abi_t<double, N>>
 }
 
 template<typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(vmx_), wide<float, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(vmx_), wide<float, N> v, as<U> tgt) noexcept
 requires ppc_abi<abi_t<float, N>>
 {
   constexpr auto c_o = categorize<wide<U, N>>();
@@ -40,7 +40,7 @@ requires ppc_abi<abi_t<float, N>>
 }
 
 template<integral_scalar_value T, typename N, arithmetic_scalar_value U>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_SUPPORTS(vmx_), wide<T, N> v, as<U> tgt) noexcept
+EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(vmx_), wide<T, N> v, as<U> tgt) noexcept
 requires ppc_abi<abi_t<T, N>>
 {
   if constexpr( std::is_floating_point_v<U> )

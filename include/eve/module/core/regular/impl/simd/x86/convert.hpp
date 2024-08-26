@@ -26,7 +26,7 @@ namespace eve::detail
 
 // 128 bits <-> 128 bits
 template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
-EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_SUPPORTS(sse2_), wide<In, N> v0, as<Out> tgt) noexcept
+EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(sse2_), wide<In, N> v0, as<Out> tgt) noexcept
 {
   if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N::value <= 16))
   {
@@ -95,7 +95,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_SUPPORTS(sse2_), wide<In, N> 
 //================================================================================================
 // 256 bits <-> 256 bits
 template<arithmetic_scalar_value In, typename N, arithmetic_scalar_value Out>
-EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_SUPPORTS(avx2_), wide<In, N> v0, as<Out> tgt) noexcept
+EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(avx2_), wide<In, N> v0, as<Out> tgt) noexcept
 {
   if constexpr (std::is_same_v<In, int16_t> && std::is_same_v<Out, int8_t> && (N::value <= 32))
   {
