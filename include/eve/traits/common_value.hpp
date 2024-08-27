@@ -13,8 +13,33 @@
 
 namespace eve::detail
 {
+  template<typename T>
+  struct fth {
+    using type = T;
+  };
+
+  template<plain_scalar_value S0, plain_scalar_value S1>
+  consteval auto operator%(fth<S0>, fth<S1>) noexcept {
+    return fth<decltype((std::declval<S0>() + std::declval<S1>()))>{};
+  }
+
+  template<typename T, typename N, plain_scalar_value S>
+  consteval auto operator%(fth<wide<T, N>>, fth<S>) noexcept {
+    return fth<wide<T, N>>{};
+  }
+
+  template<typename T, typename N, plain_scalar_value S>
+  consteval auto operator%(fth<S>, fth<wide<T, N>>) noexcept {
+    return fth<wide<T, N>>{};
+  }
+
+  template<typename T, typename N>
+  consteval auto operator%(fth<wide<T, N>>, fth<wide<T, N>>) noexcept {
+    return fth<wide<T, N>>{};
+  }
+
   template<typename... Ts>
-  using find_type = decltype(( std::declval<Ts>() + ... ));
+  using find_type = typename decltype((fth<Ts>{} % ...))::type;
 
   template<typename... Ts>
   requires(!plain_scalar_value<Ts> || ... )
@@ -73,8 +98,8 @@ namespace eve::detail
   };
 
   template<typename T, typename U>
-  requires(!(scalar_value<T> && scalar_value<U>) && requires{ detail::find_common_value<T,U>(); } )
-  struct common_logical_impl<T,U> : as_logical<typename common_value<T,U>::type>
+    requires(!(scalar_value<T> && scalar_value<U>) && requires{ typename common_value<T, U>::type; } )
+  struct common_logical_impl<T, U> : as_logical<typename common_value<T, U>::type>
   {};
 }
 
