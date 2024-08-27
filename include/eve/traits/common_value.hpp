@@ -14,27 +14,29 @@
 namespace eve::detail
 {
   template<typename T>
-  struct fth {
-    using type = T;
-  };
+  struct fth { using type = T; };
 
   template<scalar_value S0, scalar_value S1>
-  consteval auto operator%(fth<S0>, fth<S1>) noexcept {
-    return fth<decltype((std::declval<S0>() + std::declval<S1>()))>{};
+  consteval fth<decltype((std::declval<S0>() + std::declval<S1>()))> operator%(fth<S0>, fth<S1>) noexcept
+  {
+    return {};
   }
 
   template<typename T, typename N, scalar_value S>
-  consteval auto operator%(fth<wide<T, N>>, fth<S>) noexcept {
+  consteval auto operator%(fth<wide<T, N>>, fth<S>) noexcept
+  {
     return fth<wide<T, N>>{};
   }
 
   template<typename T, typename N, scalar_value S>
-  consteval auto operator%(fth<S>, fth<wide<T, N>>) noexcept {
+  consteval auto operator%(fth<S>, fth<wide<T, N>>) noexcept
+  {
     return fth<wide<T, N>>{};
   }
 
   template<typename T, typename N>
-  consteval auto operator%(fth<wide<T, N>>, fth<wide<T, N>>) noexcept {
+  consteval auto operator%(fth<wide<T, N>>, fth<wide<T, N>>) noexcept
+  {
     return fth<wide<T, N>>{};
   }
 
