@@ -24,17 +24,17 @@ namespace eve::detail
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
-      if        constexpr(O::contains(saturated2) && std::integral<T>) return add.behavior(cpu_{},opts,v,w);
+      if        constexpr (O::contains(saturated2) && std::integral<T>) return add.behavior(cpu_{}, opts, v, w);
       //  If not, we can mask if there is no alterative value
-      else  if  constexpr( !C::has_alternative )
+      else  if  constexpr (!C::has_alternative)
       {
-        auto m   = expand_mask(mask, as(v));
+        auto m = expand_mask(mask, as(v));
         return svadd_m(m,v,w);
       }
       // If not, we delegate to the automasking
       else
       {
-        return add.behavior(cpu_{},opts,v,w);
+        return add.behavior(cpu_{}, opts, v, w);
       }
     }
   }
@@ -50,8 +50,8 @@ namespace eve::detail
     }
     else
     {
-      return svadd_x(sve_true<T>(), self, other);
+      return svadd_x(sve_true<T>(), v, w);
     }
   }
-  
+
 }
