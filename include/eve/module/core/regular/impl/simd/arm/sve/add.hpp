@@ -13,10 +13,9 @@
 
 namespace eve::detail
 {
-  template<arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
-  add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-  requires sve_abi<abi_t<T, N>>
+  template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
+  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     auto const alt = alternative(mask, v, as(v));
 
@@ -40,13 +39,19 @@ namespace eve::detail
     }
   }
 
-  template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
-  add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-  requires sve_abi<abi_t<T, N>>
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated add if required or we just go to the common case of doing v+w
-    if constexpr(O::contains(saturated2) && std::integral<T>) return svqadd(v, w);
-    else                                                      return add.behavior(cpu_{},opts,v,w);
+    if constexpr(O::contains(saturated2) && std::integral<T>)
+    {
+      return svqadd(v, w);
+    }
+    else
+    {
+      return svadd_x(sve_true<T>(), self, other);
+    }
   }
+  
 }

@@ -36,19 +36,34 @@ namespace eve::detail
       else
       {
         // Triggers conditional MOV that directly read the flag register
-        T r = a + b;
+        T r = add(a, b);
         return bit_or(r, bit_mask(is_less(r, a)));
       }
     }
-    else
+    else if constexpr (plain_scalar_value<T>)
     {
-      return a += b;
+      return a + b;
+    }
+    else // wide regular case
+    {
+      if constexpr (is_emulated_v<typename T::abi_type>)
+      {
+        apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) + b.get(I)), ...); });
+        return a;
+      }
+      else if constexpr (is_aggregated_v<typename T::abi_type>)
+      {
+        a.storage().for_each([&](auto& s, auto const& o)  { s += o; }, b);
+        return a;
+      }
     }
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
+    //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
+    //      we might want to do this manually
     r0   = add[o](r0,r1);
     ((r0 = add[o](r0,rs)),...);
     return r0;
