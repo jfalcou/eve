@@ -9,6 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
+#include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::detail
@@ -17,7 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
     requires arm_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<type>();
+    constexpr auto c = categorize<wide<T, N>>();
 
             if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
       else  if constexpr( c == category::int64x2    ) return vaddq_s64(v, w);
