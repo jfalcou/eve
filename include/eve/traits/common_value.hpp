@@ -18,17 +18,17 @@ namespace eve::detail
     using type = T;
   };
 
-  template<plain_scalar_value S0, plain_scalar_value S1>
+  template<scalar_value S0, scalar_value S1>
   consteval auto operator%(fth<S0>, fth<S1>) noexcept {
     return fth<decltype((std::declval<S0>() + std::declval<S1>()))>{};
   }
 
-  template<typename T, typename N, plain_scalar_value S>
+  template<typename T, typename N, scalar_value S>
   consteval auto operator%(fth<wide<T, N>>, fth<S>) noexcept {
     return fth<wide<T, N>>{};
   }
 
-  template<typename T, typename N, plain_scalar_value S>
+  template<typename T, typename N, scalar_value S>
   consteval auto operator%(fth<S>, fth<wide<T, N>>) noexcept {
     return fth<wide<T, N>>{};
   }
@@ -42,11 +42,11 @@ namespace eve::detail
   using find_type = typename decltype((fth<Ts>{} % ...))::type;
 
   template<typename... Ts>
-  requires(!plain_scalar_value<Ts> || ... )
+  requires(!scalar_value<Ts> || ... )
   auto find_common_value() -> find_type<Ts... >;
 
   template<typename T0, typename... Ts>
-  requires(   (plain_scalar_value<T0> && ... && plain_scalar_value<Ts>)
+  requires(   (scalar_value<T0> && ... && scalar_value<Ts>)
           &&  (std::same_as<T0,Ts> && ...)
           )
   T0 find_common_value();

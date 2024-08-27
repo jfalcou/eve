@@ -40,22 +40,13 @@ namespace eve::detail
         return bit_or(r, bit_mask(is_less(r, a)));
       }
     }
-    else if constexpr (plain_scalar_value<T>)
+    else
     {
+      // The only way to get there is when :
+      //  - a + b is done in scalar
+      //  - emulation occurs and again, a + b is done in scalar
+      //  - a product_type with custom operator+ is used
       return a + b;
-    }
-    else // wide regular case
-    {
-      if constexpr (is_emulated_v<typename T::abi_type>)
-      {
-        apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) + b.get(I)), ...); });
-        return a;
-      }
-      else if constexpr (is_aggregated_v<typename T::abi_type>)
-      {
-        a.storage().for_each([&](auto& s, auto const& o)  { s += o; }, b);
-        return a;
-      }
     }
   }
 
