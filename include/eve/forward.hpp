@@ -46,4 +46,10 @@ EVE_FORCEINLINE auto mask_op(C const&                     c,
                              [[maybe_unused]] Op          f,
                              [[maybe_unused]] Arg0 const& a0,
                              [[maybe_unused]] Args const&...as);
+
+
+// This is an inderect wrapper of eve::simd_cast to avoid cycling dependencies
+template <typename From, typename To>
+To call_simd_cast(From, as<To>);
+
 }
