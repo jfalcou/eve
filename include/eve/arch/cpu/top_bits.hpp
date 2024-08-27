@@ -479,7 +479,7 @@ EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
       using bits_et   = element_type_t<bits_wide>;
       using fit_wide  = logical<wide<bits_et, expected_cardinal_t<bits_et, abi_t>>>;
       fit_wide mask([&](int i, int) { return i < Logical::size() ? mmask.get(i) : false; });
-      return bit_cast( mask, as<Logical>{} );
+      return call_simd_cast( mask, as<Logical>{} );
     }
   }
 }
