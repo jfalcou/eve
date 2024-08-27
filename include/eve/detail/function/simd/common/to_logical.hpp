@@ -78,14 +78,14 @@ to_logical(C c, eve::as<T>) noexcept
 
     if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )
     {
-      return bit_cast(to_logical(keep_first(c.count(as<l_t> {})), as<w_t> {}), as<l_t> {});
+      return call_simd_cast(to_logical(keep_first(c.count(as<l_t> {})), as<w_t> {}), as<l_t> {});
     }
     else
     {
       std::ptrdiff_t offset = c.offset(as<T> {});
       std::ptrdiff_t count  = c.count(as<T> {});
       keep_between   full_c {offset, offset + count};
-      return bit_cast(to_logical(full_c, as<w_t> {}), as<l_t> {});
+      return call_simd_cast(to_logical(full_c, as<w_t> {}), as<l_t> {});
     }
   }
   else
