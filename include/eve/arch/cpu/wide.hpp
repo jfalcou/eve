@@ -542,7 +542,7 @@ namespace eve
     friend EVE_FORCEINLINE wide operator+(wide const& v) noexcept { return v; }
 
     //! Unary minus operator. See also: eve::unary_minus
-    friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
+    friend EVE_FORCEINLINE wide operator-(wide const& v) noexcept
         requires(!kumi::product_type<Type>)
     {
       return self_negate(v);
@@ -585,35 +585,34 @@ namespace eve
     //! @brief Performs the compound difference on all the wide lanes and assign
     //! the result to the current one. See also: eve::sub
     template<value V>
-    friend EVE_FORCEINLINE auto operator-=(wide& w, V v) noexcept
-    -> decltype(detail::self_sub(w, v))
-        requires(!kumi::product_type<Type>)
+    friend EVE_FORCEINLINE wide& operator-=(wide& w, V v) noexcept
+      requires(!kumi::product_type<Type>)
     {
-      return detail::self_sub(w, v);
+      w = sub(w, v);
+      return w;
     }
 
     //! @brief Performs the difference between all lanes of its parameters
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(wide const& v, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide operator-(wide const& a, wide const& b) noexcept
     {
-      auto that = v;
-      return that -= w;
+      return sub(a, b);
     }
 
     //! @brief Performs the difference between a scalar and all lanes of a eve::wide
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(plain_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE wide operator-(plain_scalar_value auto s, wide const& w) noexcept
         requires(!kumi::product_type<Type>)
     {
-      return wide(s) - v;
+      return sub(wide{s}, w);
     }
 
     //! @brief Performs the difference between all lanes of a eve::wide and a scalar
     //! See also: eve::sub
-    friend EVE_FORCEINLINE auto operator-(wide const& v, plain_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE wide operator-(wide const& w, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
     {
-      return v - wide(s);
+      return sub(w, wide{s});
     }
 
     //! @brief Performs the compound product on all the wide lanes and assign

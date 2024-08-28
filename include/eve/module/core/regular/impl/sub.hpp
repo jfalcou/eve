@@ -25,16 +25,16 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    if constexpr(O::contains(saturated2) && integral_value<T>)
+    if constexpr (O::contains(saturated2) && integral_value<T>)
     {
-      if constexpr(scalar_value<T>)
+      if constexpr (scalar_value<T>)
       {
-        if constexpr( signed_integral_value<T> )
+        if constexpr (signed_integral_value<T>)
         {
-          if constexpr( sizeof(T) >= 4 )
+          if constexpr (sizeof(T) >= 4)
           {
             auto test = is_ltz(b);
             auto pos  = min(add(valmax(as(a)), b), a);
@@ -56,7 +56,7 @@ namespace eve::detail
       }
       else //simd
       {
-        if constexpr( signed_integral_value<T> )
+        if constexpr (signed_integral_value<T>)
         {
           auto test = is_lez(b);
           auto pos  = min(add(valmax(as(a)), b), a);
@@ -72,11 +72,11 @@ namespace eve::detail
     }
     else
     {
-      return a -= b;
+      return a - b;
     }
   }
 
-  template<typename T, std::same_as<T>... Ts, callable_options O>
+  template<callable_options O, typename T, std::same_as<T>... Ts>
   EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
     r0   = sub[o](r0,r1);
