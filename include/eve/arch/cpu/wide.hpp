@@ -596,6 +596,7 @@ namespace eve
     //! @brief Performs the difference between all lanes of its parameters
     //! See also: eve::sub
     friend EVE_FORCEINLINE wide operator-(wide const& a, wide const& b) noexcept
+    requires(!kumi::product_type<Type>)
     {
       return sub(a, b);
     }
