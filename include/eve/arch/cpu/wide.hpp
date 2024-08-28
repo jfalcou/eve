@@ -666,6 +666,7 @@ namespace eve
     //! @brief Performs the division between all lanes of its parameters
     //! See also: eve::div
     friend EVE_FORCEINLINE wide operator/(wide const& a, wide const& b) noexcept
+        requires(!kumi::product_type<Type>)
     {
       return div(a, b);
     }

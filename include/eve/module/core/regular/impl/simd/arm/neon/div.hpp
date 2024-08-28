@@ -14,7 +14,7 @@ namespace eve::detail
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires arm_abi<abi_t<T, N>>
 {
   if constexpr (O::contains(saturated2))
@@ -29,9 +29,8 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& opts, wide<T, N
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr( current_api >= asimd)
+    if constexpr (current_api >= asimd)
     {
-
             if constexpr( c == category::float64x1 ) return vdiv_f64 (a, b);
       else  if constexpr( c == category::float64x2 ) return vdivq_f64(a, b);
       else  if constexpr( c == category::float32x2 ) return vdiv_f32 (a, b);
@@ -72,7 +71,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& opts, wide<T, N
         else  if constexpr( c == category::float64x2 ) return vmulq_f64(vrecpsq_f64(x, y), y);
       };
 
-      a * refine(b, refine(b, estimate(b)));
+      return a * refine(b, refine(b, estimate(b)));
     }
     else
     {

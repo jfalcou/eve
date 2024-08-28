@@ -48,7 +48,7 @@ namespace eve::detail
 
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
-  {;
+  {
     if constexpr(O::contains(saturated2))
     {
       if constexpr( integral_value<T> )
@@ -88,8 +88,7 @@ namespace eve::detail
           return if_else(is_nez(b), div(a, b), allbits);
       }
     }
-    else if constexpr(O::contains(toward_zero) || O::contains(upward) ||
-                      O::contains(downward) || O::contains(to_nearest))
+    else if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
       using elt_t = element_type_t<T>;
       if constexpr(floating_value<T>)
@@ -171,7 +170,10 @@ namespace eve::detail
         }
       }
     }
-    else return a /= b;
+    else
+    {
+      return a / b;
+    }
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
