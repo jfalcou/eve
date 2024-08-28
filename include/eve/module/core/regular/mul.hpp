@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct mul_t : tuple_callable<mul_t, Options, saturated_option>
+  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
