@@ -36,7 +36,7 @@ namespace eve
   //! @ingroup simd_concepts
   //! @concept integral_value
   //! @brief The concept `integral_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the underlying_type satisfies `std::integral`
+  //! `eve::value` and the element type satisfies `std::integral`
   //!
   //! @groupheader{Examples}
   //! - `eve::wide<char>`
@@ -49,7 +49,7 @@ namespace eve
   //! @ingroup simd_concepts
   //! @concept signed_value
   //! @brief The concept `signed_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the underlying_type satisfies `std::is_signed`
+  //! `eve::value` and the element type satisfies `std::is_signed`
   //!
   //! @groupheader{Examples}
   //! - `eve::wide<char>`
@@ -62,7 +62,7 @@ namespace eve
   //! @ingroup simd_concepts
   //! @concept unsigned_value
   //! @brief The concept `unsigned_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the underlying_type satisfies `std::unsigned_integral`
+  //! `eve::value` and the element type satisfies `std::unsigned_integral`
   //!
   //! @groupheader{Examples}
   //! - `unsigned int`
@@ -74,7 +74,7 @@ namespace eve
   //! @ingroup simd_concepts
   //! @concept signed_integral_value
   //! @brief The concept `signed_integral_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the underlying_type satisfies `std::signed_integral`
+  //! `eve::value` and the element type satisfies `std::signed_integral`
   //!
   //! @groupheader{Examples}
   //! - `short int`
@@ -86,7 +86,7 @@ namespace eve
   //! @ingroup simd_concepts
   //! @concept floating_value
   //! @brief The concept `floating_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the underlying_type satisfies `std::floating_point`
+  //! `eve::value` and the element type satisfies `std::floating_point`
   //!
   //! @groupheader{Examples}
   //! - `double`
@@ -98,7 +98,7 @@ namespace eve
   //! @ingroup simd_concepts
   //! @concept logical_value
   //! @brief The concept `logical_value<T>` is satisfied if and only if T satisfies
-  //! `eve::value` and the underlying_type satisfies is_logical_v
+  //! `eve::value` and the element type satisfies is_logical_v
   //!
   //! @groupheader{Examples}
   //! - `eve::logical<eve::wide<char>>`
@@ -106,4 +106,16 @@ namespace eve
   //================================================================================================
   template<typename T> concept logical_value         = value<T> && is_logical_v<T>;
 
+
+  //================================================================================================
+  //! @ingroup simd_concepts
+  //! @concept plain_value
+  //! @brief The concept `plain_value<T>` is satisfied if and only if T satisfies
+  //! `eve::plain_simd_value` or `eve::plain_scalar_value`.
+  //!
+  //! @groupheader{Examples}
+  //! - `char`
+  //! - `eve::wide<double>`
+  //================================================================================================
+  template<typename T> concept plain_value         = plain_simd_value<T> || plain_scalar_value<T>;
 }
