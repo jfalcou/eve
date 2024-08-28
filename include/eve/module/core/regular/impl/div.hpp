@@ -34,6 +34,7 @@
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/round.hpp>
+#include <eve/module/core/regular/fms.hpp>
 
 
 #ifdef EVE_COMP_IS_MSVC
