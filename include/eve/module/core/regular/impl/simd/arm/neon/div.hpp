@@ -23,7 +23,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
   }
   if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
   {
-    return round[opts](div(a, b));
+    return div.behavior(cpu_{}, opts, a, b);
   }
   else
   {
