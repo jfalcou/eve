@@ -27,11 +27,13 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr T mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
+  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
     if constexpr (plain_scalar_value<T> && simd_value<U>)
     {
-      return mul[opts](U{a}, b);
+      // some backends are optimized for this specific case, let them have
+      // a chance to handle it
+      return mul[opts](b, a);
     }
     else if constexpr (simd_value<T> && plain_scalar_value<U>)
     {
