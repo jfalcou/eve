@@ -8,40 +8,32 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/simd.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
   template<typename T>
-  struct fth { using type = T; };
+  struct find_type_impl {
+    using type = T;
 
-  template<scalar_value S0, scalar_value S1>
-  consteval fth<decltype((std::declval<S0>() + std::declval<S1>()))> operator%(fth<S0>, fth<S1>) noexcept
-  {
-    return {};
-  }
-
-  template<typename T, typename N, scalar_value S>
-  consteval auto operator%(fth<wide<T, N>>, fth<S>) noexcept
-  {
-    return fth<wide<T, N>>{};
-  }
-
-  template<typename T, typename N, scalar_value S>
-  consteval auto operator%(fth<S>, fth<wide<T, N>>) noexcept
-  {
-    return fth<wide<T, N>>{};
-  }
-
-  template<typename T, typename N>
-  consteval auto operator%(fth<wide<T, N>>, fth<wide<T, N>>) noexcept
-  {
-    return fth<wide<T, N>>{};
-  }
+    template<value U>
+    friend consteval find_type_impl<std::conditional_t<
+        scalar_value<T> && scalar_value<U>,
+          decltype(std::declval<T>() + std::declval<U>()),
+          std::conditional_t<
+              (scalar_value<T> && arithmetic_simd_value<U>) ||
+              (arithmetic_simd_value<T> && scalar_value<U>) ||
+              (arithmetic_simd_value<T> && std::same_as<T, U>),
+                std::conditional_t<arithmetic_simd_value<T>, T, U>,
+                void
+          >
+    >> operator%(find_type_impl, find_type_impl<U>) noexcept { return {}; }
+  };
 
   template<typename... Ts>
-  using find_type = typename decltype((fth<Ts>{} % ...))::type;
+  using find_type = typename decltype((find_type_impl<Ts>{} % ...))::type;
 
   template<typename... Ts>
   requires(!scalar_value<Ts> || ... )
