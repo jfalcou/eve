@@ -17,27 +17,6 @@
 namespace eve::detail
 {
   //================================================================================================
-  // *=
-  //================================================================================================
-  template<plain_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_mul( wide<T,N>& self, U const& other )
-  requires( scalar_value<U> || std::same_as<wide<T, N>,U> ) && ppc_abi<abi_t<T, N>>
-  {
-    using type = wide<T, N>;
-
-    if constexpr( plain_scalar_value<U> )
-    {
-      self = self.storage() *  type{other}.storage();
-    }
-    else if constexpr( std::same_as<type,U> )
-    {
-      self = self.storage() * other.storage();
-    }
-
-    return self;
-  }
-
-  //================================================================================================
   // /=
   //================================================================================================
   template<plain_scalar_value T, value U, typename N>
