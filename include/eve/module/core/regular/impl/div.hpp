@@ -35,6 +35,7 @@
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/fms.hpp>
+#include <eve/module/core/regular/shr.hpp>
 
 
 #ifdef EVE_COMP_IS_MSVC
