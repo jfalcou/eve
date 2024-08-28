@@ -12,18 +12,21 @@
 
 namespace eve::detail
 {
-  template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(vsx_),
-                                  O const& o,
-                                  wide<T, N> v0,
-                                  wide<T, N> const& v1) noexcept
-  requires ppc_abi<abi_t<T, N>>
+  template<callable_options O, floating_scalar_value T, typename N>
+  EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(vsx_), O const& o, wide<T, N> a, wide<T, N> b) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
-      return round[o](div(v0, v1));
+    if constexpr (O::contains(saturated2))
+    {
+      return div.behavior(cpu_{}, opts, a, b);
+    }
+    if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
+    {
+      return round[o](div(a, b));
+    }
     else
     {
-      return v0 /= v1;
+      return a.storage() / b.storage();
     }
   }
 }
