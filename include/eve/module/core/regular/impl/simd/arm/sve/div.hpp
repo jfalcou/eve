@@ -13,7 +13,7 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_), O const& o, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(saturated2))
@@ -22,8 +22,8 @@ namespace eve::detail
     }
     else if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
-      if (floating_value<T>) return round[o](div[cx](a, b));
-      else                   return div.behavior(cpu_{}, o, a, b);
+      if (floating_value<T>) return round[opts](div[cx](a, b));
+      else                   return div.behavior(cpu_{}, opts, a, b);
     }
     else
     {
@@ -40,7 +40,7 @@ namespace eve::detail
   }
 
   template<callable_options O, conditional_expr C, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_), C const& cx, O const& o, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     if constexpr (O::contains(saturated2))
@@ -50,9 +50,9 @@ namespace eve::detail
     if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
       if (floating_value<T>)
-        return round[o](div[cx](a, b));
+        return round[opts](div[cx](a, b));
       else
-        return div.behavior(cpu_{}, o, a, b);
+        return div.behavior(cpu_{}, opts, a, b);
     }
     else
     {
@@ -67,11 +67,11 @@ namespace eve::detail
             auto m   = expand_mask(cx, as<wide<T, N>> {});
             return svdiv_m(m, a, b);
           }
-          else return div.behavior(cpu_{}, o, a, b);
+          else return div.behavior(cpu_{}, opts, a, b);
         }
       }
       else
-        return div.behavior(cpu_{}, o, a, b);
+        return div.behavior(cpu_{}, opts, a, b);
     }
   }
 }
