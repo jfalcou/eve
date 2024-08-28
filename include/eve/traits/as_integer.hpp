@@ -9,15 +9,15 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/wide_forward.hpp>
-#include <eve/traits/element_type.hpp>
+#include <eve/traits/translation.hpp>
 
 namespace eve
 {
   namespace detail
   {
     template<typename T>
-    struct default_as_integer_sign :
-     std::conditional<std::is_signed_v<element_type_t<T>>, signed, unsigned>
+    struct  default_as_integer_sign
+          : std::conditional<std::is_signed_v<translate_element_type_t<T>>, signed, unsigned>
     {
     };
 
@@ -31,7 +31,7 @@ namespace eve
   template<typename T, typename Sign = detail::default_as_integer_sign_t<T>>
   struct as_integer
   {
-    using type = detail::make_integer_t<sizeof(T), Sign>;
+    using type = detail::make_integer_t<sizeof(translate_t<T>), Sign>;
   };
 
   template<typename T, typename N, typename Sign>
