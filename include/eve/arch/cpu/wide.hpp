@@ -631,6 +631,7 @@ namespace eve
     //! @brief Performs the product between all lanes of its parameters
     //! See also: eve::mul
     friend EVE_FORCEINLINE wide operator*(wide const& a, wide const& b) noexcept
+      requires(!kumi::product_type<Type>)
     {
       return mul(a, b);
     }
