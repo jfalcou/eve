@@ -14,7 +14,7 @@ namespace eve::detail
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& o, wide<T, N> a, wide<T, N> b) noexcept
+EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires arm_abi<abi_t<T, N>>
 {
   if constexpr (O::contains(saturated2))
@@ -50,7 +50,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& o, wide<T, N> a
         else  if constexpr( c == category::float32x4 ) return vrecpeq_f32(x);
       };
 
-      auto refine = [](auto x, auto y) -> type
+      auto refine = [](auto x, auto y) -> wide<T, N>
       {
               if constexpr( c == category::float32x2 ) return vmul_f32(vrecps_f32(x, y), y);
         else  if constexpr( c == category::float32x4 ) return vmulq_f32(vrecpsq_f32(x, y), y);
@@ -66,7 +66,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_SUPPORTS(neon128_), O const& o, wide<T, N> a
         else  if constexpr( c == category::float64x2 ) return vrecpeq_f64(x);
       };
 
-      auto refine = [](auto x, auto y) -> type
+      auto refine = [](auto x, auto y) -> wide<T, N>
       {
               if constexpr( c == category::float64x1 ) return vmul_f64(vrecps_f64(x, y), y);
         else  if constexpr( c == category::float64x2 ) return vmulq_f64(vrecpsq_f64(x, y), y);
