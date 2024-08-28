@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
+
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/allbits.hpp>
@@ -23,9 +24,8 @@ namespace eve
       return allbits(eve::as<T>());
    }
 
-    template<eve::value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(nan_t, nan_);
   };
@@ -48,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T nan(as<T> x) noexcept;
+//!      template<eve::floating_value T> constexpr T nan(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -59,7 +58,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::nan(as<T>())`  is semantically equivalent to  `T(0.0/0.0)`.
+//!    The call `eve::nan(as<T>())`  is semantically equivalent to  `T(0.0/0.0)`.
 //!
 //!  @groupheader{Example}
 //!

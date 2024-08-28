@@ -289,7 +289,7 @@ namespace eve
   //!   simplifies the implementation of such eve::callable by just requiring your eve::callable type to implement a
   //!   static `value` member function that provides the constant value using two parameters:
   //!     * an eve::options pack containing potential decorators passed to the constant.
-  //!     * an eve::as instance to specify the output type.
+  //!     * an eve::as instance to specify the translated element type of the output.
   //!
   //!   Constant functions in EVE also supports masking, which is directly implemented in eve::constant_callable.
   //!
@@ -321,13 +321,19 @@ namespace eve
       }
       else
       {
-        // Compute the raw constant
-        auto constant_value = Func<OptionsValues>::value(target,opts);
-        using type = decltype(constant_value);
+        // Compute the raw-est type we need to build
+        using tgt_type = translate_element_type_t<T>;
 
+        // Compute the raw constant
+        auto constant_value = Func<OptionsValues>::value(as<tgt_type>{},opts);
+        using type          = decltype(constant_value);
+        using out_t         = std::conditional_t< std::same_as<type,tgt_type>
+                                                , T
+                                                , as_wide_as_t<type, T>
+                                                >;
         // Apply a mask if any and replace missing values with 0 if no alternative is provided
-        if constexpr(match_option<condition_key, O, ignore_none_>) return constant_value;
-        else  return detail::mask_op(opts[condition_key], detail::return_2nd, type{0}, constant_value);
+        if constexpr(match_option<condition_key, O, ignore_none_>) return out_t(constant_value);
+        else  return out_t(detail::mask_op(opts[condition_key], detail::return_2nd, type{0}, constant_value));
       }
     }
   };

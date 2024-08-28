@@ -10,8 +10,12 @@
 
 using eve::fixed;
 
+enum class some_enum : std::int16_t {};
+
 TTS_CASE("Constant generation for scalar")
 {
+  TTS_EQUAL((eve::Constant<some_enum, 0x4455>()), some_enum{0x4455});
+
   TTS_ULP_EQUAL((eve::Constant<float, 0x3F8E38E3>()), 1.111111f, 0.5);
   TTS_IEEE_EQUAL((eve::Constant<float, 0xFFFFFFFF>()), eve::nan(eve::as<float>()));
 
@@ -27,6 +31,8 @@ TTS_CASE("Constant generation for scalar")
   TTS_EQUAL((eve::Constant<std::uint64_t, 0xB122334455667788ULL>()), 0xB122334455667788ULL);
   TTS_EQUAL((eve::Constant<std::int64_t, 0x1122334455667788LL>()), 0x1122334455667788LL);
 };
+
+
 
 TTS_CASE_TPL("Constant generation for wide",
              fixed<1>,

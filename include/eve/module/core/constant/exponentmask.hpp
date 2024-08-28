@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
+
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
@@ -16,19 +17,16 @@ namespace eve
   template<typename Options>
   struct exponentmask_t : constant_callable<exponentmask_t, Options, downward_option, upward_option>
   {
-    template<floating_value T>
-    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;
-
-      if constexpr(std::same_as<e_t, float>  ) return i_t(0x7f800000);
-      else if constexpr(std::same_as<e_t, double> ) return i_t(0x7ff0000000000000LL);
+      if      constexpr(std::same_as<T, float>  ) return i_t(0x7f800000);
+      else if constexpr(std::same_as<T, double> ) return i_t(0x7ff0000000000000LL);
     }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-    EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr as_integer_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(exponentmask_t, exponentmask_);
   };
@@ -50,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      as_unsigned<T> exponentmask(as<T> t) noexcept;
+//!     template<eve::floating_value T> constexpr eve::as_integer_t<T> exponentmask(as<T> t) noexcept;
 //!   }
 //!   @endcode
 //!

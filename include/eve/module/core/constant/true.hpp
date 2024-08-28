@@ -17,7 +17,7 @@ template<typename Options>
 struct true_t : constant_callable<true_t, Options, downward_option, upward_option>
 {
   template<typename T>
-  static constexpr EVE_FORCEINLINE as_logical_t<T> value(eve::as<T> const&, auto const&)
+  static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
   {
     return as_logical_t<T>(true);
   }
@@ -45,8 +45,7 @@ struct true_t : constant_callable<true_t, Options, downward_option, upward_optio
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      as_logical<T> true_(as<T> x) noexcept;
+//!     template<typename T> constexpr as_logical<T> true_(as<T> x);
 //!   }
 //!   @endcode
 //!

@@ -13,33 +13,29 @@
 
 namespace eve
 {
-//   template<typename Options>
-//   struct zero_t;
-
-//   inline constexpr auto zero = functor<zero_t>;
-
-
   template<typename Options>
   struct zero_t : constant_callable<zero_t, Options, downward_option, upward_option>
   {
+    struct fill_zero
+    {
+      constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
+    };
+
     template<typename T>
-    static constexpr EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       if constexpr( kumi::product_type<T> )
       {
-        // Can't just T{kumi::map} because that does not work for scalar product types
+        // Can't just T{kumi::map} because that may not work for scalar product types
         T res;
-        // This better inline.
-        kumi::for_each([](auto& m) { m = functor<zero_t>(as(m)); }, res);
-
+        kumi::for_each(fill_zero{}, res);
         return res;
       }
-      else
-        return T(0);
+      else return T(0);
     }
 
-    template<typename T>
-      constexpr EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<eve::value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(zero_t, zero_);
   };
@@ -61,7 +57,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::plain_value T >
 //!      T zero(as<T> x) noexcept;
 //!   }
 //!   @endcode
