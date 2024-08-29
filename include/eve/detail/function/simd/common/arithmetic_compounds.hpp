@@ -126,33 +126,4 @@ namespace eve::detail
       }
     }
   }
-
-  //================================================================================================
-  // %=
-  //================================================================================================
-  template<integral_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto)
-  self_rem(wide<T, N> &self,
-           U const &        other) requires(integral_scalar_value<U> || std::same_as<wide<T, N>, U>)
-  {
-    using type = wide<T, N>;
-
-    if constexpr( integral_scalar_value<U> )
-    {
-      return self_rem(self, type {other});
-    }
-    else if constexpr( std::same_as<type, U> )
-    {
-      if constexpr( is_aggregated_v<abi_t<T, N>> )
-      {
-        self.storage().for_each( [&](auto& s, auto const& o)  { s %= o; }, other );
-        return self;
-      }
-      else
-      {
-        apply<N::value>([&](auto... I) { (self.set(I, self.get(I) % other.get(I)), ...); });
-        return self;
-      }
-    }
-  }
 }

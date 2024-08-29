@@ -25,6 +25,7 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
+#include <eve/module/core/regular/rem.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 
@@ -682,47 +683,47 @@ namespace eve
     //! the result to the current one. Does not participate in overload resolution
     //! if `Type` does not models integral_scalar_value
     template<integral_value V>
-    friend EVE_FORCEINLINE auto& operator%=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE wide& operator%=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
-      return detail::self_rem(w, o);
+      w = rem(w, o);
+      return w;
     }
 
     //! @brief Performs the modulo between all lanes of its parameters.
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
-    friend EVE_FORCEINLINE auto operator%(wide const& v, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide operator%(wide const& a, wide const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(integral_scalar_value<Type>)
+        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
-      auto that = v;
-      return that %= w;
+      return rem(a, b);
     }
 
     //! @brief Performs the modulo between a scalar and all lanes of a eve::wide
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
     template<integral_scalar_value S>
-    friend EVE_FORCEINLINE auto operator%(S s, wide const& v) noexcept
+    friend EVE_FORCEINLINE auto operator%(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(integral_scalar_value<Type>)
+        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
-      return wide(s) % v;
+      return rem(wide{s}, w);
     }
 
     //! @brief Performs the modulo between all lanes of a eve::wide and a scalar
     //! Does not participate in overload resolution if `Type` does not models
     //! integral_scalar_value
-    friend EVE_FORCEINLINE auto operator%(wide const& v, integral_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE auto operator%(wide const& w, integral_scalar_value auto s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(integral_scalar_value<Type>)
+        requires(!kumi::product_type<Type> && integral_scalar_value<Type>)
 #endif
     {
-      return v % wide(s);
+      return rem(w, wide{s});
     }
 
     //! @brief Performs the compound left-shift on all the eve::wide lanes and assign
