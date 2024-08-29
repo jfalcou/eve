@@ -27,15 +27,8 @@ namespace eve::detail
     }
     else
     {
-      if constexpr (sizeof(T) >= 4)
-      {
-        return svdiv_x(sve_true<T>(), a, b);
-      }
-      else 
-      {
-        apply<N::value>([&](auto... I) { (a.set(I, a.get(I) / b.get(I)), ...); });
-        return a;
-      }
+      if constexpr (sizeof(T) >= 4) return svdiv_x(sve_true<T>(), a, b);
+      else                          return div.behavior(cpu_{}, opts, a, b);
     }
   }
 
@@ -49,10 +42,8 @@ namespace eve::detail
     }
     else if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
-      if (floating_value<T>)
-        return round[opts](div[cx](a, b));
-      else
-        return div.behavior(cpu_{}, opts, a, b);
+      if (floating_value<T>) return round[opts](div[cx](a, b));
+      else                   return div.behavior(cpu_{}, opts, a, b);
     }
     else
     {
@@ -64,14 +55,16 @@ namespace eve::detail
         {
           if constexpr( !C::has_alternative)
           {
-            auto m   = expand_mask(cx, as<wide<T, N>> {});
+            auto m = expand_mask(cx, as<wide<T, N>> {});
             return svdiv_m(m, a, b);
           }
           else return div.behavior(cpu_{}, opts, a, b);
         }
       }
       else
+      {
         return div.behavior(cpu_{}, opts, a, b);
+      }
     }
   }
 }
