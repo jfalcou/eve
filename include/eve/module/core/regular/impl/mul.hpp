@@ -102,7 +102,7 @@ namespace eve::detail
             }
           }
         }
-        else //unsigned
+        else // unsigned
         {
           if constexpr (scalar_value<T>)
           {
@@ -125,7 +125,7 @@ namespace eve::detail
               else                   return aux(b, a);
             }
           }
-          else //simd
+          else // simd
           {
             using elt_t = element_type_t<T>;
             if constexpr (sizeof(elt_t) <= 4)
