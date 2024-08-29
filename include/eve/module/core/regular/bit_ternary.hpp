@@ -24,7 +24,7 @@ namespace eve
   struct bit_ternary_t : callable<bit_ternary_t, Options>
   {
     template<std::uint8_t K, value T0, value T1, value T2>
-    requires(eve::same_lanes_or_scalar<T0, T1, T2> && 0 <= K && K <= 255)
+    requires(eve::same_lanes_or_scalar<T0, T1, T2>)
       EVE_FORCEINLINE constexpr bit_value_t<T0, T1, T2>
     operator()( std::integral_constant<std::uint8_t, K> k, T0 t0, T1 t1, T2 t2) const noexcept
     {
