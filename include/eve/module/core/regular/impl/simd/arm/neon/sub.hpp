@@ -25,7 +25,7 @@ EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
   }
   else
   {
-    constexpr auto c = categorize<type>();
+    constexpr auto c = categorize<wide<T, N>>();
 
           if constexpr( c == category::int64x1    ) return vsub_s64 (a, b);
     else  if constexpr( c == category::int64x2    ) return vsubq_s64(a, b);

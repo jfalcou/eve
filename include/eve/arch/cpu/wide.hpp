@@ -27,6 +27,7 @@
 #include <eve/detail/function/subscript.hpp>
 #include <eve/module/core/regular/rem.hpp>
 #include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/sub.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 
