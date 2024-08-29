@@ -20,7 +20,7 @@ namespace eve::detail
     {
       return div.behavior(cpu_{}, opts, a, b);
     }
-    if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
+    else if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
       return round[opts](div(a, b));
     }
