@@ -143,6 +143,12 @@ namespace eve::detail
           }
         }
       }
+      else if constexpr (arithmetic_simd_value<T>)
+      {
+        // some mul ops cannot be handled by the neon backend
+        apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) * b.get(I)), ...); });
+        return a;
+      }
       else
       {
         return a * b;

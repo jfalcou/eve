@@ -82,14 +82,12 @@ EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(neon128_), O const &opts, wide<T, N
                 else if constexpr( c == category::float64x2 ) return vmulq_f64 (a, b);
                 else
                 {
-                    apply<N::value>([&](auto... I) { (a.set(I, a.get(I) * b.get(I)), ...); });
-                    return a;
+                    return mul.behavior(cpu_{}, opts, a, b);
                 }
             }
             else
             {
-                apply<N::value>([&](auto... I) { (a.set(I, a.get(I) * b.get(I)), ...); });
-                return a;
+                return mul.behavior(cpu_{}, opts, a, b);
             }
         }
     }
