@@ -46,7 +46,7 @@
 namespace eve::detail
 {
 
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(O::contains(saturated2))
@@ -55,6 +55,7 @@ namespace eve::detail
       {
         EVE_ASSERT(eve::all((a != 0) || (b != 0)), "[eve] - div[saturated](0, 0) is undefined");
       }
+
       if constexpr( floating_value<T> )
       {
         return div[o.drop(saturated2)](a, b);
@@ -88,10 +89,10 @@ namespace eve::detail
           return if_else(is_nez(b), div(a, b), allbits);
       }
     }
-    else if constexpr(O::contains(toward_zero) || O::contains(upward) ||
-                      O::contains(downward) || O::contains(to_nearest))
+    else if constexpr(O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {
       using elt_t = element_type_t<T>;
+
       if constexpr(floating_value<T>)
       {
         return round[o](div(a, b));
@@ -108,7 +109,10 @@ namespace eve::detail
             auto test = if_else(is_ltz(b), is_ltz(r), is_gtz(r));
             return dec[test](q);
           }
-          else { return convert[saturated](floor(convert(a, as<double>()) / convert(b, as<double>())), as<elt_t>()); }
+          else
+          {
+            return convert[saturated](floor(convert(a, as<double>()) / convert(b, as<double>())), as<elt_t>());
+          }
         }
         else if constexpr( unsigned_value<T> )
         {
@@ -122,6 +126,7 @@ namespace eve::detail
       else if  constexpr(O::contains(upward) )
       {
         EVE_ASSERT(eve::all((b != 0)), "[eve] - div[upward](a, 0) is undefined");
+
         if constexpr( signed_value<T> )
         {
           if constexpr( std::is_same_v<elt_t, std::int64_t> )
@@ -131,7 +136,10 @@ namespace eve::detail
             auto test = if_else(is_gtz(b), is_ltz(r), is_gtz(r));
             return inc[test](q);
           }
-          else { return convert[saturated](ceil(convert(a,as<double>()) / convert(b,as<double>())), as<elt_t>()); }
+          else
+          {
+            return convert[saturated](ceil(convert(a,as<double>()) / convert(b,as<double>())), as<elt_t>());
+          }
         }
         else if constexpr( unsigned_value<T> )
         {
@@ -142,7 +150,9 @@ namespace eve::detail
       else if  constexpr(O::contains(to_nearest))
       {
         EVE_ASSERT(eve::all((b != 0)), "[eve] - div[to_nearest](a, 0) is undefined");
+
         using v_t = element_type_t<T>;
+
         if constexpr( sizeof(v_t) == 8 )
         {
           if constexpr( unsigned_value<T> )
@@ -150,6 +160,7 @@ namespace eve::detail
             auto q  = div(a, b);
             auto r1 = fnma(b, q, a);
             auto r2 = b - r1;
+
             return inc[(r1 > r2) || ((r1 == r2) && is_odd(q))](q);
           }
           else
@@ -162,6 +173,7 @@ namespace eve::detail
             auto r1   = fnma(b, q, a);
             auto r2   = minus[ltzb](b) - r1;
             auto cond = (r1 > r2) || ((r1 == r2) && is_odd(q));
+            
             return if_else(is_ltz(b), dec[cond](q), inc[cond](q));
           }
         }
@@ -171,7 +183,16 @@ namespace eve::detail
         }
       }
     }
-    else return a /= b;
+    else if constexpr (arithmetic_simd_value<T>)
+    {
+      // some div ops cannot be handled by some backends (e.g. arm/neon)
+      apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) / b.get(I)), ...); });
+      return a;
+    }
+    else
+    {
+      return a / b;
+    }
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>

@@ -29,6 +29,7 @@
 #include <eve/module/core/regular/add.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/mul.hpp>
+#include <eve/module/core/regular/div.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 
@@ -655,35 +656,35 @@ namespace eve
     //! @brief Performs the compound division on all the wide lanes and assign
     //! the result to the current one. See also: eve::div
     template<value V>
-    friend EVE_FORCEINLINE auto operator/=(wide& w, V o) noexcept
-    -> decltype(detail::self_div(w, o))
+    friend EVE_FORCEINLINE wide& operator/=(wide& w, V o) noexcept
         requires(!kumi::product_type<Type>)
     {
-      return detail::self_div(w, o);
+      w = div(w, o);
+      return w;
     }
 
     //! @brief Performs the division between all lanes of its parameters
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(wide const& v, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide operator/(wide const& a, wide const& b) noexcept
+        requires(!kumi::product_type<Type>)
     {
-      auto that = v;
-      return that /= w;
+      return div(a, b);
     }
 
     //! @brief Performs the division between a scalar and all lanes of a eve::wide
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(plain_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE wide operator/(plain_scalar_value auto s, wide const& w) noexcept
         requires(!kumi::product_type<Type>)
     {
-      return wide(s) / v;
+      return div(wide{s}, w);
     }
 
     //! @brief Performs the division between all lanes of a eve::wide and a scalar
     //! See also: eve::div
-    friend EVE_FORCEINLINE auto operator/(wide const& v, plain_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE wide operator/(wide const& v, plain_scalar_value auto s) noexcept
         requires(!kumi::product_type<Type>)
     {
-      return v / wide(s);
+      return div(v, wide{s});
     }
 
     //! @brief Performs the compound modulo on all the wide lanes and assign
