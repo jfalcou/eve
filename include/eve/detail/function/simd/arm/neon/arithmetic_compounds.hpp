@@ -18,51 +18,6 @@
 namespace eve::detail
 {
   //================================================================================================
-  // +=
-  //================================================================================================
-  template<plain_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_add(wide<T, N> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && arm_abi<abi_t<T, N>>
-  {
-    using type = wide<T, N>;
-
-    if constexpr( plain_scalar_value<U> )
-    {
-      self = self_add(self, type {other});
-    }
-    else if constexpr( std::same_as<type, U> )
-    {
-      constexpr auto c = categorize<type>();
-
-            if constexpr( c == category::int64x1    ) self = vadd_s64 (self, other);
-      else  if constexpr( c == category::int64x2    ) self = vaddq_s64(self, other);
-      else  if constexpr( c == category::uint64x1   ) self = vadd_u64 (self, other);
-      else  if constexpr( c == category::uint64x2   ) self = vaddq_u64(self, other);
-      else  if constexpr( c == category::int32x2    ) self = vadd_s32 (self, other);
-      else  if constexpr( c == category::int32x4    ) self = vaddq_s32(self, other);
-      else  if constexpr( c == category::uint32x2   ) self = vadd_u32 (self, other);
-      else  if constexpr( c == category::uint32x4   ) self = vaddq_u32(self, other);
-      else  if constexpr( c == category::int16x4    ) self = vadd_s16 (self, other);
-      else  if constexpr( c == category::int16x8    ) self = vaddq_s16(self, other);
-      else  if constexpr( c == category::uint16x4   ) self = vadd_u16 (self, other);
-      else  if constexpr( c == category::uint16x8   ) self = vaddq_u16(self, other);
-      else  if constexpr( c == category::int8x8     ) self = vadd_s8  (self, other);
-      else  if constexpr( c == category::int8x16    ) self = vaddq_s8 (self, other);
-      else  if constexpr( c == category::uint8x8    ) self = vadd_u8  (self, other);
-      else  if constexpr( c == category::uint8x16   ) self = vaddq_u8 (self, other);
-      else  if constexpr( c == category::float32x2  ) self = vadd_f32 (self, other);
-      else  if constexpr( c == category::float32x4  ) self = vaddq_f32(self, other);
-      else if constexpr( current_api >= asimd )
-      {
-              if constexpr( c == category::float64x1 ) self = vadd_f64  (self, other);
-        else  if constexpr( c == category::float64x2 ) self = vaddq_f64 (self, other);
-      }
-    }
-
-    return self;
-  }
-
-  //================================================================================================
   // -=
   //================================================================================================
   template<plain_scalar_value T, value U, typename N>

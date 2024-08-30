@@ -15,15 +15,6 @@ namespace eve::detail
 {
 template<plain_scalar_value T, value U, typename N>
 EVE_FORCEINLINE auto&
-self_add(wide<T, N>& self, U const& other) noexcept
-requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
-{
-  self = svadd_x(sve_true<T>(), self, other);
-  return self;
-}
-
-template<plain_scalar_value T, value U, typename N>
-EVE_FORCEINLINE auto&
 self_sub(wide<T, N>& self, U const& other) noexcept
 requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && sve_abi<abi_t<T, N>>
 {

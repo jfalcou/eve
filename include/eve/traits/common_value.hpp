@@ -8,22 +8,48 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
+#include <eve/concept/simd.hpp>
 #include <eve/traits/as_wide.hpp>
 #include <type_traits>
 
 namespace eve::detail
 {
+  template<typename T>
+  struct find_common_value_reducer;
+
+  template<>
+  struct find_common_value_reducer<void> {};
+
+  template<typename T>
+  struct find_common_value_reducer {
+    using type = T;
+
+    template <typename U>
+    friend auto operator%(
+      find_common_value_reducer x,
+      find_common_value_reducer<U> y
+    ) {
+      if constexpr (plain_scalar_value<T> && plain_scalar_value<U>) {
+        return find_common_value_reducer<decltype(std::declval<T>() + std::declval<U>())>{};
+      } else if constexpr (plain_scalar_value<T> && arithmetic_simd_value<U>) {
+        return y;
+      } else if constexpr (arithmetic_simd_value<T> && (plain_scalar_value<U> || std::same_as<T, U>)) {
+        return x;
+      } else {
+        return find_common_value_reducer<void>{};
+      }
+    }
+  };
+  
   template<typename... Ts>
-  using find_type = decltype(( std::declval<Ts>() + ... ));
+  using find_common_value_wide = typename decltype((find_common_value_reducer<Ts>{} % ...))::type;
 
   template<typename... Ts>
-  requires(!plain_scalar_value<Ts> || ... )
-  auto find_common_value() -> find_type<Ts... >;
+  requires (!plain_scalar_value<Ts> || ...)
+  auto find_common_value() -> find_common_value_wide<Ts... >;
 
   template<typename T0, typename... Ts>
-  requires(   (plain_scalar_value<T0> && ... && plain_scalar_value<Ts>)
-          &&  (std::same_as<T0,Ts> && ...)
-          )
+  requires((plain_scalar_value<T0> && ... && plain_scalar_value<Ts>) && (std::same_as<T0,Ts> && ...))
   T0 find_common_value();
 
   template<typename, typename... Ts>
@@ -73,8 +99,8 @@ namespace eve::detail
   };
 
   template<typename T, typename U>
-  requires(!(scalar_value<T> && scalar_value<U>) && requires{ detail::find_common_value<T,U>(); } )
-  struct common_logical_impl<T,U> : as_logical<typename common_value<T,U>::type>
+    requires(!(scalar_value<T> && scalar_value<U>) && requires{ typename common_value<T, U>::type; } )
+  struct common_logical_impl<T, U> : as_logical<typename common_value<T, U>::type>
   {};
 }
 

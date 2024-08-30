@@ -21,7 +21,7 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
     if constexpr(O::contains(saturated2) && integral_value<T>)
@@ -36,19 +36,25 @@ namespace eve::detail
       else
       {
         // Triggers conditional MOV that directly read the flag register
-        T r = a + b;
+        T r = add(a, b);
         return bit_or(r, bit_mask(is_less(r, a)));
       }
     }
     else
     {
-      return a += b;
+      // The only way to get there is when :
+      //  - a + b is done in scalar
+      //  - emulation occurs and again, a + b is done in scalar
+      //  - a product_type with custom operator+ is used
+      return a + b;
     }
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
+    //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
+    //      we might want to do this manually
     r0   = add[o](r0,r1);
     ((r0 = add[o](r0,rs)),...);
     return r0;

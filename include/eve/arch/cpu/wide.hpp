@@ -26,6 +26,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
 #include <eve/module/core/regular/rem.hpp>
+#include <eve/module/core/regular/add.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 
@@ -330,10 +331,16 @@ namespace eve
     void swap(wide& other) { std::swap(this->storage(), other.storage()); }
 
     //! Pre-incrementation operator
-    EVE_FORCEINLINE wide& operator++() noexcept { return *this += wide {1}; }
+    EVE_FORCEINLINE wide& operator++() noexcept
+    {
+      return *this += wide{1};
+    }
 
     //! Pre-decrementation operator
-    EVE_FORCEINLINE wide& operator--() noexcept { return *this -= wide {1}; }
+    EVE_FORCEINLINE wide& operator--() noexcept
+    {
+      return *this -= wide{1};
+    }
 
     //! Post-incrementation operator
     EVE_FORCEINLINE wide operator++(int) noexcept
@@ -532,7 +539,7 @@ namespace eve
     // Arithmetic operators
     //==============================================================================================
     //! Unary plus operator
-    friend EVE_FORCEINLINE auto operator+(wide const& v) noexcept { return v; }
+    friend EVE_FORCEINLINE wide operator+(wide const& v) noexcept { return v; }
 
     //! Unary minus operator. See also: eve::unary_minus
     friend EVE_FORCEINLINE auto operator-(wide const& v) noexcept
@@ -544,36 +551,35 @@ namespace eve
     //! @brief Performs the compound addition on all the wide lanes and assign the result
     //! to the current one. See also: eve::add
     template<value V>
-    friend EVE_FORCEINLINE auto operator+=(wide& w, V v) noexcept
-    -> decltype(detail::self_add(w, v))
+    friend EVE_FORCEINLINE wide& operator+=(wide& w, V v) noexcept
       requires(!kumi::product_type<Type>)
     {
-      return detail::self_add(w, v);
+      w = add(w, v);
+      return w;
     }
 
     //! @brief Performs the addition between all lanes of its parameters
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(wide const& v, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide operator+(wide const& a, wide const& b) noexcept
     requires(!kumi::product_type<Type>)
     {
-      auto that = v;
-      return that += w;
+      return add(a, b);
     }
 
     //! @brief Performs the addition between a scalar and all lanes of a eve::wide
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(plain_scalar_value auto s, wide const& v) noexcept
+    friend EVE_FORCEINLINE wide operator+(plain_scalar_value auto s, wide const& v) noexcept
     requires(!kumi::product_type<Type>)
     {
-      return v + wide(s);
+      return add(v, wide{s});
     }
 
     //! @brief Performs the addition between all lanes of a eve::wide and a scalar
     //! See also: eve::add
-    friend EVE_FORCEINLINE auto operator+(wide const& v, plain_scalar_value auto s) noexcept
+    friend EVE_FORCEINLINE wide operator+(wide const& v, plain_scalar_value auto s) noexcept
     requires(!kumi::product_type<Type>)
     {
-      return v + wide(s);
+      return add(v, wide{s});
     }
 
     //! @brief Performs the compound difference on all the wide lanes and assign

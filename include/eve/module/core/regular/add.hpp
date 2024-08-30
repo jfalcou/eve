@@ -99,8 +99,16 @@ namespace eve
 
 #include <eve/module/core/regular/impl/add.hpp>
 
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/add.hpp>
+#endif
+
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/add.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/add.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
