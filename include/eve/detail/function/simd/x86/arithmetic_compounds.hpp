@@ -16,69 +16,6 @@
 namespace eve::detail
 {
   //================================================================================================
-  // -=
-  //================================================================================================
-  template<plain_scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_sub(wide<T, N> &self, U const &other) noexcept
-      requires(scalar_value<U> || std::same_as<wide<T, N>, U>) && x86_abi<abi_t<T, N>>
-  {
-    using type = wide<T, N>;
-
-    if constexpr( plain_scalar_value<U> )
-    {
-      return self_sub(self, type {other});
-    }
-    else if constexpr( std::same_as<type, U> )
-    {
-      constexpr auto c = categorize<type>();
-
-            if constexpr  ( c == category::float64x8  ) self = _mm512_sub_pd(self, other);
-      else  if constexpr  ( c == category::float32x16 ) self = _mm512_sub_ps(self, other);
-      else  if constexpr  ( c == category::int64x8    ) self = _mm512_sub_epi64(self, other);
-      else  if constexpr  ( c == category::int32x16   ) self = _mm512_sub_epi32(self, other);
-      else  if constexpr  ( c == category::int16x32   ) self = _mm512_sub_epi16(self, other);
-      else  if constexpr  ( c == category::int8x64    ) self = _mm512_sub_epi8(self, other);
-      else  if constexpr  ( c == category::uint64x8   ) self = _mm512_sub_epi64(self, other);
-      else  if constexpr  ( c == category::uint32x16  ) self = _mm512_sub_epi32(self, other);
-      else  if constexpr  ( c == category::uint16x32  ) self = _mm512_sub_epi16(self, other);
-      else  if constexpr  ( c == category::uint8x64   ) self = _mm512_sub_epi8(self, other);
-      else  if constexpr  ( c == category::float64x2  ) self = _mm_sub_pd(self, other);
-      else  if constexpr  ( c == category::float32x4  ) self = _mm_sub_ps(self, other);
-      else  if constexpr  ( c == category::int64x2    ) self = _mm_sub_epi64(self, other);
-      else  if constexpr  ( c == category::int32x4    ) self = _mm_sub_epi32(self, other);
-      else  if constexpr  ( c == category::int16x8    ) self = _mm_sub_epi16(self, other);
-      else  if constexpr  ( c == category::int8x16    ) self = _mm_sub_epi8(self, other);
-      else  if constexpr  ( c == category::uint64x2   ) self = _mm_sub_epi64(self, other);
-      else  if constexpr  ( c == category::uint32x4   ) self = _mm_sub_epi32(self, other);
-      else  if constexpr  ( c == category::uint16x8   ) self = _mm_sub_epi16(self, other);
-      else  if constexpr  ( c == category::uint8x16   ) self = _mm_sub_epi8(self, other);
-      else  if constexpr  ( c == category::float64x4  ) self = _mm256_sub_pd(self, other);
-      else  if constexpr  ( c == category::float32x8  ) self = _mm256_sub_ps(self, other);
-      else  if constexpr  ( current_api >= avx2 )
-      {
-              if constexpr  ( c == category::int64x4  ) self = _mm256_sub_epi64(self, other);
-        else  if constexpr  ( c == category::uint64x4 ) self = _mm256_sub_epi64(self, other);
-        else  if constexpr  ( c == category::int32x8  ) self = _mm256_sub_epi32(self, other);
-        else  if constexpr  ( c == category::uint32x8 ) self = _mm256_sub_epi32(self, other);
-        else  if constexpr  ( c == category::int16x16 ) self = _mm256_sub_epi16(self, other);
-        else  if constexpr  ( c == category::uint16x16) self = _mm256_sub_epi16(self, other);
-        else  if constexpr  ( c == category::int8x32  ) self = _mm256_sub_epi8(self, other);
-        else  if constexpr  ( c == category::uint8x32 ) self = _mm256_sub_epi8(self, other);
-      }
-      else
-      {
-        auto [s1, s2] = self.slice();
-        auto [o1, o2] = other.slice();
-        s1 -= o1;
-        s2 -= o2;
-        self = type {s1, s2};
-      }
-
-      return self;
-    }
-  }
-
-  //================================================================================================
   // *=
   //================================================================================================
   template<plain_scalar_value T, value U, typename N>
