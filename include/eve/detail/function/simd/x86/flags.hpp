@@ -84,4 +84,5 @@ namespace eve::detail
   {
     return static_cast<std::int32_t>(a);
   }
+
 }
