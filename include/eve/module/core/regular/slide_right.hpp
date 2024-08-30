@@ -65,3 +65,7 @@ namespace detail
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/module/core/regular/impl/simd/ppc/slide_right.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/slide_right.hpp>
+#endif

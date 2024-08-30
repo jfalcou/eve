@@ -29,7 +29,8 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
 {
   using s_t   = tuple_t<T>;
   using w_t   = eve::wide<tuple_t<T>>;
-  using w8_t  = eve::wide<tuple_t<T>, eve::fixed<8>>;
+  using expected_num_elements = eve::fixed<16>;
+  using we_t                  = eve::wide<tuple_t<T>, expected_num_elements>;
 
   auto const filler = [](auto i, auto)  { return s_t{ static_cast<std::int8_t>(1+i)
                                                     , static_cast<T>(i)
@@ -38,29 +39,28 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
                                         };
 
   w_t   reference   = filler;
-  w8_t  reference8  = filler;
+  we_t  reference_expected = filler;
 
   auto il         = eve::ignore_last(w_t::size()/4);
   auto ireference = w_t{kumi::map ( [=]<typename M>(M m){ return m & il.mask(eve::as(m)).mask(); }
                               , reference.storage()
                               )};
 
-  auto [data0,idx0] = page<std::int8_t  , typename w8_t::cardinal_type >();
-  auto [data1,idx1] = page<T            , typename w8_t::cardinal_type >();
-  auto [data2,idx2] = page<double       , typename w8_t::cardinal_type >();
+  auto [data0, idx0] = page<std::int8_t, typename we_t::cardinal_type>();
+  auto [data1, idx1] = page<T, typename we_t::cardinal_type>();
+  auto [data2, idx2] = page<double, typename we_t::cardinal_type>();
 
-  auto src = eve::soa_ptr    ( eve::as_aligned(&data0[idx0],typename w8_t::cardinal_type{})
-                              , &data1[idx1] - 1
-                              , eve::as_aligned(&data2[idx2],typename w8_t::cardinal_type{})
-                              );
-
+  auto src = eve::soa_ptr(eve::as_aligned(&data0[idx0], typename we_t::cardinal_type {}),
+                          &data1[idx1] - 1,
+                          eve::as_aligned(&data2[idx2], typename we_t::cardinal_type {}));
 
   w_t constructed(src);
   TTS_EQUAL(constructed                                , reference   );
   TTS_EQUAL(eve::load(src)                             , reference   );
-  TTS_EQUAL(eve::load(src, eve::lane<8>)               , reference8  );
+  TTS_EQUAL(eve::load(src, eve::lane<expected_num_elements::value>), reference_expected);
   TTS_EQUAL(eve::unsafe(eve::load)(src)                , reference   );
-  TTS_EQUAL(eve::unsafe(eve::load)(src, eve::lane<8>)  , reference8  );
+  TTS_EQUAL(eve::unsafe(eve::load)(src, eve::lane<expected_num_elements::value>),
+            reference_expected);
 
   auto loaded = eve::load[il](src);
   kumi::for_each( [=]<typename M>(M& m){ m &= il.mask(eve::as(m)).mask(); }, loaded);

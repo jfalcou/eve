@@ -24,7 +24,7 @@ template <typename T, typename Algo, typename Op>
 void transform_keep_if_generic_test_aligned_ptr(eve::as<T>, Algo alg, Op op)
 {
   using e_t = eve::element_type_t<T>;
-  alignas(64) std::array<e_t, 23> data;
+  alignas(128) std::array<e_t, 23> data;
   const e_t keep{5};
   const e_t drop{1};
 

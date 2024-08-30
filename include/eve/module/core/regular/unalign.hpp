@@ -95,22 +95,22 @@ namespace eve
 //! @}
 //================================================================================================
 
-//================================================================================================
-//! @addtogroup memory
-//! @{
-//!   @typedef unaligned_t
-//!   @brief  Compute the unaligned pointer type associated to a given type.
-//!   @tparam T Type to process
-//!
-//!   **Required header:** `#include <eve/module/core.hpp>`
-//!
-//!   @code{.cpp}
-//!   template <typename T>
-//!   using unaligned_t = decltype(unalign(std::declval<T>()));
-//!   @endcode
-//! @}
-//================================================================================================
-  template<typename T> using unaligned_t = decltype(unalign(std::declval<T>()));
+  //================================================================================================
+  //! @addtogroup memory
+  //! @{
+  //!   @typedef unaligned_t
+  //!   @brief  Compute the unaligned pointer type associated to a given type.
+  //!   @tparam T Type to process
+  //!
+  //!   **Required header:** `#include <eve/module/core.hpp>`
+  //!
+  //!   @code{.cpp}
+  //!   template <typename T>
+  //!   using unaligned_t = decltype(unalign(static_cast<T>(std::declval<T>())_);
+  //!   @endcode
+  //! @}
+  //================================================================================================
+  template<typename T> using unaligned_t = decltype(unalign(static_cast<T>(std::declval<T>())));
 }
 namespace eve::detail
 {
