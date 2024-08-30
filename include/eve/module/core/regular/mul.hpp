@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct mul_t : tuple_callable<mul_t, Options, saturated_option>
+  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -102,6 +102,13 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/mul.hpp>
 #endif
 
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/mul.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/mul.hpp>
+#endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/mul.hpp>
