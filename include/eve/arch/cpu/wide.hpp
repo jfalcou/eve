@@ -401,9 +401,9 @@ namespace eve
     //! @brief Performs a compound bitwise and on all the wide lanes and assign the result to the current
     //! one
     template<value V>
-    friend EVE_FORCEINLINE auto operator&=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, V> operator&=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, V>)
+        requires (!kumi::product_type<Type>)
 #endif
     {
       return detail::self_bitand(w, o);
@@ -412,9 +412,9 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_FORCEINLINE auto operator&(wide const& v, wide<U, M> const& w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, wide<U, M>> operator&(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, wide<U, M>>)
+        requires (!kumi::product_type<Type>)
 #endif
     {
       auto that = v;
@@ -424,9 +424,9 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a eve::wide and a scalar
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator&(wide const& v, S w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, S> operator&(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto that = v;
@@ -436,9 +436,9 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator&(S v, wide const& w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<S, wide> operator&(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto u = bit_cast(w, as<typename wide::template rebind<S, Cardinal>>());
@@ -448,9 +448,9 @@ namespace eve
     //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current
     //! one
     template<value V>
-    friend EVE_FORCEINLINE auto operator|=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, V> operator|=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, V>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       return detail::self_bitor(w, o);
@@ -459,9 +459,9 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_FORCEINLINE auto operator|(wide const& v, wide<U, M> const& w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, wide<U, M>> operator|(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, wide<U, M>>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       wide that = v;
@@ -471,9 +471,9 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator|(wide const& v, S w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, S> operator|(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto that = v;
@@ -483,9 +483,9 @@ namespace eve
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator|(S v, wide const& w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<S, wide> operator|(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto u = bit_cast(w, as<typename wide::template rebind<S, Cardinal>>());
@@ -494,9 +494,9 @@ namespace eve
 
     //! @brief Performs a bitwise xor on all the wide lanes and assign the result to the current one
     template<value V>
-    friend EVE_FORCEINLINE auto operator^=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, V> operator^=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, V>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       return detail::self_bitxor(w, o);
@@ -505,9 +505,9 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesn't has the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_FORCEINLINE auto operator^(wide const& v, wide<U, M> const& w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, wide<U, M>> operator^(wide const& v, wide<U, M> const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, wide<U, M>>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto that = v;
@@ -517,9 +517,9 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator^(wide const& v, S w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, S> operator^(wide const& v, S w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto that = v;
@@ -529,9 +529,9 @@ namespace eve
     //! @brief Performs a bitwise xor between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator^(S v, wide const& w) noexcept
+    friend EVE_FORCEINLINE bit_value_t<S, wide> operator^(S v, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
-        requires(!kumi::product_type<Type> && bit_compatible_values<wide, S>)
+        requires(!kumi::product_type<Type>)
 #endif
     {
       auto u = bit_cast(w, as<typename wide::template rebind<S, Cardinal>>());

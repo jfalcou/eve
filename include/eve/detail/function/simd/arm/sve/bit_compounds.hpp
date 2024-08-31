@@ -106,12 +106,13 @@ requires sve_abi<abi_t<T, N>>
 }
 
 template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE auto&
+EVE_FORCEINLINE bit_value_t<wide<T, N>, U>&
 self_bitand(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
   using type = wide<T, N>;
-  if constexpr( element_bit_compatible_to<U, type> )
+
+  if constexpr( simd_value<U> )
   {
     auto bit_other = eve::bit_cast(other, as<T> {});
     self           = self_bitand(self, type {bit_other});
@@ -129,12 +130,12 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
 }
 
 template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE auto&
+EVE_FORCEINLINE bit_value_t<wide<T, N>, U>&
 self_bitor(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
   using type = wide<T, N>;
-  if constexpr( element_bit_compatible_to<U, type> )
+  if constexpr( simd_value<U> )
   {
     auto bit_other = eve::bit_cast(other, as<T> {});
     self           = self_bitor(self, type {bit_other});
@@ -151,12 +152,12 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
   return self;
 }
 template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE auto&
+EVE_FORCEINLINE bit_value_t<wide<T, N>, U>&
 self_bitxor(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
   using type = wide<T, N>;
-  if constexpr( element_bit_compatible_to<U, type> )
+  if constexpr( simd_value<U> )
   {
     auto bit_other = eve::bit_cast(other, as<T> {});
     self           = self_bitxor(self, type {bit_other});

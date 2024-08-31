@@ -24,16 +24,6 @@ namespace eve
                            || std::same_as<std::remove_cvref_t<T>,std::remove_cvref_t<U>>;
 
   template<typename T, typename U>
-  concept element_bit_compatible_to = scalar_value<T>
-                                   && simd_value<U>
-                                   && (sizeof(T) == sizeof(element_type_t<U>));
-
-  template<typename T, typename U>
-  concept bit_compatible_values = (sizeof(T) == sizeof(U))
-                               || element_bit_compatible_to<T, U>
-                               || element_bit_compatible_to<U, T>;
-
-  template<typename T, typename U>
   concept size_compatible_to = scalar_value<T>
                             || std::same_as<cardinal_t<T>, cardinal_t<U>>;
 

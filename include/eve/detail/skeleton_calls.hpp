@@ -53,10 +53,10 @@ namespace eve::detail
    // -----------------------------------------------------------------------------------------------
   // binary bit operators scheme
   template<typename Obj, value T, value U>
-  EVE_FORCEINLINE auto bit_call(Obj op
+  EVE_FORCEINLINE bit_value_t<T, U> bit_call(Obj op
                                , T const &a
                                , U const &b) noexcept
-  requires bit_compatible_values<T, U>  && (!std::same_as<U,T>)
+  requires (!std::same_as<U,T>)
   {
     using vt_t = element_type_t<T>;
     using vt_u = element_type_t<U>;
@@ -87,11 +87,11 @@ namespace eve::detail
   }
 
   template<typename Obj, value T, value U, value V>
-  EVE_FORCEINLINE auto bit_call(Obj op
+  EVE_FORCEINLINE bit_value_t<T, U, V> bit_call(Obj op
                                , T const &a
                                , U const &b
                                , V const &c) noexcept
-  requires bit_compatible_values<T, U> && bit_compatible_values<T, V> && bit_compatible_values<U, V>  && (!(std::same_as<U,T> && std::same_as<T,V>))
+  requires (!(std::same_as<U,T> && std::same_as<T,V>))
   {
     using vt_u = element_type_t<U>;
     if constexpr(simd_value<T> && simd_value<U> && simd_value<V>)    //all three are simd so of the same bit size

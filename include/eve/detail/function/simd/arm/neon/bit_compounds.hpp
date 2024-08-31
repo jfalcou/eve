@@ -138,17 +138,12 @@ namespace eve::detail
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U> self_bitand(wide<T, N> &self, U const &other) noexcept
       requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && arm_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
 
-    if constexpr( element_bit_compatible_to<U, type> )
-    {
-      auto bit_other = eve::bit_cast(other, as<T> {});
-      self           = self_bitand(self, type {bit_other});
-    }
-    else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
+    if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
       auto bit_other = eve::bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
@@ -201,6 +196,11 @@ namespace eve::detail
         }
       }
     }
+    else
+    {
+      auto bit_other = eve::bit_cast(other, as<T> {});
+      self           = self_bitand(self, type {bit_other});
+    }
 
     return self;
   }
@@ -209,17 +209,12 @@ namespace eve::detail
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U> self_bitor(wide<T, N> &self, U const &other) noexcept
       requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && arm_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
 
-    if constexpr( element_bit_compatible_to<U, type> )
-    {
-      auto bit_other = eve::bit_cast(other, as<T> {});
-      self           = self_bitor(self, type {bit_other});
-    }
-    else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
+    if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
       auto bit_other = eve::bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
@@ -272,6 +267,11 @@ namespace eve::detail
         }
       }
     }
+    else
+    {
+      auto bit_other = eve::bit_cast(other, as<T> {});
+      self           = self_bitor(self, type {bit_other});
+    }
 
     return self;
   }
@@ -280,17 +280,12 @@ namespace eve::detail
   // ^=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U> self_bitxor(wide<T, N> &self, U const &other) noexcept
       requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && arm_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
 
-    if constexpr( element_bit_compatible_to<U, type> )
-    {
-      auto bit_other = eve::bit_cast(other, as<T> {});
-      self           = self_bitxor(self, type {bit_other});
-    }
-    else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
+    if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
     {
       auto bit_other = eve::bit_cast(other, as<type> {});
       constexpr auto c = categorize<type>();
@@ -342,6 +337,11 @@ namespace eve::detail
                                       );
         }
       }
+    }
+    else
+    {
+      auto bit_other = eve::bit_cast(other, as<T> {});
+      self           = self_bitxor(self, type {bit_other});
     }
 
     return self;
