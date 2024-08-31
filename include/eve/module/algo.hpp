@@ -52,6 +52,7 @@
 #include <eve/module/algo/algo/reduce.hpp>
 #include <eve/module/algo/algo/remove.hpp>
 #include <eve/module/algo/algo/reverse.hpp>
+#include <eve/module/algo/algo/search.hpp>
 #include <eve/module/algo/algo/set_intersection.hpp>
 #include <eve/module/algo/algo/swap_ranges.hpp>
 #include <eve/module/algo/algo/traits.hpp>
