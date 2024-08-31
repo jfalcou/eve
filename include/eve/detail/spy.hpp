@@ -1,12 +1,92 @@
-//==================================================================================================
-/**
+//======================================================================================================================
+/*
   SPY - C++ Informations Broker
-  Copyright : SPY Contributors & Maintainers
+  Copyright : SPY Project Contributors
   SPDX-License-Identifier: BSL-1.0
-**/
-//==================================================================================================
+*/
+//======================================================================================================================
 #ifndef SPY_SPY_HPP_INCLUDED
 #define SPY_SPY_HPP_INCLUDED
+//======================================================================================================================
+//! @namespace spy
+//! @brief Main SPY namespace
+//======================================================================================================================
+namespace spy
+{
+  //====================================================================================================================
+  //! @defgroup api Main API
+  //====================================================================================================================
+  //====================================================================================================================
+  //! @namespace supports
+  //! @brief Support detection SPY namespace
+  //====================================================================================================================
+  namespace supports {}
+  //====================================================================================================================
+  //! @namespace literal
+  //! @brief SPY User-defined literal namespace
+  //====================================================================================================================
+  namespace literal {}
+}
+#include <ostream>
+namespace spy::supports
+{
+  template<int M, int N, int P> struct  sycl_t
+  {
+    explicit constexpr operator bool() const noexcept { return M>0 && N>0; }
+    friend std::ostream& operator<<(std::ostream& os, sycl_t)
+    {
+      os << "SYCL v" << M << '.' << N;
+      if(P>0) os << '.' << P;
+      return os;
+    }
+  };
+  template<int M0, int N0, int P0, int M1, int N1, int P1>
+  constexpr inline bool operator==(sycl_t<M0,N0,P0> const&, sycl_t<M1,N1,P1> const&) noexcept
+  {
+    return M0==M1 && N0==N1 && P0==P1;
+  }
+  template<int M0, int N0, int P0, int M1, int N1, int P1>
+  constexpr inline bool operator!=(sycl_t<M0,N0,P0> const& a, sycl_t<M1,N1,P1> const& b) noexcept
+  {
+    return !(a==b);
+  }
+  template<int M, int N, int P> struct  cuda_t
+  {
+    explicit constexpr operator bool() const noexcept { return M>0 && N>0; }
+    friend std::ostream& operator<<(std::ostream& os, cuda_t)
+    {
+      os << "NVCC CUDA v" << M << '.' << N;
+      if(P>0) os << '.' << P;
+      return os;
+    }
+  };
+  template<int M0, int N0, int P0, int M1, int N1, int P1>
+  constexpr inline bool operator==(cuda_t<M0,N0,P0> const&, cuda_t<M1,N1,P1> const&) noexcept
+  {
+    return M0==M1 && N0==N1 && P0==P1;
+  }
+  template<int M0, int N0, int P0, int M1, int N1, int P1>
+  constexpr inline bool operator!=(cuda_t<M0,N0,P0> const& a, cuda_t<M1,N1,P1> const& b) noexcept
+  {
+    return !(a==b);
+  }
+#if defined(SYCL_LANGUAGE_VERSION) && defined (__INTEL_LLVM_COMPILER)
+#  define SPY_ACCELERATOR_SUPPORTS_SYCL
+  constexpr inline auto  sycl  = sycl_t<SYCL_LANGUAGE_VERSION/100, SYCL_LANGUAGE_VERSION%100, 0>{};
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline auto  sycl = **implementation-defined**;
+#else
+  constexpr inline auto  sycl  = sycl_t<-1,-1,-1>{};
+#endif
+#if defined(__CUDACC__)
+#  define SPY_ACCELERATOR_SUPPORTS_CUDA
+  constexpr inline auto  cuda  = cuda_t<__CUDACC_VER_MAJOR__, __CUDACC_VER_MINOR__, 0>{};
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline auto  cuda  = **implementation-defined**;
+#else
+  constexpr inline auto  cuda  = cuda_t<-1,-1,-1>{};
+#endif
+}
 #include <ostream>
 namespace spy::detail
 {
@@ -14,6 +94,7 @@ namespace spy::detail
                     , x86_ = 10, amd64_ = 11
                     , ppc_ = 20, arm_ = 30
                     , wasm_ = 40
+                    , riscv_ = 50
                     };
   template<archs Arch> struct arch_info
   {
@@ -33,6 +114,7 @@ namespace spy::detail
     if(Arch == archs::ppc_  ) return os << "PowerPC";
     if(Arch == archs::arm_  ) return os << "ARM";
     if(Arch == archs::wasm_ ) return os << "WebAssembly";
+    if(Arch == archs::riscv_) return os << "RISC-V";
     return os << "Undefined Architecture";
   }
 }
@@ -58,6 +140,9 @@ namespace spy
 #elif defined(__wasm__)
   using arch_type = detail::arch_info<detail::archs::wasm_>;
   #define SPY_ARCH_IS_WASM
+#elif defined(__riscv)
+  using arch_type = detail::arch_info<detail::archs::riscv_>;
+  #define SPY_ARCH_IS_RISCV
 #else
   #define SPY_ARCH_IS_UNKNOWN
   using arch_type = detail::arch_info<detail::archs::undefined_>;
@@ -69,7 +154,7 @@ namespace spy::detail
   template<archs Arch>
   inline constexpr arch_info<Arch>::operator bool() const noexcept
   {
-    return *this == spy::architecture;
+    return spy::architecture == *this;
   }
 }
 namespace spy
@@ -79,6 +164,7 @@ namespace spy
   constexpr inline auto ppc_    = detail::arch_info<detail::archs::ppc_>{};
   constexpr inline auto arm_    = detail::arch_info<detail::archs::arm_>{};
   constexpr inline auto wasm_   = detail::arch_info<detail::archs::wasm_>{};
+  constexpr inline auto riscv_  = detail::arch_info<detail::archs::riscv_>{};
 }
 #include <ostream>
 namespace spy::detail
@@ -198,9 +284,14 @@ constexpr bool operator<=( TYPE<C2,M2,N2,P2> const& c2 ) const noexcept \
   return C2 == vendor && version <= c2.version;                         \
 }                                                                       \
 
+#if defined __has_include
+#  if __has_include (<emscripten/version.h>)
+#    include <emscripten/version.h>
+#  endif
+#endif
 namespace spy::detail
 {
-  enum class compilers { undefined_  = - 1, msvc_, intel_, clang_, gcc_, emscripten_ };
+  enum class compilers { undefined_  = - 1, msvc_, intel_, clang_, gcc_, emscripten_, dpcpp_, nvcc_ };
   template<compilers Compiler, int M, int N, int P> struct compilers_info
   {
     static constexpr compilers          vendor  = Compiler;
@@ -216,24 +307,36 @@ namespace spy::detail
   template<compilers C, int M, int N, int P>
   std::ostream& operator<<(std::ostream& os, compilers_info<C, M, N, P> const& c)
   {
-    if(C == compilers::msvc_ ) return os << "Microsoft Visual Studio "  << c.version;
-    if(C == compilers::intel_) return os << "Intel icpc "               << c.version;
-    if(C == compilers::clang_) return os << "clang "                    << c.version;
-    if(C == compilers::gcc_  ) return os << "g++ "                      << c.version;
-    if(C == compilers::emscripten_  ) return os << "Emscripten "        << c.version;
+    if(C == compilers::nvcc_ ) return os << "NVIDIA CUDA Compiler "               << c.version;
+    if(C == compilers::msvc_ ) return os << "Microsoft Visual Studio "            << c.version;
+    if(C == compilers::intel_) return os << "Intel(R) C++ Compiler "              << c.version;
+    if(C == compilers::dpcpp_) return os << "Intel(R) oneAPI DPC++/C++ Compiler " << c.version;
+    if(C == compilers::clang_) return os << "clang "                              << c.version;
+    if(C == compilers::gcc_  ) return os << "g++ "                                << c.version;
+    if(C == compilers::emscripten_  ) return os << "Emscripten "                  << c.version;
     return os << "Undefined " << c.version;
   }
   template<int M, int N, int P> using msvc_t        = compilers_info<compilers::msvc_ ,M,N,P>;
   template<int M, int N, int P> using intel_t       = compilers_info<compilers::intel_,M,N,P>;
+  template<int M, int N, int P> using dpcpp_t       = compilers_info<compilers::dpcpp_,M,N,P>;
+  template<int M, int N, int P> using nvcc_t        = compilers_info<compilers::nvcc_ ,M,N,P>;
   template<int M, int N, int P> using clang_t       = compilers_info<compilers::clang_,M,N,P>;
   template<int M, int N, int P> using gcc_t         = compilers_info<compilers::gcc_  ,M,N,P>;
   template<int M, int N, int P> using emscripten_t  = compilers_info<compilers::emscripten_,M,N,P>;
 }
 namespace spy
 {
-#if defined(_MSC_VER)
+#if defined(__NVCC__)
+  #define SPY_COMPILER_IS_NVCC
+  using compiler_type = detail::nvcc_t<__CUDACC_VER_MAJOR__, __CUDACC_VER_MINOR__, 0>;
+#elif defined(_MSC_VER)
   #define SPY_COMPILER_IS_MSVC
   using compiler_type = detail::msvc_t<_MSC_VER / 100, _MSC_VER % 100, _MSC_FULL_VER % 100000>;
+#elif defined(__INTEL_LLVM_COMPILER)
+  #define SPY_COMPILER_IS_INTEL_DPCPP
+  #define SPY0 __INTEL_LLVM_COMPILER
+  using compiler_type = detail::dpcpp_t<SPY0/10000,(SPY0 / 100) % 100, SPY0 % 100>;
+  #undef SPY0
 #elif defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC)
   #define SPY_COMPILER_IS_INTEL
   #define SPY0 __INTEL_COMPILER
@@ -260,19 +363,25 @@ namespace spy::detail
   template<compilers C, int M, int N, int P>
   inline constexpr compilers_info<C,M,N,P>::operator bool() const noexcept
   {
-    return *this == spy::compiler;
+    return spy::compiler == *this;
   }
 }
 namespace spy
 {
+  constexpr inline auto  nvcc_        = detail::nvcc_t<-1,0,0>{};
   constexpr inline auto  msvc_        = detail::msvc_t<-1,0,0>{};
   constexpr inline auto  intel_       = detail::intel_t<-1,0,0>{};
+  constexpr inline auto  dpcpp_       = detail::dpcpp_t<-1,0,0>{};
   constexpr inline auto  clang_       = detail::clang_t<-1,0,0>{};
   constexpr inline auto  gcc_         = detail::gcc_t<-1,0,0>{};
   constexpr inline auto  emscripten_  = detail::emscripten_t<-1,0,0>{};
 }
 namespace spy::literal
 {
+  template<char ...c> constexpr auto operator"" _nvcc()
+  {
+    return detail::literal_wrap<detail::nvcc_t,c...>();
+  }
   template<char ...c> constexpr auto operator"" _msvc()
   {
     return detail::literal_wrap<detail::msvc_t,c...>();
@@ -280,6 +389,10 @@ namespace spy::literal
   template<char ...c> constexpr auto operator"" _intel()
   {
     return detail::literal_wrap<detail::intel_t,c...>();
+  }
+  template<char ...c> constexpr auto operator"" _dpcpp()
+  {
+    return detail::literal_wrap<detail::dpcpp_t,c...>();
   }
   template<char ...c> constexpr auto operator"" _clang()
   {
@@ -323,14 +436,14 @@ namespace spy
   using data_model_type = detail::data_model_info < sizeof(short), sizeof(int)
                                                   , sizeof(long), sizeof(void*)
                                                   >;
-  constexpr inline data_model_type data_model;
+  constexpr inline auto data_model = data_model_type{};
 }
 namespace spy::detail
 {
   template<int Short, int Integer, int Long, int Pointer>
   inline constexpr data_model_info<Short, Integer, Long, Pointer>::operator bool() const noexcept
   {
-    return *this == spy::data_model;
+    return spy::data_model == *this;
   }
 }
 namespace spy
@@ -364,8 +477,8 @@ namespace spy::detail
     if(c.vendor == libC::cloudabi_) return os << "CloudABI Standard C Library " << c.version;
     if(c.vendor == libC::uc_      ) return os << "uClibc Standard C Library "   << c.version;
     if(c.vendor == libC::vms_     ) return os << "VMS Standard C Library "      << c.version;
-    if(c.vendor == libC::zos_     ) return os << "z/OS Standard C Library "    << c.version;
-    if(c.vendor == libC::gnu_     ) return os << "GNU Standard C Library "     << c.version;
+    if(c.vendor == libC::zos_     ) return os << "z/OS Standard C Library "     << c.version;
+    if(c.vendor == libC::gnu_     ) return os << "GNU Standard C Library "      << c.version;
     return os << "Undefined Standard C Library";
   }
   template<int M, int N, int P> using cloudabi_t  = libc_info<libC::cloudabi_ ,M,N,P>;
@@ -403,14 +516,14 @@ namespace spy
   #define SPY_LIBC_IS_UNKNOWN
   using libc_type = detail::libc_info<detail::libC::undefined_,-1,0,0>;
 #endif
-  constexpr inline libc_type libc;
+  constexpr inline auto libc = libc_type{};
 }
 namespace spy::detail
 {
   template<libC C, int M, int N, int P>
   inline constexpr libc_info<C,M,N,P>::operator bool() const noexcept
   {
-    return *this == spy::libc;
+    return spy::libc == *this;
   }
 }
 namespace spy
@@ -513,7 +626,7 @@ namespace spy::detail
   template<systems OS>
   inline constexpr os_info<OS>::operator bool() const noexcept
   {
-    return *this == spy::operating_system;
+    return spy::operating_system == *this;
   }
 }
 namespace spy
@@ -529,11 +642,15 @@ namespace spy
 }
 namespace spy::supports
 {
-#if(MAC_OS_X_VERSION_MIN_REQUIRED >= 1090) || (_POSIX_C_SOURCE >= 200112L) || (_XOPEN_SOURCE >= 600)
-#define SPY_SUPPORTS_POSIX
+#if defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline auto posix_ = **implementation specified**;
+#else
+# if(MAC_OS_X_VERSION_MIN_REQUIRED >= 1090) || (_POSIX_C_SOURCE >= 200112L) || (_XOPEN_SOURCE >= 600)
+# define SPY_SUPPORTS_POSIX
   constexpr inline auto posix_ = true;
 #else
   constexpr inline auto posix_ = false;
+# endif
 #endif
 }
 #if defined(__has_feature)
@@ -558,11 +675,15 @@ namespace spy::supports
 {
 #if defined(SPY_ADDRESS_SANITIZERS_ENABLED)
   constexpr bool address_sanitizers_status = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr bool address_sanitizers_status = **implementation-specified**;
 #else
   constexpr bool address_sanitizers_status = false;
 #endif
 #if defined(SPY_THREAD_SANITIZERS_ENABLED)
   constexpr bool thread_sanitizers_status = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr bool thread_sanitizers_status = **implementation-specified**;
 #else
   constexpr bool thread_sanitizers_status = false;
 #endif
@@ -788,6 +909,28 @@ namespace avx512
 #endif
 }
 }
+#if defined(__ARM_FEATURE_SVE2)
+# if !defined(__ARM_FEATURE_SVE_BITS) || (__ARM_FEATURE_SVE_BITS == 0)
+#   define SPY_SIMD_IS_ARM_FLEXIBLE_SVE2
+#   define SPY_SIMD_DETECTED ::spy::detail::simd_version::sve2_
+# elif defined(__ARM_FEATURE_SVE_BITS)
+#   if(__ARM_FEATURE_SVE_BITS == 128)
+#     define SPY_SIMD_IS_ARM_FIXED_SVE2
+#     define SPY_SIMD_DETECTED ::spy::detail::simd_version::fixed_sve2_
+#   elif(__ARM_FEATURE_SVE_BITS == 256)
+#     define SPY_SIMD_IS_ARM_FIXED_SVE2
+#     define SPY_SIMD_DETECTED ::spy::detail::simd_version::fixed_sve2_
+#   elif(__ARM_FEATURE_SVE_BITS == 512)
+#     define SPY_SIMD_IS_ARM_FIXED_SVE2
+#     define SPY_SIMD_DETECTED ::spy::detail::simd_version::fixed_sve2_
+#   elif(__ARM_FEATURE_SVE_BITS == 1024)
+#     define SPY_SIMD_IS_ARM_FIXED_SVE2
+#     define SPY_SIMD_DETECTED ::spy::detail::simd_version::fixed_sve2_
+#   else
+#   error "[SPY] - No support for non-power of 2 SVE-2 cardinals"
+#   endif
+# endif
+#endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__ARM_FEATURE_SVE)
 # if !defined(__ARM_FEATURE_SVE_BITS) || (__ARM_FEATURE_SVE_BITS == 0)
 #   define SPY_SIMD_IS_ARM_FLEXIBLE_SVE
@@ -805,8 +948,17 @@ namespace avx512
 #   elif(__ARM_FEATURE_SVE_BITS == 1024)
 #     define SPY_SIMD_IS_ARM_FIXED_SVE
 #     define SPY_SIMD_DETECTED ::spy::detail::simd_version::fixed_sve_
+#   else
+#   error "[SPY] - No support for non-power of 2 SVE cardinals"
 #   endif
 # endif
+#endif
+#if defined(__ARM_FEATURE_SVE2)
+# define SPY_SIMD_IS_ARM_SVE2
+# define SPY_SIMD_VENDOR ::spy::detail::simd_isa::arm_sve_
+#elif defined(__ARM_FEATURE_SVE)
+# define SPY_SIMD_IS_ARM_SVE
+# define SPY_SIMD_VENDOR ::spy::detail::simd_isa::arm_sve_
 #endif
 #if !defined(SPY_SIMD_DETECTED) && defined(__aarch64__)
 #  define SPY_SIMD_IS_ARM_ASIMD
@@ -870,9 +1022,28 @@ namespace avx512
 #  define SPY_SIMD_IS_WASM
 #  define SPY_SIMD_VENDOR ::spy::detail::simd_isa::wasm_
 #endif
+#if defined(__riscv_vector)
+# if !defined(__riscv_v_fixed_vlen)
+#   define SPY_SIMD_IS_RISCV_FLEXIBLE_RVV
+#   define SPY_SIMD_DETECTED  ::spy::detail::simd_version::rvv_
+#else
+#  define SPY_SIMD_IS_RISCV_FIXED_RVV
+#  define SPY_SIMD_DETECTED  ::spy::detail::simd_version::fixed_rvv_
+#endif
+#endif
+#if defined(__riscv_vector)
+# define SPY_SIMD_IS_RISCV_RVV
+# define SPY_SIMD_VENDOR    ::spy::detail::simd_isa::riscv_
+#endif
 namespace spy::detail
 {
-  enum class simd_isa { undefined_ = -1, x86_ = 1000, ppc_ = 2000, arm_ = 3000, wasm_ = 4000 };
+  enum class simd_isa { undefined_  = -1
+                      , x86_        = 1000
+                      , ppc_        = 2000
+                      , arm_        = 3000, arm_sve_ = 3500
+                      , wasm_       = 4000
+                      , riscv_      = 5000
+                      };
   enum class simd_version { undefined_  = -1
                           , sse1_       = 1110, sse2_  = 1120, sse3_ = 1130, ssse3_ = 1131
                           , sse41_      = 1141, sse42_ = 1142
@@ -885,9 +1056,13 @@ namespace spy::detail
                           , vsx_2_06_   = 3206, vsx_2_07_ = 3207, vsx_3_00_ = 3300, vsx_3_01_ = 3301
                           , neon_       = 4001, asimd_    = 4002
                           , sve_        = 5000, fixed_sve_  = 5100
+                          , sve2_       = 5500, fixed_sve2_ = 5600
                           , simd128_    = 6000
+                          , rvv_        = 7000, fixed_rvv_  = 7500
                           };
-  template<simd_isa InsSetArch = simd_isa::undefined_, simd_version Version = simd_version::undefined_>
+  template< simd_isa InsSetArch  = simd_isa::undefined_
+          , simd_version Version = simd_version::undefined_
+          >
   struct simd_info
   {
     static constexpr auto           isa     = InsSetArch;
@@ -901,7 +1076,20 @@ namespace spy::detail
                   )                                                                       return 128;
       else  if constexpr(Version == simd_version::avx_ || Version == simd_version::avx2_) return 256;
       else  if constexpr(Version == simd_version::avx512_     )                           return 512;
-      else  if constexpr(Version == simd_version::fixed_sve_  )
+      else if constexpr( Version == simd_version::rvv_ )                                  return -1;
+      else if constexpr( Version == simd_version::fixed_rvv_ )
+      {
+#if defined(__riscv_v_fixed_vlen)
+        return __riscv_v_fixed_vlen;
+#else
+        return -1;
+#endif
+      }
+      else  if constexpr(Version == simd_version::sve_ || Version == simd_version::sve2_)
+      {
+        return -1;
+      }
+      else  if constexpr(Version == simd_version::fixed_sve_ || Version == simd_version::fixed_sve2_)
       {
 #if defined(__ARM_FEATURE_SVE_BITS)
         return __ARM_FEATURE_SVE_BITS;
@@ -911,6 +1099,7 @@ namespace spy::detail
       }
       else return -1;
     }();
+    static constexpr bool has_fixed_cardinal() { return width != -1; }
     friend std::ostream& operator<<(std::ostream& os, simd_info const&)
     {
             if constexpr ( Version == simd_version::simd128_  ) os << "WASM SIMD128";
@@ -933,12 +1122,14 @@ namespace spy::detail
         constexpr auto v = static_cast<int>(Version);
         os << "PPC VSX with ISA v" << ((v-3000)/100.);
       }
-      else  if constexpr ( Version == simd_version::neon_     ) os  << "ARM NEON";
-      else  if constexpr ( Version == simd_version::asimd_    ) os  << "ARM ASIMD";
-      else  if constexpr ( Version == simd_version::sve_      ) os  << "ARM SVE (dyn. bits)";
-      else  if constexpr ( Version == simd_version::fixed_sve_) os  << "ARM SVE ("
-                                                                    << simd_info::width
-                                                                    << " bits)";
+      else  if constexpr ( Version == simd_version::neon_       ) os  << "ARM NEON";
+      else  if constexpr ( Version == simd_version::asimd_      ) os  << "ARM ASIMD";
+      else  if constexpr ( Version == simd_version::sve_        ) os  << "ARM SVE (dyn.)";
+      else  if constexpr ( Version == simd_version::fixed_sve_  ) os  << "ARM SVE (" << simd_info::width << " bits)";
+      else  if constexpr ( Version == simd_version::sve2_       ) os  << "ARM SVE2 (dyn.)";
+      else  if constexpr ( Version == simd_version::fixed_sve2_ ) os  << "ARM SVE2 (" << simd_info::width << " bits)";
+      else  if constexpr ( Version == simd_version::rvv_        ) os  << "RISC-V RVV (dyn.)";
+      else  if constexpr ( Version == simd_version::fixed_rvv_  ) os  << "RISC-V RVV (" << simd_info::width << " bits)";
       else return os << "Undefined SIMD instructions set";
       if constexpr (spy::supports::fma_)     os << " (with FMA3 support)";
       if constexpr (spy::supports::fma4_)    os << " (with FMA4 support)";
@@ -1022,11 +1213,20 @@ namespace spy
   constexpr inline auto vsx_3_01_ = ppc_simd_info<detail::simd_version::vsx_3_01_>{};
   template<detail::simd_version V = detail::simd_version::undefined_>
   using arm_simd_info = detail::simd_info<detail::simd_isa::arm_,V>;
+  template<detail::simd_version V = detail::simd_version::undefined_>
+  using sve_simd_info = detail::simd_info<detail::simd_isa::arm_sve_,V>;
   constexpr inline auto arm_simd_   = arm_simd_info<>{};
   constexpr inline auto neon_       = arm_simd_info<detail::simd_version::neon_ >{};
   constexpr inline auto asimd_      = arm_simd_info<detail::simd_version::asimd_>{};
-  constexpr inline auto sve_        = arm_simd_info<detail::simd_version::sve_>{};
-  constexpr inline auto fixed_sve_  = arm_simd_info<detail::simd_version::fixed_sve_>{};
+  constexpr inline auto sve_        = sve_simd_info<detail::simd_version::sve_>{};
+  constexpr inline auto fixed_sve_  = sve_simd_info<detail::simd_version::fixed_sve_>{};
+  constexpr inline auto sve2_       = sve_simd_info<detail::simd_version::sve2_>{};
+  constexpr inline auto fixed_sve2_ = sve_simd_info<detail::simd_version::fixed_sve2_>{};
+  template<detail::simd_version V= detail::simd_version::undefined_>
+  using riscv_simd_info             =  detail::simd_info<detail::simd_isa::riscv_, V>;
+  constexpr inline auto riscv_simd_ = riscv_simd_info<> {};
+  constexpr inline auto rvv_        = riscv_simd_info<detail::simd_version::rvv_> {};
+  constexpr inline auto fixed_rvv_  = riscv_simd_info<detail::simd_version::fixed_rvv_> {};
 }
 #include <cstddef>
 namespace spy::detail
@@ -1048,7 +1248,7 @@ namespace spy::detail
   std::ostream& operator<<(std::ostream& os, stdlib_info<SLib, M, N, P> const& p)
   {
     if(SLib == stdlib::libcpp_) return os << "libc++ Standard C++ Library " << p.version ;
-    if(SLib == stdlib::gnucpp_) return os << "GNU Standard C++ Library" << p.version;
+    if(SLib == stdlib::gnucpp_) return os << "GNU Standard C++ Library " << p.version;
     return os << "Undefined Standard C++ Library";
   }
   template<int M, int N, int P> using libcpp_t = stdlib_info<stdlib::libcpp_,M,N,P>;
@@ -1068,14 +1268,14 @@ namespace spy
   #define SPY_STDLIB_IS_UNKNOWN
   using stdlib_type = detail::stdlib_info<detail::stdlib::undefined_,-1,0,0>;
 #endif
-  constexpr inline stdlib_type stdlib;
+  constexpr inline auto stdlib = stdlib_type{};
 }
 namespace spy::detail
 {
   template<stdlib SLib, int M, int N, int P>
   inline constexpr stdlib_info<SLib,M,N,P>::operator bool() const noexcept
   {
-    return *this == spy::stdlib;
+    return spy::stdlib == *this;
   }
 }
 namespace spy
