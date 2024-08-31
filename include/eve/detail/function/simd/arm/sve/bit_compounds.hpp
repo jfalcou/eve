@@ -104,27 +104,4 @@ requires sve_abi<abi_t<T, N>>
     return self;
   }
 }
-
-template<scalar_value T, value U, typename N>
-EVE_FORCEINLINE bit_value_t<wide<T, N>, U>&
-self_bitor(wide<T, N>& self, U const& other) noexcept
-requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
-{
-  using type = wide<T, N>;
-
-  if constexpr( simd_value<U> )
-  {
-    using i_t = typename type::template rebind <as_integer_t<T, signed>,N>;
-    constexpr auto tgt = as<i_t>();
-    self = bit_cast ( i_t(svorr_x(sve_true<T>(), bit_cast(self,tgt), bit_cast(other,tgt)))
-                    , as(self)
-                    );
-  }
-  else
-  {
-    self = self_bitor(self, type{eve::bit_cast(other, as<T>{})});
-  }
-
-  return self;
-}
 }
