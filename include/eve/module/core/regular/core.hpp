@@ -92,6 +92,7 @@
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_eqpz.hpp>
 #include <eve/module/core/regular/is_even.hpp>
 #include <eve/module/core/regular/is_finite.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
