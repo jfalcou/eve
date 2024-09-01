@@ -44,8 +44,9 @@ struct iota_t : callable<iota_t, Options, conditional_option>
 //!   @code
 //!   namespace eve
 //!   {
-//!      template <eve::conditional_expr C,
-//!                eve::arithmetic_simd_value T>
+//!      template < eve::conditional_expr C
+//!               , eve::arithmetic_simd_value T
+//!               >
 //!      T iota[C cond](as<T> tgt);
 //!   }
 //!   @endcode
@@ -64,6 +65,7 @@ struct iota_t : callable<iota_t, Options, conditional_option>
 //!
 //!  @godbolt{test/doc/core/constant/iota.cpp}
 //! @}
+//================================================================================================
 inline constexpr auto iota = functor<iota_t>;
 }
 

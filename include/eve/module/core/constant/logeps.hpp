@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#pragma once
-
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
@@ -18,15 +16,11 @@ namespace eve
   template<typename Options>
   struct logeps_t : constant_callable<logeps_t, Options, downward_option, upward_option>
   {
-    template<floating_value T, typename Opts>
+    template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      using e_t = element_type_t<T>;
-
-      if constexpr(std::same_as<e_t, float>)
-        return T(-0x1.fe2804p+3);
-      else
-        return T(-0x1.205966f2b4f12p+5);
+      if      constexpr(std::same_as<T, float> ) return T(-0x1.fe2804p+3);
+      else if constexpr(std::same_as<T, double>) return T(-0x1.205966f2b4f12p+5);
     }
 
     template<floating_value T>
@@ -52,8 +46,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T logeps(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T logeps(as<T> x);
 //!   }
 //!   @endcode
 //!

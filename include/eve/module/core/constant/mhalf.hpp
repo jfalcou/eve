@@ -16,18 +16,15 @@ namespace eve
   template<typename Options>
   struct mhalf_t : constant_callable<mhalf_t, Options, downward_option, upward_option>
   {
-    template<floating_value T>
+    template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-
-           if constexpr(std::same_as<e_t, float>  ) return T(-0x1p-1);
-      else if constexpr(std::same_as<e_t, double> ) return T(-0x1p-1f);
+      if      constexpr(std::same_as<T, float>  ) return T(-0x1p-1);
+      else if constexpr(std::same_as<T, double> ) return T(-0x1p-1f);
     }
 
     template<floating_value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(mhalf_t, mhalf_);
   };
@@ -49,18 +46,17 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T mhalf(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T mhalf(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!   * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
 //!
 //!    **Return value**
 //!
-//!      The call `eve::mhalf(as<T>())` is semantically equivalent to  `T(-0.5)`.
+//!    The call `eve::mhalf(as<T>())` is semantically equivalent to `T(-0.5)`.
 //!
 //!  @groupheader{Example}
 //!

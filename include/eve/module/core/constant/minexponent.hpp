@@ -19,11 +19,10 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;
 
-      if constexpr(std::same_as<e_t, float>  ) return  i_t(-126);
-      else if constexpr(std::same_as<e_t, double> ) return  i_t(-1022);
+      if      constexpr(std::same_as<T, float>  ) return i_t(-126);
+      else if constexpr(std::same_as<T, double> ) return i_t(-1022);
     }
 
     template<floating_value T>
@@ -49,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_integer<T> minexponent(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr eve::as_integer_t<T> minexponent(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

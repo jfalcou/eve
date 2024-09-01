@@ -16,19 +16,17 @@ namespace eve
   template<typename Options>
   struct mantissamask_t : constant_callable<mantissamask_t, Options, downward_option, upward_option>
   {
-    template<floating_value T>
-    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-      using i_t = as_integer_t<T>;
+      using i_t = as_uinteger_t<T>;
 
-      if constexpr(std::same_as<e_t, float>  ) return i_t(0x807FFFFFU);
-      else if constexpr(std::same_as<e_t, double> ) return i_t(0x800FFFFFFFFFFFFFULL);
+      if      constexpr(std::same_as<T, float>  ) return i_t(0x807FFFFFU);
+      else if constexpr(std::same_as<T, double> ) return i_t(0x800FFFFFFFFFFFFFULL);
     }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr as_uinteger_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(mantissamask_t, mantissamask_);
   };
@@ -50,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_unsigned<T> mantissamask(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr eve::as_uinteger_t<T> mantissamask(as<T> x);
 //!   }
 //!   @endcode
 //!

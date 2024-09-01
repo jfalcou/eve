@@ -9,6 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/concept/value.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
 namespace eve
@@ -19,23 +20,20 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = eve::element_type_t<T>;
+      if      constexpr( std::same_as<T, float>   ) return T(-0x0p+0f);
+      else if constexpr( std::same_as<T, double>  ) return T(-0x0p+0);
+      else if constexpr( std::same_as<T, uint8_t> ) return T(0x80U);
+      else if constexpr( std::same_as<T, uint16_t>) return T(0x8000U);
+      else if constexpr( std::same_as<T, uint32_t>) return T(0x80000000U);
+      else if constexpr( std::same_as<T, uint64_t>) return T(0x8000000000000000ULL);
+      else if constexpr( std::same_as<T, int8_t>  ) return T(-128);
+      else if constexpr( std::same_as<T, int16_t> ) return T(-32768);
+      else if constexpr( std::same_as<T, int32_t> ) return T(-2147483648LL);
+      else if constexpr( std::same_as<T, int64_t> ) return T(-9223372036854775807LL - 1);
+    }
 
-         if constexpr( std::same_as<e_t, float> )     return T(-0x0p+0f);
-    else if constexpr( std::same_as<e_t, double> )    return T(-0x0p+0);
-    else if constexpr( std::same_as<e_t, uint8_t> )   return T(0x80U);
-    else if constexpr( std::same_as<e_t, uint16_t> )  return T(0x8000U);
-    else if constexpr( std::same_as<e_t, uint32_t> )  return T(0x80000000U);
-    else if constexpr( std::same_as<e_t, uint64_t> )  return T(0x8000000000000000ULL);
-    else if constexpr( std::same_as<e_t, int8_t> )    return T(-128);
-    else if constexpr( std::same_as<e_t, int16_t> )   return T(-32768);
-    else if constexpr( std::same_as<e_t, int32_t> )   return T(-2147483648LL);
-    else if constexpr( std::same_as<e_t, int64_t> )   return T(-9223372036854775807LL - 1);
-  }
-
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<plain_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(signmask_t, signmask_);
   };
@@ -57,8 +55,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T signmask(as<T> x) noexcept;
+//!     template<eve::plain_value T> constexpr T signmask(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

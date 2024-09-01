@@ -17,14 +17,13 @@ namespace eve
   struct one_t : constant_callable<one_t, Options, downward_option, upward_option>
   {
     template<typename T>
-    static constexpr EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
       return T(1);
     }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      constexpr EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<plain_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(one_t, one_);
   };
@@ -46,8 +45,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T one(as<T> x) noexcept;
+//!     template<eve::plain_value T> constexpr T one(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

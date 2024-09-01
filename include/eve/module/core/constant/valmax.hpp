@@ -19,11 +19,10 @@ namespace eve
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      using e_t = element_type_t<T>;
-      return T(std::numeric_limits<e_t>::max());
+      return std::numeric_limits<T>::max();
     }
 
-    template<eve::value T>
+    template<plain_value T>
     EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(valmax_t, valmax_);
@@ -46,8 +45,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T valmax(as<T> x) noexcept;
+//!     template<eve::plain_value T> constexpr T valmax(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

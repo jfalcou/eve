@@ -7,24 +7,25 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+
 namespace eve
 {
   template<typename Options>
   struct mzero_t : constant_callable<mzero_t, Options, downward_option, upward_option>
   {
     template<typename T>
-    static constexpr EVE_FORCEINLINE T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-
-           if constexpr(std::integral<e_t>        ) return T(0);
-      else if constexpr(std::same_as<e_t, float>  ) return T(-0.0f);
-      else if constexpr(std::same_as<e_t, double> ) return T(-0.0);
+      if      constexpr(std::integral<T>        ) return T(0);
+      else if constexpr(std::same_as<T, float>  ) return T(-0.0f);
+      else if constexpr(std::same_as<T, double> ) return T(-0.0);
    }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      constexpr EVE_FORCEINLINE T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<plain_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(mzero_t, mzero_);
   };
@@ -52,8 +53,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T mzero(as<T> x) noexcept;
+//!     template<eve::plain_value T> constexpr T mzero(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -71,5 +71,4 @@ namespace eve
 //! @}
 //================================================================================================
   inline constexpr auto mzero = functor<mzero_t>;
-
 }

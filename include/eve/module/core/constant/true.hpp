@@ -6,6 +6,7 @@
 */
 //==================================================================================================
 #pragma once
+
 #include <eve/arch.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/overload.hpp>
