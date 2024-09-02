@@ -13,17 +13,6 @@
 
 namespace eve::detail
 {
-  // Generate better code on x86 than just comparing to 0
-  template<integral_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  is_gtz_(EVE_REQUIRES(sse2_), O const &, wide<T, N> const& v) noexcept
-  requires(sizeof(T) < 8 && x86_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
-  {
-    using l_t            = as_logical_t<wide<T, N>>;
-    constexpr auto shift = 8 * sizeof(T) - 1;
-    return bit_cast(v >> shift, as<l_t> {});
-  }
-
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE logical<wide<T, N>> is_gtz_(EVE_REQUIRES(avx512_),
                                               O          const &,
