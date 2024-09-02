@@ -90,5 +90,9 @@ namespace eve::detail
         return r_t(popcount(lo), popcount(hi));
       }
     }
+    else
+    {
+      return popcount.behavior(cpu_{}, o, x);
+    }
   }
 }
