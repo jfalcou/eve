@@ -26,7 +26,6 @@ namespace eve::detail
   EVE_FORCEINLINE auto putcounts(wide<T, N> in)
   {
     using i8_t = typename wide<T,N>::template rebind<std::uint8_t, fixed<S>>;
-
     }
     else if constexpr( sizeof(T) == 4 || sizeof(T) == 2 )
     {
@@ -59,8 +58,7 @@ namespace eve::detail
         auto xx     = bit_cast(x, as<i16_t>());
         if constexpr( sizeof(T) == 8 )
         {
-          xx = putcounts(xx);
-          return bit_cast(_mm256_sad_epu8(xx, _mm256_setzero_si256()), as<r_t>());
+          return bit_cast(_mm256_sad_epu8(putcounts<32>(xx), _mm256_setzero_si256()), as<r_t>());
         }
         else if constexpr( sizeof(T) == 1 )
         {
