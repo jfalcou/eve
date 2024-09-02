@@ -22,11 +22,11 @@
 
 namespace eve::detail
 {
-  template<typename T, typename N>
-  EVE_FORCEINLINE auto putcounts( wide<T, N> in)
+  template<auto S, typename T, typename N>
+  EVE_FORCEINLINE auto putcounts(wide<T, N> in)
   {
-    using i8_t = typename wide<T,N>::template rebind<std::uint8_t>;
-    
+    using i8_t = typename wide<T,N>::template rebind<std::uint8_t, fixed<S>>;
+
     const i8_t pattern_2bit(0x55);
     const i8_t pattern_4bit(0x33);
     const i8_t pattern_16bit(0x0f);
@@ -41,18 +41,18 @@ namespace eve::detail
 
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> x) noexcept
-  requires std::same_as<abi_t<T, N>, x86_128_>
+    requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if constexpr ((sizeof(T) == 8) || (sizeof(T) == 1))
     {
       using r_t = wide<T, N>;
-      using u16_t = typename wide<T,N>::template rebind<std::uint16_t>;
+      using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<8>>;
 
-      auto xx     = bit_cast(x, as<u16_t>());
+      auto xx = bit_cast(x, as<u16_t>());
 
       if constexpr (sizeof(T) == 8)
       {
-        return bit_cast(_mm_sad_epu8(putcounts(xx), _mm_setzero_si128()), as<r_t>());
+        return bit_cast(_mm_sad_epu8(putcounts<16>(xx), _mm_setzero_si128()), as<r_t>());
       }
       else if constexpr (sizeof(T) == 1)
       {
@@ -78,13 +78,12 @@ namespace eve::detail
     {
       if constexpr ((sizeof(T) == 8) || (sizeof(T) == 1))
       {
-        using u16_t = typename wide<T,N>::template rebind<std::uint16_t>;
-        auto xx     = bit_cast(x, as<u16_t>());
+        using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<16>>;
+        auto xx = bit_cast(x, as<u16_t>());
 
         if constexpr (sizeof(T) == 8)
         {
-          xx = putcounts(xx);
-          return bit_cast(_mm256_sad_epu8(xx, _mm256_setzero_si256()), as<r_t>());
+          return bit_cast(_mm256_sad_epu8(putcounts<32>(xx), _mm256_setzero_si256()), as<r_t>());
         }
         else if constexpr (sizeof(T) == 1)
         {
