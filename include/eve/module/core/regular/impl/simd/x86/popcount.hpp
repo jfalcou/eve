@@ -22,57 +22,51 @@
 
 namespace eve::detail
 {
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto putcounts( wide<T, N> in)
+  {
+    using i8_t = typename wide<T,N>::template rebind<std::uint8_t>;
+    const i8_t pattern_2bit(0x55);
+    const i8_t pattern_4bit(0x33);
+    const i8_t pattern_16bit(0x0f);
+    auto xx = bit_cast(in, as<i8_t>()); // put
+    xx -= bit_shr(xx, 1) & pattern_2bit; // put
+    xx  = (xx & pattern_4bit) + (bit_shr(xx, 2) & pattern_4bit);
+    xx  = (xx + bit_shr(xx, 4)) & pattern_16bit; // put count of each 8 bits into those 8 bits
+    return bit_cast(xx,as(in));
+  };
 
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const&, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    auto putcounts = [](auto xx)
-      {
-        using N8   = fixed<N::value * sizeof(T)>;
-        using i8_t = wide<std::int8_t, N8>;
-        const i8_t pattern_2bit(0x55);
-        const i8_t pattern_4bit(0x33);
-        const i8_t pattern_16bit(0x0f);
-        xx -= bit_shr(xx, 1) & pattern_2bit; // put count of each 2 bits into those 2 bits
-        xx = (xx & pattern_4bit)
-        + (bit_shr(xx, 2) & pattern_4bit);     // put count of each 4 bits into those 4 bits
-        xx = (xx + bit_shr(xx, 4)) & pattern_16bit; // put count of each 8 bits into those 8 bits
-        return xx;
-      };
-
     using r_t = wide<T, N>;
     if constexpr( sizeof(T) == 8 || sizeof(T) == 1 )
     {
-      using N16   = fixed<(sizeof(T) < 8) ? 8u : sizeof(T)>;
-      using i16_t = wide<uint16_t, N16>;
+      using i16_t = typename wide<T,N>::template rebind<std::uint16_t>;
       auto xx     = bit_cast(x, as<i16_t>());
       if constexpr( sizeof(T) == 8 )
       {
-        xx = putcounts(xx);
-        return bit_cast(_mm_sad_epu8(xx, _mm_setzero_si128()), as<r_t>());
+        return bit_cast(_mm_sad_epu8(putcounts(xx), _mm_setzero_si128()), as<r_t>());
       }
       else if constexpr( sizeof(T) == 1 )
       {
         const i16_t masklow(0xff);
-        return bit_cast(popcount(xx & masklow) + (popcount(bit_shr(xx, 8) & masklow) << 8),
-                        as<r_t>());
+        return bit_cast(popcount(xx & masklow) + (popcount(bit_shr(xx, 8) & masklow) << 8), as<r_t>());
       }
     }
     else if constexpr( sizeof(T) == 4 || sizeof(T) == 2 )
     {
-      using N8   = fixed<N::value * sizeof(T)>;
-      using i8_t = wide<std::int8_t, N8>;
+      using i8_t = typename wide<T,N>::template rebind<std::uint8_t>;
       const i8_t pattern_2bit(0x55);
       const i8_t pattern_4bit(0x33);
       const i8_t pattern_16bit(0x0f);
       const r_t  mask(0x7f);
+
       x = putcounts(x);
-      if constexpr( sizeof(T) >= 2 )
-        x += bit_shr(x, 8); // put count of each 16 bits into their lowest 8 bits
-      if constexpr( sizeof(T) >= 4 )
-        x += bit_shr(x, 16); // put count of each 32 bits into their lowest 8 bits
-      return bit_cast(x & mask, as<r_t>());
+      if constexpr( sizeof(T) >= 2 ) x += bit_shr(x,  8); // put count of each 16 bits into their lowest 8 bits
+      if constexpr( sizeof(T) >= 4 ) x += bit_shr(x, 16); // put count of each 32 bits into their lowest 8 bits
+      return bit_cast(x & mask, as(mask));
     }
   }
 
@@ -86,20 +80,6 @@ namespace eve::detail
     using r_t = wide<T, N>;
     if constexpr( current_api >= avx2 )
     {
-      auto putcounts = [](auto xx)
-        {
-          using N8   = fixed<N::value * sizeof(T)>;
-          using i8_t = wide<std::int8_t, N8>;
-          const i8_t pattern_2bit(0x55);
-          const i8_t pattern_4bit(0x33);
-          const i8_t pattern_16bit(0x0f);
-          xx -= bit_shr(xx, 1) & pattern_2bit; // put count of each 2 bits into those 2 bits
-          xx = (xx & pattern_4bit)
-          + (bit_shr(xx, 2) & pattern_4bit);     // put count of each 4 bits into those 4 bits
-          xx = (xx + bit_shr(xx, 4)) & pattern_16bit; // put count of each 8 bits into those 8 bits
-          return xx;
-        };
-
       if constexpr( sizeof(T) == 8 || sizeof(T) == 1 )
       {
         using N16   = fixed<(sizeof(T) < 8) ? 16 : sizeof(T) * 2>;
