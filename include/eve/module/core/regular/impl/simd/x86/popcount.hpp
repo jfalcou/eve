@@ -22,20 +22,33 @@
 
 namespace eve::detail
 {
+<<<<<<< HEAD
   template<auto S, typename T, typename N>
   EVE_FORCEINLINE auto putcounts(wide<T, N> in)
   {
     using i8_t = typename wide<T,N>::template rebind<std::uint8_t, fixed<S>>;
 
+=======
+  template<typename T, typename N>
+  EVE_FORCEINLINE auto putcounts( wide<T, N> in)
+  {
+    using i8_t = typename wide<T,N>::template rebind<std::uint8_t>;
+>>>>>>> 217c72876 ([no ci] Potential popcoutn fix)
     const i8_t pattern_2bit(0x55);
     const i8_t pattern_4bit(0x33);
     const i8_t pattern_16bit(0x0f);
     auto xx = bit_cast(in, as<i8_t>()); // put
+<<<<<<< HEAD
 
     xx -= bit_shr(xx, 1) & pattern_2bit; // put
     xx  = (xx & pattern_4bit) + (bit_shr(xx, 2) & pattern_4bit);
     xx  = (xx + bit_shr(xx, 4)) & pattern_16bit; // put count of each 8 bits into those 8 bits
 
+=======
+    xx -= bit_shr(xx, 1) & pattern_2bit; // put
+    xx  = (xx & pattern_4bit) + (bit_shr(xx, 2) & pattern_4bit);
+    xx  = (xx + bit_shr(xx, 4)) & pattern_16bit; // put count of each 8 bits into those 8 bits
+>>>>>>> 217c72876 ([no ci] Potential popcoutn fix)
     return bit_cast(xx,as(in));
   };
 
@@ -43,6 +56,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> x) noexcept
     requires std::same_as<abi_t<T, N>, x86_128_>
   {
+<<<<<<< HEAD
     if constexpr (sizeof(T) == 8)
     {
       using r_t = wide<T, N>;
@@ -51,10 +65,39 @@ namespace eve::detail
       auto xx = bit_cast(x, as<u16_t>());
 
       return bit_cast(_mm_sad_epu8(putcounts<16>(xx), _mm_setzero_si128()), as<r_t>());
+=======
+    using r_t = wide<T, N>;
+    if constexpr( sizeof(T) == 8 || sizeof(T) == 1 )
+    {
+      using i16_t = typename wide<T,N>::template rebind<std::uint16_t>;
+      auto xx     = bit_cast(x, as<i16_t>());
+      if constexpr( sizeof(T) == 8 )
+      {
+        return bit_cast(_mm_sad_epu8(putcounts(xx), _mm_setzero_si128()), as<r_t>());
+      }
+      else if constexpr( sizeof(T) == 1 )
+      {
+        const i16_t masklow(0xff);
+        return bit_cast(popcount(xx & masklow) + (popcount(bit_shr(xx, 8) & masklow) << 8), as<r_t>());
+      }
+>>>>>>> 217c72876 ([no ci] Potential popcoutn fix)
     }
     else
     {
+<<<<<<< HEAD
       return popcount.behavior(cpu_{}, opts, x); 
+=======
+      using i8_t = typename wide<T,N>::template rebind<std::uint8_t>;
+      const i8_t pattern_2bit(0x55);
+      const i8_t pattern_4bit(0x33);
+      const i8_t pattern_16bit(0x0f);
+      const r_t  mask(0x7f);
+
+      x = putcounts(x);
+      if constexpr( sizeof(T) >= 2 ) x += bit_shr(x,  8); // put count of each 16 bits into their lowest 8 bits
+      if constexpr( sizeof(T) >= 4 ) x += bit_shr(x, 16); // put count of each 32 bits into their lowest 8 bits
+      return bit_cast(x & mask, as(mask));
+>>>>>>> 217c72876 ([no ci] Potential popcoutn fix)
     }
   }
 
@@ -65,10 +108,16 @@ namespace eve::detail
     requires std::same_as<abi_t<T, N>, x86_256_>
   {
     using r_t = wide<T, N>;
+<<<<<<< HEAD
 
     if constexpr (sizeof(T) == 8)
     {
       if constexpr (current_api >= avx2)
+=======
+    if constexpr( current_api >= avx2 )
+    {
+      if constexpr( sizeof(T) == 8 || sizeof(T) == 1 )
+>>>>>>> 217c72876 ([no ci] Potential popcoutn fix)
       {
         using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<16>>;
         auto xx = bit_cast(x, as<u16_t>());
