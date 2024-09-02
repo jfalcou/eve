@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of eve::is_minf(simd) IEEE",
   using v_t = eve::element_type_t<T>;
   a0        = eve::if_else(eve::is_eqz(a0), eve::inf(eve::as<v_t>()), eve::zero);
   TTS_EQUAL(eve::is_minf(a0),
-            map([](auto e) -> eve::logical<v_t> { return e - e != 0 && e == e < 0; }, a0));
+            map([](auto e) -> eve::logical<v_t> { return e - e != 0 && e < 0; }, a0));
   TTS_EQUAL(eve::is_minf[t](a0),
             eve::if_else(t, eve::is_minf(a0), eve::false_(eve::as(a0))));
 };
