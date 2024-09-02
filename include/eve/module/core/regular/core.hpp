@@ -107,6 +107,7 @@
 #include <eve/module/core/regular/is_lessgreater.hpp>
 #include <eve/module/core/regular/is_lez.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_minf.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_ngez.hpp>
