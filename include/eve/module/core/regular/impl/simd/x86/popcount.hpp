@@ -43,22 +43,14 @@ namespace eve::detail
   EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> x) noexcept
     requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if constexpr ((sizeof(T) == 8) || (sizeof(T) == 1))
+    if constexpr (sizeof(T) == 8)
     {
       using r_t = wide<T, N>;
       using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<8>>;
 
       auto xx = bit_cast(x, as<u16_t>());
 
-      if constexpr (sizeof(T) == 8)
-      {
-        return bit_cast(_mm_sad_epu8(putcounts<16>(xx), _mm_setzero_si128()), as<r_t>());
-      }
-      else if constexpr (sizeof(T) == 1)
-      {
-        const u16_t masklow(0xff);
-        return bit_cast(popcount(xx & masklow) + (popcount(bit_shr(xx, 8) & masklow) << 8), as<r_t>());
-      }
+      return bit_cast(_mm_sad_epu8(putcounts<16>(xx), _mm_setzero_si128()), as<r_t>());
     }
     else
     {
@@ -74,39 +66,24 @@ namespace eve::detail
   {
     using r_t = wide<T, N>;
 
-    if constexpr (current_api >= avx2)
+    if constexpr (sizeof(T) == 8)
     {
-      if constexpr ((sizeof(T) == 8) || (sizeof(T) == 1))
+      if constexpr (current_api >= avx2)
       {
         using u16_t = typename wide<T,N>::template rebind<std::uint16_t, fixed<16>>;
         auto xx = bit_cast(x, as<u16_t>());
 
-        if constexpr (sizeof(T) == 8)
-        {
-          return bit_cast(_mm256_sad_epu8(putcounts<32>(xx), _mm256_setzero_si256()), as<r_t>());
-        }
-        else if constexpr (sizeof(T) == 1)
-        {
-          const u16_t masklow(0xff);
-          return bit_cast(popcount(xx & masklow) + (popcount(bit_shr(xx, 8) & masklow) << 8), as<r_t>());
-        }
-      }
-      else
-      {
-        return popcount.behavior(cpu_{}, o, x);
-      }
-    }
-    else
-    {
-      if constexpr (sizeof(T) >= 8)
-      {
-        return popcount.behavior(cpu_{}, o, x);
+        return bit_cast(_mm256_sad_epu8(putcounts<32>(xx), _mm256_setzero_si256()), as<r_t>());
       }
       else
       {
         auto [lo, hi] = x.slice();
         return r_t{popcount(lo), popcount(hi)};
       }
+    }
+    else
+    {
+      return popcount.behavior(cpu_{}, o, x);
     }
   }
 }
