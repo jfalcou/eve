@@ -22,7 +22,7 @@ namespace eve::detail
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::neg | fpclass::qnan | fpclass::snan;
+    constexpr auto f = fpclass::neg | fpclass::qnan| fpclass::neginf | fpclass::snan;
 
     using s_t = typename l_t::storage_type;
 
