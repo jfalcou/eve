@@ -90,7 +90,7 @@ namespace eve
   {
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    is_bit_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, U const& b) noexcept
+    is_bit_equal_(EVE_REQUIRES(cpu_),O const &, T const& a, U const& b) noexcept
     {
       using b_t =  bit_value_t<T, U>;
       using ui_t = as_integer_t<b_t, unsigned>;
@@ -99,7 +99,7 @@ namespace eve
 
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    is_bit_equal_(EVE_REQUIRES(cpu_),O const & o, logical<T> const& a, logical<U> const& b) noexcept
+    is_bit_equal_(EVE_REQUIRES(cpu_),O const &, logical<T> const& a, logical<U> const& b) noexcept
     {
       return is_equal(a, b);
     }
