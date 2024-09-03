@@ -126,6 +126,32 @@ jobs:
         run:  cd build && ctest --output-on-failure -j 4  -E ^doc.*.exe
 
   ##################################################################################################
+  ## RISC-V Targets
+  ##################################################################################################
+  riscv:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v8
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: riscv, opts: "-mrvv-vector-bits=128" }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.meta.exe -j 5
+      - name: Running Unit Tests
+        run:  cd build && ctest --output-on-failure -j 4  -R ^unit.meta.*.exe
+
+  ##################################################################################################
   ## Mac OS X Targets
   ##################################################################################################
   macosx:
