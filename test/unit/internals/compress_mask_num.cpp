@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#if defined(SPY_SIMD_IS_ARM_FIXED_SVE)
+#if defined(SPY_SIMD_IS_ARM_FIXED_SVE) || defined(SPY_SIMD_IS_ARM_FIXED_SVE2)
 TTS_CASE("compress_store helpers")
 {
   TTS_PASS("Nothing to do here");

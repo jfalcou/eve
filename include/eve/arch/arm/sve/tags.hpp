@@ -45,14 +45,24 @@ namespace eve
   struct sve256_  : simd_api<sve_vls_, spy::fixed_sve_> {  using is_sve = void;  };
   struct sve512_  : simd_api<sve_vls_, spy::fixed_sve_> {  using is_sve = void;  };
 
+  struct sve2_      : simd_api<sve_   , spy::sve2_>       {  using is_sve = void;  };
+  struct sve2_128_  : simd_api<sve128_, spy::fixed_sve2_> {  using is_sve = void;  };
+  struct sve2_256_  : simd_api<sve256_, spy::fixed_sve2_> {  using is_sve = void;  };
+  struct sve2_512_  : simd_api<sve512_, spy::fixed_sve2_> {  using is_sve = void;  };
+
   //================================================================================================
   // SVE extensions tag objects
   //================================================================================================
-  inline constexpr sve_     sve       = {};
-  inline constexpr sve_vls_ sve_vls   = {};
-  inline constexpr sve128_  sve128    = {};
-  inline constexpr sve256_  sve256    = {};
-  inline constexpr sve512_  sve512    = {};
+  inline constexpr sve_     sve        = {};
+  inline constexpr sve_vls_ sve_vls    = {};
+  inline constexpr sve128_  sve128     = {};
+  inline constexpr sve256_  sve256     = {};
+  inline constexpr sve512_  sve512     = {};
+
+  inline constexpr sve2_      sve2     = {};
+  inline constexpr sve2_128_  sve2_128 = {};
+  inline constexpr sve2_256_  sve2_256 = {};
+  inline constexpr sve2_512_  sve2_512 = {};
 
   //================================================================================================
   // ARM SVE ABI concept
