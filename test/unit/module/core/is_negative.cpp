@@ -58,8 +58,8 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::is_negative on wide", eve::tes
   using eve::as;
 
   auto cases = tts::limits(tgt);
-  TTS_EQUAL(eve::is_negative(cases.nan), eve::true_(as<T>()));
-  TTS_EQUAL(eve::is_negative(-cases.nan), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_negative[eve::pedantic](cases.nan), eve::false_(as<T>()));
+  TTS_EQUAL(eve::is_negative[eve::pedantic](-cases.nan), eve::false_(as<T>()));
   TTS_EQUAL(eve::is_negative(cases.minf), eve::true_(as<T>()));
   TTS_EQUAL(eve::is_negative(cases.inf), eve::false_(as<T>()));
   TTS_EQUAL(eve::is_negative(cases.zero), eve::false_(as<T>()));

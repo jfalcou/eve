@@ -28,6 +28,11 @@ namespace eve::detail
     return static_cast<std::int32_t>(a) | static_cast<std::int32_t>(b);
   }
 
+  EVE_FORCEINLINE constexpr std::int32_t to_integer(fpclass a) noexcept
+  {
+    return static_cast<std::int32_t>(a);
+  }
+
   enum class range_ctrl { min = 0b00
                         , max = 0b01
                         , absolute_min= 0b10

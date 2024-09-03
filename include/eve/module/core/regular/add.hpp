@@ -59,6 +59,8 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto add[saturated](/*any of the above overloads*/)                noexcept; // 4
+//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!
 //!   }
 //!   @endcode
 //!

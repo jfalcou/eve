@@ -89,8 +89,11 @@
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/interleave.hpp>
 #include <eve/module/core/regular/interleave_shuffle.hpp>
+#include <eve/module/core/regular/is_bit_equal.hpp>
 #include <eve/module/core/regular/is_denormal.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
+#include <eve/module/core/regular/is_eqmz.hpp>
+#include <eve/module/core/regular/is_eqpz.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_even.hpp>
 #include <eve/module/core/regular/is_finite.hpp>
@@ -105,8 +108,11 @@
 #include <eve/module/core/regular/is_lessgreater.hpp>
 #include <eve/module/core/regular/is_lez.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_minf.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_negative.hpp>
+#include <eve/module/core/regular/is_nemz.hpp>
+#include <eve/module/core/regular/is_nepz.hpp>
 #include <eve/module/core/regular/is_ngez.hpp>
 #include <eve/module/core/regular/is_ngtz.hpp>
 #include <eve/module/core/regular/is_nlez.hpp>
