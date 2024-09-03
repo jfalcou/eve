@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>E.V.E: eve::is_negative</title>
+<title>E.V.E: eve::is_nepz</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -95,7 +95,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -121,8 +121,8 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga7ba2adf258c1
 </div>
 
 <div class="contents">
-<a id="ga7ba2adf258c1260146322c1148845c15" name="ga7ba2adf258c1260146322c1148845c15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7ba2adf258c1260146322c1148845c15">&#9670;&#160;</a></span>is_negative</h2>
+<a id="ga8cd5533a316cdd5972f82bf366bceeef" name="ga8cd5533a316cdd5972f82bf366bceeef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8cd5533a316cdd5972f82bf366bceeef">&#9670;&#160;</a></span>is_nepz</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga7ba2adf258c1
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">eve::is_negative = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;is_negative_t&gt;</td>
+          <td class="memname">eve::is_nepz = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;is_nepz_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -146,33 +146,28 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga7ba2adf258c1
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">   <span class="comment">// Regular overload</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;                          <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">is_nepz</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;                          <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;    <span class="comment">// 2</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="comment">// Semantic options</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">is_negative</a>[pedantic](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)<span class="keyword">noexcept</span>;                 <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">is_nepz</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">is_nepz</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;    <span class="comment">// 2</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the underlying_ty...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__core__predicates_ga7ba2adf258c1260146322c1148845c15_html_ga7ba2adf258c1260146322c1148845c15"><div class="ttname"><a href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a></div><div class="ttdeci">constexpr auto is_negative</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is signed and has its ...</div><div class="ttdef"><b>Definition:</b> is_negative.hpp:84</div></div>
+<div class="ttc" id="agroup__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef_html_ga8cd5533a316cdd5972f82bf366bceeef"><div class="ttname"><a href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">eve::is_nepz</a></div><div class="ttdeci">constexpr auto is_nepz</div><div class="ttdoc">elementwise callable returning a logical true if and only if &quot;positive&quot; zero.</div><div class="ttdef"><b>Definition:</b> is_nepz.hpp:69</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><code>x</code>: <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
+<li><code>x</code>: <a class="el" href="concepteve_1_1value.html">floating argument</a>.</li>
 <li><code>c</code>: Conditional expression masking the operation.</li>
 <li><code>m</code>: Logical value masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>For signed types The call <code><a class="el" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15" title="elementwise callable returning a logical true if and only if the element value is signed and has its ...">is_negative(x)</a></code> returns true if and only if the bit of sign (most significant bit) is set. Of course the result on a NaN input is generally out of control.</li>
+<li><code><a class="el" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef" title="elementwise callable returning a logical true if and only if &quot;positive&quot; zero.">is_nepz(x)</a></code> is true if and only if all bits of the representation of <code>x</code> are zero.</li>
 <li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
-<li>with this option a NaN input always return false.</li>
 </ol>
-<dl class="section note"><dt>Note</dt><dd>this function coincides with <code>is_ltz</code> on <a class="el" href="concepteve_1_1value.html">integral real values</a>, but for <a class="el" href="concepteve_1_1floating__value.html">floating values</a> <code>T</code>, <code>is_negative(mzero&lt;</code>T<code>&gt;)</code> is true and if <code>n</code> is a Nan the result depends of the bit of sign of <code>n</code> which can be out of control although not undefined.</dd></dl>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -180,28 +175,16 @@ $(document).ready(function(){initNavTree('group__core__predicates_ga7ba2adf258c1
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">nan</a> =  <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>());</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -<a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">nan</a>, <a class="code hl_variable" href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">nan</a>};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -0.0};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                              = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                              = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                              = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                          = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[pedantic](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[eve::pedantic](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[wu0 != 0](wu0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[wu0 != 0](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_negative[wi0 != 0](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga7ba2adf258c1260146322c1148845c15.html#ga7ba2adf258c1260146322c1148845c15">eve::is_negative</a>[wi0 != 0](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_nepz(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">eve::is_nepz</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_nepz[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">eve::is_nepz</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; is_nepz[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__predicates_ga8cd5533a316cdd5972f82bf366bceeef.html#ga8cd5533a316cdd5972f82bf366bceeef">eve::is_nepz</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7_html_ga8ea0a46980f39915fc1780a3ed3c36f7"><div class="ttname"><a href="group__core__constants_ga8ea0a46980f39915fc1780a3ed3c36f7.html#ga8ea0a46980f39915fc1780a3ed3c36f7">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition:</b> nan.hpp:69</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:70</div></div>
 </div><!-- fragment --> 
