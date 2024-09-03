@@ -15,7 +15,7 @@
 namespace eve
 {
   template<typename Options>
-  struct is_negative_t : elementwise_callable<is_negative_t, Options>
+  struct is_negative_t : elementwise_callable<is_negative_t, Options, pedantic_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
@@ -51,6 +51,9 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto is_negative[conditional_expr auto c](value auto x) noexcept; // 2
 //!      constexpr auto is_negative[logical_value auto m](value auto x) noexcept;    // 2
+//!
+//!      // Semantic options
+//!      constexpr auto is_negative[pedantic](value auto x)noexcept;                 // 3
 //!   }
 //!   @endcode
 //!
@@ -65,6 +68,7 @@ namespace eve
 //!     1. For signed types The call `is_negative(x)` returns true
 //!        if and only if the bit of sign (most significant bit) is set.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
+//!     3. with this otion a nan is never negative.
 //!
 //!   @note
 //!     this function coincides with `is_ltz` on [integral real values](@ref eve::value),
@@ -88,6 +92,10 @@ namespace eve
     {
       if constexpr( unsigned_value<T> )
         return false_(eve::as(v));
+      else if constexpr(O::contains(pedantic))
+      {
+        return is_negative(v) && is_not_nan(v);
+      }
       else
       {
         if constexpr( signed_integral_value<T> )
@@ -108,3 +116,7 @@ namespace eve
     }
   }
 }
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/is_negative.hpp>
+#endif
