@@ -114,16 +114,15 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
 
   if constexpr( simd_value<U> )
   {
-    auto bit_other = eve::bit_cast(other, as<T> {});
-    self           = self_bitand(self, type {bit_other});
-  }
-  else
-  {
     using i_t = typename type::template rebind <as_integer_t<T, signed>,N>;
     constexpr auto tgt = as<i_t>();
     self = bit_cast ( i_t(svand_x(sve_true<T>(), bit_cast(self,tgt), bit_cast(other,tgt)))
                     , as(self)
                     );
+  }
+  else
+  {
+    self = self_bitand(self, eve::bit_cast(other, as<type>{}));
   }
 
   return self;
@@ -135,18 +134,18 @@ self_bitor(wide<T, N>& self, U const& other) noexcept
 requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_abi<abi_t<T, N>>
 {
   using type = wide<T, N>;
+
   if constexpr( simd_value<U> )
-  {
-    auto bit_other = eve::bit_cast(other, as<T> {});
-    self           = self_bitor(self, type {bit_other});
-  }
-  else
   {
     using i_t = typename type::template rebind <as_integer_t<T, signed>,N>;
     constexpr auto tgt = as<i_t>();
     self = bit_cast ( i_t(svorr_x(sve_true<T>(), bit_cast(self,tgt), bit_cast(other,tgt)))
                     , as(self)
                     );
+  }
+  else
+  {
+    self = self_bitor(self, eve::bit_cast(other, as<type>{}));
   }
 
   return self;
@@ -159,16 +158,15 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
   using type = wide<T, N>;
   if constexpr( simd_value<U> )
   {
-    auto bit_other = eve::bit_cast(other, as<T> {});
-    self           = self_bitxor(self, type {bit_other});
-  }
-  else
-  {
     using i_t = typename type::template rebind <as_integer_t<T, signed>,N>;
     constexpr auto tgt = as<i_t>();
     self = bit_cast ( i_t(sveor_x(sve_true<T>(), bit_cast(self,tgt), bit_cast(other,tgt)))
                     , as(self)
                     );
+  }
+  else
+  {
+    self = self_bitxor(self, eve::bit_cast(other, as<type>{}));
   }
 
   return self;
