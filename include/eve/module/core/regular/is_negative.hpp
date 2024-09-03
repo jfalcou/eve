@@ -67,9 +67,10 @@ namespace eve
 //!   **Return value**
 //!
 //!     1. For signed types The call `is_negative(x)` returns true
-//!        if and only if the bit of sign (most significant bit) is set.
+//!        if and only if the bit of sign (most significant bit) is set. Of course the result on a NaN input
+//!        is generally out of control.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. with this otion a nan is never negative.
+//!     3. with this option a NaN input always return false.
 //!
 //!   @note
 //!     this function coincides with `is_ltz` on [integral real values](@ref eve::value),
