@@ -10,6 +10,8 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_positive.hpp>
 
 namespace eve
 {
@@ -80,7 +82,7 @@ namespace eve
       if constexpr(integral_value<T>)
         return false_(as<T>());
       else
-        return logical_andnot(is_nez(a), is_eqpz(a));
+        return logical_or(is_positive(a), is_ltz(a));
     }
   }
 }
