@@ -122,7 +122,7 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
   }
   else
   {
-    self = self_bitand(self, eve::bit_cast(other, as<type>{}));
+    self = self_bitand(self, type{eve::bit_cast(other, as<T>{})});
   }
 
   return self;
@@ -145,7 +145,7 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
   }
   else
   {
-    self = self_bitor(self, eve::bit_cast(other, as<type>{}));
+    self = self_bitor(self, type{eve::bit_cast(other, as<T>{})});
   }
 
   return self;
@@ -166,7 +166,7 @@ requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && sve_a
   }
   else
   {
-    self = self_bitxor(self, eve::bit_cast(other, as<type>{}));
+    self = self_bitxor(self, type{eve::bit_cast(other, as<T>{})});
   }
 
   return self;
