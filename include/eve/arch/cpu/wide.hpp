@@ -451,7 +451,8 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
     {
-      return detail::self_bitor(w, o);
+      w = bit_or(w, o);
+      return w;
     }
 
     //! @brief Performs a bitwise or between all lanes of two wide instances.
@@ -462,8 +463,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
     {
-      wide that = v;
-      return that |= w;
+      return bit_or(a, b);
     }
 
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
@@ -474,8 +474,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
     {
-      auto that = v;
-      return that |= bit_cast(w, as<Type> {});
+      return bit_or(w, bit_cast(s, as<Type>{}));
     }
 
     //! @brief Performs a bitwise or between all lanes of a scalar and a eve::wide
@@ -486,8 +485,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      auto u = bit_cast(w, as<typename wide::template rebind<S, Cardinal>>());
-      return u |= v;
+      return bit_or(bit_cast(w, as<wide<S, Cardinal>>{}), s);
     }
 
     //! @brief Performs a bitwise xor on all the wide lanes and assign the result to the current one
