@@ -66,7 +66,7 @@ TTS_CASE_TPL( "Check that wide<T,N,ppc*> does not satisfy native_simd_for_abi wi
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_64_ , eve::arm_128_  > ));
   TTS_EXPECT_NOT((eve::native_simd_for_abi<logical<wide<T>> , eve::x86_128_ , eve::x86_256_, eve::x86_512_ > ));
 };
-#elif defined(SPY_SIMD_IS_ARM_FIXED_SVE) || defined(SPY_SIMD_IS_ARM_FIXED_SVE2)
+#elif defined(EVE_SIMD_IS_ANY_FIXED_SVE)
 TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM SVE ABI"
             , ::tts::arithmetic_types
             )
