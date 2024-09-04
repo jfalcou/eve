@@ -413,7 +413,7 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of two wide instances.
     //! Do not participate to overload resolution if both wide doesnot have the same `sizeof`
     template<scalar_value U, typename M>
-    friend EVE_FORCEINLINE wide operator&(wide const& v, wide<U, M> const& w) noexcept
+    friend EVE_FORCEINLINE wide operator&(wide const& a, wide<U, M> const& b) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires (!kumi::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
@@ -424,7 +424,7 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a eve::wide and a scalar
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE wide operator&(wide const& v, S w) noexcept
+    friend EVE_FORCEINLINE wide operator&(wide const& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
@@ -435,7 +435,7 @@ namespace eve
     //! @brief Performs a bitwise and between all lanes of a scalar and a eve::wide
     //! Do not participate to overload resolution if `sizeof(Type) != sizeof(S)`
     template<scalar_value S>
-    friend EVE_FORCEINLINE wide<S, Cardinal> operator&(S v, wide const& w) noexcept
+    friend EVE_FORCEINLINE wide<S, Cardinal> operator&(S s, wide const& w) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif

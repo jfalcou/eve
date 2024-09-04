@@ -116,7 +116,7 @@ namespace eve
     requires(match_option<condition_key,O,ignore_none_>)
     {
       constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-      static_assert(supports_call, "[EVE] - Missing implementation for current strict elementwise callable");
+      static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
       return adapt_call(arch,opts,x0,xs...);
     }
 
@@ -211,7 +211,7 @@ namespace eve
     requires(match_option<condition_key,O,ignore_none_>)
     {
       constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-      static_assert(supports_call, "[EVE] - Missing implementation for current elementwise callable");
+      static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
       return adapt_call(arch,opts,x0,xs...);
     }
 

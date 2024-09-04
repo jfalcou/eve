@@ -12,29 +12,26 @@
 
 namespace eve::detail
 {
-
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
-    puts("impl");
-    return a;
-    // if constexpr (simd_value<T>)
-    // {
-    //   // assume T != U
-    //   if constexpr (simd_value<U>) return bit_and(a, bit_cast(b, as<T>{}));
-    //   else                         return bit_and(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
-    // }
-    // else if constexpr (simd_value<U>)
-    // {
-    //   // T sclar, U simd
-    //   return bit_and(bit_cast(b, as<typename U::template rebind<T>>{}), a);
-    // }
-    // else
-    // {
-    //   // both scalar
-    //   static_assert(scalar_value<T> && scalar_value<U>, "T and U must be scalar values");
-    //   return a & bit_cast(b, as<T>{});
-    // }
+    if constexpr (simd_value<T>)
+    {
+      // assume T != U
+      if constexpr (simd_value<U>) return bit_and(a, bit_cast(b, as<T>{}));
+      else                         return bit_and(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+    }
+    else if constexpr (simd_value<U>)
+    {
+      // T sclar, U simd
+      return bit_and(bit_cast(b, as<typename U::template rebind<T>>{}), a);
+    }
+    else
+    {
+      // both scalar
+      static_assert(scalar_value<T> && scalar_value<U>, "T and U must be scalar values");
+      return a & bit_cast(b, as<T>{});
+    }
   }
 
   //================================================================================================
