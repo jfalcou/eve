@@ -18,21 +18,21 @@ namespace eve
   {
     template<value T0, value T1>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
-      requires(same_lanes_or_scalar<T0, T1>)
+      requires (same_lanes_or_scalar<T0, T1>)
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
+    
     template<value T0, value T1, value... Ts>
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-      requires(same_lanes_or_scalar<T0, T1, Ts...>)
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
-      requires(kumi::size_v<Tup> >= 2)
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
     {
       return EVE_DISPATCH_CALL(t);
     }
