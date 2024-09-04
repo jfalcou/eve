@@ -101,6 +101,18 @@ namespace eve
 
 #include <eve/module/core/regular/impl/bit_and.hpp>
 
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/bit_and.hpp>
+#endif
+
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/bit_and.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_and.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/bit_and.hpp>
 #endif

@@ -406,7 +406,8 @@ namespace eve
         requires (!kumi::product_type<Type> && supports_bitwise_call<wide, V>)
 #endif
     {
-      return detail::self_bitand(w, o);
+      w = bit_and(w, o);
+      return w;
     }
 
     //! @brief Performs a bitwise and between all lanes of two wide instances.
@@ -417,8 +418,7 @@ namespace eve
         requires (!kumi::product_type<Type> && supports_bitwise_call<wide, wide<U, M>>)
 #endif
     {
-      auto that = v;
-      return that &= w;
+      return bit_and(a, b);
     }
 
     //! @brief Performs a bitwise and between all lanes of a eve::wide and a scalar
@@ -429,8 +429,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<wide, S>)
 #endif
     {
-      auto that = v;
-      return that &= bit_cast(w, as<Type> {});
+      return bit_and(w, bit_cast(s, as<Type> {}));
     }
 
     //! @brief Performs a bitwise and between all lanes of a scalar and a eve::wide
@@ -441,8 +440,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      auto u = bit_cast(w, as<typename wide::template rebind<S, Cardinal>>());
-      return u &= v;
+      return bit_and(bit_cast(w, as<wide<S, Cardinal>>()), s);
     }
 
     //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current

@@ -201,47 +201,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // &=
-  //================================================================================================
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitand(wide<T, N> &self, U const &other) noexcept
-  requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
-  {
-    using type = wide<T, N>;
-
-    if constexpr( scalar_value<U> )
-    {
-      return self &= type{bit_cast(other, as<T> {})};
-    }
-    else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
-    {
-      const     auto bits = bit_cast(other, as<type> {});
-      constexpr auto c    = categorize<type>();
-      constexpr bool i    = match(c, category::integer_);
-
-            if constexpr( c == category::float64x8        ) self = _mm512_and_pd(self, bits);
-      else  if constexpr( c == category::float64x4        ) self = _mm256_and_pd(self, bits);
-      else  if constexpr( c == category::float64x2        ) self = _mm_and_pd   (self, bits);
-      else  if constexpr( c == category::float32x16       ) self = _mm512_and_ps(self, bits);
-      else  if constexpr( c == category::float32x8        ) self = _mm256_and_ps(self, bits);
-      else  if constexpr( c == category::float32x4        ) self = _mm_and_ps   (self, bits);
-      else  if constexpr( i && std::same_as<abi_t<T, N>,x86_512_> ) self = _mm512_and_si512(self, bits);
-      else  if constexpr( i && std::same_as<abi_t<T, N>,x86_256_> )
-      {
-        if constexpr  ( current_api >= avx2 ) self =  _mm256_and_si256(self, bits);
-        else                                  self =  _mm256_castps_si256
-                                                      ( _mm256_and_ps ( _mm256_castsi256_ps(self)
-                                                                      , _mm256_castsi256_ps(bits)
-                                                                      )
-                                                      );
-      }
-      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_128_> ) self = _mm_and_si128(self, bits);
-
-      return self;
-    }
-  }
-
-  //================================================================================================
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>
