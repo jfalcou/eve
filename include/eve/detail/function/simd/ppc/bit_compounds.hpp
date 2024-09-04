@@ -17,27 +17,6 @@
 namespace eve::detail
 {
   //================================================================================================
-  // <<=
-  //================================================================================================
-  template<integral_scalar_value T, typename N, integral_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, wide<U,N> s) noexcept
-  requires ppc_abi<abi_t<T, N>>
-  {
-    using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-    v = vec_sl(v.storage(), bit_cast(s,as<i_t>()).storage());
-    return v;
-  }
-
-  template<integral_scalar_value T, typename N, integral_scalar_value U>
-  requires ppc_abi<abi_t<T, N>>
-  EVE_FORCEINLINE decltype(auto) self_shl(wide<T,N>& v, U s) noexcept
-  {
-    using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-    v <<= i_t(s);
-    return v;
-  }
-
-  //================================================================================================
   // >>=
   //================================================================================================
   template<integral_scalar_value T, typename N, integral_scalar_value U>

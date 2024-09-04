@@ -17,39 +17,6 @@ namespace eve::detail
 {
 template<integral_scalar_value T, typename N, integral_scalar_value U>
 EVE_FORCEINLINE auto&
-self_shl(wide<T,N>& self, wide<U,N> shift) noexcept
-requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
-{
-  using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-  auto const si = bit_cast(shift,as<i_t>());
-
-  self = svlsl_x(sve_true<T>(), self, si);
-  return self;
-}
-
-template<integral_scalar_value T, typename N, integral_scalar_value U>
-EVE_FORCEINLINE auto&
-self_shl(wide<T,N>& self, U shift) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  using i_t = typename wide<T,N>::template rebind <as_integer_t<T, unsigned>,N>;
-  self = svlsl_x(sve_true<T>(), self, i_t(shift));
-  return self;
-}
-
-template<integral_scalar_value T, typename N, std::ptrdiff_t U>
-EVE_FORCEINLINE auto&
-self_shl(wide<T,N>& self, index_t<U>  const&) noexcept
-requires sve_abi<abi_t<T, N>>
-{
-  using i_t = as_integer_t<T, unsigned>;
-  constexpr i_t shift(U);
-  self = svlsl_x(sve_true<T>(), self, shift);
-  return self;
-}
-
-template<integral_scalar_value T, typename N, integral_scalar_value U>
-EVE_FORCEINLINE auto&
 self_shr(wide<T,N>& self, wide<U,N> shift) noexcept
 requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(U))
 {

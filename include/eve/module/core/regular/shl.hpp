@@ -99,27 +99,34 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    shl_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& s) noexcept
+    template<callable_options O, typename T, typename U>
+    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {
-      if constexpr( scalar_value<T> && scalar_value<U> )
-        return static_cast<T>(a << s);
-      else if constexpr( scalar_value<T> )
-        return as_wide_t<T, cardinal_t<U>>(a) << s;
-      else
-        return a << s;
+      if constexpr (scalar_value<T> && scalar_value<U>) return static_cast<T>(a << s);
+      else if constexpr (scalar_value<T>)               return as_wide_t<T, cardinal_t<U>>{a} << s;
+      else                                              return a << s;
     }
 
-    template<typename T, std::ptrdiff_t S, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    shl_(EVE_REQUIRES(cpu_), O const &, T const& a, index_t<S> const& s) noexcept
+    template<callable_options O, typename T, std::ptrdiff_t S>
+    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S> s) noexcept
     {
-      return a << s;
+      return shl(v, S);
     }
   }
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/shl.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/shl.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/shl.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/shl.hpp>
 #endif
