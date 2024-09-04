@@ -140,15 +140,19 @@ TTS_CASE_WITH( "Check behavior of arithmetic operators on wide and scalar"
     TTS_EQUAL( (s % a1), T([&](auto i, auto) { return s % a1.get(i); }));
   }
 
-  auto cpy = a0; (cpy += s);
+  auto cpy = a0;
+  (cpy += s);
   TTS_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) + s; }));
 
-  cpy = a0; (cpy -= s);
+  cpy = a0;
+  (cpy -= s);
   TTS_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) - s; }));
 
-  cpy = a0; (cpy *= s);
+  cpy = a0;
+  (cpy *= s);
   TTS_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) * s; }));
 
-  cpy = a0; (cpy /= s);
+  cpy = a0;
+  (cpy /= s);
   TTS_ULP_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) / s; }), 1);
 };

@@ -72,12 +72,15 @@ TTS_CASE_WITH( "Check behavior of bitwise operators on wide and scalar"
   TTS_IEEE_EQUAL( (v_t(1) | a0), T([&](auto i, auto) { return eve::bit_or (v_t(1), a0.get(i)); }));
   TTS_IEEE_EQUAL( (v_t(1) ^ a0), T([&](auto i, auto) { return eve::bit_xor(v_t(1), a0.get(i)); }));
 
-  auto cpy = a0; (cpy &= v_t(1));
+  auto cpy = a0;
+  (cpy &= v_t(1));
   TTS_IEEE_EQUAL(cpy, T([&](auto i, auto) { return eve::bit_and(a0.get(i), v_t(1)); }));
 
-  cpy = a0; (cpy |= v_t(1));
+  cpy = a0;
+  (cpy |= v_t(1));
   TTS_IEEE_EQUAL(cpy, T([&](auto i, auto) { return eve::bit_or(a0.get(i), v_t(1)); }));
 
-  cpy = a0; (cpy ^= v_t(1));
+  cpy = a0;
+  (cpy ^= v_t(1));
   TTS_IEEE_EQUAL(cpy, T([&](auto i, auto) { return eve::bit_xor(a0.get(i), v_t(1)); }));
 };
