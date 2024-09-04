@@ -16,28 +16,26 @@ namespace eve
   template<typename Options>
   struct bit_xor_t : strict_tuple_callable<bit_xor_t, Options>
   {
-    template<eve::value T0, value T1>
-    requires(eve::same_lanes_or_scalar<T0, T1>)
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1>
-    operator()(T0 t0, T1 t1) const noexcept
+    template<value T0, value T1>
+    EVE_FORCEINLINE constexpr bit_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
 
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::bit_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
-    { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept 
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
 
     EVE_CALLABLE_OBJECT(bit_xor_t, bit_xor_);
   };
@@ -97,4 +95,16 @@ namespace eve
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/bit_xor.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/bit_xor.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/bit_xor.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/bit_xor.hpp>
 #endif
