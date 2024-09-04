@@ -54,7 +54,7 @@ namespace eve::detail
   // >>=
   //================================================================================================
   template<integral_scalar_value T, typename N, integral_scalar_value U>
-  EVE_FORCEINLINE decltype(auto) self_shr(wide<T,N>& v, wide<U,N> s) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_shr(wide<T,N>& v, wide<U,N> s) noexcept
   {
     auto ss = []<typename V>(V a, auto b) { return static_cast<V>(a >> b); };
 
@@ -87,7 +87,7 @@ namespace eve::detail
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitand(wide<T, N> &self, U const &other) noexcept
   requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && non_native_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
@@ -122,7 +122,7 @@ namespace eve::detail
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto)
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>&
   self_bitor(wide<T, N> &self, U const &other) requires((sizeof(wide<T, N>) == sizeof(U))
                                                              || (sizeof(T) == sizeof(U))) && non_native_abi<abi_t<T, N>>
   {
@@ -158,7 +158,7 @@ namespace eve::detail
   // ^=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto)
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>&
   self_bitxor(wide<T, N> &self, U const &other) requires((sizeof(wide<T, N>) == sizeof(U))
                                                               || (sizeof(T) == sizeof(U))) && non_native_abi<abi_t<T, N>>
   {

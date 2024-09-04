@@ -65,7 +65,7 @@ namespace eve::detail
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U> self_bitand( wide<T,N>& self, U const& other )
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitand( wide<T,N>& self, U const& other )
     requires( (sizeof(wide<T,N>) == sizeof(U)) || (sizeof(T) == sizeof(U)) ) && ppc_abi<abi_t<T, N>>
   {
     using type = wide<T,N>;
@@ -87,7 +87,7 @@ namespace eve::detail
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U> self_bitor( wide<T,N>& self, U const& other )
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitor( wide<T,N>& self, U const& other )
   requires( (sizeof(wide<T,N>) == sizeof(U)) || (sizeof(T) == sizeof(U)) ) && ppc_abi<abi_t<T, N>>
   {
     using type = wide<T,N>;
@@ -109,7 +109,7 @@ namespace eve::detail
   // ^=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U> self_bitxor( wide<T,N>& self, U const& other )
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitxor( wide<T,N>& self, U const& other )
   requires( (sizeof(wide<T,N>) == sizeof(U)) || (sizeof(T) == sizeof(U)) ) && ppc_abi<abi_t<T, N>>
   {
     using type = wide<T,N>;

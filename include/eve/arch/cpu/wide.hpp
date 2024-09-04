@@ -401,7 +401,7 @@ namespace eve
     //! @brief Performs a compound bitwise and on all the wide lanes and assign the result to the current
     //! one
     template<value V>
-    friend EVE_FORCEINLINE bit_value_t<wide, V> operator&=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, V>& operator&=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires (!kumi::product_type<Type>)
 #endif
@@ -448,7 +448,7 @@ namespace eve
     //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current
     //! one
     template<value V>
-    friend EVE_FORCEINLINE bit_value_t<wide, V> operator|=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, V>& operator|=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
@@ -494,7 +494,7 @@ namespace eve
 
     //! @brief Performs a bitwise xor on all the wide lanes and assign the result to the current one
     template<value V>
-    friend EVE_FORCEINLINE bit_value_t<wide, V> operator^=(wide& w, V o) noexcept
+    friend EVE_FORCEINLINE bit_value_t<wide, V>& operator^=(wide& w, V o) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
