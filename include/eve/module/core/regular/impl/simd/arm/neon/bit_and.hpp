@@ -19,23 +19,23 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-          if constexpr (c == category::int64x1  ) return vand_s64 (a, b);
-    else  if constexpr (c == category::int32x2  ) return vand_s32 (a, b);
-    else  if constexpr (c == category::int16x4  ) return vand_s16 (a, b);
-    else  if constexpr (c == category::int8x8   ) return vand_s8  (a, b);
-    else  if constexpr (c == category::uint64x1 ) return vand_u64 (a, b);
-    else  if constexpr (c == category::uint32x2 ) return vand_u32 (a, b);
-    else  if constexpr (c == category::uint16x4 ) return vand_u16 (a, b);
-    else  if constexpr (c == category::uint8x8  ) return vand_u8  (a, b);
-    else  if constexpr (c == category::int64x2  ) return vandq_s64(a, b);
-    else  if constexpr (c == category::int32x4  ) return vandq_s32(a, b);
-    else  if constexpr (c == category::int16x8  ) return vandq_s16(a, b);
-    else  if constexpr (c == category::int8x16  ) return vandq_s8 (a, b);
-    else  if constexpr (c == category::uint64x2 ) return vandq_u64(a, b);
-    else  if constexpr (c == category::uint32x4 ) return vandq_u32(a, b);
-    else  if constexpr (c == category::uint16x8 ) return vandq_u16(a, b);
-    else  if constexpr (c == category::uint8x16 ) return vandq_u8 (a, b);
-    else  if constexpr (c == category::float32x2)
+          if constexpr( c == category::int64x1  ) return vand_s64 (a, b);
+    else  if constexpr( c == category::int32x2  ) return vand_s32 (a, b);
+    else  if constexpr( c == category::int16x4  ) return vand_s16 (a, b);
+    else  if constexpr( c == category::int8x8   ) return vand_s8  (a, b);
+    else  if constexpr( c == category::uint64x1 ) return vand_u64 (a, b);
+    else  if constexpr( c == category::uint32x2 ) return vand_u32 (a, b);
+    else  if constexpr( c == category::uint16x4 ) return vand_u16 (a, b);
+    else  if constexpr( c == category::uint8x8  ) return vand_u8  (a, b);
+    else  if constexpr( c == category::int64x2  ) return vandq_s64(a, b);
+    else  if constexpr( c == category::int32x4  ) return vandq_s32(a, b);
+    else  if constexpr( c == category::int16x8  ) return vandq_s16(a, b);
+    else  if constexpr( c == category::int8x16  ) return vandq_s8 (a, b);
+    else  if constexpr( c == category::uint64x2 ) return vandq_u64(a, b);
+    else  if constexpr( c == category::uint32x4 ) return vandq_u32(a, b);
+    else  if constexpr( c == category::uint16x8 ) return vandq_u16(a, b);
+    else  if constexpr( c == category::uint8x16 ) return vandq_u8 (a, b);
+    else  if constexpr( c == category::float32x2)
     {
       return vreinterpret_f32_u32 ( vand_u32( vreinterpret_u32_f32(a)
                                             , vreinterpret_u32_f32(b)
