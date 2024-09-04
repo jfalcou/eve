@@ -21,8 +21,12 @@ else()
 endif()
 
 if(EVE_ENABLE_COVERAGE)
-  target_compile_options( eve_test INTERFACE --coverage )
-  target_link_options( eve_test INTERFACE --coverage )
+  if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    message(FATAL_ERROR "EVE coverage profiling is not supported on MSVC")
+  else()
+    target_compile_options( eve_test INTERFACE --coverage )
+    target_link_options( eve_test INTERFACE --coverage )
+  endif()
 endif()
 
 target_include_directories( eve_test INTERFACE
