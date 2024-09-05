@@ -24,7 +24,7 @@ TTS_CASE_TPL( "Check behavior of shift operators on eve::wide", eve::test::simd:
   TTS_EXPR_IS( T() >> eve::index<0> , T);
   TTS_EXPR_IS( T() >> vi_t(), T);
 
-  const auto v = T{};
+  auto v = T{};
   TTS_EXPR_IS(v <<= vi_t(), T&);
   TTS_EXPR_IS(v <<= i_t() , T&);
   TTS_EXPR_IS(v <<= eve::index<0> , T&);
