@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N, integral_scalar_value S>
-  EVE_FORCEINLINE wide<T,N> shl_(EVE_REQUIRES(sse2_), O const&, wide<T, N> v, S s) noexcept
+  EVE_FORCEINLINE wide<T,N> shl_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, S s) noexcept
     requires (x86_abi<abi_t<T, N>>)
   {
     constexpr auto c = categorize<wide<T, N>>();
