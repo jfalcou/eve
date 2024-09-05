@@ -95,7 +95,13 @@ namespace eve
         using           m_t = as_logical_t<T>;
 
         if      constexpr(O::contains(saturated2))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
-        else if constexpr(integral_value<T> && iwl) return a - bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
+        else if constexpr(integral_value<T> && iwl)
+        {
+          auto m = cond.mask(as<m_t>{});
+
+          if constexpr (simd_value<decltype(m)>) return a - bit_cast(m, as<m_t>{}).mask();
+          else                                   return a - bit_cast(m.mask(), int_from<decltype(m.mask())>{});
+        }
         else                                        return add[cond](a,one(eve::as(a)));
       }
       else

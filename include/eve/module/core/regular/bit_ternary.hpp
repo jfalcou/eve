@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/bit_notor.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
-#include <iostream>
 
 namespace eve
 {
