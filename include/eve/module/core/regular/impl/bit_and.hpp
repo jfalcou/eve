@@ -28,9 +28,9 @@ namespace eve::detail
     }
     else
     {
-      // both scalar
-      static_assert(scalar_value<T> && scalar_value<U>, "T and U must be scalar values");
-      return a & bit_cast(b, as<T>{});
+      // both scalar, maybe floating, roundtrip to integer
+      using i_t = as_integer_t<T, unsigned>;
+      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) & bit_cast(b, as<i_t>{})), as(a));
     }
   }
 
