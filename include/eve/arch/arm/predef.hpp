@@ -8,10 +8,7 @@
 #pragma once
 
 #include <eve/detail/spy.hpp>
-
-#if defined(SPY_SIMD_IS_ARM_FIXED_SVE) || defined(SPY_SIMD_IS_ARM_FIXED_SVE2)
-#  define EVE_SIMD_IS_ANY_FIXED_SVE
-#endif
+#include <eve/arch/cpu/predef.hpp>
 
 // We successfully detected some native SIMD
 #if defined(EVE_SIMD_IS_ANY_FIXED_SVE) && !defined(EVE_NO_SIMD)
