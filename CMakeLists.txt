@@ -43,7 +43,6 @@ endif()
 ## Test and Benchmarks target
 ## =================================================================================================
 if( EVE_BUILD_TEST )
-  set(CTEST_COVERAGE_EXTRA_FLAGS "--long-file-names --hash-filenames")
   include(CTest)
   include(config/dependencies)
   include(config/compiler)
