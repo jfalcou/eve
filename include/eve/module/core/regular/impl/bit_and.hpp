@@ -23,8 +23,8 @@ namespace eve::detail
     }
     else if constexpr (simd_value<U>)
     {
-      // T sclar, U simd
-      return bit_and(bit_cast(b, as<typename U::template rebind<T>>{}), a);
+      // T sclar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
+      return bit_and(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
     }
     else
     {
