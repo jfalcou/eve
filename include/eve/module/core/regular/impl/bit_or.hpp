@@ -23,13 +23,14 @@ namespace eve::detail
     }
     else if constexpr (simd_value<U>)
     {
-      // T sclar, U simd
-      return bit_or(bit_cast(b, as<typename U::template rebind<T>>{}), a);
+      // T sclar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
+      return bit_or(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
     }
     else
     {
-      // both scalar
-      return a | bit_cast(b, as<T>{});
+      // both scalar, maybe floating, roundtrip to integer
+      using i_t = as_integer_t<T, unsigned>;
+      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) | bit_cast(b, as<i_t>{})), as(a));
     }
   }
 
