@@ -23,13 +23,14 @@ namespace eve::detail
     }
     else if constexpr (simd_value<U>)
     {
-      // T sclar, U simd
-      return bit_xor(bit_cast(b, as<typename U::template rebind<T>>{}), a);
+      // T sclar, U simd, in this case we know that sizeof(T) == sizeof(U::value_type)
+      return bit_xor(bit_cast(b, as<wide<T, cardinal_t<U>>>{}), a);
     }
     else
     {
-      // both scalar
-      return a ^ bit_cast(b, as<T>{});
+      // both scalar, maybe floating, roundtrip to integer
+      using i_t = as_integer_t<T, unsigned>;
+      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) ^ bit_cast(b, as<i_t>{})), as(a));
     }
   }
   
@@ -37,8 +38,7 @@ namespace eve::detail
   // N parameters
   //================================================================================================
   template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
-  bit_xor_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
+  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> bit_xor_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     using r_t = bit_value_t<T0, T1, Ts...>;
     auto that = bit_xor(r_t(a), r_t(b));
