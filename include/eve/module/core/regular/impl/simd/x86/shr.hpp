@@ -14,10 +14,67 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename T, typename N, integral_scalar_value S>
+  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> w, S s) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    constexpr auto c          = categorize<wide<T, N>>();
+    constexpr bool is_avx2    = current_api >= avx2;
+    constexpr bool is_avx512  = current_api >= avx512;
+
+          if constexpr(              c == category::int64x8  ) return _mm512_srai_epi64(w, s);
+    else  if constexpr(              c == category::int32x16 ) return _mm512_srai_epi32(w, s);
+    else  if constexpr(              c == category::int16x32 ) return _mm512_srai_epi16(w, s);
+    else  if constexpr(              c == category::uint64x8 ) return _mm512_srli_epi64(w, s);
+    else  if constexpr(              c == category::uint32x16) return _mm512_srli_epi32(w, s);
+    else  if constexpr(              c == category::uint16x32) return _mm512_srli_epi16(w, s);
+    else  if constexpr( is_avx2   && c == category::int32x8  ) return _mm256_srai_epi32(w, s);
+    else  if constexpr( is_avx2   && c == category::int16x16 ) return _mm256_srai_epi16(w, s);
+    else  if constexpr( is_avx2   && c == category::uint64x4 ) return _mm256_srli_epi64(w, s);
+    else  if constexpr( is_avx2   && c == category::uint32x8 ) return _mm256_srli_epi32(w, s);
+    else  if constexpr( is_avx2   && c == category::uint16x16) return _mm256_srli_epi16(w, s);
+    else  if constexpr( is_avx512 && c == category::int64x2  ) return _mm_srai_epi64(w, s);
+    else  if constexpr(              c == category::int32x4  ) return _mm_srai_epi32(w, s);
+    else  if constexpr(              c == category::int16x8  ) return _mm_srai_epi16(w, s);
+    else  if constexpr(              c == category::uint64x2 ) return _mm_srli_epi64(w, s);
+    else  if constexpr(              c == category::uint32x4 ) return _mm_srli_epi32(w, s);
+    else  if constexpr(              c == category::uint16x8 ) return _mm_srli_epi16(w, s);
+    else                                                       return shr.behavior(cpu_{}, opts, w, s);
+  }
+
+  template<callable_options O, integral_scalar_value T, typename N, integral_scalar_value S>
+  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> w, wide<S, N> s) noexcept
+      requires x86_abi<abi_t<T, N>>
+  {
+    constexpr auto c         = categorize<wide<T, N>>();
+    constexpr bool is_avx2   = current_api >= avx2;
+    constexpr bool is_avx512 = current_api >= avx512;
+
+          if constexpr( is_avx512    && c == category::int64x2  ) return _mm_srav_epi64(w, s);
+    else  if constexpr( is_avx2      && c == category::int32x4  ) return _mm_srav_epi32(w, s);
+    else  if constexpr( is_avx512    && c == category::int16x8  ) return _mm_srav_epi16(w, s);
+    else  if constexpr( is_avx2      && c == category::uint64x2 ) return _mm_srlv_epi64(w, s);
+    else  if constexpr( is_avx2      && c == category::uint32x4 ) return _mm_srlv_epi32(w, s);
+    else  if constexpr( is_avx512    && c == category::uint16x8 ) return _mm_srlv_epi16(w, s);
+    else  if constexpr( is_avx512    && c == category::int64x4  ) return _mm256_srav_epi64(w, s);
+    else  if constexpr( is_avx2      && c == category::int32x8  ) return _mm256_srav_epi32(w, s);
+    else  if constexpr( is_avx512    && c == category::int16x16 ) return _mm256_srav_epi16(w, s);
+    else  if constexpr( is_avx2      && c == category::uint64x4 ) return _mm256_srlv_epi64(w, s);
+    else  if constexpr( is_avx2      && c == category::uint32x8 ) return _mm256_srlv_epi32(w, s);
+    else  if constexpr( is_avx512    && c == category::uint16x16) return _mm256_srlv_epi16(w, s);
+    else  if constexpr(                 c == category::int64x8  ) return _mm512_srav_epi64(w, s);
+    else  if constexpr(                 c == category::int32x16 ) return _mm512_srav_epi32(w, s);
+    else  if constexpr(                 c == category::int16x32 ) return _mm512_srav_epi16(w, s);
+    else  if constexpr(                 c == category::uint64x8 ) return _mm512_srlv_epi64(w, s);
+    else  if constexpr(                 c == category::uint32x16) return _mm512_srlv_epi32(w, s);
+    else  if constexpr(                 c == category::uint16x32) return _mm512_srlv_epi16(w, s);
+    else                                                          return shr.behavior(cpu_{}, opts, w, s);
+  }
+
   // shr[mask](wide_val, wide_mask)
-  template<conditional_expr C, integral_scalar_value T, typename S, typename N, callable_options O>
+  template<callable_options O, conditional_expr C, integral_scalar_value T, typename S, typename N>
   EVE_FORCEINLINE wide<T,N> shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, wide<S, N> s) noexcept
-  requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
+    requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
   {
       constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});
@@ -51,9 +108,9 @@ namespace eve::detail
   }
 
   // shr[mask](wide_val, imm_mask)
-  template<conditional_expr C, integral_scalar_value T, typename N, callable_options O>
+  template<callable_options O, conditional_expr C, integral_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T,N> shr_(EVE_REQUIRES(avx512_), C const& cx, O const&, wide<T, N> v, unsigned int s) noexcept
-  requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
+    requires((sizeof(T) >= 2) && x86_abi<abi_t<T, N>>)
   {
       constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});

@@ -103,8 +103,8 @@ namespace eve
     EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {
       if constexpr (scalar_value<T> && scalar_value<U>) return static_cast<T>(a << s);
-      else if constexpr (scalar_value<T>)               return as_wide_t<T, cardinal_t<U>>{a} << s;
-      else                                              return a << s;
+      else if constexpr (scalar_value<T>)               return shl(as_wide_t<T, cardinal_t<U>>{a}, s);
+      else                                              return map([]<typename V>(V v, auto b) { return static_cast<V>(v << b); }, a, s);
     }
 
     template<callable_options O, typename T, std::ptrdiff_t S>
