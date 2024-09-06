@@ -9,6 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/spy.hpp>
+#include <eve/arch/cpu/predef.hpp>
 
 #include <cstddef>
 #include <concepts>
@@ -52,7 +53,7 @@ namespace eve
     using parent  = cpu_;
   };
 
-# if defined(SPY_SIMD_IS_X86_AVX512) || defined(SPY_SIMD_IS_ARM_FIXED_SVE)
+# if defined(SPY_SIMD_IS_X86_AVX512) || defined(EVE_SIMD_IS_ANY_FIXED_SVE)
 #define EVE_WIDE_LOGICAL_NAMESPACE
 #define EVE_BIT_LOGICAL_NAMESPACE   inline
 #else
