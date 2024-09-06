@@ -22,7 +22,6 @@ namespace eve::detail
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    using enum fpclass_enum;
     constexpr auto f = (eve::neginf | eve::posinf).value;
     
     using s_t = typename l_t::storage_type;
@@ -54,7 +53,6 @@ namespace eve::detail
     else
     {
       auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-      using enum fpclass_enum;
       constexpr auto f = (eve::neginf | eve::posinf).value;
 
       if constexpr( c == category::float32x16 )     return mask16 {_mm512_mask_fpclass_ps_mask(m, v, f)};

@@ -12,34 +12,6 @@
 
 namespace eve
 {
-  // AVX512 FPCLASS intrinsic enum class builder
-  enum class fpclass_enum :uint8_t
-  { none    = 0
-      , qnan    = 1   // quiet nan
-      , poszero = 2   // positive zero
-      , negzero = 4   // negative zero
-      , posinf  = 8   // positive infinity
-      , neginf  = 16  // negative infinity
-      , denorm  = 32  // denormal
-      , neg     = 64  // finite negative
-      , snan    = 128 // signaling nan
-      };
-
-  template<typename I> EVE_FORCEINLINE constexpr std::uint8_t operator|(I a,  fpclass_enum b) noexcept
-  {
-    return static_cast<std::int8_t>(a) | static_cast<std::int8_t>(b);
-  }
-
-  consteval std::uint8_t to_integer(fpclass_enum a) noexcept
-  {
-    return static_cast<std::int8_t>(a);
-  }
-
-  consteval std::uint8_t to_integer(uint8_t a) noexcept
-  {
-    return a;
-  }
-
   namespace detail
   {
     // AVX512 FIXUPIMM intrinsic enum class builder
