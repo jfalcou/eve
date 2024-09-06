@@ -20,9 +20,10 @@ namespace eve::detail
                                               wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    using enum fpclass_enum;
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::neg | fpclass::qnan| fpclass::neginf | fpclass::snan;
+    constexpr auto f = neg | qnan | neginf | snan;
 
     using s_t = typename l_t::storage_type;
 

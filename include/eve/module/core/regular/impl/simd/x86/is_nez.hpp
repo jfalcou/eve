@@ -20,17 +20,18 @@ namespace eve::detail
                                               wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    using enum fpclass_enum;
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::poszero | fpclass::negzero;
-    
+    constexpr auto f = poszero | negzero;
+
     using s_t = typename l_t::storage_type;
-    
+
     if constexpr( c == category::float64x8 ) return ~s_t {_mm512_fpclass_pd_mask(a, f)};
     else if constexpr( c == category::float64x4 ) return ~s_t {_mm256_fpclass_pd_mask(a, f)};
     else if constexpr( c == category::float64x2 ) return ~s_t {_mm_fpclass_pd_mask(a, f)};
     else if constexpr( c == category::float32x16) return ~s_t {_mm512_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x8 ) return ~s_t {_mm256_fpclass_ps_mask(a, f)};
-    else if constexpr( c == category::float32x4 ) return ~s_t {_mm_fpclass_ps_mask(a, f)};   
+    else if constexpr( c == category::float32x4 ) return ~s_t {_mm_fpclass_ps_mask(a, f)};
   }
 }

@@ -28,6 +28,11 @@ namespace eve
     operator()(std::integral_constant<std::uint8_t, I>i, T v) const noexcept
     { return EVE_DISPATCH_CALL(i, v); }
 
+    template<fpclass_enum I, eve::floating_value T>
+    constexpr EVE_FORCEINLINE logical<T>
+    operator()(std::integral_constant<fpclass_enum, I>i, T v) const noexcept
+    { return EVE_DISPATCH_CALL(i, v); }
+
     EVE_CALLABLE_OBJECT(fpclassify_t, fpclassify_);
   };
 
@@ -58,12 +63,17 @@ namespace eve
 //!
 //!     * `x`: [value](@ref value).
 //!     * `i`: std:uint8_t integral value
-//!        this parameter can be constructed by the consteval functions {eve::selected_classes{
-//!        (see the example)
 //!
 //!   **Return value**
 //!
 //!     the elementwise classifications
+//!
+//!   **Helpers**
+//!
+//!     the `i`parameter can be constructed easily by using fpclass_enum values
+//!     `qnan`, `poszero, `negzero, `posinf`,`neginf`, `denorn`,`neg`, `snan`,  and
+//!      using the floating point class maker  fpcl` (see the example).
+//!
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Subnormal_number)
@@ -78,6 +88,7 @@ namespace eve
 
   namespace detail
   {
+
     template<std::uint8_t I, typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
     fpclassify_(EVE_REQUIRES(cpu_), O const &,
@@ -98,24 +109,26 @@ namespace eve
     }
   }
 
-  template < eve::detail::fpclass  c0 ,
-             eve::detail::fpclass  c1 = eve::detail::fpclass::none,
-             eve::detail::fpclass  c2 = eve::detail::fpclass::none,
-             eve::detail::fpclass  c3 = eve::detail::fpclass::none,
-             eve::detail::fpclass  c4 = eve::detail::fpclass::none,
-             eve::detail::fpclass  c5 = eve::detail::fpclass::none,
-             eve::detail::fpclass  c6 = eve::detail::fpclass::none,
-             eve::detail::fpclass  c7 = eve::detail::fpclass::none >
+  template <auto I > using fpcl = std::integral_constant<std::uint8_t, eve::to_integer(I)>;
+
+  template < eve::fpclass_enum  c0 ,
+             eve::fpclass_enum  c1 = eve::fpclass_enum::none,
+             eve::fpclass_enum  c2 = eve::fpclass_enum::none,
+             eve::fpclass_enum  c3 = eve::fpclass_enum::none,
+             eve::fpclass_enum  c4 = eve::fpclass_enum::none,
+             eve::fpclass_enum  c5 = eve::fpclass_enum::none,
+             eve::fpclass_enum  c6 = eve::fpclass_enum::none,
+             eve::fpclass_enum  c7 = eve::fpclass_enum::none >
   consteval auto selected_classes()
   {
-    constexpr std::uint8_t orc = eve::detail::to_integer(c0) |
-      eve::detail::to_integer(c1) |
-      eve::detail::to_integer(c2) |
-      eve::detail::to_integer(c3) |
-      eve::detail::to_integer(c4) |
-      eve::detail::to_integer(c5) |
-      eve::detail::to_integer(c6) |
-      eve::detail::to_integer(c7);
+    constexpr std::uint8_t orc = eve::to_integer(c0) |
+      eve::to_integer(c1) |
+      eve::to_integer(c2) |
+      eve::to_integer(c3) |
+      eve::to_integer(c4) |
+      eve::to_integer(c5) |
+      eve::to_integer(c6) |
+      eve::to_integer(c7);
     return std::integral_constant<std::uint8_t, orc >();
   }
 }

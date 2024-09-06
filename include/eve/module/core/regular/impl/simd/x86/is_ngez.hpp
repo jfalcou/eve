@@ -21,7 +21,8 @@ namespace eve::detail
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::neg | fpclass::neginf | fpclass::qnan | fpclass::snan;
+    using enum fpclass_enum;
+    constexpr auto f = neg | neginf | qnan | snan;
 
     using s_t = typename l_t::storage_type;
 
@@ -52,7 +53,8 @@ namespace eve::detail
     else
     {
       auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-      constexpr auto f = fpclass::neg | fpclass::neginf | fpclass::qnan | fpclass::snan;
+      using enum fpclass_enum;
+      constexpr auto f = neg | neginf | qnan | snan;
 
       if constexpr( c == category::float32x16 )     return mask16 {_mm512_mask_fpclass_ps_mask(m, v, f)};
       else if constexpr( c == category::float64x8 ) return mask8 {_mm512_mask_fpclass_pd_mask(m, v, f)};

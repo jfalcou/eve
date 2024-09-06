@@ -22,7 +22,7 @@ namespace eve::detail
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::poszero;
+    constexpr auto f = fpclass_enum::poszero;
 
     using s_t = typename l_t::storage_type;
 
