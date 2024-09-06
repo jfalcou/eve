@@ -4,6 +4,9 @@
 
 int main()
 {
+  auto inf  = eve::inf(eve::as<double>());
+  auto mind = eve::mindenormal(eve::as<double>());
+  auto nan  = eve::nan(eve::as<double>());
 
   eve::wide wf0{0.0, 1.0, -2.0, nan, inf, mind, inf, -0.0};
 
