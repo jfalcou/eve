@@ -45,5 +45,5 @@ TTS_CASE_WITH("Check behavior of of_class on wide",
   TTS_EQUAL(of_class(a0, eve::neg    ), eve::is_finite(a0) && eve::is_ltz(a0));
   TTS_EQUAL(of_class(a0, eve::snan   ), eve::is_nan(a0));
   TTS_EQUAL(of_class(a0, eve::poszero|eve::negzero), eve::is_eqz(a0));
-  TTS_EQUAL(of_class(a0, eve::posinf|eve::neginf, a0), eve::is_infinite(a0));
+  TTS_EQUAL(of_class(a0, eve::posinf|eve::neginf), eve::is_infinite(a0));
 };
