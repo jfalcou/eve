@@ -12,8 +12,20 @@
 
 namespace eve::detail
 {
+  // AVX512 FIXUPIMM intrinsic enum class builder
+  enum class token  { qnan    = 0   // quiet nan
+                    , snan    = 1   // signaling nan
+                    , zero    = 2   //  zero
+                    , one     = 3   // oneo
+                    , neginf  = 4   // negative infinity
+                    , posinf  = 5   // positive infinity
+                    , neg     = 6   //  negative
+                    , pos     = 7   // spositive
+                    };
+
   // AVX512 FPCLASS intrinsic enum class builder
-  enum class fpclass  { qnan    = 1   // quiet nan
+  enum class fpclass  { none    = 0
+                      , qnan    = 1   // quiet nan
                       , poszero = 2   // positive zero
                       , negzero = 4   // negative zero
                       , posinf  = 8   // positive infinity
@@ -28,7 +40,7 @@ namespace eve::detail
     return static_cast<std::int32_t>(a) | static_cast<std::int32_t>(b);
   }
 
-  EVE_FORCEINLINE constexpr std::int32_t to_integer(fpclass a) noexcept
+  consteval std::int8_t to_integer(fpclass a) noexcept
   {
     return static_cast<std::int32_t>(a);
   }
