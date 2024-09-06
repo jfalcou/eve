@@ -104,6 +104,11 @@ TTS_CASE_WITH("Check behavior of add on signed types",
   using eve::add;
   using eve::saturated;
   using eve::detail::map;
+  
+  auto e0 = a2.get(0);
+
+  TTS_EQUAL(add[e0 > T(64)](a0, a1),
+            map([e0](auto e, auto f) { return e0 > 64 ? add(e, f) : e; }, a0, a1));
   TTS_EQUAL(add[a2 > T(64)](a0, a1),
             map([](auto e, auto f, auto g) { return g > 64 ? add(e, f) : e; }, a0, a1, a2));
   TTS_EQUAL(
