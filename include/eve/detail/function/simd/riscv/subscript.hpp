@@ -40,46 +40,11 @@ EVE_FORCEINLINE logical<T>
 extract_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  constexpr size_t                      array_size = (N::value + 7) / 8;
+  constexpr size_t                      array_size = std::max<size_t>(N::value / 8, 1);
   std::array<unsigned char, array_size> mask_data;
   __riscv_vsm(mask_data.data(), v, N::value);
   size_t needed_element_id = i / 8;
   return mask_data[needed_element_id] & (1 << (i % 8));
-}
-
-// For riscv logical we can not rely on common algorithm.
-template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE logical<T>
-extract_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v, std::size_t i) noexcept
-{
-  using Wide  = logical<wide<T, N>>;
-  using abi_t = typename Wide::abi_type;
-  if constexpr( has_aggregated_abi_v<Wide> )
-  {
-    constexpr auto sz = Wide::size() / 2;
-    if( i < sz ) return extract(v.slice(lower_), i);
-    else return extract(v.slice(upper_), i - sz);
-  }
-  else { static_assert("[eve riscv] -- should not be called"); }
-}
-// For riscv logical we can not rely on common algorithm.
-template<callable_options O, typename T, typename N, typename Value>
-EVE_FORCEINLINE void
-insert_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>>& p, std::size_t i, Value v) noexcept
-{
-  using Wide = logical<wide<T, N>>;
-  if constexpr( has_aggregated_abi_v<Wide> )
-  {
-    constexpr auto sz = Wide::size() / 2;
-    auto [l, h]       = p.slice();
-
-    if( i < sz ) insert(l, i, v);
-    else insert(h, i - sz, v);
-
-    p = Wide {l, h};
-  }
-  else if constexpr( has_emulated_abi_v<Wide> ) { p.storage()[i] = v; }
-  else static_assert("[eve riscv] -- should not be called");
 }
 
 template<callable_options O, typename T, typename N>
@@ -91,7 +56,7 @@ insert_(EVE_REQUIRES(rvv_),
         std::convertible_to<bool> auto x) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  constexpr size_t                      array_size = (N::value + 7) / 8;
+  constexpr size_t                      array_size = std::max<size_t>(N::value / 8, 1);
   std::array<unsigned char, array_size> mask_data;
   unsigned char                        *ptr = mask_data.data();
   __riscv_vsm(ptr, v, N::value);

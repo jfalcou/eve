@@ -25,7 +25,7 @@ EVE_FORCEINLINE logical<wide<T, N>>
 
 template<arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE logical<wide<T, N>>
-                rvv_none()
+                rvv_false()
 {
   static constexpr size_t ratio = rvv_logical_ratio_v<T, N>;
   if constexpr( ratio == 1 ) return __riscv_vmclr_m_b1(N::value);
