@@ -11,35 +11,30 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <type_traits>
+#include <eve/module/core/detail/flags.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_eqmz.hpp>
 #include <eve/module/core/regular/is_eqpz.hpp>
 #include <eve/module/core/regular/is_minf.hpp>
 #include <eve/module/core/regular/is_pinf.hpp>
-#include <eve/detail/function/simd/x86/flags.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct fpclassify_t : strict_elementwise_callable<fpclassify_t, Options>
+  struct of_class_t : strict_elementwise_callable<of_class_t, Options>
   {
     template<std::uint8_t I, eve::floating_value T>
     constexpr EVE_FORCEINLINE logical<T>
-    operator()(std::integral_constant<std::uint8_t, I>i, T v) const noexcept
+    operator()(T v, fp_class<I> i) const noexcept
     { return EVE_DISPATCH_CALL(i, v); }
 
-    template<fpclass_enum I, eve::floating_value T>
-    constexpr EVE_FORCEINLINE logical<T>
-    operator()(std::integral_constant<fpclass_enum, I>i, T v) const noexcept
-    { return EVE_DISPATCH_CALL(i, v); }
-
-    EVE_CALLABLE_OBJECT(fpclassify_t, fpclassify_);
+    EVE_CALLABLE_OBJECT(of_class_t, of_class_);
   };
 
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
-//!   @var fpclassify
+//!   @var of_class
 //!   @brief `strict_elementwise_callable` object computing classification of elements of the input.
 //!
 //!   @groupheader{Header file}
@@ -55,14 +50,14 @@ namespace eve
 //!   {
 //!      // Regular overload
 //!      template<std::uint8_t I, eve::floating_value T>
-//!      constexpr auto fpclassify(value auto x)                          noexcept;
+//!      constexpr auto of_class(value auto x, fp_class<I> i) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
 //!     * `x`: [value](@ref value).
-//!     * `i`: std:uint8_t integral value
+//!     * `i`: fp_class to check
 //!
 //!   **Return value**
 //!
@@ -70,18 +65,17 @@ namespace eve
 //!
 //!   **Helpers**
 //!
-//!     the `i`parameter can be constructed easily by using fpclass_enum values
-//!     `qnan`, `poszero, `negzero, `posinf`,`neginf`, `denorn`,`neg`, `snan`,  and
-//!      using the floating point class maker  fpcl` (see the example).
+//!     the `i`parameter can be constructed easily by using the `fp_class` values
+//!     `qnan`, `poszero, `negzero, `posinf`,`neginf`, `denorn`,`neg`, `snan`(see the example).
 //!
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Subnormal_number)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/core/fpclassify.cpp}
+//!   @godbolt{doc/core/of_class.cpp}
 //================================================================================================
-  inline constexpr auto fpclassify = functor<fpclassify_t>;
+  inline constexpr auto of_class = functor<of_class_t>;
 //================================================================================================
 //! @}
 //================================================================================================
@@ -91,8 +85,7 @@ namespace eve
 
     template<std::uint8_t I, typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    fpclassify_(EVE_REQUIRES(cpu_), O const &,
-                std::integral_constant<std::uint8_t, I>, T const& x) noexcept
+    of_class_(EVE_REQUIRES(cpu_), O const &, T const& x,  fp_class<I>) noexcept
     {
       using li_t = logical<T>;
       li_t r{false};
@@ -108,31 +101,8 @@ namespace eve
       return r;
     }
   }
-
-  template <auto I > using fpcl = std::integral_constant<std::uint8_t, eve::to_integer(I)>;
-
-  template < eve::fpclass_enum  c0 ,
-             eve::fpclass_enum  c1 = eve::fpclass_enum::none,
-             eve::fpclass_enum  c2 = eve::fpclass_enum::none,
-             eve::fpclass_enum  c3 = eve::fpclass_enum::none,
-             eve::fpclass_enum  c4 = eve::fpclass_enum::none,
-             eve::fpclass_enum  c5 = eve::fpclass_enum::none,
-             eve::fpclass_enum  c6 = eve::fpclass_enum::none,
-             eve::fpclass_enum  c7 = eve::fpclass_enum::none >
-  consteval auto selected_classes()
-  {
-    constexpr std::uint8_t orc = eve::to_integer(c0) |
-      eve::to_integer(c1) |
-      eve::to_integer(c2) |
-      eve::to_integer(c3) |
-      eve::to_integer(c4) |
-      eve::to_integer(c5) |
-      eve::to_integer(c6) |
-      eve::to_integer(c7);
-    return std::integral_constant<std::uint8_t, orc >();
-  }
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/fpclassify.hpp>
+#  include <eve/module/core/regular/impl/simd/x86/of_class.hpp>
 #endif

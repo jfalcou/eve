@@ -10,6 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/flags.hpp>
 
 namespace eve::detail
 {
@@ -23,7 +24,7 @@ namespace eve::detail
     using enum fpclass_enum;
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = neg | qnan | neginf | snan;
+    constexpr auto f = (eve::neg | eve::qnan | eve::neginf | eve::snan).value;
 
     using s_t = typename l_t::storage_type;
 

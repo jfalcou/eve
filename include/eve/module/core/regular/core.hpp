@@ -76,7 +76,6 @@
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/fnms.hpp>
-#include <eve/module/core/regular/fpclassify.hpp>
 #include <eve/module/core/regular/frac.hpp>
 #include <eve/module/core/regular/fracscale.hpp>
 #include <eve/module/core/regular/frexp.hpp>
@@ -175,6 +174,7 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/nextafter.hpp>
 #include <eve/module/core/regular/none.hpp>
+#include <eve/module/core/regular/of_class.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/prev.hpp>

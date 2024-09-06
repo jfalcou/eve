@@ -22,7 +22,7 @@ namespace eve::detail
     using enum fpclass_enum;
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = neg | negzero | poszero | neginf | qnan | snan;
+    constexpr auto f = (eve::neg | eve::negzero | eve::poszero | eve::neginf | eve::qnan | eve::snan).value;
 
     using s_t = typename l_t::storage_type;
 
@@ -31,6 +31,6 @@ namespace eve::detail
     else if constexpr( c == category::float64x2 ) return ~s_t {_mm_fpclass_pd_mask(a, f)};
     else if constexpr( c == category::float32x16) return ~s_t {_mm512_fpclass_ps_mask(a, f)};
     else if constexpr( c == category::float32x8 ) return ~s_t {_mm256_fpclass_ps_mask(a, f)};
-   else if constexpr( c == category::float32x4 ) return ~s_t {_mm_fpclass_ps_mask(a, f)};
+    else if constexpr( c == category::float32x4 ) return ~s_t {_mm_fpclass_ps_mask(a, f)};
  }
 }

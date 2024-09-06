@@ -15,9 +15,9 @@ namespace eve::detail
 {
 
   template<std::uint8_t I, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>> fpclassify_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> of_class_(EVE_REQUIRES(avx512_),
                                                   O          const &,
-                                                  std::integral_constant<std::uint8_t, I>,
+                                                  fp_class<I>,
                                                   wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -38,10 +38,10 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<std::uint8_t I, conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto fpclassify_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE auto of_class_(EVE_REQUIRES(avx512_),
                                    C const& cx,
                                    O const& o,
-                                   std::integral_constant<std::uint8_t, I>,
+                                   fp_class<I>,
                                    wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
@@ -49,11 +49,11 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return fpclassify.behavior(cpu_{}, o, v, v);
+      return of_class.behavior(cpu_{}, o, v, v);
     }
     else
     {
-      auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+      auto m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
       if constexpr( c == category::float32x16 )     return mask16 {_mm512_mask_fpclass_ps_mask(m, v, I)};
       else if constexpr( c == category::float64x8 ) return mask8 {_mm512_mask_fpclass_pd_mask(m, v, I)};
