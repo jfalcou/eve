@@ -12,6 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/convert.hpp>
 
 namespace eve
 {
@@ -99,7 +100,7 @@ namespace eve
         {
           auto m = cond.mask(as<m_t>{});
 
-          if constexpr (simd_value<decltype(m)>) return a - bit_cast(m, as<m_t>{}).mask();
+          if constexpr (simd_value<decltype(m)>) return a - convert(m.bits(), as_element<T>{});
           else                                   return a - bit_cast(m.mask(), int_from<decltype(m.mask())>{});
         }
         else                                        return add[cond](a,one(eve::as(a)));
