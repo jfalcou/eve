@@ -95,7 +95,7 @@ namespace eve
                 std::integral_constant<std::uint8_t, I>, T const& x) noexcept
     {
       using li_t = logical<T>;
-      li_t r{};
+      li_t r{false};
       constexpr std::uint8_t o(1);
       if constexpr((I       &o) == o) r = is_nan(x);
       if constexpr(((I >> 1)&o) == o) r = r || is_eqpz(x);
