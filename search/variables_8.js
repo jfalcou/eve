@@ -65,9 +65,10 @@ var searchData=
   ['is_5fnot_5fnan_62',['is_not_nan',['../group__core__predicates_gae7f301f7acb3b0f0830cba0153484c3d.html#gae7f301f7acb3b0f0830cba0153484c3d',1,'eve']]],
   ['is_5fodd_63',['is_odd',['../group__core__predicates_ga48a2d616acbfb726c6e0e476ecbed23e.html#ga48a2d616acbfb726c6e0e476ecbed23e',1,'eve']]],
   ['is_5fordered_64',['is_ordered',['../group__core__predicates_ga78ec194ea55cce9241f3fcfae74de8ce.html#ga78ec194ea55cce9241f3fcfae74de8ce',1,'eve']]],
-  ['is_5fpositive_65',['is_positive',['../group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1',1,'eve']]],
-  ['is_5fpow2_66',['is_pow2',['../group__core__predicates_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306',1,'eve']]],
-  ['is_5funit_67',['is_unit',['../group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0',1,'eve']]],
-  ['is_5funordered_68',['is_unordered',['../group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]],
-  ['iterate_5fselected_69',['iterate_selected',['../group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc',1,'eve']]]
+  ['is_5fpinf_65',['is_pinf',['../group__core__predicates_ga08b58062f62bb1d0339f69e7bfd47f02.html#ga08b58062f62bb1d0339f69e7bfd47f02',1,'eve']]],
+  ['is_5fpositive_66',['is_positive',['../group__core__predicates_ga6bc0915a16d2acf675f8fc76f2781cc1.html#ga6bc0915a16d2acf675f8fc76f2781cc1',1,'eve']]],
+  ['is_5fpow2_67',['is_pow2',['../group__core__predicates_ga97322285148609262baf774000978306.html#ga97322285148609262baf774000978306',1,'eve']]],
+  ['is_5funit_68',['is_unit',['../group__core__predicates_gaa9c0d896a6b4e77fa5e4e3d5b54503d0.html#gaa9c0d896a6b4e77fa5e4e3d5b54503d0',1,'eve']]],
+  ['is_5funordered_69',['is_unordered',['../group__core__predicates_ga2225cc46f46e4f1d12681e8c949e1413.html#ga2225cc46f46e4f1d12681e8c949e1413',1,'eve']]],
+  ['iterate_5fselected_70',['iterate_selected',['../group__core__simd_gaf091ef73bb8c32446ea6d9531e8be9bc.html#gaf091ef73bb8c32446ea6d9531e8be9bc',1,'eve']]]
 ];
