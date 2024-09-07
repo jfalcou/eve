@@ -10,6 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
+#include <eve/module/core/detail/flags.hpp>
 
 namespace eve::detail
 {
@@ -32,7 +33,7 @@ namespace eve::detail
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::neg | fpclass::neginf;
+    constexpr auto f = (eve::neg | eve::neginf).value;
 
     using s_t = typename l_t::storage_type;
 
@@ -63,7 +64,7 @@ namespace eve::detail
     else
     {
       auto           m = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-      constexpr auto f = fpclass::neg | fpclass::neginf;
+      constexpr auto f = (eve::neg | eve::neginf).value;
 
       if constexpr( c == category::float32x16 )     return mask16 {_mm512_mask_fpclass_ps_mask(m, v, f)};
       else if constexpr( c == category::float64x8 ) return mask8 {_mm512_mask_fpclass_pd_mask(m, v, f)};

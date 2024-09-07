@@ -70,6 +70,7 @@
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
 #include <eve/module/core/regular/floor.hpp>
+#include <eve/module/core/regular/flush_denormal.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/fmod.hpp>
 #include <eve/module/core/regular/fms.hpp>
@@ -130,6 +131,7 @@
 #include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/regular/is_odd.hpp>
 #include <eve/module/core/regular/is_ordered.hpp>
+#include <eve/module/core/regular/is_pinf.hpp>
 #include <eve/module/core/regular/is_positive.hpp>
 #include <eve/module/core/regular/is_pow2.hpp>
 #include <eve/module/core/regular/is_unit.hpp>
@@ -172,6 +174,7 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/nextafter.hpp>
 #include <eve/module/core/regular/none.hpp>
+#include <eve/module/core/regular/of_class.hpp>
 #include <eve/module/core/regular/oneminus.hpp>
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/module/core/regular/prev.hpp>

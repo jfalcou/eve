@@ -10,7 +10,8 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/constant/false.hpp>
+#include <eve/module/core/detail/flags.hpp>
+
 
 namespace eve::detail
 {
@@ -22,7 +23,7 @@ namespace eve::detail
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    constexpr auto f = fpclass::poszero;
+    constexpr auto f = eve::poszero.value;
 
     using s_t = typename l_t::storage_type;
 
