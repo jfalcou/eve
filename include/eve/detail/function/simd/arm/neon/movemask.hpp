@@ -9,9 +9,8 @@
 
 #include <eve/arch/logical.hpp>
 #include <eve/detail/meta.hpp>
+#include <eve/detail/function/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
-
-#include <bit>
 
 namespace eve::detail
 {
