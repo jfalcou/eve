@@ -114,7 +114,7 @@ namespace eve
     }
 
     template<typename T, std::ptrdiff_t S, callable_options O>
-    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T const& a, index_t<S> const& s) noexcept
+    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T const& a, index_t<S> const&) noexcept
     {
       return shr(a, S);
     }
