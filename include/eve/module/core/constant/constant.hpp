@@ -9,10 +9,8 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
-
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/bit_cast.hpp>
-#include <eve/traits/underlying_type.hpp>
 
 namespace eve
 {
@@ -53,7 +51,7 @@ namespace eve
 //================================================================================================
 
 template<value T, auto BitsPattern>
-EVE_FORCEINLINE auto Constant(eve::as<T> const& = {})
+EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
 {
   using t_t = translate_element_type_t<T>;
 

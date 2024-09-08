@@ -288,7 +288,7 @@ namespace tts
       // Compute a recognizable filler
       for(std::ptrdiff_t i=data.size();i<these.size();++i)
       {
-        p_t filler = eve::Constant<p_t, static_cast<p_t>(0xDEADBEEFBABE0000)>() + p_t(i);
+        p_t filler = eve::constant<p_t, static_cast<p_t>(0xDEADBEEFBABE0000)>() + p_t(i);
         these.set(i, eve::bit_cast(filler,eve::as<v_t>()) );
       }
 
