@@ -112,9 +112,8 @@ namespace eve
 
       if      constexpr(any_aggregated)                             return aggregate(this->derived(), x, xs...);
       else if constexpr(any_emulated && supports_map_no_conversion) return map(this->derived(), x, xs...);
-     // else if constexpr(has_implementation)
-  return func_t::deferred_call(a, o, x, xs...);
-     // else                                                          return ignore{};
+      else if constexpr(has_implementation)                         return func_t::deferred_call(a, o, x, xs...);
+      else                                                          return ignore{};
     }
 
     template<callable_options O, typename T, typename... Ts>
