@@ -77,6 +77,14 @@ namespace eve
       return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
     }
 
+    template<typename T, typename U>
+    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
+    operator()(bool mask, T v0, U v1) const noexcept
+    requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
+    {
+      return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
+    }
+
     EVE_CALLABLE_OBJECT(if_else_t, if_else_);
   };
 
