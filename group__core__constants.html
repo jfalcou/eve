@@ -160,12 +160,12 @@ $(document).ready(function(){initNavTree('group__core__constants.html',''); init
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(15) &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; Constant&lt;wide_ft, 0X3F1DE9E7U&gt;()           &quot;</span> &lt;&lt; eve::Constant&lt;wide_ft, 0X3F1DE9E7U&gt;()&lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; Constant&lt;wide_dt, 0x3FE3BD3CC9BE45DEULL&gt;() &quot;</span> &lt;&lt; eve::Constant&lt;wide_dt, 0x3FE3BD3CC9BE45DEULL&gt;()&lt;&lt; std::endl;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; constant&lt;wide_ft, 0X3F1DE9E7U&gt;()           &quot;</span> &lt;&lt; eve::constant&lt;wide_ft, 0X3F1DE9E7U&gt;()&lt;&lt; std::endl</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; constant&lt;wide_dt, 0x3FE3BD3CC9BE45DEULL&gt;() &quot;</span> &lt;&lt; eve::constant&lt;wide_dt, 0x3FE3BD3CC9BE45DEULL&gt;()&lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- scalar&quot;</span> &lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; Constant&lt;float, 0X3F1DE9E7U&gt;()             &quot;</span> &lt;&lt; eve::Constant&lt;float, 0X3F1DE9E7U&gt;()&lt;&lt; std::endl</div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; Constant&lt;double, 0x3FE3BD3CC9BE45DEULL&gt;()  &quot;</span> &lt;&lt; eve::Constant&lt;double, 0x3FE3BD3CC9BE45DEULL&gt;()&lt;&lt; std::endl;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; constant&lt;float, 0X3F1DE9E7U&gt;()             &quot;</span> &lt;&lt; eve::constant&lt;float, 0X3F1DE9E7U&gt;()&lt;&lt; std::endl</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; constant&lt;double, 0x3FE3BD3CC9BE45DEULL&gt;()  &quot;</span> &lt;&lt; eve::constant&lt;double, 0x3FE3BD3CC9BE45DEULL&gt;()&lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
@@ -204,7 +204,7 @@ Variables</h2></td></tr>
 <tr class="memdesc:ga040465fe0ba98419d6ce5397bc60def0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the mask to extract the mantissa bits of an ieee floating value.  <br /></td></tr>
 <tr class="separator:ga040465fe0ba98419d6ce5397bc60def0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08c97899074a949e8ee122d483d77a85"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga08c97899074a949e8ee122d483d77a85.html#ga08c97899074a949e8ee122d483d77a85">eve::maxexponent</a> = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;maxexponent_t&gt;</td></tr>
-<tr class="memdesc:ga08c97899074a949e8ee122d483d77a85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the the greatest exponent of a floating point IEEE value.  <br /></td></tr>
+<tr class="memdesc:ga08c97899074a949e8ee122d483d77a85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the greatest exponent of a floating point IEEE value.  <br /></td></tr>
 <tr class="separator:ga08c97899074a949e8ee122d483d77a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga054fe483e5b5ded0727b05b181360709"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__core__constants_ga054fe483e5b5ded0727b05b181360709.html#ga054fe483e5b5ded0727b05b181360709">eve::maxexponentm1</a> = <a class="el" href="group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467">functor</a>&lt;maxexponentm1_t&gt;</td></tr>
 <tr class="memdesc:ga054fe483e5b5ded0727b05b181360709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the the greatest exponent of a floating point IEEE value minus one.  <br /></td></tr>

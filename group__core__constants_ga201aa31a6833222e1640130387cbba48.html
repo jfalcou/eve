@@ -146,12 +146,13 @@ $(document).ready(function(){initNavTree('group__core__constants_ga201aa31a68332
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="keyword">template</span> &lt;<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a> C,</div>
-<div class="line">             eve::arithmetic_simd_value T&gt;</div>
+<div class="line">   <span class="keyword">template</span> &lt; <a class="code hl_concept" href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a> C</div>
+<div class="line">            , eve::arithmetic_simd_value T</div>
+<div class="line">            &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">iota</a>[C cond](<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> tgt);</div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
-<div class="ttc" id="agroup__core__constants_ga201aa31a6833222e1640130387cbba48_html_ga201aa31a6833222e1640130387cbba48"><div class="ttname"><a href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a></div><div class="ttdeci">constexpr auto iota</div><div class="ttdoc">all numbers from 0 to size() - 1. equivalent to T{ [](int i, int) {return i; } }</div><div class="ttdef"><b>Definition:</b> iota.hpp:67</div></div>
+<div class="ttc" id="agroup__core__constants_ga201aa31a6833222e1640130387cbba48_html_ga201aa31a6833222e1640130387cbba48"><div class="ttname"><a href="group__core__constants_ga201aa31a6833222e1640130387cbba48.html#ga201aa31a6833222e1640130387cbba48">eve::iota</a></div><div class="ttdeci">constexpr auto iota</div><div class="ttdoc">all numbers from 0 to size() - 1. equivalent to T{ [](int i, int) {return i; } }</div><div class="ttdef"><b>Definition:</b> iota.hpp:69</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
