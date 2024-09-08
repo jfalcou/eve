@@ -25,9 +25,9 @@ namespace eve::detail
   }
 
   template<callable_options O, integral_scalar_value T, typename N, integral_scalar_value U>
-  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(vmx_), O const&, wide<T,N> v, U s) noexcept
+  EVE_FORCEINLINE wide<T, N> shr_(EVE_REQUIRES(vmx_), O const& opts, wide<T,N> v, U s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    return shr(v, wide<as_integer_t<T, unsigned>, N>{s});
+    return shr.behavior(current_api, opts, v, wide<as_integer_t<T, unsigned>, N>{s});
   }
 }

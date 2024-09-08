@@ -18,10 +18,10 @@ namespace eve
   struct shr_t : strict_elementwise_callable<shr_t, Options>
   {
     template<integral_value T, integral_value N>
-    requires(eve::same_lanes_or_scalar<T, N>)
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
+      requires(eve::same_lanes_or_scalar<T, N>)
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(s),
+      EVE_ASSERT(detail::assert_good_shift<T>(this->options(), s),
                  "[eve::shr] Shifting by " << s << " is out of the range [0, "
                  << sizeof(element_type_t<T>) * 8 << "[.");
       return EVE_DISPATCH_CALL(t0, s);
@@ -99,6 +99,12 @@ namespace eve
 
   namespace detail
   {
+    template<callable_options O, conditional_expr C, typename T, typename U>
+    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U b) noexcept
+    {
+      return shr(a, if_else(cx, b, zero)); 
+    }
+
     template<typename T, typename U, callable_options O>
     EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T const& a, U const& s) noexcept
     {
