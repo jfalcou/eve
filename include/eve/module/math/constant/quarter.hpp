@@ -19,7 +19,7 @@ struct quarter_t : constant_callable<quarter_t, Options, downward_option, upward
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    return T(0x1p-2);
+    return T(0.25);
   }
 
   template<floating_value T>
@@ -45,7 +45,7 @@ struct quarter_t : constant_callable<quarter_t, Options, downward_option, upward
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T quarter(as<T> x) noexcept;
 //!   }
 //!   @endcode

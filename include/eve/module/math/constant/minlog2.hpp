@@ -19,7 +19,7 @@ namespace eve
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      if constexpr(std::same_as<element_type_t<T>, float>)
+      if constexpr(std::same_as<T, float>)
         return T(-0x1.fcp+6);
       else
         return T(-0x1.ffp+9);
@@ -48,7 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T minlog2(as<T> x) noexcept;
 //!   }
 //!   @endcode

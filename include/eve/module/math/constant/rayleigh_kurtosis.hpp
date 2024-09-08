@@ -19,7 +19,7 @@ struct rayleigh_kurtosis_t : constant_callable<rayleigh_kurtosis_t, Options, dow
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.9f5f18p+1);
       else if constexpr(Opts::contains(downward)) return T(0x1.9f5f16p+1);
@@ -57,7 +57,7 @@ struct rayleigh_kurtosis_t : constant_callable<rayleigh_kurtosis_t, Options, dow
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T rayleigh_kurtosis(as<T> x) noexcept;
 //!   }
 //!   @endcode

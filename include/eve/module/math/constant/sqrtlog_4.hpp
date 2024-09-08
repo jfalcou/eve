@@ -19,7 +19,7 @@ struct sqrtlog_4_t : constant_callable<sqrtlog_4_t, Options, downward_option, up
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.2d6acp+0);
       else if constexpr(Opts::contains(downward)) return T(0x1.2d6abep+0);
@@ -56,7 +56,7 @@ struct sqrtlog_4_t : constant_callable<sqrtlog_4_t, Options, downward_option, up
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T sqrtlog_4(as<T> x) noexcept;
 //!   }
 //!   @endcode

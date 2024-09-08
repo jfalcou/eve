@@ -19,7 +19,7 @@ struct two_o_sqrt_pi_t : constant_callable<two_o_sqrt_pi_t, Options, downward_op
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.20dd76p+0);
       else if constexpr(Opts::contains(downward)) return T(0x1.20dd74p+0);
@@ -56,7 +56,7 @@ struct two_o_sqrt_pi_t : constant_callable<two_o_sqrt_pi_t, Options, downward_op
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T two_o_sqrt_pi(as<T> x) noexcept;
 //!   }
 //!   @endcode
