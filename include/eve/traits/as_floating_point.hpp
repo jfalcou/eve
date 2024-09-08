@@ -14,11 +14,8 @@
 namespace eve
 {
   template<typename T>
-  inline constexpr auto under_size = sizeof(translate_element_type_t<T>);
-
-  template<typename T>
   struct  as_floating_point
-        : detail::make_floating_point<(under_size<T> <= 4) ? 4: under_size<T>>
+        : detail::make_floating_point<(sizeof(T) <= 4) ? 4: sizeof(T)>
   {};
 
   template<typename T, typename N>

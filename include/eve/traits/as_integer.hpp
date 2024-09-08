@@ -31,7 +31,7 @@ namespace eve
   template<typename T, typename Sign = detail::default_as_integer_sign_t<T>>
   struct as_integer
   {
-    using type = detail::make_integer_t<sizeof(translate_t<T>), Sign>;
+    using type = detail::make_integer_t<sizeof(T), Sign>;
   };
 
   template<typename T, typename N, typename Sign>
