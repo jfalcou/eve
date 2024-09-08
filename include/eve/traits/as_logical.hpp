@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/detail/wide_forward.hpp>
+#include <eve/traits/translation.hpp>
 #include <eve/detail/kumi.hpp>
 
 namespace eve
@@ -31,9 +32,12 @@ namespace eve
   };
 
 
-  template<typename T>
-  requires( kumi::product_type<T> )
+  template<kumi::product_type T>
   struct as_logical<T> : as_logical< kumi::element_t<0,T> >
+  {};
+
+  template<has_plain_translation T>
+  struct as_logical<T> : as_logical< translate_t<T> >
   {};
 
   template<typename T>

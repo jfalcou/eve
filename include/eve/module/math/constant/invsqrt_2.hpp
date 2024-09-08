@@ -19,7 +19,7 @@ struct invsqrt_2_t : constant_callable<invsqrt_2_t, Options, downward_option, up
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.6a09e8p-1);
       else if constexpr(Opts::contains(downward)) return T(0x1.6a09e6p-1);
@@ -56,7 +56,7 @@ struct invsqrt_2_t : constant_callable<invsqrt_2_t, Options, downward_option, up
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T invsqrt_2(as<T> x) noexcept;
 //!   }
 //!   @endcode

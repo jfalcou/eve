@@ -16,19 +16,17 @@ namespace eve
   template<typename Options>
   struct maxexponent_t : constant_callable<maxexponent_t, Options, downward_option, upward_option>
   {
-    template<floating_value T>
-    static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;
 
-      if constexpr(std::same_as<e_t, float>  ) return  i_t(127);
-      else if constexpr(std::same_as<e_t, double> ) return  i_t(1023);
+      if      constexpr(std::same_as<T, float>  ) return i_t(127);
+      else if constexpr(std::same_as<T, double> ) return i_t(1023);
     }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr auto operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr as_integer_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(maxexponent_t, maxexponent_);
   };
@@ -37,7 +35,7 @@ namespace eve
 //! @addtogroup core_constants
 //! @{
 //!   @var maxexponent
-//!   @brief Computes the  the greatest exponent of a floating point IEEE value
+//!   @brief Computes the greatest exponent of a floating point IEEE value
 //!
 //!   **Defined in Header**
 //!
@@ -50,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      eve::as_integer<T> maxexponent(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr eve::as_integer<T> maxexponent(as<T> x);
 //!   }
 //!   @endcode
 //!

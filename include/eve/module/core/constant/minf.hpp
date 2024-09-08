@@ -19,13 +19,11 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-      return T(-std::numeric_limits<e_t>::infinity());
+      return  T(-std::numeric_limits<T>::infinity());
     }
 
     template<floating_value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(minf_t, minf_);
   };
@@ -47,8 +45,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T minf(as<T> x) noexcept;
+//!      template<floating_value> constexpr T minf(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -58,8 +55,8 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::minf(as<T>())` is semantically equivalent to
-//!      `T(-std::numeric_limits<eve::element_type_t<T>>::``infinity())`
+//!    The call `eve::minf(as<T>())` is semantically equivalent to
+//!    T(-std::numeric_limits<eve::element_type_t<T>>::``infinity())`
 //!
 //!  @groupheader{Example}
 //!

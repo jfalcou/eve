@@ -19,7 +19,7 @@ struct pio_6_t : constant_callable<pio_6_t, Options, downward_option, upward_opt
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.0c1524p-1);
       else if constexpr(Opts::contains(downward)) return T(0x1.0c1522p-1);
@@ -56,7 +56,7 @@ struct pio_6_t : constant_callable<pio_6_t, Options, downward_option, upward_opt
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T pio_6(as<T> x) noexcept;
 //!   }
 //!   @endcode

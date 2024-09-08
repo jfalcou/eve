@@ -9,11 +9,8 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/detail/meta.hpp>
-
-#include <type_traits>
+#include <eve/detail/function/bit_cast.hpp>
 
 namespace eve
 {
@@ -53,13 +50,12 @@ namespace eve
 //! @}
 //================================================================================================
 
-template<typename T, auto BitsPattern>
-requires(plain_scalar_value<element_type_t<T>>)
-EVE_FORCEINLINE auto Constant(eve::as<T> const& = {})
+template<value T, auto BitsPattern>
+EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
 {
-  using t_t = element_type_t<T>;
+  using t_t = translate_element_type_t<T>;
 
-  if constexpr( std::is_integral_v<t_t> ) { return static_cast<T>(BitsPattern); }
+  if constexpr( std::integral<t_t> ) { return static_cast<T>(BitsPattern); }
   else
   {
     if constexpr( sizeof(t_t) != sizeof(BitsPattern) )
@@ -68,7 +64,7 @@ EVE_FORCEINLINE auto Constant(eve::as<T> const& = {})
                     "[eve::constant] floating_point case - BitsPattern has not the correct size");
       return T {};
     }
-    else { return static_cast<T>(bit_cast(BitsPattern, as<t_t> {})); }
+    else return static_cast<T>(bit_cast(BitsPattern, as<t_t> {}));
   }
 }
 }

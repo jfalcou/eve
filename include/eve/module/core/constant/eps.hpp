@@ -19,15 +19,12 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-
-           if constexpr(std::integral<e_t>        ) return T(1);
-      else if constexpr(std::same_as<e_t, float>  ) return T(0x1p-23);
-      else if constexpr(std::same_as<e_t, double> ) return T(0x1p-52);
+      if      constexpr(std::integral<T>        ) return T(1);
+      else if constexpr(std::same_as<T, float>  ) return T(0x1p-23);
+      else if constexpr(std::same_as<T, double> ) return T(0x1p-52);
     }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
+    template<plain_value T>
     EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(eps_t, eps_);
@@ -50,7 +47,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!     template<eve::value T> constexpr T eps(as<T> x) noexcept;
+//!     template<eve::plain_value T> constexpr T eps(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

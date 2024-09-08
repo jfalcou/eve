@@ -16,17 +16,14 @@ namespace eve
   template<typename Options>
   struct inf_t : constant_callable<inf_t, Options, downward_option, upward_option>
   {
-    template<floating_value T>
+    template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-
-      return T(std::numeric_limits<e_t>::infinity());
-   }
+      return std::numeric_limits<T>::infinity();
+    }
 
     template<floating_value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(inf_t, inf_);
   };
@@ -48,8 +45,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T inf(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T inf(as<T> x);
 //!   }
 //!   @endcode
 //!

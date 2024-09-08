@@ -19,12 +19,8 @@ namespace eve
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      using e_t = element_type_t<T>;
-
-      if constexpr(std::same_as<e_t, float>)
-        return T(0x1p+23f);
-      else
-        return T(0x1p+52);
+      if constexpr(std::same_as<T, float>)  return T(0x1p+23f);
+      else                                  return T(0x1p+52);
     }
 
     template<floating_value T>
@@ -50,8 +46,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T nbmantissabits(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T twotonmb(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -66,7 +61,7 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!
-//!  @godbolt{doc/core/constant/nbmantissabits.cpp}
+//!  @godbolt{doc/core/constant/twotonmb.cpp}
 //! @}
 //================================================================================================
  inline constexpr auto twotonmb = functor<twotonmb_t>;

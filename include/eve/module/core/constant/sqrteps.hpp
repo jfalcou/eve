@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
@@ -20,21 +19,16 @@ namespace eve
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
-      using e_t = element_type_t<T>;
-
-      if constexpr(std::same_as<e_t, float>  )
+      if constexpr(std::same_as<T, float>  )
       {
-        if constexpr(Opts::contains(upward))
-          return T(0x1.6a09e8p-12f);
-        else
-          return T(0x1.6a09e6p-12f);
+        if constexpr(Opts::contains(upward))        return T(0x1.6a09e8p-12f);
+        else                                        return T(0x1.6a09e6p-12f);
       }
-      else if constexpr(std::same_as<e_t, double> ) return T(0x1p-26);
+      else if constexpr(std::same_as<T, double> ) return T(0x1p-26);
     }
 
     template<floating_value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sqrteps_t, sqrteps_);
   };
@@ -56,8 +50,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T sqrteps(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T sqrteps(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

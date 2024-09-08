@@ -19,7 +19,7 @@ struct invlog_10_t : constant_callable<invlog_10_t, Options, downward_option, up
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.bcb7b2p-2);
       else if constexpr(Opts::contains(downward)) return T(0x1.bcb7bp-2 );
@@ -56,7 +56,7 @@ struct invlog_10_t : constant_callable<invlog_10_t, Options, downward_option, up
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T invlog_10(as<T> x) noexcept;
 //!   }
 //!   @endcode

@@ -19,16 +19,14 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr as_integer_t<T> value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
       using i_t = as_integer_t<T>;
 
-           if constexpr(std::same_as<e_t, float>  ) return  i_t(23);
-      else if constexpr(std::same_as<e_t, double> ) return  i_t(52);
+      if      constexpr(std::same_as<T, float>  ) return  i_t(23);
+      else if constexpr(std::same_as<T, double> ) return  i_t(52);
     }
 
     template<floating_value T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr as_integer_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr as_integer_t<T> operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(nbmantissabits_t, nbmantissabits_);
   };
@@ -50,8 +48,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::floating_value T >
-//!      T nbmantissabits(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T nbmantissabits(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!

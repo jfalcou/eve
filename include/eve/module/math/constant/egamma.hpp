@@ -19,7 +19,7 @@ struct egamma_t : constant_callable<egamma_t, Options, downward_option, upward_o
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       if constexpr(Opts::contains(upward))        return T(0x1.2788dp-1 );
       else if constexpr(Opts::contains(downward)) return T(0x1.2788cep-1);
@@ -57,7 +57,7 @@ struct egamma_t : constant_callable<egamma_t, Options, downward_option, upward_o
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T egamma(as<T> x) noexcept;
 //!   }
 //!   @endcode

@@ -19,7 +19,7 @@ struct minlog10_t : constant_callable<minlog10_t, Options, downward_option, upwa
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<element_type_t<T>, float>)
+    if constexpr(std::same_as<T, float>)
     {
       return T(-0x1.2f703p+5);
     }
@@ -52,7 +52,7 @@ struct minlog10_t : constant_callable<minlog10_t, Options, downward_option, upwa
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
+//!      template< eve::floating_value T >
 //!      T minlog10(as<T> x) noexcept;
 //!   }
 //!   @endcode

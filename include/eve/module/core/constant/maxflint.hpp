@@ -19,16 +19,12 @@ namespace eve
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
     {
-      using e_t = element_type_t<T>;
-
-           if      constexpr(std::integral<e_t>   ) return T(std::numeric_limits<e_t>::max());
-      else if constexpr(std::same_as<e_t, float>  ) return T(0x1p+24);
-      else if constexpr(std::same_as<e_t, double> ) return T(0x1p+53);
+      if      constexpr(std::same_as<T, float>  ) return T(0x1p+24);
+      else if constexpr(std::same_as<T, double> ) return T(0x1p+53);
     }
 
-    template<typename T>
-    requires(plain_scalar_value<element_type_t<T>>)
-      EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(maxflint_t, maxflint_);
   };
@@ -51,8 +47,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::value T >
-//!      T maxflint(as<T> x) noexcept;
+//!     template<eve::floating_value T> constexpr T maxflint(as<T> x) noexcept;
 //!   }
 //!   @endcode
 //!
