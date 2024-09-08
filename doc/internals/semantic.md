@@ -98,26 +98,6 @@ In a less formal way, **EVE** @ref glossary_arithmetic generalizes the notion of
 arithmetic operations. By construction, a large majority of @ref glossary_arithmetic are _de facto_
 @ref glossary_elementwise.
 
-@subsection glossary_bitwise Bitwise Functions
-
-For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn`so that the expression
-`eve::bit_compatible_values<T1,...,Tn>` evaluates to `true`, a Callable Object `f` is said to be
-a **Bitwise Function** if the expression `T1 r = f(x1, ..., xn)` is semantically equivalent to:
-
-  - if `T1` models eve::simd_value:
-    @code{.cpp}
-    T1 r = [](auto i, auto) { return f(get(x1,i), ..., get(eve::bit_cast(xn, eve::as(x1)),i); };
-    @endcode
-
-  - if `T1` models eve::scalar_value:
-    @code{.cpp}
-    T1 r = f(x1,...eve::bit_cast(xn,eve::as(x1)));
-    @endcode
-
-In a less formal way, **EVE** @ref glossary_bitwise can be applied to any pair of types, the first
-acting as the value type and the second as a type-less source of bits. By construction, a large
-majority of @ref glossary_bitwise are _de facto_ @ref glossary_elementwise.
-
 @subsection glossary_logical Logical Functions
 
 **EVE** @ref glossary_logical are @ref glossary_arithmetic that can only be applied to

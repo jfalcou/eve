@@ -16,6 +16,7 @@ TTS_CASE_TPL( "Check return types of bitwise operators on wide", eve::test::simd
 {
   using v_t = eve::element_type_t<T>;
 
+
   TTS_EXPR_IS( T()    & T()   , T);
   TTS_EXPR_IS( T()    & v_t() , T);
   TTS_EXPR_IS( v_t()  & T()   , T);
@@ -26,6 +27,13 @@ TTS_CASE_TPL( "Check return types of bitwise operators on wide", eve::test::simd
   TTS_EXPR_IS( T()    ^ v_t() , T);
   TTS_EXPR_IS( v_t()  ^ T()   , T);
   TTS_EXPR_IS( ~T()           , T);
+
+  // assigning operators
+  auto v = T{};
+
+  TTS_EXPR_IS(v &= v, T&);
+  TTS_EXPR_IS(v |= v, T&);
+  TTS_EXPR_IS(v ^= v, T&);
 };
 
 //==================================================================================================
@@ -63,4 +71,16 @@ TTS_CASE_WITH( "Check behavior of bitwise operators on wide and scalar"
   TTS_IEEE_EQUAL( (v_t(1) & a0), T([&](auto i, auto) { return eve::bit_and(v_t(1), a0.get(i)); }));
   TTS_IEEE_EQUAL( (v_t(1) | a0), T([&](auto i, auto) { return eve::bit_or (v_t(1), a0.get(i)); }));
   TTS_IEEE_EQUAL( (v_t(1) ^ a0), T([&](auto i, auto) { return eve::bit_xor(v_t(1), a0.get(i)); }));
+
+  auto cpy = a0;
+  (cpy &= v_t(1));
+  TTS_IEEE_EQUAL(cpy, T([&](auto i, auto) { return eve::bit_and(a0.get(i), v_t(1)); }));
+
+  cpy = a0;
+  (cpy |= v_t(1));
+  TTS_IEEE_EQUAL(cpy, T([&](auto i, auto) { return eve::bit_or(a0.get(i), v_t(1)); }));
+
+  cpy = a0;
+  (cpy ^= v_t(1));
+  TTS_IEEE_EQUAL(cpy, T([&](auto i, auto) { return eve::bit_xor(a0.get(i), v_t(1)); }));
 };

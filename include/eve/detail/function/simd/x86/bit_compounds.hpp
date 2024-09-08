@@ -204,7 +204,7 @@ namespace eve::detail
   // &=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitand(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitand(wide<T, N> &self, U const &other) noexcept
   requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
@@ -245,7 +245,7 @@ namespace eve::detail
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitor(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitor(wide<T, N> &self, U const &other) noexcept
       requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;
@@ -287,7 +287,7 @@ namespace eve::detail
   // ^=
   //================================================================================================
   template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE decltype(auto) self_bitxor(wide<T, N> &self, U const &other) noexcept
+  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitxor(wide<T, N> &self, U const &other) noexcept
       requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
   {
     using type = wide<T, N>;

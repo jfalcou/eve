@@ -104,4 +104,7 @@ namespace eve
 
   template<typename... Ts>
   using bit_value_t = typename bit_value<Ts...>::type;
+
+  template<typename... Ts>
+  concept supports_bitwise_call = requires { typename bit_value<Ts...>::type; };
 }

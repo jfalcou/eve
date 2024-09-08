@@ -34,6 +34,19 @@ TTS_CASE_TPL( "Check return types of arithmetic operators on wide", eve::test::s
     TTS_EXPR_IS( v_t()% T(), T);
     TTS_EXPR_IS( T() % v_t(), T);
   }
+
+  // assigning operators
+  auto v = T{};
+
+  TTS_EXPR_IS(v += v, T&);
+  TTS_EXPR_IS(v -= v, T&);
+  TTS_EXPR_IS(v *= v, T&);
+  TTS_EXPR_IS(v /= v, T&);
+
+  if constexpr( eve::integral_value<T> )
+  {
+    TTS_EXPR_IS(v %= v, T&);
+  }
 };
 
 //==================================================================================================
@@ -126,4 +139,20 @@ TTS_CASE_WITH( "Check behavior of arithmetic operators on wide and scalar"
     TTS_EQUAL( (a0 % s), T([&](auto i, auto) { return a0.get(i) % s; }));
     TTS_EQUAL( (s % a1), T([&](auto i, auto) { return s % a1.get(i); }));
   }
+
+  auto cpy = a0;
+  (cpy += s);
+  TTS_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) + s; }));
+
+  cpy = a0;
+  (cpy -= s);
+  TTS_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) - s; }));
+
+  cpy = a0;
+  (cpy *= s);
+  TTS_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) * s; }));
+
+  cpy = a0;
+  (cpy /= s);
+  TTS_ULP_EQUAL(cpy, T([&](auto i, auto) { return a0.get(i) / s; }), 1);
 };
