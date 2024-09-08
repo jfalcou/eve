@@ -169,7 +169,7 @@ namespace eve::detail
     if constexpr ( max_scalar_size_v<T> == 2 && current_api < avx ) return compress_using_masks_(EVE_RETARGET(cpu_), c, v, mask);
     else
     {
-      v = eve::if_else[mask]( v, compress_using_masks_to_left( v ) );
+      v = eve::if_else(mask, v, compress_using_masks_to_left( v ) );
       auto [lo_idx, lo_count, hi_idx, hi_count] = compress_store_swizzle_mask_num(mask);
 
       auto [shuffled_lo, shuffled_hi] = compress_using_masks_shuffle_16{lo_idx, hi_idx}(v);

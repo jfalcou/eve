@@ -9,7 +9,6 @@
 
 #include <eve/as.hpp>
 #include <eve/detail/wide_forward.hpp>
-#include <eve/concept/value.hpp>
 
 namespace eve
 {
