@@ -16,6 +16,8 @@
 #include <eve/module/core/regular/bit_notor.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/regular/bit_cast.hpp>
+
 
 namespace eve
 {
@@ -116,11 +118,13 @@ namespace eve
                                                                   , [[maybe_unused]] T2 const & cc
                                                                   ) noexcept
     {
-
       using T = bit_value_t<T0, T1, T2>;
-      auto a = T(aa);
-      auto b = T(bb);
-      auto c = T(cc);
+      auto wa = as_wide_as_t<T0, T>(aa);
+      auto wb = as_wide_as_t<T1, T>(bb);
+      auto wc = as_wide_as_t<T2, T>(cc);
+      auto a = bit_cast(wa, as<T>());
+      auto b = bit_cast(wb, as<T>());
+      auto c = bit_cast(wc, as<T>());
       if constexpr(K == 0x00) return zero(as(a));
       if constexpr(K == 0x01) return bit_not(bit_or(a, b, c));
       if constexpr(K == 0x02) return bit_notand(bit_or(a, b), c);
@@ -293,12 +297,12 @@ namespace eve
       if constexpr(K == 0xa9) return bit_not(bit_xor(c, bit_or(b, a)));
       if constexpr(K == 0xaa) return c;
       if constexpr(K == 0xab) return bit_or(c, bit_not(bit_or(b, a)));
-      if constexpr(K == 0xac) return bit_select(a, c, b);
+      if constexpr(K == 0xac) return bit_or(bit_and(c, a), bit_andnot(b, a));
       if constexpr(K == 0xad) return bit_or(bit_and(b, c), bit_xor(a, bit_not(c)));
       if constexpr(K == 0xae) return bit_or(c, bit_notand(a, b));
       if constexpr(K == 0xaf) return bit_ornot(c, a);
       if constexpr(K == 0xb0) return bit_notand(bit_notand(c, b), a);
-      if constexpr(K == 0xb1) return bit_select(c, a, bit_not(b));
+      if constexpr(K == 0xb1) return bit_or(bit_and(a, c), bit_andnot(bit_not(b), c)); 
       if constexpr(K == 0xb2) return bit_select(b, bit_and(a, c), bit_or(a, c));
       if constexpr(K == 0xb3) return bit_or(bit_and(a, c), bit_not(b));
       if constexpr(K == 0xb4) return bit_xor(bit_notand(c, b), a);
