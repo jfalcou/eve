@@ -138,10 +138,6 @@ namespace eve
       // Shush any other cascading errors
       if      constexpr(!compatible_mask) return ignore{};
       // Handle masking SIMD with scalar with ?: to prevent issues in masking optimizations
-      else if constexpr( scalar_value<decltype(cond.mask(as(x0)))> )
-      {
-        return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
-      }
       else
       // Or proceed to find the proper way to handle this masked call
       {

@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/sub.hpp>
-
+#include <eve/module/core/regular/convert.hpp>
 namespace eve
 {
   template<typename Options>
@@ -92,8 +92,14 @@ namespace eve
         constexpr bool  iwl = T::abi_type::is_wide_logical;
 
         if      constexpr(O::contains(saturated2))  return dec[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
-        else if constexpr(integral_value<T> && iwl) return a + bit_cast(cond.mask(as<m_t>{}),as<m_t>{}).mask();
-        else                                        return sub[cond](a,one(eve::as(a)));
+        else if constexpr(integral_value<T> && iwl)
+        {
+          auto m = cond.mask(as<m_t>{});
+
+          if constexpr (simd_value<decltype(m)>) return a + convert(m.bits(), as_element<T>{});
+          else                                   return a + bit_cast(m.mask(), int_from<decltype(m.mask())>{});
+        }
+        else                                     return sub[cond](a,one(eve::as(a)));
       }
       else
       {

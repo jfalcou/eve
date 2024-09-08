@@ -40,7 +40,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto expand_mask(C const& c, as<Target> const&)
   {
     auto msk = c.mask( as<Target>{} );
-    return as_wide_t<decltype(msk), cardinal_t<Target>>(msk);
+    return as_logical_t<Target>(msk);
   }
 
   //================================================================================================
