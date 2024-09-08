@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/assert_utils.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve
 {
