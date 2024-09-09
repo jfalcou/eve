@@ -22,7 +22,7 @@ namespace eve::detail
     constexpr auto c    = categorize<wide<T, N>>();
     constexpr auto tgt  = eve::as(a);
 
-    if constexpr (std::is_signed_v<T>)
+    if constexpr (std::is_unsigned_v<T>)
     {
       // this provided the best codegen in average, recheck later
       return (a > 0).mask() >> ((sizeof(T) * 8) - 1);
