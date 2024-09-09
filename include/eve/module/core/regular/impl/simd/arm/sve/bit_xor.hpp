@@ -13,7 +13,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     // no sveor_x for floating point types 
