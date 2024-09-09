@@ -36,15 +36,15 @@ namespace eve::detail
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
 
     auto m = opts[condition_key];
-    t = if_else(m, t, 0);
+    auto wt = if_else(m, t, 0);
     
     if constexpr(std::is_unsigned_v<element_type_t<A1>>)
     {
-      return eve::all( t < Mx );
+      return eve::all( wt < Mx );
     }
     else
     {
-      return eve::all( (t < Mx) && (t > -Mx) );
+      return eve::all( (wt < Mx) && (wt > -Mx) );
     }
   }
 
