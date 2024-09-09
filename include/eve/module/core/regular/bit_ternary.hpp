@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/bit_notor.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/bit_select.hpp>
 
 
 namespace eve
@@ -114,12 +115,12 @@ namespace eve
     // this is adapted from Samuel neves ternary logic for sse avx etc.
     template < std::uint8_t K, typename T0, typename T1, typename T2, callable_options O>
     EVE_FORCEINLINE  bit_value_t<T0, T1, T2> bit_ternary_(EVE_REQUIRES(cpu_)
-                                                                  , O const &
-                                                              , std::integral_constant<std::uint8_t, K> const &
-                                                                  , [[maybe_unused]] T0 const & aa
-                                                                  , [[maybe_unused]] T1 const & bb
-                                                                  , [[maybe_unused]] T2 const & cc
-                                                                  ) noexcept
+                                                         , O const &
+                                                         , std::integral_constant<std::uint8_t, K> const &
+                                                         , [[maybe_unused]] T0 const & aa
+                                                         , [[maybe_unused]] T1 const & bb
+                                                         , [[maybe_unused]] T2 const & cc
+                                                         ) noexcept
     {
       using T = bit_value_t<T0, T1, T2>;
       auto wa = as_wide_as_t<T0, T>(aa);
@@ -300,19 +301,19 @@ namespace eve
       if constexpr(K == 0xa9) return bit_not(bit_xor(c, bit_or(b, a)));
       if constexpr(K == 0xaa) return c;
       if constexpr(K == 0xab) return bit_or(c, bit_not(bit_or(b, a)));
-      if constexpr(K == 0xac) return bit_or(bit_and(c, a), bit_andnot(b, a));
+      if constexpr(K == 0xac) return bit_select(a, c, b);//bit_or(bit_and(c, a), bit_andnot(b, a));
       if constexpr(K == 0xad) return bit_or(bit_and(b, c), bit_xor(a, bit_not(c)));
       if constexpr(K == 0xae) return bit_or(c, bit_notand(a, b));
       if constexpr(K == 0xaf) return bit_ornot(c, a);
       if constexpr(K == 0xb0) return bit_notand(bit_notand(c, b), a);
-      if constexpr(K == 0xb1) return  bit_or(bit_and(a, c), bit_andnot(bit_not(b), c));
+      if constexpr(K == 0xb1) return bit_or(bit_and(a, c), bit_andnot(bit_not(b), c));
       if constexpr(K == 0xb2) return bit_or(bit_and(b, a, c),bit_notand(b, bit_or(a, c)));
       if constexpr(K == 0xb3) return bit_or(bit_and(a, c), bit_not(b));
       if constexpr(K == 0xb4) return bit_xor(bit_notand(c, b), a);
       if constexpr(K == 0xb5) return bit_or(bit_notand(b, a), bit_xor(a, bit_not(c)));
       if constexpr(K == 0xb6) return bit_or(bit_and(a, c), bit_xor(a, b, c));
       if constexpr(K == 0xb7) return bit_not(bit_and(b, bit_xor(a, c)));
-      if constexpr(K == 0xb8) return bit_or(bit_and(b, c), bit_notand(b, a));
+      if constexpr(K == 0xb8) return bit_select(b, c, a); //bit_or(bit_and(b, c), bit_notand(b, a));
       if constexpr(K == 0xb9) return bit_or(bit_and(a, c), bit_xor(b, bit_not(c)));
       if constexpr(K == 0xba) return bit_or(bit_notand(b, a), c);
       if constexpr(K == 0xbb) return bit_or(c, bit_not(b));
@@ -330,7 +331,7 @@ namespace eve
       if constexpr(K == 0xc7) return bit_or(bit_notand(c, b), bit_xor(a, bit_not(b)));
       if constexpr(K == 0xc8) return bit_and(b, bit_or(a, c));
       if constexpr(K == 0xc9) return bit_not(bit_xor(b, bit_or(a, c)));
-      if constexpr(K == 0xca) return bit_or(bit_and(a, b), bit_notand(a, c));
+      if constexpr(K == 0xca) return bit_select(a, b, c); //bit_or(bit_and(a, b), bit_notand(a, c));
       if constexpr(K == 0xcb) return bit_or(bit_and(b, c), bit_xor(a, bit_not(b)));
       if constexpr(K == 0xcc) return b;
       if constexpr(K == 0xcd) return bit_or(b, bit_not(bit_or(a, c)));
@@ -344,7 +345,7 @@ namespace eve
       if constexpr(K == 0xd5) return bit_or(bit_and(a, b), bit_not(c));
       if constexpr(K == 0xd6) return bit_or(bit_and(a, b), bit_xor(b, a, c));
       if constexpr(K == 0xd7) return bit_not(bit_and(c, bit_xor(b, a)));
-      if constexpr(K == 0xd8) return bit_or(bit_and(c, b), bit_notand(c, a));
+      if constexpr(K == 0xd8) return bit_select(c, b, a); //bit_or(bit_and(c, b), bit_notand(c, a));
       if constexpr(K == 0xd9) return bit_or(bit_and(a, b), bit_xor(b, bit_not(c)));
       if constexpr(K == 0xda) return bit_or(bit_and(a, b), bit_xor(a, c));
       if constexpr(K == 0xdb) return bit_or(bit_xor(a, c), bit_xor(a, bit_not(b)));
@@ -354,9 +355,9 @@ namespace eve
       if constexpr(K == 0xdf) return bit_or(b, bit_not(bit_and(a, c)));
       if constexpr(K == 0xe0) return bit_and(a, bit_or(b, c));
       if constexpr(K == 0xe1) return bit_not(bit_xor(a, bit_or(b, c)));
-      if constexpr(K == 0xe2) return bit_or(bit_and(b, a),  bit_notand(b, c));
+      if constexpr(K == 0xe2) return bit_select(b, a, c); //bit_or(bit_and(b, a),  bit_notand(b, c));
       if constexpr(K == 0xe3) return bit_or(bit_and(a, c), bit_xor(a, bit_not(b)));
-      if constexpr(K == 0xe4) return bit_or(bit_and(c, a), bit_notand(c, b));
+      if constexpr(K == 0xe4) return bit_select(c, a, b); //bit_or(bit_and(c, a), bit_notand(c, b));
       if constexpr(K == 0xe5) return bit_or(bit_and(a, b), bit_xor(a, bit_not(c)));
       if constexpr(K == 0xe6) return bit_or(bit_and(a, b), bit_xor(b, c));
       if constexpr(K == 0xe7) return bit_or(bit_xor(b, c), bit_xor(a, bit_not(b)));
