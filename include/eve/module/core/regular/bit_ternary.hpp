@@ -13,8 +13,8 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_notand.hpp>
 #include <eve/module/core/regular/bit_notor.hpp>
-#include <eve/module/core/regular/bit_select.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
@@ -76,6 +76,9 @@ namespace eve
 //!        For each bit in each integer, the corresponding bit from a, b, and c are used according
 //!        to ik, and the result is output.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
+//!        Note that the element type of the output is always the one of `a` and if any parameter is simd,
+//!        its number of lanes is the number of lanes of the output
+//!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!      The following table is the pattern of a truth table: if `op` is a ternary bit operator the result column
 //!      is the desired bit output when calling `op` pn the `x`, `y` and `z` bit values.
@@ -302,8 +305,8 @@ namespace eve
       if constexpr(K == 0xae) return bit_or(c, bit_notand(a, b));
       if constexpr(K == 0xaf) return bit_ornot(c, a);
       if constexpr(K == 0xb0) return bit_notand(bit_notand(c, b), a);
-      if constexpr(K == 0xb1) return bit_or(bit_and(a, c), bit_andnot(bit_not(b), c)); 
-      if constexpr(K == 0xb2) return bit_select(b, bit_and(a, c), bit_or(a, c));
+      if constexpr(K == 0xb1) return  bit_or(bit_and(a, c), bit_andnot(bit_not(b), c));
+      if constexpr(K == 0xb2) return bit_or(bit_and(b, a, c),bit_notand(b, bit_or(a, c)));
       if constexpr(K == 0xb3) return bit_or(bit_and(a, c), bit_not(b));
       if constexpr(K == 0xb4) return bit_xor(bit_notand(c, b), a);
       if constexpr(K == 0xb5) return bit_or(bit_notand(b, a), bit_xor(a, bit_not(c)));
@@ -353,7 +356,7 @@ namespace eve
       if constexpr(K == 0xe1) return bit_not(bit_xor(a, bit_or(b, c)));
       if constexpr(K == 0xe2) return bit_or(bit_and(b, a),  bit_notand(b, c));
       if constexpr(K == 0xe3) return bit_or(bit_and(a, c), bit_xor(a, bit_not(b)));
-      if constexpr(K == 0xe4) return bit_select(c, a, b);
+      if constexpr(K == 0xe4) return bit_or(bit_and(c, a), bit_notand(c, b));
       if constexpr(K == 0xe5) return bit_or(bit_and(a, b), bit_xor(a, bit_not(c)));
       if constexpr(K == 0xe6) return bit_or(bit_and(a, b), bit_xor(b, c));
       if constexpr(K == 0xe7) return bit_or(bit_xor(b, c), bit_xor(a, bit_not(b)));
