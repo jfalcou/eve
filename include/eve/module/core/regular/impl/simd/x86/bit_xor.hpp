@@ -21,7 +21,7 @@ namespace eve ::detail
   EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    constexpr auto c = categorize<type>();
+    constexpr auto c = categorize<wide<T, N>>();
     constexpr bool i = match(c, category::integer_);
 
           if constexpr ( c == category::float64x8  ) return _mm512_xor_pd(a, b);
