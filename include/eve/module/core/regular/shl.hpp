@@ -100,10 +100,16 @@ namespace eve
 
   namespace detail
   {
-    template<callable_options O, conditional_expr C, typename T, typename U>
-    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U b) noexcept
+    template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
+    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
     {
-      return shl(a, if_else(cx, b, zero)); 
+      return shl(a, if_else(cx, S, zero));
+    }
+
+    template<callable_options O, conditional_expr C, typename T, typename U>
+    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U s) noexcept
+    {
+      return shl(a, if_else(cx, s, zero)); 
     }
 
     template<callable_options O, typename T, typename U>
