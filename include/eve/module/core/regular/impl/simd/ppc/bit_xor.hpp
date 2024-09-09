@@ -13,7 +13,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE bool bit_xor_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> bit_xor_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
     return vec_xor(a.storage(), b.storage());
