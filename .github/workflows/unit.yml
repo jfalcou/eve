@@ -147,9 +147,9 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
-        run:  cd build && ninja unit.meta.exe -j 5
+        run:  cd build && ninja unit.meta.exe unit.arch.exe -j 5
       - name: Running Unit Tests
-        run:  cd build && ctest --output-on-failure -j 4  -R ^unit.meta.*.exe
+        run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe"
 
   ##################################################################################################
   ## Mac OS X Targets

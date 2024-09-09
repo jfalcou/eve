@@ -7,13 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/cpu/as_register.hpp>
+#include <eve/detail/spy.hpp>
 
-#if !defined(EVE_NO_SIMD)
-#include <eve/arch/x86/as_register.hpp>
-#include <eve/arch/ppc/as_register.hpp>
-#include <eve/arch/arm/sve/as_register.hpp>
-#include <eve/arch/arm/neon/as_register.hpp>
-#include <eve/arch/riscv/as_register.hpp>
+// We successfully detected some native SIMD
+#if defined(SPY_SIMD_IS_RISCV_FIXED_RVV) && !defined(EVE_NO_SIMD)
+#  define EVE_SUPPORTS_NATIVE_SIMD
+#  define EVE_INCLUDE_RISCV_HEADER
 #endif
-

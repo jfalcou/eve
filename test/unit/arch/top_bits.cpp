@@ -44,6 +44,7 @@ TTS_CASE_TPL( "Check top bits raw type", eve::test::simd::all_types)
        if constexpr (eve::has_aggregated_abi_v<logical>) TTS_EXPECT(expect_array(tb_storage{}));
   else if constexpr (std::same_as<ABI, eve::ppc_>) TTS_TYPE_IS(tb_storage, std::uint64_t);
   else if constexpr (eve::current_api >= eve::sve      ) TTS_TYPE_IS(tb_storage, eve::logical<eve::wide<v_t>>);
+  else if constexpr( eve::current_api == eve::rvv ) TTS_TYPE_IS(tb_storage, logical);
   else if constexpr (eve::current_api >= eve::avx512   )
   {
     constexpr std::ptrdiff_t min_size = sizeof(v_t) == 1 ? 16 : 8;
