@@ -13,5 +13,5 @@ int main()
                                                      
   std::cout << "-> bit_shr(wi0, wi1)                 = " << eve::bit_shr(wi0, wi1) << "\n";
   std::cout << "-> bit_shr[ignore_last(2)](wi0, wi1) = " << eve::bit_shr[eve::ignore_last(2)](wi0, wi1) << "\n";
-  std::cout << "-> bit_shr[wi2 > 0](wi0, wi2)       = " << eve::bit_shr[wi2 > 0](wi0, wi2) << "\n";
+  std::cout << "-> bit_shr[wi2 > 0](wi0, wi2)        = " << eve::bit_shr[wi2 > 0](wi0, wi2) << "\n";
 }
