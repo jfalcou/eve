@@ -241,46 +241,4 @@ namespace eve::detail
       return self;
     }
   }
-
-  //================================================================================================
-  // ^=
-  //================================================================================================
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitxor(wide<T, N> &self, U const &other) noexcept
-      requires((sizeof(wide<T, N>) == sizeof(U)) || (sizeof(T) == sizeof(U))) && x86_abi<abi_t<T, N>>
-  {
-    using type = wide<T, N>;
-
-    if constexpr( scalar_value<U> )
-    {
-      auto bit_other = bit_cast(other, as<T> {});
-      return self_bitxor(self, type {bit_other});
-    }
-    else if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
-    {
-      auto bits = bit_cast(other, as<type> {});
-      constexpr auto c = categorize<type>();
-      constexpr bool i = match(c, category::integer_);
-
-            if constexpr  ( c == category::float64x8        ) self = _mm512_xor_pd(self, bits);
-      else  if constexpr  ( c == category::float64x4        ) self = _mm256_xor_pd(self, bits);
-      else  if constexpr  ( c == category::float64x2        ) self = _mm_xor_pd   (self, bits);
-      else  if constexpr  ( c == category::float32x16       ) self = _mm512_xor_ps(self, bits);
-      else  if constexpr  ( c == category::float32x8        ) self = _mm256_xor_ps(self, bits);
-      else  if constexpr  ( c == category::float32x4        ) self = _mm_xor_ps   (self, bits);
-      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_512_> ) self = _mm512_xor_si512(self, bits);
-      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_256_> )
-      {
-        if constexpr  ( current_api >= avx2 ) self =  _mm256_xor_si256(self, bits);
-        else                                  self =  _mm256_castps_si256
-                                                      ( _mm256_xor_ps ( _mm256_castsi256_ps(self)
-                                                                      , _mm256_castsi256_ps(bits)
-                                                                      )
-                                                      );
-      }
-      else  if constexpr  ( i && std::same_as<abi_t<T, N>,x86_128_> ) self = _mm_xor_si128(self, bits);
-
-      return self;
-    }
-  }
 }
