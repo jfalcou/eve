@@ -115,8 +115,13 @@ namespace eve
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {
+      // S >> S case: perform the operation using the default operator
       if constexpr (scalar_value<T> && scalar_value<U>) return static_cast<T>(a << s);
-      else if constexpr (scalar_value<T>)               return shl(as_wide_t<T, cardinal_t<U>>{a}, s);
+      // S << W case: broadcast the scalar & rerun
+      else if constexpr (scalar_value<T>)               return shl(as_wide_as_t<T, U>{a}, s);
+      // W << S case: broadcast the scalar & rerun
+      else if constexpr (scalar_value<U>)               return shl(a, as_wide_as_t<U, T>{s});
+      // W << W case: all backends rejected the op, generic fallback
       else                                              return map([]<typename V>(V v, auto b) { return static_cast<V>(v << b); }, a, s);
     }
 

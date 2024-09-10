@@ -29,22 +29,28 @@ namespace eve::detail
     }
   }
 
-  template< typename A0, callable_options O, eve::value A1>
+  template<typename A0, callable_options O, eve::value A1>
   constexpr EVE_FORCEINLINE bool assert_good_shift(O const& opts, A1 t) noexcept
   {
     using v1_t = element_type_t<A1>;
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
 
-    auto m = opts[condition_key];
-    auto wt = if_else(m, t, 0);
-    
-    if constexpr(std::is_unsigned_v<element_type_t<A1>>)
+    if constexpr (plain_scalar_value<A0>)
     {
-      return eve::all( wt < Mx );
+      return assert_good_shift<A0>(t);
     }
     else
     {
-      return eve::all( (wt < Mx) && (wt > -Mx) );
+      auto wt = if_else(opts[condition_key], as_wide_as_t<A1, A0>{t}, zero);
+    
+      if constexpr(std::is_unsigned_v<element_type_t<A1>>)
+      {
+        return eve::all( wt < Mx );
+      }
+      else
+      {
+        return eve::all( (wt < Mx) && (wt > -Mx) );
+      }
     }
   }
 
