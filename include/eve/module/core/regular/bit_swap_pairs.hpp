@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
@@ -26,7 +27,17 @@ namespace eve
   {
     template<eve::integral_value T, integral_value I0, integral_value I1>
     constexpr EVE_FORCEINLINE T operator()(T v, I0 i0,  I1 i1) const noexcept
-    { return EVE_DISPATCH_CALL(v, i0, i1); }
+    {
+      EVE_ASSERT(detail::assert_shift<T>(this->options(), i0),
+                 "[eve::bit_swap_pairs] Argument i0 " << i0 << " is out of the range [0, "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+
+      EVE_ASSERT(detail::assert_shift<T>(this->options(), i1),
+                 "[eve::bit_swap_pairs] Argument i1 " << i1 << " is out of the range [0, "
+                 << sizeof(element_type_t<T>) * 8 << "[.");
+
+      return EVE_DISPATCH_CALL(v, i0, i1);
+    }
 
     EVE_CALLABLE_OBJECT(bit_swap_pairs_t, bit_swap_pairs_);
   };
@@ -82,16 +93,26 @@ namespace eve
 
   namespace detail
   {
-
-    template<value T, integral_value I0, integral_value I1, callable_options O>
-    constexpr T  bit_swap_pairs_(EVE_REQUIRES(cpu_), O const&, T a, I0 i0,  I1 i1) noexcept
+    template<callable_options O, conditional_expr C, value T, integral_value I0, integral_value I1>
+    EVE_FORCEINLINE constexpr auto bit_swap_pairs_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, I0 i0, I1 i1) noexcept
     {
-      [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;
-      EVE_ASSERT(eve::all(i0 < S8 && i1 < S8), "some indexes are out or range");
-      auto x = bit_and(bit_xor(bit_shr(a, i0), bit_shr(a, i1)), one(as(a)));
-      a ^= bit_shl(x, i1);
-      a ^= bit_shl(x, i0);
-      return a;
+      return bit_swap_pairs(a, if_else(cx, i0, zero), if_else(cx, i1, zero));
+    }
+
+    template<callable_options O, value T, integral_value I0, integral_value I1>
+    constexpr T bit_swap_pairs_(EVE_REQUIRES(cpu_), O const&, T a, I0 i0, I1 i1) noexcept
+    {
+      // 1 if the bits of a at i0 and i1 are different, 0 otherwise
+      auto x = bit_and(
+                  bit_xor(
+                      bit_shr(a, i0),
+                      bit_shr(a, i1)
+                  ),
+                  one(as(a))
+                );
+
+      // if the bits are different, swap them by toggling both
+      return bit_xor(a, bit_shl(x, i1), bit_shl(x, i0));
     }
   }
 }

@@ -50,7 +50,7 @@ namespace eve::detail
     }
     else if constexpr (scalar_value<T> && simd_value<U>)
     {
-      return rshl(wide<T, cardinal_t<U>>(a0), a1);
+      return rshl(wide<T, cardinal_t<U>>{a0}, a1);
     }
     else if constexpr (scalar_value<U> && simd_value<T>)
     {
@@ -67,11 +67,11 @@ namespace eve::detail
         #endif
       }
     }
-    else if constexpr( simd_value<U> && simd_value<T>)
+    else if constexpr (simd_value<U> && simd_value<T>)
     {
       if constexpr (unsigned_value<U>)
       {
-        return T(a0 >> a1);
+        return T{a0 >> a1};
       }
       else if constexpr (scalar_value<U>)
       {

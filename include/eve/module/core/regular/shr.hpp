@@ -25,13 +25,14 @@ namespace eve
       EVE_ASSERT(detail::assert_shift<T>(this->options(), s),
                  "[eve::shr] Shifting by " << s << " is out of the range [0, "
                  << sizeof(element_type_t<T>) * 8 << "[.");
+      
       return EVE_DISPATCH_CALL(t0, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      constexpr int l = sizeof(element_type_t<T>) * 8;
+      constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S >= 0), "[eve::shr] Shift value is out of range.");
 
       return EVE_DISPATCH_CALL(t0, s);

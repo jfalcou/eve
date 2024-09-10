@@ -18,20 +18,21 @@ namespace eve
   struct rshr_t : strict_elementwise_callable<rshr_t, Options>
   {
     template<integral_value T, integral_value N>
-    requires(eve::same_lanes_or_scalar<T, N>)
-    EVE_FORCEINLINE constexpr auto/*as_wide_as_t<T, N>*/ operator()(T t0, N s) const noexcept
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
+      requires(eve::same_lanes_or_scalar<T, N>)
     {
       EVE_ASSERT(detail::assert_relative_shift<T>(this->options(), s),
                  "[eve::rshr] - Shifting by " << s << " is out of the range ]"
                  << -int(sizeof(element_type_t<T>) * 8) << ", "
                  << sizeof(element_type_t<T>) * 8 << "[.");
+                 
       return EVE_DISPATCH_CALL(t0, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      constexpr int l = sizeof(element_type_t<T>) * 8;
+      constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S > -l), "[eve::rshr] Shift value is out of range.");
 
       return EVE_DISPATCH_CALL(t0, s);

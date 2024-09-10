@@ -35,7 +35,7 @@ namespace eve
     template<eve::unsigned_value T, auto S>
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
     {
-      constexpr int l = sizeof(element_type_t<T>) * 8;
+      constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S > -l), "[eve::rotr] Rotation is out of range.");
 
       return EVE_DISPATCH_CALL(v, s);

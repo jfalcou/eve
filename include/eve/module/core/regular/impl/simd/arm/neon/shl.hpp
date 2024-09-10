@@ -51,28 +51,22 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr(S != 0)
-    {
-           if constexpr( c == category::int64x1  ) return vshl_n_s64 (w, S);
-      else if constexpr( c == category::int32x2  ) return vshl_n_s32 (w, S);
-      else if constexpr( c == category::int16x4  ) return vshl_n_s16 (w, S);
-      else if constexpr( c == category::int8x8   ) return vshl_n_s8  (w, S);
-      else if constexpr( c == category::uint64x1 ) return vshl_n_u64 (w, S);
-      else if constexpr( c == category::uint32x2 ) return vshl_n_u32 (w, S);
-      else if constexpr( c == category::uint16x4 ) return vshl_n_u16 (w, S);
-      else if constexpr( c == category::uint8x8  ) return vshl_n_u8  (w, S);
-      else if constexpr( c == category::int64x2  ) return vshlq_n_s64(w, S);
-      else if constexpr( c == category::int32x4  ) return vshlq_n_s32(w, S);
-      else if constexpr( c == category::int16x8  ) return vshlq_n_s16(w, S);
-      else if constexpr( c == category::int8x16  ) return vshlq_n_s8 (w, S);
-      else if constexpr( c == category::uint64x2 ) return vshlq_n_u64(w, S);
-      else if constexpr( c == category::uint32x4 ) return vshlq_n_u32(w, S);
-      else if constexpr( c == category::uint16x8 ) return vshlq_n_u16(w, S);
-      else if constexpr( c == category::uint8x16 ) return vshlq_n_u8 (w, S);
-    }
-    else
-    {
-      return w;
-    }
+    if      constexpr( S == 0 )                  return w;
+    else if constexpr( c == category::int64x1  ) return vshl_n_s64 (w, S);
+    else if constexpr( c == category::int32x2  ) return vshl_n_s32 (w, S);
+    else if constexpr( c == category::int16x4  ) return vshl_n_s16 (w, S);
+    else if constexpr( c == category::int8x8   ) return vshl_n_s8  (w, S);
+    else if constexpr( c == category::uint64x1 ) return vshl_n_u64 (w, S);
+    else if constexpr( c == category::uint32x2 ) return vshl_n_u32 (w, S);
+    else if constexpr( c == category::uint16x4 ) return vshl_n_u16 (w, S);
+    else if constexpr( c == category::uint8x8  ) return vshl_n_u8  (w, S);
+    else if constexpr( c == category::int64x2  ) return vshlq_n_s64(w, S);
+    else if constexpr( c == category::int32x4  ) return vshlq_n_s32(w, S);
+    else if constexpr( c == category::int16x8  ) return vshlq_n_s16(w, S);
+    else if constexpr( c == category::int8x16  ) return vshlq_n_s8 (w, S);
+    else if constexpr( c == category::uint64x2 ) return vshlq_n_u64(w, S);
+    else if constexpr( c == category::uint32x4 ) return vshlq_n_u32(w, S);
+    else if constexpr( c == category::uint16x8 ) return vshlq_n_u16(w, S);
+    else if constexpr( c == category::uint8x16 ) return vshlq_n_u8 (w, S);
   }
 }

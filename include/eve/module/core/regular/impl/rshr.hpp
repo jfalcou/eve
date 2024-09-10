@@ -35,44 +35,54 @@ namespace eve::detail
   {
     if constexpr( scalar_value<U> && scalar_value<T>)
     {
-      if constexpr( unsigned_value<U> )
-        return T(a0 >> a1);
+      if constexpr (unsigned_value<U>)
+      {
+        return T{a0 >> a1};
+      }
       else
       {
         #ifndef NDEBUG
-        return is_gtz(a1) ? T(a0 >> max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
+          return is_gtz(a1) ? T(a0 >> max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
         #else
-        return is_gtz(a1) ? T(a0 >> a1) : T(a0 << minus(a1));
+          return is_gtz(a1) ? T(a0 >> a1) : T(a0 << minus(a1));
         #endif
       }
     }
-    else if constexpr( scalar_value<T> && simd_value<U>)
-      return rshr(wide<T, cardinal_t<U>>(a0), a1);
-    else if constexpr( scalar_value<U> && simd_value<T>)
+    else if constexpr (scalar_value<T> && simd_value<U>)
     {
-      if constexpr( unsigned_value<U> )
-        return T(a0 >> a1);
+      return rshr(wide<T, cardinal_t<U>>{a0}, a1);
+    }
+    else if constexpr (scalar_value<U> && simd_value<T>)
+    {
+      if constexpr (unsigned_value<U>)
+      {
+        return T{a0 >> a1};
+      }
       else
       {
         #ifndef NDEBUG
-        return is_gtz(a1) ? T(a0 >> max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
+          return is_gtz(a1) ? T(a0 >> max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
         #else
-        return is_gtz(a1) ? T(a0 >> a1) : T(a0 << minus(a1));
+          return is_gtz(a1) ? T(a0 >> a1) : T(a0 << minus(a1));
         #endif
       }
     }
-    else if constexpr( simd_value<U> && simd_value<T>)
+    else if constexpr (simd_value<U> && simd_value<T>)
     {
-      if constexpr( unsigned_value<U> )
-        return T(a0 >> a1);
-      else if constexpr( scalar_value<U> )
+      if constexpr (unsigned_value<U>)
+      {
+        return T{a0 >> a1};
+      }
+      else if constexpr (scalar_value<U>)
+      {
         return (a1 > 0) ? T(shr(a0, a1)) : T(shl(a0, minus(a1)));
+      }
       else
       {
         #ifndef NDEBUG
-        return if_else(is_gtz(a1), T(a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
+          return if_else(is_gtz(a1), T(a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
         #else
-        return if_else(is_gtz(a1), T(a0 >> a1), T(a0 << minus(a1)));
+          return if_else(is_gtz(a1), T(a0 >> a1), T(a0 << minus(a1)));
         #endif
       }
     }
