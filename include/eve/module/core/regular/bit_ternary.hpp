@@ -132,7 +132,7 @@ namespace eve
       auto a = bit_cast(wa, as<i_t>());
       auto b = bit_cast(wb, as<i_t>());
       auto c = bit_cast(wc, as<i_t>());
-      auto doit = [a, b, c](){
+      auto doit = []([[maybe_unused]] auto a,  [[maybe_unused]] auto b, [[maybe_unused]]  auto c){
         if constexpr(K == 0x00) return zero(as(a));
         if constexpr(K == 0x01) return bit_not(bit_or(a, b, c));
         if constexpr(K == 0x02) return bit_notand(bit_or(a, b), c);
@@ -390,14 +390,14 @@ namespace eve
         if constexpr(K == 0xfe) return bit_or(a, b, c);
         if constexpr(K == 0xff) return eve::allbits(as(a));
       };
-      return bit_cast(doit(), as<T>());
+      return bit_cast(doit(a, b, c), as<T>());
     }
   }
   template < int a, int b, int c, int d, int e, int f , int g, int h>
   consteval auto truth_table(){
     return std::integral_constant<std::uint8_t, std::uint8_t((a << 7) + (b << 6) + (c << 5) +
                                                              (d << 4) + (e << 3) + (f << 2) + (g << 1) + h)>();
-  }  
+  }
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
