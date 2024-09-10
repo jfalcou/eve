@@ -78,19 +78,20 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T,N> shl_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<S, N> s) noexcept
     requires (x86_abi<abi_t<T, N>>)
   {
+    auto sc = convert(s, as<element_type_t<T>>{});
     constexpr auto c = categorize<wide<T, N>>();
     constexpr bool is_avx2 = current_api >= avx2;
 
-          if constexpr( is_avx2 && c == category::int64x4  ) return _mm256_sllv_epi64(v, s);
-    else  if constexpr( is_avx2 && c == category::int32x8  ) return _mm256_sllv_epi32(v, s);
-    else  if constexpr( is_avx2 && c == category::uint64x4 ) return _mm256_sllv_epi64(v, s);
-    else  if constexpr( is_avx2 && c == category::uint32x8 ) return _mm256_sllv_epi32(v, s);
-    else  if constexpr(            c == category::int64x8  ) return _mm512_sllv_epi64(v, s);
-    else  if constexpr(            c == category::int32x16 ) return _mm512_sllv_epi32(v, s);
-    else  if constexpr(            c == category::int16x32 ) return _mm512_sllv_epi16(v, s);
-    else  if constexpr(            c == category::uint64x8 ) return _mm512_sllv_epi64(v, s);
-    else  if constexpr(            c == category::uint32x16) return _mm512_sllv_epi32(v, s);
-    else  if constexpr(            c == category::uint16x32) return _mm512_sllv_epi16(v, s);
+          if constexpr( is_avx2 && c == category::int64x4  ) return _mm256_sllv_epi64(v, sc);
+    else  if constexpr( is_avx2 && c == category::int32x8  ) return _mm256_sllv_epi32(v, sc);
+    else  if constexpr( is_avx2 && c == category::uint64x4 ) return _mm256_sllv_epi64(v, sc);
+    else  if constexpr( is_avx2 && c == category::uint32x8 ) return _mm256_sllv_epi32(v, sc);
+    else  if constexpr(            c == category::int64x8  ) return _mm512_sllv_epi64(v, sc);
+    else  if constexpr(            c == category::int32x16 ) return _mm512_sllv_epi32(v, sc);
+    else  if constexpr(            c == category::int16x32 ) return _mm512_sllv_epi16(v, sc);
+    else  if constexpr(            c == category::uint64x8 ) return _mm512_sllv_epi64(v, sc);
+    else  if constexpr(            c == category::uint32x16) return _mm512_sllv_epi32(v, sc);
+    else  if constexpr(            c == category::uint16x32) return _mm512_sllv_epi16(v, sc);
     else                                                     return shl.behavior(cpu_{}, opts, v, s);
   }
 
@@ -102,31 +103,32 @@ namespace eve::detail
       constexpr auto c = categorize<wide<T, N>>();
       auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+      auto sc  = convert(s, as<element_type_t<T>>{});
 
       // perform a logical shift left for ints as it is equivalent to an arithmetic shift left
-      if      constexpr( c == category::int16x32 ) return _mm512_mask_sllv_epi16 (src, m, v, s);
-      else if constexpr( c == category::int16x16 ) return _mm256_mask_sllv_epi16 (src, m, v, s);
-      else if constexpr( c == category::int16x8  ) return _mm_mask_sllv_epi16    (src, m, v, s);
+      if      constexpr( c == category::int16x32 ) return _mm512_mask_sllv_epi16 (src, m, v, sc);
+      else if constexpr( c == category::int16x16 ) return _mm256_mask_sllv_epi16 (src, m, v, sc);
+      else if constexpr( c == category::int16x8  ) return _mm_mask_sllv_epi16    (src, m, v, sc);
 
-      else if constexpr( c == category::int32x16 ) return _mm512_mask_sllv_epi32 (src, m, v, s);
-      else if constexpr( c == category::int32x8  ) return _mm256_mask_sllv_epi32 (src, m, v, s);
-      else if constexpr( c == category::int32x4  ) return _mm_mask_sllv_epi32    (src, m, v, s);
+      else if constexpr( c == category::int32x16 ) return _mm512_mask_sllv_epi32 (src, m, v, sc);
+      else if constexpr( c == category::int32x8  ) return _mm256_mask_sllv_epi32 (src, m, v, sc);
+      else if constexpr( c == category::int32x4  ) return _mm_mask_sllv_epi32    (src, m, v, sc);
 
-      else if constexpr( c == category::int64x8  ) return _mm512_mask_sllv_epi64 (src, m, v, s);
-      else if constexpr( c == category::int64x4  ) return _mm256_mask_sllv_epi64 (src, m, v, s);
-      else if constexpr( c == category::int64x2  ) return _mm_mask_sllv_epi64    (src, m, v, s);
+      else if constexpr( c == category::int64x8  ) return _mm512_mask_sllv_epi64 (src, m, v, sc);
+      else if constexpr( c == category::int64x4  ) return _mm256_mask_sllv_epi64 (src, m, v, sc);
+      else if constexpr( c == category::int64x2  ) return _mm_mask_sllv_epi64    (src, m, v, sc);
 
-      else if constexpr( c == category::uint16x32) return _mm512_mask_sllv_epi16 (src, m, v, s);
-      else if constexpr( c == category::uint16x16) return _mm256_mask_sllv_epi16 (src, m, v, s);
-      else if constexpr( c == category::uint16x8 ) return _mm_mask_sllv_epi16    (src, m, v, s);
+      else if constexpr( c == category::uint16x32) return _mm512_mask_sllv_epi16 (src, m, v, sc);
+      else if constexpr( c == category::uint16x16) return _mm256_mask_sllv_epi16 (src, m, v, sc);
+      else if constexpr( c == category::uint16x8 ) return _mm_mask_sllv_epi16    (src, m, v, sc);
 
-      else if constexpr( c == category::uint32x16) return _mm512_mask_sllv_epi32 (src, m, v, s);
-      else if constexpr( c == category::uint32x8 ) return _mm256_mask_sllv_epi32 (src, m, v, s);
-      else if constexpr( c == category::uint32x4 ) return _mm_mask_sllv_epi32    (src, m, v, s);
+      else if constexpr( c == category::uint32x16) return _mm512_mask_sllv_epi32 (src, m, v, sc);
+      else if constexpr( c == category::uint32x8 ) return _mm256_mask_sllv_epi32 (src, m, v, sc);
+      else if constexpr( c == category::uint32x4 ) return _mm_mask_sllv_epi32    (src, m, v, sc);
 
-      else if constexpr( c == category::uint64x8 ) return _mm512_mask_sllv_epi64 (src, m, v, s);
-      else if constexpr( c == category::uint64x4 ) return _mm256_mask_sllv_epi64 (src, m, v, s);
-      else if constexpr( c == category::uint64x2 ) return _mm_mask_sllv_epi64    (src, m, v, s);
+      else if constexpr( c == category::uint64x8 ) return _mm512_mask_sllv_epi64 (src, m, v, sc);
+      else if constexpr( c == category::uint64x4 ) return _mm256_mask_sllv_epi64 (src, m, v, sc);
+      else if constexpr( c == category::uint64x2 ) return _mm_mask_sllv_epi64    (src, m, v, sc);
   }
 
   // shr[mask](wide_val, imm_mask)
