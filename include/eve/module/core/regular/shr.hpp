@@ -18,11 +18,11 @@ namespace eve
   template<typename Options>
   struct shr_t : strict_elementwise_callable<shr_t, Options>
   {
-    template<integral_value T, integral_value N>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
-      requires(eve::same_lanes_or_scalar<T, N>)
+    template<integral_value T, integral_value S>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
+      requires(eve::same_lanes_or_scalar<T, S>)
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(this->options(), s),
+      EVE_ASSERT(detail::assert_shift<T>(this->options(), s),
                  "[eve::shr] Shifting by " << s << " is out of the range [0, "
                  << sizeof(element_type_t<T>) * 8 << "[.");
       return EVE_DISPATCH_CALL(t0, s);
@@ -31,9 +31,9 @@ namespace eve
     template<integral_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(s),
-                 "[eve::shr] Shifting by " << S << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
+      constexpr int l = sizeof(element_type_t<T>) * 8;
+      static_assert((S < l) && (S >= 0), "[eve::shr] Shift value is out of range.");
+
       return EVE_DISPATCH_CALL(t0, s);
     }
 
@@ -126,9 +126,10 @@ namespace eve
     }
 
     template<callable_options O, typename T, std::ptrdiff_t S>
-    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T const& a, index_t<S> const&) noexcept
+    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S> const&) noexcept
     {
-      return shr(a, S);
+      if constexpr (S == 0) return v;
+      else                  return shr(v, S);
     }
   }
 }

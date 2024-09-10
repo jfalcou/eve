@@ -24,7 +24,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<T, N>)
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(s),
+      EVE_ASSERT(detail::assert_relative_shift<T>(this->options(), s),
                  "[eve::rshl] - Shifting by " << s << " is out of the range ]"
                  << -int(sizeof(element_type_t<T>) * 8) << ", "
                  << sizeof(element_type_t<T>) * 8 << "[.");
@@ -34,10 +34,9 @@ namespace eve
     template<integral_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(S),
-                 "[eve::rshl] - Shifting by " << S << " is out of the range ]"
-                 << -int(sizeof(element_type_t<T>) * 8) << ", "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
+      constexpr int l = sizeof(element_type_t<T>) * 8;
+      static_assert((S < l) && (S > -l), "[eve::rshl] Shift value is out of range.");
+
       return EVE_DISPATCH_CALL(t0, s);
     }
 

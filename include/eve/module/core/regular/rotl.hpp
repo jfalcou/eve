@@ -12,7 +12,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/assert_utils.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/abs.hpp>
 
 namespace eve
 {
@@ -24,7 +23,7 @@ namespace eve
     constexpr EVE_FORCEINLINE as_wide_as_t<T,S> operator()(T v, S s) const
     {
       constexpr int l [[maybe_unused]] = sizeof(element_type_t<T>) * 8;
-      EVE_ASSERT( detail::assert_good_shift<T>(eve::abs(s))
+      EVE_ASSERT( detail::assert_relative_shift<T>(this->options(), s)
                 , "[eve::rotl] Rotating by "  << s << " is out of the range ]" << -l << ", " << l << "[."
                 );
 
@@ -35,7 +34,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
     {
       constexpr int l = sizeof(element_type_t<T>) * 8;
-      static_assert(eve::abs(S) < l, "[eve::rotl] Rotation is out of range.");
+      static_assert((S < l) && (S > -l), "[eve::rotl] Rotation is out of range.");
 
       return EVE_DISPATCH_CALL(v, s);
     }

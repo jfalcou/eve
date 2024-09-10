@@ -18,23 +18,22 @@ namespace eve
   template<typename Options>
   struct bit_shr_t : strict_elementwise_callable<bit_shr_t, Options>
   {
-    template<eve::value T, integral_value I >
-    constexpr EVE_FORCEINLINE  as_wide_as_t<T, I> operator()(T v, I i) const
+    template<eve::value T, integral_value S>
+    constexpr EVE_FORCEINLINE  as_wide_as_t<T, S> operator()(T v, S s) const
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(i),
-                 "[eve::bit_shr] Shifting by " << i << " is out of the range [0, "
+      EVE_ASSERT(detail::assert_shift<T>(this->options(), s),
+                 "[eve::bit_shr] Shifting by " << s << " is out of the range [0, "
                  << sizeof(element_type_t<T>) * 8 << "[.");
-      return EVE_DISPATCH_CALL(v, i);
+      return EVE_DISPATCH_CALL(v, s);
     }
 
-    template<eve::integral_value T, auto I >
-    //    requires(unsigned_scalar_value<element_type_t<T>>)
-    constexpr EVE_FORCEINLINE T operator()(T v, index_t<I> i) const
+    template<eve::integral_value T, std::ptrdiff_t S>
+    constexpr EVE_FORCEINLINE T operator()(T v, index_t<S> s) const
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(i),
-                 "[eve::bit_shr] Shifting by " << i << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
-      return EVE_DISPATCH_CALL(v, i);
+      constexpr int l = sizeof(element_type_t<T>) * 8;
+      static_assert((S < l) && (S >= 0), "[eve::bit_shr] Shift value is out of range.");
+
+      return EVE_DISPATCH_CALL(v, s);
     }
 
     EVE_CALLABLE_OBJECT(bit_shr_t, bit_shr_);

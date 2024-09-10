@@ -51,5 +51,9 @@ namespace eve::detail
       else  if constexpr( c == category::uint16x8 ) return vshrq_n_u16(w, S);
       else  if constexpr( c == category::uint8x16 ) return vshrq_n_u8 (w, S);
     }
+    else
+    {
+      return w;
+    }
   }
 }
