@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/detail/function/simd/common/bit_compounds.hpp>
-#include <eve/detail/function/operators.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/detail/function/simd/x86/bit_compounds.hpp>

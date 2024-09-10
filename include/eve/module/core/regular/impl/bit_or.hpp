@@ -8,7 +8,6 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/function/operators.hpp>
 
 namespace eve::detail
 {
