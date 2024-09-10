@@ -14,10 +14,9 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename N, integral_scalar_value S>
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(sve_), O const&, wide<T, N> v, wide<S, N> s) noexcept
-    requires (sve_abi<abi_t<T, N>> && sizeof(T) == sizeof(S))
+    requires sve_abi<abi_t<T, N>>
   {
-    auto const si = bit_cast(s, as<wide<as_integer_t<T, unsigned>, N>>{});
-    return svlsl_x(sve_true<T>(), v, si);
+    return svlsl_x(sve_true<T>(), v, convert(s, as<as_integer_t<T, unsigned>>{}));
   }
 
   template<callable_options O, typename T, typename N, integral_scalar_value S>
