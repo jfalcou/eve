@@ -36,20 +36,27 @@ namespace eve::detail
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
     auto m = opts[condition_key];
 
-    auto wt = if_else(m, as_wide_as_t<A1, A0>{t}, zero);
-  
-    if constexpr(std::is_unsigned_v<element_type_t<A1>>)
+    if constexpr (plain_scalar_value<A0>)
     {
-      return eve::all( wt < Mx );
+      return m ? assert_good_shift<A0>(t) : true;
     }
     else
     {
-      return eve::all( (wt < Mx) && (wt > -Mx) );
+      auto wt = if_else(m, as_wide_as_t<A1, A0>{t}, zero);
+    
+      if constexpr(std::is_unsigned_v<element_type_t<A1>>)
+      {
+        return eve::all( wt < Mx );
+      }
+      else
+      {
+        return eve::all( (wt < Mx) && (wt > -Mx) );
+      }
     }
   }
 
   template<typename A0, typename U, U V>
-  constexpr EVE_FORCEINLINE bool assert_good_shift(std::integral_constant<U, V> t) noexcept
+  constexpr EVE_FORCEINLINE bool assert_good_shift(std::integral_constant<U,V> t) noexcept
   {
     constexpr U Mx = sizeof(element_type_t<A0>) * 8;
 
