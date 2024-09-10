@@ -18,9 +18,20 @@
 
 namespace eve::detail
 {
-  template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  rshr_(EVE_REQUIRES(cpu_), O const &, T const& a0, U const& a1) noexcept
+  template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
+  {
+    return rshr(a, if_else(cx, S, zero)); 
+  }
+
+  template<callable_options O, conditional_expr C, typename T, typename U>
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U s) noexcept
+  {
+    return rshr(a, if_else(cx, s, zero)); 
+  }
+
+  template<callable_options O, typename T, typename U>
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T const& a0, U const& a1) noexcept
   {
     if constexpr( scalar_value<U> && scalar_value<T>)
     {
@@ -67,11 +78,10 @@ namespace eve::detail
     }
   }
 
-
-  template<integral_value T, std::ptrdiff_t N, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  rshr_(EVE_SUPPORTS(cpu_), O const &, T const& a0, index_t<N> const&) noexcept
+  template<callable_options O, integral_value T, std::ptrdiff_t N>
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_SUPPORTS(cpu_), O const &, T const& a0, index_t<N>) noexcept
   {
-    return rshr(a0, N);
+    if constexpr (N == 0) return a0;
+    else                  return rshr(a0, N);
   }
 }
