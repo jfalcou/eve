@@ -89,6 +89,10 @@ namespace eve
 //!     Although the infix notation with `<<` is supported, the `<<` operator on
 //!     standard scalar types is the original one and so can not be overloaded on standard floating
 //!     parameters due to **C++** limitations.
+//!    @warning
+//!     The behavior of this function is undefined if the shift value is out of the range [0, N[, where
+//!     N is the number of bits of the input type. Use [eve::rshl](@ref eve::rshl) for a relative left shift
+//!     that accepts negative shift values.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/shl.cpp}
