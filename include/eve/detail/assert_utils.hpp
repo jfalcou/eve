@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<typename A0, eve::value A1>
-  constexpr EVE_FORCEINLINE bool assert_good_shift(A1 const &t) noexcept
+  constexpr EVE_FORCEINLINE bool assert_good_shift(A1 t) noexcept
   {
     using v1_t = element_type_t<A1>;
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
@@ -34,28 +34,22 @@ namespace eve::detail
   {
     using v1_t = element_type_t<A1>;
     constexpr v1_t Mx  = sizeof(element_type_t<A0>) * 8;
+    auto m = opts[condition_key];
 
-    if constexpr (plain_scalar_value<A0>)
+    auto wt = if_else(m, as_wide_as_t<A1, A0>{t}, zero);
+  
+    if constexpr(std::is_unsigned_v<element_type_t<A1>>)
     {
-      return assert_good_shift<A0>(t);
+      return eve::all( wt < Mx );
     }
     else
     {
-      auto wt = if_else(opts[condition_key], as_wide_as_t<A1, A0>{t}, zero);
-    
-      if constexpr(std::is_unsigned_v<element_type_t<A1>>)
-      {
-        return eve::all( wt < Mx );
-      }
-      else
-      {
-        return eve::all( (wt < Mx) && (wt > -Mx) );
-      }
+      return eve::all( (wt < Mx) && (wt > -Mx) );
     }
   }
 
   template<typename A0, typename U, U V>
-  constexpr EVE_FORCEINLINE bool assert_good_shift(std::integral_constant<U,V> const &t) noexcept
+  constexpr EVE_FORCEINLINE bool assert_good_shift(std::integral_constant<U, V> t) noexcept
   {
     constexpr U Mx = sizeof(element_type_t<A0>) * 8;
 

@@ -18,8 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v, wide<S, N> s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    using i_t = wide<as_integer_t<T, unsigned>, N>;
-    return vec_sl(v.storage(), bit_cast(s, as<i_t>{}).storage());
+    return vec_sl(v.storage(), convert(s, as<as_integer_t<T, unsigned>>{}).storage());
   }
 
   template<callable_options O, typename T, typename N, integral_scalar_value S>
