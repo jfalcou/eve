@@ -62,28 +62,6 @@ namespace eve::detail
   }
 
   //================================================================================================
-  // &=
-  //================================================================================================
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitand( wide<T,N>& self, U const& other )
-    requires( (sizeof(wide<T,N>) == sizeof(U)) || (sizeof(T) == sizeof(U)) ) && ppc_abi<abi_t<T, N>>
-  {
-    using type = wide<T,N>;
-
-    if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
-    {
-      self = vec_and(self.storage(), (typename type::storage_type)(other.storage()) );
-    }
-    else
-    {
-      auto bit_other = bit_cast(other , as<T>{});
-      self = vec_and(self.storage(), type{bit_other}.storage());
-    }
-
-    return self;
-  }
-
-  //================================================================================================
   // |=
   //================================================================================================
   template<scalar_value T, value U, typename N>

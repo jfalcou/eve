@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <string_view>
+#include <iostream>
 
 std::ptrdiff_t
 substring_in_string(std::string_view haystack, std::string_view needle)
