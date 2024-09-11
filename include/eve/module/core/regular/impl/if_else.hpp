@@ -174,7 +174,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, Constant const& v, U const
       return minus(bit_or(minus(r_t(u)), bit_mask(mask)));
     }
     else if constexpr( integral_value<U> && cst == eve::mone )  return bit_or(u, bit_mask(mask));
-    else                                                        return if_else(cond, u, v(tgt {}));
+    else                                                        return if_else(cond, v(tgt {}), u);
   }
 }
 }
