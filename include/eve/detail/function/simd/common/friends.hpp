@@ -29,22 +29,6 @@ namespace eve::detail
 {
   //================================================================================================
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto self_negate(wide<T,N> const& v) noexcept
-  {
-    if constexpr(floating_value<T>)
-    {
-      auto that = v;
-      that ^= signmask(eve::as(v));
-      return that;
-    }
-    else
-    {
-      return T{0} - v;
-    }
-  }
-
-  //================================================================================================
-  template<arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto self_bitnot(wide<T,N> const& v) noexcept
   {
     if constexpr(is_native_v<abi_t<T, N>>)

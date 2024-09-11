@@ -87,19 +87,26 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
     {
-      if      constexpr( floating_value<T> ) return bit_xor(v, signmask(eve::as(v)));
-      else if constexpr(O::contains(saturated2))
+      if      constexpr (floating_value<T>)
+      {
+        return bit_xor(v, signmask(eve::as(v)));
+      }
+      else if constexpr (O::contains(saturated2))
       {
         return if_else(v == valmin(as<T>()), valmax(as<T>()), minus(v));
       }
       else
       {
-        if constexpr( simd_value<T> ) return -v;
-        else                          return T{0} - v;
+        if constexpr (simd_value<T>) return map(minus, v);
+        else                         return T{0} - v;
       }
     }
   }
 }
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/minus.hpp>
+#endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/minus.hpp>
