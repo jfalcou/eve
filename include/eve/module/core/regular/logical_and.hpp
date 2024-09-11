@@ -104,3 +104,15 @@ namespace eve
     }
   }
 }
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/logical_and.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/logical_and.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/regular/impl/simd/riscv/logical_and.hpp>
+#endif
