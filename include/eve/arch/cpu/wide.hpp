@@ -30,6 +30,7 @@
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/minus.hpp>
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 
@@ -540,11 +541,11 @@ namespace eve
     //! Unary plus operator
     friend EVE_FORCEINLINE wide operator+(wide const& v) noexcept { return v; }
 
-    //! Unary minus operator. See also: eve::unary_minus
+    //! Unary minus operator. See also: eve::minus
     friend EVE_FORCEINLINE wide operator-(wide const& v) noexcept
         requires(!kumi::product_type<Type>)
     {
-      return self_negate(v);
+      return minus(v);
     }
 
     //! @brief Performs the compound addition on all the wide lanes and assign the result
