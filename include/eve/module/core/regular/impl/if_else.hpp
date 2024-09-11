@@ -40,7 +40,7 @@ EVE_FORCEINLINE constexpr auto tuple_select(T cond, U const& t, V const& f)
 }
 
 template<scalar_value T, value U, value V, callable_options O>
-EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O, T cond, U const& t, V const& f)
+EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T cond, U const& t, V const& f)
 {
   if      constexpr( simd_value<U> && simd_value<V> ) return  is_nez(cond) ? t    : f;
   else if constexpr( simd_value<U> )                  return  is_nez(cond) ? t    : U(f);
@@ -72,7 +72,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& c
 //------------------------------------------------------------------------------------------------
 // Supports if_else(conditional_expr,a,b)
 template<conditional_expr C, typename U, typename V, callable_options O>
-EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O, C cond, U const& t, V const& f)
+EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U const& t, V const& f)
 {
   if constexpr( generator<V> )
   {
@@ -114,7 +114,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const
 
   if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? u : v(tgt {});
   else if constexpr( kumi::product_type<U> )  return if_else(cond, u, v(tgt {}));
-  else if constexpr( current_api >= avx512 )  return if_else(cond, u, v(tgt {}));
+  else if constexpr( !T::abi_type::is_wide_logical )  return if_else(cond, u, v(tgt {}));
   else
   {
     using           cvt   = as<as_logical_t<element_type_t<U>>>;

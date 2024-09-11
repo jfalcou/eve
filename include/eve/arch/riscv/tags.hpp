@@ -56,7 +56,7 @@ struct riscv_ : rvv_abi_<1>
 //================================================================================================
 // Dispatching tag for RISC-V SIMD implementation
 //================================================================================================
-struct rvv_ : simd_api<simd_, spy::rvv_>
+struct rvv_ : simd_api<simd_, spy::fixed_rvv_>
 {
   using is_rvv = void;
 };
