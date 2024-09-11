@@ -23,7 +23,7 @@ namespace eve::detail
     }
     else
     {
-      return a.storage().value & b.storage().value
+      return a.storage().value & b.storage().value;
     }
   }
 }
