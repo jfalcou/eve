@@ -26,6 +26,7 @@
 #include <eve/detail/function/make.hpp>
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/function/subscript.hpp>
+#include <eve/module/core/regular/logical_and.hpp>
 
 #include <cstring>
 #include <concepts>
@@ -274,23 +275,23 @@ namespace eve
     //==============================================================================================
     //! Perform a logical and operation between two eve::logical
     template<typename U>
-    friend EVE_FORCEINLINE auto operator&&(logical const& v, logical<wide<U, Cardinal>> const& w) noexcept
+    friend EVE_FORCEINLINE auto operator&&(logical const& a, logical<wide<U, Cardinal>> const& b) noexcept
     {
-      return detail::self_logand(eve::current_api,v,w);
+      return logical_and(a, b);
     }
 
     //! Perform a logical and operation between a eve::logical and a scalar
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator&&(logical const& v, S w) noexcept
+    friend EVE_FORCEINLINE auto operator&&(logical const& w, S s) noexcept
     {
-      return v && logical{w};
+      return logical_and(w, logical{s});
     }
 
     //! Perform a logical and operation between a scalar and a eve::logical
     template<scalar_value S>
-    friend EVE_FORCEINLINE auto operator&&(S v, logical const& w) noexcept
+    friend EVE_FORCEINLINE auto operator&&(S s, logical const& w) noexcept
     {
-      return w && v;
+      return logical_and(s, w);
     }
 
     //! Perform a logical or operation between two eve::logical

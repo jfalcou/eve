@@ -17,20 +17,28 @@ namespace eve
   struct logical_and_t : strict_elementwise_callable<logical_and_t, Options>
   {
     template<logical_value T, logical_value U>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const noexcept -> decltype(a && b)
-    requires(eve::same_lanes_or_scalar<T, U>)
-    { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b) const noexcept
+      requires(eve::same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL(a, b);
+    }
 
     template<logical_value U>
-    constexpr EVE_FORCEINLINE U  operator()(bool a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_FORCEINLINE U operator()(bool a, U b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b);
+    }
 
     template<logical_value T>
-    constexpr EVE_FORCEINLINE T  operator()(T a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_FORCEINLINE T operator()(T a, bool b) const noexcept
+    {
+      return EVE_DISPATCH_CALL(a, b);
+    }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    {
+      return EVE_DISPATCH_CALL(a, b);
+    }
 
     EVE_CALLABLE_OBJECT(logical_and_t, logical_and_);
   };
@@ -83,32 +91,16 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    logical_and_(EVE_REQUIRES(cpu_), O const &, T a, U b) noexcept
+    template<callable_options O, typename T, typename U>
+    EVE_FORCEINLINE constexpr auto logical_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
-      using r_t = as_logical_t<decltype(a && b)>;
-      if constexpr( scalar_value<T> && scalar_value<U> ) return r_t(a && b);
-      else return a && b;
+      if constexpr (std::same_as<T, bool>)                                           return a ? b : false_(as<U>{});
+      else if constexpr (std::same_as<U, bool>)                                      return b ? a : false_(as<T>{});
+      else if constexpr (scalar_value<T> && scalar_value<U>)                         return a && b;
+      else if constexpr (scalar_value<T> && simd_value<U>)                           return logical_and(U{a}, b);
+      else if constexpr (simd_value<T> && scalar_value<U>)                           return logical_and(a, T{b});
+      else if constexpr (std::same_as<typename T::bits_type, typename U::bits_type>) return bit_cast(a.bits() & b.bits(), as{a});
+      else                                                                           return logical_and(a, convert(b, as<typename T::value_type>{}));
     }
-
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr
-    auto logical_and_(EVE_REQUIRES(cpu_), O const &, T a, bool b) noexcept
-    {
-      return b ? T {a} : false_(as<T>());
-    }
-
-    template<typename U, callable_options O>
-    EVE_FORCEINLINE constexpr
-    auto logical_and_(EVE_REQUIRES(cpu_), O const &, bool a, U b) noexcept
-    {
-      return a ? U {b} : false_(as<U>());
-    }
-
-    template<callable_options O>
-    EVE_FORCEINLINE constexpr
-    auto logical_and_(EVE_REQUIRES(cpu_), O const &, bool a, bool b) noexcept
-    { return a && b; }
   }
 }

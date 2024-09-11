@@ -29,35 +29,6 @@ namespace eve::detail
 {
   //================================================================================================
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE auto self_logand(cpu_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
-  {
-    using abi_t = typename logical<wide<T,N>>::abi_type;
-    using abi_u = typename logical<wide<U,N>>::abi_type;
-
-    // Both arguments are aggregated, we can safely slice
-    if constexpr( is_aggregated_v<abi_t> && is_aggregated_v<abi_u> )
-    {
-      auto [vl, vh] = v.slice();
-      auto [wl, wh] = w.slice();
-      return logical<wide<T,N>> { self_logand(eve::current_api,vl, wl)
-                                , self_logand(eve::current_api,vh, wh)
-                                };
-    }
-    else
-    {
-      if constexpr( !is_aggregated_v<abi_t> && !is_aggregated_v<abi_u> && (sizeof(T) == sizeof(U)) )
-      {
-        return bit_cast ( v.bits() & w.bits(), as(v) );
-      }
-      else
-      {
-        return self_logand(cpu_{}, v, convert(w, as<logical<T>>()));
-      }
-    }
-  }
-
-  //================================================================================================
-  template<typename T, typename U, typename N>
   EVE_FORCEINLINE auto self_logor(cpu_ const&, logical<wide<T,N>> v, logical<wide<U,N>> w) noexcept
   {
     using abi_t = typename logical<wide<T,N>>::abi_type;
