@@ -51,34 +51,32 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto bit_ternary(integral_constant k, auto a, auto b,  auto c)         noexcept; // 1
-//!      constexpr auto bit_ternary(bit_tern k, auto a, auto b,  auto c)                  noexcept; // 2
+//!      constexpr auto bit_ternary(integral_constant k, auto u, auto v, auto w)         noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto bit_xor[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto bit_xor[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+//!      constexpr auto bit_xor[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 2
+//!      constexpr auto bit_xor[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `k`: integral constant whose bits are the resultat of a lookup table for the ternary operation.
-//!       The consteval function mfb (make from bits) can be use to generate this constant from its bits (see below).
-//!     * `x`, `y`, `z`, : first [argument](@ref eve::value).
+//!     * `k`: integral constant whose bits are the result of a lookup table for the ternary operation.
+//!       The consteval function mfb (make from bits) can be used to generate this constant from its bits (see below).
+//!     * `u`, `v`, `w`, : first [argument](@ref eve::value).
 //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!
 //!    **Return value**
 //!
-//!      1. Bitwise ternary logic that provides the capability to implement any three-operand binary function;
-//!        the specific binary function is specified by value of k.
+//!      1. Bitwise ternary logict provides the capability to implement any three-operand binary function;
+//!        the specific ternary function is specified by value of k.
 //!        For each bit in each integer, the corresponding bit from a, b, and c are used according
 //!        to ik, and the result is output.
-//!      2. equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!      This is the pattern of a truth table: if f is a ternary bit operator the result column
-//!      is the desired bit output when calling f pn the x, y and z bit values.
+//!      The following table is the pattern of a truth table: if `op` is a ternary bit operator the result column
+//!      is the desired bit output when calling `op` pn the `x`, `y` and `z` bit values.
 //!
 //!       |  x  |  y  |  z  | result |
 //!       | :-: | :-: | :-: | :----: |
@@ -91,7 +89,7 @@ namespace eve
 //!       |  1  |  1  |  0  |    g   |
 //!       |  1  |  1  |  1  |    h   |
 //!
-//!  A programmer as only to supply the result column, i.e. defines values of bits a through h, this is a single 8-bit value
+//!  A programmer as only to supply the result column, i.e. defines values of bits a through h in a single 8-bit value
 //!
 //!  `     k = .(a << 7) + (b << 6) + (c << 5) + (d << 4) + (e << 3) + (f << 2) + (g << 1) + h`
 //!

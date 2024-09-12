@@ -57,20 +57,31 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`: [value](@ref value).
-//!     * `i`: fp_class to check
+//!     * `i`: combination of floating point classes to check
 //!
 //!   **Return value**
 //!
-//!     the elementwise classifications
+//!      the elementwise logical result of the classification.
 //!
-//!   **Helpers**
+//!   @note  The `i`parameter can be constructed easily by using the values
+//!     `qnan`, `poszero`, `negzero`, `posinf`,`neginf`, `denorn`,`neg`, `snan`
+//!     defined in the namespace `eve`  and the `|` operator (see the example below).
 //!
-//!     the `i`parameter can be constructed easily by using the `fp_class` values
-//!     `qnan`, `poszero, `negzero, `posinf`,`neginf`, `denorn`,`neg`, `snan`(see the example).
+//!     |  name    |       meaning      |
+//!     | :------: | :----------------: |
+//!     |  qnan    |  quiet NaN         |
+//!     |  poszero |  positive zero     |
+//!     |  negzero |  negative zero     |
+//!     |  posinf  |  positive infinite |
+//!     |  neginf  |  negative infinite |
+//!     |  denorm  |  denormal number   |
+//!     |  neg     |  negative finite   |
+//!     |  snan    |  signaling NaN     |
 //!
+//!    Actually snan and qnan are not distinguished in simd wide.
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Subnormal_number)
+//!   *  [Wikipedia; Subnormal numbers](https://en.wikipedia.org/wiki/Subnormal_number)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/core/of_class.cpp}
