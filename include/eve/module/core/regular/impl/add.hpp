@@ -27,16 +27,20 @@ namespace eve::detail
   {
     if constexpr(O::contains(downward))
     {
-      std::fesetround(round_down);
+      std::fesetround(FE_DOWNWARD);
+//       auto volatile aa = a;
+//       auto volatile bb = b;
       auto r = add(a, b);
-      std::fesetround(round_to_nearest);
+      std::fesetround(FE_TONEAREST);
       return r;
     }
     else if constexpr(O::contains(downward))
     {
-      std::fesetround(round_up);
-      auto r = add(a, b);
-      std::fesetround(round_to_nearest);
+      std::fesetround(FE_UPWARD);
+//        auto volatile aa = a;
+//       auto volatile bb = b;
+     auto r = add(a, b);
+      std::fesetround(FE_TONEAREST);
       return r;
     }
     else if constexpr(O::contains(saturated2) && integral_value<T>)

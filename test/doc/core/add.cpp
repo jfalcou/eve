@@ -43,10 +43,10 @@ int main()
   std::cout << std::setprecision(15)<< "-> add[upward](wf0, wf1)         = " << eve::add[eve::upward](wf0, wf1) << "\n";
   std::cout << std::setprecision(15)<< "-  diff                          = " << eve::add[eve::upward](wf0, wf1) - eve::add[eve::downward](wf0, wf1) << "\n";
 
-  std::cout << rounds_to_nearest() << std::endl;
-//  std::fesetround(FE_DOWNWARD);
-  _MM_SET_ROUNDING_MODE(_MM_ROUND_DOWN);
-  std::cout << rounds_to_nearest() << std::endl;
-  std::cout << std::setprecision(15)<< "-> add          (wf0, wf1)       = " <<            (wf0+ wf1) << "\n";
+//   std::cout << rounds_to_nearest() << std::endl;
+//   //  std::fesetround(FE_DOWNWARD);
+//   _MM_SET_ROUNDING_MODE(_MM_ROUND_DOWN);
+//   std::cout << rounds_to_nearest() << std::endl;
+//   std::cout << std::setprecision(15)<< "-> add          (wf0, wf1)       = " <<            (wf0+ wf1) << "\n";
 
 }

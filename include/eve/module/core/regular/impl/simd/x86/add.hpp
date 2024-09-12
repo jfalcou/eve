@@ -22,7 +22,20 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
   constexpr auto c = categorize<wide<T, N>>();
   if constexpr(O::contains(downward) || O::contains(upward))
   {
-    std::cout << "icitte" << std::endl;
+    if constexpr(current_api >= avx512)
+    {
+      if constexpr(O::contains(downward))
+      {
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, _MM_FROUND_TO_NEG_INF |_MM_FROUND_NO_EXC);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, _MM_FROUND_TO_NEG_INF |_MM_FROUND_NO_EXC);
+      }
+      else
+      {
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, _MM_FROUND_TO_POS_INF |_MM_FROUND_NO_EXC);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, _MM_FROUND_TO_POS_INF |_MM_FROUND_NO_EXC);
+      }
+    }
+//    std::cout << "icitte" << std::endl;
     return add.behavior(cpu_{}, opts, v, w);
   }
   else if constexpr(O::contains(saturated2) && std::integral<T>)
