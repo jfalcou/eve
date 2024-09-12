@@ -43,7 +43,8 @@ var searchData=
   ['atan2_40',['atan2',['../group__core__arithmetic_gaa4476e86ad2d63ed1ee057fb3bc30354.html#gaa4476e86ad2d63ed1ee057fb3bc30354',1,'eve']]],
   ['atan2d_41',['atan2d',['../group__core__arithmetic_gaea54ee9da2ff37652f5153774cda6dbc.html#gaea54ee9da2ff37652f5153774cda6dbc',1,'eve']]],
   ['atan2pi_42',['atan2pi',['../group__core__arithmetic_ga36ea32adf0e59948246e62907f591d1c.html#ga36ea32adf0e59948246e62907f591d1c',1,'eve']]],
-  ['atanh_43',['atanh',['../group__math__invhyper_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256',1,'eve']]],
-  ['atanpi_44',['atanpi',['../group__math__invtrig_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb',1,'eve']]],
-  ['average_45',['average',['../group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e',1,'eve']]]
+  ['atand_43',['atand',['../group__math__invtrig_gae20e49e35daab1287b4f4efc9acac7a0.html#gae20e49e35daab1287b4f4efc9acac7a0',1,'eve']]],
+  ['atanh_44',['atanh',['../group__math__invhyper_ga0dc9d45fbf29b358f7b5095dbed40256.html#ga0dc9d45fbf29b358f7b5095dbed40256',1,'eve']]],
+  ['atanpi_45',['atanpi',['../group__math__invtrig_ga5b95c0a926215da5fb3f0af9714103cb.html#ga5b95c0a926215da5fb3f0af9714103cb',1,'eve']]],
+  ['average_46',['average',['../group__core__arithmetic_ga1d52fbcf5ca3bd73745898c1eca2072e.html#ga1d52fbcf5ca3bd73745898c1eca2072e',1,'eve']]]
 ];
