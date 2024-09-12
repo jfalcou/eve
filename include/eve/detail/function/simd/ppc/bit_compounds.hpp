@@ -60,26 +60,4 @@ namespace eve::detail
     v >>= i_t(s);
     return v;
   }
-
-  //================================================================================================
-  // |=
-  //================================================================================================
-  template<scalar_value T, value U, typename N>
-  EVE_FORCEINLINE bit_value_t<wide<T, N>, U>& self_bitor( wide<T,N>& self, U const& other )
-  requires( (sizeof(wide<T,N>) == sizeof(U)) || (sizeof(T) == sizeof(U)) ) && ppc_abi<abi_t<T, N>>
-  {
-    using type = wide<T,N>;
-
-    if constexpr( simd_value<U> && sizeof(self) == sizeof(other) )
-    {
-      self = vec_or(self.storage(), (typename type::storage_type)(other.storage()) );
-    }
-    else
-    {
-      auto bit_other = bit_cast(other , as<T>{});
-      self = vec_or(self.storage(), type{bit_other}.storage());
-    }
-
-    return self;
-  }
 }
