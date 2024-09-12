@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
-
+#include <iostream>
 namespace eve::detail
 {
 
@@ -20,8 +20,12 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
   requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr(O::contains(saturated) && std::integral<T>)
+  if constexpr(O::contains(downward) || O::contains(upward))
+  {
+    std::cout << "icitte" << std::endl;
+    return add.behavior(cpu_{}, opts, v, w);
+  }
+  else if constexpr(O::contains(saturated2) && std::integral<T>)
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 
