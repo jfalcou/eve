@@ -51,7 +51,7 @@ namespace eve::detail
         if constexpr(K == 0xb1) return bit_or(bit_and(a, c), bit_andnot(bit_not(b), c));
         if constexpr(K == 0xc5) return bit_or(bit_and(a, b), bit_notand(a, bit_not(c)));
         if constexpr(K == 0xd1) return bit_or(bit_not(bit_or(b, c)), bit_and(a, b));
-        return bit_ternary.behavior(cpu_{}, opts, ik, a, b, c);
+        else return bit_ternary.behavior(cpu_{}, opts, ik, a, b, c);
       };
       return bit_cast(doit(a, b, c), as<w_t>());
     }
