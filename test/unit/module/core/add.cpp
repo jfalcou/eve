@@ -76,6 +76,8 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::add;
   using eve::as;
   using eve::saturated;
+  using eve::downward;
+  using eve::upward;
   using eve::detail::map;
 
   TTS_ULP_EQUAL( add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
@@ -86,6 +88,16 @@ TTS_CASE_WITH("Check behavior of add on wide",
   TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
   TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  if constexpr (eve::floating_value<T>)
+  {
+    TTS_ULP_EQUAL( add[downward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[downward](add[downward](e, f), g); }, a0, a1, a2), 0.5);
+    TTS_ULP_EQUAL( add[upward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[upward](add[upward](e, f), g); }, a0, a1, a2), 0.5);
+    TTS_EXPECT(eve::all(add[upward](a0, a1, a2) >=  add[downward](a0, a1, a2)));
+    T w0(1);
+    T w1(eve::smallestposval(eve::as<T>()));
+    TTS_EXPECT(eve::all(add[upward](w0, w1) >  add(w0, w1)));
+    TTS_EXPECT(eve::all(add[downward](w0, -w1) < add(w0, -w1)));
+  }
 };
 
 //==================================================================================================
@@ -104,7 +116,7 @@ TTS_CASE_WITH("Check behavior of add on signed types",
   using eve::add;
   using eve::saturated;
   using eve::detail::map;
-  
+
   auto e0 = a2.get(0);
 
   TTS_EQUAL(add[e0 > T(64)](a0, a1),
