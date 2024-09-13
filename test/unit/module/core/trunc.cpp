@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check return types of trunc", eve::test::simd::all_types)
 //==================================================================================================
 // almost tests
 //==================================================================================================
-TTS_CASE_TPL("Check  with nans and infs", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check  fuzzy", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   TTS_EQUAL(eve::trunc[eve::almost](eve::inc(-eve::eps(eve::as<T>()))), T(1));
@@ -84,13 +84,24 @@ TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals)
   T rb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
   TTS_EQUAL( eve::trunc[eve::almost = 2](a), ra);
   TTS_EQUAL( eve::trunc[eve::almost = 2](b), rb);
-  elt_t epsi = eve::eps(eve::as<elt_t>());
-  T ea = [epsi](auto i, auto){ return elt_t(-1)+i*epsi; };
-  T eb = [epsi](auto i, auto){ return elt_t(1 )-i*epsi; };
-  T era = [](auto i, auto){ return i <=  2 ? elt_t(-1) : elt_t(0);  };
-  T erb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
-  TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](ea), era);
-  TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](eb), erb);
+//   elt_t epsi = eve::eps(eve::as<elt_t>());
+//   T ea = [epsi](auto i, auto){ return elt_t(-1)+i*epsi; };
+//   T eb = [epsi](auto i, auto){ return elt_t(1 )-i*epsi; };
+//   T era = [](auto i, auto){ return i <=  2 ? elt_t(-1) : elt_t(0);  };
+//   T erb = [](auto i, auto){ return i <=  2 ? elt_t(1): elt_t(0);  };
+//   TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](ea), era);
+//   TTS_EQUAL( eve::trunc[eve::almost = 2*epsi](eb), erb);
+
+};
+
+TTS_CASE_TPL("Check corner-cases behavior of eve::trunc",
+             eve::test::simd::ieee_reals)
+  <typename T>(tts::type<T> const& tgt)
+{
+  auto cases = tts::limits(tgt);
+  TTS_IEEE_EQUAL(eve::trunc(cases.nan), cases.nan);
+  TTS_IEEE_EQUAL(eve::trunc(cases.inf), cases.inf);
+  TTS_IEEE_EQUAL(eve::trunc(cases.minf), cases.minf);
 
 };
 
