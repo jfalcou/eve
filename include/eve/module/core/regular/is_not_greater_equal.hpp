@@ -13,6 +13,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/fam.hpp>
+#include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/traits/as_logical.hpp>
