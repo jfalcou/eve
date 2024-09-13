@@ -13,22 +13,24 @@
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_infinite.hpp>
+#include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/min.hpp>
 
 namespace eve
 {
-template<typename Options>
-struct two_add_t : elementwise_callable<two_add_t, Options>
-{
-  template<eve::floating_value T, eve::floating_value U>
-  requires(eve::same_lanes_or_scalar<T, U>)
-  constexpr EVE_FORCEINLINE
-  zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
+  template<typename Options>
+  struct two_add_t : elementwise_callable<two_add_t, Options>
   {
-    return EVE_DISPATCH_CALL(a,b);
-  }
+    template<eve::floating_value T, eve::floating_value U>
+    requires(eve::same_lanes_or_scalar<T, U>)
+      constexpr EVE_FORCEINLINE
+    zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
+    {
+      return EVE_DISPATCH_CALL(a,b);
+    }
 
-  EVE_CALLABLE_OBJECT(two_add_t, two_add_);
-};
+    EVE_CALLABLE_OBJECT(two_add_t, two_add_);
+  };
 
 //================================================================================================
 //! @addtogroup core_accuracy
@@ -72,19 +74,22 @@ struct two_add_t : elementwise_callable<two_add_t, Options>
 //! @}
 //================================================================================================
 
-
-namespace detail
-{
-  template<typename T, callable_options O>
-  constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+  namespace detail
   {
-    auto r0 = a + b;
-    auto z  = r0 - a;
-    auto r1 = a - (r0 - z) + (b - z);
+    template<typename T, callable_options O>
+    constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    {
+      auto r0 = a + b;
+      auto z  = r0 - a;
+      auto r1 = a - (r0 - z) + (b - z);
+      if constexpr( eve::platform::supports_infinites )
+        r1 = if_else(is_infinite(r0), eve::zero, r1);
 
-    if constexpr( eve::platform::supports_infinites )
-      r1 = if_else(is_infinite(r0), eve::zero, r1);
-
-    return eve::zip(r0, r1);
+      return eve::zip(r0, r1);
+    }
   }
-}}
+}
+
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/two_add.hpp>
+#endif

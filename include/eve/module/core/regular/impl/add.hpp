@@ -13,9 +13,11 @@
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/is_less.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bit_mask.hpp>
+#include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/detail/roundings.hpp>
@@ -25,23 +27,13 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    if constexpr(O::contains(downward))
+    if constexpr(O::contains(downward) ||O::contains(upward) )
     {
-      std::fesetround(FE_DOWNWARD);
-//       auto volatile aa = a;
-//       auto volatile bb = b;
-      auto r = add(a, b);
-      std::fesetround(FE_TONEAREST);
-      return r;
-    }
-    else if constexpr(O::contains(downward))
-    {
-      std::fesetround(FE_UPWARD);
-//        auto volatile aa = a;
-//       auto volatile bb = b;
-     auto r = add(a, b);
-      std::fesetround(FE_TONEAREST);
-      return r;
+      auto [r, e] = eve::two_add(a, b);
+      if constexpr(O::contains(downward))
+        return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
+      else
+        return eve::if_else(eve::is_gtz(e), eve::next(r), r);
     }
     else if constexpr(O::contains(saturated2) && integral_value<T>)
     {
@@ -82,29 +74,8 @@ namespace eve::detail
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-    if constexpr(O::contains(downward))
-    {
-      std::fesetround(round_down);
-      auto tmp1 =  rbr::drop(downward, o);
-      auto oo = options<decltype(tmp1)>{tmp1};
-      auto r = add[oo](r0, rs...);
-      std::fesetround(round_to_nearest);
-      return r;
-    }
-    else if constexpr(O::contains(upward))
-    {
-      std::fesetround(round_up);
-      auto tmp1 =  rbr::drop(upward, o);
-      auto oo = options<decltype(tmp1)>{tmp1};
-      auto r = add[oo](r0, rs...);
-      std::fesetround(round_to_nearest);
-      return r;
-    }
-    else
-    {
       r0   = add[o](r0,r1);
       ((r0 = add[o](r0,rs)),...);
       return r0;
-    }
   }
 }

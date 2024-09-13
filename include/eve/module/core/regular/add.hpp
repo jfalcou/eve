@@ -59,7 +59,8 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto add[saturated](/*any of the above overloads*/)                noexcept; // 4
-//!     2. [The operation is performed conditionnaly](@ref conditional).
+//!      constexpr auto add[downward](/*any of the above overloads*/)                 noexcept; // 5
+//!      constexpr auto add[upward](/*any of the above overloads*/)                   noexcept; // 6
 //!
 //!   }
 //!   @endcode
@@ -81,6 +82,10 @@ namespace eve
 //!    4. The call `add[saturated](...)` computes a saturated version of `add`.
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
+//!    5. The sumation is done in a 'round toward \f$-\infty\f$ mode. The sum is guaranted
+//!       to be less or equal to the exact one.
+//!    6. The sumation is done in a 'round toward \f$\infty\f$ mode. The sum is guaranted
+//!       to be greater or equal to the exact one.
 //!
 //!   @note
 //!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
