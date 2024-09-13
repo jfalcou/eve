@@ -29,25 +29,6 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(downward) || O::contains(upward) ))
     {
-//       if constexpr(spy::compiler == spy::gcc_)
-//       {
-//         std::cout << "gcc" << std::endl;
-//         constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
-//         std::fesetround(dir);
-//         auto r = eve::add(a, b);
-//         std::fesetround(FE_TONEAREST);
-//         return r;
-//       }
-//       else if constexpr(spy::compiler == spy::msvc_)
-//       {
-//         #pragma float_control(precise, on)
-//         constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
-//         std::fesetround(dir);
-//         auto r = eve::add(a, b);
-//         std::fesetround(FE_TONEAREST);
-//         return r;
-//       }
-//      else
       if constexpr(spy::compiler == spy::clang_)
       {
         #pragma clang fp exceptions(strict)
