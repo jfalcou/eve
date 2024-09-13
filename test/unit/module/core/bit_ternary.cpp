@@ -14,13 +14,17 @@ TTS_CASE_TPL("Check eve::bit_ternary return type" , eve::test::simd::all_types)
 {
   using v_t = eve::element_type_t<T>;
   using i_t = eve::as_integer_t<T, unsigned>;
+  using ei_t =  eve::element_type_t<i_t>;
   constexpr std::integral_constant<std::uint8_t, 0x0f>  ik;
-  TTS_EXPR_IS(eve::bit_ternary(ik, T() ,   T() ,   T() ), T);
-  TTS_EXPR_IS(eve::bit_ternary(ik, T() ,   T() , v_t()), T);
-  TTS_EXPR_IS(eve::bit_ternary(ik,  T() , v_t() ,   T()), T);
-  TTS_EXPR_IS(eve::bit_ternary(ik,i_t() ,   T() ,   T()), i_t);
-  TTS_EXPR_IS(eve::bit_ternary(ik,i_t() ,   T() , v_t()), i_t);
-  TTS_EXPR_IS(eve::bit_ternary(ik,i_t() , v_t() ,   T()), i_t);
+  TTS_EXPR_IS(eve::bit_ternary(ik, T() ,    T(),   T()), T);
+  TTS_EXPR_IS(eve::bit_ternary(ik, T() ,    T(), v_t()), T);
+  TTS_EXPR_IS(eve::bit_ternary(ik,  T() , v_t(),   T()), T);
+  TTS_EXPR_IS(eve::bit_ternary(ik,i_t() ,   T(),   T()), i_t);
+  TTS_EXPR_IS(eve::bit_ternary(ik,i_t() ,   T(), v_t()), i_t);
+  TTS_EXPR_IS(eve::bit_ternary(ik,i_t() , v_t(),   T()), i_t);
+  TTS_EXPR_IS(eve::bit_ternary(ik,ei_t() , v_t(),  T()), i_t);
+  TTS_EXPR_IS(eve::bit_ternary(ik, v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::bit_ternary(ik, v_t(), i_t(), ei_t()), T);
 };
 
 TTS_CASE_WITH("Check behavior of bit_ternary",
@@ -216,8 +220,8 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xae>(), a, b, c),  bit_or(c, bit_notand(a, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xaf>(), a, b, c),  bit_ornot(c, a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb0>(), a, b, c),  bit_notand(bit_notand(c, b), a));
-  TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb1>(), a, b, c),  bit_select(c, a, bit_not(b)));
-  TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb2>(), a, b, c),  bit_select(b, bit_and(a, c), bit_or(a, c)));
+  TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb1>(), a, b, c),    bit_or(bit_and(a, c), bit_notand(c, bit_not(b))));
+  TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb2>(), a, b, c),  bit_or(bit_and(b, a, c),bit_notand(b, bit_or(a, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb3>(), a, b, c),  bit_or(bit_and(a, c), bit_not(b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb4>(), a, b, c),  bit_xor(bit_notand(c, b), a));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xb5>(), a, b, c),  bit_or(bit_notand(b, a), bit_xor(a, bit_not(c))));
@@ -267,7 +271,7 @@ TTS_CASE_WITH("Check behavior of bit_ternary",
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe1>(), a, b, c),  bit_not(bit_xor(a, bit_or(b, c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe2>(), a, b, c),  bit_or(bit_and(b, a),  bit_notand(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe3>(), a, b, c),  bit_or(bit_and(a, c), bit_xor(a, bit_not(b))));
-  TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe4>(), a, b, c),  bit_select(c, a, b));
+  TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe4>(), a, b, c),  bit_or(bit_and(c, a), bit_notand(c, b)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe5>(), a, b, c),  bit_or(bit_and(a, b), bit_xor(a, bit_not(c))));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe6>(), a, b, c),  bit_or(bit_and(a, b), bit_xor(b, c)));
   TTS_EQUAL(eve::bit_ternary(std::integral_constant<std::uint8_t, 0xe7>(), a, b, c),  bit_or(bit_xor(b, c), bit_xor(a, bit_not(b))));
