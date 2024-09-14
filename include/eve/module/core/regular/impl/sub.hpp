@@ -22,6 +22,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
+#include <eve/module/core/regular/add.hpp>
 
 namespace eve::detail
 {
