@@ -56,29 +56,8 @@ namespace eve::detail
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-    if constexpr(O::contains(downward))
-    {
-      std::fesetround(round_down);
-      auto tmp1 =  rbr::drop(downward, o);
-      auto oo = options<decltype(tmp1)>{tmp1};
-      auto r = add[oo](r0, rs...);
-      std::fesetround(round_to_nearest);
-      return r;
-    }
-    else if constexpr(O::contains(upward))
-    {
-      std::fesetround(round_up);
-      auto tmp1 =  rbr::drop(upward, o);
-      auto oo = options<decltype(tmp1)>{tmp1};
-      auto r = add[oo](r0, rs...);
-      std::fesetround(round_to_nearest);
-      return r;
-    }
-    else
-    {
-      r0   = add[o](r0,r1);
-      ((r0 = add[o](r0,rs)),...);
-      return r0;
-    }
+    r0   = add[o](r0,r1);
+    ((r0 = add[o](r0,rs)),...);
+    return r0;
   }
 }
