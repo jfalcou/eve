@@ -15,8 +15,6 @@
 #include <eve/module/core/regular/bit_and.hpp>
 #include <eve/module/core/regular/bit_mask.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_gez.hpp>
-#include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_lez.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/max.hpp>

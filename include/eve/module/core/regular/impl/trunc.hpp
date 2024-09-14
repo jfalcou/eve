@@ -12,10 +12,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_not_less.hpp>
-#include <eve/module/core/regular/is_not_greater_equal.hpp>
-#include <eve/module/core/regular/is_not_nan.hpp>
-#include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_not_less_equal.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/next.hpp>
