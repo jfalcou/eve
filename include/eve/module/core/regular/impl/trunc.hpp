@@ -13,6 +13,8 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_not_less.hpp>
+#include <eve/module/core/regular/is_not_greater_equal.hpp>
+#include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/copysign.hpp>
@@ -45,9 +47,8 @@ namespace eve::detail
       }
       else
       {
-        auto already_integral = is_not_less(eve::abs(a0), maxflint(eve::as<T>()));
-        auto a0f =  if_else(already_integral,  zero, a0);
-        return if_else(already_integral, a0, trunc[raw](a0f));
+        auto not_already_integral = !is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
+        return trunc[raw][not_already_integral](a0);
       }
     }
   }
