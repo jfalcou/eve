@@ -73,7 +73,15 @@ namespace eve::detail
     }
     else
     {
-      return a - b;
+      if constexpr(signed_integral_scalar_value<T>)
+      {
+        using u_t = as_integer_t<T, unsigned>;
+        return T(u_t(a)+u_t(-b));
+      }
+      else
+      {
+        return a-b;
+      }
     }
   }
 
