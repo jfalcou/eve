@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
-#include <iostream>
+
 namespace eve::detail
 {
 
@@ -19,7 +19,9 @@ template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires x86_abi<abi_t<T, N>>
 {
- if constexpr(O::contains(saturated2) && std::integral<T>)
+  constexpr auto c = categorize<wide<T, N>>();
+
+  if constexpr(O::contains(saturated2) && std::integral<T>)
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 
