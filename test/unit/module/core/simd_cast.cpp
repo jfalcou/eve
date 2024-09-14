@@ -57,11 +57,12 @@ simd_cast_test_one_way()
 
   U actual = eve::simd_cast(x, eve::as<U> {});
 
-  // the bit nature of logicals on avx512 (rvv probably too)
+  // the bit nature of logicals on avx512 and rvv
   // makes the byte level comparisons not work,
   // because part of the byte be garbage we need to ignore.
   // That doesn't happen on other platfroms.
-  if constexpr( eve::logical_simd_value<T> && eve::current_api >= eve::avx512 )
+  if constexpr( eve::logical_simd_value<T>
+                && (eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv) )
   {
     std::ptrdiff_t min_len = std::min(T::size(), U::size());
     for( std::ptrdiff_t i = 0; i != min_len; ++i ) { TTS_EQUAL(x.get(i), actual.get(i)); }

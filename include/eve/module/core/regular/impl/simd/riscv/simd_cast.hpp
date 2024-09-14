@@ -7,6 +7,9 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/riscv/rvv_utils.hpp>
+#include <eve/arch/wide.hpp>
+
 namespace eve::detail
 {
 // Logical-wide conversions.
@@ -79,21 +82,66 @@ EVE_FORCEINLINE logical<wide<U, M>>
                            const O&,
                            logical<wide<T, N>>            x,
                            as<logical<wide<U, M>>> const                &tgt) noexcept
-requires(rvv_abi<abi_t<T, N>> || rvv_abi<abi_t<U, M>>)
+requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>)
 {
-  if constexpr( is_aggregated_v<abi_t<T, N>> || is_aggregated_v<abi_t<U, M>> )
+  using part_type_cast = detail::rvv_m1_wide<std::uint32_t>;
+  auto u_casted_in     = rvv_simd_cast(x, as<part_type_cast> {});
+  auto to_ret          = rvv_simd_cast(u_casted_in, tgt);
+  return to_ret;
+}
+
+template<typename N, typename M>
+EVE_FORCEINLINE wide<std::int8_t, M>
+                rvv_lmul_trunc(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
+requires rvv_abi<abi_t<std::int8_t, N>>
+{
+  using out_wide_t        = wide<std::int8_t, M>;
+  constexpr auto out_lmul = rvv_lmul_v<std::int8_t, M>;
+  if constexpr( out_lmul == -8 ) return __riscv_vlmul_trunc_i8mf8(a);
+  else if constexpr( out_lmul == -4 ) return __riscv_vlmul_trunc_i8mf4(a);
+  else if constexpr( out_lmul == -2 ) return __riscv_vlmul_trunc_i8mf2(a);
+  else if constexpr( out_lmul == 1 ) return __riscv_vlmul_trunc_i8m1(a);
+  else if constexpr( out_lmul == 2 ) return __riscv_vlmul_trunc_i8m2(a);
+  else if constexpr( out_lmul == 4 ) return __riscv_vlmul_trunc_i8m4(a);
+}
+
+template<typename N, typename M>
+EVE_FORCEINLINE wide<std::int8_t, M>
+                rvv_lmul_extend(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
+requires(rvv_abi<abi_t<std::int8_t, N>> && rvv_abi<abi_t<std::int8_t, M>>)
+{
+  using out_wide_t        = wide<std::int8_t, M>;
+  constexpr auto out_lmul = rvv_lmul_v<std::int8_t, M>;
+  if constexpr( out_lmul == -4 ) return __riscv_vlmul_ext_i8mf4(a);
+  else if constexpr( out_lmul == -2 ) return __riscv_vlmul_ext_i8mf2(a);
+  else if constexpr( out_lmul == 1 ) return __riscv_vlmul_ext_i8m1(a);
+  else if constexpr( out_lmul == 2 ) return __riscv_vlmul_ext_i8m2(a);
+  else if constexpr( out_lmul == 4 ) return __riscv_vlmul_ext_i8m4(a);
+  else if constexpr( out_lmul == 8 ) return __riscv_vlmul_ext_i8m8(a);
+}
+
+template<callable_options O, arithmetic_simd_value In, arithmetic_simd_value Out>
+EVE_FORCEINLINE Out
+simd_cast_(EVE_REQUIRES(rvv_), const O&, In x, as<Out> const& tgt) noexcept
+requires(rvv_abi<typename In::abi_type> && rvv_abi<typename Out::abi_type>)
+{
+  // Represents a wide that occupies the same size, but formed with int8_t.
+  // Here we use that sizeof(std::int8_t) == 1, so sizeof(In) will represent the number
+  // of std::int8_t, that are needed to have the same size.
+  using i8_in_t  = wide<std::int8_t, fixed<sizeof(In)>>;
+  using i8_tgt_t = wide<std::int8_t, fixed<sizeof(Out)>>;
+  if constexpr( sizeof(In) == sizeof(Out) ) return bit_cast(x, tgt);
+  else if constexpr( sizeof(In) < sizeof(Out) )
   {
-    auto [lv, hv] = x.slice();
-    auto half_tgt = as<logical<wide<U, typename M::split_type>>> {};
-    auto to_ret   = logical<wide<U, M>> {simd_cast(lv, half_tgt), simd_cast(hv, half_tgt)};
-    return to_ret;
+    auto i8_x     = bit_cast(x, as<i8_in_t> {});
+    auto x_extend = rvv_lmul_extend(i8_x, as<i8_tgt_t> {});
+    return bit_cast(x_extend, tgt);
   }
   else
   {
-    using part_type_cast = detail::rvv_m1_wide<std::uint32_t>;
-    auto u_casted_in     = rvv_simd_cast(x, as<part_type_cast> {});
-    auto to_ret          = rvv_simd_cast(u_casted_in, tgt);
-    return to_ret;
+    auto i8_x    = bit_cast(x, as<i8_in_t> {});
+    auto x_trunc = rvv_lmul_trunc(i8_x, as<i8_tgt_t> {});
+    return bit_cast(x_trunc, tgt);
   }
 }
 }
