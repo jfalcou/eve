@@ -19,13 +19,7 @@ template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires x86_abi<abi_t<T, N>>
 {
-  constexpr auto c = categorize<wide<T, N>>();
-  if constexpr(O::contains(downward) || O::contains(upward))
-  {
-    std::cout << "icitte" << std::endl;
-    return add.behavior(cpu_{}, opts, v, w);
-  }
-  else if constexpr(O::contains(saturated2) && std::integral<T>)
+ if constexpr(O::contains(saturated2) && std::integral<T>)
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 

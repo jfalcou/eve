@@ -18,28 +18,14 @@
 #include <eve/module/core/regular/bit_mask.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/detail/roundings.hpp>
+
 
 namespace eve::detail
 {
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    if constexpr(O::contains(downward))
-    {
-      std::fesetround(round_down);
-      auto r = add(a, b);
-      std::fesetround(round_to_nearest);
-      return r;
-    }
-    else if constexpr(O::contains(downward))
-    {
-      std::fesetround(round_up);
-      auto r = add(a, b);
-      std::fesetround(round_to_nearest);
-      return r;
-    }
-    else if constexpr(O::contains(saturated2) && integral_value<T>)
+    if constexpr(O::contains(saturated2) && integral_value<T>)
     {
       if constexpr( signed_integral_value<T> )
       {
