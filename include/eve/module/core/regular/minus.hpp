@@ -13,8 +13,10 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/constant/signmask.hpp>
-
+#include <eve/module/core/regular/inc.hpp>
+#include <iostream>
 namespace eve
 {
   template<typename Options>
@@ -97,8 +99,17 @@ namespace eve
       }
       else
       {
-        if constexpr (simd_value<T>) return map(minus, v);
-        else                         return T{0} - v;
+        using u_t = as_integer_t<T, unsigned>;
+        if (unsigned_value<T>)
+        {
+          if constexpr (simd_value<T>) return inc(bit_not(v));
+          else                         return -v;
+        }
+        else
+        {
+          if constexpr (simd_value<T>) return bit_cast(-bit_cast(v, as<u_t>()), as<T>());
+          else                         return T(-(u_t(v)));
+        }
       }
     }
   }

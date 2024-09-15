@@ -96,5 +96,6 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::minus variants on wide",
   {
     TTS_EQUAL(eve::minus[eve::saturated2](cases.valmin), cases.valmax);
     TTS_EQUAL(eve::minus(cases.valmax), cases.valmin + 1);
+    TTS_EQUAL(eve::minus(T(0)), T(0));
   }
 };
