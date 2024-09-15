@@ -15,8 +15,7 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/constant/signmask.hpp>
-#include <eve/module/core/regular/inc.hpp>
-#include <iostream>
+
 namespace eve
 {
   template<typename Options>
@@ -103,7 +102,7 @@ namespace eve
         using u_t = as_integer_t<T, unsigned>;
         if (unsigned_value<T>)
         {
-          if constexpr (simd_value<T>) return inc(bit_not(v));
+          if constexpr (simd_value<T>) return bit_not(v)+1;
           else                         return -v;
         }
         else
