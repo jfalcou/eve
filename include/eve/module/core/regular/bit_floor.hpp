@@ -99,7 +99,7 @@ namespace eve
       }
       else
       {
-        return if_else(is_eqz(v), zero, T {1} << dec(bit_width(v)));
+        return if_else(is_eqz(v), zero, T {1} << dec[saturated](bit_width(v)));
       }
     }
   }
