@@ -66,8 +66,8 @@ namespace eve
 //!      integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmax(as<T>{}))`
 //!
 //!   @note The absolute value of `x` is always representable except for
-//!    The minimum value of integral signed values. In that case contrarily to standard the result is not
-//!    undefined behaviour, but just incorrect (in this case eve::abs(valmin)` returns `valmin` !).
+//!    The minimum value of integral signed values. In that case, contrarily to the standard, the result is not
+//!     undefined behaviour, but just incorrect. In this case, `eve::abs(valmin)` returns `valmin`.
 //!
 //!   @warning
 //!   `abs` is also a standard library function name and there possibly exists a C macro version which may be called
