@@ -80,7 +80,13 @@ namespace eve
     EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr(integral_value<T> && O::contains(saturated2))  return dec[a != valmin(eve::as(a))](a);
-      else                                                        return a - one(eve::as(a));
+      else if constexpr( signed_integral_scalar_value<T>)
+      {
+        using u_t = as_integer_t<T>;
+        return T(u_t(a)+u_t(-1));
+      }
+      else
+        return a - one(eve::as(a));
     }
 
     template<conditional_expr C, value T, callable_options O>

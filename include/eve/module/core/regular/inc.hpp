@@ -82,6 +82,11 @@ namespace eve
     {
       if constexpr(integral_value<T> && O::contains(saturated2))
         return inc[a != valmax(eve::as(a))](a);
+      else if constexpr( signed_integral_scalar_value<T>)
+      {
+        using u_t = as_integer_t<T>;
+        return T(u_t(a)+u_t(1));
+      }
       else
         return a + one(eve::as(a));
     }
