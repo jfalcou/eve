@@ -19,12 +19,13 @@
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/min.hpp>
 
 namespace eve
 {
   template<typename Options>
-  struct bit_floor_t : elementwise_callable<bit_floor_t, Options, raw_option>
+  struct bit_floor_t : elementwise_callable<bit_floor_t, Options>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
@@ -104,10 +105,13 @@ namespace eve
       }
       else
       {
-        if constexpr(O::contains(raw))
-          return eve::min(v, T{1} << dec(bit_width(v)));
+        if constexpr(scalar_value<T>)
+        {
+          if (is_eqz(v)) return T(0);
+          else           return T{1} << dec(bit_width(v));
+        }
         else
-          return eve::min(v, T{1} << dec[saturated](bit_width(v)));
+          return min(v, T{1} << dec[saturated](bit_width(v)));
       }
     }
   }
