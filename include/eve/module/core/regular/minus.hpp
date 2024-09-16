@@ -13,6 +13,7 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
+#include <eve/module/core/regular/bit_not.hpp>
 #include <eve/module/core/constant/signmask.hpp>
 
 namespace eve
@@ -66,13 +67,14 @@ namespace eve
 //!
 //!      1. The result is  the opposite of `x` if this value is representable in the type of `x`.
 //!          More specifically, for signed integers the opposite value of [their lowest finite value](@ref valmin)
-//!          is not representable and the result is undefined behaviour.
+//!          is not representable and the result is incorrect (in this case eve::minus(valmin) is valmin).
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The saturated version of eve::minus. More specifically, for any signed integer value `x`, the expression
 //!         `minus[saturated](valmin(as(x)))` evaluates to `valmax(as(x))`.
 //!
 //!  @note  Although the operator notation with `-` is supported, the `-` operator on
 //!     standard scalar type is the original one and so can lead to automatic promotion.
+//!     Also contrarily to `-` on signed scalar integral values,  `eve::minus is never undefined behaviour.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minus.cpp}
@@ -97,8 +99,17 @@ namespace eve
       }
       else
       {
-        if constexpr (simd_value<T>) return map(minus, v);
-        else                         return T{0} - v;
+        using u_t = as_integer_t<T, unsigned>;
+        if (unsigned_value<T>)
+        {
+          if constexpr (simd_value<T>) return bit_not(v)+1;
+          else                         return -v;
+        }
+        else
+        {
+          if constexpr (simd_value<T>) return bit_cast(-bit_cast(v, as<u_t>()), as<T>());
+          else                         return T(-(u_t(v)));
+        }
       }
     }
   }
