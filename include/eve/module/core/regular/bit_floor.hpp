@@ -13,12 +13,13 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/bit_width.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
+#include <eve/module/core/regular/min.hpp>
 
 namespace eve
 {
@@ -104,10 +105,10 @@ namespace eve
       else
       {
         if constexpr(O::contains(raw))
-          return if_else(is_eqz(v), zero, T {1} << dec(bit_width(v)));
+          return eve::min(v, T{1} << dec(bit_width(v)));
         else
-          return if_else(is_eqz(v), zero, T {1} << dec[saturated](bit_width(v)));
-       }
+          return eve::min(v, T{1} << dec[saturated](bit_width(v)));
+      }
     }
   }
 }
