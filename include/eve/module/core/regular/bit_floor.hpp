@@ -23,7 +23,7 @@
 namespace eve
 {
   template<typename Options>
-  struct bit_floor_t : elementwise_callable<bit_floor_t, Options>
+  struct bit_floor_t : elementwise_callable<bit_floor_t, Options, raw_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
@@ -56,6 +56,9 @@ namespace eve
 //!      // Lanes masking
 //!      constexpr auto bit_floor[conditional_expr auto c](value auto x) noexcept; // 2
 //!      constexpr auto bit_floor[logical_value auto m](value auto x)    noexcept; // 2
+//!
+//!      // Semantic options
+//!      constexpr auto bit_floor[raw](value auto x)                noexcept; // 3
 //!   }
 //!   @endcode
 //!
@@ -68,8 +71,9 @@ namespace eve
 //!    **Return value**
 //!
 //!      1. The value of the largest integral power of two that is not greater than `x` is returned.
-//!         If `x` is zero returns zero.
+//!          If `x` is less than one always returns zero.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
+//!      3. If `x` is less than one the result is undefined behaviour for integral types.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/bit_floor.cpp}
@@ -99,8 +103,11 @@ namespace eve
       }
       else
       {
-        return if_else(is_eqz(v), zero, T {1} << dec[saturated](bit_width(v)));
-      }
+        if constexpr(O::contains(raw))
+          return if_else(is_eqz(v), zero, T {1} << dec(bit_width(v)));
+        else
+          return if_else(is_eqz(v), zero, T {1} << dec[saturated](bit_width(v)));
+       }
     }
   }
 }
