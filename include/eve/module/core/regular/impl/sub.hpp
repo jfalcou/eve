@@ -29,7 +29,29 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    if constexpr (O::contains(saturated) && integral_value<T>)
+    if constexpr(floating_value<T> && (O::contains(downward) || O::contains(upward) ))
+    {
+      if constexpr(spy::compiler == spy::clang_)
+      {
+        #ifdef  SPY_COMPILER_IS_CLANG
+        #pragma clang fp exceptions(strict)
+        #endif
+        constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
+        std::fesetround(dir);
+        auto r = eve::sub(a, b);
+        std::fesetround(FE_TONEAREST);
+        return r;
+      }
+      else
+      {
+        auto [r, e] = eve::two_add(a, -b);
+        if constexpr(O::contains(downward))
+          return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
+        else
+          return eve::if_else(eve::is_gtz(e), eve::next(r), r);
+      }
+    }
+    if constexpr (O::contains(saturated2) && integral_value<T>)
     {
       if constexpr (scalar_value<T>)
       {

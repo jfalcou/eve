@@ -16,11 +16,23 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires x86_abi<abi_t<T, N>>
+  requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr(O::contains(saturated))
+    if constexpr(O::contains(downward) || O::contains(upward))
+    {
+      if constexpr(current_api >= avx512)
+      {
+        auto constexpr dir =(O::contains(downward) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_sub_round_pd (a, b, dir);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_sub_round_ps (a, b, dir);
+        else                                             return  sub.behavior(cpu_{}, opts, a, b);
+      }
+      else
+        return sub.behavior(cpu_{}, opts, a, b);
+    }
+    else if constexpr(O::contains(saturated2))
     {
       constexpr auto sup_avx2 = current_api >= avx2;
 
