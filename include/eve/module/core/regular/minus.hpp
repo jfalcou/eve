@@ -93,7 +93,7 @@ namespace eve
       {
         return bit_xor(v, signmask(eve::as(v)));
       }
-      else if constexpr (O::contains(saturated2))
+      else if constexpr (O::contains(saturated))
       {
         return if_else(v == valmin(as<T>()), valmax(as<T>()), minus(v));
       }

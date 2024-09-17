@@ -21,7 +21,7 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
 {
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr(O::contains(saturated2) && std::integral<T>)
+  if constexpr(O::contains(saturated) && std::integral<T>)
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 
@@ -95,7 +95,7 @@ requires x86_abi<abi_t<T, N>>
   auto src = alternative(cx, v, as<wide<T, N>> {});
   auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-  if constexpr(O::contains(saturated2))
+  if constexpr(O::contains(saturated))
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 

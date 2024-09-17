@@ -54,7 +54,7 @@ struct maybe_saturated
   template <typename T>
   EVE_FORCEINLINE constexpr auto operator()(T const& v) const noexcept
   {
-    if constexpr (O::contains(saturated2)) return saturate(v, as<Tgt>{});
+    if constexpr (O::contains(saturated)) return saturate(v, as<Tgt>{});
     else                                   return v;
   }
 };

@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {  
-    if constexpr (O::contains(saturated2))
+    if constexpr (O::contains(saturated))
     {
       return div.behavior(cpu_{}, opts, a, b);
     }
@@ -60,7 +60,7 @@ namespace eve::detail
                                   wide<T, N> v,
                                   wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated2))
+    if constexpr (O::contains(saturated))
     {
       return div.behavior(cpu_{}, o, v, w);
     }

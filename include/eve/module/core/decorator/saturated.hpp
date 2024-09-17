@@ -51,19 +51,28 @@ using saturated_type = decorated<saturated_()>;
 //! saturated is currently supported by
 //!
 //!   - eve::abs,
+//!   - eve::absmax,
+//!   - eve::absmin,
 //!   - eve::add,
 //!   - eve::convert,
 //!   - eve::dec,
+//!   - eve::dist,
 //!   - eve::div,
 //!   - eve::inc,
+//!   - eve::maxabs,
+//!   - eve::maxmag,
+//!   - eve::minabs,
+//!   - eve::minmag,
+//!   - eve::minus,
 //!   - eve::mul,
-//!   - eve::sub,
-//!   - eve::oneminus,
+//!   - eve::negabsmax,
+//!   - eve::negabsmin,
 //!   - eve::next,
+//!   - eve::oneminus,
 //!   - eve::prev
-//!   - eve::sqr.
+//!   - eve::sqr,
+//!   - eve::sub.
 //!
 //!  @}
 //================================================================================================
-inline constexpr saturated_type const saturated = {};
 }

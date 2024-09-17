@@ -49,7 +49,7 @@ namespace eve::detail
           v   = bit_cast(convert(bit_cast(v, as<ri_t>{}), as<float>{}), as<r_t>{});
           v   = bit_shr(v, 23);
           auto w   = bit_cast(v, as<ru_t2>{});
-          w   = sub[saturated2](158, w);                    // undo bias
+          w   = sub[saturated](158, w);                    // undo bias
           auto v32 = bit_cast(r_t(32u), as<ru_t2>{});
           return bit_cast(eve::min(w,v32), as<r_t>());
         }

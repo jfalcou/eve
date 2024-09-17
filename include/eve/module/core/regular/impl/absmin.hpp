@@ -17,6 +17,6 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   absmin_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
   {
-    return eve::abs[o.drop(pedantic,numeric)](eve::min[o.drop(saturated2)](r0, r1, rs...));
+    return eve::abs[o.drop(pedantic,numeric)](eve::min[o.drop(saturated)](r0, r1, rs...));
   }
 }

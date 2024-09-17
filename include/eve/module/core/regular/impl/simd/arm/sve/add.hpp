@@ -24,7 +24,7 @@ namespace eve::detail
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
-      if        constexpr (O::contains(saturated2) && std::integral<T>) return add.behavior(cpu_{}, opts, v, w);
+      if        constexpr (O::contains(saturated) && std::integral<T>) return add.behavior(cpu_{}, opts, v, w);
       //  If not, we can mask if there is no alterative value
       else  if  constexpr (!C::has_alternative)
       {
@@ -44,7 +44,7 @@ namespace eve::detail
     requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated add if required or we just go to the common case of doing v+w
-    if constexpr(O::contains(saturated2) && std::integral<T>)
+    if constexpr(O::contains(saturated) && std::integral<T>)
     {
       return svqadd(v, w);
     }

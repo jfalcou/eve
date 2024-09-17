@@ -29,7 +29,7 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    if constexpr (O::contains(saturated2) && integral_value<T>)
+    if constexpr (O::contains(saturated) && integral_value<T>)
     {
       if constexpr (scalar_value<T>)
       {

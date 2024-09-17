@@ -95,15 +95,15 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
     EVE_FORCEINLINE constexpr T
     sqr_(EVE_REQUIRES(cpu_), O const &, T const &a0) noexcept
     {
-      if constexpr(O::contains(saturated2))
+      if constexpr(O::contains(saturated))
       {
         if constexpr( scalar_value<T> )
         {
-          return (eve::abs[saturated2](a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0)) : sqr(a0);
+          return (eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0)) : sqr(a0);
         }
         else
         {
-          return if_else(eve::abs[saturated2](a0) > sqrtvalmax(eve::as(a0)), valmax(eve::as(a0)), sqr(a0));
+          return if_else(eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0)), valmax(eve::as(a0)), sqr(a0));
         }
       }
       else

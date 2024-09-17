@@ -25,7 +25,7 @@ namespace eve::detail
   template<value T, callable_options O>
   constexpr T  abs_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
   {
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
       if constexpr( signed_integral_scalar_value<T>  ){
         if(v == valmin(eve::as(v))) return valmax(eve::as(v));

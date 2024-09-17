@@ -80,7 +80,7 @@ namespace eve
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr(integral_value<T> && O::contains(saturated2))
+      if constexpr(integral_value<T> && O::contains(saturated))
         return inc[a != valmax(eve::as(a))](a);
       else if constexpr( signed_integral_scalar_value<T>)
       {
@@ -100,7 +100,7 @@ namespace eve
         constexpr bool  iwl = T::abi_type::is_wide_logical;
         using           m_t = as_logical_t<T>;
 
-        if      constexpr(O::contains(saturated2))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
+        if      constexpr(O::contains(saturated))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
         else if constexpr(integral_value<T> && iwl)
         {
           auto m = cond.mask(as<m_t>{});

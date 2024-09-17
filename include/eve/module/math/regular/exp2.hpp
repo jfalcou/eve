@@ -150,7 +150,7 @@ namespace eve
         auto test                       = is_ltz(x) || (x > siz);
         x                               = if_else(test, zero, x);
         auto tmp                        = if_else(test, eve::zero, shl(one(eve::as(x)), x));
-        if constexpr( O::contains(saturated2))
+        if constexpr( O::contains(saturated))
         {
           using elt_t = element_type_t<T>;
           return if_else(is_gez(x, T(sizeof(elt_t))), valmax(eve::as<T>()), tmp);

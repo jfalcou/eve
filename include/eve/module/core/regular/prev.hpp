@@ -124,14 +124,14 @@ namespace eve
           auto test = is_negative(z) && is_positive(a);
           auto prv = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
           prv =  if_else(is_nan(a), eve::allbits, prv);
-          if  constexpr(O::contains(saturated2))
+          if  constexpr(O::contains(saturated))
           {
             prv = if_else(a == minf(as(a)), a, prv);
             if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, prv);
           }
           return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), prv);
         }
-        else if  constexpr(O::contains(saturated2))
+        else if  constexpr(O::contains(saturated))
         {
           auto prv = prev(a);
           auto z = if_else(a == minf(as(a)), a, prv);
@@ -146,7 +146,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2) || O::contains(pedantic))
+        if  constexpr(O::contains(saturated) || O::contains(pedantic))
         {
           return if_else(a == valmin(as(a)), a, T(a-one(as(a))));
         }
@@ -177,7 +177,7 @@ namespace eve
           }
           else { return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z); }
         }
-        else if  constexpr(O::contains(saturated2))
+        else if  constexpr(O::contains(saturated))
         {
           auto prv = prev(a, n);
           auto z = if_else(a >  prv || is_nan(prv), minf(as(a)), prv);
@@ -192,7 +192,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2) || O::contains(pedantic))
+        if  constexpr(O::contains(saturated) || O::contains(pedantic))
         {
           auto tmp = prev(a, n);
           return if_else(a < tmp, a, tmp);

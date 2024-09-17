@@ -18,7 +18,7 @@ namespace eve
 {
 
   template<typename Options>
-  struct bitofsign_t : elementwise_callable<bitofsign_t, Options, saturated_option>
+  struct bitofsign_t : elementwise_callable<bitofsign_t, Options>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept

@@ -27,7 +27,7 @@ namespace eve::detail
   maxmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
   {
     using r_t = common_value_t<T0, T1, Ts...>;
-    auto maxo = max[o.drop(saturated2)];
+    auto maxo = max[o.drop(saturated)];
     auto abso =  abs[saturated];
     if constexpr(sizeof...(Ts) == 0) // 2 parameters
     {

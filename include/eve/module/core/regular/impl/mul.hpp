@@ -41,7 +41,7 @@ namespace eve::detail
     }
     else if (std::is_same_v<T, U>)
     {
-      if constexpr (O::contains(saturated2) && integral_value<T>)
+      if constexpr (O::contains(saturated) && integral_value<T>)
       {
         if constexpr (signed_integral_value<T>)
         {

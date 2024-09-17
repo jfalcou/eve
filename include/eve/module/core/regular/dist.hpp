@@ -92,7 +92,7 @@ namespace eve
     constexpr T dist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       T d = eve::max(a, b) - eve::min(a, b);
-      if constexpr(O::contains(saturated2) && signed_integral_value<T>)
+      if constexpr(O::contains(saturated) && signed_integral_value<T>)
         return if_else(is_ltz(d), valmax(eve::as(d)), d);
       else if constexpr(O::contains(pedantic) && floating_value<T>)
         return if_else(is_unordered(a, b), allbits, if_else(is_nan(d), inf(as(d)), d));

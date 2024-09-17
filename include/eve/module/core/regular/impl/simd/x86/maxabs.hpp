@@ -21,7 +21,7 @@ namespace eve::detail
                                      wide<T, N> const & v1) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric) || O::contains(pedantic) || O::contains(saturated2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic) || O::contains(saturated))
       return maxabs.behavior(cpu_{}, opts, v0, v1);
     else
     {
@@ -49,7 +49,7 @@ namespace eve::detail
                                      wide<T, N> const &w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(numeric) || O::contains(pedantic) || O::contains(saturated2))
+    if constexpr(O::contains(numeric) || O::contains(pedantic) || O::contains(saturated))
       return maxabs.behavior(cpu_{}, opts, v, w);
     else
     {
