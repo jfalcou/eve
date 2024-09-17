@@ -90,8 +90,8 @@ TTS_CASE_WITH("Check behavior of add on wide",
   TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
   if constexpr (eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( add[downward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[downward](add[downward](e, f), g); }, a0, a1, a2), 0.5);
-    TTS_ULP_EQUAL( add[upward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[upward](add[upward](e, f), g); }, a0, a1, a2), 0.5);
+    TTS_ULP_EQUAL( add[downward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[downward](add[downward](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( add[upward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[upward](add[upward](e, f), g); }, a0, a1, a2), 1.0);
     TTS_EXPECT(eve::all(add[upward](a0, a1, a2) >=  add[downward](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));

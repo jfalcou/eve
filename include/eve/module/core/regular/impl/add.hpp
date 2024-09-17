@@ -29,18 +29,18 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(downward) || O::contains(upward) ))
     {
-      if constexpr(spy::compiler == spy::clang_)
-      {
-        #ifdef  SPY_COMPILER_IS_CLANG
-        #pragma clang fp exceptions(strict)
-        #endif
-        constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
-        std::fesetround(dir);
-        auto r = eve::add(a, b);
-        std::fesetround(FE_TONEAREST);
-        return r;
-      }
-      else
+ //      if constexpr(spy::compiler == spy::clang_)
+//       {
+//         #ifdef  SPY_COMPILER_IS_CLANG
+//         #pragma clang fp exceptions(strict)
+//         #endif
+//         constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
+//         std::fesetround(dir);
+//         auto r = eve::add(a, b);
+//         std::fesetround(FE_TONEAREST);
+//         return r;
+//       }
+//       else
       {
         auto [r, e] = eve::two_add(a, b);
         if constexpr(O::contains(downward))
