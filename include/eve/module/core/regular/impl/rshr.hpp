@@ -21,7 +21,7 @@ namespace eve::detail
   template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
   EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
   {
-    return rshr(a, if_else(cx, T{S}, zero)); 
+    return rshr(a, if_else(cx, S, zero)); 
   }
 
   template<callable_options O, conditional_expr C, typename T, typename U>
@@ -89,9 +89,9 @@ namespace eve::detail
   }
 
   template<callable_options O, integral_value T, std::ptrdiff_t S>
-  EVE_FORCEINLINE constexpr auto rshr_(EVE_SUPPORTS(cpu_), O const &, T v, index_t<S>) noexcept
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T v, index_t<S>) noexcept
   {
     if constexpr (S == 0) return v;
-    else                  return rshr(v, static_cast<element_type_t<T>>(S));
+    else                  return rshr(v, S);
   }
 }

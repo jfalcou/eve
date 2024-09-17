@@ -56,6 +56,9 @@ TTS_CASE_WITH("Check behavior of rshr on integral types",
 
   auto val = a1.get(0);
   TTS_EQUAL(rshr(a0, val), map([&](auto e) { return rshr(e, val); }, a0));
+
+  TTS_EQUAL(rshr(a0, eve::index<1>), map([&](auto e) { return rshr(e, 1); }, a0));
+  TTS_EQUAL(rshr(a0, eve::index<-1>), map([&](auto e) { return rshr(e, -1); }, a0));
 };
 
 
@@ -72,6 +75,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::rshr)(eve::wide)",
                                        U const& a1,
                                        M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::rshr[mask](a0, a1),
-            eve::if_else(mask, eve::rshr(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::rshr[mask](a0, a1), eve::if_else(mask, eve::rshr(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::rshr[mask](a0, eve::index<1>), eve::if_else(mask, eve::rshr(a0, 1), a0));
+  TTS_IEEE_EQUAL(eve::rshr[mask](a0, eve::index<-1>), eve::if_else(mask, eve::rshr(a0, -1), a0));
 };

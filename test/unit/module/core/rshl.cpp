@@ -53,19 +53,26 @@ TTS_CASE_WITH("Check behavior of rshl on integral types",
   TTS_EQUAL(rshl(a0, a1), map([&](auto e, auto f) { return rshl(e, f); }, a0, a1));
   auto val = a1.get(0);
   TTS_EQUAL(rshl(a0, val), map([&](auto e) { return rshl(e, val); }, a0));
+
+  TTS_EQUAL(rshl(a0, eve::index<1>), map([&](auto e) { return rshl(e, 1); }, a0));
+  TTS_EQUAL(rshl(a0, eve::index<-1>), map([&](auto e) { return rshl(e, -1); }, a0));
 };
 
 
 //==================================================================================================
 // Tests for masked rshl
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::masked(eve::rshl)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::masked(eve::rshr)(eve::wide)",
               eve::test::simd::unsigned_integers,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0,
-                         M const& mask)
+                            tts::as_signed_integer(tts::randoms(tts::constant(shift_min),
+                                                                tts::constant(shift_max))),
+                            tts::logicals(0, 3)))
+  <typename T, typename U, typename M>(T const& a0,
+                                       U const& a1,
+                                       M const& mask)
 {
-  TTS_IEEE_EQUAL(eve::rshl[mask](a0, 2),
-            eve::if_else(mask, eve::rshl(a0, 2), a0));
+  TTS_IEEE_EQUAL(eve::rshl[mask](a0, a1), eve::if_else(mask, eve::rshl(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::rshl[mask](a0, eve::index<1>), eve::if_else(mask, eve::rshl(a0, 1), a0));
+  TTS_IEEE_EQUAL(eve::rshl[mask](a0, eve::index<-1>), eve::if_else(mask, eve::rshl(a0, -1), a0));
 };
