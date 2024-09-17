@@ -20,8 +20,10 @@ namespace eve::detail
   {
     using i_t = wide<as_integer_t<T, unsigned>, N>;
 
-    if constexpr(std::is_signed_v<T>) return vec_sra(v.storage(), bit_cast(s, as<i_t>{}).storage());
-    else                              return vec_sr (v.storage(), bit_cast(s, as<i_t>{}).storage());
+    auto s_c = convert(s, as<as_integer_t<T, unsigned>>{});
+
+    if constexpr(std::is_signed_v<T>) return vec_sra(v.storage(), s_c.storage());
+    else                              return vec_sr (v.storage(), s_c.storage());
   }
 
   template<callable_options O, integral_scalar_value T, typename N, integral_scalar_value U>

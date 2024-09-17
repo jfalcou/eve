@@ -9,6 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/all.hpp>
+#include <eve/module/core/regular/if_else.hpp>
 #include <type_traits>
 
 namespace eve::detail
