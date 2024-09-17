@@ -108,7 +108,7 @@ namespace eve
     template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
     {
-      return shr(a, if_else(cx, S, zero)); 
+      return shr(a, if_else(cx, T{S}, zero)); 
     }
 
     template<callable_options O, conditional_expr C, typename T, typename U>
@@ -118,7 +118,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, typename U>
-    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T const& a, U const& s) noexcept
+    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {
       // S >> S case: perform the operation using the default operator
       if constexpr (scalar_value<T> && scalar_value<U>) return static_cast<T>(a >> s);
@@ -131,10 +131,10 @@ namespace eve
     }
 
     template<callable_options O, typename T, std::ptrdiff_t S>
-    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S> const&) noexcept
+    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S>) noexcept
     {
       if constexpr (S == 0) return v;
-      else                  return shr(v, S);
+      else                  return shr(v, static_cast<element_type_t<T>>(S));
     }
   }
 }

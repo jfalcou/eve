@@ -21,7 +21,7 @@ namespace eve::detail
   template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
   EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
   {
-    return rshr(a, if_else(cx, S, zero)); 
+    return rshr(a, if_else(cx, T{S}, zero)); 
   }
 
   template<callable_options O, conditional_expr C, typename T, typename U>
@@ -31,9 +31,9 @@ namespace eve::detail
   }
 
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T const& a0, U const& a1) noexcept
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
   {
-    if constexpr( scalar_value<U> && scalar_value<T>)
+    if constexpr (scalar_value<U> && scalar_value<T>)
     {
       if constexpr (unsigned_value<U>)
       {
@@ -88,10 +88,10 @@ namespace eve::detail
     }
   }
 
-  template<callable_options O, integral_value T, std::ptrdiff_t N>
-  EVE_FORCEINLINE constexpr auto rshr_(EVE_SUPPORTS(cpu_), O const &, T const& a0, index_t<N>) noexcept
+  template<callable_options O, integral_value T, std::ptrdiff_t S>
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_SUPPORTS(cpu_), O const &, T v, index_t<S>) noexcept
   {
-    if constexpr (N == 0) return a0;
-    else                  return rshr(a0, N);
+    if constexpr (S == 0) return v;
+    else                  return rshr(v, static_cast<element_type_t<T>>(S));
   }
 }

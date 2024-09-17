@@ -23,7 +23,7 @@ namespace eve::detail
   template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
   EVE_FORCEINLINE constexpr auto bit_shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
   {
-    return bit_shr(a, if_else(cx, S, zero)); 
+    return bit_shr(a, if_else(cx, T{S}, zero)); 
   }
 
   template<callable_options O, conditional_expr C, typename T, typename U>

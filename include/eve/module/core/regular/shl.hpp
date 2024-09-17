@@ -108,7 +108,7 @@ namespace eve
     template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
     {
-      return shl(a, if_else(cx, S, zero));
+      return shl(a, if_else(cx, T{S}, zero));
     }
 
     template<callable_options O, conditional_expr C, typename T, typename U>
@@ -134,7 +134,7 @@ namespace eve
     EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S>) noexcept
     {
       if constexpr (S == 0) return v;
-      else                  return shl(v, S);
+      else                  return shl(v, static_cast<element_type_t<T>>(S));
     }
   }
 }
