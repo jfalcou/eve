@@ -31,7 +31,9 @@ namespace eve::detail
     {
       if constexpr(spy::compiler == spy::clang_)
       {
+        #ifdef  SPY_COMPILER_IS_CLANG
         #pragma clang fp exceptions(strict)
+        #endif
         constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
         std::fesetround(dir);
         auto r = eve::add(a, b);
