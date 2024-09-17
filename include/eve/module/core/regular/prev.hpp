@@ -10,7 +10,6 @@
 #include <eve/assert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/one.hpp>

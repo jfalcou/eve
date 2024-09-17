@@ -13,7 +13,6 @@
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/if_else.hpp>

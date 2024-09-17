@@ -11,7 +11,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/raberu.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
 
