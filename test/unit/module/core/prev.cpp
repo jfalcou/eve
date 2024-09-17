@@ -65,7 +65,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev variants on wide",
 {
   using eve::pedantic;
   using eve::prev;
-  using eve::saturated2;
+  using eve::saturated;
 
   auto cases = tts::limits(tgt);
 
@@ -94,9 +94,9 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev variants on wide",
   {
     TTS_EQUAL(prev(T(2)), T(1));
     TTS_EQUAL(prev(T(3)), T(2));
-    TTS_EQUAL(prev[saturated2](T(2)), T(1));
-    TTS_EQUAL(prev[saturated2](T(3)), T(2));
-    TTS_EQUAL(prev[saturated2](cases.valmin), cases.valmin);
+    TTS_EQUAL(prev[saturated](T(2)), T(1));
+    TTS_EQUAL(prev[saturated](T(3)), T(2));
+    TTS_EQUAL(prev[saturated](cases.valmin), cases.valmin);
   }
 };
 
@@ -106,7 +106,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
 {
   using eve::pedantic;
   using eve::prev;
-  using eve::saturated2;
+  using eve::saturated;
 
   auto cases = tts::limits(tgt);
 
@@ -136,9 +136,9 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::prev with 2 parameters",
   {
     TTS_EQUAL(prev(T(4), 2), T(2));
     TTS_EQUAL(prev(T(5), 2), T(3));
-    TTS_EQUAL(prev[saturated2](T(4), 2), T(2));
-    TTS_EQUAL(prev[saturated2](T(5), 2), T(3));
-    TTS_EQUAL(prev[saturated2](cases.valmin, 2), cases.valmin);
+    TTS_EQUAL(prev[saturated](T(4), 2), T(2));
+    TTS_EQUAL(prev[saturated](T(5), 2), T(3));
+    TTS_EQUAL(prev[saturated](cases.valmin, 2), cases.valmin);
   }
 };
 
