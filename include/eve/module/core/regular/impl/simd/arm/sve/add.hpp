@@ -46,7 +46,7 @@ namespace eve::detail
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), O const&, wide<T, N> v, wide<T, N> w) noexcept
+  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated add if required or we just go to the common case of doing v+w
