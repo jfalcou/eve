@@ -18,22 +18,21 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
     requires arm_abi<abi_t<T, N>>
   {
-<<<<<<< HEAD
-    if constexpr (O::contains(saturated) && std::integral<T>)
-=======
     if constexpr(O::contains(downward) || O::contains(upward))
       return add.behavior(cpu_{}, opts, v, w);
     {
     else if constexpr (O::contains(saturated2) && std::integral<T>)
->>>>>>> 5a88353f1 (add sub pthet than x86)
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
+    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
+                 (O::contains(saturated2) && std::integral<T>))
+      return add.behavior(cpu_{}, opts, v, w);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-            if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
+      if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
       else  if constexpr( c == category::int64x2    ) return vaddq_s64(v, w);
       else  if constexpr( c == category::uint64x1   ) return vadd_u64 (v, w);
       else  if constexpr( c == category::uint64x2   ) return vaddq_u64(v, w);
@@ -53,10 +52,9 @@ namespace eve::detail
       else  if constexpr( c == category::float32x4  ) return vaddq_f32(v, w);
       else if constexpr( current_api >= asimd )
       {
-              if constexpr( c == category::float64x1 ) return vadd_f64  (v, w);
+        if constexpr( c == category::float64x1 ) return vadd_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vaddq_f64 (v, w);
       }
     }
   }
-
 }
