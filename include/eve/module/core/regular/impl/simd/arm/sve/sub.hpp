@@ -47,7 +47,7 @@ namespace eve::detail
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated sub if required or we just go to the common case of doing a+b
