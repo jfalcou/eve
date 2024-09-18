@@ -21,9 +21,11 @@ namespace eve::detail
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
-    else if constexpr(O::contains(downward) || O::contains(upward))
+
+    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
+                 (O::contains(saturated2) && std::integral<T>))
     {
-      return sub.behavior(cpu_{}, opts, a, b;
+      return add.behavior(cpu_{}, opts, v, w);
     }
     else
     {
@@ -49,7 +51,11 @@ namespace eve::detail
     requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated sub if required or we just go to the common case of doing v+w
-    if constexpr(O::contains(saturated) && std::integral<T>) return svqsub(a, b);
-    else                                                      return svsub_x(sve_true<T>(), a, b);
+   if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>))
+    {
+      return add.behavior(cpu_{}, opts, v, w);
+    }
+    else if constexpr(O::contains(saturated2) && std::integral<T>) return svqsub(a, b);
+    else                                                           return svsub_x(sve_true<T>(), a, b);
   }
 }

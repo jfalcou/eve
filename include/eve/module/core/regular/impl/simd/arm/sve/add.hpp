@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-    requires sve_abi<abi_t<T, N>>
+  requires sve_abi<abi_t<T, N>>
   {
     auto const alt = alternative(mask, v, as(v));
 
@@ -24,7 +24,9 @@ namespace eve::detail
 
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
                  (O::contains(saturated2) && std::integral<T>))
+    {
       return add.behavior(cpu_{}, opts, v, w);
+    }
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
@@ -52,8 +54,7 @@ namespace eve::detail
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
-    else
-    if constexpr(O::contains(saturated2) && std::integral<T>)
+    else if constexpr(O::contains(saturated2) && std::integral<T>)
     {
       return svqadd(v, w);
     }
