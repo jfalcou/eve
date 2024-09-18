@@ -8,10 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/assert.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/rotl.hpp>
 #include <eve/module/core/regular/minus.hpp>
 
@@ -24,11 +21,6 @@ namespace eve
     requires(eve::same_lanes_or_scalar<T, S>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T,S> operator()(T v, S s) const
     {
-      constexpr int l [[maybe_unused]] = sizeof(element_type_t<T>) * 8;
-      EVE_ASSERT( detail::assert_relative_shift<T>(this->options(), s)
-                , "[eve::rotr] Rotating by "  << s << " is out of the range ]" << -l << ", " << l << "[."
-                );
-
       return EVE_DISPATCH_CALL(v, s);
     }
 

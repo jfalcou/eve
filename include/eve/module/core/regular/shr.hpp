@@ -9,9 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/module/core/regular/if_else.hpp>
 
 namespace eve
 {
@@ -21,11 +18,7 @@ namespace eve
     template<integral_value T, integral_value S>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
       requires(eve::same_lanes_or_scalar<T, S>)
-    {
-      EVE_ASSERT(detail::assert_shift<T>(this->options(), s),
-                 "[eve::shr] Shifting by " << s << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
-      
+    {      
       return EVE_DISPATCH_CALL(t0, s);
     }
 
@@ -105,18 +98,6 @@ namespace eve
 
   namespace detail
   {
-    template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
-    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
-    {
-      return shr(a, if_else(cx, T{S}, zero)); 
-    }
-
-    template<callable_options O, conditional_expr C, typename T, typename U>
-    EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U s) noexcept
-    {
-      return shr(a, if_else(cx, s, zero)); 
-    }
-
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto shr_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {

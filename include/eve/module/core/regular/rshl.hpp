@@ -9,11 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
@@ -24,11 +20,6 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
       requires(eve::same_lanes_or_scalar<T, N>)
     {
-      EVE_ASSERT(detail::assert_relative_shift<T>(this->options(), s),
-                 "[eve::rshl] - Shifting by " << s << " is out of the range ]"
-                 << -int(sizeof(element_type_t<T>) * 8) << ", "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
-                 
       return EVE_DISPATCH_CALL(t0, s);
     }
 

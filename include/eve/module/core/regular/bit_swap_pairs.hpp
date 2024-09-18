@@ -10,14 +10,11 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
 #include <eve/forward.hpp>
-#include <eve/assert.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
@@ -28,14 +25,6 @@ namespace eve
     template<eve::integral_value T, integral_value I0, integral_value I1>
     constexpr EVE_FORCEINLINE T operator()(T v, I0 i0,  I1 i1) const noexcept
     {
-      EVE_ASSERT(detail::assert_shift<T>(this->options(), i0),
-                 "[eve::bit_swap_pairs] Argument i0 " << i0 << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
-
-      EVE_ASSERT(detail::assert_shift<T>(this->options(), i1),
-                 "[eve::bit_swap_pairs] Argument i1 " << i1 << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
-
       return EVE_DISPATCH_CALL(v, i0, i1);
     }
 
@@ -93,12 +82,6 @@ namespace eve
 
   namespace detail
   {
-    template<callable_options O, conditional_expr C, value T, integral_value I0, integral_value I1>
-    EVE_FORCEINLINE constexpr auto bit_swap_pairs_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, I0 i0, I1 i1) noexcept
-    {
-      return bit_swap_pairs(a, if_else(cx, i0, zero), if_else(cx, i1, zero));
-    }
-
     template<callable_options O, value T, integral_value I0, integral_value I1>
     constexpr T bit_swap_pairs_(EVE_REQUIRES(cpu_), O const&, T a, I0 i0, I1 i1) noexcept
     {

@@ -9,9 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/assert.hpp>
-#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
@@ -20,11 +17,7 @@ namespace eve
   {
     template<eve::value T, integral_value S>
     constexpr EVE_FORCEINLINE  as_wide_as_t<T, S> operator()(T v, S s) const
-    {
-      EVE_ASSERT(detail::assert_shift<T>(this->options(), s),
-                 "[eve::bit_shr] Shifting by " << s << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
-      
+    { 
       return EVE_DISPATCH_CALL(v, s);
     }
 

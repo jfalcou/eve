@@ -18,18 +18,6 @@
 
 namespace eve::detail
 {
-  template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
-  EVE_FORCEINLINE constexpr auto rshl_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
-  {
-    return rshl(a, if_else(cx, static_cast<std::make_signed_t<element_type_t<T>>>(S), zero)); 
-  }
-
-  template<callable_options O, conditional_expr C, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto rshl_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U s) noexcept
-  {
-    return rshl(a, if_else(cx, s, zero)); 
-  }
-
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto rshl_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
   {
