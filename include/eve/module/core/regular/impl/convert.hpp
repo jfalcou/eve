@@ -92,6 +92,14 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
     {
       using N = cardinal_t<In>;
 
+      constexpr auto c_i = categorize<In>();
+      constexpr auto c_o = categorize<wide<Out, N>>();
+
+      // helps with some ptrdiff_t conversions on macOS x86_64
+      if constexpr (has_native_abi_v<In> && (c_i == c_o))
+      {
+        return bit_cast(v0, as<wide<Out, N>>{});
+      }
       // Converting between integral of different signs is just a bit_cast away
       if constexpr (std::signed_integral<in_e_t> && std::unsigned_integral<Out>)
       {

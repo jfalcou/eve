@@ -19,8 +19,8 @@ namespace eve
   struct shl_t : strict_elementwise_callable<shl_t, Options>
   {
     template<integral_value T, integral_value S>
-    requires(eve::same_lanes_or_scalar<T, S>)
     EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
+      requires(eve::same_lanes_or_scalar<T, S>)
     {
       EVE_ASSERT(detail::assert_shift<T>(this->options(), s),
                  "[eve::shl] Shifting by " << s << " is out of the range [0, "
