@@ -21,6 +21,13 @@ namespace eve::detail
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
+    
+    if constexpr(O::contains(downward) || O::contains(upward))
+      return add.behavior(cpu_{}, opts, v, w);
+    {
+    else if constexpr(current_api >= avx512)
+    {
+    }
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate

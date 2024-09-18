@@ -20,8 +20,10 @@ template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires ppc_abi<abi_t<T, N>>
 {
-  if constexpr (O::contains(saturated) && std::integral<T>) return sub.behavior(cpu_{}, opts, a, b);
-  else                                                       return vec_sub(a.storage(), b.storage());
+  if constexpr(O::contains(downward) || O::contains(upward)) return sub.behavior(cpu_{}, opts, a, b);
+  else if constexpr (O::contains(saturated2) && std::integral<T>) return sub.behavior(cpu_{}, opts, a, b);
+  else                                                            return vec_sub(a.storage(), b.storage());
+
 }
 
 }

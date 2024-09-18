@@ -21,6 +21,10 @@ namespace eve::detail
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
+    else if constexpr(O::contains(downward) || O::contains(upward))
+    {
+      return sub.behavior(cpu_{}, opts, a, b;
+    }
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
@@ -49,4 +53,3 @@ namespace eve::detail
     else                                                      return svsub_x(sve_true<T>(), a, b);
   }
 }
-

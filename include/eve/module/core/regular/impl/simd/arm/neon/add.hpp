@@ -18,7 +18,14 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
     requires arm_abi<abi_t<T, N>>
   {
+<<<<<<< HEAD
     if constexpr (O::contains(saturated) && std::integral<T>)
+=======
+    if constexpr(O::contains(downward) || O::contains(upward))
+      return add.behavior(cpu_{}, opts, v, w);
+    {
+    else if constexpr (O::contains(saturated2) && std::integral<T>)
+>>>>>>> 5a88353f1 (add sub pthet than x86)
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
