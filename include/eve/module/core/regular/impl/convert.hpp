@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/impl/convert_helpers.hpp>
+#include <eve/detail/category.hpp>
 
 namespace eve::detail
 {
