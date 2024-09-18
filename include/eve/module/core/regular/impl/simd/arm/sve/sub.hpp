@@ -25,7 +25,7 @@ namespace eve::detail
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
                  (O::contains(saturated2) && std::integral<T>))
     {
-      return add.behavior(cpu_{}, opts, v, w);
+      return add.behavior(cpu_{}, opts, a, b);
     }
     else
     {
