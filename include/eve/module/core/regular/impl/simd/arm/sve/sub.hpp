@@ -51,9 +51,9 @@ namespace eve::detail
     requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated sub if required or we just go to the common case of doing a+b
-   if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>))
+    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>))
     {
-      return add.behavior(cpu_{}, opts, a+b);
+      return sub.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated2) && std::integral<T>) return svqsub(a, b);
     else                                                           return svsub_x(sve_true<T>(), a, b);
