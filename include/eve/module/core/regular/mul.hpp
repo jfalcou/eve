@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, downward_option, upward_option>
+  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option, upper_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -59,8 +59,8 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto mul[saturated](/*any of the above overloads*/)                noexcept; // 4
-//!      constexpr auto mul[downward](/*any of the above overloads*/)                 noexcept; // 5
-//!      constexpr auto mul[upward](/*any of the above overloads*/)                   noexcept; // 6
+//!      constexpr auto mul[lower](/*any of the above overloads*/)                    noexcept; // 5
+//!      constexpr auto mul[upper](/*any of the above overloads*/)                    noexcept; // 6
 ///!   }
 //!   @endcode
 //!

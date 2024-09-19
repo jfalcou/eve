@@ -75,6 +75,8 @@ TTS_CASE_WITH("Check behavior of div on wide",
   using eve::div;
   using eve::mul;
   using eve::saturated;
+  using eve::upper;
+  using eve::lower;
   using eve::detail::map;
   TTS_ULP_EQUAL(eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
   TTS_ULP_EQUAL(eve::div[saturated](a0, a2), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
@@ -84,6 +86,17 @@ TTS_CASE_WITH("Check behavior of div on wide",
   TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
   TTS_ULP_EQUAL(div(kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
   TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2), 1);
+  if constexpr (eve::floating_value<T>)
+  {
+    TTS_ULP_EQUAL( div[lower](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[lower](div[lower](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( div[upper](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[upper](div[upper](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_EXPECT(eve::all(div[upper](a0, a1, a2) >=  div[lower](a0, a1, a2)));
+    TTS_EXPECT(eve::all(div[upper](a0, a1)     >=  div[lower](a0, a1)));
+    T w0(T(0.12345));
+    T w1(T(0.126789));
+    TTS_EXPECT(eve::all(div[upper](w0, w1) >= div(w0, w1)));
+    TTS_EXPECT(eve::all(div[lower](w0, w1) <=   div(w0, w1)));
+  }
 };
 
 //==================================================================================================

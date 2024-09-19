@@ -13,11 +13,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(O::contains(downward) || O::contains(upward))
+    if constexpr(O::contains(lower) || O::contains(upper))
     {
       if constexpr(current_api >= avx512)
       {
-        auto constexpr dir =(O::contains(downward) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
         if      constexpr  ( c == category::float64x8  ) return  _mm512_mul_round_pd (a, b, dir);
         else if constexpr  ( c == category::float32x16 ) return  _mm512_mul_round_ps (a, b, dir);
         else                                             return  mul.behavior(cpu_{}, opts, a, b);

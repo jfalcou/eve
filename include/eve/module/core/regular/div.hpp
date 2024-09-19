@@ -15,7 +15,7 @@ namespace eve
 {
   template<typename Options>
   struct div_t : tuple_callable<div_t, Options, saturated_option, upward_option, downward_option,
-                                to_nearest_option, toward_zero_option>
+                                to_nearest_option, toward_zero_option, upper_option, lower_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -63,9 +63,11 @@ namespace eve
 //!      constexpr auto div[downward](/*any of the above overloads*/)                 noexcept; // 4
 //!      constexpr auto div[toward_zero](/*any of the above overloads*/)              noexcept; // 4
 //!      constexpr auto div[to_nearest](/*any of the above overloads*/)               noexcept; // 4
+//!      constexpr auto div[lower](/*any of the above overloads*/)                    noexcept; // 5
+//!      constexpr auto div[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!
 //!      // Semantic options
-//!      constexpr auto div[saturated](integral_value auto x, integral_value auto y)) noexcept; // 5
+//!      constexpr auto div[saturated](integral_value auto x, integral_value auto y)) noexcept; // 7
 //!   }
 //!   @endcode
 //!
@@ -88,7 +90,11 @@ namespace eve
 //!           * `eve::floor(div(x, z))`, if `d` is `downward`.
 //!           * `eve::ceil(div(x,  z))`, if `d` is `upward`.
 //!           * `eve::nearest(div(x, z))`, if `d` is `to_nearest`.
-//!      5. computes the saturated division of `x` by  `y`.
+//!      5. The floating division is done in a rounding mode such that the result is guaranted
+//!       to be less or equal to the exact one.
+//!      6. The floating division is done in a rounding mode such that the result is guaranted
+//!       to be greater or equal to the exact one.
+//!      7. computes the saturated division of `x` by  `y`.
 //!         The result is always defined even if the denominator is 0.
 //!
 //!         The relevant cases are just in fact the division by 0 for integral types

@@ -16,7 +16,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T,N> mul_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>))
+    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>))
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }
@@ -32,7 +32,7 @@ namespace eve::detail
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
-    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
+    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
      return mul.behavior(cpu_{}, opts, a, b);

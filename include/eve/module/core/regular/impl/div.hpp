@@ -28,7 +28,7 @@
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/inc.hpp>
-#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_negative.hpp>
 #include <eve/module/core/regular/is_odd.hpp>
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/nearest.hpp>
@@ -49,7 +49,21 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(O::contains(saturated))
+    if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
+    {
+      auto negb = is_negative(b);
+      b = if_else(negb, -b, b);
+      a = if_else(negb, -a, a);
+      auto d = div(a, b);
+      auto [r, e] = two_prod(d, b);
+      if constexpr(O::contains(upper))
+      {
+        return if_else(r < a || ((r ==  a) && is_ltz(e)), next(d), d);
+      }
+      else
+        return if_else(r > a || ((r ==  a) && is_gtz(e)), prev(d), d);
+    }
+    else if constexpr(O::contains(saturated))
     {
       if constexpr( integral_value<T> )
       {
@@ -173,7 +187,7 @@ namespace eve::detail
             auto r1   = fnma(b, q, a);
             auto r2   = minus[ltzb](b) - r1;
             auto cond = (r1 > r2) || ((r1 == r2) && is_odd(q));
-            
+
             return if_else(is_ltz(b), dec[cond](q), inc[cond](q));
           }
         }
@@ -198,7 +212,10 @@ namespace eve::detail
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
-    auto that((r1 * (rs * ...)));
+    auto that = r1;
+    if (O::contains(upper))  that = mul[lower](r1, rs...);
+    else if  (O::contains(lower))  that = mul[upper](r1, rs...);
+    else that = mul(r1, rs...);
     if constexpr(std::is_integral_v<eve::element_type_t<T>>)
       EVE_ASSERT(eve::all(is_nez(that)), "[eve] div - 0/0 is undefined");
     return div[o](r0,that);

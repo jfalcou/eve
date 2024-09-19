@@ -18,7 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(neon128_), O const &opts, wide<T, N> a, U b) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
+    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
       return mul.behavior(cpu_{}, opts, a, b);
