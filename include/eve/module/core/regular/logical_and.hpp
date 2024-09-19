@@ -18,6 +18,7 @@ namespace eve
   {
     template<typename T, typename U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const noexcept
+      requires same_lanes_or_scalar<T, U>
     {
       return EVE_DISPATCH_CALL(a, b);
     }
@@ -76,8 +77,8 @@ namespace eve
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto logical_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
-      if constexpr (std::same_as<T, bool>)                                           return a ? b : false_(as<U>{});
-      else if constexpr (std::same_as<U, bool>)                                      return b ? a : false_(as<T>{});
+      if      constexpr (std::same_as<T, bool>)                                      return logical_and(U{a}, b);
+      else if constexpr (std::same_as<U, bool>)                                      return logical_and(a, T{b});
       else if constexpr (scalar_value<T> && scalar_value<U>)                         return a && b;
       else if constexpr (scalar_value<T> && simd_value<U>)                           return logical_and(U{a}, b);
       else if constexpr (simd_value<T> && scalar_value<U>)                           return logical_and(a, T{b});
