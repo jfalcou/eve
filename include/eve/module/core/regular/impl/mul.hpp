@@ -21,8 +21,11 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/sign.hpp>
-#include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/two_prod.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/next.hpp>
 
 namespace eve::detail
 {
