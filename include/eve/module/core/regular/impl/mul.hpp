@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-
-
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
@@ -34,18 +32,18 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
- //      if constexpr(spy::compiler == spy::clang_)
-//       {
-//         #ifdef  SPY_COMPILER_IS_CLANG
-//         #pragma clang fp exceptions(strict)
-//         #endif
-//         constexpr auto dir =  O::contains(lower) ?  FE_LOWER : FE_UPWARD;
-//         std::fesetround(dir);
-//         auto r = eve::mul(a, b);
-//         std::fesetround(FE_TONEAREST);
-//         return r;
-//       }
-//       else
+      if constexpr(spy::compiler == spy::clang_)
+      {
+        #ifdef  SPY_COMPILER_IS_CLANG
+          #pragma clang fp exceptions(strict)
+        #endif
+        constexpr auto dir =  O::contains(lower) ?  FE_DOWNWARD : FE_UPWARD;
+        std::fesetround(dir);
+        auto r = eve::mul(a, b);
+        std::fesetround(FE_TONEAREST);
+        return r;
+      }
+      else
       {
         auto [r, e] = eve::two_prod(a, b);
         std::cout << "(" << r << ",  " << e << ")" << std::endl;

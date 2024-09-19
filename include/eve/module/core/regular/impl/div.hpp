@@ -51,17 +51,31 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
     {
-      auto negb = is_negative(b);
-      b = if_else(negb, -b, b);
-      a = if_else(negb, -a, a);
-      auto d = div(a, b);
-      auto [r, e] = two_prod(d, b);
-      if constexpr(O::contains(upper))
+       if constexpr(spy::compiler == spy::clang_)
       {
-        return if_else(r < a || ((r ==  a) && is_ltz(e)), next(d), d);
+        #ifdef  SPY_COMPILER_IS_CLANG
+          #pragma clang fp exceptions(strict)
+        #endif
+        constexpr auto dir =  O::contains(lower) ?  FE_DOWNWARD : FE_UPWARD;
+        std::fesetround(dir);
+        auto r = eve::div(a, b);
+        std::fesetround(FE_TONEAREST);
+        return r;
       }
       else
-        return if_else(r > a || ((r ==  a) && is_gtz(e)), prev(d), d);
+      {
+        auto negb = is_negative(b);
+        b = if_else(negb, -b, b);
+        a = if_else(negb, -a, a);
+        auto d = div(a, b);
+        auto [r, e] = two_prod(d, b);
+        if constexpr(O::contains(upper))
+        {
+          return if_else(r < a || ((r ==  a) && is_ltz(e)), next(d), d);
+        }
+        else
+          return if_else(r > a || ((r ==  a) && is_gtz(e)), prev(d), d);
+      }
     }
     else if constexpr(O::contains(saturated))
     {
