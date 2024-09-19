@@ -19,7 +19,7 @@ namespace eve::detail
   requires arm_abi<abi_t<T, N>>
   {
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
-                 (O::contains(saturated2) && std::integral<T>))
+                 (O::contains(saturated) && std::integral<T>))
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }

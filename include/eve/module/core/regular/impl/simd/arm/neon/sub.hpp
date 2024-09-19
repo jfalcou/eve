@@ -23,7 +23,7 @@ EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
   {
     return sub.behavior(cpu_{}, opts, a, b);
   }
-  else if constexpr (O::contains(saturated2) && integral_value<T>)
+  else if constexpr (O::contains(saturated) && integral_value<T>)
   {
       return sub.behavior(cpu_{}, opts, a, b);
   }

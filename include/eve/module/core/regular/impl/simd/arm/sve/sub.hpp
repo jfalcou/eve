@@ -24,7 +24,7 @@ namespace eve::detail
 
     //  if saturated on integer or oriented on floats, we don't have masked op so we delegate
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
-                 (O::contains(saturated2) && std::integral<T>))
+                 (O::contains(saturated) && std::integral<T>))
     {
       return sub.behavior(cpu_{}, opts, a, b);
     }
@@ -51,7 +51,7 @@ namespace eve::detail
     {
       return sub.behavior(cpu_{}, opts, a, b);
     }
-    else if constexpr(O::contains(saturated2) && std::integral<T>) return svqsub(a, b);
+    else if constexpr(O::contains(saturated) && std::integral<T>) return svqsub(a, b);
     else                                                           return svsub_x(sve_true<T>(), a, b);
   }
 }

@@ -32,7 +32,7 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
     else
       return add.behavior(cpu_{}, opts, v, w);
   }
-  else if constexpr(O::contains(saturated2) && std::integral<T>)
+  else if constexpr(O::contains(saturated) && std::integral<T>)
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 

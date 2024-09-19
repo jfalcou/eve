@@ -21,12 +21,12 @@ namespace eve::detail
     if constexpr(O::contains(downward) || O::contains(upward))
       return add.behavior(cpu_{}, opts, v, w);
     {
-    else if constexpr (O::contains(saturated2) && std::integral<T>)
+    else if constexpr (O::contains(saturated) && std::integral<T>)
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
-                 (O::contains(saturated2) && std::integral<T>))
+                 (O::contains(saturated) && std::integral<T>))
       return add.behavior(cpu_{}, opts, v, w);
     else
     {

@@ -51,7 +51,7 @@ namespace eve::detail
           return eve::if_else(eve::is_gtz(e), eve::next(r), r);
       }
     }
-    if constexpr (O::contains(saturated2) && integral_value<T>)
+    if constexpr (O::contains(saturated) && integral_value<T>)
     {
       if constexpr (scalar_value<T>)
       {

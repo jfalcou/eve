@@ -23,7 +23,7 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a,
 {
   if constexpr(O::contains(downward) || O::contains(upward))
     return add.behavior(cpu_{}, opts, a, b);
-  else if constexpr (O::contains(saturated2) && std::integral<T>)
+  else if constexpr (O::contains(saturated) && std::integral<T>)
   {
     return add.behavior(cpu_{}, opts, a, b);
   }

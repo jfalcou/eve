@@ -27,7 +27,7 @@ namespace eve::detail
         return mul.behavior(cpu_{}, opts, a, b);
       }
     }
-    else if constexpr (O::contains(saturated2) && std::integral<T>)
+    else if constexpr (O::contains(saturated) && std::integral<T>)
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }

@@ -32,7 +32,7 @@ namespace eve::detail
       else
         return sub.behavior(cpu_{}, opts, a, b);
     }
-    else if constexpr(O::contains(saturated2))
+    else if constexpr(O::contains(saturated))
     {
       constexpr auto sup_avx2 = current_api >= avx2;
 

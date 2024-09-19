@@ -23,7 +23,7 @@ namespace eve::detail
     if constexpr( C::is_complete ) return alt;
 
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
-                 (O::contains(saturated2) && std::integral<T>))
+                 (O::contains(saturated) && std::integral<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
@@ -54,7 +54,7 @@ namespace eve::detail
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
-    else if constexpr(O::contains(saturated2) && std::integral<T>)
+    else if constexpr(O::contains(saturated) && std::integral<T>)
     {
       return svqadd(v, w);
     }
