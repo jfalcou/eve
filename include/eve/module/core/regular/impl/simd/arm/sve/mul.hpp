@@ -18,7 +18,7 @@ namespace eve::detail
   {
     if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>))
     {
-      return mul.behavior(cpu_{}, opts, v, w);
+      return mul.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && std::integral<T>) return mul.behavior(cpu_{}, opts, a, b);
     else                                                            return svmul_x(sve_true<T>(), a, b);
