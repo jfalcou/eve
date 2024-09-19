@@ -92,8 +92,8 @@ namespace eve::detail
 
     template <typename U>
     friend auto operator%(
-      find_common_logical_reducer x,
-      find_common_logical_reducer<U> y
+      find_common_logical_reducer,
+      find_common_logical_reducer<U>
     ) {
       if      constexpr (simd_value<T>)                                  return find_common_logical_reducer<as_logical_t<T>>{};
       else if constexpr (std::same_as<T, bool> && std::same_as<U, bool>) return find_common_logical_reducer<bool>{};
