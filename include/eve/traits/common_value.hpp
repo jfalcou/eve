@@ -21,7 +21,8 @@ namespace eve::detail
   struct find_common_value_reducer<void> {};
 
   template<typename T>
-  struct find_common_value_reducer {
+  struct find_common_value_reducer
+  {
     using type = T;
 
     template <typename U>
@@ -29,13 +30,16 @@ namespace eve::detail
       find_common_value_reducer x,
       find_common_value_reducer<U> y
     ) {
-      if constexpr (plain_scalar_value<T> && plain_scalar_value<U>) {
+      if constexpr (plain_scalar_value<T> && plain_scalar_value<U>)
+      {
         return find_common_value_reducer<decltype(std::declval<T>() + std::declval<U>())>{};
       } else if constexpr (scalar_value<T> && arithmetic_simd_value<U>) {
         return y;
       } else if constexpr (arithmetic_simd_value<T> && (scalar_value<U> || std::same_as<T, U>)) {
         return x;
-      } else {
+      }
+      else
+      {
         return find_common_value_reducer<void>{};
       }
     }
@@ -75,58 +79,51 @@ namespace eve
 
 namespace eve::detail
 {
-  template<typename T, typename U>
-  struct common_logical_impl;
-
-  template<kumi::product_type T>
-  struct common_logical_impl<T,T> : as_logical<T>
-  {};
-
-  template<scalar_value T, scalar_value U>
-  struct common_logical_impl<T,U> : as_logical<T>
-  {};
-
-  template<value T>
-  struct common_logical_impl<T, bool> : as_logical<T>
-  {};
-
-  template<value T>
-  struct common_logical_impl<bool, T> : as_logical<T>
-  {};
+  template<typename T>
+  struct find_common_logical_reducer;
 
   template<>
-  struct common_logical_impl<bool, bool>
+  struct find_common_logical_reducer<void> {};
+
+  template<typename T>
+  struct find_common_logical_reducer
   {
-    using type = bool;
+    using type = T;
+
+    template <typename U>
+    friend auto operator%(
+      find_common_logical_reducer x,
+      find_common_logical_reducer<U> y
+    ) {
+      if      constexpr (simd_value<T>)                                  return find_common_logical_reducer<as_logical_t<T>>{};
+      else if constexpr (std::same_as<T, bool> && std::same_as<U, bool>) return find_common_logical_reducer<bool>{};
+      else if constexpr (std::same_as<T, bool>)                          return find_common_logical_reducer<as_logical_t<U>>{};
+      else if constexpr (std::same_as<U, bool>)                          return find_common_logical_reducer<as_logical_t<T>>{};
+      else if constexpr (scalar_value<U>)                                return find_common_logical_reducer<as_logical_t<T>>{};
+      else if constexpr (simd_value<U>)                                  return find_common_logical_reducer<as_logical_t<as_wide_as_t<T, U>>>{};
+      else                                                               return find_common_logical_reducer<void>{};
+    }
   };
 
-  template<value T, value U>
-  requires ((cardinal_v<T> == 1) || (cardinal_v<U> == 1) || (cardinal_v<T> == cardinal_v<U>))
-  struct common_logical_impl<logical<T>, logical<U>>
-  {
-    using type = logical<
-                          std::conditional_t<simd_value<T>,
-                            T,
-                            std::conditional_t<simd_value<U>,
-                              U,
-                              T
-                            >
-                          >
-                        >;
-  };
+  template<typename... Ts>
+  auto find_common_logical() -> typename decltype((find_common_logical_reducer<Ts>{} % ...))::type;
 
-  template<typename T, typename U>
-    requires(!(scalar_value<T> && scalar_value<U> && ((cardinal_v<T> == 1) || (cardinal_v<U> == 1) || (cardinal_v<T> == cardinal_v<U>))) && requires{ typename common_value<T, U>::type; } )
-  struct common_logical_impl<T, U> : as_logical<typename common_value<T, U>::type>
-  {};
+  template<typename, typename... Ts>
+  struct common_logical_impl {};
+
+  template<typename... Ts>
+  struct common_logical_impl<std::void_t<decltype(detail::find_common_logical<Ts...>())>, Ts...>
+  {
+    using type = std::remove_cvref_t<decltype(detail::find_common_logical<Ts...>())>;
+  };
 }
 
 namespace eve
 {
-  template<typename T, typename U>
-  using common_logical_t = typename eve::detail::common_logical_impl<T, U>::type;
+  template<typename... Ts>
+  using common_logical_t = typename eve::detail::common_logical_impl<void, Ts...>::type;
 
-  template<typename T, typename U>
-  struct common_logical : eve::detail::common_logical_impl<T, U>
+  template<typename... Ts>
+  struct common_logical : eve::detail::common_logical_impl<void, Ts...>
   {};
 }
