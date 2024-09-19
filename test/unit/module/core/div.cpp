@@ -95,7 +95,7 @@ TTS_CASE_WITH("Check behavior of div on wide",
     T w0(T(0.12345));
     T w1(T(0.126789));
     TTS_EXPECT(eve::all(div[upper](w0, w1) >= div(w0, w1)));
-    TTS_EXPECT(eve::all(div[lower](w0, w1) <=   div(w0, w1)));
+    TTS_EXPECT(eve::all(div[lower](w0, w1) <= div(w0, w1)));
   }
 };
 

@@ -27,14 +27,14 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
-    if constexpr(floating_value<T> && (O::contains(downward) || O::contains(upward) ))
+    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
  //      if constexpr(spy::compiler == spy::clang_)
 //       {
 //         #ifdef  SPY_COMPILER_IS_CLANG
 //         #pragma clang fp exceptions(strict)
 //         #endif
-//         constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
+//         constexpr auto dir =  O::contains(lower) ?  FE_DOWNWARD : FE_UPWARD;
 //         std::fesetround(dir);
 //         auto r = eve::add(a, b);
 //         std::fesetround(FE_TONEAREST);
@@ -43,7 +43,7 @@ namespace eve::detail
 //       else
       {
         auto [r, e] = eve::two_add(a, b);
-        if constexpr(O::contains(downward))
+        if constexpr(O::contains(lower))
           return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
         else
           return eve::if_else(eve::is_gtz(e), eve::next(r), r);

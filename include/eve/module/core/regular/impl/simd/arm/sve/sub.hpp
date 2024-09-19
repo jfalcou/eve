@@ -23,7 +23,7 @@ namespace eve::detail
     if constexpr( C::is_complete ) return alt;
 
     //  if saturated on integer or oriented on floats, we don't have masked op so we delegate
-    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
+    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
       return sub.behavior(cpu_{}, opts, a, b);
@@ -47,7 +47,7 @@ namespace eve::detail
     requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated sub if required or we just go to the common case of doing a-b
-    if constexpr((O::contains(downward) || O::contains(upward)) && floating_value<T>)
+    if constexpr((O::contains(lower) || O::contains(upper)) && floating_value<T>)
     {
       return sub.behavior(cpu_{}, opts, a, b);
     }

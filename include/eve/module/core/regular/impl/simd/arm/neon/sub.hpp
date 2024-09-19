@@ -19,7 +19,7 @@ template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires arm_abi<abi_t<T, N>>
 {
-  if constexpr(O::contains(downward) || O::contains(upward))
+  if constexpr(O::contains(lower) || O::contains(upper))
   {
     return sub.behavior(cpu_{}, opts, a, b);
   }

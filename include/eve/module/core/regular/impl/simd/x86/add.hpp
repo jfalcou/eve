@@ -20,11 +20,11 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
   requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-  if constexpr(O::contains(downward) || O::contains(upward))
+  if constexpr(O::contains(lower) || O::contains(upper))
   {
     if constexpr(current_api >= avx512)
     {
-      auto constexpr dir =(O::contains(downward) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
       if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
       else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
       else                                             return  add.behavior(cpu_{}, opts, v, w);

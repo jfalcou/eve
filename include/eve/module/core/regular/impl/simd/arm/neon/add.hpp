@@ -18,13 +18,13 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
     requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(downward) || O::contains(upward))
+    if constexpr(O::contains(lower) || O::contains(upper))
       return add.behavior(cpu_{}, opts, v, w);
     else if constexpr (O::contains(saturated) && std::integral<T>)
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
-    if constexpr(((O::contains(downward) || O::contains(upward)) && floating_value<T>) ||
+    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
       return add.behavior(cpu_{}, opts, v, w);
     else

@@ -28,8 +28,8 @@ int main()
   std::cout << "-> add(wi0, wi1)                 = " << eve::add(wi0, wi1) << "\n";
 
   std::cout << std::setprecision(20) << "-> add          (wf0, wf1)       = " << eve::add               (wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-> add[downward](wf0, wf1)       = " << eve::add[eve::downward](wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-> add[upward](wf0, wf1)         = " << eve::add[eve::upward](wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-  diff                          = " << eve::add[eve::upward](wf0, wf1) - eve::add[eve::downward](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[lower](wf0, wf1)       = " << eve::add[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[upper](wf0, wf1)         = " << eve::add[eve::upper](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-  diff                          = " << eve::add[eve::upper](wf0, wf1) - eve::add[eve::lower](wf0, wf1) << "\n";
 
 }
