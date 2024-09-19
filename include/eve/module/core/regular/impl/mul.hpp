@@ -22,13 +22,36 @@
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/two_prod.hpp>
 
 namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
-    if constexpr (plain_scalar_value<T> && simd_value<U>)
+    if constexpr(floating_value<T> && (O::contains(downward) || O::contains(upward) ))
+    {
+ //      if constexpr(spy::compiler == spy::clang_)
+//       {
+//         #ifdef  SPY_COMPILER_IS_CLANG
+//         #pragma clang fp exceptions(strict)
+//         #endif
+//         constexpr auto dir =  O::contains(downward) ?  FE_DOWNWARD : FE_UPWARD;
+//         std::fesetround(dir);
+//         auto r = eve::mul(a, b);
+//         std::fesetround(FE_TONEAREST);
+//         return r;
+//       }
+//       else
+      {
+        auto [r, e] = eve::two_prod(a, b);
+        std::cout << "(" << r << ",  " << e << ")" << std::endl;
+        if constexpr(O::contains(downward))
+          return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
+        else
+          return eve::if_else(eve::is_gtz(e), eve::next(r), r);
+      }    }
+    else if constexpr (plain_scalar_value<T> && simd_value<U>)
     {
       // some backends are optimized for this specific case, let them have
       // a chance to handle it

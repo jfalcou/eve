@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option>
+  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, downward_option, upward_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -59,7 +59,9 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto mul[saturated](/*any of the above overloads*/)                noexcept; // 4
-//!   }
+//!      constexpr auto mul[downward](/*any of the above overloads*/)                 noexcept; // 5
+//!      constexpr auto mul[upward](/*any of the above overloads*/)                   noexcept; // 6
+///!   }
 //!   @endcode
 //!
 //!   **Parameters**
@@ -79,6 +81,10 @@ namespace eve
 //!    4. The call `mul[saturated](...)` computes a saturated version of `mul`.
 //!       Take care that for signed integral entries this kind of multiplication is not associative at all.
 //!       This call perform saturated multiplications in reverse incoming order.
+//!    5. The product is done in a 'round toward \f$-\infty\f$ mode. The product is guaranted
+//!       to be less or equal to the exact one.
+//!    6. The product is done in a 'round toward \f$\infty\f$ mode. The product is guaranted
+//!       to be greater or equal to the exact one.
 //!
 //!   @note
 //!      Although the infix notation with `*` is supported for two parameters, the `*` operator on

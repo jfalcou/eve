@@ -75,27 +75,27 @@ TTS_CASE_WITH("Check behavior of mul on wide",
 {
   using eve::mul;
   using eve::saturated;
+  using eve::downward;
+  using eve::upward;
   using eve::detail::map;
-  TTS_EQUAL(mul(a0, a2), map([](auto e, auto f) { return mul(e, f); }, a0, a2));
-  TTS_EQUAL(mul[saturated](a0, a2),
-            map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2));
-  TTS_EQUAL(mul(a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(mul[saturated](a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); },
-                a0,
-                a1,
-                a2));
-  TTS_EQUAL(mul(kumi::tuple{a0, a2}), map([](auto e, auto f) { return mul(e, f); }, a0, a2));
-  TTS_EQUAL(mul[saturated](kumi::tuple{a0, a2}),
-            map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2));
-  TTS_EQUAL(mul(kumi::tuple{a0, a1, a2}),
-            map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2));
-  TTS_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}),
-            map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); },
-                a0,
-                a1,
-                a2));
+  TTS_ULP_EQUAL(mul(a0, a2), map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL(mul[saturated](a0, a2), map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL(mul(a0, a1, a2), map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul[saturated](a0, a1, a2), map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul(kumi::tuple{a0, a2}), map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL(mul(kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  if constexpr (eve::floating_value<T>)
+  {
+    TTS_ULP_EQUAL( mul[downward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return mul[downward](mul[downward](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( mul[upward](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return mul[upward](mul[upward](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_EXPECT(eve::all(mul[upward](a0, a1, a2) >=  mul[downward](a0, a1, a2)));
+    T  w0{0.1};
+    T  w1{0.12f};
+    TTS_EXPECT(eve::all(mul[upward](w0, w1) >   mul(w0, w1)));
+    TTS_EXPECT(eve::all(mul[downward](-w0, -w1) <  mul(w0, w1)));
+  }
 };
 
 //==================================================================================================

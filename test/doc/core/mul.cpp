@@ -1,6 +1,8 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
+
 
 int main()
 {
@@ -17,10 +19,21 @@ int main()
   std::cout << "<- wi1                           = " << wi1 << "\n";
   std::cout << "<- wu0                           = " << wu0 << "\n";
   std::cout << "<- wu1                           = " << wu1 << "\n";
-                                                 
+
   std::cout << "-> mul(wf0, wf1)                 = " << eve::mul(wf0, wf1) << "\n";
   std::cout << "-> mul[ignore_last(2)](wf0, wf1) = " << eve::mul[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> mul[wf0 != 0](wf0, wf1)       = " << eve::mul[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> mul(wu0, wu1)                 = " << eve::mul(wu0, wu1) << "\n";
   std::cout << "-> mul(wi0, wi1)                 = " << eve::mul(wi0, wi1) << "\n";
+
+
+  eve::wide wd0{0.1f};
+  eve::wide wd1{0.12f};
+  std::cout << std::setprecision(20) << "wd0 "<< wd0 << std::endl;
+  std::cout << std::setprecision(20) << "wd1 "<< wd1 << std::endl;
+  std::cout << std::setprecision(20) << "-> mul[downward](wd0, wd1)       = " << eve::mul[eve::downward](wd0, wd1) << "\n";
+  std::cout << std::setprecision(20) << "-> mul          (wd0, wd1)       = " << eve::mul               (wd0, wd1) << "\n";
+  std::cout << "-> mul[upward  ](-wd0, wd1)       = " << eve::mul[eve::upward](wd0, -wd1) << "\n";
+  std::cout << "-> mul          (-wd0, wd1)       = " << eve::mul             (wd0, -wd1) << "\n";
+
 }

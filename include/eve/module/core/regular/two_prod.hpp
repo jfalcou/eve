@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/zip.hpp>
+#include <eve/module/core/regular/fms.hpp>
 
 namespace eve
 {

@@ -12,7 +12,22 @@ namespace eve::detail
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   {
-    if constexpr (O::contains(saturated) && std::integral<T>)
+    constexpr auto c = categorize<wide<T, N>>();
+    if constexpr(O::contains(downward) || O::contains(upward))
+    {
+      if constexpr(current_api >= avx512)
+      {
+        auto constexpr dir =(O::contains(downward) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_mul_round_pd (a, b, dir);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_mul_round_ps (a, b, dir);
+        else                                             return  mul.behavior(cpu_{}, opts, a, b);
+      }
+      else
+      {
+        return mul.behavior(cpu_{}, opts, a, b);
+      }
+    }
+    else if constexpr (O::contains(saturated2) && std::integral<T>)
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }
@@ -20,7 +35,7 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-            if constexpr( c == category::float64x8  ) return _mm512_mul_pd(a, b);
+      if constexpr( c == category::float64x8  ) return _mm512_mul_pd(a, b);
       else  if constexpr( c == category::float64x4  ) return _mm256_mul_pd(a, b);
       else  if constexpr( c == category::float64x2  ) return _mm_mul_pd(a, b);
       else  if constexpr( c == category::float32x16 ) return _mm512_mul_ps(a, b);
@@ -95,7 +110,7 @@ namespace eve::detail
 
   template<callable_options O, conditional_expr C, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-    requires x86_abi<abi_t<T, N>>
+  requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 
