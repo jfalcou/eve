@@ -80,7 +80,7 @@ namespace eve
       if      constexpr (std::same_as<T, bool>)                                      return logical_and(U{a}, b);
       else if constexpr (std::same_as<U, bool>)                                      return logical_and(a, T{b});
       else if constexpr (scalar_value<T> && scalar_value<U>)                         return a && b;
-      else if constexpr (scalar_value<T> && simd_value<U>)                           return logical_and(U{a}, b);
+      else if constexpr (scalar_value<T> && simd_value<U>)                           return logical_and(as_wide_as_t<T, U>{a}, b);
       else if constexpr (simd_value<T> && scalar_value<U>)                           return logical_and(a, T{b});
       else if constexpr (std::same_as<typename T::bits_type, typename U::bits_type>) return bit_cast(a.bits() & b.bits(), as{a});
       else                                                                           return logical_and(a, convert(b, as<typename T::value_type>{}));
