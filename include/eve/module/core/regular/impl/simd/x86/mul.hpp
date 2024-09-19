@@ -12,7 +12,7 @@ namespace eve::detail
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   {
-    if constexpr (O::contains(saturated2) && std::integral<T>)
+    if constexpr (O::contains(saturated) && std::integral<T>)
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }
@@ -102,7 +102,7 @@ namespace eve::detail
     auto src = alternative(cx, a, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr(O::contains(saturated2) && integral_value<T>)
+    if constexpr(O::contains(saturated) && integral_value<T>)
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }

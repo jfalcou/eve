@@ -16,7 +16,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T,N> mul_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated2) && std::integral<T>) return mul.behavior(cpu_{}, opts, a, b);
+    if constexpr (O::contains(saturated) && std::integral<T>) return mul.behavior(cpu_{}, opts, a, b);
     else                                                       return svmul_x(sve_true<T>(), a, b);
   }
 
@@ -31,7 +31,7 @@ namespace eve::detail
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
-      if        constexpr (O::contains(saturated2) && std::integral<T>) return mul.behavior(cpu_{}, opts, a, b);
+      if        constexpr (O::contains(saturated) && std::integral<T>) return mul.behavior(cpu_{}, opts, a, b);
       //  If not, we can mask if there is no alterative value
       else  if  constexpr (!C::has_alternative && (sizeof(T) > 1))
       {

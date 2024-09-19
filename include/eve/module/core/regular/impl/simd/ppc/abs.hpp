@@ -20,7 +20,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-    if      constexpr(O::contains(saturated2))            return abs_(EVE_TARGETS(cpu_), opts, v);
+    if      constexpr(O::contains(saturated))            return abs_(EVE_TARGETS(cpu_), opts, v);
     else if constexpr( match(cat, category::unsigned_)  ) return v;
     else if constexpr( match(cat, category::size64_)    ) return map(eve::abs, v);
     else                                                  return vec_abs(v.storage());

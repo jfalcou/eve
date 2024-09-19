@@ -13,7 +13,6 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/bit_xor.hpp>
@@ -41,7 +40,7 @@ namespace eve::detail
     }
     else if (std::is_same_v<T, U>)
     {
-      if constexpr (O::contains(saturated2) && integral_value<T>)
+      if constexpr (O::contains(saturated) && integral_value<T>)
       {
         if constexpr (signed_integral_value<T>)
         {
@@ -67,7 +66,7 @@ namespace eve::detail
 
               un_t aa  = eve::abs(a);
               un_t bb  = eve::abs(b);
-              
+
               auto aux = [sgn](const T& mini, const T& maxi, const un_t& amini, const un_t& amaxi)
               {
                 un_t z = valmax(as<T>{}) / amaxi;

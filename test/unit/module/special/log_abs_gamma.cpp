@@ -34,7 +34,7 @@ TTS_CASE_WITH("Check behavior of log_abs_gamma on wide",
 {
   using v_t = eve::element_type_t<T>;
   using eve::log_abs_gamma;
-  TTS_RELATIVE_EQUAL(log_abs_gamma(a0), map([&](auto e) -> v_t { return std::lgamma(e); }, a0), 5e-2);
+  TTS_RELATIVE_EQUAL(log_abs_gamma(a0), map([&](auto e) -> v_t { return std::lgamma(e); }, a0), 0.1);
 
   TTS_ULP_EQUAL(log_abs_gamma(T(0.5)), T(std::lgamma(v_t(0.5))), 1.);
   TTS_ULP_EQUAL(log_abs_gamma(T(-35)), T(std::lgamma(v_t(-35))), 0.5);

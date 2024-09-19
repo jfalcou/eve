@@ -18,7 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N>
   abs_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v) noexcept requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
       return abs_(EVE_TARGETS(cpu_), opts, v);
     }

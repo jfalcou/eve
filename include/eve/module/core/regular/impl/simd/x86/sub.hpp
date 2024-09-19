@@ -20,7 +20,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
       constexpr auto sup_avx2 = current_api >= avx2;
 
@@ -92,7 +92,7 @@ namespace eve::detail
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
       constexpr auto sup_avx2 = current_api >= avx2;
 

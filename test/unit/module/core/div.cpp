@@ -24,10 +24,10 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::div(v_t(), v_t()), v_t);
 
   // saturated
-  TTS_EXPR_IS(eve::div[eve::saturated2](T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::div[eve::saturated](T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](v_t(), v_t()), v_t);
 
   // conditionnal
   TTS_EXPR_IS(eve::div[eve::logical<T>()](T(), T()), T);
@@ -35,13 +35,13 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::div[eve::logical<v_t>()](T(), T()), T);
   TTS_EXPR_IS(eve::div[eve::logical<v_t>()](T(), v_t()), T);
   TTS_EXPR_IS(eve::div[eve::logical<v_t>()](v_t(), v_t()), v_t);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<T>()](T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<T>()](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<T>()](v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<v_t>()](T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<v_t>()](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<v_t>()](v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2][eve::logical<v_t>()](v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<T>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated][eve::logical<v_t>()](v_t(), v_t()), v_t);
 
   //  //multi
   TTS_EXPR_IS(eve::div(T(), T(), T()), T);
@@ -52,13 +52,13 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::div(v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::div(v_t(), v_t(), v_t()), v_t);
 
-  TTS_EXPR_IS(eve::div[eve::saturated2](T(), T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](T(), v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](v_t(), T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](T(), T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](v_t(), v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](v_t(), T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::saturated2](v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::div[eve::saturated](T(), T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](T(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](v_t(), T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](T(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](v_t(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](v_t(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::saturated](v_t(), v_t(), v_t()), v_t);
 
   if constexpr( eve::floating_value<T> ) {}
 };
@@ -74,16 +74,16 @@ TTS_CASE_WITH("Check behavior of div on wide",
 {
   using eve::div;
   using eve::mul;
-  using eve::saturated2;
+  using eve::saturated;
   using eve::detail::map;
   TTS_ULP_EQUAL(eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
-  TTS_ULP_EQUAL(eve::div[saturated2](a0, a2), map([&](auto e, auto f) { return div[saturated2](e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(eve::div[saturated](a0, a2), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
   TTS_ULP_EQUAL(div(a0, a1, a2), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
-  TTS_ULP_EQUAL(div[saturated2](a0, a1, a2), map([&](auto e, auto f, auto g) { return div[saturated2](e, mul[saturated2](f, g)); }, a0, a1, a2),1);
+  TTS_ULP_EQUAL(div[saturated](a0, a1, a2), map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2),1);
   TTS_ULP_EQUAL(eve::div(kumi::tuple{a0, a2}), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
-  TTS_ULP_EQUAL(div[saturated2](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return div[saturated2](e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
   TTS_ULP_EQUAL(div(kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
-  TTS_ULP_EQUAL(div[saturated2](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[saturated2](e, mul[saturated2](f, g)); }, a0, a1, a2), 1);
+  TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2), 1);
 };
 
 //==================================================================================================
@@ -94,12 +94,12 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::div variants on wide", eve::te
 {
   using type = T;
   using eve::div;
-  using eve::saturated2;
+  using eve::saturated;
 
   auto cases = tts::limits(tgt);
-  TTS_EQUAL(div[saturated2](cases.valmin, type(-1)), cases.valmax);
-  TTS_EQUAL(div[saturated2](type(3), type(0)), cases.valmax);
-  TTS_EQUAL(div[saturated2](type(-3), type(0)), cases.valmin);
+  TTS_EQUAL(div[saturated](cases.valmin, type(-1)), cases.valmax);
+  TTS_EQUAL(div[saturated](type(3), type(0)), cases.valmax);
+  TTS_EQUAL(div[saturated](type(-3), type(0)), cases.valmin);
 };
 
 //==================================================================================================
@@ -117,7 +117,7 @@ TTS_CASE_WITH("Check behavior of div on signed types",
 {
   using eve::div;
   using eve::is_nez;
-  using eve::saturated2;
+  using eve::saturated;
   using eve::detail::map;
   using elt_t = eve::element_type_t<T>;
   a2 = eve::if_else(a2 > 0, eve::zero, a2);
@@ -125,8 +125,8 @@ TTS_CASE_WITH("Check behavior of div on signed types",
                 map([](auto e, auto f) { return eve::is_eqz(f) ? e : elt_t(e/f); }, a0, a2),
                 2.5);
   TTS_ULP_EQUAL(
-      div[saturated2][is_nez(a0) && is_nez(a2)](a0, a2),
-      map([](auto e, auto f) { return is_nez(e) && is_nez(f) ? div[saturated2](e, f) : e; }, a0, a2),
+      div[saturated][is_nez(a0) && is_nez(a2)](a0, a2),
+      map([](auto e, auto f) { return is_nez(e) && is_nez(f) ? div[saturated](e, f) : e; }, a0, a2),
       2.5);
 
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
@@ -134,7 +134,7 @@ TTS_CASE_WITH("Check behavior of div on signed types",
                 map([](auto e, auto f, auto g) { return g > 64 ? div(e, f) : e; }, a0, a1, a2),
                 0.5);
   TTS_ULP_EQUAL(
-      div[saturated2][a2 > T(64)](a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? div[saturated2](e, f) : e; }, a0, a1, a2),
+      div[saturated][a2 > T(64)](a0, a1),
+      map([](auto e, auto f, auto g) { return g > 64 ? div[saturated](e, f) : e; }, a0, a1, a2),
       0.5);
 };

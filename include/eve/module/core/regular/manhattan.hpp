@@ -95,10 +95,10 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     manhattan_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
     {
-      if constexpr (!O::contains(saturated2) || floating_value<T>)
+      if constexpr (!O::contains(saturated) || floating_value<T>)
         return eve::abs(a0);
       else
-        return eve::abs[saturated2](a0);
+        return eve::abs[saturated](a0);
     }
     template<typename T0,typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
@@ -106,7 +106,7 @@ namespace eve
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       auto l_abs = [](){
-        if constexpr(integral_value<r_t> && O::contains(saturated2))
+        if constexpr(integral_value<r_t> && O::contains(saturated))
           return eve::abs[saturated];
         else
           return eve::abs;

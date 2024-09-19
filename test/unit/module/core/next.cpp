@@ -65,7 +65,7 @@
  {
    using eve::next;
    using eve::pedantic;
-   using eve::saturated2;
+   using eve::saturated;
 
    auto cases = tts::limits(tgt);
 
@@ -105,9 +105,9 @@
    {
      TTS_EQUAL(next(T(0)), T(1));
      TTS_EQUAL(next(T(1)), T(2));
-     TTS_EQUAL(next[saturated2](T(0)), T(1));
-     TTS_EQUAL(next[saturated2](T(1)), T(2));
-     TTS_EQUAL(next[saturated2](cases.valmax), cases.valmax);
+     TTS_EQUAL(next[saturated](T(0)), T(1));
+     TTS_EQUAL(next[saturated](T(1)), T(2));
+     TTS_EQUAL(next[saturated](cases.valmax), cases.valmax);
    }
  };
 
@@ -117,7 +117,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
 {
   using eve::next;
   using eve::pedantic;
-  using eve::saturated2;
+  using eve::saturated;
 
   auto cases = tts::limits(tgt);
 
@@ -156,9 +156,9 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::next with 2 parameters",
   {
     TTS_EQUAL(next(T(0), 2), T(2));
     TTS_EQUAL(next(T(1), 2), T(3));
-    TTS_EQUAL(next[saturated2](T(0), 2), T(2));
-    TTS_EQUAL(next[saturated2](T(1), 2), T(3));
-    TTS_EQUAL(next[saturated2](cases.valmax, 2), cases.valmax);
+    TTS_EQUAL(next[saturated](T(0), 2), T(2));
+    TTS_EQUAL(next[saturated](T(1), 2), T(3));
+    TTS_EQUAL(next[saturated](cases.valmax, 2), cases.valmax);
   }
 };
 

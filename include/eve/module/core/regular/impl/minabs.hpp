@@ -17,6 +17,6 @@ namespace eve::detail
   minabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
   {
     auto abso = abs[o.drop(pedantic,numeric)];
-    return eve::min[o.drop(saturated2)](abso(a0), abso(a1), abso(as)...);
+    return eve::min[o.drop(saturated)](abso(a0), abso(a1), abso(as)...);
   }
 }

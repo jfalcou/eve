@@ -23,7 +23,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N>
   abs_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
       return abs.behavior(cpu_{}, opts, v);
     }

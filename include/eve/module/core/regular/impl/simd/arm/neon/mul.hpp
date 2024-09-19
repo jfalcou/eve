@@ -18,7 +18,7 @@ template<callable_options O, arithmetic_scalar_value T, typename N, typename U>
 EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(neon128_), O const &opts, wide<T, N> a, U b) noexcept
     requires arm_abi<abi_t<T, N>>
 {
-    if constexpr (O::contains(saturated2) && std::integral<T>)
+    if constexpr (O::contains(saturated) && std::integral<T>)
     {
         return mul.behavior(cpu_{}, opts, a, b);
     }

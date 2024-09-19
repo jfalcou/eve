@@ -13,7 +13,6 @@
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/if_else.hpp>
@@ -120,14 +119,14 @@ namespace eve
           auto z    = bitfloating(pz+one(as(pz)));
           auto test = is_negative(a) && is_positive(z);
           auto nxt = if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z);
-          if  constexpr(O::contains(saturated2))
+          if  constexpr(O::contains(saturated))
           {
             nxt = if_else(a == inf(as(a)), a, nxt);
             if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
           }
           return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), nxt);
         }
-        else if  constexpr(O::contains(saturated2))
+        else if  constexpr(O::contains(saturated))
         {
           auto z = if_else(a == inf(as(a)), a, next(a));
           if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
@@ -141,7 +140,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2) || O::contains(pedantic))
+        if  constexpr(O::contains(saturated) || O::contains(pedantic))
         {
           return if_else(a == valmax(as(a)), a, T(a+one(as(a))));
         }
@@ -172,7 +171,7 @@ namespace eve
           }
           else { return if_else(test, if_else(is_eqz(z), mzero(eve::as<T>()), bitfloating(pz)), z); }
         }
-        else if  constexpr(O::contains(saturated2))
+        else if  constexpr(O::contains(saturated))
         {
           auto nxt = next(a, n);
           auto z = if_else(a != inf(as(a)) && nxt == nan(as(a)), inf(as(a)), nxt);
@@ -187,7 +186,7 @@ namespace eve
       }
       else
       {
-        if  constexpr(O::contains(saturated2) || O::contains(pedantic))
+        if  constexpr(O::contains(saturated) || O::contains(pedantic))
         {
           auto tmp = next(a, n);
           return if_else(a > tmp, a, tmp);

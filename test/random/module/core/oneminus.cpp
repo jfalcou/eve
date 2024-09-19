@@ -24,6 +24,6 @@ TTS_CASE_TPL("Random check for eve::oneminus", eve::test::simd::ieee_reals)
     else if constexpr(eve::unsigned_value<e_t>) return (e <= 1) ? e_t(1)-e : e_t(0);
   };
   EVE_ULP_RANGE_CHECK( T, eve::uniform_prng<e_t>(vmin, vmax)
-                     , std_saturated_oneminus, eve::oneminus[eve::saturated2]);
+                     , std_saturated_oneminus, eve::oneminus[eve::saturated]);
 
 };

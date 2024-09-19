@@ -103,7 +103,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
         auto u_res = convert(maybe_saturate(v0), eve::as<std::make_unsigned_t<Out>> {});
         return bit_cast(u_res, eve::as<wide<Out, N>> {});
       }
-      else if constexpr (O::contains(saturated2))
+      else if constexpr (O::contains(saturated))
       {
         return convert_saturated(EVE_TARGETS(current_api_type), v0, tgt);
       }

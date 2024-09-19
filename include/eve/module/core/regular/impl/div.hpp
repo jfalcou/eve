@@ -49,7 +49,7 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
       if constexpr( integral_value<T> )
       {
@@ -58,7 +58,7 @@ namespace eve::detail
 
       if constexpr( floating_value<T> )
       {
-        return div[o.drop(saturated2)](a, b);
+        return div[o.drop(saturated)](a, b);
       }
       else if constexpr( signed_integral_value<T> )
       {
@@ -67,7 +67,7 @@ namespace eve::detail
         {
           // case valmin/-1 is treated here
           if( b == -1 && a == eve::valmin(eve::as(a)) ) return eve::valmax(eve::as(a));
-          if( b != 0 ) return div[o.drop(saturated2)](a, b);
+          if( b != 0 ) return div[o.drop(saturated)](a, b);
           // negative -> valmin,  positive -> valmax
           else return bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
         }
@@ -78,7 +78,7 @@ namespace eve::detail
           a           = inc[!(inc(b) | add(a, eve::valmin(eve::as(a))))](a);
           auto isnezb = is_nez(b);
           b           = if_else(isnezb, b, mone);
-          return if_else(isnezb, div[o.drop(saturated2)](a, b), a2);
+          return if_else(isnezb, div[o.drop(saturated)](a, b), a2);
         }
       }
       else if constexpr( unsigned_value<T> )

@@ -20,7 +20,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-    if constexpr (O::contains(saturated2) && std::integral<T>)
+    if constexpr (O::contains(saturated) && std::integral<T>)
     {
       return minus.behavior(cpu_{}, opts, v);
     }

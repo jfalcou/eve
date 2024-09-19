@@ -19,7 +19,7 @@ template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(vmx_), O const &opts, wide<T, N> a, wide<T, N> b) noexcept
     requires ppc_abi<abi_t<T, N>>
 {
-  if constexpr (O::contains(saturated2) && integral_value<T>) return mul.behavior(cpu_{}, opts, a, b);
+  if constexpr (O::contains(saturated) && integral_value<T>) return mul.behavior(cpu_{}, opts, a, b);
   else                                                        return a.storage() * b.storage();
 }
 

@@ -33,7 +33,7 @@ TTS_CASE_TPL("Check return types of eve::minus", eve::test::simd::signed_types)
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[bool()](v_t()), v_t);
 
-  TTS_EXPR_IS(eve::minus[eve::saturated2](v_t()), v_t);
+  TTS_EXPR_IS(eve::minus[eve::saturated](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[eve::logical<v_t>()][eve::saturated](v_t()), v_t);
   TTS_EXPR_IS(eve::minus[bool()][eve::saturated](v_t()), v_t);
 
@@ -58,21 +58,21 @@ TTS_CASE_WITH("Check behavior of eve::minus(eve::wide)",
 };
 
 //==================================================================================================
-// Tests for eve::minus[eve::saturated2]
+// Tests for eve::minus[eve::saturated]
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::minus[eve::saturated2](eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::minus[eve::saturated](eve::wide)",
               eve::test::simd::signed_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using eve::detail::map;
 
-  TTS_EQUAL(eve::minus[eve::saturated2](a0),
+  TTS_EQUAL(eve::minus[eve::saturated](a0),
             map([](auto e)
                 { return e == eve::valmin(eve::as(e)) ? eve::valmax(eve::as(e)) : eve::minus(e); },
                 a0));
-  TTS_EQUAL(eve::minus[mask][eve::saturated2](a0),
-            eve::if_else(mask, eve::minus[eve::saturated2](a0), a0));
+  TTS_EQUAL(eve::minus[mask][eve::saturated](a0),
+            eve::if_else(mask, eve::minus[eve::saturated](a0), a0));
 };
 
 //==================================================================================================
@@ -94,7 +94,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::minus variants on wide",
   }
   else
   {
-    TTS_EQUAL(eve::minus[eve::saturated2](cases.valmin), cases.valmax);
+    TTS_EQUAL(eve::minus[eve::saturated](cases.valmin), cases.valmax);
     TTS_EQUAL(eve::minus(cases.valmax), cases.valmin + 1);
     TTS_EQUAL(eve::minus(T(0)), T(0));
   }

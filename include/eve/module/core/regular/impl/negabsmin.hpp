@@ -19,9 +19,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
   negabsmin_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
   {
-    if constexpr(O::contains(saturated2))
+    if constexpr(O::contains(saturated))
     {
-      auto tmp1 =  rbr::drop(saturated2, o);
+      auto tmp1 =  rbr::drop(saturated, o);
       auto omin = options<decltype(tmp1)>{tmp1};
 
       return minus(absmin[omin](r0, r1, rs...));

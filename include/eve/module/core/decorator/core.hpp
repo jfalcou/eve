@@ -11,7 +11,6 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/raberu.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/saturated.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
 
@@ -61,7 +60,7 @@ namespace eve
   [[maybe_unused]] inline constexpr auto toward_zero      = ::rbr::flag( toward_zero_mode{}     );
   [[maybe_unused]] inline constexpr auto upward           = ::rbr::flag( upward_mode{}          );
 
-  [[maybe_unused]] inline constexpr auto saturated2       = ::rbr::flag( saturated_mode{}       );
+  [[maybe_unused]] inline constexpr auto saturated       = ::rbr::flag( saturated_mode{}       );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -80,7 +79,7 @@ namespace eve
   struct to_nearest_option      : detail::exact_option<to_nearest>      {};
   struct toward_zero_option     : detail::exact_option<toward_zero>     {};
   struct upward_option          : detail::exact_option<upward>          {};
-  struct saturated_option       : detail::exact_option<saturated2>      {};
+  struct saturated_option       : detail::exact_option<saturated>      {};
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
@@ -94,12 +93,6 @@ namespace eve
     else if constexpr(S::contains(eve::upward     )) return upward_mode::value;
     else                                             return T::id_type::value;
   };
-
-  // ----------------------------------------------------------------------------------
-  // [TEMPORARY] Will be removed when all decorator have been converted
-  // ----------------------------------------------------------------------------------
-  inline constexpr auto as_option(saturated_type    const&) { return saturated2;    }
-
 
   // New tolerance option that carry a value
   template<typename Value> struct almost_t;

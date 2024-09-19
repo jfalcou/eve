@@ -17,7 +17,7 @@ template<callable_options O, arithmetic_scalar_value T, typename N>
 EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires arm_abi<abi_t<T, N>>
 {
-  if constexpr (O::contains(saturated2))
+  if constexpr (O::contains(saturated))
   {
     return div.behavior(cpu_{}, opts, a, b);
   }
