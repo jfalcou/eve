@@ -31,9 +31,9 @@ int main()
   eve::wide wd1{0.12f};
   std::cout << std::setprecision(20) << "wd0 "<< wd0 << std::endl;
   std::cout << std::setprecision(20) << "wd1 "<< wd1 << std::endl;
-  std::cout << std::setprecision(20) << "-> mul[downward](wd0, wd1)       = " << eve::mul[eve::downward](wd0, wd1) << "\n";
+  std::cout << std::setprecision(20) << "-> mul[lower](wd0, wd1)       = " << eve::mul[eve::lower](wd0, wd1) << "\n";
   std::cout << std::setprecision(20) << "-> mul          (wd0, wd1)       = " << eve::mul               (wd0, wd1) << "\n";
-  std::cout << "-> mul[upward  ](-wd0, wd1)       = " << eve::mul[eve::upward](wd0, -wd1) << "\n";
+  std::cout << "-> mul[upper  ](-wd0, wd1)       = " << eve::mul[eve::upper](wd0, -wd1) << "\n";
   std::cout << "-> mul          (-wd0, wd1)       = " << eve::mul             (wd0, -wd1) << "\n";
 
 }
