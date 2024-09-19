@@ -17,6 +17,6 @@ namespace eve::detail
   EVE_FORCEINLINE logical<wide<T, N>> logical_and_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v, logical<wide<U, N>> w) noexcept
     requires(rvv_abi<abi_t<T, N>> || rvv_abi<abi_t<U, N>>)
   {
-    return __riscv_vmand(v, bit_cast(w, as<logical<T>>{}), N::value);
+    return __riscv_vmand(v, bit_cast(w, as<logical<wide<T>>>{}), N::value);
   }
 }

@@ -78,28 +78,45 @@ namespace eve::detail
   template<typename T, typename U>
   struct common_logical_impl;
 
-  template<scalar_value T, scalar_value U>
-  struct common_logical_impl<T,U> : as_logical<T>
-  {};
-
   template<kumi::product_type T>
   struct common_logical_impl<T,T> : as_logical<T>
   {};
 
-  template<value T, value U>
-  struct common_logical_impl<logical<T>,logical<U>>
+  template<scalar_value T, scalar_value U>
+  struct common_logical_impl<T,U> : as_logical<T>
+  {};
+
+  template<value T>
+  struct common_logical_impl<T, bool> : as_logical<T>
+  {};
+
+  template<value T>
+  struct common_logical_impl<bool, T> : as_logical<T>
+  {};
+
+  template<>
+  struct common_logical_impl<bool, bool>
   {
-    using type = logical<std::conditional_t<simd_value<T>, T, U>>;
+    using type = bool;
   };
 
-  template<scalar_value T, scalar_value U>
-  struct common_logical_impl<logical<T>,logical<U>>
+  template<value T, value U>
+  requires ((cardinal_v<T> == 1) || (cardinal_v<U> == 1) || (cardinal_v<T> == cardinal_v<U>))
+  struct common_logical_impl<logical<T>, logical<U>>
   {
-    using type = logical<T>;
+    using type = logical<
+                          std::conditional_t<simd_value<T>,
+                            T,
+                            std::conditional_t<simd_value<U>,
+                              U,
+                              T
+                            >
+                          >
+                        >;
   };
 
   template<typename T, typename U>
-    requires(!(scalar_value<T> && scalar_value<U>) && requires{ typename common_value<T, U>::type; } )
+    requires(!(scalar_value<T> && scalar_value<U> && ((cardinal_v<T> == 1) || (cardinal_v<U> == 1) || (cardinal_v<T> == cardinal_v<U>))) && requires{ typename common_value<T, U>::type; } )
   struct common_logical_impl<T, U> : as_logical<typename common_value<T, U>::type>
   {};
 }
