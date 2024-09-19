@@ -20,7 +20,6 @@ namespace eve::detail
   {
     if constexpr(O::contains(downward) || O::contains(upward))
       return add.behavior(cpu_{}, opts, v, w);
-    {
     else if constexpr (O::contains(saturated) && std::integral<T>)
     {
       return add.behavior(cpu_{}, opts, v, w);
