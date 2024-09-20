@@ -23,7 +23,9 @@ namespace eve::detail
     }
     else
     {
-      return a.storage().value & b.storage().value;
+      typename logical<wide<T, N>>::storage_type dst;
+      dst.value = a.storage().value & b.storage().value;
+      return dst;
     }
   }
 }
