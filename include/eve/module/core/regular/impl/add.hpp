@@ -27,22 +27,22 @@ namespace eve::detail
 {
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       using namespace spy::literal;
       if constexpr(spy::compiler == spy::clang_ || (spy::compiler == spy::gcc_ && spy::compiler >= 13'0_gcc) || spy::compiler == spy::msvc_)
       {
-        return with_rounding<O> (eve::add, a, b);
+        return with_rounding<O>(eve::add, a, b);
       }
       else
       {
        auto [r, e] = eve::two_add(a, b);
-        if constexpr(O::contains(lower))
-          return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
-        else
-          return eve::if_else(eve::is_gtz(e), eve::next(r), r);
+       if constexpr(O::contains(lower))
+         return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
+       else
+         return eve::if_else(eve::is_gtz(e), eve::next(r), r);
       }
     }
     else if constexpr(O::contains(saturated) && integral_value<T>)
