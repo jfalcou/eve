@@ -37,6 +37,7 @@
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/shr.hpp>
+#include <eve/module/core/detail/roundings.hpp>
 
 
 #ifdef EVE_COMP_IS_MSVC
@@ -52,16 +53,9 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
     {
-       if constexpr(spy::compiler == spy::clang_)
+      if constexpr(spy::compiler == spy::clang_ || spy::compiler == spy::gcc_|| spy::compiler == spy::msvc_)
       {
-        #ifdef  SPY_COMPILER_IS_CLANG
-          #pragma clang fp exceptions(strict)
-        #endif
-        constexpr auto dir =  O::contains(lower) ?  FE_DOWNWARD : FE_UPWARD;
-        std::fesetround(dir);
-        auto r = eve::div(a, b);
-        std::fesetround(FE_TONEAREST);
-        return r;
+        return with_rounding<O> (eve::div, a, b);
       }
       else
       {

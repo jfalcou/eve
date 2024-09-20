@@ -13,6 +13,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/as_element.hpp>
 #include <eve/as.hpp>
+#include <cfenv>
 
 //======================================================================================================================
 // New option style  - TODO rename later without the '2'
@@ -34,13 +35,16 @@ namespace eve
   struct spherical_mode       {};
   struct successor_mode       {};
 
-  struct upper_mode           {};
-  struct lower_mode           {};
+  struct upper_mode       {static constexpr int value = FE_UPWARD;     };
+  struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
+  struct tonearest_mode   {static constexpr int value = FE_TONEAREST;  };
+  struct tozero_mode      {static constexpr int value = FE_TOWARDZERO; };
 
   struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEAREST_INT
   struct downward_mode    { static constexpr int value = 0x08 | 0x01; }; // _MM_FROUND_TO_NEG_INF
   struct upward_mode      { static constexpr int value = 0x08 | 0x02; }; // _MM_FROUND_TO_POS_INF
   struct toward_zero_mode { static constexpr int value = 0x08 | 0x03; }; // _MM_FROUND_TO_ZERO
+
   struct pedantic_mode    {};
   struct raw_mode         {};
   struct saturated_mode   {};
@@ -65,6 +69,8 @@ namespace eve
   [[maybe_unused]] inline constexpr auto upper            = ::rbr::flag( upper_mode{}           );
   [[maybe_unused]] inline constexpr auto lower            = ::rbr::flag( lower_mode{}           );
   [[maybe_unused]] inline constexpr auto saturated        = ::rbr::flag( saturated_mode{}       );
+  [[maybe_unused]] inline constexpr auto tonearest        = ::rbr::flag( tonearest_mode{}       );
+  [[maybe_unused]] inline constexpr auto tozero           = ::rbr::flag( tozero_mode{}          );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -86,6 +92,8 @@ namespace eve
   struct saturated_option       : detail::exact_option<saturated>       {};
   struct upper_option           : detail::exact_option<upper>           {};
   struct lower_option           : detail::exact_option<lower>           {};
+  struct tonearest_option       : detail::exact_option<tonearest>       {};
+  struct tozero_option          : detail::exact_option<tozero>          {};
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
@@ -98,6 +106,14 @@ namespace eve
     else if constexpr(S::contains(eve::toward_zero)) return toward_zero_mode::value;
     else if constexpr(S::contains(eve::upward     )) return upward_mode::value;
     else                                             return T::id_type::value;
+  };
+
+  template<typename S> consteval int rounding_control() noexcept
+  {
+    if      constexpr(S::contains(eve::upper      )) return upper_mode::value;
+    else if constexpr(S::contains(eve::tozero     )) return tozero_mode::value;
+    else if constexpr(S::contains(eve::lower      )) return lower_mode::value;
+    else /*constexpr(S::contains(eve::tonearest)) */ return tonearest_mode::value;
   };
 
   // New tolerance option that carry a value

@@ -23,23 +23,18 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/detail/roundings.hpp>
 
+#include <iostream>
 namespace eve::detail
 {
+
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      if constexpr(spy::compiler == spy::clang_)
+      if constexpr(spy::compiler == spy::clang_ || spy::compiler == spy::gcc_|| spy::compiler == spy::msvc_)
       {
-        #ifdef  SPY_COMPILER_IS_CLANG
-          #pragma clang fp exceptions(strict)
-        #endif
-        constexpr auto dir =  O::contains(lower) ?  FE_DOWNWARD : FE_UPWARD;
-        std::fesetround(dir);
-        auto r = eve::add(a, b);
-        std::fesetround(FE_TONEAREST);
-        return r;
+        return with_rounding<O> (eve::add, a, b);
       }
       else
       {

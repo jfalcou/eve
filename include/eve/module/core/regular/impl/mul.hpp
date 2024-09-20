@@ -25,6 +25,7 @@
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
@@ -33,16 +34,9 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      if constexpr(spy::compiler == spy::clang_)
+      if constexpr(spy::compiler == spy::clang_ || spy::compiler == spy::gcc_|| spy::compiler == spy::msvc_)
       {
-        #ifdef  SPY_COMPILER_IS_CLANG
-          #pragma clang fp exceptions(strict)
-        #endif
-        constexpr auto dir =  O::contains(lower) ?  FE_DOWNWARD : FE_UPWARD;
-        std::fesetround(dir);
-        auto r = eve::mul(a, b);
-        std::fesetround(FE_TONEAREST);
-        return r;
+        return with_rounding<O> (eve::mul, a, b);
       }
       else
       {
