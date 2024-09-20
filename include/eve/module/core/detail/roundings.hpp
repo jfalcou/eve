@@ -38,14 +38,18 @@ namespace eve::detail
 #pragma clang fp exceptions(strict)
 #endif
 #ifdef  SPY_COMPILER_IS_GCC
+#if __GNUC__ >= 13
 #pragma STDC FENV_ACCESS on
+#endif
 #endif
     auto oldstate = std::fegetround();
     std::fesetround(rcontrol<O>());
     auto r = f(a, b...);
     std::fesetround(oldstate);
 #ifdef  SPY_COMPILER_IS_GCC
+#if __GNUC__ >= 13
 #pragma STDC FENV_ACCESS off
+#endif
 #endif
 #ifdef  SPY_COMPILER_IS_MSVC
 #pragma float_control(pop)
