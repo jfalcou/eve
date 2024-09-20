@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <cfenv>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/max.hpp>

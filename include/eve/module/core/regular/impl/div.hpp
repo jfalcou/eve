@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <cfenv>
 #include <eve/assert.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/traits/common_value.hpp>
