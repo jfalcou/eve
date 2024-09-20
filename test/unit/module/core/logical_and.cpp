@@ -28,6 +28,14 @@ TTS_CASE_TPL("Check return types of eve::logical_and(simd)", eve::test::simd::al
   TTS_EXPR_IS(eve::logical_and(bool(), bool()), bool);
 };
 
+TTS_CASE("Check return types of eve::logical_and(bool)")
+{
+  TTS_EQUAL(eve::logical_and(true, true), true);
+  TTS_EQUAL(eve::logical_and(true, false), false);
+  TTS_EQUAL(eve::logical_and(false, true), false);
+  TTS_EQUAL(eve::logical_and(false, false), false);
+};
+
 //==================================================================================================
 //== Tests for eve::logical_and
 //==================================================================================================
