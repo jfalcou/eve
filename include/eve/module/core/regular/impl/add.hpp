@@ -23,7 +23,6 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/detail/roundings.hpp>
 
-#include <iostream>
 namespace eve::detail
 {
 
@@ -32,13 +31,14 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      if constexpr(spy::compiler == spy::clang_ || spy::compiler == spy::gcc_|| spy::compiler == spy::msvc_)
+      using namespace spy::literal;
+      if constexpr(spy::compiler == spy::clang_ || (spy::compiler == spy::gcc_ && spy::compiler >= 13'0_gcc) || spy::compiler == spy::msvc_)
       {
         return with_rounding<O> (eve::add, a, b);
       }
       else
       {
-        auto [r, e] = eve::two_add(a, b);
+       auto [r, e] = eve::two_add(a, b);
         if constexpr(O::contains(lower))
           return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
         else
