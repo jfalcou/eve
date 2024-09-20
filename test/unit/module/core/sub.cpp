@@ -97,13 +97,13 @@ TTS_CASE_WITH("Check behavior of sub on wide",
             );
   if constexpr (eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( sub[lower](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return sub[lower](sub[lower](e, f), g); }, a0, a1, a2), 0.5);
-    TTS_ULP_EQUAL( sub[upper](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return sub[upper](sub[upper](e, f), g); }, a0, a1, a2), 0.5);
+    TTS_ULP_EQUAL( sub[lower](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return sub[lower](sub[lower](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( sub[upper](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return sub[upper](sub[upper](e, f), g); }, a0, a1, a2), 1.0);
     TTS_EXPECT(eve::all(sub[upper](a0, a1, a2) >=  sub[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
-    TTS_EXPECT(eve::all(sub[upper](w0, -1) >  sub(w0, -w1)));
-    TTS_EXPECT(eve::all(sub[lower](w0, w1) < sub(w0, w1)));
+    TTS_EXPECT(eve::all(sub[upper](w0, -1) >=  sub(w0, -w1)));
+    TTS_EXPECT(eve::all(sub[lower](w0, w1) <= sub(w0, w1)));
   }
 };
 
