@@ -28,7 +28,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(raw))
+    if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      return sqrt.behavior(cpu_{}, opts, a0);
+    }
+    else if constexpr (O::contains(raw))
     {
       return vec_re(v0.storage());
     }
@@ -66,5 +70,4 @@ namespace eve::detail
       }
     }
   }
-
 }

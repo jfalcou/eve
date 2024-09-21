@@ -29,7 +29,8 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(O::contains(raw))
+    if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, o, v);
+    else if constexpr(O::contains(raw))
     {
      if      constexpr( c == category::float32x16) return _mm512_rcp14_ps(v);
       else if constexpr( c == category::float64x8 ) return _mm512_rcp14_pd(v);
@@ -102,14 +103,15 @@ namespace eve::detail
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(avx512_),
                                   C const                & mask,
-                                  O const                &,
+                                  O const                & opts,
                                   wide<T, N> const       & a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(mask, a0, as(a0));
 
-    if constexpr( C::is_complete )                  return src;
+    if constexpr( C::is_complete )                              return src;
+    else if constexpr(O::contains(lower) || O::contains(upper)) return rec.behavior(cpu_{}, opts, a0);
     else
     {
       auto m   = expand_mask(mask, as(a0)).storage().value;

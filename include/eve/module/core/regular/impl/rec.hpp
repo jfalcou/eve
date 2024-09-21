@@ -16,16 +16,43 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/max.hpp>
+#include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/div.hpp>
+#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
 
   template<value T, callable_options O>
-  constexpr T  rec_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+  constexpr T  rec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
   {
     if constexpr( floating_value<T> )
     {
-      return T {1} / a;
+      auto num = T{1};
+      if constexpr( O::contains(lower) || O::contains(upper))
+      {
+        using namespace spy::literal;
+        if constexpr(false && (spy::compiler == spy::clang_ ||
+                               (spy::compiler == spy::gcc_ && spy::compiler >= 13'0_gcc) || spy::compiler == spy::msvc_))
+        {
+          return with_rounding<O>(eve::div, num, a);
+        }
+        else
+        {
+          auto d = minus[is_negative(a)](rec[o.drop(lower, upper)](abs(a)));
+          auto [r, e] = two_prod(d, a);
+          if constexpr(O::contains(upper))
+            return next[r < num || ((r == num) && is_ltz(e))](d);
+          else
+            return prev[r > num || ((r == num) && is_gtz(e))](d);
+        }
+      }
+      else
+      {
+        return num/a;
+      }
     }
     else if( integral_value<T> )
     {
