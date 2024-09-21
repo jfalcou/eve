@@ -7,6 +7,11 @@
 #pragma once
 
 #include <eve/detail/overload.hpp>
+#include <eve/detail/spy.hpp>
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
 
 //TODO DOC
 namespace eve
@@ -37,3 +42,7 @@ shuffle_(EVE_SUPPORTS(cpu_), T v, as_pattern<F> p) noexcept
   return shuffle(v, fix_pattern<T::size()>(p));
 }
 }
+
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic pop
+#endif

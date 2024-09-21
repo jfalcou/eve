@@ -2,11 +2,9 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-
 int main()
 {
-  eve::wide wf = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25, -0.5, -2.0};
+  eve::wide<float> wf = [](auto i, auto c) { return 2.f*(i-c/2);};
 
   std::cout << "<- wf                    = " << wf << "\n";
 

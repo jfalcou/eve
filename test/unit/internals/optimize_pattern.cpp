@@ -130,7 +130,7 @@ TTS_CASE("Check broadcast patterns get optimized")
     {
       auto f = [&](auto i)
       {
-        auto val = [](auto,auto i) { return i; };
+        auto val = [](auto,auto k) { return k; };
         TTS_EXPR_IS ( (find_optimized_shuffle_pattern< sizeof...(Q), val(Q,i)... >())
                     , (bound< eve::tag_t<eve::broadcast>
                             , eve::index_t<i>

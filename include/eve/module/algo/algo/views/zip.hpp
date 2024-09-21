@@ -113,17 +113,17 @@ namespace eve::algo::views
     template <typename ...Components>
     EVE_FORCEINLINE auto type_to_convert_to(Components&&...) const
     {
-      using traits_type = typename TraitsSupport::traits_type;
+      using t_t = typename TraitsSupport::traits_type;
 
-      if constexpr( traits_type::contains(force_type_key) )
+      if constexpr( t_t::contains(force_type_key) )
       {
-        return rbr::result::fetch_t<force_type_key, traits_type> {};
+        return rbr::result::fetch_t<force_type_key, t_t> {};
       }
       else
       {
         using common_zip = eve::common_type<value_type_t<std::remove_cvref_t<Components>>...>;
 
-        using Param = rbr::result::fetch_t<common_with_types_key,traits_type>;
+        using Param = rbr::result::fetch_t<common_with_types_key,t_t>;
 
         return []<typename... ParamTypes, typename... ZipTypes>(eve::common_type<ParamTypes...>,
                                                                 eve::common_type<ZipTypes...>)
@@ -148,11 +148,11 @@ namespace eve::algo::views
     requires((relaxed_range<Components> || relaxed_iterator<Components>)&&...)
   EVE_FORCEINLINE auto zip_<TraitsSupport>::operator()(Components &&...components) const
   {
-    using traits_type = typename TraitsSupport::traits_type;
+    using t_t = typename TraitsSupport::traits_type;
 
-    static_assert(traits_type::contains_only(force_type_key, common_with_types_key));
+    static_assert(t_t::contains_only(force_type_key, common_with_types_key));
 
-    if constexpr (has_type_overrides_v<traits_type>)
+    if constexpr (has_type_overrides_v<t_t>)
     {
       auto to = type_to_convert_to(EVE_FWD(components)...);
       using T = typename decltype(to)::type;

@@ -111,7 +111,7 @@ namespace eve::detail
       else
       {
         auto s = a;
-        constexpr auto smul = [](auto a, auto b) { return a * b; };
+        constexpr auto smul = [](auto va, auto vb) { return va * vb; };
 
         if constexpr (N::value >= 2) return aggregate(smul, s, b);
         else                         return map(smul, s, b);

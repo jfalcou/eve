@@ -19,7 +19,7 @@ namespace eve::detail
     using elt_t   = element_type_t<T>;
 
     // TODO specialize for float
-    auto br_large = [](auto x)
+    auto br_large = [](auto px)
     {
       using A7 = kumi::result::generate_t<7, elt_t>;
       constexpr A7 PC     = {-4.4357578167941278571e+06,
@@ -50,21 +50,21 @@ namespace eve::detail
                               3.7890229745772202641e+04,
                               8.6383677696049909675e+02,
                               1.0};
-      T                              y      = 8 * rec[pedantic](x);
+      T                              y      = 8 * rec[pedantic](px);
       T                              y2     = sqr(y);
       auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
       auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
-      auto                           factor = rsqrt(pi(as(x)) * x);
-      auto [sx, cx]                         = sincos(x);
+      auto                           factor = rsqrt(pi(as(px)) * px);
+      auto [sx, cx]                         = sincos(px);
       auto value                            = factor * fma(y, rs * (sx + cx), rc * (sx - cx));
       return value;
     };
 
     if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto br_2 = [](auto x)
+      auto br_2 = [](auto px)
         {
-          const T              z  = sqr(x);
+          const T              z  = sqr(px);
           using A5 = kumi::result::generate_t<5, elt_t>;
           constexpr A5 JP = {-4.878788132172128E-009f,
                               6.009061827883699E-007f,
@@ -72,12 +72,12 @@ namespace eve::detail
                               1.937383947804541E-003f,
                               -3.405537384615824E-002f};
 
-          return (z - 1.46819706421238932572E1f) * x * horner(z, JP);
+          return (z - 1.46819706421238932572E1f) * px * horner(z, JP);
         };
 
-      auto br_8 = [](auto x)
+      auto br_8 = [](auto px)
         {
-          auto                 q       = rec[pedantic](x);
+          auto                 q       = rec[pedantic](px);
           auto                 w       = sqrt(q);
           using A8 = kumi::result::generate_t<8, elt_t>;
           constexpr A8 MO1     = {6.913942741265801E-002f,
@@ -100,7 +100,7 @@ namespace eve::detail
           auto                 p       = w * horner(q, MO1);
           w                            = sqr(q);
           auto xn                      = q * horner(w, PH1) - thpio4f;
-          return p * cos(xn + x);
+          return p * cos(xn + px);
         };
 
       if constexpr( scalar_value<T> )

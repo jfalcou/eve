@@ -188,22 +188,22 @@ namespace eve::detail
       T      t     = prevent_gcc_abusive_contract(x * split);
       T      x1    = t - (t - x);
       T      x2    = x - x1;
-      T      sum(0);
+      T      sum_v(0);
 
-      auto pass = [&toverp](auto x1, T& b1, T& bb1)
+      auto pass = [&toverp](auto vx1, T& vb1, T& vbb1)
         {
           uint64_t t576 = 0x63f0000000000000ULL;                     /* 2 ^ 576  */
           double   tm24 = double(0x1.0000000000000p-24); /* 2 ^- 24  */
-          double   big  = double(0x1.8000000000000p+52); /*  6755399441055744      */
+          double   bigv = double(0x1.8000000000000p+52); /*  6755399441055744      */
           double   big1 = double(0x1.8000000000000p+54); /* 27021597764222976      */
-          T        sum(0);
+          T        sum_v(0);
           ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
           i32_t    k;
           i32_t    tmp;
           T        r[6];
           if constexpr( scalar_value<T> )
           {
-            auto z = bit_and(zero_lo, bit_cast(x1, as<ui64_t>()));
+            auto z = bit_and(zero_lo, bit_cast(vx1, as<ui64_t>()));
             k.hi   = int32_t(z >> 32);
             k.lo   = int32_t(z & 0x00000000FFFFFFFFULL);
             k.hi   = bit_shr(k.hi, 20) & 2047;
@@ -215,7 +215,7 @@ namespace eve::detail
           }
           else
           {
-            k   = bit_cast(bit_and(bit_cast(x1, as<ui64_t>()), zero_lo), as<i32_t>());
+            k   = bit_cast(bit_and(bit_cast(vx1, as<ui64_t>()), zero_lo), as<i32_t>());
             k   = bit_shr(k, 20) & 2047;
             k   = eve::max((k - 450) / 24, 0);
             tmp = bit_cast(ui64_t(t576), as<i32_t>());
@@ -229,41 +229,41 @@ namespace eve::detail
           {
             auto values = gather(eve::as_aligned(&toverp[0], cardinal_t<T> {}), inds);
             inds        = inc(inds);
-            r[i]        = x1 * values * tmp1;
+            r[i]        = vx1 * values * tmp1;
             tmp1 *= tm24;
           }
           T s;
           for( int i = 0; i < 3; ++i )
           {
-            s = (r[i] + big) - big;
-            sum += s;
+            s = (r[i] + bigv) - bigv;
+            sum_v += s;
             r[i] -= s;
           }
           T t(0);
           for( int i = 0; i < 6; ++i ) t += r[5 - i];
           T bb = (((((r[0] - t) + r[1]) + r[2]) + r[3]) + r[4]) + r[5];
-          s    = (t + big) - big;
-          sum += s;
+          s    = (t + bigv) - bigv;
+          sum_v += s;
           t -= s;
           T b = t + bb;
           bb  = (t - b) + bb;
-          s   = (sum + big1) - big1;
-          sum -= s;
-          b1  = b;
-          bb1 = bb;
-          return sum;
+          s   = (sum_v + big1) - big1;
+          sum_v -= s;
+          vb1  = b;
+          vbb1 = bb;
+          return sum_v;
         };
 
       T    b1, bb1, b2, bb2;
-      auto sum1 = pass(x1, b1, bb1);
-      auto sum2 = pass(x2, b2, bb2);
-      sum       = sum1 + sum2;
+      auto sum_v1 = pass(x1, b1, bb1);
+      auto sum_v2 = pass(x2, b2, bb2);
+      sum_v       = sum_v1 + sum_v2;
       T    b    = b1 + b2;
       T    bb   = if_else(eve::abs(b1) > eve::abs(b2), (b1 - b) + b2, (b2 - b) + b1);
       auto test = eve::abs(b) > 0.5;
       auto z    = copysign(one(eve::as<T>()), b);
       b         = sub[test](b, z);
-      sum       = add[test](sum, z);
+      sum_v       = add[test](sum_v, z);
       T s       = b + (bb + bb1 + bb2);
       t         = ((b - s) + bb) + (bb1 + bb2);
       b         = s * split;
@@ -277,7 +277,7 @@ namespace eve::detail
       s      = if_else(is_not_finite(x), eve::allbits, s);
       s      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), xx, s);
       t      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), t);
-      auto q = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), quadrant(sum));
+      auto q = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), quadrant(sum_v));
       return eve::zip(q, s, t);
     }
     else if constexpr( std::is_same_v<elt_t, float> )

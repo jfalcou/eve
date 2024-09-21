@@ -41,12 +41,12 @@ void scan_max(std::vector<T> const& a, std::vector<T> const& b,
 
 TTS_CASE("zip + map + scan")
 {
-  std::vector<int> a {-1,  2, -3};
-  std::vector<int> b { 1, -2,  3};
+  std::vector<int> va {-1,  2, -3};
+  std::vector<int> vb { 1, -2,  3};
 
   std::vector<std::int64_t> e { 1, 3, 6 };
   std::vector<std::int64_t> r;
-  scan_max(a, b, r);
+  scan_max(va, vb, r);
 
   TTS_EQUAL(e, r);
 };

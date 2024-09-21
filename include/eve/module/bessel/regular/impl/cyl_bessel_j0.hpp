@@ -20,7 +20,7 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
 
     auto x        = eve::abs(a0);
-    auto br_large = [](auto x) // TODO a speedier float version
+    auto br_large = [](auto px) // TODO a speedier float version
       {
         using A6 = kumi::result::generate_t<6, elt_t>;
         constexpr A6 PC     = {2.2779090197304684302e+04,
@@ -47,12 +47,12 @@ namespace eve::detail
                                 1.4887231232283756582e+03,
                                 9.0593769594993125859e+01,
                                 1.0};
-        T                              y      = 8 * rec[pedantic](x);
+        T                              y      = 8 * rec[pedantic](px);
         T                              y2     = sqr(y);
         auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
         auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
-        auto                           factor = rsqrt(pi(as(x)) * x);
-        auto [sx, cx]                         = sincos(x);
+        auto                           factor = rsqrt(pi(as(px)) * px);
+        auto [sx, cx]                         = sincos(px);
         auto value                            = factor * fnma(y, rs * (sx - cx), rc * (sx + cx));
         return value;
       };

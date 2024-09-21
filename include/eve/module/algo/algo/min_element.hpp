@@ -56,7 +56,7 @@ template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
       loop_index = [](int i, int) { return i; };
     }
 
-    delegate(I base, I f, Less less) : base(base), prev_best(f), less(less) { reset(); }
+    delegate(I b, I i, Less l) : base(b), prev_best(i), less(l) { reset(); }
 
     EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
     {

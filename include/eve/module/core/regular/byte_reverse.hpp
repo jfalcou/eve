@@ -85,8 +85,8 @@ namespace eve
     template<unsigned_scalar_value T> T bswap(T x)
     {
       constexpr size_t S = sizeof(T);
-      auto bs=[](auto x){
-        auto b = std::bit_cast<std::array<std::uint8_t, S>>(x);
+      auto bs=[](auto xx){
+        auto b = std::bit_cast<std::array<std::uint8_t, S>>(xx);
         std::reverse(b.begin(), b.end());
         return std::bit_cast<T>(b);
       };
@@ -122,7 +122,7 @@ namespace eve
         {
           constexpr auto C = cardinal_v<T>;
           using u8_t = wide<uint8_t, fixed<S*C>>;
-          auto p = [] (auto i, auto ) { auto S = sizeof(e_t); return (i/S+1)*S-1-i%S; };
+          auto p = [] (auto i, auto ) { auto E = sizeof(e_t); return (i/E+1)*E-1-i%E; };
           auto y = eve::shuffle(bit_cast(x, as<u8_t>()), eve::as_pattern(p));
           return bit_cast(y, as<T>());
         }

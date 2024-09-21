@@ -153,7 +153,7 @@ namespace detail
 
     EVE_FORCEINLINE constexpr top_bits() = default;
 
-    EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage) : storage(storage) {}
+    EVE_FORCEINLINE constexpr explicit top_bits(storage_type s) : storage(s) {}
 
     // -- constructor(logical)
 

@@ -43,9 +43,7 @@ namespace eve::detail
       }
       else
       {
-        constexpr auto c = categorize<wide<T, N>>();
-
-             if constexpr( c == category::float64x8                         ) return _mm512_set1_pd(v);
+        if      constexpr( c == category::float64x8                         ) return _mm512_set1_pd(v);
         else if constexpr( c == category::float64x4                         ) return _mm256_set1_pd(v);
         else if constexpr( c == category::float64x2                         ) return _mm_set1_pd(v);
         else if constexpr( c == category::float32x16                        ) return _mm512_set1_ps(v);

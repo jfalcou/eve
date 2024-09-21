@@ -97,57 +97,57 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
         x      = eve::max(z, zero(as(x)));
         a      = if_else(test, amax, a);
       }
-      auto lginc = [](auto a0, auto a1, auto test){
+      auto lginc = [](auto a0, auto a1, auto tt){
         // insure convergence in each case for all members of simd vector
-        // making x = a+1 when the test do not succeed
-        auto x = if_else(test, a0, a1);
+        // making x = a+1 when the tt do not succeed
+        auto lx = if_else(tt, a0, a1);
 
         // Series expansion for x < a+1
         auto ap  = a1;
         auto del = one(as(ap));
-        auto sum = del;
+        auto ss = del;
 
-        while( eve::any(abs(del) >= T(100) * epsilon(maximum(abs(sum)))) )
+        while( eve::any(abs(del) >= T(100) * epsilon(maximum(abs(ss)))) )
         {
           ap += one(as(ap));
-          del = x * del / ap;
+          del = lx * del / ap;
           sum += del;
         }
-        auto b = sum * eve::exp(fms(a1, eve::log(x), eve::log_abs_gamma(inc(a1)) + x));
+        auto b = sum * eve::exp(fms(a1, eve::log(lx), eve::log_abs_gamma(inc(a1)) + lx));
         //  For very small a, the series may overshoot very slightly.
         b = eve::min(b, one(as(b)));
         //  if lower, b(k) = bk; else b(k) = 1-bk; end
         return if_else(is_eqz(a0) && is_eqz(a1), one, b);
       };
-      auto uginc = [](auto x, auto a, auto test){
+      auto uginc = [](auto px, auto pa, auto tt){
         // insure convergence in each case for all members of simd vector
-        // making x =  a <  a+1 when the test do not succeed
-        x = if_else(test, x, inc(a));
+        // making x =  a <  a+1 when the tt do not succeed
+        px = if_else(tt, px, inc(pa));
         // Continued fraction for x >= a+1
         // k = find(a ~= 0 & x >= a+1); % & x ~= 0
-        auto x0   = one(as(x));
-        auto x1   = x;
-        auto b0   = zero(as(x));
+        auto x0   = one(as(px));
+        auto x1   = px;
+        auto b0   = zero(as(px));
         auto b1   = x0;
         auto fac  = rec[pedantic](x1);
-        auto n    = one(as(x));
+        auto n    = one(as(px));
         auto g    = b1 * fac;
         auto gold = b0;
 
         while( maximum(abs(g - gold)) >= 100 * eve::epsilon(maximum(eve::abs(g))) )
         {
           gold     = g;
-          auto ana = n - a;
+          auto ana = n - pa;
           x0       = fma(x0, ana, x1) * fac;
           b0       = fma(b0, ana, b1) * fac;
           auto anf = n * fac;
-          x1       = fma(x, x0, anf * x1);
-          b1       = fma(x, b0, anf * b1);
+          x1       = fma(px, x0, anf * x1);
+          b1       = fma(px, b0, anf * b1);
           fac      = rec[pedantic](x1);
           g        = b1 * fac;
           n        = inc(n);
         }
-        return if_else(eve::is_infinite(x), one, oneminus(exp(-x + a * log(x) - log_abs_gamma(a)) * g));
+        return if_else(eve::is_infinite(px), one, oneminus(exp(-px + pa * log(px) - log_abs_gamma(pa)) * g));
       };
 
       test    = x < inc(a);

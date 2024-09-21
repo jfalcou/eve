@@ -231,10 +231,10 @@ namespace eve::algo::views
 
     map_iterator() = default;
 
-    EVE_FORCEINLINE map_iterator(I base, LoadOp load_op, StoreOp store_op)
-        : base(base)
-        , load_op(load_op)
-        , store_op(store_op)
+    EVE_FORCEINLINE map_iterator(I b, LoadOp lo, StoreOp so)
+        : base(b)
+        , load_op(lo)
+        , store_op(so)
     {
     }
 

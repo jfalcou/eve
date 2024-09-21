@@ -18,7 +18,7 @@ struct swap_ranges_ptr_test
   eve::as<Tgt> tgt;
   Alg alg;
 
-  swap_ranges_ptr_test(eve::as<Tgt> tgt, Alg alg) : tgt(tgt), alg(alg) {}
+  swap_ranges_ptr_test(eve::as<Tgt> t, Alg a) : tgt(t), alg(a) {}
 
   void init(auto& page_1, auto& page_2) const
   {

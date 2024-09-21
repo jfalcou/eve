@@ -25,7 +25,7 @@ namespace eve::algo
     template <typename UnalignedI, typename P>
     struct delegate
     {
-      explicit delegate(UnalignedI out, P p) : out(out), p(p) {}
+      explicit delegate(UnalignedI o, P pf) : out(o), p(pf) {}
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
@@ -91,7 +91,7 @@ namespace eve::algo
   //!   you can call `::keep_if[::sparse_output](...)` to optimize for that scenario.
   //!
   //!   @groupheader{Callable Signatures}
-  //!   
+  //!
   //!   @code
   //!   {
   //!     template<relaxed_range Rng, typename P>

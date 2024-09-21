@@ -224,57 +224,55 @@ namespace eve
           auto   ltza0 = is_ltz(a0);
           size_t nb    = eve::count_true(ltza0);
           T      r {0};
-          auto   other = [Logsqrt2pi](T x)
+          auto   other = [Logsqrt2pi](T xx)
             {
-              auto   xlt650 = is_less(x, T(6.50));
-              size_t nb     = eve::count_true(xlt650);
-              T      r0x    = x;
-              T      r0z    = x;
+              auto   xlt650 = is_less(xx, T(6.50));
+              size_t nnb     = eve::count_true(xlt650);
+              T      r0x    = xx;
+              T      r0z    = xx;
               T      r0s    = one(as<T>());
               T      r1     = zero(as<T>());
               T      p      = nan(as<T>());
-              if( nb > 0 )
+              if( nnb > 0 )
               {
                 auto kernelC = false_(as<T>());
                 T    z       = one(as<T>());
-                T    tx      = if_else(xlt650, x, eve::zero);
+                T    tx      = if_else(xlt650, xx, eve::zero);
                 T    nx      = zero(as<T>());
 
                 const T _075    = T(0.75);
                 const T _150    = T(1.50);
                 const T _125    = T(1.25);
                 const T _250    = T(2.50);
-                auto    xge150  = (x >= _150);
+                auto    xge150  = (xx >= _150);
                 auto    txgt250 = (tx > _250);
-
 
                 while( eve::any(logical_and(xge150, txgt250)) )
                 {
                   nx      = dec[txgt250](nx);
-                  tx      = if_else(txgt250, x + nx, tx);
+                  tx      = if_else(txgt250, xx + nx, tx);
                   z       = if_else(txgt250, z * tx, z);
                   txgt250 = (tx > _250);
                 }
-                r0x = add[xge150](x, nx - T(2));
+                r0x = add[xge150](xx, nx - T(2));
                 r0z = if_else(xge150, z, r0z);
                 r0s = if_else(xge150, one(as<T>()), r0s);
 
-
-                auto xge125  = (x >= _125);
+                auto xge125  = (xx >= _125);
                 auto xge125t = logical_andnot(xge125, xge150);
                 if( eve::any(xge125) )
                 {
-                  r0x = if_else(xge125t, dec(x), r0x);
-                  r0z = if_else(xge125t, z * x, r0z);
+                  r0x = if_else(xge125t, dec(xx), r0x);
+                  r0z = if_else(xge125t, z * xx, r0z);
                   r0s = if_else(xge125t, mone(as<T>()), r0s);
                 }
 
-                auto xge075  = (x >= _075);
+                auto xge075  = (xx >= _075);
                 auto xge075t = logical_andnot(xge075, xge125);
                 if( eve::any(xge075t) )
                 {
                   kernelC = xge075t;
-                  r0x     = if_else(xge075t, dec(x), r0x);
+                  r0x     = if_else(xge075t, dec(xx), r0x);
                   r0z     = if_else(xge075t, one(as<T>()), r0z);
                   r0s     = if_else(xge075t, mone(as<T>()), r0s);
                   p       = helpers::log_abs_gammaC(r0x);
@@ -288,7 +286,7 @@ namespace eve
                   {
                     z       = if_else(txlt150, z * tx, z);
                     nx      = inc[txlt150](nx);
-                    tx      = if_else(txlt150, x + nx, tx);
+                    tx      = if_else(txlt150, xx + nx, tx);
                     txlt150 = logical_andnot(is_less(tx, _150), xge075);
                   }
                   r0x = add[orig](r0x, nx - T(2));
@@ -296,25 +294,25 @@ namespace eve
                   r0s = if_else(orig, mone(as<T>()), r0s);
                 }
                 p = if_else(kernelC, p, helpers::log_abs_gammaB(r0x));
-                if( nb >= cardinal_v<T> ) return fma(r0x, p, r0s * log(abs(r0z)));
+                if( nnb >= cardinal_v<T> ) return fma(r0x, p, r0s * log(abs(r0z)));
               }
-              r0z  = if_else(xlt650, abs(r0z), x);
+              r0z  = if_else(xlt650, abs(r0z), xx);
               T m  = log(r0z);
               r1   = fma(r0x, p, r0s * m);
-              T r2 = fma(x - half(as<T>()), m, Logsqrt2pi - x);
-              r2 += helpers::log_abs_gamma2(rec[pedantic](sqr(x))) / x;
+              T r2 = fma(xx - half(as<T>()), m, Logsqrt2pi - xx);
+              r2 += helpers::log_abs_gamma2(rec[pedantic](sqr(xx))) / xx;
               return if_else(xlt650, r1, r2);
             };
           T r1 = other(q);
           if( nb > 0 )
           {
-            auto negative = [](T q, T w)
+            auto negative = [](T qq, T w)
               {
-                T    p     = floor(q);
-                T    z     = q - p;
+                T    p     = floor(qq);
+                T    z     = qq - p;
                 auto test2 = (z < half(as<T>()));
                 z          = dec[test2](z);
-                z          = q * sinpi(z);
+                z          = qq * sinpi(z);
                 z          = abs(z);
                 return -log(inv_pi(as<T>()) * abs(z)) - w;
               };

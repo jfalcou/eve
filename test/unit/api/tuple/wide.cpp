@@ -71,7 +71,7 @@ TTS_CASE_TPL( "Check eve::wide lambda constructor", eve::test::scalar::all_types
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
 
-  w_t ref;
+  w_t ref = {};
 
   for(int i=0;i<ref.size();++i)
   {

@@ -68,7 +68,7 @@ namespace eve::detail
       else
       {
         auto s = a;
-        constexpr auto sdiv = [](auto a, auto b) { return a /= b; };
+        constexpr auto sdiv = [](auto va, auto vb) { return va /= vb; };
         if constexpr( N::value >= 2  )  return aggregate(sdiv, s, b);
         else                            return map(sdiv, s, b);
       }

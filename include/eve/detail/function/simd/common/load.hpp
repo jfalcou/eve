@@ -143,12 +143,12 @@ namespace eve::detail
   {
     Wide that;
 
-    auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as<Sub>)
+    auto cast = []<typename Ptr, typename Sub>(Ptr p, as<Sub>)
     {
       using type = element_type_t<Wide>;
       using a_p = eve::aligned_ptr<const type, cardinal_t<Sub>>;
-      if constexpr (std::is_pointer_v<Ptr>) return ptr;
-      else                                  return a_p{ptr.get()};
+      if constexpr (std::is_pointer_v<Ptr>) return p;
+      else                                  return a_p{p.get()};
     };
 
     that.storage().apply

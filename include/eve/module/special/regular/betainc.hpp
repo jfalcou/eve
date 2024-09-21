@@ -87,7 +87,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
   {
     template< typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    auto betainc_(EVE_REQUIRES(cpu_), O const&, T x, T  a, T  b) noexcept
+    auto betainc_(EVE_REQUIRES(cpu_), O const&, T px, T pa, T pb) noexcept
     {
       auto betacf = [](auto x, auto a, auto b) {
         // continued fraction for incomplete Beta function, used by betainc
@@ -118,14 +118,14 @@ struct betainc_t : elementwise_callable<betainc_t, Options>
         }
         return h;
       };
-      auto bt   = exp(fma(a, log(x), b * log1p(-x)) - lbeta(a, b));
-      auto test = (x > inc(a) / (a + b + T(2)));
-      auto oms   = oneminus[test](x);
-      swap_if(test, a, b);
-      auto res  = bt * betacf(oms, a, b) / a;
-      return if_else(is_ltz(oms) || oms > one(as(x)),
+      auto bt   = exp(fma(pa, log(px), pb * log1p(-px)) - lbeta(pa, pb));
+      auto test = (px > inc(pa) / (pa + pb + T(2)));
+      auto oms   = oneminus[test](px);
+      swap_if(test, pa, pb);
+      auto res  = bt * betacf(oms, pa, pb) / pa;
+      return if_else(is_ltz(oms) || oms > one(as(px)),
                      allbits,
-                     if_else(is_eqz(oms), zero, if_else(x == one(as(x)), one, oneminus[test](res))));
+                     if_else(is_eqz(oms), zero, if_else(px == one(as(px)), one, oneminus[test](res))));
     }
   }
 }

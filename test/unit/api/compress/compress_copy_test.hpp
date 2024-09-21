@@ -188,7 +188,7 @@ test_masks(eve::as<L>)
     for( int i = 2; i < (int)N; ++i )
     {
       L m {false};
-      for( int i = 0; i != L::size(); ++i ) { m.set(i, d(g) == 1); }
+      for( int j = 0; j != L::size(); ++j ) { m.set(j, d(g) == 1); }
       res[i] = m;
     }
 

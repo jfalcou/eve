@@ -253,16 +253,14 @@ namespace eve
             notdone = next_interval(br_eqxy, notdone, (x == y) && (x == z), r, x, p);
             if( eve::any(notdone) )
             {
-              auto br_eqzp = [](auto x, auto y, auto z) //  (p == z)
-                { return ellint_rd(x, y, z); };
-              notdone = next_interval(br_eqzp, notdone, (z == p), r, x, y, z);
+              notdone = next_interval(ellint_rd, notdone, (z == p), r, x, y, z);
               if( eve::any(notdone) )
               {
                 x            = if_else(notdone, x, one);
                 y            = if_else(notdone, y, one);
                 z            = if_else(notdone, z, one);
                 p            = if_else(notdone, p, one);
-                auto br_last = [](auto x, auto y, auto z, auto p) { return ellint_rj[raw](x, y, z, p); };
+                auto br_last = [](auto px, auto py, auto pz, auto pp) { return ellint_rj[raw](px, py, pz, pp); };
                 last_interval(br_last, notdone, r, x, y, z, p);
               }
             }

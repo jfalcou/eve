@@ -102,10 +102,10 @@ namespace eve
 
       if constexpr( scalar_value<T> )
       {
-        auto inftest = [](T a0)
+        auto inftest = [](T a)
           {
-            if constexpr( std::is_same_v<elt_t, float> ) { return a0 > 35.4f; }
-            else if constexpr( std::is_same_v<elt_t, double> ) { return a0 > 171.624; };
+            if constexpr( std::is_same_v<elt_t, float> ) { return a > 35.4f; }
+            else if constexpr( std::is_same_v<elt_t, double> ) { return a > 171.624; };
           };
         if( is_eqz(a0) ) return copysign(inf(eve::as(a0)), a0);
         if constexpr( eve::platform::supports_nans )

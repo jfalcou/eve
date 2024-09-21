@@ -43,9 +43,9 @@ struct compress_callable_settings
   cond_in_t  c_in;
   cond_out_t c_out;
 
-  compress_callable_settings(safe_t, dense_t, cond_in_t c_in, cond_out_t c_out)
-      : c_in(c_in)
-      , c_out(c_out)
+  compress_callable_settings(safe_t, dense_t, cond_in_t p_in, cond_out_t p_out)
+      : c_in(p_in)
+      , c_out(p_out)
   {}
 };
 
