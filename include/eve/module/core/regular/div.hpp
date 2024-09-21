@@ -90,10 +90,10 @@ namespace eve
 //!           * `eve::floor(div(x, z))`, if `d` is `downward`.
 //!           * `eve::ceil(div(x,  z))`, if `d` is `upward`.
 //!           * `eve::nearest(div(x, z))`, if `d` is `to_nearest`.
-//!      5. The floating division is done in a rounding mode such that the result is guaranted
-//!       to be less or equal to the exact one.
-//!      6. The floating division is done in a rounding mode such that the result is guaranted
-//!       to be greater or equal to the exact one.
+//!      5. The floating division is computed in a rounding mode such that the result is guaranted
+//!       to be less or equal to the exact one (except for Nans).
+//!      6. The floating division is computed in a rounding mode such that the result is guaranted
+//!       to be greater or equal to the exact one (except for Nans).
 //!      7. computes the saturated division of `x` by  `y`.
 //!         The result is always defined even if the denominator is 0.
 //!

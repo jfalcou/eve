@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
-#include <iostream>
+
 namespace eve::detail
 {
 
@@ -106,7 +106,11 @@ requires x86_abi<abi_t<T, N>>
   auto src = alternative(cx, v, as<wide<T, N>> {});
   auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-  if constexpr(O::contains(saturated))
+  if constexpr(O::contains(lower) || O::contains(upper))
+  {
+    return add.behavior(cpu_{}, opts, v, w);
+  }
+  else if constexpr(O::contains(saturated))
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 

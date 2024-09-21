@@ -104,7 +104,11 @@ namespace eve::detail
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr(O::contains(saturated))
+    if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      return sub.behavior(cpu_{}, opts, v, w);
+    }
+    else if constexpr(O::contains(saturated))
     {
       constexpr auto sup_avx2 = current_api >= avx2;
 

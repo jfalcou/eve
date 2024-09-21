@@ -67,10 +67,10 @@ namespace eve::detail
         auto [r, e] = two_prod(d, b);
         if constexpr(O::contains(upper))
         {
-          return if_else(r < a || ((r ==  a) && is_ltz(e)), next(d), d);
+          return next[r < a || ((r ==  a) && is_ltz(e))](d);
         }
         else
-          return if_else(r > a || ((r ==  a) && is_gtz(e)), prev(d), d);
+          return prev[r > a || ((r ==  a) && is_gtz(e))](d);
       }
     }
     else if constexpr(O::contains(saturated))
@@ -239,7 +239,6 @@ namespace eve::detail
     return if_else(cond, eve::div[o.drop(condition_key)](t, g), t);
   }
 }
-
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(pop)

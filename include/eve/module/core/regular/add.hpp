@@ -82,10 +82,10 @@ namespace eve
 //!    4. The call `add[saturated](...)` computes a saturated version of `add`.
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
-//!    5. The sumation is done in a 'round toward \f$-\infty\f$ mode. The sum is guaranted
-//!       to be less or equal to the exact one.
-//!    6. The sumation is done in a 'round toward \f$\infty\f$ mode. The sum is guaranted
-//!       to be greater or equal to the exact one.
+//!    5. The summation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!       to be less or equal to the exact one (except for Nans).
+//!    6. The summation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!       to be greater or equal to the exact one (except for Nans).
 //!
 //!   @note
 //!      Although the infix notation with `+` is supported for two parameters, the `+` operator on

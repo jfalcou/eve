@@ -17,11 +17,9 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated))
-    {
-      return div.behavior(cpu_{}, opts, a, b);
-    }
-    else if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
+    if constexpr(O::contains(lower) || O::contains(upper) || O::contains(saturated) ||
+                 O::contains(toward_zero) || O::contains(upward) ||
+                 O::contains(downward) || O::contains(to_nearest))
     {
       return div.behavior(cpu_{}, opts, a, b);
     }
@@ -74,11 +72,12 @@ namespace eve::detail
                                   wide<T, N> v,
                                   wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated))
+    if constexpr (O::contains(lower) || O::contains(upper) || O::contains(saturated))
     {
       return div.behavior(cpu_{}, o, v, w);
     }
-    else if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
+    else if constexpr (O::contains(toward_zero) || O::contains(upward) ||
+                       O::contains(downward) || O::contains(to_nearest))
     {
       return round[o](div[cx](v, w));
     }

@@ -42,12 +42,12 @@ namespace eve::detail
       else
       {
         auto [r, e] = eve::two_prod(a, b);
-        std::cout << "(" << r << ",  " << e << ")" << std::endl;
         if constexpr(O::contains(lower))
-          return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
+          return eve::prev[eve::is_ltz(e)](r);
         else
-          return eve::if_else(eve::is_gtz(e), eve::next(r), r);
-      }    }
+          return eve::next[eve::is_gtz(e)](r);
+      }
+    }
     else if constexpr (plain_scalar_value<T> && simd_value<U>)
     {
       // some backends are optimized for this specific case, let them have

@@ -40,9 +40,9 @@ namespace eve::detail
       {
        auto [r, e] = eve::two_add(a, b);
        if constexpr(O::contains(lower))
-         return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
+         return eve::prev[eve::is_ltz(e)](r);
        else
-         return eve::if_else(eve::is_gtz(e), eve::next(r), r);
+         return eve::next[eve::is_gtz(e)](r);
       }
     }
     else if constexpr(O::contains(saturated) && integral_value<T>)

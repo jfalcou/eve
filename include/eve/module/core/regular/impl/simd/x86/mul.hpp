@@ -117,7 +117,8 @@ namespace eve::detail
     auto src = alternative(cx, a, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr(O::contains(saturated) && integral_value<T>)
+    if constexpr(O::contains(lower) || O::contains(upper) ||
+                (O::contains(saturated) && integral_value<T>))
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }

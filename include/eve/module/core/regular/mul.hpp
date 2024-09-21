@@ -81,10 +81,10 @@ namespace eve
 //!    4. The call `mul[saturated](...)` computes a saturated version of `mul`.
 //!       Take care that for signed integral entries this kind of multiplication is not associative at all.
 //!       This call perform saturated multiplications in reverse incoming order.
-//!    5. The product is done in a 'round toward \f$-\infty\f$ mode. The product is guaranted
-//!       to be less or equal to the exact one.
-//!    6. The product is done in a 'round toward \f$\infty\f$ mode. The product is guaranted
-//!       to be greater or equal to the exact one.
+//!    5. The product is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!       to be less or equal to the exact one (except for Nans).
+//!    6. The product is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!       to be greater or equal to the exact one (except for Nans).
 //!
 //!   @note
 //!      Although the infix notation with `*` is supported for two parameters, the `*` operator on

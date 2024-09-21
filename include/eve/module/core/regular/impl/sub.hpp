@@ -40,11 +40,11 @@ namespace eve::detail
       }
       else
       {
-        auto [r, e] = eve::two_add(a, -b);
-        if constexpr(O::contains(lower))
-          return eve::if_else(eve::is_ltz(e), eve::prev(r), r);
-        else
-          return eve::if_else(eve::is_gtz(e), eve::next(r), r);
+       auto [r, e] = eve::two_add(a, -b);
+       if constexpr(O::contains(lower))
+         return eve::prev[eve::is_ltz(e)](r);
+       else
+         return eve::next[eve::is_gtz(e)](r);
       }
     }
     if constexpr (O::contains(saturated) && integral_value<T>)
