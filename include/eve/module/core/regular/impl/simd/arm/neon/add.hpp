@@ -16,17 +16,13 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-    requires arm_abi<abi_t<T, N>>
+  requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(lower) || O::contains(upper))
-      return add.behavior(cpu_{}, opts, v, w);
-    else if constexpr (O::contains(saturated) && std::integral<T>)
+    if constexpr((O::contains(lower) || O::contains(upper)  && floating_value<T>) ||
+                 (O::contains(saturated) && std::integral<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
-    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
-                 (O::contains(saturated) && std::integral<T>))
-      return add.behavior(cpu_{}, opts, v, w);
     else
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -49,7 +45,7 @@ namespace eve::detail
       else if constexpr( c == category::uint8x16   ) return vaddq_u8 (v, w);
       else if constexpr( c == category::float32x2  ) return vadd_f32 (v, w);
       else if constexpr( c == category::float32x4  ) return vaddq_f32(v, w);
-      elseif constexpr( current_api >= asimd )
+      else if constexpr( current_api >= asimd )
       {
         if constexpr( c == category::float64x1 ) return vadd_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vaddq_f64 (v, w);
