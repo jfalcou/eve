@@ -150,7 +150,6 @@ jobs:
           - { comp: gcc   , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve256  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve512  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: gcc   , arch: ppc64   , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -176,7 +175,7 @@ jobs:
       matrix:
         cfg:
         - { comp: clang, arch: aarch64_osx}
-        # - { comp: clang, arch: arm_osx    }
+        - { comp: clang, arch: arm_osx    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -208,6 +207,7 @@ jobs:
           - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
           - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
           - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+          - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi                            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -251,7 +251,6 @@ jobs:
           - { comp: gcc   , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve256  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve512  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: gcc   , arch: ppc64   , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -309,6 +308,7 @@ jobs:
           - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
           - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
           - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+          - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi                            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -351,7 +351,6 @@ jobs:
           - { comp: gcc   , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve256  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve512  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: gcc   , arch: ppc64   , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -409,6 +408,7 @@ jobs:
           - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
           - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
           - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+          - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi                            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -453,7 +453,6 @@ jobs:
           - { comp: gcc   , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve256  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: sve512  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: gcc   , arch: ppc64   , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -511,6 +510,7 @@ jobs:
           - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
           - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
           - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+          - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi                            }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
