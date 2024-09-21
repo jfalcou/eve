@@ -163,8 +163,6 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
   }
   else
   {
-    constexpr auto f = to_integer(cmp_flt::eq_oq);
-
     if constexpr( c == category::float32x8 ) return _mm256_cmp_ps(v, w, f);
     else if constexpr( c == category::float64x4 ) return _mm256_cmp_pd(v, w, f);
     else if constexpr( c == category::float32x4 ) return _mm_cmpeq_ps(v, w);
@@ -172,8 +170,8 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
     else
     {
       constexpr auto use_avx2 = current_api >= avx2;
-      constexpr auto eq       = []<typename E>(E const      &e, E const      &f)
-      { return as_logical_t<E>(e == f); };
+      constexpr auto eq       = []<typename E>(E const& ev, E const& fv)
+      { return as_logical_t<E>(ev == fv); };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpeq_epi64(v, w);
       else if constexpr( use_avx2 && c == category::uint64x4 ) return _mm256_cmpeq_epi64(v, w);
@@ -334,13 +332,13 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
     else
     {
       constexpr auto use_avx2 = current_api >= avx2;
-      constexpr auto lt       = []<typename E>(E e, E f) { return as_logical_t<E>(e < f); };
+      constexpr auto lt       = []<typename E>(E ev, E fv) { return as_logical_t<E>(ev < fv); };
 
-      [[maybe_unused]] auto unsigned_cmp = [](auto v, auto w)
+      [[maybe_unused]] auto unsigned_cmp = [](auto vv, auto wv)
       {
         using l_t     = logical<wide<T, N>>;
         auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
-        return bit_cast((bit_cast(v, as(sm)) - sm) < (bit_cast(w, as(sm)) - sm), as<l_t> {});
+        return bit_cast((bit_cast(vv, as(sm)) - sm) < (bit_cast(wv, as(sm)) - sm), as<l_t> {});
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(w, v);
@@ -416,13 +414,13 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       constexpr auto use_avx2 = current_api >= avx2;
       constexpr auto use_sse4 = current_api >= sse4_2;
 
-      constexpr auto gt = []<typename E>(E e, E f) { return as_logical_t<E>(e > f); };
+      constexpr auto gt = []<typename E>(E ev, E fv) { return as_logical_t<E>(ev > fv); };
 
-      [[maybe_unused]] auto unsigned_cmp = [](auto v, auto w)
+      [[maybe_unused]] auto unsigned_cmp = [](auto vv, auto vw)
       {
         using l_t     = logical<wide<T, N>>;
         auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
-        return bit_cast((bit_cast(v, as(sm)) - sm) > (bit_cast(w, as(sm)) - sm), as<l_t> {});
+        return bit_cast((bit_cast(vv, as(sm)) - sm) > (bit_cast(vw, as(sm)) - sm), as<l_t> {});
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(v, w);

@@ -83,9 +83,9 @@ namespace eve
     constexpr T dawson_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
     {
       using elt_t  = element_type_t<T>;
-      auto x       = eve::abs(a0);
-      auto rx      = x;
-      auto xx      = sqr(x);
+      auto aa0     = eve::abs(a0);
+      auto rrx     = aa0;
+      auto sx      = sqr(aa0);
       auto dawson1 = [](auto xx, auto x){
         if constexpr( std::is_same_v<elt_t, float> )
         {
@@ -167,20 +167,20 @@ namespace eve
           return average(rx, xx * num / (denom * x));
         }
       };
-      auto dawson4 = [](auto rx) { return rx * T(0.5); };
+      auto dawson4 = [](auto v) { return v * T(0.5); };
 
       auto r       = nan(as<T>());
-      auto notdone = is_not_nan(x);
-      notdone      = next_interval(dawson1, notdone, x < elt_t(3.25), r, xx, x);
-      rx           = rec[pedantic](x);
-      xx           = sqr(rx);
+      auto notdone = is_not_nan(aa0);
+      notdone      = next_interval(dawson1, notdone, aa0 < elt_t(3.25), r, sx, aa0);
+      rrx          = rec[pedantic](aa0);
+      sx           = sqr(rrx);
       if( eve::any(notdone) )
       {
-        notdone = next_interval(dawson2, notdone, x < elt_t(6.25), r, xx, rx, x);
+        notdone = next_interval(dawson2, notdone, aa0 < elt_t(6.25), r, sx, rrx, aa0);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(dawson3, notdone, x < elt_t(1.0e9), r, xx, rx, x);
-          if( eve::any(notdone) ) { last_interval(dawson4, x >= elt_t(1.0e9), r, rx); }
+          notdone = next_interval(dawson3, notdone, aa0 < elt_t(1.0e9), r, sx, rrx, aa0);
+          if( eve::any(notdone) ) { last_interval(dawson4, aa0 >= elt_t(1.0e9), r, rrx); }
         }
       }
       return eve::copysign(r, a0);

@@ -27,7 +27,7 @@ template<typename Algo, typename Op, typename T> struct transform_copy_if_ptr_te
   std::vector<eve::element_type_t<T>> buf2;
   std::mt19937                        g {T::size()};
 
-  transform_copy_if_ptr_test(Algo alg, Op op) : alg(alg), op(op) {}
+  transform_copy_if_ptr_test(Algo a, Op o) : alg(a), op(o) {}
 
   void init(auto *page_begin, auto *, auto *, auto *page_end)
   {

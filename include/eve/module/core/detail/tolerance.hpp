@@ -27,6 +27,7 @@ namespace eve
     constexpr almost_t() {}
     constexpr explicit almost_t(Value v) : value_(v) {}
     constexpr almost_t(almost_t const& v) : value_(v.value_) {}
+    constexpr almost_t& operator=(almost_t const& v) { value_ = v.value_; return *this; }
 
     /// ID type associated to the keyword
     using id_type = almost_mode;
@@ -75,6 +76,7 @@ namespace eve
     constexpr definitely_t() {}
     constexpr explicit definitely_t(Value v) : value_(v) {}
     constexpr definitely_t(definitely_t const& v) : value_(v.value_) {}
+    constexpr definitely_t& operator=(definitely_t const& v) { value_ = v.value_; return *this; }
 
     /// ID type associated to the keyword
     using id_type = definitely_mode;

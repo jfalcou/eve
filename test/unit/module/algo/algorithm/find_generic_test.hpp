@@ -23,7 +23,7 @@ namespace algo_test
     Algo alg;
     Check check;
 
-    find_ptr_test(Algo alg, Check check) : alg(alg), check(check) {}
+    find_ptr_test(Algo a, Check c) : alg(a), check(c) {}
 
     void init(auto* page_begin, auto* f, auto* l, auto* page_end) const
     {

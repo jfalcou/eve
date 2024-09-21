@@ -94,18 +94,18 @@ namespace eve
       if constexpr( std::is_same_v<elt_t, float> )
       {
         w            = if_else(test, w - T(2.5), sqrt(w));
-        auto br_wlt5 = [a00](auto w){
-          return a00*eve::reverse_horner(w, T(0x1.805c5ep+0f), T(0x1.f91ec6p-3f), T(-0x1.11c9dep-8f)
+        auto br_wlt5 = [a00](auto u){
+          return a00*eve::reverse_horner(u, T(0x1.805c5ep+0f), T(0x1.f91ec6p-3f), T(-0x1.11c9dep-8f)
                                         , T(-0x1.48a810p-10f), T(0x1.ca65b6p-13f), T(-0x1.26b582p-18f)
                                         , T(-0x1.d8e6aep-19f), T(0x1.70966cp-22f), T(0x1.e2cb10p-26f));
         };
         notdone = next_interval(br_wlt5, notdone, test, r, w);
         if( eve::any(notdone) )
         {
-          auto br_wge5 = [a00](auto w){
-            auto h = eve::reverse_horner(w, T(-0x1.5f17fcp-8f), T(0x1.31c2f8p-6f), T(-0x1.179ec6p-6f)
+          auto br_wge5 = [a00](auto u){
+            auto h = eve::reverse_horner(u, T(-0x1.5f17fcp-8f), T(0x1.31c2f8p-6f), T(-0x1.179ec6p-6f)
                                         , T(0x1.4c58aep-8f), T(0x1.7515dcp-9f))/
-            eve::reverse_horner(w, T(0x1.5e8044p-7f), T(-0x1.bb0154p-7f), T(0x1.5204bep-8f)
+            eve::reverse_horner(u, T(0x1.5e8044p-7f), T(-0x1.bb0154p-7f), T(0x1.5204bep-8f)
                                , T(0x1.74e782p-9f), T(0x1.2c6364p-27f));
             return copysign(h, a00);
           };
@@ -119,8 +119,8 @@ namespace eve
         auto wlt16   = w < T(16.0);
         w            = if_else(wlt6_25, w, sqrt(w));
         w -= if_else(wlt6_25, T(3.125), if_else(wlt16, T(3.25), T(5.0)));
-        auto br_wlt6_25 = [](auto w){
-          return eve::reverse_horner(w, T(0x1.a755e7c99ae86p+0), T(0x1.ebd80d9b13e28p-3), T(-0x1.8b6c33114f909p-8)
+        auto br_wlt6_25 = [](auto u){
+          return eve::reverse_horner(u, T(0x1.a755e7c99ae86p+0), T(0x1.ebd80d9b13e28p-3), T(-0x1.8b6c33114f909p-8)
                                     , T(-0x1.845769484fca8p-11), T(0x1.879c2a212f024p-13), T(-0x1.d1d1f7b8736f6p-17)
                                     , T(-0x1.6e8a5434ae8a2p-20), T(0x1.c6b4f5d03b787p-22), T(-0x1.f36cd6d3d46a9p-26)
                                     , T(-0x1.1a9e38dc84d60p-28), T(0x1.20f47ccf46b3cp-30), T(-0x1.dc583d118a561p-35)
@@ -132,8 +132,8 @@ namespace eve
         notdone = next_interval(br_wlt6_25, notdone, wlt6_25, r, w);
         if( eve::any(notdone) )
         {
-          auto br_wlt16 = [](auto w){
-            return eve::reverse_horner(w, T(0x1.8abcc380d5a48p+1), T(0x1.0158a6d641d39p+0), T(0x1.5ffcfe5b76afcp-8)
+          auto br_wlt16 = [](auto u){
+            return eve::reverse_horner(u, T(0x1.8abcc380d5a48p+1), T(0x1.0158a6d641d39p+0), T(0x1.5ffcfe5b76afcp-8)
                                       , T(-0x1.ebadabb891bbdp-9), T(0x1.468eeca533cf8p-9), T(-0x1.ba924132f38b1p-10)
                                       , T(0x1.f3cc55ad40c25p-11), T(-0x1.7448a89ef8aa3p-12), T(0x1.932cd54c8a222p-16)
                                       , T(0x1.1e684d0b9188ap-14), T(-0x1.8cef1f80281f2p-15), T(0x1.a29a0cacdfb23p-17)
@@ -144,8 +144,8 @@ namespace eve
           notdone = next_interval(br_wlt16, notdone, wlt16, r, w);
           if( eve::any(notdone) )
           {
-            auto br_wge16 = [](auto w){
-              return eve::reverse_horner(w, T(0x1.3664ddd1ad7fbp+2), T(0x1.02a30d1fba0dcp+0), T(-0x1.22ea5df04047cp-13)
+            auto br_wge16 = [](auto u){
+              return eve::reverse_horner(u, T(0x1.3664ddd1ad7fbp+2), T(0x1.02a30d1fba0dcp+0), T(-0x1.22ea5df04047cp-13)
                                         , T(-0x1.c2f36a8fc5d53p-13), T(0x1.3ebf4eb00938fp-14), T(-0x1.4a3497e1e0facp-16)
                                         , T(0x1.2fbd29d093d2bp-18), T(-0x1.0a8d40ea372ccp-20), T(0x1.ebc8bb824cb54p-23)
                                         , T(-0x1.22d220fdf9c3ep-24), T(0x1.f4c20e1334af8p-26), T(-0x1.0102e495fb9c0p-26)

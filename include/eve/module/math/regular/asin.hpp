@@ -119,8 +119,9 @@ namespace eve
         {
           x = if_else(x > one(eve::as<T>()), eve::allbits, x);
         }
-        auto case_1 = [](const T& x) { // x < 0.625
-          auto zz1 = eve::oneminus(x);
+        auto case_1 = [](const T& vx)
+        { // x < 0.625
+          auto zz1 = eve::oneminus(vx);
           auto num = zz1*eve::reverse_horner(zz1, T(0x1.c896240f3081dp+4), T(-0x1.991aaac01ab68p+4), T(0x1.bdff5baf33e6ap+2)
                                             , T(-0x1.2079259f9290fp-1), T(0x1.84fc3988e9f08p-9));
           auto den = eve::reverse_horner(zz1, T(0x1.56709b0b644bep+8), T(-0x1.7fe08959063eep+8), T(0x1.26219af6a7f42p+7)

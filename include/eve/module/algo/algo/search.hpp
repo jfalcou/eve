@@ -307,7 +307,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     using I1 = decltype(processed_haystack.begin());
     using I2 = decltype(processed_needle.begin());
 
-    needle_checker<I1, I2, Equal> needle_checker(
+    needle_checker<I1, I2, Equal> nc(
         processed_needle.begin(), processed_needle.end(), equal_fn);
 
     auto haystack_main_part_l = eve::unalign(haystack_f);
@@ -322,7 +322,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
                                processed_needle.begin(),
                                needle_len,
                                equal_fn,
-                               needle_checker) )
+                               nc) )
       {
         return eve::unalign(haystack.begin()) + (*res - haystack_f);
       }
@@ -333,7 +333,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
                               processed_needle.begin(),
                               equal_fn,
                               needle_len,
-                              needle_checker) )
+                              nc) )
     {
       return eve::unalign(haystack.begin()) + (*res - haystack_f);
     }

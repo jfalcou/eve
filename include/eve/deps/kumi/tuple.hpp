@@ -926,10 +926,10 @@ namespace kumi
       }();
       return [&]<std::size_t... N>(auto&& tuples, std::index_sequence<N...>)
       {
-        using ts  = std::remove_cvref_t<decltype(tuples)>;
+        using ts_t = std::remove_cvref_t<decltype(tuples)>;
         using type =  kumi::tuple
                       < std::tuple_element_t< pos.e[N]
-                                            , std::remove_cvref_t<std::tuple_element_t<pos.t[N],ts>>
+                                            , std::remove_cvref_t<std::tuple_element_t<pos.t[N],ts_t>>
                                             >...
                       >;
         return type{get<pos.e[N]>(get<pos.t[N]>(KUMI_FWD(tuples)))...};

@@ -32,13 +32,13 @@ template<typename TraitsSupport> struct transform_reduce_ : TraitsSupport
 
     std::array<SumWide, get_unrolling<traits_type>()> sums;
 
-    delegate(MapOp map_op, AddOp add_op, Zero zero, SumWide init)
-        : map_op(map_op)
-        , add_op(add_op)
-        , zero(zero)
+    delegate(MapOp mo, AddOp ao, Zero z, SumWide i)
+        : map_op(mo)
+        , add_op(ao)
+        , zero(z)
     {
-      sums.fill(as_value(zero, as<SumWide> {}));
-      sums[0] = add_op(sums[0], init);
+      sums.fill(as_value(z, as<SumWide> {}));
+      sums[0] = add_op(sums[0], i);
     }
 
     template <typename I>

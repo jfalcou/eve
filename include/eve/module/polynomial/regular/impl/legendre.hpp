@@ -67,7 +67,6 @@ namespace eve::detail
     {
       if (scalar_value<T>)
       {
-        using r_t = as_wide_as_t<T, L>;
         return legendre_(EVE_TARGETS(cpu_), o, l, r_t(x));
       }
       else

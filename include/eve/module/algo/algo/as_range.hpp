@@ -18,7 +18,7 @@ namespace eve::algo
 
     as_range() = default;
 
-    as_range(I f, S l) : f(f), l(l) {}
+    as_range(I i, S s) : f(i), l(s) {}
 
     using is_non_owning = void;
 

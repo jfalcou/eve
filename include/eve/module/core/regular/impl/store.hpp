@@ -100,8 +100,8 @@ template<arithmetic_scalar_value T, typename S, typename Lanes>
     requires(S::value <= Lanes::value)
     && std::same_as<abi_t<T, S>, aggregated_>
 {
-  auto cast = []<typename Ptr, typename Sub>(Ptr ptr, as<Sub>)
-  { return eve::aligned_ptr<T, typename Sub::cardinal_type> {ptr.get()}; };
+  auto cast = []<typename Ptr, typename Sub>(Ptr p, as<Sub>)
+  { return eve::aligned_ptr<T, typename Sub::cardinal_type> {p.get()}; };
 
   value.storage().apply(
       [&]<typename... Sub>(Sub&...v)

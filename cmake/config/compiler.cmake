@@ -16,6 +16,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 else()
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wshadow -Wall -Wpedantic -Wextra -fdiagnostics-color=always
                           -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow
+                          -Wno-maybe-uninitialized
                         )
 endif()
 

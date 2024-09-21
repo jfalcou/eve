@@ -55,7 +55,7 @@ namespace eve
 
     template <typename ...Ptrs1>
       requires (std::convertible_to<Ptrs1, Ptrs> && ...)
-    explicit soa_ptr(kumi::tuple<Ptrs1...> storage) : storage{storage} {}
+    explicit soa_ptr(kumi::tuple<Ptrs1...> s) : storage{s} {}
 
     template <typename ...Ptrs1>
       requires (std::convertible_to<Ptrs1, Ptrs> && ...)

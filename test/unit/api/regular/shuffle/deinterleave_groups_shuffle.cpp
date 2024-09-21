@@ -54,13 +54,13 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shu
 
   res_t expected { [](int i, int) { return i;  }};
 
-  auto [a, b] = expected.slice();
+  auto [av, bv] = expected.slice();
 
-  res_t actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<T::size()>);
+  res_t actual = eve::deinterleave_groups_shuffle(av, bv, eve::lane<T::size()>);
 
   TTS_EQUAL(expected, actual);
 
-  actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<T::size() * 2>);
+  actual = eve::deinterleave_groups_shuffle(av, bv, eve::lane<T::size() * 2>);
   TTS_EQUAL(expected, actual);
 };
 
@@ -86,15 +86,15 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle"
 
         return marker | (new_i & 0xf);
       }};
-      auto [a, b] = a_b.slice();
+      auto [av, bv] = a_b.slice();
 
-      auto r = eve::deinterleave_groups_shuffle(a, b, eve::lane<G>);
+      auto r = eve::deinterleave_groups_shuffle(av, bv, eve::lane<G>);
 
       TTS_EQUAL(expected, r)
           << "\nG: " << G
           << std::hex
-          << "\na : " << a
-          << "\nb : " << b
+          << "\na : " << av
+          << "\nb : " << bv
           << "\ne : " << expected
           << "\nr : " << r << "\n"
           << '\n' << std::dec;

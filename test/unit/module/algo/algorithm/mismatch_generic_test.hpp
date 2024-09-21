@@ -26,7 +26,7 @@ namespace algo_test
 
     std::set<int> all_distances;
 
-    mismatch_ptr_test(std::mt19937& gen, Algo alg, Check check) : gen(gen), alg(alg), check(check) {}
+    mismatch_ptr_test(std::mt19937& g, Algo a, Check c) : gen(g), alg(a), check(c) {}
 
     void init(auto& page_1, auto& /*page_2*/) const
     {

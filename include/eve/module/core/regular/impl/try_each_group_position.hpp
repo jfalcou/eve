@@ -19,8 +19,8 @@ try_each_group_position_aggregation(T x, eve::fixed<G> g) noexcept
   auto [l, h] = x.slice();
   auto l_pos  = try_each_group_position(l, g);
   auto h_pos  = try_each_group_position(h, g);
-  auto lh     = kumi::map([](auto x, auto y) { return T {x, y}; }, l_pos, h_pos);
-  auto hl     = kumi::map([](auto x, auto y) { return T {y, x}; }, l_pos, h_pos);
+  auto lh     = kumi::map([](auto vx, auto vy) { return T{vx, vy}; }, l_pos, h_pos);
+  auto hl     = kumi::map([](auto vx, auto vy) { return T{vy, vx}; }, l_pos, h_pos);
   return kumi::cat(lh, hl);
 }
 

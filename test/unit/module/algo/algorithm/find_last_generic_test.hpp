@@ -22,7 +22,7 @@ template<typename Algo, typename Check> struct find_last_ptr_test
   Algo  alg;
   Check check;
 
-  find_last_ptr_test(Algo alg, Check check) : alg(alg), check(check) {}
+  find_last_ptr_test(Algo a, Check c) : alg(a), check(c) {}
 
   void init(auto *page_begin, auto *, auto *, auto *page_end) const
   {

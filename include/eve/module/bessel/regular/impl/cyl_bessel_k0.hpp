@@ -45,7 +45,6 @@ namespace eve::detail
         }
         else
         {
-          T                              y(1.137250900268554688);
           using A5 = kumi::result::generate_t<5, elt_t>;
           constexpr A5 P = {-1.372509002685546267e-01,
                             2.574916117833312855e-01,

@@ -19,39 +19,24 @@ namespace eve::algo
   struct apply_to_zip_pair
   {
     Op op;
-
-    explicit apply_to_zip_pair(Op op) : op(op) {}
-
-    EVE_FORCEINLINE auto operator()(auto x_y) const
-    {
-      return op(get<0>(x_y), get<1>(x_y));
-    }
+    explicit apply_to_zip_pair(Op o) : op(o) {}
+    EVE_FORCEINLINE auto operator()(auto x_y) const { return op(get<0>(x_y), get<1>(x_y)); }
   };
 
   template <typename P>
   struct not_p
   {
     P p;
-
-    explicit not_p(P p) : p(p) {}
-
-    EVE_FORCEINLINE auto operator()(auto ... x) const
-    {
-      return !p(x ...);
-    }
+    explicit not_p(P pr) : p(pr) {}
+    EVE_FORCEINLINE auto operator()(auto ... x) const { return !p(x ...); }
   };
 
   template <typename Op>
   struct load_and_apply
   {
     Op op;
-
-    explicit load_and_apply(Op op) : op(op) {}
-
-    EVE_FORCEINLINE auto operator()(auto it) const
-    {
-      return op(eve::load(it));
-    }
+    explicit load_and_apply(Op o) : op(o) {}
+    EVE_FORCEINLINE auto operator()(auto it) const { return op(eve::load(it)); }
   };
 
   template <typename Delegate>
@@ -59,7 +44,7 @@ namespace eve::algo
   {
     Delegate* delegate;
 
-    explicit call_single_step(Delegate* delegate) : delegate(delegate) {}
+    explicit call_single_step(Delegate* d) : delegate(d) {}
 
     EVE_FORCEINLINE bool operator()(auto it) const
     {
@@ -86,13 +71,8 @@ namespace eve::algo
   struct equal_to
   {
     T v;
-
-    explicit equal_to(T v) : v(v) {}
-
-    EVE_FORCEINLINE auto operator()(auto x) const
-    {
-      return x == v;
-    }
+    explicit equal_to(T w) : v(w) {}
+    EVE_FORCEINLINE auto operator()(auto x) const { return x == v; }
   };
 
   template <typename Op, typename T>
@@ -100,13 +80,8 @@ namespace eve::algo
   {
     Op op;
     T v;
-
-    bind_first(Op op, T v) : op(op), v(v) {}
-
-    EVE_FORCEINLINE auto operator()(auto x) const
-    {
-      return op(v, x);
-    }
+    bind_first(Op o, T w) : op(o), v(w) {}
+    EVE_FORCEINLINE auto operator()(auto x) const { return op(v, x); }
   };
 
   template <typename Op, typename T>
@@ -115,15 +90,9 @@ namespace eve::algo
     Op op;
     T v;
 
-    bind_second(Op op, T v) : op(op), v(v) {}
-
-    EVE_FORCEINLINE auto operator()(auto x) const
-    {
-      return op(x, v);
-    }
+    bind_second(Op o, T w) : op(o), v(w) {}
+    EVE_FORCEINLINE auto operator()(auto x) const { return op(x, v); }
   };
-
-
 
   struct do_nothing
   {
@@ -133,14 +102,12 @@ namespace eve::algo
   struct inplace_load_store
   {
     EVE_FORCEINLINE static auto load_it(auto i) { return i; }
-
     EVE_FORCEINLINE static auto store_it(auto i) { return i; }
   };
 
   struct to_load_store
   {
     EVE_FORCEINLINE static auto load_it(auto i) { return get<0>(i); }
-
     EVE_FORCEINLINE static auto store_it(auto i) { return get<1>(i); }
   };
 }

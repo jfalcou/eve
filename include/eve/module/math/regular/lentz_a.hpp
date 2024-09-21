@@ -17,8 +17,7 @@ template<typename Options>
 struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 {
   template<typename G, eve::floating_scalar_value T>
-  constexpr EVE_FORCEINLINE auto operator()(G g, T eps, std::size_t m) const noexcept
-  { return EVE_DISPATCH_CALL(g, eps, m); }
+  constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept { return EVE_DISPATCH_CALL(g, e, m); }
 
   EVE_CALLABLE_OBJECT(lentz_a_t, lentz_a_);
 };

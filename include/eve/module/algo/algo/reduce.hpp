@@ -33,9 +33,9 @@ namespace eve::algo
 
       std::array<Wide, get_unrolling<traits_type>()> sums;
 
-      delegate(Op op, Zero zero, Wide init) : op(op), zero(zero) {
-        sums.fill(as_value(zero, as<Wide>{}));
-        sums[0] = op(sums[0], init);
+      delegate(Op o, Zero z, Wide i) : op(o), zero(z) {
+        sums.fill(as_value(z, as<Wide>{}));
+        sums[0] = op(sums[0], i);
       }
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto idx)
