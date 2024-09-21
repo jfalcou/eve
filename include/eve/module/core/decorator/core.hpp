@@ -37,8 +37,6 @@ namespace eve
 
   struct upper_mode       {static constexpr int value = FE_UPWARD;     };
   struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
-  struct tonearest_mode   {static constexpr int value = FE_TONEAREST;  };
-  struct tozero_mode      {static constexpr int value = FE_TOWARDZERO; };
 
   struct to_nearest_mode  { static constexpr int value = 0x08 | 0x00; }; // _MM_FROUND_TO_NEAREST_INT
   struct downward_mode    { static constexpr int value = 0x08 | 0x01; }; // _MM_FROUND_TO_NEG_INF
@@ -69,8 +67,6 @@ namespace eve
   [[maybe_unused]] inline constexpr auto upper            = ::rbr::flag( upper_mode{}           );
   [[maybe_unused]] inline constexpr auto lower            = ::rbr::flag( lower_mode{}           );
   [[maybe_unused]] inline constexpr auto saturated        = ::rbr::flag( saturated_mode{}       );
-  [[maybe_unused]] inline constexpr auto tonearest        = ::rbr::flag( tonearest_mode{}       );
-  [[maybe_unused]] inline constexpr auto tozero           = ::rbr::flag( tozero_mode{}          );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -92,8 +88,6 @@ namespace eve
   struct saturated_option       : detail::exact_option<saturated>       {};
   struct upper_option           : detail::exact_option<upper>           {};
   struct lower_option           : detail::exact_option<lower>           {};
-  struct tonearest_option       : detail::exact_option<tonearest>       {};
-  struct tozero_option          : detail::exact_option<tozero>          {};
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic
@@ -111,9 +105,8 @@ namespace eve
   template<typename S> consteval int rounding_control() noexcept
   {
     if      constexpr(S::contains(eve::upper      )) return upper_mode::value;
-    else if constexpr(S::contains(eve::tozero     )) return tozero_mode::value;
     else if constexpr(S::contains(eve::lower      )) return lower_mode::value;
-    else /*constexpr(S::contains(eve::tonearest)) */ return tonearest_mode::value;
+    else                                             return FE_TONEAREST;
   };
 
   // New tolerance option that carry a value
