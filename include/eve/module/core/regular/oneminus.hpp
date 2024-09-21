@@ -18,7 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct oneminus_t : elementwise_callable<oneminus_t, Options, saturated_option>
+  struct oneminus_t : elementwise_callable<oneminus_t, Options, saturated_option, lower_option, upper_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
@@ -45,14 +45,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overloads
-//!      constexpr auto oneminus(value auto x)                                              noexcept; // 1
+//!      constexpr auto oneminus(value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto oneminus[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-//!      constexpr auto oneminus[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+//!      constexpr auto oneminus[conditional_expr auto c](value auto x) noexcept; // 2
+//!      constexpr auto oneminus[logical_value auto m](value auto x)    noexcept; // 2
 //!
 //!      // Semantic option
-//!      constexpr auto oneminus[saturated ](/* any of the above overloads */)              noexcept; // 3
+//!      constexpr auto oneminus[saturated ](value auto x)              noexcept; // 3
+//!      constexpr auto oneminus[lower](value auto x)                   noexcept; // 4
+//!      constexpr auto oneminus[upper](value auto x)                   noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -67,6 +69,10 @@ namespace eve
 //!      1. The value of `1-x` is returned.
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. saturated version.
+//!      4. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!         to be less or equal to the exact one (except for Nans).
+//!      5. The operation is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!         to be greater or equal to the exact one (except for Nans).
 //!
 //!    @note
 //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in
@@ -85,12 +91,12 @@ namespace eve
   {
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    oneminus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
+    oneminus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
       {
-        return one(eve::as<T>()) - v;
+        return sub[o](one(eve::as<T>()), v);
       }
       else
       {

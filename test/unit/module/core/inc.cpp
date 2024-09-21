@@ -52,6 +52,12 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[cond](wide)",
   TTS_EQUAL( eve::inc[a0 > 64](a0), map([](auto e) ->v_t{ return v_t((e > 64) ?e+1 : e); }, a0));
   bool z = (a0.get(0) > 64);
   TTS_EQUAL(eve::inc[z](a0), map([&](auto e) -> v_t { return v_t((z) ? e + 1 : e); }, a0));
+  if constexpr(eve::floating_value<T>)
+  {
+    auto m = eve::smallestposval(eve::as<T>());
+    TTS_EXPECT(eve::all(eve::inc[eve::lower](-m) < eve::inc(-m)));
+    TTS_EXPECT(eve::all(eve::inc[eve::upper](m) > eve::inc(m)));
+  }
 };
 
 TTS_CASE_WITH("Check behavior of inc[saturated](wide) on integral types",
