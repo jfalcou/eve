@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option>
+  struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option, lower_option, upper_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
@@ -41,14 +41,16 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      constexpr auto sqrt(value auto x)                          noexcept; // 1
+//!      constexpr auto sqrt(floating_value auto x)                          noexcept; // 1
 //!
 //!      // Lanes masking
-//!      constexpr auto sqrt[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto sqrt[logical_value auto m](value auto x)    noexcept; // 2
+//!      constexpr auto sqrt[conditional_expr auto c](floating_value auto x) noexcept; // 2
+//!      constexpr auto sqrt[logical_value auto m](floating_value auto x)    noexcept; // 2
 //!
 //!      // Semantic options
-//!      constexpr auto sqrt[raw](value auto x)                     noexcept; // 3
+//!      constexpr auto sqrt[raw](floating_value auto x)                     noexcept; // 3
+//!      constexpr auto sqrt[lower](floating_value auto x)                   noexcept; // 4
+//!      constexpr auto sqrt[upper](floating_value auto x)                   noexcept; // 5
 //!
 //!   }
 //!   @endcode
@@ -61,11 +63,15 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. value containing the [elementwise](@ref glossary_elementwise)
+//!     1. floating value containing the [elementwise](@ref glossary_elementwise)
 //!        square root of `x` or Nan if `x` is less than zero.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!     3. call a proper system intrinsic if one exists, but with possibly
 //!        very poor accuracy in return. Otherwise it uses the regular call
+//!     4. The square root is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!      to be less or equal to the exact one (except for Nans).
+//!     5. The square root is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!       to be greater or equal to the exact one (except for Nans).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/sqrt.cpp}

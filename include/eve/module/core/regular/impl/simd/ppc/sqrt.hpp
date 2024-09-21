@@ -17,11 +17,15 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(vmx_),
-                                   O          const&,
+                                   O          const&opts,
                                    wide<T, N> const& v0) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr( current_api >= vsx )
+ if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      return sqrt.behavior(cpu_{}, opts, v);
+    }
+    else if constexpr( current_api >= vsx )
       return vec_sqrt(v0.storage());
     else
     {

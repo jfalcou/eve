@@ -19,7 +19,7 @@ namespace eve::detail
   template<floating_scalar_value T, typename N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
                                    C          const& mask,
-                                   O          const&,
+                                   O          const& opts,
                                    wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
@@ -27,6 +27,10 @@ namespace eve::detail
     if constexpr( C::is_complete )
     {
       return src;
+    }
+    else if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      return sqrt.behavior(cpu_{}, opts, v);
     }
     else
     {
@@ -41,7 +45,12 @@ namespace eve::detail
                                    wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    return svsqrt_z(sve_true<T>(),v);
+    if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      return sqrt.behavior(cpu_{}, opts, v);
+    }
+    else
+      return svsqrt_z(sve_true<T>(),v);
   }
 
 }
