@@ -127,28 +127,6 @@ jobs:
           ctest -C ${{ matrix.cfg.mode }} --output-on-failure -R ^unit.internals.*.exe
 
   ######################################################################################################################
-  ## Mac OS X Targets
-  ######################################################################################################################
-  macosx:
-    runs-on: [macos-13]
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - { comp: clang , arch: x86_osx, opts: -mavx }
-    steps:
-      - name: Fetch current branch
-        uses: actions/checkout@v4.1.1
-      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        run: |
-          mkdir build && cd build
-          cmake .. -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
-      - name: Compiling Unit Tests
-        run:  cd build && make unit.exe -j 2
-      - name: Running Unit Tests
-        run: cd build && ctest --output-on-failure -j 2  -E ^doc.*.exe
-
-  ######################################################################################################################
   ## Check arch, meta, internals, memory in bulk
   ######################################################################################################################
   basic-generic:
@@ -165,8 +143,6 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: aarch64 , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
           - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
@@ -192,6 +168,31 @@ jobs:
           cd build
           ctest --output-on-failure -j 16 -R ^unit.arch.*.exe && ctest --output-on-failure -j 16 -R ^unit.meta.*.exe \
           && ctest --output-on-failure -j 16 -R ^unit.internals.*.exe && ctest --output-on-failure -j 16 -R ^unit.memory.*.exe
+
+  basic-arm:
+    runs-on: [macos-14]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64_osx}
+        # - { comp: clang, arch: arm_osx    }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for Basic Support Targets
+        run:  |
+          cd build
+          make unit.arch.exe unit.meta.exe unit.internals.exe unit.memory.exe -j 2
+      - name: Running Unit Tests for Basic Support Targets
+        run: |
+          cd build
+          ctest --output-on-failure -j 4 -R ^unit.arch.*.exe && ctest --output-on-failure -j 4 -R ^unit.meta.*.exe \
+          && ctest --output-on-failure -j 4 -R ^unit.internals.*.exe && ctest --output-on-failure -j 4 -R ^unit.memory.*.exe
 
   basic-special:
     runs-on: [self-hosted, avx512]
@@ -243,8 +244,6 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: aarch64 , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
           - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
@@ -269,6 +268,31 @@ jobs:
         run: |
           cd build
           ctest --output-on-failure -j 16 -R ^unit.api.*.exe
+
+  api-arm:
+    needs: basic-arm
+    runs-on: [macos-14]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64_osx}
+        # - { comp: clang, arch: arm_osx    }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for API Targets
+        run:  |
+          cd build
+          make unit.api.exe -j 2
+      - name: Running Unit Tests for API Targets
+        run: |
+          cd build
+          ctest --output-on-failure -j 4 -R ^unit.api.*.exe
 
   api-special:
     needs: basic-special
@@ -320,8 +344,6 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: aarch64 , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
           - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
@@ -346,6 +368,31 @@ jobs:
         run: |
           cd build
           ctest --output-on-failure -j 16 -R ^unit.core.*.exe && ctest --output-on-failure -j 16 -R ^unit.maath.*.exe
+
+  core-math-arm:
+    needs: api-arm
+    runs-on: [macos-14]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64_osx}
+        # - { comp: clang, arch: arm_osx    }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for Core & Math Targets
+        run:  |
+          cd build
+          make unit.core.exe unit.math.exe -j 2
+      - name: Running Unit Tests for Core & Math Targets
+        run: |
+          cd build
+          ctest --output-on-failure -j 4 -R ^unit.core.*.exe && ctest --output-on-failure -j 4 -R ^unit.maath.*.exe
 
   core-math-special:
     needs: api-special
@@ -423,6 +470,31 @@ jobs:
         run: |
           cd build
           ctest --output-on-failure -j 16 -R ^unit.algo.*.exe
+
+  algorithms-arm:
+    needs: core-math-arm
+    runs-on: [macos-14]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64_osx}
+        # - { comp: clang, arch: arm_osx    }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for Algorithms Targets
+        run:  |
+          cd build
+          make unit.algo.exe -j 2
+      - name: Running Unit Tests for Algorithms Targets
+        run: |
+          cd build
+          ctest --output-on-failure -j 4 -R ^unit.algo.*.exe
 
   algorithms-special:
     needs: core-math-special
