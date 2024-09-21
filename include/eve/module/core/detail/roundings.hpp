@@ -9,24 +9,10 @@
 
 #include <cstdint>
 #include <cfenv>
+#include <eve/module/core/decorator/core.hpp>
 
 namespace eve::detail
 {
-
-  inline constexpr std::uint32_t round_to_nearest = FE_TONEAREST;  // Round to nearest (even)
-  inline constexpr std::uint32_t round_down       = FE_DOWNWARD;   // Round down
-  inline constexpr std::uint32_t round_up         = FE_UPWARD;     // Round up
-  inline constexpr std::uint32_t round_toward_zero= FE_TOWARDZERO; // Round toward zero
-
-  template < typename O >
-  EVE_FORCEINLINE constexpr int rcontrol() noexcept
-  {
-    if constexpr(O::contains(lower))          return round_down;
-    else if constexpr(O::contains(upper))     return round_up;
-    else if constexpr(O::contains(tonearest)) return round_to_nearest;
-    else if constexpr(O::contains(tozero))    return round_toward_zero;
-    else return round_to_nearest;
-  }
 
   template < typename O, typename F, typename T,  std::same_as<T> ... Ts>
   EVE_FORCEINLINE constexpr T with_rounding(F f, T a,  Ts ... b) noexcept
@@ -43,7 +29,7 @@ namespace eve::detail
 #endif
 #endif
     auto oldstate = std::fegetround();
-    std::fesetround(rcontrol<O>());
+    std::fesetround(rounding_control<O>());
     auto r = f(a, b...);
     std::fesetround(oldstate);
 #ifdef  SPY_COMPILER_IS_GCC
