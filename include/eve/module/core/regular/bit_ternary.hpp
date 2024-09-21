@@ -18,7 +18,6 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
-#include <iostream>
 
 namespace eve
 {
@@ -125,7 +124,6 @@ namespace eve
     {
       using T   = bit_value_t<T0, T1, T2>;
       using i_t = as_integer_t<T, unsigned>;
-//      std::cout << "rezut et zut" << std::endl;
       auto wa = as_wide_as_t<T0, i_t>(x);
       auto wb = as_wide_as_t<T1, i_t>(y);
       auto wc = as_wide_as_t<T2, i_t>(z);
