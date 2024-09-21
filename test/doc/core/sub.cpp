@@ -1,6 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
@@ -17,10 +18,15 @@ int main()
   std::cout << "<- wi1                           = " << wi1 << "\n";
   std::cout << "<- wu0                           = " << wu0 << "\n";
   std::cout << "<- wu1                           = " << wu1 << "\n";
-                                                 
+
   std::cout << "-> sub(wf0, wf1)                 = " << eve::sub(wf0, wf1) << "\n";
   std::cout << "-> sub[ignore_last(2)](wf0, wf1) = " << eve::sub[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> sub[wf0 != 0](wf0, wf1)       = " << eve::sub[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> sub(wu0, wu1)                 = " << eve::sub(wu0, wu1) << "\n";
   std::cout << "-> sub(wi0, wi1)                 = " << eve::sub(wi0, wi1) << "\n";
+
+  std::cout << std::setprecision(20) << "-> sub          (wf0, wf1)       = " << eve::sub               (wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> sub[lower](wf0, wf1)       = " << eve::sub[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> sub[upper](wf0, wf1)         = " << eve::sub[eve::upper](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-  diff                          = " << eve::sub[eve::upper](wf0, wf1) - eve::sub[eve::lower](wf0, wf1) << "\n";
 }

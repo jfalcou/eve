@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct sub_t : tuple_callable<sub_t, Options, saturated_option>
+  struct sub_t : tuple_callable<sub_t, Options, saturated_option, lower_option, upper_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -59,6 +59,8 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto sub[saturated](/*any of the above overloads*/)                noexcept; // 4
+//!      constexpr auto sub[lower](/*any of the above overloads*/)                    noexcept; // 5
+//!      constexpr auto sub[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -80,9 +82,13 @@ namespace eve
 //!       Take care that for signed integral entries this kind of a is highly order dependant.
 //!       This call perform saturated additions in reverse incoming order.
 //!        We do not advise to use it for more than 2 parameters.
+//!    5. The substraction is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!       to be less or equal to the exact one (except for Nans).
+//!    6. The substraction is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!       to be greater or equal to the exact one (except for Nans).
 //!
 //!   @note
-//!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
+//!      Although the infix notation with `-` is supported for two parameters, the `-` operator on
 //!      standard scalar types is the original one and so can lead to automatic promotion.
 //!
 //!  @groupheader{Example}

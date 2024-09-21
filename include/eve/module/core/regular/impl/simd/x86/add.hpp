@@ -20,8 +20,19 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
   requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-
-  if constexpr(O::contains(saturated) && std::integral<T>)
+  if constexpr(O::contains(lower) || O::contains(upper))
+  {
+    if constexpr(current_api >= avx512)
+    {
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
+      else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
+      else                                             return  add.behavior(cpu_{}, opts, v, w);
+   }
+    else
+      return add.behavior(cpu_{}, opts, v, w);
+  }
+  else if constexpr(O::contains(saturated) && std::integral<T>)
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 
@@ -95,7 +106,11 @@ requires x86_abi<abi_t<T, N>>
   auto src = alternative(cx, v, as<wide<T, N>> {});
   auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-  if constexpr(O::contains(saturated))
+  if constexpr(O::contains(lower) || O::contains(upper))
+  {
+    return add.behavior(cpu_{}, opts, v, w);
+  }
+  else if constexpr(O::contains(saturated))
   {
     constexpr auto sup_avx2 = current_api >= avx2;
 

@@ -16,10 +16,14 @@ namespace eve::detail
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept 
+EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires arm_abi<abi_t<T, N>>
 {
-  if constexpr (O::contains(saturated) && integral_value<T>)
+  if constexpr(O::contains(lower) || O::contains(upper))
+  {
+    return sub.behavior(cpu_{}, opts, a, b);
+  }
+  else if constexpr (O::contains(saturated) && integral_value<T>)
   {
       return sub.behavior(cpu_{}, opts, a, b);
   }
@@ -50,7 +54,7 @@ EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
             if constexpr( c == category::float64x1 ) return vsub_f64  (a, b);
       else  if constexpr( c == category::float64x2 ) return vsubq_f64 (a, b);
     }
-  }      
+  }
 }
 
 }

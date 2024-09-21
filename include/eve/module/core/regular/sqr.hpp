@@ -20,7 +20,7 @@
 namespace eve
 {
 template<typename Options>
-struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
+struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option, upper_option>
 {
   template<eve::value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -55,6 +55,8 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
 //!
 //!      // Semantic options
 //!      constexpr auto sqr[saturated](value auto x)               noexcept; // 3
+//!      constexpr auto sqr[lower](value auto x)                   noexcept; // 4
+//!      constexpr auto sqr[upper](value auto x)                   noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -74,6 +76,10 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
 //!      specifically, for any integer value `x`, the call evaluates to:
 //!      [`valmax(as(x))`](@ref valmax) as soon as `abs[saturated](x)`
 //!      is greater than `sqrtvalmax(as(x))`.
+//!     4. The square is done in a 'round toward \f$-\infty\f$ mode. The product is guaranted
+//!       to be less or equal to the exact one.
+//!     5. The square is done in a 'round toward \f$\infty\f$ mode. The product is guaranted
+//!       to be greater or equal to the exact one.
 //!
 //!  @note
 //!      For  [integral signed values](@ref eve::value)   if `eve::abs[eve::saturated](x)`
@@ -93,7 +99,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
-    sqr_(EVE_REQUIRES(cpu_), O const &, T const &a0) noexcept
+    sqr_(EVE_REQUIRES(cpu_), O const &o, T const &a0) noexcept
     {
       if constexpr(O::contains(saturated))
       {
@@ -107,7 +113,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option>
         }
       }
       else
-        return mul(a0, a0);
+        return mul[o](a0, a0);
     }
   }
 }

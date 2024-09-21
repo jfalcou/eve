@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-
-
+#include <cfenv>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
@@ -21,14 +20,35 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/sign.hpp>
-#include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/two_prod.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
-    if constexpr (plain_scalar_value<T> && simd_value<U>)
+    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    {
+      using namespace spy::literal;
+      if constexpr(spy::compiler == spy::clang_ || spy::compiler >= 13_gcc || spy::compiler == spy::msvc_)
+      {
+        return with_rounding<O> (eve::mul, a, b);
+      }
+      else
+      {
+        auto [r, e] = eve::two_prod(a, b);
+        if constexpr(O::contains(lower))
+          return eve::prev[eve::is_ltz(e)](r);
+        else
+          return eve::next[eve::is_gtz(e)](r);
+      }
+    }
+    else if constexpr (plain_scalar_value<T> && simd_value<U>)
     {
       // some backends are optimized for this specific case, let them have
       // a chance to handle it

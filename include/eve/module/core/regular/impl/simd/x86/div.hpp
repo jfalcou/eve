@@ -16,12 +16,10 @@ namespace eve::detail
   template<callable_options O, plain_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
-  {  
-    if constexpr (O::contains(saturated))
-    {
-      return div.behavior(cpu_{}, opts, a, b);
-    }
-    else if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
+  {
+    if constexpr(O::contains(lower) || O::contains(upper) || O::contains(saturated) ||
+                 O::contains(toward_zero) || O::contains(upward) ||
+                 O::contains(downward) || O::contains(to_nearest))
     {
       return div.behavior(cpu_{}, opts, a, b);
     }
@@ -29,7 +27,21 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-            if constexpr  ( c == category::float64x8  ) return _mm512_div_pd(a, b);
+      if constexpr(O::contains(upper) || O::contains(lower))
+      {
+        if constexpr(current_api >= avx512)
+        {
+          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          if      constexpr  ( c == category::float64x8  ) return  _mm512_div_round_pd (a, b, dir);
+          else if constexpr  ( c == category::float32x16 ) return  _mm512_div_round_ps (a, b, dir);
+          else                                             return  div.behavior(cpu_{}, opts, a, b);
+        }
+        else
+        {
+          return div.behavior(cpu_{}, opts, a, b);
+        }
+      }
+      else  if constexpr  ( c == category::float64x8  ) return _mm512_div_pd(a, b);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_div_pd(a, b);
       else  if constexpr  ( c == category::float64x2  ) return _mm_div_pd(a, b);
       else  if constexpr  ( c == category::float32x16 ) return _mm512_div_ps(a, b);
@@ -60,11 +72,12 @@ namespace eve::detail
                                   wide<T, N> v,
                                   wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated))
+    if constexpr (O::contains(lower) || O::contains(upper) || O::contains(saturated))
     {
       return div.behavior(cpu_{}, o, v, w);
     }
-    else if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
+    else if constexpr (O::contains(toward_zero) || O::contains(upward) ||
+                       O::contains(downward) || O::contains(to_nearest))
     {
       return round[o](div[cx](v, w));
     }

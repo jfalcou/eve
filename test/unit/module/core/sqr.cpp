@@ -51,10 +51,15 @@ TTS_CASE_WITH("Check behavior of eve::sqr(eve::wide)",
   using eve::as;
   using eve::saturated;
   using eve::sqr;
+  using eve::lower;
+  using eve::upper;
   using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(sqr(a0), map([](auto e) -> v_t { return e * e; }, a0));
+  TTS_EQUAL(sqr(a0), a0*a0);
+  TTS_EQUAL(sqr[lower](a0), eve::mul[lower](a0, a0));
+  TTS_EQUAL(sqr[upper](a0), eve::mul[upper](a0, a0));
   TTS_EQUAL(sqr[mask](a0), eve::if_else(mask, eve::sqr(a0), a0));
   if constexpr( eve::integral_value<T> )
   {
@@ -66,5 +71,6 @@ TTS_CASE_WITH("Check behavior of eve::sqr(eve::wide)",
                   },
                   a0));
     TTS_EQUAL(sqr[saturated][mask](a0), eve::if_else(mask,sqr[saturated](a0), a0));
+
   }
 };

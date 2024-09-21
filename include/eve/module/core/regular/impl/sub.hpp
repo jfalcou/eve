@@ -7,6 +7,7 @@
 //==================================================================================================
 #pragma once
 
+#include <cfenv>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
@@ -23,12 +24,29 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
+    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    {
+      using namespace spy::literal;
+      if constexpr(spy::compiler == spy::clang_ || spy::compiler >= 13_gcc || spy::compiler == spy::msvc_)
+      {
+        return with_rounding<O> (eve::sub, a, b);
+      }
+      else
+      {
+       auto [r, e] = eve::two_add(a, -b);
+       if constexpr(O::contains(lower))
+         return eve::prev[eve::is_ltz(e)](r);
+       else
+         return eve::next[eve::is_gtz(e)](r);
+      }
+    }
     if constexpr (O::contains(saturated) && integral_value<T>)
     {
       if constexpr (scalar_value<T>)
