@@ -14,7 +14,7 @@
 namespace eve::detail
 {
 
-  bool constexpr enable_roundings = spy::compiler == spy::clang_ /*|| spy::compiler >= 13_gcc*/ || spy::compiler == spy::msvc_;
+  bool constexpr enable_roundings = (spy::compiler == spy::clang_ && spy::architecture == spy::amd64_) || spy::compiler == spy::msvc_;
 
   template < typename O, typename F, typename T,  std::same_as<T> ... Ts>
   EVE_FORCEINLINE constexpr T with_rounding(F f, T a,  Ts ... b) noexcept
