@@ -21,9 +21,11 @@ namespace eve::detail
   {
     // REGULAR ---
     // Only floating point has a special behavior and are PEDANTIC by design
-    if constexpr( std::floating_point<T> && !(ô::contains(lower) || ô::contains(upper))) return vec_madd(a.storage(), b.storage(), c.storage());
+    if constexpr( std::floating_point<T> && !(ô::contains(lower) || O::contains(upper)))
+      return vec_madd(a.storage(), b.storage(), c.storage());
     // PEDANTIC, INTEGRAL, UPPER, ETC... ---
     // We don't care about PROMOTE as we only accept similar types.
-    else return fma.behavior(cpu_{}, opts, a, b, c);
+    else
+      return fma.behavior(cpu_{}, opts, a, b, c);
   }
 }

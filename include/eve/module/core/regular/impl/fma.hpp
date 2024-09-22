@@ -21,6 +21,7 @@
 #include <eve/module/core/regular/three_fma.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/common_value.hpp>
+#include <eve/module/core/detail/roundings.hpp>
 #include <cmath>
 
 namespace eve::detail
@@ -75,7 +76,7 @@ namespace eve::detail
     if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower)))
     {
       using namespace spy::literal;
-      if constexpr(spy::compiler == spy::clang_ || spy::compiler >= 13_gcc || spy::compiler == spy::msvc_)
+      if constexpr(enable_roundings)
       {
         return with_rounding<O>(eve::fma[o.drop(lower, upper)], a, b, c);
       }
