@@ -75,7 +75,7 @@ inline constexpr auto fast_two_add = functor<fast_two_add_t>;
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<typename T, callable_options O>
     EVE_FORCEINLINE auto fast_two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
       EVE_ASSERT(eve::all(is_not_less(eve::abs(a), eve::abs(b))), "|a| >=  |b| not satisfied for all elements");
