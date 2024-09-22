@@ -11,8 +11,6 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/false.hpp>
-#include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/is_not_less_equal.hpp>
 
 namespace eve::detail
 {
@@ -52,8 +50,7 @@ namespace eve::detail
                                      O const& o,
                                      wide<T, N> const& v,
                                      wide<T, N> const& w) noexcept
-  -> decltype(is_not_less_equal(v, w))
-    requires x86_abi<abi_t<T, N>>
+  requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -75,7 +72,7 @@ namespace eve::detail
         return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
       else if constexpr( c == category::float32x4 ) return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
       else if constexpr( c == category::float64x2 ) return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-      else return is_less[cx](w, v);
+      else return is_unordered.behavior(cpu_{}, o, v, w);
     }
   }
 }
