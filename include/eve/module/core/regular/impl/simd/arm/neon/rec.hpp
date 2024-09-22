@@ -20,7 +20,7 @@ namespace eve::detail
   {
 
     if constexpr(O::contains(lower) || O::contains(upper))
-      return rec.behavior(cpu_{}, opts, a0);
+      return rec.behavior(cpu_{}, opts, v);
     else if constexpr(O::contains(raw))
     {
       constexpr auto cat = categorize<wide<T, N>>();
