@@ -41,7 +41,7 @@ namespace eve::detail
 
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
-                                   O          const&,
+                                   O          const& opts,
                                    wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
