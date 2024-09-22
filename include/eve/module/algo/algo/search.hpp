@@ -17,6 +17,105 @@
 namespace eve::algo
 {
 
+namespace detail
+{
+
+
+/*
+* This is a version of eve::algo::for_each_selected.
+* The problem with just using eve::algo::for_each_selected for search,
+* is that, when used with zip, the tail handling gets expensive.
+*
+* We want to trade off the tail handling for maybe more false positives.
+*/
+struct for_each_possibly_matching_for_search_
+{
+  template <typename NeedleWide, typename Equal, typename Verify>
+  struct delegate {
+    NeedleWide needle_front;
+    NeedleWide needle_back;
+    Equal equal_fn;
+    Verify& verify;
+    bool was_stopped = false;
+
+    template <typename I>
+    EVE_FORCEINLINE
+    auto make_verify_adapter(I haystack_it) {
+      struct res_t {
+        Verify& verify;
+        unaligned_t<I> base;
+
+        EVE_FORCEINLINE bool operator()(std::ptrdiff_t i) {
+          return verify(base + i);
+        }
+      };
+
+      return res_t{verify, unalign(haystack_it)};
+    }
+
+    EVE_FORCEINLINE bool tail(auto zip_it, eve::relative_conditional_expr auto ignore)
+    {
+      auto front_it = get<0>(zip_it);
+
+      // not loading from `zip_it` here, becasue it's much more expensive for tails.
+      auto haystack_front = eve::load[ignore](front_it);
+      eve::logical precheck = equal_fn(haystack_front, needle_front);
+
+      was_stopped = eve::iterate_selected[ignore](precheck, make_verify_adapter(front_it));
+      return was_stopped;
+    }
+
+    EVE_FORCEINLINE bool main_part(auto zip_it)
+    {
+      auto [haystack_front, haystack_back] = eve::load(zip_it);
+
+      eve::logical precheck = equal_fn(haystack_front, needle_front) && equal_fn(haystack_back, needle_back);
+      was_stopped = eve::iterate_selected(precheck, make_verify_adapter(get<0>(zip_it)));
+
+      return was_stopped;
+    }
+
+    template <eve::relative_conditional_expr C>
+    EVE_FORCEINLINE bool step(auto zip_it, C ignore, auto /*idx*/)
+    {
+      if constexpr ( C::is_complete && C::is_inverted ) {
+        return main_part(zip_it);
+      } else {
+        return tail(zip_it, ignore);
+      }
+    }
+
+    EVE_FORCEINLINE bool unrolled_step(auto arr)
+    {
+      return unroll_by_calling_single_step {}(arr, *this);
+    }
+  };
+
+  template <typename HaystackI, typename HaystackS, typename NeedleWide, typename Equal, typename Verify>
+  EVE_FORCEINLINE bool operator()(
+    auto traits,
+    HaystackI haystack_f,
+    HaystackS haystack_l,
+    NeedleWide needle_front,
+    NeedleWide needle_back,
+    std::ptrdiff_t needle_len,
+    Equal equal_fn,
+    Verify& verify) const {
+
+    auto haystack_front_back_range = views::zip(
+      as_range(haystack_f, haystack_l),
+      unalign(haystack_f) + (needle_len - 1)
+    );
+
+    auto iteration = algo::for_each_iteration(traits, haystack_front_back_range.begin(), haystack_front_back_range.end());
+    delegate<NeedleWide, Equal, Verify> d{needle_front, needle_back, equal_fn, verify};
+    iteration(d);
+    return d.was_stopped;
+  }
+} inline constexpr for_each_possibly_matching_for_search;
+
+}
+
 template<typename TraitsSupport> struct search_ : TraitsSupport
 {
   template<typename I1,   // haystack_iter
@@ -109,28 +208,33 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     eve::wide_value_type_t<I2> needle_front(eve::read(needle_f));
     eve::wide_value_type_t<I2> needle_back(eve::read(eve::unalign(needle_f) + (needle_len - 1)));
 
-    unaligned_t<I1> hastack_back_f = eve::unalign(haystack_f) + (needle_len - 1);
+    struct
+    {
+      std::optional<unaligned_t<I1>> res;
+      Checker check;
 
-    std::optional<unaligned_t<I1>> res;
-    for_each_selected[drop_key(divisible_by_cardinal, traits)](
-        views::zip(as_range(haystack_f, haystack_main_part_l), hastack_back_f),
-        [&](auto haystack_front_back)
-        {
-          auto [haystack_front, haystack_back] = haystack_front_back;
-          return equal(haystack_front, needle_front) && equal(haystack_back, needle_back);
-        },
-        [&](auto haystack_front_back_it)
-        {
-          auto [haystack_it, _] = haystack_front_back_it;
+      EVE_FORCEINLINE bool operator()(unaligned_t<I1> haystack_it)
+      {
+        if( check.main_check(haystack_it) ) {
+          res = haystack_it;
+          return true;
+        }
+        return false;
+      }
+    } verify { {}, check };
 
-          if( check.main_check(haystack_it) )
-          {
-            res = haystack_it;
-            return true;
-          }
-          return false;
-        });
-    return res;
+    detail::for_each_possibly_matching_for_search(
+      drop_key(divisible_by_cardinal, traits),
+      haystack_f,
+      haystack_main_part_l,
+      needle_front,
+      needle_back,
+      needle_len,
+      equal,
+      verify
+    );
+
+    return verify.res;
   }
 
   template<typename UnalignedI1>
