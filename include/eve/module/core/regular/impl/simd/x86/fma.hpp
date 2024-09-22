@@ -25,6 +25,18 @@ namespace eve::detail
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
     // PEDANTIC ---
+    else if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      if constexpr(current_api >= avx512)
+      {
+        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_fmadd_round_pd (a, b, c, dir);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_fmadd_round_ps (a, b, c, dir);
+        else                                             return  fma.behavior(cpu_{}, opts, a, b, c);
+      }
+      else
+        return fma.behavior(cpu_{}, opts, a, b, c);
+    }
     else if constexpr(O::contains(pedantic) )
     {
       if constexpr( supports_fma3 ) return fma(a, b, c);

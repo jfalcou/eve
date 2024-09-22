@@ -14,6 +14,11 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/next.hpp>
+#include <eve/module/core/regular/prev.hpp>
+#include <eve/module/core/regular/three_fma.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/common_value.hpp>
 #include <cmath>
@@ -66,9 +71,26 @@ namespace eve::detail
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr auto fma_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const& b, T const& c)
   {
+    // UPPER LOWER ---------------------
+    if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower)))
+    {
+      using namespace spy::literal;
+      if constexpr(spy::compiler == spy::clang_ || spy::compiler >= 13_gcc || spy::compiler == spy::msvc_)
+      {
+        return with_rounding<O>(eve::fma[o.drop(lower, upper)], a, b, c);
+      }
+      else
+      {
+       auto [r, e, e1] = eve::three_fma(a, b, c);
+       if constexpr(O::contains(lower))
+         return eve::prev[eve::is_ltz(e+e1)](r);
+       else
+         return eve::next[eve::is_gtz(e+e1)](r);
+      }
+    }
     // PROMOTE ---------------------
     // We promote before going pedantic in case it changes the behavior
-    if constexpr(O::contains(promote)) return fma[o.drop(promote)](a,b,c);
+    else if constexpr(O::contains(promote)) return fma[o.drop(promote)](a,b,c);
     // PEDANTIC ---------------------
     else if constexpr(O::contains(pedantic))
     {

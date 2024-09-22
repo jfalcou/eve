@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, promote_option>
+  struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, promote_option, lower_option, upper_option>
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
@@ -55,6 +55,8 @@ namespace eve
 //!      // Semantic option
 //!      constexpr auto fma[pedantic](value auto x, value auto y, value auto z)                noexcept; // 3
 //!      constexpr auto fma[promote](value auto x, value auto y, value auto z)                 noexcept; // 4
+//!      constexpr auto add[lower](value auto x, value auto y, value auto z)                   noexcept; // 5
+//!      constexpr auto add[upper](value auto x, value auto y, value auto z)                   noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -73,6 +75,11 @@ namespace eve
 //!      3. `pedantic` option always ensures the full compliance to fam properties. This can be very expensive if the system
 //!         has no hardware capability.
 //!      4. TO DO : DESCRIBE
+//!      5. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!         to be less or equal to the exact one (except for Nans).
+//!      6. The operation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!         to be greater or equal to the exact one (except for Nans).
+//!
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/fma)

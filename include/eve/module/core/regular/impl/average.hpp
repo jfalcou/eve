@@ -52,7 +52,7 @@ namespace eve::detail
       {
         T invn  = rec[pedantic](T(sizeof...(args) + 1u));
         T that(r0 * invn);
-        auto lfma = fma[o.drop(raw)];
+        auto lfma = fma[o];
         auto  next = [invn, lfma](auto avg, auto x) { return lfma(x, invn, avg); };
         ((that = next(that, args)), ...);
         return that;

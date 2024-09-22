@@ -20,7 +20,10 @@ namespace eve::detail
   {
     // We don't care about PEDANTIC as this is a proper FMA.
     // We don't care about PROMOTE as we only accept similar types.
-    return svmad_x(sve_true<T>(), a, b, c);
+    if constexpr(O::contains(lower) || O::contains(upper))
+      return fma.behavior(cpu_{}, opts, a, b, c);
+    else
+      return svmad_x(sve_true<T>(), a, b, c);
   }
 
   template<conditional_expr C, typename T, typename N, callable_options O>
