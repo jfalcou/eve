@@ -17,6 +17,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
+#include <eve/module/core/regular/is_not_less_equal.hpp>
 #include <eve/module/core/regular/min.hpp>
 
 namespace eve::detail
