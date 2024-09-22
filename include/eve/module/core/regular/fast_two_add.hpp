@@ -16,8 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fast_two_add_t : elementwise_callable<fast_two_add_t, Options
-                                               , raw_option, pedantic_option>
+  struct fast_two_add_t : elementwise_callable<fast_two_add_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -77,7 +76,7 @@ inline constexpr auto fast_two_add = functor<fast_two_add_t>;
   namespace detail
   {
     template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE auto fast_two_add_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+    EVE_FORCEINLINE auto fast_two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
       EVE_ASSERT(eve::all(is_not_less(eve::abs(a), eve::abs(b))), "|a| >=  |b| not satisfied for all elements");
       T s   = a + b;
