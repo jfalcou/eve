@@ -9,11 +9,14 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
-
 #include <cmath>
 
+#if __has_include(<boost/math/special_functions/expint.hpp>)
 #include <boost/math/special_functions/expint.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -73,3 +76,9 @@ TTS_CASE_WITH("Check behavior of exp_int on wide",
   TTS_ULP_EQUAL(
       exp_int(elt_t(6000), elt_t(0.5)), (boost::math::expint(elt_t(6000), elt_t(0.5))), 4.0);
 };
+#else
+TTS_CASE("Check return types of expint")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif

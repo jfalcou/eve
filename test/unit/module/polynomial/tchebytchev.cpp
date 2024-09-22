@@ -6,11 +6,14 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-
 #include <eve/module/polynomial.hpp>
 
+#if __has_include(<boost/math/special_functions/chebyshev.hpp>)
 #include <boost/math/special_functions/chebyshev.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 //== Types tests
 //==================================================================================================
@@ -73,3 +76,11 @@ TTS_CASE_WITH("Check behavior of successor(tchebytchev)",
   auto u5 = eve::tchebytchev[kind_2](5, a0);
   TTS_ULP_EQUAL(eve::tchebytchev[eve::successor](a0, u4, u3), u5, 300);
 };
+#else
+TTS_CASE("Check return types of tchebytchev")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+
+

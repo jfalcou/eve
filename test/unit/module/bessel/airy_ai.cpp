@@ -10,8 +10,12 @@
 #include <eve/module/bessel.hpp>
 #include <eve/module/core.hpp>
 
+#if __has_include(<boost/math/special_functions/airy.hpp>)
 #include <boost/math/special_functions/airy.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 TTS_CASE_TPL("Check return types of airy_ai", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
@@ -87,3 +91,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::airy_ai)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::airy_ai[mask](a0),eve::if_else(mask, eve::airy_ai(a0), a0));
 };
+#else
+TTS_CASE("Check return types of airy_ai")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif

@@ -9,8 +9,12 @@
 
 #include <eve/module/special.hpp>
 
+#if __has_include(<boost/math/special_functions/factorials.hpp>)
 #include <boost/math/special_functions/factorials.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -46,3 +50,9 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::double_factorial on wide",
     TTS_ULP_EQUAL(eve::double_factorial(T(302)), eve::inf(eve::as<d_t>()), 0);
   }
 };
+#else
+TTS_CASE("Check return types of double_factorial")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif

@@ -8,15 +8,19 @@
 #include "test.hpp"
 
 #include <eve/module/polynomial.hpp>
-#if defined(cpp_lib_math_special_functions)
-#include <cmath>
-#define NAMESPACE std
+
+#if defined(__cpp_lib_math_special_functions)
+# define NAMESPACE std
+# define EVE_HAS_MATH
 #else
-#include <boost/math/special_functions/hermite.hpp>
-#define NAMESPACE boost::math
+# if __has_include(<boost/math/special_functions/hermite.hpp>)
+#   include <boost/math/special_functions/hermite.hpp>
+#   define EVE_HAS_MATH
+#   define NAMESPACE boost::math
+# endif
 #endif
 
-
+#if defined(EVE_HAS_MATH)
 //==================================================================================================
 //== Types tests
 //==================================================================================================
@@ -65,3 +69,10 @@ TTS_CASE_WITH("Check behavior of hermite on wide",
     }
   }
 };
+#else
+TTS_CASE("Check return types of hermite")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+

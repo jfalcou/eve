@@ -9,8 +9,12 @@
 
 #include <eve/module/polynomial.hpp>
 
+#if __has_include(<boost/math/special_functions/gegenbauer.hpp>)
 #include <boost/math/special_functions/gegenbauer.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 //== Types tests
 //==================================================================================================
@@ -63,3 +67,10 @@ TTS_CASE_WITH("Check behavior of gegenbauer on wide",
     }
   }
 };
+#else
+TTS_CASE("Check return types of gegenbauer")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+

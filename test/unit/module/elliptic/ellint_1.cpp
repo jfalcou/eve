@@ -11,8 +11,12 @@
 #include <eve/module/elliptic.hpp>
 #include <eve/module/math.hpp>
 
+#if __has_include(<boost/math/special_functions/ellint_1.hpp>)
 #include <boost/math/special_functions/ellint_1.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -65,3 +69,10 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::ellint_1)(eve::wide)",
   TTS_IEEE_EQUAL(eve::ellint_1[mask](a0, a1),
             eve::if_else(mask, eve::ellint_1(a0, a1), a0));
 };
+#else
+TTS_CASE("Check return types of ellint_1")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+
