@@ -30,7 +30,7 @@ namespace eve::detail
 // #if __GNUC__ >= 13
 // #pragma STDC FENV_ACCESS on
 // #endif
-#endif
+// #endif
 //    std::cout << "icitte" << std::endl;
     auto oldstate = std::fegetround();
     std::fesetround(rounding_control<O>());
