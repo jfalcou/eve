@@ -23,7 +23,7 @@ namespace eve::detail
   {
  if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts, v);
+      return sqrt.behavior(cpu_{}, opts, v0);
     }
     else if constexpr( current_api >= vsx )
       return vec_sqrt(v0.storage());
