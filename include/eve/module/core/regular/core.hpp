@@ -66,6 +66,7 @@
 #include <eve/module/core/regular/fam.hpp>
 #include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/regular/fdim.hpp>
+#include <eve/module/core/regular/fast_two_add.hpp>
 #include <eve/module/core/regular/first_true.hpp>
 #include <eve/module/core/regular/firstbitset.hpp>
 #include <eve/module/core/regular/firstbitunset.hpp>
@@ -215,6 +216,7 @@
 #include <eve/module/core/regular/sum_of_prod.hpp>
 #include <eve/module/core/regular/swap_if.hpp>
 #include <eve/module/core/regular/swap_pairs.hpp>
+#include <eve/module/core/regular/three_fma.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/try_each_group_position.hpp>
 #include <eve/module/core/regular/two_add.hpp>

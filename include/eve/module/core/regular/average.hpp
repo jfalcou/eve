@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct average_t : tuple_callable<average_t, Options, raw_option, upward_option, downward_option>
+  struct average_t : tuple_callable<average_t, Options, raw_option, upper_option, lower_option>
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -71,8 +71,8 @@ namespace eve
 //!      constexpr auto average[raw] (/* any of the above overloads */)                             noexcept; // 5
 //!
 //!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto average[upward](eve::integral_value auto x, eve::integral_value auto y)     noexcept; // 6
-//!      constexpr auto average[downward](eve::integral_value auto x, eve::integral_value auto y)   noexcept; // 7
+//!      constexpr auto average[upper](eve::value auto x, eve::value auto y)     noexcept; // 6
+//!      constexpr auto average[lower](eve::value auto x, eve::value auto y)   noexcept; // 7
 //!   }
 //!   @endcode
 //!
@@ -100,8 +100,12 @@ namespace eve
 //!     3. the arithmetic mean of the tuple arguments. No overflow occurs.
 //!     4. [The operation is performed conditionnaly](@ref conditional)
 //!     5. No provision is made to avoid overflows for more than 2 parameters.
-//!     6. similar to `ceil((x+y)/2)`,  but converted to an integral value.
-//!     7. similar to `floor((x+y)/2)` but converted to an integral value.
+//!     6. The average is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!        to be less or equal to the exact one (except for Nans).
+//!        For integral type entries, this is similar to `ceil((x+y)/2)`, but converted to an integral value.
+//!     7. The average is computed in a 'round toward \f$ +\infty\f$ mode. The result is guaranted
+//!        to be greater or equal to the exact one (except for Nans).
+//         For integral type entries, similar to `floor((x+y)/2)` but converted to an integral value.
 //!
 //!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Mean)
