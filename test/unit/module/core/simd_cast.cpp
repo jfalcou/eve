@@ -99,12 +99,36 @@ simd_cast_test_one_way()
       << "from: " << tts::typename_<T> << " to: " << tts::typename_<U>;
 }
 
+template<typename T>
+consteval bool
+test_enable_cardinals()
+{
+  using scalar_t                   = typename T::value_type;
+  constexpr auto cardinal          = eve::cardinal_v<T>;
+  constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+  if constexpr( expected_cardinal == cardinal ) return true;
+  else if constexpr( sizeof(scalar_t) == 8 && expected_cardinal * 2 == cardinal ) return true;
+  else return false;
+}
+template<typename T, typename U>
+consteval bool
+test_enable()
+{
+  if constexpr( eve::is_logical_v<T> ) return true;
+  else
+  {
+    constexpr auto size_limit = 256;
+    if constexpr( sizeof(T) <= size_limit && sizeof(U) <= size_limit ) return true;
+    else return test_enable_cardinals<T>();
+  }
+}
+
 template<typename T, typename U>
 void
 simd_cast_test()
 {
   // saving compile time a bit
-  if constexpr( T::size() * 2 <= U::size() )
+  if constexpr( test_enable<T, U>() )
   {
     simd_cast_test_one_way<T, U>();
     simd_cast_test_one_way<U, T>();
@@ -115,7 +139,7 @@ template<typename T, typename U>
 void
 simd_cast_logical_test()
 {
-  simd_cast_test<eve::logical<T>, eve::logical<U>>();
+  if constexpr( test_enable<T, U>() ) simd_cast_test<eve::logical<T>, eve::logical<U>>();
 }
 
 TTS_CASE_TPL("simd_cast, plain", eve::test::simd::all_types)
