@@ -33,8 +33,8 @@ auto mhalf_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pio_2(tgt
 auto half_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pio_2(tgt); };
 auto mfull_c    = []<typename T>(eve::as<T> const& tgt) { return -eve::pi(tgt); };
 auto full_c     = []<typename T>(eve::as<T> const& tgt) { return  eve::pi(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const& tgt) { return -eve::Rempio2_limit[eve::medium2](tgt); };
-auto med        = []<typename T>(eve::as<T> const& tgt) { return  eve::Rempio2_limit[eve::medium2](tgt); };
+auto mmed       = []<typename T>(eve::as<T> const& tgt) { return -eve::Rempio2_limit[eve::medium](tgt); };
+auto med        = []<typename T>(eve::as<T> const& tgt) { return  eve::Rempio2_limit[eve::medium](tgt); };
 
 TTS_CASE_WITH("Check behavior of cos on wide",
               eve::test::simd::ieee_reals,

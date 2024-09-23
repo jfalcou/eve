@@ -31,8 +31,8 @@ auto mquarter_c = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_4(tgt)
 auto quarter_c  = []<typename T>(eve::as<T> const&tgt) { return eve::pio_4(tgt); };
 auto mhalf_c    = []<typename T>(eve::as<T> const&tgt) { return -eve::pio_2(tgt); };
 auto half_c     = []<typename T>(eve::as<T> const&tgt) { return eve::pio_2(tgt); };
-auto mmed       = []<typename T>(eve::as<T> const&tgt) { return -eve::Rempio2_limit[eve::medium2](tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve::medium2](tgt); };
+auto mmed       = []<typename T>(eve::as<T> const&tgt) { return -eve::Rempio2_limit[eve::medium](tgt); };
+auto med = []<typename T>(eve::as<T> const& tgt){ return eve::Rempio2_limit[eve::medium](tgt); };
 
 
 TTS_CASE_WITH("Check behavior of csc on wide",
@@ -48,9 +48,9 @@ TTS_CASE_WITH("Check behavior of csc on wide",
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1.0 / std::sin(double(e)); };
-  TTS_ULP_EQUAL(csc[eve::quarter_circle2](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(csc[eve::half_circle2   ](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(csc[eve::half_circle2   ](a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(csc[eve::quarter_circle](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc[eve::half_circle   ](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc[eve::half_circle   ](a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(csc(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(csc(a2), map(ref, a2), 2);

@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check return types of cos", eve::test::simd::ieee_reals)
 // cos  tests
 //==================================================================================================
 auto mmed = []<typename T>(eve::as<T> const& tgt)
-{ return -eve::Rempio2_limit[eve::medium2](tgt) * eve::inv_pi(tgt); };
+{ return -eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
 auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::Rempio2_limit[eve::medium2](tgt) * eve::inv_pi(tgt); };
+{ return eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of cos on wide",
               eve::test::simd::ieee_reals,
@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of cos on wide",
   auto refc = [](auto e) -> v_t { return eve::cospi(e); };
   auto refs = [](auto e) -> v_t { return eve::sinpi(e); };
   {
-    auto [s, c] =  sinpicospi[eve::quarter_circle2](a0);
+    auto [s, c] =  sinpicospi[eve::quarter_circle](a0);
     TTS_ULP_EQUAL(s, map(refs, a0), 2);
     TTS_ULP_EQUAL(c, map(refc, a0), 2);
   }
