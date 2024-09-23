@@ -13,8 +13,12 @@
 
 #include <cmath>
 
+#if __has_include(<boost/math/special_functions/ellint_rj.hpp>)
 #include <boost/math/special_functions/ellint_rj.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -83,3 +87,10 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::ellint_rj)(eve::wide)",
   TTS_IEEE_EQUAL(eve::ellint_rj[mask](a0, a1, a2, a3),
             eve::if_else(mask, eve::ellint_rj(a0, a1, a2, a3), a0));
 };
+#else
+TTS_CASE("Check return types of ellint_rj")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+

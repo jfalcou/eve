@@ -9,8 +9,13 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
-#include <boost/math/special_functions/lambert_w.hpp>
 
+#if __has_include(<boost/math/special_functions/lambert_w.hpp>)
+#include <boost/math/special_functions/lambert_w.hpp>
+#define EVE_HAS_BOOST
+#endif
+
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -160,3 +165,9 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
     }
   }
 };
+#else
+TTS_CASE("Check return types of lambert")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif

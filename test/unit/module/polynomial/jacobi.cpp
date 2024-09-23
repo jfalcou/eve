@@ -9,9 +9,12 @@
 
 #include <eve/module/polynomial.hpp>
 
+#if __has_include(<boost/math/special_functions/jacobi.hpp>)
 #include <boost/math/special_functions/jacobi.hpp>
+#define EVE_HAS_BOOST
+#endif
 
-
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -41,3 +44,10 @@ TTS_CASE_WITH( "Check behavior of diff jacobi on wide"
   auto bdt1 = [&](auto i, auto e, auto f,  auto g){return boost::math::jacobi(i, e, f, g); };
   TTS_ULP_EQUAL(dt, eve::detail::map(bdt1, i0, a0, a1, a2), 1000);
 };
+#else
+TTS_CASE("Check return types of jacobi")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+

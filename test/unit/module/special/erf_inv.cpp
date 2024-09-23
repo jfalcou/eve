@@ -10,8 +10,12 @@
 #include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
 
+#if __has_include(<boost/math/special_functions/erf.hpp>)
 #include <boost/math/special_functions/erf.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -85,3 +89,10 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::erf_inv)(eve::wide)",
   TTS_IEEE_EQUAL(eve::erf_inv[mask](a0),
             eve::if_else(mask, eve::erf_inv(a0), a0));
 };
+#else
+TTS_CASE("Check return types of erf_inv")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+

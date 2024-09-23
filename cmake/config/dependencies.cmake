@@ -10,7 +10,6 @@
 find_package(Boost 1.74.0 QUIET)
 
 if(Boost_FOUND)
-  set(EVE_USE_BOOST 1)
   message( STATUS "[eve] Boost found in ${Boost_INCLUDE_DIRS} - Boost dependent tests activated")
 else()
   set(Boost_INCLUDE_DIRS "")

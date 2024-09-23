@@ -9,11 +9,14 @@
 
 #include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
-
 #include <cmath>
 
+#if __has_include(<boost/math/special_functions/gamma.hpp>)
 #include <boost/math/special_functions/gamma.hpp>
+#define EVE_HAS_BOOST
+#endif
 
+#if defined(EVE_HAS_BOOST)
 //==================================================================================================
 // Types tests
 //==================================================================================================
@@ -76,3 +79,10 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::gamma_p_inv)(eve::wide)",
   TTS_IEEE_EQUAL(eve::gamma_p_inv[mask](a0, a1),
             eve::if_else(mask, eve::gamma_p_inv(a0, a1), a0));
 };
+#else
+TTS_CASE("Check return types of gamma_p_inv")
+{
+  TTS_PASS("SKipping due to no reference available");
+};
+#endif
+
