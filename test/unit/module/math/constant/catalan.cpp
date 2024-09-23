@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of catalan on scalar", eve::test::scalar::ieee_real
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::catalan[eve::downward](eve::as<T>()) <= 0.915965594177219015054603l);
-    TTS_EXPECT(eve::catalan[eve::upward](eve::as<T>()) >= 0.915965594177219015054603l);
+    TTS_EXPECT(eve::catalan[eve::lower](eve::as<T>()) <= 0.915965594177219015054603l);
+    TTS_EXPECT(eve::catalan[eve::upper](eve::as<T>()) >= 0.915965594177219015054603l);
   }
   TTS_EQUAL(eve::catalan(eve::as<T>()), T(0.915965594177219015054603l));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of catalan on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::catalan[eve::downward](as<T>()), eve::catalan[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::catalan[eve::lower](as<T>()), eve::catalan[eve::upper](as<T>()))));
 };
 
 

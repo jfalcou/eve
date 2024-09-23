@@ -13,5 +13,5 @@ int main(){
    std::cout << "-> ellint_1(wphi, wf)          = " << eve::ellint_1(wphi, wf) << "\n";
    std::cout << "-> ellint_1[ignore_last(2)](wf)= " << eve::ellint_1[eve::ignore_last(2)](wf) << "\n";
    std::cout << "-> ellint_1[wf != 1.0](wf)     = " << eve::ellint_1[wf != -1.0f](wf) << "\n";
-   std::cout << "-> ellint_1(pio_2, wf)         = " << eve::ellint_1(eve::pio_2[eve::downward](eve::as(wphi)), wf) << '\n';
+   std::cout << "-> ellint_1(pio_2[lower], wf)  = " << eve::ellint_1(eve::pio_2[eve::lower](eve::as(wphi)), wf) << '\n';
 }

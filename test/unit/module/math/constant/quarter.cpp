@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of quarter on scalar", eve::test::scalar::ieee_real
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::quarter[eve::downward](eve::as<T>()) <= 0.25l);
-    TTS_EXPECT(eve::quarter[eve::upward](eve::as<T>()) >= 0.25l); 
+    TTS_EXPECT(eve::quarter[eve::lower](eve::as<T>()) <= 0.25l);
+    TTS_EXPECT(eve::quarter[eve::upper](eve::as<T>()) >= 0.25l); 
   }
   TTS_EQUAL(eve::quarter(eve::as<T>()), T(0.25l));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of quarter on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::quarter[eve::downward](as<T>()), eve::quarter[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::quarter[eve::lower](as<T>()), eve::quarter[eve::upper](as<T>()))));
 };
 
 

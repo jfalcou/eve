@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check behavior of two_pi on scalar", eve::test::scalar::ieee_reals
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
 
   TTS_EQUAL(eve::two_pi(as<T>()), T(8 * std::atan(1.0l)));
 };
@@ -44,9 +44,9 @@ TTS_CASE_TPL("Check behavior of two_pi on scalar", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::two_pi[eve::downward](as<T>())), eve::two_pi[eve::upward](as<T>()))));
+  using eve::lower;
+  using eve::upper;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::two_pi[eve::lower](as<T>())), eve::two_pi[eve::upper](as<T>()))));
 };
 
 

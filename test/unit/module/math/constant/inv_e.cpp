@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of inv_e on scalar", eve::test::scalar::ieee_reals)
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::inv_e[eve::downward](eve::as<T>()) <= std::exp(-1.0l));
-    TTS_EXPECT(eve::inv_e[eve::upward](eve::as<T>()) >= std::exp(-1.0l)); 
+    TTS_EXPECT(eve::inv_e[eve::lower](eve::as<T>()) <= std::exp(-1.0l));
+    TTS_EXPECT(eve::inv_e[eve::upper](eve::as<T>()) >= std::exp(-1.0l)); 
   }
   TTS_EQUAL(eve::inv_e(eve::as<T>()), T(std::exp(-1.0l)));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of inv_e on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_e[eve::downward](as<T>()), eve::inv_e[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_e[eve::lower](as<T>()), eve::inv_e[eve::upper](as<T>()))));
 };
 
 

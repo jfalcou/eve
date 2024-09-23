@@ -32,14 +32,14 @@ TTS_CASE_TPL("Check behavior of e on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(eve::rsqrt_pi[eve::downward](as<elt_t>())
+    TTS_EXPECT(eve::rsqrt_pi[eve::lower](as<elt_t>())
                < 0.564189583547756286948079451560772585844050629329l);
-    TTS_EXPECT(eve::rsqrt_pi[eve::upward](as<elt_t>())
+    TTS_EXPECT(eve::rsqrt_pi[eve::upper](as<elt_t>())
                > 0.564189583547756286948079451560772585844050629329l);
   }
   TTS_EQUAL(eve::rsqrt_pi(as<T>()), T(0.564189583547756286948079451560772585844050629329l));
@@ -52,9 +52,9 @@ TTS_CASE_TPL("Check behavior of e on scalar", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::sqrt_2[eve::downward](as<T>()), eve::sqrt_2[eve::upward](as<T>()))));
+  using eve::lower;
+  using eve::upper;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::sqrt_2[eve::lower](as<T>()), eve::sqrt_2[eve::upper](as<T>()))));
 };
 
 

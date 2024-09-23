@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of zeta_3 on scalar", eve::test::scalar::ieee_reals
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::zeta_3[eve::downward](eve::as<T>()) <= 1.202056903159594285399738161511449990l);
-    TTS_EXPECT(eve::zeta_3[eve::upward](eve::as<T>()) >= 1.202056903159594285399738161511449990l); 
+    TTS_EXPECT(eve::zeta_3[eve::lower](eve::as<T>()) <= 1.202056903159594285399738161511449990l);
+    TTS_EXPECT(eve::zeta_3[eve::upper](eve::as<T>()) >= 1.202056903159594285399738161511449990l); 
   }
   TTS_EQUAL(eve::zeta_3(eve::as<T>()), T(1.202056903159594285399738161511449990l));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of zeta_3 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::zeta_3[eve::downward](as<T>()), eve::zeta_3[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::zeta_3[eve::lower](as<T>()), eve::zeta_3[eve::upper](as<T>()))));
 };
 
 

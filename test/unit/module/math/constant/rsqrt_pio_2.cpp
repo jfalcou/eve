@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of rsqrt_pio_2 on scalar", eve::test::scalar::ieee_
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::rsqrt_pio_2[eve::downward](eve::as<T>()) <= 1.0l/std::sqrt(3.141592653589793238462643l/2));
-    TTS_EXPECT(eve::rsqrt_pio_2[eve::upward](eve::as<T>()) >= 1.0l/std::sqrt(3.141592653589793238462643l/2));
+    TTS_EXPECT(eve::rsqrt_pio_2[eve::lower](eve::as<T>()) <= 1.0l/std::sqrt(3.141592653589793238462643l/2));
+    TTS_EXPECT(eve::rsqrt_pio_2[eve::upper](eve::as<T>()) >= 1.0l/std::sqrt(3.141592653589793238462643l/2));
   }
   TTS_EQUAL(eve::rsqrt_pio_2(eve::as<T>()), T(1.0l/std::sqrt(3.141592653589793238462643l/2)));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of rsqrt_pio_2 on wide", eve::test::simd::ieee_real
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::rsqrt_pio_2[eve::downward](as<T>()), eve::rsqrt_pio_2[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::rsqrt_pio_2[eve::lower](as<T>()), eve::rsqrt_pio_2[eve::upper](as<T>()))));
 };
 
 

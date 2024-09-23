@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of sin_1 on scalar", eve::test::scalar::ieee_reals)
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::sin_1[eve::downward](eve::as<T>()) <= std::sin(1.0l));
-    TTS_EXPECT(eve::sin_1[eve::upward](eve::as<T>()) >= std::sin(1.0l)); 
+    TTS_EXPECT(eve::sin_1[eve::lower](eve::as<T>()) <= std::sin(1.0l));
+    TTS_EXPECT(eve::sin_1[eve::upper](eve::as<T>()) >= std::sin(1.0l)); 
   }
   TTS_EQUAL(eve::sin_1(eve::as<T>()), T(std::sin(1.0l)));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of sin_1 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::sin_1[eve::downward](as<T>()), eve::sin_1[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::sin_1[eve::lower](as<T>()), eve::sin_1[eve::upper](as<T>()))));
 };
 
 

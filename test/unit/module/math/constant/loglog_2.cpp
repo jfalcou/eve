@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of loglog_2 on scalar", eve::test::scalar::ieee_rea
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::loglog_2[eve::downward](eve::as<T>()) <= -0.36651292058166432701243915823267l);
-    TTS_EXPECT(eve::loglog_2[eve::upward](eve::as<T>()) >=   -0.36651292058166432701243915823267l);
+    TTS_EXPECT(eve::loglog_2[eve::lower](eve::as<T>()) <= -0.36651292058166432701243915823267l);
+    TTS_EXPECT(eve::loglog_2[eve::upper](eve::as<T>()) >=   -0.36651292058166432701243915823267l);
   }
   TTS_EQUAL(eve::loglog_2(eve::as<T>()), T(std::log(std::log(2.0l))));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of loglog_2 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::loglog_2[eve::downward](as<T>()), eve::loglog_2[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::loglog_2[eve::lower](as<T>()), eve::loglog_2[eve::upper](as<T>()))));
 };
 
 

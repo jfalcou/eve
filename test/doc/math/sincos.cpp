@@ -5,7 +5,7 @@
 int main()
 {
   eve::wide wf = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25, -0.5, -2.0};
-  wf *= eve::pi[eve::downward](eve::as(wf));
+  wf *= eve::pi[eve::lower](eve::as(wf));
 
   std::cout << "<- wf = " << wf << "\n";
 

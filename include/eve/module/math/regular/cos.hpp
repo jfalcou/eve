@@ -84,7 +84,7 @@ namespace eve
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cos)
 //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Cosinus)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosine.html)  
+//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/Cosine.html)
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/math/cos.cpp}
@@ -102,7 +102,7 @@ namespace eve
       if constexpr(O::contains(quarter_circle2))
       {
         auto x2          = sqr(a0);
-        auto x2nlepi2_16 = is_not_less_equal(x2, pi2o_16[upward](as(a0)));
+        auto x2nlepi2_16 = is_not_less_equal(x2, pi2o_16[upper](as(a0)));
         if constexpr( scalar_value<T> ) return (x2nlepi2_16) ? nan(eve::as<T>()) : cos_eval(x2);
         else return if_else(x2nlepi2_16, eve::allbits, cos_eval(x2));
       }
