@@ -12,7 +12,7 @@
 
 int main()
 {
-  auto lmax = eve::Rempio2_limit[eve::half_circle2](eve::as<EVE_VALUE>());
+  auto lmax = eve::Rempio2_limit[eve::half_circle](eve::as<EVE_VALUE>());
   auto lmin = -lmax;
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
@@ -20,7 +20,7 @@ int main()
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__csc) , xp, std__csc , arg0);
-  run<EVE_VALUE>(EVE_NAME(csc[eve::half_circle2]) , xp, eve::csc[eve::half_circle2] , arg0);
-  run<EVE_TYPE> (EVE_NAME(csc[eve::half_circle2]) , xp, eve::csc[eve::half_circle2] , arg0);
+  run<EVE_VALUE>(EVE_NAME(csc[eve::half_circle]) , xp, eve::csc[eve::half_circle] , arg0);
+  run<EVE_TYPE> (EVE_NAME(csc[eve::half_circle]) , xp, eve::csc[eve::half_circle] , arg0);
 
 }

@@ -56,7 +56,7 @@ struct
     auto angle_d = eve::convert(angle_f, eve::as<double>{});
 
     // full_circle covers -pi tp pi range
-    auto [sin, cos] = eve::sincos[eve::full_circle2](angle_d);
+    auto [sin, cos] = eve::sincos[eve::full_circle](angle_d);
 
     return eve::zip(r * cos, r * sin);
   }
