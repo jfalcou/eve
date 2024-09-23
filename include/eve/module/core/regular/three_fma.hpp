@@ -33,7 +33,7 @@ namespace eve
 //! @{
 //!   @var two_prod
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   triple  of an fma value f and two errors e1 and e2 such that \f$ax+y = f+r_1+r_2/f$
+//!   triplet  of an fma value f and two errors e1 and e2 such that \f$ax+y = f+r_1+r_2/f$
 //!
 //!   **Defined in Header**
 //!
