@@ -56,7 +56,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     Computes [elementwise](@ref glossary_elementwise) a triple of values `[f, r1, r2]` such that:
+//!     Computes [elementwise](@ref glossary_elementwise) a triplet of values `[f, r1, r2]` such that:
 //!
 //!     * `f` is `fma(a, x, y)`
 //!     * `\f$ a\otimes x\oplus y = r1\oplus r2\oplus r3\f$ exactly
