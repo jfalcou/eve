@@ -85,7 +85,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T sinpi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         return sin[eve::quarter_circle](a0 * pi(eve::as<T>()));
       }
@@ -95,7 +95,7 @@ namespace eve
           if( is_not_finite(a0) ) return nan(eve::as<T>());
         auto x = eve::abs(a0);
         if( eve::all(x <= T(0.25)) )
-          return sinpi[quarter_circle2](a0);
+          return sinpi[quarter_circle](a0);
         if constexpr( scalar_value<T> )
         {
           if( x > maxflint(eve::as<T>()) ) return T(0);

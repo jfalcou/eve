@@ -99,14 +99,14 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         auto x2          = sqr(a0);
         auto x2nlepi2_16 = is_not_less_equal(x2, pi2o_16[upper](as(a0)));
         if constexpr( scalar_value<T> ) return (x2nlepi2_16) ? nan(eve::as<T>()) : cos_eval(x2);
         else return if_else(x2nlepi2_16, eve::allbits, cos_eval(x2));
       }
-      else if constexpr(O::contains(half_circle2))
+      else if constexpr(O::contains(half_circle))
       {
         T    x         = eve::abs(a0);
         auto xnlepio2 = is_not_less_equal(x, pio_2(eve::as<T>()));
@@ -147,7 +147,7 @@ namespace eve
           return if_else(xnlepio2, eve::allbits, z1);
         }
       }
-      else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
+      else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
       {
         auto x       = abs(a0);
         auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
@@ -163,16 +163,16 @@ namespace eve
       else
       {
         auto x = abs(a0);
-        if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )
-          return cos[quarter_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle2](as(a0))))
-          return cos[half_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle2](as(a0))))
-          return cos[full_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))
-          return cos[medium2](a0);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )
+          return cos[quarter_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))
+          return cos[half_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))
+          return cos[full_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))
+          return cos[medium](a0);
         else
-          return cos[big2](a0);
+          return cos[big](a0);
       }
     }
   }

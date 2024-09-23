@@ -88,14 +88,14 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T tanpi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
-        return tan[eve::quarter_circle2](a0 * pi(eve::as<T>()));
+        return tan[eve::quarter_circle](a0 * pi(eve::as<T>()));
       }
       else
       {
         auto x = eve::abs(a0);
-        if( eve::all(x <= T(0.25)) ) return tanpi[eve::quarter_circle2](a0);
+        if( eve::all(x <= T(0.25)) ) return tanpi[eve::quarter_circle](a0);
         if constexpr( scalar_value<T> )
         {
           if( is_eqz(a0) ) return a0;

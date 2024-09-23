@@ -82,7 +82,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cscd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
         return eve::rec[pedantic](eve::sind[o](a0));
       else
       {

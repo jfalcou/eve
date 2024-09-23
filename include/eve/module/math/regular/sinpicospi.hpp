@@ -87,7 +87,7 @@ namespace eve
     constexpr EVE_FORCEINLINE auto
     sinpicospi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         return sincos[eve::quarter_circle](a0 * pi(eve::as<T>()));
       }
@@ -98,7 +98,7 @@ namespace eve
           if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
         }
         T x = abs(a0);
-        if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle2](a0);
+        if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle](a0);
         if constexpr( scalar_value<T> )
         {
           if( x > maxflint(eve::as<T>()) ) return eve::zip(T(0), T(1));

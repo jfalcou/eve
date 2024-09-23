@@ -87,13 +87,13 @@ namespace eve
     constexpr EVE_FORCEINLINE T sind_(EVE_REQUIRES(cpu_), O const& , T const& a0)
     {
       auto x = eve::abs(a0);
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
-        return  sinpi[eve::quarter_circle2](div_180(a0));
+        return  sinpi[eve::quarter_circle](div_180(a0));
       }
       else
       {
-        if( eve::all(eve::abs(x) <= T(45)) )  return sind[quarter_circle2](a0);
+        if( eve::all(eve::abs(x) <= T(45)) )  return sind[quarter_circle](a0);
         if constexpr( scalar_value<T> )
           if( is_not_finite(a0) ) return nan(eve::as<T>());
          x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input

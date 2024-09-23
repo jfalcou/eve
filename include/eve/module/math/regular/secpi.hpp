@@ -88,7 +88,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T secpi_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         auto x    = abs(a0);
         auto test = is_not_less_equal(x, T(0.25));

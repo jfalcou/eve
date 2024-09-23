@@ -139,12 +139,12 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto rempio2_big(T xx) noexcept
   {
     using elt_t = element_type_t<T>;
-    auto xlerfl = (xx <= Rempio2_limit[half_circle2](as(xx)));
+    auto xlerfl = (xx <= Rempio2_limit[half_circle](as(xx)));
 
-    if( eve::all(xx < Rempio2_limit[quarter_circle2](as(xx))) ) { return rempio2_quarter_circle(xx); }
-    if( eve::all(xlerfl) )                                      { return rempio2_half_circle(xx); }
-    if( eve::all(xx < Rempio2_limit[full_circle2](as(xx))) )    { return rempio2_full_circle(xx); }
-    if( eve::all(xx < Rempio2_limit[medium2](as(xx))) )         { return rempio2_medium(xx); }
+    if( eve::all(xx < Rempio2_limit[quarter_circle](as(xx))) ) { return rempio2_quarter_circle(xx); }
+    if( eve::all(xlerfl) )                                     { return rempio2_half_circle(xx); }
+    if( eve::all(xx < Rempio2_limit[full_circle](as(xx))) )    { return rempio2_full_circle(xx); }
+    if( eve::all(xx < Rempio2_limit[medium](as(xx))) )         { return rempio2_medium(xx); }
     if constexpr( std::is_same_v<elt_t, double> )
     {
       using i32_tl = struct
@@ -275,9 +275,9 @@ namespace eve::detail
       s      = b + bb;
       t      = (b - s) + bb;
       s      = if_else(is_not_finite(x), eve::allbits, s);
-      s      = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), xx, s);
-      t      = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), T(0), t);
-      auto q = if_else(xx < Rempio2_limit[quarter_circle2](as(xx)), T(0), quadrant(sum));
+      s      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), xx, s);
+      t      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), t);
+      auto q = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), quadrant(sum));
       return eve::zip(q, s, t);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
@@ -331,7 +331,7 @@ namespace eve::detail
       auto br   = if_else(xlerfl, sr, sr1);
       auto dbr  = if_else(xlerfl, dsr, dsr1);
       br        = if_else(is_not_finite(xx), eve::allbits, br);
-      auto test = xx <= Rempio2_limit[full_circle2](as(xx));
+      auto test = xx <= Rempio2_limit[full_circle](as(xx));
       return eve::zip(if_else(test, sn, bn), if_else(test, sr, br), if_else(test, dsr, dbr));
     }
   }
