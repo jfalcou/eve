@@ -27,9 +27,7 @@ namespace eve::detail
     if constexpr( O::contains(lower) || O::contains(upper))
     {
       using namespace spy::literal;
-      if constexpr( spy::compiler == spy::clang_ ||
-                    (spy::compiler == spy::gcc_ && spy::compiler >= 13'0_gcc) ||
-                     spy::compiler == spy::msvc_)
+      if constexpr( enable_roundings_)
       {
         return with_rounding<O>(eve::sqrt, a0);
       }

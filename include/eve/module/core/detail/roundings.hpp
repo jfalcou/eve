@@ -10,7 +10,7 @@
 #include <cstdint>
 #include <cfenv>
 #include <eve/module/core/decorator/core.hpp>
-#include <iostream>
+
 namespace eve::detail
 {
 
@@ -25,22 +25,10 @@ namespace eve::detail
 #ifdef  SPY_COMPILER_IS_CLANG
 #pragma clang fp exceptions(strict)
 #endif
-// gcc does not want to work with this nor with -frounding_math
-// #ifdef  SPY_COMPILER_IS_GCC
-// #if __GNUC__ >= 13
-// #pragma STDC FENV_ACCESS on
-// #endif
-// #endif
-//    std::cout << "icitte" << std::endl;
     auto oldstate = std::fegetround();
     std::fesetround(rounding_control<O>());
     auto r = f(a, b...);
     std::fesetround(oldstate);
-// #ifdef  SPY_COMPILER_IS_GCC
-// #if __GNUC__ >= 13
-// #pragma STDC FENV_ACCESS off
-// #endif
-// #endif
 #ifdef  SPY_COMPILER_IS_MSVC
 #pragma float_control(pop)
 #endif
