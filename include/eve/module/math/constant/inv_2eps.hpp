@@ -14,7 +14,7 @@
 namespace eve
 {
 template<typename Options>
-struct inv_2eps_t : constant_callable<inv_2eps_t, Options, downward_option, upward_option>
+struct inv_2eps_t : constant_callable<inv_2eps_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)

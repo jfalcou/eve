@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct mindenormal_t : constant_callable<mindenormal_t, Options, downward_option, upward_option>
+  struct mindenormal_t : constant_callable<mindenormal_t, Options, lower_option, upper_option>
   {
     template<typename T>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)

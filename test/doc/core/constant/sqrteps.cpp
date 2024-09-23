@@ -15,9 +15,9 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> sqrteps(as<wide_ft>())              = " << eve::sqrteps(eve::as<wide_ft>()) << std::endl
             << "-> sqrteps(as(wxf))                    = " << eve::sqrteps(eve::as(wxf))       << std::endl
-            << "-> sqrteps[upward](as(wxf))            = " << eve::sqrteps[eve::upward](eve::as(wxf))       << std::endl
+            << "-> sqrteps[upper](as(wxf))            = " << eve::sqrteps[eve::upper](eve::as(wxf))       << std::endl
             << "-> sqrt(double(eve::eps(as<float>()))) =  " << eve::sqrt(double(eve::eps(eve::as<float>()))) << std::endl
-            << "-> sqrteps[downward](as(wxf))          = " << eve::sqrteps[eve::downward](eve::as(wxf))    << std::endl;
+            << "-> sqrteps[lower](as(wxf))          = " << eve::sqrteps[eve::lower](eve::as(wxf))    << std::endl;
 
   double       xf;
 
