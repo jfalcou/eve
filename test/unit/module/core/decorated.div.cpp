@@ -17,16 +17,16 @@ TTS_CASE_TPL("Check return types of div", eve::test::simd::all_types)
 {
   using v_t = eve::element_type_t<T>;
 
-  // downward
-  TTS_EXPR_IS(eve::div[eve::downward](T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::downward](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::downward](v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::downward](v_t(), v_t()), v_t);
+  // lower
+  TTS_EXPR_IS(eve::div[eve::lower](T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::lower](T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::lower](v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::lower](v_t(), v_t()), v_t);
 
-  TTS_EXPR_IS(eve::div[eve::upward](T(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::upward](T(), v_t()), T);
-  TTS_EXPR_IS(eve::div[eve::upward](v_t(), T()), T);
-  TTS_EXPR_IS(eve::div[eve::upward](v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::div[eve::upper](T(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::upper](T(), v_t()), T);
+  TTS_EXPR_IS(eve::div[eve::upper](v_t(), T()), T);
+  TTS_EXPR_IS(eve::div[eve::upper](v_t(), v_t()), v_t);
 
   TTS_EXPR_IS(eve::div[eve::to_nearest](T(), T()), T);
   TTS_EXPR_IS(eve::div[eve::to_nearest](T(), v_t()), T);
@@ -59,15 +59,15 @@ TTS_CASE_WITH("Check behavior of div on wide",
 <typename T>(T a0, T, T a2)
 {
   using eve::div;
-  using eve::downward;
+  using eve::lower;
   using eve::to_nearest;
-  using eve::upward;
+  using eve::upper;
   using eve::detail::map;
   a2 = eve::if_else(eve::is_eqz(a2), eve::one, a2);
 
   TTS_EQUAL(eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2));
-  TTS_EQUAL(div[downward](a0, a2), map([&](auto e, auto f) { return div[downward](e, f); }, a0, a2));
-  TTS_EQUAL(div[upward](a0, a2), map([&](auto e, auto f) { return div[upward](e, f); }, a0, a2));
+  TTS_EQUAL(div[lower](a0, a2), map([&](auto e, auto f) { return div[lower](e, f); }, a0, a2));
+  TTS_EQUAL(div[upper](a0, a2), map([&](auto e, auto f) { return div[upper](e, f); }, a0, a2));
   TTS_EQUAL(div[to_nearest](a0, a2),  map([&](auto e, auto f) { return div[to_nearest](e, f); }, a0, a2));
 };
 
@@ -78,86 +78,86 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::div variants on wide", eve::te
 <typename T>(tts::type<T>)
 {
   using eve::div;
-  using eve::downward;
+  using eve::lower;
   using eve::to_nearest;
-  using eve::upward;
+  using eve::upper;
   using v_t = eve::element_type_t<T>;
 
-  // downward
+  // lower
   if constexpr( eve::signed_value<T> )
   {
-    TTS_EQUAL(div[downward](T(-1), T(2)), T(-1));
-    TTS_EQUAL(div[downward](v_t(-1), T(2)), T(-1));
-    TTS_EQUAL(div[downward](T(-1), v_t(2)), T(-1));
+    TTS_EQUAL(div[lower](T(-1), T(2)), T(-1));
+    TTS_EQUAL(div[lower](v_t(-1), T(2)), T(-1));
+    TTS_EQUAL(div[lower](T(-1), v_t(2)), T(-1));
 
-    TTS_EQUAL(div[downward](T(-4), T(3)), T(-2));
-    TTS_EQUAL(div[downward](v_t(-4), T(3)), T(-2));
-    TTS_EQUAL(div[downward](T(-4), v_t(3)), T(-2));
-    TTS_EQUAL(div[downward](T(-4), v_t(4)), T(-1));
+    TTS_EQUAL(div[lower](T(-4), T(3)), T(-2));
+    TTS_EQUAL(div[lower](v_t(-4), T(3)), T(-2));
+    TTS_EQUAL(div[lower](T(-4), v_t(3)), T(-2));
+    TTS_EQUAL(div[lower](T(-4), v_t(4)), T(-1));
 
-    TTS_EQUAL(div[downward](T(4), T(-3)), T(-2));
-    TTS_EQUAL(div[downward](v_t(4), T(-3)), T(-2));
-    TTS_EQUAL(div[downward](T(4), v_t(-3)), T(-2));
-    TTS_EQUAL(div[downward](T(4), v_t(-4)), T(-1));
+    TTS_EQUAL(div[lower](T(4), T(-3)), T(-2));
+    TTS_EQUAL(div[lower](v_t(4), T(-3)), T(-2));
+    TTS_EQUAL(div[lower](T(4), v_t(-3)), T(-2));
+    TTS_EQUAL(div[lower](T(4), v_t(-4)), T(-1));
 
-    TTS_EQUAL(div[downward](T(-12), T(-4)), T(3));
-    TTS_EQUAL(div[downward](T(-1), T(-2)), T(0));
-    TTS_EQUAL(div[downward](T(-4), T(-3)), T(1));
-    TTS_EQUAL(div[downward](T(-4), T(-4)), T(1));
-    TTS_EQUAL(div[downward](T(0), T(-4)), T(0));
-    TTS_EQUAL(div[downward](T(0), T(4)), T(0));
+    TTS_EQUAL(div[lower](T(-12), T(-4)), T(3));
+    TTS_EQUAL(div[lower](T(-1), T(-2)), T(0));
+    TTS_EQUAL(div[lower](T(-4), T(-3)), T(1));
+    TTS_EQUAL(div[lower](T(-4), T(-4)), T(1));
+    TTS_EQUAL(div[lower](T(0), T(-4)), T(0));
+    TTS_EQUAL(div[lower](T(0), T(4)), T(0));
   }
 
-  TTS_EQUAL(div[downward](T(12), T(4)), T(3));
-  TTS_EQUAL(div[downward](T(1), T(2)), T(0));
-  TTS_EQUAL(div[downward](T(4), T(3)), T(1));
-  TTS_EQUAL(div[downward](T(4), T(4)), T(1));
+  TTS_EQUAL(div[lower](T(12), T(4)), T(3));
+  TTS_EQUAL(div[lower](T(1), T(2)), T(0));
+  TTS_EQUAL(div[lower](T(4), T(3)), T(1));
+  TTS_EQUAL(div[lower](T(4), T(4)), T(1));
 
-  TTS_EQUAL(div[downward](v_t(12), T(4)), T(3));
-  TTS_EQUAL(div[downward](v_t(1), T(2)), T(0));
-  TTS_EQUAL(div[downward](v_t(4), T(3)), T(1));
+  TTS_EQUAL(div[lower](v_t(12), T(4)), T(3));
+  TTS_EQUAL(div[lower](v_t(1), T(2)), T(0));
+  TTS_EQUAL(div[lower](v_t(4), T(3)), T(1));
 
-  TTS_EQUAL(div[downward](T(12), v_t(4)), T(3));
-  TTS_EQUAL(div[downward](T(1), v_t(2)), T(0));
-  TTS_EQUAL(div[downward](T(4), v_t(3)), T(1));
+  TTS_EQUAL(div[lower](T(12), v_t(4)), T(3));
+  TTS_EQUAL(div[lower](T(1), v_t(2)), T(0));
+  TTS_EQUAL(div[lower](T(4), v_t(3)), T(1));
 
-  // upward
+  // upper
   if constexpr( eve::signed_value<T> )
   {
-    TTS_EQUAL(eve::div[upward](T(-1), T(2)), T(0));
-    TTS_EQUAL(eve::div[upward](v_t(-1), T(2)), T(0));
-    TTS_EQUAL(eve::div[upward](T(-1), v_t(2)), T(0));
+    TTS_EQUAL(eve::div[upper](T(-1), T(2)), T(0));
+    TTS_EQUAL(eve::div[upper](v_t(-1), T(2)), T(0));
+    TTS_EQUAL(eve::div[upper](T(-1), v_t(2)), T(0));
 
-    TTS_EQUAL(eve::div[upward](T(-4), T(3)), T(-1));
-    TTS_EQUAL(eve::div[upward](v_t(-4), T(3)), T(-1));
-    TTS_EQUAL(eve::div[upward](T(-4), v_t(3)), T(-1));
-    TTS_EQUAL(eve::div[upward](T(-4), v_t(4)), T(-1));
+    TTS_EQUAL(eve::div[upper](T(-4), T(3)), T(-1));
+    TTS_EQUAL(eve::div[upper](v_t(-4), T(3)), T(-1));
+    TTS_EQUAL(eve::div[upper](T(-4), v_t(3)), T(-1));
+    TTS_EQUAL(eve::div[upper](T(-4), v_t(4)), T(-1));
 
-    TTS_EQUAL(eve::div[upward](T(4), T(-3)), T(-1));
-    TTS_EQUAL(eve::div[upward](v_t(4), T(-3)), T(-1));
-    TTS_EQUAL(eve::div[upward](T(4), v_t(-3)), T(-1));
-    TTS_EQUAL(eve::div[upward](T(4), v_t(-4)), T(-1));
+    TTS_EQUAL(eve::div[upper](T(4), T(-3)), T(-1));
+    TTS_EQUAL(eve::div[upper](v_t(4), T(-3)), T(-1));
+    TTS_EQUAL(eve::div[upper](T(4), v_t(-3)), T(-1));
+    TTS_EQUAL(eve::div[upper](T(4), v_t(-4)), T(-1));
 
-    TTS_EQUAL(eve::div[upward](T(-12), T(-4)), T(3));
-    TTS_EQUAL(eve::div[upward](T(-1), T(-2)), T(1));
-    TTS_EQUAL(eve::div[upward](T(-4), T(-3)), T(2));
-    TTS_EQUAL(eve::div[upward](T(-4), T(-4)), T(1));
-    TTS_EQUAL(eve::div[upward](T(0), T(-4)), T(0));
-    TTS_EQUAL(eve::div[upward](T(0), T(4)), T(0));
-    TTS_EQUAL(eve::div[upward](T(1), T(2)), T(1));
+    TTS_EQUAL(eve::div[upper](T(-12), T(-4)), T(3));
+    TTS_EQUAL(eve::div[upper](T(-1), T(-2)), T(1));
+    TTS_EQUAL(eve::div[upper](T(-4), T(-3)), T(2));
+    TTS_EQUAL(eve::div[upper](T(-4), T(-4)), T(1));
+    TTS_EQUAL(eve::div[upper](T(0), T(-4)), T(0));
+    TTS_EQUAL(eve::div[upper](T(0), T(4)), T(0));
+    TTS_EQUAL(eve::div[upper](T(1), T(2)), T(1));
   }
 
-  TTS_EQUAL(eve::div[upward](T(12), T(4)), T(3));
-  TTS_EQUAL(eve::div[upward](T(1), T(2)), T(1));
-  TTS_EQUAL(eve::div[upward](T(4), T(3)), T(2));
+  TTS_EQUAL(eve::div[upper](T(12), T(4)), T(3));
+  TTS_EQUAL(eve::div[upper](T(1), T(2)), T(1));
+  TTS_EQUAL(eve::div[upper](T(4), T(3)), T(2));
 
-  TTS_EQUAL(eve::div[upward](v_t(12), T(4)), T(3));
-  TTS_EQUAL(eve::div[upward](v_t(1), T(2)), T(1));
-  TTS_EQUAL(eve::div[upward](v_t(4), T(3)), T(2));
+  TTS_EQUAL(eve::div[upper](v_t(12), T(4)), T(3));
+  TTS_EQUAL(eve::div[upper](v_t(1), T(2)), T(1));
+  TTS_EQUAL(eve::div[upper](v_t(4), T(3)), T(2));
 
-  TTS_EQUAL(eve::div[upward](T(12), v_t(4)), T(3));
-  TTS_EQUAL(eve::div[upward](T(1), v_t(2)), T(1));
-  TTS_EQUAL(eve::div[upward](T(4), v_t(3)), T(2));
+  TTS_EQUAL(eve::div[upper](T(12), v_t(4)), T(3));
+  TTS_EQUAL(eve::div[upper](T(1), v_t(2)), T(1));
+  TTS_EQUAL(eve::div[upper](T(4), v_t(3)), T(2));
 
   // nearest
   if constexpr( eve::signed_value<T> )
@@ -212,23 +212,23 @@ TTS_CASE_WITH("Check behavior of div on signed types",
 <typename T>(T a0, T a1, T a2)
 {
   using eve::div;
-  using eve::downward;
+  using eve::lower;
   using eve::is_nez;
   using eve::to_nearest;
-  using eve::upward;
+  using eve::upper;
   using eve::detail::map;
-  TTS_ULP_EQUAL(div[downward][is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return is_nez(f) ? div[downward](e, f) : e; }, a0, a2),
+  TTS_ULP_EQUAL(div[lower][is_nez(a2)](a0, a2),
+                map([](auto e, auto f) { return is_nez(f) ? div[lower](e, f) : e; }, a0, a2),
                 2.5);
-  TTS_ULP_EQUAL(div[upward][is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return is_nez(f) ? div[upward](e, f) : e; }, a0, a2),
+  TTS_ULP_EQUAL(div[upper][is_nez(a2)](a0, a2),
+                map([](auto e, auto f) { return is_nez(f) ? div[upper](e, f) : e; }, a0, a2),
                 2.5);
   TTS_ULP_EQUAL(div[to_nearest][is_nez(a2)](a0, a2),
                 map([](auto e, auto f) { return is_nez(f) ? div[to_nearest](e, f) : e; }, a0, a2),
                 2.5);
 
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_EQUAL(div[downward][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[downward](e, f) : e; }, a0, a1, a2));
-  TTS_EQUAL(div[upward][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[upward](e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(div[lower][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[lower](e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(div[upper][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[upper](e, f) : e; }, a0, a1, a2));
   TTS_EQUAL(div[to_nearest][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[to_nearest](e, f) : e; }, a0, a1, a2));
 };

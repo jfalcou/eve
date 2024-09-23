@@ -31,16 +31,16 @@ TTS_CASE_TPL("Check behavior of oneosqrteps on wide", eve::test::simd::ieee_real
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
   using elt_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::oneosqrteps(as<T>()), T(1.0l / std::sqrt(eve::eps(as<eve::element_type_t<T>>()))));
-  TTS_EXPECT(eve::all(eve::oneosqrteps[downward](as<elt_t>())
+  TTS_EXPECT(eve::all(eve::oneosqrteps[lower](as<elt_t>())
                       <= std::sqrt(1.0l / (long double)(eve::eps(as<elt_t>())))));
-  TTS_EXPECT(eve::all(eve::oneosqrteps[upward](as<elt_t>())
+  TTS_EXPECT(eve::all(eve::oneosqrteps[upper](as<elt_t>())
                       >= std::sqrt(1.0l / (long double)(eve::eps(as<elt_t>())))));
-  TTS_EXPECT(eve::all(eve::oneosqrteps[downward](as<T>()) <= eve::oneosqrteps(as<T>())));
-  TTS_EXPECT(eve::all(eve::oneosqrteps(as<T>()) <= eve::oneosqrteps[upward](as<T>())));
-  TTS_ULP_EQUAL(eve::oneosqrteps[downward](as<T>()), eve::oneosqrteps[upward](as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::oneosqrteps[lower](as<T>()) <= eve::oneosqrteps(as<T>())));
+  TTS_EXPECT(eve::all(eve::oneosqrteps(as<T>()) <= eve::oneosqrteps[upper](as<T>())));
+  TTS_ULP_EQUAL(eve::oneosqrteps[lower](as<T>()), eve::oneosqrteps[upper](as<T>()), 0.5);
 };

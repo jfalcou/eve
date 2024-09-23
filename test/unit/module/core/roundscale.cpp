@@ -57,23 +57,23 @@ TTS_CASE_WITH("Check behavior of roundscale[cond](wide) on  floating types",
   constexpr eve::index_t<4> four;
   TTS_EQUAL(roundscale(a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
   TTS_EQUAL(roundscale[eve::to_nearest](a0, 4), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(roundscale[eve::upward](a0, 4), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(roundscale[eve::downward](a0, 4), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::upper](a0, 4), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::lower](a0, 4), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
   TTS_EQUAL(roundscale[eve::toward_zero](a0, 4), eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4));
 
   TTS_EQUAL(roundscale(a0, four), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
   TTS_EQUAL(roundscale[eve::to_nearest](a0, four), eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(roundscale[eve::upward](a0, four), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
-  TTS_EQUAL(roundscale[eve::downward](a0, four), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::upper](a0, four), eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4));
+  TTS_EQUAL(roundscale[eve::lower](a0, four), eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4));
   TTS_EQUAL(roundscale[eve::toward_zero](a0, four), eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4));
 
   TTS_EQUAL(roundscale[t](a0, four),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
   TTS_EQUAL(roundscale[eve::to_nearest][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(roundscale[eve::upward][t](a0, four),
+  TTS_EQUAL(roundscale[eve::upper][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(roundscale[eve::downward][t](a0, four),
+  TTS_EQUAL(roundscale[eve::lower][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0));
   TTS_EQUAL(roundscale[eve::toward_zero][t](a0, four),
             eve::if_else(t, eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0));
@@ -82,9 +82,9 @@ TTS_CASE_WITH("Check behavior of roundscale[cond](wide) on  floating types",
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
   TTS_EQUAL(roundscale[eve::to_nearest][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::nearest(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(roundscale[eve::upward][t](a0, 4),
+  TTS_EQUAL(roundscale[eve::upper][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::ceil(eve::ldexp(a0, 4)), -4), a0));
-  TTS_EQUAL(roundscale[eve::downward][t](a0, 4),
+  TTS_EQUAL(roundscale[eve::lower][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::floor(eve::ldexp(a0, 4)), -4), a0));
   TTS_EQUAL(roundscale[eve::toward_zero][t](a0, 4),
             eve::if_else(t, eve::ldexp(eve::trunc(eve::ldexp(a0, 4)), -4), a0));

@@ -32,14 +32,14 @@ TTS_CASE_TPL("Check behavior of sqrtvalmax on wide", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
 
   using elt_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::sqrtvalmax(as<T>()), T(eve::sqrt(eve::valmax(as<elt_t>()))));
   if constexpr( eve::floating_value<T> )
     TTS_EQUAL(eve::sqr(eve::next(eve::sqrtvalmax(as<T>()))), eve::inf(as<T>()));
-  TTS_EXPECT(eve::all(eve::sqrtvalmax[downward](as<T>()) <= eve::sqrt((eve::valmax(as<T>())))));
-  TTS_EXPECT(eve::all(eve::sqrtvalmax(as<T>()) <= eve::sqrtvalmax[upward](as<T>())));
-  TTS_ULP_EQUAL(eve::sqrtvalmax[downward](as<T>()), eve::sqrtvalmax[upward](as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::sqrtvalmax[lower](as<T>()) <= eve::sqrt((eve::valmax(as<T>())))));
+  TTS_EXPECT(eve::all(eve::sqrtvalmax(as<T>()) <= eve::sqrtvalmax[upper](as<T>())));
+  TTS_ULP_EQUAL(eve::sqrtvalmax[lower](as<T>()), eve::sqrtvalmax[upper](as<T>()), 0.5);
 };
