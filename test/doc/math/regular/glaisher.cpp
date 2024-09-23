@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> glaisher(as<wide_ft>())                 = " << eve::glaisher(eve::as<wide_ft>())                << std::endl
             << "-> glaisher(as(wxf))                       = " << eve::glaisher(eve::as(wxf))                      << std::endl
-            << "-> glaisher[upward](as<wide_ft>())         = " << eve::glaisher[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> glaisher[upward](as(wxf))               = " << eve::glaisher[eve::upward](eve::as(wxf))         << std::endl
-            << "-> glaisher[downward](as<wide_ft>())       = " << eve::glaisher[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> glaisher[downward](as(wxf))             = " << eve::glaisher[eve::downward](eve::as(wxf))       << std::endl
+            << "-> glaisher[upper](as<wide_ft>())         = " << eve::glaisher[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> glaisher[upper](as(wxf))               = " << eve::glaisher[eve::upper](eve::as(wxf))         << std::endl
+            << "-> glaisher[lower](as<wide_ft>())       = " << eve::glaisher[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> glaisher[lower](as(wxf))             = " << eve::glaisher[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> glaisher(as<wide_dt>())           = " << eve::glaisher(eve::as<wide_dt>())                << std::endl
             << "-> glaisher(as(wxd))                 = " << eve::glaisher(eve::as(wxd))                      << std::endl
-            << "-> glaisher[upward](as<wide_dt>())   = " << eve::glaisher[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> glaisher[upward](as(wxd))         = " << eve::glaisher[eve::upward](eve::as(wxd))         << std::endl
-            << "-> glaisher[downward](as<wide_dt>()) = " << eve::glaisher[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> glaisher[downward](as(wxd))       = " << eve::glaisher[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> glaisher[upper](as<wide_dt>())   = " << eve::glaisher[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> glaisher[upper](as(wxd))         = " << eve::glaisher[eve::upper](eve::as(wxd))         << std::endl
+            << "-> glaisher[lower](as<wide_dt>()) = " << eve::glaisher[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> glaisher[lower](as(wxd))       = " << eve::glaisher[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

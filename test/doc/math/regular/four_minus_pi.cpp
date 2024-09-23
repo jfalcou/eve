@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> four_minus_pi(as<wide_ft>())                 = " << eve::four_minus_pi(eve::as<wide_ft>())                << std::endl
             << "-> four_minus_pi(as(wxf))                       = " << eve::four_minus_pi(eve::as(wxf))                      << std::endl
-            << "-> four_minus_pi[upward](as<wide_ft>())         = " << eve::four_minus_pi[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> four_minus_pi[upward](as(wxf))               = " << eve::four_minus_pi[eve::upward](eve::as(wxf))         << std::endl
-            << "-> four_minus_pi[downward](as<wide_ft>())       = " << eve::four_minus_pi[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> four_minus_pi[downward](as(wxf))             = " << eve::four_minus_pi[eve::downward](eve::as(wxf))       << std::endl
+            << "-> four_minus_pi[upper](as<wide_ft>())         = " << eve::four_minus_pi[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> four_minus_pi[upper](as(wxf))               = " << eve::four_minus_pi[eve::upper](eve::as(wxf))         << std::endl
+            << "-> four_minus_pi[lower](as<wide_ft>())       = " << eve::four_minus_pi[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> four_minus_pi[lower](as(wxf))             = " << eve::four_minus_pi[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> four_minus_pi(as<wide_dt>())           = " << eve::four_minus_pi(eve::as<wide_dt>())                << std::endl
             << "-> four_minus_pi(as(wxd))                 = " << eve::four_minus_pi(eve::as(wxd))                      << std::endl
-            << "-> four_minus_pi[upward](as<wide_dt>())   = " << eve::four_minus_pi[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> four_minus_pi[upward](as(wxd))         = " << eve::four_minus_pi[eve::upward](eve::as(wxd))         << std::endl
-            << "-> four_minus_pi[downward](as<wide_dt>()) = " << eve::four_minus_pi[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> four_minus_pi[downward](as(wxd))       = " << eve::four_minus_pi[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> four_minus_pi[upper](as<wide_dt>())   = " << eve::four_minus_pi[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> four_minus_pi[upper](as(wxd))         = " << eve::four_minus_pi[eve::upper](eve::as(wxd))         << std::endl
+            << "-> four_minus_pi[lower](as<wide_dt>()) = " << eve::four_minus_pi[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> four_minus_pi[lower](as(wxd))       = " << eve::four_minus_pi[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

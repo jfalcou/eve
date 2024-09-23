@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> pi_pow_e(as<wide_ft>())                 = " << eve::pi_pow_e(eve::as<wide_ft>())                << std::endl
             << "-> pi_pow_e(as(wxf))                       = " << eve::pi_pow_e(eve::as(wxf))                      << std::endl
-            << "-> pi_pow_e[upward](as<wide_ft>())         = " << eve::pi_pow_e[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> pi_pow_e[upward](as(wxf))               = " << eve::pi_pow_e[eve::upward](eve::as(wxf))         << std::endl
-            << "-> pi_pow_e[downward](as<wide_ft>())       = " << eve::pi_pow_e[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> pi_pow_e[downward](as(wxf))             = " << eve::pi_pow_e[eve::downward](eve::as(wxf))       << std::endl
+            << "-> pi_pow_e[upper](as<wide_ft>())         = " << eve::pi_pow_e[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> pi_pow_e[upper](as(wxf))               = " << eve::pi_pow_e[eve::upper](eve::as(wxf))         << std::endl
+            << "-> pi_pow_e[lower](as<wide_ft>())       = " << eve::pi_pow_e[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> pi_pow_e[lower](as(wxf))             = " << eve::pi_pow_e[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> pi_pow_e(as<wide_dt>())           = " << eve::pi_pow_e(eve::as<wide_dt>())                << std::endl
             << "-> pi_pow_e(as(wxd))                 = " << eve::pi_pow_e(eve::as(wxd))                      << std::endl
-            << "-> pi_pow_e[upward](as<wide_dt>())   = " << eve::pi_pow_e[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> pi_pow_e[upward](as(wxd))         = " << eve::pi_pow_e[eve::upward](eve::as(wxd))         << std::endl
-            << "-> pi_pow_e[downward](as<wide_dt>()) = " << eve::pi_pow_e[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> pi_pow_e[downward](as(wxd))       = " << eve::pi_pow_e[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> pi_pow_e[upper](as<wide_dt>())   = " << eve::pi_pow_e[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> pi_pow_e[upper](as(wxd))         = " << eve::pi_pow_e[eve::upper](eve::as(wxd))         << std::endl
+            << "-> pi_pow_e[lower](as<wide_dt>()) = " << eve::pi_pow_e[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> pi_pow_e[lower](as(wxd))       = " << eve::pi_pow_e[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

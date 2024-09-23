@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> inv_2pi(as<wide_ft>())                 = " << eve::inv_2pi(eve::as<wide_ft>())                << std::endl
             << "-> inv_2pi(as(wxf))                       = " << eve::inv_2pi(eve::as(wxf))                      << std::endl
-            << "-> inv_2pi[upward](as<wide_ft>())         = " << eve::inv_2pi[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> inv_2pi[upward](as(wxf))               = " << eve::inv_2pi[eve::upward](eve::as(wxf))         << std::endl
-            << "-> inv_2pi[downward](as<wide_ft>())       = " << eve::inv_2pi[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> inv_2pi[downward](as(wxf))             = " << eve::inv_2pi[eve::downward](eve::as(wxf))       << std::endl
+            << "-> inv_2pi[upper](as<wide_ft>())         = " << eve::inv_2pi[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> inv_2pi[upper](as(wxf))               = " << eve::inv_2pi[eve::upper](eve::as(wxf))         << std::endl
+            << "-> inv_2pi[lower](as<wide_ft>())       = " << eve::inv_2pi[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> inv_2pi[lower](as(wxf))             = " << eve::inv_2pi[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> inv_2pi(as<wide_dt>())           = " << eve::inv_2pi(eve::as<wide_dt>())                << std::endl
             << "-> inv_2pi(as(wxd))                 = " << eve::inv_2pi(eve::as(wxd))                      << std::endl
-            << "-> inv_2pi[upward](as<wide_dt>())   = " << eve::inv_2pi[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> inv_2pi[upward](as(wxd))         = " << eve::inv_2pi[eve::upward](eve::as(wxd))         << std::endl
-            << "-> inv_2pi[downward](as<wide_dt>()) = " << eve::inv_2pi[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> inv_2pi[downward](as(wxd))       = " << eve::inv_2pi[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> inv_2pi[upper](as<wide_dt>())   = " << eve::inv_2pi[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> inv_2pi[upper](as(wxd))         = " << eve::inv_2pi[eve::upper](eve::as(wxd))         << std::endl
+            << "-> inv_2pi[lower](as<wide_dt>()) = " << eve::inv_2pi[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> inv_2pi[lower](as(wxd))       = " << eve::inv_2pi[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> khinchin(as<wide_ft>())                 = " << eve::khinchin(eve::as<wide_ft>())                << std::endl
             << "-> khinchin(as(wxf))                       = " << eve::khinchin(eve::as(wxf))                      << std::endl
-            << "-> khinchin[upward](as<wide_ft>())         = " << eve::khinchin[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> khinchin[upward](as(wxf))               = " << eve::khinchin[eve::upward](eve::as(wxf))         << std::endl
-            << "-> khinchin[downward](as<wide_ft>())       = " << eve::khinchin[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> khinchin[downward](as(wxf))             = " << eve::khinchin[eve::downward](eve::as(wxf))       << std::endl
+            << "-> khinchin[upper](as<wide_ft>())         = " << eve::khinchin[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> khinchin[upper](as(wxf))               = " << eve::khinchin[eve::upper](eve::as(wxf))         << std::endl
+            << "-> khinchin[lower](as<wide_ft>())       = " << eve::khinchin[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> khinchin[lower](as(wxf))             = " << eve::khinchin[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> khinchin(as<wide_dt>())           = " << eve::khinchin(eve::as<wide_dt>())                << std::endl
             << "-> khinchin(as(wxd))                 = " << eve::khinchin(eve::as(wxd))                      << std::endl
-            << "-> khinchin[upward](as<wide_dt>())   = " << eve::khinchin[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> khinchin[upward](as(wxd))         = " << eve::khinchin[eve::upward](eve::as(wxd))         << std::endl
-            << "-> khinchin[downward](as<wide_dt>()) = " << eve::khinchin[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> khinchin[downward](as(wxd))       = " << eve::khinchin[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> khinchin[upper](as<wide_dt>())   = " << eve::khinchin[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> khinchin[upper](as(wxd))         = " << eve::khinchin[eve::upper](eve::as(wxd))         << std::endl
+            << "-> khinchin[lower](as<wide_dt>()) = " << eve::khinchin[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> khinchin[lower](as(wxd))       = " << eve::khinchin[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;
