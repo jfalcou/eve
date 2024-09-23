@@ -32,13 +32,13 @@ TTS_CASE_TPL("Check behavior of log2_e on scalar", eve::test::scalar::ieee_reals
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(eve::log2_e[eve::downward](as<elt_t>()) < std::log2(std::exp(1.0l)));
-    TTS_EXPECT(eve::log2_e[eve::upward](as<elt_t>()) > std::log2(std::exp(1.0l)));
+    TTS_EXPECT(eve::log2_e[eve::lower](as<elt_t>()) < std::log2(std::exp(1.0l)));
+    TTS_EXPECT(eve::log2_e[eve::upper](as<elt_t>()) > std::log2(std::exp(1.0l)));
   }
   TTS_IEEE_EQUAL(eve::log2_e(as<T>()), T(std::log2(std::exp(1.0l))));
 };
@@ -50,9 +50,9 @@ TTS_CASE_TPL("Check behavior of log2_e on scalar", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::log2_e[eve::downward](as<T>())), eve::log2_e[eve::upward](as<T>()))));
+  using eve::lower;
+  using eve::upper;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::log2_e[eve::lower](as<T>())), eve::log2_e[eve::upper](as<T>()))));
 };
 
 

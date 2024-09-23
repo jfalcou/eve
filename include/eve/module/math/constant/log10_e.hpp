@@ -14,21 +14,21 @@
 namespace eve
 {
 template<typename Options>
-struct log10_e_t : constant_callable<log10_e_t, Options, downward_option, upward_option>
+struct log10_e_t : constant_callable<log10_e_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
-      if constexpr(Opts::contains(upward))        return T(0x1.bcb7b2p-2);
-      else if constexpr(Opts::contains(downward)) return T(0x1.bcb7bp-2 );
+      if constexpr(Opts::contains(upper))        return T(0x1.bcb7b2p-2);
+      else if constexpr(Opts::contains(lower)) return T(0x1.bcb7bp-2 );
       else                                         return T(0x1.bcb7b2p-2);
     }
     else
     {
-      if constexpr(Opts::contains(upward))        return T(0x1.bcb7b1526e50fp-2);
-      else if constexpr(Opts::contains(downward)) return T(0x1.bcb7b1526e50ep-2);
+      if constexpr(Opts::contains(upper))        return T(0x1.bcb7b1526e50fp-2);
+      else if constexpr(Opts::contains(lower)) return T(0x1.bcb7b1526e50ep-2);
       else                                         return T(0x1.bcb7b1526e50ep-2);
     }
   }

@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check behavior of maxlog2 on scalar", eve::test::simd::ieee_reals)
   using eve::as;
   TTS_IEEE_EQUAL(eve::exp2(eve::maxlog2(as<T>())), eve::inf(as<T>()));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp2(eve::prev(eve::maxlog2(as<T>()))))));
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog2[eve::downward](as<T>()), eve::maxlog2[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog2[eve::lower](as<T>()), eve::maxlog2[eve::upper](as<T>()))));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp2(eve::prev(eve::maxlog2(as<T>()))))));
 };
 

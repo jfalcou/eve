@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of invcbrt_pi on scalar", eve::test::scalar::ieee_r
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::invcbrt_pi[eve::downward](eve::as<T>()) <= 1.0l/std::cbrt(3.141592653589793238462643l));
-    TTS_EXPECT(eve::invcbrt_pi[eve::upward](eve::as<T>()) >= 1.0l/std::cbrt(3.141592653589793238462643l)); 
+    TTS_EXPECT(eve::invcbrt_pi[eve::lower](eve::as<T>()) <= 1.0l/std::cbrt(3.141592653589793238462643l));
+    TTS_EXPECT(eve::invcbrt_pi[eve::upper](eve::as<T>()) >= 1.0l/std::cbrt(3.141592653589793238462643l)); 
   }
   TTS_ULP_EQUAL(eve::invcbrt_pi(eve::as<T>()), T(1.0l/std::cbrt(3.141592653589793238462643l)), 0.5);
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of invcbrt_pi on wide", eve::test::simd::ieee_reals
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::invcbrt_pi[eve::downward](as<T>()), eve::invcbrt_pi[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::invcbrt_pi[eve::lower](as<T>()), eve::invcbrt_pi[eve::upper](as<T>()))));
 };
 
 

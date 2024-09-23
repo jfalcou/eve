@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of third on scalar", eve::test::scalar::ieee_reals)
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::third[eve::downward](eve::as<T>()) <= 1.0l/3);
-    TTS_EXPECT(eve::third[eve::upward](eve::as<T>()) >= 1.0l/3); 
+    TTS_EXPECT(eve::third[eve::lower](eve::as<T>()) <= 1.0l/3);
+    TTS_EXPECT(eve::third[eve::upper](eve::as<T>()) >= 1.0l/3); 
   }
   TTS_EQUAL(eve::third(eve::as<T>()), T(1.0l/3));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of third on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::third[eve::downward](as<T>()), eve::third[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::third[eve::lower](as<T>()), eve::third[eve::upper](as<T>()))));
 };
 
 

@@ -13,8 +13,8 @@ int main()
 
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> inv_egamma(as<wide_ft>())                 = " << eve::inv_egamma(eve::as<wide_ft>())                << std::endl
-            << "-> inv_egamma[upward](as<wide_ft>())         = " << eve::inv_egamma[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> inv_egamma[downward](as<wide_ft>())       = " << eve::inv_egamma[eve::downward](eve::as<wide_ft>()) << std::endl;
+            << "-> inv_egamma[upper](as<wide_ft>())         = " << eve::inv_egamma[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> inv_egamma[lower](as<wide_ft>())       = " << eve::inv_egamma[eve::lower](eve::as<wide_ft>()) << std::endl;
 
 
   std::cout << "---- scalar" << std::endl

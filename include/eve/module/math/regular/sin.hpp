@@ -100,7 +100,7 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle2))
       {
-        auto pi2_16 = pi2o_16[upward](as<T>());
+        auto pi2_16 = pi2o_16[upper](as<T>());
         auto x2 = sqr(a0);
         if constexpr( scalar_value<T> )
           if( is_not_less_equal(x2, pi2_16) ) return nan(eve::as<T>());

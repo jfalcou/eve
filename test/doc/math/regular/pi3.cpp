@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> pi3(as<wide_ft>())                 = " << eve::pi3(eve::as<wide_ft>())                << std::endl
             << "-> pi3(as(wxf))                       = " << eve::pi3(eve::as(wxf))                      << std::endl
-            << "-> pi3[upward](as<wide_ft>())         = " << eve::pi3[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> pi3[upward](as(wxf))               = " << eve::pi3[eve::upward](eve::as(wxf))         << std::endl
-            << "-> pi3[downward](as<wide_ft>())       = " << eve::pi3[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> pi3[downward](as(wxf))             = " << eve::pi3[eve::downward](eve::as(wxf))       << std::endl
+            << "-> pi3[upper](as<wide_ft>())         = " << eve::pi3[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> pi3[upper](as(wxf))               = " << eve::pi3[eve::upper](eve::as(wxf))         << std::endl
+            << "-> pi3[lower](as<wide_ft>())       = " << eve::pi3[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> pi3[lower](as(wxf))             = " << eve::pi3[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> pi3(as<wide_dt>())           = " << eve::pi3(eve::as<wide_dt>())                << std::endl
             << "-> pi3(as(wxd))                 = " << eve::pi3(eve::as(wxd))                      << std::endl
-            << "-> pi3[upward](as<wide_dt>())   = " << eve::pi3[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> pi3[upward](as(wxd))         = " << eve::pi3[eve::upward](eve::as(wxd))         << std::endl
-            << "-> pi3[downward](as<wide_dt>()) = " << eve::pi3[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> pi3[downward](as(wxd))       = " << eve::pi3[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> pi3[upper](as<wide_dt>())   = " << eve::pi3[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> pi3[upper](as(wxd))         = " << eve::pi3[eve::upper](eve::as(wxd))         << std::endl
+            << "-> pi3[lower](as<wide_dt>()) = " << eve::pi3[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> pi3[lower](as(wxd))       = " << eve::pi3[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

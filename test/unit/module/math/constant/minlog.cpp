@@ -46,7 +46,7 @@ TTS_CASE_TPL("Check behavior of minlog on scalar", eve::test::simd::ieee_reals)
 #ifndef SPY_ARCH_IS_ARM
   TTS_EXPECT(eve::all(eve::is_gtz(eve::exp(eve::next(eve::minlog(as<T>()))))));
 #endif
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::minlog[eve::downward](as<T>()), eve::minlog[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::minlog[eve::lower](as<T>()), eve::minlog[eve::upper](as<T>()))));
 };
 
 

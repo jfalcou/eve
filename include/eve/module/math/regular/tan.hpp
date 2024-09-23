@@ -106,7 +106,7 @@ namespace eve
         }
         else
         {
-          auto pi2_16 =  pi2o_16[upward](as<T>());
+          auto pi2_16 =  pi2o_16[upper](as<T>());
           a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits, a0);
         }
         return tancot_eval(a0);

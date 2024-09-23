@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of invlog_phi on scalar", eve::test::scalar::ieee_r
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::invlog_phi[eve::downward](eve::as<T>()) <= 1.0l/std::log(1.618033988749894848204586l));
-    TTS_EXPECT(eve::invlog_phi[eve::upward](eve::as<T>()) >= 1.0l/std::log(1.618033988749894848204586l));
+    TTS_EXPECT(eve::invlog_phi[eve::lower](eve::as<T>()) <= 1.0l/std::log(1.618033988749894848204586l));
+    TTS_EXPECT(eve::invlog_phi[eve::upper](eve::as<T>()) >= 1.0l/std::log(1.618033988749894848204586l));
   }
   TTS_ULP_EQUAL(eve::invlog_phi(eve::as<T>()), T(1.0l/std::log(1.618033988749894848204586l)), 0.5);
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of invlog_phi on wide", eve::test::simd::ieee_reals
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::invlog_phi[eve::downward](as<T>()), eve::invlog_phi[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::invlog_phi[eve::lower](as<T>()), eve::invlog_phi[eve::upper](as<T>()))));
 };
 
 

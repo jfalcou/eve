@@ -31,14 +31,14 @@ TTS_CASE_TPL("Check behavior of e on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
 
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(eve::euler[eve::downward](as<elt_t>()) < std::exp(1.0l));
-    TTS_EXPECT(eve::euler[eve::upward](as<elt_t>()) > std::exp(1.0l));
+    TTS_EXPECT(eve::euler[eve::lower](as<elt_t>()) < std::exp(1.0l));
+    TTS_EXPECT(eve::euler[eve::upper](as<elt_t>()) > std::exp(1.0l));
    }
   TTS_EQUAL(eve::euler(as<T>()), T(std::exp(1.0l)));
 };
@@ -50,9 +50,9 @@ TTS_CASE_TPL("Check behavior of e on scalar", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::euler[eve::downward](as<T>()), eve::euler[eve::upward](as<T>()))));
+  using eve::lower;
+  using eve::upper;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::euler[eve::lower](as<T>()), eve::euler[eve::upper](as<T>()))));
 };
 
 

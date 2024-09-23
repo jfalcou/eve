@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of sixth on scalar", eve::test::scalar::ieee_reals)
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::sixth[eve::downward](eve::as<T>()) <= 1.0l/6);
-    TTS_EXPECT(eve::sixth[eve::upward](eve::as<T>()) >= 1.0l/6);
+    TTS_EXPECT(eve::sixth[eve::lower](eve::as<T>()) <= 1.0l/6);
+    TTS_EXPECT(eve::sixth[eve::upper](eve::as<T>()) >= 1.0l/6);
   }
   TTS_EQUAL(eve::sixth(eve::as<T>()), T(1.0l/6));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of sixth on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::sixth[eve::downward](as<T>()), eve::sixth[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::sixth[eve::lower](as<T>()), eve::sixth[eve::upper](as<T>()))));
 };
 
 

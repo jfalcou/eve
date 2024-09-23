@@ -44,7 +44,7 @@ TTS_CASE_TPL("Check behavior of maxlog10 on scalar", eve::test::simd::ieee_reals
   using eve::as;
   TTS_IEEE_EQUAL(eve::exp10(eve::maxlog10(as<T>())), eve::inf(as<T>()));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog10(as<T>()))))));
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog10[eve::downward](as<T>()), eve::maxlog10[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::maxlog10[eve::lower](as<T>()), eve::maxlog10[eve::upper](as<T>()))));
   TTS_EXPECT(eve::all(eve::is_finite(eve::exp(eve::prev(eve::maxlog10(as<T>()))))));
 };
 

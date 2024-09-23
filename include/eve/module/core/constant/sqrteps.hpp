@@ -14,14 +14,14 @@
 namespace eve
 {
   template<typename Options>
-  struct sqrteps_t : constant_callable<sqrteps_t, Options, downward_option, upward_option>
+  struct sqrteps_t : constant_callable<sqrteps_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
     static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
     {
       if constexpr(std::same_as<T, float>  )
       {
-        if constexpr(Opts::contains(upward))        return T(0x1.6a09e8p-12f);
+        if constexpr(Opts::contains(upper))        return T(0x1.6a09e8p-12f);
         else                                        return T(0x1.6a09e6p-12f);
       }
       else if constexpr(std::same_as<T, double> ) return T(0x1p-26);

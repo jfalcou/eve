@@ -32,13 +32,13 @@ TTS_CASE_TPL("Check behavior of phi on scalar", eve::test::scalar::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
 
   TTS_IEEE_EQUAL(eve::phi(as<T>()), T(1.61803398874989484820458683436563811772030917980575l));
-  TTS_EXPECT(eve::all(eve::phi[eve::downward](as<T>()) <= eve::phi(as<T>())));
-  TTS_EXPECT(eve::all(eve::phi(as<T>()) <= eve::phi[eve::upward](as<T>())));
-  TTS_ULP_EQUAL(eve::phi[eve::downward](as<T>()), eve::phi[eve::upward](as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::phi[eve::lower](as<T>()) <= eve::phi(as<T>())));
+  TTS_EXPECT(eve::all(eve::phi(as<T>()) <= eve::phi[eve::upper](as<T>())));
+  TTS_ULP_EQUAL(eve::phi[eve::lower](as<T>()), eve::phi[eve::upper](as<T>()), 0.5);
 };
 
 //==================================================================================================
@@ -48,9 +48,9 @@ TTS_CASE_TPL("Check behavior of phi on scalar", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::phi[eve::downward](as<T>()), eve::phi[eve::upward](as<T>()))));
+  using eve::lower;
+  using eve::upper;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::phi[eve::lower](as<T>()), eve::phi[eve::upper](as<T>()))));
 };
 
 

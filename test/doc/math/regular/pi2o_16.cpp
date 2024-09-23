@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> pi2o_16(as<wide_ft>())                 = " << eve::pi2o_16(eve::as<wide_ft>())                << std::endl
             << "-> pi2o_16(as(wxf))                       = " << eve::pi2o_16(eve::as(wxf))                      << std::endl
-            << "-> pi2o_16[upward](as<wide_ft>())         = " << eve::pi2o_16[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> pi2o_16[upward](as(wxf))               = " << eve::pi2o_16[eve::upward](eve::as(wxf))         << std::endl
-            << "-> pi2o_16[downward](as<wide_ft>())       = " << eve::pi2o_16[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> pi2o_16[downward](as(wxf))             = " << eve::pi2o_16[eve::downward](eve::as(wxf))       << std::endl
+            << "-> pi2o_16[upper](as<wide_ft>())         = " << eve::pi2o_16[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> pi2o_16[upper](as(wxf))               = " << eve::pi2o_16[eve::upper](eve::as(wxf))         << std::endl
+            << "-> pi2o_16[lower](as<wide_ft>())       = " << eve::pi2o_16[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> pi2o_16[lower](as(wxf))             = " << eve::pi2o_16[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> pi2o_16(as<wide_dt>())           = " << eve::pi2o_16(eve::as<wide_dt>())                << std::endl
             << "-> pi2o_16(as(wxd))                 = " << eve::pi2o_16(eve::as(wxd))                      << std::endl
-            << "-> pi2o_16[upward](as<wide_dt>())   = " << eve::pi2o_16[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> pi2o_16[upward](as(wxd))         = " << eve::pi2o_16[eve::upward](eve::as(wxd))         << std::endl
-            << "-> pi2o_16[downward](as<wide_dt>()) = " << eve::pi2o_16[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> pi2o_16[downward](as(wxd))       = " << eve::pi2o_16[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> pi2o_16[upper](as<wide_dt>())   = " << eve::pi2o_16[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> pi2o_16[upper](as(wxd))         = " << eve::pi2o_16[eve::upper](eve::as(wxd))         << std::endl
+            << "-> pi2o_16[lower](as<wide_dt>()) = " << eve::pi2o_16[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> pi2o_16[lower](as(wxd))       = " << eve::pi2o_16[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

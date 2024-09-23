@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> catalan(as<wide_ft>())                 = " << eve::catalan(eve::as<wide_ft>())                << std::endl
             << "-> catalan(as(wxf))                       = " << eve::catalan(eve::as(wxf))                      << std::endl
-            << "-> catalan[upward](as<wide_ft>())         = " << eve::catalan[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> catalan[upward](as(wxf))               = " << eve::catalan[eve::upward](eve::as(wxf))         << std::endl
-            << "-> catalan[downward](as<wide_ft>())       = " << eve::catalan[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> catalan[downward](as(wxf))             = " << eve::catalan[eve::downward](eve::as(wxf))       << std::endl
+            << "-> catalan[upper](as<wide_ft>())         = " << eve::catalan[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> catalan[upper](as(wxf))               = " << eve::catalan[eve::upper](eve::as(wxf))         << std::endl
+            << "-> catalan[lower](as<wide_ft>())       = " << eve::catalan[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> catalan[lower](as(wxf))             = " << eve::catalan[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> catalan(as<wide_dt>())           = " << eve::catalan(eve::as<wide_dt>())                << std::endl
             << "-> catalan(as(wxd))                 = " << eve::catalan(eve::as(wxd))                      << std::endl
-            << "-> catalan[upward](as<wide_dt>())   = " << eve::catalan[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> catalan[upward](as(wxd))         = " << eve::catalan[eve::upward](eve::as(wxd))         << std::endl
-            << "-> catalan[downward](as<wide_dt>()) = " << eve::catalan[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> catalan[downward](as(wxd))       = " << eve::catalan[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> catalan[upper](as<wide_dt>())   = " << eve::catalan[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> catalan[upper](as(wxd))         = " << eve::catalan[eve::upper](eve::as(wxd))         << std::endl
+            << "-> catalan[lower](as<wide_dt>()) = " << eve::catalan[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> catalan[lower](as(wxd))       = " << eve::catalan[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;
@@ -43,7 +43,7 @@ int main()
              << "-> catalan[wxf <  0.0f](as(wxf))     = " << eve::catalan[wxf < 0.0f](eve::as(wxf)) << std::endl
              << "-> catalan[ignore_first(3)](as(wxf)) = " << eve::catalan[eve::ignore_first(3)](eve::as(wxf))  << std::endl;
 
-  std::cout << "-> constexpr catalan            = " << constexpr_catalan<float>() << std::endl;
+   std::cout << "-> constexpr catalan                 = " << constexpr_catalan<float>() << std::endl;
 
   return 0;
 }

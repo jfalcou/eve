@@ -32,14 +32,14 @@ TTS_CASE_TPL("Check behavior of invlog_2 on scalar", eve::test::scalar::ieee_rea
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
   using elt_t = eve::element_type_t<T>;
   if constexpr( sizeof(long double) > sizeof(elt_t) )
   {
-    TTS_EXPECT(eve::invlog_2[eve::downward](as<elt_t>())
+    TTS_EXPECT(eve::invlog_2[eve::lower](as<elt_t>())
                < 1.442695040888963407359924681001892137426645954153l);
-    TTS_EXPECT(eve::invlog_2[eve::upward](as<elt_t>())
+    TTS_EXPECT(eve::invlog_2[eve::upper](as<elt_t>())
                > 1.442695040888963407359924681001892137426645954153l);
   }
   TTS_IEEE_EQUAL(eve::invlog_2(as<T>()), T(1.442695040888963407359924681001892137426645954153l));
@@ -52,9 +52,9 @@ TTS_CASE_TPL("Check behavior of invlog_2 on scalar", eve::test::simd::ieee_reals
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::invlog_2[eve::downward](as<T>())), eve::invlog_2[eve::upward](as<T>()))));
+  using eve::lower;
+  using eve::upper;
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::next(eve::invlog_2[eve::lower](as<T>())), eve::invlog_2[eve::upper](as<T>()))));
 };
 
 

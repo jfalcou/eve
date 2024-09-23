@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct maxexponentm1_t : constant_callable<maxexponentm1_t, Options, downward_option, upward_option>
+  struct maxexponentm1_t : constant_callable<maxexponentm1_t, Options, lower_option, upper_option>
   {
     template<typename T>
     static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)

@@ -34,9 +34,9 @@
 //!
 //!  * the regular call provides the floating point representation that is nearest to the
 //!    mathematical value,
-//!  * eve::upward provides the least representable value that is greater than
+//!  * eve::upper provides the least representable value that is greater than
 //!    the mathematical value,
-//!  * eve::downward provides the greatest representable value that is less than the
+//!  * eve::lower provides the greatest representable value that is less than the
 //!    mathematical value,
 //!
 //!  About constants names:
@@ -66,7 +66,7 @@
 //!     but eve::cospi(0.5) is 0 (as 0.5 is exact).
 //!
 //! Moreover each function can be decorated with eve::quarter_circle,  eve:half_circle,
-//! eve::full_circle, eve::medium,  eve::big.
+//! eve::full_circle.
 //!
 //!   * eve::quarter_circle provides accurate result for the corresponding
 //!     radian angle in\f$]-\pi/4,\pi/4[\f$,  Nan outside

@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of four_minus_pi on scalar", eve::test::scalar::iee
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::four_minus_pi[eve::downward](eve::as<T>()) <= 4.0l-3.141592653589793238462643l);
-    TTS_EXPECT(eve::four_minus_pi[eve::upward](eve::as<T>()) >= 4.0l-3.141592653589793238462643l);
+    TTS_EXPECT(eve::four_minus_pi[eve::lower](eve::as<T>()) <= 4.0l-3.141592653589793238462643l);
+    TTS_EXPECT(eve::four_minus_pi[eve::upper](eve::as<T>()) >= 4.0l-3.141592653589793238462643l);
   }
   TTS_ULP_EQUAL(eve::four_minus_pi(eve::as<T>()), T(4.0l-3.141592653589793238462643l), 0.5);
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of four_minus_pi on wide", eve::test::simd::ieee_re
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::four_minus_pi[eve::downward](as<T>()), eve::four_minus_pi[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::four_minus_pi[eve::lower](as<T>()), eve::four_minus_pi[eve::upper](as<T>()))));
 };
 
 

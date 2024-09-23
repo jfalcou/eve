@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of khinchin on scalar", eve::test::scalar::ieee_rea
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::khinchin[eve::downward](eve::as<T>()) <=2.685452001065306445309714 );
-    TTS_EXPECT(eve::khinchin[eve::upward](eve::as<T>()) >= 2.685452001065306445309714);
+    TTS_EXPECT(eve::khinchin[eve::lower](eve::as<T>()) <=2.685452001065306445309714 );
+    TTS_EXPECT(eve::khinchin[eve::upper](eve::as<T>()) >= 2.685452001065306445309714);
   }
   TTS_EQUAL(eve::khinchin(eve::as<T>()), T(2.685452001065306445309714));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of khinchin on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::khinchin[eve::downward](as<T>()), eve::khinchin[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::khinchin[eve::lower](as<T>()), eve::khinchin[eve::upper](as<T>()))));
 };
 
 

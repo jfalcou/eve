@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of inv_2eps on scalar", eve::test::scalar::ieee_rea
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::inv_2eps[eve::downward](eve::as<T>()) <= 0.5/eve::eps(eve::as<T>()));
-    TTS_EXPECT(eve::inv_2eps[eve::upward](eve::as<T>()) >= 0.5/eve::eps(eve::as<T>())); 
+    TTS_EXPECT(eve::inv_2eps[eve::lower](eve::as<T>()) <= 0.5/eve::eps(eve::as<T>()));
+    TTS_EXPECT(eve::inv_2eps[eve::upper](eve::as<T>()) >= 0.5/eve::eps(eve::as<T>())); 
   }
   TTS_EQUAL(eve::inv_2eps(eve::as<T>()), T(0.5/eve::eps(eve::as<T>())));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of inv_2eps on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_2eps[eve::downward](as<T>()), eve::inv_2eps[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_2eps[eve::lower](as<T>()), eve::inv_2eps[eve::upper](as<T>()))));
 };
 
 

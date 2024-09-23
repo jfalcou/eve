@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of sqrtlog_4 on scalar", eve::test::scalar::ieee_re
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::sqrtlog_4[eve::downward](eve::as<T>()) <= std::sqrt(std::log(4.0l)));
-    TTS_EXPECT(eve::sqrtlog_4[eve::upward](eve::as<T>()) >= std::sqrt(std::log(4.0l))); 
+    TTS_EXPECT(eve::sqrtlog_4[eve::lower](eve::as<T>()) <= std::sqrt(std::log(4.0l)));
+    TTS_EXPECT(eve::sqrtlog_4[eve::upper](eve::as<T>()) >= std::sqrt(std::log(4.0l))); 
   }
   TTS_EQUAL(eve::sqrtlog_4(eve::as<T>()), T(std::sqrt(std::log(4.0l))));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of sqrtlog_4 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::sqrtlog_4[eve::downward](as<T>()), eve::sqrtlog_4[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::sqrtlog_4[eve::lower](as<T>()), eve::sqrtlog_4[eve::upper](as<T>()))));
 };
 
 

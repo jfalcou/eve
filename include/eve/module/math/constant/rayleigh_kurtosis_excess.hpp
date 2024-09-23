@@ -14,21 +14,21 @@
 namespace eve
 {
 template<typename Options>
-struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t, Options, downward_option, upward_option>
+struct rayleigh_kurtosis_excess_t : constant_callable<rayleigh_kurtosis_excess_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
-      if constexpr(Opts::contains(upward))        return T(0x1.f5f162p-3);
-      else if constexpr(Opts::contains(downward)) return T(0x1.f5f16p-3);
+      if constexpr(Opts::contains(upper))        return T(0x1.f5f162p-3);
+      else if constexpr(Opts::contains(lower)) return T(0x1.f5f16p-3);
       else                                         return T(0x1.f5f162p-3);
     }
     else
     {
-      if constexpr(Opts::contains(upward))        return T(0x1.f5f161186c5f2p-3);
-      else if constexpr(Opts::contains(downward)) return T(0x1.f5f161186c5f1p-3);
+      if constexpr(Opts::contains(upper))        return T(0x1.f5f161186c5f2p-3);
+      else if constexpr(Opts::contains(lower)) return T(0x1.f5f161186c5f1p-3);
       else                                         return T(0x1.f5f161186c5f2p-3);
     }
   }

@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct zero_t : constant_callable<zero_t, Options, downward_option, upward_option>
+  struct zero_t : constant_callable<zero_t, Options, lower_option, upper_option>
   {
     struct fill_zero
     {

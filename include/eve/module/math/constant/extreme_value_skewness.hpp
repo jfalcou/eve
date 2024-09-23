@@ -14,21 +14,21 @@
 namespace eve
 {
 template<typename Options>
-struct extreme_value_skewness_t : constant_callable<extreme_value_skewness_t, Options, downward_option, upward_option>
+struct extreme_value_skewness_t : constant_callable<extreme_value_skewness_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
-      if constexpr(Opts::contains(upward))        return T(0x1.23b95cp+0);
-      else if constexpr(Opts::contains(downward)) return T(0x1.23b95ap+0);
+      if constexpr(Opts::contains(upper))        return T(0x1.23b95cp+0);
+      else if constexpr(Opts::contains(lower)) return T(0x1.23b95ap+0);
       else                                         return T(0x1.23b95cp+0);
     }
     else
     {
-      if constexpr(Opts::contains(upward))        return T(0x1.23b95bd431d32p+0);
-      else if constexpr(Opts::contains(downward)) return T(0x1.23b95bd431d31p+0);
+      if constexpr(Opts::contains(upper))        return T(0x1.23b95bd431d32p+0);
+      else if constexpr(Opts::contains(lower)) return T(0x1.23b95bd431d31p+0);
       else                                         return T(0x1.23b95bd431d31p+0);
     }
   }

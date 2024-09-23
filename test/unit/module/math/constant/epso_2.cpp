@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of epso_2 on scalar", eve::test::scalar::ieee_reals
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::epso_2[eve::downward](eve::as<T>()) <= eve::eps(eve::as<T>())/2);
-    TTS_EXPECT(eve::epso_2[eve::upward](eve::as<T>()) >= eve::eps(eve::as<T>())/2); 
+    TTS_EXPECT(eve::epso_2[eve::lower](eve::as<T>()) <= eve::eps(eve::as<T>())/2);
+    TTS_EXPECT(eve::epso_2[eve::upper](eve::as<T>()) >= eve::eps(eve::as<T>())/2); 
   }
   TTS_EQUAL(eve::epso_2(eve::as<T>()), T(eve::eps(eve::as<T>())/2));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of epso_2 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::epso_2[eve::downward](as<T>()), eve::epso_2[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::epso_2[eve::lower](as<T>()), eve::epso_2[eve::upper](as<T>()))));
 };
 
 

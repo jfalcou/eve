@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> sixth(as<wide_ft>())                 = " << eve::sixth(eve::as<wide_ft>())                << std::endl
             << "-> sixth(as(wxf))                       = " << eve::sixth(eve::as(wxf))                      << std::endl
-            << "-> sixth[upward](as<wide_ft>())         = " << eve::sixth[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> sixth[upward](as(wxf))               = " << eve::sixth[eve::upward](eve::as(wxf))         << std::endl
-            << "-> sixth[downward](as<wide_ft>())       = " << eve::sixth[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> sixth[downward](as(wxf))             = " << eve::sixth[eve::downward](eve::as(wxf))       << std::endl
+            << "-> sixth[upper](as<wide_ft>())         = " << eve::sixth[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> sixth[upper](as(wxf))               = " << eve::sixth[eve::upper](eve::as(wxf))         << std::endl
+            << "-> sixth[lower](as<wide_ft>())       = " << eve::sixth[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> sixth[lower](as(wxf))             = " << eve::sixth[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> sixth(as<wide_dt>())           = " << eve::sixth(eve::as<wide_dt>())                << std::endl
             << "-> sixth(as(wxd))                 = " << eve::sixth(eve::as(wxd))                      << std::endl
-            << "-> sixth[upward](as<wide_dt>())   = " << eve::sixth[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> sixth[upward](as(wxd))         = " << eve::sixth[eve::upward](eve::as(wxd))         << std::endl
-            << "-> sixth[downward](as<wide_dt>()) = " << eve::sixth[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> sixth[downward](as(wxd))       = " << eve::sixth[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> sixth[upper](as<wide_dt>())   = " << eve::sixth[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> sixth[upper](as(wxd))         = " << eve::sixth[eve::upper](eve::as(wxd))         << std::endl
+            << "-> sixth[lower](as<wide_dt>()) = " << eve::sixth[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> sixth[lower](as(wxd))       = " << eve::sixth[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

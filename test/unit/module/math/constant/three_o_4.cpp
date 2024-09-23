@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of three_o_4 on scalar", eve::test::scalar::ieee_re
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::three_o_4[eve::downward](eve::as<T>()) <= 3.0/4);
-    TTS_EXPECT(eve::three_o_4[eve::upward](eve::as<T>()) >= 3.0/4); 
+    TTS_EXPECT(eve::three_o_4[eve::lower](eve::as<T>()) <= 3.0/4);
+    TTS_EXPECT(eve::three_o_4[eve::upper](eve::as<T>()) >= 3.0/4); 
   }
   TTS_EQUAL(eve::three_o_4(eve::as<T>()), T(3.0/4));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of three_o_4 on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::three_o_4[eve::downward](as<T>()), eve::three_o_4[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::three_o_4[eve::lower](as<T>()), eve::three_o_4[eve::upper](as<T>()))));
 };
 
 

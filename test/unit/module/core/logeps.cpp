@@ -32,11 +32,11 @@ TTS_CASE_TPL("Check behavior of logeps on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::downward;
-  using eve::upward;
+  using eve::lower;
+  using eve::upper;
 
   TTS_ULP_EQUAL(eve::logeps(as<T>()), T(std::log(eve::eps(as<eve::element_type_t<T>>()))), 0.5);
-  TTS_EXPECT(eve::all(eve::logeps[eve::downward](as<T>()) <= eve::logeps(as<T>())));
-  TTS_EXPECT(eve::all(eve::logeps(as<T>()) <= eve::logeps[upward](as<T>())));
-  TTS_ULP_EQUAL(eve::logeps[downward](as<T>()), eve::logeps[upward](as<T>()), 0.5);
+  TTS_EXPECT(eve::all(eve::logeps[eve::lower](as<T>()) <= eve::logeps(as<T>())));
+  TTS_EXPECT(eve::all(eve::logeps(as<T>()) <= eve::logeps[upper](as<T>())));
+  TTS_ULP_EQUAL(eve::logeps[upper](as<T>()), eve::logeps[lower](as<T>()), 0.5);
 };

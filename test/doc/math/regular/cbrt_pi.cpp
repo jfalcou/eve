@@ -17,17 +17,17 @@ int main()
   std::cout << "---- simd"  << std::setprecision(9) << std::endl
             << "-> cbrt_pi(as<wide_ft>())                 = " << eve::cbrt_pi(eve::as<wide_ft>())                << std::endl
             << "-> cbrt_pi(as(wxf))                       = " << eve::cbrt_pi(eve::as(wxf))                      << std::endl
-            << "-> cbrt_pi[upward](as<wide_ft>())         = " << eve::cbrt_pi[eve::upward](eve::as<wide_ft>())   << std::endl
-            << "-> cbrt_pi[upward](as(wxf))               = " << eve::cbrt_pi[eve::upward](eve::as(wxf))         << std::endl
-            << "-> cbrt_pi[downward](as<wide_ft>())       = " << eve::cbrt_pi[eve::downward](eve::as<wide_ft>()) << std::endl
-            << "-> cbrt_pi[downward](as(wxf))             = " << eve::cbrt_pi[eve::downward](eve::as(wxf))       << std::endl
+            << "-> cbrt_pi[upper](as<wide_ft>())         = " << eve::cbrt_pi[eve::upper](eve::as<wide_ft>())   << std::endl
+            << "-> cbrt_pi[upper](as(wxf))               = " << eve::cbrt_pi[eve::upper](eve::as(wxf))         << std::endl
+            << "-> cbrt_pi[lower](as<wide_ft>())       = " << eve::cbrt_pi[eve::lower](eve::as<wide_ft>()) << std::endl
+            << "-> cbrt_pi[lower](as(wxf))             = " << eve::cbrt_pi[eve::lower](eve::as(wxf))       << std::endl
             << std::setprecision(17)
             << "-> cbrt_pi(as<wide_dt>())           = " << eve::cbrt_pi(eve::as<wide_dt>())                << std::endl
             << "-> cbrt_pi(as(wxd))                 = " << eve::cbrt_pi(eve::as(wxd))                      << std::endl
-            << "-> cbrt_pi[upward](as<wide_dt>())   = " << eve::cbrt_pi[eve::upward](eve::as<wide_dt>())   << std::endl
-            << "-> cbrt_pi[upward](as(wxd))         = " << eve::cbrt_pi[eve::upward](eve::as(wxd))         << std::endl
-            << "-> cbrt_pi[downward](as<wide_dt>()) = " << eve::cbrt_pi[eve::downward](eve::as<wide_dt>()) << std::endl
-            << "-> cbrt_pi[downward](as(wxd))       = " << eve::cbrt_pi[eve::downward](eve::as(wxd))       << std::endl;
+            << "-> cbrt_pi[upper](as<wide_dt>())   = " << eve::cbrt_pi[eve::upper](eve::as<wide_dt>())   << std::endl
+            << "-> cbrt_pi[upper](as(wxd))         = " << eve::cbrt_pi[eve::upper](eve::as(wxd))         << std::endl
+            << "-> cbrt_pi[lower](as<wide_dt>()) = " << eve::cbrt_pi[eve::lower](eve::as<wide_dt>()) << std::endl
+            << "-> cbrt_pi[lower](as(wxd))       = " << eve::cbrt_pi[eve::lower](eve::as(wxd))       << std::endl;
 
   float        xf;
   double       xd;

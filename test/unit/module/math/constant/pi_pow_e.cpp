@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of pi_pow_e on scalar", eve::test::scalar::ieee_rea
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::pi_pow_e[eve::downward](eve::as<T>()) <= std::pow(3.141592653589793238462643l,std::exp(1.0l)));
-    TTS_EXPECT(eve::pi_pow_e[eve::upward](eve::as<T>()) >= std::pow(3.141592653589793238462643l,std::exp(1.0l)));
+    TTS_EXPECT(eve::pi_pow_e[eve::lower](eve::as<T>()) <= std::pow(3.141592653589793238462643l,std::exp(1.0l)));
+    TTS_EXPECT(eve::pi_pow_e[eve::upper](eve::as<T>()) >= std::pow(3.141592653589793238462643l,std::exp(1.0l)));
   }
   TTS_ULP_EQUAL(eve::pi_pow_e(eve::as<T>()), T(std::pow(3.141592653589793238462643l,std::exp(1.0l))), 0.5);
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of pi_pow_e on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::pi_pow_e[eve::downward](as<T>()), eve::pi_pow_e[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::pi_pow_e[eve::lower](as<T>()), eve::pi_pow_e[eve::upper](as<T>()))));
 };
 
 

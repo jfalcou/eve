@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of glaisher on scalar", eve::test::scalar::ieee_rea
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::glaisher[eve::downward](eve::as<T>()) <= 1.28242712910062263687l);
-    TTS_EXPECT(eve::glaisher[eve::upward](eve::as<T>()) >= 1.28242712910062263687l);
+    TTS_EXPECT(eve::glaisher[eve::lower](eve::as<T>()) <= 1.28242712910062263687l);
+    TTS_EXPECT(eve::glaisher[eve::upper](eve::as<T>()) >= 1.28242712910062263687l);
   }
   TTS_EQUAL(eve::glaisher(eve::as<T>()), T(1.28242712910062263687l));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of glaisher on wide", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::glaisher[eve::downward](as<T>()), eve::glaisher[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::glaisher[eve::lower](as<T>()), eve::glaisher[eve::upper](as<T>()))));
 };
 
 

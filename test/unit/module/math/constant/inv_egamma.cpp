@@ -32,8 +32,8 @@ TTS_CASE_TPL("Check behavior of inv_egamma on scalar", eve::test::scalar::ieee_r
 {
   if constexpr( sizeof(long double) > sizeof(T) )
   {
-    TTS_EXPECT(eve::inv_egamma[eve::downward](eve::as<T>()) <= 1.0l/0.57721566490153286060651209008l);
-    TTS_EXPECT(eve::inv_egamma[eve::upward](eve::as<T>()) >= 1.0l/0.57721566490153286060651209008l); 
+    TTS_EXPECT(eve::inv_egamma[eve::lower](eve::as<T>()) <= 1.0l/0.57721566490153286060651209008l);
+    TTS_EXPECT(eve::inv_egamma[eve::upper](eve::as<T>()) >= 1.0l/0.57721566490153286060651209008l); 
   }
   TTS_EQUAL(eve::inv_egamma(eve::as<T>()), T(1.0l/0.57721566490153286060651209008l));
 };
@@ -45,7 +45,7 @@ TTS_CASE_TPL("Check behavior of inv_egamma on wide", eve::test::simd::ieee_reals
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_egamma[eve::downward](as<T>()), eve::inv_egamma[eve::upward](as<T>()))));
+  TTS_EXPECT(eve::all(eve::test::is_near(eve::inv_egamma[eve::lower](as<T>()), eve::inv_egamma[eve::upper](as<T>()))));
 };
 
 
