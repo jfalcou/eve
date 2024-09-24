@@ -35,13 +35,15 @@ TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sqrt(wide) and diff on  floating types",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::generate(tts::randoms(0, eve::valmax)))
 <typename T>(T const& a0)
 {
   using eve::detail::map;
   using eve::rec;
   using eve::sqr;
   TTS_ULP_EQUAL(eve::sqrt(a0), map([&](auto e) { return std::sqrt(e); }, a0), 2);
+  TTS_EXPECT(eve::all(eve::sqrt(a0) <= eve::sqrt[eve::upper](a0)));
+  TTS_EXPECT(eve::all(eve::sqrt(a0) >= eve::sqrt[eve::lower](a0)));
 };
 
 //==================================================================================================

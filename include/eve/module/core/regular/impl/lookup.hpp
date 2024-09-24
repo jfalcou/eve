@@ -40,7 +40,7 @@ namespace eve::detail
       idx     &= ind;
 
       // Rebuild as scalar
-      wide<T, N> data;
+      wide<T, N> data{};
 
       if constexpr(has_aggregated_abi_v<wide<T,N>>)
       {

@@ -5,8 +5,9 @@
 
 int main()
 {
-  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
-  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  auto sml = eve::smallestposval(eve::as(1.0));
+  eve::wide wf0{1.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
+  eve::wide wf1{sml, -sml, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
   eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
   eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
   eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
@@ -25,8 +26,7 @@ int main()
   std::cout << "-> sub(wu0, wu1)                 = " << eve::sub(wu0, wu1) << "\n";
   std::cout << "-> sub(wi0, wi1)                 = " << eve::sub(wi0, wi1) << "\n";
 
-  std::cout << std::setprecision(20) << "-> sub          (wf0, wf1)       = " << eve::sub               (wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-> sub[lower](wf0, wf1)       = " << eve::sub[eve::lower](wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-> sub[upper](wf0, wf1)         = " << eve::sub[eve::upper](wf0, wf1) << "\n";
-  std::cout << std::setprecision(20) << "-  diff                          = " << eve::sub[eve::upper](wf0, wf1) - eve::sub[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> sub(wf0, wf1)          = " << eve::sub(wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> sub[lower](wf0, wf1)   = " << eve::sub[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> sub[upper](wf0, wf1)   = " << eve::sub[eve::upper](wf0, wf1) << "\n";
 }

@@ -46,6 +46,8 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using eve::detail::map;
+  using eve::lower;
+  using eve::upper;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::rec(a0),
@@ -55,12 +57,14 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask, eve::rec(a0), a0));
   TTS_EQUAL(eve::rec[eve::raw][mask](a0), eve::if_else(mask, eve::rec[eve::raw](a0), a0));
   TTS_EQUAL(eve::rec[eve::pedantic][mask](a0), eve::if_else(mask, eve::rec[eve::pedantic](a0), a0));
+  TTS_ULP_EQUAL(eve::rec[eve::lower](a0), eve::div[lower](T(1), a0), 1.0);
+  TTS_ULP_EQUAL(eve::rec[eve::upper](a0), eve::div[upper](T(1), a0), 1.0);
 };
 
 //==================================================================================================
 // Test for corner-cases values
 //==================================================================================================
-TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::test::simd::all_types)
+TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::test::simd::ieee_reals)
   <typename T>(tts::type<T> tgt)
 {
   auto cases = tts::limits(tgt);
@@ -83,7 +87,7 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.inf) , cases.zero);
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.mzero), cases.minf);
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](cases.zero), cases.inf);
-    
+
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](eve::smallestposval(eve::as<T>())), T(1)/eve::smallestposval(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::rec[eve::pedantic](2*eve::smallestposval(eve::as<T>())), T(1)/(2*eve::smallestposval(eve::as<T>())));
 
@@ -93,7 +97,4 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::rec variants on wide", eve::te
       TTS_ULP_EQUAL(eve::rec[eve::pedantic](2*eve::mindenormal(eve::as<T>())), T(0.5)/eve::mindenormal(eve::as<T>()), 0.5);
     }
   }
-  else TTS_EQUAL(0, 0);
-
-
 };

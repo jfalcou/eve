@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/is_less.hpp>
 
 namespace eve::detail
 {
@@ -46,7 +45,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return l_t(_mm256_cmp_ps(a, b, m));
       else if constexpr( c == category::float64x2 ) return l_t(_mm_cmpnge_pd(a, b));
       else if constexpr( c == category::float32x4 ) return l_t(_mm_cmpnge_ps(a, b));
-      else return is_less(a, b);
+      else return a < b;
     }
   }
 
@@ -78,7 +77,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 )  return mask8 {_mm256_mask_cmp_pd_mask(m, v, w, f)};
       else if constexpr( c == category::float32x4 )  return mask8 {_mm_mask_cmp_ps_mask(m, v, w, f)};
       else if constexpr( c == category::float64x2 )  return mask8 {_mm_mask_cmp_pd_mask(m, v, w, f)};
-      else return is_less[mask](v, w);
+      else return if_else(mask, zero, v < w); //is_less[mask](v, w); // circular include
     }
   }
 }

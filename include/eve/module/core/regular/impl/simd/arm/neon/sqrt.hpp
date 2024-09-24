@@ -18,13 +18,14 @@ namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>  sqrt_(EVE_SUPPORTS(neon128_),
-                                    O          const&,
+                                    O          const& opts,
                                     wide<T, N> const& v0) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-    if constexpr( current_api >= asimd )
+    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(cpu_{}, opts, v0);
+    else if constexpr( current_api >= asimd )
     {
       if      constexpr( cat == category::float32x2 ) return vsqrt_f32(v0);
       else if constexpr( cat == category::float64x1 ) return vsqrt_f64(v0);

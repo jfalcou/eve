@@ -95,8 +95,8 @@ TTS_CASE_WITH("Check behavior of add on wide",
     TTS_EXPECT(eve::all(add[upper](a0, a1, a2) >=  add[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
-    TTS_EXPECT(eve::all(add[upper](w0, w1) >=  add(w0, w1)));
-    TTS_EXPECT(eve::all(add[lower](w0, -w1) <= add(w0, -w1)));
+    TTS_EXPECT(eve::all(add[upper](w0, w1)  >  add(w0, w1)));
+    TTS_EXPECT(eve::all(add[lower](w0, -w1) < add(w0, -w1)));
   }
 };
 

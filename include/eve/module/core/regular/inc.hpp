@@ -17,7 +17,7 @@
 namespace eve
 {
   template<typename Options>
-  struct inc_t : elementwise_callable<inc_t, Options, saturated_option>
+  struct inc_t : elementwise_callable<inc_t, Options, saturated_option, lower_option, upper_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -51,6 +51,8 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto inc[saturated](value auto x)               noexcept; // 3
+//!      constexpr auto inc[lower](value auto x)                   noexcept; // 4
+//!      constexpr auto inc[upper](value auto x)                   noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -66,6 +68,10 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The saturated incrementation of `x`. More specifically, for signed
 //!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
+//!      4. The increment is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
+//!         to be less or equal to the exact one (except for Nans).
+//!      5. The increment is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
+//!         to be greater or equal to the exact one (except for Nans).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/inc.cpp}
@@ -78,7 +84,7 @@ namespace eve
   namespace detail
   {
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
       if constexpr(integral_value<T> && O::contains(saturated))
         return inc[a != valmax(eve::as(a))](a);
@@ -88,12 +94,12 @@ namespace eve
         return T(u_t(a)+u_t(1));
       }
       else
-        return a + one(eve::as(a));
+        return eve::add[o](a, one(eve::as(a)));
     }
 
 
     template<conditional_expr C, value T, callable_options O>
-    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), C cond, O const&, T const& a) noexcept
+    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), C cond, O const& o, T const& a) noexcept
     {
       if constexpr(simd_value<T>)
       {
@@ -108,11 +114,11 @@ namespace eve
           if constexpr (simd_value<decltype(m)>) return a - convert(m.bits(), as_element<T>{});
           else                                   return a - bit_cast(m.mask(), int_from<decltype(m.mask())>{});
         }
-        else                                        return add[cond](a,one(eve::as(a)));
+        else                                     return add[o](a,one(eve::as(a)));
       }
       else
       {
-        return add[cond](a,one(eve::as(a)));
+        return add[o](a,one(eve::as(a)));
       }
     }
   }

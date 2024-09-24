@@ -34,7 +34,7 @@ namespace eve::detail
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       using namespace spy::literal;
-      if constexpr(spy::compiler == spy::clang_ || spy::compiler >= 13_gcc || spy::compiler == spy::msvc_)
+      if constexpr(enable_roundings)
       {
         return with_rounding<O> (eve::sub, a, b);
       }
