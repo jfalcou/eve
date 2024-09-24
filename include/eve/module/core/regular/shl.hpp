@@ -9,30 +9,25 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
   template<typename Options>
   struct shl_t : strict_elementwise_callable<shl_t, Options>
   {
-    template<integral_value T, integral_value N>
-    requires(eve::same_lanes_or_scalar<T, N>)
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
+    template<integral_value T, integral_value S>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
+      requires(eve::same_lanes_or_scalar<T, S>)
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(s),
-                 "[eve::shl] Shifting by " << s << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
       return EVE_DISPATCH_CALL(t0, s);
     }
 
-    template<integral_value T, std::ptrdiff_t N>
-    EVE_FORCEINLINE constexpr T operator()(T t0, index_t<N> s) const noexcept
+    template<integral_value T, std::ptrdiff_t S>
+    EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(s),
-                 "[eve::shl] Shifting by " << s << " is out of the range [0, "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
+      constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
+      static_assert((S < l) && (S >= 0), "[eve::shl] Shift value is out of range.");
+
       return EVE_DISPATCH_CALL(t0, s);
     }
 
@@ -88,6 +83,10 @@ namespace eve
 //!     Although the infix notation with `<<` is supported, the `<<` operator on
 //!     standard scalar types is the original one and so can not be overloaded on standard floating
 //!     parameters due to **C++** limitations.
+//!    @warning
+//!     The behavior of this function is undefined if the shift value is out of the range [0, N[, where
+//!     N is the number of bits of the input type. Use [eve::rshl](@ref eve::rshl) for a relative left shift
+//!     that accepts negative shift values.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/shl.cpp}
@@ -99,27 +98,40 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    shl_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& s) noexcept
+    template<callable_options O, typename T, typename U>
+    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T a, U s) noexcept
     {
-      if constexpr( scalar_value<T> && scalar_value<U> )
-        return static_cast<T>(a << s);
-      else if constexpr( scalar_value<T> )
-        return as_wide_t<T, cardinal_t<U>>(a) << s;
-      else
-        return a << s;
+      // S >> S case: perform the operation using the default operator
+      if constexpr (scalar_value<T> && scalar_value<U>) return static_cast<T>(a << s);
+      // S << W case: broadcast the scalar & rerun
+      else if constexpr (scalar_value<T>)               return shl(as_wide_as_t<T, U>{a}, s);
+      // W << S case: broadcast the scalar & rerun
+      else if constexpr (scalar_value<U>)               return shl(a, as_wide_as_t<U, T>{s});
+      // W << W case: all backends rejected the op, generic fallback
+      else                                              return map([]<typename V>(V v, auto b) { return static_cast<V>(v << b); }, a, s);
     }
 
-    template<typename T, std::ptrdiff_t S, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    shl_(EVE_REQUIRES(cpu_), O const &, T const& a, index_t<S> const& s) noexcept
+    template<callable_options O, typename T, std::ptrdiff_t S>
+    EVE_FORCEINLINE constexpr auto shl_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S>) noexcept
     {
-      return a << s;
+      if constexpr (S == 0) return v;
+      else                  return shl(v, static_cast<element_type_t<T>>(S));
     }
   }
 }
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/shl.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/shl.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/shl.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/shl.hpp>
 #endif

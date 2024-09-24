@@ -9,11 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/detail/assert_utils.hpp>
-#include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/abs.hpp>
-#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
@@ -21,23 +17,18 @@ namespace eve
   struct rshl_t : strict_elementwise_callable<rshl_t, Options>
   {
     template<integral_value T, integral_value N>
-    requires(eve::same_lanes_or_scalar<T, N>)
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
+      requires(eve::same_lanes_or_scalar<T, N>)
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(s),
-                 "[eve::rshl] - Shifting by " << s << " is out of the range ]"
-                 << -int(sizeof(element_type_t<T>) * 8) << ", "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
       return EVE_DISPATCH_CALL(t0, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
     EVE_FORCEINLINE constexpr T operator()(T t0, index_t<S> s) const noexcept
     {
-      EVE_ASSERT(detail::assert_good_shift<T>(S),
-                 "[eve::rshl] - Shifting by " << S << " is out of the range ]"
-                 << -int(sizeof(element_type_t<T>) * 8) << ", "
-                 << sizeof(element_type_t<T>) * 8 << "[.");
+      constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
+      static_assert((S < l) && (S > -l), "[eve::rshl] Shift value is out of range.");
+
       return EVE_DISPATCH_CALL(t0, s);
     }
 

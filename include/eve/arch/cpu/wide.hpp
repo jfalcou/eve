@@ -18,7 +18,6 @@
 #include <eve/conditional.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/function/combine.hpp>
-#include <eve/detail/function/compounds.hpp>
 #include <eve/detail/function/fill.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/function/load.hpp>
@@ -732,75 +731,77 @@ namespace eve
     //! @brief Performs the compound left-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
-    friend EVE_FORCEINLINE auto& operator<<=(wide& w, S s) noexcept
+    friend EVE_FORCEINLINE wide& operator<<=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
     {
-      return detail::self_shl(w, s);
+      w = shl(w, s);
+      return w;
     }
 
     //! @brief Performs the compound left-shift on all the eve::wide lanes with a constant and assign
     //! the result to current one.
     template<std::ptrdiff_t V>
-    friend EVE_FORCEINLINE auto& operator<<=(wide& w, index_t<V> const& s) noexcept
+    friend EVE_FORCEINLINE wide& operator<<=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
     {
-      return detail::self_shl(w, s);
+      w = shl(w, s);
+      return w;
     }
 
     //! @brief Performs the left-shift between all lanes of a eve::wide and an integral scalar.
-    template<integral_value S> friend EVE_FORCEINLINE auto operator<<(wide v, S s) noexcept
+    template<integral_value S>
+    friend EVE_FORCEINLINE wide operator<<(wide w, S s) noexcept
     {
-      auto that = v;
-      return that <<= s;
+      return shl(w, s);
     }
 
     //! @brief Performs the left-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
-    friend EVE_FORCEINLINE auto operator<<(wide v, index_t<V> const& s) noexcept
+    friend EVE_FORCEINLINE wide operator<<(wide w, index_t<V> const& s) noexcept
     {
-      auto that = v;
-      return that <<= s;
+      return shl(w, s);
     }
 
     //! @brief Performs the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<integral_value S>
-    friend EVE_FORCEINLINE auto& operator>>=(wide& w, S s) noexcept
+    friend EVE_FORCEINLINE wide& operator>>=(wide& w, S s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
     {
-      return detail::self_shr(w, s);
+      w = shr(w, s);
+      return w;
     }
 
     //! @brief Performs the compound right-shift on all the eve::wide lanes and assign
     //! the result to current one.
     template<std::ptrdiff_t V>
-    friend EVE_FORCEINLINE auto& operator>>=(wide& w, index_t<V> const& s) noexcept
+    friend EVE_FORCEINLINE wide& operator>>=(wide& w, index_t<V> const& s) noexcept
 #if !defined(EVE_DOXYGEN_INVOKED)
         requires(!kumi::product_type<Type>)
 #endif
     {
-      return detail::self_shr(w, s);
+      w = shr(w, s);
+      return w;
     }
 
     //! @brief Performs the right-shift between all lanes of a eve::wide and an integral scalar.
-    template<integral_value S> friend EVE_FORCEINLINE auto operator>>(wide v, S s) noexcept
+    template<integral_value S>
+    friend EVE_FORCEINLINE wide operator>>(wide w, S s) noexcept
     {
-      auto that = v;
-      return that >>= s;
+      return shr(w, s);
     }
 
     //! @brief Performs the right-shift between all lanes of a eve::wide and an integral constant.
     template<std::ptrdiff_t V>
-    friend EVE_FORCEINLINE auto operator>>(wide v, index_t<V> const& s) noexcept
+    friend EVE_FORCEINLINE auto operator>>(wide w, index_t<V> const& s) noexcept
     {
-      auto that = v;
-      return that >>= s;
+      return shr(w, s);
     }
 
     //==============================================================================================

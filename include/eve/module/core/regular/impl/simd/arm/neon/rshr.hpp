@@ -9,37 +9,30 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/impl/simd/arm/neon/detail/shift.hpp>
-#include <eve/module/core/regular/shr.hpp>
+#include <eve/module/core/regular/shl.hpp>
 
 namespace eve::detail
 {
-  template<integral_scalar_value T, typename N, integral_scalar_value I, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rshr_(EVE_REQUIRES(neon128_),
-                                   O          const &,
-                                   wide<T, N> const &v0,
-                                   wide<I, N> const &v1) noexcept requires arm_abi<abi_t<T, N>>
+  template<callable_options O, integral_scalar_value T, typename N, integral_scalar_value S>
+  EVE_FORCEINLINE wide<T, N> rshr_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<S, N> s) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
-    return neon_shifter(v0, -v1);
+    return shl.behavior(current_api, opts, v, -s);
   }
 
-  template<integral_scalar_value T, typename N, integral_scalar_value I, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rshr_(EVE_REQUIRES(neon128_),
-                                   O          const &,
-                                   wide<T, N> const &v0,
-                                   I const          &v1) noexcept requires arm_abi<abi_t<T, N>>
+  template<callable_options O, integral_scalar_value T, typename N, integral_scalar_value I>
+  EVE_FORCEINLINE wide<T, N> rshr_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, I s) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
-    using i_t = wide<as_integer_t<T, signed>, N>;
-    return eve::rshr(v0, i_t(v1));
+    return shl.behavior(current_api, opts, v, -s);
   }
 
-  template<integral_scalar_value T, typename N, std::ptrdiff_t S, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rshr_(EVE_REQUIRES(neon128_),
-                                   O          const &,
-                                   wide<T, N> const &v0,
-                                   index_t<S> const &
-                                  ) noexcept requires arm_abi<abi_t<T, N>>
+  template<callable_options O, integral_scalar_value T, typename N, std::ptrdiff_t S>
+  EVE_FORCEINLINE wide<T, N> rshr_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, index_t<S> s) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
-    return neon_shifter(v0, index<-S>);
+    if constexpr (S == 0)     return v;
+    else if constexpr (S < 0) return shl.behavior(current_api, opts, v, index<-S>);
+    else                      return shr.behavior(current_api, opts, v, s);
   }
 }
