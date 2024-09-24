@@ -14,7 +14,7 @@
 #include <eve/module/math/constant/pi2o_16.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
@@ -94,7 +94,7 @@ namespace eve
     constexpr EVE_FORCEINLINE auto sincos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
       auto x       = abs(a0);
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         auto pi2_16 = pi2o_16[upper](as<T>());
         auto x2          = sqr(a0);
@@ -110,7 +110,7 @@ namespace eve
           return eve::zip(sin_eval(x2, a0), cos_eval(x2));
         }
       }
-      else if constexpr(O::contains(half_circle2))
+      else if constexpr(O::contains(half_circle))
       {
         auto reduce = [](auto x)
         {
@@ -153,7 +153,7 @@ namespace eve
           return eve::zip(s, c);
         }
       }
-      else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
+      else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
       {
         auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
         if constexpr( scalar_value<T> )
@@ -167,11 +167,11 @@ namespace eve
       }
       else
       {
-        if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )   return sincos[quarter_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle2](as(a0))))  return sincos[half_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle2](as(a0))))  return sincos[full_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))       return sincos[medium2](a0);
-        else                                                          return sincos[big2](a0);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )   return sincos[quarter_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))  return sincos[half_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))  return sincos[full_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))       return sincos[medium](a0);
+        else                                                          return sincos[big](a0);
       }
     }
   }

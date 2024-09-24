@@ -10,7 +10,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/rempio2_kernel.hpp>
 
@@ -94,17 +94,17 @@ namespace eve
     constexpr EVE_FORCEINLINE auto
     rempio2_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
-      if      constexpr( O::contains(quarter_circle2))  return rempio2_half_circle(x);
-      else if constexpr( O::contains(half_circle2))     return rempio2_half_circle(x);
-      else if constexpr( O::contains(full_circle2))     return rempio2_full_circle(x);
-      else if constexpr( O::contains(medium2))          return rempio2_medium(x);
-      else if constexpr( O::contains(big2))             return rempio2_big(x);
+      if      constexpr( O::contains(quarter_circle))  return rempio2_half_circle(x);
+      else if constexpr( O::contains(half_circle))     return rempio2_half_circle(x);
+      else if constexpr( O::contains(full_circle))     return rempio2_full_circle(x);
+      else if constexpr( O::contains(medium))          return rempio2_medium(x);
+      else if constexpr( O::contains(big))             return rempio2_big(x);
       else
       {
-        if( eve::all(x <= Rempio2_limit[quarter_circle2](as(x))))   return eve::zip(T(0), x, T(0));
-        else if( eve::all(x <= Rempio2_limit[half_circle2](as(x)))) return rempio2_half_circle(x);
-        else if( eve::all(x <= Rempio2_limit[full_circle2](as(x)))) return rempio2_full_circle(x);
-        else if( eve::all(x <= Rempio2_limit[medium2](as(x))))      return rempio2_medium(x);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as(x))))   return eve::zip(T(0), x, T(0));
+        else if( eve::all(x <= Rempio2_limit[half_circle](as(x)))) return rempio2_half_circle(x);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as(x)))) return rempio2_full_circle(x);
+        else if( eve::all(x <= Rempio2_limit[medium](as(x))))      return rempio2_medium(x);
         else                                                        return rempio2_big(x);
       }
     }

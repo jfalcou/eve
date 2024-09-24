@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/regular/cos.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 
@@ -88,9 +88,9 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cospi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
-        return eve::cos[quarter_circle2](a0*pi(eve::as<T>()));
+        return eve::cos[quarter_circle](a0*pi(eve::as<T>()));
       }
       else
       {

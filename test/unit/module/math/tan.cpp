@@ -34,9 +34,9 @@ auto half_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pio_2(t
 auto mfull_c    = []<typename T>(eve::as<T> const   &tgt) { return -eve::pi(tgt); };
 auto full_c     = []<typename T>(eve::as<T> const    &tgt) { return eve::pi(tgt); };
 auto mmed       = []<typename T>(eve::as<T> const      &tgt)
-{ return -eve::Rempio2_limit[eve::medium2](tgt); };
+{ return -eve::Rempio2_limit[eve::medium](tgt); };
 auto med = []<typename T>(eve::as<T> const& tgt)
-{ return eve::Rempio2_limit[eve::medium2](tgt); };
+{ return eve::Rempio2_limit[eve::medium](tgt); };
 
 TTS_CASE_WITH("Check behavior of tan on wide",
               eve::test::simd::ieee_reals,

@@ -14,7 +14,7 @@
 #include <eve/module/math/constant/pi2o_16.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
@@ -98,7 +98,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T tan_(EVE_REQUIRES(cpu_), O const& o, T a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         if constexpr( scalar_value<T> )
         {
@@ -111,7 +111,7 @@ namespace eve
         }
         return tancot_eval(a0);
       }
-      else if constexpr(O::contains(half_circle2))
+      else if constexpr(O::contains(half_circle))
       {
         auto reduce = [](auto x)
           {
@@ -146,7 +146,7 @@ namespace eve
           return if_else(x <= eps(as<T>()), a0, bit_xor(bitofsign(a0), y));
         }
       }
-      else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
+      else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
       {
         auto x       = abs(a0);
         auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
@@ -162,16 +162,16 @@ namespace eve
       else
       {
         auto x = abs(a0);
-        if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )
-          return tan[quarter_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle2](as(a0))))
-          return tan[half_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle2](as(a0))))
-          return tan[full_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))
-          return tan[medium2](a0);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )
+          return tan[quarter_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))
+          return tan[half_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))
+          return tan[full_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))
+          return tan[medium](a0);
         else
-          return tan[big2](a0);
+          return tan[big](a0);
       }
     }
   }

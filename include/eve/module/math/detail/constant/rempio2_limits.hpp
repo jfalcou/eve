@@ -14,7 +14,6 @@
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
 
 namespace eve
 {
@@ -37,16 +36,16 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        if constexpr( O::contains(quarter_circle2))
+        if constexpr( O::contains(quarter_circle))
           return pio_4(eve::as<T>());
-        else if constexpr( O::contains(half_circle2))
+        else if constexpr( O::contains(half_circle))
           return pio_2(eve::as<T>());
-        else if constexpr( O::contains(full_circle2))
+        else if constexpr( O::contains(full_circle))
         {
           return T(pi(eve::as<float>())); // this to ensure that converting from float to double will
           // preserve belonging to the interval
         }
-        else if constexpr(O::contains(medium2))
+        else if constexpr(O::contains(medium))
           return ieee_constant<0x1.9220e60p+50f, 0x1.6bcc41e900000p+47>(eve::as<T>{}); // 1.76858e+15,  2.0e14
         else
           return valmax(eve::as<T>());

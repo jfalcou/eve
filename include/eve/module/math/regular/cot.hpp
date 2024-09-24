@@ -10,7 +10,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
@@ -96,7 +96,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T cot_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
       auto x =  eve::abs(a0);
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         auto aa0nlepio4 = is_not_less_equal(x, pio_4(eve::as<T>()));
         if constexpr( scalar_value<T> )
@@ -105,7 +105,7 @@ namespace eve
         }
         else { return if_else(aa0nlepio4, eve::allbits, rec[pedantic](tancot_eval(a0))); }
       }
-      else if constexpr(O::contains(half_circle2))
+      else if constexpr(O::contains(half_circle))
       {
         auto xleeps = x <= eps(as<T>());
         auto reduce = [](auto x)
@@ -142,7 +142,7 @@ namespace eve
           return if_else(xleeps, rec[pedantic](a0), bit_xor(bitofsign(a0), y));
         }
       }
-      else if constexpr(O::contains(full_circle2) || O::contains(medium2) || O::contains(big2) )
+      else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
       {
         auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
         if constexpr( scalar_value<T> )
@@ -155,16 +155,16 @@ namespace eve
       }
       else
       {
-        if( eve::all(x <= Rempio2_limit[quarter_circle2](as(a0))) )
-          return cot[quarter_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle2](as(a0))))
-          return cot[half_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle2](as(a0))))
-          return cot[full_circle2](a0);
-        else if( eve::all(x <= Rempio2_limit[medium2](as(a0))))
-          return cot[medium2](a0);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )
+          return cot[quarter_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))
+          return cot[half_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))
+          return cot[full_circle](a0);
+        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))
+          return cot[medium](a0);
         else
-          return cot[big2](a0);
+          return cot[big](a0);
       }
     }
   }

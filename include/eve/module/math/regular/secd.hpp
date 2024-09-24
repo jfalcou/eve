@@ -87,7 +87,7 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T secd_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
     {
-      if constexpr( O::contains(quarter_circle2) )
+      if constexpr( O::contains(quarter_circle) )
         return eve::rec[pedantic](eve::cosd[o](a0));
       else
       {

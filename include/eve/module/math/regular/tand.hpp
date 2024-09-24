@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
 #include <eve/module/math/regular/div_180.hpp>
@@ -85,14 +85,14 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T tand_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
         return tanpi[eve::quarter_circle](div_180(a0));
       }
       else
       {
         auto x = eve::abs(a0);
-        if( eve::all(x <= T(45)) ) return tand[eve::quarter_circle2](a0);
+        if( eve::all(x <= T(45)) ) return tand[eve::quarter_circle](a0);
         auto a0_180 = div_180(a0);
         auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as(a0_180)));
         if constexpr( scalar_value<T> )

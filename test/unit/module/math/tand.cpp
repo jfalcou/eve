@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of tand on wide",
     auto d = eve::cosd(e);
     return d ? eve::sind(e) / d : eve::nan(eve::as(e));
   };
-  TTS_ULP_EQUAL(tand[eve::quarter_circle2](a0), map(ref, a0), 2);
+  TTS_ULP_EQUAL(tand[eve::quarter_circle](a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tand(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(tand(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(tand(a2), map(ref, a2), 2);

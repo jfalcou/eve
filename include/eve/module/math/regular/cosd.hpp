@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/regular/cospi.hpp>
 #include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/detail/generic/rem180.hpp>
@@ -87,16 +87,16 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T cosd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      if constexpr(O::contains(quarter_circle2))
+      if constexpr(O::contains(quarter_circle))
       {
-        return eve::cospi[quarter_circle2](div_180(a0));
+        return eve::cospi[quarter_circle](div_180(a0));
       }
       else
       {
         if constexpr( scalar_value<T> )
           if( is_not_finite(a0) ) return nan(eve::as<T>());
         auto x = eve::abs(a0);
-        if (eve::all(x <= T(45))) return cosd[quarter_circle2](x);
+        if (eve::all(x <= T(45))) return cosd[quarter_circle](x);
         auto [fn, xr, dxr] = rem180(x);
         return cos_finalize(fn, xr, dxr);
       }

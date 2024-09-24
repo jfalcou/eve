@@ -44,7 +44,7 @@ TTS_CASE_WITH("Check behavior of cscd on wide",
     auto d = eve::sind(e);
     return d ? 1.0 / d : eve::nan(eve::as(e));
   };
-  TTS_ULP_EQUAL(cscd[eve::quarter_circle2](a0), map(ref, a0), 4);
+  TTS_ULP_EQUAL(cscd[eve::quarter_circle](a0), map(ref, a0), 4);
   TTS_ULP_EQUAL(eve::cscd(a0), map(ref, a0), 2);
   TTS_ULP_EQUAL(eve::cscd(a1), map(ref, a1), 2);
   TTS_ULP_EQUAL(eve::cscd(a2), map(ref, a2), 2);
