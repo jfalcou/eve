@@ -75,7 +75,7 @@ namespace eve
   namespace detail
   {
     template<callable_options O, typename T, typename U>
-    EVE_FORCEINLINE constexpr auto logical_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+    EVE_FORCEINLINE constexpr common_logical_t<T, U> logical_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
       if      constexpr ((scalar_value<T> || std::same_as<T, bool>) && (scalar_value<U> || std::same_as<U, bool>)) return a && b;
       else if constexpr (std::same_as<T, bool>)                                                                    return logical_and(U{a}, b);
