@@ -148,4 +148,6 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::add[mask](a0, a1),
             eve::if_else(mask, eve::add(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::add[mask][eve::lower](a0, a1),
+                 eve::if_else(mask, eve::add[eve::lower](a0, a1), a0));
 };

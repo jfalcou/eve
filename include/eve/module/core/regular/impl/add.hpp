@@ -94,16 +94,16 @@ namespace eve::detail
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-    if constexpr( (floating_value<T> && (O::contains(lower) || O::contains(upper) )) && (sizeof...(Ts) >= 4) && enable_roundings)
-    {
-      auto plus = [](auto aa, auto bb,  auto... cc){
-        aa   = add(aa,bb);
-        ((aa = add(aa,cc)),...);
-        return aa;
-      };
-      return with_rounding<O>(plus, r0, rs...);
-    }
-    else
+//     if constexpr( (floating_value<T> && (O::contains(lower) || O::contains(upper) )) && (sizeof...(Ts) >= 4) && enable_roundings)
+//     {
+//       auto plus = [](auto aa, auto bb,  auto... cc){
+//         aa   = add(aa,bb);
+//         ((aa = add(aa,cc)),...);
+//         return aa;
+//       };
+//       return with_rounding<O>(plus, r0, rs...);
+//     }
+//     else
     {
       r0   = add[o](r0,r1);
       ((r0 = add[o](r0,rs)),...);

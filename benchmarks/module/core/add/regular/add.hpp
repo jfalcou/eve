@@ -30,5 +30,4 @@ int main()
   run<EVE_TYPE> (EVE_NAME(add[raw][lower]) , xp, eve::add[eve::raw][eve::lower], arg0, arg1);
   run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1, arg2, arg3);
   run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1, arg2, arg3, arg0, arg1, arg2, arg3);
-  run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1, arg2, arg3, arg0, arg1, arg2, arg3);
 }
