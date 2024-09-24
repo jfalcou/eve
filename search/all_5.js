@@ -41,10 +41,9 @@ var searchData=
   ['front_38',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::front()'],['../structeve_1_1wide.html#a91abf1f8683e031f8169a5b5473c1660',1,'eve::wide::front()']]],
   ['fsm_39',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
   ['fsnm_40',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
-  ['full_5fcircle_41',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
-  ['functions_42',['Functions',['../group__functions.html',1,'']]],
-  ['functor_43',['functor',['../group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467',1,'eve']]],
-  ['fundamental_5fcardinal_44',['fundamental_cardinal',['../structeve_1_1fundamental__cardinal.html',1,'eve']]],
-  ['fuse_5foperations_45',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]],
-  ['fused_20multiply_20add_20family_46',['Fused multiply add family',['../group__core__fma__family.html',1,'']]]
+  ['functions_41',['Functions',['../group__functions.html',1,'']]],
+  ['functor_42',['functor',['../group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467',1,'eve']]],
+  ['fundamental_5fcardinal_43',['fundamental_cardinal',['../structeve_1_1fundamental__cardinal.html',1,'eve']]],
+  ['fuse_5foperations_44',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]],
+  ['fused_20multiply_20add_20family_45',['Fused multiply add family',['../group__core__fma__family.html',1,'']]]
 ];

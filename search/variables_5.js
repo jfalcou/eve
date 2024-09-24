@@ -34,7 +34,6 @@ var searchData=
   ['frexp_31',['frexp',['../group__core__internal_ga3894112eaa757390614470b3c77b2ddb.html#ga3894112eaa757390614470b3c77b2ddb',1,'eve']]],
   ['fsm_32',['fsm',['../group__core__fma__family_ga667bad71b5b7dc2ffffb565f8a4cf401.html#ga667bad71b5b7dc2ffffb565f8a4cf401',1,'eve']]],
   ['fsnm_33',['fsnm',['../group__core__fma__family_ga43ce3760cd377286d328b640fd01549b.html#ga43ce3760cd377286d328b640fd01549b',1,'eve']]],
-  ['full_5fcircle_34',['full_circle',['../group__math__trig_ga582ee61bd6909c6b95af359339d32c2b.html#ga582ee61bd6909c6b95af359339d32c2b',1,'eve']]],
-  ['functor_35',['functor',['../group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467',1,'eve']]],
-  ['fuse_5foperations_36',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]]
+  ['functor_34',['functor',['../group__extensions.html#gabf77b781e2a81fa82abc362bc03a1467',1,'eve']]],
+  ['fuse_5foperations_35',['fuse_operations',['../group__algo__traits_gab9f572e15fac2f4f23ecdf3658ce192c.html#gab9f572e15fac2f4f23ecdf3658ce192c',1,'eve::algo']]]
 ];
