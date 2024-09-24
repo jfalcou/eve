@@ -31,25 +31,25 @@ namespace eve::detail
     ) {
       if constexpr (plain_scalar_value<T> && plain_scalar_value<U>) {
         return find_common_value_reducer<decltype(std::declval<T>() + std::declval<U>())>{};
-      } else if constexpr (plain_scalar_value<T> && arithmetic_simd_value<U>) {
+      } else if constexpr (scalar_value<T> && arithmetic_simd_value<U>) {
         return y;
-      } else if constexpr (arithmetic_simd_value<T> && (plain_scalar_value<U> || std::same_as<T, U>)) {
+      } else if constexpr (arithmetic_simd_value<T> && (scalar_value<U> || std::same_as<T, U>)) {
         return x;
       } else {
         return find_common_value_reducer<void>{};
       }
     }
   };
-  
+
   template<typename... Ts>
   using find_common_value_wide = typename decltype((find_common_value_reducer<Ts>{} % ...))::type;
 
   template<typename... Ts>
-  requires (!plain_scalar_value<Ts> || ...)
+  requires (!scalar_value<Ts> || ...)
   auto find_common_value() -> find_common_value_wide<Ts... >;
 
   template<typename T0, typename... Ts>
-  requires((plain_scalar_value<T0> && ... && plain_scalar_value<Ts>) && (std::same_as<T0,Ts> && ...))
+  requires((scalar_value<T0> && ... && scalar_value<Ts>) && (std::same_as<T0,Ts> && ...))
   T0 find_common_value();
 
   template<typename, typename... Ts>

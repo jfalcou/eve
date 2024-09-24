@@ -70,7 +70,7 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
   // else_
   {
     auto else_reference = ireference;
-    kumi::for_each( [=]<typename M>(M& m) { m = eve::if_else[il](m, eve::zero); }, else_reference );
+    kumi::for_each( [=]<typename M>(M& m) { m = eve::if_else(il,m, eve::zero); }, else_reference );
 
     s_t scalar_zero {(std::uint8_t) 0, (T) 0, (double) 0};
     w_t wide_zeroes { scalar_zero };

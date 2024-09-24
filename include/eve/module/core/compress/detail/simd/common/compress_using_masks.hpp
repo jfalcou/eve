@@ -225,7 +225,7 @@ namespace eve::detail
     else if constexpr ( N() == 2 )
     {
       auto to_left     = eve::slide_left( v, eve::index<1> );
-      auto compressed  = eve::if_else[mask]( v, to_left );
+      auto compressed  = eve::if_else(mask, v, to_left );
 
       kumi::tuple cur{ compressed, eve::count_true(mask) };
       return kumi::tuple<decltype(cur)> { cur };
@@ -240,7 +240,7 @@ namespace eve::detail
     {
       // Reduce variations: in each pair from 4 to 3. 10 and 01 become the same.
       // Two last elements don't matter.
-      v = eve::if_else[mask]( v, compress_using_masks_to_left( v ) );
+      v = eve::if_else(mask, v, compress_using_masks_to_left( v ) );
 
       auto [num, count] = compress_store_swizzle_mask_num(mask);
       kumi::tuple cur { compress_using_masks_shuffle(v, num), count };

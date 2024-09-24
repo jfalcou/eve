@@ -13,15 +13,11 @@
 
 namespace eve::detail
 {
-//================================================================================================
-// Full logical if_else
-template<arithmetic_scalar_value U, typename N>
-EVE_FORCEINLINE auto
-if_else_(EVE_SUPPORTS(neon128_),
-         logical<wide<U, N>> const& v0,
-         logical<wide<U, N>> const& v1,
-         logical<wide<U, N>> const& v2) noexcept requires arm_abi<abi_t<U, N>>
-{
-  return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v0));
-}
+  template<typename T, typename N, callable_options O>
+  EVE_FORCEINLINE constexpr auto
+  if_else_(EVE_REQUIRES(neon128_), O, logical<wide<T,N>> m, logical<wide<T,N>> v0, logical<wide<T,N>> v1) noexcept
+  requires arm_abi<abi_t<T,N>>
+  {
+    return bit_cast(if_else(m, v0.mask(), v1.mask()), as(v0));
+  }
 }

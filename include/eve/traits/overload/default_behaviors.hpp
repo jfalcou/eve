@@ -84,8 +84,13 @@ namespace eve
     protected:
     EVE_FORCEINLINE constexpr
     Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>const&>(*this); }
-  };
 
+    //! Checks if two callable are instances of the same function
+    template<template<typename> class F2, typename OV2, typename... O2>
+    friend constexpr bool operator==(callable const&, callable<F2,OV2,O2...> const&)  { return false; }
+
+    friend constexpr bool operator==(callable const&, callable const&)                { return true;  }
+  };
 
   template< template<typename> class Func
           , typename OptionsValues

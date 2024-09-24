@@ -1,67 +1,170 @@
-//==================================================================================================
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
   SPDX-License-Identifier: BSL-1.0
 */
-//==================================================================================================
+//======================================================================================================================
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
-
+#include <eve/traits/overload.hpp>
+#include <eve/concept/generator.hpp>
 namespace eve
 {
-//================================================================================================
-//! @addtogroup core_logical
-//! @{
-//!   @var if_else
-//!   @brief Computes the results of a choice under condition
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      constexpr auto if_else(value auto x, value auto y, value auto z ) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: condition
-//!     * `y`, `z`:  choice [value](@ref value).
-//!
-//!   **Return value**
-//!
-//!      The call `if_else(x, y, z)` performs [elementwise](@ref glossary_elementwise)
-//!      a choice between the elements of `y` and `z`
-//!      according to the truth value of the elements of `x`.
-//!
-//!   **Possible optimizations**
-//!
-//!     The following calls where `x`, `y` and `z` are values can be optimized:
-//!
-//!        * `if_else(x, y, allbits< T >())` writing: `if_else(x, y, allbits)`
-//!        * `if_else(x, y, one< T >()    )` writing: `if_else(x, y, one    )`
-//!        * `if_else(x, y, mone< T >()   )` writing: `if_else(x, y, mone   )`
-//!        * `if_else(x, y, zero< T >()   )` writing: `if_else(x, y, zero   )`
-//!        * `if_else(x, allbits< T >(), z)` writing: `if_else(x, allbits, z)`
-//!        * `if_else(x, one< T >(), z    )` writing: `if_else(x, one, z    )`
-//!        * `if_else(x, mone< T >(), z   )` writing: `if_else(x, mone, z   )`
-//!        * `if_else(x, zero< T >(), z   )` writing: `if_else(x, zero, z   )`
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/core/if_else.cpp}
-//! @}
-//================================================================================================
-EVE_MAKE_CALLABLE(if_else_, if_else);
+  template<typename Options>
+  struct if_else_t : callable<if_else_t, Options>
+  {
+    //==================================================================================================================
+    // The following requires ensure proper, short error messages
+    // We rely on the semantic of as_wide_as to handle bool and conditional_expr properly
+    template<typename C, typename T, typename U> struct result;
+
+    template<typename C, typename T, typename U>
+    requires(requires { typename common_value<T,U>::type; })
+    struct result<C,T,U> : as_wide_as<common_value_t<T,U>,C> {};
+
+    template<typename C, typename T, typename U>
+    requires(requires { typename common_logical<T,U>::type; })
+    struct result<C, logical<T>, logical<U>> : as_wide_as<common_logical_t<T,U>,C> {};
+
+    template<typename C, typename  T, generator U> struct result<C, T, U> : as_wide_as<T,C> {};
+    template<typename C, generator T, typename  U> struct result<C, T, U> : as_wide_as<U,C> {};
+    //==================================================================================================================
+
+    // IF_ELSE with a value as condition
+    template<value C, value T, value U>
+    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    operator()(C mask, T v0, U v1) const noexcept
+    requires(eve::same_lanes_or_scalar<C,T,U>)
+    {
+      return EVE_DISPATCH_CALL(mask,v0,v1);
+    }
+
+    template<value C, typename T, typename U>
+    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    operator()(C mask, T v0, U v1) const noexcept
+    requires(   (eve::same_lanes_or_scalar<C,T> && generator<U> && value<T>)
+            ||  (eve::same_lanes_or_scalar<C,U> && generator<T> && value<U>)
+            )
+    {
+      return EVE_DISPATCH_CALL(mask,v0,v1);
+    }
+
+    // IF_ELSE with a conditional_expr as condition
+    template<conditional_expr C, value T, value U>
+    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    operator()(C mask, T v0, U v1) const noexcept
+    requires(eve::same_lanes_or_scalar<T,U>)
+    {
+      return EVE_DISPATCH_CALL(mask,v0,v1);
+    }
+
+    template<conditional_expr C, typename T, typename U>
+    EVE_FORCEINLINE constexpr typename result<C,T,U>::type
+    operator()(C mask, T v0, U v1) const noexcept
+    requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
+    {
+      return EVE_DISPATCH_CALL(mask,v0,v1);
+    }
+
+    // IF_ELSE with explicit bool
+    template<value T, value U>
+    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
+    operator()(bool mask, T v0, U v1) const noexcept
+    requires(eve::same_lanes_or_scalar<T,U>)
+    {
+      return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
+    }
+
+    template<typename T, typename U>
+    EVE_FORCEINLINE constexpr typename result<bool,T,U>::type
+    operator()(bool mask, T v0, U v1) const noexcept
+    requires( (generator<U> && value<T>) || (generator<T> && value<U>) )
+    {
+      return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
+    }
+
+    EVE_CALLABLE_OBJECT(if_else_t, if_else_);
+  };
+
+  //================================================================================================
+  //! @addtogroup core_logical
+  //! @{
+  //!   @var if_else
+  //!   @brief Select value based on conditional mask or values
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template<eve::value U, eve::value V>
+  //!     constexpr auto if_else(bool mask, U t, V f) noexcept;
+  //!
+  //!     template<eve::value M, eve::value U, eve::value V>
+  //!     constexpr auto if_else(M mask, U t, V f) noexcept;
+  //!
+  //!     template<eve::value M, eve::generator U, eve::value V>
+  //!     constexpr auto if_else(M mask, U t, V f) noexcept;
+  //!
+  //!     template<eve::value M, eve::value U, eve::generator V>
+  //!     constexpr auto if_else(M mask, U t, V f) noexcept;
+  //!
+  //!     template<eve::conditional_expr C, eve::value U, eve::value V >
+  //!     constexpr auto if_else(C mask, U t, V f) noexcept;
+  //!
+  //!     template<eve::conditional_expr C, eve::generator U, eve::value V >
+  //!     constexpr auto if_else(C mask, U t, V f) noexcept;
+  //!
+  //!     template<eve::conditional_expr C, eve::value U, eve::generator V >
+  //!     constexpr auto if_else(C mask, U t, V f) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `mask`: [logical value](@ref eve::logical_value) or [condition](@ref eve::conditional_expr) to use as mask.
+  //!     * `t`: Value or constant to use where `mask` evaluates to `true`.
+  //!     * `f`: Value or constant to use where `mask` evaluates to `false`.
+  //!
+  //!   **Return value**
+  //!
+  //!   The call `if_else(mask, t, f)` performs an [elementwise](@ref glossary_elementwise)
+  //!   selection between the elements of `t` and `f` according to the value of the elements of `mask`.
+  //!
+  //!   **Possible optimizations**
+  //!
+  //!   The following calls, where `t` and `f` are values, are optimized so the constant are not evaluated:
+  //!     * `if_else(mask, t            , eve::allbits)`
+  //!     * `if_else(mask, t            , eve::one    )`
+  //!     * `if_else(mask, t            , eve::mone   )`
+  //!     * `if_else(mask, t            , eve::zero   )`
+  //!     * `if_else(mask, eve::allbits , f           )`
+  //!     * `if_else(mask, eve::one     , f           )`
+  //!     * `if_else(mask, eve::mone    , f           )`
+  //!     * `if_else(mask, eve::zero    , f           )`
+  //!
+  //!   In addition, the following calls, where `t` and `f` are unsigned values, are optimized so the
+  //!   constant are not evaluated:
+  //!     * `if_else(mask, t          , eve::valmax)`
+  //!     * `if_else(mask, t          , eve::valmin)`
+  //!     * `if_else(mask, eve::valmax, f          )`
+  //!     * `if_else(mask, eve::valmin, f          )`
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/if_else.cpp}
+  //!
+  //! @}
+  //================================================================================================
+  inline constexpr auto if_else = functor<if_else_t>;
 }
 
 #include <eve/module/core/regular/impl/if_else.hpp>

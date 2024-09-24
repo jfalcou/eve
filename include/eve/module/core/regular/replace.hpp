@@ -36,7 +36,7 @@ namespace eve
 //!   {
 //!      template< eve::value T, eve::conditional_expr Ignore, eve::value Other >
 //!      auto replace_ignored(T x, Ignore ignore, Other with )
-//!        -> decltype(eve::if_else[ignore](x, with))
+//!        -> decltype(eve::if_else(ignore, x, with))
 //!   }
 //!   @endcode
 //!
@@ -62,9 +62,9 @@ namespace detail
   template<simd_value Wide, conditional_expr Ignore, typename Other>
   EVE_FORCEINLINE auto
   replace_ignored_(EVE_SUPPORTS(cpu_), Wide x, Ignore ignore, Other with) noexcept
-      -> decltype(eve::if_else[ignore](x, with))
+      -> decltype(eve::if_else(ignore, x, with))
   {
-    return eve::if_else[ignore](x, with);
+    return eve::if_else(ignore, x, with);
   }
 }
 }
