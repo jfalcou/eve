@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check return types of cospi", eve::test::simd::ieee_reals)
 // cospi  tests
 //==================================================================================================
 auto mmed = [](auto const& tgt)
-{ return -eve::Rempio2_limit[eve::mdeium]( tgt) * eve::inv_pi(tgt); };
+{ return -eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
 auto med = [](auto const& tgt)
-{ return eve::Rempio2_limit[eve::mdeium]( tgt) * eve::inv_pi(tgt); };
+{ return eve::Rempio2_limit[eve::medium]( tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of cospi on wide",
               eve::test::simd::ieee_reals,
