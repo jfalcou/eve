@@ -24,8 +24,6 @@ requires rvv_abi<abi_t<T, N>>
   auto a = allbits(as<wide<u_t, N>>{});
 
   return __riscv_vmerge_tu(a.storage(), z.storage(), a.storage(), p.storage(), N::value);
-
-//  return eve::if_else(p, static_cast<uint_type>(-1), static_cast<uint_type>(0));
 }
 
 //================================================================================================
