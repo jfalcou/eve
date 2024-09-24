@@ -32,6 +32,6 @@ TTS_CASE_TPL("eve.algo.find_if_with_search generic", algo_test::selected_types)
                                [](auto f, auto l, auto expected, auto actual)
                                {
                                  TTS_EQUAL(actual, expected, REQUIRED)
-                                     << "l - f: " << (l - f) << " expected: " << (expected - f);
+                                     << "l - f: " << (l - f) << " expected: " << (expected - f) << " actual: " << (actual - f);
                                });
 };
