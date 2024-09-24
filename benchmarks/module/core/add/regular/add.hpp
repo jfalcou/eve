@@ -15,11 +15,20 @@ int main()
 
   auto arg0 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
   auto arg1 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg2 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
+  auto arg3 = eve::bench::random_<EVE_VALUE>(lmin,lmax);
 
-  auto std__add =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(x+y); };
+ auto std__add =  [](EVE_VALUE x,  EVE_VALUE y){return EVE_VALUE(x+y); };
 
   eve::bench::experiment xp;
   run<EVE_VALUE>(EVE_NAME(std__add) , xp, std__add, arg0, arg1);
   run<EVE_VALUE>(EVE_NAME(add) , xp, eve::add, arg0, arg1);
   run<EVE_TYPE> (EVE_NAME(add) , xp, eve::add, arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1);
+  run<EVE_VALUE>(EVE_NAME(add[raw][lower]) , xp, eve::add[eve::raw][eve::lower], arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(add[raw][lower]) , xp, eve::add[eve::raw][eve::lower], arg0, arg1);
+  run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1, arg2, arg3);
+  run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1, arg2, arg3, arg0, arg1, arg2, arg3);
+  run<EVE_TYPE> (EVE_NAME(add[lower]) , xp, eve::add[eve::lower], arg0, arg1, arg2, arg3, arg0, arg1, arg2, arg3);
 }
