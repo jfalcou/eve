@@ -179,20 +179,22 @@ $(document).ready(function(){initNavTree('group__core__bitops_ga90dbfe2bce675d3b
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi0{2, 4, 9, 5};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi1{1, 3, 3, 3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi2{0, 2, 1, 2};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi3{0, -2, -1, 7};</div>
 <div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::showbase &lt;&lt; std::hex;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                           = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                           = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                           = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">                                                                 </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga90dbfe2bce675d3be86d5707327f71f0.html#ga90dbfe2bce675d3be86d5707327f71f0">eve::bit_swap_pairs</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga90dbfe2bce675d3be86d5707327f71f0.html#ga90dbfe2bce675d3be86d5707327f71f0">eve::bit_swap_pairs</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga90dbfe2bce675d3be86d5707327f71f0.html#ga90dbfe2bce675d3be86d5707327f71f0">eve::bit_swap_pairs</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs[wi3 &gt; 0](wi0, wi1, wi3)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__bitops_ga90dbfe2bce675d3be86d5707327f71f0.html#ga90dbfe2bce675d3be86d5707327f71f0">eve::bit_swap_pairs</a>[wi3 &gt;= 0](wi0, wi1, wi3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:71</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:70</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
