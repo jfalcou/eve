@@ -16,7 +16,6 @@
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
 
 namespace eve::detail
 {

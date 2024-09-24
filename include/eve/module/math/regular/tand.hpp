@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/math/decorator/trigo_tags.hpp>
+
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
 #include <eve/module/math/regular/div_180.hpp>
