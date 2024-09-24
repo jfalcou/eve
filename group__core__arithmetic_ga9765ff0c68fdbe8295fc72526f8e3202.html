@@ -154,11 +154,13 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <div class="line"> </div>
 <div class="line">   <span class="comment">// Semantic options</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>[saturated](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)               <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>[lower](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">inc</a>[upper](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                   <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr auto inc</div><div class="ttdoc">elementwise_callable object returning the input incremented by 1.</div><div class="ttdef"><b>Definition:</b> inc.hpp:73</div></div>
+<div class="ttc" id="agroup__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202_html_ga9765ff0c68fdbe8295fc72526f8e3202"><div class="ttname"><a href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a></div><div class="ttdeci">constexpr auto inc</div><div class="ttdoc">elementwise_callable object returning the input incremented by 1.</div><div class="ttdef"><b>Definition:</b> inc.hpp:79</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -171,22 +173,26 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <li>The value of <code>x + 1</code> is returned.</li>
 <li><a class="el" href="conditional.html">The operation is performed conditionnaly</a>.</li>
 <li>The saturated incrementation of <code>x</code>. More specifically, for signed integral, <code>abs[saturated](valmin(as&lt;T&gt;{}))</code> returns <code>eve:valmin(as&lt;T&gt;{}))</code></li>
+<li>The increment is computed in a 'round toward \(-\infty\) mode. The result is guaranted to be less or equal to the exact one (except for Nans).</li>
+<li>The increment is computed in a 'round toward \(\infty\) mode. The result is guaranted to be greater or equal to the exact one (except for Nans).</li>
 </ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <span class="keyword">auto</span> sml = <a class="code hl_variable" href="group__core__constants_ga34924224922708e1770206eb025185ec.html#ga34924224922708e1770206eb025185ec">eve::smallestposval</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0));</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{sml, -sml, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                      = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                      = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                      = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">                                            </div>
+<div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; inc(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -198,7 +204,11 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_ga9765ff0c68fd
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[wi0 != 0](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[wi0 != 0](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[saturated](wi0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[eve::saturated](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[lower](wf1)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[eve::lower](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; inc[upper](wf1)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__core__arithmetic_ga9765ff0c68fdbe8295fc72526f8e3202.html#ga9765ff0c68fdbe8295fc72526f8e3202">eve::inc</a>[eve::upper](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
+<div class="ttc" id="agroup__core__constants_ga34924224922708e1770206eb025185ec_html_ga34924224922708e1770206eb025185ec"><div class="ttname"><a href="group__core__constants_ga34924224922708e1770206eb025185ec.html#ga34924224922708e1770206eb025185ec">eve::smallestposval</a></div><div class="ttdeci">constexpr auto smallestposval</div><div class="ttdoc">Computes the smallest normal positive value.</div><div class="ttdef"><b>Definition:</b> smallestposval.hpp:70</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition:</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:304</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition:</b> wide.hpp:71</div></div>
 </div><!-- fragment --> 
