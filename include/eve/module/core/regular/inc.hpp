@@ -53,8 +53,8 @@ namespace eve
 //!      constexpr auto inc[saturated](value auto x)               noexcept; // 3
 //!      constexpr auto inc[lower](value auto x)                   noexcept; // 4
 //!      constexpr auto inc[upper](value auto x)                   noexcept; // 5
-//!      constexpr auto div[lower][strict](value auto x)           noexcept; // 4
-//!      constexpr auto div[upper][strict](value auto x)           noexcept; // 5
+//!      constexpr auto inc[lower][strict](value auto x)           noexcept; // 4
+//!      constexpr auto inc[upper][strict](value auto x)           noexcept; // 5
 //!   }
 //!   @endcode
 //!
