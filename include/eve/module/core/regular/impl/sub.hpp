@@ -24,7 +24,6 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/add.hpp>
-#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
@@ -33,10 +32,13 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      using namespace spy::literal;
-      if constexpr(enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O> (eve::sub, a, b);
+       auto r = sub(a, b);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {

@@ -14,7 +14,8 @@
 namespace eve
 {
 template<typename Options>
-struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option, lower_option, upper_option>
+struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option, lower_option,
+                                    upper_option, strict_option>
 {
   template<eve::value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
@@ -52,6 +53,8 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!      constexpr auto rec[pedantic](value auto x)                noexcept; // 4
 //!      constexpr auto rec[lower](floating_value auto x)          noexcept; // 5
 //!      constexpr auto rec[upper](floating_value auto x)          noexcept; // 6
+//!      constexpr auto rec[lower](floating_value auto x)          noexcept; // 5
+//!      constexpr auto rec[upper](floating_value auto x)          noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -74,10 +77,12 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!        to be greater or equal to the exact one (except for Nans).
 //!
 //!  @note
-//!     For [integral value](@ref integral_value) `rec(x)` is equivalent to:
+//!    *  For [integral value](@ref integral_value) `rec(x)` is equivalent to:
 //!       * If x==1 or x==-1, x is returned.
 //!       * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.
 //!       * Otherwise 0 is returned.
+//!    *  `lower`and `upper` can be associated with raw and pedantic to provide a correct
+//!       faster but less accurate version
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/rec.cpp}

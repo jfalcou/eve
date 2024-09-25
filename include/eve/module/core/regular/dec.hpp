@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct dec_t : elementwise_callable<dec_t, Options, saturated_option, lower_option, upper_option>
+  struct dec_t : elementwise_callable<dec_t, Options, saturated_option, lower_option, upper_option, strict_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
@@ -50,9 +50,10 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto dec[saturated](value auto x)               noexcept; // 3
-//!      constexpr auto inc[lower](value auto x)                   noexcept; // 4
-//!      constexpr auto inc[upper](value auto x)                   noexcept; // 5
-//!   }
+//!      constexpr auto dec[lower](value auto x)                   noexcept; // 4
+//!      constexpr auto dec[upper](value auto x)                   noexcept; // 5
+//!      constexpr auto dec[lower][strict](value auto x)           noexcept; // 4
+//!      constexpr auto dec[upper][strict](value auto x)           noexcept; // 5
 //!   @endcode
 //!
 //!   **Parameters**
@@ -68,9 +69,11 @@ namespace eve
 //!      3. The saturated decrementation of `x`. More specifically, for signed
 //!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
 //!      4. The decrement is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!         to be less or equal to the exact one (except for Nans).
+//!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!      5. The decrement is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!         to be greater or equal to the exact one (except for Nans).
+//!         to be greater or equal to the exact one (except for Nans).Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/dec.cpp}

@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
-#include <iostream>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {
@@ -21,7 +21,7 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
   requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
-  if constexpr(O::contains(lower) || O::contains(upper))
+  if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
   {
     if constexpr(current_api >= avx512)
     {
@@ -31,15 +31,14 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v
       else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
       {
-        auto vv = combine(v, v);
-        auto ww = combine(w, w);
+        auto vv = eve::combine(v, v);
+        auto ww = eve::combine(w, w);
         auto vvpww = add[opts](vv, ww);
         return slice(vvpww, eve::upper_);
       }
-      else                                             return  add.behavior(cpu_{}, opts, v, w);
-   }
-    else
-      return add.behavior(cpu_{}, opts, v, w);
+      else                                             return add.behavior(cpu_{}, opts, v, w);
+    }
+    else                                               return add.behavior(cpu_{}, opts, v, w);
   }
   else if constexpr(O::contains(saturated) && std::integral<T>)
   {
@@ -115,7 +114,7 @@ requires x86_abi<abi_t<T, N>>
   auto src = alternative(cx, v, as<wide<T, N>> {});
   auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-  if constexpr(O::contains(lower) || O::contains(upper))
+  if constexpr(floating_value<T> &&( O::contains(lower) || O::contains(upper)) && !O::contains(strict))
   {
     if constexpr(current_api >= avx512)
     {
@@ -125,16 +124,15 @@ requires x86_abi<abi_t<T, N>>
       else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
       {
-        auto vv = combine(v, w);
-        auto ww = combine(w, v);
+        auto vv = eve::combine(v, w);
+        auto ww = eve::combine(w, v);
         auto vvpww = add[opts.drop(condition_key)](vv, ww);
         auto s =  slice(vvpww, eve::upper_);
         return if_else(cx,s,src);
       }
-      else                                             return  add.behavior(cpu_{}, opts, v, w);
+      else                                             return add.behavior(cpu_{}, opts, v, w);
    }
-    else
-      return add.behavior(cpu_{}, opts, v, w);
+    else                                               return add.behavior(cpu_{}, opts, v, w);
   }
   else if constexpr(O::contains(saturated))
   {

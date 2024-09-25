@@ -21,7 +21,6 @@
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
@@ -31,28 +30,21 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      if constexpr(false && enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O>(eve::add, a, b);
+        auto r = add(a, b);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {
-        if constexpr(O::contains(raw))
-        {
-          auto r = add(a, b);
-          if constexpr(O::contains(lower))
-            return prev(r);
-          else
-            return next(r);
-        }
+        auto [r, e] = eve::two_add(a, b);
+        if constexpr(O::contains(lower))
+          return eve::prev[eve::is_ltz(e)](r);
         else
-        {
-          auto [r, e] = eve::two_add(a, b);
-          if constexpr(O::contains(lower))
-            return eve::prev[eve::is_ltz(e)](r);
-          else
-            return eve::next[eve::is_gtz(e)](r);
-        }
+          return eve::next[eve::is_gtz(e)](r);
       }
     }
     else if constexpr(O::contains(saturated) && integral_value<T>)
@@ -94,20 +86,8 @@ namespace eve::detail
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-//     if constexpr( (floating_value<T> && (O::contains(lower) || O::contains(upper) )) && (sizeof...(Ts) >= 4) && enable_roundings)
-//     {
-//       auto plus = [](auto aa, auto bb,  auto... cc){
-//         aa   = add(aa,bb);
-//         ((aa = add(aa,cc)),...);
-//         return aa;
-//       };
-//       return with_rounding<O>(plus, r0, rs...);
-//     }
-//     else
-    {
-      r0   = add[o](r0,r1);
-      ((r0 = add[o](r0,rs)),...);
-      return r0;
-    }
+    r0   = add[o](r0,r1);
+    ((r0 = add[o](r0,rs)),...);
+    return r0;
   }
 }

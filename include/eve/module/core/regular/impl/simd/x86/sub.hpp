@@ -11,6 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {
@@ -19,18 +20,24 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-
-    if constexpr(O::contains(lower) || O::contains(upper))
+   if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(current_api >= avx512)
       {
         auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
         if      constexpr  ( c == category::float64x8  ) return  _mm512_sub_round_pd (a, b, dir);
         else if constexpr  ( c == category::float32x16 ) return  _mm512_sub_round_ps (a, b, dir);
-        else                                             return  sub.behavior(cpu_{}, opts, a, b);
+        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+        {
+          auto aa = eve::combine(a, a);
+          auto bb = eve::combine(b, b);
+          auto aapbb = sub[opts](aa, bb);
+          return slice(aapbb, eve::upper_);
+        }
+        else                                             return sub.behavior(cpu_{}, opts, a, b);
       }
-      else
-        return sub.behavior(cpu_{}, opts, a, b);
+      else                                               return sub.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {
@@ -104,9 +111,25 @@ namespace eve::detail
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr(O::contains(lower) || O::contains(upper))
+    if constexpr(floating_value<T> &&( O::contains(lower) || O::contains(upper)) && !O::contains(strict))
     {
-      return sub.behavior(cpu_{}, opts, v, w);
+      if constexpr(current_api >= avx512)
+      {
+        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_sub_round_pd (src, m, v, w, dir);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_sub_round_ps (src, m, v, w, dir);
+        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+        {
+          auto vv = eve::combine(v, w);
+          auto ww = eve::combine(w, v);
+          auto vvpww = sub[opts.drop(condition_key)](vv, ww);
+          auto s =  slice(vvpww, eve::upper_);
+          return if_else(cx,s,src);
+        }
+        else                                             return add.behavior(cpu_{}, opts, v, w);
+      }
+      else                                               return add.behavior(cpu_{}, opts, v, w);
     }
     else if constexpr(O::contains(saturated))
     {

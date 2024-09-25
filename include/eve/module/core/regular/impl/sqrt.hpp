@@ -26,10 +26,13 @@ namespace eve::detail
   {
     if constexpr( O::contains(lower) || O::contains(upper))
     {
-      using namespace spy::literal;
-      if constexpr( enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O>(eve::sqrt, a0);
+        auto r = sqrt(a0); ;
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {

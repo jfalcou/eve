@@ -14,7 +14,8 @@
 namespace eve
 {
   template<typename Options>
-  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option, upper_option>
+  struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option,
+                                       upper_option, strict_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -61,6 +62,8 @@ namespace eve
 //!      constexpr auto mul[saturated](/*any of the above overloads*/)                noexcept; // 4
 //!      constexpr auto mul[lower](/*any of the above overloads*/)                    noexcept; // 5
 //!      constexpr auto mul[upper](/*any of the above overloads*/)                    noexcept; // 6
+//!      constexpr auto mul[lower][strict](/*any of the above overloads*/)            noexcept; // 5
+//!      constexpr auto mul[upper][strict](/*any of the above overloads*/)            noexcept; // 6
 ///!   }
 //!   @endcode
 //!
@@ -82,9 +85,11 @@ namespace eve
 //!       Take care that for signed integral entries this kind of multiplication is not associative at all.
 //!       This call perform saturated multiplications in reverse incoming order.
 //!    5. The product is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!       to be less or equal to the exact one (except for Nans).
+//!       to be less or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!    6. The product is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!       to be greater or equal to the exact one (except for Nans).
+//!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!
 //!   @note
 //!      Although the infix notation with `*` is supported for two parameters, the `*` operator on

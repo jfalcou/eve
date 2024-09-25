@@ -37,8 +37,6 @@
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/detail/roundings.hpp>
-
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
@@ -53,10 +51,13 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
     {
-      using namespace spy::literal;
-      if constexpr(enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O> (eve::div, a, b);
+        auto r = div(a, b);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {

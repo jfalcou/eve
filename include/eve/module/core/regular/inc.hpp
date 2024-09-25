@@ -53,6 +53,8 @@ namespace eve
 //!      constexpr auto inc[saturated](value auto x)               noexcept; // 3
 //!      constexpr auto inc[lower](value auto x)                   noexcept; // 4
 //!      constexpr auto inc[upper](value auto x)                   noexcept; // 5
+//!      constexpr auto div[lower][strict](value auto x)           noexcept; // 4
+//!      constexpr auto div[upper][strict](value auto x)           noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -69,9 +71,11 @@ namespace eve
 //!      3. The saturated incrementation of `x`. More specifically, for signed
 //!         integral, `abs[saturated](valmin(as<T>{}))` returns `eve:valmin(as<T>{}))`
 //!      4. The increment is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!         to be less or equal to the exact one (except for Nans).
+//!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!      5. The increment is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!         to be greater or equal to the exact one (except for Nans).
+//!         to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/inc.cpp}
