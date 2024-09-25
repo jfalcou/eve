@@ -17,19 +17,47 @@ namespace eve
   {
     //==================================================================================================================
     // The following requires ensure proper, short error messages
-    // We rely on the semantic of as_wide_as to handle bool and conditional_expr properly
     template<typename C, typename T, typename U> struct result;
 
     template<typename C, typename T, typename U>
-    requires(requires { typename common_value<T,U>::type; })
+    requires(requires { typename common_value<T,U>::type; } && !conditional_expr<C>)
     struct result<C,T,U> : as_wide_as<common_value_t<T,U>,C> {};
 
     template<typename C, typename T, typename U>
-    requires(requires { typename common_logical<T,U>::type; })
+    requires(requires { typename common_logical<T,U>::type; } && !conditional_expr<C>)
     struct result<C, logical<T>, logical<U>> : as_wide_as<common_logical_t<T,U>,C> {};
 
-    template<typename C, typename  T, generator U> struct result<C, T, U> : as_wide_as<T,C> {};
-    template<typename C, generator T, typename  U> struct result<C, T, U> : as_wide_as<U,C> {};
+    template<typename C, typename  T, generator U>
+    requires(!conditional_expr<C>)
+    struct result<C, T, U> : as_wide_as<T,C>
+    {};
+
+    template<typename C, generator T, typename  U>
+    requires(!conditional_expr<C>)
+    struct result<C, T, U> : as_wide_as<U,C>
+    {};
+
+    // Handle conditional_expr so that mask is properly computed in all case
+    template<conditional_expr C, typename T, typename U>
+    requires(requires { typename common_value<T,U>::type; })
+    struct result<C,T,U> : result<decltype(std::declval<C>().mask(as<as_logical_t<common_value_t<T,U>>>{})),T,U>
+    {};
+
+    template<conditional_expr C, typename T, typename U>
+    requires(requires { typename common_logical<T,U>::type; })
+    struct result<C, logical<T>, logical<U>> : result < decltype(std::declval<C>().mask(as<common_logical_t<T,U>>{}))
+                                                      , logical<T>, logical<U>
+                                                      >
+    {};
+
+    template<conditional_expr C, typename T, generator U>
+    struct result<C,T,U> : result<decltype(std::declval<C>().mask(as<as_logical_t<T>>{})),T,U>
+    {};
+
+    template<conditional_expr C, generator T, typename U>
+    struct result<C,T,U> : result<decltype(std::declval<C>().mask(as<as_logical_t<U>>{})),T,U>
+    {};
+
     //==================================================================================================================
 
     // IF_ELSE with a value as condition
