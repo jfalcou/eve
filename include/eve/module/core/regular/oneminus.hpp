@@ -18,7 +18,8 @@
 namespace eve
 {
   template<typename Options>
-  struct oneminus_t : elementwise_callable<oneminus_t, Options, saturated_option, lower_option, upper_option>
+  struct oneminus_t : elementwise_callable<oneminus_t, Options, saturated_option, lower_option,
+                                           upper_option, strict_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
@@ -55,6 +56,8 @@ namespace eve
 //!      constexpr auto oneminus[saturated ](value auto x)              noexcept; // 3
 //!      constexpr auto oneminus[lower](value auto x)                   noexcept; // 4
 //!      constexpr auto oneminus[upper](value auto x)                   noexcept; // 5
+//!      constexpr auto oneminus[lower][strict](value auto x)           noexcept; // 4
+//!      constexpr auto oneminus[upper][strict](value auto x)           noexcept; // 5
 //!   }
 //!   @endcode
 //!
@@ -70,9 +73,11 @@ namespace eve
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. saturated version.
 //!      4. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!         to be less or equal to the exact one (except for Nans).
+//!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!      5. The operation is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!         to be greater or equal to the exact one (except for Nans).
+//!         to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!
 //!    @note
 //!      If an  [element](@ref glossary_elementwise) of the expected result is not representable in

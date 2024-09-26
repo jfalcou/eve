@@ -14,7 +14,8 @@
 namespace eve
 {
   template<typename Options>
-  struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option, upper_option>
+  struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
+                                upper_option, strict_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -59,8 +60,12 @@ namespace eve
 //!
 //!      // Semantic options
 //!      constexpr auto add[saturated](/*any of the above overloads*/)                noexcept; // 4
-//!      constexpr auto add[lower](/*any of the above overloads*/)                 noexcept; // 5
-//!      constexpr auto add[upper](/*any of the above overloads*/)                   noexcept; // 6
+//!      constexpr auto add[lower](/*any of the above overloads*/)                    noexcept; // 5
+//!      constexpr auto add[upper](/*any of the above overloads*/)                    noexcept; // 6
+//!      constexpr auto add[lower][strict](/*any of the above overloads*/)            noexcept; // 5
+//!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
+//!      constexpr auto div[lower][strict](/*any of the above overloads*/)            noexcept; // 5
+//!      constexpr auto div[upper][strict](/*any of the above overloads*/)            noexcept; // 6
 //!
 //!   }
 //!   @endcode
@@ -83,9 +88,11 @@ namespace eve
 //!       Take care that for signed integral entries this kind of addition is not associative at all.
 //!       This call perform saturated additions in reverse incoming order.
 //!    5. The summation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!       to be less or equal to the exact one (except for Nans).
+//!       to be less or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!    6. The summation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!       to be greater or equal to the exact one (except for Nans).
+//!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!
 //!   @note
 //!      Although the infix notation with `+` is supported for two parameters, the `+` operator on

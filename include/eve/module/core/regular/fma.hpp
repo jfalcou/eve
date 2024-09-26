@@ -14,7 +14,8 @@
 namespace eve
 {
   template<typename Options>
-  struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, promote_option, lower_option, upper_option>
+  struct fma_t : strict_elementwise_callable<fma_t, Options, pedantic_option, promote_option,
+                                             raw_option, lower_option, upper_option, strict_option>
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
@@ -57,6 +58,8 @@ namespace eve
 //!      constexpr auto fma[promote](value auto x, value auto y, value auto z)                 noexcept; // 4
 //!      constexpr auto add[lower](value auto x, value auto y, value auto z)                   noexcept; // 5
 //!      constexpr auto add[upper](value auto x, value auto y, value auto z)                   noexcept; // 6
+//!      constexpr auto fma[lower][srict](value auto x, value auto y, value auto z)            noexcept; // 5
+//!      constexpr auto fma[upper][srict](value auto x, value auto y, value auto z)            noexcept; // 6
 //!   }
 //!   @endcode
 //!
@@ -76,10 +79,15 @@ namespace eve
 //!         has no hardware capability.
 //!      4. TO DO : DESCRIBE
 //!      5. The operation is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
-//!         to be less or equal to the exact one (except for Nans).
+//!         to be less or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!      6. The operation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
-//!         to be greater or equal to the exact one (except for Nans).
+//!         to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
+//!       ensures generally faster computation, but strict inequality.
 //!
+//!  @note
+//!    *  `lower`and `upper` can be associated with raw to provide a correct,
+//!       faster but less accurate version
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/fma)
