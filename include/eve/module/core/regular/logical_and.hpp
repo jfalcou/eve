@@ -18,7 +18,7 @@ namespace eve
   {
     template<typename T, typename U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const noexcept
-      requires same_lanes_or_scalar<T, U>
+      requires (same_lanes_or_scalar<T, U> && !arithmetic_simd_value<T> && !arithmetic_simd_value<U>)
     {
       return EVE_DISPATCH_CALL(a, b);
     }

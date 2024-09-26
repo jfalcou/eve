@@ -113,6 +113,11 @@ namespace eve
       return EVE_DISPATCH_CALL(logical<std::uint8_t>(mask),v0,v1);
     }
 
+    EVE_FORCEINLINE constexpr bool operator()(bool mask, bool v0, bool v1) const noexcept
+    {
+      return mask ? v0 : v1;
+    }
+
     EVE_CALLABLE_OBJECT(if_else_t, if_else_);
   };
 
