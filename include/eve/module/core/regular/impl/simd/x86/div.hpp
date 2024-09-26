@@ -8,16 +8,19 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/detail/implementation.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/category.hpp>
+#include <eve/forward.hpp>
+#include <eve/module/core/regular/combine.hpp>
 
 namespace eve::detail
 {
 
-  template<callable_options O, plain_scalar_value T, typename N>
+  template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(lower) || O::contains(upper) || O::contains(saturated) ||
+    if constexpr(O::contains(saturated) ||
                  O::contains(toward_zero) || O::contains(upward) ||
                  O::contains(downward) || O::contains(to_nearest))
     {
@@ -27,19 +30,24 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-      if constexpr(O::contains(upper) || O::contains(lower))
+      if constexpr((O::contains(upper) || O::contains(lower)) && !O::contains(strict))
       {
         if constexpr(current_api >= avx512)
         {
-          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
           if      constexpr  ( c == category::float64x8  ) return  _mm512_div_round_pd (a, b, dir);
           else if constexpr  ( c == category::float32x16 ) return  _mm512_div_round_ps (a, b, dir);
-          else                                             return  div.behavior(cpu_{}, opts, a, b);
+          else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                               c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          {
+            auto aa = eve::combine(a, a);
+            auto bb = eve::combine(b, b);
+            auto aapbb = div[opts](aa, bb);
+            return  slice(aapbb, eve::upper_);
+          }
+          else                                             return div.behavior(cpu_{}, opts, a, b);
         }
-        else
-        {
-          return div.behavior(cpu_{}, opts, a, b);
-        }
+        else                                               return div.behavior(cpu_{}, opts, a, b);
       }
       else  if constexpr  ( c == category::float64x8  ) return _mm512_div_pd(a, b);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_div_pd(a, b);
@@ -72,8 +80,25 @@ namespace eve::detail
                                   wide<T, N> v,
                                   wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(lower) || O::contains(upper) || O::contains(saturated))
+    constexpr auto c = categorize<wide<T, N>>();
+    auto src = alternative(cx, v, as<wide<T, N>> {});
+    if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
+      if constexpr(current_api >= avx512)
+      {
+        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
+        else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
+        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+        {
+          auto vv = combine(v, v);
+          auto ww = combine(w, w);
+          auto vvpww = div[o](vv, ww);
+          auto s =  slice(vvpww, eve::upper_);
+          return if_else(cx,s,src);
+        }
+      }
       return div.behavior(cpu_{}, o, v, w);
     }
     else if constexpr (O::contains(toward_zero) || O::contains(upward) ||
@@ -83,9 +108,6 @@ namespace eve::detail
     }
     else
     {
-      constexpr auto c = categorize<wide<T, N>>();
-
-      auto src = alternative(cx, v, as<wide<T, N>> {});
       auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
       if      constexpr( C::is_complete ) return src;
