@@ -15,7 +15,7 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/arch/platform.hpp>
-
+#include <iostream>
 namespace eve
 {
   template<typename Options>
@@ -89,7 +89,7 @@ namespace detail
   {
     if constexpr(floating_value<T>)
     {
-      auto t = trunc[o.drop(pedantic)](a);
+      auto t = trunc(a);
       if constexpr(O::contains(raw))
       {
         return eve::zip(a-t, t);
@@ -97,8 +97,14 @@ namespace detail
       else
       {
         auto f = if_else(is_eqz(a), a, a-t);
-        if constexpr(O::contains(pedantic)  && platform::supports_infinites)
-          f = if_else(is_infinite(a), eve::zero, f);
+//        std::cout << "f " << f << std::endl;
+        if constexpr(/*O::contains(pedantic)  &&*/ platform::supports_infinites)
+        {
+//           std::cout << "fbis " << f << std::endl;
+//          std::cout << "a    " << a << std::endl;
+          f = if_else(is_infinite(a), eve::zero(as(f)), f);
+        }
+
         return eve::zip(f, t);
       }
     }
