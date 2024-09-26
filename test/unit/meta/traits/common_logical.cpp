@@ -64,17 +64,15 @@ TTS_CASE_TPL("eve::common_logical on wide x wide"
   using Wt = eve::wide<T>;
   using Wu = eve::wide<U>;
 
-  using uWt = eve::as_wide_as_t<T, Wu>;
-
   TTS_TYPE_IS((eve::common_logical_t<Wt, Wu>), eve::logical<Wt>);
   TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<Wu>>), eve::logical<Wt>);
   TTS_TYPE_IS((eve::common_logical_t<eve::logical<Wt>, Wu>), eve::logical<Wt>);
   TTS_TYPE_IS((eve::common_logical_t<eve::logical<Wt>, eve::logical<Wu>>), eve::logical<Wt>);
 
-  TTS_TYPE_IS((eve::common_logical_t<T, Wu>), eve::logical<uWt>);
-  TTS_TYPE_IS((eve::common_logical_t<T, eve::logical<Wu>>), eve::logical<uWt>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, Wu>), eve::logical<uWt>);
-  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, eve::logical<Wu>>), eve::logical<uWt>);
+  TTS_TYPE_IS((eve::common_logical_t<T, Wu>), eve::logical<Wu>);
+  TTS_TYPE_IS((eve::common_logical_t<T, eve::logical<Wu>>), eve::logical<Wu>);
+  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, Wu>), eve::logical<Wu>);
+  TTS_TYPE_IS((eve::common_logical_t<eve::logical<T>, eve::logical<Wu>>), eve::logical<Wu>);
 
   TTS_TYPE_IS((eve::common_logical_t<Wt, U>), eve::logical<Wt>);
   TTS_TYPE_IS((eve::common_logical_t<Wt, eve::logical<U>>), eve::logical<Wt>);
