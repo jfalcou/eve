@@ -97,10 +97,10 @@ namespace eve::detail
     ) {
       if      constexpr (std::same_as<T, bool> && std::same_as<U, bool>) return find_common_logical_reducer<bool>{};
       else if constexpr (simd_value<T>)                                  return find_common_logical_reducer<as_logical_t<T>>{};
+      else if constexpr (simd_value<U>)                                  return find_common_logical_reducer<as_logical_t<U>>{};
       else if constexpr (std::same_as<T, bool>)                          return find_common_logical_reducer<as_logical_t<U>>{};
       else if constexpr (std::same_as<U, bool>)                          return find_common_logical_reducer<as_logical_t<T>>{};
       else if constexpr (scalar_value<U>)                                return find_common_logical_reducer<as_logical_t<T>>{};
-      else if constexpr (simd_value<U>)                                  return find_common_logical_reducer<as_logical_t<as_wide_as_t<T, U>>>{};
       else                                                               return find_common_logical_reducer<void>{};
     }
   };
