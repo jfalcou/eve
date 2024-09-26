@@ -36,7 +36,7 @@ TTS_CASE_TPL("Check behavior of modf on real types full range", eve::test::simd:
   }
   {
     auto [p0, p1] = eve::modf(eve::inf(eve::as<T>{}));
-    TTS_IEEE_EQUAL(p0, eve::nan(eve::as<T>{}));
+    TTS_IEEE_EQUAL(p0, eve::zero(eve::as<T>{}));
     TTS_IEEE_EQUAL(p1, eve::inf(eve::as<T>{}));
   }
   {
