@@ -1,0 +1,40 @@
+Checks: >
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  misc-*,
+  modernize-*,
+  performance-*,
+  hicpp-*,
+
+  -misc-const-correctness,
+
+  -bugprone-exception-escape,
+  -bugprone-macro-parentheses,
+  -bugprone-easily-swappable-parameters,
+  -clang-analyzer-optin.core.EnumCastOutOfRange,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-avoid-do-while,
+  -cppcoreguidelines-avoid-non-const-global-variables,
+  -cppcoreguidelines-init-variables,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-macro-usage,
+  -cppcoreguidelines-macro-to-enum,
+  -modernize-use-trailing-return-type,
+  -modernize-use-std-numbers,
+  -modernize-macro-to-enum,
+  -misc-include-cleaner,
+  -misc-non-private-member-variables-in-classes,
+  -misc-use-internal-linkage,
+  -misc-confusable-identifiers,
+  -performance-avoid-endl,
+  -hicpp-uppercase-literal-suffix,
+  -hicpp-braces-around-statements,
+  -hicpp-named-parameter,
+  -hicpp-signed-bitwise
+
+HeaderFilterRegex: '.*'
+
+FormatStyle: file
