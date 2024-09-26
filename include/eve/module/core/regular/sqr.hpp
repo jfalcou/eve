@@ -95,7 +95,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //================================================================================================
 
   namespace detail
-  {
+  { 
 
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
@@ -117,3 +117,4 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
     }
   }
 }
+ 
