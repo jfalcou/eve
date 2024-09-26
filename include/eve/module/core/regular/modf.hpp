@@ -81,7 +81,6 @@ namespace eve
 //================================================================================================
 //================================================================================================
 
-
 namespace detail
 {
   template<typename T, callable_options O>
@@ -97,8 +96,11 @@ namespace detail
       else
       {
         auto f = if_else(is_eqz(a), a, a-t);
-        if constexpr(O::contains(pedantic)  && platform::supports_infinites)
+        if constexpr(platform::supports_infinites)
+        {
           f = if_else(is_infinite(a), eve::zero, f);
+        }
+
         return eve::zip(f, t);
       }
     }

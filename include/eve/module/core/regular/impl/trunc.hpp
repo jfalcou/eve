@@ -22,7 +22,7 @@ namespace eve::detail
 
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T
-  trunc_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
+  trunc_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
   {
     if constexpr(integral_value<T>)
       return a0;
@@ -44,8 +44,9 @@ namespace eve::detail
       }
       else
       {
-        auto not_already_integral = !is_not_less_equal(eve::abs(a0), maxflint(eve::as<T>()));
-        return trunc[raw][not_already_integral](a0);
+        auto not_already_integral = !is_not_less_equal(abs(a0), maxflint(eve::as<T>()));
+        auto a = if_else(not_already_integral, a0, zero);
+        return if_else(not_already_integral, trunc[raw](a), a0);
       }
     }
   }
