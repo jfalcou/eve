@@ -9,25 +9,6 @@
 #include <eve/module/core.hpp>
 #include "test.hpp"
 
-// S, Ls, b, W, Lw
-//
-//
-
-// W x W   -> LW T
-
-// S x W   -> Lw U
-// S x Lw  -> Lw U
-//
-
-// Ls x W  -> Lw U
-// Ls x Lw -> Lw U
-//
-// W x S   -> Lw T
-// W x Ls  -> Lw T
-//
-// Lw x S  -> Lw T
-// Lw x Ls -> Lw T
-
 template<typename L1> struct rewrap;
 template<typename... Ts> 
 struct rewrap<kumi::tuple<Ts...>> { using type = tts::types<Ts...>; };
