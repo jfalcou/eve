@@ -57,10 +57,11 @@ TTS_CASE_WITH("Check behavior of dec(wide) and dec[cond](wide)",
   TTS_EQUAL(eve::dec[z](a0), map([&](auto e) -> v_t { return v_t((z) ? e - 1 : e); }, a0));
   if constexpr(eve::floating_value<T>)
   {
-    auto m = eve::smallestposval(eve::as<T>());
-    TTS_EXPECT(eve::all(eve::dec[eve::lower](-m) < eve::dec(-m)));
-    TTS_EXPECT(eve::all(eve::dec[eve::upper](m) > eve::dec(m)));
-  }
+    TTS_EXPECT(eve::all(eve::dec[eve::lower](a0) <= eve::dec(a0)));
+    TTS_EXPECT(eve::all(eve::dec[eve::upper](a0) >= eve::dec(a0)));
+    TTS_EXPECT(eve::all(eve::dec[eve::lower][eve::strict](a0) < eve::dec(a0)));
+    TTS_EXPECT(eve::all(eve::dec[eve::upper][eve::strict](a0) > eve::dec(a0)));
+ }
 };
 
 TTS_CASE_WITH("Check behavior of dec[saturated](wide) on integral types",

@@ -61,6 +61,13 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
   TTS_ULP_EQUAL(eve::rec[upper](a0), eve::div[upper](T(1), a0), 1.0);
   TTS_ULP_EQUAL(eve::rec[lower][eve::strict](a0), eve::div[eve::strict][lower](T(1), a0), 1.0);
   TTS_ULP_EQUAL(eve::rec[upper][eve::strict](a0), eve::div[eve::strict][upper](T(1), a0), 1.0);
+  if constexpr (eve::floating_value<T>)
+  {
+    TTS_EXPECT(eve::all(eve::rec[eve::lower](a0) <= eve::rec(a0)));
+    TTS_EXPECT(eve::all(eve::rec[eve::upper](a0) >= eve::rec(a0)));
+    TTS_EXPECT(eve::all(eve::rec[eve::lower][eve::strict](a0) < eve::rec(a0)));
+    TTS_EXPECT(eve::all(eve::rec[eve::upper][eve::strict](a0) > eve::rec(a0)));
+  }
 };
 
 //==================================================================================================

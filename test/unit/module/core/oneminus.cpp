@@ -65,9 +65,10 @@ TTS_CASE_WITH("Check behavior of eve::oneminus(eve::wide)",
         eve::if_else(a0 < eve::valmin(eve::as(a0)) + 2, eve::valmax(eve::as(a0)), oneminus(a0)));
   if constexpr(eve::floating_value<T>)
   {
-    auto m = eve::smallestposval(eve::as<T>());
-    TTS_EXPECT(eve::all(eve::oneminus[eve::lower](m) < eve::oneminus(m)));
-    TTS_EXPECT(eve::all(eve::oneminus[eve::upper](-m) > eve::oneminus(-m)));
+    TTS_EXPECT(eve::all(eve::oneminus[eve::lower](a0) <= eve::oneminus(a0)));
+    TTS_EXPECT(eve::all(eve::oneminus[eve::upper](a0) >= eve::oneminus(a0)));
+    TTS_EXPECT(eve::all(eve::oneminus[eve::lower][eve::strict](a0) < eve::oneminus(a0)));
+    TTS_EXPECT(eve::all(eve::oneminus[eve::upper][eve::strict](a0) > eve::oneminus(a0)));
   }
 };
 
