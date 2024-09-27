@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #pragma once
-
+x3
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/constant/half.hpp>
@@ -22,8 +22,10 @@ EVE_FORCEINLINE wide<T, N> average_(EVE_SUPPORTS(vmx_),
 {
   if constexpr( integral_value<T> && sizeof(T) < 8 )
     return vec_avg(v0.storage(), v1.storage());
+  else if constexpr( O::contains(upper) && integral_value<T>)
+    return average.behavior(cpu_{}, opts, v0, v1);
   else if constexpr( floating_value<T> )
-    return fma(v0, half(eve::as(v0)), v1 * half(eve::as(v0)));
+    return fma[opts](v0, half(eve::as(v0)), v1 * half(eve::as(v0)));
   else
     return map(average[opts], v0, v1);
 }

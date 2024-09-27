@@ -113,9 +113,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
 };
 
 //==================================================================================================
-//===  Tests for downward upward  average
+//===  Tests for lower upper  average
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::upward(eve::average)(eve::wide)",
+TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
               eve::test::simd::all_types,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax))
