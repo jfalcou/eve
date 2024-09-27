@@ -1,7 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
-
+#include <iomanip>
 int main()
 {
   eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
@@ -23,7 +23,7 @@ int main()
   std::cout << "<- wu0                                = " << wu0 << "\n";
   std::cout << "<- wu1                                = " << wu1 << "\n";
   std::cout << "<- wu2                                = " << wu2 << "\n";
-                                                      
+
   std::cout << "-> fma(wf0, wf1, wf2)                 = " << eve::fma(wf0, wf1, wf2) << "\n";
   std::cout << "-> fma[ignore_last(2)](wf0, wf1, wf2) = " << eve::fma[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
   std::cout << "-> fma[wf0 != 0](wf0, wf1, wf2)       = " << eve::fma[wf0 != 0](wf0, wf1, wf2) << "\n";
@@ -39,4 +39,10 @@ int main()
   std::cout << "-> fma[wi0 != 0](wi0, wi1, wi2)       = " << eve::fma[wi0 != 0](wi0, wi1, wi2) << "\n";
   std::cout << "-> fma[pedantic](wi0, wi1, wi2)       = " << eve::fma[eve::pedantic](wi0, wi1, wi2) << "\n";
   std::cout << "-> fma[promote](wi0, wi1, wi2)        = " << eve::fma[eve::promote](wi0, wi1, wi2) << "\n";
+
+  std::cout << std::setprecision(20) << "-> fma(wf0, wf1, wf2)          = " << eve::fma(wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fma[lower](wf0, wf1, wf2)   = " << eve::fma[eve::lower](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fma[upper](wf0, wf1, wf2)   = " << eve::fma[eve::upper](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fma[lower][strict](wf0, wf1, wf2)   = " << eve::fma[eve::lower][eve::strict](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fma[upper][strict](wf0, wf1, wf2)   = " << eve::fma[eve::upper][eve::strict](wf0, wf1, wf2) << "\n";
 }

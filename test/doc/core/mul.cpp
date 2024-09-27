@@ -25,15 +25,10 @@ int main()
   std::cout << "-> mul[wf0 != 0](wf0, wf1)       = " << eve::mul[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> mul(wu0, wu1)                 = " << eve::mul(wu0, wu1) << "\n";
   std::cout << "-> mul(wi0, wi1)                 = " << eve::mul(wi0, wi1) << "\n";
-
-
-  eve::wide wd0{0.1f};
-  eve::wide wd1{0.12f};
-  std::cout << std::setprecision(20) << "wd0 "<< wd0 << std::endl;
-  std::cout << std::setprecision(20) << "wd1 "<< wd1 << std::endl;
-  std::cout << std::setprecision(20) << "-> mul[lower](wd0, wd1)       = " << eve::mul[eve::lower](wd0, wd1) << "\n";
-  std::cout << std::setprecision(20) << "-> mul          (wd0, wd1)       = " << eve::mul               (wd0, wd1) << "\n";
-  std::cout << "-> mul[upper  ](-wd0, wd1)       = " << eve::mul[eve::upper](wd0, -wd1) << "\n";
-  std::cout << "-> mul          (-wd0, wd1)       = " << eve::mul             (wd0, -wd1) << "\n";
+  std::cout << std::setprecision(20) << "-> add(wf0, wf1)          = " << eve::add(wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[lower](wf0, wf1)   = " << eve::add[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[upper](wf0, wf1)   = " << eve::add[eve::upper](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[lower][strict](wf0, wf1)   = " << eve::add[eve::lower][eve::strict](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[upper][strict](wf0, wf1)   = " << eve::add[eve::upper][eve::strict](wf0, wf1) << "\n";
 
 }

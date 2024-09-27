@@ -78,6 +78,7 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::saturated;
   using eve::lower;
   using eve::upper;
+  using eve::strict;
   using eve::detail::map;
 
   TTS_ULP_EQUAL( add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
@@ -97,6 +98,10 @@ TTS_CASE_WITH("Check behavior of add on wide",
     T w1(eve::smallestposval(eve::as<T>()));
     TTS_EXPECT(eve::all(add[upper](w0, w1)  >  add(w0, w1)));
     TTS_EXPECT(eve::all(add[lower](w0, -w1) < add(w0, -w1)));
+    TTS_EXPECT(eve::all(add[strict][upper](w0, w1)  >  add(w0, w1)));
+    TTS_EXPECT(eve::all(add[strict][lower](w0, -w1) <  add(w0, -w1)));
+    TTS_EXPECT(eve::all(add[strict][upper](w0, w1)  >= add[upper](w0, w1)));
+    TTS_EXPECT(eve::all(add[strict][lower](w0, -w1) <= add[lower](w0, -w1)));
   }
 };
 
@@ -143,4 +148,6 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
 {
   TTS_IEEE_EQUAL(eve::add[mask](a0, a1),
             eve::if_else(mask, eve::add(a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::add[mask][eve::lower](a0, a1),
+                 eve::if_else(mask, eve::add[eve::lower](a0, a1), a0));
 };

@@ -57,8 +57,10 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask, eve::rec(a0), a0));
   TTS_EQUAL(eve::rec[eve::raw][mask](a0), eve::if_else(mask, eve::rec[eve::raw](a0), a0));
   TTS_EQUAL(eve::rec[eve::pedantic][mask](a0), eve::if_else(mask, eve::rec[eve::pedantic](a0), a0));
-  TTS_ULP_EQUAL(eve::rec[eve::lower](a0), eve::div[lower](T(1), a0), 1.0);
-  TTS_ULP_EQUAL(eve::rec[eve::upper](a0), eve::div[upper](T(1), a0), 1.0);
+  TTS_ULP_EQUAL(eve::rec[lower](a0), eve::div[lower](T(1), a0), 1.0);
+  TTS_ULP_EQUAL(eve::rec[upper](a0), eve::div[upper](T(1), a0), 1.0);
+  TTS_ULP_EQUAL(eve::rec[lower][eve::strict](a0), eve::div[eve::strict][lower](T(1), a0), 1.0);
+  TTS_ULP_EQUAL(eve::rec[upper][eve::strict](a0), eve::div[eve::strict][upper](T(1), a0), 1.0);
 };
 
 //==================================================================================================

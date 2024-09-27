@@ -20,6 +20,9 @@ int main()
   std::cout << "-> oneminus[saturated ](wf0)     = " << eve::oneminus[eve::saturated ](wf0) << "\n";
   std::cout << "-> oneminus(wu0)                 = " << eve::oneminus(wu0) << "\n";
   std::cout << "-> oneminus(wi0)                 = " << eve::oneminus(wi0) << "\n";
-  std::cout << std::setprecision(20) << "-> oneminus[upper](wf0)          = " << eve::oneminus[eve::upper](wf0) << "\n";
-  std::cout << "-> oneminus[lower](wf0)          = " << eve::oneminus[eve::lower](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> oneminus[lower](wf0)         = " << eve::oneminus[eve::lower](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> oneminus[upper](wf0)         = " << eve::oneminus[eve::upper](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> oneminus[lower][strict](wf0)   = " << eve::oneminus[eve::lower][eve::strict](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> oneminus[upper][strict](wf0)   = " << eve::oneminus[eve::upper][eve::strict](wf0) << "\n";
+
 }
