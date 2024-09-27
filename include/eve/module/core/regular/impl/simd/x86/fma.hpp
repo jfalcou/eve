@@ -26,26 +26,29 @@ namespace eve::detail
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
     // PEDANTIC ---
-    else if constexpr(O::contains(lower) || O::contains(upper) && !O::contains(strict))
+    else if constexpr(O::contains(lower) || O::contains(upper))
     {
-      if constexpr(current_api >= avx512)
+      if(!O::contains(strict))
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_fmadd_round_pd (a, b, c, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_fmadd_round_ps (a, b, c, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+        if constexpr(current_api >= avx512)
         {
-          auto aa = eve::combine(a, a);
-          auto bb = eve::combine(b, b);
-          auto cc = eve::combine(c, c);
-          auto aabbcc = fma(aa, bb, cc);
-          return  slice(aabbcc, eve::upper_);
+          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          if      constexpr  ( c == category::float64x8  ) return  _mm512_fmadd_round_pd (a, b, c, dir);
+          else if constexpr  ( c == category::float32x16 ) return  _mm512_fmadd_round_ps (a, b, c, dir);
+          else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                               c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          {
+            auto aa = eve::combine(a, a);
+            auto bb = eve::combine(b, b);
+            auto cc = eve::combine(c, c);
+            auto aabbcc = fma(aa, bb, cc);
+            return  slice(aabbcc, eve::upper_);
+          }
+          else                                             return  fma.behavior(cpu_{}, opts, a, b, c);
         }
-        else                                             return  fma.behavior(cpu_{}, opts, a, b, c);
+        else                                               return fma.behavior(cpu_{}, opts, a, b, c);
       }
-      else
-        return fma.behavior(cpu_{}, opts, a, b, c);
+      else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
     }
     else if constexpr(O::contains(pedantic) )
     {
@@ -94,26 +97,30 @@ namespace eve::detail
 
       // Integral don't do anything special ----
       if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
-      else if constexpr(O::contains(lower) || O::contains(upper) && !O::contains(strict))
+      else if constexpr(O::contains(lower) || O::contains(upper))
       {
-        if constexpr(current_api >= avx512)
+        if constexpr(!O::contains(strict))
         {
-          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-          if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_fmadd_round_pd (a, m, b, c, dir);
-          else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_fmadd_round_ps (a, m, b, c, dir);
-          else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                               c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          if constexpr(current_api >= avx512)
           {
-            auto aa = eve::combine(a, a);
-            auto bb = eve::combine(b, b);
-            auto cc = eve::combine(c, c);
-            auto aabbcc = fma[opts.drop(condition_key)](aa, bb, cc);
-            auto s =  slice(aabbcc, eve::upper_);
-            return if_else(cx,s,src);
+            auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+            if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_fmadd_round_pd (a, m, b, c, dir);
+            else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_fmadd_round_ps (a, m, b, c, dir);
+            else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                                 c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+            {
+              auto aa = eve::combine(a, a);
+              auto bb = eve::combine(b, b);
+              auto cc = eve::combine(c, c);
+              auto aabbcc = fma[opts.drop(condition_key)](aa, bb, cc);
+              auto s =  slice(aabbcc, eve::upper_);
+              return if_else(cx,s,src);
+            }
+            else                                             return fma.behavior(cpu_{}, opts, a, b, c);
           }
-          else                                             return fma.behavior(cpu_{}, opts, a, b, c);
+          else                                               return fma.behavior(cpu_{}, opts, a, b, c);
         }
-        else                                               return fma.behavior(cpu_{}, opts, a, b, c);
+        else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
       }
       else if constexpr( cx == category::float32x16 ) return _mm512_mask_fmadd_ps(a, m, b, c);
       else if constexpr( cx == category::float64x8  ) return _mm512_mask_fmadd_pd(a, m, b, c);

@@ -74,7 +74,7 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   using eve::saturated;
   using eve::lower;
   using eve::upper;
-  using eve::strict; 
+  using eve::strict;
   using eve::sub;
   using eve::detail::map;
 
@@ -103,8 +103,8 @@ TTS_CASE_WITH("Check behavior of sub on wide",
     TTS_EXPECT(eve::all(sub[upper](a0, a1, a2) >=  sub[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
-    TTS_EXPECT(eve::all(sub[upper](w0, w1)  >  sub(w0, w1)));
-    TTS_EXPECT(eve::all(sub[lower](w0, -w1) < sub(w0, -w1)));
+    TTS_EXPECT(eve::all(sub[upper](w0, w1)  >=  sub(w0, w1)));
+    TTS_EXPECT(eve::all(sub[lower](w0, -w1) <= sub(w0, -w1)));
     TTS_EXPECT(eve::all(sub[strict][upper](w0, w1)  >  sub(w0, w1)));
     TTS_EXPECT(eve::all(sub[strict][lower](w0, -w1) <  sub(w0, -w1)));
     TTS_EXPECT(eve::all(sub[strict][upper](w0, w1)  >= sub[upper](w0, w1)));

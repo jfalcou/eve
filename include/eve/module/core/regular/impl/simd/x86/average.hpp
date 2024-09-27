@@ -20,7 +20,7 @@ namespace eve::detail
                                       wide<T, N> b) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( O::contains(upward))
+    if constexpr( O::contains(upper))
     {
       return average.behavior(cpu_{}, opts, a, b);
     }
@@ -60,7 +60,7 @@ namespace eve::detail
                                        wide<T, N> const &w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if constexpr( O::contains(upward))
+    if constexpr( O::contains(upper))
       return average.behavior(cpu_{}, cx, opts, v, w);
     else
     {

@@ -101,7 +101,7 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
       {
-        return sub[o](one(eve::as<T>()), v);
+        return add[o](one(eve::as<T>()), -v);
       }
       else
       {
