@@ -20,24 +20,28 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-   if constexpr(floating_value<T> && !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
+    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
-      if constexpr(current_api >= avx512)
+      if (!O::contains(strict))
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_sub_round_pd (a, b, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_sub_round_ps (a, b, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+        if constexpr(current_api >= avx512)
         {
-          auto aa = eve::combine(a, a);
-          auto bb = eve::combine(b, b);
-          auto aapbb = sub[opts](aa, bb);
-          return slice(aapbb, eve::upper_);
+          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          if      constexpr  ( c == category::float64x8  ) return  _mm512_sub_round_pd (a, b, dir);
+          else if constexpr  ( c == category::float32x16 ) return  _mm512_sub_round_ps (a, b, dir);
+          else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                               c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          {
+            auto aa = eve::combine(a, a);
+            auto bb = eve::combine(b, b);
+            auto aapbb = sub[opts](aa, bb);
+            return slice(aapbb, eve::upper_);
+          }
+          else                                             return sub.behavior(cpu_{}, opts, a, b);
         }
-        else                                             return sub.behavior(cpu_{}, opts, a, b);
+        else                                               return sub.behavior(cpu_{}, opts, a, b);
       }
-      else                                               return sub.behavior(cpu_{}, opts, a, b);
+      else                                                 return add.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {

@@ -103,12 +103,12 @@ TTS_CASE_WITH("Check behavior of sub on wide",
     TTS_EXPECT(eve::all(sub[upper](a0, a1, a2) >=  sub[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
-    TTS_EXPECT(eve::all(add[upper](w0, w1)  >  add(w0, w1)));
-    TTS_EXPECT(eve::all(add[lower](w0, -w1) < add(w0, -w1)));
-    TTS_EXPECT(eve::all(add[strict][upper](w0, w1)  >  add(w0, w1)));
-    TTS_EXPECT(eve::all(add[strict][lower](w0, -w1) <  add(w0, -w1)));
-    TTS_EXPECT(eve::all(add[strict][upper](w0, w1)  >= add[upper](w0, w1)));
-    TTS_EXPECT(eve::all(add[strict][lower](w0, -w1) <= add[lower](w0, -w1)));
+    TTS_EXPECT(eve::all(sub[upper](w0, w1)  >  sub(w0, w1)));
+    TTS_EXPECT(eve::all(sub[lower](w0, -w1) < sub(w0, -w1)));
+    TTS_EXPECT(eve::all(sub[strict][upper](w0, w1)  >  sub(w0, w1)));
+    TTS_EXPECT(eve::all(sub[strict][lower](w0, -w1) <  sub(w0, -w1)));
+    TTS_EXPECT(eve::all(sub[strict][upper](w0, w1)  >= sub[upper](w0, w1)));
+    TTS_EXPECT(eve::all(sub[strict][lower](w0, -w1) <= sub[lower](w0, -w1)));
   }
 };
 

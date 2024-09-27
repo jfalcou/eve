@@ -28,13 +28,13 @@
 namespace eve::detail
 {
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
-       auto r = sub(a, b);
+        auto r = sub[o.drop(lower, upper, strict)](a, b);
         if constexpr(O::contains(lower))
           return prev(r);
         else

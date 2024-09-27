@@ -37,7 +37,7 @@
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <iostream>
+
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
 #  pragma warning(disable : 4723) // potential divide by 0
