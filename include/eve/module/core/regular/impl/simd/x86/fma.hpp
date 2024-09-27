@@ -23,6 +23,7 @@ namespace eve::detail
                                   wide<T, N> const& c) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
     // PEDANTIC ---
@@ -33,10 +34,10 @@ namespace eve::detail
         if constexpr(current_api >= avx512)
         {
           auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-          if      constexpr  ( c == category::float64x8  ) return  _mm512_fmadd_round_pd (a, b, c, dir);
-          else if constexpr  ( c == category::float32x16 ) return  _mm512_fmadd_round_ps (a, b, c, dir);
-          else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                               c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          if      constexpr  ( cat == category::float64x8  ) return  _mm512_fmadd_round_pd (a, b, c, dir);
+          else if constexpr  ( cat == category::float32x16 ) return  _mm512_fmadd_round_ps (a, b, c, dir);
+          else if constexpr  ( cat == category::float64x4 ||  cat == category::float64x2 ||
+                               cat == category::float32x8 ||  cat == category::float32x4 || cat == category::float32x2)
           {
             auto aa = eve::combine(a, a);
             auto bb = eve::combine(b, b);
@@ -59,7 +60,6 @@ namespace eve::detail
     // we don't care about PROMOTE as we only accept similar types.
     else
     {
-      constexpr auto cat = categorize<wide<T, N>>();
 
       if      constexpr( cat == category::float64x8  )  return _mm512_fmadd_pd(a, b, c);
       else if constexpr( cat == category::float32x16 )  return _mm512_fmadd_ps(a, b, c);
