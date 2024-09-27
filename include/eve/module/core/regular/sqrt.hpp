@@ -14,7 +14,8 @@
 namespace eve
 {
   template<typename Options>
-  struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option, lower_option, upper_option>
+  struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option,
+                                       lower_option, upper_option, strict_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const

@@ -35,7 +35,7 @@ namespace eve::detail
     {
       if constexpr(O::contains(strict))
       {
-        auto r = mul(a, b);
+        auto r = mul[opts.drop(lower, upper, strict)](a, b);
         if constexpr(O::contains(lower))
           return prev(r);
         else

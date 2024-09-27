@@ -53,7 +53,7 @@ namespace eve::detail
     {
       if constexpr(O::contains(strict))
       {
-        auto r = div(a, b);
+        auto r = div[o.drop(lower, upper, strict)](a, b);
         if constexpr(O::contains(lower))
           return prev(r);
         else
@@ -64,7 +64,7 @@ namespace eve::detail
         auto negb = is_negative(b);
         b = if_else(negb, -b, b);
         a = if_else(negb, -a, a);
-        auto d = div(a, b);
+        auto d = div[o.drop(lower, upper)](a, b);
         auto [r, e] = two_prod(d, b);
         if constexpr(O::contains(upper))
         {
@@ -224,9 +224,9 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
     auto that = r1;
-    if (O::contains(upper))  that = mul[lower](r1, rs...);
-    else if  (O::contains(lower))  that = mul[upper](r1, rs...);
-    else that = mul(r1, rs...);
+//     if (O::contains(upper))  that = mul[lower](r1, rs...);
+//     else if  (O::contains(lower))  that = mul[upper](r1, rs...);
+//     else that = mul(r1, rs...);
     if constexpr(std::is_integral_v<eve::element_type_t<T>>)
       EVE_ASSERT(eve::all(is_nez(that)), "[eve] div - 0/0 is undefined");
     return div[o](r0,that);

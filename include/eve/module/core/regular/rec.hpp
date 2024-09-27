@@ -14,7 +14,8 @@
 namespace eve
 {
 template<typename Options>
-struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option, lower_option, upper_option>
+struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
+                                    lower_option, upper_option, strict_option>
 {
   template<eve::value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept

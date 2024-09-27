@@ -20,7 +20,6 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/div.hpp>
-#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
@@ -30,16 +29,19 @@ namespace eve::detail
   {
     if constexpr( floating_value<T> )
     {
-      auto num = T{1};
       if constexpr( O::contains(lower) || O::contains(upper))
       {
-        using namespace spy::literal;
-        if constexpr(enable_roundings)
+        if constexpr(O::contains(strict))
         {
-          return with_rounding<O>(eve::div, num, a);
+          auto r = rec[o.drop(lower, upper, strict)](a);
+          if constexpr(O::contains(lower))
+            return prev(r);
+          else
+            return next(r);
         }
         else
         {
+          auto num = T{1};
           auto d = minus[is_negative(a)](rec[o.drop(lower, upper)](abs(a)));
           auto [r, e] = two_prod(d, a);
           if constexpr(O::contains(upper))
@@ -50,7 +52,7 @@ namespace eve::detail
       }
       else
       {
-        return num/a;
+        return T(1)/a;
       }
     }
     else if( integral_value<T> )

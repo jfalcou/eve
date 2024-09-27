@@ -21,19 +21,22 @@ namespace eve::detail
 {
   template<typename T, callable_options O>
   EVE_FORCEINLINE constexpr T sqrt_(EVE_REQUIRES(cpu_),
-                                    O const&,
+                                    O const& o,
                                     T const& a0) noexcept
   {
     if constexpr( O::contains(lower) || O::contains(upper))
     {
-      using namespace spy::literal;
-      if constexpr( enable_roundings)
+     if constexpr(O::contains(strict))
       {
-        return with_rounding<O>(eve::sqrt, a0);
+        auto r = sqrt[o.drop(lower, upper, strict)](a0);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {
-        auto x = sqrt(a0);
+        auto x = sqrt[o.drop(lower, upper)](a0);
         auto [r, e] = two_prod(x, x);
         if constexpr(O::contains(lower))
           return eve::prev[r > a0 || (r == a0 && eve::is_gtz(e))](x);
