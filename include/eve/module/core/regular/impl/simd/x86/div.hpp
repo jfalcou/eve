@@ -30,24 +30,28 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-      if constexpr((O::contains(upper) || O::contains(lower)) && !O::contains(strict))
+      if constexpr(O::contains(upper) || O::contains(lower))
       {
-        if constexpr(current_api >= avx512)
+        if constexpr(!O::contains(strict))
         {
-          auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-          if      constexpr  ( c == category::float64x8  ) return  _mm512_div_round_pd (a, b, dir);
-          else if constexpr  ( c == category::float32x16 ) return  _mm512_div_round_ps (a, b, dir);
-          else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                               c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+          if constexpr(current_api >= avx512)
           {
-            auto aa = eve::combine(a, a);
-            auto bb = eve::combine(b, b);
-            auto aapbb = div[opts](aa, bb);
-            return  slice(aapbb, eve::upper_);
+            auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+            if      constexpr  ( c == category::float64x8  ) return  _mm512_div_round_pd (a, b, dir);
+            else if constexpr  ( c == category::float32x16 ) return  _mm512_div_round_ps (a, b, dir);
+            else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                                 c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+            {
+              auto aa = eve::combine(a, a);
+              auto bb = eve::combine(b, b);
+              auto aapbb = div[opts](aa, bb);
+              return  slice(aapbb, eve::upper_);
+            }
+            else                                             return div.behavior(cpu_{}, opts, a, b);
           }
-          else                                             return div.behavior(cpu_{}, opts, a, b);
+          else                                               return div.behavior(cpu_{}, opts, a, b);
         }
-        else                                               return div.behavior(cpu_{}, opts, a, b);
+        else                                                 return div.behavior(cpu_{}, opts, a, b);
       }
       else  if constexpr  ( c == category::float64x8  ) return _mm512_div_pd(a, b);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_div_pd(a, b);
@@ -82,7 +86,7 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
-    if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
+    if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(current_api >= avx512)
       {

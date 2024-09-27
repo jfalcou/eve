@@ -19,7 +19,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
+    if constexpr(floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(current_api >= avx512)
       {

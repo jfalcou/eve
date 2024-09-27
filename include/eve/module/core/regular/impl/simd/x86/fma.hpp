@@ -26,7 +26,7 @@ namespace eve::detail
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
     // PEDANTIC ---
-    else if constexpr(O::contains(lower) || O::contains(upper))
+    else if constexpr(O::contains(lower) || O::contains(upper) && !O::contains(strict))
     {
       if constexpr(current_api >= avx512)
       {
@@ -94,7 +94,7 @@ namespace eve::detail
 
       // Integral don't do anything special ----
       if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
-      else if constexpr(O::contains(lower) || O::contains(upper))
+      else if constexpr(O::contains(lower) || O::contains(upper) && !O::contains(strict))
       {
         if constexpr(current_api >= avx512)
         {

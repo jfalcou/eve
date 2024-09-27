@@ -20,7 +20,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-   if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
+   if constexpr(floating_value<T> && !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(current_api >= avx512)
       {
