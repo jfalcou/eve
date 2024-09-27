@@ -12,8 +12,11 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/add.hpp>
+#include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
+#include <eve/module/core/constant/one.hpp>
 
 namespace eve
 {
@@ -101,7 +104,7 @@ namespace eve
       using elt_t = element_type_t<T>;
       if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
       {
-        return add[o](one(eve::as<T>()), -v);
+        return add[o](one(eve::as<T>()), minus(v));
       }
       else
       {
