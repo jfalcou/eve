@@ -9,8 +9,7 @@
 
 #include <eve/detail/kumi.hpp>
 
-#include <eve/traits/value_type.hpp>
-
+#include <eve/memory/pointer.hpp>
 #include <concepts>
 #include <compare>
 
@@ -31,7 +30,7 @@ namespace eve
   template <typename ... Ptrs>
   struct soa_ptr
   {
-    using value_type = kumi::tuple<value_type_t<Ptrs>...>;
+    using value_type = kumi::tuple<typename pointer_traits<Ptrs>::value_type...>;
     using tuple_type = kumi::tuple<Ptrs...>;
 
     // product type
