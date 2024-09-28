@@ -1,6 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
@@ -27,4 +28,8 @@ int main()
   std::cout << "-> rec[wi0 != 0](wi0)       = " << eve::rec[wi0 != 0](wi0) << "\n";
   std::cout << "-> rec[raw](wi0)            = " << eve::rec[eve::raw](wi0) << "\n";
   std::cout << "-> rec[pedantic](wi0)       = " << eve::rec[eve::pedantic](wi0) << "\n";
+  std::cout << std::setprecision(20) << "-> rec[lower](wf1)         = " << eve::rec[eve::lower](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> rec[upper](wf1)         = " << eve::rec[eve::upper](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> rec[lower][strict](wf0)   = " << eve::rec[eve::lower][eve::strict](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> rec[upper][strict](wf0)   = " << eve::rec[eve::upper][eve::strict](wf0) << "\n";
 }

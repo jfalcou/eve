@@ -54,9 +54,10 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[cond](wide)",
   TTS_EQUAL(eve::inc[z](a0), map([&](auto e) -> v_t { return v_t((z) ? e + 1 : e); }, a0));
   if constexpr(eve::floating_value<T>)
   {
-    auto m = eve::smallestposval(eve::as<T>());
-    TTS_EXPECT(eve::all(eve::inc[eve::lower](-m) < eve::inc(-m)));
-    TTS_EXPECT(eve::all(eve::inc[eve::upper](m) > eve::inc(m)));
+    TTS_EXPECT(eve::all(eve::dec[eve::lower](a0) <= eve::inc(a0)));
+    TTS_EXPECT(eve::all(eve::inc[eve::upper](a0) >= eve::inc(a0)));
+    TTS_EXPECT(eve::all(eve::inc[eve::lower][eve::strict](a0) < eve::inc(a0)));
+    TTS_EXPECT(eve::all(eve::inc[eve::upper][eve::strict](a0) > eve::inc(a0)));
   }
 };
 

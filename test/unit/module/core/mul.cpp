@@ -77,6 +77,7 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   using eve::saturated;
   using eve::lower;
   using eve::upper;
+  using eve::strict;
   using eve::detail::map;
   TTS_ULP_EQUAL(mul(a0, a2), map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL(mul[saturated](a0, a2), map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
@@ -93,8 +94,12 @@ TTS_CASE_WITH("Check behavior of mul on wide",
     TTS_EXPECT(eve::all(mul[upper](a0, a1, a2) >=  mul[lower](a0, a1, a2)));
     T  w0{0.1};
     T  w1{0.12f};
-    TTS_EXPECT(eve::all(mul[upper](w0, w1) >   mul(w0, w1)));
-    TTS_EXPECT(eve::all(mul[lower](-w0, -w1) <  mul(w0, w1)));
+    TTS_EXPECT(eve::all(mul[upper](w0, w1)  >  mul(w0, w1)));
+    TTS_EXPECT(eve::all(mul[lower](w0, -w1) < mul(w0, -w1)));
+    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >  mul(w0, w1)));
+    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <  mul(w0, -w1)));
+    TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >= mul[upper](w0, w1)));
+    TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <= mul[lower](w0, -w1)));
   }
 };
 

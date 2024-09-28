@@ -77,6 +77,7 @@ TTS_CASE_WITH("Check behavior of div on wide",
   using eve::saturated;
   using eve::upper;
   using eve::lower;
+  using eve::strict;
   using eve::detail::map;
   TTS_ULP_EQUAL(eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
   TTS_ULP_EQUAL(eve::div[saturated](a0, a2), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
@@ -94,8 +95,12 @@ TTS_CASE_WITH("Check behavior of div on wide",
     TTS_EXPECT(eve::all(div[upper](a0, a1)     >=  div[lower](a0, a1)));
     T w0(T(0.12345));
     T w1(T(0.126789));
-    TTS_EXPECT(eve::all(div[upper](w0, w1) >= div(w0, w1)));
-    TTS_EXPECT(eve::all(div[lower](w0, w1) <= div(w0, w1)));
+    TTS_EXPECT(eve::all(div[upper](w0, w1)  >=  div(w0, w1)));
+    TTS_EXPECT(eve::all(div[lower](w0, -w1) <= div(w0, -w1)));
+    TTS_EXPECT(eve::all(div[strict][upper](w0, w1)  >  div(w0, w1)));
+    TTS_EXPECT(eve::all(div[strict][lower](w0, -w1) <  div(w0, -w1)));
+    TTS_EXPECT(eve::all(div[strict][upper](w0, w1)  >= div(w0, w1)));
+    TTS_EXPECT(eve::all(div[strict][lower](w0, -w1) <= div(w0, -w1)));
   }
 };
 

@@ -25,7 +25,6 @@
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
@@ -34,10 +33,13 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      using namespace spy::literal;
-      if constexpr(enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O> (eve::mul, a, b);
+        auto r = mul[opts.drop(lower, upper, strict)](a, b);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {

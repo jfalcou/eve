@@ -21,27 +21,30 @@
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
-#include <eve/module/core/detail/roundings.hpp>
 
 namespace eve::detail
 {
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
-      if constexpr(enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O>(eve::add, a, b);
+        auto r = add[o.drop(lower, upper, strict)](a, b);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {
-       auto [r, e] = eve::two_add(a, b);
-       if constexpr(O::contains(lower))
-         return eve::prev[eve::is_ltz(e)](r);
-       else
-         return eve::next[eve::is_gtz(e)](r);
+        auto [r, e] = eve::two_add(a, b);
+        if constexpr(O::contains(lower))
+          return eve::prev[eve::is_ltz(e)](r);
+        else
+          return eve::next[eve::is_gtz(e)](r);
       }
     }
     else if constexpr(O::contains(saturated) && integral_value<T>)
@@ -83,8 +86,8 @@ namespace eve::detail
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-      r0   = add[o](r0,r1);
-      ((r0 = add[o](r0,rs)),...);
-      return r0;
+    r0   = add[o](r0,r1);
+    ((r0 = add[o](r0,rs)),...);
+    return r0;
   }
 }

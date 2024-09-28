@@ -30,4 +30,6 @@ int main()
   std::cout << std::setprecision(20) << "-> add(wf0, wf1)          = " << eve::add(wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[lower](wf0, wf1)   = " << eve::add[eve::lower](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[upper](wf0, wf1)   = " << eve::add[eve::upper](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[lower][strict](wf0, wf1)   = " << eve::add[eve::lower][eve::strict](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> add[upper][strict](wf0, wf1)   = " << eve::add[eve::upper][eve::strict](wf0, wf1) << "\n";
 }

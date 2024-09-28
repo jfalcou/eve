@@ -24,4 +24,6 @@ int main()
   std::cout << "-> average[lower](wi0, wi1)          = " << eve::average[eve::lower](wi0, wi1) << "\n";
   std::cout << std::setprecision(20) << "-> average[upper](wf0, wf1)          = " << eve::average[eve::upper](wf0, wf1) << "\n";
   std::cout << "-> average[lower](wf0, wf1)          = " << eve::average[eve::lower](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> average[lower][strict](wf0, wf1)   = " << eve::average[eve::lower][eve::strict](wf0, wf1) << "\n";
+  std::cout << std::setprecision(20) << "-> average[upper][strict](wf0, wf1)   = " << eve::average[eve::upper][eve::strict](wf0, wf1) << "\n";
 }

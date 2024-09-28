@@ -37,8 +37,6 @@
 #include <eve/module/core/regular/round.hpp>
 #include <eve/module/core/regular/fms.hpp>
 #include <eve/module/core/regular/shr.hpp>
-#include <eve/module/core/detail/roundings.hpp>
-
 
 #ifdef EVE_COMP_IS_MSVC
 #  pragma warning(push)
@@ -53,24 +51,25 @@ namespace eve::detail
   {
     if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
     {
-      using namespace spy::literal;
-      if constexpr(enable_roundings)
+      if constexpr(O::contains(strict))
       {
-        return with_rounding<O> (eve::div, a, b);
+        auto r = div[o.drop(lower, upper, strict)](a, b);
+        if constexpr(O::contains(lower))
+          return prev(r);
+        else
+          return next(r);
       }
       else
       {
         auto negb = is_negative(b);
         b = if_else(negb, -b, b);
         a = if_else(negb, -a, a);
-        auto d = div(a, b);
+        auto d = div[o.drop(lower, upper)](a, b);
         auto [r, e] = two_prod(d, b);
         if constexpr(O::contains(upper))
-        {
           return next[r < a || ((r ==  a) && is_ltz(e))](d);
-        }
         else
-          return prev[r > a || ((r ==  a) && is_gtz(e))](d);
+          return prev[r > a || ((r ==  a) && is_ltz(e))](d);
       }
     }
     else if constexpr(O::contains(saturated))
@@ -225,7 +224,7 @@ namespace eve::detail
     auto that = r1;
     if (O::contains(upper))  that = mul[lower](r1, rs...);
     else if  (O::contains(lower))  that = mul[upper](r1, rs...);
-    else that = mul(r1, rs...);
+    else that = mul[o](r1, rs...);
     if constexpr(std::is_integral_v<eve::element_type_t<T>>)
       EVE_ASSERT(eve::all(is_nez(that)), "[eve] div - 0/0 is undefined");
     return div[o](r0,that);

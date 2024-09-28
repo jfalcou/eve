@@ -25,6 +25,8 @@ int main()
   std::cout << "-> inc[ignore_last(2)](wi0) = " << eve::inc[eve::ignore_last(2)](wi0) << "\n";
   std::cout << "-> inc[wi0 != 0](wi0)       = " << eve::inc[wi0 != 0](wi0) << "\n";
   std::cout << "-> inc[saturated](wi0)      = " << eve::inc[eve::saturated](wi0) << "\n";
-  std::cout << std::setprecision(20) << "-> inc[lower](wf1)         = " << eve::inc[eve::lower](wf0) << "\n";
-  std::cout << std::setprecision(20) << "-> inc[upper](wf1)         = " << eve::inc[eve::upper](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> inc[lower](wf0)         = " << eve::inc[eve::lower](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> inc[upper](wf0)         = " << eve::inc[eve::upper](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> inc[lower][strict](wf0)   = " << eve::inc[eve::lower][eve::strict](wf0) << "\n";
+  std::cout << std::setprecision(20) << "-> inc[upper][strict](wf0)   = " << eve::inc[eve::upper][eve::strict](wf0) << "\n";
 }
