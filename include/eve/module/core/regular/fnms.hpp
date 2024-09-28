@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/minus.hpp>
+#include <iostream>
 
 namespace eve
 {
@@ -93,7 +94,11 @@ namespace eve
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fnms_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
-      return minus(fma[o](a, b, c));
+      if constexpr(O::contains(upper) || O::contains(lower))
+      {
+        return fma[o](a, minus(b), minus(c));
+      }
+      else return minus(fma[o](a, b, c));
     }
 
   }
