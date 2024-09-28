@@ -38,14 +38,19 @@ namespace eve
     template<typename Options>
     struct slice_callable_t : callable<slice_callable_t, Options>
     {
+      template<typename W> struct result
+      {
+        using type = typename W::template rescale<typename W::cardinal_type::split_type>;
+      };
+
       template<typename W>
-      EVE_FORCEINLINE constexpr auto operator()(W v) const noexcept
+      EVE_FORCEINLINE constexpr std::array<typename result<W>::type,2> operator()(W v) const noexcept
       {
         return EVE_DISPATCH_CALL(v);
       }
 
       template<typename W, std::size_t Slice>
-      EVE_FORCEINLINE constexpr auto operator()(W v, slice_t<Slice> s) const noexcept
+      EVE_FORCEINLINE constexpr typename result<W>::type operator()(W v, slice_t<Slice> s) const noexcept
       {
         return EVE_DISPATCH_CALL(v, s);
       }
