@@ -21,7 +21,8 @@
 namespace eve
 {
  template<typename Options>
-  struct dist_t : elementwise_callable<dist_t, Options, saturated_option,  pedantic_option>
+  struct dist_t : elementwise_callable<dist_t, Options, saturated_option,  pedantic_option,
+                                       upper_option, lower_option,  strict_option>
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -89,9 +90,9 @@ namespace eve
   namespace detail
   {
     template<value T, callable_options O>
-    constexpr T dist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
+    constexpr T dist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
     {
-      T d = eve::max(a, b) - eve::min(a, b);
+      T d = sub[o](eve::max(a, b), eve::min(a, b));
       if constexpr(O::contains(saturated) && signed_integral_value<T>)
         return if_else(is_ltz(d), valmax(eve::as(d)), d);
       else if constexpr(O::contains(pedantic) && floating_value<T>)

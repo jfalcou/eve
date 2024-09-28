@@ -11,7 +11,7 @@
 #include <algorithm>
 
 //==================================================================================================
-// Types tests
+//== Types tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of fnma", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
@@ -38,7 +38,7 @@ TTS_CASE_TPL("Check return types of fnma", eve::test::simd::all_types)
 };
 
 //==================================================================================================
-// fnma tests
+//== fnma tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -64,7 +64,31 @@ TTS_CASE_WITH("Check precision behavior of fnma on real types",
 };
 
 //==================================================================================================
-// fnma full range tests
+//== fnma upper lower tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of fnma[promote] on all types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000))
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2 )
+{
+  using eve::as;
+  using eve::fnma;
+  using eve::lower;
+  using eve::upper;
+  using eve::strict;
+  TTS_EXPECT(eve::all(fnma[upper](a0, a1, a2) >= fnma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fnma[lower](a0, a1, a2) <= fnma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fnma[upper][strict](a0, a1, a2) > fnma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fnma[lower][strict](a0, a1, a2) < fnma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fnma[strict][upper](a0, a1, a2) >= fnma[upper](a0, a1, a2)));
+  TTS_EXPECT(eve::all(fnma[strict][lower](a0, a1, a2) <= fnma[lower](a0, a1, a2)));
+};
+
+//==================================================================================================
+//== fnma full range tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fnma on all types full range",
               eve::test::simd::all_types,
@@ -102,46 +126,46 @@ TTS_CASE_WITH("Check behavior of fnma on all types full range",
  };
 
 //==================================================================================================
-// fnma promote tests
+//== fnma promote tests
 //==================================================================================================
-// TTS_CASE_WITH("Check behavior of promote(fnma) on all types",
-//               eve::test::simd::all_types,
-//               tts::generate(tts::randoms(eve::valmin, eve::valmax),
-//                             tts::randoms(eve::valmin, eve::valmax)))
-// <typename T>(T const& a0, T const& a1 )
-// {
-//   using eve::as;
-//   using eve::fnma;
-//   using eve::promote;
-//   using eve::detail::map;
+TTS_CASE_WITH("Check behavior of promote(fnma) on all types",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1 )
+{
+  using eve::as;
+  using eve::fnma;
+  using eve::promote;
+  using eve::detail::map;
 
-//   constexpr int N = eve::cardinal_v<T>;
-//   eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
-//   auto r1 = fnma[eve::promote](a0, a1, fa);
-//   using er1_t =  eve::element_type_t<decltype(r1)>;
-//   auto refr1 = eve::fnma(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
-//   TTS_ULP_EQUAL(r1,  refr1, 2.0);
+  constexpr int N = eve::cardinal_v<T>;
+  eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });
+  auto r1 = fnma[eve::promote](a0, a1, fa);
+  using er1_t =  eve::element_type_t<decltype(r1)>;
+  auto refr1 = eve::fnma(eve::convert(a0, eve::as<er1_t>()), eve::convert(a1, eve::as<er1_t>()), eve::convert(fa, eve::as<er1_t>()));
+  TTS_ULP_EQUAL(r1,  refr1, 2.0);
 
-//   eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
-//   auto r2 = fnma[eve::promote](a0, da, a1);
-//   using er2_t =  eve::element_type_t<decltype(r2)>;
-//   auto refr2 = eve::fnma(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
-//   TTS_ULP_EQUAL(r2,  refr2, 0.5);
+  eve::wide<double, eve::fixed<N>> da([](auto i,  auto){return double(i)/3; });
+  auto r2 = fnma[eve::promote](a0, da, a1);
+  using er2_t =  eve::element_type_t<decltype(r2)>;
+  auto refr2 = eve::fnma(eve::convert(a0, eve::as<er2_t>()), eve::convert(da, eve::as<er2_t>()), eve::convert(a1, eve::as<er2_t>()));
+  TTS_ULP_EQUAL(r2,  refr2, 0.5);
 
-//   eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
-//   auto r3 = fnma[eve::promote](ia, a0, a1);
-//   using er3_t =  eve::element_type_t<decltype(r3)>;
-//   auto refr3 = eve::fnma(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));
-//   TTS_ULP_EQUAL(r3,  refr3, 0.5);
+  eve::wide<int, eve::fixed<N>> ia([](auto i,  auto){return int(i); });
+  auto r3 = fnma[eve::promote](ia, a0, a1);
+  using er3_t =  eve::element_type_t<decltype(r3)>;
+  auto refr3 = eve::fnma(eve::convert(ia, eve::as<er3_t>()), eve::convert(a0, eve::as<er3_t>()), eve::convert(a1, eve::as<er3_t>()));
+  TTS_ULP_EQUAL(r3,  refr3, 0.5);
 
-//   auto r4 = fnma[eve::promote](ia, da, a1);
-//   using er4_t =  eve::element_type_t<decltype(r4)>;
-//   auto refr4= eve::fnma(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
-//   TTS_ULP_EQUAL(r4,  refr4, 0.5);
-// };
+  auto r4 = fnma[eve::promote](ia, da, a1);
+  using er4_t =  eve::element_type_t<decltype(r4)>;
+  auto refr4= eve::fnma(eve::convert(ia, eve::as<er4_t>()), eve::convert(da, eve::as<er4_t>()), eve::convert(a1, eve::as<er4_t>()));
+  TTS_ULP_EQUAL(r4,  refr4, 0.5);
+};
 
 //==================================================================================================
-// fnma masked
+//== fnma masked
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of masked fnma on all types full range",
               eve::test::simd::all_types,

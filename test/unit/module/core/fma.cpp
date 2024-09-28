@@ -80,6 +80,32 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
 };
 
 //==================================================================================================
+// fma upper lower tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of fma[promote] on all types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000))
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2 )
+{
+  using eve::as;
+  using eve::fma;
+  using eve::promote;
+  using eve::detail::map;
+  using eve::lower;
+  using eve::upper;
+  using eve::strict;
+  TTS_EXPECT(eve::all(fma[upper](a0, a1, a2) >= fma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fma[lower](a0, a1, a2) <= fma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fma[upper][strict](a0, a1, a2) > fma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fma[lower][strict](a0, a1, a2) < fma(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fma[strict][upper](a0, a1, a2) >= fma[upper](a0, a1, a2)));
+  TTS_EXPECT(eve::all(fma[strict][lower](a0, a1, a2) <= fma[lower](a0, a1, a2)));
+};
+
+//==================================================================================================
 // fma promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fma[promote] on all types",

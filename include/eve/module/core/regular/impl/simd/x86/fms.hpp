@@ -26,9 +26,35 @@ namespace eve::detail
                                   wide<T, N> const  &c) noexcept
   requires x86_abi<abi_t<T, N>>
   {
+    constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fms.behavior(cpu_{}, opts, a, b, c);
-    // PEDANTIC ---
+    // UPPER LOWER  ----
+    else if constexpr(O::contains(lower) || O::contains(upper))
+    {
+      if(!O::contains(strict))
+      {
+        if constexpr(current_api >= avx512)
+        {
+          auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          if      constexpr  ( cat == category::float64x8  ) return  _mm512_fmsub_round_pd (a, b, c, dir);
+          else if constexpr  ( cat == category::float32x16 ) return  _mm512_fmsub_round_ps (a, b, c, dir);
+          else if constexpr  ( cat == category::float64x4 ||  cat == category::float64x2 ||
+                               cat == category::float32x8 ||  cat == category::float32x4 || cat == category::float32x2)
+          {
+            auto aa = eve::combine(a, a);
+            auto bb = eve::combine(b, b);
+            auto cc = eve::combine(c, c);
+            auto aabbcc = fms(aa, bb, cc);
+            return  slice(aabbcc, eve::upper_);
+          }
+          else                                             return fma.behavior(cpu_{}, opts, a, b, c);
+        }
+        else                                               return fma.behavior(cpu_{}, opts, a, b, c);
+      }
+      else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
+    }
+   // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
     {
       if constexpr( supports_fma3 ) return fms(a, b, c);
@@ -38,8 +64,6 @@ namespace eve::detail
     // we don't care about PROMOTE as we only accept similar types.
     else
     {
-      constexpr auto cat = categorize<wide<T, N>>();
-
       if      constexpr( cat == category::float64x8 )  return _mm512_fmsub_pd(a, b, c);
       else if constexpr( cat == category::float32x16 ) return _mm512_fmsub_ps(a, b, c);
       else if constexpr( supports_fma3 )
@@ -65,7 +89,7 @@ namespace eve::detail
   requires x86_abi<abi_t<T, N>>
   {
     // NOTE: As those masked version are at the AVX512 level, they will always uses a variant of
-    // hardware VMADD, thus ensuring the pedantic behavior by default, hence why we don't care about
+    // hardware VMSUB, thus ensuring the pedantic behavior by default, hence why we don't care about
     // PEDANTIC. As usual, we don't care about PROMOTE as we only accept similar types.
 
     if      constexpr( C::is_complete )            return alternative(mask, v, as(v));

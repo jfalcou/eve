@@ -26,7 +26,7 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
     if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
-    // PEDANTIC ---
+    // UPPER LOWER  ----
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
       if(!O::contains(strict))
@@ -45,12 +45,13 @@ namespace eve::detail
             auto aabbcc = fma(aa, bb, cc);
             return  slice(aabbcc, eve::upper_);
           }
-          else                                             return  fma.behavior(cpu_{}, opts, a, b, c);
+          else                                             return fma.behavior(cpu_{}, opts, a, b, c);
         }
         else                                               return fma.behavior(cpu_{}, opts, a, b, c);
       }
       else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
     }
+    // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
     {
       if constexpr( supports_fma3 ) return fma(a, b, c);
@@ -97,6 +98,7 @@ namespace eve::detail
 
       // Integral don't do anything special ----
       if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
+      // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
         if constexpr(!O::contains(strict))

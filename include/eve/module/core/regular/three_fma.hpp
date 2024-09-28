@@ -11,7 +11,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/fast_two_add.hpp>
-#include <eve/module/core/regular/two_prod.hpp>
 
 
 namespace eve
@@ -74,7 +73,12 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+}
 
+#include <eve/module/core/regular/two_prod.hpp>
+
+namespace eve
+{
   namespace detail
   {
     template<typename T, callable_options O>

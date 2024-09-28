@@ -14,9 +14,9 @@ namespace eve::detail
 {
   template<typename T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fsnm_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
+  EVE_FORCEINLINE wide<T, N> fsnm_(EVE_REQUIRES(sve_), O const& o, wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
   {
-    return -fam(a, b, c);
+    return -fam[o](a, b, c);
   }
 
   template<conditional_expr C, typename T, typename N, callable_options O>

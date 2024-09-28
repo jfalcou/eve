@@ -1,6 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
@@ -23,7 +24,7 @@ int main()
   std::cout << "<- wu0                                = " << wu0 << "\n";
   std::cout << "<- wu1                                = " << wu1 << "\n";
   std::cout << "<- wu2                                = " << wu2 << "\n";
-                                                      
+
   std::cout << "-> fam(wf0, wf1, wf2)                 = " << eve::fam(wf0, wf1, wf2) << "\n";
   std::cout << "-> fam[ignore_last(2)](wf0, wf1, wf2) = " << eve::fam[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
   std::cout << "-> fam[wf0 != 0](wf0, wf1, wf2)       = " << eve::fam[wf0 != 0](wf0, wf1, wf2) << "\n";
@@ -39,4 +40,10 @@ int main()
   std::cout << "-> fam[wi0 != 0](wi0, wi1, wi2)       = " << eve::fam[wi0 != 0](wi0, wi1, wi2) << "\n";
   std::cout << "-> fam[pedantic](wi0, wi1, wi2)       = " << eve::fam[eve::pedantic](wi0, wi1, wi2) << "\n";
   std::cout << "-> fam[promote](wi0, wi1, wi2)        = " << eve::fam[eve::promote](wi0, wi1, wi2) << "\n";
+
+  std::cout << std::setprecision(20) << "-> fam(wf0, wf1, wf2)          = " << eve::fam(wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fam[lower](wf0, wf1, wf2)   = " << eve::fam[eve::lower](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fam[upper](wf0, wf1, wf2)   = " << eve::fam[eve::upper](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fam[lower][strict](wf0, wf1, wf2)   = " << eve::fam[eve::lower][eve::strict](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fam[upper][strict](wf0, wf1, wf2)   = " << eve::fam[eve::upper][eve::strict](wf0, wf1, wf2) << "\n";
 }
