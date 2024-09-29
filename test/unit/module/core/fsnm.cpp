@@ -92,7 +92,6 @@ TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
 {
   using eve::as;
   using eve::fsnm;
-  using eve::promote;
   using eve::detail::map;
   using eve::lower;
   using eve::upper;

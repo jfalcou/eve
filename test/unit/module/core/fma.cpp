@@ -92,7 +92,6 @@ TTS_CASE_WITH("Check behavior of fma[promote] on all types",
 {
   using eve::as;
   using eve::fma;
-  using eve::promote;
   using eve::detail::map;
   using eve::lower;
   using eve::upper;

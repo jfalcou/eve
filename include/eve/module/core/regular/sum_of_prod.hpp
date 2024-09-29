@@ -18,7 +18,8 @@
 namespace eve
 {
   template<typename Options>
-  struct sum_of_prod_t : elementwise_callable<sum_of_prod_t, Options, raw_option, pedantic_option>
+  struct sum_of_prod_t : elementwise_callable<sum_of_prod_t, Options, raw_option, pedantic_option,
+                                               upper_option, lower_option, strict_option>
   {
     template<value T,  value U, value V,  value W>
     requires(eve::same_lanes_or_scalar<T, U, V, W>)
@@ -100,7 +101,7 @@ namespace eve
       {
         auto err = fms[o](c, d, cd);
         auto dop = fma[o](a, b, cd);
-        return add[is_finite(err)](dop, err);
+        return add[o][is_finite(err)](dop, err);
       }
     }
   }

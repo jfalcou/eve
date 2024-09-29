@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <cfenv>
 #include <eve/concept/value.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
@@ -24,6 +23,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/saturate.hpp>
 #include <eve/module/core/regular/add.hpp>
+#include <iostream>
 
 namespace eve::detail
 {
