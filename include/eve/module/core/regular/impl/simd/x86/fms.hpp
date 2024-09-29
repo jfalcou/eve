@@ -45,7 +45,7 @@ namespace eve::detail
             auto aa = eve::combine(a, a);
             auto bb = eve::combine(b, b);
             auto cc = eve::combine(c, c);
-            auto aabbcc = fms(aa, bb, cc);
+            auto aabbcc = fms[opts](aa, bb, cc);
             return  slice(aabbcc, eve::upper_);
           }
           else                                             return fma.behavior(cpu_{}, opts, a, b, c);
