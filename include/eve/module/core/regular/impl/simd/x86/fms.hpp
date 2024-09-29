@@ -48,11 +48,11 @@ namespace eve::detail
             auto aabbcc = fms[opts](aa, bb, cc);
             return  slice(aabbcc, eve::upper_);
           }
-          else                                             return fma.behavior(cpu_{}, opts, a, b, c);
+          else                                             return fms.behavior(cpu_{}, opts, a, b, c);
         }
-        else                                               return fma.behavior(cpu_{}, opts, a, b, c);
+        else                                               return fms.behavior(cpu_{}, opts, a, b, c);
       }
-      else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
+      else                                                 return fms.behavior(cpu_{}, opts, a, b, c);
     }
    // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
