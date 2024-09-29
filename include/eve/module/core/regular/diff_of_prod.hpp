@@ -18,8 +18,7 @@
 namespace eve
 {
   template<typename Options>
-  struct diff_of_prod_t : elementwise_callable<diff_of_prod_t, Options, raw_option, pedantic_option,
-                                               upper_option, lower_option, strict_option>
+  struct diff_of_prod_t : elementwise_callable<diff_of_prod_t, Options, raw_option, pedantic_option>
   {
     template<value T,  value U, value V,  value W>
     requires(eve::same_lanes_or_scalar<T, U, V, W>)
@@ -93,13 +92,14 @@ namespace eve
                   T const &a,  T const &b,
                   T const &c,  T const &d) noexcept
     {
-      auto cd =  c*d;
       if constexpr(O::contains(raw))
       {
-        return fms(a, b, cd);
+       T cd =  mul(c, d);
+       return fms(a, b, cd);
       }
       else
       {
+        auto cd = mul[o](c, d);
         auto err = fnma[o](c, d, cd);
         auto dop = fms[o](a, b, cd);
         return add[o][is_finite(err)](dop, err);

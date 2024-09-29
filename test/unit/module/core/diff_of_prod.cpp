@@ -66,29 +66,3 @@ TTS_CASE_TPL( "Check diff_of_prod", eve::test::scalar::ieee_reals)
   TTS_EQUAL(pdop(i1,  f1, d1, we1), test( i1, f1, d1, we1));
   TTS_EQUAL(pdop(we1, i1,  f1, d1), test(we1, i1, f1, d1));
 };
-
-//==================================================================================================
-// diff_of_prod upper lower tests
-//==================================================================================================
-TTS_CASE_WITH("Check behavior of diff_of_prod lower upper on real types",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000),
-                            tts::randoms(-1000, 1000))
-             )
-  <typename T>(T const& a0, T const& a1, T const& a2 , T const& a3 )
-{
-  using eve::as;
-  using eve::fma;
-  using eve::diff_of_prod;
-  using eve::lower;
-  using eve::upper;
-  using eve::strict;
-  TTS_EXPECT(eve::all(diff_of_prod[upper](a0, a1, a2, a3) >= diff_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(diff_of_prod[lower](a0, a1, a2, a3) <= diff_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(diff_of_prod[upper][strict](a0, a1, a2, a3) > diff_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(diff_of_prod[lower][strict](a0, a1, a2, a3) < diff_of_prod(a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(diff_of_prod[strict][upper](a0, a1, a2, a3) >= diff_of_prod[upper](a0, a1, a2, a3)));
-  TTS_EXPECT(eve::all(diff_of_prod[strict][lower](a0, a1, a2, a3) <= diff_of_prod[lower](a0, a1, a2, a3)));
-};
