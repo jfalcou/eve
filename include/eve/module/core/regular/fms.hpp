@@ -14,7 +14,7 @@
 namespace eve
 {
   template<typename Options>
-  struct fms_t : strict_elementwise_callable<fms_t, Options, pedantic_option, promote_option, 
+  struct fms_t : strict_elementwise_callable<fms_t, Options, pedantic_option, promote_option,
                                              upper_option, lower_option, strict_option>
   {
     template<eve::value T,eve::value U,eve::value V>
@@ -85,6 +85,10 @@ namespace eve
 
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/fms.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_POWERPC_HEADER)
+#  include <eve/module/core/regular/impl/simd/ppc/fms.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_SVE_HEADER)
