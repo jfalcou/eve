@@ -18,7 +18,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sve_),O const& o,wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
   {
     if constexpr(O::contains(lower) || O::contains(upper))
-      return fnma.behavior(cpu_{}, opts, a, b, c);
+      return fnma.behavior(cpu_{}, o, a, b, c);
     else
       // We don't care about PEDANTIC as this is a proper FMA.
       // We don't care about PROMOTE as we only accept similar types.
@@ -30,7 +30,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> fnma_(EVE_REQUIRES(sve_), C cond, O const&o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     if constexpr(O::contains(lower) || O::contains(upper))
-      return fnma.behavior(cpu_{}, opts, a, b, c);
+      return fnma.behavior(cpu_{}, o, a, b, c);
     else
     {
       // We don't care about PEDANTIC as this is a proper FMA.
