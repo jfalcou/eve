@@ -16,7 +16,7 @@ namespace eve::detail
   requires sve_abi<abi_t<T, N>>
   EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_), O const&, wide<T, N> a, wide<T, N> b,wide<T, N> c) noexcept
   {
-    return -fanm(a, b, c);
+    return fms(b, c, -a);
   }
 
   template<conditional_expr C, typename T, typename N, callable_options O>

@@ -118,7 +118,7 @@ namespace eve::detail
         constexpr auto tgt = as<as_integer_t<T, unsigned>>{};
         return bit_cast(fms(bit_cast(a,tgt), bit_cast(b,tgt), bit_cast(c,tgt)), as<T>());
       }
-      else  return fms(a, b, c);
+      else  return fma(a, b, -c);
     }
     // REGULAR ---------------------
     else  return a * b - c;
