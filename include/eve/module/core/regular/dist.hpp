@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/inf.hpp>
-#include <iostream>
+
 namespace eve
 {
  template<typename Options>
