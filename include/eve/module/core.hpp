@@ -48,6 +48,74 @@
 //! @ingroup core
 //! Core semantic modifiers
 //!
+//!  Many core function semantics can be modified using decorator(s). The complete description of their effects can be found in
+//!  the proper documentation page of each implied function.
+//!
+//!  They can be classified in the following way:
+//!   * general behaviour
+//!       - `raw`: indicates that the operation is performed to gain speed generally at the expanse of some accuracy
+//!           or/and proper treament of limting values.
+//!
+//!           Concerned functions are eve::average, eve::diff_of_prod, eve::exponent, eve::frac, eve::frexp, eve::ifrexp,
+//!           eve::mantissa, eve::modf, eve::next, eve::prev, eve::rec, eve::rsqrt, eve::sqrt, eve::sum_of_prod, eve::trunc,
+//!       - `numeric` : indicates that the operation will aim to ignore Nans as possible.
+//!
+//!           Concerned functions are eve::absmax, eve::absmin, eve::is_equal, eve::is_not_equal, eve::max, eve::maxabs,
+//!           eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::negabsmax, eve::negabsmin, eve::negmaxabs,
+//!           eve::negminabs,
+//!
+//!       - `pedantic` : indicates that the operation will aim to follow existing **C++** standard.
+//!
+//!          Concerned functions are eve::absmax, eve::absmin, eve::diff_of_prod, eve::dist, eve::fam, eve::fanm,
+//!          eve::fma, eve::fms, eve::fnma, eve::fnms, eve::frac, eve::frexp, eve::fsm, eve::fsnm, eve::ifrexp, eve::is_flint,
+//!          eve::is_negative, eve::is_not_flint, eve::is_not_infinite, eve::is_unit, eve::ldexp, eve::lerp, eve::manhattan, eve::max,
+//!          eve::maxabs, eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::modf, eve::negabsmax,
+//!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist, eve::rsqrt, eve::signnz, eve::sum_of_prod,
+//!
+//!   * integer roundings :
+//!
+//!     These decorators can be used with the functions
+//!     eve::div, eve::rem, eve::round with floating or integral arguments
+//!     to choose the rounding to integer mode
+//!
+//!     - `to_nearest`: troundint to nearest or even
+//!     - `downward`: rounding toward \f$-\infty\f$
+//!     - `upward`: rounding toward \f$+\infty\f$
+//!     - `toward_zero`: rounding toward zero
+//!
+//!     All these decorators can be used with the functions eve::div, eve::rem, eve::round.
+//!
+//!    * floating point roundings;
+//!
+//!      - `lower`: the computed result of the floating operation is less than the mathematical exact value
+//!      - `upper`: the computed result of the floating operation is greater than the mathematical exact value
+//!      - `strict`: combined with lower or upper option strict ensures that the inequalities obtained are strict.
+//!
+//!      These decorators can be used with the functions
+//!      eve::add, eve::average, eve::dec, eve::div, eve::fma,  eve::fms, eve::inc,
+//!      eve::mul, eve::oneminus, eve::rec, eve::sqr, eve::sqrt, eve::sub.
+//!
+//!      Also `lower` and `upper` (but not `strict`) can be used with all floating point constants.
+//!
+//!      Except for average with integral typed inputs these decocators have no impact on integer calls.
+//!
+//!     * Fuzzy
+//!
+//!       - `almost`: allows some laxity on the predicate result or the integer rounding direction
+//!       - `definitely`: impose some rigidity on the predicate result or the integer rounding direction
+//!
+//!       these two decorators can be used with the functions eve::ceil,  eve::floor, eve::frac, eve::modf, eve::trunc,
+//!       `almost` with the predicates eve::is_equal, eve::is_greater_equal, eve::is_less_equal, eve::is_not_greater, eve::is_not_less,
+//!       `definitely` with the predicates eve::is_not_equal, eve::is_not_greater_equal, ieve::s_not_less_equal, eve::is_greater, eve::is_less,
+//!
+//!      * saturation
+//!
+//!        - saturated: the operations are executed with saturation which avoids overflow.
+//!
+//!          This option can be used with eve::abs, eve::absmax, eve::absmin, eve::add, eve::bit_floor, eve::convert, eve::dec, eve::dist,
+//!          eve::div, eve::inc, eve::manhattan, eve::maxabs, eve::maxmag, eve::minabs, eve::minmag, eve::minus, eve::mul,
+//!          eve::negabsmax, eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::oneminus, eve::prev, eve::sqr, eve::sub
+//!
 //! @defgroup core_fma_family  Fused multiply add family
 //! @ingroup core
 //! These functions implements accurate versions of the operations
