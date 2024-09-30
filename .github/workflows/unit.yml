@@ -143,6 +143,7 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
           - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
@@ -168,14 +169,13 @@ jobs:
           ctest --output-on-failure -j 16 -R ^unit.arch.*.exe && ctest --output-on-failure -j 16 -R ^unit.meta.*.exe \
           && ctest --output-on-failure -j 16 -R ^unit.internals.*.exe && ctest --output-on-failure -j 16 -R ^unit.memory.*.exe
 
-  basic-arm:
+  basic-aarch64:
     runs-on: [macos-14]
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { comp: clang, arch: aarch64_osx}
-        - { comp: clang, arch: arm_osx    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -244,6 +244,7 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
           - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
@@ -268,15 +269,14 @@ jobs:
           cd build
           ctest --output-on-failure -j 16 -R ^unit.api.*.exe
 
-  api-arm:
-    needs: basic-arm
+  api-aarch64:
+    needs: basic-aarch64
     runs-on: [macos-14]
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { comp: clang, arch: aarch64_osx}
-        # - { comp: clang, arch: arm_osx    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -344,6 +344,7 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
           - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
@@ -368,15 +369,14 @@ jobs:
           cd build
           ctest --output-on-failure -j 16 -R ^unit.core.*.exe && ctest --output-on-failure -j 16 -R ^unit.maath.*.exe
 
-  core-math-arm:
-    needs: api-arm
+  core-math-aarch64:
+    needs: api-aarch64
     runs-on: [macos-14]
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { comp: clang, arch: aarch64_osx}
-        # - { comp: clang, arch: arm_osx    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
@@ -444,7 +444,6 @@ jobs:
           - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
-          - { comp: clang , arch: aarch64 , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
           - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
@@ -470,15 +469,14 @@ jobs:
           cd build
           ctest --output-on-failure -j 16 -R ^unit.algo.*.exe
 
-  algorithms-arm:
-    needs: core-math-arm
+  algorithms-aarch64:
+    needs: core-math-aarch64
     runs-on: [macos-14]
     strategy:
       fail-fast: false
       matrix:
         cfg:
         - { comp: clang, arch: aarch64_osx}
-        # - { comp: clang, arch: arm_osx    }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
