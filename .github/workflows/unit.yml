@@ -66,11 +66,7 @@ jobs:
           ctest --output-on-failure -j 4 -E ^doc.*.exe
 
   ######################################################################################################################
-  ## Partially Supproted Targets
-  ######################################################################################################################
-
-  ######################################################################################################################
-  ## RISC-V Targets
+  ## Partially Supported Targets
   ######################################################################################################################
   riscv:
     runs-on: ubuntu-latest
@@ -95,9 +91,6 @@ jobs:
       - name: Running Unit Tests
         run:  cd build && ctest --output-on-failure -j 4  -R "^unit.meta.*.exe|^unit.arch.*.exe|unit.core.bit_cast.exe"
 
-  ######################################################################################################################
-  ## Windows Targets
-  ######################################################################################################################
   msvc:
     runs-on: [windows-2022]
     strategy:
@@ -186,14 +179,14 @@ jobs:
       - name: Compiling Unit Tests for Basic Support Targets
         run:  |
           cd build
-          make unit.arch.exe unit.meta.exe unit.internals.exe unit.memory.exe -j 2
+          make unit.arch.exe unit.meta.exe unit.internals.exe unit.memory.exe -j 3
       - name: Running Unit Tests for Basic Support Targets
         run: |
           cd build
-          ctest --output-on-failure -j 4 -R ^unit.arch.*.exe && ctest --output-on-failure -j 4 -R ^unit.meta.*.exe \
-          && ctest --output-on-failure -j 4 -R ^unit.internals.*.exe && ctest --output-on-failure -j 4 -R ^unit.memory.*.exe
+          ctest --output-on-failure -j 3 -R ^unit.arch.*.exe && ctest --output-on-failure -j 3 -R ^unit.meta.*.exe \
+          && ctest --output-on-failure -j 3 -R ^unit.internals.*.exe && ctest --output-on-failure -j 3 -R ^unit.memory.*.exe
 
-  basic-special:
+  basic-other:
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -287,14 +280,14 @@ jobs:
       - name: Compiling Unit Tests for API Targets
         run:  |
           cd build
-          make unit.api.exe -j 2
+          make unit.api.exe -j 3
       - name: Running Unit Tests for API Targets
         run: |
           cd build
-          ctest --output-on-failure -j 4 -R ^unit.api.*.exe
+          ctest --output-on-failure -j 3 -R ^unit.api.*.exe
 
-  api-special:
-    needs: basic-special
+  api-other:
+    needs: basic-other
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -387,14 +380,14 @@ jobs:
       - name: Compiling Unit Tests for Core & Math Targets
         run:  |
           cd build
-          make unit.core.exe unit.math.exe -j 2
+          make unit.core.exe unit.math.exe -j 3
       - name: Running Unit Tests for Core & Math Targets
         run: |
           cd build
-          ctest --output-on-failure -j 4 -R ^unit.core.*.exe && ctest --output-on-failure -j 4 -R ^unit.maath.*.exe
+          ctest --output-on-failure -j 3 -R ^unit.core.*.exe && ctest --output-on-failure -j 4 -R ^unit.maath.*.exe
 
-  core-math-special:
-    needs: api-special
+  core-math-other:
+    needs: api-other
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -424,7 +417,7 @@ jobs:
       - name: Running Unit Tests for Core & Math Targets
         run: |
           cd build
-          ctest --output-on-failure -j 8 -R ^unit.core.*.exe && ctest --output-on-failure -j 16 -R ^unit.maath.*.exe
+          ctest --output-on-failure -j 8 -R ^unit.core.*.exe && ctest --output-on-failure -j 8 -R ^unit.maath.*.exe
 
   ##################################################################################################
   ## Check algo in bulk
@@ -487,14 +480,14 @@ jobs:
       - name: Compiling Unit Tests for Algorithms Targets
         run:  |
           cd build
-          make unit.algo.exe -j 2
+          make unit.algo.exe -j 3
       - name: Running Unit Tests for Algorithms Targets
         run: |
           cd build
-          ctest --output-on-failure -j 4 -R ^unit.algo.*.exe
+          ctest --output-on-failure -j 3 -R ^unit.algo.*.exe
 
-  algorithms-special:
-    needs: core-math-special
+  algorithms-other:
+    needs: core-math-other
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v7
@@ -524,4 +517,110 @@ jobs:
       - name: Running Unit Tests for Algorithms Targets
         run: |
           cd build
-          ctest --output-on-failure -j 16 -R ^unit.algo.*.exe
+          ctest --output-on-failure -j 4 -R ^unit.algo.*.exe
+
+  ##################################################################################################
+  ## bessel, combinatorial, elliptic, polynomial, special in bulk
+  ##################################################################################################
+  advanced-math-generic:
+    needs: algorithms-generic
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+          - { comp: clang , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
+          - { comp: clang , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: clang , arch: arm     , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: gcc   , arch: x86     , opts: -DEVE_NO_SIMD         , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: gcc   , arch: x86     , opts: -msse2                , pch: "-DEVE_USE_PCH=OFF"}
+          - { comp: gcc   , arch: x86     , opts: -msse4.2              , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: gcc   , arch: x86     , opts: -mavx                 , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: gcc   , arch: x86     , opts: -mavx2                , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: gcc   , arch: sve256  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
+          - { comp: gcc   , arch: sve512  , opts: -Wno-psabi            , pch: "-DEVE_USE_PCH=ON" }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" ${{ matrix.cfg.pch }}  \
+          -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for Basic Support Targets
+        run:  |
+          cd build
+          ninja unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe -j 16
+      - name: Running Unit Tests for Basic Support Targets
+        run: |
+          cd build
+          ctest --output-on-failure -j 16 -R ^unit.bessel.*.exe && ctest --output-on-failure -j 16 -R ^unit.combinatorial.*.exe   \
+          && ctest --output-on-failure -j 16 -R ^unit.elliptic.*.exe && ctest --output-on-failure -j 16 -R ^unit.polynomial.*.exe \
+          && ctest --output-on-failure -j 16 -R ^unit.special.*.exe
+
+  advanced-math-aarch64:
+    needs: algorithms-aarch64
+    runs-on: [macos-14]
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: aarch64_osx}
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }}
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for Basic Support Targets
+        run:  |
+          cd build
+          make unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe  -j 3
+      - name: Running Unit Tests for Basic Support Targets
+        run: |
+          cd build
+          ctest --output-on-failure    -j 3 -R ^unit.bessel.*.exe   && ctest --output-on-failure -j 3 -R ^unit.combinatorial.*.exe  \
+          && ctest --output-on-failure -j 3 -R ^unit.elliptic.*.exe && ctest --output-on-failure -j 3 -R ^unit.polynomial.*.exe     \
+          && ctest --output-on-failure -j 3 -R ^unit.special.*.exe
+
+  advanced-math-other:
+    needs: algorithms-other
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v7
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+          - { comp: clang       , arch: x86     , opts: -march=skylake-avx512                 }
+          - { comp: gcc         , arch: x86     , opts: -march=skylake-avx512                 }
+          - { comp: clang_libcpp, arch: x86     , opts: -msse2                                }
+          - { comp: clang       , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+          - { comp: gcc         , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+          - { comp: gcc         , arch: ppc64   , opts: -Wno-psabi                            }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v4.1.1
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+          -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests for Advanced Math Targets
+        run:  |
+          cd build
+          ninja unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe -j 4
+      - name: Running Unit Tests for Advanced Math Targets
+        run: |
+          cd build
+          ctest --output-on-failure    -j 4 -R ^unit.bessel.*.exe   && ctest --output-on-failure -j 4 -R ^unit.combinatorial.*.exe  \
+          && ctest --output-on-failure -j 4 -R ^unit.elliptic.*.exe && ctest --output-on-failure -j 4 -R ^unit.polynomial.*.exe     \
+          && ctest --output-on-failure -j 4 -R ^unit.special.*.exe
