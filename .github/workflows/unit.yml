@@ -132,30 +132,32 @@ jobs:
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v4.1.1
+      - name: Install Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }}
         run: |
           mkdir build && cd build
-          cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+          cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests for Basic Support Targets
         run:  |
           cd build
-          make unit.arch.exe unit.meta.exe unit.internals.exe unit.memory.exe -j 3
+          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.memory.exe -j 3
       - name: Compiling Unit Tests for API Targets
         run:  |
           cd build
-          make unit.api.exe -j 3
+          ninja unit.api.exe -j 3
       - name: Compiling Unit Tests for Core & Math Targets
         run:  |
           cd build
-          make unit.core.exe unit.math.exe -j 3
+          ninja unit.core.exe unit.math.exe -j 3
       - name: Compiling Unit Tests for Algorithms Targets
         run:  |
           cd build
-          make unit.algo.exe -j 3
+          ninja unit.algo.exe -j 3
       - name: Compiling Unit Tests for Basic Support Targets
         run:  |
           cd build
-          make unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe  -j 3
+          ninja unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe  -j 3
       - name: Running Unit Tests for Basic Support Targets
         run: |
           cd build
