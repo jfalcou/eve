@@ -156,9 +156,15 @@ TTS_CASE_WITH("Check behavior of masked fsnm on all types",
 {
   using eve::fsnm;
   using eve::if_;
+  using eve::lower;
 
   TTS_IEEE_EQUAL(fsnm[t](a0, a1, a2), eve::if_else(t, fsnm(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(fsnm[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fsnm(a0, a1, a2), 100));
   TTS_IEEE_EQUAL(fsnm[eve::ignore_all](a0, a1, a2), a0);
   TTS_IEEE_EQUAL(fsnm[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
+
+  TTS_IEEE_EQUAL(fsnm[t][lower](a0, a1, a2), eve::if_else(t, fsnm[lower](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fsnm[if_(t).else_(100)][lower](a0, a1, a2), eve::if_else(t, fsnm[lower](a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fsnm[eve::ignore_all][lower](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fsnm[eve::ignore_all.else_(42)][lower](a0, a1, a2), T{42});
 };
