@@ -158,6 +158,7 @@ TTS_CASE_WITH("Check behavior of masked fms on all types",
   using eve::fms;
   using eve::if_;
   using eve::lower;
+  using eve::strict;
 
   TTS_IEEE_EQUAL(fms[t](a0, a1, a2), eve::if_else(t, fms(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(fms[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fms(a0, a1, a2), 100));
@@ -168,4 +169,9 @@ TTS_CASE_WITH("Check behavior of masked fms on all types",
   TTS_IEEE_EQUAL(fms[if_(t).else_(100)][lower](a0, a1, a2), eve::if_else(t, fms[lower](a0, a1, a2), 100));
   TTS_IEEE_EQUAL(fms[eve::ignore_all][lower](a0, a1, a2), a0);
   TTS_IEEE_EQUAL(fms[eve::ignore_all.else_(42)][lower](a0, a1, a2), T{42});
+
+  TTS_IEEE_EQUAL(fms[t][lower][strict](a0, a1, a2), eve::if_else(t, fms[lower][strict](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fms[if_(t).else_(100)][lower][strict](a0, a1, a2), eve::if_else(t, fms[lower][strict](a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fms[eve::ignore_all][lower][strict](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fms[eve::ignore_all.else_(42)][lower][strict](a0, a1, a2), T{42});
 };

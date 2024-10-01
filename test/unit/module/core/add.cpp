@@ -12,56 +12,56 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-// TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
-// <typename T>(tts::type<T>)
-// {
-//   using v_t = eve::element_type_t<T>;
+TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
 
-//   // regular
-//   TTS_EXPR_IS(eve::add(T(), T()), T);
-//   TTS_EXPR_IS(eve::add(T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add(v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add(v_t(), v_t()), v_t);
+  // regular
+  TTS_EXPR_IS(eve::add(T(), T()), T);
+  TTS_EXPR_IS(eve::add(T(), v_t()), T);
+  TTS_EXPR_IS(eve::add(v_t(), T()), T);
+  TTS_EXPR_IS(eve::add(v_t(), v_t()), v_t);
 
-//   // saturated
-//   TTS_EXPR_IS(eve::add[eve::saturated](T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t()), v_t);
+  // saturated
+  TTS_EXPR_IS(eve::add[eve::saturated](T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t()), v_t);
 
-//   // conditionnal
-//   TTS_EXPR_IS(eve::add[eve::logical<T>()](T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::logical<T>()](T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::logical<T>()](v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::logical<v_t>()](T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::logical<v_t>()](T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::logical<v_t>()](v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<T>()](T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<T>()](T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](v_t(), v_t()), v_t);
+  // conditionnal
+  TTS_EXPR_IS(eve::add[eve::logical<T>()](T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::logical<T>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::logical<T>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::logical<v_t>()](T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::logical<v_t>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::logical<v_t>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<T>()](T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<T>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](v_t(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated][eve::logical<v_t>()](v_t(), v_t()), v_t);
 
-//   // multi
-//   TTS_EXPR_IS(eve::add(T(), T(), T()), T);
-//   TTS_EXPR_IS(eve::add(T(), v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add(v_t(), T(), T()), T);
-//   TTS_EXPR_IS(eve::add(T(), T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add(v_t(), v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add(v_t(), T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add(v_t(), v_t(), v_t()), v_t);
-//   TTS_EXPR_IS(eve::add(int(), std::int8_t(), T()), T);
-//   TTS_EXPR_IS(eve::add(int(), T(), int()), T);
+  // multi
+  TTS_EXPR_IS(eve::add(T(), T(), T()), T);
+  TTS_EXPR_IS(eve::add(T(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::add(v_t(), T(), T()), T);
+  TTS_EXPR_IS(eve::add(T(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::add(v_t(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::add(v_t(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::add(v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::add(int(), std::int8_t(), T()), T);
+  TTS_EXPR_IS(eve::add(int(), T(), int()), T);
 
-//   TTS_EXPR_IS(eve::add[eve::saturated](T(), T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](T(), v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](T(), T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t(), T()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T(), v_t()), T);
-//   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t(), v_t()), v_t);
-// };
+  TTS_EXPR_IS(eve::add[eve::saturated](T(), T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](T(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](T(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t(), T()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T(), v_t()), T);
+  TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t(), v_t()), v_t);
+};
 
 //==================================================================================================
 //==  add simd tests
@@ -150,4 +150,12 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::add)(eve::wide)",
             eve::if_else(mask, eve::add(a0, a1), a0));
   TTS_IEEE_EQUAL(eve::add[mask][eve::lower](a0, a1),
                  eve::if_else(mask, eve::add[eve::lower](a0, a1), a0));
+
+  using eve::lower;
+  using eve::if_;
+  TTS_IEEE_EQUAL(eve::add[mask][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), a0));
+  TTS_IEEE_EQUAL(eve::add[if_(mask).else_(100)][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), 100));
+  TTS_IEEE_EQUAL(eve::add[eve::ignore_all][lower](a0, a1), a0);
+  TTS_IEEE_EQUAL(eve::add[eve::ignore_all.else_(42)][lower](a0, a1), T{42});
+
 };
