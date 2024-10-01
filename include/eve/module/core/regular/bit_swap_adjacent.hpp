@@ -18,9 +18,11 @@ namespace eve
   template<typename Options>
   struct bit_swap_adjacent_t : strict_elementwise_callable<bit_swap_adjacent_t, Options>
   {
-    template<eve::unsigned_value T, integral_scalar_value I>
+    template<unsigned_value T, integral_scalar_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
-    { return EVE_DISPATCH_CALL(v, i); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v, i);
+    }
 
     EVE_CALLABLE_OBJECT(bit_swap_adjacent_t, bit_swap_adjacent_);
   };

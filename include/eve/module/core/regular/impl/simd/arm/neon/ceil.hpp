@@ -29,9 +29,9 @@ namespace eve::detail
         else if constexpr( cat == category::float32x2 ) return vrndp_f32(v);
         else if constexpr( cat == category::float32x4 ) return vrndpq_f32(v);
       }
-      else return map(ceil, v);
+      else return map_pt(as<wide<T, N>>{}, ceil, v);
     }
     else
-      return ceil_(EVE_TARGETS(cpu_), o, v);
+      return ceil.behavior(as<wide<T, N>>{}, cpu_{}, o, v);
   }
 }

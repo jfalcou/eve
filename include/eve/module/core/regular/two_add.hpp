@@ -22,11 +22,10 @@ namespace eve
   struct two_add_t : elementwise_callable<two_add_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-      constexpr EVE_FORCEINLINE
-    zipped<common_value_t<T,U>,common_value_t<T,U>> operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>,common_value_t<T, U>> operator()(T a, U b) const
+      requires(eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(a,b);
+      return EVE_DISPATCH_CALL_PT((as<zipped<common_value_t<T, U>,common_value_t<T, U>>>{}), a, b);
     }
 
     EVE_CALLABLE_OBJECT(two_add_t, two_add_);

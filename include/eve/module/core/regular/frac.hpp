@@ -20,9 +20,11 @@ namespace eve
   template<typename Options>
   struct frac_t : elementwise_callable<frac_t, Options, raw_option, almost_option, pedantic_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(frac_t, frac_);
   };

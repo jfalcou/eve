@@ -16,18 +16,18 @@ namespace eve
   template<typename Options>
   struct floor_t : strict_elementwise_callable<floor_t, Options, almost_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     {
 //      static_assert( valid_tolerance<T, Options>::value, "[eve::floor] simd tolerance requires simd parameter." );
-      return EVE_DISPATCH_CALL(v);
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
     }
 
-    template<eve::value T, only_if<signed,unsigned>  U>
+    template<value T, only_if<signed,unsigned>  U>
     constexpr EVE_FORCEINLINE  as_integer_t<T, U> operator()(T v,  as<U> const & target) const  noexcept
     {
 //      static_assert( valid_tolerance<T, Options>::value, "[eve::floor] simd tolerance requires simd parameter." );
-      return EVE_DISPATCH_CALL(v, target);
+      return EVE_DISPATCH_CALL_PT((as<as_integer_t<T, U>>{}), v);
     }
 
     EVE_CALLABLE_OBJECT(floor_t, floor_);

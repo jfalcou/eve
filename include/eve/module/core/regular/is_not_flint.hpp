@@ -17,11 +17,10 @@ namespace eve
   template<typename Options>
   struct is_not_flint_t : elementwise_callable<is_not_flint_t, Options,  pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return EVE_DISPATCH_CALL_PT((as<as_logical_t<T>>{}), t);
     }
 
     EVE_CALLABLE_OBJECT(is_not_flint_t, is_not_flint_);

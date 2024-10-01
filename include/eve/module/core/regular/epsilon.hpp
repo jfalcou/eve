@@ -21,9 +21,11 @@ namespace eve
   template<typename Options>
   struct epsilon_t : elementwise_callable<epsilon_t, Options, upward_option, downward_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
-    { return EVE_DISPATCH_CALL(a); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), a);
+    }
 
     EVE_CALLABLE_OBJECT(epsilon_t, epsilon_);
   };

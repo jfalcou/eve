@@ -18,14 +18,19 @@ namespace eve
   struct fnms_t : strict_elementwise_callable<fnms_t, Options, pedantic_option, promote_option,
                                              lower_option, upper_option, strict_option>
   {
-    template<eve::value T,eve::value U,eve::value V>
-    requires(Options::contains(promote))
-      constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    template<value T, value U, value V>
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept
+      requires (Options::contains(promote))
+    {
+      return EVE_DISPATCH_CALL(a, b, c);
+    }
 
-    template<eve::value T,eve::value U,eve::value V>
-    requires(!Options::contains(promote))
-      constexpr EVE_FORCEINLINE
-    common_value_t<T,U,V> operator()(T a, U b, V c) const noexcept { return EVE_DISPATCH_CALL(a,b,c); }
+    template<value T, value U, value V>
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const noexcept
+      requires (!Options::contains(promote))
+    {
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V>>{}), a, b, c);
+    }
 
     EVE_CALLABLE_OBJECT(fnms_t, fnms_);
   };

@@ -28,14 +28,14 @@ namespace eve
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    { return EVE_DISPATCH_CALL_PT(as<T>{}, v); }
 
     template<eve::value T, integral_value N>
-    requires(eve::same_lanes_or_scalar<T, N>)
     constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(T v, N n) const noexcept
+      requires (eve::same_lanes_or_scalar<T, N>)
     {
       EVE_ASSERT(eve::all(n >= 0), "[eve::next] : second parameter must be positive");
-      return EVE_DISPATCH_CALL(v, n);
+      return EVE_DISPATCH_CALL_PT((as<as_wide_as_t<T, N>>{}), v, n);
     }
 
     EVE_CALLABLE_OBJECT(next_t, next_);

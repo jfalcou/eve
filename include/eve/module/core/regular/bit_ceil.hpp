@@ -24,9 +24,11 @@ namespace eve
   template<typename Options>
   struct bit_ceil_t : elementwise_callable<bit_ceil_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(bit_ceil_t, bit_ceil_);
   };
@@ -86,13 +88,13 @@ namespace eve
     EVE_FORCEINLINE constexpr T
     bit_ceil_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
     {
-      auto vle1 = v <= one(eve::as(v));
+      auto vle1 = v <= one(as{v});
       if constexpr( floating_value<T> )
       {
         auto e      = exponent(v);
-        auto tmp    = ldexp(one(eve::as(v)), e);
+        auto tmp    = ldexp(one(as{v}), e);
         auto tmpltv = tmp < v;
-        return if_else(vle1, one(eve::as(v)), add[tmpltv](tmp, tmp));
+        return if_else(vle1, one(as{v}), add[tmpltv](tmp, tmp));
       }
       else
       {

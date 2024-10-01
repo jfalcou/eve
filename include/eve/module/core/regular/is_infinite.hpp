@@ -20,10 +20,9 @@ namespace eve
   struct is_infinite_t : elementwise_callable<is_infinite_t, Options>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return EVE_DISPATCH_CALL_PT((as<as_logical_t<T>>{}), t);
     }
 
     EVE_CALLABLE_OBJECT(is_infinite_t, is_infinite_);

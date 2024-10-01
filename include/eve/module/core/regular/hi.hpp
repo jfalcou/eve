@@ -24,9 +24,11 @@ namespace eve
       using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
     };
 
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type
-    operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<value T>
+    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T a) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as<typename result<T>::type>{}), a);
+    }
 
     EVE_CALLABLE_OBJECT(hi_t, hi_);
   };

@@ -21,10 +21,9 @@ namespace eve
   struct is_eqpz_t : elementwise_callable<is_eqpz_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return EVE_DISPATCH_CALL_PT((as<as_logical_t<T>>{}), t);
     }
 
     EVE_CALLABLE_OBJECT(is_eqpz_t, is_eqpz_);

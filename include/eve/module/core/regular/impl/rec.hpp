@@ -25,7 +25,7 @@ namespace eve::detail
 {
 
   template<value T, callable_options O>
-  constexpr T  rec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
+  constexpr T rec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
   {
     if constexpr( floating_value<T> )
     {
@@ -79,7 +79,7 @@ namespace eve::detail
         if( std::is_unsigned_v<T> )
           return if_else(is_eqz(a), valmax(eve::as(a)), if_else(eve::abs(a) == one(eve::as(a)), a, eve::zero));
         else
-          return map(eve::rec, a);
+          return map_pt(as<T>{}, eve::rec, a);
       }
     }
   }

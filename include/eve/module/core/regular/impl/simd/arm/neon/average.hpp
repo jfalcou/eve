@@ -32,7 +32,7 @@ requires arm_abi<abi_t<T, N>>
     return average.behavior(cpu_{}, opts, v0, v1);
   if constexpr( std::is_floating_point_v<T> )
     return fma[opts](v0, half(eve::as(v0)), v1 * half(eve::as(v1)));
-  else if constexpr( sizeof(T) == 8 ) return map(average, v0, v1);
+  else if constexpr( sizeof(T) == 8 ) return map_pt(as<wide<T, N>>{}, average, v0, v1);
   else if constexpr( cat == category::int32x4 ) return vhaddq_s32(v0, v1);
   else if constexpr( cat == category::int16x8 ) return vhaddq_s16(v0, v1);
   else if constexpr( cat == category::int8x16 ) return vhaddq_s8(v0, v1);

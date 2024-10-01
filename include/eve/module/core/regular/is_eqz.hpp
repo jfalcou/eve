@@ -10,7 +10,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/zero.hpp>
-#include <eve/module/core/regular/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
@@ -19,10 +18,9 @@ namespace eve
   struct is_eqz_t : elementwise_callable<is_eqz_t, Options>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return EVE_DISPATCH_CALL_PT((as<as_logical_t<T>>{}), t);
     }
 
     EVE_CALLABLE_OBJECT(is_eqz_t, is_eqz_);

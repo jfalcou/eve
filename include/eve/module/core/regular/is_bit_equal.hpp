@@ -23,17 +23,16 @@ namespace eve
     template <typename T, typename U > using  ui_t = as_integer_t<b_t<T, U>, unsigned>;
 
     template<value T, value U>
-    constexpr EVE_FORCEINLINE auto  operator()(T a, U b)  const
+    constexpr EVE_FORCEINLINE auto operator()(T a, U b)  const
       -> decltype(is_equal(bit_cast(b_t<T, U>(a), as<ui_t<T, U>>()), bit_cast(b_t<T, U>(b), as<ui_t<T, U>>())))
     {
       return EVE_DISPATCH_CALL(a, b);
     }
 
     template<value T, value U>
-    constexpr EVE_FORCEINLINE auto  operator()(logical<T> a, logical<U> b)  const
-      -> decltype(is_equal(a, b))
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(logical<T> a, logical<U> b) const
     {
-      return EVE_DISPATCH_CALL(a, b);
+      return EVE_DISPATCH_CALL_PT((as<common_logical_t<T, U>>{}), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_bit_equal_t, is_bit_equal_);

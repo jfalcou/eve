@@ -18,9 +18,11 @@ namespace eve
   template<typename Options>
   struct countl_one_t : elementwise_callable<countl_one_t, Options>
   {
-    template<eve::unsigned_value T>
+    template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(countl_one_t, countl_one_);
   };

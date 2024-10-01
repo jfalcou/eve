@@ -23,7 +23,9 @@ namespace eve
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const {
+      return EVE_DISPATCH_CALL_PT(as<T>{}, v);
+    }
 
     EVE_CALLABLE_OBJECT(valmax_t, valmax_);
   };

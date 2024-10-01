@@ -114,7 +114,7 @@ namespace eve::detail
         constexpr auto smul = [](auto a, auto b) { return a * b; };
 
         if constexpr (N::value >= 2) return aggregate(smul, s, b);
-        else                         return map(smul, s, b);
+        else                         return map_pt(as<wide<T, N>>{}, smul, s, b);
       }
     }
   }

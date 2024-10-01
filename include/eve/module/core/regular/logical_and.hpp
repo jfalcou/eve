@@ -19,18 +19,18 @@ namespace eve
     template<logical_value T, logical_value U>
     constexpr EVE_FORCEINLINE auto operator()(T a, U b) const noexcept -> decltype(a && b)
     requires(eve::same_lanes_or_scalar<T, U>)
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return EVE_DISPATCH_CALL_PT(as<decltype(a && b)>{}, a, b); }
 
     template<logical_value U>
     constexpr EVE_FORCEINLINE U  operator()(bool a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return EVE_DISPATCH_CALL_PT(as<bool>{}, a, b); }
 
     template<logical_value T>
     constexpr EVE_FORCEINLINE T  operator()(T a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return EVE_DISPATCH_CALL_PT(as<bool>{}, a, b); }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return EVE_DISPATCH_CALL_PT(as<bool>{}, a, b); }
 
     EVE_CALLABLE_OBJECT(logical_and_t, logical_and_);
   };

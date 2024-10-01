@@ -19,7 +19,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
       requires(eve::same_lanes_or_scalar<T, S>)
     {
-      return EVE_DISPATCH_CALL(t0, s);
+      return EVE_DISPATCH_CALL_PT((as<as_wide_as_t<T, S>>{}), t0, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
@@ -28,7 +28,7 @@ namespace eve
       constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S >= 0), "[eve::shl] Shift value is out of range.");
 
-      return EVE_DISPATCH_CALL(t0, s);
+      return EVE_DISPATCH_CALL_PT(as<T>{}, t0, s);
     }
 
     EVE_CALLABLE_OBJECT(shl_t, shl_);
@@ -108,7 +108,7 @@ namespace eve
       // W << S case: broadcast the scalar & rerun
       else if constexpr (scalar_value<U>)               return shl(a, as_wide_as_t<U, T>{s});
       // W << W case: all backends rejected the op, generic fallback
-      else                                              return map([]<typename V>(V v, auto b) { return static_cast<V>(v << b); }, a, s);
+      else                                              return map_pt(as<T>{}, []<typename V>(V v, auto b) { return static_cast<V>(v << b); }, a, s);
     }
 
     template<callable_options O, typename T, std::ptrdiff_t S>

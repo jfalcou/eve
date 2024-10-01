@@ -17,9 +17,11 @@ namespace eve
   template<typename Options>
   struct bit_unset_t : strict_elementwise_callable<bit_unset_t, Options>
   {
-    template<eve::integral_value T, integral_value I >
+    template<integral_value T, integral_value I >
     constexpr EVE_FORCEINLINE T operator()(T v, I i) const
-    { return EVE_DISPATCH_CALL(v, i); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v, i);
+    }
 
     EVE_CALLABLE_OBJECT(bit_unset_t, bit_unset_);
   };

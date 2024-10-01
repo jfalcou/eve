@@ -18,19 +18,23 @@ namespace eve
   {
     template<eve::value T, value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept { return EVE_DISPATCH_CALL(t, u); }
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept {
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U>>{}), t, u);
+    }
 
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T0, T1, Ts...>>{}), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const & t) const noexcept  requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    operator()(Tup const & t) const noexcept  requires(kumi::size_v<Tup> >= 2) {
+      return EVE_DISPATCH_CALL_PT((as<kumi::apply_traits_t<eve::common_value,Tup>>{}), t);
+    }
 
     template<typename Callable>
     requires(!kumi::product_type<Callable> && !eve::value<Callable>)

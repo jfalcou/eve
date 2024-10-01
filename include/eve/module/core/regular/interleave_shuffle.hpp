@@ -19,11 +19,12 @@ namespace eve
   template<typename Options>
   struct interleave_shuffle_t : callable<interleave_shuffle_t, Options>
   {
-    template<eve::value T, eve::value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE auto
-    operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+    template<value T, value U>
+    EVE_FORCEINLINE auto operator()(T v, U w) const noexcept
+      requires(same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL(v, w);
+    }
 
     EVE_CALLABLE_OBJECT(interleave_shuffle_t, interleave_shuffle_);
   };

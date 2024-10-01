@@ -19,10 +19,9 @@ namespace eve
   struct is_nemz_t : elementwise_callable<is_nemz_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return EVE_DISPATCH_CALL_PT((as<as_logical_t<T>>{}), t);
     }
 
     EVE_CALLABLE_OBJECT(is_nemz_t, is_nemz_);

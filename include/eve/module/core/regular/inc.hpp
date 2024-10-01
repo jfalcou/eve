@@ -19,8 +19,11 @@ namespace eve
   template<typename Options>
   struct inc_t : elementwise_callable<inc_t, Options, saturated_option, lower_option, upper_option, strict_option>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(inc_t, inc_);
   };

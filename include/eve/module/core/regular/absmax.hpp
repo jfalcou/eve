@@ -16,19 +16,19 @@ namespace eve
   template<typename Options>
   struct absmax_t : tuple_callable<absmax_t, Options, numeric_option, pedantic_option, saturated_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires(same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T0, T1, Ts...>>{}), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<common_value, Tup> operator()(Tup const& t) const noexcept
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return EVE_DISPATCH_CALL_PT((as<kumi::apply_traits_t<common_value, Tup>>{}), t);
+    }
 
     EVE_CALLABLE_OBJECT(absmax_t, absmax_);
   };

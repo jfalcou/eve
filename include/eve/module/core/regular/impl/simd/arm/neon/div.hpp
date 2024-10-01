@@ -21,7 +21,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
                 O::contains(toward_zero) || O::contains(upward) ||
                 O::contains(downward) || O::contains(to_nearest))
   {
-    return div.behavior(cpu_{}, opts, a, b);
+    return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
   }
   else
   {
@@ -35,7 +35,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
       else  if constexpr( c == category::float32x4 ) return vdivq_f32(a, b);
       else
       {
-        return div.behavior(cpu_{}, opts, a, b);
+        return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
     }
     else if constexpr (std::same_as<T, float>)
@@ -72,7 +72,7 @@ EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N
     }
     else
     {
-      return div.behavior(cpu_{}, opts, a, b);
+      return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
   }
 }

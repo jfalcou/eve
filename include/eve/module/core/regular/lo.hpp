@@ -27,7 +27,10 @@ namespace eve
 
     template<eve::value T>
     constexpr EVE_FORCEINLINE typename result<T>::type
-    operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    operator()(T a) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as<typename result<T>::type>{}), a);
+    }
 
     EVE_CALLABLE_OBJECT(lo_t, lo_);
   };

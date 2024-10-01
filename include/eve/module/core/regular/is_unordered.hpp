@@ -16,11 +16,11 @@ namespace eve
   template<typename Options>
   struct is_unordered_t : elementwise_callable<is_unordered_t, Options>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+      requires (eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(a, b);
+      return EVE_DISPATCH_CALL_PT((as<common_logical_t<T, U>>{}), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_unordered_t, is_unordered_);
