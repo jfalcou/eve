@@ -22,7 +22,7 @@ namespace eve
 {
  template<typename Options>
   struct dist_t : elementwise_callable<dist_t, Options, saturated_option,  pedantic_option,
-                                       upper_option, lower_option,  strict_option>
+                                               upper_option, lower_option, strict_option>
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
@@ -90,7 +90,7 @@ namespace eve
   namespace detail
   {
     template<value T, callable_options O>
-    constexpr T dist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
+    constexpr T dist_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       T d = sub[o](eve::max(a, b), eve::min(a, b));
       if constexpr(O::contains(saturated) && signed_integral_value<T>)
@@ -102,3 +102,7 @@ namespace eve
     }
   }
 }
+
+#if defined(EVE_INCLUDE_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/dist.hpp>
+#endif
