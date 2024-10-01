@@ -27,6 +27,6 @@ namespace eve::detail
     else if constexpr( floating_value<T> )
       return fma[opts](v0, half(eve::as(v0)), v1 * half(eve::as(v0)));
     else
-      return map(average[opts], v0, v1);
+      return map_pt(as<wide<T, N>>{}, average[opts], v0, v1);
   }
 }

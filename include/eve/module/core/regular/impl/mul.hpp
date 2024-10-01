@@ -30,7 +30,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
+  EVE_FORCEINLINE constexpr common_value_t<T, U> mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
@@ -118,7 +118,7 @@ namespace eve::detail
               }
               else
               {
-                auto that = map(eve::mul[saturated], a, b);
+                auto that = map_pt(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
                 return that;
               }
             }
@@ -159,7 +159,7 @@ namespace eve::detail
             }
             else
             {
-              auto that = map(eve::mul[saturated], a, b);
+              auto that = map_pt(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
               return that;
             }
           }

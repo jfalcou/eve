@@ -19,7 +19,7 @@ namespace eve::detail
     if constexpr (O::contains_any(saturated, upper, lower, toward_zero,
                                   upward, downward, to_nearest, widen))
     {
-      return div.behavior(cpu_{}, opts, a, b);
+      return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -70,7 +70,7 @@ namespace eve::detail
       }
       else
       {
-        return div.behavior(cpu_{}, opts, a, b);
+        return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
     }
   }

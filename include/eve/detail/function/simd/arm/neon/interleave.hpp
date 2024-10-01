@@ -18,7 +18,7 @@ namespace eve::detail
   // Interleave pairs of wides
   //================================================================================================
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_SUPPORTS(neon128_),
+  EVE_FORCEINLINE kumi::tuple<wide<T, N>, wide<T, N>> interleave_(EVE_SUPPORTS(neon128_),
                                    O const& o,
                                    wide<T,N> v0,
                                    wide<T,N> v1) noexcept
@@ -130,7 +130,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{},o,v0,v1);
     }
   }
 }

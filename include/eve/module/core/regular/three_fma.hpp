@@ -19,10 +19,11 @@ namespace eve
   struct three_fma_t : elementwise_callable<three_fma_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U, eve::floating_value V>
-   requires(eve::same_lanes_or_scalar<T, U, V>)
-     constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>
-    operator()(T t, U u, V v) const noexcept
-    { return EVE_DISPATCH_CALL(t, u, v); }
+    constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>> operator()(T t, U u, V v) const noexcept
+      requires(eve::same_lanes_or_scalar<T, U, V>)
+    {
+      return EVE_DISPATCH_CALL_PT((as<zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>>{}), t, u, v);
+    }
 
     EVE_CALLABLE_OBJECT(three_fma_t, three_fma_);
   };

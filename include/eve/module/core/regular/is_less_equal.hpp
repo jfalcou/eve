@@ -19,12 +19,12 @@ namespace eve
   template<typename Options>
   struct is_less_equal_t : strict_elementwise_callable<is_less_equal_t, Options, almost_option>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U> operator()(T a, U b) const
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires(eve::same_lanes_or_scalar<T, U>)
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_less_equal] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL(a, b);
+      return EVE_DISPATCH_CALL_PT((as<common_logical_t<T, U>>{}), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_less_equal_t, is_less_equal_);

@@ -27,7 +27,7 @@ namespace eve
     template<value U, scalar_value T>
     EVE_FORCEINLINE constexpr U operator()(U t0, as<T> const & target) const noexcept
     {
-      return EVE_DISPATCH_CALL(t0, target);
+      return EVE_DISPATCH_CALL_PT(as<U>{}, t0, target);
     }
 
     EVE_CALLABLE_OBJECT(saturate_t, saturate_);
@@ -163,7 +163,7 @@ namespace eve
         else if constexpr( has_aggregated_abi_v<U> )
           return aggregate(eve::saturate, a0, at);
         else if constexpr( has_emulated_abi_v<U> )
-          return map(eve::saturate, a0, at);
+          return map_pt(as<U>{}, eve::saturate, a0, at);
         else
         {
           if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point

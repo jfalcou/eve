@@ -58,7 +58,7 @@ namespace eve::detail
       }
       else
       {
-        if constexpr( current_api == neon && simd_value<T> ) return map(rem, a, b);
+        if constexpr( current_api == neon && simd_value<T> ) return map_pt(as<T>{}, rem, a, b);
         else
         {
           return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),

@@ -51,7 +51,7 @@ namespace eve::detail
     if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -113,12 +113,12 @@ namespace eve::detail
           else if constexpr( c == category::float64x2 ) return vmulq_f64 (a, b);
           else
           {
-            return mul.behavior(cpu_{}, opts, a, b);
+            return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
           }
         }
         else
         {
-          return mul.behavior(cpu_{}, opts, a, b);
+          return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
         }
       }
     }

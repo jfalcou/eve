@@ -18,10 +18,12 @@ namespace eve
   template<typename Options>
   struct fdim_t : elementwise_callable<fdim_t, Options>
   {
-    template<eve::value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<value T, value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U>>{}), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(fdim_t, fdim_);
   };
@@ -79,7 +81,6 @@ namespace eve
 
   namespace detail
   {
-
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T
     fdim_(EVE_REQUIRES(cpu_), O const &, T a, T b) noexcept

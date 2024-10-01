@@ -24,7 +24,7 @@ namespace eve
   {
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    { return EVE_DISPATCH_CALL_PT(as<T>{}, a); }
 
     EVE_CALLABLE_OBJECT(sign_t, sign_);
   };

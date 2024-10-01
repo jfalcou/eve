@@ -21,10 +21,12 @@ namespace eve
   struct diff_of_prod_t : elementwise_callable<diff_of_prod_t, Options, raw_option, pedantic_option, lower_option,
                                 upper_option, strict_option>
   {
-    template<value T,  value U, value V,  value W>
-    requires(eve::same_lanes_or_scalar<T, U, V, W>)
+    template<value T, value U, value V, value W>
     constexpr EVE_FORCEINLINE common_value_t<T, U, V, W> operator()(T a, U b, V c, W d) const
-    { return EVE_DISPATCH_CALL(a, b, c, d); }
+      requires(eve::same_lanes_or_scalar<T, U, V, W>)
+    {
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V, W>>{}), a, b, c, d);
+    }
 
     EVE_CALLABLE_OBJECT(diff_of_prod_t, diff_of_prod_);
   };

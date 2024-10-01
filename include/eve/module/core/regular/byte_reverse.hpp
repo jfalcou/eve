@@ -24,9 +24,11 @@ namespace eve
   template<typename Options>
   struct byte_reverse_t : elementwise_callable<byte_reverse_t, Options>
   {
-    template<eve::unsigned_value T>
+    template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(byte_reverse_t, byte_reverse_);
   };

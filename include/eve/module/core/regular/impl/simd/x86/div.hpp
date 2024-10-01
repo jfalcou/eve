@@ -70,7 +70,7 @@ namespace eve::detail
         auto s = a;
         constexpr auto sdiv = [](auto va, auto vb) { return va /= vb; };
         if constexpr( N::value >= 2  )  return aggregate(sdiv, s, b);
-        else                            return map(sdiv, s, b);
+        else                            return map_pt(as<wide<T, N>>{}, sdiv, s, b);
       }
     }
   }

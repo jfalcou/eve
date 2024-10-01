@@ -50,7 +50,7 @@ namespace eve::detail
       }
       else if constexpr (simd_value<T>)
       {
-        return bit_cast(map(bit_shr, a, b), as(a));
+        return map_pt(as<T>{}, bit_shr, a, b);
       }
     }
   }

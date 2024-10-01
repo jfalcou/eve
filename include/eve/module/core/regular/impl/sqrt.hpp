@@ -47,6 +47,6 @@ namespace eve::detail
     else if constexpr( scalar_value<T> )
       return std::sqrt(a0);
     else
-      return map(eve::sqrt, a0);
+      return map_pt(as<T>{}, eve::sqrt, a0);
   }
 }

@@ -16,6 +16,9 @@
 #include <algorithm>
 #include <utility>
 
+#include <iostream>
+static int call_count = 0;
+
 namespace eve::detail
 {
   // Extract ith element of a wide or propagate the value if non SIMD
@@ -88,9 +91,31 @@ namespace eve::detail
     }
   };
 
+  template<typename R, typename Fn, typename... Ts>
+  EVE_FORCEINLINE R map_pt(as<R>, Fn &&f, Ts &&... ts) noexcept
+  {
+    if constexpr (kumi::product_type<element_type_t<R>>)
+    {
+      return  apply<cardinal_v<std::tuple_element_t<0, R>>>
+              ( [&](auto... I)
+                {
+                  return rebuild<R>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
+                }
+              );
+    }
+    else
+    {
+      return apply<cardinal_v<R>>([&](auto... I) { return R{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
+    }
+  }
+
   template<typename Fn, typename... Ts>
   EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
+    call_count++;
+    std::cout << "map called " << call_count << " times" << std::endl;
+    // __builtin_trap();
+
     using w_t = typename wide_result<Fn, Ts...>::type;
 
     if constexpr( kumi::product_type<element_type_t<w_t>> )

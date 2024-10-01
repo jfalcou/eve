@@ -18,22 +18,30 @@ namespace eve
   struct zip_t : callable<zip_t, Options>
   {
     template<scalar_value... Vs>
-    constexpr EVE_FORCEINLINE kumi::tuple<Vs...>
-    operator()(Vs... vs) const noexcept { return EVE_DISPATCH_CALL(vs...); }
+    constexpr EVE_FORCEINLINE kumi::tuple<Vs...> operator()(Vs... vs) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as<kumi::tuple<Vs...>>{}), vs...);
+    }
 
     template<kumi::product_type Target, scalar_value... Vs>
-    constexpr EVE_FORCEINLINE Target
-    operator()(as<Target> const& tgt, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(tgt, vs...); }
+    constexpr EVE_FORCEINLINE Target operator()(as<Target> const& tgt, Vs... vs) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as<Target>{}), tgt, vs...);
+    }
 
     template<simd_value V0, simd_value... Vs>
-    requires( same_lanes<V0,Vs...> )
-    EVE_FORCEINLINE as_wide_as_t<kumi::tuple<element_type_t<V0>,element_type_t<Vs>...>, V0>
-    operator()(V0 v0, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(v0,vs...); }
+    EVE_FORCEINLINE as_wide_as_t<kumi::tuple<element_type_t<V0>, element_type_t<Vs>...>, V0> operator()(V0 v0, Vs... vs) const noexcept
+      requires (same_lanes<V0, Vs...>)
+    {
+      return EVE_DISPATCH_CALL_PT((as<as_wide_as_t<kumi::tuple<element_type_t<V0>, element_type_t<Vs>...>, V0>>{}), v0, vs...);
+    }
 
     template<kumi::product_type Target, simd_value V0, simd_value... Vs>
-    requires((sizeof...(Vs)+1 == kumi::size_v<Target>) && same_lanes<V0,Vs...>)
-    EVE_FORCEINLINE wide<Target, cardinal_t<V0>>
-    operator()(as<Target> const& tgt, V0 v0, Vs... vs) const noexcept { return EVE_DISPATCH_CALL(tgt, v0, vs...); }
+    EVE_FORCEINLINE wide<Target, cardinal_t<V0>> operator()(as<Target> const& tgt, V0 v0, Vs... vs) const noexcept
+      requires (((sizeof...(Vs) + 1) == kumi::size_v<Target>) && same_lanes<V0, Vs...>)
+    {
+      return EVE_DISPATCH_CALL_PT((as<wide<Target, cardinal_t<V0>>>{}), tgt, v0, vs...);
+    }
 
     EVE_CALLABLE_OBJECT(zip_t, zip_);
 

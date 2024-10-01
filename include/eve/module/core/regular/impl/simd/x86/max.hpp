@@ -90,7 +90,7 @@ namespace eve::detail
         return detail::if_else_max(v0, v1);
       else if constexpr( current_api >= sse4_2 && c == category::uint64x2 )
         return detail::if_else_max(v0, v1);
-      else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map(max, v0, v1);
+      else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map_pt(as<wide<T, N>>{}, max, v0, v1);
       // 128 - 32 bit ints
       else if constexpr( current_api >= sse4_1 && c == category::int32x4 ) return _mm_max_epi32(v0, v1);
       else if constexpr( current_api >= sse4_1 && c == category::uint32x4 )

@@ -451,7 +451,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
 
        if constexpr( mi16x8 && mo8x16 && a512                     ) return _mm_cvtepi16_epi8(v);
   else if constexpr( mi16x8 && mo8x16 && as3                      ) return convert_integers_shuffle(v, tgt);
-  else if constexpr( mi16x8 && mo8x16                             ) return map(convert, v, tgt);
+  else if constexpr( mi16x8 && mo8x16                             ) return map_pt(as<wide<U, N>>{}, convert, v, tgt);
   else if constexpr( c_i == category::int16x8  && mo32x4 && a41   ) return _mm_cvtepi16_epi32(v);
   else if constexpr( c_i == category::uint16x8 && mo32x4 && a41   ) return _mm_cvtepu16_epi32(v);
   else if constexpr( c_i == category::int16x8  && mo32x8 && aavx2 ) return _mm256_cvtepi16_epi32(v);

@@ -19,6 +19,6 @@ namespace eve::detail
     if constexpr( scalar_value<T> )
       return a0 ? rec[pedantic](eve::sqrt(a0)) : inf(eve::as(a0));
     else
-      return map(rsqrt, a0);
+      return map_pt(as<T>{}, rsqrt, a0);
   }
 }

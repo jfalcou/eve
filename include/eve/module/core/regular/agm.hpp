@@ -31,10 +31,12 @@ namespace eve
   template<typename Options>
   struct agm_t : elementwise_callable<agm_t, Options>
   {
-    template<eve::floating_value T,  floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<floating_value T, floating_value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires(same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U>>{}), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(agm_t, agm_);
   };
@@ -109,7 +111,7 @@ namespace eve
       a =  ldexp(a, -ex);
       b =  ldexp(b, -ex);
       auto c  = average(a, -b);
-      while (eve::any(eve::abs(c) > T(2)*eps(as(c))))
+      while (any(abs(c) > T(2)*eps(as(c))))
       {
         auto an=average(a, b);
         auto bn=sqrt(a*b);

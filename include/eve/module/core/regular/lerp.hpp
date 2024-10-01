@@ -22,7 +22,9 @@ namespace eve
     template<value T,  value U,  value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
-    { return EVE_DISPATCH_CALL(a, b, c); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V>>{}), a, b, c);
+    }
 
     EVE_CALLABLE_OBJECT(lerp_t, lerp_);
   };

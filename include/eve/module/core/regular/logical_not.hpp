@@ -10,7 +10,6 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/traits/as_logical.hpp>
 
 
@@ -20,11 +19,15 @@ namespace eve
   struct logical_not_t : elementwise_callable<logical_not_t, Options>
   {
     template<logical_value T>
-    constexpr EVE_FORCEINLINE auto operator()(T a) const  noexcept -> as_logical_t<decltype(!a)>
-    { return EVE_DISPATCH_CALL(a); }
+    constexpr EVE_FORCEINLINE auto operator()(T a) const noexcept -> as_logical_t<decltype(!a)>
+    {
+      return EVE_DISPATCH_CALL_PT((as<as_logical_t<decltype(!a)>>{}), a);
+    }
 
-    constexpr EVE_FORCEINLINE bool operator()(bool a) const  noexcept
-    { return EVE_DISPATCH_CALL(a); }
+    constexpr EVE_FORCEINLINE bool operator()(bool a) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as<bool>{}), a);
+    }
 
     EVE_CALLABLE_OBJECT(logical_not_t, logical_not_);
   };

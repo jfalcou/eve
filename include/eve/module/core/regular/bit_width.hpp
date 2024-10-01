@@ -18,9 +18,11 @@ namespace eve
   template<typename Options>
   struct bit_width_t : elementwise_callable<bit_width_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(bit_width_t, bit_width_);
   };

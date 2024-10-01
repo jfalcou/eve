@@ -48,7 +48,7 @@ namespace eve::detail
     if constexpr((O::contains_any(lower, upper)  && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
-      return add.behavior(cpu_{}, opts, v, w);
+      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
 
     else

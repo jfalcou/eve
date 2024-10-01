@@ -25,9 +25,11 @@ namespace eve
   template<typename Options>
   struct bit_floor_t : elementwise_callable<bit_floor_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+    }
 
     EVE_CALLABLE_OBJECT(bit_floor_t, bit_floor_);
   };

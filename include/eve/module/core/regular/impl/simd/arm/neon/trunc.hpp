@@ -30,7 +30,7 @@ namespace eve::detail
         else if constexpr( cat == category::float32x2 ) return vrnd_f32(v);
         else if constexpr( cat == category::float32x4 ) return vrndq_f32(v);
       }
-      else return map(trunc, v);
+      else return map_pt(as<wide<T, N>>{}, trunc, v);
     }
     else
       return trunc_(EVE_TARGETS(cpu_), o, v);
