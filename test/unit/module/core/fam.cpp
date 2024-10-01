@@ -80,6 +80,31 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
 };
 
 //==================================================================================================
+// fam upper lower tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of fam upper lower on all types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000))
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2 )
+{
+  using eve::as;
+  using eve::fam;
+  using eve::detail::map;
+  using eve::lower;
+  using eve::upper;
+  using eve::strict;
+  TTS_EXPECT(eve::all(fam[upper](a0, a1, a2) >= fam(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fam[lower](a0, a1, a2) <= fam(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fam[upper][strict](a0, a1, a2) > fam(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fam[lower][strict](a0, a1, a2) < fam(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fam[strict][upper](a0, a1, a2) >= fam[upper](a0, a1, a2)));
+  TTS_EXPECT(eve::all(fam[strict][lower](a0, a1, a2) <= fam[lower](a0, a1, a2)));
+};
+
+//==================================================================================================
 // fam promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fam[promote] on all types",

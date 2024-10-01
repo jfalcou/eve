@@ -80,6 +80,31 @@ TTS_CASE_WITH("Check precision behavior of fsnm on real types",
 };
 
 //==================================================================================================
+// fsnm upper lower tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of fsnm lower upper on real types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000))
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2 )
+{
+  using eve::as;
+  using eve::fsnm;
+  using eve::detail::map;
+  using eve::lower;
+  using eve::upper;
+  using eve::strict;
+  TTS_EXPECT(eve::all(fsnm[upper](a0, a1, a2) >= fsnm(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fsnm[lower](a0, a1, a2) <= fsnm(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fsnm[upper][strict](a0, a1, a2) > fsnm(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fsnm[lower][strict](a0, a1, a2) < fsnm(a0, a1, a2)));
+  TTS_EXPECT(eve::all(fsnm[strict][upper](a0, a1, a2) >= fsnm[upper](a0, a1, a2)));
+  TTS_EXPECT(eve::all(fsnm[strict][lower](a0, a1, a2) <= fsnm[lower](a0, a1, a2)));
+};
+
+//==================================================================================================
 // fsnm promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fsnm[promote] on all types",

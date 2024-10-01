@@ -92,16 +92,17 @@ namespace eve
                   T const &a,  T const &b,
                   T const &c,  T const &d) noexcept
     {
-      auto cd =  c*d;
       if constexpr(O::contains(raw))
       {
-        return fms(a, b, cd);
+       T cd =  mul(c, d);
+       return fms(a, b, cd);
       }
       else
       {
+        auto cd = mul[o](c, d);
         auto err = fnma[o](c, d, cd);
         auto dop = fms[o](a, b, cd);
-        return add[is_finite(err)](dop, err);
+        return add[o][is_finite(err)](dop, err);
       }
     }
   }

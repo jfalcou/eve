@@ -1,6 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
@@ -23,7 +24,7 @@ int main()
   std::cout << "<- wu0                                 = " << wu0 << "\n";
   std::cout << "<- wu1                                 = " << wu1 << "\n";
   std::cout << "<- wu2                                 = " << wu2 << "\n";
-                                                       
+
   std::cout << "-> fnma(wf0, wf1, wf2)                 = " << eve::fnma(wf0, wf1, wf2) << "\n";
   std::cout << "-> fnma[ignore_last(2)](wf0, wf1, wf2) = " << eve::fnma[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
   std::cout << "-> fnma[wf0 != 0](wf0, wf1, wf2)       = " << eve::fnma[wf0 != 0](wf0, wf1, wf2) << "\n";
@@ -39,4 +40,10 @@ int main()
   std::cout << "-> fnma[wi0 != 0](wi0, wi1, wi2)       = " << eve::fnma[wi0 != 0](wi0, wi1, wi2) << "\n";
   std::cout << "-> fnma[pedantic](wi0, wi1, wi2)       = " << eve::fnma[eve::pedantic](wi0, wi1, wi2) << "\n";
   std::cout << "-> fnma[promote](wi0, wi1, wi2)        = " << eve::fnma[eve::promote](wi0, wi1, wi2) << "\n";
+
+  std::cout << std::setprecision(20) << "-> fnma(wf0, wf1, wf2)          = " << eve::fnma(wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fnma[lower](wf0, wf1, wf2)   = " << eve::fnma[eve::lower](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fnma[upper](wf0, wf1, wf2)   = " << eve::fnma[eve::upper](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fnma[lower][strict](wf0, wf1, wf2)   = " << eve::fnma[eve::lower][eve::strict](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fnma[upper][strict](wf0, wf1, wf2)   = " << eve::fnma[eve::upper][eve::strict](wf0, wf1, wf2) << "\n";
 }

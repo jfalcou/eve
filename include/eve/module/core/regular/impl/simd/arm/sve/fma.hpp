@@ -28,13 +28,18 @@ namespace eve::detail
 
   template<conditional_expr C, typename T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fma_(EVE_REQUIRES(sve_), C cond, O const&, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
+  EVE_FORCEINLINE wide<T, N> fma_(EVE_REQUIRES(sve_), C cond, O const&opts, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
-    // We don't care about PEDANTIC as this is a proper FMA.
-    // We don't care about PROMOTE as we only accept similar types.
-    [[maybe_unused]] auto const alt = alternative(cond, a, as(a));
-    if      constexpr( C::is_complete )       return alt;
-    else if constexpr( !C::has_alternative )  return svmad_m(cond.mask(as<T>{}), a, b, c);
-    else                                      return if_else(cond, eve::fma(a, b, c), alt);
+    if constexpr(O::contains(lower) || O::contains(upper))
+      return fma.behavior(cpu_{}, opts, a, b, c);
+    else
+    {
+      // We don't care about PEDANTIC as this is a proper FMA.
+      // We don't care about PROMOTE as we only accept similar types.
+      [[maybe_unused]] auto const alt = alternative(cond, a, as(a));
+      if      constexpr( C::is_complete )       return alt;
+      else if constexpr( !C::has_alternative )  return svmad_m(cond.mask(as<T>{}), a, b, c);
+      else                                      return if_else(cond, eve::fma(a, b, c), alt);
+    }
   }
 }

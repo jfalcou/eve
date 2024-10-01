@@ -65,6 +65,4 @@ TTS_CASE_TPL( "Check diff_of_prod", eve::test::scalar::ieee_reals)
 
   TTS_EQUAL(pdop(i1,  f1, d1, we1), test( i1, f1, d1, we1));
   TTS_EQUAL(pdop(we1, i1,  f1, d1), test(we1, i1, f1, d1));
-
-
 };

@@ -50,6 +50,18 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
                   if constexpr(eve::unsigned_value<T>) return d;
                   else  return eve::if_else(eve::is_ltz(d),  eve::valmax(eve::as<T>()),  d);
                 }(a0, a1), 2);
+  if constexpr(eve::floating_value<T>)
+  {
+    using eve::upper;
+    using eve::lower;
+    using eve::strict;
+    TTS_EXPECT(eve::all(dist[upper](a0, a1) >= dist(a0, a1)));
+    TTS_EXPECT(eve::all(dist[lower](a0, a1) <= dist(a0, a1)));
+    TTS_EXPECT(eve::all(dist[upper][strict](a0, a1) > dist(a0, a1)));
+    TTS_EXPECT(eve::all(dist[lower][strict](a0, a1) < dist(a0, a1)));
+    TTS_EXPECT(eve::all(dist[strict][upper](a0, a1) >= dist[upper](a0, a1)));
+    TTS_EXPECT(eve::all(dist[strict][lower](a0, a1) <= dist[lower](a0, a1)));
+  }
 };
 
 auto vmin = tts::constant(

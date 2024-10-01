@@ -15,7 +15,8 @@
 namespace eve
 {
   template<typename Options>
-  struct fnms_t : strict_elementwise_callable<fnms_t, Options, pedantic_option, promote_option>
+  struct fnms_t : strict_elementwise_callable<fnms_t, Options, pedantic_option, promote_option,
+                                             lower_option, upper_option, strict_option>
   {
     template<eve::value T,eve::value U,eve::value V>
     requires(Options::contains(promote))
@@ -92,7 +93,11 @@ namespace eve
     template<typename T, typename U, typename V, callable_options O>
     EVE_FORCEINLINE constexpr auto fnms_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
     {
-      return minus(fma[o](a, b, c));
+      if constexpr(O::contains(upper) || O::contains(lower))
+      {
+        return fma[o](a, minus(b), minus(c));
+      }
+      else return minus(fma[o](a, b, c));
     }
 
   }

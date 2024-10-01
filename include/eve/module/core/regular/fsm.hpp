@@ -15,7 +15,8 @@
 namespace eve
 {
 template<typename Options>
-struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, promote_option>
+struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, promote_option,
+                                             lower_option, upper_option, strict_option>
 {
   template<eve::value T,eve::value U,eve::value V>
   requires(Options::contains(promote))

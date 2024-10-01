@@ -103,8 +103,8 @@ namespace eve::detail
         return fam(a, b, c);
       }
     }
-    // REGULAR ---------------------
+    // REGULAR UPPER LOWER---------------------
     else
-      return fma(b, c, a);
+      return fma[o](b, c, a);
   }
 }

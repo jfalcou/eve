@@ -41,7 +41,7 @@ namespace eve::detail
         }
         else                                               return sub.behavior(cpu_{}, opts, a, b);
       }
-      else                                                 return add.behavior(cpu_{}, opts, a, b);
+      else                                                 return sub.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {

@@ -11,7 +11,6 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 #include <eve/module/core/regular/fast_two_add.hpp>
-#include <eve/module/core/regular/two_prod.hpp>
 
 
 namespace eve
@@ -74,7 +73,12 @@ namespace eve
 //================================================================================================
 //! @}
 //================================================================================================
+}
 
+#include <eve/module/core/regular/two_prod.hpp>
+
+namespace eve
+{
   namespace detail
   {
     template<typename T, callable_options O>
@@ -85,7 +89,7 @@ namespace eve
       auto [a1, a2] = two_add(y, u2);
       auto [b1, b2] = two_add(u1, a1);
       auto c =  (b1-r1)+b2;
-      auto [r2, r3] = fast_two_add(c, a2);
+      auto [r2, r3] = two_add(c, a2);
       return eve::zip(r1, r2, r3);
     }
   }

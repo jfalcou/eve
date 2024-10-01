@@ -1,6 +1,7 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
@@ -23,7 +24,7 @@ int main()
   std::cout << "<- wu0                                 = " << wu0 << "\n";
   std::cout << "<- wu1                                 = " << wu1 << "\n";
   std::cout << "<- wu2                                 = " << wu2 << "\n";
-                                                       
+
   std::cout << "-> fanm(wf0, wf1, wf2)                 = " << eve::fanm(wf0, wf1, wf2) << "\n";
   std::cout << "-> fanm[ignore_last(2)](wf0, wf1, wf2) = " << eve::fanm[eve::ignore_last(2)](wf0, wf1, wf2) << "\n";
   std::cout << "-> fanm[wf0 != 0](wf0, wf1, wf2)       = " << eve::fanm[wf0 != 0](wf0, wf1, wf2) << "\n";
@@ -39,4 +40,10 @@ int main()
   std::cout << "-> fanm[wi0 != 0](wi0, wi1, wi2)       = " << eve::fanm[wi0 != 0](wi0, wi1, wi2) << "\n";
   std::cout << "-> fanm[pedantic](wi0, wi1, wi2)       = " << eve::fanm[eve::pedantic](wi0, wi1, wi2) << "\n";
   std::cout << "-> fanm[promote](wi0, wi1, wi2)        = " << eve::fanm[eve::promote](wi0, wi1, wi2) << "\n";
+
+  std::cout << std::setprecision(20) << "-> fanm(wf0, wf1, wf2)          = " << eve::fanm(wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fanm[lower](wf0, wf1, wf2)   = " << eve::fanm[eve::lower](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fanm[upper](wf0, wf1, wf2)   = " << eve::fanm[eve::upper](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fanm[lower][strict](wf0, wf1, wf2)   = " << eve::fanm[eve::lower][eve::strict](wf0, wf1, wf2) << "\n";
+  std::cout << std::setprecision(20) << "-> fanm[upper][strict](wf0, wf1, wf2)   = " << eve::fanm[eve::upper][eve::strict](wf0, wf1, wf2) << "\n";
 }

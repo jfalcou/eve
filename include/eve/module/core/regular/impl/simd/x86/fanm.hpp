@@ -11,11 +11,24 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/fma.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 namespace eve::detail
 {
-// -----------------------------------------------------------------------------------------------
-// Masked case
+  template<typename T, typename N, callable_options O>
+  EVE_FORCEINLINE wide<T, N> fanm_(EVE_REQUIRES(sse2_),
+                                   O const& opts,
+                                   wide<T, N> const& a,
+                                   wide<T, N> const& b,
+                                   wide<T, N> const& c) noexcept
+  requires x86_abi<abi_t<T, N>>
+  {
+    return fam[opts](a, minus(b), c);
+  }
+  
+  // -----------------------------------------------------------------------------------------------
+  // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> fanm_(EVE_REQUIRES(avx512_),
                                    C const            &mask,
