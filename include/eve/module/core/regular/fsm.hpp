@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/fma.hpp>
+#include <iostream>
 
 namespace eve
 {
@@ -94,6 +95,7 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
     {
       return fms[o](b, c, a);
     }
+
   }
 }
 

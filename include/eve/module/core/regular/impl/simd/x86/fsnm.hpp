@@ -30,7 +30,7 @@ namespace eve::detail
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> fsnm_(EVE_REQUIRES(avx512_),
                                    C          const &mask,
-                                   O          const &,
+                                   O          const &opts,
                                    wide<T, N> const &v,
                                    wide<T, N> const &w,
                                    wide<T, N> const &x) noexcept
@@ -45,8 +45,8 @@ namespace eve::detail
     {
       constexpr auto              c = categorize<wide<T, N>>();
       [[maybe_unused]] auto const m = expand_mask(mask, as(v)).storage().value;
-
-      if      constexpr( c == category::float32x16) return _mm512_mask3_fnmsub_ps(w, x, v, m);
+      if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fsnm[opts.drop(condition_key)](v, w, x), v);
+      else if constexpr( c == category::float32x16) return _mm512_mask3_fnmsub_ps(w, x, v, m);
       else if constexpr( c == category::float64x8 ) return _mm512_mask3_fnmsub_pd(w, x, v, m);
       else if constexpr( c == category::float32x8 ) return _mm256_mask3_fnmsub_ps(w, x, v, m);
       else if constexpr( c == category::float64x4 ) return _mm256_mask3_fnmsub_pd(w, x, v, m);
@@ -55,6 +55,6 @@ namespace eve::detail
       // No rounding issue with integers, so we just mask over regular FSNM
       else                                          return if_else(mask, eve::fsnm(v, w, x), v);
     }
-    else                                            return if_else(mask, eve::fsnm(v, w, x), alternative(mask, v, as(v)));
+    else                                            return if_else(mask, eve::fsnm[opts.drop(condition_key)](v, w, x), alternative(mask, v, as(v)));
   }
 }
