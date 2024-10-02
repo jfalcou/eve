@@ -29,6 +29,6 @@ namespace eve::detail
     [[maybe_unused]] auto const alt = alternative(m, a, as(a));
     if      constexpr( C::is_complete )       return alt;
     else if constexpr( !C::has_alternative )  return minus[m](wide<T, N>(svmls_m(m.mask(as<T>{}), a, b, c)));
-    else                                      return if_else(m, -eve::fanm(a, b, c), alt);
+    else                                      return if_else(m, eve::fms[o.drop(condition_key)](c, a, b), alt);
   }
 }
