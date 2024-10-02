@@ -156,6 +156,7 @@ TTS_CASE_WITH("Check behavior of masked fsm on all types",
   using eve::fsm;
   using eve::if_;
   using eve::lower;
+  using eve::strict;
 
   TTS_ULP_EQUAL(fsm[t](a0, a1, a2), eve::if_else(t, fsm(a0, a1, a2), a0), 0);
   TTS_ULP_EQUAL(fsm[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fsm(a0, a1, a2), 100), 0);
@@ -166,4 +167,9 @@ TTS_CASE_WITH("Check behavior of masked fsm on all types",
   TTS_IEEE_EQUAL(fsm[if_(t).else_(100)][lower](a0, a1, a2), eve::if_else(t, fsm[lower](a0, a1, a2), 100));
   TTS_IEEE_EQUAL(fsm[eve::ignore_all][lower](a0, a1, a2), a0);
   TTS_IEEE_EQUAL(fsm[eve::ignore_all.else_(42)][lower](a0, a1, a2), T{42});
+
+  TTS_IEEE_EQUAL(fsm[t][lower][strict](a0, a1, a2), eve::if_else(t, fsm[lower][strict](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fsm[if_(t).else_(100)][lower][strict](a0, a1, a2), eve::if_else(t, fsm[lower][strict](a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fsm[eve::ignore_all][lower][strict](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fsm[eve::ignore_all.else_(42)][lower][strict](a0, a1, a2), T{42});
 };
