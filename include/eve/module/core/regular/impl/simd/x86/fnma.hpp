@@ -128,7 +128,7 @@ namespace eve::detail
         }
         else                                                 return fnma.behavior(cpu_{}, opts, a, b, c);
       }
-      if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fnma[opts.drop(condition_key)](v, w, x), v);
+      if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fnma[opts.drop(condition_key)](a, b, c), a);
       else if constexpr( cx == category::float32x16 ) return _mm512_mask_fnmadd_ps(a, m, b, c);
       else if constexpr( cx == category::float64x8  ) return _mm512_mask_fnmadd_pd(a, m, b, c);
       else if constexpr( cx == category::float32x8  ) return _mm256_mask_fnmadd_ps(a, m, b, c);
