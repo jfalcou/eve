@@ -81,7 +81,7 @@ TTS_CASE_WITH("Check precision behavior of fma on real types",
 };
 
 //==================================================================================================
-é/fma upper lower tests
+//== é/fma upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fma[promote] on all types",
               eve::test::simd::ieee_reals,
