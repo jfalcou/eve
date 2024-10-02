@@ -21,7 +21,7 @@ namespace eve::detail
 
   template<conditional_expr C, typename T, typename N, callable_options O>
   requires sve_abi<abi_t<T, N>>
-  EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_), C m, O const&, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
+  EVE_FORCEINLINE wide<T, N> fsm_(EVE_REQUIRES(sve_), C m, O const&o, wide<T,N> a, wide<T,N> b, wide<T,N> c) noexcept
   {
     // This is done so the masking use a and not -a as source
     // We don't care about PEDANTIC as this is a proper FMA.
