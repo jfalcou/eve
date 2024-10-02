@@ -120,7 +120,7 @@ namespace eve::detail
               auto cc = eve::combine(c, c);
               auto aabbcc = fma[opts.drop(condition_key)](aa, bb, cc);
               auto s =  slice(aabbcc, eve::upper_);
-              return if_else(mash,s,src);
+              return if_else(mask,s,src);
             }
             else                                             return fnma.behavior(cpu_{}, opts, a, b, c);
           }
