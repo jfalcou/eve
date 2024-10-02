@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check return types of fam", eve::test::simd::all_types)
 };
 
 //==================================================================================================
-//  fam tests
+//== fam tests
 //==================================================================================================
 auto onepmileps =
     tts::constant([]<typename U>(eve::as<U>)
@@ -62,7 +62,7 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
 
 
 //==================================================================================================
-// fam tests
+//== fam tests
 //==================================================================================================
 TTS_CASE_WITH("Check precision behavior of fam on real types",
               eve::test::simd::ieee_reals,
@@ -80,7 +80,7 @@ TTS_CASE_WITH("Check precision behavior of fam on real types",
 };
 
 //==================================================================================================
-// fam upper lower tests
+//== fam upper lower tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fam upper lower on all types",
               eve::test::simd::ieee_reals,
@@ -105,7 +105,7 @@ TTS_CASE_WITH("Check behavior of fam upper lower on all types",
 };
 
 //==================================================================================================
-// fam promote tests
+//== fam promote tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of fam[promote] on all types",
               eve::test::simd::all_types,
@@ -157,6 +157,7 @@ TTS_CASE_WITH("Check behavior of masked fam on all types",
   using eve::fam;
   using eve::if_;
   using eve::lower;
+  using eve::strict;
 
   TTS_IEEE_EQUAL(fam[t](a0, a1, a2), eve::if_else(t, fam(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(fam[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fam(a0, a1, a2), 100));
@@ -168,4 +169,8 @@ TTS_CASE_WITH("Check behavior of masked fam on all types",
   TTS_IEEE_EQUAL(fam[eve::ignore_all][lower](a0, a1, a2), a0);
   TTS_IEEE_EQUAL(fam[eve::ignore_all.else_(42)][lower](a0, a1, a2), T{42});
 
+  TTS_IEEE_EQUAL(fam[t][lower][strict](a0, a1, a2), eve::if_else(t, fam[lower][strict](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fam[if_(t).else_(100)][lower][strict](a0, a1, a2), eve::if_else(t, fam[lower][strict](a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fam[eve::ignore_all][lower][strict](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fam[eve::ignore_all.else_(42)][lower][strict](a0, a1, a2), T{42});
 };

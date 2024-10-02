@@ -117,7 +117,7 @@ namespace eve::detail
               auto aa = eve::combine(a, a);
               auto bb = eve::combine(b, b);
               auto cc = eve::combine(c, c);
-              auto aabbcc = fma[opts.drop(condition_key)](aa, bb, cc);
+              auto aabbcc = fnms[opts.drop(condition_key)](aa, bb, cc);
               auto s =  slice(aabbcc, eve::upper_);
               return if_else(mask,s,src);
             }
