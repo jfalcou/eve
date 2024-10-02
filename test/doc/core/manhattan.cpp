@@ -1,11 +1,12 @@
 // revision 0
 #include <eve/module/core.hpp>
 #include <iostream>
+#include <iomanip>
 
 int main()
 {
-  eve::wide wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};
-  eve::wide wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
+  eve::wide wf0{0.01, 1.01, 2.01, 3.01, -1.01, -2.01, -3.01, -4.01};
+  eve::wide wf1{0.01, -4.01, 1.01, -1.01, 2.01, -2.01, 3.01, -3.01};
   eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
   eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
   eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
@@ -17,11 +18,18 @@ int main()
   std::cout << "<- wi1                                 = " << wi1 << "\n";
   std::cout << "<- wu0                                 = " << wu0 << "\n";
   std::cout << "<- wu1                                 = " << wu1 << "\n";
-                                                       
+
   std::cout << "-> manhattan(wf0, wf1)                 = " << eve::manhattan(wf0, wf1) << "\n";
   std::cout << "-> manhattan[ignore_last(2)](wf0, wf1) = " << eve::manhattan[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> manhattan[wf0 != 0](wf0, wf1)       = " << eve::manhattan[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> manhattan[pedantic](wf0, wf1)       = " << eve::manhattan[eve::pedantic](wf0, wf1) << "\n";
   std::cout << "-> manhattan(wu0, wu1)                 = " << eve::manhattan(wu0, wu1) << "\n";
   std::cout << "-> manhattan(wi0, wi1)                 = " << eve::manhattan(wi0, wi1) << "\n";
+
+  std::cout << std::hexfloat;
+  std::cout << "-> manhattan[lower][strict](wf0, wf1)  = " << eve::manhattan[eve::lower][eve::strict](wf0, wf1) << "\n";
+  std::cout << "-> manhattan[lower](wf0, wf1)          = " << eve::manhattan[eve::lower](wf0, wf1) << "\n";
+  std::cout << "-> manhattan(wf0, wf1)                 = " << eve::manhattan(wf0, wf1) << "\n";
+  std::cout << "-> manhattan[upper](wf0, wf1)          = " << eve::manhattan[eve::upper](wf0, wf1) << "\n";
+  std::cout << "-> manhattan[upper][strict](wf0, wf1)  = " << eve::manhattan[eve::upper][eve::strict](wf0, wf1) << "\n";
 }
