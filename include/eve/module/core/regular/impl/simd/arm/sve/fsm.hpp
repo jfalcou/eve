@@ -28,7 +28,6 @@ namespace eve::detail
     // We don't care about PROMOTE as we only accept similar types.
     [[maybe_unused]] auto const alt = alternative(m, a, as(a));
     if      constexpr( C::is_complete )       return alt;
-//    else if constexpr( !C::has_alternative )  return minus[m](wide<T, N>(svmls_m(m.mask(as<T>{}), a, b, c)));
     else                                      return if_else(m, eve::fms[o.drop(condition_key)](b, c, a), alt);
   }
 }
