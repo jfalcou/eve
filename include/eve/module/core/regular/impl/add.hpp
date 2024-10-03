@@ -28,18 +28,29 @@
 namespace eve::detail
 {
 
+  template < typename F, callable_options O, typename ... Ts>
+  auto narrow_it(F f, O const & o, Ts ... ts)
+  { using dw_t = downgrade_t<element_type_t<decltype(f(ts...))>>;
+    return convert(f[o.drop(narrow)](ts...), as<dw_t>());
+  }
+
+  template < typename F, callable_options O, typename ... Ts>
+  auto widen_it(F f, O const & o, Ts ... ts)
+  {
+    using up_t = upgrade_t<element_type_t<common_value_t<Ts...>>>;
+    return f[o.drop(widen)](convert(ts ,as< up_t>())...);
+  }
+
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(O::contains(narrow))
     {
-      using n_t = downgrade_t<element_type_t<T>>;
-      return convert(add[o.drop(narrow)](a, b), as<n_t>());
+      return narrow_it(add, o, a, b);
     }
     else if constexpr(O::contains(widen))
     {
-      using n_t = upgrade_t<element_type_t<T>>;
-      return add[o.drop(widen)](convert(a, as<n_t>()), convert(b, as<n_t>()));
+      return widen_it(add, o, a, b);
     }
     else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
