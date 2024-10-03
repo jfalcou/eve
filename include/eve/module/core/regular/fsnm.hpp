@@ -75,7 +75,7 @@ namespace eve
 //!    2. [The operation is performed conditionnaly](@ref conditional)
 //!    3. `pedantic` option always ensures the full compliance to fsnm properties. This can be very expensive if the system
 //!       has no hardware capability.
-//!    4. TO DO : DESCRIBE
+//!    4. The operation is performed as if the parameters where promoted to the common type of the three parameters.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/special_functions/fma)
