@@ -13,7 +13,6 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/fma.hpp>
-
 #include <type_traits>
 
 namespace eve::detail
@@ -52,7 +51,10 @@ namespace eve::detail
         }
         else                                               return fnma.behavior(cpu_{}, opts, a, b, c);
       }
-      else                                                 return fnma.behavior(cpu_{}, opts, a, b, c);
+      else
+      {
+        return fnma.behavior(cpu_{}, opts, a, b, c);
+      }
     }
     // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
@@ -92,7 +94,6 @@ namespace eve::detail
     // NOTE: As those masked version are at the AVX512 level, they will always uses a variant of
     // hardware VMADD, thus ensuring the pedantic behavior by default, hence why we don't care about
     // PEDANTIC. As usual, we don't care about PROMOTE as we only accept similar types.
-
     if      constexpr( C::is_complete )               return alternative(mask, a, as(a));
     else if constexpr( !C::has_alternative )
     {
@@ -110,17 +111,17 @@ namespace eve::detail
           if constexpr(current_api >= avx512)
           {
             auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-            if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_fnmadd_round_pd (a, m, b, c, dir);
-            else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_fnmadd_round_ps (a, m, b, c, dir);
-            else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                                 c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
+            if      constexpr  ( cx == category::float64x8  ) return  _mm512_mask_fnmadd_round_pd (a, m, b, c, dir);
+            else if constexpr  ( cx == category::float32x16 ) return  _mm512_mask_fnmadd_round_ps (a, m, b, c, dir);
+            else if constexpr  ( cx == category::float64x4 ||  cx == category::float64x2 ||
+                                 cx == category::float32x8 ||  cx == category::float32x4 || cx == category::float32x2)
             {
               auto aa = eve::combine(a, a);
               auto bb = eve::combine(b, b);
               auto cc = eve::combine(c, c);
-              auto aabbcc = fma[opts.drop(condition_key)](aa, bb, cc);
+              auto aabbcc = fnma[opts.drop(condition_key)](aa, bb, cc);
               auto s =  slice(aabbcc, eve::upper_);
-              return if_else(cx,s,src);
+              return if_else(mask,s,src);
             }
             else                                             return fnma.behavior(cpu_{}, opts, a, b, c);
           }
@@ -128,7 +129,8 @@ namespace eve::detail
         }
         else                                                 return fnma.behavior(cpu_{}, opts, a, b, c);
       }
-      if      constexpr( cx == category::float32x16 ) return _mm512_mask_fnmadd_ps(a, m, b, c);
+      if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fnma[opts.drop(condition_key)](a, b, c), a);
+      else if constexpr( cx == category::float32x16 ) return _mm512_mask_fnmadd_ps(a, m, b, c);
       else if constexpr( cx == category::float64x8  ) return _mm512_mask_fnmadd_pd(a, m, b, c);
       else if constexpr( cx == category::float32x8  ) return _mm256_mask_fnmadd_ps(a, m, b, c);
       else if constexpr( cx == category::float64x4  ) return _mm256_mask_fnmadd_pd(a, m, b, c);
@@ -137,6 +139,6 @@ namespace eve::detail
       // No rounding issue with integers, so we just mask over regular FMA
       else                                            return if_else(mask, eve::fnma(a, b, c), a);
     }
-    else                                              return if_else(mask, eve::fnma(a, b, c), alternative(mask, a, as(a)));
+    else                                              return if_else(mask, eve::fnma[opts.drop(condition_key)](a, b, c), alternative(mask, a, as(a)));
   }
 }

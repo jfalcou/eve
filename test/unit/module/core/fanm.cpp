@@ -157,9 +157,22 @@ TTS_CASE_WITH("Check behavior of masked fanm on all types",
 {
   using eve::fanm;
   using eve::if_;
+  using eve::lower;
+  using eve::strict;
 
   TTS_IEEE_EQUAL(fanm[t](a0, a1, a2), eve::if_else(t, fanm(a0, a1, a2), a0));
   TTS_IEEE_EQUAL(fanm[if_(t).else_(100)](a0, a1, a2), eve::if_else(t, fanm(a0, a1, a2), 100));
   TTS_IEEE_EQUAL(fanm[eve::ignore_all](a0, a1, a2), a0);
   TTS_IEEE_EQUAL(fanm[eve::ignore_all.else_(42)](a0, a1, a2), T{42});
+
+  TTS_IEEE_EQUAL(fanm[t][lower](a0, a1, a2), eve::if_else(t, fanm[lower](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fanm[if_(t).else_(100)][lower](a0, a1, a2), eve::if_else(t, fanm[lower](a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fanm[eve::ignore_all][lower](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fanm[eve::ignore_all.else_(42)][lower](a0, a1, a2), T{42});
+
+  TTS_IEEE_EQUAL(fanm[t][lower][strict](a0, a1, a2), eve::if_else(t, fanm[lower][strict](a0, a1, a2), a0));
+  TTS_IEEE_EQUAL(fanm[if_(t).else_(100)][lower][strict](a0, a1, a2), eve::if_else(t, fanm[lower][strict](a0, a1, a2), 100));
+  TTS_IEEE_EQUAL(fanm[eve::ignore_all][lower][strict](a0, a1, a2), a0);
+  TTS_IEEE_EQUAL(fanm[eve::ignore_all.else_(42)][lower][strict](a0, a1, a2), T{42});
+
 };

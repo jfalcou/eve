@@ -18,7 +18,8 @@
 namespace eve
 {
   template<typename Options>
-  struct sum_of_prod_t : elementwise_callable<sum_of_prod_t, Options, raw_option, pedantic_option>
+  struct sum_of_prod_t : elementwise_callable<sum_of_prod_t, Options, raw_option, pedantic_option, lower_option,
+                                upper_option, strict_option>
   {
     template<value T,  value U, value V,  value W>
     requires(eve::same_lanes_or_scalar<T, U, V, W>)
@@ -95,6 +96,34 @@ namespace eve
       {
         T cd =  mul(c, d);
         return fma(a, b, cd);
+      }
+      else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+      {
+        if constexpr(O::contains(strict))
+        {
+          auto r = sum_of_prod[o.drop(lower, upper, strict)](a, b, c, d);
+          if constexpr(O::contains(lower))
+            return prev(r);
+          else
+            return next(r);
+        }
+        else
+        {
+          T cdl =  mul[lower](c, d);
+          T cdu =  mul[upper](c, d);
+          if constexpr(O::contains(upper))
+          {
+            auto err = fms[o](c, d, cdl);
+            auto dop = fma[o](a, b, cdu);
+            return add[o][is_finite(err)](dop, err);
+          }
+          else
+          {
+            auto err = fms[o](c, d, cdu);
+            auto dop = fma[o](a, b, cdl);
+            return add[o][is_finite(err)](dop, err);
+          }
+        }
       }
       else
       {

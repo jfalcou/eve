@@ -64,8 +64,6 @@ namespace eve
 //!      constexpr auto add[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto add[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
-//!      constexpr auto div[lower][strict](/*any of the above overloads*/)            noexcept; // 5
-//!      constexpr auto div[upper][strict](/*any of the above overloads*/)            noexcept; // 6
 //!
 //!   }
 //!   @endcode

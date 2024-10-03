@@ -17,7 +17,8 @@
 namespace eve
 {
   template<typename Options>
-  struct manhattan_t : tuple_callable<manhattan_t, Options, pedantic_option, saturated_option>
+  struct manhattan_t : tuple_callable<manhattan_t, Options, pedantic_option, saturated_option, lower_option,
+                                upper_option, strict_option>
   {
     template<value T0, eve::value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)

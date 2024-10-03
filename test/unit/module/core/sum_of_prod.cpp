@@ -67,3 +67,28 @@ TTS_CASE_TPL( "Check sum_of_prod", eve::test::scalar::ieee_reals)
   TTS_EQUAL(psop(we1, i1,  f1, d1), test(we1, i1, f1, d1));
 
 };
+
+
+//==================================================================================================
+// sum_of_prod upper lower tests
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of sum_of_prod upper lower on all types",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000),
+                            tts::randoms(-1000, 1000))
+             )
+  <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::as;
+  using eve::sum_of_prod;
+  using eve::detail::map;
+  using eve::lower;
+  using eve::upper;
+  using eve::strict;
+  TTS_EXPECT(eve::all(sum_of_prod[upper](a0, a1, a2, a3) >= sum_of_prod(a0, a1, a2, a3)));
+  TTS_EXPECT(eve::all(sum_of_prod[lower](a0, a1, a2, a3) <= sum_of_prod(a0, a1, a2, a3)));
+  TTS_EXPECT(eve::all(sum_of_prod[upper][strict](a0, a1, a2, a3) > sum_of_prod(a0, a1, a2, a3)));
+  TTS_EXPECT(eve::all(sum_of_prod[lower][strict](a0, a1, a2, a3) < sum_of_prod(a0, a1, a2, a3)));
+};
