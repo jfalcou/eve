@@ -17,6 +17,13 @@
 namespace eve::detail
 {
 
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE  auto add_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  requires (ppc_abi<abi_t<T, N>> && (O::contains(narrow) || O::contains(widen)))
+  {
+    return add.behavior(cpu_{}, opts, v, w);
+  }
+
 template<callable_options O, typename T, typename N>
 EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b)
     requires ppc_abi<abi_t<T, N>>

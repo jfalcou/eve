@@ -12,6 +12,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 #include <eve/module/core/regular/is_gtz.hpp>
@@ -22,13 +23,25 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 
+#include <iostream>
+
 namespace eve::detail
 {
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    if constexpr(O::contains(narrow))
+    {
+      using n_t = downgrade_t<element_type_t<T>>;
+      return convert(add[o.drop(narrow)](a, b), as<n_t>());
+    }
+    else if constexpr(O::contains(widen))
+    {
+      using n_t = upgrade_t<element_type_t<T>>;
+      return add[o.drop(widen)](convert(a, as<n_t>()), convert(b, as<n_t>()));
+    }
+    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {

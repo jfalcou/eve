@@ -35,6 +35,9 @@ namespace eve
   struct spherical_mode       {};
   struct successor_mode       {};
 
+  struct narrow_mode          {};
+  struct widen_mode           {};
+
   struct upper_mode       {static constexpr int value = FE_UPWARD;     };
   struct lower_mode       {static constexpr int value = FE_DOWNWARD;   };
   struct strict_mode      {};
@@ -69,6 +72,8 @@ namespace eve
   [[maybe_unused]] inline constexpr auto lower            = ::rbr::flag( lower_mode{}           );
   [[maybe_unused]] inline constexpr auto saturated        = ::rbr::flag( saturated_mode{}       );
   [[maybe_unused]] inline constexpr auto strict           = ::rbr::flag( strict_mode{}          );
+  [[maybe_unused]] inline constexpr auto narrow           = ::rbr::flag( narrow_mode{}          );
+  [[maybe_unused]] inline constexpr auto widen            = ::rbr::flag( widen_mode{}           );
 
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
@@ -90,7 +95,9 @@ namespace eve
   struct saturated_option       : detail::exact_option<saturated>       {};
   struct upper_option           : detail::exact_option<upper>           {};
   struct lower_option           : detail::exact_option<lower>           {};
-  struct strict_option           : detail::exact_option<strict>         {};
+  struct strict_option          : detail::exact_option<strict>          {};
+  struct narrow_option          : detail::exact_option<narrow>          {};
+  struct widen_option           : detail::exact_option<widen>           {};
 
   // ----------------------------------------------------------------------------------
   // Turn rounding mode option into the proper constexpr flags for x86 intrinsic

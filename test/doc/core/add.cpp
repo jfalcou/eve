@@ -11,8 +11,8 @@ int main()
   eve::wide wf1{eve::smallestposval(eve::as(1.0)), -eve::smallestposval(eve::as(1.0)), 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};
   eve::wide wi0{0, 1, 2, 3, -1, -2, -3, -4};
   eve::wide wi1{0, -4, 1, -1, 2, -2, 3, -3};
-  eve::wide wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};
-  eve::wide wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
+  eve::wide<std::uint16_t, eve::fixed<8>> wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};
+  eve::wide<std::uint16_t, eve::fixed<8>> wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};
 
   std::cout << std::setprecision(20) << "<- wf0                           = " << wf0 << "\n";
   std::cout << std::setprecision(20) << "<- wf1                           = " << wf1 << "\n";
@@ -32,4 +32,8 @@ int main()
   std::cout << std::setprecision(20) << "-> add[upper](wf0, wf1)   = " << eve::add[eve::upper](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[lower][strict](wf0, wf1)   = " << eve::add[eve::lower][eve::strict](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[upper][strict](wf0, wf1)   = " << eve::add[eve::upper][eve::strict](wf0, wf1) << "\n";
+
+  std::cout << "-> add[narrow](wu0, wu1)         = " << eve::add[eve::narrow](wu0, wu1) << "\n";
+  std::cout << "-> add(wu0, wu1)                 = " << eve::add(wu0, wu1) << "\n";
+  std::cout << "-> add[widen](wu0, wu1)          = " << eve::add[eve::widen](wu0, wu1) << "\n";
 }
