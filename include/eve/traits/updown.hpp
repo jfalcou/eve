@@ -57,12 +57,12 @@ namespace eve
         }
         else if constexpr(std::signed_integral<v_t>)
         {
-          using ud_t = eve::detail::make_integer<sizeof(v_t)*2, signed>::type;
+          using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, signed>::type;
           return ud_t();
         }
         else if constexpr(std::unsigned_integral<v_t>)
         {
-          using ud_t = eve::detail::make_integer<sizeof(v_t)*2, unsigned>::type;
+          using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, unsigned>::type;
           return ud_t();
         }
       };
@@ -70,6 +70,6 @@ namespace eve
     };
   }
 
-  template < typename T > using down_t = detail::down<T>::type;
-  template < typename T > using up_t = detail::up<T>::type;
+  template < typename T > using down_t = typename detail::down<T>::type;
+  template < typename T > using up_t = typename detail::up<T>::type;
 }
