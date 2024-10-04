@@ -19,19 +19,6 @@ namespace eve
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, narrow_option, widen_option>
   {
-
-//     template<eve::value T0, value T1, value... Ts>
-//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(narrow))
-//       constexpr EVE_FORCEINLINE auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-//     -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
-//     { return EVE_DISPATCH_CALL(t0, t1, ts...); }
-
-//     template<eve::value T0, value T1, value... Ts>
-//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-//       constexpr EVE_FORCEINLINE  auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-//     -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
-//     { return EVE_DISPATCH_CALL(t0, t1, ts...); }
-
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> )
       EVE_FORCEINLINE auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
@@ -80,7 +67,7 @@ namespace eve
 //!      constexpr auto add[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto add[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
-//!      constexpr auto add[narrow](/*any of the above overloads*/)                 é noexcept; // 7
+//!      constexpr auto add[narrow](/*any of the above overloads*/)                   noexcept; // 7
 //!      constexpr auto add[widen](/*any of the above overloads*/)                    noexcept; // 8
 //!   }
 //!   @endcode
