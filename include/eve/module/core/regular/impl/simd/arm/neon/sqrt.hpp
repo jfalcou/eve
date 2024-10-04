@@ -19,24 +19,24 @@ namespace eve::detail
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N>  sqrt_(EVE_SUPPORTS(neon128_),
                                     O          const& opts,
-                                    wide<T, N> const& v0) noexcept
+                                    wide<T, N> w) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(cpu_{}, opts, v0);
+    if constexpr(O::contains(lower) || O::contains(upper)) return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     else if constexpr( current_api >= asimd )
     {
-      if      constexpr( cat == category::float32x2 ) return vsqrt_f32(v0);
-      else if constexpr( cat == category::float64x1 ) return vsqrt_f64(v0);
-      else if constexpr( cat == category::float64x2 ) return vsqrtq_f64(v0);
-      else if constexpr( cat == category::float32x4 ) return vsqrtq_f32(v0);
+      if      constexpr( cat == category::float32x2 ) return vsqrt_f32(w);
+      else if constexpr( cat == category::float64x1 ) return vsqrt_f64(w);
+      else if constexpr( cat == category::float64x2 ) return vsqrtq_f64(w);
+      else if constexpr( cat == category::float32x4 ) return vsqrtq_f32(w);
     }
     else
     {
-      auto that = if_else(v0, v0 * rsqrt(v0), v0);
+      auto that = if_else(w, w * rsqrt(w), w);
       if constexpr( platform::supports_invalids || O::contains(raw))
-        return if_else(v0 == inf(as(v0)), v0, that);
+        return if_else(w == inf(as(w)), w, that);
       else
         return that;
     }

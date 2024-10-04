@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/fmx_utils.hpp>
+
 
 namespace eve
 {
@@ -18,17 +20,17 @@ namespace eve
                                              upper_option, lower_option, strict_option>
   {
     template<eve::value T, eve::value U, eve::value V>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept
+    constexpr EVE_FORCEINLINE detail::fmx_promote_rt<T, U, V> operator()(T a, U b, V c) const noexcept
       requires (Options::contains(promote))
     {
-      return EVE_DISPATCH_CALL(a, b, c);
+      return EVE_DISPATCH_CALL_PT((detail::fmx_promote_rt<T, U, V>), a, b, c);
     }
 
     template<eve::value T, eve::value U, eve::value V>
     constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const noexcept
       requires (!Options::contains(promote))
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V>>{}), a, b, c);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U, V>), a, b, c);
     }
 
     EVE_CALLABLE_OBJECT(fms_t, fms_);

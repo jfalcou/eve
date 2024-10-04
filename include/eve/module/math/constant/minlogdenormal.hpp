@@ -13,63 +13,60 @@
 
 namespace eve
 {
-template<typename Options>
-struct minlogdenormal_t : constant_callable<minlogdenormal_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct minlogdenormal_t : constant_callable<minlogdenormal_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<floating_value T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      return T(-0x1.9fe36ap+6);
+      if constexpr (std::same_as<T, float>) return T{-0x1.9fe36ap+6};
+      else                                  return T{-0x1.74910d52d3052p+9};
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      return T(-0x1.74910d52d3052p+9);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
-  }
+    
+    EVE_CALLABLE_OBJECT(minlogdenormal_t, minlogdenormal_);
+  };
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
-
-  EVE_CALLABLE_OBJECT(minlogdenormal_t, minlogdenormal_);
-};
-
-//================================================================================================
-//! @addtogroup math_constants
-//! @{
-//!   @var minlogdenormal
-//!   @brief Callable object computing the least value for which eve::exp is not denormal.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T minlogdenormal(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::minlogdenormal(as<T>())` returns  the least value for which
-//!      eve::exp is not zero.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/minlogdenormal.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto minlogdenormal = functor<minlogdenormal_t>;
+  //================================================================================================
+  //! @addtogroup math_constants
+  //! @{
+  //!   @var minlogdenormal
+  //!   @brief Callable object computing the least value for which eve::exp is not denormal.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T minlogdenormal(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::minlogdenormal(as<T>())` returns  the least value for which
+  //!      eve::exp is not zero.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/regular/minlogdenormal.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto minlogdenormal = functor<minlogdenormal_t>;
 }

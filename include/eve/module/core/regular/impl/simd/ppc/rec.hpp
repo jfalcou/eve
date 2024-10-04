@@ -25,21 +25,21 @@ namespace eve::detail
 {
 
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> v0) noexcept
-  requires ppc_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> rec_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> w) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return rec.behavior(cpu_{}, opts, v0);
+      return rec.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     }
     else if constexpr (O::contains(raw))
     {
-      return vec_re(v0.storage());
+      return vec_re(w.storage());
     }
     else if constexpr (O::contains(pedantic))
     {
-      if (any(is_denormal(v0))) return eve::one(as<T>{}) / v0;
-      else                      return rec(v0);
+      if (any(is_denormal(w))) return eve::one(as<T>{}) / w;
+      else                      return rec(w);
     }
     else
     {
@@ -57,16 +57,16 @@ namespace eve::detail
 
       if constexpr (std::is_same_v<double, T>)
       {
-        auto estimate = refine_rec(v0, rec[raw](v0));
-        estimate      = refine_rec(v0, estimate);
-        estimate      = if_else(is_eqz(v0), v0 | inf(eve::as(v0)), estimate);
-        return fix_inf(v0, estimate);
+        auto estimate = refine_rec(w, rec[raw](w));
+        estimate      = refine_rec(w, estimate);
+        estimate      = if_else(is_eqz(w), w | inf(eve::as(w)), estimate);
+        return fix_inf(w, estimate);
       }
       else if constexpr (std::is_same_v<float, T>)
       {
-        auto estimate = refine_rec(v0, rec[raw](v0));
-        estimate      = if_else(is_eqz(v0), v0 | inf(eve::as(v0)), estimate);
-        return fix_inf(v0, estimate);
+        auto estimate = refine_rec(w, rec[raw](w));
+        estimate      = if_else(is_eqz(w), w | inf(eve::as(w)), estimate);
+        return fix_inf(w, estimate);
       }
     }
   }

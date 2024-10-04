@@ -15,82 +15,83 @@ namespace eve
   template<typename Options>
   struct exp2_t : strict_elementwise_callable<exp2_t, Options, pedantic_option, saturated_option>
   {
-    template<eve::value T>
+    template<value T>
     EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
     {
-      if constexpr(eve::integral_value<T>)
+      if constexpr (integral_value<T>)
       {
-        using vt_t = eve::element_type_t<T>;
-        EVE_ASSERT(eve::all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
-        EVE_ASSERT(eve::all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
+        using vt_t = element_type_t<T>;
+        EVE_ASSERT(all(is_gez(s)), "[eve::exp2] - with integral entries the parameter element(s) must be greater than 0");
+        EVE_ASSERT(all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
       }
-      return EVE_DISPATCH_CALL(s);
+
+      return EVE_DISPATCH_CALL_PT(T, s);
     }
 
-    template<eve::integral_value T, floating_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T>operator()(T v, eve::as<U> target ) const noexcept
+    template<integral_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
     }
 
     EVE_CALLABLE_OBJECT(exp2_t, exp2_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var exp2
-//! @brief  `elementwise_callable` object computing \f$2^x\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto exp2(value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto exp2[conditional_expr auto c](value auto x) noexcept; // 2
-//!      constexpr auto exp2[logical_value auto m](value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
-//!      In particular, for floating inputs:
-//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!        * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!        * If the element is a `NaN`, `NaN` is returned
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp2)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
-//!   *  [DLMF](https://dlmf.nist.gov/4.2)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/exp2.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var exp2
+  //! @brief  `elementwise_callable` object computing \f$2^x\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto exp2(value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto exp2[conditional_expr auto c](value auto x) noexcept; // 2
+  //!      constexpr auto exp2[logical_value auto m](value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1. Returns the [elementwise](@ref glossary_elementwise) exponential of base 2 of the input.
+  //!      In particular, for floating inputs:
+  //!        * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!        * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!        * If the element is a `NaN`, `NaN` is returned
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp2)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+  //!   *  [DLMF](https://dlmf.nist.gov/4.2)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/exp2.cpp}
+  //================================================================================================
   inline constexpr auto exp2 = functor<exp2_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

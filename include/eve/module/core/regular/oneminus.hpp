@@ -24,9 +24,11 @@ namespace eve
   struct oneminus_t : elementwise_callable<oneminus_t, Options, saturated_option, lower_option,
                                            upper_option, strict_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    {
+      return EVE_DISPATCH_CALL_PT(T, a);
+    }
 
     EVE_CALLABLE_OBJECT(oneminus_t, oneminus_);
   };

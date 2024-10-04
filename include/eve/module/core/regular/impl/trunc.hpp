@@ -44,7 +44,7 @@ namespace eve::detail
       }
       else
       {
-        auto not_already_integral = !is_not_less_equal(abs(a0), maxflint(eve::as<T>()));
+        auto not_already_integral = !is_not_less_equal(abs(a0), maxflint(as<T>{}));
         auto a = if_else(not_already_integral, a0, zero);
         return if_else(not_already_integral, trunc[raw](a), a0);
       }
@@ -52,8 +52,7 @@ namespace eve::detail
   }
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  trunc_(EVE_REQUIRES(cpu_), O const& o, T const & a0, as<U> const& ) noexcept
+  EVE_FORCEINLINE constexpr auto trunc_(EVE_REQUIRES(cpu_), O const& o, T const& a0, as<U>) noexcept
   {
     if constexpr(integral_value<T>)
       return convert(a0, as_element<as_integer_t<T,U>>{});

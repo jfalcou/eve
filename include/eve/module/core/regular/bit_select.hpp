@@ -20,7 +20,7 @@ namespace eve
     template<value M, value T, value U>
     constexpr EVE_FORCEINLINE bit_value_t<T, U, M> operator()(M m, T u, U v) const
     {
-      return EVE_DISPATCH_CALL_PT((as<bit_value_t<T, U, M>>{}), m, u, v);
+      return EVE_DISPATCH_CALL_PT((bit_value_t<T, U, M>), m, u, v);
     }
 
     EVE_CALLABLE_OBJECT(bit_select_t, bit_select_);

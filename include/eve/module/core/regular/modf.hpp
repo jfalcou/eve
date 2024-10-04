@@ -21,10 +21,10 @@ namespace eve
   template<typename Options>
   struct modf_t : elementwise_callable<modf_t, Options, pedantic_option, raw_option, almost_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr zipped<T,T> operator()(T a) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr zipped<T, T> operator()(T a) const noexcept
     {
-      return EVE_DISPATCH_CALL(a);
+      return EVE_DISPATCH_CALL_PT((zipped<T, T>), a);
     }
 
     EVE_CALLABLE_OBJECT(modf_t, modf_);

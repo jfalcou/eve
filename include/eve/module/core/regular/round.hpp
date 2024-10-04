@@ -21,9 +21,11 @@ namespace eve
   struct round_t : elementwise_callable<round_t, Options, upward_option, downward_option,
                                         to_nearest_option, toward_zero_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T x) const noexcept
-    { return EVE_DISPATCH_CALL(x); }
+    {
+      return EVE_DISPATCH_CALL_PT(T, x);
+    }
 
     EVE_CALLABLE_OBJECT(round_t, round_);
   };

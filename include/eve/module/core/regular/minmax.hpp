@@ -24,25 +24,29 @@ namespace eve
   template<typename Options>
   struct minmax_t : tuple_callable<minmax_t, Options, pedantic_option, numeric_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr
-    zipped<common_value_t<T0,T1,Ts...>,common_value_t<T0,T1,Ts...>>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires(same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+      return EVE_DISPATCH_CALL_PT((zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>>), t0, t1, ts...);
     }
 
+    template <kumi::non_empty_product_type Tup>
+    using r_t = decltype(zip(min(std::declval<Tup>()), max(std::declval<Tup>())));
+
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    auto operator()(Tup const & t) const noexcept -> decltype(zip(min(t),max(t)))
-    requires(kumi::size_v<Tup> >= 2)
-    { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr r_t<Tup> operator()(Tup const& t) const noexcept
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return EVE_DISPATCH_CALL_PT(r_t<Tup>, t);
+    }
 
     template<typename Callable>
-    requires(!kumi::product_type<Callable> && !eve::value<Callable>)
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
+    EVE_FORCEINLINE constexpr auto operator()(Callable const& f) const noexcept
+      requires(!kumi::product_type<Callable> && !value<Callable>)
+    {
+      return EVE_DISPATCH_CALL(f);
+    }
 
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
   };

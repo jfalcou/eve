@@ -16,60 +16,63 @@ namespace eve
   template<typename Options>
   struct cbrt_t : elementwise_callable<cbrt_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(cbrt_t, cbrt_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//!   @var cbrt
-//!   @brief `elementwise_callable` object computing the cubic root.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto cbrt(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto cbrt[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto cbrt[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`:  [floating value](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1. Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Cube_root)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CubeRoot.html)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/cbrt.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //!   @var cbrt
+  //!   @brief `elementwise_callable` object computing the cubic root.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto cbrt(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto cbrt[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto cbrt[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`:  [floating value](@ref floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1. Returns an [elementwise](@ref glossary_elementwise) cubic root value of the input.
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cbrt)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Cube_root)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CubeRoot.html)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/cbrt.cpp}
+  //================================================================================================
   inline constexpr auto cbrt = functor<cbrt_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

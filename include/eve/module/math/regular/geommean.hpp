@@ -18,71 +18,73 @@ namespace eve
   template<typename Options>
   struct geommean_t : tuple_callable<geommean_t, Options, pedantic_option>
   {
-    template<eve::floating_value T0, eve::floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0,T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<floating_value T0, floating_value T1, floating_value... Ts>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, Ts...>), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const& t) const noexcept  requires(kumi::size_v<Tup> >= 2)  { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<common_value, Tup> operator()(Tup const& t) const noexcept 
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<common_value, Tup>), t);
+    }
 
     EVE_CALLABLE_OBJECT(geommean_t, geommean_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var geommean
-//!
-//! @brief Callable object computing the geometric mean of the inputs.\f$ \left(\prod_{i = 1}^n
-//! x_i\right)^{1/n} \f$.
-//!
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overloads
-//!      constexpr auto geommean(floating_value auto x, floating_value auto ... xs)        noexcept; // 1
-//!      constexpr auto geommean(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto geommean[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto geommean[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`, `...xs`: [real](@ref value) arguments.
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. The geometric mean of the inputs is returned
-//!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/geommean.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var geommean
+  //!
+  //! @brief Callable object computing the geometric mean of the inputs.\f$ \left(\prod_{i = 1}^n
+  //! x_i\right)^{1/n} \f$.
+  //!
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overloads
+  //!      constexpr auto geommean(floating_value auto x, floating_value auto ... xs)        noexcept; // 1
+  //!      constexpr auto geommean(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto geommean[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+  //!      constexpr auto geommean[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`, `...xs`: [real](@ref value) arguments.
+  //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. The geometric mean of the inputs is returned
+  //!    2. equivalent to the call on the elements of the tuple.
+  //!    3. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/geommean.cpp}
+  //================================================================================================
   inline constexpr auto geommean = functor<geommean_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

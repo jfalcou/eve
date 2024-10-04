@@ -28,7 +28,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT((as<T>{}), v);
+      return EVE_DISPATCH_CALL_PT((T), v);
     }
 
     EVE_CALLABLE_OBJECT(bit_floor_t, bit_floor_);

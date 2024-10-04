@@ -22,10 +22,10 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a,
     requires ppc_abi<abi_t<T, N>>
 {
   if constexpr(O::contains(lower) || O::contains(upper))
-    return add.behavior(cpu_{}, opts, a, b);
+    return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
   else if constexpr (O::contains(saturated) && std::integral<T>)
   {
-    return add.behavior(cpu_{}, opts, a, b);
+    return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
   }
   else
   {

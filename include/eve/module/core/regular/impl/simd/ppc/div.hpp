@@ -18,7 +18,7 @@ namespace eve::detail
   {
     if constexpr (O::contains(saturated)|| O::contains(upper) || O::contains(lower))
     {
-      return div.behavior(cpu_{}, opts, a, b);
+      return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(toward_zero) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
     {

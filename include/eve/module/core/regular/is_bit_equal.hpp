@@ -19,20 +19,18 @@ namespace eve
   template<typename Options>
   struct is_bit_equal_t : strict_elementwise_callable<is_bit_equal_t, Options>
   {
-    template <typename T, typename U > using  b_t = bit_value_t<T, U>;
-    template <typename T, typename U > using  ui_t = as_integer_t<b_t<T, U>, unsigned>;
+    template <typename T, typename U> using r_t = as_logical_t<as_integer_t<bit_value_t<T, U>, unsigned>>;
 
     template<value T, value U>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b)  const
-      -> decltype(is_equal(bit_cast(b_t<T, U>(a), as<ui_t<T, U>>()), bit_cast(b_t<T, U>(b), as<ui_t<T, U>>())))
+    constexpr EVE_FORCEINLINE r_t<T, U> operator()(T a, U b) const
     {
-      return EVE_DISPATCH_CALL(a, b);
+      return EVE_DISPATCH_CALL_PT((r_t<T, U>), a, b);
     }
 
     template<value T, value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(logical<T> a, logical<U> b) const
     {
-      return EVE_DISPATCH_CALL_PT((as<common_logical_t<T, U>>{}), a, b);
+      return EVE_DISPATCH_CALL_PT((common_logical_t<T, U>), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_bit_equal_t, is_bit_equal_);

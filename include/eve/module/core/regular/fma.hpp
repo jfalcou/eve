@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/detail/fmx_utils.hpp>
+
 
 namespace eve
 {
@@ -18,17 +20,17 @@ namespace eve
                                              raw_option, lower_option, upper_option, strict_option>
   {
     template<eve::value T, eve::value U, eve::value V>
-    constexpr EVE_FORCEINLINE auto operator()(T a, U b, V c) const noexcept
-      requires(Options::contains(promote))
+    constexpr EVE_FORCEINLINE detail::fmx_promote_rt<T, U, V> operator()(T a, U b, V c) const noexcept
+      requires (Options::contains(promote))
     {
-      return EVE_DISPATCH_CALL(a, b, c);
+      return EVE_DISPATCH_CALL_PT((detail::fmx_promote_rt<T, U, V>), a, b, c);
     }
 
     template<eve::value T, eve::value U, eve::value V>
     constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const noexcept
-      requires(!Options::contains(promote))
+      requires (!Options::contains(promote))
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V>>{}), a, b, c);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U, V>), a, b, c);
     }
 
     EVE_CALLABLE_OBJECT(fma_t, fma_);
@@ -61,8 +63,8 @@ namespace eve
 //!      // Semantic option
 //!      constexpr auto fma[pedantic](value auto x, value auto y, value auto z)                noexcept; // 3
 //!      constexpr auto fma[promote](value auto x, value auto y, value auto z)                 noexcept; // 4
-//!      constexpr auto add[lower](value auto x, value auto y, value auto z)                   noexcept; // 5
-//!      constexpr auto add[upper](value auto x, value auto y, value auto z)                   noexcept; // 6
+//!      constexpr auto fma[lower](value auto x, value auto y, value auto z)                   noexcept; // 5
+//!      constexpr auto fma[upper](value auto x, value auto y, value auto z)                   noexcept; // 6
 //!      constexpr auto fma[lower][srict](value auto x, value auto y, value auto z)            noexcept; // 5
 //!      constexpr auto fma[upper][srict](value auto x, value auto y, value auto z)            noexcept; // 6
 //!   }

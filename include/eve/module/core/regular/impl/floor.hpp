@@ -67,8 +67,7 @@ namespace eve::detail
   }
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
+  EVE_FORCEINLINE constexpr auto floor_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U>) noexcept
   {
     if constexpr(integral_value<T>) return convert(a0, as_element<as_integer_t<T,U>>{});
     else                            return convert(floor(a0), as_element<as_integer_t<T,U>>{});

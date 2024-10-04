@@ -16,7 +16,7 @@ namespace eve::detail
 {
 template<typename T, typename N, callable_options O>
 EVE_FORCEINLINE wide<T, N>
-fma_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& a, wide<T, N> const& b, wide<T, N> const& c) noexcept
+fma_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b, wide<T, N> c) noexcept
 requires arm_abi<abi_t<T, N>>
 {
   // We don't care about PROMOTE as we takes single type

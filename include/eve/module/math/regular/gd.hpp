@@ -19,65 +19,68 @@ namespace eve
   template<typename Options>
   struct gd_t : elementwise_callable<gd_t, Options>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(gd_t, gd_);
   };
 
-//================================================================================================
-//! @addtogroup math_hyper
-//! @{
-//! @var gd
-//! @brief `elementwise_callable` object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto gd(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto gd[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto gd[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!      * `x`: [floating value](@ref eve::floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1.  Returns the [elementwise](@ref glossary_elementwise) gudermanian of the input.
-//!         In particular:
-//!            * If the element is \f$\pm0\f$, \f$0\f$ is returned.
-//!            * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
-//!            * If the element is a `NaN`, `NaN` is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld: Gudermannian](https://mathworld.wolfram.com/Gudermannian.html)
-//!   *  [Wikipedia: Gudermannian function](https://en.wikipedia.org/wiki/Gudermannian_function)
-//!   *  [DLMF: gudermannian functions: gudermannian functions](https://dlmf.nist.gov/4.23#viii)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/gd.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_hyper
+  //! @{
+  //! @var gd
+  //! @brief `elementwise_callable` object computing the gudermanian gd: \f$\int_0^\infty 1/\cosh x dx\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto gd(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto gd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto gd[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!      * `x`: [floating value](@ref eve::floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1.  Returns the [elementwise](@ref glossary_elementwise) gudermanian of the input.
+  //!         In particular:
+  //!            * If the element is \f$\pm0\f$, \f$0\f$ is returned.
+  //!            * If the element is \f$\pm\infty\f$, \f$\pm\pi/2\f$ is returned.
+  //!            * If the element is a `NaN`, `NaN` is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld: Gudermannian](https://mathworld.wolfram.com/Gudermannian.html)
+  //!   *  [Wikipedia: Gudermannian function](https://en.wikipedia.org/wiki/Gudermannian_function)
+  //!   *  [DLMF: gudermannian functions: gudermannian functions](https://dlmf.nist.gov/4.23#viii)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/gd.cpp}
+  //================================================================================================
   inline constexpr auto gd = functor<gd_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

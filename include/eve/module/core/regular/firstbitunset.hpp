@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
     {
-      return EVE_DISPATCH_CALL_PT((as<T>{}), a);
+      return EVE_DISPATCH_CALL_PT((T), a);
     }
 
     EVE_CALLABLE_OBJECT(firstbitunset_t, firstbitunset_);

@@ -22,9 +22,11 @@ namespace eve
 template<typename Options>
 struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option, upper_option>
 {
-  template<eve::value T>
+  template<value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-  { return EVE_DISPATCH_CALL(v); }
+  {
+    return EVE_DISPATCH_CALL_PT(T, v);
+  }
 
   EVE_CALLABLE_OBJECT(sqr_t, sqr_);
 };
@@ -105,11 +107,11 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
       {
         if constexpr( scalar_value<T> )
         {
-          return (eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0))) ? valmax(eve::as(a0)) : sqr(a0);
+          return (abs[saturated](a0) > sqrtvalmax(as{a0})) ? valmax(as{a0}) : sqr(a0);
         }
         else
         {
-          return if_else(eve::abs[saturated](a0) > sqrtvalmax(eve::as(a0)), valmax(eve::as(a0)), sqr(a0));
+          return if_else(abs[saturated](a0) > sqrtvalmax(as{a0}), valmax(as{a0}), sqr(a0));
         }
       }
       else

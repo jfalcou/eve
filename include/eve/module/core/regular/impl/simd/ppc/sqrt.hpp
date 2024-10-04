@@ -16,22 +16,23 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(vmx_),
-                                   O          const&opts,
-                                   wide<T, N> const& v0) noexcept
-  requires ppc_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> w) noexcept
+    requires ppc_abi<abi_t<T, N>>
   {
- if constexpr(O::contains(lower) || O::contains(upper))
+    if constexpr (O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts, v0);
+      return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     }
-    else if constexpr( current_api >= vsx )
-      return vec_sqrt(v0.storage());
+    else if constexpr (current_api >= vsx)
+    {
+      return vec_sqrt(w.storage());
+    }
     else
     {
-      auto that = if_else(is_nez(v0), v0 * rsqrt(v0), v0);
-      if constexpr( platform::supports_invalids && !O::contains(raw))
-        return if_else(v0 == inf(eve::as(v0)), v0, that);
+      auto that = if_else(is_nez(w), w * rsqrt(w), w);
+      
+      if constexpr (platform::supports_invalids && !O::contains(raw))
+        return if_else(w == inf(eve::as(w)), w, that);
       else
         return that;
     }

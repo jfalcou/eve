@@ -18,11 +18,11 @@ namespace eve
   struct is_greater_t : strict_elementwise_callable<is_greater_t, Options, definitely_option>
   {
     template<value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires (same_lanes_or_scalar<T, U>)
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_greater] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL_PT((as<common_logical_t<T, U>>{}), a, b);
+      return EVE_DISPATCH_CALL_PT((common_logical_t<T, U>), a, b);
     }
 
 
@@ -101,16 +101,14 @@ namespace eve
 namespace eve::detail
 {
   template<value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr common_logical_t<T,U>
-  is_greater_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+  EVE_FORCEINLINE constexpr common_logical_t<T, U> is_greater_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
   {
     if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a > b);
-    else                                              return a >  b;
+    else                                              return a > b;
   }
 
   template<value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr common_logical_t<T,U>
-  is_greater_(EVE_REQUIRES(cpu_), O const & o, T const& aa, U const& bb) noexcept
+  EVE_FORCEINLINE constexpr common_logical_t<T, U> is_greater_(EVE_REQUIRES(cpu_), O const& o, T const& aa, U const& bb) noexcept
   {
     if constexpr(O::contains(definitely))
     {
@@ -120,7 +118,7 @@ namespace eve::detail
 
       auto tol = o[definitely].value(w_t{});
       if constexpr(integral_value<decltype(tol)>) return a >  eve::next(b, tol);
-      else              return a > fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
+      else                                        return a > fam(b, tol, eve::max(eve::abs(a), eve::abs(b)));
     }
     else
     {

@@ -16,29 +16,33 @@ namespace eve
   template<typename Options>
   struct max_t : tuple_callable<max_t, Options, pedantic_option, numeric_option>
   {
-    template<eve::value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U>>{}), t, u);
+    template<value T, value U>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), t, u);
     }
 
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
+    template<value T0, value T1, value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T0, T1, Ts...>>{}), t0, t1, ts...);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, Ts...>), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const & t) const noexcept  requires(kumi::size_v<Tup> >= 2) {
-      return EVE_DISPATCH_CALL_PT((as<kumi::apply_traits_t<eve::common_value,Tup>>{}), t);
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<common_value, Tup> operator()(Tup const& t) const noexcept 
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    {
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<common_value,Tup>), t);
     }
 
     template<typename Callable>
-    requires(!kumi::product_type<Callable> && !eve::value<Callable>)
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept { return EVE_DISPATCH_CALL(f); }
+    EVE_FORCEINLINE constexpr auto operator()(Callable const& f) const noexcept
+      requires(!kumi::product_type<Callable> && !value<Callable>)
+    {
+      return EVE_DISPATCH_CALL(f);
+    }
 
     EVE_CALLABLE_OBJECT(max_t, max_);
   };

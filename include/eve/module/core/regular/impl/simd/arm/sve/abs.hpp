@@ -19,7 +19,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> abs_(EVE_REQUIRES(sve_),
                                   C          const& mask,
                                   O          const&,
-                                  wide<T, N> const& v) noexcept
+                                  wide<T, N> v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     constexpr auto  c   = categorize<wide<T, N>>();
@@ -33,12 +33,12 @@ namespace eve::detail
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> abs_(EVE_REQUIRES(sve_),
                                   O          const& opts,
-                                  wide<T, N> const& v) noexcept
+                                  wide<T, N> v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
     
-    if      constexpr(O::contains(saturated))          return abs.behavior(cpu_{}, opts, v);
+    if      constexpr(O::contains(saturated))          return abs.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     else if constexpr( match(c, category::unsigned_) )  return v;
     else                                                return svabs_z(sve_true<T>(),v);
   }

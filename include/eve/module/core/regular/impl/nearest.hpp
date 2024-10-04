@@ -41,8 +41,7 @@ namespace eve::detail
   }
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
+  EVE_FORCEINLINE constexpr auto nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U>) noexcept
   {
     auto z = nearest(a0);
     if constexpr(unsigned_value<U>)

@@ -20,13 +20,13 @@ namespace eve
     template<floating_value T0, integral_value T1>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<T0>{}), t0, n);
+      return EVE_DISPATCH_CALL_PT((T0), t0, n);
     }
 
     template<floating_value T0, auto N>
     EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<T0>{}), t0, n);
+      return EVE_DISPATCH_CALL_PT((T0), t0, n);
     }
 
     EVE_CALLABLE_OBJECT(fracscale_t, fracscale_);

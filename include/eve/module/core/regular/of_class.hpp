@@ -23,10 +23,11 @@ namespace eve
   template<typename Options>
   struct of_class_t : strict_elementwise_callable<of_class_t, Options>
   {
-    template<std::uint8_t I, eve::floating_value T>
-    constexpr EVE_FORCEINLINE logical<T>
-    operator()(T v, fp_class<I> i) const noexcept
-    { return EVE_DISPATCH_CALL( v, i); }
+    template<std::uint8_t I, floating_value T>
+    constexpr EVE_FORCEINLINE logical<T> operator()(T v, fp_class<I> i) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(logical<T>, v, i);
+    }
 
     EVE_CALLABLE_OBJECT(of_class_t, of_class_);
   };

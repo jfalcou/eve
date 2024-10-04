@@ -20,37 +20,37 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
                                    C          const& mask,
                                    O          const& opts,
-                                   wide<T, N> const& v) noexcept
+                                   wide<T, N> w) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    auto const      src = alternative(mask, v, as(v));
+    auto const      src = alternative(mask, w, as(w));
     if constexpr( C::is_complete )
     {
       return src;
     }
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts, v);
+      return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     }
     else
     {
-      auto m   = expand_mask(mask, as(v));
-      return svsqrt_m(src, m, v);
+      auto m   = expand_mask(mask, as(w));
+      return svsqrt_m(src, m, w);
     }
   }
 
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> sqrt_(EVE_REQUIRES(sve_),
                                    O          const& opts,
-                                   wide<T, N> const& v) noexcept
+                                   wide<T, N> w) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(lower) || O::contains(upper))
     {
-      return sqrt.behavior(cpu_{}, opts, v);
+      return sqrt.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     }
     else
-      return svsqrt_z(sve_true<T>(),v);
+      return svsqrt_z(sve_true<T>(),w);
   }
 
 }

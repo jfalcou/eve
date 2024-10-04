@@ -17,13 +17,16 @@ namespace eve
   struct one_t : constant_callable<one_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      return T(1);
+      return T{1};
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(one_t, one_);
   };

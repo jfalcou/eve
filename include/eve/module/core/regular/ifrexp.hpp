@@ -20,7 +20,7 @@ struct ifrexp_t : strict_elementwise_callable<ifrexp_t, Options, pedantic_option
   template<floating_value T>
   constexpr EVE_FORCEINLINE zipped<T, as_integer_t<T>> operator()(T v) const
   {
-    return EVE_DISPATCH_CALL_PT((as<zipped<T, as_integer_t<T>>>{}), v);
+    return EVE_DISPATCH_CALL_PT((zipped<T, as_integer_t<T>>), v);
   }
 
   EVE_CALLABLE_OBJECT(ifrexp_t, ifrexp_);
