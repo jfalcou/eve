@@ -58,7 +58,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexp(O::contains_any(narrow, widen) ||
+    if constexpr(O::contains_any(narrow, widen) ||
       (O::contains_any(lower, upper)  && floating_value<T>) ||
       (O::contains(saturated) && std::integral<T>))
     {
