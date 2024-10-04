@@ -13,6 +13,13 @@
 
 namespace eve::detail
 {
+  template<callable_options O, typename T, typename N>
+  EVE_FORCEINLINE  auto add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>> && (O::contains_any(narrow, widen)))
+  {
+    return add.behavior(cpu_{}, opts, v, w);
+  }
+
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires sve_abi<abi_t<T, N>>
@@ -22,7 +29,7 @@ namespace eve::detail
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
 
-    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
+    if constexpr(O::contains_any(narrow, widen) || (O::contains_any(lower, upper) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
@@ -50,7 +57,7 @@ namespace eve::detail
   requires sve_abi<abi_t<T, N>>
   {
     // We call the saturated add if required or we just go to the common case of doing v+w
-    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>))
+    if constexpr(O::contains_any(narrow, widen) || ((O::contains_any(lower, upper)) && floating_value<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }

@@ -23,34 +23,14 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 
-#include <iostream>
-
 namespace eve::detail
 {
-
-  template < typename F, callable_options O, typename ... Ts>
-  auto narrow_it(F f, O const & o, Ts ... ts)
-  { using dw_t = downgrade_t<element_type_t<decltype(f(ts...))>>;
-    return convert(f[o.drop(narrow)](ts...), as<dw_t>());
-  }
-
-  template < typename F, callable_options O, typename ... Ts>
-  auto widen_it(F f, O const & o, Ts ... ts)
-  {
-    using up_t = upgrade_t<element_type_t<common_value_t<Ts...>>>;
-    return f[o.drop(widen)](convert(ts ,as< up_t>())...);
-  }
-
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(O::contains(narrow))
+    if constexpr(O::contains_any(narrow, widen))
     {
-      return narrow_it(add, o, a, b);
-    }
-    else if constexpr(O::contains(widen))
-    {
-      return widen_it(add, o, a, b);
+      return resize_it(add, o, a, b);
     }
     else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
@@ -106,12 +86,17 @@ namespace eve::detail
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-    r0   = add[o](r0,r1);
-    ((r0 = add[o](r0,rs)),...);
-    return r0;
+    if constexpr(O::contains_any(narrow, widen))
+      return resize_it(add, o, r0, r1, rs...);
+    else
+    {
+      r0   = add[o](r0,r1);
+      ((r0 = add[o](r0,rs)),...);
+      return r0;
+    }
   }
 }

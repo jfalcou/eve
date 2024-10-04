@@ -18,7 +18,7 @@ namespace eve::detail
 
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE  auto add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
-  requires (x86_abi<abi_t<T, N>> && (O::contains(narrow) || O::contains(widen)))
+  requires (x86_abi<abi_t<T, N>> && (O::contains_any(narrow, widen)))
   {
     return add.behavior(cpu_{}, opts, v, w);
   }

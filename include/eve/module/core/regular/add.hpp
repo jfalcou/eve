@@ -10,16 +10,32 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/detail/resize.hpp>
 
 namespace eve
 {
+
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, narrow_option, widen_option>
   {
+
+//     template<eve::value T0, value T1, value... Ts>
+//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(narrow))
+//       constexpr EVE_FORCEINLINE auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+//     -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
+//     { return EVE_DISPATCH_CALL(t0, t1, ts...); }
+
+//     template<eve::value T0, value T1, value... Ts>
+//     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
+//       constexpr EVE_FORCEINLINE  auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+//     -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
+//     { return EVE_DISPATCH_CALL(t0, t1, ts...); }
+
     template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-      EVE_FORCEINLINE constexpr auto/*common_value_t<T0, T1, Ts...>*/ operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> )
+      EVE_FORCEINLINE auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
@@ -64,7 +80,8 @@ namespace eve
 //!      constexpr auto add[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto add[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
-//!
+//!      constexpr auto add[narrow](/*any of the above overloads*/)                 é noexcept; // 7
+//!      constexpr auto add[widen](/*any of the above overloads*/)                    noexcept; // 8
 //!   }
 //!   @endcode
 //!
@@ -91,6 +108,10 @@ namespace eve
 //!    6. The summation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
+//!    7. The summation is computed as usual but then narrowed to the half size element type(if available).
+//!       This decorator ha No effect on float and 1 8 bits integrals
+//!    8. The summation is computed in the double sized element type (if available).
+//!       This decorator has no effect on double and  64 bits integrals.
 //!
 //!   @note
 //!      Although the infix notation with `+` is supported for two parameters, the `+` operator on

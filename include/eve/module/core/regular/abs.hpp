@@ -14,7 +14,8 @@
 namespace eve
 {
   template<typename Options>
-  struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
+  struct abs_t : elementwise_callable<abs_t, Options, saturated_option,
+                                      narrow_option, widen_option>
   {
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
