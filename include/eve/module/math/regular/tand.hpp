@@ -22,63 +22,66 @@ namespace eve
   template<typename Options>
   struct tand_t : elementwise_callable<tand_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(tand_t, tand_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var tand
-//!
-//! @brief `elementwise_callable` object computing the tangent from an input in degrees.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto tand(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto tand[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto tand[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto tand[quarter_circle](floating_value auto x)          noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in
-//!       degrees. In particular:
-//!         * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!         * If the element is \f$\pm\infty\f$, Nan is returned.
-//!         * If the element is a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. Assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/tand.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var tand
+  //!
+  //! @brief `elementwise_callable` object computing the tangent from an input in degrees.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto tand(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto tand[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto tand[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto tand[quarter_circle](floating_value auto x)          noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in
+  //!       degrees. In particular:
+  //!         * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!         * If the element is \f$\pm\infty\f$, Nan is returned.
+  //!         * If the element is a `NaN`, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!    3. Assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/tand.cpp}
+  //================================================================================================
   inline constexpr auto tand = functor<tand_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

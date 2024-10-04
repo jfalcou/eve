@@ -18,65 +18,68 @@ namespace eve
   template<typename Options>
   struct tanh_t : elementwise_callable<tanh_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(tanh_t, tanh_);
   };
 
-//================================================================================================
-//! @addtogroup math_hyper
-//! @{
-//! @var tanh
-//!
-//! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto tanh(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto tanh[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto tanh[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic tangent of the input.
-//!      In particular:
-//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
-//!        * If the element is a `NaN`, `NaN` is returned.
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/tanh)
-//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Hyperbolic_functions)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicTangent.html)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/tanh.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_hyper
+  //! @{
+  //! @var tanh
+  //!
+  //! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}{e^x+e^{-x}}\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto tanh(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto tanh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto tanh[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic tangent of the input.
+  //!      In particular:
+  //!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!        * If the element is \f$\pm\infty\f$, \f$\pm1\f$ returned.
+  //!        * If the element is a `NaN`, `NaN` is returned.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/tanh)
+  //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Hyperbolic_functions)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicTangent.html)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/tanh.cpp}
+  //================================================================================================
   inline constexpr auto tanh = functor<tanh_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

@@ -25,61 +25,64 @@ namespace eve
   template<typename Options>
   struct sinpicospi_t : elementwise_callable< sinpicospi_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE zipped<T, T> operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT((zipped<T, T>), v);
+    }
 
     EVE_CALLABLE_OBJECT(sinpicospi_t, sinpicospi_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var sinpicospi
-//!
-//! @brief `elementwise_callable` object computing the simultaneous  computation of sin an cos from
-//! an argument in \f$\pi\f$ multiples.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto sinpicospi(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto sinpicospi[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto sinpicospi[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto sinpicospi[quarter_circle](floating_value auto x)          noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!      * `x`: [floating value](@ref floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!   1 .The computation returns a tuple-like whose elements are `sinpi(x)` and `cospi(x)`
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!   3. Assumes that the inputs elements  belong to \f$[-1/4,\1/4]\f$ and return NaN outside.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/sinpicospi.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var sinpicospi
+  //!
+  //! @brief `elementwise_callable` object computing the simultaneous  computation of sin an cos from
+  //! an argument in \f$\pi\f$ multiples.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto sinpicospi(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sinpicospi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sinpicospi[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto sinpicospi[quarter_circle](floating_value auto x)          noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!      * `x`: [floating value](@ref floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!   1 .The computation returns a tuple-like whose elements are `sinpi(x)` and `cospi(x)`
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!   3. Assumes that the inputs elements  belong to \f$[-1/4,\1/4]\f$ and return NaN outside.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/sinpicospi.cpp}
+  //================================================================================================
  inline constexpr auto sinpicospi = functor<sinpicospi_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

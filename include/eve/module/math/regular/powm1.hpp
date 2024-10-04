@@ -18,68 +18,72 @@ namespace eve
   template<typename Options>
   struct powm1_t : elementwise_callable<powm1_t, Options, raw_option>
   {
-    template<eve::floating_scalar_value T, eve::integral_scalar_value U>
+    template<floating_scalar_value T, integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+    {
+      return EVE_DISPATCH_CALL_PT(T, v, w);
+    }
 
-    template<eve::value T, eve::value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), v, w);
+    }
 
     EVE_CALLABLE_OBJECT(powm1_t, powm1_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var powm1
-//!
-//! @brief Callable object computing powm1: \f$x^y-1\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto powm1(floating_value auto x, floating_value auto y)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto powm1[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
-//!      constexpr auto powm1[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto powm1[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`, `y`: [floating value](@ref floating_value) arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
-//!       even when `y` is very small, or when `x` is close to 1.
-//!    2. [The operation is performed conditionnaly](@ref conditional)
-//!    3. faster but less accurate call.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/powm1.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var powm1
+  //!
+  //! @brief Callable object computing powm1: \f$x^y-1\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto powm1(floating_value auto x, floating_value auto y)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto powm1[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+  //!      constexpr auto powm1[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto powm1[raw](floating_value auto x, floating_value auto y)                     noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`, `y`: [floating value](@ref floating_value) arguments.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) power minus one, with good accuracy,
+  //!       even when `y` is very small, or when `x` is close to 1.
+  //!    2. [The operation is performed conditionnaly](@ref conditional)
+  //!    3. faster but less accurate call.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/powm1.cpp}
+  //================================================================================================
   inline constexpr auto powm1 = functor<powm1_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

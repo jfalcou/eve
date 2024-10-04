@@ -32,9 +32,11 @@ namespace eve
         else                                      return T{0x1.bb8226f502bf8p+0};
       }
     }
-
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(inv_egamma_t, inv_egamma_);
   };

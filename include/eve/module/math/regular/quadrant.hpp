@@ -16,9 +16,11 @@ namespace eve
   template<typename Options>
   struct quadrant_t : elementwise_callable<quadrant_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(quadrant_t, quadrant_);
   };

@@ -20,61 +20,64 @@ namespace eve
   template<typename Options>
   struct sinh_t : elementwise_callable<sinh_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(sinh_t, sinh_);
   };
 
-//================================================================================================
-//! @addtogroup math_hyper
-//! @{
-//! @var sinh
-//!
-//! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}2\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto sinh(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto sinh[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto sinh[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!      * `x`: [floating value](@ref floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
-//!       In particular:
-//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
-//!        * If the element is a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/sinh.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_hyper
+  //! @{
+  //! @var sinh
+  //!
+  //! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}2\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto sinh(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sinh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sinh[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!      * `x`: [floating value](@ref floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input.
+  //!       In particular:
+  //!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
+  //!        * If the element is a `NaN`, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/sinh.cpp}
+  //================================================================================================
   inline constexpr auto sinh = functor<sinh_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

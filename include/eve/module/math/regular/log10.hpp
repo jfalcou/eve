@@ -18,67 +18,70 @@ namespace eve
   template<typename Options>
   struct log10_t : elementwise_callable<log10_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE  constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE  constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(log10_t, log10_);
   };
 
-//================================================================================================
-//! @addtogroup math_log
-//! @{
-//! @var log10
-//!
-//! @brief `elementwise_callable` object computing the base 10  logarithm: \f$\log_{10} x\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto log10(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto log10[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!    * `x`: [floating value](@ref eve::floating_value).
-//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!    * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1.  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
-//!      In particular, for floating inputs:
-//!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-//!        * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-//!        * If the element is less than 0, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log10)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CommonLogarithm.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/log10.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_log
+  //! @{
+  //! @var log10
+  //!
+  //! @brief `elementwise_callable` object computing the base 10  logarithm: \f$\log_{10} x\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto log10(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto log10[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!    * `x`: [floating value](@ref eve::floating_value).
+  //!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!    * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1.  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
+  //!      In particular, for floating inputs:
+  //!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+  //!        * If the element is \f$1\f$, \f$+0\f$ is returned.
+  //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+  //!        * If the element is less than 0, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log10)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CommonLogarithm.html)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/log10.cpp}
+  //================================================================================================
   inline constexpr auto log10 = functor<log10_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
