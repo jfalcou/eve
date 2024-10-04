@@ -28,12 +28,12 @@ namespace eve
         }
         else if constexpr(std::signed_integral<v_t>)
         {
-          using sd_t = eve::detail::make_integer<sizeof(v_t)/2, signed>::type;
+          using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, signed>::type;
           return sd_t();
         }
         else if constexpr(std::unsigned_integral<v_t>)
         {
-          using sd_t = eve::detail::make_integer<sizeof(v_t)/2, unsigned>::type;
+          using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, unsigned>::type;
           return sd_t();
         }
       };
