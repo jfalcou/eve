@@ -17,78 +17,81 @@ namespace eve
   template<typename Options>
   struct hypot_t : tuple_callable<hypot_t, Options, pedantic_option>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
+    template<value T0, value T1, value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(t0,  t1, ts...); }
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, Ts...>), t0,  t1, ts...);
+    }
 
     template<kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
-    operator()(Tup const & t) const noexcept
-    requires(kumi::size_v<Tup> >= 2)
-    { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<common_value, Tup> operator()(Tup const & t) const noexcept
+      requires (kumi::size_v<Tup> >= 2)
+    {
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<common_value, Tup>), t);
+    }
 
     EVE_CALLABLE_OBJECT(hypot_t, hypot_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var hypot
-//! @brief `tuple_callable` computing the \f$l_2\f$ norm of its inputs.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overloads
-//!      constexpr auto hypot(value auto x, value auto ... xs)                          noexcept; // 1
-//!      constexpr auto hypot(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto hypot[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto hypot[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
-//!
-//!      // Semantic options
-//!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                noexcept; // 4
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!    * `x`, `...xs`: [real](@ref value) arguments.
-//!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!    * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$.
-//!        The result type is the [common value type](@ref common_value_t) of the
-//!        absolute values of the parameters.
-//!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
-//!    4. The pedantic option`  computes the result without undue overflow or underflow
-//!        at intermediate stages of the computation and can be more accurate than the regulard call.
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/hypot.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var hypot
+  //! @brief `tuple_callable` computing the \f$l_2\f$ norm of its inputs.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overloads
+  //!      constexpr auto hypot(value auto x, value auto ... xs)                          noexcept; // 1
+  //!      constexpr auto hypot(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto hypot[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+  //!      constexpr auto hypot[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+  //!
+  //!      // Semantic options
+  //!      constexpr auto hypot[pedantic](/*any of the above overloads*/)                noexcept; // 4
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!    * `x`, `...xs`: [real](@ref value) arguments.
+  //!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+  //!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!    * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns  \f$\displaystyle\sqrt{\sum_1^n |x_i|^2}\f$.
+  //!        The result type is the [common value type](@ref common_value_t) of the
+  //!        absolute values of the parameters.
+  //!    2. equivalent to the call on the elements of the tuple.
+  //!    3. [The operation is performed conditionnaly](@ref conditional)
+  //!    4. The pedantic option`  computes the result without undue overflow or underflow
+  //!        at intermediate stages of the computation and can be more accurate than the regulard call.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/hypot)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Pythagorean_addition)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/hypot.cpp}
+  //================================================================================================
   inline constexpr auto hypot = functor<hypot_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

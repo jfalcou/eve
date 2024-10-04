@@ -18,65 +18,68 @@ namespace eve
   template<typename Options>
   struct sinc_t : elementwise_callable<sinc_t, Options, quarter_circle_option, half_circle_option, full_circle_option, medium_option, big_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(sinc_t, sinc_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var sinc
-//!
-//! @brief `elementwise_callable` object computing the sine cardinal.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto sinc(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto sinc[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto sinc[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) sine of the input divided by the input.
-//!      In particular:
-//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!       * If the element is \f$\pm\infty\f$, 0 is returned.
-//!       * If the element is a `Nan`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_cardinal)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/sinc.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var sinc
+  //!
+  //! @brief `elementwise_callable` object computing the sine cardinal.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto sinc(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sinc[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sinc[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1. Returns the [elementwise](@ref glossary_elementwise) sine of the input divided by the input.
+  //!      In particular:
+  //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+  //!       * If the element is \f$\pm\infty\f$, 0 is returned.
+  //!       * If the element is a `Nan`, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia](https://fr.wikipedia.org/wiki/Sinus_cardinal)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/SineCardinalFunction.html)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/sinc.cpp}
+  //================================================================================================
  inline constexpr auto sinc = functor<sinc_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

@@ -18,78 +18,80 @@ namespace eve
   template<typename Options>
   struct logspace_add_t : tuple_callable<logspace_add_t, Options>
   {
-    template<eve::floating_value T, floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<floating_value T, floating_value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(t, u);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), t, u);
     }
 
-    template<eve::floating_value T0, floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
+    template<floating_value T0, floating_value T1, floating_value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, Ts...>), t0,  t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tuple>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tuple>
-    operator()(Tuple const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value, Tuple> operator()(Tuple const& t) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<eve::common_value, Tuple>), t);
+    }
 
 
     EVE_CALLABLE_OBJECT(logspace_add_t, logspace_add_);
   };
 
-//================================================================================================
-//! @addtogroup math_log
-//! @{
-//! @var logspace_add
-//!
-//! @brief `tuple_callable` object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n
-//! e^{\log x_i}\right)\f$
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overloads
-//!      constexpr auto logspace_add(floating_value auto x, floating_value auto ... xs)                          noexcept; // 1
-//!      constexpr auto logspace_add(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto logspace_add[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto logspace_add[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`, `...xs`: [real](@ref floating_value) arguments.
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. The call `logspace_add(x, xs...)` is semantically equivalent to `log(exp(log(x)) +  + exp(log(xs))...)`
-//!      without causing unnecessary overflows or throwing away too much accuracy.
-//!    2. equivalent to the call on the elements of the tuple.
-//!    3. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/logspace_add.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_log
+  //! @{
+  //! @var logspace_add
+  //!
+  //! @brief `tuple_callable` object computing the logspace_add operation: \f$\log\left(\sum_{i = 0}^n
+  //! e^{\log x_i}\right)\f$
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overloads
+  //!      constexpr auto logspace_add(floating_value auto x, floating_value auto ... xs)                          noexcept; // 1
+  //!      constexpr auto logspace_add(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto logspace_add[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+  //!      constexpr auto logspace_add[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`, `...xs`: [real](@ref floating_value) arguments.
+  //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. The call `logspace_add(x, xs...)` is semantically equivalent to `log(exp(log(x)) +  + exp(log(xs))...)`
+  //!      without causing unnecessary overflows or throwing away too much accuracy.
+  //!    2. equivalent to the call on the elements of the tuple.
+  //!    3. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/logspace_add.cpp}
+  //================================================================================================
   inline constexpr auto logspace_add = functor<logspace_add_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

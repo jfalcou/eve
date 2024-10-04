@@ -21,77 +21,77 @@ namespace eve
     {
       EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
       EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
-      return EVE_DISPATCH_CALL(t0, n);
+
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T0, T1>), t0, n);
     }
 
     EVE_CALLABLE_OBJECT(significants_t, significants_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//!   @var significants
-//!   @brief Computes the rounding to n significants digits of the first input.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      constexpr auto significants(auto floating_value x, auto value n) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!      * `x`: [floating argument](@ref eve::floating_value).
-//!      * `n` : [value argument](@ref eve::integral_value). Must be positive and integral or flint.
-//!
-//!    **Return value**
-//!
-//!      Computes  [elementwise](@ref glossary_elementwise) the rounding to n
-//!      significants digits of `x`.
-//!      With null n the result is a NaN.
-//!
-//! @warning Floating numbers are not stored in decimal form. So if you try `significants` with
-//!   a not exactly representable number the result can be not exactly what you expect.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/core/significants.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //!   @var significants
+  //!   @brief Computes the rounding to n significants digits of the first input.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      constexpr auto significants(auto floating_value x, auto value n) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!      * `x`: [floating argument](@ref eve::floating_value).
+  //!      * `n` : [value argument](@ref eve::integral_value). Must be positive and integral or flint.
+  //!
+  //!    **Return value**
+  //!
+  //!      Computes  [elementwise](@ref glossary_elementwise) the rounding to n
+  //!      significants digits of `x`.
+  //!      With null n the result is a NaN.
+  //!
+  //! @warning Floating numbers are not stored in decimal form. So if you try `significants` with
+  //!   a not exactly representable number the result can be not exactly what you expect.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/core/significants.cpp}
+  //================================================================================================
   inline constexpr auto significants = functor<significants_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
-namespace detail
-{
-  template<floating_value T, value U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
+  namespace detail
   {
-    using r_t = as_wide_as_t<T, U>;
-    if constexpr(integral_value<U>)
+    template<floating_value T, value U, callable_options O>
+    EVE_FORCEINLINE constexpr auto significants_(EVE_REQUIRES(cpu_), O const &, T const& a, U const& n) noexcept
     {
-      return significants(r_t(a), convert(n, as_element<T>()));
-    }
-    else
-    {
-      EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
-      EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
-      auto e      = floor(inc(log10(eve::abs(a)) - n));
-      auto factor = exp10(abs(e));
-      auto rfactor = rec[pedantic](factor);
-      auto tmp    = if_else(is_gez(e), nearest(a*rfactor)*factor, nearest(a*factor)*rfactor);
-      tmp         = if_else(is_eqz(a), a, tmp);
-      return if_else(is_nez(n), tmp, allbits);
+      using r_t = as_wide_as_t<T, U>;
+      if constexpr(integral_value<U>)
+      {
+        return significants(r_t(a), convert(n, as_element<T>()));
+      }
+      else
+      {
+        EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
+        EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
+        auto e      = floor(inc(log10(eve::abs(a)) - n));
+        auto factor = exp10(abs(e));
+        auto rfactor = rec[pedantic](factor);
+        auto tmp    = if_else(is_gez(e), nearest(a*rfactor)*factor, nearest(a*factor)*rfactor);
+        tmp         = if_else(is_eqz(a), a, tmp);
+        return if_else(is_nez(n), tmp, allbits);
+      }
     }
   }
-}
 }

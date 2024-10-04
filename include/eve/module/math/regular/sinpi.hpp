@@ -18,67 +18,70 @@ namespace eve
   template<typename Options>
   struct sinpi_t : elementwise_callable<sinpi_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(sinpi_t, sinpi_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var sinpi
-//!
-//! @brief `elementwise_callable` object computing the sine from an input in \f$\pi\f$ multiples.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto sinpi(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto sinpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto sinpi[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto sinpi[quarter_circle](floating_value auto x)          noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!      * `x`: [floating value](@ref floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1.   Returns the [elementwise](@ref glossary_elementwise) cosine of the input in \f$\pi\f$ multiples.
-//!       The call `sinpi(x)` is  equivalent to \f$\cos(\pi x)\f$.
-//!       In particular:
-//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!        * If the element is \f$\pm1/2\f$, \f$1\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, Nan is returned.
-//!        * If the element is a `Nan`, `Nan` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. Assumes that the inputs elements  belong to \f$[-1/4,1/4]\f$ and return NaN outside.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/sinpi.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var sinpi
+  //!
+  //! @brief `elementwise_callable` object computing the sine from an input in \f$\pi\f$ multiples.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto sinpi(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sinpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sinpi[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto sinpi[quarter_circle](floating_value auto x)          noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!      * `x`: [floating value](@ref floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1.   Returns the [elementwise](@ref glossary_elementwise) cosine of the input in \f$\pi\f$ multiples.
+  //!       The call `sinpi(x)` is  equivalent to \f$\cos(\pi x)\f$.
+  //!       In particular:
+  //!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!        * If the element is \f$\pm1/2\f$, \f$1\f$ is returned.
+  //!        * If the element is \f$\pm\infty\f$, Nan is returned.
+  //!        * If the element is a `Nan`, `Nan` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!    3. Assumes that the inputs elements  belong to \f$[-1/4,1/4]\f$ and return NaN outside.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/sinpi.cpp}
+  //================================================================================================
   inline constexpr auto sinpi = functor<sinpi_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

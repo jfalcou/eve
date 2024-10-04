@@ -18,8 +18,11 @@ namespace eve
   template<typename Options>
   struct radinpi_t : elementwise_callable<radinpi_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(radinpi_t, radinpi_);
   };

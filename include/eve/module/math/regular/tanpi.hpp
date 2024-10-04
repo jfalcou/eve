@@ -21,67 +21,70 @@ namespace eve
   template<typename Options>
   struct tanpi_t : elementwise_callable<tanpi_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(tanpi_t, tanpi_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var tanpi
-//!
-//! @brief `elementwise_callable` object computing the tangent from an input in \f$\pi\f$ multiples.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto tanpi(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto tanpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto tanpi[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto tanpi[quarter_circle](floating_value auto x)          noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!      * `x`: [floating value](@ref floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
-//!       multiples. In particular:
-//!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, Nan is returned.
-//!        * If the element is a `Nan`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. Assumes that the inputs elements  belong to \f$[-1/4,1/4]\f$ and return NaN outside.
-//!
-//!  @groupheader{Example}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var tanpi
+  //!
+  //! @brief `elementwise_callable` object computing the tangent from an input in \f$\pi\f$ multiples.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto tanpi(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto tanpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto tanpi[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto tanpi[quarter_circle](floating_value auto x)          noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!      * `x`: [floating value](@ref floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) tangent of the input expressed in \f$\pi\f$
+  //!       multiples. In particular:
+  //!        * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!        * If the element is \f$\pm\infty\f$, Nan is returned.
+  //!        * If the element is a `Nan`, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!    3. Assumes that the inputs elements  belong to \f$[-1/4,1/4]\f$ and return NaN outside.
+  //!
+  //!  @groupheader{Example}
+  //================================================================================================
   inline constexpr auto tanpi = functor<tanpi_t>;
-//================================================================================================
-//!  @godbolt{doc/math/tanpi.cpp}
-//================================================================================================
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @godbolt{doc/math/tanpi.cpp}
+  //================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

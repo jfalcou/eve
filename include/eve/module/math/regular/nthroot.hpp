@@ -17,69 +17,73 @@ namespace eve
   template<typename Options>
   struct nthroot_t : strict_elementwise_callable<nthroot_t, Options, raw_option>
   {
-    template<eve::floating_value T, eve::integral_value U>
+    template<floating_value T, integral_value U>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, U> operator()(T v, U w) const noexcept
-    requires(eve::same_lanes_or_scalar<T, U>)
-    { return EVE_DISPATCH_CALL(v, w); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, U>), v, w);
+    }
 
-    template<eve::floating_value T, eve::floating_value U>
+    template<floating_value T, floating_value U>
     EVE_FORCEINLINE  constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), v, w);
+    }
 
     EVE_CALLABLE_OBJECT(nthroot_t, nthroot_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var nthroot
-//!
-//! @brief Callable object computing the nth root: \f$x^{1/n}\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto nthroot(floating_value auto x, value auto n) noexcept;             noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto nthroot[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
-//!      constexpr auto nthroot[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto nthroot[raw](/* any of the above overloads */)                     noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `n`: [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref is_flint).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the value of \f$x^{1/n}\f$. For negative `x` the value returned is a Nan as soon as `n`
-//!      is not an odd integer.
-//!    2. [The operation is performed conditionnaly](@ref conditional)
-//!    3. Speedier but less accurate computation.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/nthroot.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var nthroot
+  //!
+  //! @brief Callable object computing the nth root: \f$x^{1/n}\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto nthroot(floating_value auto x, value auto n) noexcept;             noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto nthroot[conditional_expr auto c](/* any of the above overloads */) noexcept; // 2
+  //!      constexpr auto nthroot[logical_value auto m](/* any of the above overloads */)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto nthroot[raw](/* any of the above overloads */)                     noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `n`: [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref is_flint).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the value of \f$x^{1/n}\f$. For negative `x` the value returned is a Nan as soon as `n`
+  //!      is not an odd integer.
+  //!    2. [The operation is performed conditionnaly](@ref conditional)
+  //!    3. Speedier but less accurate computation.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/nthroot.cpp}
+  //================================================================================================
   inline constexpr auto nthroot = functor<nthroot_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

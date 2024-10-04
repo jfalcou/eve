@@ -15,58 +15,61 @@ namespace eve
   template<typename Options>
   struct log_abs_t : elementwise_callable<log_abs_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(log_abs_t, log_abs_);
   };
 
-//================================================================================================
-//! @addtogroup math_log
-//! @{
-//! @var log_abs
-//!
-//! @brief Callable object computing the natural logarithm of the absolute value of the input.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto log_abs(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto log_abs[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto log[logical_value auto m](floating_value auto x)        noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!    * `x`: [floating value](@ref eve::floating_value).
-//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!    * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
-//!       the absolute value of the input.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/log_abs.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_log
+  //! @{
+  //! @var log_abs
+  //!
+  //! @brief Callable object computing the natural logarithm of the absolute value of the input.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto log_abs(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto log_abs[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto log[logical_value auto m](floating_value auto x)        noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!    * `x`: [floating value](@ref eve::floating_value).
+  //!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!    * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns [elementwise](@ref glossary_elementwise) the natural logarithm  of
+  //!       the absolute value of the input.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/log_abs.cpp}
+  //================================================================================================
   inline constexpr auto log_abs = functor<log_abs_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
