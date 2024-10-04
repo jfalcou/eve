@@ -122,7 +122,7 @@ self_lognot(logical<wide<T, N>> v) noexcept requires x86_abi<abi_t<T, N>>
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_eq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -222,7 +222,7 @@ self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_neq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -284,7 +284,7 @@ self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_less(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -349,11 +349,11 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       else if constexpr( use_avx2 && c == category::uint16x16 ) return unsigned_cmp(v, w);
       else if constexpr( use_avx2 && c == category::int8x32 ) return _mm256_cmpgt_epi8(w, v);
       else if constexpr( use_avx2 && c == category::uint8x32 ) return unsigned_cmp(v, w);
-      else if constexpr( c == category::int64x2 ) return map_pt(as<as_logical_t<wide<T, N>>>{}, lt, v, w);
+      else if constexpr( c == category::int64x2 ) return map_pt(as<logical<wide<T, N>>>{}, lt, v, w);
       else if constexpr( c == category::int32x4 ) return _mm_cmplt_epi32(v, w);
       else if constexpr( c == category::int16x8 ) return _mm_cmplt_epi16(v, w);
       else if constexpr( c == category::int8x16 ) return _mm_cmplt_epi8(v, w);
-      else if constexpr( c == category::uint64x2 ) return map_pt(as<as_logical_t<wide<T, N>>>{}, lt, v, w);
+      else if constexpr( c == category::uint64x2 ) return map_pt(as<logical<wide<T, N>>>{}, lt, v, w);
       else if constexpr( c == category::uint32x4 ) return unsigned_cmp(v, w);
       else if constexpr( c == category::uint16x8 ) return unsigned_cmp(v, w);
       else if constexpr( c == category::uint8x16 ) return unsigned_cmp(v, w);
@@ -364,7 +364,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_greater(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -432,7 +432,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       else if constexpr( use_avx2 && c == category::int8x32 ) return _mm256_cmpgt_epi8(v, w);
       else if constexpr( use_avx2 && c == category::uint8x32 ) return unsigned_cmp(v, w);
       else if constexpr( use_sse4 && c == category::int64x2 ) return _mm_cmpgt_epi64(v, w);
-      else if constexpr( c == category::int64x2 ) return map_pt(as<as_logical_t<wide<T, N>>>{}, gt, v, w);
+      else if constexpr( c == category::int64x2 ) return map_pt(as<logical<wide<T, N>>>{}, gt, v, w);
       else if constexpr( c == category::int32x4 ) return _mm_cmpgt_epi32(v, w);
       else if constexpr( c == category::int16x8 ) return _mm_cmpgt_epi16(v, w);
       else if constexpr( c == category::int8x16 ) return _mm_cmpgt_epi8(v, w);

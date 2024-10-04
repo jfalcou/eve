@@ -18,9 +18,9 @@ namespace eve::detail
   {
     if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
-    else if constexpr (O::contains(saturated) && std::integral<T>) return mul.behavior(cpu_{}, opts, a, b);
+    else if constexpr (O::contains(saturated) && std::integral<T>) return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     else                                                            return svmul_x(sve_true<T>(), a, b);
   }
 
@@ -35,13 +35,13 @@ namespace eve::detail
     if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
-     return mul.behavior(cpu_{}, opts, a, b);
+     return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
       //  if saturated on integer, we don't have masked op so we delegate
       if        constexpr (O::contains(saturated) && std::integral<T>)
-        return mul.behavior(cpu_{}, opts, a, b);
+        return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       //  If not, we can mask if there is no alterative value
       else  if  constexpr (!C::has_alternative && (sizeof(T) > 1))
       {
@@ -51,7 +51,7 @@ namespace eve::detail
       // If not, we delegate to the automasking
       else
       {
-        return mul.behavior(cpu_{}, opts, a, b);
+        return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
 
     }

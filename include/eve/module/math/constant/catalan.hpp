@@ -13,67 +13,70 @@
 
 namespace eve
 {
-template<typename Options>
-struct catalan_t : constant_callable<catalan_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct catalan_t : constant_callable<catalan_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<floating_value T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.d4f972p-1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.d4f97p-1);
-      else                                         return T(0x1.d4f972p-1);
+      if constexpr (std::same_as<T, float>)
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.d4f972p-1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.d4f97p-1};
+        else                                      return T{0x1.d4f972p-1};
+      }
+      else
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.d4f9713e8135ep-1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.d4f9713e8135dp-1};
+        else                                      return T{0x1.d4f9713e8135dp-1};
+      }
     }
-    else
+
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(as<T> v) const
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.d4f9713e8135ep-1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.d4f9713e8135dp-1);
-      else                                         return T(0x1.d4f9713e8135dp-1);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_CALLABLE_OBJECT(catalan_t, catalan_);
+  };
 
-  EVE_CALLABLE_OBJECT(catalan_t, catalan_);
-};
-
-//================================================================================================
-//! @addtogroup math_constants
-//! @{
-//!   @var catalan
-//!   @brief Callable object computing the catalan constant \f$\beta(2) = \sum_0^\infty
-//!   \frac{(-1)^n}{(2n+1)^2}\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!     template< eve::floating_value T > constexpr T catalan(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::catalan(as<T>())` returns  the catalan constant \f$\beta(2) = \sum_0^\infty
-//!      \frac{(-1)^n}{(2n+1)^2}\f$.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/catalan.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto catalan = functor<catalan_t>;
+  //================================================================================================
+  //! @addtogroup math_constants
+  //! @{
+  //!   @var catalan
+  //!   @brief Callable object computing the catalan constant \f$\beta(2) = \sum_0^\infty
+  //!   \frac{(-1)^n}{(2n+1)^2}\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template< eve::floating_value T > constexpr T catalan(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::catalan(as<T>())` returns  the catalan constant \f$\beta(2) = \sum_0^\infty
+  //!      \frac{(-1)^n}{(2n+1)^2}\f$.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/regular/catalan.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto catalan = functor<catalan_t>;
 }

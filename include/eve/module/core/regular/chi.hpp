@@ -23,13 +23,13 @@ namespace eve
       requires(same_lanes_or_scalar<T, U, V>)
     {
       EVE_ASSERT(eve::all(lo <= hi), "[eve::chi] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V>>{}), a, lo, hi);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U, V>), a, lo, hi);
     }
 
     template<value T, typename  B>
     constexpr EVE_FORCEINLINE T operator()(T a, B const & belongs) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<T>{}), a, belongs);
+      return EVE_DISPATCH_CALL_PT((T), a, belongs);
     }
 
     EVE_CALLABLE_OBJECT(chi_t, chi_);

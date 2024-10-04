@@ -21,7 +21,7 @@ namespace eve
     requires( same_lanes<V,I> )
     constexpr EVE_FORCEINLINE V operator()(V v, I i) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(as<V>{}, v, i);
+      return EVE_DISPATCH_CALL_PT(V, v, i);
     }
 
     EVE_CALLABLE_OBJECT(lookup_t, lookup_);

@@ -20,7 +20,7 @@ namespace eve
     template<unsigned_value T>
     EVE_FORCEINLINE constexpr T operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return EVE_DISPATCH_CALL_PT(T, t);
     }
 
     EVE_CALLABLE_OBJECT(popcount_t, popcount_);

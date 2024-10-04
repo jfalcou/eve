@@ -21,61 +21,64 @@ namespace eve
   template<typename Options>
   struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(exp10_t, exp10_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var exp10
-//!
-//! @brief Callable object computing  \f$10^x\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto exp10(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto exp10[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto exp10[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
-//!       In particular, for floating inputs:
-//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!       * If the element is a `NaN`, `NaN` is returned
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/exp10.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var exp10
+  //!
+  //! @brief Callable object computing  \f$10^x\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto exp10(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto exp10[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto exp10[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1.  Returns the [elementwise](@ref glossary_elementwise) exponential of base 10 of the input.
+  //!       In particular, for floating inputs:
+  //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!       * If the element is a `NaN`, `NaN` is returned
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/exp10.cpp}
+  //================================================================================================
   inline constexpr auto exp10 = functor<exp10_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

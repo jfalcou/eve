@@ -20,21 +20,21 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
       requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U>>{}), a, b);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), a, b);
     }
 
     template<floating_value T0, floating_value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
       requires (same_lanes_or_scalar<T0, Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T0, Ts...>>{}), t0, ts...);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, Ts...>), t0, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<common_value, Tup> operator()(Tup const& t) const noexcept
       requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
     {
-      return EVE_DISPATCH_CALL_PT((as<kumi::apply_traits_t<common_value, Tup>>{}), t);
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<common_value, Tup>), t);
     }
 
     EVE_CALLABLE_OBJECT(average_t, average_);

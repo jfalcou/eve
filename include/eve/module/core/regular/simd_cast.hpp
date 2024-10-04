@@ -102,9 +102,9 @@ template<typename Options> struct simd_cast_t : callable<simd_cast_t, Options>
 
   template<simd_value T, simd_value Target>
   EVE_FORCEINLINE constexpr Target operator()(T x, as<Target> tgt) const noexcept
-  requires(enabled_for(as<T> {}, as<Target> {}))
+    requires (enabled_for(as<T>{}, as<Target>{}))
   {
-    return EVE_DISPATCH_CALL(x, tgt);
+    return EVE_DISPATCH_CALL_PT(Target, x, tgt);
   }
 
   EVE_CALLABLE_OBJECT(simd_cast_t, simd_cast_);

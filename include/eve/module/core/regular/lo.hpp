@@ -29,7 +29,7 @@ namespace eve
     constexpr EVE_FORCEINLINE typename result<T>::type
     operator()(T a) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<typename result<T>::type>{}), a);
+      return EVE_DISPATCH_CALL_PT((typename result<T>::type), a);
     }
 
     EVE_CALLABLE_OBJECT(lo_t, lo_);

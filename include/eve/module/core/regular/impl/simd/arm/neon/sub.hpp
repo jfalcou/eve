@@ -50,11 +50,11 @@ namespace eve::detail
   {
     if constexpr(O::contains_any(lower, upper))
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && integral_value<T>)
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {

@@ -20,60 +20,64 @@ namespace eve
     template<typename Ptr>
     EVE_FORCEINLINE auto operator()(Ptr ptr) const noexcept -> std::remove_cvref_t<decltype(*ptr)>
     {
-      return EVE_DISPATCH_CALL(ptr);
+      return EVE_DISPATCH_CALL_PT(std::remove_cvref_t<decltype(*ptr)>, ptr);
     }
 
     template<typename Readable>
     EVE_FORCEINLINE auto operator()(Readable ptr) const noexcept -> decltype(ptr.read())
     {
-      return EVE_DISPATCH_CALL(ptr);
+      return EVE_DISPATCH_CALL_PT(decltype(ptr.read()), ptr);
     }
 
     template<typename... Ptrs>
-    EVE_FORCEINLINE auto operator()(soa_ptr<Ptrs...> ptr) const noexcept { return EVE_DISPATCH_CALL(ptr); }
+    EVE_FORCEINLINE kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>> operator()(soa_ptr<Ptrs...> ptr) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>>), ptr);
+    }
 
     EVE_CALLABLE_OBJECT(read_t, read_);
   };
-// TODO DOC 
-//================================================================================================
-//! @addtogroup memory
-//! @{
-//! @var read
-//!
-//! @brief Callable object reading single value from memory
-//!
-//! **Required header:** `#include <eve/module/core.hpp>`
-//!
-//! `operator*` based interface used in the standard has notorious issues with proxy references.
-//! To prevent those issues when dealing with complex, potentially SIMD-aware iterators, `eve::read`
-//! is to be used.
-//!
-//! #### Members Functions
-//!
-//! | Member       | Effect                                                     |
-//! |:-------------|:-----------------------------------------------------------|
-//! | `operator()` | Performs a single read from memory                         |
-//!
-//! ---
-//!
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
-//!  template<typename Ptr> auto operator()(Ptr p) const noexcept
-//!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//!
-//! **Parameters**
-//!
-//! `ptr`: Memory to read from.
-//!
-//! **Return value**
-//!
-//! Returns a signle value read at the memory location specified by `ptr`. If `ptr` is
-//! equivalent to `nullptr`, the behavior is undefined.
-//!
-//================================================================================================
+
+  // TODO DOC 
+  //================================================================================================
+  //! @addtogroup memory
+  //! @{
+  //! @var read
+  //!
+  //! @brief Callable object reading single value from memory
+  //!
+  //! **Required header:** `#include <eve/module/core.hpp>`
+  //!
+  //! `operator*` based interface used in the standard has notorious issues with proxy references.
+  //! To prevent those issues when dealing with complex, potentially SIMD-aware iterators, `eve::read`
+  //! is to be used.
+  //!
+  //! #### Members Functions
+  //!
+  //! | Member       | Effect                                                     |
+  //! |:-------------|:-----------------------------------------------------------|
+  //! | `operator()` | Performs a single read from memory                         |
+  //!
+  //! ---
+  //!
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
+  //!  template<typename Ptr> auto operator()(Ptr p) const noexcept
+  //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  //!
+  //! **Parameters**
+  //!
+  //! `ptr`: Memory to read from.
+  //!
+  //! **Return value**
+  //!
+  //! Returns a signle value read at the memory location specified by `ptr`. If `ptr` is
+  //! equivalent to `nullptr`, the behavior is undefined.
+  //!
+  //================================================================================================
   inline constexpr auto read = functor<read_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 }
 namespace eve::detail
 {

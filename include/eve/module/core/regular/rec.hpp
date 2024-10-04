@@ -17,9 +17,11 @@ template<typename Options>
 struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
                                     lower_option, upper_option, strict_option>
 {
-  template<eve::value T>
+  template<value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-  { return EVE_DISPATCH_CALL(v); }
+  {
+    return EVE_DISPATCH_CALL_PT(T, v);
+  }
 
   EVE_CALLABLE_OBJECT(rec_t, rec_);
 };

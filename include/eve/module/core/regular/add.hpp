@@ -34,7 +34,7 @@ namespace eve
     EVE_FORCEINLINE typename result<T0, T1, Ts...>::type constexpr operator()(T0 t0, T1 t1, Ts...ts) const noexcept
       requires (same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T0, T1, Ts...>>{}), t0, t1, ts...);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, Ts...>), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>

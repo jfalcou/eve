@@ -22,68 +22,70 @@ namespace eve
   template<typename Options>
   struct asin_t : elementwise_callable<asin_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(asin_t, asin_);
-};
+  };
 
-
-//================================================================================================
-//! @addtogroup math_invtrig
-//! @{
-//!   @var asin
-//!   @brief `elementwise_callable` object computing the arc sine.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto asin(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) arc sine of the
-//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
-//!      In particular:
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned unmodified.
-//!      * If the element \f$|x| > 1\f$, `NaN` is returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)
-//!   *  [Wolfram MathWorld: InverseSine](https://mathworld.wolfram.com/InverseSine.html)
-//!   *  [Wikipedia:Inverse trigonometric functions ](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
-//!   *  [DLMF:Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/asin.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_invtrig
+  //! @{
+  //!   @var asin
+  //!   @brief `elementwise_callable` object computing the arc sine.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto asin(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto asin[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto asin[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) arc sine of the
+  //!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
+  //!      In particular:
+  //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned unmodified.
+  //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
+  //!      * If the element is a `NaN`, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)
+  //!   *  [Wolfram MathWorld: InverseSine](https://mathworld.wolfram.com/InverseSine.html)
+  //!   *  [Wikipedia:Inverse trigonometric functions ](https://en.wikipedia.org/wiki/Inverse_trigonometric_functions)
+  //!   *  [DLMF:Inverse trigonometric functions](https://dlmf.nist.gov/4.23)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/asin.cpp}
+  //================================================================================================
   inline constexpr auto asin = functor<asin_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

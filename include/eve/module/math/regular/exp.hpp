@@ -14,72 +14,73 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct exp_t : elementwise_callable<exp_t, Options, pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(exp_t, exp_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var exp
-//! @brief `elementwise_callable` object computing \f$e^x\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto exp(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) natural exponential
-//!       of the input. In particular:
-//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!       * If the element is a `NaN`, `NaN` is returned
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
-//!   *  [DLMF](https://dlmf.nist.gov/4.2)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/exp.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var exp
+  //! @brief `elementwise_callable` object computing \f$e^x\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto exp(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1.  Returns the [elementwise](@ref glossary_elementwise) natural exponential
+  //!       of the input. In particular:
+  //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!       * If the element is a `NaN`, `NaN` is returned
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+  //!   *  [DLMF](https://dlmf.nist.gov/4.2)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/exp.cpp}
+  //================================================================================================
   inline constexpr auto exp = functor<exp_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

@@ -25,7 +25,7 @@ namespace eve
     constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>,common_value_t<T, U>> operator()(T a, U b) const
       requires(eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((as<zipped<common_value_t<T, U>,common_value_t<T, U>>>{}), a, b);
+      return EVE_DISPATCH_CALL_PT((zipped<common_value_t<T, U>,common_value_t<T, U>>), a, b);
     }
 
     EVE_CALLABLE_OBJECT(two_add_t, two_add_);

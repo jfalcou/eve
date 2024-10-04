@@ -25,7 +25,7 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<T, U, V, W> operator()(T a, U b, V c, W d) const
       requires(eve::same_lanes_or_scalar<T, U, V, W>)
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V, W>>{}), a, b, c, d);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U, V, W>), a, b, c, d);
     }
 
     EVE_CALLABLE_OBJECT(diff_of_prod_t, diff_of_prod_);

@@ -26,7 +26,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<T, U>)
     {
       //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_not_less_equal] simd tolerance requires at least one simd parameter." );
-      return EVE_DISPATCH_CALL_PT((as<common_logical_t<T, U>>{}), a, b);
+      return EVE_DISPATCH_CALL_PT((common_logical_t<T, U>), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_not_less_equal_t, is_not_less_equal_);

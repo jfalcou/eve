@@ -16,12 +16,11 @@
 namespace eve::detail
 {
   template<scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
-  max_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> const& a, wide<T, N> const& b) noexcept
-  requires sve_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> max_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+    requires sve_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
-      return max.behavior(cpu_{}, opts, a, b);
+      return max.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     else
       return svmax_z(sve_true<T>(),a,b);
   }

@@ -22,65 +22,68 @@ namespace eve
   template<typename Options>
   struct cosd_t : elementwise_callable<cosd_t, Options, quarter_circle_option>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(cosd_t, cosd_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var cosd
-//!
-//! @brief  `elementwise_callable` object object computing cosine from an input in degrees.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto cosd(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto cosd[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto cosd[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto cosd[quarter_circle](floating_value auto x)          noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating real value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) cosine of the input expressed in degrees.
-//!       In particular:
-//!         * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!         * If the element is \f$\pm\infty\f$, Nan is returned.
-//!         * If the element is a `Nan`, `Nan` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!    3. Assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/cosd.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var cosd
+  //!
+  //! @brief  `elementwise_callable` object object computing cosine from an input in degrees.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto cosd(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto cosd[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto cosd[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto cosd[quarter_circle](floating_value auto x)          noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating real value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) cosine of the input expressed in degrees.
+  //!       In particular:
+  //!         * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+  //!         * If the element is \f$\pm\infty\f$, Nan is returned.
+  //!         * If the element is a `Nan`, `Nan` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!    3. Assumes that the inputs elements  belong to \f$[-45,45]\f$ and return NaN outside.
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/cosd.cpp}
+  //================================================================================================
   inline constexpr auto cosd = functor<cosd_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

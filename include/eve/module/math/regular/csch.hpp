@@ -18,8 +18,11 @@ namespace eve
   template<typename Options>
   struct csch_t : elementwise_callable<csch_t, Options>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(csch_t, csch_);
   };

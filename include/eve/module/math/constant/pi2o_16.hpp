@@ -13,66 +13,69 @@
 
 namespace eve
 {
-template<typename Options>
-struct pi2o_16_t : constant_callable<pi2o_16_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct pi2o_16_t : constant_callable<pi2o_16_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<floating_value T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.3bd3cep-1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.3bd3ccp-1);
-      else                                         return T(0x1.3bd3ccp-1);
+      if constexpr (std::same_as<T, float>)
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.3bd3cep-1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.3bd3ccp-1};
+        else                                      return T{0x1.3bd3ccp-1};
+      }
+      else
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.3bd3cc9be45dfp-1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.3bd3cc9be45dep-1};
+        else                                      return T{0x1.3bd3cc9be45dep-1};
+      }
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.3bd3cc9be45dfp-1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.3bd3cc9be45dep-1);
-      else                                         return T(0x1.3bd3cc9be45dep-1);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_CALLABLE_OBJECT(pi2o_16_t, pi2o_16_);
+  };
 
-  EVE_CALLABLE_OBJECT(pi2o_16_t, pi2o_16_);
-};
-
-//================================================================================================
-//! @addtogroup math_constants
-//! @{
-//!   @var pi2o_16
-//!   @brief Callable object computing the constant \f$\pi^2/16\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T pi2o_16(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::pi2o_16(as<T>())` returns  \f$\pi^2/16\f$.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/pi2o_16.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto pi2o_16 = functor<pi2o_16_t>;
+  //================================================================================================
+  //! @addtogroup math_constants
+  //! @{
+  //!   @var pi2o_16
+  //!   @brief Callable object computing the constant \f$\pi^2/16\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T pi2o_16(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::pi2o_16(as<T>())` returns  \f$\pi^2/16\f$.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/regular/pi2o_16.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto pi2o_16 = functor<pi2o_16_t>;
 }

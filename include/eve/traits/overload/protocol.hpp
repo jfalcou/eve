@@ -157,7 +157,7 @@ this->behavior(eve::current_api, this->options(), __VA_ARGS__)                  
 //! @}
 //======================================================================================================================
 #define EVE_DISPATCH_CALL_PT(x, ...)                                                                                  \
-this->behavior(x, eve::current_api, this->options(), __VA_ARGS__)                                                     \
+this->behavior(as<EVE_REMOVE_PARENS(x)>{}, eve::current_api, this->options(), __VA_ARGS__)                                                     \
 /**/
 
 //======================================================================================================================

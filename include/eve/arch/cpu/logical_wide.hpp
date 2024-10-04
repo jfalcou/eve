@@ -51,7 +51,7 @@ namespace eve
   //!                   architecture is selected.
   //================================================================================================
   template<arithmetic_scalar_value Type, typename Cardinal>
-  struct  EVE_MAY_ALIAS  logical<wide<Type,Cardinal>>
+  struct  EVE_MAY_ALIAS  logical<wide<Type, Cardinal>>
         : detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>
   {
     using storage_base  = detail::wide_storage<as_logical_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
@@ -73,10 +73,16 @@ namespace eve
     using size_type     = std::ptrdiff_t;
 
     //! Type representing the bits of the logical value
-    using bits_type = wide<detail::make_integer_t<sizeof(Type), unsigned>, Cardinal>;
+    using bits_type     = wide<detail::make_integer_t<sizeof(Type), unsigned>, Cardinal>;
 
     //! Type representing the numerical value associated to the mask
-    using mask_type = wide<Type, Cardinal>;
+    using mask_type     = wide<Type, Cardinal>;
+
+    //! Type representing a logical wide of the same type but with a cardinal twice the size
+    using combined_type = logical<wide<Type, typename Cardinal::combined_type>>;
+
+    //! Type representing a logical wide of the same type but with a cardinal half the size
+    using split_type    = logical<typename wide<Type, Cardinal>::split_type>;
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.

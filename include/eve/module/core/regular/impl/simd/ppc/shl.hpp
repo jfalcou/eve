@@ -25,6 +25,6 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> v, S s) noexcept
     requires ppc_abi<abi_t<T, N>>
   {
-    return shl.behavior(current_api, opts, v, wide<as_integer_t<T, unsigned>, N>{s});
+    return shl.behavior(as<wide<T, N>>{}, current_api, opts, v, wide<as_integer_t<T, unsigned>, N>{s});
   }
 }

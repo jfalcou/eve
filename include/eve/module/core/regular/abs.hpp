@@ -19,7 +19,7 @@ namespace eve
     template<eve::value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(as<T>{}, v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     EVE_CALLABLE_OBJECT(abs_t, abs_);

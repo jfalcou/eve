@@ -22,7 +22,7 @@ namespace eve
     constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>> operator()(T t, U u, V v) const noexcept
       requires(eve::same_lanes_or_scalar<T, U, V>)
     {
-      return EVE_DISPATCH_CALL_PT((as<zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>>{}), t, u, v);
+      return EVE_DISPATCH_CALL_PT((zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>), t, u, v);
     }
 
     EVE_CALLABLE_OBJECT(three_fma_t, three_fma_);

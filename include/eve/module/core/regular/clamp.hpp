@@ -25,7 +25,7 @@ namespace eve
       requires(eve::same_lanes_or_scalar<T, U, V>)
     {
       EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T, U, V>>{}), a, lo, hi);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U, V>), a, lo, hi);
     }
 
     EVE_CALLABLE_OBJECT(clamp_t, clamp_);

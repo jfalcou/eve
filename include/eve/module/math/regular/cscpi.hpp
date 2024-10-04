@@ -18,63 +18,66 @@ namespace eve
   template<typename Options>
   struct cscpi_t : elementwise_callable<cscpi_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(cscpi_t, cscpi_);
   };
 
-//================================================================================================
-//! @addtogroup math_trig
-//! @{
-//! @var cscpi
-//! @brief `elementwise_callable` object computing the cosecant in \f$\pi\f$ multiples.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto cscpi(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto cscpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto cscpi[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto cscpi[quarter_circle](floating_value auto x)          noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!      * `x`: [floating value](@ref eve::floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The call `cscpi(x)` is semantically equivalent to \f$\csc(\pi x)\f$.
-//!       In particular:
-//!         * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
-//!         * If the element is \f$\pm\infty\f$, Nan is returned.
-//!         * If the element is a `Nan`, `NaN` is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/cscpi.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_trig
+  //! @{
+  //! @var cscpi
+  //! @brief `elementwise_callable` object computing the cosecant in \f$\pi\f$ multiples.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto cscpi(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto cscpi[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto cscpi[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto cscpi[quarter_circle](floating_value auto x)          noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!      * `x`: [floating value](@ref eve::floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The call `cscpi(x)` is semantically equivalent to \f$\csc(\pi x)\f$.
+  //!       In particular:
+  //!         * If the element is \f$\pm0\f$, \f$\pm\infty\f$ is returned.
+  //!         * If the element is \f$\pm\infty\f$, Nan is returned.
+  //!         * If the element is a `Nan`, `NaN` is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/cscpi.cpp}
+  //================================================================================================
   inline constexpr auto cscpi = functor<cscpi_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

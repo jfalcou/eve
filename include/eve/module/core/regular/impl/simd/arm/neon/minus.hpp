@@ -22,7 +22,7 @@ namespace eve::detail
 
     if constexpr (O::contains(saturated) && std::integral<T>)
     {
-      return minus.behavior(cpu_{}, opts, v);
+      return minus.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     }
     else
     {
@@ -38,11 +38,11 @@ namespace eve::detail
       {
         if constexpr( cat == category::float64x2 )      return vnegq_f64(v);
         else if constexpr( cat == category::float64x1 ) return vneg_f64(v);
-        else return minus.behavior(cpu_{}, opts, v);
+        else return minus.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
       }
       else
       {
-        return minus.behavior(cpu_{}, opts, v);
+        return minus.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
       }
     }
   }

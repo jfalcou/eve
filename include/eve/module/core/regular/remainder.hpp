@@ -16,11 +16,11 @@ namespace eve
   template<typename Options>
   struct remainder_t : elementwise_callable<remainder_t, Options>
   {
-    template<eve::floating_value T0, floating_value T1>
-    requires(eve::same_lanes_or_scalar<T0, T1>)
+    template<floating_value T0, floating_value T1>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
     {
-      return EVE_DISPATCH_CALL(t0, t1);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), t0, t1);
     }
 
     EVE_CALLABLE_OBJECT(remainder_t, remainder_);

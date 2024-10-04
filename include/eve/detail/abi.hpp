@@ -60,3 +60,22 @@
 #  define EVE_NO_NANS
 #  define EVE_NO_INFINITIES
 #endif
+
+// strip parenthesis from the macro argument
+#define EVE_REMOVE_PARENS(x)              EVE_EVAL((EVE_REMOVE_PARENS_I x), x)
+#define EVE_REMOVE_PARENS_I(...)          1, 1
+#define EVE_APPLY(macro, args)            EVE_APPLY_I(macro, args)
+#define EVE_APPLY_I(macro, args)          macro args
+#define EVE_EVAL_I(test, x)               EVE_MAYBE_STRIP_PARENS(EVE_TEST_ARITY test, x)
+#define EVE_EVAL(test, x)                 EVE_EVAL_I(test, x)
+#define EVE_TEST_ARITY(...)               EVE_APPLY(EVE_TEST_ARITY_I, (__VA_ARGS__, 2, 1))
+#define EVE_TEST_ARITY_I(a, b, c, ...)    c
+#define EVE_MAYBE_STRIP_PARENS(cond, x)   EVE_MAYBE_STRIP_PARENS_I(cond, x)
+#define EVE_MAYBE_STRIP_PARENS_I(cond, x) EVE_CAT(EVE_MAYBE_STRIP_PARENS_, cond)(x)
+#define EVE_MAYBE_STRIP_PARENS_1(x)       x
+#define EVE_MAYBE_STRIP_PARENS_2(x)       EVE_APPLY(EVE_MAYBE_STRIP_PARENS_2_I, x)
+#define EVE_MAYBE_STRIP_PARENS_2_I(...)   __VA_ARGS__
+
+// Concatenate two tokens
+#define EVE_CAT(x, y)   EVE_CAT_I(x, y)
+#define EVE_CAT_I(x, y) x##y

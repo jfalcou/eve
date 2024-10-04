@@ -19,66 +19,69 @@ namespace eve
   template<typename Options>
   struct cosh_t : elementwise_callable<cosh_t, Options>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(cosh_t, cosh_);
   };
 
-//================================================================================================
-//! @addtogroup math_hyper
-//! @{
-//! @var cosh
-//!
-//! @brief  `elementwise_callable` object computing the hyperbolic cosine: \f$\frac{e^x+e^{-x}}2\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto cosh(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto cosh[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto cosh[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
-//!       In particular:
-//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
-//!        * If the element is a `NaN`, `NaN` is returned.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cosh)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicCosine.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/cosh.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_hyper
+  //! @{
+  //! @var cosh
+  //!
+  //! @brief  `elementwise_callable` object computing the hyperbolic cosine: \f$\frac{e^x+e^{-x}}2\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto cosh(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto cosh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto cosh[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic cosine of the input.
+  //!       In particular:
+  //!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+  //!        * If the element is \f$\pm\infty\f$, \f$+\infty\f$ is returned.
+  //!        * If the element is a `NaN`, `NaN` is returned.
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/cosh)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/HyperbolicCosine.html)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Hyperbolic_functions)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/cosh.cpp}
+  //================================================================================================
   inline constexpr auto cosh = functor<cosh_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {

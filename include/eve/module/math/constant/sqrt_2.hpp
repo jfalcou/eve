@@ -17,19 +17,19 @@ template<typename Options>
 struct sqrt_2_t : constant_callable<sqrt_2_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.6a09e8p+0);
-      else if constexpr(Opts::contains(lower)) return T(0x1.6a09e6p+0);
-      else                                         return T(0x1.6a09e6p+0);
+      if constexpr(Opts::contains(upper))        return T{0x1.6a09e8p+0};
+      else if constexpr(Opts::contains(lower)) return T{0x1.6a09e6p+0};
+      else                                         return T{0x1.6a09e6p+0};
     }
     else
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.6a09e667f3bcdp+0);
-      else if constexpr(Opts::contains(lower)) return T(0x1.6a09e667f3bccp+0);
-      else                                         return T(0x1.6a09e667f3bcdp+0);
+      if constexpr(Opts::contains(upper))        return T{0x1.6a09e667f3bcdp+0};
+      else if constexpr(Opts::contains(lower)) return T{0x1.6a09e667f3bccp+0};
+      else                                         return T{0x1.6a09e667f3bcdp+0};
     }
   }
 

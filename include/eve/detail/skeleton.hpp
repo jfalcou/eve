@@ -85,7 +85,7 @@ namespace eve::detail
   {
     // Not a lambda as we need force-inlining
     template<typename Func, typename Idx, typename... Ts>
-    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
+    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept -> decltype(EVE_FWD(fn)(eve::detail::get_at(EVE_FWD(vs), i)...))
     {
       return EVE_FWD(fn)(eve::detail::get_at(EVE_FWD(vs), i)...);
     }
@@ -113,7 +113,7 @@ namespace eve::detail
   EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
     call_count++;
-    std::cout << "map called " << call_count << " times" << std::endl;
+    // std::cout << "map called " << call_count << " times" << std::endl;
     // __builtin_trap();
 
     using w_t = typename wide_result<Fn, Ts...>::type;

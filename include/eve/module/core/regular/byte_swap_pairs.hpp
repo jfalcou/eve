@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
     EVE_FORCEINLINE T operator()(T a, index_t<I0> const & i0,  index_t<I1> const & i1) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<T>{}), a, i0, i1);
+      return EVE_DISPATCH_CALL_PT((T), a, i0, i1);
     }
 
     EVE_CALLABLE_OBJECT(byte_swap_pairs_t, byte_swap_pairs_);

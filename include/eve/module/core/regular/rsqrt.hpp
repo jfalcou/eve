@@ -16,9 +16,11 @@ namespace eve
   template<typename Options>
   struct rsqrt_t : elementwise_callable<rsqrt_t, Options, raw_option, pedantic_option>
   {
-    template<eve::floating_value T>
+    template<floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    {
+      return EVE_DISPATCH_CALL_PT(T, a);
+    }
 
     EVE_CALLABLE_OBJECT(rsqrt_t, rsqrt_);
   };

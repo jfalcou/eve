@@ -13,63 +13,60 @@
 
 namespace eve
 {
-template<typename Options>
-struct maxlog10_t : constant_callable<maxlog10_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct maxlog10_t : constant_callable<maxlog10_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<floating_value T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      return T(0x1.31d8b2p+5);
+      if constexpr (std::same_as<T, float>) return T{0x1.31d8b2p+5};
+      else                                  return T{0x1.341aace35661p+8};
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      return T(0x1.341aace35661p+8);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_CALLABLE_OBJECT(maxlog10_t, maxlog10_);
+  };
 
-  EVE_CALLABLE_OBJECT(maxlog10_t, maxlog10_);
-};
-
-//================================================================================================
-//! @addtogroup math_constants
-//! @{
-//!   @var maxlog10
-//!   @brief Callable object computing the greatest positive value for which eve::exp10 is finite.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T maxlog10(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::maxlog10(as<T>())` returns the greatest positive value
-//!      for which eve::exp10 is finite.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/maxlog10.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto maxlog10 = functor<maxlog10_t>;
+  //================================================================================================
+  //! @addtogroup math_constants
+  //! @{
+  //!   @var maxlog10
+  //!   @brief Callable object computing the greatest positive value for which eve::exp10 is finite.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T maxlog10(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::maxlog10(as<T>())` returns the greatest positive value
+  //!      for which eve::exp10 is finite.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/regular/maxlog10.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto maxlog10 = functor<maxlog10_t>;
 }

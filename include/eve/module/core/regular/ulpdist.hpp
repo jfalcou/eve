@@ -25,9 +25,11 @@ namespace eve
  template<typename Options>
   struct ulpdist_t : elementwise_callable<ulpdist_t, Options>
   {
-    template<value T,  value U>
+    template<value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(ulpdist_t, ulpdist_);
   };

@@ -24,7 +24,7 @@ namespace eve
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     EVE_FORCEINLINE constexpr common_value_t<T0,T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<common_value_t<T0,T1, Ts...>>{}), t0, t1, ts...);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0,T1, Ts...>), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
@@ -33,7 +33,7 @@ namespace eve
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<kumi::apply_traits_t<eve::common_value,Tup>>{}), t);
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<eve::common_value,Tup>), t);
     }
 
     EVE_CALLABLE_OBJECT(manhattan_t, manhattan_);

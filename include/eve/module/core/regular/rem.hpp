@@ -17,11 +17,11 @@ namespace eve
   struct rem_t : elementwise_callable<rem_t, Options, upward_option, downward_option,
                                       to_nearest_option, toward_zero_option>
   {
-    template<eve::value T0, value T1>
-    requires(eve::same_lanes_or_scalar<T0, T1>)
+    template<value T0, value T1>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
     {
-      return EVE_DISPATCH_CALL(t0, t1);
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), t0, t1);
     }
 
     EVE_CALLABLE_OBJECT(rem_t, rem_);

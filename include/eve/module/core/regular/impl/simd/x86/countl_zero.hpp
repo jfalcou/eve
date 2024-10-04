@@ -20,10 +20,8 @@
 namespace eve::detail
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sse2_),
-                                          O const& opts,
-                                          wide<T, N> a0) noexcept
-  requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> w) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     using r_t        = wide<T, N>;
     constexpr auto c = categorize<r_t>();
@@ -31,12 +29,12 @@ namespace eve::detail
     {
       if constexpr( current_api == avx512)
       {
-        if constexpr( c == category::uint64x8 ) return r_t(_mm512_lzcnt_epi64(a0));
-        else if constexpr( c == category::uint32x16) return r_t(_mm512_lzcnt_epi32(a0));
-        else if constexpr( c == category::uint64x4 ) return r_t(_mm256_lzcnt_epi64(a0));
-        else if constexpr( c == category::uint32x8 ) return r_t(_mm256_lzcnt_epi32(a0));
-        else if constexpr( c == category::uint64x2 ) return r_t(_mm_lzcnt_epi64(a0));
-        else if constexpr( c == category::uint32x4 ) return r_t(_mm_lzcnt_epi32(a0));
+        if constexpr( c == category::uint64x8 ) return r_t(_mm512_lzcnt_epi64(w));
+        else if constexpr( c == category::uint32x16) return r_t(_mm512_lzcnt_epi32(w));
+        else if constexpr( c == category::uint64x4 ) return r_t(_mm256_lzcnt_epi64(w));
+        else if constexpr( c == category::uint32x8 ) return r_t(_mm256_lzcnt_epi32(w));
+        else if constexpr( c == category::uint64x2 ) return r_t(_mm_lzcnt_epi64(w));
+        else if constexpr( c == category::uint32x4 ) return r_t(_mm_lzcnt_epi32(w));
       }
       else if constexpr( current_api >= sse2 )
       {
@@ -45,7 +43,7 @@ namespace eve::detail
         using ru_t2      = wide< std::uint16_t, fixed< N::value*2>>;
         if constexpr( match(c, category::uint32x8, category::uint32x4 ))
         {
-          auto    v   = bit_notand(bit_shr(a0, 8), a0);
+          auto    v   = bit_notand(bit_shr(w, 8), w);
           v   = bit_cast(convert(bit_cast(v, as<ri_t>{}), as<float>{}), as<r_t>{});
           v   = bit_shr(v, 23);
           auto w   = bit_cast(v, as<ru_t2>{});
@@ -53,36 +51,34 @@ namespace eve::detail
           auto v32 = bit_cast(r_t(32u), as<ru_t2>{});
           return bit_cast(eve::min(w,v32), as<r_t>());
         }
-        else return countl_zero.behavior(cpu_{}, opts, a0);
+        else return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
       }
       else
-        return countl_zero.behavior(cpu_{}, opts, a0);
+        return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     }
     else
     {
-      return countl_zero.behavior(cpu_{}, opts, a0);
+      return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
     }
   }
 
 // -----------------------------------------------------------------------------------------------
 // Masked case
   template<int S, conditional_expr C, integral_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(avx512_),
-                                          C const          & cx,
-                                          O const          & opts,
-                                          wide<T, N> const & a0) noexcept requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> w) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
-    auto src = alternative(cx, a0, as<wide<T, N>> {});
+    auto src = alternative(cx, w, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
     if constexpr( C::is_complete)                return src;
-    else if constexpr( c == category::uint64x8 ) return r_t(_mm512_mask_lzcnt_epi64(src, m, a0));
-    else if constexpr( c == category::uint32x16) return r_t(_mm512_mask_lzcnt_epi32(src, m, a0));
-    else if constexpr( c == category::uint64x4 ) return r_t(_mm256_mask_lzcnt_epi64(src, m, a0));
-    else if constexpr( c == category::uint32x8 ) return r_t(_mm256_mask_lzcnt_epi32(src, m, a0));
-    else if constexpr( c == category::uint64x2 ) return r_t(_mm_mask_lzcnt_epi64(src, m, a0));
-    else if constexpr( c == category::uint32x4 ) return r_t(_mm_mask_lzcnt_epi32(src, m, a0));
-    else return countl_zero.behavior(cpu_{}, opts, a0);
+    else if constexpr( c == category::uint64x8 ) return r_t(_mm512_mask_lzcnt_epi64(src, m, w));
+    else if constexpr( c == category::uint32x16) return r_t(_mm512_mask_lzcnt_epi32(src, m, w));
+    else if constexpr( c == category::uint64x4 ) return r_t(_mm256_mask_lzcnt_epi64(src, m, w));
+    else if constexpr( c == category::uint32x8 ) return r_t(_mm256_mask_lzcnt_epi32(src, m, w));
+    else if constexpr( c == category::uint64x2 ) return r_t(_mm_mask_lzcnt_epi64(src, m, w));
+    else if constexpr( c == category::uint32x4 ) return r_t(_mm_mask_lzcnt_epi32(src, m, w));
+    else return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
   }
 }

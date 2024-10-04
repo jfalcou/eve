@@ -23,9 +23,9 @@ namespace eve
   struct bit_swap_pairs_t : strict_elementwise_callable<bit_swap_pairs_t, Options>
   {
     template<integral_value T, integral_value I0, integral_value I1>
-    constexpr EVE_FORCEINLINE T operator()(T v, I0 i0,  I1 i1) const noexcept
+    constexpr EVE_FORCEINLINE T operator()(T v, I0 i0, I1 i1) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<T>{}), v, i0, i1);
+      return EVE_DISPATCH_CALL_PT(T, v, i0, i1);
     }
 
     EVE_CALLABLE_OBJECT(bit_swap_pairs_t, bit_swap_pairs_);
@@ -91,7 +91,7 @@ namespace eve
                       bit_shr(a, i0),
                       bit_shr(a, i1)
                   ),
-                  one(as(a))
+                  one(as{a})
                 );
 
       // if the bits are different, swap them by toggling both

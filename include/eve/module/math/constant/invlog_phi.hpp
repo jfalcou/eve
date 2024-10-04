@@ -13,67 +13,70 @@
 
 namespace eve
 {
-template<typename Options>
-struct invlog_phi_t : constant_callable<invlog_phi_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct invlog_phi_t : constant_callable<invlog_phi_t, Options, lower_option, upper_option>
   {
-    if constexpr(std::same_as<T, float>)
+    template<floating_value T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.09fec2p+1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.09fecp+1);
-      else                                         return T(0x1.09fecp+1);
+      if constexpr (std::same_as<T, float>)
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.09fec2p+1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.09fecp+1};
+        else                                      return T{0x1.09fecp+1};
+      }
+      else
+      {
+        if      constexpr (Opts::contains(upper)) return T{0x1.09fec09279922p+1};
+        else if constexpr (Opts::contains(lower)) return T{0x1.09fec09279921p+1};
+        else                                      return T{0x1.09fec09279922p+1};
+      }
     }
-    else
+
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.09fec09279922p+1);
-      else if constexpr(Opts::contains(lower)) return T(0x1.09fec09279921p+1);
-      else                                         return T(0x1.09fec09279922p+1);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
-  }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_CALLABLE_OBJECT(invlog_phi_t, invlog_phi_);
+  };
 
-  EVE_CALLABLE_OBJECT(invlog_phi_t, invlog_phi_);
-};
-
-//================================================================================================
-//! @addtogroup math_constants
-//! @{
-//!   @var invlog_phi
-//!   @brief Callable object computing the inverse of the logarithm of the golden ratio :
-//!   \f$1/\log((1+\sqrt5)/2)\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T invlog_phi(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::invlog_phi(as<T>())` returns the inverse of the logarithm of the golden ratio?
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/invlog_phi.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto invlog_phi = functor<invlog_phi_t>;
+  //================================================================================================
+  //! @addtogroup math_constants
+  //! @{
+  //!   @var invlog_phi
+  //!   @brief Callable object computing the inverse of the logarithm of the golden ratio :
+  //!   \f$1/\log((1+\sqrt5)/2)\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T invlog_phi(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::invlog_phi(as<T>())` returns the inverse of the logarithm of the golden ratio?
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/regular/invlog_phi.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto invlog_phi = functor<invlog_phi_t>;
 }

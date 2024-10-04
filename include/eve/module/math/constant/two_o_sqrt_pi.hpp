@@ -17,19 +17,19 @@ template<typename Options>
 struct two_o_sqrt_pi_t : constant_callable<two_o_sqrt_pi_t, Options, lower_option, upper_option>
 {
   template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
   {
     if constexpr(std::same_as<T, float>)
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.20dd76p+0);
-      else if constexpr(Opts::contains(lower)) return T(0x1.20dd74p+0);
-      else                                         return T(0x1.20dd76p+0);
+      if constexpr(Opts::contains(upper))        return T{0x1.20dd76p+0};
+      else if constexpr(Opts::contains(lower)) return T{0x1.20dd74p+0};
+      else                                         return T{0x1.20dd76p+0};
     }
     else
     {
-      if constexpr(Opts::contains(upper))        return T(0x1.20dd750429b6ep+0);
-      else if constexpr(Opts::contains(lower)) return T(0x1.20dd750429b6dp+0);
-      else                                         return T(0x1.20dd750429b6dp+0);
+      if constexpr(Opts::contains(upper))        return T{0x1.20dd750429b6ep+0};
+      else if constexpr(Opts::contains(lower)) return T{0x1.20dd750429b6dp+0};
+      else                                         return T{0x1.20dd750429b6dp+0};
     }
   }
 

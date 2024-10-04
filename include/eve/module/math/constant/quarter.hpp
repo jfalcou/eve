@@ -13,55 +13,58 @@
 
 namespace eve
 {
-template<typename Options>
-struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_option>
-{
-  template<typename T, typename Opts>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+  template<typename Options>
+  struct quarter_t : constant_callable<quarter_t, Options, lower_option, upper_option>
   {
-    return T(0.25);
-  }
+    template<floating_value T, typename Opts>
+    static EVE_FORCEINLINE constexpr T value(as<T>, Opts const&)
+    {
+      return T{0.25};
+    }
 
-  template<floating_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
-  EVE_CALLABLE_OBJECT(quarter_t, quarter_);
-};
+    EVE_CALLABLE_OBJECT(quarter_t, quarter_);
+  };
 
-//================================================================================================
-//! @addtogroup math_constants
-//! @{
-//!   @var quarter
-//!   @brief Callable object computing the constant \f$1/3\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::floating_value T >
-//!      T quarter(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::quarter(as<T>())` returns one quarter.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/math/regular/quarter.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto quarter = functor<quarter_t>;
+  //================================================================================================
+  //! @addtogroup math_constants
+  //! @{
+  //!   @var quarter
+  //!   @brief Callable object computing the constant \f$1/3\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::floating_value T >
+  //!      T quarter(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::quarter(as<T>())` returns one quarter.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/math/regular/quarter.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto quarter = functor<quarter_t>;
 }

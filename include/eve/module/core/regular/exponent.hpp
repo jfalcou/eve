@@ -31,7 +31,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE as_integer_t<T> operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as<as_integer_t<T>>{}), v);
+      return EVE_DISPATCH_CALL_PT((as_integer_t<T>), v);
     }
 
     EVE_CALLABLE_OBJECT(exponent_t, exponent_);
