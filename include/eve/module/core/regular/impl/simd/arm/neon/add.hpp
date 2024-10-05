@@ -66,7 +66,7 @@ namespace eve::detail
     }
     else if (O::contains(widen))
     {
-      using r_t = eve::wide<up_t<T>, N>;
+      using r_t = as_wide_as<decltype(v), up_t<T>>;
       if      constexpr( c == category::int32x2    ) return r_t(vaddl_s32 (v, w));//*
       else if constexpr( c == category::uint32x2   ) return r_t(vaddl_u32 (v, w));//*
       else if constexpr( c == category::int16x4    ) return r_t(vaddl_s16 (v, w));//*
