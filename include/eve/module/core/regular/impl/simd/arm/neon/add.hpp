@@ -19,6 +19,8 @@ namespace eve::detail
   EVE_FORCEINLINE  wide<up_t<N> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
+    constexpr auto c = categorize<wide<T, N>>();
+
     if      constexpr( c == category::int32x2    ) return vaddl_s32 (v, w);
     else if constexpr( c == category::uint32x2   ) return vaddl_u32 (v, w);
     else if constexpr( c == category::int16x4    ) return vaddl_s16 (v, w);
