@@ -67,12 +67,12 @@ namespace eve::detail
     else if (O::contains(widen))
     {
 //      using r_t = as_wide_as<decltype(v), up_t<T>>;
-      if      constexpr( c == category::int32x2    ) return eve::wide<int64_t, N>(vaddl_s32 (v, w));//*
-      else if constexpr( c == category::uint32x2   ) return eve::wide<uint64_t, N>(vaddl_u32 (v, w));//*
-      else if constexpr( c == category::int16x4    ) return eve::wide<int32_t, N>(vaddl_s16 (v, w));//*
-      else if constexpr( c == category::uint16x4   ) return eve::wide<uint32_t, N>(vaddl_u16 (v, w));//*
-      else if constexpr( c == category::int8x8     ) return eve::wide<int16_t, N>(vaddl_s8  (v, w));//*
-      else if constexpr( c == category::uint8x8    ) return eve::wide<uint16_t, N>(vaddl_u8  (v, w));//*
+      if      constexpr( c == category::int32x2    ) return eve::wide<int64_t, fixed<2>>(vaddl_s32 (v, w));//*
+      else if constexpr( c == category::uint32x2   ) return eve::wide<uint64_t, fixed<2>>(vaddl_u32 (v, w));//*
+      else if constexpr( c == category::int16x4    ) return eve::wide<int32_t, fixed<4>>(vaddl_s16 (v, w));//*
+      else if constexpr( c == category::uint16x4   ) return eve::wide<uint32_t, fixed<4>>(vaddl_u16 (v, w));//*
+      else if constexpr( c == category::int8x8     ) return eve::wide<int16_t, fixed<8>>(vaddl_s8  (v, w));//*
+      else if constexpr( c == category::uint8x8    ) return eve::wide<uint16_t, fixed<8>>(vaddl_u8  (v, w));//*
       else return add.behavior(cpu_{}, opts, v, w);
     }
     else if ((O::contains_any(lower, upper)  && floating_value<T>) ||
