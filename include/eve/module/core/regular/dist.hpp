@@ -106,3 +106,7 @@ namespace eve
 #if defined(EVE_INCLUDE_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/dist.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/dist.hpp>
+#endif
