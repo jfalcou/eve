@@ -16,10 +16,14 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
+    if constexpr(O::contains_any(narrow, widen))
+    {
+      return mul.behavior(cpu_{}, opts, a, b);
+    }
+    else if constexpr(floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(current_api >= avx512)
       {
@@ -120,7 +124,7 @@ namespace eve::detail
   }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE auto  mul_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();

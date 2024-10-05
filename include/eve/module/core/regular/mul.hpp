@@ -15,11 +15,12 @@ namespace eve
 {
   template<typename Options>
   struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option,
-                                       upper_option, strict_option>
+                                       upper_option, strict_option, narrow_option, widen_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      EVE_FORCEINLINE constexpr auto operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }

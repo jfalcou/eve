@@ -36,15 +36,4 @@ int main()
   std::cout << "-> add[narrow](wu0, wu1)         = " << eve::add[eve::narrow](wu0, wu1) << "\n";
   std::cout << "-> add(wu0, wu1)                 = " << eve::add(wu0, wu1) << "\n";
   std::cout << "-> add[widen](wu0, wu1)          = " << eve::add[eve::widen](wu0, wu1) << "\n";
-
-  std::cout << sizeof(decltype(wu0)) << std::endl;
-
-  std::cout << sizeof(eve::detail::upgrade_t<decltype(wu0)>) << std::endl;
-  std::cout << sizeof(eve::detail::downgrade_t<decltype(wu0)>) << std::endl;
-
-  std::cout << sizeof(std::uint16_t) << std::endl;
-
-  std::cout << sizeof(eve::detail::upgrade_t<std::uint16_t>) << std::endl;
-  std::cout << sizeof(eve::detail::downgrade_t<std::uint16_t>) << std::endl;
-
 }

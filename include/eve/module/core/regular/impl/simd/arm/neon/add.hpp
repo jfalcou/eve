@@ -32,6 +32,7 @@ namespace eve::detail
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE auto add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  -> decltype(eve::detail::resize_it(Options(), wide<T, N>()))
   requires (arm_abi<abi_t<T, N>> && !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -59,7 +60,7 @@ namespace eve::detail
     else
     {
       using r_t = eve::wide<T, N>;
-      if constexpr( c == category::int64x1    ) return r_t(vadd_s64 (v, w));
+      if      constexpr( c == category::int64x1    ) return r_t(vadd_s64 (v, w));
       else if constexpr( c == category::int64x2    ) return r_t(vaddq_s64(v, w));
       else if constexpr( c == category::uint64x1   ) return r_t(vadd_u64 (v, w));
       else if constexpr( c == category::uint64x2   ) return r_t(vaddq_u64(v, w));

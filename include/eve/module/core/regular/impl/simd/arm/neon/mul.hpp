@@ -15,10 +15,11 @@ namespace eve::detail
 {
 
   template<callable_options O, arithmetic_scalar_value T, typename N, typename U>
-  EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(neon128_), O const &opts, wide<T, N> a, U b) noexcept
+  EVE_FORCEINLINE auto mul_(EVE_REQUIRES(neon128_), O const &opts, wide<T, N> a, U b) noexcept
+  -> decltype(eve::detail::resize_it(Options(), wide<T, N>()))
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
+    if constexpr(O::contains_any(saturated, narrow, widen) || ((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
       return mul.behavior(cpu_{}, opts, a, b);
