@@ -16,7 +16,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains_any(saturated, narrow, widen || ((O::contains(lower) || O::contains(upper)) && floating_value<T>))
+    if constexpr(O::contains_any(saturated, narrow, widen) || ((O::contains(lower) || O::contains(upper)) && floating_value<T>))
     {
       return mul.behavior(cpu_{}, opts, a, b);
     }
