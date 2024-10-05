@@ -66,12 +66,13 @@ namespace eve::detail
     }
     else if (O::contains(widen))
     {
-      if      constexpr( c == category::int32x2    ) return vaddl_s32 (v, w);//*
-      else if constexpr( c == category::uint32x2   ) return vaddl_u32 (v, w);//*
-      else if constexpr( c == category::int16x4    ) return vaddl_s16 (v, w);//*
-      else if constexpr( c == category::uint16x4   ) return vaddl_u16 (v, w);//*
-      else if constexpr( c == category::int8x8     ) return vaddl_s8  (v, w);//*
-      else if constexpr( c == category::uint8x8    ) return vaddl_u8  (v, w);//*
+      using r_t = eve::wide<up_t<T>, N>;
+      if      constexpr( c == category::int32x2    ) return r_t(vaddl_s32 (v, w));//*
+      else if constexpr( c == category::uint32x2   ) return r_t(vaddl_u32 (v, w));//*
+      else if constexpr( c == category::int16x4    ) return r_t(vaddl_s16 (v, w));//*
+      else if constexpr( c == category::uint16x4   ) return r_t(vaddl_u16 (v, w));//*
+      else if constexpr( c == category::int8x8     ) return r_t(vaddl_s8  (v, w));//*
+      else if constexpr( c == category::uint8x8    ) return r_t(vaddl_u8  (v, w));//*
       else return add.behavior(cpu_{}, opts, v, w);
     }
     else if ((O::contains_any(lower, upper)  && floating_value<T>) ||
@@ -81,28 +82,29 @@ namespace eve::detail
     }
     else
     {
-      if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
-      else if constexpr( c == category::int64x2    ) return vaddq_s64(v, w);
-      else if constexpr( c == category::uint64x1   ) return vadd_u64 (v, w);
-      else if constexpr( c == category::uint64x2   ) return vaddq_u64(v, w);
-      else if constexpr( c == category::int32x2    ) return vadd_s32 (v, w);
-      else if constexpr( c == category::int32x4    ) return vaddq_s32(v, w);
-      else if constexpr( c == category::uint32x2   ) return vadd_u32 (v, w);
-      else if constexpr( c == category::uint32x4   ) return vaddq_u32(v, w);
-      else if constexpr( c == category::int16x4    ) return vadd_s16 (v, w);
-      else if constexpr( c == category::int16x8    ) return vaddq_s16(v, w);
-      else if constexpr( c == category::uint16x4   ) return vadd_u16 (v, w);
-      else if constexpr( c == category::uint16x8   ) return vaddq_u16(v, w);
-      else if constexpr( c == category::int8x8     ) return vadd_s8  (v, w);
-      else if constexpr( c == category::int8x16    ) return vaddq_s8 (v, w);
-      else if constexpr( c == category::uint8x8    ) return vadd_u8  (v, w);
-      else if constexpr( c == category::uint8x16   ) return vaddq_u8 (v, w);
-      else if constexpr( c == category::float32x2  ) return vadd_f32 (v, w);
-      else if constexpr( c == category::float32x4  ) return vaddq_f32(v, w);
+      using r_t = eve::wide<T, N>;
+      if constexpr( c == category::int64x1    ) return r_t(vadd_s64 (v, w));
+      else if constexpr( c == category::int64x2    ) return r_t(vaddq_s64(v, w));
+      else if constexpr( c == category::uint64x1   ) return r_t(vadd_u64 (v, w));
+      else if constexpr( c == category::uint64x2   ) return r_t(vaddq_u64(v, w));
+      else if constexpr( c == category::int32x2    ) return r_t(vadd_s32 (v, w));
+      else if constexpr( c == category::int32x4    ) return r_t(vaddq_s32(v, w));
+      else if constexpr( c == category::uint32x2   ) return r_t(vadd_u32 (v, w));
+      else if constexpr( c == category::uint32x4   ) return r_t(vaddq_u32(v, w));
+      else if constexpr( c == category::int16x4    ) return r_t(vadd_s16 (v, w));
+      else if constexpr( c == category::int16x8    ) return r_t(vaddq_s16(v, w));
+      else if constexpr( c == category::uint16x4   ) return r_t(vadd_u16 (v, w));
+      else if constexpr( c == category::uint16x8   ) return r_t(vaddq_u16(v, w));
+      else if constexpr( c == category::int8x8     ) return r_t(vadd_s8  (v, w));
+      else if constexpr( c == category::int8x16    ) return r_t(vaddq_s8 (v, w));
+      else if constexpr( c == category::uint8x8    ) return r_t(vadd_u8  (v, w));
+      else if constexpr( c == category::uint8x16   ) return r_t(vaddq_u8 (v, w));
+      else if constexpr( c == category::float32x2  ) return r_t(vadd_f32 (v, w));
+      else if constexpr( c == category::float32x4  ) return r_t(vaddq_f32(v, w));
       else if constexpr( current_api >= asimd )
       {
-        if constexpr( c == category::float64x1 ) return vadd_f64  (v, w);
-        else  if constexpr( c == category::float64x2 ) return vaddq_f64 (v, w);
+        if constexpr( c == category::float64x1 ) return r_t(vadd_f64  (v, w));
+        else  if constexpr( c == category::float64x2 ) return r_t(vaddq_f64 (v, w));
       }
     }
   }
