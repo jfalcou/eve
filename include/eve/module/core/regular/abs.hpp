@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/detail/resize.hpp>
 
 namespace eve
 {
@@ -18,7 +19,8 @@ namespace eve
                                       narrow_option, widen_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    constexpr EVE_FORCEINLINE auto operator()(T v) const noexcept
+    -> decltype(eve::detail::resize_it(Options(), T()))
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(abs_t, abs_);

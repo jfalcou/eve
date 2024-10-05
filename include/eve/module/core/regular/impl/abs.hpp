@@ -17,15 +17,19 @@
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 #include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
+#include <eve/module/core/regular/minus.hpp>
 
 namespace eve::detail
 {
   template<value T, callable_options O>
-  constexpr T  abs_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+  constexpr auto  abs_(EVE_REQUIRES(cpu_), O const& o, T const& v) noexcept
   {
-    if constexpr(O::contains(saturated))
+    if constexpr(O::contains_any(narrow, widen))
+      return resize_it(abs, o, v);
+    else if constexpr(O::contains(saturated))
     {
       if constexpr( signed_integral_scalar_value<T>  ){
         if(v == valmin(eve::as(v))) return valmax(eve::as(v));
@@ -42,7 +46,7 @@ namespace eve::detail
       if      constexpr( floating_value<T> )                return bit_andnot(v, mzero(eve::as(v)));
       else if constexpr( unsigned_value<T> )                return v;
       else if constexpr( signed_integral_scalar_value<T> )  return v < T(0) ?  T(-u_t(v)) : v;
-      else                                                  return eve::max(v, T(-u_t(v)));
+      else                                                  return eve::max(v, minus(v));
     }
   }
 }

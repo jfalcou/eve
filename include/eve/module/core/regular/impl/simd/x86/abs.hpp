@@ -20,10 +20,10 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>
+  EVE_FORCEINLINE auto
   abs_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> const& v) noexcept requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(saturated))
+    if constexpr(O::contains_any(saturated, narrow, widen))
     {
       return abs.behavior(cpu_{}, opts, v);
     }
