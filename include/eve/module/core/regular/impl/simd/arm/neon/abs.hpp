@@ -17,7 +17,7 @@ namespace eve::detail
   template<arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE auto
   abs_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v) noexcept
-  -> decltype(eve::detail::resize_it(Options(), wide<T, N>()))
+  -> decltype(eve::detail::resize_it(O(), wide<T, N>()))
   requires arm_abi<abi_t<T, N>>
   {
     if constexpr(O::contains_any(saturated, narrow, widen))
