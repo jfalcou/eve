@@ -236,7 +236,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<double, N> v, 
   constexpr auto c_i  = categorize<wide<double, N>>();
   constexpr auto c_o  = categorize<wide<U, N>>();
   constexpr auto a512 = current_api >= avx512;
-  using t_t           = as<upgrade_t<as_integer_t<element_type_t<U>, signed>>>;
+  using t_t           = as<up_t<as_integer_t<element_type_t<U>, signed>>>;
 
   if constexpr( c_i == category::float64x2 && c_o == category::float32x4        ) return _mm_cvtpd_ps(v);
   else if constexpr( c_i == category::float64x4 && c_o == category::float32x4        ) return _mm256_cvtpd_ps(v);
