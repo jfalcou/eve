@@ -49,7 +49,7 @@ TTS_CASE_WITH("Check behavior of eve::logical_notor(simd)",
   TTS_EQUAL(eve::logical_notor(l0.get(0), l1),
             map([&](auto f) -> l_t { return !l0.get(0) || f; }, l1));
   using v_t  = eve::element_type_t<T>;
-  using d_t  = eve::down_t<v_t>;
+  using d_t  = eve::downgrade_t<v_t>;
   auto da0   = eve::convert(a0, eve::as<d_t>());
   using dl_t = eve::as_logical_t<d_t>;
   TTS_EQUAL(eve::logical_notor(l1, da0 > 1),

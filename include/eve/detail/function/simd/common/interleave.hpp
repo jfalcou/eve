@@ -37,7 +37,7 @@ namespace eve::detail
       auto [ab0, ab1] = interleave(a, b);
       auto [cd0, cd1] = interleave(c, d);
 
-      using up_e_t = up_t<eve::element_type_t<T>>;
+      using up_e_t = upgrade_t<eve::element_type_t<T>>;
       using up_t   = wide<up_e_t, eve::fixed<T::size() / 2>>;
 
       auto [abcd00, abcd01] = interleave(bit_cast(ab0, as<up_t>()), bit_cast(cd0, as<up_t>()));

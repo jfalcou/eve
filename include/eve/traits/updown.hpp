@@ -70,6 +70,6 @@ namespace eve
     };
   }
 
-  template < typename T > using down_t = typename detail::down<T>::type;
-  template < typename T > using up_t = typename detail::up<T>::type;
+  template < typename T > using downgrade_t = typename detail::down<T>::type;
+  template < typename T > using upgrade_t = typename detail::up<T>::type;
 }
