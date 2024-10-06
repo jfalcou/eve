@@ -21,7 +21,7 @@ namespace eve
     template<typename T>
     struct result
     {
-      using type = as_wide_as_t<detail::downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using type = as_wide_as_t<down_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
     };
 
     template<eve::value T>

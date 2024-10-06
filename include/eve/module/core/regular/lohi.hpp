@@ -21,7 +21,7 @@ namespace eve
     template<typename T>
     struct result
     {
-      using base = as_wide_as_t<detail::downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using base = as_wide_as_t<down_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
       using type = zipped<base, base>;
     };
 
@@ -86,7 +86,7 @@ namespace eve
       }
       else
       {
-        using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
+        using si_t = down_t<as_integer_t<elt_t, unsigned>>;
 
         constexpr auto is_le  = (std::endian::native == std::endian::little);
         constexpr auto lo_idx = is_le ? 0 : 1;
@@ -104,7 +104,7 @@ namespace eve
         }
         else
         {
-          using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
+          using si_t = down_t<as_integer_t<elt_t, unsigned>>;
           using r_t  = std::array<si_t, 2>;
           auto z     = bit_cast(a0, as<r_t>());
           return zip(z[lo_idx], z[hi_idx]);

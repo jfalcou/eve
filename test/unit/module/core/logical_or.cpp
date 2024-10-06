@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of eve::logical_or(simd)",
   TTS_EQUAL(eve::logical_or(l0, l1.get(0)), map([&](auto e) -> l_t { return e || l1.get(0); }, l0));
   TTS_EQUAL(eve::logical_or(l0.get(0), l1), map([&](auto f) -> l_t { return l0.get(0) || f; }, l1));
   using v_t  = eve::element_type_t<T>;
-  using d_t  = eve::detail::downgrade_t<v_t>;
+  using d_t  = eve::down_t<v_t>;
   auto da0   = eve::convert(a0, eve::as<d_t>());
   using dl_t = eve::as_logical_t<d_t>;
   TTS_EQUAL(eve::logical_or(l1, da0 > 1),

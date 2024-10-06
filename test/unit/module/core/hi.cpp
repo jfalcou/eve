@@ -18,7 +18,7 @@ TTS_CASE_TPL("Check return types of hi on wide", eve::test::simd::unsigned_integ
 <typename T>(tts::type<T>)
 {
   using v_t  = eve::element_type_t<T>;
-  using sd_t = eve::detail::downgrade_t<v_t>;
+  using sd_t = eve::down_t<v_t>;
   using d_t  = eve::wide<sd_t, eve::cardinal_t<T>>;
   TTS_EXPR_IS(eve::hi(T()), d_t);
   TTS_EXPR_IS(eve::hi(v_t()), sd_t);
@@ -33,7 +33,7 @@ TTS_CASE_WITH("Check behavior of hi(wide) on unsigned integral ",
 <typename T>(T const& a0)
 {
   using v_t       = eve::element_type_t<T>;
-  using d_t       = eve::detail::downgrade_t<v_t>;
+  using d_t       = eve::down_t<v_t>;
   constexpr int s = sizeof(v_t) * 4;
   if constexpr( s == 4 )
   {

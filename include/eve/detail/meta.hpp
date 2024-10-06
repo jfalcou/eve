@@ -153,157 +153,6 @@ namespace eve::detail
   template<std::size_t Size, typename Sign = unsigned>
   using make_integer_t = typename make_integer<Size, Sign>::type;
 
-  // Upgrade a type (u)int(xx) -> (u)int(min(2xx, 64)
-  //                float -> double,  double -> double
-  template < typename T, bool is = std::is_integral_v<T>>
-  struct upgrader
-  {
-    using type = T;
-  };
-
-  template < typename T>
-  struct upgrader < T, true>
-  {
-    template<std::size_t Size, bool Sign, typename Dummy = void>
-    struct fetch;
-
-    template<typename Dummy>
-    struct fetch<1, true, Dummy>
-    {
-      using type = std::int16_t;
-    };
-    template<typename Dummy>
-    struct fetch<2, true, Dummy>
-    {
-      using type = std::int32_t;
-    };
-    template<typename Dummy>
-    struct fetch<4, true, Dummy>
-    {
-      using type = std::int64_t;
-    };
-    template<typename Dummy>
-    struct fetch<8, true, Dummy>
-    {
-      using type = std::int64_t;
-    };
-
-    template<typename Dummy>
-    struct fetch<1, false, Dummy>
-    {
-      using type = std::uint16_t;
-    };
-    template<typename Dummy>
-    struct fetch<2, false, Dummy>
-    {
-      using type = std::uint32_t;
-    };
-    template<typename Dummy>
-    struct fetch<4, false, Dummy>
-    {
-      using type = std::uint64_t;
-    };
-    template<typename Dummy>
-    struct fetch<8, false, Dummy>
-    {
-      using type = std::uint64_t;
-    };
-
-    using sel = fetch<sizeof(T), std::is_signed_v<T>>;
-    using type = typename sel::type;
-
-  };
-
-  template < typename T>
-  struct upgrader< T, false>
-  {
-    using type = double;
-  };
-
-  template<typename T>
-  struct upgrade : upgrader<T>
-  {
-  };
-
-  template<typename T>
-  using upgrade_t = typename upgrade<T>::type;
-
-
-  //////////////////////////////////////////////////////
-  // Downgrade a type (u)int(xx) -> (u)int(max(xx/2, 8)
-  //                double -> float,  float -> float
-  template < typename T, bool is = std::is_integral_v<T>>
-  struct downgrader
-  {
-    using type = T;
-  };
-
-  template < typename T>
-  struct downgrader < T, true>
-  {
-    template<std::size_t Size, bool Sign, typename Dummy = void>
-    struct fetch;
-
-    template<typename Dummy>
-    struct fetch<1, true, Dummy>
-    {
-      using type = std::int8_t;
-    };
-    template<typename Dummy>
-    struct fetch<2, true, Dummy>
-    {
-      using type = std::int8_t;
-    };
-    template<typename Dummy>
-    struct fetch<4, true, Dummy>
-    {
-      using type = std::int16_t;
-    };
-    template<typename Dummy>
-    struct fetch<8, true, Dummy>
-    {
-      using type = std::int32_t;
-    };
-
-    template<typename Dummy>
-    struct fetch<1, false, Dummy>
-    {
-      using type = std::uint8_t;
-    };
-    template<typename Dummy>
-    struct fetch<2, false, Dummy>
-    {
-      using type = std::uint8_t;
-    };
-    template<typename Dummy>
-    struct fetch<4, false, Dummy>
-    {
-      using type = std::uint16_t;
-    };
-    template<typename Dummy>
-    struct fetch<8, false, Dummy>
-    {
-      using type = std::uint32_t;
-    };
-
-    using sel = fetch<sizeof(T), std::is_signed_v<T>>;
-    using type = typename sel::type;
-
-  };
-
-//   template < typename T>
-//   struct downgrader< T, false>
-//   {
-//     using type = float;
-//   };
-
-  template<typename T>
-  struct downgrade : downgrader<T>
-  {
-  };
-
-  template<typename T>
-  using downgrade_t = typename downgrade<T>::type;
 
   ///////////////////////////////////////////////////////////////////
 
@@ -347,9 +196,9 @@ namespace eve::detail
   template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
   {
     const auto impl = [&]<std::size_t... I>(std::index_sequence<I...> const &)
-    {
-      return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
-    };
+      {
+        return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
+      };
 
     return impl(std::make_index_sequence<Count>{});
   }
@@ -359,9 +208,9 @@ namespace eve::detail
   EVE_FORCEINLINE decltype(auto) apply(Func &&f, Generator<I...> const& g)
   {
     const auto impl = [&](Generator<I...> const &)
-    {
-      return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
-    };
+      {
+        return EVE_FWD(f)(std::integral_constant<std::size_t, I>{}...);
+      };
 
     return impl(g);
   }
@@ -381,9 +230,9 @@ namespace eve::detail
   {
     using type = decltype(Begin);
     auto body = [&]<typename N>(N)
-                {
-                  return f(std::integral_constant<type, Begin + N::value*Step>{} );
-                };
+      {
+        return f(std::integral_constant<type, Begin + N::value*Step>{} );
+      };
 
     [&]<auto... Iter>( std::integer_sequence<type,Iter...> )
     {
