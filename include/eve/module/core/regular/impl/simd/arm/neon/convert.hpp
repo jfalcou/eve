@@ -12,6 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/combine.hpp>
+#include <eve/traits/updown.hpp>
 
 namespace eve::detail
 {
@@ -122,7 +123,7 @@ requires arm_abi<abi_t<T, N>> && (sizeof(T) == 4)
   else if constexpr( c_i == category::uint32x4 && c_o == category::uint16x4  ) return vmovn_u32(v);
   else if constexpr( sizeof(U) == 2                                          ) return convert_integers_shuffle(v, tgt);
   else if constexpr( sizeof(U) == 1                                          ) return convert_integers_chain(v, tgt);
-  else if constexpr( std::same_as<double, U>                                 ) return convert(convert(v, as<upgrade_t<T>> {}), tgt);
+  else if constexpr( std::same_as<double, U>                                 ) return convert(convert(v, as<up_t<element_type_t<T>> {}), tgt);
   else                                                                         return convert_impl(EVE_TARGETS(cpu_), v, tgt);
 }
 
@@ -174,7 +175,7 @@ requires arm_abi<abi_t<T, N>> && (sizeof(T) == 1)
   else if constexpr( c_i == category::int8x8  && c_o == category::int16x4  ) return vget_low_s16(vmovl_s8(v));
   else if constexpr( c_i == category::uint8x8 && c_o == category::uint16x4 ) return vget_low_u16(vmovl_u8(v));
   else if constexpr( std::same_as<double, U> && current_api < asimd        ) return map(convert, v, tgt);
-  else if constexpr( sizeof(U) != 2                                        ) return convert(convert(v, as<upgrade_t<T>> {}), tgt);
+  else if constexpr( sizeof(U) != 2                                        ) return convert(convert(v, as<up_t<element_type_t<T>>> {}), tgt);
   else return convert_slice(v, tgt);
 }
 

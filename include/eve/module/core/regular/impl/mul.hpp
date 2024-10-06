@@ -25,6 +25,7 @@
 #include <eve/module/core/regular/is_gtz.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/next.hpp>
+#include <eve/traits/updown.hpp>
 
 namespace eve::detail
 {
@@ -70,8 +71,8 @@ namespace eve::detail
           {
             if constexpr (sizeof(T) <= 4)
             {
-              using up_t = upgrade_t<T>;
-              return static_cast<T>(saturate(static_cast<up_t>(a) * static_cast<up_t>(b), as<T>{}));
+              using upw_t = up_t<T>;
+              return static_cast<T>(saturate(static_cast<upw_t>(a) * static_cast<upw_t>(b), as<T>{}));
             }
             else if constexpr (sizeof(T) == 8)
             {
@@ -110,8 +111,8 @@ namespace eve::detail
             {
               if constexpr (sizeof(elt_t) <= 4)
               {
-                using sup_t = upgrade_t<elt_t>;
-                auto z      = mul(convert(a, as<sup_t>()), convert(b, as<sup_t>()));
+                using supw_t = up_t<elt_t>;
+                auto z      = mul(convert(a, as<supw_t>()), convert(b, as<supw_t>()));
                 auto s      = saturate(z, as<elt_t>());
                 return convert(s, as<elt_t>());
               }
@@ -129,8 +130,8 @@ namespace eve::detail
           {
             if constexpr (sizeof(T) <= 4)
             {
-              using up_t = upgrade_t<T>;
-              up_t res   = up_t(a) * up_t(b);
+              using upw_t = up_t<T>;
+              upw_t res   = upw_t(a) * upw_t(b);
               return (res > valmax(as<T>{})) ? valmax(as<T>{}) : static_cast<T>(res);
             }
             else
@@ -151,8 +152,8 @@ namespace eve::detail
             using elt_t = element_type_t<T>;
             if constexpr (sizeof(elt_t) <= 4)
             {
-              using sup_t = upgrade_t<elt_t>;
-              auto z      = mul(convert(a, as<sup_t>()), convert(b, as<sup_t>()));
+              using supw_t = up_t<elt_t>;
+              auto z      = mul(convert(a, as<supw_t>()), convert(b, as<supw_t>()));
               auto s      = saturate(z, as<elt_t>());
               return convert(s, as<elt_t>());
             }
