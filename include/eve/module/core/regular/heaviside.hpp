@@ -94,10 +94,7 @@ namespace eve
     template<typename T, callable_options O>
     EVE_FORCEINLINE constexpr T heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     {
-      if constexpr(scalar_value<T>)
-        return a > 0;
-      else
-        return if_else(is_gtz(a), one(as(a)), zero);
+      return if_else(is_gtz(a), one(as(a)), zero);
     }
 
     template<typename T, callable_options O>
