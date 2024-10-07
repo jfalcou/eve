@@ -20,8 +20,7 @@ namespace eve
     template<plain_value T>
     static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      constexpr auto mask = ~0ULL;
-      if      constexpr (std::integral<T>       )  return T{mask};
+      if      constexpr (std::integral<T>       )  return ~T{0};
       else if constexpr (std::same_as<T, double>)  return T{std::bit_cast<double>(~0ULL)};
       else if constexpr (std::same_as<T, float >)  return T{std::bit_cast<float>(~0U)};
     }

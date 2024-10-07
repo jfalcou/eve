@@ -78,7 +78,7 @@ namespace eve::detail
       else  if constexpr( cat == category::int64x2)   return vceqq_s64(v, w);
       else  if constexpr( cat == category::uint64x2)  return vceqq_u64(v, w);
     }
-    else  if constexpr( sizeof(T) == 8 )            return map(eq, v, w);
+    else  if constexpr( sizeof(T) == 8 )            return map_pt(as<logical<wide<T, N>>>{}, eq, v, w);
   }
 
   //================================================================================================
@@ -126,7 +126,7 @@ namespace eve::detail
       else  if constexpr( cat == category::uint64x2)  return vcltq_u64(v, w);
     }
     else  if constexpr( sizeof(T) == 8 )
-      return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e < f); }, v, w);
+      return map_pt(as<logical<wide<T, N>>>{}, []<typename E>(E const& e, E const& f){ return as_logical_t<E>(e < f); }, v, w);
 
   }
 
@@ -162,7 +162,7 @@ namespace eve::detail
       else  if constexpr( cat == category::uint64x2)  return vcgtq_u64(v, w);
     }
     else  if constexpr( sizeof(T) == 8 )
-      return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e > f); }, v, w);
+      return map_pt(as<logical<wide<T, N>>>{}, []<typename E>(E const& e, E const& f){ return as_logical_t<E>(e > f); }, v, w);
   }
 
   template<typename T, typename N>
@@ -195,7 +195,7 @@ namespace eve::detail
       else  if constexpr( cat == category::uint64x2)  return vcgeq_u64(v, w);
     }
     else  if constexpr( sizeof(T) == 8 )
-        return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
+        return map_pt(as<logical<wide<T, N>>>{}, []<typename E>(E const& e, E const& f){ return as_logical_t<E>(e >= f); }, v, w);
   }
 
   template<typename T, typename N>
@@ -228,6 +228,6 @@ namespace eve::detail
       else  if constexpr( cat == category::uint64x2)  return vcleq_u64(v, w);
     }
     else  if constexpr( sizeof(T) == 8 )
-        return map([]<typename E>(E const& e, E const& f){ return as_logical_t<E>(e <= f); }, v, w);
+        return map_pt(as<logical<wide<T, N>>>{}, []<typename E>(E const& e, E const& f){ return as_logical_t<E>(e <= f); }, v, w);
   }
 }
