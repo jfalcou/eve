@@ -151,14 +151,14 @@ EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
 }
 
 template<typename T, typename N, typename U>
-EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
+EVE_FORCEINLINE wide<U, N> convert_slice(wide<T, N> v, as<U> tgt)
 {
   if constexpr( N::value > 1 )
   {
     auto [l, h] = v.slice();
     return wide<U, N>(convert(l, tgt), convert(h, tgt));
   }
-  else return map(convert, v, tgt);
+  else return map_pt(as<wide<U, N>>{}, convert, v, tgt);
 }
 
 // Convert integer from 2^n -> 2^n+1

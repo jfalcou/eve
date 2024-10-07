@@ -84,7 +84,7 @@ namespace eve
       if constexpr( integral_value<T> )
         return false_(eve::as<T>());
       else if (O::contains(pedantic))
-        return is_nez(frac[raw](a)) || (a > eve::maxflint(eve::as<T>()));
+        return is_nez(frac(a)) || (a > eve::maxflint(eve::as<T>()));
       else
         return is_nez(frac[raw](a));
     }

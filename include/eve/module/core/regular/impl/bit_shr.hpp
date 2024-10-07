@@ -23,13 +23,13 @@ namespace eve::detail
   template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
   EVE_FORCEINLINE constexpr auto bit_shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept
   {
-    return bit_shr(a, if_else(cx, T{S}, zero)); 
+    return bit_shr(a, if_else(cx, T{S}, zero));
   }
 
   template<callable_options O, conditional_expr C, typename T, typename U>
   EVE_FORCEINLINE constexpr auto bit_shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, U s) noexcept
   {
-    return bit_shr(a, if_else(cx, s, zero)); 
+    return bit_shr(a, if_else(cx, s, zero));
   }
 
   template<callable_options O, typename T, typename U>
@@ -38,14 +38,14 @@ namespace eve::detail
     using u_t = eve::as_integer_t<T, unsigned>;
     if constexpr (scalar_value<U>)
     {
-           if constexpr (scalar_value<T>) return static_cast<T>(u_t(a) >>  ptrdiff_t(b));
+           if constexpr (scalar_value<T>) return static_cast<T>(u_t(a) >> ptrdiff_t(b));
       else if constexpr (simd_value<T>)   return bit_cast(bit_cast(a, as<u_t>()) >> ptrdiff_t(b), as(a));
     }
     else // U wide
     {
       if constexpr (scalar_value<T>)
       {
-        using w_t =  as_wide_as_t<T, U>;
+        using w_t = as_wide_as_t<T, U>;
         return bit_shr(w_t(a), b);
       }
       else if constexpr (simd_value<T>)
