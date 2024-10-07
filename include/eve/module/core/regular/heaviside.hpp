@@ -30,7 +30,6 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<T, U>
     operator()(T a, U s) const noexcept
     {
-      EVE_ASSERT(eve::all(lo <= hi), "[eve::heaviside] bounds are not correctly ordered");
       return EVE_DISPATCH_CALL(a, s);
     }
 
