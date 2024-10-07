@@ -76,7 +76,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T> is_finite_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( is_logical_v<T> || integral_value<T>)

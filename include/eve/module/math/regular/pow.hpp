@@ -27,8 +27,8 @@ namespace eve
     }
 
     template<floating_value T, floating_value U>
-    requires(same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
     {
       return EVE_DISPATCH_CALL_PT(T, v, w);
     }
@@ -46,15 +46,15 @@ namespace eve
     }
 
     template<floating_value T, integral_simd_value U>
-    requires(same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr  as_wide_as_t<T, U> operator()(T v, U w) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
     {
       return EVE_DISPATCH_CALL_PT(T, v, w);
     }
 
     template<integral_simd_value T, integral_simd_value U>
-    requires(same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
     {
       return EVE_DISPATCH_CALL_PT(T, v, w);
     }
@@ -135,9 +135,8 @@ namespace eve
 
   namespace detail
   {
-    template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
+    template<floating_scalar_value T, integral_scalar_value U, callable_options O>
+    EVE_FORCEINLINE constexpr T pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
     {
       if constexpr( std::is_unsigned_v<U> ) // U unsigned
       {
@@ -161,24 +160,25 @@ namespace eve
       }
     }
 
-    template<floating_value T,  floating_value U, callable_options O> //3
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
+    template<floating_value T, floating_value U, callable_options O> //3
+    EVE_FORCEINLINE constexpr common_value_t<T, U> pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
-      if constexpr(O::contains(raw))
+      if constexpr (O::contains(raw))
       {
         return exp(a1*log(a0));
       }
       else
       {
-        if constexpr( scalar_value<T> )
+        if constexpr (scalar_value<T>)
         {
           if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
         }
+
         auto nega = is_negative(r_t(a0));
-        r_t  z  = eve::pow_abs(a0, a1);
-        return minus[is_odd(a1) && nega](z);
+        r_t  z    = eve::pow_abs(a0, a1);
+
+        return minus[is_odd[pedantic](a1) && nega](z);
       }
     }
 

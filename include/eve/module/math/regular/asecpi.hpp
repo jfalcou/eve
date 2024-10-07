@@ -27,7 +27,7 @@ namespace eve
 
     EVE_CALLABLE_OBJECT(asecpi_t, asecpi_);
   };
-  
+
   //================================================================================================
   //! @addtogroup math_invtrig
   //! @{
@@ -91,7 +91,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T asecpi_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
       return radinpi(asec[o](a));

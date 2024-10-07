@@ -12,7 +12,7 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(avx512_), O const&, T a, T b)
   {
     // maxmag/maxmag have an intrinsic in avx512 so we gain one operation

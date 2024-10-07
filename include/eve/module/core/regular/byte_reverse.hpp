@@ -27,7 +27,7 @@ namespace eve
     template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     EVE_CALLABLE_OBJECT(byte_reverse_t, byte_reverse_);
@@ -106,7 +106,7 @@ namespace eve
       }
     }
 
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
     byte_reverse_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {

@@ -46,8 +46,8 @@ namespace eve
   //================================================================================================
   template<typename T> concept relative_conditional_expr = conditional_expr<T> && requires(T a)
   {
-    { a.count(eve::as<eve::wide<int>>())  };
-    { a.offset(eve::as<eve::wide<int>>()) };
-    { a.roffset(eve::as<eve::wide<int>>()) };
+    { a.count(as<eve::wide<int>>{})  };
+    { a.offset(as<eve::wide<int>>{}) };
+    { a.roffset(as<eve::wide<int>>{}) };
   };
 }

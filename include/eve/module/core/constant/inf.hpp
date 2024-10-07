@@ -16,7 +16,7 @@ namespace eve
   template<typename Options>
   struct inf_t : constant_callable<inf_t, Options, lower_option, upper_option>
   {
-    template<typename T>
+    template<floating_value T>
     static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
       return std::numeric_limits<T>::infinity();

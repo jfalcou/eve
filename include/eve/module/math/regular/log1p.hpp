@@ -81,7 +81,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto
     log1p_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {

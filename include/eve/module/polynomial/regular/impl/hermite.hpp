@@ -20,7 +20,7 @@ namespace eve::detail
     return z + z;
   }
 
-  template<typename I, typename T, callable_options O>
+  template<callable_options O, typename I, typename T>
   constexpr as_wide_as_t<T, I>
   hermite_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {

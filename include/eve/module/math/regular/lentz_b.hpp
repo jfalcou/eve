@@ -17,9 +17,19 @@ namespace eve
   struct lentz_b_t : strict_elementwise_callable<lentz_b_t, Options>
   {
     template<typename G, floating_scalar_value T>
-    constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const
+    constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept
+      -> as_wide_as_t<T, decltype(get<0>(g()))>
+        requires (kumi::sized_product_type<decltype(g()), 2>)
     {
-      return EVE_DISPATCH_CALL(g, e, m);
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, decltype(get<0>(g()))>), g, e, m);
+    }
+
+    template<typename G, floating_scalar_value T>
+    constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept
+      -> as_wide_as_t<T, decltype(g())>
+        requires (!kumi::product_type<decltype(g())>)
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, decltype(g())>), g, e, m);
     }
 
     EVE_CALLABLE_OBJECT(lentz_b_t, lentz_b_);
@@ -83,7 +93,6 @@ namespace eve
   //================================================================================================
   //! @}
   //================================================================================================
-
 }
 
 #include <eve/module/math/regular/impl/lentz.hpp>

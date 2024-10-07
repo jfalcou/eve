@@ -82,7 +82,7 @@ namespace eve
 {
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE auto three_fma_(EVE_REQUIRES(cpu_), O const&, T a, T x, T y) noexcept
     {
       T r1 = fma(a, x, y);

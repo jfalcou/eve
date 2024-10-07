@@ -20,67 +20,69 @@ namespace eve
   template<typename Options>
   struct erfcx_t : elementwise_callable<erfcx_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(erfcx_t, erfcx_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var erfcx
-//!   @brief Computes the normalized complementary error function
-//!   \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto erfcx(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto erfcx[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto erfcx[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!   1. The value of the normalized complementary error function:
-//!     \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$, is returned.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/special/erfcx.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var erfcx
+  //!   @brief Computes the normalized complementary error function
+  //!   \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto erfcx(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto erfcx[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto erfcx[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!   1. The value of the normalized complementary error function:
+  //!     \f$ \displaystyle \mbox{erfcx}(x) = e^{x^2} \mbox{erfc}(x)\f$, is returned.
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Error_function)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/special/erfcx.cpp}
+  //================================================================================================
   inline constexpr auto erfcx = functor<erfcx_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr T
-    erfcx_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE T erfcx_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
       /*
        * Based on: M. M. Shepherd and J. G. Laframboise, "Chebyshev Approximation of
@@ -88,20 +90,23 @@ namespace eve
        * No. 153, January 1981, pp. 249-253.
        *
        */
-      if constexpr( scalar_value<T> && eve::platform::supports_invalids )
+      if constexpr (scalar_value<T> && eve::platform::supports_invalids)
       {
         if( is_nan(x) ) return x;
       }
       using elt_t     = element_type_t<T>;
+
       auto largelimit = [](){
         // for x greater than the value 1/(sqrt(pi)*x) ==  erfcx(x) at working precision
         if constexpr( std::is_same_v<elt_t, float> ) return 0x1.a919d2p+37;
         else return 0x1.fffffffffffffp+510;
       };
+
       auto    ll        = largelimit();
       const T invsqrtpi = T(0.564189583547756286948079451560772585844050629329);
       T       a         = eve::abs(x);
-      if constexpr( scalar_value<T> )
+
+      if constexpr (scalar_value<T>)
       {
         if( x == inf(as(x)) ) return zero(as(a));
         if( x > ll ) return invsqrtpi * rec[pedantic](a);
@@ -112,8 +117,10 @@ namespace eve
         };
         if( x < largeneglimit() ) return inf(as(a));
       }
+
       constexpr auto isfloat = std::same_as<elt_t, float>;
       const T        shift   = if_else(isfloat, T(2), T(4));
+
       /* Compute q = (a-shift)/(a+shift) accurately. [0,INF) -> [-1,1] */
       T    m = a - shift;
       T    p = a + shift;
@@ -122,8 +129,9 @@ namespace eve
       T    t = fnma(inc(q), shift, a);
       T    e = fma(q, -a, t);
       q      = fma(r, e, q);
+
       /* Approximate (1+2*a)*exp(a*a)*erfc(a) as p(q)+1 for q in [-1,1] */
-      if constexpr( isfloat )
+      if constexpr (isfloat)
       {
         p = eve::reverse_horner(q, T(0x1.1ba03ap-2f), T(-0x1.7bf5cep-4f), T(-0x1.54081ap-3f)
                                , T(0x1.4ff8acp-3f), T(-0x1.bc1b6cp-5f), T(-0x1.069940p-7f)
@@ -150,13 +158,18 @@ namespace eve
       t = q + q;
       e = (p - q) + fma(t, -a, T(1));
       r = fma(e, r, q);
-      if( eve::any(a > ll) ) r = if_else(a > ll, invsqrtpi * rec[pedantic](a), r);
+
+      if (eve::any(a > ll)) r = if_else(a > ll, invsqrtpi * rec[pedantic](a), r);
+
       auto xpos = (x >= 0);
-      if( eve::all(xpos) ) return r;
+
+      if (eve::all(xpos)) return r;
+
       /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */
       auto r1 = fms(T(2), expx2(x), r);
       r1      = if_else(is_nan(r1), inf(as<T>()), r1);
       r       = if_else(xpos, r, r1);
+
       return if_else(is_nan(x), eve::allbits, r);
     }
   }

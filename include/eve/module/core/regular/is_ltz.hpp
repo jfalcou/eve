@@ -21,7 +21,7 @@ namespace eve
     template<eve::value T>
     EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_logical_t<T>), t);
+      return EVE_DISPATCH_CALL_PT(as_logical_t<T>, t);
     }
 
     EVE_CALLABLE_OBJECT(is_ltz_t, is_ltz_);
@@ -74,7 +74,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_ltz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {

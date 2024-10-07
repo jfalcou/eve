@@ -16,7 +16,7 @@
 namespace eve::detail
 {
 
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
@@ -33,7 +33,7 @@ namespace eve::detail
   }
 
 
-  template<typename T, typename U, callable_options O>
+  template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U>) noexcept
   {
     if constexpr(integral_value<T>)

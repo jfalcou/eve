@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O> constexpr
+  template<callable_options O, typename T> constexpr
   T cyl_bessel_y1_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     using elt_t = element_type_t<T>;

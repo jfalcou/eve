@@ -85,7 +85,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto
     is_bit_equal_(EVE_REQUIRES(cpu_),O const &, T const& a, U const& b) noexcept
     {
@@ -94,7 +94,7 @@ namespace eve
       return is_equal(bit_cast(b_t(a), as<ui_t>()), bit_cast(b_t(b), as<ui_t>()));
     }
 
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto
     is_bit_equal_(EVE_REQUIRES(cpu_),O const &, logical<T> const& a, logical<U> const& b) noexcept
     {

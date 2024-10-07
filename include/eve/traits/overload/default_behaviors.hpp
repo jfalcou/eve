@@ -159,9 +159,8 @@ namespace eve
 
     template<callable_options O, typename T, typename... Ts>
     EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
-      requires(!match_option<condition_key,O,ignore_none_>)
+      requires (!match_option<condition_key, O, ignore_none_>)
     {
-
       // Grab the condition and drop it from the callable
       auto[cond, rmv_cond] = opts.extract(condition_key);
       using cond_t =  decltype(cond);
@@ -195,7 +194,7 @@ namespace eve
 
     template<typename R, callable_options O, typename T, typename... Ts>
     EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, T x0, Ts const&... xs) const
-      requires(!match_option<condition_key,O,ignore_none_>)
+      requires (!match_option<condition_key, O, ignore_none_>)
     {
       return this->behavior(arch, opts, x0, xs...);
     }
@@ -257,7 +256,7 @@ namespace eve
       using          cv_t           = common_value_t<T,Ts...>;
       constexpr bool is_callable    = !std::same_as<ignore, decltype(base_t::adapt_call_pt(pt, a, o, x, xs...))>;
       constexpr bool is_convertible = requires{ func_t::deferred_call(a, o, cv_t{x}, cv_t{xs}...); };
-      
+
       if      constexpr(is_callable   ) return base_t::adapt_call_pt(pt, a, o, x, xs...);
       else if constexpr(is_convertible) return func_t::deferred_call(a, o, cv_t{x}, cv_t{xs}...);
       else                              return ignore{};
@@ -404,9 +403,9 @@ namespace eve
   struct constant_callable : callable<Func, OptionsValues, conditional_option, Options...>
   {
     using constant_callable_tag = void;
-    
+
     template<typename O, typename T>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> const& target) const
+    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> target) const
     {
       using func_t                =  Func<OptionsValues>;
       if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )
@@ -435,7 +434,7 @@ namespace eve
     }
 
     template<typename R, typename O, typename T>
-    EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, as<T> const& target) const
+    EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, as<T> target) const
     {
       return this->behavior(arch, opts, target);
     }

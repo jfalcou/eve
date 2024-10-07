@@ -56,7 +56,7 @@ namespace eve
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}
 //!  using t_t = element_type_t<T>;
 //!  if constexpr(std::same_as<t_t, float>) return T(f)
-//!  else if constexpr(std::same_as<t_t, double>)  return T(d);
+//!  else if constexpr(std::same_as<t_t, double>)  return T{d};
 //!  else the result is UB
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //! ---
@@ -75,10 +75,10 @@ namespace eve
   }
 
   template<eve::_::real32 BF, eve::_::real64 BD, floating_value T>
-   constexpr T ieee_constant(eve::as<T>)
+  constexpr T ieee_constant(as<T>)
   {
-    using e_t = eve::element_type_t<T>;
-    if      constexpr(std::same_as<float,e_t>) return T(BF.value);
-    else if constexpr(std::same_as<double,e_t>) return T(BD.value);
+    using e_t = element_type_t<T>;
+    if      constexpr(std::same_as<float,e_t>) return T{BF.value};
+    else if constexpr(std::same_as<double,e_t>) return T{BD.value};
   }
 }

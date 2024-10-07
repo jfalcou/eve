@@ -23,7 +23,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     EVE_CALLABLE_OBJECT(frac_t, frac_);
@@ -89,11 +89,10 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr (floating_value<T>)
       {
         if constexpr(O::contains(raw))      return a-trunc[o](a);
         else

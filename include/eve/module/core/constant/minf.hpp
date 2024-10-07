@@ -16,52 +16,55 @@ namespace eve
   template<typename Options>
   struct minf_t : constant_callable<minf_t, Options, lower_option, upper_option>
   {
-    template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    template<floating_value T>
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      return  T(-std::numeric_limits<T>::infinity());
+      return  T{-std::numeric_limits<T>::infinity()};
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(minf_t, minf_);
   };
 
-//================================================================================================
-//! @addtogroup core_constants
-//! @{
-//!   @var minf
-//!   @brief Computes the -infinity ieee value.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template<floating_value> constexpr T minf(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!    The call `eve::minf(as<T>())` is semantically equivalent to
-//!    T(-std::numeric_limits<eve::element_type_t<T>>::``infinity())`
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/core/constant/minf.cpp}
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var minf
+  //!   @brief Computes the -infinity ieee value.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template<floating_value> constexpr T minf(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!    The call `eve::minf(as<T>())` is semantically equivalent to
+  //!    T(-std::numeric_limits<eve::element_type_t<T>>::``infinity())`
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/minf.cpp}
+  //! @}
+  //================================================================================================
   inline constexpr auto minf = functor<minf_t>;
 }

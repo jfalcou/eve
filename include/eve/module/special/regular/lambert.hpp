@@ -17,65 +17,67 @@ namespace eve
   template<typename Options>
   struct lambert_t : elementwise_callable<lambert_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    zipped<T,T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr zipped<T, T> operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((zipped<T, T>), v);
+    }
 
     EVE_CALLABLE_OBJECT(lambert_t, lambert_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var lambert
-//!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto lambert(floating_value auto x) ;                        noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto lambert[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto lambert[logical_value auto m](floating_value auto x)    noexcept; // 2
-///!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. A tuple of the two branch values of the Lambert function is returned with the following
-//!       considerations:
-//!        * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
-//!          returned are NaN.
-//!        * If the inputs are positive, only one branch exist and the two returned values are equal.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)
-//!   *  [DLMF](https://dlmf.nist.gov/4.13)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/lambert.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var lambert
+  //!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto lambert(floating_value auto x) ;                        noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto lambert[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto lambert[logical_value auto m](floating_value auto x)    noexcept; // 2
+  ///!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. A tuple of the two branch values of the Lambert function is returned with the following
+  //!       considerations:
+  //!        * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
+  //!          returned are NaN.
+  //!        * If the inputs are positive, only one branch exist and the two returned values are equal.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)
+  //!   *  [DLMF](https://dlmf.nist.gov/4.13)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/lambert.cpp}
+  //================================================================================================
   inline constexpr auto lambert = functor<lambert_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
@@ -96,8 +98,8 @@ namespace eve
       }
     }
 
-    template<typename T, callable_options O>
-    constexpr  kumi::tuple<T, T> lambert_(EVE_REQUIRES(cpu_), O const&, T x)
+    template<callable_options O, typename T>
+    constexpr kumi::tuple<T, T> lambert_(EVE_REQUIRES(cpu_), O const&, T x)
     {
       auto halley = [](auto px, auto w_i, auto max_iters)
         {

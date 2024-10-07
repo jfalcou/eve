@@ -20,9 +20,8 @@
 namespace eve::detail
 {
 
-  template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  trunc_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
+  template<callable_options O, typename T>
+  EVE_FORCEINLINE constexpr T trunc_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
   {
     if constexpr(integral_value<T>)
       return a0;
@@ -51,7 +50,7 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename U, callable_options O>
+  template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto trunc_(EVE_REQUIRES(cpu_), O const& o, T const& a0, as<U>) noexcept
   {
     if constexpr(integral_value<T>)

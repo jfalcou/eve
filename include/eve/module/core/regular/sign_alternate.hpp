@@ -76,7 +76,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
     sign_alternate_(EVE_REQUIRES(cpu_), O const &, T const& n) noexcept
     {

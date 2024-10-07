@@ -80,7 +80,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(cpu_),
                                       O const & ,
                                       logical<T> const& a,
@@ -102,7 +102,7 @@ namespace eve
       }
     }
 
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr
     auto logical_xor_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
     {

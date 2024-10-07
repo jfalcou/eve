@@ -18,76 +18,76 @@
 
 namespace eve
 {
-template<typename Options>
-struct betainc_t : elementwise_callable<betainc_t, Options>
-{
-  template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
-  requires (same_lanes_or_scalar<T0, T1, T2>)
-  constexpr EVE_FORCEINLINE eve::common_value_t<T0, T1, T2>
-  operator()(T0 a, T1 b, T2 c) const noexcept
-  { return EVE_DISPATCH_CALL(a, b, c); }
+  template<typename Options>
+  struct betainc_t : elementwise_callable<betainc_t, Options>
+  {
+    template<floating_value T0, floating_value T1, floating_value T2>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, T2>), a, b, c);
+    }
 
-  EVE_CALLABLE_OBJECT(betainc_t, betainc_);
-};
+    EVE_CALLABLE_OBJECT(betainc_t, betainc_);
+  };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var betainc
-//!   @brief Computes the betainc incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =
-//!   \frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
-//!
-//!   **Defined in header**
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto betainc(floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)    noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto betainc[conditional_expr auto c](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
-//!      constexpr auto betainc[logical_value auto m](floating_value auto s,
-//!                             floating_value auto x, floating_value auto y)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `s` :  [real floating argument](@ref eve::floating_value). \f$ s \in [0, 1]\f$
-//!
-//!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_value).
-//!
-//!   **Return value**
-//!
-//!   The value of the incomplete betainc function is returned.
-//!
-//!  @groupheader{External references}
-//!   *  [DLMF: Incomplete Beta Function](https://dlmf.nist.gov/8.17)
-//!   *  [Wolfram MathWorld: Beta Incomplete Function](https://mathworld.wolfram.com/IncompleteBetaFunction.html)
-//!   *  [Wikipedia: Beta Function](https://en.wikipedia.org/wiki/Beta_function)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/betainc.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var betainc
+  //!   @brief Computes the betainc incomplete function. \f$\displaystyle \mbox{I}_s(x,y) =
+  //!   \frac{1}{\mbox{B}(x,y)}\int_0^s t^{x-1}(1-t)^{y-1}\mbox{d}t\f$
+  //!
+  //!   **Defined in header**
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto betainc(floating_value auto s,
+  //!                             floating_value auto x, floating_value auto y)    noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto betainc[conditional_expr auto c](floating_value auto s,
+  //!                             floating_value auto x, floating_value auto y)    noexcept; // 2
+  //!      constexpr auto betainc[logical_value auto m](floating_value auto s,
+  //!                             floating_value auto x, floating_value auto y)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `s` :  [real floating argument](@ref eve::floating_value). \f$ s \in [0, 1]\f$
+  //!
+  //!     * `x`, `y`:  [strictly positive real floating arguments](@ref eve::floating_value).
+  //!
+  //!   **Return value**
+  //!
+  //!   The value of the incomplete betainc function is returned.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [DLMF: Incomplete Beta Function](https://dlmf.nist.gov/8.17)
+  //!   *  [Wolfram MathWorld: Beta Incomplete Function](https://mathworld.wolfram.com/IncompleteBetaFunction.html)
+  //!   *  [Wikipedia: Beta Function](https://en.wikipedia.org/wiki/Beta_function)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/betainc.cpp}
+  //================================================================================================
  inline constexpr auto betainc = functor<betainc_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template< typename T, callable_options O>
-    constexpr EVE_FORCEINLINE
-    auto betainc_(EVE_REQUIRES(cpu_), O const&, T px, T pa, T pb) noexcept
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE auto betainc_(EVE_REQUIRES(cpu_), O const&, T px, T pa, T pb) noexcept
     {
       auto betacf = [](auto x, auto a, auto b) {
         // continued fraction for incomplete Beta function, used by betainc

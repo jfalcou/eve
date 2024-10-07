@@ -27,7 +27,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     EVE_CALLABLE_OBJECT(bit_ceil_t, bit_ceil_);
@@ -84,7 +84,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
     bit_ceil_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
     {

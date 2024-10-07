@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
     {
-      return EVE_DISPATCH_CALL_PT((T), a);
+      return EVE_DISPATCH_CALL_PT(T, a);
     }
 
     EVE_CALLABLE_OBJECT(firstbitset_t, firstbitset_);
@@ -74,7 +74,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
     firstbitset_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
     {

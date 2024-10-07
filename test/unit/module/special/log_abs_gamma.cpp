@@ -46,6 +46,7 @@ TTS_CASE_WITH("Check behavior of log_abs_gamma on wide",
     TTS_IEEE_EQUAL(log_abs_gamma(eve::inf(eve::as<T>())), eve::inf(eve::as<T>()));
     TTS_IEEE_EQUAL(log_abs_gamma(eve::minf(eve::as<T>())), eve::inf(eve::as<T>()));
   }
+
   TTS_IEEE_EQUAL(log_abs_gamma(T(0)), eve::inf(eve::as<T>()));
   TTS_IEEE_EQUAL(log_abs_gamma(T(-0.)), eve::inf(eve::as<T>()));
   TTS_IEEE_EQUAL(log_abs_gamma(T(1)), T(0));
@@ -53,7 +54,6 @@ TTS_CASE_WITH("Check behavior of log_abs_gamma on wide",
   TTS_IEEE_EQUAL(log_abs_gamma(T(3)), T(std::log(2.0)));
   TTS_IEEE_EQUAL(log_abs_gamma(T(5)), T(std::log(24.0)));
 };
-
 
 //==================================================================================================
 // Tests for masked log_abs_gamma

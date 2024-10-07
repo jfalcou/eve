@@ -34,66 +34,67 @@
 
 namespace eve::detail
 {
-template<typename T>
-EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
-{
-  using i_t = as_integer_t<T, signed>;
-  if constexpr( simd_value<T> )
+  template<typename T>
+  EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
   {
-    using elt_t = element_type_t<T>;
-    i_t t(0);
-    if constexpr( eve::platform::supports_denormals )
+    using i_t = as_integer_t<T, signed>;
+    if constexpr( simd_value<T> )
     {
-      auto test = is_denormal(a0);
-      t         = if_else(test, nbmantissabits(eve::as<T>()), eve::zero);
-      a0        = if_else(test, twotonmb(eve::as<T>()) * a0, a0);
-    }
+      using elt_t = element_type_t<T>;
+      i_t t(0);
 
-
-    auto emask = exponentmask(as<T>());
-    auto e     = bit_cast(bit_and(a0,emask),as(emask)); // extract exp.
-    auto x     = bit_notand(emask, a0);
-    e          = bit_shr(e, nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>());
-    auto r0    = bit_or(half(eve::as<T>()), x);
-    auto test0 = is_nez(a0);
-    auto test1 = is_greater(e, maxexponentp1(eve::as<T>()));
-    auto ee    = if_else(logical_notand(test1, test0), e, eve::zero);
-
-    if constexpr( eve::platform::supports_denormals ) { ee -= t; }
-    return eve::zip(if_else(test0, add[test1](r0, a0), eve::zero), ee);
-  }
-  else if constexpr( scalar_value<T> )
-  {
-    if( a0 == 0 || is_not_finite(a0) ) { return eve::zip(a0, i_t(0)); }
-    else if constexpr( scalar_value<T> )
-    {
-      auto const nmb = nbmantissabits(eve::as<T>());
-      i_t        e   = bit_and(exponentmask(as<T>()), a0); // extract exp.
       if constexpr( eve::platform::supports_denormals )
       {
-        i_t t = i_t(0);
-        if( is_eqz(e) ) // denormal
-        {
-          a0 *= twotonmb(eve::as<T>());
-          e = bit_and(exponentmask(as<T>()), a0); // extract exp. again
-          t = nmb;
-        }
-        T x = bit_andnot(a0, exponentmask(as<T>()));         // clear exp. in a0
-        e   = bit_shr(e, nmb) - maxexponentm1(eve::as<T>()); // compute exp.
-        if( e > maxexponentp1(eve::as<T>()) ) return eve::zip(a0, i_t(0));
-        e -= t;
-        return eve::zip(bit_or(x, half(eve::as<T>())), e);
+        auto test = is_denormal(a0);
+        t         = if_else(test, nbmantissabits(as<T>()), eve::zero);
+        a0        = if_else(test, twotonmb(as<T>()) * a0, a0);
       }
-      else
+
+      auto emask = exponentmask(as<T>());
+      auto e     = bit_cast(bit_and(a0,emask),as(emask)); // extract exp.
+      auto x     = bit_notand(emask, a0);
+      e          = bit_shr(e, nbmantissabits(as<elt_t>())) - maxexponentm1(as<elt_t>());
+      auto r0    = bit_or(half(as<T>()), x);
+      auto test0 = is_nez(a0);
+      auto test1 = is_greater(e, maxexponentp1(as<T>()));
+      auto ee    = if_else(logical_notand(test1, test0), e, eve::zero);
+
+      if constexpr( eve::platform::supports_denormals ) { ee -= t; }
+      return eve::zip(if_else(test0, add[test1](r0, a0), eve::zero), ee);
+    }
+    else if constexpr( scalar_value<T> )
+    {
+      if( a0 == 0 || is_not_finite(a0) ) { return eve::zip(a0, i_t(0)); }
+      else if constexpr( scalar_value<T> )
       {
-        T x = bit_andnot(a0, exponentmask(as<T>()));         // clear exp. in a0
-        e   = bit_shr(e, nmb) - maxexponentm1(eve::as<T>()); // compute exp.
-        if( e > maxexponentp1(eve::as<T>()) ) return eve::zip(a0, i_t(0));
-        return eve::zip(bit_or(x, half(eve::as<T>())), e);
+        auto const nmb = nbmantissabits(as<T>());
+        i_t        e   = bit_and(exponentmask(as<T>()), a0); // extract exp.
+
+        if constexpr( eve::platform::supports_denormals )
+        {
+          i_t t = i_t(0);
+          if( is_eqz(e) ) // denormal
+          {
+            a0 *= twotonmb(as<T>());
+            e = bit_and(exponentmask(as<T>()), a0); // extract exp. again
+            t = nmb;
+          }
+          T x = bit_andnot(a0, exponentmask(as<T>()));         // clear exp. in a0
+          e   = bit_shr(e, nmb) - maxexponentm1(as<T>()); // compute exp.
+          if( e > maxexponentp1(as<T>()) ) return eve::zip(a0, i_t(0));
+          e -= t;
+          return eve::zip(bit_or(x, half(as<T>())), e);
+        }
+        else
+        {
+          T x = bit_andnot(a0, exponentmask(as<T>()));         // clear exp. in a0
+          e   = bit_shr(e, nmb) - maxexponentm1(as<T>()); // compute exp.
+          if( e > maxexponentp1(as<T>()) ) return eve::zip(a0, i_t(0));
+          return eve::zip(bit_or(x, half(as<T>())), e);
+        }
       }
     }
   }
-}
 
   template<floating_value T, callable_options O>
   EVE_FORCEINLINE constexpr auto ifrexp_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
@@ -108,8 +109,8 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
       auto emask  = exponentmask(as<T>());
       auto r1     = bit_cast(bit_and(a0,emask), as(emask));
       auto x      = bit_notand(emask, a0);
-      auto res    = eve::zip( bit_or(half(eve::as<T>()), x)
-                            , bit_shr(r1, nbmantissabits(eve::as<elt_t>())) - maxexponentm1(eve::as<elt_t>())
+      auto res    = eve::zip( bit_or(half(as<T>()), x)
+                            , bit_shr(r1, nbmantissabits(as<elt_t>())) - maxexponentm1(as<elt_t>())
                             );
 
       if constexpr(O::contains(raw)) return res;
@@ -126,5 +127,4 @@ EVE_FORCEINLINE constexpr auto pedantic_frexp(T a0) noexcept
       }
     }
   }
-
 }

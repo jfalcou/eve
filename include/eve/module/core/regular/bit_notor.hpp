@@ -16,74 +16,74 @@ namespace eve
   struct bit_notor_t : strict_tuple_callable<bit_notor_t, Options>
   {
     template<value T0, value T1, value... Ts>
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
-      requires(same_lanes_or_scalar<T0, T1, Ts...>)
+    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts... ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
       return EVE_DISPATCH_CALL_PT((bit_value_t<T0, T1, Ts...>), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value,Tup> operator()(Tup const& t) const noexcept
-      requires(same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+      requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
     {
-      EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<bit_value, Tup>), t);
+      return EVE_DISPATCH_CALL_PT((kumi::apply_traits_t<bit_value, Tup>), t);
     }
 
     EVE_CALLABLE_OBJECT(bit_notor_t, bit_notor_);
   };
 
-//================================================================================================
-//! @addtogroup core_bitops
-//! @{
-//!   @var bit_notor
-//!   @brief `strict_tuple_callable` object computing the bitwise NOTOR of its arguments.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overloads
-//!      constexpr auto bit_notor(value auto x, value auto ... xs)                          noexcept; // 1
-//!      constexpr auto bit_notor(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto bit_notor[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
-//!      constexpr auto bit_notor[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: first [argument](@ref eve::value).
-//!     * `xs...`: other [arguments](@ref eve::value).
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!    **Return value**
-//!
-//!      1. The return value type is the common `bit_value` of the parameters. Each parameter
-//!        is converted to this type and then:
-//!           - For two parameters it computes the  bitwise NOTOR of the two parameters
-//!           - For more than two parameters the call is semantically equivalent to
-//!             `bit_notor(a0, bit_or(xs...))`
-//!      2. equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/core/bit_notor.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup core_bitops
+  //! @{
+  //!   @var bit_notor
+  //!   @brief `strict_tuple_callable` object computing the bitwise NOTOR of its arguments.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overloads
+  //!      constexpr auto bit_notor(value auto x, value auto ... xs)                          noexcept; // 1
+  //!      constexpr auto bit_notor(kumi::non_empty_product_type auto const& tup)             noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto bit_notor[conditional_expr auto c](/*any of the above overloads*/)  noexcept; // 3
+  //!      constexpr auto bit_notor[logical_value auto m](/*any of the above overloads*/)     noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: first [argument](@ref eve::value).
+  //!     * `xs...`: other [arguments](@ref eve::value).
+  //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!    **Return value**
+  //!
+  //!      1. The return value type is the common `bit_value` of the parameters. Each parameter
+  //!        is converted to this type and then:
+  //!           - For two parameters it computes the  bitwise NOTOR of the two parameters
+  //!           - For more than two parameters the call is semantically equivalent to
+  //!             `bit_notor(a0, bit_or(xs...))`
+  //!      2. equivalent to the call on the elements of the tuple.
+  //!      3. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/core/bit_notor.cpp}
+  //================================================================================================
   inline constexpr auto bit_notor = functor<bit_notor_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 

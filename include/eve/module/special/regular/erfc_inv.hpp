@@ -19,70 +19,73 @@ namespace eve
   template<typename Options>
   struct erfc_inv_t : elementwise_callable<erfc_inv_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(erfc_inv_t, erfc_inv_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var erfc_inv
-//!   @brief Computes the inverse of the complementary error function.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto erfc_inv(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto erfc_inv[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto erfc_inv[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`:  [real floating argument](@ref eve::floating_value).
-//!       Must be in interval  \f$[0, 2]\f$ else nan is returned.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!    **Return value**
-//!
-//!      1. The value of the inverse complementary error function is returned. In particular:
-//!        * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
-//!        * If the argument is \f$2\f$, \f$-\infty\f$ is returned.
-//!        * If the argument is \f$0\f$,\f$\infty\f$ is returned.
-//!        * If the argument is `NaN`, `NaN` is returned.
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference: erf](https://en.cppreference.com/w/cpp/numeric/math/erf)
-//!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Erf.html)
-//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2#i)
-//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/erfc_inv.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var erfc_inv
+  //!   @brief Computes the inverse of the complementary error function.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto erfc_inv(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto erfc_inv[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto erfc_inv[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`:  [real floating argument](@ref eve::floating_value).
+  //!       Must be in interval  \f$[0, 2]\f$ else nan is returned.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!    **Return value**
+  //!
+  //!      1. The value of the inverse complementary error function is returned. In particular:
+  //!        * If the argument is \f$\pm0\f$, \f$1\f$ is returned.
+  //!        * If the argument is \f$2\f$, \f$-\infty\f$ is returned.
+  //!        * If the argument is \f$0\f$,\f$\infty\f$ is returned.
+  //!        * If the argument is `NaN`, `NaN` is returned.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference: erf](https://en.cppreference.com/w/cpp/numeric/math/erf)
+  //!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Erf.html)
+  //!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2#i)
+  //!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/erfc_inv.cpp}
+  //================================================================================================
   inline constexpr auto erfc_inv = functor<erfc_inv_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     T constexpr erfc_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       using elt_t = element_type_t<T>;

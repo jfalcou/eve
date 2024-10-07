@@ -78,7 +78,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto nb_values_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       using ui_t = as_integer_t<T, unsigned>;

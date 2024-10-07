@@ -17,15 +17,18 @@ namespace eve
   struct mindenormal_t : constant_callable<mindenormal_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if      constexpr(std::integral<T>        ) return T(1);
-      else if constexpr(std::same_as<T, float>  ) return T( 0x1p-149);
-      else if constexpr(std::same_as<T, double> ) return T(0x0.0000000000001p-1022);
+      if      constexpr (std::integral<T>       ) return T{1};
+      else if constexpr (std::same_as<T, float> ) return T{0x1p-149};
+      else if constexpr (std::same_as<T, double>) return T{0x0.0000000000001p-1022};
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(mindenormal_t, mindenormal_);
   };

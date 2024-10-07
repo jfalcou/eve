@@ -84,7 +84,7 @@ namespace eve
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T
   arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
   {

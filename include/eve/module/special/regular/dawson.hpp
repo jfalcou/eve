@@ -19,68 +19,71 @@ namespace eve
   template<typename Options>
   struct dawson_t : elementwise_callable<dawson_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(dawson_t, dawson_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var dawson
-//!   @brief `elementwise_callable` object computing the Dawson function:
-//!     \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto dawson(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto dawson[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto dawson[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating_value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. the value of the Dawson function:
-//!        \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2.5)
-//!   *  [Wolfram MathWorld: dawson Integral](https://mathworld.wolfram.com/DawsonsIntegral.html)
-//!
-//!   @groupheader{Example}
-//!
-//!   @godbolt{doc/special/dawson.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var dawson
+  //!   @brief `elementwise_callable` object computing the Dawson function:
+  //!     \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto dawson(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto dawson[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto dawson[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating_value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. the value of the Dawson function:
+  //!        \f$\displaystyle D_+(x)=e^{-x^2}\int_0^{x} e^{t^2} \mbox{d}t\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2.5)
+  //!   *  [Wolfram MathWorld: dawson Integral](https://mathworld.wolfram.com/DawsonsIntegral.html)
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/special/dawson.cpp}
+  //================================================================================================
   inline constexpr auto dawson = functor<dawson_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr T dawson_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
+    template<callable_options O, typename T>
+    constexpr T dawson_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       using elt_t  = element_type_t<T>;
       auto aa0     = eve::abs(a0);

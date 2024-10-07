@@ -14,7 +14,7 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O> constexpr
+  template<callable_options O, typename T> constexpr
   T  airy_ai_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
   {
     using elt_t = element_type_t<T>;

@@ -18,69 +18,72 @@
 
 namespace eve
 {
-template<typename Options>
-struct digamma_t : elementwise_callable<digamma_t, Options>
-{
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct digamma_t : elementwise_callable<digamma_t, Options>
+  {
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
-  EVE_CALLABLE_OBJECT(digamma_t, digamma_);
-};
+    EVE_CALLABLE_OBJECT(digamma_t, digamma_);
+  };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var digamma
-//!   @brief `elementwise_callable` object computing the Digamma function i.e.
-//!   the logarithmic derivative of the \f$\Gamma\f$  function.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating_value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
-//!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/digamma.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var digamma
+  //!   @brief `elementwise_callable` object computing the Digamma function i.e.
+  //!   the logarithmic derivative of the \f$\Gamma\f$  function.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating_value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
+  //!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/digamma.cpp}
+  //================================================================================================
   inline constexpr auto digamma = functor<digamma_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
+    template<callable_options O, typename T>
+    constexpr T digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
     {
       using elt_t  = element_type_t<T>;
       auto dlarge = (std::is_same_v<elt_t, double>) ? 20 : 10;

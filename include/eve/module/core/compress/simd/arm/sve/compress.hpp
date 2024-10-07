@@ -29,8 +29,8 @@ namespace eve::detail
     wide<T, N> operator()(wide<T, N> v) const
       requires ( sizeof(T) < 4 )
     {
-      auto bigger = operator()(eve::convert(v, eve::as<std::int32_t>{}));
-      return eve::convert(bigger, eve::as<T>{});
+      auto bigger = operator()(eve::convert(v, as<std::int32_t>{}));
+      return eve::convert(bigger, as<T>{});
     }
 
     template <typename T>

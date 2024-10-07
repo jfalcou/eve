@@ -26,11 +26,11 @@ namespace eve
 
     template<logical_value T>
     constexpr EVE_FORCEINLINE T operator()(T a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL_PT((T), a, b); }
+    { return EVE_DISPATCH_CALL_PT(T, a, b); }
 
     template<logical_value T>
     constexpr EVE_FORCEINLINE T operator()(bool a, T b) const noexcept
-    { return EVE_DISPATCH_CALL_PT((T), a, b); }
+    { return EVE_DISPATCH_CALL_PT(T, a, b); }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
     { return EVE_DISPATCH_CALL_PT(bool, a, b); }
@@ -82,7 +82,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto logical_notor_(EVE_REQUIRES(cpu_),
                                                   O const & ,
                                                   T a, U b) noexcept
@@ -92,7 +92,7 @@ namespace eve
       else return !a || b;
     }
 
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr
     auto logical_notor_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
     {

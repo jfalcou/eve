@@ -83,7 +83,7 @@ namespace eve
 
 namespace detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto modf_(EVE_REQUIRES(cpu_), O const& o, T a) noexcept
   {
     if constexpr(floating_value<T>)

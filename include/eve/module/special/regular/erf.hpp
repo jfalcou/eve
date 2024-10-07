@@ -19,98 +19,106 @@ namespace eve
   template<typename Options>
   struct erf_t : elementwise_callable<erf_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE T operator()(T v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(erf_t, erf_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var erf
-//!   @brief `elementwise_callable` object computing the error function: \f$ \displaystyle
-//!   \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto erf(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto erf[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto erf[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!    **Return value**
-//!
-//!     1. The value of the error function is returned: \f$ \displaystyle
-//!        \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
-//!        In particular:
-//!          * If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!          * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
-//!          * If the argument is Nan, nan returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference: erf](https://en.cppreference.com/w/cpp/numeric/math/erf)
-//!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Erf.html)
-//!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2#i)
-//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/erf.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var erf
+  //!   @brief `elementwise_callable` object computing the error function: \f$ \displaystyle
+  //!   \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto erf(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto erf[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto erf[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!    **Return value**
+  //!
+  //!     1. The value of the error function is returned: \f$ \displaystyle
+  //!        \mbox{erf}(x)=\frac{2}{\sqrt\pi}\int_0^{x} e^{-t^2}\mbox{d}t\f$.
+  //!        In particular:
+  //!          * If the argument is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!          * If the argument is \f$\pm\infty\f$, \f$\pm1\f$ is returned.
+  //!          * If the argument is Nan, nan returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference: erf](https://en.cppreference.com/w/cpp/numeric/math/erf)
+  //!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Erf.html)
+  //!   *  [DLMF: Error Functions](https://dlmf.nist.gov/7.2#i)
+  //!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/erf.cpp}
+  //================================================================================================
   inline constexpr auto erf = functor<erf_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    T
-    erf_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE T erf_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
-      if constexpr(scalar_value<T>)
+      if constexpr (scalar_value<T>)
       {
-        if constexpr( eve::platform::supports_invalids )
-          if( is_nan(a0) ) return a0;
-        if constexpr( eve::platform::supports_infinites )
-          if( eve::is_infinite(a0) ) return signnz(a0);
-        if constexpr( std::is_same_v<T, double> )
+        if constexpr (eve::platform::supports_invalids)
+        {
+          if (is_nan(a0)) return a0;
+        }
+
+        if constexpr (eve::platform::supports_infinites)
+        {
+          if (eve::is_infinite(a0)) return signnz(a0);
+        }
+
+        if constexpr (std::is_same_v<T, double>)
         {
           T y = eve::abs(a0);
-          if( y <= 0.46875 ) // 15/32
+          if (y <= 0.46875) // 15/32
           {
             T ysq = if_else(y > epso_2(as<T>()), sqr(y), eve::zero);
             return kernel1_erf1(a0, ysq);
           }
           else
           {
-            if( a0 > 26.543 ) return sign(a0);
-            else if( y <= 4 )
+            if (a0 > 26.543) return sign(a0);
+            else if (y <= 4)
             {
               T res = kernel1_erf2(a0, y);
               res   = kernel1_finalize2(res, y);
               res   = (half(as<T>()) - res) + half(as<T>());
-              if( is_ltz(a0) ) res = -res;
+              if (is_ltz(a0)) res = -res;
               return res;
             }
             else // if  (y <= 26.543)
@@ -118,15 +126,15 @@ namespace eve
               T res = kernel1_erf3(a0, y);
               res   = kernel1_finalize2(res, y);
               res   = (half(as<T>()) - res) + half(as<T>());
-              if( is_ltz(a0) ) res = -res;
+              if (is_ltz(a0)) res = -res;
               return res;
             }
           }
         }
-        else if constexpr( std::is_same_v<T, float> )
+        else if constexpr (std::is_same_v<T, float>)
         {
           T x = eve::abs(a0);
-          if( x < 6.6666667e-01f ) // 2/3
+          if (x < 6.6666667e-01f) // 2/3
           {
             return a0 * kernel_erf1(sqr(x));
           }
@@ -134,7 +142,7 @@ namespace eve
           {
             T z  = x / inc(x) - 0.4f; // Ratio<T, 2, 5>();
             T r2 = oneminus(exp(-sqr(x)) * kernel_erfc2(z));
-            if( is_ltz(a0) ) r2 = -r2;
+            if (is_ltz(a0)) r2 = -r2;
             return r2;
           }
         }
@@ -142,7 +150,7 @@ namespace eve
       else //simd case
       {
         using elt_t = element_type_t<T>;
-        if constexpr( std::is_same_v<elt_t, double> )
+        if constexpr (std::is_same_v<elt_t, double>)
         {
           T y        = eve::abs(a0);
           y          = if_else(y > T(26.543), T(26.543), y);
@@ -150,25 +158,29 @@ namespace eve
           auto test1 = eve::is_less(y, T(0.46875)); // 15/32;
           T    r1    = eve::zero(as<T>());
           auto nb    = eve::count_true(test1);
-          if( nb > 0 ) // here y < 0.46875
+
+          if (nb > 0) // here y < 0.46875
           {
             T ysq = if_else(y > epso_2(as<T>()), sqry, eve::zero);
             r1    = kernel1_erf1(a0, ysq);
-            if( nb == T::size() ) return r1;
+            if (nb == T::size()) return r1;
           }
+
           auto test2 = (y <= T(4));
           auto test3 = logical_andnot(test2, test1);
 
           auto nb1 = eve::count_true(test3);
-          if( nb1 > 0 ) // here we treat 0.46875 <= y and y <= 4
+
+          if (nb1 > 0) // here we treat 0.46875 <= y and y <= 4
           {
             T res = kernel1_erf2(a0, y);
             res   = kernel1_finalize2(res, y);
             res   = (half(as<T>()) - res) + half(as<T>());
             res   = minus[is_ltz(a0)](res);
             r1    = if_else(test3, res, r1);
-            if( nb + nb1 == T::size() ) return r1;
+            if (nb + nb1 == T::size()) return r1;
           }
+
           // here we treat y > 4
           T res = kernel1_erf3(a0, y);
           res   = kernel1_finalize2(res, y);
@@ -177,24 +189,30 @@ namespace eve
           r1    = if_else(test2, r1, res);
           return r1;
         }
-        else if constexpr( std::is_same_v<elt_t, float> )
+        else if constexpr (std::is_same_v<elt_t, float>)
         {
           T    x     = eve::abs(a0);
           T    r1    = eve::zero(as<T>());
           auto test1 = eve::is_less(x, 6.6666667e-01f); // Ratio<T, 2, 3>());
           auto nb    = eve::count_true(test1);
-          if( nb > 0 )
+
+          if (nb > 0)
           {
             r1 = a0 * kernel_erf1(sqr(x));
             if( nb >= T::size() ) return r1;
           }
+
           T z = x / inc(x);
           z -= T(0.4);
           T r2 = oneminus(exp(-sqr(x)) * kernel_erfc2(z));
           r2   = minus[is_ltz(a0)](r2);
           r1   = if_else(test1, r1, r2);
-          if constexpr( eve::platform::supports_infinites )
+
+          if constexpr (eve::platform::supports_infinites)
+          {
             r1 = eve::if_else(eve::is_infinite(a0), eve::sign(a0), r1);
+          }
+
           return r1;
         }
       }

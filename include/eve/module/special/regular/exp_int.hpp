@@ -20,100 +20,104 @@ namespace eve
   template<typename Options>
   struct exp_int_t : strict_elementwise_callable<exp_int_t, Options, saturated_option>
   {
-    template<eve::floating_value T, eve::value I>
-    requires (same_lanes_or_scalar<I, T>)
-      EVE_FORCEINLINE  constexpr eve::as_wide_as_t<T, I>  operator()(I n, T v) const noexcept
-    { return EVE_DISPATCH_CALL(n, v); }
+    template<floating_value T, value I>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, I> operator()(I n, T v) const noexcept
+      requires (same_lanes_or_scalar<I, T>)
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, I>), n, v);
+    }
 
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(exp_int_t, exp_int_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var exp_int
-//!   @brief  `elementwise_callable` object computing the exponential integral
-//!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto exp_int(floating_value auto x)                                   noexcept; // 1
-//!      constexpr auto exp_int(unsigned_value auto n, floating_value auto x)            noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto exp_int[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto exp_int[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `n`: [unsigned argument](@ref eve::unsigned_value). If not present taken to be 1.
-//!     * `x`: [real floating argument](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value of the exponential integral
-//!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$, is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld:Exponential Integral ](https://mathworld.wolfram.com/ExponentialIntegral.html)
-//!   *  [DLMF: Generalized Exponential Integral](https://dlmf.nist.gov/8.19#i)
-//!   *  [Wikipedia: Exponential integral](https://en.wikipedia.org/wiki/Exponential_integral)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/special/exp_int.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var exp_int
+  //!   @brief  `elementwise_callable` object computing the exponential integral
+  //!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto exp_int(floating_value auto x)                                   noexcept; // 1
+  //!      constexpr auto exp_int(unsigned_value auto n, floating_value auto x)            noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto exp_int[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+  //!      constexpr auto exp_int[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `n`: [unsigned argument](@ref eve::unsigned_value). If not present taken to be 1.
+  //!     * `x`: [real floating argument](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value of the exponential integral
+  //!   \f$ \mathbf{E}_n(x) = \displaystyle \int_1^\infty \frac{e^{-xt}}{t^n}\;\mbox{d}t\f$, is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld:Exponential Integral ](https://mathworld.wolfram.com/ExponentialIntegral.html)
+  //!   *  [DLMF: Generalized Exponential Integral](https://dlmf.nist.gov/8.19#i)
+  //!   *  [Wikipedia: Exponential integral](https://en.wikipedia.org/wiki/Exponential_integral)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/special/exp_int.cpp}
+  //================================================================================================
   inline constexpr auto exp_int = functor<exp_int_t>;
-//================================================================================================
-//! @}
-//================================================================================================
-
+  //================================================================================================
+  //! @}
+  //================================================================================================
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr  EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE T exp_int_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
       return exp_int(T(1), x);
     }
 
-    template<typename I, typename T, callable_options O>
-    constexpr eve::as_wide_as_t<T, I> exp_int_(EVE_REQUIRES(cpu_), O const& , I in, T x) noexcept
+    template<callable_options O, typename I, typename T>
+    constexpr as_wide_as_t<T, I> exp_int_(EVE_REQUIRES(cpu_), O const&, I in, T x) noexcept
     {
-      if constexpr(scalar_value<I> && scalar_value<T>)
+      if constexpr (scalar_value<I> && scalar_value<T>)
       {
         if( in == 0 ) return exp(-x) / x;
         if( in < 0 ) return nan(as<T>());
         return exp_int(T(in), x);
       }
-      else if constexpr(integral_scalar_value<I> && simd_value<T>)
+      else if constexpr (integral_scalar_value<I> && simd_value<T>)
       {
         using elt_t = element_type_t<T>;
         auto n = T(convert(in, as<elt_t>()));
         return exp_int(n, x);
       }
-      else if constexpr(integral_simd_value<I> && simd_value<T>)
+      else if constexpr (integral_simd_value<I> && simd_value<T>)
       {
         using elt_t = element_type_t<T>;
         return exp_int(convert(in, as<elt_t>()), x);
       }
-      else if constexpr(integral_simd_value<I> && scalar_value<T>)
+      else if constexpr (integral_simd_value<I> && scalar_value<T>)
       {
         using elt_t = element_type_t<T>;
         using w_t   = wide<elt_t, cardinal_t<I>>;
@@ -122,8 +126,8 @@ namespace eve
       }
     }
 
-    template<typename T, callable_options O>
-    T exp_int_(EVE_REQUIRES(cpu_), O const& , T n, T x)
+    template<callable_options O, typename T>
+    constexpr T exp_int_(EVE_REQUIRES(cpu_), O const&, T n, T x)
     {
       using elt_t = element_type_t<T>;
       auto notdone  = is_gez(x) && is_flint(n) && is_gez(n);
