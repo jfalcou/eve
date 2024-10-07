@@ -92,21 +92,21 @@ namespace eve
   {
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+    EVE_FORCEINLINE constexpr T heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > 0;
       else
-        return bit_and(one(as(a)), is_gtz(a));
+        return return if_else(is_gtz(a)), one(as(a)), zero);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a, T s) noexcept
+    EVE_FORCEINLINE constexpr T heaviside_(EVE_REQUIRES(cpu_), O const &, T a, T s) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > s;
       else
-        return  bit_and(one(as(a)), a > s);
+        return  if_else(a > s, one(as(a)), zero);
     }
   }
 }
