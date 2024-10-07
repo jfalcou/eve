@@ -26,8 +26,12 @@ namespace eve::detail
 {
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
+    if constexpr(O::contains_any(widen))
+    {
+      return resize_it(add, o, a, b);
+    }
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
@@ -82,12 +86,17 @@ namespace eve::detail
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr T add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-    r0   = add[o](r0,r1);
-    ((r0 = add[o](r0,rs)),...);
-    return r0;
+    if constexpr(O::contains_any(widen))
+      return resize_it(add, o, r0, r1, rs...);
+    else
+    {
+      r0   = add[o](r0,r1);
+      ((r0 = add[o](r0,rs)),...);
+      return r0;
+    }
   }
 }

@@ -15,11 +15,13 @@ namespace eve
 {
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
-                                upper_option, strict_option>
+                                upper_option, strict_option, widen_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    EVE_FORCEINLINE constexpr auto operator()(T0 t0, T1 t1, Ts...ts)
+    -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
+      const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
@@ -64,7 +66,8 @@ namespace eve
 //!      constexpr auto add[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto add[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto add[upper][strict](/*any of the above overloads*/)            noexcept; // 6
-//!
+//!      constexpr auto add[widen](/*any of the above overloads*/)                    noexcept; // 7
+
 //!   }
 //!   @endcode
 //!
@@ -91,7 +94,8 @@ namespace eve
 //!    6. The summation is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
-//!
+//!    7. The summation is computed in the double sized element type (if available).
+//!       This decorator has no effect on double and  64 bits integrals.//!
 //!   @note
 //!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
 //!      standard scalar types is the original one and so can lead to automatic promotion.

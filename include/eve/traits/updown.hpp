@@ -68,8 +68,24 @@ namespace eve
       };
       using type = eve::as_wide_as_t<decltype(ud()), T>;
     };
+
+    template < typename T,  callable_options O >
+    constexpr auto resize_it(O const &, T a) noexcept
+    {
+      if constexpr(O::contains(widen))
+      {
+        using upw_t = up_t<element_type_t<T>>;
+        return convert(a, as< upw_t>());
+      }
+      else return a;
+    }
   }
+
+  template < typename T,  typename O> using resized_t = decltype(detail::resize_it(O(), T()));
 
   template < typename T > using downgrade_t = typename detail::down<T>::type;
   template < typename T > using upgrade_t = typename detail::up<T>::type;
+  template < typename T > downgrade_t<T> downgrade(T const & a){return convert(a, as<element_type_t<downgrade_t<T>>>()); }
+  template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
+
 }

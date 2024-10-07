@@ -61,6 +61,11 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t(), T()), T);
   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::add[eve::saturated](v_t(), v_t(), v_t()), v_t);
+  TTS_EXPR_IS(eve::add[eve::widen](T(), T()), eve::up_t<T>);
+  TTS_EXPR_IS(eve::add[eve::widen](T(), v_t()), eve::up_t<T>);
+  TTS_EXPR_IS(eve::add[eve::widen](v_t(), T()), eve::up_t<T>);
+  TTS_EXPR_IS(eve::add[eve::widen](v_t(), v_t()), eve::up_t<v_t>);
+
 };
 
 //==================================================================================================
@@ -105,7 +110,26 @@ TTS_CASE_WITH("Check behavior of add on wide",
   }
 };
 
-/// /==================================================================================================
+TTS_CASE_WITH("Check behavior of add widen on wide",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::add;
+  using eve::detail::resize_it;
+  using eve::narrow;
+  using eve::widen;
+  using eve::convert;
+  using eve::as;
+
+  TTS_ULP_EQUAL(add[widen ](a0, a1), add(eve::upgrade(a0), eve::upgrade(a1), 0.5);
+  TTS_ULP_EQUAL(add[widen ](a0, a1, a2), add(eve::upgrade(a0), eve::upgrade(a1), eve::upgrade(a2), 0.5);
+
+};
+
+//==================================================================================================
 //==  conditional add tests on simd
 //==================================================================================================
 auto mini = tts::constant([]<typename T>(eve::as<T> const&)
