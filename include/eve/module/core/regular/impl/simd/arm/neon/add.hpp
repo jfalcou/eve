@@ -15,27 +15,31 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE upgrade_t<wide<T, N>>> add_(EVE_REQUIRES(neon128_), O const& opts,
+                                              wide<T, N> v, wide<T, N> w) noexcept
+  requires (arm_abi<abi_t<T, N>> && O::contains(widen))
+  {
+    if      constexpr( c == category::int32x2    ) return vaddl_s32 (v, w);
+    else if constexpr( c == category::uint32x2   ) return vaddl_u32 (v, w);
+    else if constexpr( c == category::int16x4    ) return vaddl_s16 (v, w);
+    else if constexpr( c == category::uint16x4   ) return vaddl_u16 (v, w);
+    else if constexpr( c == category::int8x8     ) return vaddl_s8  (v, w);
+    else if constexpr( c == category::uint8x8    ) return vaddl_u8  (v, w);
+    else return add.behavior(cpu_{}, opts, v, w);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE resize_t<O, wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,
                                                wide<T, N> v, wide<T, N> w) noexcept
-  requires arm_abi<abi_t<T, N>>
+    requires (arm_abi<abi_t<T, N>> && !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr((O::contains_any(lower, upper)  && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
-                 (O::contains(widen))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
-    else if (O::contains(widen))
-    {
-      if      constexpr( c == category::int32x2    ) return vaddl_s32 (v, w);
-      else if constexpr( c == category::uint32x2   ) return vaddl_u32 (v, w);
-      else if constexpr( c == category::int16x4    ) return vaddl_s16 (v, w);
-      else if constexpr( c == category::uint16x4   ) return vaddl_u16 (v, w);
-      else if constexpr( c == category::int8x8     ) return vaddl_s8  (v, w);
-      else if constexpr( c == category::uint8x8    ) return vaddl_u8  (v, w);
-      else return add.behavior(cpu_{}, opts, v, w);
-    }
+
     else
     {
       if constexpr( c == category::int64x1    ) return vadd_s64 (v, w);
