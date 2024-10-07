@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/as_wide.hpp>
+
 namespace eve
 {
   namespace detail
