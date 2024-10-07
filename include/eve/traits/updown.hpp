@@ -38,6 +38,8 @@ namespace eve
           using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, unsigned>::type;
           return sd_t();
         }
+        else
+          return T{};
       };
       using type = eve::as_wide_as_t<decltype(sd()), T>;
     };
@@ -67,6 +69,8 @@ namespace eve
           using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, unsigned>::type;
           return ud_t();
         }
+        else
+          return T{};
       };
       using type = eve::as_wide_as_t<decltype(ud()), T>;
     };
