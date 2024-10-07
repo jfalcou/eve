@@ -21,7 +21,7 @@ namespace eve
     template<typename T>
     struct result
     {
-      using base = as_wide_as_t<detail::downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
       using type = zipped<base, base>;
     };
 

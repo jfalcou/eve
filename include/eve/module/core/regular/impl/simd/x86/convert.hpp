@@ -12,6 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/interleave_shuffle.hpp>
 #include <type_traits>
+#include <eve/traits/updown.hpp>
 
 namespace eve::detail
 {
@@ -85,7 +86,7 @@ EVE_FORCEINLINE wide<Out, N> convert_saturated(EVE_REQUIRES(sse2_), wide<In, N> 
       return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
     }
   }
-  else 
+  else
   {
     // emulated fallback
     return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
@@ -205,7 +206,7 @@ EVE_FORCEINLINE logical<wide<U, N>> convert_impl(EVE_REQUIRES(sse2_), logical<wi
   // The sizeof(U)/sizeof(T) > 2 case is handled by the generic implementation
   else if constexpr( sizeof(T) / sizeof(U) > 2 )
   {
-    return convert(convert(v, as<logical<downgrade_t<as_integer_t<T, signed>>>> {}), tgt);
+    return convert(convert(v, as<logical<downgrade_t<as_integer_t<element_type_t<T>, signed>>>> {}), tgt);
   }
   //==============================================================================================
   // Common cases for 8->16, 16->32, 32->64
@@ -235,9 +236,9 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<double, N> v, 
   constexpr auto c_i  = categorize<wide<double, N>>();
   constexpr auto c_o  = categorize<wide<U, N>>();
   constexpr auto a512 = current_api >= avx512;
-  using t_t           = as<upgrade_t<as_integer_t<U, signed>>>;
+  using t_t           = as<upgrade_t<as_integer_t<element_type_t<U>, signed>>>;
 
-       if constexpr( c_i == category::float64x2 && c_o == category::float32x4        ) return _mm_cvtpd_ps(v);
+  if constexpr( c_i == category::float64x2 && c_o == category::float32x4        ) return _mm_cvtpd_ps(v);
   else if constexpr( c_i == category::float64x4 && c_o == category::float32x4        ) return _mm256_cvtpd_ps(v);
   else if constexpr( c_i == category::float64x8 && c_o == category::float32x8        ) return _mm512_cvtpd_ps(v);
   else if constexpr( c_i == category::float64x2 && c_o == category::int64x2 && a512  ) return _mm_cvttpd_epi64(v);
@@ -465,10 +466,10 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr( c_i == category::uint16x8 && mo64x8 && a512  ) return _mm512_cvtepu16_epi64(v);
   else if constexpr( c_i == category::int16x8  && c_o == category::float64x8 && a512 ) return convert(convert(v, as<std::int64_t> {}), tgt);
   else if constexpr( c_i == category::uint16x8 && c_o == category::float64x8 && a512 ) return convert(convert(v, as<std::int64_t> {}), tgt);
-  else if constexpr( mi16x8 && std::is_floating_point_v<U>       ) return convert(convert(v, as<upgrade_t<T>> {}), tgt);
+  else if constexpr( mi16x8 && std::is_floating_point_v<U>       ) return convert(convert(v, as<upgrade_t<element_type_t<T>>> {}), tgt);
   else if constexpr( mi16x8 && sizeof(U) == 8                    ) return convert_integers_chain(v, tgt);
   else if constexpr( mi16x8 && (sizeof(U) >= 4) && N::value == 8 ) return convert_slice(v, tgt);
-  else if constexpr( mi16x16 && match(c_o, category::float_)     ) return convert(convert(v, as<upgrade_t<T>> {}), tgt);
+  else if constexpr( mi16x16 && match(c_o, category::float_)     ) return convert(convert(v, as<upgrade_t<element_type_t<T>>> {}), tgt);
   else if constexpr( mi16x16 && mo8x16 && a512                   ) return _mm256_cvtepi16_epi8(v);
   else if constexpr( c_i == category::int16x16 && mo32x16        ) return _mm512_cvtepi16_epi32(v);
   else if constexpr( c_i == category::uint16x16 && mo32x16       ) return _mm512_cvtepu16_epi32(v);
@@ -499,7 +500,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   constexpr auto mo64x4  = match(c_o, category::int64x4,  category::uint64x4);
   constexpr auto mo64x8  = match(c_o, category::int64x8,  category::uint64x8);
 
-  using d_t = as<downgrade_t<U>>;
+  using d_t = as<downgrade_t<element_type_t<U>>>;
   using t_t =
       std::conditional_t<std::is_signed_v<T>, as_integer_t<U, signed>, as_integer_t<U, unsigned>>;
 

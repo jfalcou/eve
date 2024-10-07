@@ -15,7 +15,7 @@ TTS_CASE_TPL("Check return types of lohi", eve::test::simd::integers)
 {
   using elt_t  = eve::element_type_t<T>;
   using sui_t  = eve::as_integer_t<elt_t, unsigned>;
-  using sdui_t = eve::detail::downgrade_t<sui_t>;
+  using sdui_t = eve::downgrade_t<sui_t>;
   using v_t    = eve::as_wide_as_t<sdui_t,T>;
   using vt_t   = eve::result_t<eve::zip,v_t,v_t>;
   using t_t    = eve::result_t<eve::zip,sdui_t,sdui_t>;
@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check behavior of lohi on all types full range", eve::test::simd::
 {
   using elt_t = eve::element_type_t<T>;
   using ui_t  = eve::as_integer_t<elt_t, unsigned>;
-  using dui_t = eve::detail::downgrade_t<ui_t>;
+  using dui_t = eve::downgrade_t<ui_t>;
   if constexpr( sizeof(elt_t) > 1 )
   {
     {

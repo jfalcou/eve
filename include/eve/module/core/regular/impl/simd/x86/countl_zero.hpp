@@ -42,7 +42,7 @@ namespace eve::detail
       {
         //Inspired from: https://stackoverflow.com/questions/58823140/count-leading-zero-bits-for-each-element-in-avx2-vector-emulate-mm256-lzcnt-ep
         using ri_t       = wide<std::int32_t,N>;
-        using ru_t2      = downgrade_t<r_t>;
+        using ru_t2      = wide< std::uint16_t, fixed< N::value*2>>;
         if constexpr( match(c, category::uint32x8, category::uint32x4 ))
         {
           auto    v   = bit_notand(bit_shr(a0, 8), a0);
