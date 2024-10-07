@@ -40,7 +40,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var heaviside
-//!   @brief `callable` indicatrix of the interval \f$[lo, hi[\f$ or of the set for which the invocable returns true.
+//!   @brief `callable` step function taking the value 0 then 1 after value s (0 by default).
 //!
 //!   **Defined in Header**
 //!
