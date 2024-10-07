@@ -97,7 +97,7 @@ namespace eve
       if constexpr(scalar_value<T>)
         return a > 0;
       else
-        return return if_else(is_gtz(a)), one(as(a)), zero);
+        return if_else(is_gtz(a), one(as(a)), zero);
     }
 
     template<typename T, callable_options O>
