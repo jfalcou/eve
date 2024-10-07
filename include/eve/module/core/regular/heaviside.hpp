@@ -101,7 +101,7 @@ namespace eve
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const & c, T a, T s) noexcept
+    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a, T s) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > s;
