@@ -13,25 +13,44 @@
 
 namespace eve
 {
+  template<typename ...Ts>
+  struct result
+  {
+    using type = common_value_t < upgrade_t<Ts>... >;
+  };
+
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option>
   {
     template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr auto operator()(T0 t0, T1 t1, Ts...ts)
-    -> decltype(eve::detail::resize_it(Options(), common_value_t<T0, T1, Ts...>()))
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts)
+      const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE auto//typename result<T0, T1, Ts...>::type
+    constexpr operator()(T0 t0, T1 t1, Ts...ts)
       const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+    EVE_FORCEINLINE constexpr
+    upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
-
     EVE_CALLABLE_OBJECT(add_t, add_);
   };
 
@@ -123,10 +142,10 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/add.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/add.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/neon/add.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/add.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/add.hpp>
+// #endif

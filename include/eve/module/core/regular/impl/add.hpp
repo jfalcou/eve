@@ -28,11 +28,11 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(O::contains_any(widen))
+    if constexpr(O::contains(widen))
     {
-      return resize_it(add, o, a, b);
+      return add[o.drop(widen)](upgrade(a), upgrade(b));
     }
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -90,8 +90,8 @@ namespace eve::detail
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually
-    if constexpr(O::contains_any(widen))
-      return resize_it(add, o, r0, r1, rs...);
+    if constexpr(O::contains(widen))
+      return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
     else
     {
       r0   = add[o](r0,r1);

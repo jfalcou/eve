@@ -15,7 +15,8 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE resize_t<O, wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  EVE_FORCEINLINE resize_t<O, wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,
+                                               wide<T, N> v, wide<T, N> w) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
