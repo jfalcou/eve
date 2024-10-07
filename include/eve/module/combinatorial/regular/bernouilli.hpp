@@ -18,68 +18,70 @@ namespace eve
   template<typename Options>
   struct bernouilli_t : elementwise_callable<bernouilli_t, Options>
   {
-    template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<double, T> operator()(T v) const noexcept  { return EVE_DISPATCH_CALL(v); }
+    template<unsigned_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<double, T> operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<double, T>), v);
+    }
 
     EVE_CALLABLE_OBJECT(bernouilli_t, bernouilli_);
   };
 
-//================================================================================================
-//! @addtogroup combinatorial
-//! @{
-//!   @var bernouilli
-//!   @brief  `elementwise_callable` object computing the nth Bernouilli number \f$b_n\f$ as a double.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/combinatorial.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      template<unsigned_value  N, floating_value T>
-//!      constexpr as_wide_as_t<T,N> bernouilli(unsigned_value auto n)             noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
-//!      constexpr auto bernouilli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `n`: unsigned argument.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!    **Return value**
-//!       The result's element type is `double` to avoid overflow as possible and
-//!       its cardinal is the same as `n`.
-//!
-//!       1. The value of the nth Bernouilli number is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld: Bernoulli Number](https://mathworld.wolfram.com/BernoulliNumber.html)
-//!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/bernouilli.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup combinatorial
+  //! @{
+  //!   @var bernouilli
+  //!   @brief  `elementwise_callable` object computing the nth Bernouilli number \f$b_n\f$ as a double.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      template<unsigned_value  N, floating_value T>
+  //!      constexpr as_wide_as_t<T,N> bernouilli(unsigned_value auto n)             noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
+  //!      constexpr auto bernouilli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `n`: unsigned argument.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!    **Return value**
+  //!       The result's element type is `double` to avoid overflow as possible and
+  //!       its cardinal is the same as `n`.
+  //!
+  //!       1. The value of the nth Bernouilli number is returned.
+  //!       2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld: Bernoulli Number](https://mathworld.wolfram.com/BernoulliNumber.html)
+  //!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/combinatorial/bernouilli.cpp}
+  //================================================================================================
   inline constexpr auto bernouilli = functor<bernouilli_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<unsigned_value T, callable_options O>
+    template<callable_options O, unsigned_value T>
     constexpr EVE_FORCEINLINE auto
     bernouilli_(EVE_REQUIRES(cpu_), O const&, T n)
     {

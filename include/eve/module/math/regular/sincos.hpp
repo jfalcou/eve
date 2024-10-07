@@ -93,7 +93,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE auto sincos_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
     {
       auto x       = abs(a0);

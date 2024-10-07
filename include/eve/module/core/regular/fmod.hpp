@@ -83,7 +83,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O> EVE_FORCEINLINE constexpr auto
+    template<callable_options O, typename T> EVE_FORCEINLINE constexpr auto
     fmod_(EVE_REQUIRES(cpu_), O const &, T const& a, T const& b) noexcept
     {
       return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),

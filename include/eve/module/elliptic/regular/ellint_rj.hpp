@@ -23,78 +23,79 @@ namespace eve
   template<typename Options>
   struct ellint_rj_t : elementwise_callable<ellint_rj_t, Options, raw_option>
   {
-    template<eve::floating_value T0, eve::floating_value T1,
-             eve::floating_value T2, eve::floating_value T3>
-    requires (same_lanes_or_scalar<T0, T1, T2, T3>)
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1, T2, T3> operator()(T0 a, T1 b, T2 c, T3 d) const noexcept
-    { return EVE_DISPATCH_CALL(a, b, c, d); }
+    template<floating_value T0, floating_value T1, floating_value T2, floating_value T3>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1, T2, T3> operator()(T0 a, T1 b, T2 c, T3 d) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2, T3>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1, T2, T3>), a, b, c, d);
+    }
 
     EVE_CALLABLE_OBJECT(ellint_rj_t, ellint_rj_);
   };
 
-//================================================================================================
-//! @addtogroup elliptic
-//! @{
-//!   @var ellint_rj
-//!   @brief Computes the Carlson's elliptic integral
-//!   \f$ \mathbf{R}_\mathbf{J}(x, y) = \frac32 \int_{0}^{\infty}
-//!   \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/elliptic.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto ellint_rf(floating_value auto x, floating_value auto y,
-//!                               floating_value auto z, floating_value auto p)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto ellint_rf[conditional_expr auto c](floating_value auto x, floating_value auto y,
-//!                                                        floating_value auto z, floating_value auto p) noexcept; // 2
-//!      constexpr auto ellint_rf[logical_value auto m](floating_value auto x, floating_value auto y,
-//!                                                     floating_value auto z, floating_value auto p)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_value). `x`, `y` and  `z`
-//!                     must be non negative and at most one of them equal to 0. In any other case,
-//!                     the result is `NaN`.
-//!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_value). In any other case,
-//!             the result is `NaN`.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. the value of the \f$\mathbf{R}_\mathbf{J}\f$ Carlson elliptic integral:
-//!        \f$ \frac32 \int_{0}^{\infty}
-//!        \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\;\mathrm{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!  @groupheader{External references}
-//!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
-//!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/elliptic/ellint_rj.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup elliptic
+  //! @{
+  //!   @var ellint_rj
+  //!   @brief Computes the Carlson's elliptic integral
+  //!   \f$ \mathbf{R}_\mathbf{J}(x, y) = \frac32 \int_{0}^{\infty}
+  //!   \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/elliptic.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto ellint_rf(floating_value auto x, floating_value auto y,
+  //!                               floating_value auto z, floating_value auto p)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto ellint_rf[conditional_expr auto c](floating_value auto x, floating_value auto y,
+  //!                                                        floating_value auto z, floating_value auto p) noexcept; // 2
+  //!      constexpr auto ellint_rf[logical_value auto m](floating_value auto x, floating_value auto y,
+  //!                                                     floating_value auto z, floating_value auto p)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`, `y`, `z`: [floating real arguments](@ref eve::floating_value). `x`, `y` and  `z`
+  //!                     must be non negative and at most one of them equal to 0. In any other case,
+  //!                     the result is `NaN`.
+  //!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_value). In any other case,
+  //!             the result is `NaN`.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. the value of the \f$\mathbf{R}_\mathbf{J}\f$ Carlson elliptic integral:
+  //!        \f$ \frac32 \int_{0}^{\infty}
+  //!        \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\;\mathrm{d}t\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!  @groupheader{External references}
+  //!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
+  //!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/elliptic/ellint_rj.cpp}
+  //================================================================================================
   inline constexpr auto ellint_rj = functor<ellint_rj_t>;
-//================================================================================================
-//! @}
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O >
+    template<callable_options O, typename T>
     constexpr auto ellint_rj_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z, T p)
     {
       if (O::contains(raw))

@@ -19,7 +19,7 @@ namespace eve
     template<floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     EVE_CALLABLE_OBJECT(flush_denormal_t, flush_denormal_);
@@ -74,7 +74,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
     flush_denormal_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
     {

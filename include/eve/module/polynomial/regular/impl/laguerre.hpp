@@ -25,7 +25,7 @@ namespace eve::detail
   }
 
   //  Laguerre polynomials:
-  template<typename I, typename T, callable_options O>
+  template<callable_options O, typename I, typename T>
   constexpr auto laguerre_(EVE_REQUIRES(cpu_), O const&, I n, T x)
   {
     if constexpr(scalar_value<I>)

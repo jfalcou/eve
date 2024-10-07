@@ -21,84 +21,87 @@ namespace eve
   template<typename Options>
   struct ellint_2_t : elementwise_callable<ellint_2_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE
-    T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, a);
+    }
 
-    template<eve::floating_value T0, eve::floating_value T1>
-    requires (same_lanes_or_scalar<T0, T1>)
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    template<floating_value T0, floating_value T1>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(ellint_2_t, ellint_2_);
   };
 
-//================================================================================================
-//! @addtogroup elliptic
-//! @{
-//!   @var ellint_2
-//!   @brief `elementwise_callable` object computing the  elliptic integrals of the second kind.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/elliptic.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto ellint_2(floating_value auto k)                                   noexcept; // 1
-//!      constexpr auto ellint_2(floating_value auto phi, floating_value auto k)          noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto ellint_2[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
-//!      constexpr auto ellint_2[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `phi`: [floating Jacobi amplitude](@reffloating_value).
-//!     * `k`: [floating elliptic modulus](@ref floating_value). `k` must satisfy
-//!             \f$k^2\sin^2\phi \le 1\f$ or the result is `NaN`. In the complete case this means
-//!             \f$|k| \le 1\f$.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!      1. the complete ( corresponding to \f$ \phi = \pi/2 \f$ )of the second kind:
-//!         \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
-//!      2. the incomplete elliptic integrals of the second kind:
-//!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
-//!      3. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
-//!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
-//!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference: ellint_2](https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1)
-//!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
-//!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/EllipticIntegral.html)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/elliptic/ellint_2.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup elliptic
+  //! @{
+  //!   @var ellint_2
+  //!   @brief `elementwise_callable` object computing the  elliptic integrals of the second kind.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/elliptic.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto ellint_2(floating_value auto k)                                   noexcept; // 1
+  //!      constexpr auto ellint_2(floating_value auto phi, floating_value auto k)          noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto ellint_2[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 3
+  //!      constexpr auto ellint_2[logical_value auto m](/*any of the above overloads*/)    noexcept; // 3
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `phi`: [floating Jacobi amplitude](@reffloating_value).
+  //!     * `k`: [floating elliptic modulus](@ref floating_value). `k` must satisfy
+  //!             \f$k^2\sin^2\phi \le 1\f$ or the result is `NaN`. In the complete case this means
+  //!             \f$|k| \le 1\f$.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!      1. the complete ( corresponding to \f$ \phi = \pi/2 \f$ )of the second kind:
+  //!         \f$\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
+  //!      2. the incomplete elliptic integrals of the second kind:
+  //!        \f$ \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\f$ is returned.
+  //!      3. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!   @note Be aware that as \f$\pi/2\f$ is not exactly represented by floating point
+  //!   values the result of the incomplete  function with a \f$\phi\f$ floating point value
+  //!   representing \f$\pi/2\f$ can differ a lot with the result of the complete call.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference: ellint_2](https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1)
+  //!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
+  //!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/EllipticIntegral.html)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/elliptic/ellint_2.cpp}
+  //================================================================================================
   inline constexpr auto ellint_2 = functor<ellint_2_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
 
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T
     ellint_2_(EVE_REQUIRES(cpu_), O const&, T k)
     {
@@ -107,7 +110,7 @@ namespace eve
       return if_else(k2 == one(as(k)), one, r);
     }
 
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     constexpr common_value_t<T, U>
     ellint_2_(EVE_REQUIRES(cpu_), O const&, T phi00, U xx)
     {

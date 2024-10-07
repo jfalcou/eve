@@ -107,20 +107,20 @@ namespace eve
   namespace detail
   {
 
-    template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
+    template<floating_scalar_value T, integral_scalar_value U, callable_options O>
     EVE_FORCEINLINE constexpr T
     pow_abs_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
       return pow_abs[o](a0, T(a1));
     }
 
-    template<typename T,  typename U, callable_options O>
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
-    pow_abs_(EVE_REQUIRES(cpu_), O const &, T a, U b) noexcept
+    template<typename T, typename U, callable_options O>
+    EVE_FORCEINLINE constexpr common_value_t<T, U> pow_abs_(EVE_REQUIRES(cpu_), O const &, T a, U b) noexcept
     {
       using r_t = common_value_t<T, U>;
       auto x =  r_t(a);
       auto y =  r_t(b);
+
       if constexpr( scalar_value<r_t> )
         return std::pow(eve::abs(x), y);
       else

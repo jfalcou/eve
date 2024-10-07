@@ -20,66 +20,69 @@ namespace eve
   template<typename Options>
   struct tgamma_t : elementwise_callable<tgamma_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(tgamma_t, tgamma_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var tgamma
-//!   @brief `elementwise_callable` object computing \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto tgamma(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto tgamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto tgamma[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!      * `x`: [floating real value](@ref eve::floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!      1. The value of \f$\Gamma\f$ is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference: tgamma](https://en.cppreference.com/w/cpp/numeric/math/tgamma)
-//!   *  [Wikipedia: Gamma function](https://en.wikipedia.org/wiki/Gamma_function)
-//!   *  [Wolfram MathWorld: Gamma Function](https://mathworld.wolfram.com/GammaFunction.html)
-//!   *  [DLMF: gamma function](https://dlmf.nist.gov/5.2)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/tgamma.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var tgamma
+  //!   @brief `elementwise_callable` object computing \f$\displaystyle \Gamma(x)=\int_0^\infty t^{x-1}e^{-t}\mbox{d}t\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto tgamma(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto tgamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto tgamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!      * `x`: [floating real value](@ref eve::floating_value).
+  //!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!      * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!      1. The value of \f$\Gamma\f$ is returned.
+  //!      2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference: tgamma](https://en.cppreference.com/w/cpp/numeric/math/tgamma)
+  //!   *  [Wikipedia: Gamma function](https://en.wikipedia.org/wiki/Gamma_function)
+  //!   *  [Wolfram MathWorld: Gamma Function](https://mathworld.wolfram.com/GammaFunction.html)
+  //!   *  [DLMF: gamma function](https://dlmf.nist.gov/5.2)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/tgamma.cpp}
+  //================================================================================================
   inline constexpr auto tgamma = functor<tgamma_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     T tgamma_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       using elt_t  = element_type_t<T>;

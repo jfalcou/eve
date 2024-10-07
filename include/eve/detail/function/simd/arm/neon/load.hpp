@@ -20,7 +20,7 @@ namespace eve::detail
   template< arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
                                   , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const&, Ptr p
+                                  , as<wide<T, N>> const&, Ptr p
                                   )
   requires arm_abi<abi_t<T, N>>
   {
@@ -66,7 +66,7 @@ namespace eve::detail
   template<arithmetic_scalar_value T, typename N, typename U, typename Lanes>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(neon128_)
                                   , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const& tgt, aligned_ptr<U, Lanes> p
+                                  , as<wide<T, N>> const& tgt, aligned_ptr<U, Lanes> p
                                   )
   requires simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>> && arm_abi<abi_t<T, N>>
   {

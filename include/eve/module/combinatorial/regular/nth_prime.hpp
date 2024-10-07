@@ -18,81 +18,82 @@ namespace eve
   template<typename Options>
   struct nth_prime_t : strict_elementwise_callable<nth_prime_t, Options>
   {
-    template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
-    T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
-
-    template<eve::unsigned_value T, floating_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    template<unsigned_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
-    template<eve::unsigned_value T, unsigned_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    template<unsigned_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
+    }
+
+    template<unsigned_value T, unsigned_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
     }
 
     EVE_CALLABLE_OBJECT(nth_prime_t, nth_prime_);
   };
 
-//================================================================================================
-//! @addtogroup combinatorial
-//! @{
-//!   @var nth_prime
-//!   @brief Returns the nth prime number.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/combinatorial.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      constexpr auto nth_prime(unsigned_value auto x) -> decltype(x) noexcept; //1
-//!      template < integral_value T,  floating_scalar_value U>
-//!      constexpr as_wide_as_t<U, T> nth_prime(T x, as<U>)             noexcept; //2
-//!      template < integral_value T,  unsigned_scalar_value U>
-//!      constexpr as_wide_as_t<U, T> nth_prime(T x, as<U>)             noexcept; //2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `n` : unsigned argument. If n is greater than 10'000, behavior is undefined.
-//!
-//!   **Return value**
-//!
-//!     1. The nth prime is returned.
-//!     2. Same, but the element type of the result is deduced from U.
-//!
-//!   **Notes**
-//!
-//!     * 2 is the first prime. It is returned for n=0.
-//!
-//!     * Almost no computations are made, the results are from a lookup table.
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
-//!
-//!   **Example**
-//!     @godbolt{doc/combinatorial/nth_prime.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup combinatorial
+  //! @{
+  //!   @var nth_prime
+  //!   @brief Returns the nth prime number.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      constexpr auto nth_prime(unsigned_value auto x) -> decltype(x) noexcept; //1
+  //!      template < integral_value T,  floating_scalar_value U>
+  //!      constexpr as_wide_as_t<U, T> nth_prime(T x, as<U>)             noexcept; //2
+  //!      template < integral_value T,  unsigned_scalar_value U>
+  //!      constexpr as_wide_as_t<U, T> nth_prime(T x, as<U>)             noexcept; //2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `n` : unsigned argument. If n is greater than 10'000, behavior is undefined.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The nth prime is returned.
+  //!     2. Same, but the element type of the result is deduced from U.
+  //!
+  //!   **Notes**
+  //!
+  //!     * 2 is the first prime. It is returned for n=0.
+  //!
+  //!     * Almost no computations are made, the results are from a lookup table.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
+  //!
+  //!   **Example**
+  //!     @godbolt{doc/combinatorial/nth_prime.cpp}
+  //================================================================================================
   inline constexpr auto nth_prime = functor<nth_prime_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<unsigned_value T, callable_options O>
-    constexpr EVE_FORCEINLINE T
-    nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn) noexcept
+    template<callable_options O, unsigned_value T>
+    constexpr EVE_FORCEINLINE T nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn) noexcept
     {
       // clang-format off
       // This is basically three big tables which together
@@ -1268,11 +1269,11 @@ namespace eve
       };
       // clang-format on
 
-      auto n = convert(inc(nn), as<uint16_t>());
-      if constexpr( scalar_value<T> )
+      auto n = convert(inc(nn), as<uint16_t>{});
+      if constexpr (scalar_value<T>)
       {
-        if constexpr( sizeof(T) == 1 ) { return convert(a1[n > 54u ? 0 : n], as<int8_t>()); }
-        else if constexpr( sizeof(T) == 2 ) { return a1[n > 6542u ? 0 : n]; }
+        if constexpr (sizeof(T) == 1) { return convert(a1[n > 54u ? 0 : n], as<int8_t>{}); }
+        else if constexpr (sizeof(T) == 2) { return a1[n > 6542u ? 0 : n]; }
         else
         {
           n = (n > 10000u) ? 0u : n;
@@ -1282,14 +1283,14 @@ namespace eve
       else
       {
         using elt_t = element_type_t<T>;
-        if constexpr( sizeof(elt_t) >= 1 ) n = if_else(n > 10000u, zero, n);
+        if constexpr (sizeof(elt_t) >= 1) n = if_else(n > 10000u, zero, n);
         auto tmp = gather(&a1[0], n);
-        if constexpr( sizeof(elt_t) == 1 )
+        if constexpr (sizeof(elt_t) == 1)
         {
           tmp = if_else(n > 54u, zero, tmp);
           return convert(tmp, as<uint8_t>());
         }
-        else if constexpr( sizeof(elt_t) == 2 )
+        else if constexpr (sizeof(elt_t) == 2)
         {
           tmp = if_else(n > 6542u, zero, tmp);
           return convert(tmp, as<uint16_t>());
@@ -1298,16 +1299,14 @@ namespace eve
       }
     }
 
-    template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
-    constexpr EVE_FORCEINLINE auto
-    nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+    template<callable_options O, unsigned_value T, unsigned_scalar_value U>
+    constexpr EVE_FORCEINLINE auto nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> target) noexcept
     {
       return nth_prime(convert(n, target));
     }
 
-    template<unsigned_value T,  floating_scalar_value U, callable_options O>
-    constexpr EVE_FORCEINLINE auto
-    nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+    template<callable_options O, unsigned_value T, floating_scalar_value U>
+    constexpr EVE_FORCEINLINE auto nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> target) noexcept
     {
       auto r = convert(nth_prime(convert(n, as<uint32_t>())), target);
       return if_else(is_eqz(r), allbits, r);

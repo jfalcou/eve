@@ -39,7 +39,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE auto interleave_shuffle_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
     {
       if constexpr (scalar_value<T>)      return interleave_shuffle(U{a}, b);

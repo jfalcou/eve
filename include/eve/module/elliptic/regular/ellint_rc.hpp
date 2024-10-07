@@ -20,11 +20,12 @@ namespace eve
   template<typename Options>
   struct ellint_rc_t : elementwise_callable<ellint_rc_t, Options>
   {
-    template<eve::floating_value T0, eve::floating_value T1>
-    requires (same_lanes_or_scalar<T0, T1>)
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    template<floating_value T0, floating_value T1>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
+    {
+      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(ellint_rc_t, ellint_rc_);
   };
@@ -85,7 +86,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto ellint_rc_(EVE_REQUIRES(cpu_), O const&, T x, T y) noexcept
     {
       auto ylt0   = is_ltz(y);

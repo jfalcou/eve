@@ -26,13 +26,13 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     template<value T, integral_scalar_value I >
     constexpr EVE_FORCEINLINE T operator()(T v, I i) const
     {
-      return EVE_DISPATCH_CALL_PT((T), v, i);
+      return EVE_DISPATCH_CALL_PT(T, v, i);
     }
 
     EVE_CALLABLE_OBJECT(bit_reverse_t, bit_reverse_);
@@ -92,7 +92,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
     bit_reverse_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {

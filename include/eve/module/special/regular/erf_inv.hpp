@@ -20,67 +20,69 @@ namespace eve
   template<typename Options>
   struct erf_inv_t : elementwise_callable<erf_inv_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(erf_inv_t, erf_inv_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var erf_inv
-//!   @brief `elementwise_callable` object computing the inverse of the error function.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto erf_inv(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto erf_inv[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto erf_inv[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating value](@ref floating_value)
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value `y` such that `erf(y)==x` is returned. For `x` outside of \f$[-1,1]\f$, the result
-//!        is `NaN`.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld: Inverse Erf](https://mathworld.wolfram.com/InverseErf.html)
-//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/erf_inv.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var erf_inv
+  //!   @brief `elementwise_callable` object computing the inverse of the error function.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto erf_inv(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto erf_inv[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto erf_inv[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref floating_value)
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value `y` such that `erf(y)==x` is returned. For `x` outside of \f$[-1,1]\f$, the result
+  //!        is `NaN`.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld: Inverse Erf](https://mathworld.wolfram.com/InverseErf.html)
+  //!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Error_function)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/erf_inv.cpp}
+  //================================================================================================
   inline constexpr auto erf_inv = functor<erf_inv_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr  EVE_FORCEINLINE T
-    erf_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE T erf_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       using elt_t = element_type_t<T>;
       auto w       = -log1p(-sqr(a0));

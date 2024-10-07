@@ -75,7 +75,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE auto two_add_(EVE_REQUIRES(cpu_), O const&, T a, T b)
     {
       auto r0 = a + b;

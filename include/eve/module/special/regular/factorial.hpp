@@ -15,78 +15,79 @@ namespace eve
   template<typename Options>
   struct factorial_t : elementwise_callable<factorial_t, Options>
   {
-    template<eve::integral_value T>
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<double, T >
-    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<integral_value T>
+    EVE_FORCEINLINE constexpr as_wide_as_t<double, T> operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<double, T>), v);
+    }
 
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(factorial_t, factorial_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var factorial
-//!   @brief `elementwise_callable` computing \f$\displaystyle n! = \prod_{i=1}^n i\f$.
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x) noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto factorial[conditional_expr auto c](value auto n)    noexcept; // 2
-//!      constexpr auto factorial[logical_value auto m](value auto n)       noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `n`: must be integral or flint.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value of \f$ n!\f$ is returned. If the entry is of integral type a double based floating_value
-//!        is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!  @warning
-//!    This function will overflow as soon as the input is greater than 171 for integral or double
-//!    entries and if the entry is greater than 34 for float.
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)
-//!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Factorial)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/factorial.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var factorial
+  //!   @brief `elementwise_callable` computing \f$\displaystyle n! = \prod_{i=1}^n i\f$.
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      template <value T> constexpr as_wide_as_t<double,T> factorial(T x) noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto factorial[conditional_expr auto c](value auto n)    noexcept; // 2
+  //!      constexpr auto factorial[logical_value auto m](value auto n)       noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `n`: must be integral or flint.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value of \f$ n!\f$ is returned. If the entry is of integral type a double based floating_value
+  //!        is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!  @warning
+  //!    This function will overflow as soon as the input is greater than 171 for integral or double
+  //!    entries and if the entry is greater than 34 for float.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld: Erf](https://mathworld.wolfram.com/Factorial.html)
+  //!   *  [Wikipedia: Error Function](https://en.wikipedia.org/wiki/Factorial)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/factorial.cpp}
+  //================================================================================================
   inline constexpr auto factorial = functor<factorial_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-
-    template<integral_value T, callable_options O>
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<double, T> factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+    template<callable_options O, integral_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<double, T> factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       if constexpr(signed_integral_value<T>)
       {
@@ -276,9 +277,8 @@ namespace eve
       }
     }
 
-    template<floating_value T, callable_options O>
-    constexpr EVE_FORCEINLINE
-    T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
+    template<callable_options O, floating_value T>
+    constexpr EVE_FORCEINLINE T factorial_(EVE_REQUIRES(cpu_), O const&, T n) noexcept
     {
       using elt_t = element_type_t<T>;
       EVE_ASSERT(eve::all(is_flint(n)), "factorial : some entry elements are not flint");

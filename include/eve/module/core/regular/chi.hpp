@@ -29,7 +29,7 @@ namespace eve
     template<value T, typename  B>
     constexpr EVE_FORCEINLINE T operator()(T a, B const & belongs) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((T), a, belongs);
+      return EVE_DISPATCH_CALL_PT(T, a, belongs);
     }
 
     EVE_CALLABLE_OBJECT(chi_t, chi_);

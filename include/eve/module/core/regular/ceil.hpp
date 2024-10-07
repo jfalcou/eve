@@ -20,7 +20,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     {
       //     static_assert( valid_tolerance<T, Options>::value, "[eve::ceil] simd tolerance requires simd parameter." );
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     template<value T, only_if<signed, unsigned> U>

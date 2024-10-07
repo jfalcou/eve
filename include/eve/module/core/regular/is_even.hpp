@@ -22,12 +22,12 @@
 namespace eve
 {
   template<typename Options>
-  struct is_even_t : elementwise_callable<is_even_t, Options>
+  struct is_even_t : elementwise_callable<is_even_t, Options, pedantic_option>
   {
     template<eve::value T>
     EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_logical_t<T>), t);
+      return EVE_DISPATCH_CALL_PT(as_logical_t<T>, t);
     }
 
     EVE_CALLABLE_OBJECT(is_even_t, is_even_);
@@ -81,13 +81,12 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_even_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_even_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
       if constexpr( floating_value<T> )
       {
-        auto aisflt = is_flint(a * half(eve::as(a)));
+        auto aisflt = is_flint[o](a * half(eve::as(a)));
         auto aa     = eve::abs(a);
         if constexpr( eve::platform::supports_denormals )
           return aisflt && (aa != mindenormal(eve::as<T>()));

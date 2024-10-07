@@ -21,7 +21,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((T), v);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
     EVE_CALLABLE_OBJECT(bit_width_t, bit_width_);
@@ -75,7 +75,7 @@ namespace eve
 
   namespace detail
   {
-    template<unsigned_value T, callable_options O>
+    template<callable_options O, unsigned_value T>
     constexpr T  bit_width_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       using elt_t = element_type_t<T>;

@@ -35,8 +35,8 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, ev
 }
 
 template<callable_options O, value In, scalar_value Out>
-requires (!product_type<In>)
 EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
+  requires (!product_type<In>)
 {
   constexpr maybe_saturated<O, Out> maybe_saturate;
 
@@ -69,7 +69,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       }
       else
       {
-        if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t)) 
+        if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
         {
           return bit_cast(v0, as<out_t> {});
         }
@@ -83,7 +83,7 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
           using i_t = as<logical<as_integer_t<out_ae_t, signed>>>;
           return bit_cast(convert(v0, i_t {}), as<out_t> {});
         }
-        else 
+        else
         {
           return convert_impl(EVE_TARGETS(current_api_type), v0, tgt);
         }

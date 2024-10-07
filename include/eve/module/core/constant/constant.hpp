@@ -51,7 +51,7 @@ namespace eve
 //================================================================================================
 
 template<value T, auto BitsPattern>
-EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
+EVE_FORCEINLINE auto constant(eve::as<T> = {})
 {
   using t_t = translate_element_type_t<T>;
 

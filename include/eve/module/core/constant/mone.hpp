@@ -16,14 +16,17 @@ namespace eve
   template<typename Options>
   struct mone_t : constant_callable<mone_t, Options, lower_option, upper_option>
   {
-    template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    template<plain_value T>
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      return T(-1);
+      return T{-1};
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(mone_t, mone_);
   };

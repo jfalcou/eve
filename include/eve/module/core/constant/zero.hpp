@@ -21,60 +21,63 @@ namespace eve
       constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
     };
 
-    template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    template<eve::value T>
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if constexpr( kumi::product_type<T> )
+      if constexpr (kumi::product_type<T>)
       {
         // Can't just T{kumi::map} because that may not work for scalar product types
         T res;
         kumi::for_each(fill_zero{}, res);
         return res;
       }
-      else return T(0);
+      else return T{0};
     }
 
     template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(zero_t, zero_);
   };
 
-//================================================================================================
-//! @addtogroup core_constants
-//! @{
-//!   @var zero
-//!   @brief Computes the constant 0
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      template< eve::plain_value T >
-//!      T zero(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!    **Return value**
-//!
-//!      The call `eve::zero(as<T>())` is semantically equivalent to  `T(0)`.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/core/constant/zero.cpp}
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var zero
+  //!   @brief Computes the constant 0
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      template< eve::plain_value T >
+  //!      T zero(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!    **Return value**
+  //!
+  //!      The call `eve::zero(as<T>())` is semantically equivalent to  `T(0)`.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/constant/zero.cpp}
+  //! @}
+  //================================================================================================
   inline constexpr auto zero = functor<zero_t>;
 
   // Required for if_else optimisation detections

@@ -23,10 +23,12 @@ namespace eve
 template<typename Options>
 struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 {
-  template<eve::floating_value T0, eve::floating_value T1>
-  requires (same_lanes_or_scalar<T0, T1>)
-  EVE_FORCEINLINE constexpr eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
-  { return EVE_DISPATCH_CALL(a, b); }
+  template<floating_value T0, floating_value T1>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
+    requires (same_lanes_or_scalar<T0, T1>)
+  {
+    return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), a, b);
+  }
 
   EVE_CALLABLE_OBJECT(gamma_p_inv_t, gamma_p_inv_);
 };
@@ -84,7 +86,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto  gamma_p_inv_(EVE_REQUIRES(cpu_), O const&, T p, T k) noexcept
     {
       if constexpr( std::is_same_v<element_type_t<T>, float> )

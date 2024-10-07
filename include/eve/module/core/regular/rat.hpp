@@ -87,13 +87,13 @@ struct rat_t : elementwise_callable<rat_t, Options>
 
 namespace detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto rat_(EVE_REQUIRES(cpu_), O const& o, T const& x) noexcept
   {
     return rat[o](x, T(1.0e-6) * eve::abs(x));
   }
 
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto
   rat_(EVE_REQUIRES(cpu_), O const&, T const& x, T const& tol) noexcept
   {

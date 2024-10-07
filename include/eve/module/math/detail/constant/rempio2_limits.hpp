@@ -21,8 +21,11 @@ namespace eve
   struct Rempio2_limit_t : elementwise_callable<Rempio2_limit_t, Options, quarter_circle_option, half_circle_option
                                                 , full_circle_option, medium_option, big_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(as<T> v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
     EVE_CALLABLE_OBJECT(Rempio2_limit_t, Rempio2_limit_);
   };
@@ -31,27 +34,27 @@ namespace eve
 
   namespace detail
   {
-    template< typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T  Rempio2_limit_(EVE_REQUIRES(cpu_), O const& , as<T> const&) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T Rempio2_limit_(EVE_REQUIRES(cpu_), O const&, as<T>) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr (floating_value<T>)
       {
-        if constexpr( O::contains(quarter_circle))
-          return pio_4(eve::as<T>());
-        else if constexpr( O::contains(half_circle))
-          return pio_2(eve::as<T>());
-        else if constexpr( O::contains(full_circle))
+        if constexpr (O::contains(quarter_circle))
+          return pio_4(as<T>{});
+        else if constexpr (O::contains(half_circle))
+          return pio_2(as<T>{});
+        else if constexpr (O::contains(full_circle))
         {
-          return T(pi(eve::as<float>())); // this to ensure that converting from float to double will
-          // preserve belonging to the interval
+          // this to ensure that converting from float to double will preserve belonging to the interval
+          return T(pi(as<float>{}));
         }
         else if constexpr(O::contains(medium))
-          return ieee_constant<0x1.9220e60p+50f, 0x1.6bcc41e900000p+47>(eve::as<T>{}); // 1.76858e+15,  2.0e14
+          return ieee_constant<0x1.9220e60p+50f, 0x1.6bcc41e900000p+47>(as<T>{}); // 1.76858e+15,  2.0e14
         else
-          return valmax(eve::as<T>());
+          return valmax(as<T>{});
       }
       else
-        return valmax(eve::as<T>());
+        return valmax(as<T>{});
     }
   }
 }

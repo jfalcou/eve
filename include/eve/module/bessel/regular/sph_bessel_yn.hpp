@@ -16,11 +16,12 @@ namespace eve
   template<typename Options>
   struct sph_bessel_yn_t : strict_elementwise_callable<sph_bessel_yn_t, Options>
   {
-    template<eve::value N, eve::floating_value T>
-    requires (same_lanes_or_scalar<N, T>)
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<T, N> operator()(N n, T x) const noexcept
-    { return EVE_DISPATCH_CALL(n, x); }
+    template<value N, floating_value T>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(N n, T x) const noexcept
+      requires (same_lanes_or_scalar<N, T>)
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, N>), n, x);
+    }
 
     EVE_CALLABLE_OBJECT(sph_bessel_yn_t, sph_bessel_yn_);
   };
@@ -82,9 +83,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename I, typename T, callable_options O>
-    EVE_FORCEINLINE constexpr  as_wide_as_t<T, I>
-    sph_bessel_yn_(EVE_REQUIRES(cpu_), O const&, I n, T x) noexcept
+    template<callable_options O, typename I, typename T>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, I> sph_bessel_yn_(EVE_REQUIRES(cpu_), O const&, I n, T x) noexcept
     {
       EVE_ASSERT(all(is_gez(n) && is_flint(n)), "eve::sph_bessel_yn : some orders are non-integral positive");
       EVE_ASSERT(all(is_nltz(x))              , "eve::sph_bessel_yn : some x are negative");

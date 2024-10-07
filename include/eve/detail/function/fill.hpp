@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<typename Generator, typename Pack>
-  EVE_FORCEINLINE auto fill(eve::as<Pack> const &, Generator g) noexcept
+  EVE_FORCEINLINE auto fill(as<Pack> const&, Generator g) noexcept
   {
     // MSVC emits a spurious error trying to interpret the Pack construction as an
     // initializer_list when it should not. We then manually split the two cases.

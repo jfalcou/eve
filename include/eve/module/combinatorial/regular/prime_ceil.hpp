@@ -18,75 +18,76 @@ namespace eve
   template<typename Options>
   struct prime_ceil_t : strict_elementwise_callable<prime_ceil_t, Options>
   {
-    template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
-    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
-
-    template<eve::unsigned_value T, floating_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    template<unsigned_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return EVE_DISPATCH_CALL_PT(T, v);
     }
 
-    template<eve::unsigned_value T, unsigned_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T> operator()(T v, eve::as<U> target ) const noexcept
+    template<unsigned_value T, floating_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL(v, target);
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
+    }
+
+    template<unsigned_value T, unsigned_scalar_value U>
+    EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
+    {
+      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
     }
 
     EVE_CALLABLE_OBJECT(prime_ceil_t, prime_ceil_);
   };
 
-//================================================================================================
-//! @addtogroup combinatorial
-//! @{
-//!   @var prime_ceil
-//!   @brief `strict_elementwise_callable` object computing the smallest prime greater or equal to the input.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/combinatorial.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      constexpr auto prime_floor(unsigned_value auto x) -> decltype(x) noexcept; //1
-//!      template < integral_value T,  floating_scalar_value U>
-//!      constexpr as_wide_as_t<U, T> prime_floor(T x, as<U>)             noexcept; //2
-//!      template < integral_value T,  unsigned_scalar_value U>
-//!      constexpr as_wide_as_t<U, T> prime_floor(T x, as<U>)             noexcept; //2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `n`: unsigned argument. If `n` is greater than 104'729, returns 0.
-//!
-//!   **Return value**
-//!
-//!     1. The smallest prime greater or equal to `n`.
-//!     2. Same, but the element type of the result is deduced from U.
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/combinatorial/prime_ceil.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup combinatorial
+  //! @{
+  //!   @var prime_ceil
+  //!   @brief `strict_elementwise_callable` object computing the smallest prime greater or equal to the input.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      constexpr auto prime_floor(unsigned_value auto x) -> decltype(x) noexcept; //1
+  //!      template < integral_value T,  floating_scalar_value U>
+  //!      constexpr as_wide_as_t<U, T> prime_floor(T x, as<U>)             noexcept; //2
+  //!      template < integral_value T,  unsigned_scalar_value U>
+  //!      constexpr as_wide_as_t<U, T> prime_floor(T x, as<U>)             noexcept; //2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `n`: unsigned argument. If `n` is greater than 104'729, returns 0.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The smallest prime greater or equal to `n`.
+  //!     2. Same, but the element type of the result is deduced from U.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia: Prime number](https://en.wikipedia.org/wiki/Prime_number)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/combinatorial/prime_ceil.cpp}
+  //================================================================================================
   inline constexpr auto prime_ceil = functor<prime_ceil_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<unsigned_value T, callable_options O>
-    constexpr EVE_FORCEINLINE T
-    prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n)
+    template<callable_options O, unsigned_value T>
+    constexpr EVE_FORCEINLINE T prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n)
     {
       using elt_t = element_type_t<T>;
       n           = if_else(is_eqz(n), T(2), n);

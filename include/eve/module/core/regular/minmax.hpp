@@ -51,83 +51,83 @@ namespace eve
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
   };
 
-//================================================================================================
-//! @addtogroup core_arithmetic
-//! @{
-//!   @var minmax
-//!   @brief Computes the minimum and maximum of its arguments.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overloads
-//!      constexpr auto minmax(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
-//!      constexpr auto minmax(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
-//!
-//!      // Lanes masking
-//!      constexpr auto minmax[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
-//!      constexpr auto minmax[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
-//!
-//!      // Exclusive Semantic options - Only one of those can be set at once
-//!      constexpr auto minmax[pedantic](/* any of the above overloads */)                noexcept; // 4
-//!      constexpr auto minmax[numeric ](/* any of the above overloads */)                noexcept; // 4
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`, `xs...`: [arguments](@ref eve::value).
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!    **Return value**
-//!
-//!      1. A `kumi::tuple` containing the value of the minimum and the maximum of the arguments.
-//!      2. Equivalent to the call on the elements of the tuple.
-//!      3. [The operation is performed conditionnaly](@ref conditional)
-//!      4. Equivalent to `{min[o], max[o]}` where `o` is one of these two options.
-//!
-//!   @note
-//!   @note
-//!     * If any element of the inputs is a `Nan`, the corresponding output element
-//!       is system-dependent.
-//!
-//!  @groupheader{Example}
-//!
-//!  @godbolt{doc/core/minmax.cpp}
-//!
-//!  @groupheader{Semantic Modifiers}
-//!
-//!   * Masked Call
-//!
-//!     The call `eve::minmax[mask](x, ...)` provides a masked version of `minmax` which is
-//!     equivalent to `if_else(mask, minmax(x, ...), x)`
-//!
-//!     **Example**
-//!
-//!       @godbolt{doc/core/masked/minmax.cpp}
-//!
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup core_arithmetic
+  //! @{
+  //!   @var minmax
+  //!   @brief Computes the minimum and maximum of its arguments.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overloads
+  //!      constexpr auto minmax(eve::value auto x, eve::value auto ... xs)                 noexcept; // 1
+  //!      constexpr auto minmax(kumi::non_empty_product_type auto const& tup)              noexcept; // 2
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto minmax[conditional_expr auto c](/* any of the above overloads */) noexcept; // 3
+  //!      constexpr auto minmax[logical_value auto m](/* any of the above overloads */)    noexcept; // 3
+  //!
+  //!      // Exclusive Semantic options - Only one of those can be set at once
+  //!      constexpr auto minmax[pedantic](/* any of the above overloads */)                noexcept; // 4
+  //!      constexpr auto minmax[numeric ](/* any of the above overloads */)                noexcept; // 4
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`, `xs...`: [arguments](@ref eve::value).
+  //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!    **Return value**
+  //!
+  //!      1. A `kumi::tuple` containing the value of the minimum and the maximum of the arguments.
+  //!      2. Equivalent to the call on the elements of the tuple.
+  //!      3. [The operation is performed conditionnaly](@ref conditional)
+  //!      4. Equivalent to `{min[o], max[o]}` where `o` is one of these two options.
+  //!
+  //!   @note
+  //!   @note
+  //!     * If any element of the inputs is a `Nan`, the corresponding output element
+  //!       is system-dependent.
+  //!
+  //!  @groupheader{Example}
+  //!
+  //!  @godbolt{doc/core/minmax.cpp}
+  //!
+  //!  @groupheader{Semantic Modifiers}
+  //!
+  //!   * Masked Call
+  //!
+  //!     The call `eve::minmax[mask](x, ...)` provides a masked version of `minmax` which is
+  //!     equivalent to `if_else(mask, minmax(x, ...), x)`
+  //!
+  //!     **Example**
+  //!
+  //!       @godbolt{doc/core/masked/minmax.cpp}
+  //!
+  //================================================================================================
   inline constexpr auto minmax = functor<minmax_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
     template<typename W>
     constexpr bool prefer_min_max() noexcept
     {
-      if constexpr( scalar_value<W> ) return true;
+      if constexpr (scalar_value<W>) return true;
       else
       {
         constexpr bool is_ints64 = match(categorize<W>(),
@@ -142,12 +142,11 @@ namespace eve
     }
 
 
-    template<value T0, value T1, value... Ts, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), O const & , T0 v0, T1 v1, Ts... vs) noexcept
-    -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
+    template<callable_options O, value T0, value T1, value... Ts>
+    EVE_FORCEINLINE auto minmax_(EVE_REQUIRES(cpu_), O const&, T0 v0, T1 v1, Ts... vs) noexcept
+      -> decltype(zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...)))
     {
-      if constexpr( prefer_min_max<common_value_t<T0,T1,Ts...>>()  || sizeof...(Ts) > 0)
+      if constexpr (prefer_min_max<common_value_t<T0,T1,Ts...>>() || (sizeof...(Ts) > 0))
       {
         return zip(eve::min(v0, v1, vs...), eve::max(v0, v1, vs...));
       }
@@ -161,12 +160,11 @@ namespace eve
     }
 
     // -----  Predicate case
-    template<typename Callable, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), O const &, Callable f)
+    template<callable_options O, typename Callable>
+    EVE_FORCEINLINE auto minmax_(EVE_REQUIRES(cpu_), O const&, Callable f)
     {
-      if constexpr( std::same_as<Callable, callable_is_less_> ) return eve::minmax;
-      else if constexpr( std::same_as<Callable, callable_is_greater_> )
+      if constexpr (std::same_as<Callable, callable_is_less_>) return eve::minmax;
+      else if constexpr (std::same_as<Callable, callable_is_greater_>)
       {
         return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
       }
@@ -180,10 +178,9 @@ namespace eve
       }
     }
 
-    template<conditional_expr C, value T0, value T1, value... Ts, callable_options O>
-    EVE_FORCEINLINE auto
-    minmax_(EVE_REQUIRES(cpu_), C const& c, O const &, T0 v0, T1 v1, Ts... vs) noexcept
-    -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))
+    template<callable_options O, conditional_expr C, value T0, value T1, value... Ts>
+    EVE_FORCEINLINE auto minmax_(EVE_REQUIRES(cpu_), C const& c, O const&, T0 v0, T1 v1, Ts... vs) noexcept
+      -> decltype(zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...)))
     {
       return zip(eve::min[c](v0, v1, vs...), eve::max[c](v0, v1, vs...));
     }

@@ -13,57 +13,60 @@
 
 namespace eve
 {
-template<typename Options>
-struct bitincrement_t : constant_callable<bitincrement_t, Options, lower_option, upper_option>
-{
-  template<typename T>
-  static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+  template<typename Options>
+  struct bitincrement_t : constant_callable<bitincrement_t, Options, lower_option, upper_option>
   {
-    if      constexpr(std::integral<T>        ) return T(1);
-    else if constexpr(std::same_as<T, float>  ) return T(0x1p-149);
-    else if constexpr(std::same_as<T, double> ) return T(0x0.0000000000001p-1022);
-  }
+    template<plain_value T>
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
+    {
+      if      constexpr (std::integral<T>       ) return T{1};
+      else if constexpr (std::same_as<T, float> ) return T{0x1p-149};
+      else if constexpr (std::same_as<T, double>) return T{0x0.0000000000001p-1022};
+    }
 
-  template<plain_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<plain_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return EVE_DISPATCH_CALL_PT(T, v);
+    }
 
-  EVE_CALLABLE_OBJECT(bitincrement_t, bitincrement_);
-};
+    EVE_CALLABLE_OBJECT(bitincrement_t, bitincrement_);
+  };
 
-//================================================================================================
-//! @addtogroup core_constants
-//! @{
-//!   @var bitincrement
-//!   @brief Computes a constant with only the least significant bit set.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/core.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!     template< eve::plain_value T > constexpr T bitincrement(as<T> x) noexcept;
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-//!
-//!   **Return value**
-//!
-//!   The call `eve::bitincrement(as<T>())` returns a value of type `T` with only the least significant
-//!   bit set.
-//!
-//!   @groupheader{Example}
-//!
-//!   @godbolt{doc/core/constant/bitincrement.cpp}
-//! @}
-//================================================================================================
-inline constexpr auto bitincrement = functor<bitincrement_t>;
+  //================================================================================================
+  //! @addtogroup core_constants
+  //! @{
+  //!   @var bitincrement
+  //!   @brief Computes a constant with only the least significant bit set.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!     template< eve::plain_value T > constexpr T bitincrement(as<T> x) noexcept;
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+  //!
+  //!   **Return value**
+  //!
+  //!   The call `eve::bitincrement(as<T>())` returns a value of type `T` with only the least significant
+  //!   bit set.
+  //!
+  //!   @groupheader{Example}
+  //!
+  //!   @godbolt{doc/core/constant/bitincrement.cpp}
+  //! @}
+  //================================================================================================
+  inline constexpr auto bitincrement = functor<bitincrement_t>;
 }

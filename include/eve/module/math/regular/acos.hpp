@@ -90,7 +90,7 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T acos_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr(O::contains(raw))

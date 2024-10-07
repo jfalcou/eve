@@ -108,7 +108,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     constexpr EVE_FORCEINLINE common_value_t<T, U>
     atan2pi_(EVE_REQUIRES(cpu_), O const& o, T const& a0, const U a1) noexcept
     {

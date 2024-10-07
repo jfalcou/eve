@@ -81,7 +81,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     T  expm1_(EVE_REQUIRES(cpu_), O const& o, T const& xx)
     {
       using elt_t       = element_type_t<T>;
