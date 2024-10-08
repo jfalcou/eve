@@ -22,9 +22,17 @@ namespace eve::detail
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
+  EVE_FORCEINLINE auto add_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
+                            wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N> && O:contains(widen))
+  {
+    return add.behavior(cpu_{}, opts, v, w);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
-                                               wide<T, N> v, wide<T, N> w) noexcept
-  requires (sve_abi<abi_t<T, N>> && !O::contains(widen))
+                                  wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>&& !O:contains(widen))
   {
     auto const alt = alternative(mask, v, as(v));
 
@@ -32,8 +40,7 @@ namespace eve::detail
     if constexpr( C::is_complete ) return alt;
 
     if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) ||
-                 (O::contains(saturated) && std::integral<T>) ||
-                 (O::contains(widen))
+                 (O::contains(saturated) && std::integral<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
@@ -56,13 +63,12 @@ namespace eve::detail
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE resize_t<O, wide<T, N>> add_(EVE_REQUIRES(sve_), O const& opts,
-                                               wide<T, N> v, wide<T, N> w) noexcept
-  requires sve_abi<abi_t<T, N>>
+  EVE_FORCEINLINEwide<T, N> add_(EVE_REQUIRES(sve_), O const& opts,
+                                 wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>> && !O::contains(widen))
   {
     // We call the saturated add if required or we just go to the common case of doing v+w
-    if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) ||
-                 O::contains(widen))
+    if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) )
     {
       return add.behavior(cpu_{}, opts, v, w);
     }
