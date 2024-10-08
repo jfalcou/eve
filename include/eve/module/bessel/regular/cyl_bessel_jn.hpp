@@ -20,7 +20,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(N n, T x) const
       requires (same_lanes_or_scalar<N, T>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, N>), n, x);
+      return this->behavior(as<as_wide_as_t<T, N>>{}, eve::current_api, this->options(), n, x);
     }
 
     EVE_CALLABLE_OBJECT(cyl_bessel_jn_t, cyl_bessel_jn_);

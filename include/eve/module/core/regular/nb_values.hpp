@@ -25,7 +25,7 @@ namespace eve
     template<value T, value U>
     EVE_FORCEINLINE constexpr as_integer_t<common_value_t<T, U>, unsigned> operator()(T a, U b) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_integer_t<common_value_t<T, U>, unsigned>), a, b);
+      return this->behavior(as<as_integer_t<common_value_t<T, U>, unsigned>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(nb_values_t, nb_values_);

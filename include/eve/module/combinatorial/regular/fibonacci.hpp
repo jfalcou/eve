@@ -23,7 +23,7 @@ namespace eve
     constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N> operator()(N n, T0 t0, T1 t1) const noexcept
       requires (same_lanes_or_scalar<N, T0, T1>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<common_value_t<T0, T1>, N>), n, t0, t1);
+      return this->behavior(as<as_wide_as_t<common_value_t<T0, T1>, N>>{}, eve::current_api, this->options(), n, t0, t1);
     }
 
     EVE_CALLABLE_OBJECT(fibonacci_t, fibonacci_);

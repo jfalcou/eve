@@ -21,12 +21,12 @@ namespace eve
     template<logical_value T>
     constexpr EVE_FORCEINLINE auto operator()(T a) const noexcept -> as_logical_t<decltype(!a)>
     {
-      return EVE_DISPATCH_CALL_PT((as_logical_t<decltype(!a)>), a);
+      return this->behavior(as<as_logical_t<decltype(!a)>>{}, eve::current_api, this->options(), a);
     }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((bool), a);
+      return this->behavior(as<bool>{}, eve::current_api, this->options(), a);
     }
 
     EVE_CALLABLE_OBJECT(logical_not_t, logical_not_);

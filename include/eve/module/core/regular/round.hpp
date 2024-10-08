@@ -24,7 +24,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T x) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, x);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), x);
     }
 
     EVE_CALLABLE_OBJECT(round_t, round_);

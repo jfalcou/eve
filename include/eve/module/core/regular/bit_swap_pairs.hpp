@@ -25,7 +25,7 @@ namespace eve
     template<integral_value T, integral_value I0, integral_value I1>
     constexpr EVE_FORCEINLINE T operator()(T v, I0 i0, I1 i1) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v, i0, i1);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, i0, i1);
     }
 
     EVE_CALLABLE_OBJECT(bit_swap_pairs_t, bit_swap_pairs_);

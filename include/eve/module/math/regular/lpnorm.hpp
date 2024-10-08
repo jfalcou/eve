@@ -24,13 +24,13 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P> operator()(P p, T0 t0, T1 t1, Ts...ts) const noexcept
       requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<common_value_t<T0, T1, Ts...>, P>), p, t0, t1, ts...);
+      return this->behavior(as<as_wide_as_t<common_value_t<T0, T1, Ts...>, P>>{}, eve::current_api, this->options(), p, t0, t1, ts...);
     }
 
     template<value P, kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P> operator()(P p, Tup const& t) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P>), p, t);
+      return this->behavior(as<as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P>>{}, eve::current_api, this->options(), p, t);
     }
 
     EVE_CALLABLE_OBJECT(lpnorm_t, lpnorm_);

@@ -28,7 +28,7 @@ namespace eve
     EVE_FORCEINLINE constexpr zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
       requires(same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT((zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>>), t0, t1, ts...);
+      return this->behavior(as<zipped<common_value_t<T0, T1, Ts...>, common_value_t<T0, T1, Ts...>>>{}, eve::current_api, this->options(), t0, t1, ts...);
     }
 
     template <kumi::non_empty_product_type Tup>
@@ -38,7 +38,7 @@ namespace eve
     EVE_FORCEINLINE constexpr r_t<Tup> operator()(Tup const& t) const noexcept
       requires (same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
     {
-      return EVE_DISPATCH_CALL_PT(r_t<Tup>, t);
+      return this->behavior(as<r_t<Tup>>{}, eve::current_api, this->options(), t);
     }
 
     template<typename Callable>

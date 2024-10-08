@@ -26,7 +26,7 @@ namespace eve
     template<typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T> operator()(as<T> v) const
     {
-      return EVE_DISPATCH_CALL_PT(as_logical_t<T>, v);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(true_t, true__);

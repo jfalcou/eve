@@ -19,13 +19,13 @@ namespace eve
     template<simd_value T, typename Less>
     constexpr EVE_FORCEINLINE T operator()(T v, Less l) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v, l);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, l);
     }
 
      template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(sort_t, sort_);

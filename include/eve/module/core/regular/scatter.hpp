@@ -22,7 +22,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
   EVE_FORCEINLINE void operator()(T const& v, Ptr ptr, Idx const& idx) const noexcept
     requires (T::size() == Idx::size())
   {
-    EVE_DISPATCH_CALL_PT(void, v, ptr, idx);
+    this->behavior(as<void>{}, eve::current_api, this->options(), v, ptr, idx);
   }
 
   EVE_CALLABLE_OBJECT(scatter_t, scatter_);

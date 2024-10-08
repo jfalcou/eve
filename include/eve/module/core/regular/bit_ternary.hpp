@@ -28,7 +28,7 @@ namespace eve
     EVE_FORCEINLINE constexpr bit_value_t<T0, T1, T2> operator()(std::integral_constant<std::uint8_t, K> k, T0 t0, T1 t1, T2 t2) const noexcept
       requires(eve::same_lanes_or_scalar<T0, T1, T2>)
     {
-      return EVE_DISPATCH_CALL_PT((bit_value_t<T0, T1, T2>), k, t0, t1, t2);
+      return this->behavior(as<bit_value_t<T0, T1, T2>>{}, eve::current_api, this->options(), k, t0, t1, t2);
     }
 
     EVE_CALLABLE_OBJECT(bit_ternary_t, bit_ternary_);

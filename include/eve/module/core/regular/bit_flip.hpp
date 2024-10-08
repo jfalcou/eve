@@ -23,7 +23,7 @@ namespace eve
     template<value T, integral_value I>
     constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
     {
-      return EVE_DISPATCH_CALL_PT(T, v, i);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, i);
     }
 
     EVE_CALLABLE_OBJECT(bit_flip_t, bit_flip_);

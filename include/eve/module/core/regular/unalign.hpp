@@ -22,26 +22,26 @@ namespace eve
     template<std::contiguous_iterator I>
     constexpr EVE_FORCEINLINE I operator()(I ptr) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(I, ptr);
+      return this->behavior(as<I>{}, eve::current_api, this->options(), ptr);
     }
 
     template<typename Ptr>
     EVE_FORCEINLINE auto operator()(Ptr p) const noexcept -> decltype(p.unalign())
     {
-      return EVE_DISPATCH_CALL_PT(decltype(p.unalign()), p);
+      return this->behavior(as<decltype(p.unalign())>{}, eve::current_api, this->options(), p);
     }
 
     template<typename T, typename N>
     constexpr EVE_FORCEINLINE T* operator()(aligned_ptr<T, N> p) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T*, p);
+      return this->behavior(as<T*>{}, eve::current_api, this->options(), p);
     }
 
     template<typename... Ptrs>
     constexpr EVE_FORCEINLINE auto operator()(soa_ptr<Ptrs...> ptr) const noexcept
               -> soa_ptr<decltype(std::declval<unalign_t>()(std::declval<Ptrs>()))...>
     {
-      return EVE_DISPATCH_CALL_PT((soa_ptr<decltype(std::declval<unalign_t>()(std::declval<Ptrs>()))...>), ptr);
+      return this->behavior(as<soa_ptr<decltype(std::declval<unalign_t>()(std::declval<Ptrs>()))...>>{}, eve::current_api, this->options(), ptr);
     }
 
     EVE_CALLABLE_OBJECT(unalign_t, unalign_);

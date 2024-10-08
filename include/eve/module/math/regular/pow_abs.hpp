@@ -20,14 +20,14 @@ namespace eve
     template<floating_scalar_value T, integral_scalar_value U>
     EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v, w);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, w);
     }
 
     template<floating_value T, floating_value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
       requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), v, w);
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), v, w);
     }
 
     EVE_CALLABLE_OBJECT(pow_abs_t, pow_abs_);

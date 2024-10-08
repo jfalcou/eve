@@ -23,7 +23,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T operator()(T n) const noexcept
     {
       EVE_ASSERT(all(is_flint(n)), "sign_alternate : some entries are not flint");
-      return EVE_DISPATCH_CALL_PT(T, n);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), n);
     }
 
     EVE_CALLABLE_OBJECT(sign_alternate_t, sign_alternate_);

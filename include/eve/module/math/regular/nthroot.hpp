@@ -21,13 +21,13 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<T, U> operator()(T v, U w) const noexcept
       requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, U>), v, w);
+      return this->behavior(as<as_wide_as_t<T, U>>{}, eve::current_api, this->options(), v, w);
     }
 
     template<floating_value T, floating_value U>
     EVE_FORCEINLINE  constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), v, w);
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), v, w);
     }
 
     EVE_CALLABLE_OBJECT(nthroot_t, nthroot_);

@@ -19,14 +19,14 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<Ts...> operator()(Ts... b) const noexcept
       requires (same_lanes_or_scalar<Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT(common_value_t<Ts...>, b...);
+      return this->behavior(as<common_value_t<Ts...>>{}, eve::current_api, this->options(), b...);
     }
 
     template<integral_value T0, floating_value ...Ts>
     constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<Ts...>, T0> operator()(T0 a, Ts... b) const noexcept
       requires (same_lanes_or_scalar<T0, Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<common_value_t<Ts...>, T0>), a, b...);
+      return this->behavior(as<as_wide_as_t<common_value_t<Ts...>, T0>>{}, eve::current_api, this->options(), a, b...);
     }
 
     EVE_CALLABLE_OBJECT(jacobi_t, jacobi_);

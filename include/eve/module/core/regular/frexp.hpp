@@ -19,7 +19,7 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 {
   template<eve::floating_value T>
   constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const {
-    return EVE_DISPATCH_CALL_PT((zipped<T,T>), v);
+    return this->behavior(as<zipped<T,T>>{}, eve::current_api, this->options(), v);
   }
 
   EVE_CALLABLE_OBJECT(frexp_t, frexp_);

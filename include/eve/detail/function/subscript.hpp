@@ -17,7 +17,7 @@ namespace eve::detail
     template<typename Wide, typename Val>
     EVE_FORCEINLINE constexpr void operator()(Wide& w, std::size_t idx, Val v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(std::void_t<Wide>, w, idx, v);
+      return this->behavior(as<std::void_t<Wide>>{}, eve::current_api, this->options(), w, idx, v);
     }
 
     EVE_CALLABLE_OBJECT(insert_t, insert_);
@@ -31,7 +31,7 @@ namespace eve::detail
     template<typename Wide>
     EVE_FORCEINLINE constexpr element_type_t<Wide> operator()(Wide w, std::size_t idx) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(element_type_t<Wide>, w, idx);
+      return this->behavior(as<element_type_t<Wide>>{}, eve::current_api, this->options(), w, idx);
     }
 
     EVE_CALLABLE_OBJECT(extract_t, extract_);

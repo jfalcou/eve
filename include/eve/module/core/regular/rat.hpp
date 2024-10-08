@@ -31,13 +31,13 @@ struct rat_t : elementwise_callable<rat_t, Options>
   template<floating_value T>
   constexpr EVE_FORCEINLINE zipped<T, T> operator()(T v) const
   {
-    return EVE_DISPATCH_CALL_PT((zipped<T, T>), v);
+    return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), v);
   }
 
   template<floating_value T, floating_value U>
   constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>> operator()(T v, U t) const
   {
-    return EVE_DISPATCH_CALL_PT((zipped<common_value_t<T, U>, common_value_t<T, U>>), v, t);
+    return this->behavior(as<zipped<common_value_t<T, U>, common_value_t<T, U>>>{}, eve::current_api, this->options(), v, t);
   }
 
   EVE_CALLABLE_OBJECT(rat_t, rat_);

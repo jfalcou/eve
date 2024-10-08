@@ -20,19 +20,19 @@ struct iterate_selected_t
   template<eve::logical_simd_value L, irregular_predicate<std::ptrdiff_t> F>
   EVE_FORCEINLINE bool operator()(L l, F&& f) const noexcept
   {
-    return EVE_DISPATCH_CALL_PT(bool, l, f);
+    return this->behavior(as<bool>{}, eve::current_api, this->options(), l, f);
   }
 
   template<eve::logical_simd_value L, irregular_predicate<std::ptrdiff_t> F>
   EVE_FORCEINLINE bool operator()(top_bits<L> l, F&& f) const noexcept
   {
-    return EVE_DISPATCH_CALL_PT(bool, l, f);
+    return this->behavior(as<bool>{}, eve::current_api, this->options(), l, f);
   }
 
   template<irregular_predicate<std::ptrdiff_t> F>
   EVE_FORCEINLINE bool operator()(bool l, F&& f) const noexcept
   {
-    return EVE_DISPATCH_CALL_PT(bool, l, f);
+    return this->behavior(as<bool>{}, eve::current_api, this->options(), l, f);
   }
 
   EVE_CALLABLE_OBJECT(iterate_selected_t, iterate_selected_);

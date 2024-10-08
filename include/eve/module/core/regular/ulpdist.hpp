@@ -28,7 +28,7 @@ namespace eve
     template<value T, value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), a, b);
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(ulpdist_t, ulpdist_);

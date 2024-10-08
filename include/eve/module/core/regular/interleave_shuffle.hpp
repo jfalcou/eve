@@ -29,7 +29,7 @@ namespace eve
     EVE_FORCEINLINE decltype(r_t<T, U>()) operator()(T v, U w) const noexcept
       requires (same_lanes_or_scalar<T, U> && (simd_value<T> || simd_value<U>))
     {
-      return EVE_DISPATCH_CALL_PT((decltype(r_t<T, U>())), v, w);
+      return this->behavior(as<decltype(r_t<T, U>())>{}, eve::current_api, this->options(), v, w);
     }
 
     EVE_CALLABLE_OBJECT(interleave_shuffle_t, interleave_shuffle_);

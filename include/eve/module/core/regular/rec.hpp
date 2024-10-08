@@ -20,7 +20,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
   template<value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
   {
-    return EVE_DISPATCH_CALL_PT(T, v);
+    return this->behavior(as<T>{}, eve::current_api, this->options(), v);
   }
 
   EVE_CALLABLE_OBJECT(rec_t, rec_);

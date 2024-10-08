@@ -22,7 +22,7 @@ namespace eve
     template<unsigned_value T>
     EVE_FORCEINLINE constexpr as_wide_as_t<double, T> operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<double, T>), v);
+      return this->behavior(as<as_wide_as_t<double, T>>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(double_factorial_t, double_factorial_);

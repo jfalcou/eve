@@ -21,7 +21,7 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept
       requires (same_lanes_or_scalar<T0, T1>)
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), a, b);
+      return this->behavior(as<common_value_t<T0, T1>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(lbeta_t, lbeta_);

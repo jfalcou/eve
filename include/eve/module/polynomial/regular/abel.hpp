@@ -19,7 +19,7 @@ namespace eve
     template<value N, floating_value T0, floating_value T1>
     constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<T0, T1>, N> operator()(N n, T0 x,  T1 a) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<common_value_t<T0, T1>, N>), n, x, a);
+      return this->behavior(as<as_wide_as_t<common_value_t<T0, T1>, N>>{}, eve::current_api, this->options(), n, x, a);
     }
 
     EVE_CALLABLE_OBJECT(abel_t, abel_);

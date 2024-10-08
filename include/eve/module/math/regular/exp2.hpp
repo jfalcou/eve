@@ -25,13 +25,13 @@ namespace eve
         EVE_ASSERT(all(is_less(s, sizeof(vt_t) * 8 - std::is_signed_v<vt_t>)), "[eve::exp2] - overflow caused by too large integral entry");
       }
 
-      return EVE_DISPATCH_CALL_PT(T, s);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), s);
     }
 
     template<integral_value T, floating_scalar_value U>
     EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
+      return this->behavior(as<as_wide_as_t<U, T>>{}, eve::current_api, this->options(), v, target);
     }
 
     EVE_CALLABLE_OBJECT(exp2_t, exp2_);

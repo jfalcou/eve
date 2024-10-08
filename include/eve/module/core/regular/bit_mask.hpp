@@ -19,7 +19,7 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE auto operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(bit_mask_t, bit_mask_);

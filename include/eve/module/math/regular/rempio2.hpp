@@ -25,7 +25,7 @@ namespace eve
     template<floating_value T>
     constexpr EVE_FORCEINLINE zipped<T, T, T> operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((zipped<T, T, T>), v);
+      return this->behavior(as<zipped<T, T, T>>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(rempio2_t, rempio2_);
