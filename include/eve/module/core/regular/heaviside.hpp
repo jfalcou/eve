@@ -40,7 +40,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var heaviside
-//!   @brief `callable` indicatrix of the interval \f$[lo, hi[\f$ or of the set for which the invocable returns true.
+//!   @brief `elementwise_callable` that return 1 if the input is greater than a threshold else 0.
 //!
 //!   **Defined in Header**
 //!
@@ -72,10 +72,10 @@ namespace eve
 //!
 //!    **Return value**
 //!        1. Each [element](@ref glossary_elementwise)  of the result contains:
-//!           * `0`, if `x` is less  zero.
+//!           * `0`, if `x` is less or equal to zero.
 //!           * `1` otherwise.
 //!        2. Each [element](@ref glossary_elementwise)  of the result contains:
-//!           * `0`, if `x` is less than `s` (default to zero).
+//!           * `0`, if `x` is less or equal to `s` (default to zero).
 //!           * `1` otherwise.
 //!        3. [The operation is performed conditionnaly](@ref conditional).
 //!
@@ -97,7 +97,7 @@ namespace eve
       if constexpr(scalar_value<T>)
         return a > 0;
       else
-        return bit_and(one(as(a)), is_gtz(a));
+        return if_else(isgtz(a), one(as(a)), zero);
     }
 
     template<typename T, callable_options O>
@@ -106,7 +106,7 @@ namespace eve
       if constexpr(scalar_value<T>)
         return a > s;
       else
-        return  bit_and(one(as(a)), a > s);
+        return if_else(a > s, one(as(a)), zero);
     }
   }
 }
