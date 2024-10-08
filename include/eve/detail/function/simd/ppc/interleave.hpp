@@ -17,10 +17,10 @@ namespace eve::detail
   // Interleave pairs of wides
   //================================================================================================
   template<callable_options OO, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(vmx_), OO const & o, wide<T,N> v0, wide<T,N> v1) noexcept
-  requires (N::value > 1) && ppc_abi<abi_t<T,N>>
+  EVE_FORCEINLINE kumi::tuple<wide<T, N>, wide<T, N>> interleave_(EVE_REQUIRES(vmx_), OO const & o, wide<T,N> v0, wide<T,N> v1) noexcept
+    requires (N::value > 1) && ppc_abi<abi_t<T,N>>
   {
-    using type = wide<T,N>;
+    using type = wide<T, N>;
 
     auto ptn = []<typename O, std::size_t... I>( O, std::index_sequence<I...> )
     {
@@ -49,7 +49,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{},o,v0,v1);
     }
   }
 }

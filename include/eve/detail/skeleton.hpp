@@ -16,9 +16,6 @@
 #include <algorithm>
 #include <utility>
 
-#include <iostream>
-static int call_count = 0;
-
 namespace eve::detail
 {
   // Extract ith element of a wide or propagate the value if non SIMD
@@ -112,10 +109,6 @@ namespace eve::detail
   template<typename Fn, typename... Ts>
   EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
   {
-    call_count++;
-    // std::cout << "map called " << call_count << " times" << std::endl;
-    // __builtin_trap();
-
     using w_t = typename wide_result<Fn, Ts...>::type;
 
     if constexpr( kumi::product_type<element_type_t<w_t>> )
