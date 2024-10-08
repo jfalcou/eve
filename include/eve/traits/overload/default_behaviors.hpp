@@ -13,9 +13,6 @@
 #include <eve/detail/overload.hpp>  // TEMPORARY
 #include <eve/forward.hpp>
 
-
-#include <iostream>
-
 namespace eve
 {
   namespace detail

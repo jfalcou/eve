@@ -17,24 +17,24 @@ namespace eve::detail
   // Interleave pairs of wides
   //================================================================================================
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(sse2_) , O const& o, wide<T,N> v0, wide<T,N> v1) noexcept
-  requires (N::value > 1) && x86_abi<abi_t<T,N>>
+  EVE_FORCEINLINE kumi::tuple<wide<T, N>, wide<T, N>> interleave_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> a, wide<T, N> b) noexcept
+    requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
     constexpr auto c = categorize<type>();
 
     if constexpr( c == category::float64x2 )
     {
-      return kumi::make_tuple(type(_mm_unpacklo_pd(v0, v1)),type(_mm_unpackhi_pd(v0, v1)));
+      return kumi::make_tuple(type(_mm_unpacklo_pd(a, b)),type(_mm_unpackhi_pd(a, b)));
     }
     else if constexpr( match(c,category::int64x2, category::uint64x2) )
     {
-      return kumi::make_tuple(type(_mm_unpacklo_epi64(v0,v1)), type(_mm_unpackhi_epi64(v0,v1)));
+      return kumi::make_tuple(type(_mm_unpacklo_epi64(a,b)), type(_mm_unpackhi_epi64(a,b)));
     }
     else if constexpr( c == category::float64x4 )
     {
-      auto[a0,a1] = v0.slice();
-      auto[b0,b1] = v1.slice();
+      auto[a0,a1] = a.slice();
+      auto[b0,b1] = b.slice();
       auto[x0,x1] = eve::interleave(a0,b0);
       auto[y0,y1] = eve::interleave(a1,b1);
 
@@ -44,14 +44,14 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        auto xy = _mm_shuffle_ps(v0,v1,0b10011001);
-        return kumi::make_tuple ( type(_mm_unpacklo_ps(v0,v1))
+        auto xy = _mm_shuffle_ps(a,b,0b10011001);
+        return kumi::make_tuple ( type(_mm_unpacklo_ps(a,b))
                                 , type(_mm_shuffle_ps(xy,xy,0b11011000))
                                 );
       }
       else if constexpr(N::value == 4)
       {
-        return kumi::make_tuple(type(_mm_unpacklo_ps(v0,v1)), type(_mm_unpackhi_ps(v0,v1)));
+        return kumi::make_tuple(type(_mm_unpacklo_ps(a,b)), type(_mm_unpackhi_ps(a,b)));
       }
     }
     else if constexpr( match(c,category::int32x4, category::uint32x4) )
@@ -59,18 +59,18 @@ namespace eve::detail
       if constexpr(N::value == 2)
       {
         using  ftype = as<wide< as_floating_point_t<T>,N>>;
-        auto that = interleave(bit_cast(v0,ftype()),bit_cast(v1,ftype()));
+        auto that = interleave(bit_cast(a,ftype()),bit_cast(b,ftype()));
         return kumi::map( [](auto m){ return bit_cast(m,as<type>()); }, that);
       }
       else if constexpr(N::value == 4)
       {
-        return kumi::make_tuple(type(_mm_unpacklo_epi32(v0,v1)), type(_mm_unpackhi_epi32(v0,v1)));
+        return kumi::make_tuple(type(_mm_unpacklo_epi32(a,b)), type(_mm_unpackhi_epi32(a,b)));
       }
     }
     else if constexpr( c == category::float32x8 )
     {
-      auto[a0,a1] = v0.slice();
-      auto[b0,b1] = v1.slice();
+      auto[a0,a1] = a.slice();
+      auto[b0,b1] = b.slice();
       auto[x0,x1] = eve::interleave(a0,b0);
       auto[y0,y1] = eve::interleave(a1,b1);
 
@@ -80,11 +80,11 @@ namespace eve::detail
     {
       if constexpr(N::value == 8)
       {
-        return kumi::make_tuple(type(_mm_unpacklo_epi16(v0,v1)), type(_mm_unpackhi_epi16(v0,v1)));
+        return kumi::make_tuple(type(_mm_unpacklo_epi16(a,b)), type(_mm_unpackhi_epi16(a,b)));
       }
       else
       {
-        wide<T,fixed<8>> v01 = _mm_unpacklo_epi16(v0.storage(),v1.storage());
+        wide<T,fixed<8>> v01 = _mm_unpacklo_epi16(a.storage(),b.storage());
         if constexpr(N::value == 2 )
         {
           auto[l,h] = v01.slice(lower_).slice();
@@ -101,11 +101,11 @@ namespace eve::detail
     {
       if constexpr(N::value == 16)
       {
-        return kumi::make_tuple(type(_mm_unpacklo_epi8(v0,v1)), type(_mm_unpackhi_epi8(v0,v1)));
+        return kumi::make_tuple(type(_mm_unpacklo_epi8(a,b)), type(_mm_unpackhi_epi8(a,b)));
       }
       else
       {
-        wide<T,fixed<16>> v01 = _mm_unpacklo_epi8(v0.storage(),v1.storage());
+        wide<T,fixed<16>> v01 = _mm_unpacklo_epi8(a.storage(),b.storage());
 
         if constexpr(N::value == 2)
         {
@@ -126,20 +126,20 @@ namespace eve::detail
     }
     else if constexpr( match(c,category::int8x16, category::uint8x16) )
     {
-      if constexpr (N() == 16) return kumi::make_tuple(type(_mm_unpacklo_epi8(v0, v1)), type(_mm_unpackhi_epi8(v0, v1)));
+      if constexpr (N() == 16) return kumi::make_tuple(type(_mm_unpacklo_epi8(a, b)), type(_mm_unpackhi_epi8(a, b)));
       else
       {
-        type combined = _mm_unpacklo_epi8(v0, v1);
+        type combined = _mm_unpacklo_epi8(a, b);
         auto [lo, hi] = combined.slice();
-        return kumi::make_tuple(eve::bit_cast(lo, eve::as(v0)), eve::bit_cast(lo, eve::as(v1)));
+        return kumi::make_tuple(eve::bit_cast(lo, eve::as(a)), eve::bit_cast(lo, eve::as(b)));
       }
     }
     else if constexpr ( match(c,category::int8x32,  category::uint8x32,
                                 category::int16x16, category::uint16x16)
                         && current_api >= avx2 )
     {
-      type ul_lanes = sizeof(T) == 2 ? _mm256_unpacklo_epi16(v0, v1) : _mm256_unpacklo_epi8(v0, v1);
-      type uh_lanes = sizeof(T) == 2 ? _mm256_unpackhi_epi16(v0, v1) : _mm256_unpackhi_epi8(v0, v1);
+      type ul_lanes = sizeof(T) == 2 ? _mm256_unpacklo_epi16(a, b) : _mm256_unpacklo_epi8(a, b);
+      type uh_lanes = sizeof(T) == 2 ? _mm256_unpackhi_epi16(a, b) : _mm256_unpackhi_epi8(a, b);
       type ul       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x20);
       type uh       = _mm256_permute2f128_si256(ul_lanes, uh_lanes, 0x31);
       return kumi::make_tuple(ul, uh);
@@ -147,8 +147,8 @@ namespace eve::detail
     else if constexpr ( match(c, category::int8x32 , category::uint8x32,
                                  category::int16x16, category::uint16x16) )
     {
-      auto [a0, a1] = v0.slice();
-      auto [b0, b1] = v1.slice();
+      auto [a0, a1] = a.slice();
+      auto [b0, b1] = b.slice();
       auto [ab00, ab01] = interleave(a0, b0);
       auto [ab10, ab11] = interleave(a1, b1);
       return kumi::make_tuple(type(ab00, ab01), type(ab10, ab11));
@@ -156,8 +156,8 @@ namespace eve::detail
     else if constexpr ( match(c, category::int8x64 , category::uint8x64,
                                  category::int16x32, category::uint16x32) )
     {
-      type ul_lanes = sizeof(T) == 2 ? _mm512_unpacklo_epi16(v0, v1) : _mm512_unpacklo_epi8(v0, v1);
-      type uh_lanes = sizeof(T) == 2 ? _mm512_unpackhi_epi16(v0, v1) : _mm512_unpackhi_epi8(v0, v1);
+      type ul_lanes = sizeof(T) == 2 ? _mm512_unpacklo_epi16(a, b) : _mm512_unpacklo_epi8(a, b);
+      type uh_lanes = sizeof(T) == 2 ? _mm512_unpackhi_epi16(a, b) : _mm512_unpackhi_epi8(a, b);
 
       // Can't use shuffle_i32x4, only applies within lanes
       using idx_t = typename type::template rebind<std::uint64_t, fixed<8>>;
@@ -170,14 +170,14 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, a, b);
     }
   }
 
   template<callable_options O, scalar_value T, typename N>
   EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
                                   , O const& o
-                                  , logical<wide<T,N>> v0, logical<wide<T,N>> v1
+                                  , logical<wide<T,N>> a, logical<wide<T,N>> b
                                   ) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
@@ -198,8 +198,8 @@ namespace eve::detail
         else                          return _pdep_u64(v,0xAAAAAAAAAAAAAAAAULL);
       };
 
-      auto x = v0.storage().value;
-      auto y = v1.storage().value;
+      auto x = a.storage().value;
+      auto y = b.storage().value;
 
       auto lx = deposit_low (x);
       auto ly = deposit_high(y);
@@ -214,7 +214,7 @@ namespace eve::detail
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>>>{}, cpu_{}, o, a, b);
     }
   }
 
@@ -224,7 +224,7 @@ namespace eve::detail
   template<callable_options O, scalar_value T, typename N>
   EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
                                   , O const& o
-                                  , wide<T,N> v0, wide<T,N> v1, wide<T,N> v2
+                                  , wide<T,N> a, wide<T,N> b, wide<T,N> c
                                   ) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
@@ -235,37 +235,37 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        return interleave.behavior(cpu_{},o,v0,v1,v2);
+        return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>, wide<T, N>>>{}, cpu_{}, o, a, b, c);
       }
       else if constexpr(N::value == 4)
       {
-        type xy = _mm_unpacklo_ps(v0,v1);
-        type xz = _mm_shuffle_ps(v0,v2,197);
+        type xy = _mm_unpacklo_ps(a,b);
+        type xz = _mm_shuffle_ps(a,c,197);
 
         xy = _mm_shuffle_ps(xy,xz,36);
-        xz = _mm_shuffle_ps(v2,v1,17);
+        xz = _mm_shuffle_ps(c,b,17);
 
-        auto dy   = eve::bit_cast(v1, eve::as<wide<double,fixed<2>>>());
-             dy   = _mm_unpackhi_pd(dy,eve::bit_cast(v0, eve::as<wide<double,fixed<2>>>()));
+        auto dy   = eve::bit_cast(b, eve::as<wide<double,fixed<2>>>());
+             dy   = _mm_unpackhi_pd(dy,eve::bit_cast(a, eve::as<wide<double,fixed<2>>>()));
         auto yyx  = eve::bit_cast(dy, eve::as<type>());
 
-        xz  = _mm_shuffle_ps(xz,yyx, 34);
-        v0  = _mm_shuffle_ps(v0, v2, 35);
-        v2  = _mm_shuffle_ps(v2, v1,255);
-        v0  = _mm_shuffle_ps(v0, v2, 34);
+        xz  = _mm_shuffle_ps(xz, yyx, 34);
+        a  = _mm_shuffle_ps(a, c, 35);
+        c  = _mm_shuffle_ps(c, b,255);
+        a  = _mm_shuffle_ps(a, c, 34);
 
-        return kumi::make_tuple(xy,xz,v0);
+        return kumi::make_tuple(xy, xz, a);
       }
     }
     else if constexpr( match(c,category::int32x4, category::uint32x4) )
     {
       using  ftype = as<wide< as_floating_point_t<T>,N>>;
-      auto that = interleave(bit_cast(v0,ftype()),bit_cast(v1,ftype()),bit_cast(v2,ftype()));
+      auto that = interleave(bit_cast(a,ftype()),bit_cast(b,ftype()),bit_cast(c,ftype()));
       return kumi::map( [](auto m){ return bit_cast(m,as<type>()); }, that);
     }
     else
     {
-      return interleave.behavior(cpu_{},o,v0,v1,v2);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>, wide<T, N>>>{}, cpu_{}, o, a, b, c);
     }
   }
 
@@ -275,7 +275,7 @@ namespace eve::detail
   template<callable_options O, scalar_value T, typename N>
   EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
                                   , O const& o
-                                  , wide<T,N> v0, wide<T,N> v1, wide<T,N> v2, wide<T,N> v3
+                                  , wide<T,N> a, wide<T,N> b, wide<T,N> c, wide<T,N> d
                                   ) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
@@ -286,12 +286,12 @@ namespace eve::detail
     {
       if constexpr(N::value == 2)
       {
-        return interleave.behavior(cpu_{},o,v0,v1,v2,v3);
+        return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>, wide<T, N>, wide<T, N>>>{}, cpu_{}, o, a, b, c, d);
       }
       else if constexpr(N::value == 4)
       {
-        auto[t0,t1] = interleave(v0,v2);
-        auto[t2,t3] = interleave(v1,v3);
+        auto[t0,t1] = interleave(a,c);
+        auto[t2,t3] = interleave(b,d);
 
         auto[r0,r1] = interleave(t0,t2);
         auto[r2,r3] = interleave(t1,t3);
@@ -302,14 +302,14 @@ namespace eve::detail
     else if constexpr( match(c,category::int32x4, category::uint32x4) )
     {
       using  ftype = as<wide< as_floating_point_t<T>,N>>;
-      auto that = interleave( bit_cast(v0,ftype()),bit_cast(v1,ftype())
-                            , bit_cast(v2,ftype()),bit_cast(v3,ftype())
+      auto that = interleave( bit_cast(a,ftype()),bit_cast(b,ftype())
+                            , bit_cast(c,ftype()),bit_cast(d,ftype())
                             );
       return kumi::map( [](auto m){ return bit_cast(m,as<type>()); }, that);
     }
     else
     {
-      return interleave.behavior(cpu_{},o, v0,v1,v2,v3);
+      return interleave.behavior(as<kumi::tuple<wide<T, N>, wide<T, N>, wide<T, N>, wide<T, N>>>{}, cpu_{}, o, a, b, c, d);
     }
   }
 }
