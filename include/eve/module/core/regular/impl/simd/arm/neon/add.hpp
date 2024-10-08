@@ -21,12 +21,12 @@ namespace eve::detail
   {
     using u_t = upgrade_t<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    if      constexpr( c == category::int32x2    ) return wide < u_t >( vaddl_s32 (v, w)).slice(lower_);
-    else if constexpr( c == category::uint32x2   ) return wide < u_t >( vaddl_u32 (v, w)).slice(lower_);
-    else if constexpr( c == category::int16x4    ) return wide < u_t >( vaddl_s16 (v, w)).slice(lower_);
-    else if constexpr( c == category::uint16x4   ) return wide < u_t >( vaddl_u16 (v, w)).slice(lower_);
-    else if constexpr( c == category::int8x8     ) return wide < u_t > (vaddl_s8  (v, w)).slice(lower_);
-    else if constexpr( c == category::uint8x8    ) return wide < u_t >( vaddl_u8  (v, w)).slice(lower_);
+    if      constexpr( c == category::int32x2    ) return  u_t(vaddl_s32(v, w)).slice(lower_);
+    else if constexpr( c == category::uint32x2   ) return  u_t(vaddl_u32(v, w)).slice(lower_);
+    else if constexpr( c == category::int16x4    ) return  u_t(vaddl_s16(v, w)).slice(lower_);
+    else if constexpr( c == category::uint16x4   ) return  u_t(vaddl_u16(v, w)).slice(lower_);
+    else if constexpr( c == category::int8x8     ) return  u_t(vaddl_s8 (v, w)).slice(lower_);
+    else if constexpr( c == category::uint8x8    ) return  u_t(vaddl_u8 (v, w)).slice(lower_);
     else return add.behavior(cpu_{}, opts, v, w);
   }
 
