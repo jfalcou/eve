@@ -24,7 +24,7 @@ namespace eve::detail
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
   EVE_FORCEINLINE auto add_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                             wide<T, N> v, wide<T, N> w) noexcept
-  requires (sve_abi<abi_t<T, N> && O:contains(widen))
+  requires (sve_abi<abi_t<T, N>> && O::contains(widen))
   {
     return add.behavior(cpu_{}, opts, v, w);
   }
