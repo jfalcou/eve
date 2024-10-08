@@ -17,7 +17,7 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE upgrade_t<wide<T, N>>> add_(EVE_REQUIRES(vmx_), O const& opts,
+  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(vmx_), O const& opts,
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (ppc_abi<abi_t<T, N>> && O::contains(widen))
   {
