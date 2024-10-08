@@ -22,7 +22,7 @@ namespace eve
     template<floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(log2_t, log2_);

@@ -19,7 +19,7 @@ namespace eve
     template<typename G, floating_scalar_value T>
     constexpr EVE_FORCEINLINE auto operator()(G g, T e, std::size_t m) const noexcept -> decltype(g())
     {
-      return EVE_DISPATCH_CALL_PT(decltype(g()), g, e, m);
+      return this->behavior(as<decltype(g())>{}, eve::current_api, this->options(), g, e, m);
     }
 
     EVE_CALLABLE_OBJECT(lentz_a_t, lentz_a_);

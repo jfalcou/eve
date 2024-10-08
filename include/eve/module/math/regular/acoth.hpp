@@ -21,7 +21,7 @@ namespace eve
     template<floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(acoth_t, acoth_);

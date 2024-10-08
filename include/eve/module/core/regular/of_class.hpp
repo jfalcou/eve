@@ -26,7 +26,7 @@ namespace eve
     template<std::uint8_t I, floating_value T>
     constexpr EVE_FORCEINLINE logical<T> operator()(T v, fp_class<I> i) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(logical<T>, v, i);
+      return this->behavior(as<logical<T>>{}, eve::current_api, this->options(), v, i);
     }
 
     EVE_CALLABLE_OBJECT(of_class_t, of_class_);

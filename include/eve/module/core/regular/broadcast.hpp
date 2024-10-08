@@ -20,26 +20,26 @@ namespace eve
     template<scalar_value T>
     constexpr EVE_FORCEINLINE as_wide_t<T> operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(as_wide_t<T>, v);
+      return this->behavior(as<as_wide_t<T>>{}, eve::current_api, this->options(), v);
     }
 
     template<scalar_value T, std::ptrdiff_t N>
     constexpr EVE_FORCEINLINE as_wide_t<T, fixed<N>> operator()(T v, fixed<N> lanes) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_t<T, fixed<N>>), v, lanes);
+      return this->behavior(as<as_wide_t<T, fixed<N>>>{}, eve::current_api, this->options(), v, lanes);
     }
 
     // TODO: Remove this as it is a duplicata of broadcast_lane
     template<simd_value T, std::ptrdiff_t I>
     constexpr EVE_FORCEINLINE T operator()(T v, index_t<I> idx) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v, idx);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, idx);
     }
 
     template<simd_value T, std::ptrdiff_t I, std::ptrdiff_t N>
     constexpr EVE_FORCEINLINE as_wide_t<T, fixed<N>> operator()(T v, index_t<I> idx, fixed<N> lanes) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_t<T, fixed<N>>), v, idx, lanes);
+      return this->behavior(as<as_wide_t<T, fixed<N>>>{}, eve::current_api, this->options(), v, idx, lanes);
     }
 
     EVE_CALLABLE_OBJECT(broadcast_t, broadcast_);

@@ -28,7 +28,7 @@ namespace eve
     template<eve::value T>
     constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT((typename result<T>::type), v);
+      return this->behavior(as<typename result<T>::type>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(lohi_t, lohi_);

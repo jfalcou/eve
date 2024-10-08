@@ -18,7 +18,7 @@ namespace eve
     template<value T, integral_value S>
     constexpr EVE_FORCEINLINE as_wide_as_t<T, S> operator()(T v, S s) const
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, S>), v, s);
+      return this->behavior(as<as_wide_as_t<T, S>>{}, eve::current_api, this->options(), v, s);
     }
 
     template<integral_value T, std::ptrdiff_t S>
@@ -27,7 +27,7 @@ namespace eve
       constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S >= 0), "[eve::bit_shr] Shift value is out of range.");
 
-      return EVE_DISPATCH_CALL_PT(T, v, s);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, s);
     }
 
     EVE_CALLABLE_OBJECT(bit_shr_t, bit_shr_);

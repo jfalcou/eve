@@ -21,13 +21,13 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...> operator()(X x, T t, Ts...ts) const noexcept
       requires (same_lanes_or_scalar<X, T, Ts...>)
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<X, T, Ts...>), x, t, ts...);
+      return this->behavior(as<common_value_t<X, T, Ts...>>{}, eve::current_api, this->options(), x, t, ts...);
     }
 
     template<floating_value X, kumi::non_empty_product_type Tup>
     EVE_FORCEINLINE constexpr common_value_t<kumi::apply_traits_t<common_value,Tup>, X> operator()(X x, Tup const& t) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<kumi::apply_traits_t<common_value,Tup>, X>), x, t);
+      return this->behavior(as<common_value_t<kumi::apply_traits_t<common_value,Tup>, X>>{}, eve::current_api, this->options(), x, t);
     }
 
     EVE_CALLABLE_OBJECT(reverse_horner_t, reverse_horner_);

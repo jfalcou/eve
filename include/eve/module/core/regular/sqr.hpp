@@ -25,7 +25,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
   template<value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
   {
-    return EVE_DISPATCH_CALL_PT(T, v);
+    return this->behavior(as<T>{}, eve::current_api, this->options(), v);
   }
 
   EVE_CALLABLE_OBJECT(sqr_t, sqr_);

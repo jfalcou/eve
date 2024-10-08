@@ -26,13 +26,13 @@ namespace eve
     template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     template<value T, integral_scalar_value I >
     constexpr EVE_FORCEINLINE T operator()(T v, I i) const
     {
-      return EVE_DISPATCH_CALL_PT(T, v, i);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, i);
     }
 
     EVE_CALLABLE_OBJECT(bit_reverse_t, bit_reverse_);

@@ -37,7 +37,7 @@ namespace eve
     template<eve::value T>
     EVE_FORCEINLINE constexpr T operator()(as<T> v) const
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(zero_t, zero_);

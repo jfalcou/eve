@@ -22,7 +22,7 @@ namespace eve
       EVE_ASSERT(eve::all(is_flint(n)), "eve::significants - The value n is not flint");
       EVE_ASSERT(eve::all(is_gez(n))  , "eve::significants - Some n are not positive");
 
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T0, T1>), t0, n);
+      return this->behavior(as<as_wide_as_t<T0, T1>>{}, eve::current_api, this->options(), t0, n);
     }
 
     EVE_CALLABLE_OBJECT(significants_t, significants_);

@@ -20,7 +20,7 @@ namespace eve
     template<eve::value T>
     EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(as_logical_t<T>, t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_positive_t, is_positive_);

@@ -23,19 +23,19 @@ namespace eve
     EVE_FORCEINLINE constexpr r_t<Src, Tgt> operator()(Src const& src, as<Tgt> tgt) const noexcept
       requires(kumi::result::flatten_all_t<Src>::size() == kumi::result::flatten_all_t<Tgt>::size())
     {
-      return EVE_DISPATCH_CALL_PT((r_t<Src, Tgt>), src, tgt);
+      return this->behavior(as<r_t<Src, Tgt>>{}, eve::current_api, this->options(), src, tgt);
     }
 
     template<logical_value Src, logical_scalar_value Tgt>
     EVE_FORCEINLINE constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<Tgt, Src>), src, tgt);
+      return this->behavior(as<as_wide_as_t<Tgt, Src>>{}, eve::current_api, this->options(), src, tgt);
     }
 
     template<value Src, plain_scalar_value Tgt>
     EVE_FORCEINLINE constexpr as_wide_as_t<Tgt, Src> operator()(Src src, as<Tgt> tgt) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<Tgt, Src>), src, tgt);
+      return this->behavior(as<as_wide_as_t<Tgt, Src>>{}, eve::current_api, this->options(), src, tgt);
     }
 
     EVE_CALLABLE_OBJECT(convert_t, convert_);

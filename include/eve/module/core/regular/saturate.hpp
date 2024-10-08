@@ -27,7 +27,7 @@ namespace eve
     template<value U, scalar_value T>
     EVE_FORCEINLINE constexpr U operator()(U t0, as<T> target) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(U, t0, target);
+      return this->behavior(as<U>{}, eve::current_api, this->options(), t0, target);
     }
 
     EVE_CALLABLE_OBJECT(saturate_t, saturate_);

@@ -19,19 +19,19 @@ namespace eve
     template<integral_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     template<floating_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const  noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     template<floating_value T, only_if<signed, unsigned> U>
     constexpr EVE_FORCEINLINE as_integer_t<T, U> operator()(T v, as<U> target) const  noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_integer_t<T, U>), v, target);
+      return this->behavior(as<as_integer_t<T, U>>{}, eve::current_api, this->options(), v, target);
     }
 
     EVE_CALLABLE_OBJECT(nearest_t, nearest_);

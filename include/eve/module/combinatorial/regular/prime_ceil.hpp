@@ -21,19 +21,19 @@ namespace eve
     template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     template<unsigned_value T, floating_scalar_value U>
     EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
+      return this->behavior(as<as_wide_as_t<U, T>>{}, eve::current_api, this->options(), v, target);
     }
 
     template<unsigned_value T, unsigned_scalar_value U>
     EVE_FORCEINLINE constexpr as_wide_as_t<U, T> operator()(T v, as<U> target) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<U, T>), v, target);
+      return this->behavior(as<as_wide_as_t<U, T>>{}, eve::current_api, this->options(), v, target);
     }
 
     EVE_CALLABLE_OBJECT(prime_ceil_t, prime_ceil_);

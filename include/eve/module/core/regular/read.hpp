@@ -20,19 +20,19 @@ namespace eve
     template<typename Ptr>
     EVE_FORCEINLINE auto operator()(Ptr ptr) const noexcept -> std::remove_cvref_t<decltype(*ptr)>
     {
-      return EVE_DISPATCH_CALL_PT(std::remove_cvref_t<decltype(*ptr)>, ptr);
+      return this->behavior(as<std::remove_cvref_t<decltype(*ptr)>>{}, eve::current_api, this->options(), ptr);
     }
 
     template<typename Readable>
     EVE_FORCEINLINE auto operator()(Readable ptr) const noexcept -> decltype(ptr.read())
     {
-      return EVE_DISPATCH_CALL_PT(decltype(ptr.read()), ptr);
+      return this->behavior(as<decltype(ptr.read())>{}, eve::current_api, this->options(), ptr);
     }
 
     template<typename... Ptrs>
     EVE_FORCEINLINE kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>> operator()(soa_ptr<Ptrs...> ptr) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>>), ptr);
+      return this->behavior(as<kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>>>{}, eve::current_api, this->options(), ptr);
     }
 
     EVE_CALLABLE_OBJECT(read_t, read_);

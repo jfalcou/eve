@@ -20,18 +20,18 @@ namespace eve
     template<logical_value T, logical_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE  auto operator()(T a, U b) const noexcept  -> decltype(logical_and(a, b))
-    { return EVE_DISPATCH_CALL_PT((decltype(logical_and(a, b))), a, b); }
+    { return this->behavior(as<decltype(logical_and(a, b))>{}, eve::current_api, this->options(), a, b); }
 
     template<logical_value T>
     constexpr EVE_FORCEINLINE T operator()(T a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL_PT(T, a, b); }
+    { return this->behavior(as<T>{}, eve::current_api, this->options(), a, b); }
 
     template<logical_value T>
     constexpr EVE_FORCEINLINE T operator()(bool a, T b) const noexcept
-    { return EVE_DISPATCH_CALL_PT(T, a, b); }
+    { return this->behavior(as<T>{}, eve::current_api, this->options(), a, b); }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL_PT(bool, a, b); }
+    { return this->behavior(as<bool>{}, eve::current_api, this->options(), a, b); }
 
     EVE_CALLABLE_OBJECT(logical_ornot_t, logical_ornot_);
   };

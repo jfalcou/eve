@@ -24,13 +24,13 @@ namespace eve
     EVE_FORCEINLINE constexpr as_wide_as_t<T, I> operator()(I n, T v) const noexcept
       requires (same_lanes_or_scalar<I, T>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, I>), n, v);
+      return this->behavior(as<as_wide_as_t<T, I>>{}, eve::current_api, this->options(), n, v);
     }
 
     template<floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(exp_int_t, exp_int_);

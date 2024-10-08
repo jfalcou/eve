@@ -24,13 +24,13 @@ namespace eve
     template<value T, value U>
     constexpr EVE_FORCEINLINE r_t<T, U> operator()(T a, U b) const
     {
-      return EVE_DISPATCH_CALL_PT((r_t<T, U>), a, b);
+      return this->behavior(as<r_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     template<value T, value U>
     constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(logical<T> a, logical<U> b) const
     {
-      return EVE_DISPATCH_CALL_PT((common_logical_t<T, U>), a, b);
+      return this->behavior(as<common_logical_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_bit_equal_t, is_bit_equal_);

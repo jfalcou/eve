@@ -25,7 +25,7 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
   EVE_FORCEINLINE common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
     requires (same_lanes_or_scalar<T0, T1>)
   {
-    return EVE_DISPATCH_CALL_PT((common_value_t<T0, T1>), a, b);
+    return this->behavior(as<common_value_t<T0, T1>>{}, eve::current_api, this->options(), a, b);
   }
 
   EVE_CALLABLE_OBJECT(gamma_p_t, gamma_p_);

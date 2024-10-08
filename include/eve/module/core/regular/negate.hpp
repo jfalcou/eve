@@ -20,7 +20,7 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
       requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<T, U>), a, b);
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(negate_t, negate_);

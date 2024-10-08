@@ -21,7 +21,7 @@ namespace eve
       -> as_wide_as_t<T, decltype(get<0>(g()))>
         requires (kumi::sized_product_type<decltype(g()), 2>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, decltype(get<0>(g()))>), g, e, m);
+      return this->behavior(as<as_wide_as_t<T, decltype(get<0>(g()))>>{}, eve::current_api, this->options(), g, e, m);
     }
 
     template<typename G, floating_scalar_value T>
@@ -29,7 +29,7 @@ namespace eve
       -> as_wide_as_t<T, decltype(g())>
         requires (!kumi::product_type<decltype(g())>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, decltype(g())>), g, e, m);
+      return this->behavior(as<as_wide_as_t<T, decltype(g())>>{}, eve::current_api, this->options(), g, e, m);
     }
 
     EVE_CALLABLE_OBJECT(lentz_b_t, lentz_b_);

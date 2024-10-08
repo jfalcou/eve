@@ -22,7 +22,7 @@ namespace eve
     template <arithmetic_simd_value T>
     EVE_FORCEINLINE constexpr T operator()(as<T> tgt) const
     {
-      return EVE_DISPATCH_CALL_PT(T, tgt);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), tgt);
     }
 
     EVE_CALLABLE_OBJECT(iota_t, iota_);

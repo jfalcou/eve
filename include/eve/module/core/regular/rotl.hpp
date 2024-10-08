@@ -19,7 +19,7 @@ namespace eve
     constexpr EVE_FORCEINLINE as_wide_as_t<T, S> operator()(T v, S s) const
       requires (same_lanes_or_scalar<T, S>)
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<T, S>), v, s);
+      return this->behavior(as<as_wide_as_t<T, S>>{}, eve::current_api, this->options(), v, s);
     }
 
     template<unsigned_value T, auto S>
@@ -28,7 +28,7 @@ namespace eve
       constexpr std::ptrdiff_t l = sizeof(element_type_t<T>) * 8;
       static_assert((S < l) && (S > -l), "[eve::rotl] Rotation is out of range.");
 
-      return EVE_DISPATCH_CALL_PT(T, v, s);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v, s);
     }
 
     EVE_CALLABLE_OBJECT(rotl_t, rotl_);

@@ -18,13 +18,13 @@ namespace eve
     template<integral_value T>
     EVE_FORCEINLINE constexpr as_wide_as_t<double, T> operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((as_wide_as_t<double, T>), v);
+      return this->behavior(as<as_wide_as_t<double, T>>{}, eve::current_api, this->options(), v);
     }
 
     template<floating_value T>
     EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(T, v);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(factorial_t, factorial_);

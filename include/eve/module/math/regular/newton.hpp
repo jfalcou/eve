@@ -21,14 +21,14 @@ namespace eve
     EVE_FORCEINLINE constexpr common_value_t<X, CsNs...> operator()(X x, CsNs... csns) const noexcept
       requires (same_lanes_or_scalar<X, CsNs...>)
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<X, CsNs...>), x, csns...);
+      return this->behavior(as<common_value_t<X, CsNs...>>{}, eve::current_api, this->options(), x, csns...);
     }
 
     template<floating_value X, value... Cs, value... Ns>
     EVE_FORCEINLINE constexpr common_value_t<X, Cs..., Ns...> operator()(X x, kumi::tuple<Cs...> const& t1, kumi::tuple<Ns...> const& t2) const noexcept
       requires (same_lanes_or_scalar<X, Cs..., Ns...>)
     {
-      return EVE_DISPATCH_CALL_PT((common_value_t<X, Cs..., Ns...>), x, t1, t2);
+      return this->behavior(as<common_value_t<X, Cs..., Ns...>>{}, eve::current_api, this->options(), x, t1, t2);
     }
 
     EVE_CALLABLE_OBJECT(newton_t, newton_);

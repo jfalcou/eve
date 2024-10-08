@@ -24,7 +24,7 @@ namespace eve
     template<value T>
     EVE_FORCEINLINE constexpr zipped<T, T> operator()(T a) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT((zipped<T, T>), a);
+      return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), a);
     }
 
     EVE_CALLABLE_OBJECT(modf_t, modf_);

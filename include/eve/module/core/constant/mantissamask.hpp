@@ -28,7 +28,7 @@ namespace eve
     template<floating_value T>
     EVE_FORCEINLINE constexpr as_uinteger_t<T> operator()(as<T> v) const
     {
-      return EVE_DISPATCH_CALL_PT(as_uinteger_t<T>, v);
+      return this->behavior(as<as_uinteger_t<T>>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(mantissamask_t, mantissamask_);

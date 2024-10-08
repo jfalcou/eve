@@ -65,7 +65,7 @@ namespace eve
     EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
       requires (eve::same_lanes_or_scalar<C, T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((typename result<C, T, U>::type), mask, v0, v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     template<value C, typename T, typename U>
@@ -74,7 +74,7 @@ namespace eve
               ||  (eve::same_lanes_or_scalar<C, U> && generator<T> && value<U>)
               )
     {
-      return EVE_DISPATCH_CALL_PT((typename result<C, T, U>::type), mask, v0, v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     // IF_ELSE with a conditional_expr as condition
@@ -82,14 +82,14 @@ namespace eve
     EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
       requires (eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((typename result<C, T, U>::type), mask, v0, v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     template<conditional_expr C, typename T, typename U>
     EVE_FORCEINLINE constexpr typename result<C, T, U>::type operator()(C mask, T v0, U v1) const noexcept
       requires ((generator<U> && value<T>) || (generator<T> && value<U>))
     {
-      return EVE_DISPATCH_CALL_PT((typename result<C, T, U>::type), mask, v0, v1);
+      return this->behavior(as<typename result<C, T, U>::type>{}, eve::current_api, this->options(), mask, v0, v1);
     }
 
     // IF_ELSE with explicit bool
@@ -97,14 +97,14 @@ namespace eve
     EVE_FORCEINLINE constexpr typename result<bool, T, U>::type operator()(bool mask, T v0, U v1) const noexcept
       requires (eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL_PT((typename result<bool, T, U>::type), logical<std::uint8_t>(mask), v0, v1);
+      return this->behavior(as<typename result<bool, T, U>::type>{}, eve::current_api, this->options(), logical<std::uint8_t>(mask), v0, v1);
     }
 
     template<typename T, typename U>
     EVE_FORCEINLINE constexpr typename result<bool, T, U>::type operator()(bool mask, T v0, U v1) const noexcept
       requires ((generator<U> && value<T>) || (generator<T> && value<U>))
     {
-      return EVE_DISPATCH_CALL_PT((typename result<bool, T, U>::type), logical<std::uint8_t>(mask), v0, v1);
+      return this->behavior(as<typename result<bool, T, U>::type>{}, eve::current_api, this->options(), logical<std::uint8_t>(mask), v0, v1);
     }
 
     EVE_CALLABLE_OBJECT(if_else_t, if_else_);

@@ -21,20 +21,20 @@ namespace eve
     EVE_FORCEINLINE void operator()(V v, Ptr ptr) const noexcept
       requires requires(Ptr p, V v) { *p = v; }
     {
-      return EVE_DISPATCH_CALL_PT(void, v, ptr);
+      return this->behavior(as<void>{}, eve::current_api, this->options(), v, ptr);
     }
 
     template<typename Writeable, scalar_value V>
     EVE_FORCEINLINE void operator()(V v, Writeable p) const noexcept
       requires requires(Writeable p, V v) { p.write(v); }
     {
-      return EVE_DISPATCH_CALL_PT(void, v, p);
+      return this->behavior(as<void>{}, eve::current_api, this->options(), v, p);
     }
 
     template<typename... Ptrs, scalar_value V>
     EVE_FORCEINLINE void operator()(V v, soa_ptr<Ptrs...> ptr) const noexcept
     {
-      return EVE_DISPATCH_CALL_PT(void, v, ptr);
+      return this->behavior(as<void>{}, eve::current_api, this->options(), v, ptr);
     }
 
     EVE_CALLABLE_OBJECT(write_t, write_);
