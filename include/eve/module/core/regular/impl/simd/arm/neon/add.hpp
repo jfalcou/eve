@@ -19,13 +19,14 @@ namespace eve::detail
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
+    using u_t = upgrade_t<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    if      constexpr( c == category::int32x2    ) return vaddl_s32 (v, w);
-    else if constexpr( c == category::uint32x2   ) return vaddl_u32 (v, w);
-    else if constexpr( c == category::int16x4    ) return vaddl_s16 (v, w);
-    else if constexpr( c == category::uint16x4   ) return vaddl_u16 (v, w);
-    else if constexpr( c == category::int8x8     ) return vaddl_s8  (v, w);
-    else if constexpr( c == category::uint8x8    ) return vaddl_u8  (v, w);
+    if      constexpr( c == category::int32x2    ) return wide < u_t >( vaddl_s32 (v, w)).slice(lower_);
+    else if constexpr( c == category::uint32x2   ) return wide < u_t >( vaddl_u32 (v, w)).slice(lower_);
+    else if constexpr( c == category::int16x4    ) return wide < u_t >( vaddl_s16 (v, w)).slice(lower_);
+    else if constexpr( c == category::uint16x4   ) return wide < u_t >( vaddl_u16 (v, w)).slice(lower_);
+    else if constexpr( c == category::int8x8     ) return wide < u_t > (vaddl_s8  (v, w)).slice(lower_);
+    else if constexpr( c == category::uint8x8    ) return wide < u_t >( vaddl_u8  (v, w)).slice(lower_);
     else return add.behavior(cpu_{}, opts, v, w);
   }
 
