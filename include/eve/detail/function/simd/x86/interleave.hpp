@@ -229,9 +229,9 @@ namespace eve::detail
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
-    constexpr auto c = categorize<type>();
+    constexpr auto cat = categorize<type>();
 
-    if constexpr( c == category::float32x4 )
+    if constexpr( cat == category::float32x4 )
     {
       if constexpr(N::value == 2)
       {
@@ -257,7 +257,7 @@ namespace eve::detail
         return kumi::make_tuple(xy, xz, a);
       }
     }
-    else if constexpr( match(c,category::int32x4, category::uint32x4) )
+    else if constexpr( match(cat,category::int32x4, category::uint32x4) )
     {
       using  ftype = as<wide< as_floating_point_t<T>,N>>;
       auto that = interleave(bit_cast(a,ftype()),bit_cast(b,ftype()),bit_cast(c,ftype()));
@@ -280,9 +280,9 @@ namespace eve::detail
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
-    constexpr auto c = categorize<type>();
+    constexpr auto cat = categorize<type>();
 
-    if constexpr( c == category::float32x4 )
+    if constexpr( cat == category::float32x4 )
     {
       if constexpr(N::value == 2)
       {
@@ -299,7 +299,7 @@ namespace eve::detail
         return kumi::tuple{r0,r1,r2,r3};
       }
     }
-    else if constexpr( match(c,category::int32x4, category::uint32x4) )
+    else if constexpr( match(cat,category::int32x4, category::uint32x4) )
     {
       using  ftype = as<wide< as_floating_point_t<T>,N>>;
       auto that = interleave( bit_cast(a,ftype()),bit_cast(b,ftype())
