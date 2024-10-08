@@ -9,7 +9,11 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
+
 #include <eve/forward.hpp>
 
 namespace eve
@@ -97,11 +101,11 @@ namespace eve
       if constexpr(scalar_value<T>)
         return a > 0;
       else
-        return if_else(isgtz(a), one(as(a)), zero);
+        return if_else(is_gtz(a), one(as(a)), zero);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const & c, T a, T s) noexcept
+    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O, T a, T s) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > s;
