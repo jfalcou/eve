@@ -36,7 +36,7 @@ template<typename T, kumi::product_type U, kumi::product_type V>
 EVE_FORCEINLINE constexpr auto tuple_select(T cond, U const& t, V const& f)
 {
   using r_t = std::conditional_t<simd_value<U>, U, V>;
-  return r_t {kumi::map([&](auto const& v, auto const& f) { return if_else(cond, v, f); }, t, f)};
+  return r_t {kumi::map([&](auto const& vv, auto const& fv) { return if_else(cond, vv, fv); }, t, f)};
 }
 
 template<scalar_value T, value U, value V, callable_options O>

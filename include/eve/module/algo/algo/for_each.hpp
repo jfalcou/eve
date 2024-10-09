@@ -43,7 +43,7 @@ namespace eve::algo
     {
       Op op;
 
-      explicit delegate(Op op) : op(op) {}
+      explicit delegate(Op o) : op(o) {}
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {

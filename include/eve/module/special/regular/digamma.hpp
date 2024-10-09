@@ -80,7 +80,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
   namespace detail
   {
     template<typename T, callable_options O>
-    constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
+    constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
     {
       using elt_t  = element_type_t<T>;
       auto dlarge = (std::is_same_v<elt_t, double>) ? 20 : 10;
@@ -142,83 +142,83 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 
       if constexpr( scalar_value<T> )
       {
-        auto result = zero(as(x));
-        if( x == 0 ) return copysign(inf(as(x)), x);
-        if( x < 0 )
+        auto result = zero(as(a));
+        if( a == 0 ) return copysign(inf(as(a)), a);
+        if( a < 0 )
         {
-          if( 0 && (x > -1) ) result = -x;
+          if( 0 && (a > -1) ) result = -a;
           else
           {
-            x      = oneminus(x);
-            result = x - floor(x);
+            a      = oneminus(a);
+            result = a - floor(a);
           }
           if( result > 0.5 ) result -= 1;
-          if( result == 0.5 ) result = zero(as(x));
-          else if( result ) result = pi(as(x)) * cotpi(result);
-          else result = nan(as(x));
+          if( result == 0.5 ) result = zero(as(a));
+          else if( result ) result = pi(as(a)) * cotpi(result);
+          else result = nan(as(a));
           // we are ready to increment result that was
           // Pi<A0>()/tanpi(remainder) if a0 < 0  and remainder != 0
           // Nan<A0>                   if a0 < 0  and remainder == 0
           // 0                         in any other cases
         }
-        if( x >= dlarge )
-        { // If we're above the lower-limit for the asymptotic expansion then use it:
-          return br_large(x, result);
+        if( a >= dlarge )
+        { // If we're above the lower-limit for the asymptotic eapansion then use it:
+          return br_large(a, result);
         }
-        // If x > 2 reduce to the interval [1,2]:
-        while( x > 2 )
+        // If a > 2 reduce to the interval [1,2]:
+        while( a > 2 )
         {
-          x -= 1;
-          result += 1 / x;
+          a -= 1;
+          result += 1 / a;
         }
-        // If x < 1 use shift to > 1:
-        if( x < 1 )
+        // If a < 1 use shift to > 1:
+        if( a < 1 )
         {
-          result = -1 / x;
-          x += 1;
+          result = -1 / a;
+          a += 1;
         }
-        return br_1_2(x, result);
+        return br_1_2(a, result);
       }
       else // simd
       {
-        x            = if_else(is_ltz(x) && is_flint(x), allbits, x);
-        auto notdone = is_not_nan(x);
-        auto result  = zero(as(x));
-        auto test    = is_lez(x);
+        a            = if_else(is_ltz(a) && is_flint(a), allbits, a);
+        auto notdone = is_not_nan(a);
+        auto result  = zero(as(a));
+        auto test    = is_lez(a);
         if( eve::any(test) )
         {
-          auto a         = x;
-          x              = oneminus[test](x);
-          auto remainder = frac[raw](x);
+          auto va        = a;
+          a              = oneminus[test](a);
+          auto remainder = frac[raw](a);
           remainder      = dec[remainder > 0.5](remainder);
-          remainder      = if_else(is_eqz(remainder), nan(as(x)), remainder);
-          remainder      = if_else(remainder == T(0.5), zero, pi(as(x)) * cotpi(remainder));
-          result         = if_else(is_eqz(a), copysign(inf(as(x)), a), remainder);
+          remainder      = if_else(is_eqz(remainder), nan(as(a)), remainder);
+          remainder      = if_else(remainder == T(0.5), zero, pi(as(a)) * cotpi(remainder));
+          result         = if_else(is_eqz(va), copysign(inf(as(a)), va), remainder);
           result         = if_else(test, result, zero);
         }
         auto r = nan(as<T>());
         if( eve::any(notdone) )
         {
-          notdone = next_interval(br_large, notdone, x >= dlarge, r, x, result);
+          notdone = next_interval(br_large, notdone, a >= dlarge, r, a, result);
           if( eve::any(notdone) )
           {
-            // If x > 2 reduce to the interval [1,2]:
-            x         = if_else(x > dlarge, one, x);
-            auto cond = x > T(2);
+            // If a > 2 reduce to the interval [1,2]:
+            a         = if_else(a > dlarge, one, a);
+            auto cond = a > T(2);
             while( eve::any(cond) )
             {
-              x      = dec[cond](x);
-              result = add[cond](result, rec[pedantic](x));
-              cond   = x > T(2);
+              a      = dec[cond](a);
+              result = add[cond](result, rec[pedantic](a));
+              cond   = a > T(2);
             }
-            cond = x < T(1);
+            cond = a < T(1);
             while( eve::any(cond) )
             {
-              result = add[cond](result, -rec[pedantic](x));
-              x      = inc[cond](x);
-              cond   = x < T(1);
+              result = add[cond](result, -rec[pedantic](a));
+              a      = inc[cond](a);
+              cond   = a < T(1);
             }
-            notdone = last_interval(br_1_2, notdone, r, x, result);
+            notdone = last_interval(br_1_2, notdone, r, a, result);
           }
         }
         return r;

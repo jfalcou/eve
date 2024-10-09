@@ -83,7 +83,7 @@ load_(EVE_SUPPORTS(cpu_),
       }
       else
       {
-        [[maybe_unused]] r_t that;
+        [[maybe_unused]] r_t that = {};
         auto                *dst = (e_t *)(&that.storage());
         std::memcpy((void *)(dst + offset), ptr + offset, sizeof(e_t) * cond.count(as<r_t> {}));
         return that;

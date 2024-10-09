@@ -22,7 +22,7 @@ TTS_CASE_TPL("Check eve::count_true behavior", eve::test::simd::all_types)
 
   for( std::ptrdiff_t j = 0; j < cardinal; ++j )
   {
-    eve::logical<T> rhs1, rhs2, rhs3, rhs4;
+    eve::logical<T> rhs1 = {}, rhs2 = {}, rhs3 = {}, rhs4 = {};
 
     for( std::ptrdiff_t i = 0; i < cardinal; ++i )
     {

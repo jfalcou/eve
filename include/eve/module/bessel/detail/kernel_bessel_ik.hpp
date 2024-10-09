@@ -286,8 +286,7 @@ requires(scalar_value<T>)
   T   b = xi2 * nu;
   T   d = T(0);
   T   c = h;
-  int i;
-  for( i = 1; i <= max_iter; ++i )
+  for(int i = 1; i <= max_iter; ++i )
   {
     b += xi2;
     d           = rec[pedantic](b + d);
@@ -314,9 +313,9 @@ requires(scalar_value<T>)
   if( x < x_min )
   {
     const T x2    = x / T(2);
-    const T fact  = rec[pedantic](sinpic(mu));
-    T       d     = -eve::log(x2);
-    T       e     = mu * d;
+    const T fct   = rec[pedantic](sinpic(mu));
+    T       dd    = -eve::log(x2);
+    T       e     = mu * dd;
     const T fact2 = eve::sinhc(e);
     T       gam1, gam2, gampl, gammi;
     auto    gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
@@ -329,36 +328,35 @@ requires(scalar_value<T>)
       return;
     };
     gamma_temme(mu);
-    T ff     = fact * fma(gam1, eve::cosh(e), gam2 * fact2 * d);
-    T sum    = ff;
+    T ff     = fct * fma(gam1, eve::cosh(e), gam2 * fact2 * dd);
+    T sums   = ff;
     e        = eve::exp(e);
     T p      = e / (T(2) * gampl);
     T q      = T(1) / (T(2) * e * gammi);
-    T c      = T(1);
+    T cc     = T(1);
     d        = sqr(x2);
     T   sum1 = p;
-    int i;
-    for( i = 1; i <= max_iter; ++i )
+    for(int i = 1; i <= max_iter; ++i )
     {
       ff = (i * ff + p + q) / (i * i - mu2);
-      c *= d / i;
+      cc *= d / i;
       p /= i - mu;
       q /= i + mu;
-      const T del = c * ff;
-      sum += del;
-      const T del1 = c * (p - i * ff);
+      const T del = cc * ff;
+      sums += del;
+      const T del1 = cc * (p - i * ff);
       sum1 += del1;
-      if( eve::abs(del) < Eps * eve::abs(sum) ) break;
+      if( eve::abs(del) < Eps * eve::abs(sums) ) break;
     }
-    Kmu  = sum;
+    Kmu  = sums;
     Knu1 = sum1 * xi2;
   }
   else
   {
-    T b    = 2 * inc(x);
-    T d    = rec[pedantic](b);
-    T delh = d;
-    T h    = delh;
+    T bb   = 2 * inc(x);
+    T dd   = rec[pedantic](bb);
+    T delh = dd;
+    T hh   = delh;
     T q1   = T(0);
     T q2   = T(1);
     T a1   = T(0.25) - mu2;
@@ -371,14 +369,14 @@ requires(scalar_value<T>)
       {
         a -= 2 * (i - 1);
         c            = -a * c / i;
-        const T qnew = (q1 - b * q2) / a;
+        const T qnew = (q1 - bb * q2) / a;
         q1           = q2;
         q2           = qnew;
         q += c * qnew;
-        b += T(2);
-        d    = rec[pedantic](fam(b, a, d));
-        delh = dec(b * d) * delh;
-        h += delh;
+        bb += T(2);
+        dd   = rec[pedantic](fam(bb, a, dd));
+        delh = dec(bb * dd) * delh;
+        hh += delh;
         const T dels = q * delh;
         s += dels;
         if( eve::abs(dels) < Eps * abs(s) ) break;
@@ -386,19 +384,19 @@ requires(scalar_value<T>)
       if( i > max_iter )
       {
         s = nan(as(s));
-        h = nan(as(s));
+        hh = nan(as(s));
       }
     }
-    h    = a1 * h;
+    hh   = a1 * hh;
     Kmu  = eve::sqrt(pio_2(as(x)) / (x)) * eve::exp(-x) / s;
-    Knu1 = Kmu * (mu + x + T(0.5) - h) * xi;
+    Knu1 = Kmu * (mu + x + T(0.5) - hh) * xi;
   }
   T    Kpmu    = fms(mu, xi * Kmu, Knu1);
   T    Inumu   = xi / fms(f, Kmu, Kpmu);
   auto invInul = rec[pedantic](Inul);
   Inu          = Inumu * Inul1 * invInul;
   Ipnu         = Inumu * Ipnu1 * invInul;
-  for( i = 1; i <= nl; ++i )
+  for(int i = 1; i <= nl; ++i )
   {
     const T Knutemp = fma((mu + i), xi2 * Knu1, Kmu);
     Kmu             = Knu1;

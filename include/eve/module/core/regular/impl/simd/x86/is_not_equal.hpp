@@ -38,7 +38,6 @@ namespace eve::detail
     {
       auto const            s = alternative(mask, v, as(to_logical(v)));
       [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
-      constexpr auto        c = categorize<wide<T, N>>();
       constexpr auto        f = to_integer(cmp_flt::neq_uq);
 
       if      constexpr( C::is_complete )            return s;

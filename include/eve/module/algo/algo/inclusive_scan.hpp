@@ -32,7 +32,7 @@ namespace eve::algo
         Zero zero;
         Wide running_sum;
 
-        delegate(Op op, Zero zero, Wide init) : op(op), zero(zero), running_sum(init) {}
+        delegate(Op o, Zero z, Wide i) : op(o), zero(z), running_sum(i) {}
 
         EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
         {

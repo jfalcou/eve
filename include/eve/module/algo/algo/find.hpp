@@ -39,7 +39,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
 {
   template<typename UnalignedI, typename P> struct delegate
   {
-    explicit delegate(UnalignedI found, P p) : found(found), p(p) {}
+    explicit delegate(UnalignedI f, P pf) : found(f), p(pf) {}
 
     EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {

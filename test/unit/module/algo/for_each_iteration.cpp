@@ -126,7 +126,7 @@ using test_res = std::vector<std::pair<std::ptrdiff_t, ignore>>;
 
 template<typename I> struct test_delegate
 {
-  test_delegate(I base, std::ptrdiff_t stop_at) : base {base}, stop_at(stop_at) {}
+  test_delegate(I b, std::ptrdiff_t sa) : base {b}, stop_at(sa) {}
 
   I              base;
   std::ptrdiff_t stop_at;

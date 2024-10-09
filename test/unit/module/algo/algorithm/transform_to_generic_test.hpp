@@ -21,8 +21,8 @@ namespace algo_test {
 
     std::vector<std::tuple_element_t<1, eve::element_type_t<Tgt>>> ans;
 
-    transform_to_ptr_test(eve::as<Tgt> tgt, Algo alg, Control control, Args... args) :
-      tgt(tgt), alg(alg), control(control), args{args...} {}
+    transform_to_ptr_test(eve::as<Tgt> t, Algo a, Control c, Args... arg) :
+      tgt(t), alg(a), control(c), args{arg...} {}
 
     void init(auto& page_1, auto& /*page_2*/) const
     {

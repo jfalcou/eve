@@ -59,16 +59,16 @@ namespace eve::detail
     {
       using r_t        = wide<T, N>;
 
-      auto compute = [](auto v, auto cx){
-        auto src = alternative(cx, v, as<wide<T, N>> {});
-        auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
+      auto compute = [](auto vv, auto cx){
+        auto src = alternative(cx, vv, as<wide<T, N>> {});
+        auto mk  = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-        if      constexpr( c == category::float32x16) return convert(r_t(_mm512_mask_getexp_ps(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x8 ) return convert(r_t(_mm512_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
+        if      constexpr( c == category::float32x16) return convert(r_t(_mm512_mask_getexp_ps(src, mk, vv)), int_from<T>());
+        else if constexpr( c == category::float64x8 ) return convert(r_t(_mm512_mask_getexp_pd(src, mk, vv)), int_from<T>());
+        else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_mask_getexp_pd(src, mk, vv)), int_from<T>());
+        else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, mk, vv)), int_from<T>());
+        else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, mk, vv)), int_from<T>());
+        else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, mk, vv)), int_from<T>());
       };
     }
     else return exponent.behavior(cpu_{}, o, v);

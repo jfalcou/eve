@@ -38,7 +38,7 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
     UnalignedFwdI found;
     P p;
 
-    explicit delegate(UnalignedFwdI found, P p) : found(found), p(p) {}
+    explicit delegate(UnalignedFwdI f, P pf) : found(f), p(pf) {}
 
     void set_found(auto back_it, std::ptrdiff_t m) {
       found = unalign(back_it.base) - iterator_cardinal_v<UnalignedFwdI> + m;

@@ -24,7 +24,7 @@ template<typename TraitsSupport> struct all_of_ : TraitsSupport
 {
   template<typename P> struct delegate
   {
-    explicit delegate(P p) : p(p) {}
+    explicit delegate(P pf) : p(pf) {}
 
     EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {
