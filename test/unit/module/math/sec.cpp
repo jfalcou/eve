@@ -43,17 +43,16 @@ TTS_CASE_WITH("Check behavior of sec on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::sec;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1 / std::cos(e); };
-  TTS_ULP_EQUAL(sec[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sec[eve::half_circle   ](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sec[eve::half_circle   ](a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(sec(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sec(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(sec(a2), map(ref, a2), 2);
-  TTS_ULP_EQUAL(sec(a3), map(ref, a3), 2);
+  TTS_ULP_EQUAL(sec[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sec[eve::half_circle   ](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sec[eve::half_circle   ](a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(sec(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sec(a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(sec(a2), tts::map(ref, a2), 2);
+  TTS_ULP_EQUAL(sec(a3), tts::map(ref, a3), 2);
 };
 
 

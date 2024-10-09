@@ -49,7 +49,6 @@ TTS_CASE_WITH("Check behavior of negmaxabs on all types full range",
 {
   using eve::abs;
   using eve::negmaxabs;
-  using eve::detail::map;
 
   TTS_ULP_EQUAL(negmaxabs(a0, a1, a2), -eve::maxabs(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::negmaxabs[eve::pedantic](a0, a1, a2),  -eve::maxabs[eve::pedantic](a0, a1, a2), 2);

@@ -31,10 +31,9 @@ TTS_CASE_WITH("Check behavior of eve::is_ltz(simd)",
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::is_ltz(a0), map([](auto e) -> eve::logical<v_t> { return e < v_t(0); }, a0));
-  TTS_EQUAL(eve::is_ltz(a1), map([](auto e) -> eve::logical<v_t> { return e < v_t(0); }, a1));
+  TTS_EQUAL(eve::is_ltz(a0), tts::map([](auto e) -> eve::logical<v_t> { return e < v_t(0); }, a0));
+  TTS_EQUAL(eve::is_ltz(a1), tts::map([](auto e) -> eve::logical<v_t> { return e < v_t(0); }, a1));
   TTS_EQUAL(eve::is_ltz[t](a0), eve::if_else(t, eve::is_ltz(a0), eve::false_(eve::as(a0))));
 };

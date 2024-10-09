@@ -31,9 +31,8 @@ TTS_CASE_WITH("Check behavior of bit_mask(simd) on all types",
 {
   using v_t = eve::element_type_t<T>;
   using eve::bit_mask;
-  using eve::detail::map;
   TTS_IEEE_EQUAL(
       bit_mask(a0),
-      map([](auto v) -> v_t { return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v)); }, a0));
+      tts::map([](auto v) -> v_t { return v ? eve::allbits(eve::as(v)) : eve::zero(eve::as(v)); }, a0));
   TTS_IEEE_EQUAL(eve::bit_mask[t](a0), eve::if_else(t, eve::bit_mask(a0), a0));
 };

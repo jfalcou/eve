@@ -37,11 +37,10 @@ TTS_CASE_WITH("Check behavior of exp on wide",
               tts::generate(tts::randoms(mini, maxi), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::expx2(a0),
-                map(
+                tts::map(
                     [](auto e) -> v_t
                     {
                       long double le = e;
@@ -50,7 +49,7 @@ TTS_CASE_WITH("Check behavior of exp on wide",
                     a0),
                 200);
   TTS_ULP_EQUAL(eve::expx2(a1),
-                map(
+                tts::map(
                     [](auto e) -> v_t
                     {
                       long double le = e;

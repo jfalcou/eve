@@ -32,11 +32,10 @@ TTS_CASE_WITH("Check behavior of exp on wide",
               tts::generate(tts::randoms(eve::minlog, eve::maxlog), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::sigmoid(a0), map([](auto e) -> v_t { return eve::rec(eve::inc(std::exp(-e))); }, a0), 2);
-  TTS_ULP_EQUAL(eve::sigmoid(a1), map([](auto e) -> v_t { return eve::rec(eve::inc(std::exp(-e))); }, a1), 2);
+  TTS_ULP_EQUAL(eve::sigmoid(a0), tts::map([](auto e) -> v_t { return eve::rec(eve::inc(std::exp(-e))); }, a0), 2);
+  TTS_ULP_EQUAL(eve::sigmoid(a1), tts::map([](auto e) -> v_t { return eve::rec(eve::inc(std::exp(-e))); }, a1), 2);
 };
 
 

@@ -43,12 +43,11 @@ TTS_CASE_WITH("Check behavior of ellint_rf on wide",
               tts::generate(tts::randoms(0, 100.0), tts::randoms(0, 100.0), tts::randoms(0, 100.0)))
 <typename T>(T const& x, T const& y, T const& z)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
       eve::ellint_rf(x, y, z),
-      map([](auto e, auto f, auto g) -> v_t { return boost::math::ellint_rf(e, f, g); }, x, y, z),
+      tts::map([](auto e, auto f, auto g) -> v_t { return boost::math::ellint_rf(e, f, g); }, x, y, z),
       11);
 };
 

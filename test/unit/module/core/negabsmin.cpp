@@ -49,18 +49,17 @@ TTS_CASE_WITH("Check behavior of negabsmin on all types full range",
 {
   using eve::abs;
   using eve::negabsmin;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   auto m = [](auto a, auto b, auto c) -> v_t { return eve::minus[eve::saturated](eve::abs[eve::saturated](eve::min(a, b, c))); };
-  TTS_ULP_EQUAL(negabsmin((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::negabsmin[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::negabsmin[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::negabsmin[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-//   TTS_ULP_EQUAL(negabsmin(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-//   TTS_ULP_EQUAL(eve::negabsmin[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-//   TTS_ULP_EQUAL(eve::negabsmin[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-//   TTS_ULP_EQUAL(eve::negabsmin[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(negabsmin((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::negabsmin[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::negabsmin[eve::numeric]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::negabsmin[eve::saturated]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(negabsmin(kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(eve::negabsmin[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(eve::negabsmin[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+//   TTS_ULP_EQUAL(eve::negabsmin[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(negabsmin[t](a0, a1), eve::if_else(t, negabsmin(a0, a1), a0));
 };

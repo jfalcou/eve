@@ -39,17 +39,16 @@ TTS_CASE_WITH("Check behavior of nthroot on wide",
                             tts::as_integer(tts::randoms(1, 10))))
 <typename T, typename U>(T const& a0, T const& a1, U const& a2, U const& a3)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::nthroot(a0, U(2) * a2 + U(1)),
-                map([](auto e, auto f) -> v_t
+                tts::map([](auto e, auto f) -> v_t
                     { return std::pow(std::abs(e), eve::rec(2.0 * f + 1.0)) * eve::sign(e); },
                     a0,
                     a2),
                 100);
   TTS_ULP_EQUAL(eve::nthroot(a1, a3),
-                map([](auto e, auto f) -> v_t { return std::pow(e, eve::rec(double(f))); }, a1, a3),
+                tts::map([](auto e, auto f) -> v_t { return std::pow(e, eve::rec(double(f))); }, a1, a3),
                 100);
 };
 

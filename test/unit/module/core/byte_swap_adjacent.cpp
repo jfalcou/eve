@@ -31,23 +31,22 @@ TTS_CASE_WITH("Check behavior of byte_swap_adjacent(simd) on unsigned types",
   using v_t = eve::element_type_t<T>;
   using eve::byte_swap_adjacent;
   using eve::bit_swap_adjacent;
-  using eve::detail::map;
  if constexpr(sizeof(v_t) >= 2)
  {
     int n= 1;
-    TTS_EQUAL(byte_swap_adjacent(a0, n), map([n](auto e) -> v_t { return byte_swap_adjacent(e, n); }, a0)) << a0 << '\n';
+    TTS_EQUAL(byte_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return byte_swap_adjacent(e, n); }, a0)) << a0 << '\n';
     TTS_EQUAL(eve::byte_swap_adjacent[t](a0, n), eve::if_else(t, eve::byte_swap_adjacent(a0, n), a0));
   }
   if constexpr(sizeof(v_t) >= 4)
   {
     int n= 2;
-    TTS_EQUAL(byte_swap_adjacent(a0, n), map([n](auto e) -> v_t { return byte_swap_adjacent(e, n); }, a0)) << a0 << '\n';
+    TTS_EQUAL(byte_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return byte_swap_adjacent(e, n); }, a0)) << a0 << '\n';
     TTS_EQUAL(eve::byte_swap_adjacent[t](a0, n), eve::if_else(t, eve::byte_swap_adjacent(a0, n), a0));
   }
   if constexpr(sizeof(v_t) >= 8)
   {
     int n= 4;
-    TTS_EQUAL(byte_swap_adjacent(a0, n), map([n](auto e) -> v_t { return byte_swap_adjacent(e, n); }, a0)) << a0 << '\n';
+    TTS_EQUAL(byte_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return byte_swap_adjacent(e, n); }, a0)) << a0 << '\n';
     TTS_EQUAL(eve::byte_swap_adjacent[t](a0, n), eve::if_else(t, eve::byte_swap_adjacent(a0, n), a0));
   }
 };

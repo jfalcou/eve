@@ -49,18 +49,17 @@ TTS_CASE_WITH("Check behavior of absmax on all types full range",
 {
   using eve::abs;
   using eve::absmax;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return eve::abs(eve::max(a, b, c)); };
 
-  TTS_ULP_EQUAL(absmax(a0, a1, a2), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax[eve::pedantic](a0, a1, a2), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax[eve::numeric](a0, a1, a2), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax[eve::saturated](a0, a1, a2), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax(kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax[eve::pedantic](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax[eve::numeric](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(absmax[eve::saturated](kumi::tuple{a0, a1, a2}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax(a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax[eve::pedantic](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax[eve::numeric](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax[eve::saturated](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax(kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax[eve::pedantic](kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax[eve::numeric](kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(absmax[eve::saturated](kumi::tuple{a0, a1, a2}), tts::map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(absmax[t](a0, a1), eve::if_else(t, absmax(a0, a1), a0));
 };

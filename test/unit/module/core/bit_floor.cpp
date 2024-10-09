@@ -32,7 +32,7 @@ TTS_CASE_WITH("Check behavior of bit_floor(wide) on unsigned integral types",
 <typename T, typename U>(T const& a0, U const& t)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::bit_floor(a0), map([](auto e) { return v_t(std::bit_floor(e)); }, a0));
+  TTS_EQUAL(eve::bit_floor(a0), tts::map([](auto e) { return v_t(std::bit_floor(e)); }, a0));
   TTS_EQUAL(eve::bit_floor[t](a0), eve::if_else(t, eve::bit_floor(a0), a0));
 };
 

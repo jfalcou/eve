@@ -35,12 +35,11 @@ TTS_CASE_WITH("Check behavior of sinhc on wide",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::sinhc;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return e ? std::sinh(e) / e : v_t(1); };
-  TTS_ULP_EQUAL(sinhc(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sinhc(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(sinhc(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sinhc(a1), tts::map(ref, a1), 2);
 };
 
 

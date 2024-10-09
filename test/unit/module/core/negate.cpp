@@ -70,10 +70,9 @@ TTS_CASE_WITH("Check behavior of negate(wide)",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::negate;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      negate(a0, a1), map([](auto e, auto f) -> v_t { return e * eve::sign(f); }, a0, a1), 2);
+      negate(a0, a1), tts::map([](auto e, auto f) -> v_t { return e * eve::sign(f); }, a0, a1), 2);
 };
 
 //==================================================================================================

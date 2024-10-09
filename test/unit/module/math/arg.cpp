@@ -34,11 +34,10 @@ TTS_CASE_WITH("Check behavior of eve::arg(simd)",
               tts::generate(tts::between(-1.0, 1.0)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   std::cout << "a0 " << a0 << std::endl;
   TTS_EQUAL(eve::arg(a0),
-            map([](auto e) -> v_t { return e >= 0 ? 0 : eve::pi(eve::as(v_t())); }, a0));
+            tts::map([](auto e) -> v_t { return e >= 0 ? 0 : eve::pi(eve::as(v_t())); }, a0));
 };
 
 //==================================================================================================
@@ -49,13 +48,12 @@ TTS_CASE_WITH("Check behavior of eve::arg[eve::pedantic](simd)",
               tts::generate(tts::between(-1.0, 1.0)))
 <typename T>(T a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   auto cases = tts::limits(tts::type<T> {});
 
   TTS_EQUAL(eve::arg[eve::pedantic](a0),
-            map([](auto e) -> v_t { return e >= 0 ? 0 : eve::pi(eve::as(v_t())); }, a0));
+            tts::map([](auto e) -> v_t { return e >= 0 ? 0 : eve::pi(eve::as(v_t())); }, a0));
   TTS_IEEE_EQUAL(eve::arg[eve::pedantic](cases.nan), cases.nan);
 };
 

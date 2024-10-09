@@ -39,15 +39,14 @@ TTS_CASE_WITH("Check behavior of eve::is_greater(simd)",
               tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, M const& t)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::is_greater(a0, a1),
-            map([](auto e, auto f) -> eve::logical<v_t> { return e > f; }, a0, a1));
+            tts::map([](auto e, auto f) -> eve::logical<v_t> { return e > f; }, a0, a1));
   TTS_EQUAL(eve::is_greater(a0, a0),
-            map([](auto e, auto f) -> eve::logical<v_t> { return e > f; }, a0, a0));
+            tts::map([](auto e, auto f) -> eve::logical<v_t> { return e > f; }, a0, a0));
   TTS_EQUAL(eve::is_greater(a0, v_t(1)),
-            map([](auto e) -> eve::logical<v_t> { return e > v_t(1); }, a0));
+            tts::map([](auto e) -> eve::logical<v_t> { return e > v_t(1); }, a0));
   TTS_EQUAL(eve::is_greater[t](a0, a1),
             eve::if_else(t, eve::is_greater(a0, a1), eve::false_(eve::as(a0))));
 };
@@ -59,7 +58,6 @@ TTS_CASE_TPL("Check behavior of eve::is_greater(simd)", eve::test::simd::ieee_re
 <typename T>(tts::type<T>)
 {
   using eve::as;
-  using eve::detail::map;
   using v_t  = eve::element_type_t<T>;
   using ui_t = eve::as_integer_t<v_t, unsigned>;
 

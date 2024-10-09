@@ -37,7 +37,7 @@ TTS_CASE_WITH ( "Check behavior of cyl_bessel_y1 on wide"
 
 #if defined(__cpp_lib_math_special_functions)
   auto std_cyl_bessel_y1 = [](auto x) -> v_t { return std::cyl_neumann(v_t(1), x); };
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_y1(a0), eve::detail::map(std_cyl_bessel_y1, a0), 7e-3);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_y1(a0), tts::map(std_cyl_bessel_y1, a0), 7e-3);
 #else
   TTS_PASS("No support for std::cyl_bessel_y");
 #endif

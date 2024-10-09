@@ -38,10 +38,9 @@ TTS_CASE_WITH("Check behavior of sqrt(wide) and diff on  floating types",
               tts::generate(tts::randoms(0, eve::valmax)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using eve::rec;
   using eve::sqr;
-  TTS_ULP_EQUAL(eve::sqrt(a0), map([&](auto e) { return std::sqrt(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::sqrt(a0), tts::map([&](auto e) { return std::sqrt(e); }, a0), 2);
 
   TTS_EXPECT(eve::all(eve::sqrt[eve::lower](a0) <= eve::sqrt(a0)));
   TTS_EXPECT(eve::all(eve::sqrt[eve::upper](a0) >= eve::sqrt(a0)));
@@ -59,8 +58,7 @@ TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
 {
   using v_t = eve::element_type_t<T>;
   auto val  = eve::unsigned_value<v_t> ? (eve::valmax(eve::as<v_t>()) / 2) : 0;
-  using eve::detail::map;
-  TTS_ULP_EQUAL(eve::sqrt[a0 < val](a0), map([&](auto e) { return (e < val) ? std::sqrt(e) : e; }, a0), 2);
+  TTS_ULP_EQUAL(eve::sqrt[a0 < val](a0), tts::map([&](auto e) { return (e < val) ? std::sqrt(e) : e; }, a0), 2);
 };
 
 

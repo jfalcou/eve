@@ -47,13 +47,12 @@ TTS_CASE_WITH("Check behavior of bit_xor on integral types",
 {
   using eve::as;
   using eve::bit_xor;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(bit_xor(a0, a1), map([](auto e, auto f) -> v_t { return e ^ f; }, a0, a1));
+  TTS_EQUAL(bit_xor(a0, a1), tts::map([](auto e, auto f) -> v_t { return e ^ f; }, a0, a1));
   auto test = a3 > eve::average(eve::valmin(as<T>()), eve::valmax(as<T>()));
   TTS_EQUAL(bit_xor[test](a0, a1), eve::if_else(test, eve::bit_xor(a0, a1), a0));
   TTS_EQUAL(bit_xor[test](a0, a1, a2), eve::if_else(test, eve::bit_xor(a0, a1, a2), a0));
-  TTS_EQUAL(bit_xor(kumi::tuple{a0, a1}), map([](auto e, auto f) -> v_t { return e ^ f; }, a0, a1));
+  TTS_EQUAL(bit_xor(kumi::tuple{a0, a1}), tts::map([](auto e, auto f) -> v_t { return e ^ f; }, a0, a1));
   TTS_EQUAL(bit_xor[test](kumi::tuple{a0, a1}), eve::if_else(test, eve::bit_xor(a0, a1), a0));
   TTS_EQUAL(bit_xor[test](kumi::tuple{a0, a1, a2}), eve::if_else(test, eve::bit_xor(a0, a1, a2), a0));
 };
@@ -69,12 +68,11 @@ TTS_CASE_WITH("Check behavior of bit_xor on floating types",
   using eve::as;
   using eve::bit_cast;
   using eve::bit_xor;
-  using eve::detail::map;
   using i_t = eve::as_integer_t<eve::element_type_t<T>, signed>;
   using v_t = eve::element_type_t<T>;
   TTS_IEEE_EQUAL(
       bit_xor(a0, a1),
-      map([](auto e, auto f) -> v_t
+      tts::map([](auto e, auto f) -> v_t
           { return bit_cast(bit_cast(e, as(i_t())) ^ bit_cast(f, as(i_t())), as(v_t())); },
           a0,
           a1));

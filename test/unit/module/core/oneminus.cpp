@@ -51,10 +51,9 @@ TTS_CASE_WITH("Check behavior of eve::oneminus(eve::wide)",
   using eve::as;
   using eve::oneminus;
   using eve::saturated;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(oneminus(a0), map([](auto e) -> v_t { return 1 - e; }, a0));
+  TTS_EQUAL(oneminus(a0), tts::map([](auto e) -> v_t { return 1 - e; }, a0));
   TTS_EQUAL(oneminus[mask](a0), eve::if_else(mask, oneminus(a0), a0));
   if constexpr( eve::unsigned_value<T> )
     TTS_EQUAL(oneminus[saturated](a0),

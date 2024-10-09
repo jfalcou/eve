@@ -43,13 +43,13 @@ TTS_CASE_WITH("Check behavior of chi(wide) and diff  on all types",
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(chi(a0, a1, a2),
-             map([&](auto e, auto f, auto g) -> v_t { return e >= f && e < g; }, a0, a1, a2));
+             tts::map([&](auto e, auto f, auto g) -> v_t { return e >= f && e < g; }, a0, a1, a2));
 
   auto b = [a1, a2](auto x){return (x <  a1) || (x >= a2); };
   TTS_EQUAL(chi(a0, b),
-             map([](auto e, auto f, auto g) -> v_t { return (e < f || e >=  g); }, a0, a1, a2));
+             tts::map([](auto e, auto f, auto g) -> v_t { return (e < f || e >=  g); }, a0, a1, a2));
   TTS_EQUAL(chi(a0, a1, 2),
-            map([&](auto e, auto f) -> v_t { return e >= f && e < 2; }, a0, a1));
+            tts::map([&](auto e, auto f) -> v_t { return e >= f && e < 2; }, a0, a1));
 
 };
 

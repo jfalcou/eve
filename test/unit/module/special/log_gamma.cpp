@@ -34,7 +34,7 @@ TTS_CASE_WITH("Check behavior of log_gamma on wide",
 {
   using v_t = eve::element_type_t<T>;
   using eve::log_gamma;
-  TTS_RELATIVE_EQUAL(log_gamma(a0), map([&](auto e) -> v_t { auto x = std::lgamma(e);
+  TTS_RELATIVE_EQUAL(log_gamma(a0), tts::map([&](auto e) -> v_t { auto x = std::lgamma(e);
                                           return eve::is_lez(eve::signgam(e)) ?
                                             eve::nan(eve::as(e)) : x; }, a0), 5e-2);
 

@@ -55,7 +55,6 @@ TTS_CASE_WITH("Check behavior of bit_cast(simd) on integral types",
 {
   using eve::as;
   using eve::bit_cast;
-  using eve::detail::map;
   using elt_t = eve::element_type_t<T>;
   using ut_t  = eve::as_integer_t<T, unsigned>;
   using it_t  = eve::as_integer_t<T, signed>;
@@ -64,13 +63,13 @@ TTS_CASE_WITH("Check behavior of bit_cast(simd) on integral types",
 
   TTS_EQUAL(
       bit_cast(a0, eve::as<T>()),
-      map([](auto e, auto) -> elt_t { return bit_cast(e, eve::as<elt_t>()); }, a0, eve::as<T>()));
+      tts::map([](auto e, auto) -> elt_t { return bit_cast(e, eve::as<elt_t>()); }, a0, eve::as<T>()));
   TTS_EQUAL(bit_cast(a0, eve::as<ut_t>()),
-            map([](auto e, auto) -> vut_t { return bit_cast(e, eve::as<vut_t>()); },
+            tts::map([](auto e, auto) -> vut_t { return bit_cast(e, eve::as<vut_t>()); },
                 a0,
                 eve::as<ut_t>()));
   TTS_EQUAL(bit_cast(a0, eve::as<it_t>()),
-            map([](auto e, auto) -> vit_t { return bit_cast(e, eve::as<vit_t>()); },
+            tts::map([](auto e, auto) -> vit_t { return bit_cast(e, eve::as<vit_t>()); },
                 a0,
                 eve::as<it_t>()));
   //== more tests to write when std::bit_cast will be available

@@ -32,13 +32,12 @@ TTS_CASE_WITH("Check behavior of atanpi on wide",
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
-      eve::atanpi(a0), map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a0), 2);
+      eve::atanpi(a0), tts::map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a0), 2);
   TTS_ULP_EQUAL(
-      eve::atanpi(a1), map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a1), 2);
+      eve::atanpi(a1), tts::map([](auto e) -> v_t { return eve::radinpi(std::atan(e)); }, a1), 2);
 };
 
 

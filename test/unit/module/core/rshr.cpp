@@ -52,13 +52,13 @@ TTS_CASE_WITH("Check behavior of rshr on integral types",
 <typename T, typename U>(T const& a0, U const& a1)
 {
   using eve::rshr;
-  TTS_EQUAL(rshr(a0, a1), map([&](auto e, auto f) { return rshr(e, f); }, a0, a1));
+  TTS_EQUAL(rshr(a0, a1), tts::map([&](auto e, auto f) { return rshr(e, f); }, a0, a1));
 
   auto val = a1.get(0);
-  TTS_EQUAL(rshr(a0, val), map([&](auto e) { return rshr(e, val); }, a0));
+  TTS_EQUAL(rshr(a0, val), tts::map([&](auto e) { return rshr(e, val); }, a0));
 
-  TTS_EQUAL(rshr(a0, eve::index<1>), map([&](auto e) { return rshr(e, 1); }, a0));
-  TTS_EQUAL(rshr(a0, eve::index<-1>), map([&](auto e) { return rshr(e, -1); }, a0));
+  TTS_EQUAL(rshr(a0, eve::index<1>), tts::map([&](auto e) { return rshr(e, 1); }, a0));
+  TTS_EQUAL(rshr(a0, eve::index<-1>), tts::map([&](auto e) { return rshr(e, -1); }, a0));
 };
 
 

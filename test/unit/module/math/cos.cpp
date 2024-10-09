@@ -45,21 +45,20 @@ TTS_CASE_WITH("Check behavior of cos on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4)
 {
   using eve::cos;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return std::cos(e); };
-  TTS_ULP_EQUAL(cos[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cos[eve::half_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cos[eve::half_circle](a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(cos[eve::full_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cos[eve::full_circle](a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(cos[eve::full_circle](a2), map(ref, a2), 2);
-  TTS_ULP_EQUAL(cos(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cos(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(cos(a2), map(ref, a2), 2);
-  TTS_ULP_EQUAL(cos(a3), map(ref, a3), 2);
-  TTS_ULP_EQUAL(cos(a4), map(ref, a4), 2);
+  TTS_ULP_EQUAL(cos[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cos[eve::half_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cos[eve::half_circle](a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(cos[eve::full_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cos[eve::full_circle](a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(cos[eve::full_circle](a2), tts::map(ref, a2), 2);
+  TTS_ULP_EQUAL(cos(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cos(a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(cos(a2), tts::map(ref, a2), 2);
+  TTS_ULP_EQUAL(cos(a3), tts::map(ref, a3), 2);
+  TTS_ULP_EQUAL(cos(a4), tts::map(ref, a4), 2);
 };
 
 

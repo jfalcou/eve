@@ -31,11 +31,10 @@ TTS_CASE_WITH("Check behavior of eve::fdim(simd) floating",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::as;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::fdim(a0, a1),
-            map([](auto e, auto f) -> v_t { return (e >= f) ? e - f : eve::zero(as(e)); }, a0, a1));
+            tts::map([](auto e, auto f) -> v_t { return (e >= f) ? e - f : eve::zero(as(e)); }, a0, a1));
 };
 
 auto maxi =
@@ -49,10 +48,9 @@ TTS_CASE_WITH("Check behavior of eve::fdim(simd) integral",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::as;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::fdim(a0, a1),
-            map([](auto e, auto f) -> v_t
+            tts::map([](auto e, auto f) -> v_t
                 { return (e >= f) ? v_t(e - f) : eve::zero(eve::as<v_t>()); },
                 a0,
                 a1));

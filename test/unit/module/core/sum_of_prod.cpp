@@ -83,7 +83,6 @@ TTS_CASE_WITH("Check behavior of sum_of_prod upper lower on all types",
 {
   using eve::as;
   using eve::sum_of_prod;
-  using eve::detail::map;
   using eve::lower;
   using eve::upper;
   using eve::strict;

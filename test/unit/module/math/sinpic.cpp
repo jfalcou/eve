@@ -36,13 +36,12 @@ TTS_CASE_WITH("Check behavior of sinpic on wide",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::sinpic;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   v_t  dpi  = 3.1415926535897932384626433832795028841971693993751;
   auto ref  = [dpi](auto e) -> v_t { return e ? eve::sinpi(e) / (dpi * e) : v_t(1); };
-  TTS_ULP_EQUAL(sinpic(a0), map(ref, a0), 3);
-  TTS_ULP_EQUAL(sinpic(a1), map(ref, a1), 3);
+  TTS_ULP_EQUAL(sinpic(a0), tts::map(ref, a0), 3);
+  TTS_ULP_EQUAL(sinpic(a1), tts::map(ref, a1), 3);
 };
 
 

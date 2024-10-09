@@ -32,14 +32,13 @@ TTS_CASE_WITH("Check behavior of exp on wide",
               tts::generate(tts::randoms(eve::minlog, eve::maxlog), tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::exp(a0), map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::exp(a1), map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp(a0), tts::map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::exp(a1), tts::map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
 
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a0), map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
-  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a0), tts::map([](auto e) -> v_t { return std::exp(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::exp[eve::pedantic](a1), tts::map([](auto e) -> v_t { return std::exp(e); }, a1), 2);
 };
 
 TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals)

@@ -49,12 +49,11 @@ TTS_CASE_WITH ( "Check behavior of min on all types full range"
 {
   using eve::abs;
   using eve::min;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return std::min(std::min(a, b), c); };
-  TTS_ULP_EQUAL(min(a0, a1, a2), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(min[eve::pedantic](a0, a1, a2), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(min[eve::numeric](a0, a1, a2), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min(a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min[eve::pedantic](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(min[eve::numeric](a0, a1, a2), tts::map(m, a0, a1, a2), 2);
 };
 
 TTS_CASE_TPL("Check values of min", eve::test::simd::ieee_reals)

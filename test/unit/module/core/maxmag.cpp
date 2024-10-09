@@ -57,17 +57,16 @@ TTS_CASE_WITH("Check behavior of maxmag on all types full range",
 {
   using eve::abs;
   using eve::maxmag;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return maxmag(maxmag(b, c), a); };
-  TTS_ULP_EQUAL(maxmag((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::maxmag[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::maxmag[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::maxmag[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
- TTS_ULP_EQUAL(maxmag(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::maxmag[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::maxmag[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::maxmag[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(maxmag((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::numeric]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::saturated]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+ TTS_ULP_EQUAL(maxmag(kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::maxmag[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(maxmag[t](a0, a1), eve::if_else(t, maxmag(a0, a1), a0));
 };

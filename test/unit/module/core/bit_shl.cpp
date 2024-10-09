@@ -43,9 +43,8 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, wide)",
 <typename T, typename I, typename L>(T a0, I a1, L test)
 {
   using eve::bit_shl;
-  using eve::detail::map;
   using v_t = typename T::value_type;
-  TTS_EQUAL(bit_shl(a0, a1), map([](auto e, auto s) -> v_t { return e << s; }, a0, a1));
+  TTS_EQUAL(bit_shl(a0, a1), tts::map([](auto e, auto s) -> v_t { return e << s; }, a0, a1));
   TTS_EQUAL(bit_shl[test](a0, a1), eve::if_else(test, eve::bit_shl(a0, a1), a0));
 };
 
@@ -55,10 +54,9 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, scalar)",
 <typename T, typename I, typename L>(T a0, I s, L test)
 {
   using eve::bit_shl;
-  using eve::detail::map;
   auto val  = s.get(0);
   using v_t = typename T::value_type;
-  TTS_EQUAL(bit_shl(a0, val), map([&](auto e) -> v_t { return e << val; }, a0));
+  TTS_EQUAL(bit_shl(a0, val), tts::map([&](auto e) -> v_t { return e << val; }, a0));
   TTS_EQUAL(bit_shl[test](a0, val), eve::if_else(test, eve::bit_shl(a0, val), a0));
 };
 
@@ -68,9 +66,8 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
 <typename T, typename L>(T a0, L test)
 {
   using eve::bit_shl;
-  using eve::detail::map;
   using v_t = typename T::value_type;
-  TTS_EQUAL(bit_shl(a0, eve::index<1>), map([&](auto e) -> v_t { return e << 1; }, a0));
+  TTS_EQUAL(bit_shl(a0, eve::index<1>), tts::map([&](auto e) -> v_t { return e << 1; }, a0));
   TTS_EQUAL(bit_shl[test](a0, eve::index<1>), eve::if_else(test, eve::bit_shl(a0, eve::index<1>), a0));
 };
 

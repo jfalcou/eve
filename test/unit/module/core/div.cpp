@@ -78,19 +78,18 @@ TTS_CASE_WITH("Check behavior of div on wide",
   using eve::upper;
   using eve::lower;
   using eve::strict;
-  using eve::detail::map;
-  TTS_ULP_EQUAL(eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
-  TTS_ULP_EQUAL(eve::div[saturated](a0, a2), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
-  TTS_ULP_EQUAL(div(a0, a1, a2), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
-  TTS_ULP_EQUAL(div[saturated](a0, a1, a2), map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2),1);
-  TTS_ULP_EQUAL(eve::div(kumi::tuple{a0, a2}), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
-  TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
-  TTS_ULP_EQUAL(div(kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
-  TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2), 1);
+  TTS_ULP_EQUAL(eve::div(a0, a2), tts::map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(eve::div[saturated](a0, a2), tts::map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(div(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
+  TTS_ULP_EQUAL(div[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2),1);
+  TTS_ULP_EQUAL(eve::div(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return eve::div(e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
+  TTS_ULP_EQUAL(div(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
+  TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2), 1);
   if constexpr (eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( div[lower](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[lower](div[lower](e, f), g); }, a0, a1, a2), 2.0);
-    TTS_ULP_EQUAL( div[upper](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return div[upper](div[upper](e, f), g); }, a0, a1, a2), 2.0);
+    TTS_ULP_EQUAL( div[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[lower](div[lower](e, f), g); }, a0, a1, a2), 2.0);
+    TTS_ULP_EQUAL( div[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[upper](div[upper](e, f), g); }, a0, a1, a2), 2.0);
     TTS_EXPECT(eve::all(div[upper](a0, a1, a2) >=  div[lower](a0, a1, a2)));
     TTS_EXPECT(eve::all(div[upper](a0, a1)     >=  div[lower](a0, a1)));
     T w0(T(0.12345));
@@ -136,23 +135,22 @@ TTS_CASE_WITH("Check behavior of div on signed types",
   using eve::div;
   using eve::is_nez;
   using eve::saturated;
-  using eve::detail::map;
   using elt_t = eve::element_type_t<T>;
   a2 = eve::if_else(a2 > 0, eve::zero, a2);
   TTS_ULP_EQUAL(div[is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return eve::is_eqz(f) ? e : elt_t(e/f); }, a0, a2),
+                tts::map([](auto e, auto f) { return eve::is_eqz(f) ? e : elt_t(e/f); }, a0, a2),
                 2.5);
   TTS_ULP_EQUAL(
       div[saturated][is_nez(a0) && is_nez(a2)](a0, a2),
-      map([](auto e, auto f) { return is_nez(e) && is_nez(f) ? div[saturated](e, f) : e; }, a0, a2),
+      tts::map([](auto e, auto f) { return is_nez(e) && is_nez(f) ? div[saturated](e, f) : e; }, a0, a2),
       2.5);
 
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
   TTS_ULP_EQUAL(div[a2 > T(64)](a0, a1),
-                map([](auto e, auto f, auto g) { return g > 64 ? div(e, f) : e; }, a0, a1, a2),
+                tts::map([](auto e, auto f, auto g) { return g > 64 ? div(e, f) : e; }, a0, a1, a2),
                 0.5);
   TTS_ULP_EQUAL(
       div[saturated][a2 > T(64)](a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? div[saturated](e, f) : e; }, a0, a1, a2),
+      tts::map([](auto e, auto f, auto g) { return g > 64 ? div[saturated](e, f) : e; }, a0, a1, a2),
       0.5);
 };

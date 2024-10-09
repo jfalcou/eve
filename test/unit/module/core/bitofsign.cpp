@@ -36,9 +36,8 @@ TTS_CASE_WITH("Check behavior of bitofsign(wide)",
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   TTS_EQUAL(eve::bitofsign(a0),
-            map([&](auto e) { return eve::bit_and(e, eve::signmask(eve::as(e))); }, a0));
+            tts::map([&](auto e) { return eve::bit_and(e, eve::signmask(eve::as(e))); }, a0));
 };
 
 //==================================================================================================
@@ -51,8 +50,7 @@ TTS_CASE_WITH("Check behavior of bitofsign(wide)",
 {
   using v_t = eve::element_type_t<T>;
   auto val  = eve::unsigned_value<v_t> ? (eve::valmax(eve::as<v_t>()) / 2) : 0;
-  using eve::detail::map;
   TTS_EQUAL(
       eve::bitofsign[a0 < val](a0),
-      map([&](auto e) { return (e < val) ? eve::bit_and(e, eve::signmask(eve::as(e))) : e; }, a0));
+      tts::map([&](auto e) { return (e < val) ? eve::bit_and(e, eve::signmask(eve::as(e))) : e; }, a0));
 };

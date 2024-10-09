@@ -19,7 +19,6 @@ TTS_CASE_WITH("Check behavior of bit_unset(simd) on integral types",
 {
   using v_t = eve::element_type_t<T>;
   using eve::bit_unset;
-  using eve::detail::map;
-  TTS_EQUAL(bit_unset(a0, 0u), map([](auto e) -> v_t { return eve::bit_unset(e, 0u); }, a0)) << a0 << '\n';
+  TTS_EQUAL(bit_unset(a0, 0u), tts::map([](auto e) -> v_t { return eve::bit_unset(e, 0u); }, a0)) << a0 << '\n';
   TTS_EQUAL(eve::bit_unset[t](a0, 0u), eve::if_else(t, eve::bit_unset(a0, 0u), a0));
 };

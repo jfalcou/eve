@@ -38,7 +38,7 @@ TTS_CASE_WITH("Check behavior of pow on wide",
   using v_t = eve::element_type_t<T>;
 
   TTS_RELATIVE_EQUAL(eve::pow(a0, a1),
-                     eve::detail::map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1),
+                     tts::map([](auto e, auto f) -> v_t { return std::pow(std::abs(e), f); }, a0, a1),
                      0.001);
 };
 

@@ -28,9 +28,8 @@ TTS_CASE_WITH("Check behavior of eve::firstbitunset(simd)",
               tts::generate(tts::ramp(0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, const M t)
 {
-  using eve::detail::map;
   using vi_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::firstbitunset(a0), map([](auto e) -> vi_t { return eve::firstbitunset(e); }, a0));
+  TTS_EQUAL(eve::firstbitunset(a0), tts::map([](auto e) -> vi_t { return eve::firstbitunset(e); }, a0));
   TTS_EQUAL(eve::firstbitunset[t](a0), eve::if_else(t, eve::firstbitunset(a0), a0));
 };

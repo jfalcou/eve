@@ -35,17 +35,16 @@ TTS_CASE_WITH("Check behavior of secd on wide",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::secd;
-  using eve::detail::map;
 
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
 //  auto ref  = [](auto e) -> v_t { return 1.0l / eve::cospi(double(e / 180.0l)); };
   auto ref  = [](auto e) -> v_t { return 1.0 / eve::cosd(e); };
 
-  TTS_ULP_EQUAL(secd[eve::quarter_circle](a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(secd(a0), map(ref, a0), 4);
-  TTS_ULP_EQUAL(secd(a1), map(ref, a1), 4);
-  TTS_ULP_EQUAL(secd(a2), map(ref, a2), 512);
+  TTS_ULP_EQUAL(secd[eve::quarter_circle](a0), tts::map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd(a0), tts::map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd(a1), tts::map(ref, a1), 4);
+  TTS_ULP_EQUAL(secd(a2), tts::map(ref, a2), 512);
 };
 
 TTS_CASE_TPL("Check return types of secd", eve::test::simd::ieee_reals)

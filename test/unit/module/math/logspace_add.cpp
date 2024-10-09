@@ -49,7 +49,6 @@ TTS_CASE_WITH("Check behavior of logspace_add on wide",
                             tts::randoms(0.5, 2.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
 {
-  using eve::detail::map;
 
   auto la0 = eve::log(a0);
   auto la1 = eve::log(a1);

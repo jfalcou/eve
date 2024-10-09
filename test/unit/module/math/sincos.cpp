@@ -46,50 +46,49 @@ TTS_CASE_WITH("Check behavior of cos on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4)
 {
   using eve::sincos;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return std::cos(e); };
   auto refs = [](auto e) -> v_t { return std::sin(e); };
   {
     auto [s, c] = sincos[eve::quarter_circle](a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
   }
   {
     auto [s, c] = sincos[eve::half_circle](a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
     auto [s1, c1] = sincos[eve::half_circle](a1);
-    TTS_ULP_EQUAL(s1, map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1, map(refc, a1), 2);
+    TTS_ULP_EQUAL(s1, tts::map(refs, a1), 2);
+    TTS_ULP_EQUAL(c1, tts::map(refc, a1), 2);
   }
   {
     auto [s, c] = sincos[eve::full_circle](a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
     auto [s1, c1] = sincos[eve::full_circle](a1);
-    TTS_ULP_EQUAL(s1, map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1, map(refc, a1), 2);
+    TTS_ULP_EQUAL(s1, tts::map(refs, a1), 2);
+    TTS_ULP_EQUAL(c1, tts::map(refc, a1), 2);
     auto [s2, c2] = sincos[eve::full_circle](a2);
-    TTS_ULP_EQUAL(s2, map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2, map(refc, a2), 2);
+    TTS_ULP_EQUAL(s2, tts::map(refs, a2), 2);
+    TTS_ULP_EQUAL(c2, tts::map(refc, a2), 2);
   }
   {
     auto [s, c] = sincos(a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
     auto [s1, c1] = sincos(a1);
-    TTS_ULP_EQUAL(s1, map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1, map(refc, a1), 2);
+    TTS_ULP_EQUAL(s1, tts::map(refs, a1), 2);
+    TTS_ULP_EQUAL(c1, tts::map(refc, a1), 2);
     auto [s2, c2] = sincos(a2);
-    TTS_ULP_EQUAL(s2, map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2, map(refc, a2), 2);
+    TTS_ULP_EQUAL(s2, tts::map(refs, a2), 2);
+    TTS_ULP_EQUAL(c2, tts::map(refc, a2), 2);
     auto [s3, c3] = sincos(a3);
-    TTS_ULP_EQUAL(s3, map(refs, a3), 2);
-    TTS_ULP_EQUAL(c3, map(refc, a3), 2);
+    TTS_ULP_EQUAL(s3, tts::map(refs, a3), 2);
+    TTS_ULP_EQUAL(c3, tts::map(refc, a3), 2);
     auto [s4, c4] = sincos(a4);
-    TTS_ULP_EQUAL(s4, map(refs, a4), 2);
-    TTS_ULP_EQUAL(c4, map(refc, a4), 2);
+    TTS_ULP_EQUAL(s4, tts::map(refs, a4), 2);
+    TTS_ULP_EQUAL(c4, tts::map(refc, a4), 2);
   }
 };

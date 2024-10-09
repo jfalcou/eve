@@ -42,7 +42,6 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::cotpi;
-  using eve::detail::map;
 
   using eve::deginrad;
   using eve::pi;
@@ -55,11 +54,11 @@ TTS_CASE_WITH("Check behavior of cotpi on wide",
 //     auto d = std::sin(pi*e);
 //    return d ? std::cos(pi*e) / d : eve::nan(eve::as(e));
   };
-  TTS_ULP_EQUAL(cotpi[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotpi(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cotpi(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(cotpi(a2), map(ref, a2), 2);
-  TTS_ULP_EQUAL(cotpi(a3), map(ref, a3), 2);
+  TTS_ULP_EQUAL(cotpi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cotpi(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cotpi(a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(cotpi(a2), tts::map(ref, a2), 2);
+  TTS_ULP_EQUAL(cotpi(a3), tts::map(ref, a3), 2);
 };
 
 

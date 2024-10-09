@@ -76,25 +76,25 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
     { return eve::is_positive(v) ? boost::math::lambert_w0(v) : boost::math::lambert_wm1(v); };
     {
       auto [w0, wm1] = eve::lambert(a0);
-      TTS_ULP_EQUAL(w0, map(std_w0, a0), 10.0);
-      TTS_RELATIVE_EQUAL(wm1, map(std_wm1, a0), 0.001);
+      TTS_ULP_EQUAL(w0, tts::map(std_w0, a0), 10.0);
+      TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a0), 0.001);
     }
     {
       auto [w0, wm1] = eve::lambert(a1);
-      TTS_ULP_EQUAL(w0, map(std_w0, a1), 512.0);
-      TTS_RELATIVE_EQUAL(wm1, map(std_wm1, a1), 0.001);
+      TTS_ULP_EQUAL(w0, tts::map(std_w0, a1), 512.0);
+      TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a1), 0.001);
     }
     {
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a2);
-      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a2), tol);
-      TTS_ABSOLUTE_EQUAL(wm1, map(std_wm1, a2), tol);
+      TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a2), tol);
+      TTS_ABSOLUTE_EQUAL(wm1, tts::map(std_wm1, a2), tol);
     }
     {
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a3);
-      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), tol);
-      TTS_RELATIVE_EQUAL(wm1, map(std_wm1, a3), 0.001);
+      TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a3), tol);
+      TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a3), 0.001);
     }
   }
 };
@@ -143,25 +143,25 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
     { return eve::is_positive(v) ? boost::math::lambert_w0(v) : boost::math::lambert_wm1(v); };
     {
       auto [w0, wm1] = eve::lambert(a0);
-      TTS_ULP_EQUAL(w0, map(std_w0, a0), 10.0);
-      TTS_RELATIVE_EQUAL(wm1, map(std_wm1, a0), 0.001);
+      TTS_ULP_EQUAL(w0, tts::map(std_w0, a0), 10.0);
+      TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a0), 0.001);
     }
     {
       auto [w0, wm1] = eve::lambert(a1);
-      TTS_ULP_EQUAL(w0, map(std_w0, a1), 512.0);
-      TTS_RELATIVE_EQUAL(wm1, map(std_wm1, a1), 0.001);
+      TTS_ULP_EQUAL(w0, tts::map(std_w0, a1), 512.0);
+      TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a1), 0.001);
     }
     {
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a2);
-      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a2), tol);
-      TTS_ABSOLUTE_EQUAL(wm1, map(std_wm1, a2), tol);
+      TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a2), tol);
+      TTS_ABSOLUTE_EQUAL(wm1, tts::map(std_wm1, a2), tol);
     }
     {
       elt_t tol      = 10000 * eve::eps(eve::as<elt_t>());
       auto [w0, wm1] = eve::lambert(a3);
-      TTS_ABSOLUTE_EQUAL(w0, map(std_w0, a3), tol);
-      TTS_RELATIVE_EQUAL(wm1, map(std_wm1, a3), 0.001);
+      TTS_ABSOLUTE_EQUAL(w0, tts::map(std_w0, a3), tol);
+      TTS_RELATIVE_EQUAL(wm1, tts::map(std_wm1, a3), 0.001);
     }
   }
 };

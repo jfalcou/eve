@@ -44,10 +44,9 @@ TTS_CASE_WITH("Check behavior of shr(wide, wide)",
 <typename T, typename I, typename L>(T a0, I a1, L test)
 {
   using eve::bit_shr;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
-  TTS_EQUAL(bit_shr(a0, a1), map([](auto e, auto s) -> v_t { return v_t(u_t(e) >> s); }, a0, a1));
+  TTS_EQUAL(bit_shr(a0, a1), tts::map([](auto e, auto s) -> v_t { return v_t(u_t(e) >> s); }, a0, a1));
   TTS_EQUAL(bit_shr[test](a0, a1), eve::if_else(test, eve::bit_shr(a0, a1), a0));
 };
 
@@ -57,9 +56,8 @@ TTS_CASE_WITH("Check behavior of bit_shr(wide, integral constant)",
 <typename T, typename L>(T a0, L test)
 {
   using eve::bit_shr;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(bit_shr(a0, eve::index<1>), map([&](auto e) -> v_t { return eve::bit_shr(e, eve::index<1>); }, a0));
+  TTS_EQUAL(bit_shr(a0, eve::index<1>), tts::map([&](auto e) -> v_t { return eve::bit_shr(e, eve::index<1>); }, a0));
   TTS_EQUAL(bit_shr[test](a0, eve::index<1>), eve::if_else(test, eve::bit_shr(a0, eve::index<1>), a0));
 };
 
@@ -69,11 +67,10 @@ TTS_CASE_WITH("Check behavior of shift(wide, scalar)",
 <typename T, typename I, typename L>(T a0, I s, L test)
 {
   using eve::bit_shr;
-  using eve::detail::map;
   auto val  = s.get(0);
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
-  TTS_EQUAL(bit_shr(a0, val), map([&](auto e) -> v_t { return v_t(u_t(e) >> val); }, a0));
+  TTS_EQUAL(bit_shr(a0, val), tts::map([&](auto e) -> v_t { return v_t(u_t(e) >> val); }, a0));
   TTS_EQUAL(bit_shr[test](a0, val), eve::if_else(test, eve::bit_shr(a0, val), a0));
 };
 

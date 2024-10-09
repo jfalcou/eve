@@ -55,9 +55,9 @@ TTS_CASE_WITH("Check behavior of sph_bessel_y0 on wide",
   TTS_ULP_EQUAL(eve::sph_bessel_y0(T(1)), T(std_sph_bessel_y0(v_t(1))), 1024.0);
   TTS_ULP_EQUAL(eve::sph_bessel_y0(T(0)), eve::minf(eve::as<T>()), 0.0);
 
-  TTS_ULP_EQUAL(eve::sph_bessel_y0(a0), map(std_sph_bessel_y0, a0), 1024.0);
-  TTS_ULP_EQUAL(eve::sph_bessel_y0(a1), map(std_sph_bessel_y0, a1), 1024.0);
-  TTS_ULP_EQUAL(eve::sph_bessel_y0(a2), map(std_sph_bessel_y0, a2), 10000.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_y0(a0), tts::map(std_sph_bessel_y0, a0), 1024.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_y0(a1), tts::map(std_sph_bessel_y0, a1), 1024.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_y0(a2), tts::map(std_sph_bessel_y0, a2), 10000.0);
 #else
   TTS_PASS("No support for std::sph_neumann");
 #endif

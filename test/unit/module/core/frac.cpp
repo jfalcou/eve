@@ -31,10 +31,9 @@ TTS_CASE_WITH("Check behavior of eve::frac(simd)",
               tts::generate(tts::between(-1.0, 1.0)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::frac(a0), map([](auto e) -> v_t { return e - std::trunc(e); }, a0));
+  TTS_EQUAL(eve::frac(a0), tts::map([](auto e) -> v_t { return e - std::trunc(e); }, a0));
   TTS_EXPECT(eve::all(eve::is_negative(eve::frac(eve::mzero(eve::as(a0))))));
 };
 

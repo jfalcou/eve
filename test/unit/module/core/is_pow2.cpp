@@ -34,7 +34,7 @@ TTS_CASE_WITH("Check behavior of is_pow2(wide) on unsigned integral ",
   using v_t = eve::element_type_t<T>;
   using f_t = eve::as_floating_point_t<v_t>;
   TTS_EQUAL(eve::is_pow2(a0),
-            map([](auto e) -> eve::logical<v_t>
+            tts::map([](auto e) -> eve::logical<v_t>
                 { return std::exp2(std::trunc(std::log2(f_t(e)))) == f_t(e); },
                 a0));
 };

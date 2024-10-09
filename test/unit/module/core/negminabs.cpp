@@ -49,7 +49,6 @@ TTS_CASE_WITH("Check behavior of negminabs on all types full range",
 {
   using eve::abs;
   using eve::negminabs;
-  using eve::detail::map;
 
   TTS_ULP_EQUAL(negminabs(a0, a1, a2), -eve::minabs(a0, a1, a2), 2);
   TTS_ULP_EQUAL(eve::negminabs[eve::pedantic](a0, a1, a2),  -eve::minabs[eve::pedantic](a0, a1, a2), 2);

@@ -13,6 +13,6 @@ int main()
             << "-> rotate(x, eve::index<1>) = " << eve::rotate(x, eve::index<1>) << '\n'
             << "-> rotate(x, eve::index<2>) = " << eve::rotate(x, eve::index<2>) << '\n'
             << "-> rotate(x, eve::index<3>) = " << eve::rotate(x, eve::index<3>) << '\n'
-            << "-> rotate(x, eve::index<4>) = " << eve::rotate(x, eve::index<4>) << '\n';;
+            << "-> rotate(x, eve::index<4>) = " << eve::rotate(x, eve::index<4>) << '\n';
 
 }

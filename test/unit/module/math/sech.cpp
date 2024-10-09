@@ -41,15 +41,14 @@ TTS_CASE_WITH("Check behavior of sech on wide",
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using eve::cosh;
   using eve::sech;
 
   auto rel = std::is_same_v<v_t, float> ? 2e-5 : 1e-13;
 
-  TTS_RELATIVE_EQUAL(sech(a0), map([](auto e) -> v_t { return 1 / std::cosh(e); }, a0), rel);
-  TTS_RELATIVE_EQUAL(sech(a1), map([](auto e) -> v_t { return 1 / std::cosh(e); }, a1), rel);
+  TTS_RELATIVE_EQUAL(sech(a0), tts::map([](auto e) -> v_t { return 1 / std::cosh(e); }, a0), rel);
+  TTS_RELATIVE_EQUAL(sech(a1), tts::map([](auto e) -> v_t { return 1 / std::cosh(e); }, a1), rel);
 };
 
 

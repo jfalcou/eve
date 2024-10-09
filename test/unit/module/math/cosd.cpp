@@ -37,16 +37,15 @@ TTS_CASE_WITH("Check behavior of cosd on wide",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::cosd;
-  using eve::detail::map;
 
   using eve::deginrad;
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return eve::cospi(double(e / 180.0l)); };
 
-  TTS_ULP_EQUAL(cosd[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cosd(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(cosd(a1), map(ref, a1), 30);
-  TTS_ULP_EQUAL(cosd(a2), map(ref, a2), 420);
+  TTS_ULP_EQUAL(cosd[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cosd(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cosd(a1), tts::map(ref, a1), 30);
+  TTS_ULP_EQUAL(cosd(a2), tts::map(ref, a2), 420);
 };
 
 TTS_CASE_TPL("Check return types of cosd", eve::test::simd::ieee_reals)

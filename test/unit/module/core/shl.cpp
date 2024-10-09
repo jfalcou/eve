@@ -56,9 +56,8 @@ TTS_CASE_WITH("Check behavior of bit_shl(wide, integral constant)",
 <typename T, typename L>(T a0, L test)
 {
   using eve::shl;
-  using eve::detail::map;
   using v_t = typename T::value_type;
-  TTS_EQUAL(shl(a0, eve::index<1>), map([&](auto e) -> v_t { return e << 1; }, a0));
+  TTS_EQUAL(shl(a0, eve::index<1>), tts::map([&](auto e) -> v_t { return e << 1; }, a0));
   TTS_EQUAL(shl[test](a0, eve::index<1>), eve::if_else(test, eve::shl(a0, eve::index<1>), a0));
 };
 

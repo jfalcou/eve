@@ -56,10 +56,9 @@ TTS_CASE_WITH("Check behavior of eve::abs(eve::wide)",
               tts::generate(tts::randoms(-10, +10), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::abs(a0), map([](auto e) -> v_t { return e > 0 ? e : -e; }, a0));
+  TTS_EQUAL(eve::abs(a0), tts::map([](auto e) -> v_t { return e > 0 ? e : -e; }, a0));
   TTS_EQUAL(eve::abs[mask](a0), eve::if_else(mask, eve::abs(a0), a0));
 };
 
@@ -72,12 +71,11 @@ TTS_CASE_WITH("Check behavior of eve::abs[eve::saturated](eve::wide)",
 <typename T, typename M>(T const& a0, M const& mask)
 {
   using v_t = eve::element_type_t<T>;
-  using eve::detail::map;
 
   if constexpr( std::is_signed_v<v_t> )
   {
     TTS_EQUAL(eve::abs[eve::saturated](a0),
-              map([](auto e)
+              tts::map([](auto e)
                   { return e == eve::valmin(eve::as(e)) ? eve::valmax(eve::as(e)) : eve::abs(e); },
                   a0));
   }

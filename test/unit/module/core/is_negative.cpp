@@ -34,15 +34,14 @@ TTS_CASE_WITH("Check behavior of eve::is_negative(simd)",
   using eve::bit_or;
   using eve::bitofsign;
   using eve::one;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::is_negative(a0),
-            map([](auto e) -> eve::logical<v_t>
+            tts::map([](auto e) -> eve::logical<v_t>
                 { return bit_or(bitofsign(e), one(as(e))) < v_t(0); },
                 a0));
   TTS_EQUAL(eve::is_negative(-a0),
-            map([](auto e) -> eve::logical<v_t>
+            tts::map([](auto e) -> eve::logical<v_t>
                 { return bit_or(bitofsign(e), one(as(e))) < v_t(0); },
                 -a0));
   TTS_EQUAL(eve::is_negative[t](a0),

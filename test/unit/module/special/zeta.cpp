@@ -38,7 +38,7 @@ TTS_CASE_WITH("Check behavior of zeta on wide",
 #if defined(__cpp_lib_math_special_functions)
   using v_t = eve::element_type_t<T>;
   TTS_RELATIVE_EQUAL(
-      zeta(a0), map([](auto e) -> v_t { return std::riemann_zeta(v_t(e)); }, a0), 0.4);
+      zeta(a0), tts::map([](auto e) -> v_t { return std::riemann_zeta(v_t(e)); }, a0), 0.4);
   TTS_ULP_EQUAL(eve::zeta(T(0)), T(std::riemann_zeta(v_t(0))), 0.5);
   TTS_ULP_EQUAL(eve::zeta(T(-0.0)), T(std::riemann_zeta(v_t(-0.0))), 0.5);
   TTS_ULP_EQUAL(eve::zeta(T(1.5)), T(std::riemann_zeta(v_t(1.5))), 1.5);

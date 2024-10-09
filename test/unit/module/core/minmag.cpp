@@ -57,17 +57,16 @@ TTS_CASE_WITH("Check behavior of minmag on all types full range",
 {
   using eve::abs;
   using eve::minmag;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t { return minmag(minmag(a, b), c); };
-  TTS_ULP_EQUAL(minmag((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minmag[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minmag[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minmag[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(minmag(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minmag[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minmag[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minmag[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(minmag((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minmag[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minmag[eve::numeric]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minmag[eve::saturated]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(minmag(kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minmag[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minmag[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minmag[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(minmag[t](a0, a1), eve::if_else(t, minmag(a0, a1), a0));
 };

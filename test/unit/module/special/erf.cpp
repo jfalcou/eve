@@ -35,7 +35,7 @@ TTS_CASE_WITH("Check behavior of erf on wide",
   using v_t = eve::element_type_t<T>;
   using eve::as;
   using eve::erf;
-  TTS_ULP_EQUAL(erf(a0), map([&](auto e) -> v_t { return std::erf(e); }, a0), 2);
+  TTS_ULP_EQUAL(erf(a0), tts::map([&](auto e) -> v_t { return std::erf(e); }, a0), 2);
   TTS_ULP_EQUAL(erf(T(0.5)), T(std::erf(v_t(0.5))), 1.);
   TTS_ULP_EQUAL(erf(T(-35)), T(std::erf(v_t(-35))), 0.5);
   TTS_ULP_EQUAL(

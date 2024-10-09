@@ -33,16 +33,15 @@ TTS_CASE_WITH("Check behavior of fracscale(wide) and diff on  floating types",
               tts::generate(tts::randoms(-100.0, 100.0)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
 
   using eve::rec;
   using eve::sqr;
   TTS_ULP_EQUAL(eve::fracscale(a0, 4),
-                map([&](auto e) { return e - eve::ldexp(eve::nearest(eve::ldexp(e, 4)), -4); }, a0),
+                tts::map([&](auto e) { return e - eve::ldexp(eve::nearest(eve::ldexp(e, 4)), -4); }, a0),
                 2);
   TTS_ULP_EQUAL(
       eve::fracscale(a0, 10),
-      map([&](auto e) { return e - eve::ldexp(eve::nearest(eve::ldexp(e, 10)), -10); }, a0),
+      tts::map([&](auto e) { return e - eve::ldexp(eve::nearest(eve::ldexp(e, 10)), -10); }, a0),
       2);
 };
 

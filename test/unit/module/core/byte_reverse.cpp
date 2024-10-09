@@ -30,8 +30,8 @@ TTS_CASE_WITH("Check behavior of byte_reverse(simd) on integral types",
   if constexpr(sizeof(v_t) == 8)
   {
     using eve::byte_reverse;
-    using eve::detail::map;
-    TTS_EQUAL(byte_reverse(a0), map([](auto e) -> v_t { return byte_reverse(e); }, a0));
+    ;
+    TTS_EQUAL(byte_reverse(a0), tts::map([](auto e) -> v_t { return byte_reverse(e); }, a0));
     TTS_EQUAL(eve::byte_reverse[t](a0), eve::if_else(t, eve::byte_reverse(a0), a0));
   }
 };

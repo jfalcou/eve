@@ -79,20 +79,19 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::lower;
   using eve::upper;
   using eve::strict;
-  using eve::detail::map;
 
-  TTS_ULP_EQUAL( add(a0, a2), map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](a0, a2), map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( add(a0, a1, a2), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add(kumi::tuple{a0, a2}), map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a2}), map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add(a0, a2), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( add[saturated](a0, a2), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2), 0.5);
+  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
   if constexpr (eve::floating_value<T> && sizeof(eve::element_type_t<T>) == 4)
   {
-    TTS_ULP_EQUAL( add[lower](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[lower](add[lower](e, f), g); }, a0, a1, a2), 1.0);
-    TTS_ULP_EQUAL( add[upper](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return add[upper](add[upper](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( add[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[lower](add[lower](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( add[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[upper](add[upper](e, f), g); }, a0, a1, a2), 1.0);
     TTS_EXPECT(eve::all(add[upper](a0, a1, a2) >=  add[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
@@ -120,17 +119,16 @@ TTS_CASE_WITH("Check behavior of add on signed types",
 {
   using eve::add;
   using eve::saturated;
-  using eve::detail::map;
 
   auto e0 = a2.get(0);
 
   TTS_EQUAL(add[e0 > T(64)](a0, a1),
-            map([e0](auto e, auto f) { return e0 > 64 ? add(e, f) : e; }, a0, a1));
+            tts::map([e0](auto e, auto f) { return e0 > 64 ? add(e, f) : e; }, a0, a1));
   TTS_EQUAL(add[a2 > T(64)](a0, a1),
-            map([](auto e, auto f, auto g) { return g > 64 ? add(e, f) : e; }, a0, a1, a2));
+            tts::map([](auto e, auto f, auto g) { return g > 64 ? add(e, f) : e; }, a0, a1, a2));
   TTS_EQUAL(
       add[saturated][a2 > T(64)](a0, a1),
-      map([](auto e, auto f, auto g) { return g > 64 ? add[saturated](e, f) : e; }, a0, a1, a2));
+      tts::map([](auto e, auto f, auto g) { return g > 64 ? add[saturated](e, f) : e; }, a0, a1, a2));
 };
 
 

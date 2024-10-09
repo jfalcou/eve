@@ -5,8 +5,8 @@
 int main()
 {
   eve::wide pf = {3.0, -1.0, -3.0, 10.0};
-  eve::wide qf = {4.0, 1.0, 1.0, 15.0};;
-  eve::wide rf = {-1.0, 2.0, 3.0, 1.5};;
+  eve::wide qf = {4.0, 1.0, 1.0, 15.0};
+  eve::wide rf = {-1.0, 2.0, 3.0, 1.5};
   kumi::tuple wt{pf, qf, rf};
 
   std::cout << "<- pf                              = " << pf << "\n";

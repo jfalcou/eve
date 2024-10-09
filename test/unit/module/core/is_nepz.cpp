@@ -30,9 +30,8 @@ TTS_CASE_WITH("Check behavior of eve::is_nepz(simd)",
               tts::generate(tts::ramp(0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::is_nepz(a0), map([](auto e) -> eve::logical<v_t> { return eve::is_gtz(e) || eve::is_negative(e); }, a0));
+  TTS_EQUAL(eve::is_nepz(a0), tts::map([](auto e) -> eve::logical<v_t> { return eve::is_gtz(e) || eve::is_negative(e); }, a0));
   TTS_EQUAL(eve::is_nepz[t](a0), eve::if_else(t, eve::is_nepz(a0), eve::false_(eve::as(a0))));
 };

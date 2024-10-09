@@ -76,9 +76,8 @@ TTS_CASE_WITH("Check behavior of negatenz(wide)",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::negatenz;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL( negatenz(a0, a1), map([](auto e, auto f) -> v_t { return e*eve::signnz(f); }, a0, a1), 2);
+  TTS_ULP_EQUAL( negatenz(a0, a1), tts::map([](auto e, auto f) -> v_t { return e*eve::signnz(f); }, a0, a1), 2);
 };
 
 

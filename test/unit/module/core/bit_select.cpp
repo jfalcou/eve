@@ -36,7 +36,6 @@ TTS_CASE_WITH("Check behavior of bit_select(simd) on integers",
 {
   using v_t = eve::element_type_t<T>;
   using eve::bit_select;
-  using eve::detail::map;
   TTS_EQUAL(bit_select(a0, a1, a2),
-            map([](auto x, auto y, auto z) -> v_t { return (y & x) | (z & ~x); }, a0, a1, a2));
+            tts::map([](auto x, auto y, auto z) -> v_t { return (y & x) | (z & ~x); }, a0, a1, a2));
 };

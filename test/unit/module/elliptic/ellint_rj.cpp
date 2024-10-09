@@ -54,11 +54,10 @@ TTS_CASE_WITH("Check behavior of ellint_rj on wide",
                             tts::randoms(0, 100.0)))
 <typename T>(T const& x, T const& y, T const& z, T const& p)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::ellint_rj(x, y, z, p),
-                map([](auto e, auto f, auto g, auto h) -> v_t
+                tts::map([](auto e, auto f, auto g, auto h) -> v_t
                     { return boost::math::ellint_rj(e, f, g, h); },
                     x,
                     y,

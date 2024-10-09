@@ -40,13 +40,12 @@ TTS_CASE_WITH("Check behavior of atan2 on wide",
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
-      eve::atan2(a0, a1), map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a0, a1), 2);
+      eve::atan2(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a0, a1), 2);
   TTS_ULP_EQUAL(
-      eve::atan2(a2, a3), map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a2, a3), 2);
+      eve::atan2(a2, a3), tts::map([](auto e, auto f) -> v_t { return std::atan2(e, f); }, a2, a3), 2);
 };
 
 TTS_CASE_TPL("Check behavior of pedantic(atan2)", eve::test::simd::ieee_reals)

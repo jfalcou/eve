@@ -30,16 +30,15 @@ TTS_CASE_WITH ( "Check behavior of exp10 on wide"
               )
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t       = eve::element_type_t<T>;
   long double l10 = std::log(10.0l);
-  TTS_ULP_EQUAL(eve::exp10(a0), map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a0), 380) << "a0 " << a0 << '\n';
+  TTS_ULP_EQUAL(eve::exp10(a0), tts::map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a0), 380) << "a0 " << a0 << '\n';
 
   TTS_ULP_EQUAL(eve::exp10[eve::pedantic](a0),
-                map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a0),
+                tts::map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a0),
                 380);
   TTS_ULP_EQUAL(eve::exp10[eve::pedantic](a1),
-                map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a1),
+                tts::map([l10](auto e) -> v_t { return std::exp(l10 * e); }, a1),
                 2);
 };
 

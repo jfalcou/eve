@@ -31,35 +31,35 @@ TTS_CASE_WITH("Check behavior of bit_swap_adjacent(simd) on unsigned types",
   using eve::bit_swap_adjacent;
   {
     int n = 1;
-    TTS_EQUAL(bit_swap_adjacent(a0, n), map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
+    TTS_EQUAL(bit_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
     TTS_EQUAL(eve::bit_swap_adjacent[t](a0, n), eve::if_else(t, eve::bit_swap_adjacent(a0, n), a0));
   }
   {
     int n = 2;
-    TTS_EQUAL(bit_swap_adjacent(a0, n), map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
+    TTS_EQUAL(bit_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
     TTS_EQUAL(eve::bit_swap_adjacent[t](a0, n), eve::if_else(t, eve::bit_swap_adjacent(a0, n), a0));
   }
   {
     int n = 4;
-    TTS_EQUAL(bit_swap_adjacent(a0, n), map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
+    TTS_EQUAL(bit_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
     TTS_EQUAL(eve::bit_swap_adjacent[t](a0, n), eve::if_else(t, eve::bit_swap_adjacent(a0, n), a0));
   }
   if constexpr(sizeof(v_t) >= 2)
   {
     int n = 8;
-    TTS_EQUAL(bit_swap_adjacent(a0, n), map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
+    TTS_EQUAL(bit_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
     TTS_EQUAL(eve::bit_swap_adjacent[t](a0, n), eve::if_else(t, eve::bit_swap_adjacent(a0, n), a0));
   }
   if constexpr(sizeof(v_t) >= 4)
   {
     int n = 16;
-    TTS_EQUAL(bit_swap_adjacent(a0, n), map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
+    TTS_EQUAL(bit_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
     TTS_EQUAL(eve::bit_swap_adjacent[t](a0, n), eve::if_else(t, eve::bit_swap_adjacent(a0, n), a0));
   }
   if constexpr(sizeof(v_t) == 8)
   {
     int n = 32;
-    TTS_EQUAL(bit_swap_adjacent(a0, n), map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
+    TTS_EQUAL(bit_swap_adjacent(a0, n), tts::map([n](auto e) -> v_t { return bit_swap_adjacent(e, n); }, a0));
     TTS_EQUAL(eve::bit_swap_adjacent[t](a0, n), eve::if_else(t, eve::bit_swap_adjacent(a0, n), a0));
   }
 };

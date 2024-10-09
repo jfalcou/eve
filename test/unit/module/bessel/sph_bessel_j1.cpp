@@ -56,9 +56,9 @@ TTS_CASE_TPL("Check return types of sph_bessel_j1", eve::test::simd::ieee_reals)
   TTS_ULP_EQUAL(eve::sph_bessel_j1(T(1)), T(std_sph_bessel_j1(v_t(1))), 5000.0);
   TTS_ULP_EQUAL(eve::sph_bessel_j1(T(0)), eve::zero(eve::as<T>()), 0.0);
 
-  TTS_ULP_EQUAL(eve::sph_bessel_j1(a0), eve::detail::map(std_sph_bessel_j1, a0), 1390.0);
-  TTS_ULP_EQUAL(eve::sph_bessel_j1(a1), eve::detail::map(std_sph_bessel_j1, a1), 390.0);
-  TTS_ULP_EQUAL(eve::sph_bessel_j1(a2), eve::detail::map(std_sph_bessel_j1, a2), 10700.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_j1(a0), tts::map(std_sph_bessel_j1, a0), 1390.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_j1(a1), tts::map(std_sph_bessel_j1, a1), 390.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_j1(a2), tts::map(std_sph_bessel_j1, a2), 10700.0);
 #else
   TTS_PASS("No support for std::sph_bessel");
 #endif
