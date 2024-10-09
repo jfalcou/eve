@@ -11,6 +11,8 @@
 #include <eve/detail/meta.hpp>
 #include <eve/traits/overload.hpp>
 
+#include <functional>
+
 namespace eve
 {
 
