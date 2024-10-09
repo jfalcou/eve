@@ -34,7 +34,7 @@ namespace eve::detail
     else if constexpr( c == category::uint16x4 ) return fix(vsubl_u16(v, w));
     else if constexpr( c == category::int8x8   ) return fix(vsubl_s8 (v, w));
     else if constexpr( c == category::uint8x8  ) return fix(vsubl_u8 (v, w));
-    else if constexpr( match(c == category::integer_) && sizeof(T) <= 4 )
+    else if constexpr( match(c, category::integer_) && sizeof(T) <= 4 )
     {
       auto [vlo, vhi] = v.slice();
       auto [wlo, whi] = w.slice();
