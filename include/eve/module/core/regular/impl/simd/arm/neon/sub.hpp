@@ -16,13 +16,12 @@ namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE upgrade_t<wide<T, N>> sub_(EVE_REQUIRES(neon128_), O const& opts,
-                                              wide<T, N> v, wide<T, N> w) noexcept
+                                             wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    auto fix = [](auto r)
-    {
+    auto fix = [](auto r){
       using u_t  = upgrade_t<T>;
       using uw_t = upgrade_t<wide<T, N>>;
       if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
