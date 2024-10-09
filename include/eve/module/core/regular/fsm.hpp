@@ -30,8 +30,11 @@ namespace eve
     constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const noexcept
       requires (!Options::contains(promote))
     {
-      return this->behavior(as<common_value_t<T,U,V>>{}, eve::current_api, this->options(), a, b, c);
+      return this->behavior(as<common_value_t<T, U, V>>{}, eve::current_api, this->options(), a, b, c);
     }
+    
+    EVE_CALLABLE_OBJECT(fsm_t, fsm_);
+  };
 
   //================================================================================================
   //! @addtogroup core_fma_family
@@ -97,7 +100,6 @@ namespace eve
     {
       return fms[o](b, c, a);
     }
-
   }
 }
 
