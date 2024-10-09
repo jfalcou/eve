@@ -997,6 +997,11 @@ namespace eve
   //! @}
   //================================================================================================
 
+  // Represents a wide that occupies the same size, but formed with int8_t.
+  // Here we use that sizeof(std::int8_t) == 1, so sizeof(In) will represent the number
+  // of std::int8_t, that are needed to have the same size.
+  template<arithmetic_simd_value In> using wide_bytes = wide<std::int8_t, fixed<sizeof(In)>>;
+
   //====================================================================================================================
   //! @name Deduction Guides
   //! @{

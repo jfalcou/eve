@@ -57,11 +57,12 @@ simd_cast_test_one_way()
 
   U actual = eve::simd_cast(x, eve::as<U> {});
 
-  // the bit nature of logicals on avx512 (rvv probably too)
+  // the bit nature of logicals on avx512 and rvv
   // makes the byte level comparisons not work,
   // because part of the byte be garbage we need to ignore.
   // That doesn't happen on other platfroms.
-  if constexpr( eve::logical_simd_value<T> && eve::current_api >= eve::avx512 )
+  if constexpr( eve::logical_simd_value<T>
+                && (eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv) )
   {
     std::ptrdiff_t min_len = std::min(T::size(), U::size());
     for( std::ptrdiff_t i = 0; i != min_len; ++i ) { TTS_EQUAL(x.get(i), actual.get(i)); }
@@ -98,12 +99,36 @@ simd_cast_test_one_way()
       << "from: " << tts::typename_<T> << " to: " << tts::typename_<U>;
 }
 
+template<typename T>
+consteval bool
+test_enable_cardinals()
+{
+  using scalar_t                   = typename T::value_type;
+  constexpr auto cardinal          = eve::cardinal_v<T>;
+  constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+  if constexpr( expected_cardinal == cardinal ) return true;
+  else if constexpr( sizeof(scalar_t) == 8 && expected_cardinal * 2 == cardinal ) return true;
+  else return false;
+}
+template<typename T, typename U>
+consteval bool
+test_enable()
+{
+  if constexpr( eve::is_logical_v<T> ) return true;
+  else
+  {
+    constexpr auto size_limit = 256;
+    if constexpr( sizeof(T) <= size_limit && sizeof(U) <= size_limit ) return true;
+    else return test_enable_cardinals<T>();
+  }
+}
+
 template<typename T, typename U>
 void
 simd_cast_test()
 {
   // saving compile time a bit
-  if constexpr( T::size() * 2 <= U::size() )
+  if constexpr( test_enable<T, U>() )
   {
     simd_cast_test_one_way<T, U>();
     simd_cast_test_one_way<U, T>();
@@ -114,7 +139,7 @@ template<typename T, typename U>
 void
 simd_cast_logical_test()
 {
-  simd_cast_test<eve::logical<T>, eve::logical<U>>();
+  if constexpr( test_enable<T, U>() ) simd_cast_test<eve::logical<T>, eve::logical<U>>();
 }
 
 TTS_CASE_TPL("simd_cast, plain", eve::test::simd::all_types)
