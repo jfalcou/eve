@@ -97,7 +97,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(I_t(10), T(8)), T(std_cyl_bessel_yn(10, v_t(8))), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(I_t(10), T(8)), T(std_cyl_bessel_yn(10, v_t(8))), 20000.0);
 
-  TTS_ULP_EQUAL(eve::cyl_bessel_yn(n, a0), eve::detail::map(std_cyl_bessel_yn, n, a0), 100000.0);
+  TTS_ULP_EQUAL(eve::cyl_bessel_yn(n, a0), tts::map(std_cyl_bessel_yn, n, a0), 100000.0);
 #else
   TTS_PASS("No support for std::cyl_neumann");
 #endif
@@ -130,7 +130,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with non integral order",
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(10.5), T(8)), T(std_cyl_bessel_yn(v_t(10.5), v_t(8))), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(10.5), T(8)), T(std_cyl_bessel_yn(v_t(10.5), v_t(8))), 20000.0);
 
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_yn(n, a0), eve::detail::map(std_cyl_bessel_yn, n, a0), 0.22);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_yn(n, a0), tts::map(std_cyl_bessel_yn, n, a0), 0.22);
 #else
   TTS_PASS("No support for std::cyl_neumann");
 #endif

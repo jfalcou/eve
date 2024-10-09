@@ -20,11 +20,10 @@ TTS_CASE_WITH("Check behavior of swap_pairs(simd) on all types",
 {
   using v_t = eve::element_type_t<T>;
   using eve::swap_pairs;
-  using eve::detail::map;
   constexpr size_t S =  eve::cardinal_v<v_t>-1;
   constexpr auto _0 = eve::index_t<0>();
   constexpr auto _S = eve::index_t<S>();
   constexpr auto _H = eve::index_t<S/2>();
-  TTS_EQUAL(swap_pairs(a0, _0, _S), map([_0, _S](auto e) -> v_t { return swap_pairs(e, _0, _S); }, a0));
-  TTS_EQUAL(swap_pairs(a0, _0, _H), map([_0, _H](auto e) -> v_t { return swap_pairs(e, _0, _H); }, a0));
+  TTS_EQUAL(swap_pairs(a0, _0, _S), tts::map([_0, _S](auto e) -> v_t { return swap_pairs(e, _0, _S); }, a0));
+  TTS_EQUAL(swap_pairs(a0, _0, _H), tts::map([_0, _H](auto e) -> v_t { return swap_pairs(e, _0, _H); }, a0));
 };

@@ -106,7 +106,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(I_t(10), T(8)), T(std_cyl_bessel_kn(10, v_t(8))), 5.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(I_t(20), T(8)), T(std_cyl_bessel_kn(20, v_t(8))), 5.0);
 
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_kn(n, a0), map(std_cyl_bessel_kn, n, a0), 1.0e-4);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_kn(n, a0), tts::map(std_cyl_bessel_kn, n, a0), 1.0e-4);
 #else
   TTS_PASS("No support for std::cyl_bessel_k");
 #endif
@@ -152,7 +152,7 @@ TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(T(10.5), T(8)), T(std_cyl_bessel_kn(v_t(10.5), v_t(8))), 10.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(T(10.5), T(8)), T(std_cyl_bessel_kn(v_t(10.5), v_t(8))), 10.0);
 
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_kn(n, a0), map(std_cyl_bessel_kn, n, a0), 1.0e-3);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_kn(n, a0), tts::map(std_cyl_bessel_kn, n, a0), 1.0e-3);
 #else
   TTS_PASS("No support for std::cyl_bessel_k");
 #endif

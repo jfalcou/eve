@@ -35,17 +35,16 @@ TTS_CASE_WITH("Check behavior of asec on wide",
                             tts::randoms(-100.0, -1.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   auto sasec = [](auto e) -> v_t { return std::acos(1 / e); };
-  TTS_ULP_EQUAL(eve::asec(a0), map(sasec, a0), 3.5);
+  TTS_ULP_EQUAL(eve::asec(a0), tts::map(sasec, a0), 3.5);
 
-  TTS_ULP_EQUAL(eve::asec(a1), map(sasec, a1), 2);
+  TTS_ULP_EQUAL(eve::asec(a1), tts::map(sasec, a1), 2);
 
-  TTS_ULP_EQUAL(eve::asec(a2), map(sasec, a2), 2);
+  TTS_ULP_EQUAL(eve::asec(a2), tts::map(sasec, a2), 2);
 
-  TTS_ULP_EQUAL(eve::asec(a3), map(sasec, a3), 2);
+  TTS_ULP_EQUAL(eve::asec(a3), tts::map(sasec, a3), 2);
 };
 
 

@@ -35,17 +35,16 @@ TTS_CASE_WITH("Check behavior of acscpi on wide",
                             tts::randoms(-100.0, -1.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   auto sacscpi = [](auto e) -> v_t { return eve::radinpi(std::asin(1 / e)); };
-  TTS_ULP_EQUAL(eve::acscpi(a0), map(sacscpi, a0), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a0), tts::map(sacscpi, a0), 2);
 
-  TTS_ULP_EQUAL(eve::acscpi(a1), map(sacscpi, a1), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a1), tts::map(sacscpi, a1), 2);
 
-  TTS_ULP_EQUAL(eve::acscpi(a2), map(sacscpi, a2), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a2), tts::map(sacscpi, a2), 2);
 
-  TTS_ULP_EQUAL(eve::acscpi(a3), map(sacscpi, a3), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a3), tts::map(sacscpi, a3), 2);
 };
 
 

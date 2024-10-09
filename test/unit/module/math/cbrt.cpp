@@ -32,10 +32,9 @@ TTS_CASE_WITH("Check behavior of cbrt on wide",
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::cbrt(a0), map([](auto e) -> v_t { return std::cbrt(e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::cbrt(a0), tts::map([](auto e) -> v_t { return std::cbrt(e); }, a0), 2);
 };
 
 

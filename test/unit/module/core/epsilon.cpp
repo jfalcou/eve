@@ -30,7 +30,6 @@ TTS_CASE_WITH("Check behavior of eve::epsilon(simd)",
               tts::generate(tts::ramp(1)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using eve::as;
   if constexpr( eve::floating_value<T> )
@@ -51,7 +50,7 @@ TTS_CASE_WITH("Check behavior of eve::epsilon(simd)",
     TTS_ULP_EQUAL(eve::epsilon(T(2)), 2 * eve::eps(as<T>()), 0.5);
     TTS_ULP_EQUAL(eve::epsilon(T(1.5)), eve::eps(as<T>()), 0.5);
     TTS_ULP_EQUAL(eve::epsilon(a0),
-                  map([](auto e) -> v_t { return eve::bit_floor(e) * eve::eps(as<v_t>()); }, a0),
+                  tts::map([](auto e) -> v_t { return eve::bit_floor(e) * eve::eps(as<v_t>()); }, a0),
                   2);
     TTS_ULP_EQUAL(eve::epsilon[eve::downward](T(1)), eve::eps(as<T>())/2, 0.5);
     TTS_ULP_EQUAL(eve::epsilon[eve::downward](T(0)), eve::mindenormal(as<T>()), 0.5);

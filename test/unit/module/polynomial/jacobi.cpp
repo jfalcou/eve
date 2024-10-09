@@ -42,7 +42,7 @@ TTS_CASE_WITH( "Check behavior of diff jacobi on wide"
 {
   auto dt = eve::jacobi(i0, a0, a1, a2);
   auto bdt1 = [&](auto i, auto e, auto f,  auto g){return boost::math::jacobi(i, e, f, g); };
-  TTS_ULP_EQUAL(dt, eve::detail::map(bdt1, i0, a0, a1, a2), 1000);
+  TTS_ULP_EQUAL(dt, tts::map(bdt1, i0, a0, a1, a2), 1000);
 };
 #else
 TTS_CASE("Check return types of jacobi")

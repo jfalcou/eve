@@ -39,9 +39,8 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on integral types",
 {
   using v_t = eve::element_type_t<T>;
   using u_t = eve::as_integer_t<v_t, unsigned>;
-  using eve::detail::map;
   TTS_EQUAL(eve::bit_ceil(a0),
-            map([](auto e) { return v_t(eve::bit_ceil(u_t((e > 0) ? e : 0))); }, a0));
+            tts::map([](auto e) { return v_t(eve::bit_ceil(u_t((e > 0) ? e : 0))); }, a0));
   TTS_EQUAL(eve::bit_ceil[t](a0), eve::if_else(t, eve::bit_ceil(a0), a0));
 };
 
@@ -53,9 +52,8 @@ TTS_CASE_WITH("Check behavior of bit_ceil(wide) on floating",
   using v_t = eve::element_type_t<T>;
   using eve::exponent;
   using eve::ldexp;
-  using eve::detail::map;
   TTS_EQUAL(eve::bit_ceil(a0),
-            map(
+            tts::map(
                 [](auto x)
                 {
                   auto v = x;

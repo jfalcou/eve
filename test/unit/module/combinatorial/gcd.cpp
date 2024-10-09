@@ -29,9 +29,8 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::gcd on wide",
               tts::generate(tts::randoms(mini, eve::valmax), tts::randoms(mini, eve::valmax)))
 <typename T>(const T& a0, const T& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::gcd(a0, a1), map([](auto e, auto f) -> v_t { return std::gcd(e, f); }, a0, a1));
+  TTS_EQUAL(eve::gcd(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::gcd(e, f); }, a0, a1));
 };
 
 //==================================================================================================

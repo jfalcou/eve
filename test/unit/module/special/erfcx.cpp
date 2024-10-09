@@ -36,7 +36,7 @@ TTS_CASE_WITH("Check behavior of erfcx on wide",
   using eve::as;
   using eve::erfcx;
   TTS_ULP_EQUAL(
-      erfcx(a0), map([&](auto e) -> v_t { return std::exp(e * e) * std::erfc(e); }, a0), 8);
+      erfcx(a0), tts::map([&](auto e) -> v_t { return std::exp(e * e) * std::erfc(e); }, a0), 8);
   TTS_ULP_EQUAL(erfcx(T(-0.0)), T(1), 0);
   TTS_ULP_EQUAL(erfcx(T(0)), T(1), 0);
   TTS_ULP_EQUAL(erfcx(T(eve::epso_2(as<T>()))), T(0.999999999999999874724746818321), 0.5);

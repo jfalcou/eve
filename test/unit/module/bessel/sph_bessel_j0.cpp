@@ -54,9 +54,9 @@ TTS_CASE_WITH("Check behavior of eve::sph_bessel_j0 on wide",
   TTS_ULP_EQUAL(eve::sph_bessel_j0(T(1)), T(std_sph_bessel_j0(v_t(1))), 5000.0);
   TTS_ULP_EQUAL(eve::sph_bessel_j0(T(0)), eve::one(eve::as<T>()), 0.0);
 
-  TTS_ULP_EQUAL(eve::sph_bessel_j0(a0), map(std_sph_bessel_j0, a0), 2048.0);
-  TTS_ULP_EQUAL(eve::sph_bessel_j0(a1), map(std_sph_bessel_j0, a1), 2048.0);
-  TTS_ULP_EQUAL(eve::sph_bessel_j0(a2), map(std_sph_bessel_j0, a2), 2048.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_j0(a0), tts::map(std_sph_bessel_j0, a0), 2048.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_j0(a1), tts::map(std_sph_bessel_j0, a1), 2048.0);
+  TTS_ULP_EQUAL(eve::sph_bessel_j0(a2), tts::map(std_sph_bessel_j0, a2), 2048.0);
 #else
   TTS_PASS("No support for std::sph_bessel");
 #endif

@@ -38,14 +38,13 @@ TTS_CASE_WITH("Check behavior of eve::prev(eve::wide)",
               tts::generate(tts::randoms(-10, +10), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   if constexpr( eve::floating_value<v_t> )
   {
     auto n = [](auto e) -> v_t { return std::nextafter(e, eve::valmin(eve::as(e))); };
-    TTS_EQUAL(eve::prev(a0), map(n, a0));
+    TTS_EQUAL(eve::prev(a0), tts::map(n, a0));
     auto nn = [n](auto e) -> v_t { return n(n(e)); };
-    TTS_EQUAL(eve::prev(a0, 2), map(nn, a0));
+    TTS_EQUAL(eve::prev(a0, 2), tts::map(nn, a0));
   }
   else
   {

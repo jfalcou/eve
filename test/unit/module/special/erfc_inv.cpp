@@ -46,7 +46,7 @@ TTS_CASE_WITH("Check behavior of erfc_inv on wide",
   using v_t = eve::element_type_t<T>;
   using eve::as;
   using eve::erfc_inv;
-  TTS_ULP_EQUAL(erfc_inv(a0), map([](auto e) { return boost::math::erfc_inv(e); }, a0), 2);
+  TTS_ULP_EQUAL(erfc_inv(a0), tts::map([](auto e) { return boost::math::erfc_inv(e); }, a0), 2);
   TTS_ULP_EQUAL(erfc_inv(T(0.5)), T(boost::math::erfc_inv(v_t(0.5))), 1.);
 
   if constexpr( eve::platform::supports_invalids )

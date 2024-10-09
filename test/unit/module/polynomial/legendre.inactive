@@ -131,10 +131,10 @@ TTS_CASE_WITH("Check behavior of associated legendre p on wide",
   }
 
 #if defined(__cpp_lib_math_special_functions)
-  TTS_ULP_EQUAL(eve__legendrev(j0, i0, a0), map(std_assoc, j0, i0, a0), 100);
+  TTS_ULP_EQUAL(eve__legendrev(j0, i0, a0), tts::map(std_assoc, j0, i0, a0), 100);
 #endif
 
-  TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), map(boost_legendrev, i0, j0, a0), 100);
+  TTS_ULP_EQUAL(cse__legendrev(i0, j0, a0), tts::map(boost_legendrev, i0, j0, a0), 100);
 };
 
 /////////////spherical legendre
@@ -173,8 +173,8 @@ TTS_CASE_WITH("Check behavior of spherical legendre on wide",
 
   j0 = eve::min(i0, j0);
 #if defined(__cpp_lib_math_special_functions)
-  TTS_ULP_EQUAL(eve__slegendre(i0, j0, a0), map(std_slegendre, i0, j0, a0), 100);
+  TTS_ULP_EQUAL(eve__slegendre(i0, j0, a0), tts::map(std_slegendre, i0, j0, a0), 100);
 #else
-  TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), map(boost_slegendre, i0, j0, a0), 0.01);
+  TTS_RELATIVE_EQUAL(eve__slegendre(i0, j0, a0), tts::map(boost_slegendre, i0, j0, a0), 0.01);
 #endif
 };

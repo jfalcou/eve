@@ -29,10 +29,9 @@ TTS_CASE_WITH("Check behavior of eve::popcount(simd)",
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const&)
 {
-  using eve::detail::map;
   using i_t  = eve::as_integer_t<T, unsigned>;
   using vi_t = eve::element_type_t<i_t>;
 
-  TTS_EQUAL(eve::popcount(a0), map([](vi_t e) -> vi_t { return std::popcount(e); }, a0));
+  TTS_EQUAL(eve::popcount(a0), tts::map([](vi_t e) -> vi_t { return std::popcount(e); }, a0));
   //  TTS_EQUAL(eve::popcount[t](a0), eve::if_else(t, eve::popcount(a0), a0));
 };

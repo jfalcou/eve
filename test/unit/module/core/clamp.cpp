@@ -52,7 +52,7 @@ TTS_CASE_WITH("Check behavior of clamp(wide) and diff  on all types",
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(clamp(a0, a1, a2),
-            map([&](auto e, auto f, auto g) -> v_t { return std::clamp(e, f, g); }, a0, a1, a2));
+            tts::map([&](auto e, auto f, auto g) -> v_t { return std::clamp(e, f, g); }, a0, a1, a2));
 };
 
 

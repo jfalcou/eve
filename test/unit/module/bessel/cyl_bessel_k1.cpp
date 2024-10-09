@@ -40,10 +40,10 @@ TTS_CASE_WITH ( "Check behavior of cyl_bessel_k1 on wide"
 
 #if defined(__cpp_lib_math_special_functions)
   auto std_cyl_bessel_k1 = [](auto x) -> v_t { return std::cyl_bessel_k(v_t(1), x); };
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a0), eve::detail::map(std_cyl_bessel_k1, a0), 1e-4);
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a1), eve::detail::map(std_cyl_bessel_k1, a1), 1e-4);
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a2), eve::detail::map(std_cyl_bessel_k1, a2), 1e-4);
-  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a3), eve::detail::map(std_cyl_bessel_k1, a3), 2e-2);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a0), tts::map(std_cyl_bessel_k1, a0), 1e-4);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a1), tts::map(std_cyl_bessel_k1, a1), 1e-4);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a2), tts::map(std_cyl_bessel_k1, a2), 1e-4);
+  TTS_RELATIVE_EQUAL(eve::cyl_bessel_k1(a3), tts::map(std_cyl_bessel_k1, a3), 2e-2);
 #else
   TTS_PASS("No support for std::cyl_bessel_k");
 #endif

@@ -423,6 +423,14 @@ namespace tts
       }
     }();
   }
+  
+  template<typename Fn, typename Wm, typename... Args>
+  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::detail::get_at(wm, 0), eve::detail::get_at(args, 0)...)), eve::cardinal_t<Wm>>
+  {
+    using r_t = eve::as_wide_t<decltype(f(eve::detail::get_at(wm, 0), eve::detail::get_at(args, 0)...)), eve::cardinal_t<Wm>>;
+    auto call_f = [&](auto idx) { return f(eve::detail::get_at(wm, idx), eve::detail::get_at(args, idx)...); };
+    return eve::detail::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
+  }
 }
 
 //==================================================================================================

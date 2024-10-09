@@ -47,10 +47,9 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::geommean;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(geommean(a0, a1),
-                map(
+                tts::map(
                     [](auto e, auto f) -> v_t {
                       return (eve::sign(e) * eve::sign(f) >= 0) ? std::sqrt(e * f)
                                                                 : eve::nan(eve::as<v_t>());
@@ -59,13 +58,13 @@ TTS_CASE_WITH("Check behavior of geommean(wide)",
                     a1),
                 2);
   TTS_ULP_EQUAL(geommean(a0, a1, a2),
-                map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
   TTS_ULP_EQUAL(geommean[eve::pedantic](a0, a1, a2),
-                map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
  TTS_ULP_EQUAL(geommean(kumi::tuple{a0, a1, a2}),
-                map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
+                tts::map([](auto e, auto f, auto g) { return std::cbrt(g * f * e); }, a0, a1, a2),
                 30);
 };
 

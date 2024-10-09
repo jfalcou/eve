@@ -32,9 +32,8 @@ TTS_CASE_WITH("Check behavior of asech on wide",
               tts::generate(tts::randoms(0, 1.0)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(eve::asech(a0), map([](auto e) -> v_t { return std::acosh(1 / e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::asech(a0), tts::map([](auto e) -> v_t { return std::acosh(1 / e); }, a0), 2);
 };
 
 

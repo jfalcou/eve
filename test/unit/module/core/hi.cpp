@@ -37,10 +37,10 @@ TTS_CASE_WITH("Check behavior of hi(wide) on unsigned integral ",
   constexpr int s = sizeof(v_t) * 4;
   if constexpr( s == 4 )
   {
-    TTS_EQUAL(eve::hi(a0), map([&](auto e) -> v_t { return d_t(eve::shr(e, s)); }, a0));
+    TTS_EQUAL(eve::hi(a0), tts::map([&](auto e) -> v_t { return d_t(eve::shr(e, s)); }, a0));
   }
   else
   {
-    TTS_EQUAL(eve::hi(a0), map([&](auto e) -> d_t { return d_t(eve::shr(e, s)); }, a0));
+    TTS_EQUAL(eve::hi(a0), tts::map([&](auto e) -> d_t { return d_t(eve::shr(e, s)); }, a0));
   }
 };

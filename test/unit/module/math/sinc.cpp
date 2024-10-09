@@ -36,13 +36,12 @@ TTS_CASE_WITH("Check behavior of sinc on wide",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::sinc;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
 
   auto ref = [](auto e) -> v_t { return e ? std::sin(e) / e : v_t(1); };
-  TTS_ULP_EQUAL(sinc(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(sinc(a1), map(ref, a1), 2);
+  TTS_ULP_EQUAL(sinc(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sinc(a1), tts::map(ref, a1), 2);
 };
 
 

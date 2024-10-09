@@ -62,13 +62,12 @@ TTS_CASE_WITH("Check behavior of div on wide",
   using eve::downward;
   using eve::to_nearest;
   using eve::upward;
-  using eve::detail::map;
   a2 = eve::if_else(eve::is_eqz(a2), eve::one, a2);
 
-  TTS_EQUAL(eve::div(a0, a2), map([](auto e, auto f) { return eve::div(e, f); }, a0, a2));
-  TTS_EQUAL(div[downward](a0, a2), map([&](auto e, auto f) { return div[downward](e, f); }, a0, a2));
-  TTS_EQUAL(div[upward](a0, a2), map([&](auto e, auto f) { return div[upward](e, f); }, a0, a2));
-  TTS_EQUAL(div[to_nearest](a0, a2),  map([&](auto e, auto f) { return div[to_nearest](e, f); }, a0, a2));
+  TTS_EQUAL(eve::div(a0, a2), tts::map([](auto e, auto f) { return eve::div(e, f); }, a0, a2));
+  TTS_EQUAL(div[downward](a0, a2), tts::map([&](auto e, auto f) { return div[downward](e, f); }, a0, a2));
+  TTS_EQUAL(div[upward](a0, a2), tts::map([&](auto e, auto f) { return div[upward](e, f); }, a0, a2));
+  TTS_EQUAL(div[to_nearest](a0, a2),  tts::map([&](auto e, auto f) { return div[to_nearest](e, f); }, a0, a2));
 };
 
 //==================================================================================================
@@ -216,19 +215,18 @@ TTS_CASE_WITH("Check behavior of div on signed types",
   using eve::is_nez;
   using eve::to_nearest;
   using eve::upward;
-  using eve::detail::map;
   TTS_ULP_EQUAL(div[downward][is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return is_nez(f) ? div[downward](e, f) : e; }, a0, a2),
+                tts::map([](auto e, auto f) { return is_nez(f) ? div[downward](e, f) : e; }, a0, a2),
                 2.5);
   TTS_ULP_EQUAL(div[upward][is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return is_nez(f) ? div[upward](e, f) : e; }, a0, a2),
+                tts::map([](auto e, auto f) { return is_nez(f) ? div[upward](e, f) : e; }, a0, a2),
                 2.5);
   TTS_ULP_EQUAL(div[to_nearest][is_nez(a2)](a0, a2),
-                map([](auto e, auto f) { return is_nez(f) ? div[to_nearest](e, f) : e; }, a0, a2),
+                tts::map([](auto e, auto f) { return is_nez(f) ? div[to_nearest](e, f) : e; }, a0, a2),
                 2.5);
 
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_EQUAL(div[downward][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[downward](e, f) : e; }, a0, a1, a2));
-  TTS_EQUAL(div[upward][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[upward](e, f) : e; }, a0, a1, a2));
-  TTS_EQUAL(div[to_nearest][a2 > T(64)](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? div[to_nearest](e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(div[downward][a2 > T(64)](a0, a1), tts::map([](auto e, auto f, auto g) { return g > 64 ? div[downward](e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(div[upward][a2 > T(64)](a0, a1), tts::map([](auto e, auto f, auto g) { return g > 64 ? div[upward](e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(div[to_nearest][a2 > T(64)](a0, a1), tts::map([](auto e, auto f, auto g) { return g > 64 ? div[to_nearest](e, f) : e; }, a0, a1, a2));
 };

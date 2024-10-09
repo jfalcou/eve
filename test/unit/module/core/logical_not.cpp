@@ -30,10 +30,9 @@ TTS_CASE_WITH("Check behavior of eve::logical_not(simd)",
               tts::generate(tts::logicals(0, 3)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::logical_not(a0), map([](auto e) -> v_t { return !e; }, a0));
+  TTS_EQUAL(eve::logical_not(a0), tts::map([](auto e) -> v_t { return !e; }, a0));
   TTS_EQUAL(eve::logical_not(true), false);
   TTS_EQUAL(eve::logical_not(false), true);
 };

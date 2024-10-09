@@ -48,11 +48,10 @@ TTS_CASE_WITH("Check behavior of remainder on wide",
 <typename T>(T a0, T a1)
 {
   using eve::remainder;
-  using eve::detail::map;
 
   auto thrs = std::same_as<eve::element_type_t<T>, float> ? 5e-4 : 5e-12;
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_RELATIVE_EQUAL(remainder(a0, a1), map([](auto e, auto f) { return std::remainder(e, f); }, a0, a1), thrs);
+  TTS_RELATIVE_EQUAL(remainder(a0, a1), tts::map([](auto e, auto f) { return std::remainder(e, f); }, a0, a1), thrs);
 };
 
 

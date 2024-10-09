@@ -37,10 +37,9 @@ TTS_CASE_WITH("Check behavior of eve::signnz(eve::wide)",
               tts::generate(tts::randoms(-10, +10), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::signnz(a0), map([](auto e) -> v_t { return e >= 0 ? 1 : -1; }, a0));
+  TTS_EQUAL(eve::signnz(a0), tts::map([](auto e) -> v_t { return e >= 0 ? 1 : -1; }, a0));
   TTS_EQUAL(eve::signnz[mask](a0), eve::if_else(mask, eve::signnz(a0), a0));
   if constexpr( eve::floating_value<T> )
   {

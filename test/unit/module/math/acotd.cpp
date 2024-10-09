@@ -32,11 +32,10 @@ TTS_CASE_WITH("Check behavior of acotd on wide",
               tts::generate(tts::randoms(-1e20, 1e20)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
-      eve::acotd(a0), map([](auto e) -> v_t { return eve::radindeg(std::atan(1 / e)); }, a0), 2);
+      eve::acotd(a0), tts::map([](auto e) -> v_t { return eve::radindeg(std::atan(1 / e)); }, a0), 2);
 };
 
 

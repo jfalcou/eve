@@ -35,17 +35,16 @@ TTS_CASE_WITH("Check behavior of asecpi on wide",
                             tts::randoms(-100.0, -1.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   auto sasecpi = [](auto e) -> v_t { return eve::radinpi(std::acos(1 / e)); };
-  TTS_ULP_EQUAL(eve::asecpi(a0), map(sasecpi, a0), 2);
+  TTS_ULP_EQUAL(eve::asecpi(a0), tts::map(sasecpi, a0), 2);
 
-  TTS_ULP_EQUAL(eve::asecpi(a1), map(sasecpi, a1), 2);
+  TTS_ULP_EQUAL(eve::asecpi(a1), tts::map(sasecpi, a1), 2);
 
-  TTS_ULP_EQUAL(eve::asecpi(a2), map(sasecpi, a2), 2);
+  TTS_ULP_EQUAL(eve::asecpi(a2), tts::map(sasecpi, a2), 2);
 
-  TTS_ULP_EQUAL(eve::asecpi(a3), map(sasecpi, a3), 2);
+  TTS_ULP_EQUAL(eve::asecpi(a3), tts::map(sasecpi, a3), 2);
 };
 
 

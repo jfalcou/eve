@@ -32,11 +32,10 @@ TTS_CASE_WITH("Check behavior of acotpi on wide",
               tts::generate(tts::randoms(-1e20, 1e20)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
-      eve::acotpi(a0), map([](auto e) -> v_t { return eve::radinpi(std::atan(1 / e)); }, a0), 2);
+      eve::acotpi(a0), tts::map([](auto e) -> v_t { return eve::radinpi(std::atan(1 / e)); }, a0), 2);
 };
 
 

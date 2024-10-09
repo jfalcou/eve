@@ -41,28 +41,27 @@ TTS_CASE_WITH("Check behavior of cos on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::sinpicospi;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   auto refc = [](auto e) -> v_t { return eve::cospi(e); };
   auto refs = [](auto e) -> v_t { return eve::sinpi(e); };
   {
     auto [s, c] =  sinpicospi[eve::quarter_circle](a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
   }
   {
     auto [s, c] = sinpicospi(a0);
-    TTS_ULP_EQUAL(s, map(refs, a0), 2);
-    TTS_ULP_EQUAL(c, map(refc, a0), 2);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
     auto [s1, c1] = sinpicospi(a1);
-    TTS_ULP_EQUAL(s1, map(refs, a1), 2);
-    TTS_ULP_EQUAL(c1, map(refc, a1), 2);
+    TTS_ULP_EQUAL(s1, tts::map(refs, a1), 2);
+    TTS_ULP_EQUAL(c1, tts::map(refc, a1), 2);
     auto [s2, c2] = sinpicospi(a2);
-    TTS_ULP_EQUAL(s2, map(refs, a2), 2);
-    TTS_ULP_EQUAL(c2, map(refc, a2), 2);
+    TTS_ULP_EQUAL(s2, tts::map(refs, a2), 2);
+    TTS_ULP_EQUAL(c2, tts::map(refc, a2), 2);
     auto [s3, c3] = sinpicospi(a3);
-    TTS_ULP_EQUAL(s3, map(refs, a3), 2);
-    TTS_ULP_EQUAL(c3, map(refc, a3), 2);
+    TTS_ULP_EQUAL(s3, tts::map(refs, a3), 2);
+    TTS_ULP_EQUAL(c3, tts::map(refc, a3), 2);
   }
 };

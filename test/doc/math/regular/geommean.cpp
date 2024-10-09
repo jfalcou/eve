@@ -21,7 +21,7 @@ int main()
             << " yi                  = " << yi << '\n'
             << " -> geommean(xi, yi) = " << eve::geommean(xi, yi) << '\n';
 
-  w_t pf = {3, 1, -3, -10}, qf = {4, 1, 1, 15};;
+  w_t pf = {3, 1, -3, -10}, qf = {4, 1, 1, 15};
   std::cout << "---- multi" << '\n'
             << " <- pf                             = " << pf << '\n'
             << " <- qf                             = " << qf << '\n'

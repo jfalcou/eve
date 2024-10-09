@@ -48,15 +48,15 @@ TTS_CASE_WITH("Check behavior of rotr on wide",
   using eve::rotr;
   TTS_EQUAL(rotr(a0, 0u), a0);
   TTS_EQUAL(rotr(a0, eve::index<0>), a0);
-  TTS_EQUAL(rotr(a0, 1u), map([](auto e) { return std::rotr(e, 1u); }, a0));
-  TTS_EQUAL(rotr(a0, eve::index<4>), map([](auto e) { return std::rotr(e, 4u); }, a0));
+  TTS_EQUAL(rotr(a0, 1u), tts::map([](auto e) { return std::rotr(e, 1u); }, a0));
+  TTS_EQUAL(rotr(a0, eve::index<4>), tts::map([](auto e) { return std::rotr(e, 4u); }, a0));
   using v_t = eve::element_type_t<T>;
   a0        = eve::one(eve::as(a0));
   a1        = eve::iota(eve::as(a0));
   a1        = a1 % (sizeof(v_t) * 8);
   auto ua1  =  eve::convert(a1,  eve::int_from<T>());
-  TTS_EQUAL(rotr(a0, a1), map([](auto e, auto f) -> v_t { return std::rotr(e, f); }, a0, a1));
-  TTS_EQUAL(rotr(a0, ua1), map([](auto e, auto f) -> v_t { return std::rotr(e, f); }, a0, ua1));
+  TTS_EQUAL(rotr(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::rotr(e, f); }, a0, a1));
+  TTS_EQUAL(rotr(a0, ua1), tts::map([](auto e, auto f) -> v_t { return std::rotr(e, f); }, a0, ua1));
 };
 
 //======================================================================================================================

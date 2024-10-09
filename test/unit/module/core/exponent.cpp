@@ -32,12 +32,11 @@ TTS_CASE_WITH("Check behavior of eve::exponent(simd)",
               tts::generate(tts::between(-1.0, 1.0), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& t)
 {
-  using eve::detail::map;
   using i_t  = eve::as_integer_t<T>;
   using vi_t = eve::element_type_t<i_t>;
 
   TTS_EQUAL(eve::exponent(a0),
-            map(
+            tts::map(
                 [](auto e) -> vi_t
                 {
                   int ee;

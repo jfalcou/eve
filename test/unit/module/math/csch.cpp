@@ -43,13 +43,12 @@ TTS_CASE_WITH("Check behavior of csch on wide",
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using eve::coth;
   using eve::csch;
 
-  TTS_ULP_EQUAL(csch(a0), map([](auto e) -> v_t { return 1.0 / std::sinh(e); }, a0), 2);
-  TTS_ULP_EQUAL(csch(a1), map([](auto e) -> v_t { return 1.0 / std::sinh(e); }, a1), 2);
+  TTS_ULP_EQUAL(csch(a0), tts::map([](auto e) -> v_t { return 1.0 / std::sinh(e); }, a0), 2);
+  TTS_ULP_EQUAL(csch(a1), tts::map([](auto e) -> v_t { return 1.0 / std::sinh(e); }, a1), 2);
 };
 
 

@@ -33,6 +33,6 @@ TTS_CASE_WITH("Check behavior of eve::rat(simd)",
 {
   using v_t   = eve::element_type_t<T>;
   auto [n, d] = eve::rat(a0 / 37);
-  TTS_EQUAL(n, eve::detail::map([](auto e) -> v_t { return e; }, a0));
+  TTS_EQUAL(n, tts::map([](auto e) -> v_t { return e; }, a0));
   TTS_EQUAL(d, T(37));
 };

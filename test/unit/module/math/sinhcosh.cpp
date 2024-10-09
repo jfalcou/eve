@@ -43,12 +43,11 @@ TTS_CASE_WITH("Check behavior of cos on wide",
 <typename T>(T const& a0)
 {
   using eve::sinhcosh;
-  using eve::detail::map;
 
   using v_t   = eve::element_type_t<T>;
   auto refc   = [](auto e) -> v_t { return std::cosh(e); };
   auto refs   = [](auto e) -> v_t { return std::sinh(e); };
   auto [s, c] = sinhcosh(a0);
-  TTS_ULP_EQUAL(s, map(refs, a0), 2);
-  TTS_ULP_EQUAL(c, map(refc, a0), 2);
+  TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+  TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
 };

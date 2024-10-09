@@ -47,10 +47,9 @@ TTS_CASE_WITH("Check behavior of eve::minus(eve::wide)",
               tts::generate(tts::randoms(-10, +10), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::minus(a0), map([](auto e) -> v_t { return -e; }, a0));
+  TTS_EQUAL(eve::minus(a0), tts::map([](auto e) -> v_t { return -e; }, a0));
   TTS_EQUAL(eve::minus[mask](a0), eve::if_else(mask, eve::minus(a0), a0));
   TTS_EQUAL(eve::minus[eve::if_(mask).else_(99)](a0), eve::if_else(mask, eve::minus(a0), T{99}));
   TTS_EQUAL(eve::minus[eve::ignore_all](a0), a0);
@@ -65,10 +64,9 @@ TTS_CASE_WITH("Check behavior of eve::minus[eve::saturated](eve::wide)",
               tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
-  using eve::detail::map;
 
   TTS_EQUAL(eve::minus[eve::saturated](a0),
-            map([](auto e)
+            tts::map([](auto e)
                 { return e == eve::valmin(eve::as(e)) ? eve::valmax(eve::as(e)) : eve::minus(e); },
                 a0));
   TTS_EQUAL(eve::minus[mask][eve::saturated](a0),

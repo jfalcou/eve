@@ -37,7 +37,7 @@ TTS_CASE_WITH("Check behavior of tgamma on wide",
 #if defined(__cpp_lib_math_special_functions)
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(tgamma(a0), map([&](auto e) -> v_t { return std::tgamma(e); }, a0), 4);
+  TTS_ULP_EQUAL(tgamma(a0), tts::map([&](auto e) -> v_t { return std::tgamma(e); }, a0), 4);
 #endif // __cpp_lib_math_special_functions
 
   if constexpr( eve::platform::supports_invalids )

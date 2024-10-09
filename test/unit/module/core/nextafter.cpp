@@ -34,12 +34,11 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
                             tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   if constexpr( eve::floating_value<v_t> )
   {
     auto n = [](auto e, auto f) -> v_t { return std::nextafter(e, f); };
-    TTS_EQUAL(eve::nextafter(a0, a1), map(n, a0, a1));
+    TTS_EQUAL(eve::nextafter(a0, a1), tts::map(n, a0, a1));
     TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic](eve::nan(eve::as<T>()), T(1)),
                    eve::nan(eve::as<T>()));
     TTS_IEEE_EQUAL(eve::nextafter[eve::pedantic](T(1), eve::nan(eve::as<T>())),

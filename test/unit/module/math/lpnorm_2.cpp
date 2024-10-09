@@ -25,7 +25,6 @@ TTS_CASE_WITH("Check behavior of lpnorm on wide",
                             tts::randoms(0.5, 2.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3, T const& a4, T const& a5)
 {
-  using eve::detail::map;
 
   TTS_ULP_EQUAL(eve::lpnorm(2, a0, a1), eve::hypot(a0, a1), 2);
   TTS_ULP_EQUAL(eve::lpnorm(2, a2, a3), eve::hypot(a2, a3), 2);

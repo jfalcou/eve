@@ -32,10 +32,9 @@ TTS_CASE_WITH("Check behavior of acoth on wide",
               tts::generate(tts::randoms(1.0, 1e20)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_ULP_EQUAL(eve::acoth(a0), map([](auto e) -> v_t { return std::atanh(1 / e); }, a0), 2);
+  TTS_ULP_EQUAL(eve::acoth(a0), tts::map([](auto e) -> v_t { return std::atanh(1 / e); }, a0), 2);
 };
 
 

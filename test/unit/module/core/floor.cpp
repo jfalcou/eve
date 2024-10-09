@@ -101,7 +101,6 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
               tts::generate(tts::randoms(mini, +50)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using wi_t  = eve::as_integer_t<T>;
   using uwi_t = eve::as_integer_t<T, unsigned>;
   using v_t   = eve::element_type_t<T>;
@@ -109,7 +108,7 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
   using ui_t  = eve::as_integer_t<v_t, unsigned>;
   if constexpr( eve::floating_value<T> )
   {
-    TTS_EQUAL(eve::floor(a0), map([&](auto e) -> v_t { return v_t(std::floor(e)); }, a0));
+    TTS_EQUAL(eve::floor(a0), tts::map([&](auto e) -> v_t { return v_t(std::floor(e)); }, a0));
 
     TTS_EQUAL(eve::floor(a0, eve::as<int>()),
               wi_t([&](auto i, auto) { return i_t(std::floor(a0.get(i))); }));

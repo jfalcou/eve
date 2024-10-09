@@ -37,9 +37,8 @@ TTS_CASE_WITH("Check behavior of abel on wide",
 <typename T, typename I>(T const& a0, T const& a1, I const&)
 {
   using v_t =  eve::element_type_t<T>;
-  auto std_abel = [](uint32_t n, auto x, auto a) ->v_t{ return x*std::pow(x-n*a, n-1); };
   for( unsigned int n = 1; n < 6; ++n )
   {
-    TTS_ULP_EQUAL(eve::abel(n, a0, a1), map(std_abel, n, a0, a1), 3.0);
+    TTS_ULP_EQUAL(eve::abel(n, a0, a1), tts::map([](auto x, auto a, uint32_t n) -> v_t { return x * std::pow(x - n * a, n - 1); }, a0, a1, n), 3.0);
   }
 };

@@ -43,7 +43,6 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
 <typename T>(T a0, T a1)
 {
   using eve::dist;
-  using eve::detail::map;
   TTS_ULP_EQUAL(dist(a0, a1), eve::max(a0, a1) - eve::min(a0, a1), 2);
   TTS_ULP_EQUAL(dist[eve::saturated](a0, a1), [](auto a, auto b){
                   auto d = eve::dist(a, b);
@@ -81,13 +80,12 @@ TTS_CASE_WITH("Check behavior of dist(wide)",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::dist;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(dist(a0, a1),
-                map([](auto e, auto f) -> v_t { return std::max(e, f) - std::min(f, e); }, a0, a1),
+                tts::map([](auto e, auto f) -> v_t { return std::max(e, f) - std::min(f, e); }, a0, a1),
                 2);
   TTS_ULP_EQUAL(dist[eve::saturated](a0, a1),
-                map(
+                tts::map(
                     [](auto e, auto f) -> v_t
                     {
                       v_t d = eve::max(e, f) - eve::min(f, e);

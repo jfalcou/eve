@@ -32,11 +32,10 @@ TTS_CASE_WITH("Check behavior of asind on wide",
               tts::generate(tts::randoms(-1, 1)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
-      eve::asind(a0), map([](auto e) -> v_t { return eve::radindeg(std::asin(e)); }, a0), 2);
+      eve::asind(a0), tts::map([](auto e) -> v_t { return eve::radindeg(std::asin(e)); }, a0), 2);
 };
 
 

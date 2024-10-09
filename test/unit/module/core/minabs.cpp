@@ -57,18 +57,17 @@ TTS_CASE_WITH("Check behavior of minabs on all types full range",
 {
   using eve::abs;
   using eve::minabs;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto m    = [](auto a, auto b, auto c) -> v_t
   { return eve::min(eve::abs(a), eve::abs(b), eve::abs(c)); };
-  TTS_ULP_EQUAL(minabs((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minabs[eve::pedantic]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minabs[eve::numeric]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minabs[eve::saturated]((a0), (a1), (a2)), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(minabs(kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minabs[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minabs[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
-  TTS_ULP_EQUAL(eve::minabs[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(minabs((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minabs[eve::pedantic]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minabs[eve::numeric]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minabs[eve::saturated]((a0), (a1), (a2)), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(minabs(kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minabs[eve::pedantic](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minabs[eve::numeric](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
+  TTS_ULP_EQUAL(eve::minabs[eve::saturated](kumi::tuple{(a0), (a1), (a2)}), tts::map(m, a0, a1, a2), 2);
 
   TTS_IEEE_EQUAL(minabs[t](a0, a1), eve::if_else(t, minabs(a0, a1), a0));
 };

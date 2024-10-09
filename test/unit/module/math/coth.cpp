@@ -41,13 +41,12 @@ TTS_CASE_WITH("Check behavior of coth on wide",
                             tts::randoms(-1.0, 1.0)))
 <typename T>(T const& a0, T const& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   using eve::coth;
   using eve::sinh;
 
-  TTS_ULP_EQUAL(coth(a0), map([](auto e) -> v_t { return 1.0 / std::tanh(double(e)); }, a0), 2);
-  TTS_ULP_EQUAL(coth(a1), map([](auto e) -> v_t { return 1.0 / std::tanh(double(e)); }, a1), 2);
+  TTS_ULP_EQUAL(coth(a0), tts::map([](auto e) -> v_t { return 1.0 / std::tanh(double(e)); }, a0), 2);
+  TTS_ULP_EQUAL(coth(a1), tts::map([](auto e) -> v_t { return 1.0 / std::tanh(double(e)); }, a1), 2);
 
   TTS_IEEE_EQUAL(eve::coth(T(0)), eve::inf(eve::as<T>()));
   TTS_IEEE_EQUAL(eve::coth(T(-0.)), eve::minf(eve::as<T>()));

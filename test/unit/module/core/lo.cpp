@@ -38,11 +38,11 @@ TTS_CASE_WITH("Check behavior of lo(wide) on unsigned integral ",
   if constexpr( s == 4 )
   {
     TTS_EQUAL(eve::lo(a0),
-              map([&](auto e) -> v_t { return d_t(eve::shr(eve::shl(e, s), s)); }, a0));
+              tts::map([&](auto e) -> v_t { return d_t(eve::shr(eve::shl(e, s), s)); }, a0));
   }
   else
   {
     TTS_EQUAL(eve::lo(a0),
-              map([&](auto e) -> d_t { return d_t(eve::shr(eve::shl(e, s), s)); }, a0));
+              tts::map([&](auto e) -> d_t { return d_t(eve::shr(eve::shl(e, s), s)); }, a0));
   }
 };

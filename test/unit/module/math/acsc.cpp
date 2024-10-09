@@ -35,17 +35,16 @@ TTS_CASE_WITH("Check behavior of acsc on wide",
                             tts::randoms(-100.0, -1.0)))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   auto sacsc = [](auto e) -> v_t { return std::asin(1 / e); };
-  TTS_ULP_EQUAL(eve::acsc(a0), map(sacsc, a0), 2);
+  TTS_ULP_EQUAL(eve::acsc(a0), tts::map(sacsc, a0), 2);
 
-  TTS_ULP_EQUAL(eve::acsc(a1), map(sacsc, a1), 2);
+  TTS_ULP_EQUAL(eve::acsc(a1), tts::map(sacsc, a1), 2);
 
-  TTS_ULP_EQUAL(eve::acsc(a2), map(sacsc, a2), 2);
+  TTS_ULP_EQUAL(eve::acsc(a2), tts::map(sacsc, a2), 2);
 
-  TTS_ULP_EQUAL(eve::acsc(a3), map(sacsc, a3), 2);
+  TTS_ULP_EQUAL(eve::acsc(a3), tts::map(sacsc, a3), 2);
 };
 
 

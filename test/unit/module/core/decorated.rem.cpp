@@ -55,13 +55,12 @@ TTS_CASE_WITH("Check behavior of rem on wide",
   using eve::rem;
   using eve::to_nearest;
   using eve::upward;
-  using eve::detail::map;
   a2 = eve::if_else(eve::is_eqz(a2), eve::one, a2);
 
-  TTS_EQUAL(eve::rem(a0, a2), map([](auto e, auto f) { return eve::rem(e, f); }, a0, a2));
-  TTS_EQUAL(rem[downward](a0, a2),  map([&](auto e, auto f) { return rem[downward](e, f); }, a0, a2));
-  TTS_EQUAL(rem[upward](a0, a2), map([&](auto e, auto f) { return rem[upward](e, f); }, a0, a2));
-  TTS_EQUAL(rem[to_nearest](a0, a2), map([&](auto e, auto f) { return rem[to_nearest](e, f); }, a0, a2));
+  TTS_EQUAL(eve::rem(a0, a2), tts::map([](auto e, auto f) { return eve::rem(e, f); }, a0, a2));
+  TTS_EQUAL(rem[downward](a0, a2),  tts::map([&](auto e, auto f) { return rem[downward](e, f); }, a0, a2));
+  TTS_EQUAL(rem[upward](a0, a2), tts::map([&](auto e, auto f) { return rem[upward](e, f); }, a0, a2));
+  TTS_EQUAL(rem[to_nearest](a0, a2), tts::map([&](auto e, auto f) { return rem[to_nearest](e, f); }, a0, a2));
 };
 
 //==================================================================================================
@@ -178,14 +177,13 @@ TTS_CASE_WITH("Check behavior of rem on signed types",
   using eve::rem;
   using eve::to_nearest;
   using eve::upward;
-  using eve::detail::map;
 
-  TTS_RELATIVE_EQUAL( rem[is_nez(a2)][downward](a0, a2), map([](auto e, auto f) { return is_nez(f) ? rem[downward](e, f) : e; }, a0, a2),  4e-4);
-  TTS_RELATIVE_EQUAL(rem[is_nez(a2)][upward](a0, a2), map([](auto e, auto f) { return is_nez(f) ? rem[upward](e, f) : e; }, a0, a2),       4e-4);
-  TTS_RELATIVE_EQUAL(rem[is_nez(a2)][to_nearest](a0, a2), map([](auto e, auto f) { return is_nez(f) ? rem[to_nearest](e, f) : e; }, a0, a2), 4e-4);
+  TTS_RELATIVE_EQUAL( rem[is_nez(a2)][downward](a0, a2), tts::map([](auto e, auto f) { return is_nez(f) ? rem[downward](e, f) : e; }, a0, a2),  4e-4);
+  TTS_RELATIVE_EQUAL(rem[is_nez(a2)][upward](a0, a2), tts::map([](auto e, auto f) { return is_nez(f) ? rem[upward](e, f) : e; }, a0, a2),       4e-4);
+  TTS_RELATIVE_EQUAL(rem[is_nez(a2)][to_nearest](a0, a2), tts::map([](auto e, auto f) { return is_nez(f) ? rem[to_nearest](e, f) : e; }, a0, a2), 4e-4);
 
   a1 = eve::if_else(eve::is_eqz(a1), eve::one, a1);
-  TTS_RELATIVE_EQUAL(rem[a2 > T(64)][downward](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? rem[downward](e, f) : e; }, a0, a1, a2), 4e-4);
-  TTS_RELATIVE_EQUAL(rem[a2 > T(64)][upward](a0, a1),   map([](auto e, auto f, auto g) { return g > 64 ? rem[upward](e, f) : e; }, a0, a1, a2),   4e-4);
-  TTS_RELATIVE_EQUAL(rem[a2 > T(64)][to_nearest](a0, a1), map([](auto e, auto f, auto g) { return g > 64 ? rem[to_nearest](e, f) : e; }, a0, a1, a2), 4e-4);
+  TTS_RELATIVE_EQUAL(rem[a2 > T(64)][downward](a0, a1), tts::map([](auto e, auto f, auto g) { return g > 64 ? rem[downward](e, f) : e; }, a0, a1, a2), 4e-4);
+  TTS_RELATIVE_EQUAL(rem[a2 > T(64)][upward](a0, a1),   tts::map([](auto e, auto f, auto g) { return g > 64 ? rem[upward](e, f) : e; }, a0, a1, a2),   4e-4);
+  TTS_RELATIVE_EQUAL(rem[a2 > T(64)][to_nearest](a0, a1), tts::map([](auto e, auto f, auto g) { return g > 64 ? rem[to_nearest](e, f) : e; }, a0, a1, a2), 4e-4);
 };

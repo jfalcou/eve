@@ -52,11 +52,10 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::fms;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
       eve::fms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
-      map([&](auto e, auto f) -> v_t { return eve::fms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+      tts::map([&](auto e, auto f) -> v_t { return eve::fms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
       2);
 };
 
@@ -71,11 +70,10 @@ TTS_CASE_WITH("Check precision behavior of fms on real types",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::fms;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
       eve::fms[eve::pedantic](a0, a1, -eve::one(eve::as<T>())),
-      map([&](auto e, auto f) -> v_t { return eve::fms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
+      tts::map([&](auto e, auto f) -> v_t { return eve::fms[eve::pedantic](e, f, v_t(-1)); }, a0, a1),
       2);
 };
 
@@ -93,7 +91,6 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
   using eve::as;
   using eve::fms;
   using eve::promote;
-  using eve::detail::map;
   using eve::lower;
   using eve::upper;
   using eve::strict;
@@ -117,7 +114,6 @@ TTS_CASE_WITH("Check behavior of fms[promote] on all types",
   using eve::as;
   using eve::fms;
   using eve::promote;
-  using eve::detail::map;
 
   constexpr int N = eve::cardinal_v<T>;
   eve::wide<float, eve::fixed<N>> fa([](auto i,  auto){return float(i)/2; });

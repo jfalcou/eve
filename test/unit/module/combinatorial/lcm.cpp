@@ -25,10 +25,9 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::lcm on wide",
               tts::generate(tts::randoms(1, maxi), tts::randoms(1, maxi)))
 <typename T>(const T& a0, const T& a1)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::lcm(a0, a1), map([](auto e, auto f) -> v_t { return std::lcm(e, f); }, a0, a1));
+  TTS_EQUAL(eve::lcm(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::lcm(e, f); }, a0, a1));
 };
 
 //==================================================================================================

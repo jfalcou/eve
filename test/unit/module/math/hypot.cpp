@@ -85,23 +85,22 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
 {
   using eve::hypot;
   using eve::pedantic;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
-      hypot(a0, a1), map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 2);
+      hypot(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::hypot(e, f); }, a0, a1), 2);
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(hypot(a0, a1, a2),
-                  map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot[pedantic](a0, a1, a2),
-                  map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot(kumi::tuple{a0, a1, a2}),
-                  map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
     TTS_ULP_EQUAL(hypot[pedantic](kumi::tuple{a0, a1, a2}),
-                  map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return std::hypot(e, f, g); }, a0, a1, a2),
                   2);
    }
 };

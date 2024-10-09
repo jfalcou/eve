@@ -32,6 +32,6 @@ TTS_CASE_WITH("Check behavior of countl_one(wide) on unsigned integral ",
 <typename T, typename M>(T const& a0, const M t)
 {
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(eve::countl_one(a0), map([](auto e) -> v_t { return std::countl_one(e); }, a0));
+  TTS_EQUAL(eve::countl_one(a0), tts::map([](auto e) -> v_t { return std::countl_one(e); }, a0));
   TTS_EQUAL(eve::countl_one[t](a0), eve::if_else(t, eve::countl_one(a0), a0));
 };

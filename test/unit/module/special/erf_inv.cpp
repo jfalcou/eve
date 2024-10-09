@@ -39,7 +39,7 @@ TTS_CASE_WITH("Check behavior of erf_inv on wide",
   using v_t = eve::element_type_t<T>;
   using eve::as;
   using eve::erf_inv;
-  TTS_ULP_EQUAL(erf_inv(a0), map([](auto e) { return boost::math::erf_inv(e); }, a0), 8);
+  TTS_ULP_EQUAL(erf_inv(a0), tts::map([](auto e) { return boost::math::erf_inv(e); }, a0), 8);
   TTS_ULP_EQUAL(erf_inv(T(0.5)), T(boost::math::erf_inv(v_t(0.5))), 1.);
 
   if constexpr( eve::platform::supports_denormals )

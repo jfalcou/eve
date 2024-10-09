@@ -41,9 +41,9 @@ TTS_CASE_WITH("Check behavior of heaviside(wide) on all types",
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(heaviside(a0, a1),
-            map([&](auto e, auto f) -> v_t { return e > f; }, a0, a1));
+            tts::map([&](auto e, auto f) -> v_t { return e > f; }, a0, a1));
   TTS_EQUAL(heaviside(a0),
-            map([&](auto e) -> v_t { return e > 0; }, a0));
+            tts::map([&](auto e) -> v_t { return e > 0; }, a0));
 };
 
 

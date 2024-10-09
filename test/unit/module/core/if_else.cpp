@@ -76,57 +76,56 @@ TTS_CASE_WITH(
   using eve::nan;
   using eve::one;
   using eve::zero;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_EQUAL(if_else(m0, m1, m2), map([](auto e, auto f, auto g) { return e ? f : g; }, m0, m1, m2));
-  TTS_EQUAL(if_else(m0, a1, a2), map([](auto e, auto f, auto g) { return e ? f : g; }, m0, a1, a2));
-  TTS_EQUAL(if_else(m0, a1, one), map([](auto e, auto f) { return e ? f : v_t(1); }, m0, a1));
-  TTS_EQUAL(if_else(m0, a1, zero), map([](auto e, auto f) { return e ? f : v_t(0); }, m0, a1));
+  TTS_EQUAL(if_else(m0, m1, m2), tts::map([](auto e, auto f, auto g) { return e ? f : g; }, m0, m1, m2));
+  TTS_EQUAL(if_else(m0, a1, a2), tts::map([](auto e, auto f, auto g) { return e ? f : g; }, m0, a1, a2));
+  TTS_EQUAL(if_else(m0, a1, one), tts::map([](auto e, auto f) { return e ? f : v_t(1); }, m0, a1));
+  TTS_EQUAL(if_else(m0, a1, zero), tts::map([](auto e, auto f) { return e ? f : v_t(0); }, m0, a1));
   if constexpr( eve::signed_value<T> )
-    TTS_EQUAL(if_else(m0, a1, mone), map([](auto e, auto f) { return e ? f : v_t(-1); }, m0, a1));
+    TTS_EQUAL(if_else(m0, a1, mone), tts::map([](auto e, auto f) { return e ? f : v_t(-1); }, m0, a1));
   else
     TTS_EQUAL(if_else(m0, a1, allbits),
-              map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, m0, a1));
+              tts::map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, m0, a1));
   if constexpr( eve::floating_value<T> )
     TTS_IEEE_EQUAL(if_else(m0, a1, allbits),
-                   map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, m0, a1));
-  TTS_EQUAL(if_else(true, m1, m2), map([](auto f) { return f; }, m1));
-  TTS_EQUAL(if_else(false, a1, a2), map([](auto g) { return g; }, a2));
+                   tts::map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, m0, a1));
+  TTS_EQUAL(if_else(true, m1, m2), tts::map([](auto f) { return f; }, m1));
+  TTS_EQUAL(if_else(false, a1, a2), tts::map([](auto g) { return g; }, a2));
 
   using d_t = eve::logical<eve::downgrade_t<eve::element_type_t<T>>>;
   auto dm0  = eve::convert(m0, as<d_t>());
 
   TTS_EQUAL(if_else(dm0, m1, m2),
-            map([](auto e, auto f, auto g) { return e ? f : g; }, dm0, m1, m2));
+            tts::map([](auto e, auto f, auto g) { return e ? f : g; }, dm0, m1, m2));
   TTS_EQUAL(if_else(dm0, a1, a2),
-            map([](auto e, auto f, auto g) { return e ? f : g; }, dm0, a1, a2));
-  TTS_EQUAL(if_else(dm0, a1, one), map([](auto e, auto f) { return e ? f : v_t(1); }, dm0, a1));
-  TTS_EQUAL(if_else(dm0, a1, zero), map([](auto e, auto f) { return e ? f : v_t(0); }, dm0, a1));
+            tts::map([](auto e, auto f, auto g) { return e ? f : g; }, dm0, a1, a2));
+  TTS_EQUAL(if_else(dm0, a1, one), tts::map([](auto e, auto f) { return e ? f : v_t(1); }, dm0, a1));
+  TTS_EQUAL(if_else(dm0, a1, zero), tts::map([](auto e, auto f) { return e ? f : v_t(0); }, dm0, a1));
   if constexpr( eve::signed_value<T> )
-    TTS_EQUAL(if_else(dm0, a1, mone), map([](auto e, auto f) { return e ? f : v_t(-1); }, dm0, a1));
+    TTS_EQUAL(if_else(dm0, a1, mone), tts::map([](auto e, auto f) { return e ? f : v_t(-1); }, dm0, a1));
   else
     TTS_EQUAL(if_else(dm0, a1, allbits),
-              map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, dm0, a1));
+              tts::map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, dm0, a1));
   if constexpr( eve::floating_value<T> )
     TTS_IEEE_EQUAL(if_else(dm0, a1, allbits),
-                   map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, dm0, a1));
+                   tts::map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, dm0, a1));
 
   using u_t = eve::logical<eve::upgrade_t<eve::element_type_t<T>>>;
   auto um0  = eve::convert(m0, as<u_t>());
   TTS_EQUAL(if_else(um0, m1, m2),
-            map([](auto e, auto f, auto g) { return e ? f : g; }, um0, m1, m2));
+            tts::map([](auto e, auto f, auto g) { return e ? f : g; }, um0, m1, m2));
   TTS_EQUAL(if_else(um0, a1, a2),
-            map([](auto e, auto f, auto g) { return e ? f : g; }, um0, a1, a2));
-  TTS_EQUAL(if_else(um0, a1, one), map([](auto e, auto f) { return e ? f : v_t(1); }, um0, a1));
-  TTS_EQUAL(if_else(um0, a1, zero), map([](auto e, auto f) { return e ? f : v_t(0); }, um0, a1));
+            tts::map([](auto e, auto f, auto g) { return e ? f : g; }, um0, a1, a2));
+  TTS_EQUAL(if_else(um0, a1, one), tts::map([](auto e, auto f) { return e ? f : v_t(1); }, um0, a1));
+  TTS_EQUAL(if_else(um0, a1, zero), tts::map([](auto e, auto f) { return e ? f : v_t(0); }, um0, a1));
   if constexpr( eve::signed_value<T> )
-    TTS_EQUAL(if_else(um0, a1, mone), map([](auto e, auto f) { return e ? f : v_t(-1); }, um0, a1));
+    TTS_EQUAL(if_else(um0, a1, mone), tts::map([](auto e, auto f) { return e ? f : v_t(-1); }, um0, a1));
   else
     TTS_EQUAL(if_else(um0, a1, allbits),
-              map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, um0, a1));
+              tts::map([](auto e, auto f) { return e ? f : allbits(as<v_t>()); }, um0, a1));
   if constexpr( eve::floating_value<T> )
     TTS_IEEE_EQUAL(if_else(um0, a1, allbits),
-                   map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, um0, a1));
+                   tts::map([](auto e, auto f) { return e ? f : nan(as<v_t>()); }, um0, a1));
 };
 
 TTS_CASE_WITH("Check behavior of eve::if_else(conditional, a, b)",

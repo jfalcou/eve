@@ -40,13 +40,12 @@ TTS_CASE_WITH("Check behavior of lerp on ieee floating",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::lerp;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(lerp(a0, a1, a2),
-                map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
+                tts::map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
                 8);
   TTS_ULP_EQUAL(lerp[eve::pedantic](a0, a1, a2),
-                map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
+                tts::map([&](auto e, auto f, auto g) -> v_t { return std::lerp(e, f, g); }, a0, a1, a2),
                 8);
 };
 

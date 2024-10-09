@@ -31,12 +31,11 @@ TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
               tts::generate(tts::randoms(eve::valmin, eve::valmax)))
 <typename T>(T const& a0)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   {
     auto [x, n] = eve::frexp(a0);
     TTS_EQUAL(x,
-              map(
+              tts::map(
                   [](auto e) -> v_t
                   {
                     int ee;
@@ -44,7 +43,7 @@ TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
                   },
                   a0));
     TTS_EQUAL(n,
-              map(
+              tts::map(
                   [](auto e) -> v_t
                   {
                     int ee;
@@ -56,7 +55,7 @@ TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
   {
     auto [x, n] = eve::frexp[eve::pedantic](a0);
     TTS_EQUAL(x,
-              map(
+              tts::map(
                   [](auto e) -> v_t
                   {
                     int ee;
@@ -64,7 +63,7 @@ TTS_CASE_WITH("Check behavior of eve::frexp(simd)",
                   },
                   a0));
     TTS_EQUAL(n,
-              map(
+              tts::map(
                   [](auto e) -> v_t
                   {
                     int ee;

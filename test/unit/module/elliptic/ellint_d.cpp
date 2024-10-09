@@ -41,13 +41,12 @@ TTS_CASE_WITH("Check behavior of ellint_d on wide",
               tts::generate(tts::randoms(0, 1.0), tts::randoms(0, eve::pio_2)))
 <typename T>(T const& k, T const& phi)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(
-      eve::ellint_d(k), map([](auto e) -> v_t { return boost::math::ellint_d(e); }, k), 24);
+      eve::ellint_d(k), tts::map([](auto e) -> v_t { return boost::math::ellint_d(e); }, k), 24);
   TTS_ULP_EQUAL(eve::ellint_d(phi, k),
-                map([](auto e, auto f) -> v_t { return boost::math::ellint_d(e, f); }, k, phi),
+                tts::map([](auto e, auto f) -> v_t { return boost::math::ellint_d(e, f); }, k, phi),
                 24);
 };
 

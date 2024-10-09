@@ -76,30 +76,29 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   using eve::upper;
   using eve::strict;
   using eve::sub;
-  using eve::detail::map;
-
-  TTS_EQUAL(sub(a0, a2), map([](auto e, auto f) { return sub(e, f); }, a0, a2));
+  
+  TTS_EQUAL(sub(a0, a2), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
   TTS_EQUAL(sub[saturated](a0, a2),
-            map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
+            tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
   TTS_EQUAL(sub(a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
+            tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
   TTS_EQUAL(sub[saturated](a0, a1, a2),
-            map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
+            tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
                 a0,a1,a2)
             );
-  TTS_EQUAL(sub(kumi::tuple{a0, a2}), map([](auto e, auto f) { return sub(e, f); }, a0, a2));
+  TTS_EQUAL(sub(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
   TTS_EQUAL(sub[saturated](kumi::tuple{a0, a2}),
-            map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
+            tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
   TTS_EQUAL(sub(kumi::tuple{a0, a1, a2}),
-            map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
+            tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2));
   TTS_EQUAL(sub[saturated](kumi::tuple{a0, a1, a2}),
-            map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
+            tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
                 a0,a1,a2)
             );
   if constexpr (eve::floating_value<T>)
   {
-    TTS_ULP_EQUAL( sub[lower](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return sub[lower](sub[lower](e, f), g); }, a0, a1, a2), 1.0);
-    TTS_ULP_EQUAL( sub[upper](kumi::tuple{a0, a1, a2}), map([&](auto e, auto f, auto g) { return sub[upper](sub[upper](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( sub[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[lower](sub[lower](e, f), g); }, a0, a1, a2), 1.0);
+    TTS_ULP_EQUAL( sub[upper](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[upper](sub[upper](e, f), g); }, a0, a1, a2), 1.0);
     TTS_EXPECT(eve::all(sub[upper](a0, a1, a2) >=  sub[lower](a0, a1, a2)));
     T w0(1);
     T w1(eve::smallestposval(eve::as<T>()));
@@ -127,16 +126,15 @@ TTS_CASE_WITH("Check behavior of sub on signed types",
 {
   using eve::saturated;
   using eve::sub;
-  using eve::detail::map;
 
   auto e0 = a2.get(0);
 
   TTS_EQUAL(sub[e0 > T(64)](a0, a1),
-            map([e0](auto e, auto f) { return e0 > 64 ? sub(e, f) : e; }, a0, a1));
+            tts::map([e0](auto e, auto f) { return e0 > 64 ? sub(e, f) : e; }, a0, a1));
   TTS_EQUAL(sub[a2 > T(64)](a0, a1),
-            map([](auto e, auto f, auto g) { return g > 64 ? sub(e, f) : e; }, a0, a1, a2));
+            tts::map([](auto e, auto f, auto g) { return g > 64 ? sub(e, f) : e; }, a0, a1, a2));
   TTS_EQUAL(sub[saturated][a2 > T(64)](a0, a1)
-           , map([](auto e, auto f, auto g) { return g > 64 ? sub[saturated](e, f) : e; }, a0, a1, a2));
+           , tts::map([](auto e, auto f, auto g) { return g > 64 ? sub[saturated](e, f) : e; }, a0, a1, a2));
 };
 
 /// TODO waiting for interface simplifications to sub scalar tests

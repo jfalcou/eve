@@ -53,13 +53,12 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::average;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  TTS_ULP_EQUAL(average(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(average(a0, a1, a2),
-                  map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
+                  tts::map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
                   48);
   }
 };
@@ -71,9 +70,8 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::average;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
-  TTS_ULP_EQUAL(average(a0, a1), map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
+  TTS_ULP_EQUAL(average(a0, a1), tts::map([](auto e, auto f) -> v_t { return std::midpoint(e, f); }, a0, a1), 2);
 };
 
 //==================================================================================================
@@ -85,13 +83,12 @@ TTS_CASE_WITH("Check behavior of  average[cond](wide)",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::average;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   // values can differ by one on integral types from scalar to simd implementations (intrinsics may
   // be at work)
   TTS_ULP_EQUAL(
       average[a2 > T(64)](a0, a1),
-      map([](auto e, auto f, auto g) { return g > v_t(64) ? average(e, f) : e; }, a0, a1, a2),
+      tts::map([](auto e, auto f, auto g) { return g > v_t(64) ? average(e, f) : e; }, a0, a1, a2),
       2);
 };
 

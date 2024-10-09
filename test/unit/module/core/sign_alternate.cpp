@@ -34,10 +34,9 @@ TTS_CASE_WITH("Check behavior of eve::sign_alternate(eve::wide)",
   using eve::as;
   using eve::saturated;
   using eve::sign_alternate;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   auto a0   = eve::trunc(a00);
   TTS_EQUAL(sign_alternate(a0),
-            map([](auto e) -> v_t { return eve::is_odd(e) ? v_t(-1) : v_t(1); }, a0));
+            tts::map([](auto e) -> v_t { return eve::is_odd(e) ? v_t(-1) : v_t(1); }, a0));
   TTS_EQUAL(sign_alternate[mask](a0), eve::if_else(mask, sign_alternate(a0), a0));
 };

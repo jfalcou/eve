@@ -50,11 +50,11 @@ TTS_CASE_WITH("Check behavior of dec(wide) and dec[cond](wide)",
 {
   using v_t = eve::element_type_t<T>;
 
-  TTS_EQUAL(eve::dec(a0), map([](auto e) -> v_t { return v_t(e - 1); }, a0));
+  TTS_EQUAL(eve::dec(a0), tts::map([](auto e) -> v_t { return v_t(e - 1); }, a0));
   TTS_EQUAL(eve::dec[a0 > 64](a0),
-            map([](auto e) -> v_t { return v_t((e > 64) ? e - 1 : e); }, a0));
+            tts::map([](auto e) -> v_t { return v_t((e > 64) ? e - 1 : e); }, a0));
   bool z = (a0.get(0) > 64);
-  TTS_EQUAL(eve::dec[z](a0), map([&](auto e) -> v_t { return v_t((z) ? e - 1 : e); }, a0));
+  TTS_EQUAL(eve::dec[z](a0), tts::map([&](auto e) -> v_t { return v_t((z) ? e - 1 : e); }, a0));
   if constexpr(eve::floating_value<T>)
   {
     TTS_EXPECT(eve::all(eve::dec[eve::lower](a0) <= eve::dec(a0)));
@@ -71,15 +71,15 @@ TTS_CASE_WITH("Check behavior of dec[saturated](wide) on integral types",
 {
   using v_t = eve::element_type_t<T>;
   TTS_EQUAL(eve::dec[eve::saturated](a0),
-            map([](auto e) -> v_t { return v_t(e == eve::valmin(eve::as(e)) ? e : e - 1); }, a0));
+            tts::map([](auto e) -> v_t { return v_t(e == eve::valmin(eve::as(e)) ? e : e - 1); }, a0));
   TTS_EQUAL(eve::dec[eve::saturated][a0 > 64](a0),
-            map([](auto e) -> v_t
+            tts::map([](auto e) -> v_t
                 { return v_t((e > 64 && e != eve::valmin(eve::as(e)) ? e - 1 : e)); },
                 a0));
   bool z = (a0.get(0) > 64);
   TTS_EQUAL(
       eve::dec[eve::saturated][z](a0),
-      map([&](auto e) -> v_t { return v_t((z && e != eve::valmin(eve::as(e)) ? e - 1 : e)); }, a0));
+      tts::map([&](auto e) -> v_t { return v_t((z && e != eve::valmin(eve::as(e)) ? e - 1 : e)); }, a0));
 };
 
 TTS_CASE_WITH("Check behavior of dec[saturated](wide) on integral types",

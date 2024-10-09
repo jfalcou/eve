@@ -44,17 +44,16 @@ TTS_CASE_WITH("Check behavior of csc on wide",
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::csc;
-  using eve::detail::map;
 
   using v_t = eve::element_type_t<T>;
   auto ref  = [](auto e) -> v_t { return 1.0 / std::sin(double(e)); };
-  TTS_ULP_EQUAL(csc[eve::quarter_circle](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(csc[eve::half_circle   ](a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(csc[eve::half_circle   ](a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(csc(a0), map(ref, a0), 2);
-  TTS_ULP_EQUAL(csc(a1), map(ref, a1), 2);
-  TTS_ULP_EQUAL(csc(a2), map(ref, a2), 2);
-  TTS_ULP_EQUAL(csc(a3), map(ref, a3), 2);
+  TTS_ULP_EQUAL(csc[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc[eve::half_circle   ](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc[eve::half_circle   ](a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(csc(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(csc(a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(csc(a2), tts::map(ref, a2), 2);
+  TTS_ULP_EQUAL(csc(a3), tts::map(ref, a3), 2);
 };
 
 

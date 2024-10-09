@@ -100,7 +100,7 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_yn on wide with integral order"
   TTS_ULP_EQUAL(eve::sph_bessel_yn(I_t(10), T(8)), T(std_sph_bessel_yn(10u, v_t(8))), 10000.0);
   TTS_ULP_EQUAL(eve::sph_bessel_yn(I_t(10), T(8)), T(std_sph_bessel_yn(10u, v_t(8))), 10000.0);
 
-  TTS_RELATIVE_EQUAL(eve::sph_bessel_yn(n, a0), map(std_sph_bessel_yn, n, a0), 0.005);
+  TTS_RELATIVE_EQUAL(eve::sph_bessel_yn(n, a0), tts::map(std_sph_bessel_yn, n, a0), 0.005);
 #else
   TTS_PASS("No support for std::sph_neumann");
 #endif

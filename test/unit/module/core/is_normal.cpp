@@ -36,14 +36,13 @@ TTS_CASE_WITH("Check behavior of eve::is_normal(simd)",
                             tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, T const& a1, T const& a2, M const& t)
 {
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
 
   TTS_EQUAL(eve::is_normal(a0),
-            map([](auto e) -> eve::logical<v_t> { return std::fpclassify(e) == FP_NORMAL; }, a0));
+            tts::map([](auto e) -> eve::logical<v_t> { return std::fpclassify(e) == FP_NORMAL; }, a0));
   TTS_EQUAL(eve::is_normal(a1),
-            map([](auto e) -> eve::logical<v_t> { return std::fpclassify(e) == FP_NORMAL; }, a1));
+            tts::map([](auto e) -> eve::logical<v_t> { return std::fpclassify(e) == FP_NORMAL; }, a1));
   TTS_EQUAL(eve::is_normal(a2),
-            map([](auto e) -> eve::logical<v_t> { return std::fpclassify(e) == FP_NORMAL; }, a2));
+            tts::map([](auto e) -> eve::logical<v_t> { return std::fpclassify(e) == FP_NORMAL; }, a2));
   TTS_EQUAL(eve::is_normal[t](a0), eve::if_else(t, eve::is_normal(a0), eve::false_(eve::as(a0))));
 };

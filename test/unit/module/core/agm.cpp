@@ -33,7 +33,6 @@ TTS_CASE_WITH("Check behavior of agm(wide)",
 <typename T>(T const& a0, T const& a1)
 {
   using eve::agm;
-  using eve::detail::map;
   TTS_RELATIVE_EQUAL(agm(a0, a1),
                      ((a0 + a1) / eve::ellint_1((a0 - a1) / (a0 + a1))) * eve::pio_4(eve::as(a0)),
                      0.5);
@@ -48,10 +47,9 @@ TTS_CASE_WITH("Check behavior of  agm[cond](wide)",
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::agm;
-  using eve::detail::map;
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(agm[a2 > T(64)](a0, a1),
-                map([](auto e, auto f, auto g) { return g > v_t(64) ? agm(e, f) : e; }, a0, a1, a2),
+                tts::map([](auto e, auto f, auto g) { return g > v_t(64) ? agm(e, f) : e; }, a0, a1, a2),
                 5);
 };
 

@@ -45,13 +45,12 @@ TTS_CASE_WITH("Check behavior of eve::rec(eve::wide)",
               tts::generate(tts::randoms(mini, maxi), tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0, M const& mask)
 {
-  using eve::detail::map;
   using eve::lower;
   using eve::upper;
   using v_t = eve::element_type_t<T>;
 
   TTS_ULP_EQUAL(eve::rec(a0),
-                map([](auto e) -> v_t { return e ? v_t(1 / e) : eve::valmax(eve::as<v_t>()); }, a0),
+                tts::map([](auto e) -> v_t { return e ? v_t(1 / e) : eve::valmax(eve::as<v_t>()); }, a0),
                 2.5);
 
   TTS_EQUAL(eve::rec[mask](a0), eve::if_else(mask, eve::rec(a0), a0));

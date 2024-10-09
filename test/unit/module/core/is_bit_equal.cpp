@@ -36,18 +36,17 @@ TTS_CASE_WITH(
     tts::generate(tts::ramp(0), tts::reverse_ramp(4, 2), tts::logicals(0, 3), tts::logicals(1, 2)))
 <typename T, typename M>(T const& a0, T const& a1, M const& l0, M const& l1)
 {
-  using eve::detail::map;
   using eve::as;
   using eve::bit_cast;
   using v_t = eve::element_type_t<T>;
   using vi_t= eve::as_integer_t<v_t, unsigned>;
   using bi_t= eve::as_integer_t<T, unsigned>;
   TTS_EQUAL(eve::is_bit_equal(a0, a1),
-            map([](auto e, auto f) -> eve::logical<vi_t> { return bit_cast(e, as<vi_t>())== bit_cast(f, as<vi_t>()); }, a0, a1));
+            tts::map([](auto e, auto f) -> eve::logical<vi_t> { return bit_cast(e, as<vi_t>())== bit_cast(f, as<vi_t>()); }, a0, a1));
   TTS_EQUAL(eve::is_bit_equal(a0, a0),
-            map([](auto e, auto f) -> eve::logical<vi_t> { return bit_cast(e, as<vi_t>())== bit_cast(f, as<vi_t>()); }, a0, a0));
+            tts::map([](auto e, auto f) -> eve::logical<vi_t> { return bit_cast(e, as<vi_t>())== bit_cast(f, as<vi_t>()); }, a0, a0));
   TTS_EQUAL(eve::is_bit_equal(l0, l1),
-             map([](auto e, auto f) { return e == f; }, l0, l1));
+             tts::map([](auto e, auto f) { return e == f; }, l0, l1));
   TTS_EQUAL(eve::is_bit_equal[l0](a0, a1),
             eve::if_else(l0, eve::is_bit_equal(a0, a1), eve::false_(eve::as<bi_t>())));
 };
