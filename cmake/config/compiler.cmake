@@ -17,6 +17,15 @@ else()
   target_compile_options( eve_test INTERFACE -std=c++20 -Werror -Wall -Wpedantic -Wextra -fdiagnostics-color=always -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow)
 endif()
 
+if(EVE_ENABLE_COVERAGE)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+    message(FATAL_ERROR "EVE coverage profiling is not supported on MSVC")
+  else()
+    target_compile_options( eve_test INTERFACE --coverage )
+    target_link_options( eve_test INTERFACE --coverage )
+  endif()
+endif()
+
 target_include_directories( eve_test INTERFACE
                             ${PROJECT_SOURCE_DIR}/test
                             ${PROJECT_SOURCE_DIR}/examples
