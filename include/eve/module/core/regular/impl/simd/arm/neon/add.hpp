@@ -11,6 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/simd_cast.hpp>
 
 namespace eve::detail
 {
@@ -19,14 +20,22 @@ namespace eve::detail
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
-    using u_t = upgrade_t<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
-    if      constexpr( c == category::int32x2    ) return  u_t(vaddl_s32(v, w)).slice(lower_);
-    else if constexpr( c == category::uint32x2   ) return  u_t(vaddl_u32(v, w)).slice(lower_);
-    else if constexpr( c == category::int16x4    ) return  u_t(vaddl_s16(v, w)).slice(lower_);
-    else if constexpr( c == category::uint16x4   ) return  u_t(vaddl_u16(v, w)).slice(lower_);
-    else if constexpr( c == category::int8x8     ) return  u_t(vaddl_s8 (v, w)).slice(lower_);
-    else if constexpr( c == category::uint8x8    ) return  u_t(vaddl_u8 (v, w)).slice(lower_);
+
+    auto fix = [](auto r)
+    {
+      using u_t  = upgrade_t<T>;
+      using uw_t = upgrade_t<wide<T, N>>;
+      if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
+      else                                               return simd_cast(wide<u_t>{r}, as<uw_t>{});
+    };
+
+    if      constexpr( c == category::int32x2  ) return fix(vaddl_s32(v, w));
+    else if constexpr( c == category::uint32x2 ) return fix(vaddl_u32(v, w));
+    else if constexpr( c == category::int16x4  ) return fix(vaddl_s16(v, w));
+    else if constexpr( c == category::uint16x4 ) return fix(vaddl_u16(v, w));
+    else if constexpr( c == category::int8x8   ) return fix(vaddl_s8 (v, w));
+    else if constexpr( c == category::uint8x8  ) return fix(vaddl_u8 (v, w));
     else return add.behavior(cpu_{}, opts, v, w);
   }
 
