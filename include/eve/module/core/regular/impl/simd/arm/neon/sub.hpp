@@ -39,7 +39,7 @@ namespace eve::detail
     {
       auto [vlo, vhi] = v.slice();
       auto [wlo, whi] = w.slice();
-      return combine(sub[opts](vlo, wlo), sub[opts](wlo, whi));
+      return eve::combine(sub[opts](vlo, wlo), sub[opts](wlo, whi));
     }
     else return sub.behavior(cpu_{}, opts, v, w);
   }
