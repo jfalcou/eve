@@ -48,3 +48,4 @@ doc/docs/*
 
 # file system metadata
 *.DS_Store
+.#*

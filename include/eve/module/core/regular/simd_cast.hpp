@@ -29,12 +29,12 @@ namespace eve
 //!   @endcode
 //!
 //!   This cast reinterprets one `eve::simd_value` as the other, if such reinterpretation is
-//!   avaliable. If the output is smaller in size, the extra bits are dropped. If the output is
+//!   available. If the output is smaller in size, the extra bits are dropped. If the output is
 //!   bigger, the value of extra bits is unspecified.
 //!
 //!   What can be simd_cast?
 //!    * any eve::plain_simd_value to any other eve::plain_simd_value
-//!    * product_simd_value to a product_simd_value iff all fields can be simd_cast to correspoding
+//!    * product_simd_value to a product_simd_value iff each fields can be simd_cast to the corresponding
 //!      field.
 //!    * if is_wide_logical: logical_simd_value behaves same as plain_simd_value
 //!    * if !is_wide_logical: any logical_simd_value can cast to any other logical_simd_value,
@@ -61,7 +61,6 @@ namespace eve
 //!    bits from `x` reinterpreted as a new type, accoridng to the rules described earlier.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/simd_cast.cpp}
 //! @}
 //================================================================================================
