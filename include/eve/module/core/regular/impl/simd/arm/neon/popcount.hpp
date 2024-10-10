@@ -29,11 +29,11 @@ namespace eve::detail
 
     if      constexpr( cat == category::uint8x8 ) return vcnt_u8(v);
     else if constexpr( cat == category::uint8x16) return vcntq_u8(v);
-    else if constexpr( cat == category::uint16x4) return vpaddl_u8(split_it(v));
-    else if constexpr( cat == category::uint16x8) return vpaddlq_u8(split_it(v));
-    else if constexpr( cat == category::uint32x2) return vpaddl_u16(split_it(v));
-    else if constexpr( cat == category::uint32x4) return vpaddlq_u16(split_it(v));
-    else if constexpr( cat == category::uint64x2) return vpaddl_u32(split_it(v));
+//     else if constexpr( cat == category::uint16x4) return vpaddl_u8(split_it(v));
+//     else if constexpr( cat == category::uint16x8) return vpaddlq_u8(split_it(v));
+//     else if constexpr( cat == category::uint32x2) return vpaddl_u16(split_it(v));
+//     else if constexpr( cat == category::uint32x4) return vpaddlq_u16(split_it(v));
+//     else if constexpr( cat == category::uint64x2) return vpaddl_u32(split_it(v));
     else return popcount.behavior(cpu_{}, o, v);
 
   }
