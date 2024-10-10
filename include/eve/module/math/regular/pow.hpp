@@ -178,7 +178,7 @@ namespace eve
         auto nega = is_negative(r_t(a0));
         r_t  z    = eve::pow_abs(a0, a1);
 
-        return minus[is_odd[pedantic](a1) && nega](z);
+        return minus[is_odd(a1) && nega](z);
       }
     }
 
