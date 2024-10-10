@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
