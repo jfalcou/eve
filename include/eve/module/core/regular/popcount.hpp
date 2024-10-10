@@ -1,3 +1,4 @@
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
@@ -7,17 +8,31 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/detail/overload.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/decorator/core.hpp>
+#include <eve/detail/assert_utils.hpp>
 
 namespace eve
 {
+  template<typename Options>
+  struct popcount_t : elementwise_callable<popcount_t, Options>
+  {
+    template<unsigned_value T>
+    EVE_FORCEINLINE constexpr T operator()(T t) const noexcept
+    {
+      return EVE_DISPATCH_CALL(t);
+    }
+
+    EVE_CALLABLE_OBJECT(popcount_t, popcount_);
+  };
+
 //================================================================================================
 //! @addtogroup core_bitops
 //! @{
 //!   @var popcount
-//!   @brief Computes elementwise the number of bits set in the parameter.
+//!   @brief `elementwise_callable` object computing elementwise the number of bits set in the parameter.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
@@ -28,26 +43,26 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      template< eve::unsigned_value T >
-//!      T popcount(T x) noexcept;
+//!      constexpr auto popcount(unsigned_value auto x) noexcept;
 //!   }
 //!   @endcode
 //!
 //!   **Parameters**
 //!
-//!     * `x` :  [unsigned argument](@ref eve::unsigned_value).
+//!     * `x`: [unsigned argument](@ref eve::unsigned_value).
 //!
 //!    **Return value**
 //!
-//!    The value of  number of bits set in the value `x`
-//!    is returned.
+//!    The value of  number of bits set in the value `x` is returned.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/popcount.cpp}
+//================================================================================================
+  inline constexpr auto popcount = functor<popcount_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-EVE_MAKE_CALLABLE(popcount_, popcount);
+
 }
 
 #include <eve/module/core/regular/impl/popcount.hpp>
