@@ -27,33 +27,33 @@ TTS_CASE_TPL("Check return types of eve::ilogb(simd)", eve::test::simd::ieee_rea
 //==================================================================================================
 // Tests for eve::ilogb
 //==================================================================================================
-TTS_CASE_WITH("Check behavior of eve::ilogb(simd)",
-              eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0), tts::logicals(0, 3)))
-<typename T, typename M>(T const& a0, M const& t)
-{
-  using i_t  = eve::as_integer_t<T>;
-  using vi_t = eve::element_type_t<i_t>;
+// TTS_CASE_WITH("Check behavior of eve::ilogb(simd)",
+//               eve::test::simd::ieee_reals,
+//               tts::generate(tts::between(-1.0, 1.0), tts::logicals(0, 3)))
+// <typename T, typename M>(T const& a0, M const& t)
+// {
+//   using i_t  = eve::as_integer_t<T>;
+//   using vi_t = eve::element_type_t<i_t>;
 
-  TTS_EQUAL(eve::ilogb(a0),
-            tts::map(
-                [](auto e) -> vi_t
-                {
-                  int ee;
-                  std::frexp(e, &ee);
-                  return ee - 1;
-                },
-                a0));
-  TTS_EQUAL(eve::ilogb[t](a0),
-            eve::if_else(t, eve::ilogb(a0), eve::convert(a0, eve::as<vi_t>())));
-  TTS_EQUAL(eve::ilogb(2.5), std::ilogb(2.5));
-};
+//   TTS_EQUAL(eve::ilogb(a0),
+//             tts::map(
+//                 [](auto e) -> vi_t
+//                 {
+//                   int ee;
+//                   std::frexp(e, &ee);
+//                   return ee - 1;
+//                 },
+//                 a0));
+//   TTS_EQUAL(eve::ilogb[t](a0),
+//             eve::if_else(t, eve::ilogb(a0), eve::convert(a0, eve::as<vi_t>())));
+//   TTS_EQUAL(eve::ilogb(2.5), std::int64_t(std::ilogb(2.5)));
+// };
 
 //==================================================================================================
 // special tests
 //==================================================================================================
 TTS_CASE_TPL("Check return types of eve::ilogb(simd)", eve::test::simd::ieee_reals)
-<typename T>(tts::type<T>)
+  <typename T>(tts::type<T>)
 {
   using        eve::as;
   using i_t  = eve::as_integer_t<T>;

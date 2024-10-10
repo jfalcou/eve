@@ -69,7 +69,7 @@ namespace eve
   namespace detail
   {
     template<floating_value T, callable_options O>
-    constexpr as_integer_t<T>  ilogb_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    constexpr auto  ilogb_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       auto x =  exponent[raw](a);
       return if_else(is_eqz(a), valmin(as(x)), if_else(is_normal(a), x, valmax(as(x))));
@@ -77,9 +77,9 @@ namespace eve
   }
 }
 
-// #if defined(EVE_INCLUDE_X86_HEADER)
-// #  include <eve/module/core/regular/impl/simd/x86/ilogb.hpp>
-// #endif
+#if defined(EVE_INCLUDE_X86_HEADER)
+#  include <eve/module/core/regular/impl/simd/x86/ilogb.hpp>
+#endif
 
 // #if defined(EVE_INCLUDE_SVE_HEADER)
 // #  include <eve/module/core/regular/impl/simd/arm/sve/ilogb.hpp>
