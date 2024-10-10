@@ -10,6 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/simd_cast.hpp>
 
 namespace eve::detail
 {
