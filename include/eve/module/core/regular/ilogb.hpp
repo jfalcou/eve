@@ -77,10 +77,10 @@ namespace eve
   }
 }
 
-#if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/ilogb.hpp>
-#endif
+// #if defined(EVE_INCLUDE_X86_HEADER)
+// #  include <eve/module/core/regular/impl/simd/x86/ilogb.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/ilogb.hpp>
-#endif
+// #if defined(EVE_INCLUDE_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/ilogb.hpp>
+// #endif
