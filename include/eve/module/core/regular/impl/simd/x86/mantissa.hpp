@@ -30,7 +30,7 @@ namespace eve::detail
     constexpr auto sign     = _MM_MANT_SIGN_src;
 
     r_t r;
-    
+
     if      constexpr( c == category::float32x16) r = _mm512_getmant_ps(w, interval, sign);
     else if constexpr( c == category::float64x8 ) r = _mm512_getmant_pd(w, interval, sign);
     else if constexpr( c == category::float64x4 ) r = _mm256_getmant_pd(w, interval, sign);
@@ -52,7 +52,7 @@ namespace eve::detail
     if constexpr(O::contains(raw))
     {
       auto src                  = alternative(cx, w, as<wide<T, N>> {});
-      if constexpr( C::is_complete ) return src;
+      if constexpr (C::is_complete) return src;
       else
       {
         constexpr auto        c = categorize<wide<T, N>>();

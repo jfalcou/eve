@@ -97,24 +97,18 @@ namespace eve::detail
       {
         if constexpr (!O::contains(strict))
         {
-          if constexpr(current_api >= avx512)
+          auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+          if      constexpr ( cx == category::float64x8  ) return  _mm512_mask_fmsub_round_pd (a, m, b, c, dir);
+          else if constexpr ( cx == category::float32x16 ) return  _mm512_mask_fmsub_round_ps (a, m, b, c, dir);
+          else
           {
-            auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-            if      constexpr ( cx == category::float64x8  ) return  _mm512_mask_fmsub_round_pd (a, m, b, c, dir);
-            else if constexpr ( cx == category::float32x16 ) return  _mm512_mask_fmsub_round_ps (a, m, b, c, dir);
-            else if constexpr ( cx == category::float64x4 ||  cx == category::float64x2 ||
-                                 cx == category::float32x8 ||  cx == category::float32x4 || cx == category::float32x2)
-            {
-              auto aa = eve::combine(a, a);
-              auto bb = eve::combine(b, b);
-              auto cc = eve::combine(c, c);
-              auto aabbcc = fms[opts.drop(condition_key)](aa, bb, cc);
-              auto s =  slice(aabbcc, eve::upper_);
-              return if_else(mask, s, src);
-            }
-            else                                     return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
+            auto aa = eve::combine(a, a);
+            auto bb = eve::combine(b, b);
+            auto cc = eve::combine(c, c);
+            auto aabbcc = fms[opts.drop(condition_key)](aa, bb, cc);
+            auto s =  slice(aabbcc, eve::upper_);
+            return if_else(mask, s, src);
           }
-          else                                       return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
         }
         else                                         return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }

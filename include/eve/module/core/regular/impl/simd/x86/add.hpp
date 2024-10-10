@@ -27,7 +27,7 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a
     {
       if constexpr(current_api >= avx512)
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+        auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
         if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (a, b, dir);
         else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (a, b, dir);
         else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
@@ -108,10 +108,10 @@ EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a
   }
 }
 
-template<conditional_expr C, typename T, typename N, callable_options O>
+template<callable_options O, conditional_expr C, typename T, typename N>
 EVE_FORCEINLINE
 wide<T, N> add_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-requires x86_abi<abi_t<T, N>>
+  requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
@@ -120,42 +120,34 @@ requires x86_abi<abi_t<T, N>>
 
   if constexpr(floating_value<T> &&( O::contains(lower) || O::contains(upper)) && !O::contains(strict))
   {
-    if constexpr(current_api >= avx512)
+    auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+    if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_add_round_pd (src, m, a, b, dir);
+    else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_add_round_ps (src, m, a, b, dir);
+    else
     {
-      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-      if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_add_round_pd (src, m, a, b, dir);
-      else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_add_round_ps (src, m, a, b, dir);
-      else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                           c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-      {
-        auto vv = eve::combine(a, b);
-        auto ww = eve::combine(b, a);
-        auto vvpww = add[opts.drop(condition_key)](vv, ww);
-        auto s =  slice(vvpww, eve::upper_);
-        return if_else(cx,s,src);
-      }
-      else                                             return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
-   }
-    else                                               return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
+      auto vv = eve::combine(a, b);
+      auto ww = eve::combine(b, a);
+      auto vvpww = add[opts.drop(condition_key)](vv, ww);
+      auto s =  slice(vvpww, eve::upper_);
+      return if_else(cx,s,src);
+    }
   }
   else if constexpr(O::contains(saturated))
   {
-    constexpr auto sup_avx2 = current_api >= avx2;
-
-    if      constexpr( floating_value<T>        )             return add[cx](a, b);
-    else if constexpr( c == category::int16x32  )             return _mm512_mask_adds_epi16(src, m, a, b);
-    else if constexpr( c == category::uint16x32 )             return _mm512_mask_adds_epu16(src, m, a, b);
-    else if constexpr( c == category::int8x64   )             return _mm512_mask_adds_epi8(src, m, a, b);
-    else if constexpr( c == category::uint8x64  )             return _mm512_mask_adds_epu8(src, m, a, b);
-    else if constexpr( sup_avx2 && c == category::int16x16  ) return _mm256_mask_adds_epi16(src, m, a, b);
-    else if constexpr( sup_avx2 && c == category::uint16x16 ) return _mm256_mask_adds_epu16(src, m, a, b);
-    else if constexpr( sup_avx2 && c == category::int8x32   ) return _mm256_mask_adds_epi8(src, m, a, b);
-    else if constexpr( sup_avx2 && c == category::uint8x32  ) return _mm256_mask_adds_epu8(src, m, a, b);
-    else if constexpr( c == category::int16x8   )             return _mm_mask_adds_epi16(src, m, a, b);
-    else if constexpr( c == category::uint16x8  )             return _mm_mask_adds_epu16(src, m, a, b);
-    else if constexpr( c == category::int8x16   )             return _mm_mask_adds_epi8(src, m, a, b);
-    else if constexpr( c == category::uint8x16  )             return _mm_mask_adds_epu8(src, m, a, b);
-    else                                                      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
+    if      constexpr( floating_value<T>        ) return add[cx](a, b);
+    else if constexpr( c == category::int16x32  ) return _mm512_mask_adds_epi16(src, m, a, b);
+    else if constexpr( c == category::uint16x32 ) return _mm512_mask_adds_epu16(src, m, a, b);
+    else if constexpr( c == category::int8x64   ) return _mm512_mask_adds_epi8(src, m, a, b);
+    else if constexpr( c == category::uint8x64  ) return _mm512_mask_adds_epu8(src, m, a, b);
+    else if constexpr( c == category::int16x16  ) return _mm256_mask_adds_epi16(src, m, a, b);
+    else if constexpr( c == category::uint16x16 ) return _mm256_mask_adds_epu16(src, m, a, b);
+    else if constexpr( c == category::int8x32   ) return _mm256_mask_adds_epi8(src, m, a, b);
+    else if constexpr( c == category::uint8x32  ) return _mm256_mask_adds_epu8(src, m, a, b);
+    else if constexpr( c == category::int16x8   ) return _mm_mask_adds_epi16(src, m, a, b);
+    else if constexpr( c == category::uint16x8  ) return _mm_mask_adds_epu16(src, m, a, b);
+    else if constexpr( c == category::int8x16   ) return _mm_mask_adds_epi8(src, m, a, b);
+    else if constexpr( c == category::uint8x16  ) return _mm_mask_adds_epu8(src, m, a, b);
+    else                                          return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
   }
   else
   {

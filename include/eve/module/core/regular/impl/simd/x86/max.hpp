@@ -113,7 +113,7 @@ namespace eve::detail
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> max_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-  requires x86_abi<abi_t<T, N>>
+    requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
     {
@@ -128,39 +128,39 @@ namespace eve::detail
       if      constexpr( c == category::float32x16) return _mm512_mask_max_ps    (src, m, a, b);
       else if constexpr( c == category::float32x8 ) return _mm256_mask_max_ps    (src, m, a, b);
       else if constexpr( c == category::float32x4 ) return _mm_mask_max_ps       (src, m, a, b);
- 
+
       else if constexpr( c == category::float64x8 ) return _mm512_mask_max_pd    (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_max_pd    (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_max_pd       (src, m, a, b);
- 
+
       else if constexpr( c == category::int8x64   ) return _mm512_mask_max_epi8  (src, m, a, b);
       else if constexpr( c == category::int8x32   ) return _mm256_mask_max_epi8  (src, m, a, b);
       else if constexpr( c == category::int8x16   ) return _mm_mask_max_epi8     (src, m, a, b);
- 
+
       else if constexpr( c == category::int16x32  ) return _mm512_mask_max_epi16 (src, m, a, b);
       else if constexpr( c == category::int16x16  ) return _mm256_mask_max_epi16 (src, m, a, b);
       else if constexpr( c == category::int16x8   ) return _mm_mask_max_epi16    (src, m, a, b);
- 
+
       else if constexpr( c == category::int32x16  ) return _mm512_mask_max_epi32 (src, m, a, b);
       else if constexpr( c == category::int32x8   ) return _mm256_mask_max_epi32 (src, m, a, b);
       else if constexpr( c == category::int32x4   ) return _mm_mask_max_epi32    (src, m, a, b);
- 
+
       else if constexpr( c == category::int64x8   ) return _mm512_mask_max_epi64 (src, m, a, b);
       else if constexpr( c == category::int64x4   ) return _mm256_mask_max_epi64 (src, m, a, b);
       else if constexpr( c == category::int64x2   ) return _mm_mask_max_epi64    (src, m, a, b);
- 
+
       else if constexpr( c == category::uint8x64  ) return _mm512_mask_max_epu8  (src, m, a, b);
       else if constexpr( c == category::uint8x32  ) return _mm256_mask_max_epu8  (src, m, a, b);
       else if constexpr( c == category::uint8x16  ) return _mm_mask_max_epu8     (src, m, a, b);
- 
+
       else if constexpr( c == category::uint16x32 ) return _mm512_mask_max_epu16 (src, m, a, b);
       else if constexpr( c == category::uint16x16 ) return _mm256_mask_max_epu16 (src, m, a, b);
       else if constexpr( c == category::uint16x8  ) return _mm_mask_max_epu16    (src, m, a, b);
- 
+
       else if constexpr( c == category::uint32x16 ) return _mm512_mask_max_epu32 (src, m, a, b);
       else if constexpr( c == category::uint32x8  ) return _mm256_mask_max_epu32 (src, m, a, b);
       else if constexpr( c == category::uint32x4  ) return _mm_mask_max_epu32    (src, m, a, b);
- 
+
       else if constexpr( c == category::uint64x8  ) return _mm512_mask_max_epu64 (src, m, a, b);
       else if constexpr( c == category::uint64x4  ) return _mm256_mask_max_epu64 (src, m, a, b);
       else if constexpr( c == category::uint64x2  ) return _mm_mask_max_epu64    (src, m, a, b);
