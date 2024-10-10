@@ -15,14 +15,16 @@ namespace eve::detail
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> popcount_(EVE_REQUIRES(neon128_),
-                                       O const&,
+                                       O const& o,
                                        wide<T, N> v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
 
-    auto split_it = [](auto v){
-      auto z =  bit_cast(v, as<wide<std::uint8, fixed < fixed < N>::value*2>>>>());
+    auto split_it = []<typename T > (T v){
+      using d_t = downgrade<T>;
+      using t_t = wide<d_t, eve::fixed<N::value*2>>
+      auto z =  bit_cast(v, as<t_t>());
       return  popcount(z);
     };
 
