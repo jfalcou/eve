@@ -21,7 +21,7 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N>>();
 
     auto split_it = []<typename U > (U v){
-      using d_t = downgrade_t<U>;
+      using d_t = downgrade_t<element_type_t<U>>;
       using t_t = wide<d_t, eve::fixed<N::value*2>>;
       auto z =  bit_cast(v, as<t_t>());
       return  popcount(z);
@@ -34,7 +34,7 @@ namespace eve::detail
     else if constexpr( cat == category::uint32x2) return vpaddl_u16(split_it(v));
     else if constexpr( cat == category::uint32x4) return vpaddlq_u16(split_it(v));
     else if constexpr( cat == category::uint64x2) return vpaddl_u32(split_it(v));
-    else                                          return popcount.behavior(cpu_{}, o, v);
+    else return popcount.behavior(cpu_{}, o, v);
 
   }
 }
