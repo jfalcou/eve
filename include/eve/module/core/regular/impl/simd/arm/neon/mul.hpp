@@ -35,13 +35,13 @@ namespace eve::detail
     else if constexpr( c == category::uint16x4 ) return fix(vmull_u16(v, w));
     else if constexpr( c == category::int8x8   ) return fix(vmull_s8 (v, w));
     else if constexpr( c == category::uint8x8  ) return fix(vmull_u8 (v, w));
-    else return mul.behavior(cpu_{}, opts, v, w);
     else if constexpr( match(c, category::integer_) && sizeof(T) <= 4 )
     {
       auto [vlo, vhi] = v.slice();
       auto [wlo, whi] = w.slice();
       return combine(mul[opts](vlo, wlo), mul[opts](wlo, whi));
     }
+    else return mul.behavior(cpu_{}, opts, v, w);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, typename U>
