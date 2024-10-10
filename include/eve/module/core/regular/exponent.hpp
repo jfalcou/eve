@@ -98,6 +98,6 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/exponent.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/exponent.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/exponent.hpp>
+// #endif
