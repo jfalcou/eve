@@ -59,3 +59,7 @@ EVE_MAKE_CALLABLE(popcount_, popcount);
 #if defined(EVE_INCLUDE_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/popcount.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_ARM_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/popcount.hpp>
+#endif
