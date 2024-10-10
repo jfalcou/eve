@@ -109,15 +109,15 @@ namespace eve
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T prev_(EVE_REQUIRES(cpu_), O const&, T const &a) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr (floating_value<T>)
       {
-        if constexpr(O::contains(raw))
+        if constexpr (O::contains(raw))
         {
           auto s = ieee_constant<0x1.000002p-24f, 0x1.0000000000001p-53>(as{a});
           return fnma[pedantic](s, eve::abs(a), a);
         }
         if (eve::all( eve::is_normal(a))) return prev[raw](a);
-        if constexpr(O::contains(pedantic))
+        if constexpr (O::contains(pedantic))
         {
           auto pz   = bitinteger(a);
           auto z    = bitfloating(pz-one(as{pz}));
@@ -131,11 +131,11 @@ namespace eve
           }
           return if_else(test, if_else(is_eqz(z), mzero(as<T>{}), bitfloating(pz)), prv);
         }
-        else if  constexpr(O::contains(saturated))
+        else if constexpr (O::contains(saturated))
         {
           auto prv = prev(a);
           auto z = if_else(a == minf(as{a}), a, prv);
-          if constexpr( eve::platform::supports_nans ) return if_else(is_nan(a), eve::allbits, z);
+          if constexpr (eve::platform::supports_nans) return if_else(is_nan(a), eve::allbits, z);
           else return z;
         }
         else
@@ -157,9 +157,8 @@ namespace eve
       }
     }
 
-    template<typename T, typename N, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, N>
-    prev_(EVE_REQUIRES(cpu_), O const&, T const &a,  N const &n) noexcept
+    template<callable_options O, typename T, typename N>
+    EVE_FORCEINLINE constexpr as_wide_as_t<T, N> prev_(EVE_REQUIRES(cpu_), O const&, T const &a,  N const &n) noexcept
     {
       if constexpr( floating_value<T> )
       {

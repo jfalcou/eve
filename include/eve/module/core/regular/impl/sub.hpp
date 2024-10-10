@@ -29,7 +29,7 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(O::contains(strict))
       {
