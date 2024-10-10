@@ -87,11 +87,11 @@ namespace eve::detail
     else if constexpr( !C::has_alternative )
     {
       constexpr auto cx = categorize<wide<T, N>>();
-      auto src = alternative(mask, v, as<wide<T, N>> {});
-      [[maybe_unused]] auto const m = expand_mask(mask, as{v}).storage().value;
+      auto src = alternative(mask, a, as<wide<T, N>> {});
+      [[maybe_unused]] auto const m = expand_mask(mask, as{a}).storage().value;
 
       // Integral don't do anything special ----
-      if constexpr (std::integral<T>) return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
+      if constexpr (std::integral<T>) return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       // UPPER LOWER  ----
       else if constexpr (O::contains(lower) || O::contains(upper))
       {
@@ -99,34 +99,34 @@ namespace eve::detail
         {
           if constexpr(current_api >= avx512)
           {
-            auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-            if      constexpr ( cx == category::float64x8  ) return  _mm512_mask_fmsub_round_pd (v, m, w, x, dir);
-            else if constexpr ( cx == category::float32x16 ) return  _mm512_mask_fmsub_round_ps (v, m, w, x, dir);
+            auto constexpr dir = (O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+            if      constexpr ( cx == category::float64x8  ) return  _mm512_mask_fmsub_round_pd (a, m, b, c, dir);
+            else if constexpr ( cx == category::float32x16 ) return  _mm512_mask_fmsub_round_ps (a, m, b, c, dir);
             else if constexpr ( cx == category::float64x4 ||  cx == category::float64x2 ||
                                  cx == category::float32x8 ||  cx == category::float32x4 || cx == category::float32x2)
             {
-              auto aa = eve::combine(v, v);
-              auto bb = eve::combine(w, w);
-              auto cc = eve::combine(x, x);
+              auto aa = eve::combine(a, a);
+              auto bb = eve::combine(b, b);
+              auto cc = eve::combine(c, c);
               auto aabbcc = fms[opts.drop(condition_key)](aa, bb, cc);
               auto s =  slice(aabbcc, eve::upper_);
-              return if_else(mask,s,src);
+              return if_else(mask, s, src);
             }
-            else                                     return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
+            else                                     return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
           }
-          else                                       return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
+          else                                       return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
         }
-        else                                         return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
+        else                                         return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }
-      else if constexpr( cx == category::float32x16) return _mm512_mask_fmsub_ps(v, m, w, x);
-      else if constexpr( cx == category::float64x8 ) return _mm512_mask_fmsub_pd(v, m, w, x);
-      else if constexpr( cx == category::float32x8 ) return _mm256_mask_fmsub_ps(v, m, w, x);
-      else if constexpr( cx == category::float64x4 ) return _mm256_mask_fmsub_pd(v, m, w, x);
-      else if constexpr( cx == category::float32x4 ) return _mm_mask_fmsub_ps(v, m, w, x);
-      else if constexpr( cx == category::float64x2 ) return _mm_mask_fmsub_pd(v, m, w, x);
+      else if constexpr( cx == category::float32x16) return _mm512_mask_fmsub_ps(a, m, b, c);
+      else if constexpr( cx == category::float64x8 ) return _mm512_mask_fmsub_pd(a, m, b, c);
+      else if constexpr( cx == category::float32x8 ) return _mm256_mask_fmsub_ps(a, m, b, c);
+      else if constexpr( cx == category::float64x4 ) return _mm256_mask_fmsub_pd(a, m, b, c);
+      else if constexpr( cx == category::float32x4 ) return _mm_mask_fmsub_ps(a, m, b, c);
+      else if constexpr( cx == category::float64x2 ) return _mm_mask_fmsub_pd(a, m, b, c);
       // No rounding issue with integers, so we just mask over regular FMS
-      else                                          return if_else(mask, eve::fms(v, w, x), v);
+      else                                          return if_else(mask, eve::fms(a, b, c), a);
     }
-    else                                            return if_else(mask, eve::fms[opts.drop(condition_key)](v, w, x), alternative(mask, v, as{v}));
+    else                                            return if_else(mask, eve::fms[opts.drop(condition_key)](a, b, c), alternative(mask, a, as{a}));
   }
 }
