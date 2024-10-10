@@ -89,16 +89,18 @@ namespace eve
     template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T secd_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
     {
-      if constexpr( O::contains(quarter_circle) )
+      if constexpr (O::contains(quarter_circle))
         return eve::rec[pedantic](eve::cosd[o](a0));
       else
       {
         auto a0_180 = div_180(a0);
-        auto test   = is_not_flint[pedantic](a0_180) && is_flint[pedantic](a0_180 + mhalf(eve::as{a0_180}));
+        auto test   = is_not_flint[pedantic](a0_180) && is_flint[pedantic](a0_180 + mhalf(as{a0_180}));
+
         if constexpr (scalar_value<T>) // early return for nans in scalar case
         {
           if (test) return nan(as<T>{});
         }
+
         return if_else(test, eve::allbits, rec[pedantic](cosd[o](a0)));
       }
     }

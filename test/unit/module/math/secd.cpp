@@ -47,7 +47,7 @@ TTS_CASE_WITH("Check behavior of secd on wide",
   TTS_ULP_EQUAL(secd(a2), tts::map(ref, a2), 512);
 };
 
-TTS_CASE_TPL("Check return types of secd", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check behavior of secd on wide (edge cases)", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)
 {
   if constexpr( eve::platform::supports_invalids )

@@ -20,8 +20,10 @@ namespace eve::detail
     requires x86_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
+
     // Integral don't do anything special ----
     if constexpr (std::integral<T>) return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
+
     // UPPER LOWER  ----
     else if constexpr (O::contains(lower) || O::contains(upper))
     {

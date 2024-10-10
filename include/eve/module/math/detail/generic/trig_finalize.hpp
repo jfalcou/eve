@@ -94,7 +94,7 @@ namespace eve
     {
       auto tmp      = one[fn >= T(2)](eve::as{xr});
       auto swap_bit = (eve::fma(T(-2), tmp, fn));
-      auto zz1 = eve::is_odd(fn+tmp);
+      auto zz1 = eve::is_odd[pedantic](fn+tmp);
       auto sign    =  eve::if_else(zz1, eve::mone(eve::as{xr}), eve::one(eve::as{xr}));
       T    z        = eve::sqr(xr);
       T    se       = sin_eval(z, xr);
