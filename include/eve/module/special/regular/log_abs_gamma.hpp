@@ -505,7 +505,7 @@ namespace eve
               return if_else(test, r1, r2);
             };
 
-          auto inf_result = (is_lez(a0) && is_flint[pedantic](a0)) || is_infinite(a0);
+          auto inf_result = (is_lez(a0) && is_flint(a0)) || is_infinite(a0);
           T x = if_else(inf_result, eve::allbits, a0);
           T q = abs(x);
 

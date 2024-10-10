@@ -147,7 +147,7 @@ namespace eve::algo::views
     converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}
 
     EVE_FORCEINLINE auto unalign() const noexcept { return convert(eve::unalign(base), as<T>{}); }
-    EVE_FORCEINLINE auto read()    const noexcept { return eve::convert(eve::read(base)   , as<T>{}); }
+    EVE_FORCEINLINE auto read()    const noexcept { return eve::convert(eve::read(base), as<T>{}); }
 
     EVE_FORCEINLINE void write(T v) const noexcept
     {

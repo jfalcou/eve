@@ -233,7 +233,7 @@ namespace eve
           else return xx;
         };
 
-        auto nan_result = is_ltz(v) && is_flint[pedantic](v);
+        auto nan_result = is_ltz(v) && is_flint(v);
         //       if constexpr(eve::platform::supports_nans) nan_result = is_nan(v) || nan_result;
         auto        q    = abs(v);
         auto        test = is_less(v, T{-33.0});

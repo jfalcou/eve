@@ -83,7 +83,7 @@ namespace eve
     constexpr EVE_FORCEINLINE T signgam_(EVE_REQUIRES(cpu_), O const&, T a0)
     {
       auto isleza0 = is_ngtz(a0);
-      auto a       = if_else(is_flint[pedantic](a0) || is_infinite(a0),
+      auto a       = if_else(is_flint(a0) || is_infinite(a0),
                              eve::allbits,
                              oneminus(one[is_odd(floor(a0))](as{a0}) * T(2)));
       a            = if_else(is_eqz(a0), bit_or(one(as{a0}), bitofsign(a0)), a);
