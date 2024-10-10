@@ -14,7 +14,7 @@ namespace eve::detail
 {
 
 template<callable_options O, product_type T, product_type U>
-EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
+EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, as<U>)
 {
   if constexpr( std::same_as<element_type_t<T>, U> )
   {
@@ -104,13 +104,13 @@ EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unuse
       // Converting between integral of different signs is just a bit_cast away
       if constexpr (std::signed_integral<in_e_t> && std::unsigned_integral<Out>)
       {
-        auto s_res = convert(maybe_saturate(v0), eve::as<std::make_signed_t<Out>> {});
-        return bit_cast(s_res, eve::as<wide<Out, N>> {});
+        auto s_res = convert(maybe_saturate(v0), as<std::make_signed_t<Out>> {});
+        return bit_cast(s_res, as<wide<Out, N>> {});
       }
       else if constexpr (std::unsigned_integral<in_e_t> && std::signed_integral<Out>)
       {
-        auto u_res = convert(maybe_saturate(v0), eve::as<std::make_unsigned_t<Out>> {});
-        return bit_cast(u_res, eve::as<wide<Out, N>> {});
+        auto u_res = convert(maybe_saturate(v0), as<std::make_unsigned_t<Out>> {});
+        return bit_cast(u_res, as<wide<Out, N>> {});
       }
       else if constexpr (O::contains(saturated))
       {

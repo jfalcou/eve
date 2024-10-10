@@ -15,7 +15,7 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>> is_denormal_(EVE_REQUIRES(avx512_), O const &, wide<T, N> w) noexcept
+  EVE_FORCEINLINE logical<wide<T, N>> is_denormal_(EVE_REQUIRES(avx512_), O const&, wide<T, N> w) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     using l_t        = logical<wide<T, N>>;

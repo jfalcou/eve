@@ -47,7 +47,7 @@ namespace eve
 //!   {
 //!      template <eve::simd_value T, eve::simd_value Target>
 //!        requires /* see documentation*/
-//!      Target simd_cast(T x, eve::as<Target> tgt);
+//!      Target simd_cast(T x, as<Target> tgt);
 //!   }
 //!   @endcode
 //!

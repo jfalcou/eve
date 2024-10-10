@@ -79,7 +79,7 @@ namespace eve
     constexpr T  bit_not_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
       if constexpr( floating_scalar_value<T> )
-        return bit_cast(~bit_cast(v, as<as_integer_t<T>> {}), as(v));
+        return bit_cast(~bit_cast(v, as<as_integer_t<T>> {}), as{v});
       else
         return T(~v);
     }

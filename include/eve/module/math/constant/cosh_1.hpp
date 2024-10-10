@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::cosh_1(as<T>())` returns the hyperbolic cosine of 1.
+  //!      The call `eve::cosh_1(as<T>{})` returns the hyperbolic cosine of 1.
   //!
   //!  @groupheader{Example}
   //!

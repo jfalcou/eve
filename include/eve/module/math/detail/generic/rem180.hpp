@@ -28,7 +28,7 @@ rem180(T x) noexcept
   xr       = if_else(tst, xr - T(45), xr);
   tst      = xr > 45;
   xr       = if_else(tst, x - T(45), xr);
-  xr       = div_180(xr) * pi(as(xr));
-  return kumi::make_tuple(fn, xr, zero(as(xr)));
+  xr       = div_180(xr) * pi(as{xr});
+  return kumi::make_tuple(fn, xr, zero(as{xr}));
 }
 }

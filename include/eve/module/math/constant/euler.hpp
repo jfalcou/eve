@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::euler(as<T>())` returns  the basis of the natural logarithms.
+  //!      The call `eve::euler(as<T>{})` returns  the basis of the natural logarithms.
   //!
   //!  @groupheader{Example}
   //!

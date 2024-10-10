@@ -80,7 +80,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    remainder_(EVE_REQUIRES(cpu_), O const &, T const& a, T const& b) noexcept
+    remainder_(EVE_REQUIRES(cpu_), O const&, T const& a, T const& b) noexcept
     {
       return rem[to_nearest](a, b);
     }

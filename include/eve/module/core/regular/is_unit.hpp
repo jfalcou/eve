@@ -77,9 +77,9 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE as_logical_t<T>
-    is_unit_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_unit_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      return is_equal(abs(a), one(as<T>()));
+      return is_equal(abs(a), one(as<T>{}));
     }
   }
 }

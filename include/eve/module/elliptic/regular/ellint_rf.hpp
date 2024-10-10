@@ -101,13 +101,13 @@ namespace eve
         T    zn   = z;
         T    an   = (x + y + z) / 3;
         T    a0   = an;
-        auto epsi = pow_abs(3 * eps(as(element_type_t<T>())), -1 / T(8));
+        auto epsi = pow_abs(3 * eps(as<element_type_t<T>>{}), -1 / T(8));
         T    q  = epsi * (eve::max)((eve::max)(eve::abs(an - xn), eve::abs(an - yn)), eve::abs(an - zn));
-        T    fn = one(as(x));
+        T    fn = one(as{x});
 
         // duplication
         unsigned k  = 1;
-        T        hf = half(as(x));
+        T        hf = half(as{x});
         for( ; k < 30; ++k )
         {
           T root_x = eve::sqrt(xn);
@@ -142,12 +142,12 @@ namespace eve
         constexpr elt_t c7 = sizeof(elt_t) == 4 ? -1 / 16.0f : 1 / 16.0;
         return (fma(e3,
                     fma(e3, c1, c0),
-                    fma(e2, (c2 + e3 * c5 + e2 * (c4 + e2 * c6 + e3 * c7)), one(as(x)))))
+                    fma(e2, (c2 + e3 * c5 + e2 * (c4 + e2 * c6 + e3 * c7)), one(as{x}))))
           * rsqrt(an);
       }
       else
       {
-        auto r = nan(as(x));
+        auto r = nan(as{x});
         auto notdone =
           is_nltz(x) && is_nltz(y) && is_nltz(z) && is_nez(x + y) && is_nez(y + z) && is_nez(z + x);
         // any parameter nan or less than zero or more than one parameter zero implies nan

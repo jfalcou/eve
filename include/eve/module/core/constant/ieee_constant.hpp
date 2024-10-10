@@ -46,11 +46,11 @@ namespace eve
 //!
 //!   ** Parameters**
 //!
-//!  'target': as<T>() where T is the chosen return type
+//!  'target': as<T>{} where T is the chosen return type
 //!
 //! **Return value**
 //!
-//! the call `eve::ieee_constant<f, d>(as<T>())`
+//! the call `eve::ieee_constant<f, d>(as<T>{})`
 //! is semantically equivalent to :
 //!
 //!  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{.cpp}

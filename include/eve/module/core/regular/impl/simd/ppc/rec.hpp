@@ -45,27 +45,27 @@ namespace eve::detail
     {
       auto constexpr fix_inf = [](auto v, auto e) {
         if constexpr (platform::supports_infinites)
-          return if_else(is_infinite(v), v & mzero(eve::as(v)), e);
+          return if_else(is_infinite(v), v & mzero(eve::as{v}), e);
         else
           return e;
       };
 
       auto constexpr refine_rec = [](auto a0, auto x) {
         // Newton-Raphson: 1/X ~= (1-a0*x)*x + x
-        return fma(fnma(x, a0, one(eve::as(a0))), x, x);
+        return fma(fnma(x, a0, one(eve::as{a0})), x, x);
       };
 
       if constexpr (std::is_same_v<double, T>)
       {
         auto estimate = refine_rec(w, rec[raw](w));
         estimate      = refine_rec(w, estimate);
-        estimate      = if_else(is_eqz(w), w | inf(eve::as(w)), estimate);
+        estimate      = if_else(is_eqz(w), w | inf(eve::as{w}), estimate);
         return fix_inf(w, estimate);
       }
       else if constexpr (std::is_same_v<float, T>)
       {
         auto estimate = refine_rec(w, rec[raw](w));
-        estimate      = if_else(is_eqz(w), w | inf(eve::as(w)), estimate);
+        estimate      = if_else(is_eqz(w), w | inf(eve::as{w}), estimate);
         return fix_inf(w, estimate);
       }
     }

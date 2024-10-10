@@ -30,11 +30,11 @@ namespace eve::detail
   {
     if constexpr(scalar_value<I>)
     {
-      auto p0 = one(as(x));
+      auto p0 = one(as{x});
       if( is_eqz(n) ) return p0;
       auto p1 = oneminus(x);
-      auto vc = one(as(x));
-      auto c  = one(as(n));
+      auto vc = one(as{x});
+      auto c  = one(as{n});
       while( c < n )
       {
         auto p    = p0;
@@ -55,13 +55,13 @@ namespace eve::detail
       else if constexpr(simd_value<T>)
       {
         using elt_t = element_type_t<T>;
-        auto p0     = one(as(x));
+        auto p0     = one(as{x});
         auto iseqzn = is_eqz(n);
         if( eve::all(iseqzn) ) return p0;
 
         auto p1   = oneminus(x);
-        auto nn    = convert(n, as<elt_t>());
-        auto c    = one(as(nn));
+        auto nn    = convert(n, as<elt_t>{});
+        auto c    = one(as{nn});
         auto test = c < nn;
         while( eve::any(test) )
         {
@@ -85,7 +85,7 @@ namespace eve::detail
     if constexpr(integral_scalar_value<M> && integral_scalar_value<N>)
     {
       if( mm == 0 ) return laguerre(nn, x);
-      auto p0 = one(as(x));
+      auto p0 = one(as{x});
       if( nn == 0 ) return p0;
       auto p1 = inc(mm) - x;
 
@@ -106,16 +106,16 @@ namespace eve::detail
       else
       {
         using elt_t = element_type_t<T>;
-        auto p0     = one(as<r_t>());
+        auto p0     = one(as<r_t>{});
         auto iseqzn = is_eqz(nn);
         if( eve::all(iseqzn) )  { return r_t(p0); }
         else
         {
-          auto m  = convert(mm, as<elt_t>());
+          auto m  = convert(mm, as<elt_t>{});
           auto p1 = inc(m) - r_t(x);
 
-          auto n = convert(nn, as<elt_t>());
-          auto c = one(as<r_t>());
+          auto n = convert(nn, as<elt_t>{});
+          auto c = one(as<r_t>{});
 
           auto test = c < n;
           while( eve::any(test) )

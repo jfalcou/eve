@@ -66,7 +66,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::mzero(as<T>())` is semantically equivalent to `T(-0.0)`.
+  //!      The call `eve::mzero(as<T>{})` is semantically equivalent to `T(-0.0)`.
   //!
   //!  @groupheader{Example}
   //!

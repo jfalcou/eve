@@ -148,13 +148,13 @@ namespace eve
           {
             if constexpr (sizeof(elt_t) == 4)
             {
-              auto r = gcd[raw](convert(a, as<double>()), convert(b, as<double>()));
+              auto r = gcd[raw](convert(a, as<double>{}), convert(b, as<double>{}));
               if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
               else                                    return convert(r, uint_from<T>());
             }
             else if constexpr (sizeof(elt_t) <= 2)
             {
-              auto r = gcd[raw](convert(a, as<float>()), convert(b, as<float>()));
+              auto r = gcd[raw](convert(a, as<float>{}), convert(b, as<float>{}));
               if constexpr( std::is_signed_v<elt_t> ) return convert(r, int_from<T>());
               else                                    return convert(r, uint_from<T>());
             }

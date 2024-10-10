@@ -83,7 +83,7 @@ namespace eve
         T    w     = eve::log_abs_gamma(q);
         T    p     = floor(q);
         T    z     = q - p;
-        auto test2 = (z < half(as<T>()));
+        auto test2 = (z < half(as<T>{}));
         z          = dec[test2](z);
         z          = q * sinpi(z);
         z          = abs(z);
@@ -143,16 +143,16 @@ namespace eve
       {
         if constexpr (scalar_value<T>)
         {
-          if ((is_infinite(a0))) return inf(as<T>());
+          if ((is_infinite(a0))) return inf(as<T>{});
 
-          const T Maxlog_abs_gamma = ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
+          const T Maxlog_abs_gamma = ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(as<T>{});
           auto log_abs_gamma_pos = [Logsqrt2pi](T x)
             {
               if (x < 6.5f)
               {
-                T z  = one(as<T>());
+                T z  = one(as<T>{});
                 T tx = x;
-                T nx = zero(as<T>());
+                T nx = zero(as<T>{});
                 if (x >= 1.5f)
                 {
                   while (tx > 2.5f)
@@ -184,7 +184,7 @@ namespace eve
 
                 while (tx < 1.5f)
                 {
-                  if (is_eqz(tx)) return inf(as<T>());
+                  if (is_eqz(tx)) return inf(as<T>{});
 
                   z *= tx;
                   nx = inc(nx);
@@ -209,33 +209,33 @@ namespace eve
               return q;
             };
 
-          if ((a0 > Maxlog_abs_gamma) || is_eqz(a0)) return inf(as<T>());
+          if ((a0 > Maxlog_abs_gamma) || is_eqz(a0)) return inf(as<T>{});
 
           T x = a0;
           T q = abs(x);
 
           if (x < 0.0f)
           {
-            if (q > Maxlog_abs_gamma) return nan(as<T>());
+            if (q > Maxlog_abs_gamma) return nan(as<T>{});
 
             T w = log_abs_gamma_pos(q);
             T p = floor(q);
 
-            if (p == q) return inf(as<T>());
+            if (p == q) return inf(as<T>{});
 
             T z = q - p;
 
-            if (z > half(as<T>()))
+            if (z > half(as<T>{}))
             {
-              p += one(as<T>());
+              p += one(as<T>{});
               z = p - q;
             }
 
             z = q * sinpi(z);
 
-            if(is_eqz(z)) return inf(as<T>());
+            if(is_eqz(z)) return inf(as<T>{});
 
-            return -log(inv_pi(as<T>()) * abs(z)) - w;
+            return -log(inv_pi(as<T>{}) * abs(z)) - w;
           }
           else { return log_abs_gamma_pos(x); }
         }
@@ -247,7 +247,7 @@ namespace eve
 
           if constexpr(eve::platform::supports_infinites)
           {
-            inf_result = (x == inf(as<T>())) || inf_result;
+            inf_result = (x == inf(as<T>{})) || inf_result;
           }
 
           auto   ltza0 = is_ltz(a0);
@@ -260,16 +260,16 @@ namespace eve
               size_t nb     = eve::count_true(xlt650);
               T      r0x    = x;
               T      r0z    = x;
-              T      r0s    = one(as<T>());
-              T      r1     = zero(as<T>());
-              T      p      = nan(as<T>());
+              T      r0s    = one(as<T>{});
+              T      r1     = zero(as<T>{});
+              T      p      = nan(as<T>{});
 
               if (nb > 0)
               {
-                auto kernelC = false_(as<T>());
-                T    z       = one(as<T>());
+                auto kernelC = false_(as<T>{});
+                T    z       = one(as<T>{});
                 T    tx      = if_else(xlt650, x, eve::zero);
-                T    nx      = zero(as<T>());
+                T    nx      = zero(as<T>{});
 
                 const T _075    = T(0.75);
                 const T _150    = T(1.50);
@@ -289,7 +289,7 @@ namespace eve
 
                 r0x = add[xge150](x, nx - T(2));
                 r0z = if_else(xge150, z, r0z);
-                r0s = if_else(xge150, one(as<T>()), r0s);
+                r0s = if_else(xge150, one(as<T>{}), r0s);
 
 
                 auto xge125  = (x >= _125);
@@ -299,7 +299,7 @@ namespace eve
                 {
                   r0x = if_else(xge125t, dec(x), r0x);
                   r0z = if_else(xge125t, z * x, r0z);
-                  r0s = if_else(xge125t, mone(as<T>()), r0s);
+                  r0s = if_else(xge125t, mone(as<T>{}), r0s);
                 }
 
                 auto xge075  = (x >= _075);
@@ -309,8 +309,8 @@ namespace eve
                 {
                   kernelC = xge075t;
                   r0x     = if_else(xge075t, dec(x), r0x);
-                  r0z     = if_else(xge075t, one(as<T>()), r0z);
-                  r0s     = if_else(xge075t, mone(as<T>()), r0s);
+                  r0z     = if_else(xge075t, one(as<T>{}), r0z);
+                  r0s     = if_else(xge075t, mone(as<T>{}), r0s);
                   p       = helpers::log_abs_gammaC(r0x);
                 }
 
@@ -328,7 +328,7 @@ namespace eve
                   }
                   r0x = add[orig](r0x, nx - T(2));
                   r0z = if_else(orig, z, r0z);
-                  r0s = if_else(orig, mone(as<T>()), r0s);
+                  r0s = if_else(orig, mone(as<T>{}), r0s);
                 }
 
                 p = if_else(kernelC, p, helpers::log_abs_gammaB(r0x));
@@ -339,7 +339,7 @@ namespace eve
               r0z  = if_else(xlt650, abs(r0z), x);
               T m  = log(r0z);
               r1   = fma(r0x, p, r0s * m);
-              T r2 = fma(x - half(as<T>()), m, Logsqrt2pi - x);
+              T r2 = fma(x - half(as<T>{}), m, Logsqrt2pi - x);
               r2 += helpers::log_abs_gamma2(rec[pedantic](sqr(x))) / x;
 
               return if_else(xlt650, r1, r2);
@@ -353,23 +353,23 @@ namespace eve
               {
                 T    p     = floor(q);
                 T    z     = q - p;
-                auto test2 = (z < half(as<T>()));
+                auto test2 = (z < half(as<T>{}));
                 z          = dec[test2](z);
                 z          = q * sinpi(z);
                 z          = abs(z);
 
-                return -log(inv_pi(as<T>()) * abs(z)) - w;
+                return -log(inv_pi(as<T>{}) * abs(z)) - w;
               };
 
             // treat negative
-            r = if_else(inf_result, inf(as<T>()), negative(q, r1));
+            r = if_else(inf_result, inf(as<T>{}), negative(q, r1));
 
             if (nb >= cardinal_v<T>) return r;
           }
 
           T r2 = if_else(ltza0, r, r1);
 
-          return if_else(inf_result, inf(as<T>()), r2);
+          return if_else(inf_result, inf(as<T>{}), r2);
         }
       }
       else if constexpr( std::is_same_v<elt_t, double> )
@@ -379,14 +379,14 @@ namespace eve
         if constexpr (scalar_value<T>)
         {
           const T Maxlog_abs_gamma =
-            ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(eve::as<T>{});
+            ieee_constant<0x1.87f1d40p+120f, 0x1.74c5dd06d2516p+1014>(as<T>{});
 
           auto log_abs_gamma_pos = [Logsqrt2pi](T x)
             {
               if (x < 13.0)
               {
-                T z = one(as<T>());
-                T p = zero(as<T>());
+                T z = one(as<T>{});
+                T p = zero(as<T>{});
                 T u = x;
 
                 while (u >= 3.0)
@@ -398,7 +398,7 @@ namespace eve
 
                 while (u < 2.0)
                 {
-                  if (u == 0.0) return inf(as<T>());
+                  if (u == 0.0) return inf(as<T>{});
 
                   z /= u;
                   p += 1.0;
@@ -426,33 +426,33 @@ namespace eve
               return q;
             };
 
-          if (is_infinite(a0) || is_eqz(a0)) return inf(as<T>());
+          if (is_infinite(a0) || is_eqz(a0)) return inf(as<T>{});
 
           T x = a0;
           T q = abs(x);
 
-          if (x > Maxlog_abs_gamma) return inf(as<T>());
+          if (x > Maxlog_abs_gamma) return inf(as<T>{});
 
           if (x < -34.0 )
           {
-            if (q > Maxlog_abs_gamma) return nan(as<T>());
+            if (q > Maxlog_abs_gamma) return nan(as<T>{});
 
             T w = log_abs_gamma_pos(q);
             T p = floor(q);
 
-            if (p == q) return inf(as<T>());
+            if (p == q) return inf(as<T>{});
 
             T z = q - p;
 
-            if (z > half(as<T>()))
+            if (z > half(as<T>{}))
             {
-              p += one(as<T>());
+              p += one(as<T>{});
               z = p - q;
             }
 
             z = q * sinpi(z);
 
-            if (is_eqz(z)) return inf(as<T>());
+            if (is_eqz(z)) return inf(as<T>{});
 
             return Logpi - log(z) - w;
           }
@@ -468,11 +468,11 @@ namespace eve
               T              x    = xx;
               auto           test = (x < T(13.0));
               std::ptrdiff_t nb   = eve::count_true(test);
-              T              r1   = zero(as<T>());
+              T              r1   = zero(as<T>{});
               if (nb > 0)
               {
-                T    z     = one(as<T>());
-                T    p     = zero(as<T>());
+                T    z     = one(as<T>{});
+                T    p     = zero(as<T>{});
                 T    u     = if_else(test, x, eve::zero);
                 auto test1 = (u > T(3));
 
@@ -501,7 +501,7 @@ namespace eve
                 if (nb >= T::size()) return r1;
               }
 
-              T r2 = fma(xx - half(as<T>()), log(xx), Logsqrt2pi - xx);
+              T r2 = fma(xx - half(as<T>{}), log(xx), Logsqrt2pi - xx);
               T p  = rec[pedantic](sqr(xx));
               r2 += helpers::log_abs_gammaA(p) / xx;
 
@@ -512,23 +512,23 @@ namespace eve
           T x = if_else(inf_result, eve::allbits, a0);
           T q = abs(x);
 
-          if (eve::platform::supports_infinites) inf_result = inf_result || (q == inf(as<T>()));
+          if (eve::platform::supports_infinites) inf_result = inf_result || (q == inf(as<T>{}));
 
           auto test = (a0 < T(-34.0));
           auto nb   = eve::count_true(test);
-          T    r    = nan(as<T>());
+          T    r    = nan(as<T>{});
 
           if (nb > 0)
           {
             // treat negative large with reflection
             r = helpers::large_negative(q);
-            if (nb >= T::size()) return if_else(inf_result, inf(as<T>()), r);
+            if (nb >= T::size()) return if_else(inf_result, inf(as<T>{}), r);
           }
 
           T r1 = other(a0);
           T r2 = if_else(test, r, r1);
 
-          return if_else(inf_result, inf(as<T>()), r2);
+          return if_else(inf_result, inf(as<T>{}), r2);
         }
       }
     }

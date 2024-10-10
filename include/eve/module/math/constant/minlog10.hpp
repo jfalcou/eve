@@ -60,7 +60,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::minlog10(as<T>())` returns  the least value for which
+  //!      The call `eve::minlog10(as<T>{})` returns  the least value for which
   //!      eve::exp10 is not zero.
   //!
   //!  @groupheader{Example}

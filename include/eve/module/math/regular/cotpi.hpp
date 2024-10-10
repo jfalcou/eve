@@ -94,27 +94,27 @@ namespace eve
       {
         if constexpr( scalar_value<T> )
         {
-          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
+          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as{a0}));
           auto x = abs(a0);
-          if( is_not_less_equal(x, T(0.25)) ) return nan(eve::as<T>());
-          return rec[pedantic](tancot_eval(pi(eve::as<T>()) * a0));
+          if( is_not_less_equal(x, T(0.25)) ) return nan(as<T>{});
+          return rec[pedantic](tancot_eval(pi(as<T>{}) * a0));
         }
         else
         {
           auto x = eve::abs(a0);
           return if_else(is_eqz(a0),
-                         bit_or(a0, inf(eve::as(a0))),
+                         bit_or(a0, inf(eve::as{a0})),
                          if_else(is_not_less_equal(x, T(0.25)),
                                  eve::allbits,
-                                 rec[pedantic](tancot_eval(pi(eve::as<T>()) * a0))));
+                                 rec[pedantic](tancot_eval(pi(as<T>{}) * a0))));
         }
       }
       else
       {
         if constexpr( scalar_value<T> )
         {
-          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
-          if( is_not_finite(a0) || is_flint(a0) ) return nan(eve::as<T>());
+          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as{a0}));
+          if( is_not_finite(a0) || is_flint(a0) ) return nan(as<T>{});
         }
         auto x = abs(a0);
         if( eve::all(x <= T(0.25)) ) return cotpi[quarter_circle](a0);
@@ -123,7 +123,7 @@ namespace eve
           x = if_else(is_not_finite(a0) || is_flint(x), eve::allbits, x);
         }
         auto [fn, xr, dxr] = rem2(x);
-        return cot_finalize(a0 * pi(eve::as<T>()), quadrant(fn), xr, dxr);
+        return cot_finalize(a0 * pi(as<T>{}), quadrant(fn), xr, dxr);
       }
     }
   }

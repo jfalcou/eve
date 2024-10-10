@@ -116,9 +116,9 @@ namespace eve
             r_t ay(abs(r1));
             auto test = ax > ay;
             eve::swap_if(test, ax, ay); // now 0 <= ax <= ay
-            constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>()));
-            auto scale = if_else(ax > sqrtvalmax(as(ax)), sqrtsmallestposval(as<r_t>())/4
-                                , if_else(ay < sqrtsmallestposval(as(ay)), rsqspvo4
+            constexpr auto rsqspvo4 = 1/(sqrtsmallestposval(as<e_t>{}));
+            auto scale = if_else(ax > sqrtvalmax(as{ax}), sqrtsmallestposval(as<r_t>{})/4
+                                , if_else(ay < sqrtsmallestposval(as{ay}), rsqspvo4
                                          ,  one)
                                 );
             ax *= scale;
@@ -130,8 +130,8 @@ namespace eve
             h-= x/(2*h);
             h /= scale;
             h = if_else(is_eqz(ay), zero, h);
-            h = if_else(ax <= ay*eve::sqrteps(as<r_t>()), ay, h);
-            h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>()), h);
+            h = if_else(ax <= ay*eve::sqrteps(as<r_t>{}), ay, h);
+            h = if_else(is_infinite(ax) || is_infinite(ay), inf(as<r_t>{}), h);
             return h;
           }
           else

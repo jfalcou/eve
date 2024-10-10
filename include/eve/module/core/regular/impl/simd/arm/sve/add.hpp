@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    auto const alt = alternative(mask, a, as(a));
+    auto const alt = alternative(mask, a, as{a});
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
@@ -34,7 +34,7 @@ namespace eve::detail
       //  If not, we can mask if there is no alterative value
       else  if  constexpr (!C::has_alternative)
       {
-        auto m = expand_mask(mask, as(a));
+        auto m = expand_mask(mask, as{a});
         return svadd_m(m,a,b);
       }
       // If not, we delegate to the automasking

@@ -97,7 +97,7 @@ namespace eve
 
     template<std::uint8_t I, typename T, callable_options O>
     EVE_FORCEINLINE constexpr auto
-    of_class_(EVE_REQUIRES(cpu_), O const &, T const& x,  fp_class<I>) noexcept
+    of_class_(EVE_REQUIRES(cpu_), O const&, T const& x,  fp_class<I>) noexcept
     {
       using li_t = logical<T>;
       li_t r{false};

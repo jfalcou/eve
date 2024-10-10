@@ -27,7 +27,7 @@ EVE_FORCEINLINE Pack
 load_(EVE_SUPPORTS(sse2_),
       C const            & cond,
       safe_type const    & s,
-      eve::as<Pack> const& tgt,
+      as<Pack>             tgt,
       Ptr                  p) noexcept
 requires simd_compatible_ptr<Ptr, Pack> && (!has_bundle_abi_v<Pack>)
 {

@@ -82,9 +82,9 @@ namespace eve
   {
     template<typename U, typename Target, callable_options O>
     EVE_FORCEINLINE constexpr U saturate_(EVE_REQUIRES(cpu_),
-                                               O const &,
+                                               O const&,
                                                U const & a0,
-                                               as<Target> const & at) noexcept
+                                               as<Target> at) noexcept
     {
       if constexpr( scalar_value<U>)
       {
@@ -97,8 +97,8 @@ namespace eve
             if constexpr( sizeof(Target) >= sizeof(U) ) { return a0; }
             else
             {
-              auto mn = static_cast<double>(valmin(eve::as<float>()));
-              auto mx = static_cast<double>(valmax(eve::as<float>()));
+              auto mn = static_cast<double>(valmin(as<float>{}));
+              auto mx = static_cast<double>(valmax(as<float>{}));
               return is_infinite(a0) ? a0 : clamp(a0, mn, mx);
             }
           }
@@ -114,8 +114,8 @@ namespace eve
             if constexpr( std::is_floating_point_v<U> )
             {
               return clamp(a0,
-                           static_cast<U>(valmin(eve::as<Target>())),
-                           static_cast<U>(valmax(eve::as<Target>())));
+                           static_cast<U>(valmin(as<Target>{})),
+                           static_cast<U>(valmax(as<Target>{})));
             }
             else if constexpr( std::is_signed_v<U> ) // from a signed
             {
@@ -123,33 +123,33 @@ namespace eve
               else
               {
                 return clamp(a0,
-                             static_cast<U>(valmin(eve::as<Target>())),
-                             static_cast<U>(valmax(eve::as<Target>())));
+                             static_cast<U>(valmin(as<Target>{})),
+                             static_cast<U>(valmax(as<Target>{})));
               }
             }
             else // from an unsigned
             {
-              return min(a0, static_cast<U>(valmax(eve::as<Target>())));
+              return min(a0, static_cast<U>(valmax(as<Target>{})));
             }
           }
           else // saturating to unsigned integer
           {
             if constexpr( std::is_floating_point_v<U> )
             {
-              return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(eve::as<Target>())));
+              return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(as<Target>{})));
             }
             if constexpr( !std::is_signed_v<U> ) // from a unsigned
             {
               if constexpr( sizeof(Target) >= sizeof(U) ) { return a0; }
-              else { return min(a0, static_cast<U>(valmax(eve::as<Target>()))); }
+              else { return min(a0, static_cast<U>(valmax(as<Target>{}))); }
             }
             else // from a signed
             {
               if constexpr( sizeof(Target) >= sizeof(U) )
               {
-                return clamp(a0, static_cast<U>(0), valmax(eve::as<U>()));
+                return clamp(a0, static_cast<U>(0), valmax(as<U>{}));
               }
-              else { return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(eve::as<Target>()))); }
+              else { return clamp(a0, static_cast<U>(0), static_cast<U>(valmax(as<Target>{}))); }
             }
           }
         }
@@ -173,8 +173,8 @@ namespace eve
               if constexpr( sizeof(Target) >= sizeof(elt_u) ) return a0;
               else
               {
-                auto mn = U(valmin(eve::as<float>()));
-                auto mx = U(valmax(eve::as<float>()));
+                auto mn = U(valmin(as<float>{}));
+                auto mx = U(valmax(as<float>{}));
                 return clamp[is_not_infinite(a0)](a0, mn, mx);
               }
             }
@@ -188,17 +188,17 @@ namespace eve
               if constexpr( std::is_floating_point_v<elt_u> )
               {
                 return clamp(a0,
-                             static_cast<U>(valmin(eve::as<Target>())),
-                             static_cast<U>(valmax(eve::as<Target>())));
+                             static_cast<U>(valmin(as<Target>{})),
+                             static_cast<U>(valmax(as<Target>{})));
               }
               else if constexpr( std::is_signed_v<elt_u> ) // from a signed
               {
                 if constexpr( sizeof(Target) > sizeof(elt_u) ) return a0;
-                else return clamp(a0, U(valmin(eve::as<Target>())), U(valmax(eve::as<Target>())));
+                else return clamp(a0, U(valmin(as<Target>{})), U(valmax(as<Target>{})));
               }
               else // from an unsigned
               {
-                return min(a0, U(valmax(eve::as<Target>())));
+                return min(a0, U(valmax(as<Target>{})));
               }
             }
             else // saturating to unsigned integer
@@ -206,19 +206,19 @@ namespace eve
               if constexpr( std::is_floating_point_v<elt_u> )
               {
                 return clamp(a0,
-                             static_cast<U>(zero(eve::as<Target>())),
-                             static_cast<U>(valmax(eve::as<Target>())));
+                             static_cast<U>(zero(as<Target>{})),
+                             static_cast<U>(valmax(as<Target>{})));
               }
               else if constexpr( !std::is_signed_v<elt_u> ) // from a unsigned
               {
                 if constexpr( sizeof(Target) >= sizeof(elt_u) ) return a0;
-                else return min(a0, U(valmax(eve::as<Target>())));
+                else return min(a0, U(valmax(as<Target>{})));
               }
               else // from a signed
               {
                 if constexpr( sizeof(Target) >= sizeof(elt_u) )
-                  return clamp(a0, U(zero(eve::as<Target>())), valmax(eve::as<U>()));
-                else return clamp(a0, U(zero(eve::as<Target>())), U(valmax(eve::as<Target>())));
+                  return clamp(a0, U(zero(as<Target>{})), valmax(as<U>{}));
+                else return clamp(a0, U(zero(as<Target>{})), U(valmax(as<Target>{})));
               }
             }
           }

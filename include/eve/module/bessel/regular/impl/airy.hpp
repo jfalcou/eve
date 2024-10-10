@@ -38,23 +38,23 @@ namespace eve::detail
       T    j1 = cyl_bessel_in(v, p);
       T    j2 = cyl_bessel_in(-v, p);
       auto bi = racthird * (j1 + j2);
-      auto ai = cyl_bessel_kn(v, p) * rac * T(0.183776298473931); // third *inv_pi(as(p));
+      auto ai = cyl_bessel_kn(v, p) * rac * T(0.183776298473931); // third *inv_pi(as{p});
       return zip(ai, bi);
     };
 
     elt_t constexpr thresh = (sizeof(elt_t) == 8) ? (4.440892098500626e-16) : (2.3841858e-07);
     if constexpr( scalar_value<T> )
     {
-      if( x == minf(as(x)) )      return zip(zero(as(x)), zero(as(x)));
-      else if( is_nan(x) )        return zip(nan(as(x)), nan(as(x)));
-      else if( x == inf(as(x)) )  return zip(zero(as(x)), inf(as(x)));
+      if( x == minf(as{x}) )      return zip(zero(as{x}), zero(as{x}));
+      else if( is_nan(x) )        return zip(nan(as{x}), nan(as{x}));
+      else if( x == inf(as{x}) )  return zip(zero(as{x}), inf(as{x}));
       else if( x < 0 )            return br_0();
       else if( x < thresh )       return br_small();
       else                        return br_last();
     }
     else
     {
-      auto r       = eve::zip(nan(as(x)), nan(as(x)));
+      auto r       = eve::zip(nan(as{x}), nan(as{x}));
       auto notdone = is_not_nan(x);
       if( eve::any(notdone) )
       {
@@ -65,8 +65,8 @@ namespace eve::detail
           if( eve::any(notdone) ) { last_interval(br_last, notdone, r); }
         }
       }
-      r         = if_else(is_infinite(x), zip(zero(as(x)), inf(as(x))), r);
-      get<0>(r) = if_else(x == minf(as(x)), zero, get<0>(r));
+      r         = if_else(is_infinite(x), zip(zero(as{x}), inf(as{x})), r);
+      get<0>(r) = if_else(x == minf(as{x}), zero, get<0>(r));
       return r;
     }
   }

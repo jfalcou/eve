@@ -30,7 +30,7 @@ any_(EVE_SUPPORTS(neon128_),
   {
     if constexpr( sizeof(T) * N() <= 4u ) return any_(EVE_RETARGET(cpu_), cond, v0);
 
-    auto dwords = eve::bit_cast(v0, eve::as<u32_2> {});
+    auto dwords = eve::bit_cast(v0, as<u32_2> {});
     dwords      = vpmax_u32(dwords, dwords);
     return vget_lane_u32(dwords, 0);
   }
@@ -50,7 +50,7 @@ any_(EVE_SUPPORTS(neon128_),
   else if constexpr( eve::current_api < eve::asimd && sizeof(T) >= 2 )
   {
     using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-    auto halved    = eve::convert(v0, eve::as<eve::logical<half_e_t>> {});
+    auto halved    = eve::convert(v0, as<eve::logical<half_e_t>> {});
     return eve::any[cond](halved);
   }
   else if constexpr( !C::is_complete ) return any_(EVE_RETARGET(cpu_), cond, v0);
@@ -58,11 +58,11 @@ any_(EVE_SUPPORTS(neon128_),
   {
     // Adapted from https://github.com/dotnet/runtime/pull/75864
     auto mask = bit_cast(v0.bits(), as<u32_4>{});
-    return bit_cast(u32_4(vpmaxq_u32(mask,mask)), as<u64_2>()).get(0) != 0;
+    return bit_cast(u32_4(vpmaxq_u32(mask,mask)), as<u64_2>{}).get(0) != 0;
   }
   else // chars, no asimd
   {
-    auto dwords = eve::bit_cast(v0, eve::as<u32_4>());
+    auto dwords = eve::bit_cast(v0, as<u32_4>{});
     return eve::any[ignore_none](detail::to_logical(dwords));
   }
 }

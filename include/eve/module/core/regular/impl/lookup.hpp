@@ -17,7 +17,7 @@ namespace eve::detail
   template<callable_options O, typename T, typename I, typename N>
   EVE_FORCEINLINE logical<wide<T,N>> lookup_(EVE_REQUIRES(cpu_), O const&, logical<wide<T,N>> a, wide<I,N> i) noexcept
   {
-    if constexpr(abi_t<T, N>::is_wide_logical) return bit_cast(lookup(a.bits(), i), as(a));
+    if constexpr(abi_t<T, N>::is_wide_logical) return bit_cast(lookup(a.bits(), i), as{a});
     else                                       return to_logical(lookup(a.mask(), i));
   }
 
@@ -46,13 +46,13 @@ namespace eve::detail
       {
         constexpr auto const half = N::value / 2;
         apply<half>([&, lx = idx.slice(lower_)](auto... v)
-                    { (data.set(v, (cond.get(v) ? a.get(lx.get(v)) : T {})), ...); });
+                    { (data.set(v, (cond.get(v) ? a.get(lx.get(v)) : T{})), ...); });
         apply<half>([&, hx = idx.slice(upper_)](auto... v)
-                    { (data.set(v + half, (cond.get(v) ? a.get(hx.get(v)) : T {})), ...); });
+                    { (data.set(v + half, (cond.get(v) ? a.get(hx.get(v)) : T{})), ...); });
       }
       else
       {
-        apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T {}), ...); });
+        apply<N::value>([&](auto... v) { (data.set(v, cond.get(v) ? a.get(idx.get(v)) : T{}), ...); });
       }
 
       return data;

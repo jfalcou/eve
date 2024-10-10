@@ -71,7 +71,7 @@ shuffle_l2_svrevbhw(P p, eve::fixed<G> g, eve::wide<T, N> _x)
       (void)g;
       return no_matching_shuffle;
 #if 0
-      auto m = is_na_or_we_mask(p, g, eve::as<eve::logical<eve::wide<T, N>>> {});
+      auto m = is_na_or_we_mask(p, g, as<eve::logical<eve::wide<T, N>>> {});
 
       if constexpr( P::g_size == 1 ) return U {svrevb_z(m, x)};
       else if constexpr( P::g_size == 2 ) return U {svrevh_z(m, x)};

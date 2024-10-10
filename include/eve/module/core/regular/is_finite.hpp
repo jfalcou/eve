@@ -80,7 +80,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T> is_finite_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( is_logical_v<T> || integral_value<T>)
-        return true_(eve::as(a));
+        return true_(eve::as{a});
       else
         return is_eqz(a - a);
     }

@@ -24,7 +24,7 @@ namespace eve
     }
 
     template<kumi::product_type Target, scalar_value... Vs>
-    constexpr EVE_FORCEINLINE Target operator()(as<Target> const& tgt, Vs... vs) const noexcept
+    constexpr EVE_FORCEINLINE Target operator()(as<Target> tgt, Vs... vs) const noexcept
     {
       return this->behavior(as<Target>{}, eve::current_api, this->options(), tgt, vs...);
     }
@@ -37,7 +37,7 @@ namespace eve
     }
 
     template<kumi::product_type Target, simd_value V0, simd_value... Vs>
-    EVE_FORCEINLINE wide<Target, cardinal_t<V0>> operator()(as<Target> const& tgt, V0 v0, Vs... vs) const noexcept
+    EVE_FORCEINLINE wide<Target, cardinal_t<V0>> operator()(as<Target> tgt, V0 v0, Vs... vs) const noexcept
       requires (((sizeof...(Vs) + 1) == kumi::size_v<Target>) && same_lanes<V0, Vs...>)
     {
       return this->behavior(as<wide<Target, cardinal_t<V0>>>{}, eve::current_api, this->options(), tgt, v0, vs...);
@@ -118,7 +118,7 @@ namespace eve::detail
 
   template<callable_options O, kumi::product_type Target, scalar_value... Vs>
   EVE_FORCEINLINE auto
-  zip_(EVE_REQUIRES(cpu_), O const&, as<Target> const&, Vs... vs) noexcept
+  zip_(EVE_REQUIRES(cpu_), O const&, as<Target>, Vs... vs) noexcept
   {
     Target      res;
     kumi::for_each(tag_t<zip>::filler{}, kumi::tuple{vs...}, kumi::map(tag_t<zip>::to_ptr{}, res));
@@ -126,7 +126,7 @@ namespace eve::detail
   }
 
   template<callable_options O, kumi::product_type Target, simd_value V0, simd_value... Vs>
-  EVE_FORCEINLINE auto zip_(EVE_REQUIRES(cpu_), O const&, as<Target> const&, V0 v0, Vs... vs) noexcept
+  EVE_FORCEINLINE auto zip_(EVE_REQUIRES(cpu_), O const&, as<Target>, V0 v0, Vs... vs) noexcept
   {
     return wide<Target, cardinal_t<V0>>{v0, vs...};
   }

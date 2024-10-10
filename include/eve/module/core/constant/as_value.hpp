@@ -34,7 +34,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      template< eve::value From, eve::value T >
-//!      T as_value(From x, eve::as<T> t) noexcept;
+//!      T as_value(From x, as<T> t) noexcept;
 //!   }
 //!   @endcode
 //!
@@ -45,7 +45,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::as_value(as<T>())` returns a value of type T which is
+//!      The call `eve::as_value(as<T>{})` returns a value of type T which is
 //!      the conversion of `x` to type Target or the the eve constant of type Target.
 //!
 //!  @groupheader{Example}

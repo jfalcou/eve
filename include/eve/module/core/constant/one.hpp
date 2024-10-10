@@ -58,7 +58,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::one(as<T>())` is semantically equivalent to `T(1)`
+//!      The call `eve::one(as<T>{})` is semantically equivalent to `T(1)`
 //!
 //!  @groupheader{Example}
 //!

@@ -29,6 +29,7 @@ namespace eve
     EVE_FORCEINLINE decltype(r_t<T, U>()) operator()(T v, U w) const noexcept
       requires (same_lanes_or_scalar<T, U> && (simd_value<T> || simd_value<U>))
     {
+      
       return this->behavior(as<decltype(r_t<T, U>())>{}, eve::current_api, this->options(), v, w);
     }
 

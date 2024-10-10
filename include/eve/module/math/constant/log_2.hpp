@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::log_2(as<T>())` returns \f$\log 2\f$.
+  //!      The call `eve::log_2(as<T>{})` returns \f$\log 2\f$.
   //!
   //!  @groupheader{Example}
   //!

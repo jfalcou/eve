@@ -34,7 +34,7 @@ shuffle_emulated_no_group(auto p, kumi::tuple<T, Ts...> xs_)
         {
           if( in_flat_i < 0 )
           {
-            res.set(res_i++, eve::zero(eve::as<eve::element_type_t<T>> {}));
+            res.set(res_i++, eve::zero(as<eve::element_type_t<T>> {}));
             continue;
           }
 
@@ -276,7 +276,7 @@ shuffle_v2_overly_large_groups(NativeSelector        selector,
     auto l     = eve::index < (has_zeroes && !has_emulated_abi_v<T>) ? 1 : 0 > ;
     auto get_i = [&]<std::ptrdiff_t i>(eve::index_t<i>)
     {
-      if constexpr( i == na_ ) return eve::zero(eve::as<T> {});
+      if constexpr( i == na_ ) return eve::zero(as<T> {});
       else if constexpr( i == we_ ) return get<0>(xs);
       else return get<i>(xs);
     };

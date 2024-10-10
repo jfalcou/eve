@@ -80,7 +80,7 @@ namespace eve
     radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( has_native_abi_v<T> )
-        return inv_pi(eve::as(a)) * a;
+        return inv_pi(eve::as{a}) * a;
       else
         return apply_over(radinpi, a);
     }

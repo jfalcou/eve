@@ -98,7 +98,7 @@ namespace eve::detail
             , 4.585534549e-02f
           };
           auto r = rec[pedantic](x);
-          if( eve::all(x < maxlog(as(x))) )
+          if( eve::all(x < maxlog(as{x})) )
             return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
           else
           {
@@ -129,7 +129,7 @@ namespace eve::detail
                             2.27912927104139732e+00,
                             2.50358186953478678e-02};
           auto                           r = rec[pedantic](x);
-          if( eve::all(x < maxlog(as(x))) )
+          if( eve::all(x < maxlog(as{x})) )
             return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
           else
           {
@@ -141,23 +141,23 @@ namespace eve::detail
 
     if constexpr( scalar_value<T> )
     {
-      if( is_ngez(x) ) return nan(as(x));
-      if( x == 0 ) return inf(as(x));           // x is 0
-      if( x == inf(as(x)) ) return zero(as(x)); // x is infinite
-      if( x < one(as(x)) ) return br_1(x);      // x in (0, 1]
+      if( is_ngez(x) ) return nan(as{x});
+      if( x == 0 ) return inf(as{x});           // x is 0
+      if( x == inf(as{x}) ) return zero(as{x}); // x is infinite
+      if( x < one(as{x}) ) return br_1(x);      // x in (0, 1]
       return br_large(x);                       // x in (t1, \infty)
     }
     else
     {
-      auto r       = nan(as(x));
+      auto r       = nan(as{x});
       auto notdone = is_gtz(x);
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_1, notdone, x <= T(1), r, x);
         if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
       }
-      r = if_else(is_eqz(x), inf(as(x)), r);
-      r = if_else(x == inf(as(x)), zero, r);
+      r = if_else(is_eqz(x), inf(as{x}), r);
+      r = if_else(x == inf(as{x}), zero, r);
       return r;
     }
   }

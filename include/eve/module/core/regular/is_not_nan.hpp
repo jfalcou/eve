@@ -73,9 +73,9 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_not_nan_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_not_nan_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      if constexpr(integral_value<T>) return true_(eve::as(a));
+      if constexpr(integral_value<T>) return true_(eve::as{a});
       else                            return a == a;
     }
   }

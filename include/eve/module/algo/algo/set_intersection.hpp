@@ -67,7 +67,7 @@ namespace detail
           auto eq_test = equal(v1, v2);
           if( eve::any[ignore](eq_test) )
           {
-            eve::write(eve::convert(eve::read(f1), eve::as<value_type_t<RO>> {}), o);
+            eve::write(eve::convert(eve::read(f1), as<value_type_t<RO>> {}), o);
             if( ++o == ro.end() )
             {
               ++f1;
@@ -161,7 +161,7 @@ namespace detail
           if( auto found = eve::first_true[ignore](equal(v1, v2)) )
           {
             auto f1 = eve::unalign(i) + *found;
-            eve::write(eve::convert(eve::read(f1), eve::as<value_type_t<RO>> {}), o);
+            eve::write(eve::convert(eve::read(f1), as<value_type_t<RO>> {}), o);
             if( ++o == ro.end() )
             {
               f1_res = f1 + 1;
@@ -234,7 +234,7 @@ namespace detail
     {
       // force no aligning, drop unrolling
       auto [pr1, pr2, pro] = temporary_preprocess_ranges_hack(
-          modified_traits(), r1, r2, views::convert(ro, eve::as<value_type_t<R1>> {}));
+          modified_traits(), r1, r2, views::convert(ro, as<value_type_t<R1>> {}));
 
       auto f1 = eve::unalign(pr1.begin());
       auto f2 = eve::unalign(pr2.begin());
@@ -334,14 +334,14 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
     using T = common_type_t<value_type_t<R1>, eve::value_type_t<R2>>;
 
     // No need to convert to O, that can be converted on a write without any issues
-    auto [f1, f2, o] = operator()(views::convert(EVE_FWD(r1), eve::as<T> {}),
-                                  views::convert(EVE_FWD(r2), eve::as<T> {}),
+    auto [f1, f2, o] = operator()(views::convert(EVE_FWD(r1), as<T> {}),
+                                  views::convert(EVE_FWD(r2), as<T> {}),
                                   EVE_FWD(ro),
                                   eve::is_less,
                                   eve::is_equal);
     // this convert will unpack iterators if necessary
-    return {views::convert(f1, eve::as<value_type_t<R1>> {}),
-            views::convert(f2, eve::as<value_type_t<R2>> {}),
+    return {views::convert(f1, as<value_type_t<R1>> {}),
+            views::convert(f2, as<value_type_t<R2>> {}),
             o};
   }
 };

@@ -60,7 +60,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::inv_2eps(as<T>())` returns  half the inverse of the machine epsilon.
+  //!      The call `eve::inv_2eps(as<T>{})` returns  half the inverse of the machine epsilon.
   //!
   //!  @groupheader{Example}
   //!

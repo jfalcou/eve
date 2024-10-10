@@ -74,27 +74,27 @@ namespace eve
 
   namespace detail
   {
-    template<value T, value U, callable_options O>
+    template<callable_options O, value T, value U>
     EVE_FORCEINLINE constexpr auto
     is_unordered_(EVE_REQUIRES(cpu_),
-                  O const & ,
+                  O const& ,
                   logical<T> const& , logical<U> const& ) noexcept
     {
       using r_t =  common_logical_t<logical<T>, logical<U>>;
-      return false_(as<r_t>());
+      return false_(as<r_t>{});
     }
 
 
-    template<value T, value U, callable_options O>
+    template<callable_options O, value T, value U>
     EVE_FORCEINLINE constexpr auto
     is_unordered_(EVE_REQUIRES(cpu_),
-                  O const & ,
+                  O const& ,
                   T const& aa, U const& bb) noexcept
     {
       using w_t =  common_value_t<T, U>;
       {
         if constexpr(integral_value<T> )
-          return false_(as<w_t>());
+          return false_(as<w_t>{});
         else
         {
           auto a = w_t(aa);

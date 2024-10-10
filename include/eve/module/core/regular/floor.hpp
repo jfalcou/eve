@@ -81,7 +81,7 @@ namespace eve
   //!             representable value in the `x` type.
   //!           - with a floating  value `tol`: computes the floor with a tolerance `tol`
   //!             using Hagerty's FL5 function.
-  //!       4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as(x))(x)`
+  //!       4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as{x})(x)`
   //!
   //!  @groupheader{External references}
   //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/ceil)

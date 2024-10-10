@@ -13,7 +13,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename Target>
-  EVE_FORCEINLINE constexpr auto bit_cast_(EVE_REQUIRES(cpu_), O const&, T const &a, as<Target> const &) noexcept
+  EVE_FORCEINLINE constexpr auto bit_cast_(EVE_REQUIRES(cpu_), O const&, T const &a, as<Target>) noexcept
   {
     if constexpr(std::is_same_v<T, Target>) return a;
     else                                    return std::bit_cast<Target>(a);

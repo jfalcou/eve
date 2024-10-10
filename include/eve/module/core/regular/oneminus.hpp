@@ -101,26 +101,26 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
-    oneminus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
+    oneminus_(EVE_REQUIRES(cpu_), O const& o, T v) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
       {
-        return add[o](one(eve::as<T>()), minus(v));
+        return add[o](one(as<T>{}), minus(v));
       }
       else
       {
         if constexpr( std::is_unsigned_v<elt_t> )
         {
-          return one[is_eqz(v)](as(v));
+          return one[is_eqz(v)](as{v});
         }
         else if constexpr( scalar_value<T> )
         {
-          return (v <= valmin(eve::as(v)) + 2) ? valmax(eve::as(v)) : oneminus(v);
+          return (v <= valmin(eve::as{v}) + 2) ? valmax(eve::as{v}) : oneminus(v);
         }
         else if constexpr( simd_value<T> )
         {
-          return if_else(v < valmin(eve::as(v)) + 2, valmax(eve::as(v)), oneminus(v));
+          return if_else(v < valmin(eve::as{v}) + 2, valmax(eve::as{v}), oneminus(v));
         }
       }
     }

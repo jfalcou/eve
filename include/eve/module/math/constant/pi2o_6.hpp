@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::pi2o_6(as<T>())` returns \f$\pi^2/6\f$.
+  //!      The call `eve::pi2o_6(as<T>{})` returns \f$\pi^2/6\f$.
   //!
   //!  @groupheader{Example}
   //!

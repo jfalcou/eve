@@ -71,7 +71,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::rayleigh_kurtosis(as<T>())` returns the Rayleigh kurtosis value.
+  //!      The call `eve::rayleigh_kurtosis(as<T>{})` returns the Rayleigh kurtosis value.
   //!
   //!  @groupheader{Example}
   //!

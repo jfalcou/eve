@@ -46,17 +46,17 @@ namespace eve::detail
       if constexpr( eve::platform::supports_denormals )
       {
         auto test = is_denormal(a0);
-        t         = if_else(test, nbmantissabits(as<T>()), eve::zero);
-        a0        = if_else(test, twotonmb(as<T>()) * a0, a0);
+        t         = if_else(test, nbmantissabits(as<T>{}), eve::zero);
+        a0        = if_else(test, twotonmb(as<T>{}) * a0, a0);
       }
 
-      auto emask = exponentmask(as<T>());
-      auto e     = bit_cast(bit_and(a0,emask),as(emask)); // extract exp.
+      auto emask = exponentmask(as<T>{});
+      auto e     = bit_cast(bit_and(a0,emask),as{emask}); // extract exp.
       auto x     = bit_notand(emask, a0);
-      e          = bit_shr(e, nbmantissabits(as<elt_t>())) - maxexponentm1(as<elt_t>());
-      auto r0    = bit_or(half(as<T>()), x);
+      e          = bit_shr(e, nbmantissabits(as<elt_t>{})) - maxexponentm1(as<elt_t>{});
+      auto r0    = bit_or(half(as<T>{}), x);
       auto test0 = is_nez(a0);
-      auto test1 = is_greater(e, maxexponentp1(as<T>()));
+      auto test1 = is_greater(e, maxexponentp1(as<T>{}));
       auto ee    = if_else(logical_notand(test1, test0), e, eve::zero);
 
       if constexpr( eve::platform::supports_denormals ) { ee -= t; }
@@ -67,30 +67,30 @@ namespace eve::detail
       if( a0 == 0 || is_not_finite(a0) ) { return eve::zip(a0, i_t(0)); }
       else if constexpr( scalar_value<T> )
       {
-        auto const nmb = nbmantissabits(as<T>());
-        i_t        e   = bit_and(exponentmask(as<T>()), a0); // extract exp.
+        auto const nmb = nbmantissabits(as<T>{});
+        i_t        e   = bit_and(exponentmask(as<T>{}), a0); // extract exp.
 
         if constexpr( eve::platform::supports_denormals )
         {
           i_t t = i_t(0);
           if( is_eqz(e) ) // denormal
           {
-            a0 *= twotonmb(as<T>());
-            e = bit_and(exponentmask(as<T>()), a0); // extract exp. again
+            a0 *= twotonmb(as<T>{});
+            e = bit_and(exponentmask(as<T>{}), a0); // extract exp. again
             t = nmb;
           }
-          T x = bit_andnot(a0, exponentmask(as<T>()));         // clear exp. in a0
-          e   = bit_shr(e, nmb) - maxexponentm1(as<T>()); // compute exp.
-          if( e > maxexponentp1(as<T>()) ) return eve::zip(a0, i_t(0));
+          T x = bit_andnot(a0, exponentmask(as<T>{}));         // clear exp. in a0
+          e   = bit_shr(e, nmb) - maxexponentm1(as<T>{}); // compute exp.
+          if( e > maxexponentp1(as<T>{}) ) return eve::zip(a0, i_t(0));
           e -= t;
-          return eve::zip(bit_or(x, half(as<T>())), e);
+          return eve::zip(bit_or(x, half(as<T>{})), e);
         }
         else
         {
-          T x = bit_andnot(a0, exponentmask(as<T>()));         // clear exp. in a0
-          e   = bit_shr(e, nmb) - maxexponentm1(as<T>()); // compute exp.
-          if( e > maxexponentp1(as<T>()) ) return eve::zip(a0, i_t(0));
-          return eve::zip(bit_or(x, half(as<T>())), e);
+          T x = bit_andnot(a0, exponentmask(as<T>{}));         // clear exp. in a0
+          e   = bit_shr(e, nmb) - maxexponentm1(as<T>{}); // compute exp.
+          if( e > maxexponentp1(as<T>{}) ) return eve::zip(a0, i_t(0));
+          return eve::zip(bit_or(x, half(as<T>{})), e);
         }
       }
     }
@@ -106,11 +106,11 @@ namespace eve::detail
     else
     {
       using elt_t = element_type_t<T>;
-      auto emask  = exponentmask(as<T>());
-      auto r1     = bit_cast(bit_and(a0,emask), as(emask));
+      auto emask  = exponentmask(as<T>{});
+      auto r1     = bit_cast(bit_and(a0,emask), as{emask});
       auto x      = bit_notand(emask, a0);
-      auto res    = eve::zip( bit_or(half(as<T>()), x)
-                            , bit_shr(r1, nbmantissabits(as<elt_t>())) - maxexponentm1(as<elt_t>())
+      auto res    = eve::zip( bit_or(half(as<T>{}), x)
+                            , bit_shr(r1, nbmantissabits(as<elt_t>{})) - maxexponentm1(as<elt_t>{})
                             );
 
       if constexpr(O::contains(raw)) return res;

@@ -45,8 +45,8 @@ namespace eve::detail
   EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_), C const& mask, O const& o, wide<T, N> w) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    auto const            s = alternative(mask, w, as(w));
-    [[maybe_unused]] auto m = expand_mask(mask, as(w)).storage().value;
+    auto const            s = alternative(mask, w, as{w});
+    [[maybe_unused]] auto m = expand_mask(mask, as{w}).storage().value;
     constexpr auto        c = categorize<wide<T, N>>();
 
     if constexpr( C::is_complete ) return s;

@@ -92,15 +92,15 @@ namespace eve
       {
         if constexpr( scalar_value<T> )
         {
-          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as(a0)));
-          if( is_not_less_equal(x, T(45)) ) return nan(eve::as<T>());
+          if( is_eqz(a0) ) return bit_or(a0, inf(eve::as{a0}));
+          if( is_not_less_equal(x, T(45)) ) return nan(as<T>{});
           return rec[pedantic](tancot_eval(deginrad(a0)));
         }
         else
         {
           return if_else(
             is_eqz(a0),
-            bit_or(a0, inf(eve::as(a0))),
+            bit_or(a0, inf(eve::as{a0})),
             if_else(is_not_less_equal(x, T(45)), eve::allbits, rec[pedantic](tancot_eval(deginrad(a0)))));
         }
       }
@@ -111,7 +111,7 @@ namespace eve
         auto test   = is_nez(a0_180) && is_flint(a0_180);
         if constexpr( scalar_value<T> ) // early return for nans in scalar case
         {
-          if( test ) return nan(eve::as<T>());
+          if( test ) return nan(as<T>{});
         }
         else { x = if_else(test, eve::allbits, x); }
         auto [fn, xr, dxr] = rem180(x);

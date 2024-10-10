@@ -86,12 +86,12 @@ namespace eve
       {
         auto aa = eve::detail::bitinteger(a);
         auto bb = eve::detail::bitinteger(b);
-        auto z  = if_else(is_unordered(a, b), eve::valmax(eve::as<ui_t>()), bit_cast(dist(bb, aa), as<ui_t>()));
+        auto z  = if_else(is_unordered(a, b), eve::valmax(as<ui_t>{}), bit_cast(dist(bb, aa), as<ui_t>{}));
         return inc[is_ltz(signnz(a) * signnz(b))](z);
       }
       else
       {
-        return dist[saturated](bit_cast(a, as<ui_t>()), bit_cast(b, as<ui_t>()));
+        return dist[saturated](bit_cast(a, as<ui_t>{}), bit_cast(b, as<ui_t>{}));
       }
     }
   }

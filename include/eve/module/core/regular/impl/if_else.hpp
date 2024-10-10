@@ -65,7 +65,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& c
       if constexpr( std::same_as<U, V> )  return bit_select(cond.mask(), r_t(t), r_t(f));
       else                                return if_else(cond, r_t(t), r_t(f));
     }
-    else return if_else(convert(cond, as<as_logical_t<e_t>>()), r_t(t), r_t(f));
+    else return if_else(convert(cond, as<as_logical_t<e_t>>{}), r_t(t), r_t(f));
   }
 }
 
@@ -77,14 +77,14 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U 
   if constexpr( generator<V> )
   {
     if      constexpr( C::is_complete && C::is_inverted  ) return t;
-    else if constexpr( C::is_complete && !C::is_inverted ) return f(as<U>());
-    else                                                   return if_else(cond.mask(eve::as<U>()),t,f);
+    else if constexpr( C::is_complete && !C::is_inverted ) return f(as<U>{});
+    else                                                   return if_else(cond.mask(as<U>{}),t,f);
   }
   else if constexpr( generator<U> )
   {
-    if      constexpr( C::is_complete && C::is_inverted  ) return t(as<V>());
+    if      constexpr( C::is_complete && C::is_inverted  ) return t(as<V>{});
     else if constexpr( C::is_complete && !C::is_inverted ) return f;
-    else                                                   return if_else(cond.mask(eve::as<V>()),t,f);
+    else                                                   return if_else(cond.mask(as<V>{}),t,f);
   }
   else
   {
@@ -97,7 +97,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U 
     else if constexpr( C::is_complete && !C::is_inverted ) return r_t(f);
     else
     {
-      auto const mask = cond.mask(eve::as<r_t>());
+      auto const mask = cond.mask(as<r_t>{});
       if constexpr( C::is_inverted )  return if_else(mask, f, t);
       else                            return if_else(mask, t, f);
     }
@@ -112,9 +112,9 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const
 {
   using tgt = as<U>;
 
-  if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? u : v(tgt {});
-  else if constexpr( kumi::product_type<U> )  return if_else(cond, u, v(tgt {}));
-  else if constexpr( !T::abi_type::is_wide_logical )  return if_else(cond, u, v(tgt {}));
+  if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? u : v(tgt{});
+  else if constexpr( kumi::product_type<U> )  return if_else(cond, u, v(tgt{}));
+  else if constexpr( !T::abi_type::is_wide_logical )  return if_else(cond, u, v(tgt{}));
   else
   {
     using           cvt   = as<as_logical_t<element_type_t<U>>>;
@@ -137,7 +137,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const
       return minus(bit_ornot(minus(r_t(u)), bit_mask(mask)));
     }
     else if constexpr( integral_value<U> && cst == eve::mone )  return bit_ornot(u, bit_mask(mask));
-    else                                                        return if_else(cond, u, v(tgt {}));
+    else                                                        return if_else(cond, u, v(tgt{}));
   }
 }
 
@@ -149,9 +149,9 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, Constant const& v, U const
 {
   using tgt = as<U>;
 
-  if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? v(tgt {}) : u;
-  else if constexpr( kumi::product_type<U> )  return if_else(cond, v(tgt {}), u);
-  else if constexpr( current_api >= avx512 )  return if_else(cond, v(tgt {}), u);
+  if      constexpr( scalar_value<T> )        return static_cast<bool>(cond) ? v(tgt{}) : u;
+  else if constexpr( kumi::product_type<U> )  return if_else(cond, v(tgt{}), u);
+  else if constexpr( current_api >= avx512 )  return if_else(cond, v(tgt{}), u);
   else
   {
     using           cvt   = as<as_logical_t<element_type_t<U>>>;
@@ -174,7 +174,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, Constant const& v, U const
       return minus(bit_or(minus(r_t(u)), bit_mask(mask)));
     }
     else if constexpr( integral_value<U> && cst == eve::mone )  return bit_or(u, bit_mask(mask));
-    else                                                        return if_else(cond, v(tgt {}), u);
+    else                                                        return if_else(cond, v(tgt{}), u);
   }
 }
 }

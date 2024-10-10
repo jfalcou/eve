@@ -38,8 +38,8 @@ struct compress_store_core
     }
     else if constexpr( !COut::is_complete && !std::same_as<COut, keep_first> )
     {
-      auto   offset = settings.c_out.offset(as(x));
-      auto   count  = settings.c_out.count(as(x));
+      auto   offset = settings.c_out.offset(as{x});
+      auto   count  = settings.c_out.count(as{x});
       return operator()(detail::compress_callable_settings(
                             settings.safety, dense, settings.c_in, keep_first(count)),
                         x,
@@ -55,16 +55,16 @@ struct compress_store_core
 
       auto up_to       =   operator()(unsafe_settings, x, m, buf.ptr());
       std::ptrdiff_t n = up_to - buf.ptr();
-      if constexpr( !COut::is_complete ) { n = std::min(n, settings.c_out.count(as(x))); }
+      if constexpr( !COut::is_complete ) { n = std::min(n, settings.c_out.count(as{x})); }
       store[keep_first(n)](T(buf.ptr()), o);
       return unalign(o) + n;
     }
     else if constexpr( has_emulated_abi_v<T> )
     {
-      auto offset = settings.c_in.offset(as(x));
-      auto count  = settings.c_in.count(as(x));
+      auto offset = settings.c_in.offset(as{x});
+      auto count  = settings.c_in.count(as{x});
       auto o_     = unalign(o);
-      auto limit  = o_ + settings.c_out.count(as(x));
+      auto limit  = o_ + settings.c_out.count(as{x});
 
       for( int idx = offset; idx != (int)(offset + count); ++idx )
       {
@@ -84,7 +84,7 @@ struct compress_store_core
       eve::store[settings.c_out](part, o);
       std::ptrdiff_t count = count_;
 
-      if( !COut::is_complete ) count = std::min(count, settings.c_out.count(as(x)));
+      if( !COut::is_complete ) count = std::min(count, settings.c_out.count(as{x}));
 
       return unalign(o) + count;
     }

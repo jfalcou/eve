@@ -105,7 +105,7 @@ namespace eve
       // Assumes a>0 and a+x>0.
       auto ax      = eve::abs(x);
       auto notdone = is_nlez(a) && is_nlez(a + x);
-      auto r       = nan(as(x));
+      auto r       = nan(as{x});
       auto lr0     = [](auto a, auto x) { return log_abs_gamma(x + a) - log_abs_gamma(a); };
 
       auto lr1 = [](auto a, auto x){
@@ -131,19 +131,19 @@ namespace eve
         const auto ser   = (ser_1 + ser_2) / (12 * a);
         auto       term1 = x * dec(eve::log(a)); // eve::log(a/M_E);
         auto       lg    = eve::log1p(xoa);
-        auto       term2 = (x + a - half(as(x))) * lg;
+        auto       term2 = (x + a - half(as{x})) * lg;
         return term1 + term2 + ser;
       };
 
       auto lr2 = [](auto a, auto x){
-        return if_else(dist(x + a, a) < 10 * a * eps(as(a)),
+        return if_else(dist(x + a, a) < 10 * a * eps(as{a}),
                        eve::log1p(x * digamma(a)),
                        log_abs_gamma(a + x) - log_abs_gamma(a));
       };
 
       if( eve::any(notdone) )
       {
-        auto test0 = (10 * ax > a) || (10 * ax * log(eve::max(a, T(2))) > one(as(x)));
+        auto test0 = (10 * ax > a) || (10 * ax * log(eve::max(a, T(2))) > one(as{x}));
         notdone    = next_interval(lr0, notdone, test0, r, a, x);
         if( eve::any(notdone) )
         {
@@ -167,7 +167,7 @@ namespace eve
         {
           using elt_t = element_type_t<T>;
           using r_t   = as_wide_t<elt_t, cardinal_t<I>>;
-          auto aa     = convert(a, as(elt_t()));
+          auto aa     = convert(a, as<elt_t>{});
           return lrising_factorial[o](aa, r_t(x));
         }
         else if constexpr( integral_scalar_value<I> )
@@ -186,10 +186,10 @@ namespace eve
         else if constexpr(O::contains(pedantic))
         {
           // pedantic computes also for negative values and even negative integer values
-          auto r       = nan(as(a));
+          auto r       = nan(as{a});
           auto notdone = is_not_nan(a) && is_not_nan(x);
 
-          auto lr0 = []() { return zero(as(T())); };
+          auto lr0 = []() { return zero(as<T>{}); };
 
           auto lrpos = [](auto a, auto x) { return inner_lrising_factorial(a, x); };
 
@@ -203,7 +203,7 @@ namespace eve
           };
 
           auto lraneqmx = [](auto a, auto){ // a < 0.0 && a+x < 0.0
-            return minf(as(a));
+            return minf(as{a});
           };
 
           auto lrneg = [](auto a, auto x){
@@ -253,10 +253,10 @@ namespace eve
         else
         {
           // regular  nan if a+x or x is negative,  better computation than raw
-          auto lr0   = []() { return zero(as(T())); };
+          auto lr0   = []() { return zero(as<T>{}); };
           auto lrpos = [](auto a, auto x) { return inner_lrising_factorial(a, x); };
 
-          auto r       = nan(as(a));
+          auto r       = nan(as{a});
           auto notdone = is_nltz(x) || is_nltz(a + x);
           if( eve::any(notdone) )
           {

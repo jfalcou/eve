@@ -143,7 +143,7 @@ namespace eve
         T base = a0;
         U expo = a1;
 
-        auto result = one(as(a0));
+        auto result = one(as{a0});
         while( expo )
         {
           if( is_odd(expo) ) result *= base;
@@ -172,7 +172,7 @@ namespace eve
       {
         if constexpr (scalar_value<T>)
         {
-          if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
+          if( a0 == mone(as{a0}) && is_infinite(a1) ) return one(as<r_t>{});
         }
 
         auto nega = is_negative(r_t(a0));
@@ -216,7 +216,7 @@ namespace eve
         r_t base = a0;
         U expo = a1;
 
-        auto result = one(as(a0));
+        auto result = one(as{a0});
         while( expo )
         {
           if( is_odd(expo) ) result *= base;
@@ -243,7 +243,7 @@ namespace eve
         r_t base = a0;
         U expo = a1;
 
-        r_t result = one(as<r_t>());
+        r_t result = one(as<r_t>{});
         while( eve::any(to_logical(expo)) )
         {
           result *= if_else(is_odd(expo), base, one);
@@ -255,7 +255,7 @@ namespace eve
       else
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>{}));
         return if_else(is_ltz(a1), rec[pedantic](tmp), tmp);
       }
     }
@@ -270,7 +270,7 @@ namespace eve
         r_t base = a0;
         U expo = a1;
 
-        r_t result = eve::one(as<r_t>());
+        r_t result = eve::one(as<r_t>{});
         while( eve::any(to_logical(expo)) )
         {
           result *= if_else(is_odd(expo), base, one);
@@ -282,7 +282,7 @@ namespace eve
       else
       {
         using u_t = as_integer_t<U, unsigned>;
-        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>()));
+        r_t tmp     = pow(a0, bit_cast(eve::abs(a1), as<u_t>{}));
         return if_else(is_ltz(a1), rec[pedantic](tmp), tmp);
       }
     }

@@ -16,7 +16,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(neon128_), O const&, wide<T, N> w, wide<S, N> s) noexcept
       requires arm_abi<abi_t<T, N>>
   {
-    auto const si = convert(s, as<as_integer_t<T, signed>>());
+    auto const si = convert(s, as<as_integer_t<T, signed>>{});
 
     constexpr auto c = categorize<wide<T, N>>();
 

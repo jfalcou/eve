@@ -113,9 +113,9 @@ namespace eve::detail
 
     if constexpr( scalar_value<T> )
     {
-      if( is_ngez(x) ) return nan(as(x));
-      if( x == 0 ) return zero(as(x));         // x is 0
-      if( x == inf(as(x)) ) return inf(as(x)); // x is infinite
+      if( is_ngez(x) ) return nan(as{x});
+      if( x == 0 ) return zero(as{x});         // x is 0
+      if( x == inf(as{x}) ) return inf(as{x}); // x is infinite
       if( x < T(7.75) ) return br_7_75(x);     // x in (0, 7.75]
       const auto thresh = if_else(std::same_as<elt_t, float>, elt_t(50), elt_t(500));
       if( x < thresh ) return br_medium(x); // x in (7.75, thresh]
@@ -125,7 +125,7 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> )
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_nltz(x);
         if( eve::any(notdone) )
         {
@@ -137,8 +137,8 @@ namespace eve::detail
             if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
           }
         }
-        r = if_else(is_eqz(x), zero(as(x)), r);
-        r = if_else(x == inf(as(x)), inf, r);
+        r = if_else(is_eqz(x), zero(as{x}), r);
+        r = if_else(x == inf(as{x}), inf, r);
         return r;
       }
     }

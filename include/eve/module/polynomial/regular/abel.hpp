@@ -84,7 +84,7 @@ namespace eve
       EVE_ASSERT(eve::all(is_flint(n)), "n  not flint");
       auto nn = convert(n, as_element<r_t>());
       return if_else( is_eqz(n), one,
-                      if_else(n == one(as(n)), x,
+                      if_else(n == one(as{n}), x,
                               x*pow(-fms(nn, a, x), dec(n))
                              )
                     );

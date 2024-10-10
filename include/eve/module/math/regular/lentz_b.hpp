@@ -59,7 +59,7 @@ namespace eve
   //!   **Parameters**
   //!
   //!     * `g`   : generator function.
-  //!     * `tol` : tolerance value. If negative the effective tolerance will be abs(tol)*eve::eps(as(< u_t>)
+  //!     * `tol` : tolerance value. If negative the effective tolerance will be abs(tol)*eve::eps(as{< u_t>}
   //!               where u_t is the underlying floating type associated to the return type of the invocable g.
   //!     * `max_terms` : no more than max_terms calls to the generator will be made.
   //!

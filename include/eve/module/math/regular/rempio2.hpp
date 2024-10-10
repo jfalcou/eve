@@ -103,10 +103,10 @@ namespace eve
       else if constexpr( O::contains(big))             return rempio2_big(x);
       else
       {
-        if( eve::all(x <= Rempio2_limit[quarter_circle](as(x))))   return eve::zip(T(0), x, T(0));
-        else if( eve::all(x <= Rempio2_limit[half_circle](as(x)))) return rempio2_half_circle(x);
-        else if( eve::all(x <= Rempio2_limit[full_circle](as(x)))) return rempio2_full_circle(x);
-        else if( eve::all(x <= Rempio2_limit[medium](as(x))))      return rempio2_medium(x);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as{x})))   return eve::zip(T(0), x, T(0));
+        else if( eve::all(x <= Rempio2_limit[half_circle](as{x}))) return rempio2_half_circle(x);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as{x}))) return rempio2_full_circle(x);
+        else if( eve::all(x <= Rempio2_limit[medium](as{x})))      return rempio2_medium(x);
         else                                                        return rempio2_big(x);
       }
     }

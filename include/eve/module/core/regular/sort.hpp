@@ -146,14 +146,14 @@ namespace eve
 
     template <typename T, typename Less, callable_options O>
     constexpr EVE_FORCEINLINE
-    T sort_(EVE_REQUIRES(cpu_), O const &, T x, Less less) noexcept
+    T sort_(EVE_REQUIRES(cpu_), O const&, T x, Less less) noexcept
     {
       return make_bitonic(x, less, lane<T::size()>);
     }
 
     template <typename T, callable_options O>
     constexpr EVE_FORCEINLINE
-    T sort_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
+    T sort_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
       return sort(x, is_less);
     }

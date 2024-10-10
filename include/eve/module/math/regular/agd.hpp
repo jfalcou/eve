@@ -88,7 +88,7 @@ namespace eve
     template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T agd_(EVE_REQUIRES(cpu_), O const&, T const& x)
     {
-      return 2*atanh(tan(x*half(as(x))));
+      return 2*atanh(tan(x*half(as{x})));
     }
   }
 }

@@ -23,12 +23,12 @@ namespace eve::detail
     else if constexpr (sizeof(T) == 4)
     {
       // Alternativatly we can add shorts in scalar but this a very cheap conversion
-      return compress_store_swizzle_mask_num(c, convert(mask, eve::as<logical<std::uint16_t>>{}));
+      return compress_store_swizzle_mask_num(c, convert(mask, as<logical<std::uint16_t>>{}));
     }
     else
     {
       using bits_type = typename logical<wide<T, fixed<4>>>::bits_type;
-      mask = mask && c.mask(eve::as(mask));
+      mask = mask && c.mask(eve::as{mask});
 
       bits_type sad_mask {0x81, 0x82, 0x84, 0x80};
       bits_type sum = _mm_sad_epu8(_mm_andnot_si128(mask, sad_mask), sad_mask);
@@ -50,7 +50,7 @@ namespace eve::detail
     if constexpr ( eve::has_aggregated_abi_v<wide<T, fixed<8>>> )
     {
       using half_t = make_integer_t<sizeof(T) / 2, unsigned>;
-      auto half = eve::convert(mask, eve::as<logical<half_t>>{});
+      auto half = eve::convert(mask, as<logical<half_t>>{});
       return compress_store_swizzle_mask_num(half);
     }
     else if constexpr ( sizeof(T) == 4 )
@@ -82,7 +82,7 @@ namespace eve::detail
       // Alternative for shorts is to compute both halves
       // But that implies using _mm_extract_epi16 which has latency 3
       // as oppose to latency 1 for _mm_packs_epi16
-      auto to_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
+      auto to_bytes = eve::convert(mask, as<eve::logical<std::uint8_t>>{});
       return compress_store_swizzle_mask_num(to_bytes);
     }
     else if constexpr ( sizeof(T) == 1 )
@@ -111,7 +111,7 @@ namespace eve::detail
   {
     if constexpr ( sizeof(T) == 2 )
     {
-      auto to_bytes = eve::convert(mask, eve::as<eve::logical<std::uint8_t>>{});
+      auto to_bytes = eve::convert(mask, as<eve::logical<std::uint8_t>>{});
       return compress_store_swizzle_mask_num(to_bytes);
     }
     else if constexpr ( sizeof(T) == 1 )

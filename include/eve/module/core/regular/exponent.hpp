@@ -89,9 +89,9 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr as_integer_t<T>  exponent_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      auto z = bit_and(exponentmask(as<T>()), a);
-      auto x = (z >> nbmantissabits(eve::as<T>()));
-      return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
+      auto z = bit_and(exponentmask(as<T>{}), a);
+      auto x = (z >> nbmantissabits(as<T>{}));
+      return sub[is_nez(a)](x, maxexponent(as<T>{}));
     }
   }
 }

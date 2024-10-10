@@ -17,7 +17,7 @@ namespace eve::detail
   // Generate better code on x86 than just comparing to 0
   template<signed_integral_value T, typename N, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  is_ltz_(EVE_REQUIRES(sse2_), O const &, wide<T, N> const& a) noexcept
+  is_ltz_(EVE_REQUIRES(sse2_), O const&, wide<T, N> const& a) noexcept
   requires(sizeof(T) < 8 && x86_abi<abi_t<T, N>> && abi_t<T, N>::is_wide_logical)
   {
     using l_t            = as_logical_t<wide<T, N>>;

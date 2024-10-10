@@ -95,13 +95,13 @@ namespace eve
       else if constexpr( scalar_value<T> )
       {
         if( is_equal[numeric](a, b) ) return T(0);
-        if( is_unordered(a, b) ) return inf(eve::as<T>());
-        return nb_values(a, b)*half(eve::as(a));
+        if( is_unordered(a, b) ) return inf(as<T>{});
+        return nb_values(a, b)*half(eve::as{a});
       }
       else if constexpr( simd_value<T> )
       {
         auto inen = is_not_equal[numeric](a, b);
-        return half[inen](eve::as(a))*(eve::inf[is_unordered(a, b)&&inen](as(a))+convert(nb_values(a, b), eve::as<eve::element_type_t<T>>()));
+        return half[inen](eve::as{a})*(eve::inf[is_unordered(a, b)&&inen](as{a})+convert(nb_values(a, b), as<eve::element_type_t<T>>{}));
       }
     }
   }

@@ -77,13 +77,13 @@ compress_copy_scalar_impl_(EVE_SUPPORTS(sve_), Settings settings, I f, L m, O o)
     return compress_copy_scalar_impl(
         compress_callable_settings(settings.safety, settings.density, ignore_none, settings.c_out),
         f,
-        m && to_logical(settings.c_in, as(m)),
+        m && to_logical(settings.c_in, as{m}),
         o);
   }
   else if constexpr ( !OC::is_complete )
   {
-    o += settings.c_out.offset(eve::as(m));
-    O limit = o + settings.c_out.count(eve::as(m));
+    o += settings.c_out.offset(eve::as{m});
+    O limit = o + settings.c_out.count(eve::as{m});
     return compress_copy_sparse_sve_limited(f, m, o, limit);
   }
   else

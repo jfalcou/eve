@@ -131,7 +131,7 @@ namespace eve
             logical<T> test;
             if constexpr( eve::platform::supports_denormals )
             {
-              test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
+              test = is_less(a0, smallestposval(as<T>{})) && isnez;
               if( eve::any(test) )
               {
                 k = sub[test](k, TT(25));
@@ -142,18 +142,18 @@ namespace eve
             {
               auto [xx, kk]     = eve::frexp(x);
               x = xx;
-              auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+              auto x_lt_sqrthf = (invsqrt_2(as<T>{}) > x);
               k += dec[x_lt_sqrthf](kk);
               f = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
             }
             else
             {
-              uiT ix = bit_cast(x, as<uiT>());
+              uiT ix = bit_cast(x, as<uiT>{});
               /* reduce x into [sqrt(2)/2, sqrt(2)] */
               ix += 0x3f800000 - 0x3f3504f3;
-              k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
+              k += bit_cast(ix >> 23, as<iT>{}) - 0x7f;
               ix = (ix & 0x007fffff) + 0x3f3504f3;
-              x  = bit_cast(ix, as<T>());
+              x  = bit_cast(ix, as<T>{});
               f  = dec(x);
             }
             T s    = f / (2.0f + f);
@@ -162,10 +162,10 @@ namespace eve
             T t1   = w * eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f));
             T t2   = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
             T R    = t2 + t1;
-            T hfsq = half(eve::as<T>()) * sqr(f);
+            T hfsq = half(as<T>{}) * sqr(f);
 
-            T dk = convert(k, as<float>());
-            T r  = fma(fms(s, hfsq + R, hfsq) + f, invlog_2(eve::as<T>()), dk);
+            T dk = convert(k, as<float>{});
+            T r  = fma(fms(s, hfsq + R, hfsq) + f, invlog_2(as<T>{}), dk);
             // The original algorithm does some extra calculation in place of the return line
             // to get extra precision but this is uneeded for float as the exhaustive test shows
             // a 0.5 ulp maximal error on the full range.
@@ -180,9 +180,9 @@ namespace eve
             if constexpr( eve::platform::supports_infinites )
             {
               zz = if_else(
-                isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+                isnez, if_else(a0 == inf(as<T>{}), inf(as<T>{}), r), minf(as<T>{}));
             }
-            else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+            else { zz = if_else(isnez, r, minf(as<T>{})); }
             return if_else(is_ngez(a0), eve::allbits, zz);
           }
           else if constexpr( std::is_same_v<elt_t, double> )
@@ -205,7 +205,7 @@ namespace eve
             logical<T> test;
             if constexpr( eve::platform::supports_denormals )
             {
-              test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
+              test = is_less(a0, smallestposval(as<T>{})) && isnez;
               if( eve::any(test) )
               {
                 k = sub[test](k, TT(54));
@@ -216,18 +216,18 @@ namespace eve
             {
               auto [xx, kk]     = eve::frexp(x);
               x = xx;
-              auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+              auto x_lt_sqrthf = (invsqrt_2(as<T>{}) > x);
               k += dec[x_lt_sqrthf](kk);
               f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
             }
             else
             {
               /* reduce x into [sqrt(2)/2, sqrt(2)] */
-              uiT hx = bit_cast(x, as<uiT>()) >> 32;
+              uiT hx = bit_cast(x, as<uiT>{}) >> 32;
               hx += 0x3ff00000 - 0x3fe6a09e;
-              k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
+              k += bit_cast(hx >> 20, as<iT>{}) - 0x3ff;
               hx = ((hx & 0x000fffffull)) + 0x3fe6a09e;
-              x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
+              x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>{}), 0xffffffffull)), as<T>{});
               f  = dec(x);
             }
             T s  = f / (2.0f + f);
@@ -237,7 +237,7 @@ namespace eve
             T t2 = z * eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
                                           , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
             T R    = t2 + t1;
-            T hfsq = half(eve::as<T>()) * sqr(f);
+            T hfsq = half(as<T>{}) * sqr(f);
             //        return -(hfsq-(s*(hfsq+R))-f)*Invlog_2<T>()+dk;  // fast ?
 
             /*
@@ -273,16 +273,16 @@ namespace eve
 
             /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
 
-            T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(eve::as<T>{});
-            T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(eve::as<T>{});
+            T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(as<T>{});
+            T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(as<T>{});
             T hi         = f - hfsq;
-            hi           = (hi & (allbits(eve::as<uiT>()) << 32));
+            hi           = (hi & (allbits(as<uiT>{}) << 32));
             T lo         = fma(s, hfsq + R, f - hi - hfsq);
 
             T val_hi = hi * Invlog_2hi;
             T val_lo = fma(lo + hi, Invlog_2lo, lo * Invlog_2hi);
 
-            T dk = convert(k, as<double>());
+            T dk = convert(k, as<double>{});
             T w1 = dk + val_hi;
             val_lo += (dk - w1) + val_hi;
             val_hi = w1;
@@ -291,9 +291,9 @@ namespace eve
             if constexpr( eve::platform::supports_infinites )
             {
               zz = if_else(
-                isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+                isnez, if_else(a0 == inf(as<T>{}), inf(as<T>{}), r), minf(as<T>{}));
             }
-            else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+            else { zz = if_else(isnez, r, minf(as<T>{})); }
             return if_else(is_ngez(a0), eve::allbits, zz);
           }
         }
@@ -317,27 +317,27 @@ namespace eve
            * is preserved.
            * ====================================================
            */
-          uiT ix = bit_cast(x, as<uiT>());
+          uiT ix = bit_cast(x, as<uiT>{});
           iT  k  = 0;
           if( ix < 0x00800000 || ix >> 31 ) /* x < 2**-126  */
           {
-            if( ix << 1 == 0 ) return minf(eve::as<T>()); /* log(+-0)=-inf */
-            if( ix >> 31 ) return nan(eve::as<T>());      /* log(-#) = NaN */
+            if( ix << 1 == 0 ) return minf(as<T>{}); /* log(+-0)=-inf */
+            if( ix >> 31 ) return nan(as<T>{});      /* log(-#) = NaN */
             if constexpr( eve::platform::supports_denormals )
             { /* subnormal number, scale up x */
               k -= 25;
               x *= 33554432.0f;
-              ix = bit_cast(x, as<iT>());
+              ix = bit_cast(x, as<iT>{});
             }
           }
           else if( ix >= 0x7f800000 ) { return x; }
-          else if( ix == 0x3f800000 ) return zero(eve::as(x));
+          else if( ix == 0x3f800000 ) return zero(eve::as{x});
 
           /* reduce x into [sqrt(2)/2, sqrt(2)] */
           ix += 0x3f800000 - 0x3f3504f3;
-          k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
+          k += bit_cast(ix >> 23, as<iT>{}) - 0x7f;
           ix     = (ix & 0x007fffff) + 0x3f3504f3;
-          x      = bit_cast(ix, as<T>());
+          x      = bit_cast(ix, as<T>{});
           T f    = dec(x);
           T s    = f / (2.0f + f);
           T z    = sqr(s);
@@ -346,7 +346,7 @@ namespace eve
           T t2   = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
           T R    = t2 + t1;
           T hfsq = 0.5f * sqr(f);
-          return -(hfsq - (s * (hfsq + R)) - f) * invlog_2(eve::as<T>()) + k;
+          return -(hfsq - (s * (hfsq + R)) - f) * invlog_2(as<T>{}) + k;
           // The original algorithm does some extra calculation in place of the return line
           // to get extra precision but this is uneeded for float as the exhaustive test shows
           // a 0.5 ulp maximal error on the full range.
@@ -370,27 +370,27 @@ namespace eve
            * is preserved.
            * ====================================================
            */
-          uiT hx = bit_cast(x, as<uiT>()) >> 32;
+          uiT hx = bit_cast(x, as<uiT>{}) >> 32;
           iT  k  = 0;
           if( hx < 0x00100000 || hx >> 31 )
           {
-            if( is_eqz(x) ) return minf(eve::as<T>()); /* log(+-0)=-inf */
-            if( hx >> 31 ) return nan(eve::as<T>());   /* log(-#) = NaN */
+            if( is_eqz(x) ) return minf(as<T>{}); /* log(+-0)=-inf */
+            if( hx >> 31 ) return nan(as<T>{});   /* log(-#) = NaN */
             /* subnormal number, scale x up */
             if constexpr( eve::platform::supports_denormals )
             {
               k -= 54;
               x *= 18014398509481984.0;
-              hx = bit_cast(x, as<uiT>()) >> 32;
+              hx = bit_cast(x, as<uiT>{}) >> 32;
             }
           }
           else if( hx >= 0x7ff00000 ) { return x; }
-          else if( x == one(eve::as<T>()) ) return zero(eve::as<T>());
+          else if( x == one(as<T>{}) ) return zero(as<T>{});
           /* reduce x into [sqrt(2)/2, sqrt(2)] */
           hx += 0x3ff00000 - 0x3fe6a09e;
-          k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
+          k += bit_cast(hx >> 20, as<iT>{}) - 0x3ff;
           hx     = (hx & 0x000fffff) + 0x3fe6a09e;
-          x      = bit_cast((uint64_t)hx << 32 | ((bit_cast(x, as<uiT>()) & 0xffffffffull)), as<T>());
+          x      = bit_cast((uint64_t)hx << 32 | ((bit_cast(x, as<uiT>{}) & 0xffffffffull)), as<T>{});
           T f    = dec(x);
           T hfsq = 0.5 * sqr(f);
           T s    = f / (2.0f + f);
@@ -436,10 +436,10 @@ namespace eve
 
           /* hi+lo = f - hfsq + s*(hfsq+R) ~ log(1+f) */
 
-          T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(eve::as<T>{});
-          T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(eve::as<T>{});
+          T Invlog_2lo = ieee_constant<-0x1.7135a80p-13f, 0x1.705fc2eefa200p-33>(as<T>{});
+          T Invlog_2hi = ieee_constant<0x1.7160000p+0f, 0x1.7154765200000p+0>(as<T>{});
           T hi         = f - hfsq;
-          hi           = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
+          hi           = bit_and(hi, (allbits(as<uiT>{}) << 32));
           T lo         = f - hi - hfsq + s * (hfsq + R);
 
           T val_hi = hi * Invlog_2hi;

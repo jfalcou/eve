@@ -29,7 +29,7 @@ namespace eve::detail
     {
       // both scalar, maybe floating, roundtrip to integer
       using i_t = as_integer_t<T, unsigned>;
-      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) | bit_cast(b, as<i_t>{})), as(a));
+      return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) | bit_cast(b, as<i_t>{})), as{a});
     }
   }
 

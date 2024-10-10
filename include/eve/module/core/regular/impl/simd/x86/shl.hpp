@@ -28,11 +28,11 @@ namespace eve::detail
 
       i16_t const masklow(0xff);
       i16_t const maskhi (0xff00);
-      auto const xx   =  bit_cast(a, as<i16_t>());
+      auto const xx   =  bit_cast(a, as<i16_t>{});
       auto const odd  = (xx << b) & masklow;
       auto const even = ((xx & maskhi) << b) & maskhi;
 
-      return bit_cast(odd + even, as(a));
+      return bit_cast(odd + even, as{a});
     };
 
           if constexpr( c == category::int64x8  ) return _mm512_slli_epi64(w, s);

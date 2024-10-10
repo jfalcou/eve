@@ -71,7 +71,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::invlog_phi(as<T>())` returns the inverse of the logarithm of the golden ratio?
+  //!      The call `eve::invlog_phi(as<T>{})` returns the inverse of the logarithm of the golden ratio?
   //!
   //!  @groupheader{Example}
   //!

@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::rsqrt_e(as<T>())` returns the inverse of the square root of the basis of
+  //!      The call `eve::rsqrt_e(as<T>{})` returns the inverse of the square root of the basis of
   //!      natural logarithms.
   //!
   //!  @groupheader{Example}

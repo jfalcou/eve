@@ -99,7 +99,7 @@ namespace eve
       {
         auto np = [](auto x)
           {
-            if constexpr(integral_value<T>) return convert(inc(x), as<double>());
+            if constexpr(integral_value<T>) return convert(inc(x), as<double>{});
             else                            return inc(x);
           }(n);
 

@@ -88,7 +88,7 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr T
   arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
   {
-    auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
+    auto z = if_else(is_negative(a), pi(eve::as{a}), eve::zero);
     if constexpr( platform::supports_nans && O::contains(pedantic))
       return if_else(is_nan(a), eve::allbits, z);
     else

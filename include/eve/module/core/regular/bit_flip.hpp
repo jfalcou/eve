@@ -84,7 +84,7 @@ namespace eve
     {
       [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;
       EVE_ASSERT(eve::all(i >= 0 && i < S8), "some index elements are out or range");
-      return bit_xor(a, bit_shl(one(as(a)), i));
+      return bit_xor(a, bit_shl(one(as{a}), i));
     }
   }
 }

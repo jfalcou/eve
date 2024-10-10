@@ -28,10 +28,10 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> )
       {
-        T p0 = one(as(x));
+        T p0 = one(as{x});
         if( is_eqz(n) ) return p0;
         T p1 = x + x;
-        I c  = one(as(n));
+        I c  = one(as{n});
         while( c < n )
         {
           std::swap(p0, p1);
@@ -52,12 +52,12 @@ namespace eve::detail
       else if constexpr(simd_value<T>)
       {
         using elt_t = element_type_t<T>;
-        auto p0     = one(as(x));
+        auto p0     = one(as{x});
         auto iseqzn = is_eqz(n);
         if( eve::all(iseqzn) ) return p0;
         auto p1   = add[!iseqzn](x, x);
-        auto nn    = convert(n, as<elt_t>());
-        auto c    = one(as(nn));
+        auto nn    = convert(n, as<elt_t>{});
+        auto c    = one(as{nn});
         auto test = c < nn;
         while( eve::any(test) )
         {
@@ -74,8 +74,8 @@ namespace eve::detail
   template<int N, floating_value T, callable_options O>
   constexpr T hermite_(EVE_REQUIRES(cpu_), O const&, std::integral_constant<int, N> const&, T x)
   {
-    if constexpr( N < 0 ) return zero(as(x));
-    else if constexpr( N == 0 ) return one(as(x));
+    if constexpr( N < 0 ) return zero(as{x});
+    else if constexpr( N == 0 ) return one(as{x});
     else if constexpr( N == 1 ) return x + x;
     else if constexpr( N == 2 ) return dec(sqr(x)) * 2;
     else if constexpr( N == 3 ) return 4 * x * (sqr(x) - 3);

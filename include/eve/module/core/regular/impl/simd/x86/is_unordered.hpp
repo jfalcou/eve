@@ -15,14 +15,14 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>> is_unordered_(EVE_REQUIRES(sse2_), O const &, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE logical<wide<T, N>> is_unordered_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     using l_t        = logical<wide<T, N>>;
     constexpr auto c = categorize<wide<T, N>>();
     constexpr auto m = _CMP_UNORD_Q;
 
-    if constexpr( match(c, category::integer_) ) return false_(eve::as<l_t>());
+    if constexpr( match(c, category::integer_) ) return false_(as<l_t>{});
     else if constexpr( current_api >= eve::avx512 )
     {
       using s_t = typename l_t::storage_type;

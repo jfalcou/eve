@@ -33,7 +33,7 @@ namespace eve::detail
     if constexpr( current_api >= avx512 )
     {
       auto z = wide<T, N>(0);
-      auto a = allbits(as<wide<T, N>>());
+      auto a = allbits(as<wide<T, N>>{});
       auto m = p.storage().value;
 
       if constexpr( std::same_as<abi_t<T, N>,x86_128_>)

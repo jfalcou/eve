@@ -34,23 +34,23 @@ namespace eve::detail
 
     auto br_last  = [v, p, rac]()
     {
-      return cyl_bessel_kn(v, p) * rac * T(0.183776298473931); // third *inv_pi(as(p));
+      return cyl_bessel_kn(v, p) * rac * T(0.183776298473931); // third *inv_pi(as{p});
     };
 
     elt_t constexpr thresh = (sizeof(elt_t) == 8) ? (4.440892098500626e-16) : (2.3841858e-07);
 
     if constexpr( scalar_value<T> )
     {
-      if( x == minf(as(x)) )  return zero(as(x));
-      if( is_nan(x) )         return nan(as(x));
-      if( x == inf(as(x)) )   return zero(as(x));
+      if( x == minf(as{x}) )  return zero(as{x});
+      if( is_nan(x) )         return nan(as{x});
+      if( x == inf(as{x}) )   return zero(as{x});
       if( x < 0 )             return br_0();
       if( x < thresh )        return br_small();
       return br_last();
     }
     else
     {
-      auto r       = nan(as(x));
+      auto r       = nan(as{x});
       auto notdone = is_not_nan(x);
       if( eve::any(notdone) )
       {

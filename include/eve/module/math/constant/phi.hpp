@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::phi(as<T>())` returns the golden ratio.
+  //!      The call `eve::phi(as<T>{})` returns the golden ratio.
   //!
   //!  @groupheader{Example}
   //!

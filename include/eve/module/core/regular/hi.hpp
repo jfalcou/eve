@@ -21,7 +21,7 @@ namespace eve
     template<typename T>
     struct result
     {
-      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>, unsigned>>,T>;
     };
 
     template<value T>
@@ -84,7 +84,7 @@ namespace eve
       if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction
       {
         using ui_t = as_integer_t<T, unsigned>;
-        auto uia0  = bit_cast(a0, as<ui_t>());
+        auto uia0  = bit_cast(a0, as<ui_t>{});
         return ui_t((uia0 & ui_t(0xF0)) >> 4);
       }
       else

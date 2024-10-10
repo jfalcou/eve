@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> minus_(EVE_REQUIRES(sve_), C const& mask, O const& o, wide<T, N> w) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    auto const alt = alternative(mask, w, as(w));
+    auto const alt = alternative(mask, w, as{w});
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
@@ -34,7 +34,7 @@ namespace eve::detail
     {
       //  if saturated on integer, we don't have masked op so we delegate
       if constexpr(O::contains(saturated) && std::integral<T>) return minus.behavior(as<wide<T, N>>{}, cpu_{},o,w);
-      else                                                      return svneg_m(alt,expand_mask(mask, as(w)),w);
+      else                                                      return svneg_m(alt,expand_mask(mask, as{w}),w);
     }
   }
 }

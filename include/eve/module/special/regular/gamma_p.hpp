@@ -89,14 +89,14 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
     gamma_p_(EVE_REQUIRES(cpu_), O const&, T x, T a) noexcept
     {
       auto const third   = T(1 / 3.0);
-      auto       res     = nan(as<T>()); // nan case treated here
+      auto       res     = nan(as<T>{}); // nan case treated here
       auto       notdone = is_not_nan(x);
       const auto amax    = T(1048576);
       auto       test    = (a > amax);
       if( eve::any(test) )
       {
         auto z = eve::fma(1024 * rsqrt(a), x - (a - third), amax - third);
-        x      = eve::max(z, zero(as(x)));
+        x      = eve::max(z, zero(as{x}));
         a      = if_else(test, amax, a);
       }
       auto lginc = [](auto a0, auto a1, auto test){
@@ -106,18 +106,18 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 
         // Series expansion for x < a+1
         auto ap  = a1;
-        auto del = one(as(ap));
+        auto del = one(as{ap});
         auto sum = del;
 
         while( eve::any(abs(del) >= T(100) * epsilon(maximum(abs(sum)))) )
         {
-          ap += one(as(ap));
+          ap += one(as{ap});
           del = x * del / ap;
           sum += del;
         }
         auto b = sum * eve::exp(fms(a1, eve::log(x), eve::log_abs_gamma(inc(a1)) + x));
         //  For very small a, the series may overshoot very slightly.
-        b = eve::min(b, one(as(b)));
+        b = eve::min(b, one(as{b}));
         //  if lower, b(k) = bk; else b(k) = 1-bk; end
         return if_else(is_eqz(a0) && is_eqz(a1), one, b);
       };
@@ -127,12 +127,12 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
         x = if_else(test, x, inc(a));
         // Continued fraction for x >= a+1
         // k = find(a ~= 0 & x >= a+1); % & x ~= 0
-        auto x0   = one(as(x));
+        auto x0   = one(as{x});
         auto x1   = x;
-        auto b0   = zero(as(x));
+        auto b0   = zero(as{x});
         auto b1   = x0;
         auto fac  = rec[pedantic](x1);
-        auto n    = one(as(x));
+        auto n    = one(as{x});
         auto g    = b1 * fac;
         auto gold = b0;
 

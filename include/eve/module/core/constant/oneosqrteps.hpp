@@ -63,8 +63,8 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::oneosqrteps(as<T>())`  is semantically equivalent to
-  //!      `eve::rec (eve::sqrt (eve::eps (as<T>())))`
+  //!      The call `eve::oneosqrteps(as<T>{})`  is semantically equivalent to
+  //!      `eve::rec (eve::sqrt (eve::eps (as<T>{})))`
   //!
   //!  @groupheader{Example}
   //!

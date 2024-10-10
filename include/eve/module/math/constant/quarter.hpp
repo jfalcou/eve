@@ -59,7 +59,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::quarter(as<T>())` returns one quarter.
+  //!      The call `eve::quarter(as<T>{})` returns one quarter.
   //!
   //!  @groupheader{Example}
   //!

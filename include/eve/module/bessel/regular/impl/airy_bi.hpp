@@ -42,17 +42,17 @@ namespace eve::detail
 
     if constexpr( scalar_value<T> )
     {
-      if( x == minf(as(x)) )  return zero(as(x));
-      if( is_nan(x) )         return nan(as(x));
-      if( x == inf(as(x)) )   return inf(as(x));
+      if( x == minf(as{x}) )  return zero(as{x});
+      if( is_nan(x) )         return nan(as{x});
+      if( x == inf(as{x}) )   return inf(as{x});
       if( x < 0 )             return br_0();
       if( x < thresh )        return br_small();
       return br_last();
     }
     else
     {
-      auto r       = nan(as(x));
-      auto notdone = (x != minf(as(x)) && is_not_nan(x));
+      auto r       = nan(as{x});
+      auto notdone = (x != minf(as{x}) && is_not_nan(x));
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_0, notdone, is_ltz(x), r);
@@ -62,8 +62,8 @@ namespace eve::detail
           if( eve::any(notdone) ) { last_interval(br_last, notdone, r); }
         }
       }
-      r = if_else(x == inf(as(x)), inf(as(x)), r);
-      r = if_else(x == minf(as(x)), zero, r);
+      r = if_else(x == inf(as{x}), inf(as{x}), r);
+      r = if_else(x == minf(as{x}), zero, r);
       return r;
     }
   }

@@ -99,15 +99,15 @@ namespace eve
         T    zn     = z;
         T    an     = (x + y + T(3) * z) / 5;
         T    a0     = an;
-        auto epsi   = pow_abs(elt_t(0.25) * eps(as(element_type_t<T>())), -1 / T(8));
+        auto epsi   = pow_abs(elt_t(0.25) * eps(as<element_type_t<T>>{}), -1 / T(8));
         T    q = epsi * (eve::max)((eve::max)(eve::abs(an - xn), eve::abs(an - yn)), eve::abs(an - zn))
           * elt_t(1.2);
-        T fn(one(as(x)));
-        T rd_sum(zero(as(x)));
+        T fn(one(as{x}));
+        T rd_sum(zero(as{x}));
 
         // duplication
         unsigned k  = 0;
-        T        hf = half(as(x));
+        T        hf = half(as{x});
         for( ; k < 30; ++k )
         {
           T root_x = eve::sqrt(xn);
@@ -156,7 +156,7 @@ namespace eve
       }
       else
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_nltz(x) && is_nltz(y) && is_nlez(z) && is_nez(x + y);
         // z equal to zero or any parameter nan or less than zero or more than one of x and y zero implies
         // nan

@@ -96,11 +96,11 @@ namespace eve
         auto test = is_not_less_equal(x, T(0.25));
         if constexpr( scalar_value<T> )
         {
-          if( test ) return nan(eve::as<T>());
+          if( test ) return nan(as<T>{});
         }
         else { a0 = if_else(test, eve::allbits, a0); }
 
-        a0 *= pi(eve::as<T>());
+        a0 *= pi(as<T>{});
         auto x2 = sqr(a0);
         return rec[pedantic](cos_eval(x2));
       }
@@ -109,12 +109,12 @@ namespace eve
         const T x = eve::abs(a0);
         if constexpr( scalar_value<T> )
         {
-          if( is_not_finite(x) ) return nan(eve::as<T>());
-          if( x > maxflint(eve::as<T>()) ) return T(1);
+          if( is_not_finite(x) ) return nan(as<T>{});
+          if( x > maxflint(as<T>{}) ) return T(1);
         }
 
         T z = cospi[o](x);
-        if constexpr( scalar_value<T> ) { return (z) ? rec[pedantic](z) : nan(eve::as<T>()); }
+        if constexpr( scalar_value<T> ) { return (z) ? rec[pedantic](z) : nan(as<T>{}); }
         else { return if_else(is_nez(z) && is_finite(a0), rec[pedantic](z), eve::allbits); }
       }
     }

@@ -97,7 +97,7 @@ namespace eve::detail
     T del = (x - ysq) * (x + ysq);
     T y   = exp(ysq * ysq) * exp(del);
     return if_else(
-      x < -26.628, inf(as<T>()), (y + y) - res);
+      x < -26.628, inf(as<T>{}), (y + y) - res);
   }
 
 //////////////////////////////////////////////////////////////////

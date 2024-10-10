@@ -32,7 +32,7 @@ namespace eve::detail
       auto that = if_else(is_nez(w), w * rsqrt(w), w);
       
       if constexpr (platform::supports_invalids && !O::contains(raw))
-        return if_else(w == inf(eve::as(w)), w, that);
+        return if_else(w == inf(eve::as{w}), w, that);
       else
         return that;
     }

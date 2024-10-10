@@ -98,7 +98,7 @@ namespace eve
       {
         if( eve::all(eve::abs(x) <= T(45)) )  return sind[quarter_circle](a0);
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return nan(eve::as<T>());
+          if( is_not_finite(a0) ) return nan(as<T>{});
          x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
         auto [fn, xr, dxr] = rem180(x);
         return sin_finalize(bitofsign(a0), fn, xr, dxr);

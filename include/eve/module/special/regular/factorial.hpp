@@ -266,13 +266,13 @@ namespace eve
                                                           0x1.1f63cb077cadep+997,
                                                           0x1.7932fa79d3a43p+1004,
                                                           0x1.f2054eb4d96ecp+1011}};
-        if constexpr( scalar_value<T> ) { return (n < 171u) ? dfactorials[n] : inf(as<double>()); }
+        if constexpr( scalar_value<T> ) { return (n < 171u) ? dfactorials[n] : inf(as<double>{}); }
         else
         {
           auto test = (n < 171u);
           auto nn   = if_else(test, n, zero);
           auto r    = gather(&dfactorials[0], nn);
-          return if_else(test, r, inf(as(r)));
+          return if_else(test, r, inf(as{r}));
         }
       }
     }
@@ -285,7 +285,7 @@ namespace eve
       EVE_ASSERT(eve::all(is_gez(n)), "factorial : some entry elements are not positive");
       auto r = factorial(convert(n, uint_from<T>()));
       if constexpr( std::same_as<elt_t, double> ) return r;
-      else return convert(r, as<float>());
+      else return convert(r, as<float>{});
     }
   }
 }

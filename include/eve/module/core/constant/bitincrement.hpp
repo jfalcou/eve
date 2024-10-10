@@ -60,7 +60,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!   The call `eve::bitincrement(as<T>())` returns a value of type `T` with only the least significant
+  //!   The call `eve::bitincrement(as<T>{})` returns a value of type `T` with only the least significant
   //!   bit set.
   //!
   //!   @groupheader{Example}

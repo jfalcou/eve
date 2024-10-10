@@ -41,7 +41,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::constant<Bitpattern>(as<T>())` returns a value of type T
+//!      The call `eve::constant<Bitpattern>(as<T>{})` returns a value of type T
 //!      from the bits found in Bitpattern.
 //!
 //!  @groupheader{Example}
@@ -51,7 +51,7 @@ namespace eve
 //================================================================================================
 
 template<value T, auto BitsPattern>
-EVE_FORCEINLINE auto constant(eve::as<T> = {})
+EVE_FORCEINLINE auto constant(as<T> = {})
 {
   using t_t = translate_element_type_t<T>;
 
@@ -62,7 +62,7 @@ EVE_FORCEINLINE auto constant(eve::as<T> = {})
     {
       static_assert(sizeof(t_t) == sizeof(BitsPattern),
                     "[eve::constant] floating_point case - BitsPattern has not the correct size");
-      return T {};
+      return T{};
     }
     else return static_cast<T>(bit_cast(BitsPattern, as<t_t> {}));
   }

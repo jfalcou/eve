@@ -60,7 +60,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!   The call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
+  //!   The call `eve::eps(as<T>{})` returns [elementwise](@ref glossary_elementwise), the smallest
   //!   positive value `x` of the type such that `1+x !=  x`.
   //!
   //!   * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one.

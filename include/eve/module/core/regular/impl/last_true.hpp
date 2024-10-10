@@ -48,8 +48,8 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   if constexpr( C::is_complete && !C::is_inverted ) return {};
   else if constexpr( has_emulated_abi_v<T> )
   {
-    std::ptrdiff_t first = cond.offset(eve::as<T> {});
-    std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
+    std::ptrdiff_t first = cond.offset(as<T> {});
+    std::ptrdiff_t last  = first + cond.count(as<T> {});
 
     while( first != last )
     {

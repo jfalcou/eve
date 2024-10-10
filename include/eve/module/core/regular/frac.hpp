@@ -75,7 +75,7 @@ namespace eve
 //!     3. just `x-trunc(x)`.
 //!     4. zeros and not finite values are all handled properly.
 //!     5. `almost` allows a fuzzy interpretation of `frac` using internally the `almost` version of `trunc`.
-//!     6. with no tolerance value, the call is equivalent to `frac[tolerance = 3*eps(as(x))(x)`
+//!     6. with no tolerance value, the call is equivalent to `frac[tolerance = 3*eps(as{x})(x)`
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/modf)
@@ -99,13 +99,13 @@ namespace eve
         {
           auto f = if_else(is_eqz(a), a, a - trunc[o](a));
           if constexpr(platform::supports_infinites && O::contains(pedantic))
-            return if_else(is_infinite(a), bit_and(a, signmask(as(a))), f);
+            return if_else(is_infinite(a), bit_and(a, signmask(as{a})), f);
           else
             return f;
         }
       }
       else
-        return zero(eve::as(a));
+        return zero(eve::as{a});
     }
   }
 }

@@ -108,14 +108,14 @@ namespace eve
 
       if constexpr (scalar_value<T>)
       {
-        if( x == inf(as(x)) ) return zero(as(a));
+        if( x == inf(as{x}) ) return zero(as{a});
         if( x > ll ) return invsqrtpi * rec[pedantic](a);
         auto largeneglimit = [](){
           // for x less than the value erfcx(x) is inf at working precision
           if constexpr( std::is_same_v<elt_t, float> ) return -0x1.fffffcp+63;
           else return -0x1.ffffffffffffep+511;
         };
-        if( x < largeneglimit() ) return inf(as(a));
+        if( x < largeneglimit() ) return inf(as{a});
       }
 
       constexpr auto isfloat = std::same_as<elt_t, float>;
@@ -151,9 +151,9 @@ namespace eve
       }
 
       /* Divide (1+p) by (1+2*a) ==> exp(a*a)*erfc(a) */
-      T d = a + half(as<T>());
+      T d = a + half(as<T>{});
       r   = rec[pedantic](d);
-      r *= half(as<T>());
+      r *= half(as<T>{});
       q = fma(p, r, r);
       t = q + q;
       e = (p - q) + fma(t, -a, T(1));
@@ -167,7 +167,7 @@ namespace eve
 
       /* Handle negative arguments: erfcx(x) = 2*exp(x*x) - erfcx(|x|) */
       auto r1 = fms(T(2), expx2(x), r);
-      r1      = if_else(is_nan(r1), inf(as<T>()), r1);
+      r1      = if_else(is_nan(r1), inf(as<T>{}), r1);
       r       = if_else(xpos, r, r1);
 
       return if_else(is_nan(x), eve::allbits, r);

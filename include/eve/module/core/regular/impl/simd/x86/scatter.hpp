@@ -46,7 +46,7 @@ namespace eve::detail
       else
       {
         // Use masked intrinsics
-        [[maybe_unused]] auto m = expand_mask(opts[condition_key], as(idx)).storage().value;
+        [[maybe_unused]] auto m = expand_mask(opts[condition_key], as{idx}).storage().value;
 
         if      constexpr(match(ci, category::int64x8 , category::uint64x8 ))
         {

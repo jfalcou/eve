@@ -55,7 +55,7 @@ to_logical(T v) noexcept
 
 template<relative_conditional_expr C, simd_value T>
 EVE_FORCEINLINE auto
-to_logical(C c, eve::as<T>) noexcept
+to_logical(C c, as<T>) noexcept
 {
   using l_t = typename as_logical<T>::type;
 
@@ -90,7 +90,7 @@ to_logical(C c, eve::as<T>) noexcept
   }
   else
   {
-    auto           i     = eve::iota(eve::as<i_t>());
+    auto           i     = eve::iota(as<i_t>{});
     std::ptrdiff_t count = c.count(as<i_t> {});
 
     if constexpr( std::same_as<C, keep_first> || std::same_as<C, ignore_last> )

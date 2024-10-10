@@ -93,7 +93,7 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle))
       {
-        return tan[eve::quarter_circle](a0 * pi(eve::as<T>()));
+        return tan[eve::quarter_circle](a0 * pi(as<T>{}));
       }
       else
       {
@@ -102,16 +102,16 @@ namespace eve
         if constexpr( scalar_value<T> )
         {
           if( is_eqz(a0) ) return a0;
-          if( is_not_finite(x) || (frac[raw](x) == half(eve::as<T>())) ) return nan(eve::as<T>());
-          if( x > maxflint(eve::as<T>()) || is_flint(x) ) return T(0);
+          if( is_not_finite(x) || (frac[raw](x) == half(as<T>{})) ) return nan(as<T>{});
+          if( x > maxflint(as<T>{}) || is_flint(x) ) return T(0);
         }
         else
         {
-          x = if_else(is_greater(x, maxflint(eve::as(x))) || is_flint(x), eve::zero, x);
-          x = if_else(is_not_finite(a0) || (frac[raw](x) == half(eve::as<T>())), eve::allbits, x);
+          x = if_else(is_greater(x, maxflint(eve::as{x})) || is_flint(x), eve::zero, x);
+          x = if_else(is_not_finite(a0) || (frac[raw](x) == half(as<T>{})), eve::allbits, x);
         }
         auto [fn, xr, dxr] = rem2(x);
-        return tan_finalize(a0 * pi(eve::as<T>()), fn, xr, dxr);
+        return tan_finalize(a0 * pi(as<T>{}), fn, xr, dxr);
       }
     }
   }

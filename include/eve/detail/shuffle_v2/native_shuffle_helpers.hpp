@@ -16,7 +16,7 @@ namespace eve::detail
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>
 EVE_FORCEINLINE auto
-is_na_or_we_mask(eve::pattern_t<I...>, eve::fixed<G>, eve::as<T> tgt)
+is_na_or_we_mask(eve::pattern_t<I...>, eve::fixed<G>, as<T> tgt)
 {
   if constexpr( G == 1 && logical_simd_value<T> ) return T {I >= 0 ...};
   else if constexpr( G == 1 )
@@ -34,9 +34,9 @@ is_na_or_we_mask(eve::pattern_t<I...>, eve::fixed<G>, eve::as<T> tgt)
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>
 EVE_FORCEINLINE auto
-is_na_or_we_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, eve::as<T> tgt)
+is_na_or_we_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, as<T> tgt)
 {
-  if constexpr (!logical_simd_value<T>) return is_na_or_we_mask(p, g, eve::as<logical<T>>{});
+  if constexpr (!logical_simd_value<T>) return is_na_or_we_mask(p, g, as<logical<T>>{});
   else return is_na_or_we_mask(p, g, tgt);
 }
 
@@ -105,9 +105,9 @@ shuffle_2_using_or(pattern_t<I...>, fixed<G> g, T x, T y)
 }
 
 template <simd_value T>
-constexpr auto mask_type(eve::as<T> tgt)
+constexpr auto mask_type(as<T> tgt)
 {
-  if constexpr ( logical_simd_value<T> ) return eve::as<decltype(T {}.mask())>{};
+  if constexpr ( logical_simd_value<T> ) return as<decltype(T{}.mask())>{};
   else return tgt;
 }
 

@@ -97,7 +97,7 @@ namespace eve
       else
       {
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return nan(eve::as<T>());
+          if( is_not_finite(a0) ) return nan(as<T>{});
         auto x = eve::abs(a0);
         if (eve::all(x <= T(45))) return cosd[quarter_circle](x);
         auto [fn, xr, dxr] = rem180(x);

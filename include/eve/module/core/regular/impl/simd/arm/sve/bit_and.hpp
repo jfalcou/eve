@@ -20,7 +20,7 @@ namespace eve::detail
   {
     // no svand_x for floating point types
     using i_t = wide<as_integer_t<T, signed>, N>;
-    constexpr auto tgt = as<i_t>();
-    return bit_cast(i_t(svand_x(sve_true<T>(), bit_cast(a, tgt), bit_cast(b, tgt))), as(a));
+    constexpr auto tgt = as<i_t>{};
+    return bit_cast(i_t(svand_x(sve_true<T>(), bit_cast(a, tgt), bit_cast(b, tgt))), as{a});
   }
 }

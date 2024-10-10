@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::inv_2pi(as<T>())` returns the inverse of \f$2\pi\f$.
+  //!      The call `eve::inv_2pi(as<T>{})` returns the inverse of \f$2\pi\f$.
   //!
   //!  @groupheader{Example}
   //!

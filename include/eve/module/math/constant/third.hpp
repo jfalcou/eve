@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::third(as<T>())` returns one third.
+  //!      The call `eve::third(as<T>{})` returns one third.
   //!
   //!  @groupheader{Example}
   //!

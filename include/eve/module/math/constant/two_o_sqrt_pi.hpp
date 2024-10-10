@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::two_o_sqrt_pi(as<T>())` returns  \f$2/\sqrt\pi\f$.
+  //!      The call `eve::two_o_sqrt_pi(as<T>{})` returns  \f$2/\sqrt\pi\f$.
   //!
   //!  @groupheader{Example}
   //!

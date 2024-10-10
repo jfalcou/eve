@@ -55,13 +55,13 @@ namespace eve::algo::views
   //!   @var convert
   //!   @brief Takes an iterator or a range and returns an adapter that has a provided value type.
   //!
-  //!  @code{.cpp} eve::algo::views::convert(it_or_r, eve::as<int>{}); @endcode
+  //!  @code{.cpp} eve::algo::views::convert(it_or_r, as<int>{}); @endcode
   //!
   //!  Behaviour for a specific iterator/range can be customized via tagged dispatch:
   //!
   //!  @code{.cpp}
   //!  template <typename T>
-  //!  EVE_FORCEINLINE friend auto tagged_dispatch(eve::algo::views::convert_, my_rng self, eve::as<T> tgt);
+  //!  EVE_FORCEINLINE friend auto tagged_dispatch(eve::algo::views::convert_, my_rng self, as<T> tgt);
   //!  @endcode
   //!
   //!    **Required header:** `#include <eve/module/algo/algo/views/convert.hpp>`
@@ -73,7 +73,7 @@ namespace eve::algo::views
 
   struct convert_ {
     template<typename Wrapped, typename T>
-    auto no_tagged_dispatch(Wrapped &&wrapped, eve::as<T> tgt) const
+    auto no_tagged_dispatch(Wrapped &&wrapped, as<T> tgt) const
     {
       if constexpr( relaxed_range<Wrapped> )
       {
@@ -94,7 +94,7 @@ namespace eve::algo::views
     }
 
     template <typename Wrapped, typename T>
-    auto operator()(Wrapped&& wrapped, eve::as<T> tgt) const
+    auto operator()(Wrapped&& wrapped, as<T> tgt) const
     {
       if constexpr (eve::detail::tag_dispatchable<convert_, decltype(EVE_FWD(wrapped)), as<T>>)
       {
@@ -114,8 +114,8 @@ namespace eve::algo::views
     using types_to_consider = kumi::result::cat_t<
       kumi::tuple<T>, types_to_consider_for_t<R>>;
 
-    EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
-    EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
+    EVE_FORCEINLINE auto begin() const { return convert(base.begin(), as<T>{}); }
+    EVE_FORCEINLINE auto end()   const { return convert(base.end(),   as<T>{}); }
 
     template<typename Traits>
     EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
@@ -207,13 +207,13 @@ namespace eve::algo::views
     EVE_FORCEINLINE auto previous_partially_aligned() const
       requires iterator<I>
     {
-      return convert(base.previous_partially_aligned(), eve::as<T>{});
+      return convert(base.previous_partially_aligned(), as<T>{});
     }
 
     EVE_FORCEINLINE auto next_partially_aligned() const
       requires iterator<I>
     {
-      return convert(base.next_partially_aligned(), eve::as<T>{});
+      return convert(base.next_partially_aligned(), as<T>{});
     }
 
     static auto iterator_cardinal() requires iterator<I>
@@ -223,7 +223,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
       requires iterator<I>
     {
-      return convert(base.cardinal_cast(N), eve::as<T>{});
+      return convert(base.cardinal_cast(N), as<T>{});
     }
 
     template<relative_conditional_expr C, decorator S>
@@ -231,16 +231,16 @@ namespace eve::algo::views
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
                                                 C c,
                                                 S s,
-                                                eve::as<wide_value_type_t<converting_iterator>>,
+                                                as<wide_value_type_t<converting_iterator>>,
                                                 converting_iterator self)
     {
       auto c1 = map_alternative(
         c,
-        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
+        [](auto alt) { return eve::convert(alt, as<value_type_t<I>>{}); }
       );
 
-      return eve::convert ( eve::load(c1, s, eve::as<wide_value_type_t<I>>{}, self.base)
-                          , eve::as<T>{}
+      return eve::convert ( eve::load(c1, s, as<wide_value_type_t<I>>{}, self.base)
+                          , as<T>{}
                           );
     }
 
@@ -251,10 +251,10 @@ namespace eve::algo::views
     {
       auto c1 = map_alternative(
         c,
-        [](auto alt) { return eve::convert(alt, eve::as<value_type_t<I>>{}); }
+        [](auto alt) { return eve::convert(alt, as<value_type_t<I>>{}); }
       );
 
-      auto v1 = eve::convert(v, eve::as<value_type_t<I>>{});
+      auto v1 = eve::convert(v, as<value_type_t<I>>{});
 
       return kumi::make_tuple(c1, v1, self.base);
     }

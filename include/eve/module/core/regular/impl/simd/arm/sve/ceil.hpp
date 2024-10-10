@@ -29,10 +29,10 @@ namespace eve::detail
                              wide<T, N> w) noexcept -> wide<T, N>
   requires sve_abi<abi_t<T, N>>
   {
-    auto alt = alternative(cond, w, as(w));
+    auto alt = alternative(cond, w, as{w});
 
     if      constexpr(C::is_complete && !C::is_inverted) return alt;
-    else if constexpr(!O::contains(almost  ))           return svrintp_m(alt, cond.mask(as(w)), w);
+    else if constexpr(!O::contains(almost  ))           return svrintp_m(alt, cond.mask(as{w}), w);
     else                                                 return ceil.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
   }
 }

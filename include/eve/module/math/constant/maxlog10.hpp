@@ -60,7 +60,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::maxlog10(as<T>())` returns the greatest positive value
+  //!      The call `eve::maxlog10(as<T>{})` returns the greatest positive value
   //!      for which eve::exp10 is finite.
   //!
   //!  @groupheader{Example}

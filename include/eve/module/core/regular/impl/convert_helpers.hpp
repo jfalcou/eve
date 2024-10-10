@@ -176,18 +176,18 @@ EVE_FORCEINLINE auto convert_integers_interleave(wide<T, N> v, as<U>)
       if constexpr( std::endian::native == std::endian::little )
       {
         if constexpr( std::is_signed_v<T> ) return eve::interleave(w, (w < 0).mask());
-        else return eve::interleave(w, zero(as(w)));
+        else return eve::interleave(w, zero(as{w}));
       }
       else
       {
         if constexpr( std::is_signed_v<T> ) return eve::interleave((w < 0).mask(), w);
-        else return eve::interleave(zero(as(w)), w);
+        else return eve::interleave(zero(as{w}), w);
       }
     };
 
     auto [l, h] = pieces(v);
-    eve::wide<U, N> that {eve::bit_cast(l, eve::as<eve::wide<U, typename N::split_type>> {}),
-                          eve::bit_cast(h, eve::as<eve::wide<U, typename N::split_type>> {})};
+    eve::wide<U, N> that {eve::bit_cast(l, as<eve::wide<U, typename N::split_type>> {}),
+                          eve::bit_cast(h, as<eve::wide<U, typename N::split_type>> {})};
     return that;
   }
 }

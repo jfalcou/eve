@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::three_o_4(as<T>())` returns  \f$3/4\f$.
+  //!      The call `eve::three_o_4(as<T>{})` returns  \f$3/4\f$.
   //!
   //!  @groupheader{Example}
   //!

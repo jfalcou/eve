@@ -76,7 +76,7 @@ namespace eve
 //!         This means that:
 //!            - if `tol` is a floating value then  \f$x > y + \mbox{tol}\cdot \max(|x|, |y|)\f$
 //!            - if `tol` is a positive integral value then \f$x > \mbox{next}(y, \mbox{tol})\f$;
-//!            - if `tol` is omitted then the tolerance `tol` default to `3*eps(as(x))`.
+//!            - if `tol` is omitted then the tolerance `tol` default to `3*eps(as{x})`.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/is_greater.cpp}
@@ -100,14 +100,14 @@ namespace eve
 
 namespace eve::detail
 {
-  template<value T, value U, callable_options O>
+  template<callable_options O, value T, value U>
   EVE_FORCEINLINE constexpr common_logical_t<T, U> is_greater_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
   {
     if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a > b);
     else                                              return a > b;
   }
 
-  template<value T, value U, callable_options O>
+  template<callable_options O, value T, value U>
   EVE_FORCEINLINE constexpr common_logical_t<T, U> is_greater_(EVE_REQUIRES(cpu_), O const& o, T const& aa, U const& bb) noexcept
   {
     if constexpr(O::contains(definitely))

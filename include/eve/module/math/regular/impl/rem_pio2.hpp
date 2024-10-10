@@ -43,9 +43,9 @@ rem_pio2_(EVE_SUPPORTS(cpu_), T const& a0) noexcept
 EVE_FORCEINLINE auto
 rem_pio2_(EVE_SUPPORTS(cpu_), double const& a0) noexcept
 {
-  if( a0 == inf(eve::as<double>()) )
+  if( a0 == inf(as<double>{}) )
     return kumi::make_tuple(
-        zero(eve::as<double>()), nan(eve::as<double>()), nan(eve::as<double>()));
+        zero(as<double>{}), nan(as<double>{}), nan(as<double>{}));
   double       y[2];
   std::int32_t n = __ieee754_rem_pio2(a0, y);
   return kumi::make_tuple(static_cast<double>(n & std::int32_t(3)), y[0], y[1]);
@@ -54,8 +54,8 @@ rem_pio2_(EVE_SUPPORTS(cpu_), double const& a0) noexcept
 EVE_FORCEINLINE auto
 rem_pio2_(EVE_SUPPORTS(cpu_), float const& a0) noexcept
 {
-  if( a0 == inf(eve::as<float>()) )
-    return kumi::make_tuple(zero(eve::as<float>()), nan(eve::as<float>()), nan(eve::as<float>()));
+  if( a0 == inf(as<float>{}) )
+    return kumi::make_tuple(zero(as<float>{}), nan(as<float>{}), nan(as<float>{}));
   // This is the musl way
   // pio2_1:   first 25 bits of pi/2
   // pio2_1t:  pi/2 - pio2_1
@@ -65,7 +65,7 @@ rem_pio2_(EVE_SUPPORTS(cpu_), float const& a0) noexcept
   if( abs(a0) < 4.2166e+08 )                               /* |x| ~< 2^28*(pi/2), medium size */
   {
     /* 25+53 bit pi is good enough for medium size */
-    double fn = nearest(double(a0) * two_o_pi(eve::as<double>()));
+    double fn = nearest(double(a0) * two_o_pi(as<double>{}));
     return kumi::make_tuple(static_cast<float>(quadrant(fn)),
                             static_cast<float>((a0 - fn * pio2_1) - fn * pio2_1t),
                             0.0f);

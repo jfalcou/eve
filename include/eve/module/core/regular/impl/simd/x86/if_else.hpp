@@ -60,7 +60,7 @@ requires x86_abi<abi_t<T,N>>
   }
   else
   {
-    auto msk = bit_cast(v0.bits(), as(v2));
+    auto msk = bit_cast(v0.bits(), as{v2});
 
     if      constexpr( c == category::float64x4 ) return _mm256_blendv_pd(v2, v1, msk);
     else if constexpr( c == category::float64x2 ) return _mm_blendv_pd(v2, v1, msk);
@@ -72,7 +72,7 @@ requires x86_abi<abi_t<T,N>>
       else if constexpr( current_api >= avx2 )
       {
         using a_t = wide<as_integer_t<T>, N>;
-        return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(), as<a_t>()));
+        return _mm256_blendv_epi8(v2, v1, bit_cast(v0.bits(), as<a_t>{}));
       }
       else
       {
@@ -80,7 +80,7 @@ requires x86_abi<abi_t<T,N>>
         else if constexpr( sizeof(T) >= 4 )
         {
           using f_t = wide<as_floating_point_t<T>, N>;
-          return bit_cast(if_else(v0, bit_cast(v1, as<f_t>()), bit_cast(v2, as<f_t>())), as(v2));
+          return bit_cast(if_else(v0, bit_cast(v1, as<f_t>{}), bit_cast(v2, as<f_t>{})), as{v2});
         }
       }
     }
@@ -98,6 +98,6 @@ requires x86_abi<abi_t<T,N>>
     auto r    = bit_select(v0.storage().value, v1.storage().value, v2.storage().value);
     return logical<wide<T,N>>(s_t {r});
   }
-  else return bit_cast(if_else(v0, v1.mask(), v2.mask()), as(v0));
+  else return bit_cast(if_else(v0, v1.mask(), v2.mask()), as{v0});
 }
 }

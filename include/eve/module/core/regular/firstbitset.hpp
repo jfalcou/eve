@@ -76,7 +76,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
-    firstbitset_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
+    firstbitset_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       return a0 & inc(~a0);
     }

@@ -19,6 +19,6 @@ any_(EVE_SUPPORTS(sve_), C const& cond, logical<wide<T,N>> v) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   if constexpr(C::is_complete && ! C::is_inverted)  return false;
-  else                                              return svptest_any(sve_true(cond, as(v)) , v);
+  else                                              return svptest_any(sve_true(cond, as{v}) , v);
 }
 }

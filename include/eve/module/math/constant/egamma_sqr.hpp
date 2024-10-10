@@ -71,7 +71,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::egamma_sqr(as<T>())` returns the square of the [Euler-Mascheroni constant](@ref
+  //!      The call `eve::egamma_sqr(as<T>{})` returns the square of the [Euler-Mascheroni constant](@ref
   //!      eve::egamma).
   //!
   //!  @groupheader{Example}

@@ -23,7 +23,7 @@ namespace eve::detail
                                    wide<T, N> w) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    auto const      src = alternative(mask, w, as(w));
+    auto const      src = alternative(mask, w, as{w});
     if constexpr( C::is_complete )
     {
       return src;
@@ -34,7 +34,7 @@ namespace eve::detail
     }
     else
     {
-      auto m   = expand_mask(mask, as(w));
+      auto m   = expand_mask(mask, as{w});
       return svsqrt_m(src, m, w);
     }
   }

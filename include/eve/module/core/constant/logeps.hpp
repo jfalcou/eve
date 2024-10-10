@@ -59,8 +59,8 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::logeps(as<T>())` is semantically equivalent
-  //!      to eve::log (eve::eps (eve::as<T>())).
+  //!      The call `eve::logeps(as<T>{})` is semantically equivalent
+  //!      to eve::log (eve::eps (as<T>{})).
   //!
   //!  @groupheader{Example}
   //!

@@ -35,7 +35,7 @@ namespace eve::detail
   else if constexpr( c_i == category::float64x2 && c_o == category::uint64x2  ) return vcvtq_u64_f64(v);
   else if constexpr( c_i == category::float64x2 && c_o == category::int32x2   ) return vmovn_s64(vcvtq_s64_f64(v));
   else if constexpr( c_i == category::float64x2 && c_o == category::uint32x2  ) return vmovn_u64(vcvtq_u64_f64(v));
-  else if constexpr( c_i == category::float64x2                               ) return convert(convert(v, as<std::int32_t>()), tgt);
+  else if constexpr( c_i == category::float64x2                               ) return convert(convert(v, as<std::int32_t>{}), tgt);
 }
 
 //================================================================================================

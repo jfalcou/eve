@@ -86,7 +86,7 @@ basic_shuffle_(EVE_SUPPORTS(sse2_),
     using i_t     = as_integer_t<wide<T, N>>;
 
     return that_t((st_t)_mm_shuffle_epi8(bit_cast(v, as<i_t> {}).storage(),
-                                         as_bytes<that_t>(q, as<bytes_t>())));
+                                         as_bytes<that_t>(q, as<bytes_t>{})));
   }
   else
   {
@@ -195,7 +195,7 @@ basic_shuffle_(EVE_SUPPORTS(avx_),
         if constexpr( match(c, category::int64x4, category::uint64x4) )
         {
           auto vc = bit_cast(v, as<as_floating_point_t<that_t>> {});
-          return bit_cast(basic_shuffle(vc, q), as(s));
+          return bit_cast(basic_shuffle(vc, q), as{s});
         }
         else if constexpr( match(c, category::int32x8, category::uint32x8) )
           s = _mm256_permutexvar_epi32(m, v);
@@ -255,13 +255,13 @@ basic_shuffle_(EVE_SUPPORTS(avx_),
               });
 
           auto const m = as_indexes<wide<T, N>>(fixed_pattern);
-          return bit_cast(process_zeros(f_t {_mm256_permutevar_pd(vv, m)}, q), as(v));
+          return bit_cast(process_zeros(f_t {_mm256_permutevar_pd(vv, m)}, q), as{v});
         }
         else if constexpr( sizeof(T) == 4 && is_x86_shuffle_compatible(q) )
         {
           auto const vv = bit_cast(v, as<f_t> {});
           auto const m  = as_indexes<wide<T, N>>(q);
-          return bit_cast(process_zeros(f_t {_mm256_permutevar_ps(vv, m)}, q), as(v));
+          return bit_cast(process_zeros(f_t {_mm256_permutevar_ps(vv, m)}, q), as{v});
         }
         else
         {

@@ -107,12 +107,12 @@ namespace eve
         auto an    = (x + y + z + 2 * p) / 5;
         auto a0    = an;
         auto delta = (p - x) * (p - y) * (p - z);
-        auto q     = pow_abs(eps(as<T>()) / 5, -T(1) / 8)
+        auto q     = pow_abs(eps(as<T>{}) / 5, -T(1) / 8)
           * (eve::max)((eve::max)(eve::abs(an - x), eve::abs(an - y)),
                        (eve::max)(eve::abs(an - z), eve::abs(an - p)));
 
-        T fmn(one(as(x))); // 4^-n
-        T rc_sum(zero(as(x)));
+        T fmn(one(as{x})); // 4^-n
+        T rc_sum(zero(as{x}));
 
         for( unsigned n = 0; n < 30; ++n )
         {
@@ -125,12 +125,12 @@ namespace eve
           en /= dn;
           auto test = (en < -0.5) && (en > -1.5);
           auto rc1p = [](auto y){
-            auto r       = zero(as(y));
-            auto notdone = true_(as(y)); //!= mone(as(y));
+            auto r       = zero(as{y});
+            auto notdone = true_(as{y}); //!= mone(as{y});
             if( eve::any(notdone) )
             {
               auto br_yltm1 = [](auto my) { return rsqrt(my) * ellint_rc(my, dec(my)); };
-              notdone       = next_interval(br_yltm1, notdone, y < mone(as(y)), r, -y);
+              notdone       = next_interval(br_yltm1, notdone, y < mone(as{y}), r, -y);
               if( eve::any(notdone) )
               {
                 auto br_ygt0 = [](auto y)
@@ -222,7 +222,7 @@ namespace eve
       }
       else
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_nltz(x) && is_nltz(y) && is_nltz(z) && is_nez(p) && is_nez(x + y)
           && is_nez(z + y) && is_nez(x + z);
         if( eve::any(notdone) )

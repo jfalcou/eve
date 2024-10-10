@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::rsqrt_pio_2(as<T>())` returns the inverse of  \f$\sqrt{\pi/2}\f$.
+  //!      The call `eve::rsqrt_pio_2(as<T>{})` returns the inverse of  \f$\sqrt{\pi/2}\f$.
   //!
   //!  @groupheader{Example}
   //!

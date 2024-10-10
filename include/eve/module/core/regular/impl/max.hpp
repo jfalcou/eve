@@ -22,7 +22,7 @@
 namespace eve::detail
 {
   template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr T max_(EVE_REQUIRES(cpu_), O const & o, T a0, T a1, Ts... as) noexcept
+  EVE_FORCEINLINE constexpr T max_(EVE_REQUIRES(cpu_), O const& o, T a0, T a1, Ts... as) noexcept
   {
     if constexpr(sizeof...(Ts) == 0) // 2 parameters
     {
@@ -96,7 +96,7 @@ namespace eve::detail
   //================================================================================================
   template<typename Callable, callable_options O>
   EVE_FORCEINLINE constexpr auto
-  max_(EVE_REQUIRES(cpu_), O const &, Callable const & f) noexcept
+  max_(EVE_REQUIRES(cpu_), O const&, Callable const & f) noexcept
   {
     if      constexpr( std::same_as<Callable, eve::callable_is_less_>    ) return eve::max;
     else if constexpr( std::same_as<Callable, eve::callable_is_greater_> ) return eve::min;

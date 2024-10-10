@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::invsqrt_2(as<T>())` returns the inverse of \f$\sqrt{2}\f$.
+  //!      The call `eve::invsqrt_2(as<T>{})` returns the inverse of \f$\sqrt{2}\f$.
   //!
   //!  @groupheader{Example}
   //!

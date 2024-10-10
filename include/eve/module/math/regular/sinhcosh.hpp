@@ -90,43 +90,43 @@ namespace eve
     template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE auto sinhcosh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      T    ovflimit = maxlog(as<T>());
+      T    ovflimit = maxlog(as<T>{});
       auto x        = eve::abs(a0);
 
       if constexpr( scalar_value<T> )
       {
-        if( x < T(0x1.0p-28) ) return eve::zip(a0, one(eve::as<T>()));
+        if( x < T(0x1.0p-28) ) return eve::zip(a0, one(as<T>{}));
         auto h = (a0 > T(0)) ? T(1) : T(-1);
         if( x >= ovflimit )
         {
-          auto w = exp(x * half(eve::as<T>()));
-          auto t = half(eve::as<T>()) * w;
+          auto w = exp(x * half(as<T>{}));
+          auto t = half(as<T>{}) * w;
           t *= w;
           return eve::zip(t * h, t);
         }
-        h *= half(eve::as<T>());
+        h *= half(as<T>{});
         auto t    = expm1(x);
         auto inct = inc(t);
         auto u    = t / inct;
         auto s    = h * (fnma(t, u, t) + t);
-        auto c    = (x > T(22.0f)) ? inct * half(eve::as<T>()) : average(inct, rec[pedantic](inct));
+        auto c    = (x > T(22.0f)) ? inct * half(as<T>{}) : average(inct, rec[pedantic](inct));
         return eve::zip(s, c);
       }
       else
       {
-        auto h    = if_else(is_positive(a0), one(eve::as<T>()), mone(eve::as<T>()));
+        auto h    = if_else(is_positive(a0), one(as<T>{}), mone(as<T>{}));
         auto t    = expm1(x);
         auto inct = inc(t);
         auto u    = t / inct;
         auto z    = fnma(t, u, t);
-        auto s    = half(eve::as<T>()) * h * (z + t);
+        auto s    = half(as<T>{}) * h * (z + t);
         auto invt = if_else(x > T(22.0f), eve::zero, rec[pedantic](inct));
         auto c    = average(inct, invt);
         auto test = x < ovflimit;
         if( eve::all(test) ) return eve::zip(s, c);
 
-        auto w = exp(x * half(eve::as<T>()));
-        t      = half(eve::as<T>()) * w;
+        auto w = exp(x * half(as<T>{}));
+        t      = half(as<T>{}) * w;
         t *= w;
 
         s = if_else(test, s, t * h);

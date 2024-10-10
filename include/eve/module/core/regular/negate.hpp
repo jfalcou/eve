@@ -78,7 +78,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    negate_(EVE_REQUIRES(cpu_), O const &, T const &a,  T const &b) noexcept
+    negate_(EVE_REQUIRES(cpu_), O const&, T const &a,  T const &b) noexcept
     {
       if constexpr( signed_value<T> )
         return a * sign(b);

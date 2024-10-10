@@ -39,7 +39,7 @@ EVE_FORCEINLINE auto
 load_(EVE_SUPPORTS(cpu_),
       C const& cond,
       safe_type const&,
-      eve::as<Pack> tgt,
+      as<Pack>      tgt,
       Ptr           ptr) noexcept requires simd_compatible_ptr<Ptr, Pack>
 {
   using e_t = typename pointer_traits<Pack>::value_type;
@@ -100,7 +100,7 @@ SPY_DISABLE_SANITIZERS Pack
 load_(EVE_SUPPORTS(cpu_),
       C const& cond,
       unsafe_type const&,
-      eve::as<Pack> const& tgt,
+      as<Pack>    tgt,
       Ptr                  ptr) noexcept requires(!has_bundle_abi_v<Pack>)
 {
   if constexpr( spy::supports::sanitizers_status )

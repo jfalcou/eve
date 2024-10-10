@@ -39,7 +39,7 @@ namespace eve::detail
     if constexpr (scalar_value<U>)
     {
            if constexpr (scalar_value<T>) return static_cast<T>(u_t(a) >> ptrdiff_t(b));
-      else if constexpr (simd_value<T>)   return bit_cast(bit_cast(a, as<u_t>()) >> ptrdiff_t(b), as(a));
+      else if constexpr (simd_value<T>)   return bit_cast(bit_cast(a, as<u_t>{}) >> ptrdiff_t(b), as{a});
     }
     else // U wide
     {
@@ -60,6 +60,6 @@ namespace eve::detail
   {
     using u_t = eve::as_integer_t<T, unsigned>;
     if constexpr (scalar_value<T>) return static_cast<T>(u_t(a) >> b);
-    else                           return bit_cast(bit_cast(a, as<u_t>()) >> b, as(a));
+    else                           return bit_cast(bit_cast(a, as<u_t>{}) >> b, as{a});
   }
 }

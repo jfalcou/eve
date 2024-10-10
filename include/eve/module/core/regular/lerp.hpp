@@ -83,7 +83,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    lerp_(EVE_REQUIRES(cpu_), O const & o, T const &a,  T const &b,  T const &t) noexcept
+    lerp_(EVE_REQUIRES(cpu_), O const& o, T const &a,  T const &b,  T const &t) noexcept
     {
       return fma[o](t, b, fnma[o](t, a, a));
     }

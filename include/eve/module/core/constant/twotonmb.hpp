@@ -59,8 +59,8 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!       The call `eve::twotonmb(as<T>())` is semantically equivalent to
-  //!      `eve::exp2 (T(eve::nbmantissabits (as<eve::element_type_t<T>>())))`
+  //!       The call `eve::twotonmb(as<T>{})` is semantically equivalent to
+  //!      `eve::exp2 (T(eve::nbmantissabits (as<eve::element_type_t<T>>{})))`
   //!
   //!  @groupheader{Example}
   //!

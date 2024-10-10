@@ -413,7 +413,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr ( c_i == category::int32x8  && match(c_o, category::int64x8, category::uint64x8) && a512  ) return _mm512_cvtepi32_epi64(v);
   else if constexpr ( c_i == category::uint32x8 && match(c_o, category::int64x8, category::uint64x8) && a512  ) return _mm512_cvtepu32_epi64(v);
   else if constexpr ( N {} <= 2  && std::is_signed_v<T>   && sizeof(U) == 8) return _mm_unpacklo_epi32(v, _mm_srai_epi32(v,31));
-  else if constexpr ( N {} <= 2  && std::is_unsigned_v<T> && sizeof(U) == 8) return _mm_unpacklo_epi32(v, zero(as(v)));
+  else if constexpr ( N {} <= 2  && std::is_unsigned_v<T> && sizeof(U) == 8) return _mm_unpacklo_epi32(v, zero(as{v}));
   else if constexpr ( N {} <= 4  && sizeof(U) == 2 && a512 ) return _mm_cvtepi32_epi16(v);
   else if constexpr ( N {} <= 2  && sizeof(U) == 2         ) return _mm_shufflelo_epi16(v, 8);
   else if constexpr ( N {} == 8  && sizeof(U) == 2 && a512 ) return _mm256_cvtepi32_epi16(v);
@@ -457,7 +457,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr( c_i == category::int16x8  && mo32x8 && aavx2 ) return _mm256_cvtepi16_epi32(v);
   else if constexpr( c_i == category::uint16x8 && mo32x8 && aavx2 ) return _mm256_cvtepu16_epi32(v);
   else if constexpr( c_i == category::int16x8  && mo32x4          ) return _mm_unpacklo_epi16(v, _mm_srai_epi16(v,15));
-  else if constexpr( c_i == category::uint16x8 && mo32x4          ) return _mm_unpacklo_epi16(v, zero(as(v)));
+  else if constexpr( c_i == category::uint16x8 && mo32x4          ) return _mm_unpacklo_epi16(v, zero(as{v}));
   else if constexpr( c_i == category::int16x8  && mo64x2 && a41   ) return _mm_cvtepi16_epi64(v);
   else if constexpr( c_i == category::uint16x8 && mo64x2 && a41   ) return _mm_cvtepu16_epi64(v);
   else if constexpr( c_i == category::int16x8  && mo64x4 && aavx2 ) return _mm256_cvtepi16_epi64(v);
@@ -527,7 +527,7 @@ EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sse2_), wide<T, N> v, as<U>
   else if constexpr ( c_i == category::uint8x16 && mo64x2 && a41   ) return _mm_cvtepu8_epi64(v);
   else if constexpr ( c_i == category::uint8x16 && mo64x4 && aavx2 ) return _mm256_cvtepu8_epi64(v);
   else if constexpr ( c_i == category::uint8x16 && mo64x8          ) return _mm512_cvtepu8_epi64(v);
-  else if constexpr ( c_i == category::uint8x16 && mo16x8          ) return _mm_unpacklo_epi8(v, zero(as(v)));
+  else if constexpr ( c_i == category::uint8x16 && mo16x8          ) return _mm_unpacklo_epi8(v, zero(as{v}));
   else if constexpr ( c_i == category::uint8x16 && mo32x4          ) return convert(convert(v, d_t {}), tgt);
   else if constexpr ( mi8x16 && mo64x2                             ) return convert(convert(v, d_t {}), tgt);
   else if constexpr ( mi8x16 && mo64x4                             ) return convert(convert(v, d_t {}), tgt);

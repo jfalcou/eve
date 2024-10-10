@@ -45,7 +45,7 @@ kernel_bessel_k_int_forward(I nn, T x, T k0, T k1) noexcept
       auto t0   = k < nn;
       T    fact = 2 * k / x;
       // rescale if we would overflow or underflow:
-      auto test = ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)) && t0;
+      auto test = ((valmax(as{x}) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)) && t0;
       if( eve::any(test) )
       {
         scale   = if_else(test, scale / current, scale);
@@ -89,25 +89,25 @@ kernel_bessel_k_int(I n, T x) noexcept
 
   if constexpr( scalar_value<T> )
   {
-    if( is_ngez(x) ) return nan(as(x));
-    if( is_eqz(x) ) return (n == 0) ? one(as(x)) : zero(as(x));
-    if( x == inf(as(x)) ) return inf(as(x));
+    if( is_ngez(x) ) return nan(as{x});
+    if( is_eqz(x) ) return (n == 0) ? one(as{x}) : zero(as{x});
+    if( x == inf(as{x}) ) return inf(as{x});
     if( n == 0 ) return k0;  // cyl_bessel_k0(x);
     if( n == 1 ) return k1;  // cyl_bessel_k1(x);
     return br_forward(n, x); // general
   }
   else
   {
-    auto r      = nan(as(x));
-    auto isinfx = x == inf(as(x));
-    r           = if_else(isinfx, inf(as(x)), allbits);
+    auto r      = nan(as{x});
+    auto isinfx = x == inf(as{x});
+    r           = if_else(isinfx, inf(as{x}), allbits);
     x           = if_else(isinfx, mone, x);
     auto iseqzx = is_eqz(x);
     auto iseqzn = is_eqz(n);
-    if( eve::any(iseqzx) ) { r = if_else(iseqzx, if_else(iseqzn, zero, one(as(x))), r); }
+    if( eve::any(iseqzx) ) { r = if_else(iseqzx, if_else(iseqzn, zero, one(as{x})), r); }
     if( eve::any(iseqzn) ) { r = if_else(iseqzn, cyl_bessel_k0(x), r); }
-    auto iseq1n = n == one(as(n));
-    if( eve::any(iseq1n) ) { r = if_else(n == one(as(n)), cyl_bessel_k1(x), r); }
+    auto iseq1n = n == one(as{n});
+    if( eve::any(iseq1n) ) { r = if_else(n == one(as{n}), cyl_bessel_k1(x), r); }
     auto notdone = is_gez(x) && !(iseqzn || iseq1n);
     x            = if_else(notdone, x, allbits);
     if( eve::any(notdone) ) return if_else(notdone, br_forward(n, x), r);
@@ -130,17 +130,17 @@ kernel_bessel_k_flt(T n, T x) noexcept
 
   if constexpr( scalar_value<T> )
   {
-    if( is_ngez(x) ) return nan(as(x));
-    if( x == inf(as(x)) ) return zero(as(x));
-    if( is_eqz(x) ) return zero(as(x));
+    if( is_ngez(x) ) return nan(as{x});
+    if( x == inf(as{x}) ) return zero(as{x});
+    if( is_eqz(x) ) return zero(as{x});
     return br_medium(n, x);
   }
   else
   {
     auto xlt0    = is_ltz(x);
-    auto r       = nan(as(x));
-    auto isinfx  = x == inf(as(x));
-    r            = if_else(isinfx, zero(as(x)), allbits);
+    auto r       = nan(as{x});
+    auto isinfx  = x == inf(as{x});
+    r            = if_else(isinfx, zero(as{x}), allbits);
     x            = if_else(isinfx || xlt0, allbits, x);
     auto notdone = is_not_nan(x);
     if( eve::any(notdone) ) return if_else(notdone, br_medium(n, x), r);

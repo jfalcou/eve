@@ -104,7 +104,7 @@ namespace eve
       if constexpr(O::contains(promote))
       {
         using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
-        constexpr auto tgt = as(eve::as<er_t>());
+        constexpr auto tgt = as{as<er_t>{}};
         return fma[o.drop(promote)](minus(convert(a, tgt)), convert(b, tgt), convert(c,tgt));
       }
       else

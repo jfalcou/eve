@@ -67,8 +67,8 @@ namespace eve::detail
       {
         // Slice bits via uint64 then go back
         using retarget_t = typename wide<T, N>::template rebind<std::uint64_t>;
-        return bit_cast ( slice( bit_cast(a, as<retarget_t>()),Slice{})
-                        , as<wide<T, typename N::split_type>>()
+        return bit_cast ( slice( bit_cast(a, as<retarget_t>{}),Slice{})
+                        , as<wide<T, typename N::split_type>>{}
                         );
       }
     }

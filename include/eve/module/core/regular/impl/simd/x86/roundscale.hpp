@@ -35,7 +35,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> roundscale_(EVE_REQUIRES(avx512_), C const& mask, O const& o, wide<T, N> w, eve::index_t<S>) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    auto const alt = alternative(mask, w, as(w));
+    auto const alt = alternative(mask, w, as{w});
 
     if constexpr( C::is_complete)  return alt;
     else if constexpr(S > 15)      return roundscale.behavior(as<wide<T, N>>{}, o, w, S);

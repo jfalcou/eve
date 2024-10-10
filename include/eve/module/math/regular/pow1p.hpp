@@ -108,7 +108,7 @@ namespace eve
          auto x =  r_t(a);
          auto y =  r_t(b);
          auto incx = inc(x);
-         return if_else(abs(x) > half(as(x)), pow[o](incx, y), exp(y*log1p(x)));
+         return if_else(abs(x) > half(as{x}), pow[o](incx, y), exp(y*log1p(x)));
        }
     }
   }

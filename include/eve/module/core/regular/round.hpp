@@ -89,7 +89,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    round_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
+    round_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
       if constexpr(integral_value<T>)
         return x;

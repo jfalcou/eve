@@ -59,7 +59,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    The call `eve::mhalf(as<T>())` is semantically equivalent to `T(-0.5)`.
+  //!    The call `eve::mhalf(as<T>{})` is semantically equivalent to `T(-0.5)`.
   //!
   //!  @groupheader{Example}
   //!

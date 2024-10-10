@@ -128,9 +128,9 @@ namespace eve
         using i_t              = as_integer_t<r_t, unsigned>;
         using eli_t            = element_type_t<i_t>;
         auto        iseqzx     = is_eqz(x);
-        auto        ylt0       = y < zero(as(y));
+        auto        ylt0       = y < zero(as{y});
         auto        ax         = eve::abs(x);
-        auto        ax_is1     = ax == eve::one(as(x));
+        auto        ax_is1     = ax == eve::one(as{x});
         eli_t const largelimit = (sizeof(eli_t) == 4 ? 31 : 63);
         auto [yf, yi]          = eve::modf(eve::abs(y));
         auto test              = yf > r_t(0.5);
@@ -152,9 +152,9 @@ namespace eve
           return result;
         };
         z *= russian(ax, convert(yi, uint_from<T>()));
-        z = if_else(large, if_else(ax < one(as(x)), zero, inf(as(x))), z);
+        z = if_else(large, if_else(ax < one(as{x}), zero, inf(as{x})), z);
         z = if_else(iseqzx && ylt0, zero, z);
-        z = if_else(is_infinite(ax), inf(as(x)), z);
+        z = if_else(is_infinite(ax), inf(as{x}), z);
         z = if_else(ylt0, rec[pedantic](z), z);
         z = if_else(ax_is1 || is_eqz(y), one, z);
         z = if_else(iseqzx && is_gtz(y), zero, z);

@@ -27,8 +27,8 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       constexpr auto shift = Shift * sizeof(T);
       using i_t            = as_integer_t<wide<T, N>, unsigned>;
 
-      auto const b = bit_cast(v, as<i_t>());
-      return bit_cast(i_t(_mm_bslli_si128(b, shift)), as(v));
+      auto const b = bit_cast(v, as<i_t>{});
+      return bit_cast(i_t(_mm_bslli_si128(b, shift)), as{v});
     }
     else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )
     {
@@ -40,12 +40,12 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
         i_t vi  = bit_cast(v, as<i_t> {});
         i_t bvi = _mm256_permute2x128_si256(vi, vi, 0x08);
 
-        if constexpr( offset == 16 ) { return bit_cast(bvi, as(v)); }
+        if constexpr( offset == 16 ) { return bit_cast(bvi, as{v}); }
         else if constexpr( offset < 16 )
         {
-          return bit_cast(i_t(_mm256_alignr_epi8(vi, bvi, 16 - offset)), as(v));
+          return bit_cast(i_t(_mm256_alignr_epi8(vi, bvi, 16 - offset)), as{v});
         }
-        else { return bit_cast(i_t(_mm256_bslli_epi128(bvi, offset - 16)), as(v)); }
+        else { return bit_cast(i_t(_mm256_bslli_epi128(bvi, offset - 16)), as{v}); }
       }
       else
       {
@@ -56,28 +56,28 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
 
         if constexpr( shifted_bytes == 4 * 7 )
         {
-          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, f_t(0), 0xef), 0x39)), as(v));
+          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, f_t(0), 0xef), 0x39)), as{v});
         }
         else if constexpr( shifted_bytes == 4 * 6 )
         {
-          return bit_cast(f_t(_mm256_shuffle_ps(f_t {0}, s0, 0x40)), as(v));
+          return bit_cast(f_t(_mm256_shuffle_ps(f_t {0}, s0, 0x40)), as{v});
         }
         else if constexpr( shifted_bytes == 4 * 5 )
         {
-          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, f_t(0), 0x8f), 0x93)), as(v));
+          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, f_t(0), 0x8f), 0x93)), as{v});
         }
-        else if constexpr( shifted_bytes == 4 * 4 ) { return bit_cast(f_t(s0), as(v)); }
+        else if constexpr( shifted_bytes == 4 * 4 ) { return bit_cast(f_t(s0), as{v}); }
         else if constexpr( shifted_bytes == 4 * 3 )
         {
-          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, w, 0x11), 0x39)), as(v));
+          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, w, 0x11), 0x39)), as{v});
         }
         else if constexpr( shifted_bytes == 4 * 2 )
         {
-          return bit_cast(f_t(_mm256_shuffle_ps(s0, w, 0x4e)), as(v));
+          return bit_cast(f_t(_mm256_shuffle_ps(s0, w, 0x4e)), as{v});
         }
         else if constexpr( shifted_bytes == 4 )
         {
-          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, w, 0x77), 0x93)), as(v));
+          return bit_cast(f_t(_mm256_permute_ps(_mm256_blend_ps(s0, w, 0x77), 0x93)), as{v});
         }
         else
         {
@@ -89,7 +89,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
 
             // permutes so we have [ <0 .. 0> 0 .. v0 ]
             auto g = bit_cast(h, as<f_t> {});
-            return bit_cast(_mm256_permute2f128_ps(g, g, 0x01), as(v));
+            return bit_cast(_mm256_permute2f128_ps(g, g, 0x01), as{v});
           }
           else
           {
@@ -105,7 +105,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
 
             // Slide lower parts using _mm_alignr_epi8
             byte_t bytes = _mm_alignr_epi8(bit_cast(h, tgt_t {}), bit_cast(l, tgt_t {}), sz);
-            return wide<T, N> {l0, bit_cast(bytes, as(l0))};
+            return wide<T, N> {l0, bit_cast(bytes, as{l0})};
           }
         }
       }
@@ -147,7 +147,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       res = _mm_or_si128(ab, cd);
     }
 
-    return bit_cast(res, as(x));
+    return bit_cast(res, as{x});
   }
   else if constexpr( std::same_as<abi_t<T, N>, x86_256_> )
   {
@@ -159,7 +159,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       i_t cd  = bit_cast(y, as<i_t> {});
       i_t res = _mm256_alignr_epi32(cd, ab, 8 - shifted_bytes / 4);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     else if constexpr( current_api >= avx2 )
     {
@@ -175,7 +175,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       else if constexpr( shifted_bytes < 16 ) res = _mm256_alignr_epi8(cd, bc, 16 - shifted_bytes);
       else res = _mm256_alignr_epi8(bc, ab, 32 - shifted_bytes);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     else if constexpr( shifted_bytes % 8 == 0 )
     {
@@ -190,7 +190,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       else if constexpr( shifted_bytes == 4 * 4 ) res = bc;
       else if constexpr( shifted_bytes == 4 * 6 ) res = _mm256_shuffle_pd(ab, bc, 0b0101);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     // I can't come up with a 4 byte implementation
     else if constexpr( shifted_bytes < 16 )
@@ -219,7 +219,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
     {
       i_t res = _mm512_alignr_epi32(cd, ab, 16 - shifted_bytes / 4);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     else if constexpr( shifted_bytes < 16 )
     {
@@ -227,7 +227,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       i_t rhs = cd;
       i_t res = _mm512_alignr_epi8(rhs, lhs, 16 - shifted_bytes);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     else if constexpr( shifted_bytes < 32 )
     {
@@ -235,7 +235,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       i_t rhs = _mm512_alignr_epi32(cd, ab, 12);
       i_t res = _mm512_alignr_epi8(rhs, lhs, 32 - shifted_bytes);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     else if constexpr( shifted_bytes < 48 )
     {
@@ -243,7 +243,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       i_t rhs = _mm512_alignr_epi32(cd, ab, 8);
       i_t res = _mm512_alignr_epi8(rhs, lhs, 48 - shifted_bytes);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
     else
     {
@@ -251,7 +251,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
       i_t rhs = _mm512_alignr_epi32(cd, ab, 4);
       i_t res = _mm512_alignr_epi8(rhs, lhs, 64 - shifted_bytes);
 
-      return bit_cast(res, as(x));
+      return bit_cast(res, as{x});
     }
   }
 }

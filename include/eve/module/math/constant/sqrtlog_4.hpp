@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sqrtlog_4(as<T>())` returns the square root of \f$\log4\f$.
+  //!      The call `eve::sqrtlog_4(as<T>{})` returns the square root of \f$\log4\f$.
   //!
   //!  @groupheader{Example}
   //!

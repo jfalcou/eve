@@ -93,7 +93,7 @@ namespace eve
     nthroot_(EVE_REQUIRES(cpu_), O const & o, T x, U n) noexcept
     {
       using elt_t = element_type_t<T>;
-      return nthroot[o](x,convert(n, as<elt_t>()));
+      return nthroot[o](x,convert(n, as<elt_t>{}));
     }
 
     template<floating_value  T, floating_value  U, callable_options O>
@@ -111,7 +111,7 @@ namespace eve
         else
         {
           return if_else(is_eqz(x),
-                         if_else(is_ltz(n), inf(as(x)), zero),
+                         if_else(is_ltz(n), inf(as{x}), zero),
                          if_else(islezx && !is_odd(n), allbits, r * sign(x)));
         }
       }

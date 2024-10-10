@@ -33,7 +33,7 @@ shuffle_l3_x86_pshuvb(P, fixed<G>, wide<T, N> x)
     else
     {
       using u8xN = wide<std::uint8_t, eve::fixed<P::reg_size>>;
-      return x86_pshuvb(idxm::to_pattern<*pshuvb_pattern>(), eve::bit_cast(x, eve::as<u8xN> {}));
+      return x86_pshuvb(idxm::to_pattern<*pshuvb_pattern>(), eve::bit_cast(x, as<u8xN> {}));
     }
   }
 }
@@ -47,7 +47,7 @@ shuffle_l3_x86_permutex(P p, fixed<G> g, wide<T, N> x)
   else if constexpr( P::g_size < 2 ) return no_matching_shuffle;
   else if constexpr( !P::has_zeroes )
   {
-    auto idxs = make_idx_mask<P::idxs>(as(x));
+    auto idxs = make_idx_mask<P::idxs>(as{x});
 
     if constexpr( P::g_size == 2 )
     {
@@ -68,8 +68,8 @@ shuffle_l3_x86_permutex(P p, fixed<G> g, wide<T, N> x)
   else if constexpr( current_api < avx512 ) return no_matching_shuffle;
   else
   {
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage().value;
-    auto idxs = make_idx_mask<P::idxs>(as(x));
+    auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage().value;
+    auto idxs = make_idx_mask<P::idxs>(as{x});
 
     if constexpr( P::g_size == 2 )
     {
@@ -132,7 +132,7 @@ shuffle_l3_x86_permutex2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
   if constexpr ( current_api < avx512 || P::g_size == 1) return no_matching_shuffle;
   else if constexpr (!P::has_zeroes)
   {
-    auto idxs = make_idx_mask<P::idxs>(as(x));
+    auto idxs = make_idx_mask<P::idxs>(as{x});
 
     if constexpr ( P::g_size == 2 )
     {
@@ -155,8 +155,8 @@ shuffle_l3_x86_permutex2(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
   }
   else
   {
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage().value;
-    auto idxs = make_idx_mask<P::idxs>(as(x));
+    auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage().value;
+    auto idxs = make_idx_mask<P::idxs>(as{x});
 
     if constexpr( P::g_size == 2 )
     {
