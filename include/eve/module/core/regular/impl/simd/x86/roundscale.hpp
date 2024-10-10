@@ -43,7 +43,7 @@ namespace eve::detail
     {
       auto          src = alternative(mask, w, as<wide<T, N>> {});
       auto          m   = expand_mask(mask, as<wide<T, N>> {}).storage().value;
-      constexpr int spv = ((S) << 4) + (eve::rounding_mode<O>(eve::to_nearest) & 3);
+      constexpr int spv = (S << 4) + (eve::rounding_mode<O>(eve::to_nearest) & 3);
 
       constexpr auto c = categorize<wide<T, N>>();
 

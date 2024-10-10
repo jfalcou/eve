@@ -39,7 +39,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N>  maxabs_(EVE_REQUIRES(avx512_), C const &cx, O const&opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE wide<T, N> maxabs_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic) || O::contains(saturated))
