@@ -229,8 +229,8 @@ namespace eve
               {
                 // from here a+x <= 0 ||  x <= 0
                 auto aneg       = is_ltz(a);
-                auto aflint     = is_flint[pedantic](a);
-                auto testnegint = aflint && is_flint[pedantic](a + x) && aneg && is_ltz(a + x);
+                auto aflint     = is_flint(a);
+                auto testnegint = aflint && is_flint(a + x) && aneg && is_ltz(a + x);
                 notdone         = next_interval(lrnegint, notdone, testnegint, r, a, x);
                 if( eve::any(notdone) )
                 {
