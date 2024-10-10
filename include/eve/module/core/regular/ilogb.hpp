@@ -10,15 +10,21 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
-#include <eve/module/core/regular/exponent.hpp>
+#include <eve/module/core/constant/mantissamask.hpp>
+#include <eve/module/core/constant/exponentmask.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/sub.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/is_normal.hpp>
 
 namespace eve
 {
 
   template<typename Options>
-  struct ilogb_t : elementwise_callable<ilogb_t, Options, raw_option>
+  struct ilogb_t : elementwise_callable<ilogb_t, Options>
   {
-    template<eve::value T>
+    template<eve::floating_value T>
     constexpr EVE_FORCEINLINE as_integer_t<T> operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
@@ -43,8 +49,7 @@ namespace eve
 //!   namespace eve
 //!   {
 //!      // Regular overload
-//!      template < floating_value T>
-//!      constexpr as_integer_t<T> ilogb(floating_value auto x)       noexcept;
+//!      template < floating_value T> constexpr as_integer_t<T> ilogb(T x)  noexcept;
 //!
 //!   @endcode
 //!
@@ -71,8 +76,10 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr auto  ilogb_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      auto x =  exponent[raw](a);
-      return if_else(is_eqz(a), valmin(as(x)), if_else(is_normal(a), x, valmax(as(x))));
+      auto z = bit_and(exponentmask(as<T>()), a);
+      auto x = (z >> nbmantissabits(eve::as<T>()));
+      x = sub(x, maxexponent(eve::as<T>()));
+      return if_else(is_eqz(a)||is_not_finite(a), valmin(as(x)), x);
     }
   }
 }
@@ -80,7 +87,3 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/ilogb.hpp>
 #endif
-
-// #if defined(EVE_INCLUDE_SVE_HEADER)
-// #  include <eve/module/core/regular/impl/simd/arm/sve/ilogb.hpp>
-// #endif

@@ -50,26 +50,22 @@ namespace eve::detail
                                  wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    auto const            s = alternative(mask, v, as(v));
+    auto const            src = alternative(mask, v, as(v));
     [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
     constexpr auto        c = categorize<wide<T, N>>();
 
-    if constexpr( C::is_complete ) return s;
+    if constexpr( C::is_complete ) return src;
     else if  constexpr(O::contains(raw))
     {
       using r_t        = wide<T, N>;
 
-      auto compute = [](auto v, auto cx){
-        auto src = alternative(cx, v, as<wide<T, N>> {});
-        auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
-        if      constexpr( c == category::float32x16) return convert(r_t(_mm512_mask_getexp_ps(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x8 ) return convert(r_t(_mm512_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
-      };
+      if      constexpr( c == category::float32x16) return convert(r_t(_mm512_mask_getexp_ps(src, m, v)), int_from<T>());
+      else if constexpr( c == category::float64x8 ) return convert(r_t(_mm512_mask_getexp_pd(src, m, v)), int_from<T>());
+      else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_mask_getexp_pd(src, m, v)), int_from<T>());
+      else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
+      else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
+      else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
+      else                                          return exponent.behavior(cpu_{}, o, v);
     }
     else return exponent.behavior(cpu_{}, o, v);
   }
