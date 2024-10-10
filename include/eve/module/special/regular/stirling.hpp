@@ -100,38 +100,38 @@ namespace eve
           ;
         }
       };
-      const T Stirlingsplitlim = ieee_constant<0x1.ac51ec0p+4f, 0x1.1e083ba3443d4p+7>(eve::as<T>{});
-      const T Stirlinglargelim = ieee_constant<0x1.1851e60p+5f, 0x1.5800000000000p+7>(eve::as<T>{});
-      const T Sqrt_2pi = ieee_constant<0x1.40d9320p+1f, 0x1.40d931ff62704p+1>(eve::as<T>{});
+      const T Stirlingsplitlim = ieee_constant<0x1.ac51ec0p+4f, 0x1.1e083ba3443d4p+7>(as<T>{});
+      const T Stirlinglargelim = ieee_constant<0x1.1851e60p+5f, 0x1.5800000000000p+7>(as<T>{});
+      const T Sqrt_2pi = ieee_constant<0x1.40d9320p+1f, 0x1.40d931ff62704p+1>(as<T>{});
       if constexpr( simd_value<T> )
       {
         a0        = if_else(is_gez(a0), a0, eve::allbits);
         T w       = rec[pedantic](a0);
-        w         = fma(w, stirling1(w), one(eve::as<T>()));
+        w         = fma(w, stirling1(w), one(as<T>{}));
         T    y    = exp(-a0);
         auto test = is_less(a0, Stirlingsplitlim);
-        T    z    = a0 - half(eve::as<T>());
-        z         = if_else(test, z, half(eve::as<T>()) * z);
+        T    z    = a0 - half(as<T>{});
+        z         = if_else(test, z, half(as<T>{}) * z);
         T v       = pow_abs(a0, z);
         y *= v;
         y = if_else(test, y, y * v); /* Avoid overflow in pow() */
         y *= Sqrt_2pi * w;
-        y = if_else(a0 == inf(eve::as<T>()), a0, y);
-        return if_else(a0 > Stirlinglargelim, inf(eve::as<T>()), y);
+        y = if_else(a0 == inf(as<T>{}), a0, y);
+        return if_else(a0 > Stirlinglargelim, inf(as<T>{}), y);
       }
       else if constexpr( scalar_value<T> )
       {
-        if( is_ltz(a0) ) return nan(eve::as<T>());
+        if( is_ltz(a0) ) return nan(as<T>{});
         if( is_nan(a0) ) return a0;
-        if( a0 > Stirlinglargelim ) return inf(eve::as<T>());
+        if( a0 > Stirlinglargelim ) return inf(as<T>{});
         T w = rec[pedantic](a0);
-        w   = fma(w, stirling1(w), one(eve::as<T>()));
+        w   = fma(w, stirling1(w), one(as<T>{}));
         T y = exp(-a0);
-        if( is_eqz(y) ) return inf(eve::as<T>());
-        T z = a0 - half(eve::as<T>());
+        if( is_eqz(y) ) return inf(as<T>{});
+        T z = a0 - half(as<T>{});
         if( a0 >= Stirlingsplitlim )
         { /* Avoid overflow in pow() */
-          const T v = pow_abs(a0, z * half(eve::as<T>()));
+          const T v = pow_abs(a0, z * half(as<T>{}));
           y *= v;
           y *= v;
         }

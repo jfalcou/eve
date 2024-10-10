@@ -81,7 +81,7 @@ namespace eve
   //!         - with an integral value `tol`: computes the ceil of the previous nth
   //!           representable value in the `x` type.
   //!         - with a floating  value `tol`: computes the ceil with a tolerance `tol`.
-  //!     4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as(x))(x)`
+  //!     4. with no tolerance value, the call is equivalent to `ceil[tolerance = 3*eps(as{x})(x)`
   //!     5. Faster for floating inputs, but only correct if as an integer, the truncation  that can be
   //!        exactly represented in the associated integral type.
   //!

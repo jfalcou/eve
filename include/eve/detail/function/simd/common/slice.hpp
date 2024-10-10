@@ -71,7 +71,7 @@ namespace eve::detail
       using s_t   = typename l_t::storage_type;
       using t_t   = std::array<l_t, 2>;
       auto [l, h] = a.mask().slice();
-      return t_t{ l_t{ bit_cast(l.storage(), as<s_t>()) }, l_t{ bit_cast(h.storage(), as<s_t>()) } };
+      return t_t{ l_t{ bit_cast(l.storage(), as<s_t>{}) }, l_t{ bit_cast(h.storage(), as<s_t>{}) } };
     }
     else if constexpr (non_native_abi<abi_t<T, N>>)
     {
@@ -86,7 +86,7 @@ namespace eve::detail
     {
       using l_t = logical<wide<T, typename N::split_type>>;
       using s_t = typename l_t::storage_type;
-      return l_t{ bit_cast(a.mask().slice(s).storage(), as<s_t>()) };
+      return l_t{ bit_cast(a.mask().slice(s).storage(), as<s_t>{}) };
     }
     else if constexpr (non_native_abi<abi_t<T, N>>)
     {

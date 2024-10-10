@@ -22,7 +22,7 @@ namespace eve::detail
   template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr >
   EVE_FORCEINLINE wide<T,N> load_ ( EVE_SUPPORTS(cpu_)
                                   , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const &, Ptr p
+                                  , as<wide<T, N>>, Ptr p
                                   )
   requires dereference_as<T, Ptr>::value && x86_abi<abi_t<T, N>>
   {
@@ -93,7 +93,7 @@ namespace eve::detail
   template<typename T, typename N, typename Ptr>
   EVE_FORCEINLINE logical<wide<T, N>> load_ ( EVE_SUPPORTS(cpu_)
                                             , ignore_none_ const&, safe_type const&
-                                            , eve::as<logical<wide<T, N>>> const& tgt
+                                            , as<logical<wide<T, N>>> tgt
                                             , Ptr p
                                             )
 
@@ -101,7 +101,7 @@ namespace eve::detail
   {
     auto block = [&]() -> wide<T, N>
     {
-      using wtg = eve::as<wide<T, N>>;
+      using wtg = as<wide<T, N>>;
       return load(ignore_none, safe, wtg{}, ptr_cast<T const>(p));
     }();
 
@@ -112,14 +112,14 @@ namespace eve::detail
   template<typename Iterator, typename T, typename N>
   EVE_FORCEINLINE logical<wide<T, N>> load_ ( EVE_SUPPORTS(cpu_)
                                             , ignore_none_ const&, safe_type const&
-                                            , eve::as<logical<wide<T, N>>> const &
+                                            , as<logical<wide<T, N>>>
                                             , Iterator b, Iterator e
                                             ) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     auto block = [&]() -> wide<T, N>
     {
-      using tgt = eve::as<wide<T, N>>;
+      using tgt = as<wide<T, N>>;
       return load(ignore_none, safe, tgt(), b, e);
     }();
 

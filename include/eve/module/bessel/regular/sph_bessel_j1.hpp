@@ -83,7 +83,7 @@ namespace eve
     EVE_FORCEINLINE constexpr T sph_bessel_j1_(EVE_REQUIRES(cpu_), O const&, T x)
     {
       auto rx = rec(x);
-      return if_else(eve::abs(x) < eve::eps(eve::as(x)) || is_infinite(x)
+      return if_else(eve::abs(x) < eve::eps(eve::as{x}) || is_infinite(x)
                     , eve::zero
                     , (sinc(x)-cos(x))*rx
                     );

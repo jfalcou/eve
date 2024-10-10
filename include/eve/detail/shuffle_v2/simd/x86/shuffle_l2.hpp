@@ -90,7 +90,7 @@ shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
     else if constexpr( current_api == avx )
     {
       // Only do this on avx because _mm256_shuffle_epi32 has better throughput
-      return _mm256_permute_ps(eve::bit_cast(x, eve::as<eve::wide<float>> {}), m);
+      return _mm256_permute_ps(eve::bit_cast(x, as<eve::wide<float>> {}), m);
     }
     else if constexpr( P::reg_size == 32 ) return _mm256_shuffle_epi32(x, m);
     else return _mm512_shuffle_epi32(x, m);
@@ -99,7 +99,7 @@ shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
   else
   {
     constexpr int m    = idxm::x86_mm_shuffle_4(*P::repeated_16);
-    auto          mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+    auto          mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
 
     if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_epi32(mask, x, m);
     else if constexpr( P::reg_size == 32 ) return _mm256_maskz_shuffle_epi32(mask, x, m);
@@ -193,7 +193,7 @@ shuffle_l2_x86_repeated_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
   {
     constexpr int mm = idxm::x86_shuffle_4_in_lane(*P::repeated_32);
 
-    auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
+    auto x_f64 = bit_cast(x, as<eve::wide<double, N>> {});
 
     if constexpr( !P::has_zeroes )
     {
@@ -202,7 +202,7 @@ shuffle_l2_x86_repeated_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
     }
     else
     {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+      auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
       if constexpr( P::reg_size == 32 ) return _mm256_maskz_permute_pd(mask, x_f64, mm);
       else return _mm256_maskz_permute_pd(mask, x_f64, mm);
     }
@@ -218,7 +218,7 @@ shuffle_l2_x86_repeated_256_permute4x64(P p, fixed<G> g, wide<T, N> x)
     }
     else
     {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+      auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
 
       if constexpr( P::reg_size == 32 ) return _mm256_maskz_permutex_epi64(mask, x, mm);
       else return _mm512_maskz_permutex_epi64(mask, x, mm);
@@ -260,7 +260,7 @@ shuffle_l2_x86_u64x2(P p, fixed<G> g, wide<T, N> x)
     if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, x, mm);
     else
     {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+      auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
       return _mm512_maskz_shuffle_i64x2(mask, x, x, mm);
     }
   }
@@ -298,7 +298,7 @@ shuffle_l2_alignr_epi32_self(P p, fixed<G> g, wide<T, N> x)
     constexpr std::ptrdiff_t shift_epi32 = (N() - *rotation) * P::g_size / 4;
     constexpr std::ptrdiff_t shift_epi64 = (N() - *rotation) * P::g_size / 8;
 
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+    auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
 
     if constexpr( P::reg_size == 16 )
     {
@@ -365,16 +365,16 @@ shuffle_l2_x86_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 
     if constexpr( eve::current_api >= eve::sse4_1 && P::g_size >= 8 )
     {
-      auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
-      auto y_f64 = bit_cast(y, eve::as<eve::wide<double, N>> {});
+      auto x_f64 = bit_cast(x, as<eve::wide<double, N>> {});
+      auto y_f64 = bit_cast(y, as<eve::wide<double, N>> {});
 
       if constexpr( P::reg_size == 16 ) return _mm_blend_pd(x_f64, y_f64, m);
       else return _mm256_blend_pd(x_f64, y_f64, m);
     }
     else if constexpr( eve::current_api >= eve::sse4_1 && P::g_size >= 4 )
     {
-      auto x_f32 = bit_cast(x, eve::as<eve::wide<float, N>> {});
-      auto y_f32 = bit_cast(y, eve::as<eve::wide<float, N>> {});
+      auto x_f32 = bit_cast(x, as<eve::wide<float, N>> {});
+      auto y_f32 = bit_cast(y, as<eve::wide<float, N>> {});
 
       if constexpr( P::reg_size == 16 ) return _mm_blend_ps(x_f32, y_f32, m);
       else return _mm256_blend_ps(x_f32, y_f32, m);
@@ -440,8 +440,8 @@ shuffle_l2_x86_within_128x2_shuffle_ps(P p, fixed<G> g, wide<T, N> x, wide<T, N>
   else
   {
     using floats_t = eve::wide<float, eve::fixed<N::value * sizeof(T) / sizeof(float)>>;
-    auto x_f32     = bit_cast(x, eve::as<floats_t> {});
-    auto y_f32     = bit_cast(y, eve::as<floats_t> {});
+    auto x_f32     = bit_cast(x, as<floats_t> {});
+    auto y_f32     = bit_cast(y, as<floats_t> {});
 
     constexpr int mm = *opt_mm;
     if constexpr( !P::has_zeroes )
@@ -452,7 +452,7 @@ shuffle_l2_x86_within_128x2_shuffle_ps(P p, fixed<G> g, wide<T, N> x, wide<T, N>
     }
     else
     {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+      auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
 
       if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
       else if constexpr( P::reg_size == 32 ) return _mm256_maskz_shuffle_ps(mask, x_f32, y_f32, mm);
@@ -506,7 +506,7 @@ shuffle_l2_x86_shuffle_i32x4(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
     if constexpr( !P::has_zeroes ) return _mm512_shuffle_i64x2(x, y, mm);
     else
     {
-      auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+      auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
       if constexpr( sizeof(T) >= 8 ) return _mm512_maskz_shuffle_i64x2(mask, x, y, mm);
       else return _mm512_maskz_shuffle_i64x2(mask, x, y, mm);
     }
@@ -562,7 +562,7 @@ shuffle_l2_x86_alignr_epi32(P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
     constexpr std::ptrdiff_t shift_epi32 = *starts_from * P::g_size / 4;
     constexpr std::ptrdiff_t shift_epi64 = *starts_from * P::g_size / 8;
 
-    auto mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
+    auto mask = is_na_or_we_logical_mask(p, g, as{x}).storage();
 
     if constexpr( P::reg_size == 16 )
     {

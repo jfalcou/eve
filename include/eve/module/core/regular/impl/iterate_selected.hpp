@@ -63,7 +63,7 @@ iterate_selected_(EVE_REQUIRES(cpu_), O const& opts, L l, F&& f)
   auto ignore = opts[condition_key];
   if constexpr( std::same_as<L, bool> )
   {
-    if( l && ignore.count(eve::as<eve::wide<int, eve::fixed<1>>> {}) )
+    if( l && ignore.count(as<eve::wide<int, eve::fixed<1>>> {}) )
     {
       return f(std::ptrdiff_t {0});
     }

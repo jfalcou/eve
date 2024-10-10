@@ -62,7 +62,7 @@ namespace eve
 struct reverse_in_subgroups_t
 {
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t SubG>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>, eve::fixed<SubG>)
+  static constexpr auto pattern(as<T>, eve::fixed<G>, eve::fixed<SubG>)
   {
     static_assert(SubG <= T::size() / G);
     static_assert(SubG >= 1);
@@ -77,7 +77,7 @@ struct reverse_in_subgroups_t
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t SubG>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::fixed<SubG> sub_g)
+  static constexpr std::ptrdiff_t level(as<T> tgt, eve::fixed<G> g, eve::fixed<SubG> sub_g)
   {
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
     const std::size_t    sub_size = g_size * SubG;
@@ -89,7 +89,7 @@ struct reverse_in_subgroups_t
     else if constexpr( eve::has_aggregated_abi_v<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
-      using half_t = decltype(T {}.slice(lower_));
+      using half_t = decltype(T{}.slice(lower_));
       return level(as<half_t> {}, g, sub_g);
     }
 

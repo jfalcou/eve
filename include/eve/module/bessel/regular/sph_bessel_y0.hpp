@@ -84,7 +84,7 @@ namespace eve
     template<callable_options O, typename T>
     constexpr T sph_bessel_y0_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
-      return if_else(x == inf(as(x)), zero, -cos(x) / x);
+      return if_else(x == inf(as{x}), zero, -cos(x) / x);
     }
   }
 }

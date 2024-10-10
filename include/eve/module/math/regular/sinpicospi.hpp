@@ -92,24 +92,24 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle))
       {
-        return sincos[eve::quarter_circle](a0 * pi(eve::as<T>()));
+        return sincos[eve::quarter_circle](a0 * pi(as<T>{}));
       }
       else
       {
         if constexpr( scalar_value<T> )
         {
-          if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
+          if( is_not_finite(a0) ) return eve::zip(nan(as<T>{}), nan(as<T>{}));
         }
         T x = abs(a0);
         if( eve::all(x <= T(0.25)) )  return sinpicospi[quarter_circle](a0);
         if constexpr( scalar_value<T> )
         {
-          if( x > maxflint(eve::as<T>()) ) return eve::zip(T(0), T(1));
+          if( x > maxflint(as<T>{}) ) return eve::zip(T(0), T(1));
         }
         else
         {
           auto invalid = is_not_finite(x);
-          x            = if_else(x > maxflint(eve::as(x)), eve::zero, x);
+          x            = if_else(x > maxflint(eve::as{x}), eve::zero, x);
           x            = if_else(invalid, eve::allbits, x);
         }
         auto [fn, xr, dxr] = rem2(x);

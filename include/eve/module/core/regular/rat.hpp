@@ -101,10 +101,10 @@ namespace detail
     {
       if( is_infinite(x) || is_eqz(x) ) return zip(sign(x), T{0});
       auto n     = nearest(x);
-      auto d     = one(as(x));
+      auto d     = one(as{x});
       auto frac  = x - n;
-      auto lastn = one(as(x));
-      auto lastd = zero(as(x));
+      auto lastn = one(as{x});
+      auto lastd = zero(as{x});
 
       while( abs(x - n / d) >= tol )
       {
@@ -127,10 +127,10 @@ namespace detail
       auto is_inf = is_infinite(x);
       auto y      = if_else(is_inf, zero, x);
       auto n      = nearest(y);
-      auto d      = one(as(y));
+      auto d      = one(as{y});
       auto frac   = y - n;
-      auto lastn  = one(as(y));
-      auto lastd  = zero(as(y));
+      auto lastn  = one(as{y});
+      auto lastd  = zero(as{y});
 
       while( true )
       {

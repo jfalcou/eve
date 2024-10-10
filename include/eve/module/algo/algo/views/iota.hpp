@@ -95,7 +95,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE T read() const noexcept { return base + T(i) * step; }
 
     template <typename U>
-    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, iota_with_step_iterator self, eve::as<U> tgt)
+    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, iota_with_step_iterator self, as<U> tgt)
     {
       return iota_with_step_iterator<U, N>{
         eve::convert(self.base, tgt),
@@ -108,7 +108,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE friend wv_type tagged_dispatch(eve::tag::load_,
                                                    C const & c,
                                                    S const &,
-                                                   eve::as<wv_type> const &,
+                                                   as<wv_type>,
                                                    iota_with_step_iterator self)
     {
       if constexpr ( !C::has_alternative ) return self.wide_cur;

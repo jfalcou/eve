@@ -91,7 +91,7 @@ namespace eve
         T c  = Cl * a;
         return fma[test](a, Ch, c);
       }
-      else { return convert(div_180(convert(a, as<double>())), as<float>()); }
+      else { return convert(div_180(convert(a, as<double>{})), as<float>{}); }
     }
   }
 }

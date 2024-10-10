@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    auto const alt = alternative(mask, a, as(a));
+    auto const alt = alternative(mask, a, as{a});
 
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;

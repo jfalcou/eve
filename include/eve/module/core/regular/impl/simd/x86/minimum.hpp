@@ -49,7 +49,7 @@ requires(sizeof(T) <= 2) EVE_FORCEINLINE
     else if constexpr( c == category::int16x8 )
     {
       auto       usv = eve::bit_cast(v, as<wide<std::uint16_t, N>> {});
-      auto const sm  = signmask(as<T>());
+      auto const sm  = signmask(as<T>{});
       usv += sm;
       return static_cast<T>(minimum(usv) - sm);
     }

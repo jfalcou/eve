@@ -28,18 +28,18 @@ namespace eve::detail
     if constexpr(O::contains(saturated))
     {
       if constexpr( signed_integral_scalar_value<T>  ){
-        if(v == valmin(eve::as(v))) return valmax(eve::as(v));
+        if(v == valmin(eve::as{v})) return valmax(eve::as{v});
         else                        return eve::abs(v);
       }
       else if constexpr( signed_integral_simd_value<T>    )
-        return eve::abs[if_( v != valmin(eve::as(v))).else_(valmax(eve::as(v)))](v);
+        return eve::abs[if_( v != valmin(eve::as{v})).else_(valmax(eve::as{v}))](v);
       else
         return eve::abs(v);
     }
     else
     {
       using u_t = as_integer_t<T, unsigned>; //to avoid any ub
-      if      constexpr( floating_value<T> )                return bit_andnot(v, mzero(eve::as(v)));
+      if      constexpr( floating_value<T> )                return bit_andnot(v, mzero(eve::as{v}));
       else if constexpr( unsigned_value<T> )                return v;
       else if constexpr( signed_integral_scalar_value<T> )  return v < T(0) ?  T(-u_t(v)) : v;
       else                                                  return eve::max(v, T(-u_t(v)));

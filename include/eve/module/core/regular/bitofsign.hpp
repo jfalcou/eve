@@ -20,7 +20,7 @@ namespace eve
   template<typename Options>
   struct bitofsign_t : elementwise_callable<bitofsign_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
     {
       return this->behavior(as<T>{}, eve::current_api, this->options(), v);
@@ -71,8 +71,8 @@ namespace eve
 //!
 //!      * In particular,  take care that for  [floating real values](@ref eve::value) bitofsign
 //!        does NOT return a [logical value](@ref eve::value) that can be tested, but
-//!        `mzero(as(x))` if `x` is
-//!        negative and  `zero(as(x))` if `x` is positive, which both satisfy the eve::is_eqz
+//!        `mzero(as{x})` if `x` is
+//!        negative and  `zero(as{x})` if `x` is positive, which both satisfy the eve::is_eqz
 //!        predicate.
 //!
 //!      * If you want to test if the bit of sign is set `is_negative` is the right function to
@@ -91,7 +91,7 @@ namespace eve
     template<value T, callable_options O>
     constexpr T  bitofsign_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      return bit_and(a, signmask(eve::as(a)));
+      return bit_and(a, signmask(eve::as{a}));
     }
   }
 }

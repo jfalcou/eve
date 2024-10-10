@@ -104,13 +104,13 @@ namespace eve
     template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T ellint_d_(EVE_REQUIRES(cpu_), O const&, T k) noexcept
     {
-      auto r       = nan(as(k));
+      auto r       = nan(as{k});
       auto t       = sqr(k);
-      auto notdone = t < one(as(t));
-      auto x(zero(as(k)));
+      auto notdone = t < one(as{t});
+      auto x(zero(as{k}));
       auto y = oneminus(t);
-      auto z(one(as(k)));
-      return if_else(notdone, if_else(t < eps(as(k)), pio_4(as(k)), ellint_rd(x, y, z) / 3), r);
+      auto z(one(as{k}));
+      return if_else(notdone, if_else(t < eps(as{k}), pio_4(as{k}), ellint_rd(x, y, z) / 3), r);
     }
 
     template<callable_options O, typename T, typename U>
@@ -120,22 +120,23 @@ namespace eve
       r_t k = r_t(kk);
       r_t phi0 = r_t(phi00);
       auto aphi    = eve::abs(phi0);
-      auto r       = nan(as(aphi));
+      auto r       = nan(as{aphi});
       auto notdone = is_finite(aphi);
-      r            = if_else(notdone, r, inf(as(phi0)));
+      r            = if_else(notdone, r, inf(as{phi0}));
       if( eve::any(notdone) )
       {
-        auto br_philarge = [aphi](auto k_) // aphi*eps(as(aphi)) > one(as(aphi))
+        auto br_philarge = [aphi](auto k_) // aphi*eps(as{aphi}) > one(as{aphi})
           { return aphi * ellint_d(k_) / pio_2(as(aphi)); };
+
         notdone = next_interval(br_philarge, notdone, aphi * eps(as(aphi)) > one(as(aphi)), r, k);
         if( eve::any(notdone) )
         {
-          auto rphi         = rem(aphi, pio_2(as(aphi)));
-          auto m            = nearest((aphi - rphi) / pio_2(as(aphi)));
+          auto rphi         = rem(aphi, pio_2(as{aphi}));
+          auto m            = nearest((aphi - rphi) / pio_2(as{aphi}));
           auto oddm         = is_odd(m);
           m                 = inc[oddm](m);
-          T s               = if_else(oddm, mone, one(as(k)));
-          rphi              = if_else(oddm, pio_2(as(phi0)) - rphi, rphi);
+          T s               = if_else(oddm, mone, one(as{k}));
+          rphi              = if_else(oddm, pio_2(as{phi0}) - rphi, rphi);
           auto [sinp, cosp] = sincos(rphi);
           T    c            = rec[pedantic](sqr(sinp));
           T    cm1          = sqr(cosp) * c; // c - 1
@@ -148,7 +149,7 @@ namespace eve
           };
           notdone = last_interval(br_reg, notdone, r, k);
 
-          r = if_else(k2 * sinp * sinp > one(as(phi0)), allbits, r);
+          r = if_else(k2 * sinp * sinp > one(as{phi0}), allbits, r);
           r = if_else(is_eqz(phi0), zero, r);
         }
       }

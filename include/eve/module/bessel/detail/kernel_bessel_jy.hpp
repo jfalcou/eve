@@ -21,29 +21,29 @@ requires(scalar_value<T>)
 {
   T nu(n);
   T jnu, jpnu, nnu, npnu;
-  if( x == inf(as(x)) ) return kumi::make_tuple(T(0), nan(as(x)), T(0), nan(as(x)));
-  else if( is_ltz(x) ) return kumi::make_tuple(nan(as(x)), nan(as(x)), nan(as(x)), nan(as(x)));
+  if( x == inf(as{x}) ) return kumi::make_tuple(T(0), nan(as{x}), T(0), nan(as{x}));
+  else if( is_ltz(x) ) return kumi::make_tuple(nan(as{x}), nan(as{x}), nan(as{x}), nan(as{x}));
   else if( is_eqz(x) )
   {
     if( is_eqz(nu) )
     {
-      return kumi::make_tuple(T(1), T(0), minf(as(x)), inf(as(x))); // jnu, jpnu, nnu, npnu
+      return kumi::make_tuple(T(1), T(0), minf(as{x}), inf(as{x})); // jnu, jpnu, nnu, npnu
     }
-    else if( nu == one(as(x)) )
+    else if( nu == one(as{x}) )
     {
-      return kumi::make_tuple(T(0), T(0.5), minf(as(x)), inf(as(x))); // jnu, jpnu, nnu, npnu
+      return kumi::make_tuple(T(0), T(0.5), minf(as{x}), inf(as{x})); // jnu, jpnu, nnu, npnu
     }
     else
     {
-      return kumi::make_tuple(T(0), T(0), minf(as(x)), inf(as(x))); // jnu, jpnu, nnu, npnu
+      return kumi::make_tuple(T(0), T(0), minf(as{x}), inf(as{x})); // jnu, jpnu, nnu, npnu
     }
   }
 
   auto reflect(is_ltz(nu));
   nu = eve::abs(nu); // v is non-negative from here
 
-  const T       Eps      = eve::eps(as(x));
-  const T       fp_min   = eve::sqrt(smallestposval(as(x)));
+  const T       Eps      = eve::eps(as{x});
+  const T       fp_min   = eve::sqrt(smallestposval(as{x}));
   constexpr int max_iter = 15000;
   const T       x_min    = T(2);
   const int     nl =
@@ -52,7 +52,7 @@ requires(scalar_value<T>)
   const T mu2   = sqr(mu);
   const T xi    = rec[pedantic](x);
   const T xi2   = xi + xi;
-  T       w     = xi2 * inv_pi(as(x));
+  T       w     = xi2 * inv_pi(as{x});
   int     isign = 1;
   T       h     = nu * xi;
   if( h < fp_min ) h = fp_min;
@@ -74,7 +74,7 @@ requires(scalar_value<T>)
       if( d < T(0) ) isign = -isign;
       if( eve::abs(del - T(1)) < Eps ) break;
     }
-    if( i > max_iter ) return kumi::make_tuple(nan(as(x)), nan(as(x)), nan(as(x)), nan(as(x)));
+    if( i > max_iter ) return kumi::make_tuple(nan(as{x}), nan(as{x}), nan(as{x}), nan(as{x}));
   }
   T jnul  = isign * fp_min;
   T jpnul = h * jnul;
@@ -91,7 +91,7 @@ requires(scalar_value<T>)
   if( jnul == T(0) ) jnul = Eps;
   T    f = jpnul / jnul;
   T    nmu, nnu1, npmu, jmu;
-  auto Pi = eve::pi(as(x));
+  auto Pi = eve::pi(as{x});
   if( x < x_min )
   {
     const T x2    = x / T(2);
@@ -184,7 +184,7 @@ requires(scalar_value<T>)
         p    = temp;
         if( eve::abs(dlr - T(1)) + eve::abs(dli) < Eps ) break;
       }
-      if( i > max_iter ) return kumi::make_tuple(nan(as(x)), nan(as(x)), nan(as(x)), nan(as(x)));
+      if( i > max_iter ) return kumi::make_tuple(nan(as{x}), nan(as{x}), nan(as{x}), nan(as{x}));
     }
     const T gam = (p - f) / q;
     jmu         = eve::sqrt(w / ((p - f) * gam + q));
@@ -225,8 +225,8 @@ requires(simd_value<T>)
   auto isltzx = is_ltz(x);
   x           = if_else(isltzx, zero, x);
   T             jnu, jpnu, nnu, npnu;
-  const T       Eps      = eve::eps(as(x));
-  const T       fp_min   = eve::sqrt(smallestposval(as(x)));
+  const T       Eps      = eve::eps(as{x});
+  const T       fp_min   = eve::sqrt(smallestposval(as{x}));
   constexpr int max_iter = 15000;
   const T       x_min    = T(2);
   auto          nl    = if_else(x < x_min, trunc(nu + T(0.5)), eve::max(0, trunc(nu - x + T(1.5))));
@@ -234,8 +234,8 @@ requires(simd_value<T>)
   const T       mu2   = sqr(mu);
   const T       xi    = if_else(iseqzx, x, rec[pedantic](x));
   const T       xi2   = xi + xi;
-  T             w     = xi2 * inv_pi(as(x));
-  T             isign = one(as(x));
+  T             w     = xi2 * inv_pi(as{x});
+  T             isign = one(as{x});
   T             h     = nu * xi;
   h                   = eve::max(h, fp_min);
   T b                 = xi2 * nu;
@@ -243,7 +243,7 @@ requires(simd_value<T>)
   T c = h;
   {
     int  i;
-    auto test(false_(as(Eps)));
+    auto test(false_(as{Eps}));
     for( i = 1; i <= max_iter; ++i )
     {
       b += xi2;
@@ -258,7 +258,7 @@ requires(simd_value<T>)
       test  = eve::abs(del - T(1)) < Eps;
       if( eve::all(test) ) break;
     }
-    if( i == max_iter ) h = if_else(test, h, nan(as(h)));
+    if( i == max_iter ) h = if_else(test, h, nan(as{h}));
   }
   T    jnul  = isign * fp_min;
   T    jpnul = h * jnul;
@@ -266,7 +266,7 @@ requires(simd_value<T>)
   T    jpnu1 = jpnul;
   T    factor  = nu * xi;
   auto l     = nl;
-  auto test  = l >= one(as(x));
+  auto test  = l >= one(as{x});
   while( eve::any(test) )
   {
     T jnutemp = fma(factor, jnul, jpnul);
@@ -274,15 +274,15 @@ requires(simd_value<T>)
     jpnul     = if_else(test, fms(factor, jnutemp, jnul), jpnul);
     jnul      = if_else(test, jnutemp, jnul);
     l         = dec(l);
-    test      = l >= one(as(x));
+    test      = l >= one(as{x});
   }
   jnul = if_else(is_eqz(jnul), Eps, jnul);
   T f  = jpnul / jnul;
 
   auto case_lt = [=](auto xx, T& nmu, T& npmu, T& nnu1, T& jmu)
   {
-    const T Pi    = eve::pi(as(xx));
-    const T x2    = xx / T(2);
+    const T Pi    = eve::pi(as{xx});
+    const T x2    = xx / T{2};
     T       ffactor  = rec[pedantic](sinpic(mu));
     T       dd     = -eve::log(x2);
     T       e     = mu * dd;
@@ -326,8 +326,8 @@ requires(simd_value<T>)
       }
       if( i == max_iter )
       {
-        sum0  = if_else(test, sum0, nan(as(sum0)));
-        sum1 = if_else(test, sum1, nan(as(sum0)));
+        sum  = if_else(test, sum0, nan(as{sum0}));
+        sum1 = if_else(test, sum1, nan(as{sum0}));
       }
     }
 
@@ -409,7 +409,7 @@ requires(simd_value<T>)
   factor   = jmu / jnul;
   jnu    = factor * jnul1;
   jpnu   = factor * jpnu1;
-  auto i = one(as(x));
+  auto i = one(as{x});
   test   = i <= nl;
   while( eve::any(test) )
   {
@@ -425,9 +425,9 @@ requires(simd_value<T>)
   {
     auto iseqznu = is_eqz(nu);
     jnu          = if_else(iseqzx, if_else(iseqznu, T(1), zero), jnu);
-    jpnu = if_else(iseqzx, if_else(iseqznu, zero, if_else(nu == one(as(nu)), T(0.5), jpnu)), jpnu);
-    nnu  = if_else(iseqzx, minf(as(x)), nnu);
-    nnu1 = if_else(iseqzx, inf(as(x)), nnu1);
+    jpnu = if_else(iseqzx, if_else(iseqznu, zero, if_else(nu == one(as{nu}), T(0.5), jpnu)), jpnu);
+    nnu  = if_else(iseqzx, minf(as{x}), nnu);
+    nnu1 = if_else(iseqzx, inf(as{x}), nnu1);
   }
   if( eve::any(reflect) )
   {

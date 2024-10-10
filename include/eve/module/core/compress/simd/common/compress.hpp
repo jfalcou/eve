@@ -34,8 +34,8 @@ template<typename L> struct compress_bits_to_logical
 
     eve::as_wide_t<eve::element_type_t<L>, N> r;
 
-    if constexpr( abi_t<T, N>::is_wide_logical ) r = bit_cast(bits, as(r));
-    else r = bit_cast(to_logical(bits), as(r));
+    if constexpr( abi_t<T, N>::is_wide_logical ) r = bit_cast(bits, as{r});
+    else r = bit_cast(to_logical(bits), as{r});
 
     return kumi::tuple {r, offset};
   }

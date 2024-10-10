@@ -36,11 +36,11 @@ slide_right_in_lanes(wide<T, N> x, wide<T, N> y, index_t<Shift>) requires(curren
   {
     using i_t = as_integer_t<wide<T, N>, unsigned>;
 
-    i_t lhs = eve::bit_cast(x, eve::as<i_t> {});
-    i_t rhs = eve::bit_cast(y, eve::as<i_t> {});
+    i_t lhs = eve::bit_cast(x, as<i_t> {});
+    i_t rhs = eve::bit_cast(y, as<i_t> {});
     i_t res = _mm256_alignr_epi8(rhs, lhs, 16 - Shift * sizeof(T));
 
-    return eve::bit_cast(res, eve::as(x));
+    return eve::bit_cast(res, eve::as{x});
   }
 }
 
@@ -72,7 +72,7 @@ use_scan_in_lanes(Wide)
   {
     return kumi::fold_right(
         []<bool so_far, typename T>(std::bool_constant<so_far>, T)
-        { return std::bool_constant<so_far&& decltype(use_scan_in_lanes(T {}))::value> {}; },
+        { return std::bool_constant<so_far&& decltype(use_scan_in_lanes(T{}))::value> {}; },
         Wide {},
         std::true_type {});
   }
@@ -85,7 +85,7 @@ scan_(EVE_SUPPORTS(avx2_), Wide v, Op op, Zero z_) requires(current_api == avx2)
 {
   if constexpr( decltype(use_scan_in_lanes(v))::value )
   {
-    Wide z = as_value(z_, eve::as<Wide> {});
+    Wide z = as_value(z_, as<Wide> {});
 
     v             = scan_in_lanes<Wide::size() / 2>(v, op, z);
     Wide left_sum = broadcast(v, index<Wide::size() / 2 - 1>);

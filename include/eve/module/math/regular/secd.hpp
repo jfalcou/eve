@@ -94,10 +94,10 @@ namespace eve
       else
       {
         auto a0_180 = div_180(a0);
-        auto test   = is_not_flint[pedantic](a0_180) && is_flint[pedantic](a0_180 + mhalf(eve::as(a0_180)));
+        auto test   = is_not_flint[pedantic](a0_180) && is_flint[pedantic](a0_180 + mhalf(eve::as{a0_180}));
         if constexpr (scalar_value<T>) // early return for nans in scalar case
         {
-          if (test) return nan(eve::as<T>());
+          if (test) return nan(as<T>{});
         }
         return if_else(test, eve::allbits, rec[pedantic](cosd[o](a0)));
       }

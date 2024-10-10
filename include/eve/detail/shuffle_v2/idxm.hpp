@@ -210,7 +210,7 @@ swap_xy(std::array<std::ptrdiff_t, N> in, std::ptrdiff_t s) -> std::array<std::p
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, typename T, typename... Ts>
 constexpr bool
-validate_pattern(eve::fixed<G>, pattern_t<I...>, eve::as<T>, eve::as<Ts>...)
+validate_pattern(eve::fixed<G>, pattern_t<I...>, as<T>, as<Ts>...)
 {
   std::ptrdiff_t max_idx = T::size() * (sizeof...(Ts) + 1) / G;
   for( auto i : {I...} )

@@ -31,7 +31,7 @@ basic_shuffle_(EVE_SUPPORTS(vmx_),
   {
     using bytes_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;
     that_t that =
-        vec_perm(v.storage(), v.storage(), as_bytes<wide<T, N>>(q, as<bytes_t>()).storage());
+        vec_perm(v.storage(), v.storage(), as_bytes<wide<T, N>>(q, as<bytes_t>{}).storage());
 
     return process_zeros(that, q);
   }

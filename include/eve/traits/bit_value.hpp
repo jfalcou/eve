@@ -46,13 +46,13 @@ namespace eve
         // We compute the list of actual size of Ts...
         // 0 means it's a scalar and will be skipped
         // anything else is the # of bytes the wide logically represents
-        auto size_of = []<typename T>(eve::as<T>) -> std::ptrdiff_t
+        auto size_of = []<typename T>(as<T>) -> std::ptrdiff_t
         {
             if constexpr(simd_value<T>) return T::alignment();
             else                        return sizeof(T0) == sizeof(T) ? 0 : -1;
         };
 
-        std::ptrdiff_t size[] = { size_of(eve::as<Ts>{})... };
+        std::ptrdiff_t size[] = { size_of(as<Ts>{})... };
 
         // Find first non-scalar wide if possible
         auto first_wide = [&]()

@@ -59,7 +59,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::true_(as<T>())` returns [elementwise](@ref glossary_elementwise), the true
+  //!      The call `eve::true_(as<T>{})` returns [elementwise](@ref glossary_elementwise), the true
   //!      logical value.
   //!
   //!  @groupheader{Example}

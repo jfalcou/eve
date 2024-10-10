@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sixth(as<T>())` returns  \f$1/6\f$.
+  //!      The call `eve::sixth(as<T>{})` returns  \f$1/6\f$.
   //!
   //!  @groupheader{Example}
   //!

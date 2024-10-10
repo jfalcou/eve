@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::pi_pow_e(as<T>())` returns  \f$\pi^e\f$.
+  //!      The call `eve::pi_pow_e(as<T>{})` returns  \f$\pi^e\f$.
   //!
   //!  @groupheader{Example}
   //!

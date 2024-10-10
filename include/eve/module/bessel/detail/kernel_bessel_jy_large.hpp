@@ -46,7 +46,7 @@ asymptotic_bessel_amplitude(T v, T x) noexcept
   s += 3 * mum1 * (mu - 9) / (txq2 * 8);
   s += 15 * mum1 * (mu - 9) * (mu - 25) / (txq2 * txq * 8 * 6);
 
-  return sqrt(s * 2 / (pi(as(x)) * x));
+  return sqrt(s * 2 / (pi(as{x}) * x));
 }
 
 template<floating_value T>
@@ -127,7 +127,7 @@ asymptotic_bessel_large_x_limit(N v, T x) noexcept
   if constexpr( integral_scalar_value<N> ) { return (eve::max)(v, 1) < x * 0.004f; }
   else if constexpr( integral_simd_value<N> )
   {
-    return asymptotic_bessel_large_x_limit(convert(v, as<elt_t>()), x);
+    return asymptotic_bessel_large_x_limit(convert(v, as<elt_t>{}), x);
   }
   else
   {

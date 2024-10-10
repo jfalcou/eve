@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::four_minus_pi(as<T>())` returns \f$4-\pi\f$.
+  //!      The call `eve::four_minus_pi(as<T>{})` returns \f$4-\pi\f$.
   //!
   //!  @groupheader{Example}
   //!

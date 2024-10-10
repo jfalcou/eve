@@ -60,8 +60,8 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sqrtsmallestposval(as<T>())` is semantically equivalent to
-  //!      `eve::sqrt (eve::smallestposval(as<T>())`.
+  //!      The call `eve::sqrtsmallestposval(as<T>{})` is semantically equivalent to
+  //!      `eve::sqrt (eve::smallestposval(as<T>{})`.
   //!
   //!  @groupheader{Example}
   //!

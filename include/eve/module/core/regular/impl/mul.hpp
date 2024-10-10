@@ -112,9 +112,9 @@ namespace eve::detail
               if constexpr (sizeof(elt_t) <= 4)
               {
                 using supw_t = upgrade_t<elt_t>;
-                auto z      = mul(convert(a, as<supw_t>()), convert(b, as<supw_t>()));
-                auto s      = saturate(z, as<elt_t>());
-                return convert(s, as<elt_t>());
+                auto z      = mul(convert(a, as<supw_t>{}), convert(b, as<supw_t>{}));
+                auto s      = saturate(z, as<elt_t>{});
+                return convert(s, as<elt_t>{});
               }
               else
               {
@@ -153,9 +153,9 @@ namespace eve::detail
             if constexpr (sizeof(elt_t) <= 4)
             {
               using supw_t = upgrade_t<elt_t>;
-              auto z      = mul(convert(a, as<supw_t>()), convert(b, as<supw_t>()));
-              auto s      = saturate(z, as<elt_t>());
-              return convert(s, as<elt_t>());
+              auto z      = mul(convert(a, as<supw_t>{}), convert(b, as<supw_t>{}));
+              auto s      = saturate(z, as<elt_t>{});
+              return convert(s, as<elt_t>{});
             }
             else
             {
@@ -179,7 +179,7 @@ namespace eve::detail
   }
 
   template<callable_options O, typename T, typename U, typename... Vs>
-  EVE_FORCEINLINE constexpr T mul_(EVE_REQUIRES(cpu_), O const & o, T r0, U r1, Vs... rs) noexcept
+  EVE_FORCEINLINE constexpr T mul_(EVE_REQUIRES(cpu_), O const& o, T r0, U r1, Vs... rs) noexcept
   {
     //TODO: optimize, see add_
     r0   = mul[o](r0,r1);

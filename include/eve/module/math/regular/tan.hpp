@@ -105,11 +105,11 @@ namespace eve
       {
         if constexpr( scalar_value<T> )
         {
-          if( is_not_less_equal(eve::abs(a0), pio_4(eve::as<T>())) ) return nan(eve::as<T>());
+          if( is_not_less_equal(eve::abs(a0), pio_4(as<T>{})) ) return nan(as<T>{});
         }
         else
         {
-          auto pi2_16 =  pi2o_16[upper](as<T>());
+          auto pi2_16 =  pi2o_16[upper](as<T>{});
           a0 = if_else(is_not_less_equal(sqr(a0), pi2_16), eve::allbits, a0);
         }
         return tancot_eval(a0);
@@ -118,10 +118,10 @@ namespace eve
       {
         auto reduce = [](auto xx)
           {
-            auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(eve::as<T>{});
-            auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(eve::as<T>{});
-            auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(eve::as<T>{});
-            T    xr     = xx - pio2_1;
+            auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(as<T>{});
+            auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(as<T>{});
+            auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(as<T>{});
+            T    xr     = x - pio2_1;
             xr -= pio2_2;
             xr -= pio2_3;
             return xr;
@@ -129,9 +129,9 @@ namespace eve
         T x = eve::abs(a0);
         if constexpr( scalar_value<T> )
         {
-          if( x < eps(as<T>()) ) return a0;
-          if( is_not_less_equal(x, pio_2(eve::as<T>())) ) return nan(eve::as<T>());
-          int n = x > pio_4(eve::as<T>());
+          if( x < eps(as<T>{}) ) return a0;
+          if( is_not_less_equal(x, pio_2(as<T>{})) ) return nan(as<T>{});
+          int n = x > pio_4(as<T>{});
           if( n )
           {
             T xr = reduce(x);
@@ -142,20 +142,20 @@ namespace eve
         }
         else if constexpr( simd_value<T> )
         {
-          auto test = is_not_less_equal(x, pio_4(eve::as(a0)));
+          auto test = is_not_less_equal(x, pio_4(eve::as{a0}));
           T    xr   = if_else(test, reduce(x), x);
           auto y    = tancot_eval(xr);
           y         = if_else(is_not_finite(a0), eve::allbits, if_else(test, -rec[pedantic](y), y));
-          return if_else(x <= eps(as<T>()), a0, bit_xor(bitofsign(a0), y));
+          return if_else(x <= eps(as<T>{}), a0, bit_xor(bitofsign(a0), y));
         }
       }
       else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
       {
         auto x       = abs(a0);
-        auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
+        auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as{a0}));
         if constexpr( scalar_value<T> )
         {
-          if( xnlelim ) return nan(eve::as<T>());
+          if( xnlelim ) return nan(as<T>{});
           if( is_eqz(a0) ) return a0;
         }
         else x = if_else(xnlelim, allbits, x);
@@ -165,13 +165,13 @@ namespace eve
       else
       {
         auto x = abs(a0);
-        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as{a0})) )
           return tan[quarter_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))
+        else if( eve::all(x <= Rempio2_limit[half_circle](as{a0})))
           return tan[half_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))
+        else if( eve::all(x <= Rempio2_limit[full_circle](as{a0})))
           return tan[full_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))
+        else if( eve::all(x <= Rempio2_limit[medium](as{a0})))
           return tan[medium](a0);
         else
           return tan[big](a0);

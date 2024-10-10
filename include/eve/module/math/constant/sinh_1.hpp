@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sinh_1(as<T>())` returns the hyperbolic sine of 1.
+  //!      The call `eve::sinh_1(as<T>{})` returns the hyperbolic sine of 1.
   //!
   //!  @groupheader{Example}
   //!

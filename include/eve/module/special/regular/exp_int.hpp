@@ -103,26 +103,26 @@ namespace eve
       if constexpr (scalar_value<I> && scalar_value<T>)
       {
         if( in == 0 ) return exp(-x) / x;
-        if( in < 0 ) return nan(as<T>());
+        if( in < 0 ) return nan(as<T>{});
         return exp_int(T(in), x);
       }
       else if constexpr (integral_scalar_value<I> && simd_value<T>)
       {
         using elt_t = element_type_t<T>;
-        auto n = T(convert(in, as<elt_t>()));
+        auto n = T(convert(in, as<elt_t>{}));
         return exp_int(n, x);
       }
       else if constexpr (integral_simd_value<I> && simd_value<T>)
       {
         using elt_t = element_type_t<T>;
-        return exp_int(convert(in, as<elt_t>()), x);
+        return exp_int(convert(in, as<elt_t>{}), x);
       }
       else if constexpr (integral_simd_value<I> && scalar_value<T>)
       {
         using elt_t = element_type_t<T>;
         using w_t   = wide<elt_t, cardinal_t<I>>;
         using i_t   = as_integer_t<elt_t>;
-        return exp_int(convert(in, as<i_t>()), w_t(x));
+        return exp_int(convert(in, as<i_t>{}), w_t(x));
       }
     }
 
@@ -131,7 +131,7 @@ namespace eve
     {
       using elt_t = element_type_t<T>;
       auto notdone  = is_gez(x) && is_flint(n) && is_gez(n);
-      T    r        = nan(as(x));  // if_else(notdone, zero, nan(as(x)));
+      T    r        = nan(as{x});  // if_else(notdone, zero, nan(as{x}));
       auto br_zeron = [](auto p) { return exp(-p) / p; };
       notdone = next_interval(br_zeron, notdone, is_eqz(n), r, x); // n == 0
       if( eve::any(notdone) )
@@ -151,7 +151,7 @@ namespace eve
           auto br_xlt1 = [](auto pn, auto px) { // here x is always le 1
             auto eqzx    = is_eqz(px);
             px           = inc[eqzx](px); // loop is infinite for x == 0
-            auto    psi1 = zero(as(px));
+            auto    psi1 = zero(as{px});
             int32_t maxn = dec(max(1, int32_t(eve::maximum(pn))));
             for( int32_t i = maxn; i != 0; --i ) psi1 = add[T(i) < pn](psi1, rec[pedantic](T(i)));
             auto euler = ieee_constant<0x1.2788d00p-1f, 0x1.2788cfc6fb619p-1>(eve::as<T>{});
@@ -159,8 +159,8 @@ namespace eve
             T    t;
 
             auto z   = -px;
-            auto xk  = zero(as(px));
-            auto yk  = one(as(px));
+            auto xk  = zero(as{px});
+            auto yk  = one(as{px});
             auto pk  = oneminus(pn);
             auto ans = if_else(is_eqz(pk), zero, rec[pedantic](pk));
             do {
@@ -170,9 +170,9 @@ namespace eve
               ans = add[is_nez(pk)](ans, yk / pk);
               t   = if_else(is_nez(ans), abs(yk / ans), one);
             }
-            while( eve::any(t > epso_2(as(px))) );
+            while( eve::any(t > epso_2(as{px})) );
             auto in = convert(pn, int_from<T>());
-            return add[eqzx]((eve::pow(z, dec(in)) * psi / tgamma(pn)) - ans, inf(as(px)));
+            return add[eqzx]((eve::pow(z, dec(in)) * psi / tgamma(pn)) - ans, inf(as{px}));
           };
           auto xlt1 = x < 1;
           T    xx   = if_else(xlt1, x, one);
@@ -184,9 +184,9 @@ namespace eve
               auto    rr          = exp_intbig;
               int32_t sk         = 1;
               T       t;
-              auto    pkm2 = one(as(px));
+              auto    pkm2 = one(as{px});
               auto    qkm2 = px;
-              auto    pkm1 = one(as(px));
+              auto    pkm1 = one(as{px});
               auto    qkm1 = px + pn;
               auto    ans  = pkm1 / qkm1;
               do {
@@ -205,14 +205,14 @@ namespace eve
                 qkm2       = qkm1;
                 qkm1       = qk;
                 test       = abs(pk) > exp_intbig;
-                auto fac   = if_else(test, epso_2(as(px)), one);
+                auto fac   = if_else(test, epso_2(as{px}), one);
                 pkm2 *= fac;
                 pkm1 *= fac;
                 qkm2 *= fac;
                 qkm1 *= fac;
               }
-              while( eve::any(t > eps(as(px))) );
-              return add[px < maxlog(as(px))](zero(as(px)), ans * exp(-px));
+              while( eve::any(t > eps(as{px})) );
+              return add[px < maxlog(as{px})](zero(as{px}), ans * exp(-px));
             };
             notdone = last_interval(br_xge1, notdone, r, n, if_else(xlt1, T(2), x));
           }

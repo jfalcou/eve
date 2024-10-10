@@ -49,7 +49,7 @@ namespace eve::algo::views
   namespace detail
   {
     template <typename Self, typename T>
-    auto convert_zipped(Self self, eve::as<T> tgt);
+    auto convert_zipped(Self self, as<T> tgt);
   }
 
   //================================================================================================
@@ -156,7 +156,7 @@ namespace eve::algo::views
     {
       auto to = type_to_convert_to(EVE_FWD(components)...);
       using T = typename decltype(to)::type;
-      return zip(views::convert(EVE_FWD(components), eve::as<T>{})...);
+      return zip(views::convert(EVE_FWD(components), as<T>{})...);
     }
     else if constexpr( (relaxed_iterator<Components> && ...) )
     {
@@ -210,7 +210,7 @@ namespace eve::algo::views
     }
 
     template <typename T>
-    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_range self, eve::as<T> tgt)
+    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_range self, as<T> tgt)
     {
       return detail::convert_zipped(self, tgt);
     }
@@ -235,7 +235,7 @@ namespace std
 namespace eve::algo::views::detail
 {
   template<typename Self, typename T>
-  EVE_FORCEINLINE auto convert_zipped(Self self, eve::as<T> tgt)
+  EVE_FORCEINLINE auto convert_zipped(Self self, as<T> tgt)
   {
     if constexpr( std::same_as<value_type_t<Self>, T> ) return self;
     else

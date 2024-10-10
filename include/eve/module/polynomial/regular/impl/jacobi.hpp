@@ -85,10 +85,10 @@ namespace eve::detail
         using f_t   = common_value_t<T, U, V>;
         using r_t   = as_wide_t<f_t, cardinal_t<I>>;
         using elt_t = element_type_t<r_t>;
-        r_t nn(convert(n, as<elt_t>()));
-        r_t aalpha(convert(alpha, as<elt_t>()));
-        r_t bbeta(convert(beta, as<elt_t>()));
-        r_t xx(convert(x, as<elt_t>()));
+        r_t nn(convert(n, as<elt_t>{}));
+        r_t aalpha(convert(alpha, as<elt_t>{}));
+        r_t bbeta(convert(beta, as<elt_t>{}));
+        r_t xx(convert(x, as<elt_t>{}));
         return arithmetic_call(jacobi, nn, aalpha, bbeta, xx);
       }
     }

@@ -94,7 +94,7 @@ namespace eve::detail
   compress_store_swizzle_mask_num_(EVE_SUPPORTS(neon128_), C c, logical<wide<T, fixed<4>>> mask)
   {
          if constexpr ( C::is_complete && !C::is_inverted ) return {0, 0};
-    else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num(ignore_none, mask && c.mask(as(mask)));
+    else if constexpr ( !C::is_complete                   ) return compress_store_swizzle_mask_num(ignore_none, mask && c.mask(as{mask}));
     else
     {
       using l_t = logical<wide<T, fixed<4>>>;

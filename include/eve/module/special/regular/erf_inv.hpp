@@ -86,7 +86,7 @@ namespace eve
     {
       using elt_t = element_type_t<T>;
       auto w       = -log1p(-sqr(a0));
-      auto r       = nan(as(a0));
+      auto r       = nan(as{a0});
       auto notdone = (a0 >= T(-1)) && (a0 <= T(1));
       if constexpr( std::is_same_v<elt_t, float> )
       {
@@ -108,7 +108,7 @@ namespace eve
           };
           notdone = last_interval(br_wge5, notdone, r, w);
         }
-        return if_else(w == inf(as(a0)), copysign(w, a0), a0 * r);
+        return if_else(w == inf(as{a0}), copysign(w, a0), a0 * r);
       }
       else // double
       {
@@ -154,7 +154,7 @@ namespace eve
             notdone = last_interval(br_wge16, notdone, r, w);
           }
         }
-        return if_else(w == inf(as(a0)), copysign(w, a0), a0 * r);
+        return if_else(w == inf(as{a0}), copysign(w, a0), a0 * r);
       }
     }
   }

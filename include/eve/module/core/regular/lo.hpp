@@ -87,7 +87,7 @@ namespace eve
       if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction
       {
         using ui_t = as_integer_t<T, unsigned>;
-        auto uia0  = bit_cast(a0, as<ui_t>());
+        auto uia0  = bit_cast(a0, as<ui_t>{});
         return ui_t(uia0 & ui_t(0xF));
       }
       else

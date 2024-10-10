@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::zeta_3(as<T>())` returns  \f$\zeta(3)\f$.
+  //!      The call `eve::zeta_3(as<T>{})` returns  \f$\zeta(3)\f$.
   //!
   //!  @groupheader{Example}
   //!

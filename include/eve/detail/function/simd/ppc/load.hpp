@@ -19,7 +19,7 @@ namespace eve::detail
   template<typename T, typename N, simd_compatible_ptr<wide<T,N>> Ptr>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const& tgt, Ptr ptr
+                                  , as<wide<T, N>> tgt, Ptr ptr
                                   )
   requires ppc_abi<abi_t<T, N>>
   {
@@ -60,7 +60,7 @@ namespace eve::detail
   template<typename T, typename U, typename N, typename Lanes>
   EVE_FORCEINLINE wide<T, N> load_( EVE_SUPPORTS(vmx_)
                                   , ignore_none_ const&, safe_type const&
-                                  , eve::as<wide<T, N>> const& tgt
+                                  , as<wide<T, N>> tgt
                                   , aligned_ptr<U, Lanes> ptr
                                   )
   requires ppc_abi<abi_t<T, N>> && simd_compatible_ptr<aligned_ptr<U, Lanes>,wide<T, N>>

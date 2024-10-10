@@ -119,7 +119,7 @@ namespace eve
       using r_t   = common_value_t<r1_t, r2_t>;
       if constexpr(kumi::size_v<decltype(cs)> == 0)
       {
-        return zero(as<r_t>());
+        return zero(as<r_t>{});
       }
       else if constexpr(kumi::size_v<decltype(cs)> == 1)
       {
@@ -149,7 +149,7 @@ namespace eve
       auto x = r_t(xx);
       constexpr auto s   = sizeof...(cns);
       if constexpr(s == 0)
-        return zero(as(xx));
+        return zero(as{xx});
       else
       {
         EVE_ASSERT(s&1, "nodes and coefs have incompatible sizes");

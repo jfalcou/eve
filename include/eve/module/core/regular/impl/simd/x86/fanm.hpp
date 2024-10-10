@@ -42,11 +42,11 @@ namespace eve::detail
     // PEDANTIC. As usual, we don't care about PROMOTE as we only accept similar types.
 
     if      constexpr( C::is_complete )
-      return alternative(mask, v, as(v));
+      return alternative(mask, v, as{v});
     else if constexpr( !C::has_alternative )
     {
       constexpr auto              c = categorize<wide<T, N>>();
-      [[maybe_unused]] auto const m = expand_mask(mask, as(v)).storage().value;
+      [[maybe_unused]] auto const m = expand_mask(mask, as{v}).storage().value;
 
       if constexpr( !C::has_alternative )
       {
@@ -61,7 +61,7 @@ namespace eve::detail
           return if_else(mask, eve::fanm(v, w, x), v);
       }
       else
-        return if_else(mask, eve::fanm(v, w, x), alternative(mask, v, as(v)));
+        return if_else(mask, eve::fanm(v, w, x), alternative(mask, v, as{v}));
     }
   }
 }

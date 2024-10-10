@@ -27,7 +27,7 @@ namespace eve::detail
       return (c-1-i) * spacing;
     });
 
-    auto result = vec_vbpermq(bit_cast(v.bits(),as(mask)).storage(), mask.storage());
+    auto result = vec_vbpermq(bit_cast(v.bits(),as{mask}).storage(), mask.storage());
     return {result[0], eve::lane<1>};
   }
 }

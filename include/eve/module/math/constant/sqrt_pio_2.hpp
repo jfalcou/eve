@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sqrt_pio_2(as<T>())` returns the square root of \f$\pi/2\f$.
+  //!      The call `eve::sqrt_pio_2(as<T>{})` returns the square root of \f$\pi/2\f$.
   //!
   //!  @groupheader{Example}
   //!

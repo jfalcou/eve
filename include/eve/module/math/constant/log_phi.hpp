@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::log_phi(as<T>())` returns  the logarithm of the golden ratio.
+  //!      The call `eve::log_phi(as<T>{})` returns  the logarithm of the golden ratio.
   //!
   //!  @groupheader{Example}
   //!

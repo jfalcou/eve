@@ -21,7 +21,7 @@ template<relative_conditional_expr C,
          simd_compatible_ptr<wide<T, N>> Ptr>
 EVE_FORCEINLINE wide<T, N>
 load_(EVE_SUPPORTS(sve_),
-  C const& cond, safe_type const& s, eve::as<wide<T, N>> const& tgt, Ptr p)
+  C const& cond, safe_type const& s, as<wide<T, N>> tgt, Ptr p)
   requires (sve_abi<abi_t<T, N>>)
 {
   auto ptr = unalign(p);
@@ -48,11 +48,11 @@ EVE_FORCEINLINE logical<wide<T, N>>
                 load_(EVE_SUPPORTS(sve_),
                       C const& cond,
                       safe_type const&,
-                      eve::as<logical<wide<T, N>>> const&,
+                      as<logical<wide<T, N>>>,
                       Pointer ptr) noexcept
 {
   auto const c1     = map_alternative(cond, [](auto alt) { return alt.mask(); });
-  auto const block  = load(c1, safe, eve::as<wide<T, N>> {}, ptr_cast<T const>(ptr));
+  auto const block  = load(c1, safe, as<wide<T, N>> {}, ptr_cast<T const>(ptr));
   return to_logical(block);
 }
 
@@ -61,13 +61,13 @@ EVE_FORCEINLINE logical<wide<T, N>>
                 load_(EVE_SUPPORTS(sve_),
                       C const& cond,
                       safe_type const&,
-                      eve::as<logical<wide<T, N>>> const&,
+                      as<logical<wide<T, N>>>,
                       Iterator b,
                       Iterator e) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   auto const c1     = map_alternative(cond, [](auto alt) { return alt.mask(); });
-  auto const block  = load(c1, safe, eve::as<wide<T, N>> {}, b, e);
+  auto const block  = load(c1, safe, as<wide<T, N>> {}, b, e);
   return to_logical(block);
 }
 }

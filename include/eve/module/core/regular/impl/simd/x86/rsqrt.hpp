@@ -48,15 +48,15 @@ namespace eve::detail
     if constexpr( std::is_same_v<v_t, double> )
     {
       // To obtain extra accuracy, we need one additional Newton step
-      a0 = fma(fnma(x, sqr(a0), one(eve::as(a0))), a0 * half(eve::as(a0)), a0);
+      a0 = fma(fnma(x, sqr(a0), one(eve::as{a0})), a0 * half(eve::as{a0}), a0);
     }
 
     if constexpr( platform::supports_infinites )
     {
-      a0 = if_else(x == inf(eve::as(x)), eve::zero, a0);
+      a0 = if_else(x == inf(eve::as{x}), eve::zero, a0);
     }
 
-    return if_else(is_eqz(x), inf(eve::as(x)), a0);
+    return if_else(is_eqz(x), inf(eve::as{x}), a0);
   }
 
   template<typename Pack> EVE_FORCEINLINE Pack
@@ -64,8 +64,8 @@ namespace eve::detail
   {
     using v_t = typename Pack::value_type;
     if( eve::any(is_denormal(x)) ||
-        (std::is_same_v<v_t, double> && eve::any(eve::abs(x) < smallestposval(eve::as<float>()) ||
-                                                 eve::abs(x) > valmax(eve::as<float>()))) )
+        (std::is_same_v<v_t, double> && eve::any(eve::abs(x) < smallestposval(as<float>{}) ||
+                                                 eve::abs(x) > valmax(as<float>{}))) )
       // this is necessary because of the poor initialisation by float intrinsic
     {
       auto [a00, nn] = ifrexp[pedantic](x);
@@ -73,7 +73,7 @@ namespace eve::detail
       nn             = dec[tst](nn);
       a00            = mul[tst](a00, 2);
       auto a0        = rsqrt_x86_normal(a00);
-      return if_else(is_eqz(x), inf(eve::as(x)), ldexp[pedantic](a0, -nn / 2));
+      return if_else(is_eqz(x), inf(eve::as{x}), ldexp[pedantic](a0, -nn / 2));
     }
     else
     {

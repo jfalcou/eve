@@ -21,7 +21,7 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // masked  implementation
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(avx512_), C const &mask, O const &opts, wide<T, N> a, wide<T, N> b) noexcept
+  EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(avx512_), C const &mask, O const&opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     if constexpr( C::has_alternative || O::contains(almost))
@@ -30,7 +30,7 @@ namespace eve::detail
     }
     else
     {
-      auto const            s = alternative(mask, a, as(to_logical(a)));
+      auto const            s = alternative(mask, a, as{to_logical(a}));
       constexpr        auto c = categorize<wide<T, N>>();
       [[maybe_unused]] auto m = expand_mask(mask, as<wide<T, N>> {}).storage().value;
       constexpr auto        f = to_integer(cmp_flt::eq_oq);

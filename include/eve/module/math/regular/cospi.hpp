@@ -93,21 +93,21 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle))
       {
-        return eve::cos[quarter_circle](a0*pi(eve::as<T>()));
+        return eve::cos[quarter_circle](a0*pi(as<T>{}));
       }
       else
       {
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return nan(eve::as<T>());
+          if( is_not_finite(a0) ) return nan(as<T>{});
         auto x = eve::abs(a0);
         if constexpr( scalar_value<T> )
         {
-          if( x > maxflint(eve::as<T>()) ) return T(1);
+          if( x > maxflint(as<T>{}) ) return T(1);
         }
         else
         {
           x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
-          x = if_else(is_greater(x, maxflint(eve::as(x))), eve::zero, x);
+          x = if_else(is_greater(x, maxflint(eve::as{x})), eve::zero, x);
         }
         auto [fn, xr, dxr] = rem2(x);
         return cos_finalize(fn, xr, dxr);

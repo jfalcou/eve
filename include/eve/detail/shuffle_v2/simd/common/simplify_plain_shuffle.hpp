@@ -24,9 +24,9 @@ upscale_pattern(pattern_t<I...> p)
 
 template<typename U, typename... Ts>
 EVE_FORCEINLINE auto
-bit_cast_tuple(kumi::tuple<Ts...> xs, eve::as<U>)
+bit_cast_tuple(kumi::tuple<Ts...> xs, as<U>)
 {
-  return kumi::map([](auto x) { return eve::bit_cast(x, eve::as<U> {}); }, xs);
+  return kumi::map([](auto x) { return eve::bit_cast(x, as<U> {}); }, xs);
 };
 
 template<typename G, typename P, typename... Ts> struct simplified_pattern

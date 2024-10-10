@@ -87,10 +87,10 @@ namespace eve
       EVE_ASSERT(all(is_gez(n) && is_flint(n)), "eve::sph_bessel_jn : some orders are non integral positive");
       EVE_ASSERT(all(is_nltz(x))              , "eve::sph_bessel_jn : some x are negative");
       using elt_t = element_type_t<T>;
-      if constexpr( integral_value<I> ) return sph_bessel_jn(convert(n, as<elt_t>()), x);
-      else return if_else(abs(x) < eps(as(x)),
-                          if_else(is_eqz(n), one(as(x)), zero),
-                          cyl_bessel_jn(n + half(as(n)), x) * rsqrt(2 * x * inv_pi(as(x))));
+      if constexpr( integral_value<I> ) return sph_bessel_jn(convert(n, as<elt_t>{}), x);
+      else return if_else(abs(x) < eps(as{x}),
+                          if_else(is_eqz(n), one(as{x}), zero),
+                          cyl_bessel_jn(n + half(as{n}), x) * rsqrt(2 * x * inv_pi(as{x})));
     }
   }
 }

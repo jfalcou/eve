@@ -43,8 +43,8 @@ template<typename T, typename N, std::ptrdiff_t G>
   else if constexpr( G > 1 )
   {
     using up_t    = upgrade_t<T>;
-    auto const up = bit_cast(v, as<wide<up_t, typename N::split_type>>());
-    return bit_cast(deinterleave_groups_shuffle(up, fixed<G / 2> {}), as(v));
+    auto const up = bit_cast(v, as<wide<up_t, typename N::split_type>>{});
+    return bit_cast(deinterleave_groups_shuffle(up, fixed<G / 2> {}), as{v});
   }
   else
   {
@@ -95,8 +95,8 @@ template<typename T, typename N, std::ptrdiff_t G>
   else if constexpr( G > 1 )
   {
     using up_t     = upgrade_t<T>;
-    auto const up0 = bit_cast(v0, as<wide<up_t, typename N::split_type>>());
-    auto const up1 = bit_cast(v1, as<wide<up_t, typename N::split_type>>());
+    auto const up0 = bit_cast(v0, as<wide<up_t, typename N::split_type>>{});
+    auto const up1 = bit_cast(v1, as<wide<up_t, typename N::split_type>>{});
     return bit_cast(deinterleave_groups_shuffle(up0, up1, fixed<G / 2> {}), as<r_t> {});
   }
   // ===================================================================================================

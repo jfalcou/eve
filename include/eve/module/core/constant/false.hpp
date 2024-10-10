@@ -59,7 +59,7 @@ namespace eve
   //!
   //!   **Return value**
   //!
-  //!   The call `eve::false_(as<T>())` returns the `false` logical value for type `T`.
+  //!   The call `eve::false_(as<T>{})` returns the `false` logical value for type `T`.
   //!
   //!   @groupheader{Example}
   //!

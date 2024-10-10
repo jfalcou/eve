@@ -92,10 +92,10 @@ namespace eve
   {
 
     template<typename T0, typename T1,  typename T2, callable_options O>
-    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T0 a, T1 l, T2 h) noexcept
+    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const& c, T0 a, T1 l, T2 h) noexcept
     {
       using r_t =  common_value_t<T0, T1, T2>;
-      auto z = if_else( r_t(a) < r_t(h) && r_t(a) >= r_t(l), one(as<r_t>()), zero);
+      auto z = if_else( r_t(a) < r_t(h) && r_t(a) >= r_t(l), one(as<r_t>{}), zero);
       if constexpr(O::contains(eve::condition_key))
         return mask_op(c[eve::condition_key], return_2nd, a, z);
       else
@@ -103,9 +103,9 @@ namespace eve
     }
 
     template<typename T, typename B, callable_options O>
-    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T x, B const & b) noexcept
+    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const& c, T x, B const & b) noexcept
     {
-     auto z = if_else(b(x), one(as(x)), zero);
+     auto z = if_else(b(x), one(as{x}), zero);
      if constexpr(O::contains(eve::condition_key))
        return  mask_op(c[eve::condition_key], return_2nd, x, z);
      else

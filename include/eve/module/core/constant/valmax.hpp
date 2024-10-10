@@ -57,7 +57,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::valmax(as<T>())` is semantically equivalent to
+  //!      The call `eve::valmax(as<T>{})` is semantically equivalent to
   //!      `T(std::numeric_limits<element_type_t<T>>::max())`
   //!
   //!  @groupheader{Example}

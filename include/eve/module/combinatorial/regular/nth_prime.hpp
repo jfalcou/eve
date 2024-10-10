@@ -1288,14 +1288,14 @@ namespace eve
         if constexpr (sizeof(elt_t) == 1)
         {
           tmp = if_else(n > 54u, zero, tmp);
-          return convert(tmp, as<uint8_t>());
+          return convert(tmp, as<uint8_t>{});
         }
         else if constexpr (sizeof(elt_t) == 2)
         {
           tmp = if_else(n > 6542u, zero, tmp);
-          return convert(tmp, as<uint16_t>());
+          return convert(tmp, as<uint16_t>{});
         }
-        else { return add[convert(n, as<elt_t>()) > 6542u](convert(tmp, as<elt_t>()), T(0xffffu)); }
+        else { return add[convert(n, as<elt_t>{}) > 6542u](convert(tmp, as<elt_t>{}), T(0xffffu)); }
       }
     }
 
@@ -1308,7 +1308,7 @@ namespace eve
     template<callable_options O, unsigned_value T, floating_scalar_value U>
     constexpr EVE_FORCEINLINE auto nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> target) noexcept
     {
-      auto r = convert(nth_prime(convert(n, as<uint32_t>())), target);
+      auto r = convert(nth_prime(convert(n, as<uint32_t>{})), target);
       return if_else(is_eqz(r), allbits, r);
     }
   }

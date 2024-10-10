@@ -125,8 +125,8 @@ namespace eve
           constexpr auto C = cardinal_v<T>;
           using u8_t = wide<uint8_t, fixed<S*C>>;
           auto p = [] (auto i, auto ) { auto E = sizeof(e_t); return (i/E+1)*E-1-i%E; };
-          auto y = eve::shuffle(bit_cast(x, as<u8_t>()), eve::as_pattern(p));
-          return bit_cast(y, as<T>());
+          auto y = eve::shuffle(bit_cast(x, as<u8_t>{}), eve::as_pattern(p));
+          return bit_cast(y, as<T>{});
         }
       }
     }

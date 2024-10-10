@@ -78,7 +78,7 @@ namespace eve::algo
 
         auto iteration = two_stage_iteration(processed_in.traits(), processed_in.begin(), processed_in.end());
 
-        auto convert_out = views::convert(processed_out, eve::as<transformed_t>{});
+        auto convert_out = views::convert(processed_out, as<transformed_t>{});
 
         auto of = unalign(convert_out.begin());
         auto ol = unalign(convert_out.end());

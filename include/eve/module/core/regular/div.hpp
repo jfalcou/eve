@@ -103,10 +103,10 @@ namespace eve
 //!         The result is always defined even if the denominator is 0.
 //!
 //!         The relevant cases are just in fact the division by 0 for integral types
-//!         in which case the result is [`eve::valmin(as(x))`](@ref valmin) or
-//!         [`valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
-//!         the division of [`valmin(as(x))`](@ref valmin)
-//!         by -1 that produces [`valmax(as(x))`](@ref valmax).
+//!         in which case the result is [`eve::valmin(as{x})`](@ref valmin) or
+//!         [`valmax(as{x})`](ref eve::valmax) according to the dividend sign, and
+//!         the division of [`valmin(as{x})`](@ref valmin)
+//!         by -1 that produces [`valmax(as{x})`](@ref valmax).
 //!
 //!    @note
 //!      * With two parameters, the call `div(x, y)` is equivalent to `x / y`

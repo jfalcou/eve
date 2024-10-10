@@ -21,12 +21,12 @@ namespace eve::detail
   // What's the alternative for this case ?
   //================================================================================================
   template<conditional_expr C, typename Target, typename Arg>
-  EVE_FORCEINLINE Target alternative(C const& c, Arg a0, as<Target> const&)
+  EVE_FORCEINLINE Target alternative(C const& c, Arg a0, as<Target>)
   {
     if constexpr( C::has_alternative )  return Target{c.alternative};
     else
     {
-      if      constexpr(logical_value<Target>)    return false_(as<Target>());
+      if      constexpr(logical_value<Target>)    return false_(as<Target>{});
       else if constexpr(std::same_as<Arg,Target>) return a0;
       else if constexpr(scalar_value<Arg>)        return Target(a0);
       else                                        return convert(a0, eve::as_element<Target>());
@@ -37,7 +37,7 @@ namespace eve::detail
   // Turn a conditional into a mask
   //================================================================================================
   template<conditional_expr C, typename Target>
-  EVE_FORCEINLINE auto expand_mask(C const& c, as<Target> const&)
+  EVE_FORCEINLINE auto expand_mask(C const& c, as<Target>)
   {
     auto msk = c.mask( as<Target>{} );
     return as_logical_t<Target>(msk);
@@ -50,16 +50,16 @@ namespace eve::detail
   EVE_FORCEINLINE auto mask_op( C const& c
                               , [[maybe_unused]] Op f
                               , [[maybe_unused]] Arg0 const& a0
-                              , [[maybe_unused]] Args const&... as
+                              , [[maybe_unused]] Args const&... ax
                               )
   {
-    using r_t = decltype(f(a0,as...));
+    using r_t = decltype(f(a0, ax...));
 
-          if constexpr( C::is_complete && !C::is_inverted ) return alternative(c,a0,eve::as<r_t>{});
-    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0,as...);
-    else                                                    return if_else( c.mask(eve::as<r_t>())
-                                                                          , f(a0,as...)
-                                                                          , alternative(c,a0,eve::as<r_t>{})
+          if constexpr( C::is_complete && !C::is_inverted ) return alternative(c, a0, as<r_t>{});
+    else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0, ax...);
+    else                                                    return if_else( c.mask(as<r_t>{})
+                                                                          , f(a0, ax...)
+                                                                          , alternative(c, a0, as<r_t>{})
                                                                           );
   }
 }

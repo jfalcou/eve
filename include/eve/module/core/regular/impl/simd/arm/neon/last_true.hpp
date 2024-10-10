@@ -25,7 +25,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   else if constexpr( eve::current_api < eve::asimd && sizeof(T) >= 2 )
   {
     using half_e_t = make_integer_t<sizeof(T) / 2, unsigned>;
-    auto halved    = eve::convert(v0, eve::as<eve::logical<half_e_t>> {});
+    auto halved    = eve::convert(v0, as<eve::logical<half_e_t>> {});
     return eve::last_true[cond](halved);
   }
   else return last_true_(EVE_RETARGET(cpu_), cond, v0);

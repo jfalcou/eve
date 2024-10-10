@@ -126,13 +126,13 @@ namespace eve
       {
         if constexpr(scalar_value<r_t> && platform::supports_nans)
         {
-          if (is_unordered(a00, a10)) return nan(eve::as(a00));
+          if (is_unordered(a00, a10)) return nan(eve::as{a00});
         }
         if constexpr(platform::supports_infinites)
         {
           auto test1 =  eve::is_infinite(a00) && eve::is_infinite(a10);
-          a00 =  eve::if_else(test1, eve::copysign(one(eve::as(a00)), a00), a00);
-          a10 =  eve::if_else(test1, eve::copysign(one(eve::as(a00)), a10), a10);
+          a00 =  eve::if_else(test1, eve::copysign(one(eve::as{a00}), a00), a00);
+          a10 =  eve::if_else(test1, eve::copysign(one(eve::as{a00}), a10), a10);
         }
 
         r_t q = eve::abs(a00/a10);
@@ -140,14 +140,14 @@ namespace eve
         r_t sgn = signnz(a00);
         if constexpr(scalar_value<r_t>)
         {
-          z = (is_positive(a10)? z: pi(eve::as<r_t>())-z)*sgn;
-          return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as(a00))*sgn, eve::zero) : z;
+          z = (is_positive(a10)? z: pi(as<r_t>{})-z)*sgn;
+          return is_eqz(a00) ? if_else(is_negative(a10), pi(eve::as{a00})*sgn, eve::zero) : z;
         }
         else
         {
-          z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as(a0))-z)*sgn;
+          z = eve::if_else(eve::is_positive(a10), z, eve::pi(eve::as{a0})-z)*sgn;
           z = eve::if_else( eve::is_eqz(a00),
-                            eve::if_else( eve::is_negative(a10),  eve::pi(eve::as(a00))*sgn, eve::zero),
+                            eve::if_else( eve::is_negative(a10),  eve::pi(eve::as{a00})*sgn, eve::zero),
                             z);
           if constexpr(platform::supports_nans)
             return  eve::if_else( is_unordered(a00, a10), eve::allbits, z);
@@ -159,7 +159,7 @@ namespace eve
       {
         auto q = eve::abs(a00/a10);
         auto z = detail::atan_kernel(q, eve::rec[pedantic](q));
-        return if_else(is_positive(a10), z, (pi(eve::as(a00)) - z))*signnz(a00);
+        return if_else(is_positive(a10), z, (pi(eve::as{a00}) - z))*signnz(a00);
       }
     }
   }

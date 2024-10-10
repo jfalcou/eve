@@ -104,11 +104,11 @@ namespace eve
         swap_if(x < z, x, z);
         swap_if(y > z, y, z);
         // now all(x >= z) and all(z >= y)
-        return average(z*ellint_rf(x,y,z)-(x-z)*(y-z)*ellint_rd(x, y, z)*third(as<T>()), sqrt(x*y/z));
+        return average(z*ellint_rf(x,y,z)-(x-z)*(y-z)*ellint_rd(x, y, z)*third(as<T>{}), sqrt(x*y/z));
       }
       else
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_nltz(x) && is_nltz(y) && is_nltz(z);
         // any parameter nan or less than zero implies nan
         auto br0 = [x, y, z]() { return ellint_rg[raw](x, y, z); };

@@ -105,12 +105,10 @@ namespace eve::detail
   }();
 
   template <std::unsigned_integral T>
-  constexpr auto pattern_4_elements_bytes_v alignas(sizeof(T) * 4) =
-    pattern_4_elements(idxs_bytes<T>);
+  constexpr auto pattern_4_elements_bytes_v alignas(sizeof(T) * 4) = pattern_4_elements(idxs_bytes<T>);
 
   template <std::unsigned_integral T>
-  constexpr auto pattern_8_elements_bytes_v alignas(sizeof(T) * 8) =
-    pattern_8_elements(idxs_bytes<T>);
+  constexpr auto pattern_8_elements_bytes_v alignas(sizeof(T) * 8) = pattern_8_elements(idxs_bytes<T>);
 
   struct compress_using_masks_shuffle_recurse
   {
@@ -142,9 +140,9 @@ namespace eve::detail
         auto       bytes_ap  = eve::as_aligned(bytes_p, eve::fixed<bytes::size()>{});
         bytes pattern{bytes_ap};
 
-        bytes bytes_v = bit_cast(v, eve::as<bytes>{});
+        bytes bytes_v = bit_cast(v, as<bytes>{});
         bytes_v       = byte_16_runtime_shuffle(bytes_v, pattern);
-        v             = bit_cast(bytes_v, as(v));
+        v             = bit_cast(bytes_v, as{v});
 
         return v;
       }
@@ -156,9 +154,9 @@ namespace eve::detail
         bytes pattern{bytes_ap};
 
         // Shuffle
-        bytes bytes_v = bit_cast(v, eve::as<bytes>{});
+        bytes bytes_v = bit_cast(v, as<bytes>{});
         bytes_v       = byte_16_runtime_shuffle(bytes_v, pattern);
-        v             = bit_cast(bytes_v, as(v));
+        v             = bit_cast(bytes_v, as{v});
 
         return v;
       }
@@ -204,7 +202,7 @@ namespace eve::detail
     // In all of these cases we should remove ignore
     else if constexpr ( (treat_like_aggregate || N() != 4) && !C::is_complete )
     {
-      mask = mask && c.mask(as(mask));
+      mask = mask && c.mask(as{mask});
       return compress_using_masks_(EVE_RETARGET(cpu_), ignore_none, v, mask);
     }
     else if constexpr ( treat_like_aggregate )

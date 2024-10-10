@@ -84,7 +84,7 @@ namespace eve
   {
     template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE constexpr auto logical_notor_(EVE_REQUIRES(cpu_),
-                                                  O const & ,
+                                                  O const& ,
                                                   T a, U b) noexcept
     {
       using r_t = decltype(logical_and(a, b));
@@ -94,21 +94,21 @@ namespace eve
 
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr
-    auto logical_notor_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
+    auto logical_notor_(EVE_REQUIRES(cpu_), O const& , T a, bool b) noexcept
     {
-      return b ? true_(as(a)) : !a;
+      return b ? true_(as{a}) : !a;
     }
 
     template<typename U, callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_notor_(EVE_REQUIRES(cpu_), O const & , bool a, U b) noexcept
+    auto logical_notor_(EVE_REQUIRES(cpu_), O const& , bool a, U b) noexcept
     {
-      return a ? b : true_(as(b));
+      return a ? b : true_(as{b});
     }
 
     template<callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_notor_(EVE_REQUIRES(cpu_), O const & , bool a, bool b) noexcept
+    auto logical_notor_(EVE_REQUIRES(cpu_), O const& , bool a, bool b) noexcept
     {
       return !a || b;
     }

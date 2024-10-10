@@ -118,8 +118,8 @@ copy_by_one_checking_each(Settings settings, I f, M m, O o) -> O
   }
   else
   {
-    o += settings.c_out.offset(eve::as(m));
-    O limit = o + settings.c_out.count(eve::as(m));
+    o += settings.c_out.offset(eve::as{m});
+    O limit = o + settings.c_out.count(eve::as{m});
 
     for_each_until_m(m, copy_by_one_checking_each_lambda_checked {f, o, limit});
   }
@@ -195,8 +195,8 @@ copy_by_countr_zeroes(Settings settings, I f, top_bits<L> m, O o) -> O
   if constexpr( OC::is_complete ) { return copy_by_countr_zeroes_no_limits(f, m, o); }
   else
   {
-    o += settings.c_out.offset(eve::as(m));
-    O limit = o + settings.c_out.count(eve::as(m));
+    o += settings.c_out.offset(eve::as{m});
+    O limit = o + settings.c_out.count(eve::as{m});
     return copy_by_countr_zeroes_limited(f, m, o, limit);
   }
 }

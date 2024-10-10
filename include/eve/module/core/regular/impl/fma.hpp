@@ -32,7 +32,7 @@ namespace eve::detail
     if constexpr(O::contains(promote))
     {
       using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
-      constexpr auto tgt = as(eve::as<er_t>());
+      constexpr auto tgt = as{as<er_t>{}};
       return fma[o.drop(promote)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
     }
     // OTHERS ---------------------
@@ -54,7 +54,7 @@ namespace eve::detail
     if constexpr(O::contains(promote))
     {
       using er_t = common_type_t<element_type_t<T>, element_type_t<U>, element_type_t<V>>;
-      constexpr auto tgt = as(eve::as<er_t>());
+      constexpr auto tgt = as{as<er_t>{}};
 
       return fma[o.drop(promote)](convert(a, tgt), convert(b, tgt), convert(c,tgt));
     }
@@ -115,7 +115,7 @@ namespace eve::detail
         // to perform the computations in a guarantee 2-complement environment
         // since signed integer overflows in C++ produce "undefined results"
         constexpr auto tgt = as<as_integer_t<T, unsigned>>{};
-        return bit_cast(fma(bit_cast(a,tgt), bit_cast(b,tgt), bit_cast(c,tgt)), as<T>());
+        return bit_cast(fma(bit_cast(a,tgt), bit_cast(b,tgt), bit_cast(c,tgt)), as<T>{});
       }
       else  return fma(a, b, c);
     }

@@ -107,7 +107,7 @@ namespace eve
           T y = eve::abs(a0);
           if (y <= 0.46875) // 15/32
           {
-            T ysq = if_else(y > epso_2(as<T>()), sqr(y), eve::zero);
+            T ysq = if_else(y > epso_2(as<T>{}), sqr(y), eve::zero);
             return kernel1_erf1(a0, ysq);
           }
           else
@@ -117,7 +117,7 @@ namespace eve
             {
               T res = kernel1_erf2(a0, y);
               res   = kernel1_finalize2(res, y);
-              res   = (half(as<T>()) - res) + half(as<T>());
+              res   = (half(as<T>{}) - res) + half(as<T>{});
               if (is_ltz(a0)) res = -res;
               return res;
             }
@@ -125,7 +125,7 @@ namespace eve
             {
               T res = kernel1_erf3(a0, y);
               res   = kernel1_finalize2(res, y);
-              res   = (half(as<T>()) - res) + half(as<T>());
+              res   = (half(as<T>{}) - res) + half(as<T>{});
               if (is_ltz(a0)) res = -res;
               return res;
             }
@@ -156,12 +156,12 @@ namespace eve
           y          = if_else(y > T(26.543), T(26.543), y);
           T    sqry  = eve::sqr(y);
           auto test1 = eve::is_less(y, T(0.46875)); // 15/32;
-          T    r1    = eve::zero(as<T>());
+          T    r1    = eve::zero(as<T>{});
           auto nb    = eve::count_true(test1);
 
           if (nb > 0) // here y < 0.46875
           {
-            T ysq = if_else(y > epso_2(as<T>()), sqry, eve::zero);
+            T ysq = if_else(y > epso_2(as<T>{}), sqry, eve::zero);
             r1    = kernel1_erf1(a0, ysq);
             if (nb == T::size()) return r1;
           }
@@ -175,7 +175,7 @@ namespace eve
           {
             T res = kernel1_erf2(a0, y);
             res   = kernel1_finalize2(res, y);
-            res   = (half(as<T>()) - res) + half(as<T>());
+            res   = (half(as<T>{}) - res) + half(as<T>{});
             res   = minus[is_ltz(a0)](res);
             r1    = if_else(test3, res, r1);
             if (nb + nb1 == T::size()) return r1;
@@ -184,7 +184,7 @@ namespace eve
           // here we treat y > 4
           T res = kernel1_erf3(a0, y);
           res   = kernel1_finalize2(res, y);
-          res   = (half(as<T>()) - res) + half(as<T>());
+          res   = (half(as<T>{}) - res) + half(as<T>{});
           res   = minus[is_ltz(a0)](res);
           r1    = if_else(test2, r1, res);
           return r1;
@@ -192,7 +192,7 @@ namespace eve
         else if constexpr (std::is_same_v<elt_t, float>)
         {
           T    x     = eve::abs(a0);
-          T    r1    = eve::zero(as<T>());
+          T    r1    = eve::zero(as<T>{});
           auto test1 = eve::is_less(x, 6.6666667e-01f); // Ratio<T, 2, 3>());
           auto nb    = eve::count_true(test1);
 

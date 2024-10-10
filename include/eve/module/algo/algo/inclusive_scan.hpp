@@ -65,7 +65,7 @@ namespace eve::algo
         using I      = decltype(processed.begin());
         using wide_t = eve::wide<U, iterator_cardinal_t<I>>;
 
-        wide_t wide_init = eve::as_value(init, eve::as<wide_t> {});
+        wide_t wide_init = eve::as_value(init, as<wide_t> {});
 
         auto [op, zero] = op_zero;
 
@@ -82,7 +82,7 @@ namespace eve::algo
     EVE_FORCEINLINE void operator()(Rng&& rng, std::pair<Op, Zero> op_zero, U init) const
     {
       detail::inclusive_scan_common<inplace_load_store>{}(
-        TraitsSupport::get_traits(), views::convert(EVE_FWD(rng), eve::as<U>{}), op_zero, init);
+        TraitsSupport::get_traits(), views::convert(EVE_FWD(rng), as<U>{}), op_zero, init);
     }
 
     template <relaxed_range Rng, typename U>

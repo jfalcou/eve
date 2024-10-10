@@ -50,7 +50,7 @@ requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>
 
 template<scalar_value T, typename N, scalar_value U, typename M>
 EVE_FORCEINLINE wide<U, M>
-                rvv_simd_cast(logical<wide<T, N>> x, as<wide<U, M>> const&) noexcept
+                rvv_simd_cast(logical<wide<T, N>> x, as<wide<U, M>>) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
   constexpr auto out_lmul = rvv_lmul_v<U, M>;

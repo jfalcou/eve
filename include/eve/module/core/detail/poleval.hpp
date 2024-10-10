@@ -20,7 +20,7 @@ auto
 poleval(T x, A const& coefs)
 {
   auto p = coefs.begin();
-  if( coefs.end() == p ) return zero(as(x));
+  if( coefs.end() == p ) return zero(as{x});
   auto r = T(*p++);
 
   while( p != coefs.end() ) { r = fma(r, x, *p++); }
@@ -32,7 +32,7 @@ auto
 poleval1(T x, A const& coefs)
 {
   auto p = coefs.begin();
-  if( coefs.end() == p ) return one(as(x));
+  if( coefs.end() == p ) return one(as{x});
   auto r = x + T(*p++);
 
   while( p != coefs.end() ) { r = fma(r, x, *p++); }

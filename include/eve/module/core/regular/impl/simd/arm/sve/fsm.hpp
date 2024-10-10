@@ -26,7 +26,7 @@ namespace eve::detail
     // This is done so the masking use a and not -a as source
     // We don't care about PEDANTIC as this is a proper FMA.
     // We don't care about PROMOTE as we only accept similar types.
-    [[maybe_unused]] auto const alt = alternative(m, a, as(a));
+    [[maybe_unused]] auto const alt = alternative(m, a, as{a});
     if      constexpr( C::is_complete )       return alt;
     else                                      return if_else(m, eve::fms[o.drop(condition_key)](b, c, a), alt);
   }

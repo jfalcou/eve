@@ -38,15 +38,15 @@ namespace eve::detail
         {
           switch( int(n) )
           {
-          case 0: return one(as(x));
+          case 0: return one(as{x});
           case 1: return x;
-          case 2: return fma(x, x + x, mone(as(x)));
+          case 2: return fma(x, x + x, mone(as{x}));
           case 3: return x * (4 * sqr(x) - 3);
           case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
           default:
             auto nn = T(n);
             auto z  = eve::abs(x);
-            if( z <= one(as(z)) ) return cos(nn * acos(x));
+            if( z <= one(as{z}) ) return cos(nn * acos(x));
             else
             {
               auto t = cosh(nn * acosh(z));
@@ -60,15 +60,15 @@ namespace eve::detail
           {
             switch( int(n) )
             {
-            case 0: return one(as(x));
+            case 0: return one(as{x});
             case 1: return x;
-            case 2: return fma(x, x + x, mone(as(x)));
+            case 2: return fma(x, x + x, mone(as{x}));
             case 3: return x * fms(4 * x, x, 3);
             case 4: return inc(8 * sqr(x) * (sqr(x) - 1));
             default:
               auto nn   = T(n);
               auto z    = eve::abs(x);
-              auto test = (z <= one(as(z)));
+              auto test = (z <= one(as{z}));
               if( all(test) ) return cos(nn * acos(x));
               else
               {
@@ -94,10 +94,10 @@ namespace eve::detail
         }
         else if constexpr( has_native_abi_v<T> )
         {
-          auto nn   = convert(n, as<eve::element_type_t<T>>());
+          auto nn   = convert(n, as<eve::element_type_t<T>>{});
           auto z    = eve::abs(x);
           auto r    = cos(nn * acos(x));
-          auto test = z <= one(as(z));
+          auto test = z <= one(as{z});
           if( all(test) ) return r;
           else
           {
@@ -115,8 +115,8 @@ namespace eve::detail
       auto acx = acos(x);
 
       auto r0   = sin(nn * acx) / sin(acx);
-      auto r    = if_else(oneminus(z) < eps(as(x)), if_else(is_gez(x), nn, -nn * sign_alternate(nn)), r0);
-      auto test = z <= one(as(z));
+      auto r    = if_else(oneminus(z) < eps(as{x}), if_else(is_gez(x), nn, -nn * sign_alternate(nn)), r0);
+      auto test = z <= one(as{z});
       if( all(test) )
       {
         return r;
@@ -125,7 +125,7 @@ namespace eve::detail
       {
         auto achx = acosh(x);
         auto t0   = sinh(nn * achx) / sinh(achx);
-        auto t    = if_else(dec(z) < eps(as(x)), if_else(is_gez(x), nn, -nn * sign_alternate(nn)), t0);
+        auto t    = if_else(dec(z) < eps(as{x}), if_else(is_gez(x), nn, -nn * sign_alternate(nn)), t0);
         return if_else(test, r, if_else(is_gez(x), t, -t * sign_alternate(nn)));
       }
     }

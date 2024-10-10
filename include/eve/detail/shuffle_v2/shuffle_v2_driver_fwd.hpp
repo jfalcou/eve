@@ -57,7 +57,7 @@ template<typename NativeSelector> struct shuffle_v2_driver
       return cant_shuffle_different_types<T, Ts...> {};
     }
     else if constexpr( !detail::idxm::validate_pattern(
-                           eve::lane<G>, pattern<I...>, eve::as<T> {}, eve::as<Ts> {}...) )
+                           eve::lane<G>, pattern<I...>, as<T> {}, as<Ts> {}...) )
     {
       return pattern_failed_validation<pattern_t<I...>, fixed<G>, T, Ts...> {};
     }

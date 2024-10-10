@@ -331,11 +331,11 @@ namespace eve::algo::views
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
                                                 C c,
                                                 S s,
-                                                eve::as<vw_type>,
+                                                as<vw_type>,
                                                 map_iterator self)
     {
       auto loaded =  self.load_op(eve::load(drop_alternative(c), s,
-                                            self.base, eve::as<wide_value_type_t<I>>{}));
+                                            self.base, as<wide_value_type_t<I>>{}));
       if constexpr (C::has_alternative)
       {
         loaded = eve::replace_ignored(loaded, c, c.alternative);

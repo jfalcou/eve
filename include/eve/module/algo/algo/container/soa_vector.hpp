@@ -310,13 +310,13 @@ namespace eve::algo
     //! Returns an aligned iterator to the beginning
     EVE_FORCEINLINE auto begin_aligned() -> iterator_aligned
     {
-      return views::convert(storage.data_aligned(), eve::as<Type>{});
+      return views::convert(storage.data_aligned(), as<Type>{});
     }
 
     //! Returns an aligned iterator to the beginning
     EVE_FORCEINLINE auto begin_aligned()  const -> const_iterator_aligned
     {
-      return views::convert(storage.data_aligned(), eve::as<Type>{});
+      return views::convert(storage.data_aligned(), as<Type>{});
     }
 
     //! Returns a constant aligned iterator to the beginning
@@ -325,13 +325,13 @@ namespace eve::algo
     //! Returns an iterator to the beginning
     EVE_FORCEINLINE auto begin() -> iterator
     {
-      return views::convert(storage.data(), eve::as<Type>{});
+      return views::convert(storage.data(), as<Type>{});
     }
 
     //! Returns an iterator to the beginning
     EVE_FORCEINLINE auto begin()  const -> const_iterator
     {
-      return views::convert(storage.data(), eve::as<Type>{});
+      return views::convert(storage.data(), as<Type>{});
     }
 
     //! Returns a constant iterator to the beginning

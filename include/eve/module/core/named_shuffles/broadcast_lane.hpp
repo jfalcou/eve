@@ -60,14 +60,14 @@ namespace eve
 struct broadcast_lane_t
 {
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t I>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>, eve::index_t<I>)
+  static constexpr auto pattern(as<T>, eve::fixed<G>, eve::index_t<I>)
   {
     static_assert(I < T::size() / G);
     return eve::fix_pattern<T::size() / G>([](int, int) { return I; });
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t I>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<I> i)
+  static constexpr std::ptrdiff_t level(as<T> tgt, eve::fixed<G> g, eve::index_t<I> i)
   {
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
@@ -75,7 +75,7 @@ struct broadcast_lane_t
     if constexpr( eve::has_aggregated_abi_v<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
-      using half_t = decltype(T {}.slice(lower_));
+      using half_t = decltype(T{}.slice(lower_));
       return level(as<half_t> {}, g, i);
     }
     else if constexpr( current_api >= vmx ) return 2;

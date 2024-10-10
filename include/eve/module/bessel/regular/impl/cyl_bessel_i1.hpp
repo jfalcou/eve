@@ -102,16 +102,16 @@ namespace eve::detail
           auto                           ex = eve::exp(xx / 2);
           return ex * (ex * reverse_horner(rec[pedantic](xx), P) / eve::sqrt(xx));
         }
-        else { return inf(as(xx)); }
+        else { return inf(as{xx}); }
       };
 
     if constexpr( scalar_value<T> )
     {
-      if( is_ngez(x) ) return nan(as(x));
-      if( x == 0 ) return zero(as(x));         // x is 0
-      if( x == inf(as(x)) ) return inf(as(x)); // x is infinite
+      if( is_ngez(x) ) return nan(as{x});
+      if( x == 0 ) return zero(as{x});         // x is 0
+      if( x == inf(as{x}) ) return inf(as{x}); // x is infinite
       if( x < T(7.75) ) return br_7_75(x);     // x in (0, 7.75]
-      const auto thresh = if_else(std::same_as<elt_t, double>, elt_t(500), inf(as<elt_t>()));
+      const auto thresh = if_else(std::same_as<elt_t, double>, elt_t(500), inf(as<elt_t>{}));
       if( x < thresh ) return br_medium(x); // x in (7.75, thresh]
       return br_large(x);                   // x in (thresh, \infty)
     }
@@ -119,20 +119,20 @@ namespace eve::detail
     {
       if constexpr( has_native_abi_v<T> )
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_gtz(x);
         if( eve::any(notdone) )
         {
           notdone = next_interval(br_7_75, notdone, x <= T(7.75), r, x);
           if( eve::any(notdone) )
           {
-            const auto thresh = if_else(std::same_as<elt_t, float>, elt_t(500), inf(as<elt_t>()));
+            const auto thresh = if_else(std::same_as<elt_t, float>, elt_t(500), inf(as<elt_t>{}));
             notdone           = next_interval(br_medium, notdone, x <= T(thresh), r, x);
             if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
           }
         }
-        r = if_else(is_eqz(x), zero(as(x)), r);
-        r = if_else(x == inf(as(x)), inf, r);
+        r = if_else(is_eqz(x), zero(as{x}), r);
+        r = if_else(x == inf(as{x}), inf, r);
         return r;
       }
     }

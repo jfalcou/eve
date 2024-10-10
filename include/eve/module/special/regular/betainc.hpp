@@ -92,9 +92,9 @@ namespace eve
       auto betacf = [](auto x, auto a, auto b) {
         // continued fraction for incomplete Beta function, used by betainc
         constexpr std::size_t itmax = 100;
-        auto const            o     = one(as(x));
-        auto                  epsi  = 10 * eps(as(x));
-        auto                  fpmin = sqr(eps(as(x)));
+        auto const            o     = one(as{x});
+        auto                  epsi  = 10 * eps(as{x});
+        auto                  fpmin = sqr(eps(as{x}));
         auto                  qab   = a + b;
         auto                  qap   = inc(a);
         auto                  qam   = dec(a);
@@ -123,9 +123,9 @@ namespace eve
       auto oms   = oneminus[test](px);
       swap_if(test, pa, pb);
       auto res  = bt * betacf(oms, pa, pb) / pa;
-      return if_else(is_ltz(oms) || oms > one(as(px)),
+      return if_else(is_ltz(oms) || oms > one(as{px}),
                      allbits,
-                     if_else(is_eqz(oms), zero, if_else(px == one(as(px)), one, oneminus[test](res))));
+                     if_else(is_eqz(oms), zero, if_else(px == one(as{px}), one, oneminus[test](res))));
     }
   }
 }

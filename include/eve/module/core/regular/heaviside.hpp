@@ -30,7 +30,7 @@ namespace eve
 
     template<value T, value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U s) const noexcept
-    requires (same_lanes_or_scalar<T, U>)
+      requires (same_lanes_or_scalar<T, U>)
     {
       return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, s);
     }

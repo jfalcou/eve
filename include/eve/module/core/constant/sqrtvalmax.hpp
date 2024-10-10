@@ -66,8 +66,8 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sqrtvalmax(as<T>())` is the greatest number of the type whose  square
-  //!      is less or equal to `eve::valmax(as<T>())`.
+  //!      The call `eve::sqrtvalmax(as<T>{})` is the greatest number of the type whose  square
+  //!      is less or equal to `eve::valmax(as<T>{})`.
   //!
   //!  @groupheader{Example}
   //!

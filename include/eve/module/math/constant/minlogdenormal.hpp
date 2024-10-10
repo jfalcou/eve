@@ -60,7 +60,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::minlogdenormal(as<T>())` returns  the least value for which
+  //!      The call `eve::minlogdenormal(as<T>{})` returns  the least value for which
   //!      eve::exp is not zero.
   //!
   //!  @groupheader{Example}

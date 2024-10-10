@@ -112,7 +112,7 @@ namespace eve::algo
 
     template< relative_conditional_expr C, decorator S>
     EVE_FORCEINLINE friend auto tagged_dispatch ( eve::tag::load_, C const& c, S const& s
-                                                , eve::as<wv_type> const&, ptr_iterator self
+                                                , as<wv_type>, ptr_iterator self
                                                 )
     {
       return eve::load(c, s, self.ptr, Cardinal{});

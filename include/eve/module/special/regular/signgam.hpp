@@ -85,8 +85,8 @@ namespace eve
       auto isleza0 = is_ngtz(a0);
       auto a       = if_else(is_flint[pedantic](a0) || is_infinite(a0),
                              eve::allbits,
-                             oneminus(one[is_odd(floor(a0))](as(a0)) * T(2)));
-      a            = if_else(is_eqz(a0), bit_or(one(as(a0)), bitofsign(a0)), a);
+                             oneminus(one[is_odd(floor(a0))](as{a0}) * T(2)));
+      a            = if_else(is_eqz(a0), bit_or(one(as{a0}), bitofsign(a0)), a);
       return if_else(is_nan(a0), a0, if_else(isleza0, a, eve::one));
 
     }

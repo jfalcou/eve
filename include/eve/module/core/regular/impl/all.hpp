@@ -24,8 +24,8 @@ all_(EVE_SUPPORTS(cpu_), C const& cond, T const& v) noexcept
   {
     bool res = true;
 
-    std::ptrdiff_t first = cond.offset(eve::as<T> {});
-    std::ptrdiff_t last  = first + cond.count(eve::as<T> {});
+    std::ptrdiff_t first = cond.offset(as<T> {});
+    std::ptrdiff_t last  = first + cond.count(as<T> {});
     while( first != last ) res = res && v.get(first++);
 
     return res;

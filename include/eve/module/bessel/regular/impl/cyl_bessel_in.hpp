@@ -22,12 +22,12 @@ namespace eve::detail
       if constexpr( simd_value<I> && scalar_value<T> )
       {
         using c_t = wide<T, cardinal_t<I>>;
-        return cyl_bessel_in(convert(nu, as(x)), c_t(x));
+        return cyl_bessel_in(convert(nu, as{x}), c_t(x));
       }
       else if constexpr( simd_value<I> && simd_value<T> )
       {
         using elt_t = element_type_t<T>;
-        auto tnu    = convert(nu, as(elt_t()));
+        auto tnu    = convert(nu, as<elt_t>{});
         return cyl_bessel_in(tnu, x);
       }
       else if constexpr( integral_scalar_value<I> )

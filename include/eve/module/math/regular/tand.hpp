@@ -97,11 +97,11 @@ namespace eve
         auto x = eve::abs(a0);
         if( eve::all(x <= T(45)) ) return tand[eve::quarter_circle](a0);
         auto a0_180 = div_180(a0);
-        auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as(a0_180)));
+        auto test   = is_not_flint(a0_180) && is_flint(a0_180 + mhalf(eve::as{a0_180}));
         if constexpr( scalar_value<T> )
         {
           if( is_eqz(a0) ) return a0;
-          if( test ) return nan(eve::as<T>());
+          if( test ) return nan(as<T>{});
         }
         else
           x = if_else(test, eve::allbits, x);

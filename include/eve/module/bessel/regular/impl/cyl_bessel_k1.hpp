@@ -97,9 +97,15 @@ namespace eve::detail
             , 9.904984851e-01f
             , 4.585534549e-02f
           };
+<<<<<<< HEAD
           auto r = rec[pedantic](xxx);
           if( eve::all(xxx < maxlog(as(xxx))) )
             return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-xxx) * rsqrt(xxx));
+=======
+          auto r = rec[pedantic](x);
+          if( eve::all(x < maxlog(as{x})) )
+            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
+>>>>>>> b4cfae764 (more cleanup)
           else
           {
             T ex = exp(-xxx / 2);
@@ -129,7 +135,7 @@ namespace eve::detail
                             2.27912927104139732e+00,
                             2.50358186953478678e-02};
           auto                           r = rec[pedantic](xxx);
-          if( eve::all(xxx < maxlog(as(xxx))) )
+          if( eve::all(xxx < maxlog(as{xxx})) )
             return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-xxx) * rsqrt(xxx));
           else
           {
@@ -141,23 +147,23 @@ namespace eve::detail
 
     if constexpr( scalar_value<T> )
     {
-      if( is_ngez(xx) ) return nan(as(xx));
-      if( xx == 0 ) return inf(as(xx));            // xx is 0
-      if( xx == inf(as(xx)) ) return zero(as(xx)); // xx is infinite
-      if( xx < one(as(xx)) ) return br_1(xx);      // xx in (0, 1]
+      if( is_ngez(xx) ) return nan(as{xx});
+      if( xx == 0 ) return inf(as{xx});            // xx is 0
+      if( xx == inf(as{xx}) ) return zero(as{xx}); // xx is infinite
+      if( xx < one(as{xx}) ) return br_1(xx);      // xx in (0, 1]
       return br_large(xx);                         // xx in (t1, \infty)
     }
     else
     {
-      auto r       = nan(as(xx));
+      auto r       = nan(as{xx});
       auto notdone = is_gtz(xx);
       if( eve::any(notdone) )
       {
         notdone = next_interval(br_1, notdone, xx <= T(1), r, xx);
         if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, xx); }
       }
-      r = if_else(is_eqz(xx), inf(as(xx)), r);
-      r = if_else(xx == inf(as(xx)), zero, r);
+      r = if_else(is_eqz(xx), inf(as{xx}), r);
+      r = if_else(xx == inf(as{xx}), zero, r);
       return r;
     }
   }

@@ -37,9 +37,9 @@ namespace eve::detail
     {
       if constexpr(O::contains(p_kind) || O::contains(q_kind))
       {
-        auto out_of_range = eve::abs(x) > one(as(x));
+        auto out_of_range = eve::abs(x) > one(as{x});
         if( l < 0 ) l = -l - 1; // reflection formula
-        auto p0 = one(as(x));
+        auto p0 = one(as{x});
         auto p1 = x;
         if constexpr(O::contains(p_kind))
         {
@@ -49,9 +49,9 @@ namespace eve::detail
         {
           p0 = eve::atanh(x);
           if( is_eqz(l) ) return if_else(out_of_range, allbits, p0);
-          p1 = fms(x, p0, one(as(x)));
+          p1 = fms(x, p0, one(as{x}));
         }
-        auto c = one(as(l));
+        auto c = one(as{l});
         while( c < l )
         {
           auto p = p0;
@@ -77,11 +77,11 @@ namespace eve::detail
           {
             auto xx = r_t(x);
             using elt_t = element_type_t<T>;
-            auto p0     = one(as(xx));
+            auto p0     = one(as{xx});
             r_t    p00;
             auto iseqzn       = is_eqz(l);
             auto p1           = xx;
-            auto out_of_range = eve::abs(xx) > one(as(xx));
+            auto out_of_range = eve::abs(xx) > one(as{xx});
 
             if constexpr(O::contains(p_kind))
             {
@@ -92,10 +92,10 @@ namespace eve::detail
               p0  = atanh(xx);
               p00 = p0;
               if( eve::all(iseqzn) ) return if_else(out_of_range, allbits, r_t(p0));
-              p1 = fms(x, p0, one(as(xx)));
+              p1 = fms(x, p0, one(as{xx}));
             }
-            auto n    = convert(l, as<elt_t>());
-            auto c    = one(as(n));
+            auto n    = convert(l, as<elt_t>{});
+            auto c    = one(as{n});
             auto test = c < n;
             while( eve::any(test) )
             {
@@ -151,7 +151,7 @@ namespace eve::detail
       using r_t = eve::common_value_t<T, decltype(ll), decltype(mm)>;
       r_t p0(x);
       p0 = eve::legendre[associated](l, m, eve::cos(p0));
-      p0 *= sqrt(((2 * ll + 1) / (4 * pi(as(x))))
+      p0 *= sqrt(((2 * ll + 1) / (4 * pi(as{x})))
                  * exp(log_abs_gamma(ll - mm + 1) - log_abs_gamma(ll + mm + 1)));
        return if_else(is_odd(m), -p0, p0);
     }
@@ -162,8 +162,8 @@ namespace eve::detail
     }
     else if constexpr(scalar_value<M> && scalar_value<L>)
     {
-      auto outofrange = eve::abs(x) > one(as(x));
-      if( outofrange || (l < 0) || (m < 0) ) return nan(as(x));
+      auto outofrange = eve::abs(x) > one(as{x});
+      if( outofrange || (l < 0) || (m < 0) ) return nan(as{x});
       if( (l == L(1)) && (m == M(0)) ) return x;
       if( m > l ) return T(0);
       if( m == 0 ) return legendre(l, x);
@@ -195,9 +195,9 @@ namespace eve::detail
           auto lpos    = is_gez(l);
           auto mpos    = is_gez(m);
           auto mlel    = m <= l;
-          auto inrange = eve::abs(x) <= one(as(x));
+          auto inrange = eve::abs(x) <= one(as{x});
           auto notdone_ = inrange && lpos && mpos;
-          auto r       = if_else(notdone_, zero, nan(as(x)));
+          auto r       = if_else(notdone_, zero, nan(as{x}));
           notdone_     = notdone_ && mlel;
 
           if( eve::any(notdone_) )
@@ -208,13 +208,13 @@ namespace eve::detail
 
             auto regular_case = [](auto ll, auto mm, auto x_, auto notdone) { // other cases
               using elt_t          = element_type_t<T>;
-              auto ll_             = convert(ll, as<elt_t>());
-              auto mm_               = convert(mm, as<elt_t>());
+              auto ll_             = convert(ll, as<elt_t>{});
+              auto mm_               = convert(mm, as<elt_t>{});
               using r_t            = decltype(x_ * ll_ * mm_);
               auto sin_theta_power = eve::pow1p(-sqr(x_), eve::abs(mm_) / 2);
 
-              r_t p0 = convert(eve::double_factorial(convert(eve::max(2 * mm - 1, zero(as(mm))), uint_from<T>())),
-                               as<elt_t>())
+              r_t p0 = convert(eve::double_factorial(convert(eve::max(2 * mm - 1, zero(as{mm})), uint_from<T>())),
+                               as<elt_t>{})
               * sin_theta_power;
               auto p00  = p0;
               auto p1   = x_ * (2 * mm_ + 1) * p0;

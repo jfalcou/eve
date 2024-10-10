@@ -60,7 +60,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::epso_2(as<T>())` returns the half of the machine epsilon.
+  //!      The call `eve::epso_2(as<T>{})` returns the half of the machine epsilon.
   //!
   //!  @groupheader{Example}
   //!

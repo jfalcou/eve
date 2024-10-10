@@ -86,11 +86,11 @@ namespace eve
                                       T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return one[is_nez(a)](eve::as(a));
+        return one[is_nez(a)](eve::as{a});
       else  if constexpr( floating_value<T> )
         return signnz[is_nez(a)](a);
       else
-        return eve::max(eve::min(a,one(eve::as(a))), mone(eve::as(a)));
+        return eve::max(eve::min(a,one(eve::as{a})), mone(eve::as{a}));
     }
   }
 }

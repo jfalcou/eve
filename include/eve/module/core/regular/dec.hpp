@@ -91,14 +91,14 @@ namespace eve
     template<value T, callable_options O>
     EVE_FORCEINLINE constexpr T dec_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
-      if constexpr(integral_value<T> && O::contains(saturated))  return dec[a != valmin(eve::as(a))](a);
+      if constexpr(integral_value<T> && O::contains(saturated))  return dec[a != valmin(eve::as{a})](a);
       else if constexpr( signed_integral_scalar_value<T>)
       {
         using u_t = as_integer_t<T>;
         return T(u_t(a)+u_t(-1));
       }
       else
-        return add[o](a, mone(eve::as(a)));
+        return add[o](a, mone(eve::as{a}));
     }
 
     template<conditional_expr C, value T, callable_options O>
@@ -109,7 +109,7 @@ namespace eve
         using           m_t = as_logical_t<T>;
         constexpr bool  iwl = T::abi_type::is_wide_logical;
 
-        if      constexpr(O::contains(saturated))  return dec[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
+        if      constexpr(O::contains(saturated))  return dec[cond.mask(as<m_t>{}) && (a != valmin(eve::as{a}))](a);
         else if constexpr(integral_value<T> && iwl)
         {
           auto m = cond.mask(as<m_t>{});
@@ -117,11 +117,11 @@ namespace eve
           if constexpr (simd_value<decltype(m)>) return a + convert(m.bits(), as_element<T>{});
           else                                   return a + bit_cast(m.mask(), int_from<decltype(m.mask())>{});
         }
-        else                                     return add[o](a,mone(eve::as(a)));
+        else                                     return add[o](a,mone(eve::as{a}));
       }
       else
       {
-        return add[o](a,mone(eve::as(a)));
+        return add[o](a,mone(eve::as{a}));
       }
     }
   }

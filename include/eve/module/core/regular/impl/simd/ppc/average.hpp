@@ -23,7 +23,7 @@ namespace eve::detail
     else if constexpr( O::contains(upper) && integral_value<T>)
       return average.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     else if constexpr( floating_value<T> )
-      return fma[opts](a, half(eve::as(a)), b * half(eve::as(a)));
+      return fma[opts](a, half(eve::as{a}), b * half(eve::as{a}));
     else
       return map_pt(as<wide<T, N>>{}, average[opts], a, b);
   }

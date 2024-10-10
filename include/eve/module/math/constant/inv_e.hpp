@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::inv_e(as<T>())` returns athe inverse of the basis of the natural logarithms.
+  //!      The call `eve::inv_e(as<T>{})` returns athe inverse of the basis of the natural logarithms.
   //!
   //!  @groupheader{Example}
   //!

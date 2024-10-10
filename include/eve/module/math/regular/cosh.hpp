@@ -97,22 +97,22 @@ namespace eve
       //////////////////////////////////////////////////////////////////////////////
       if constexpr( scalar_value<T> )
       {
-        if( is_eqz(a0) ) return one(eve::as(a0));
+        if( is_eqz(a0) ) return one(eve::as{a0});
       }
-      T ovflimitmln2 = maxlog(as(a0))-log_2(as(a0));
+      T ovflimitmln2 = maxlog(as{a0})-log_2(as{a0});
       auto x = eve::abs(a0);
       if constexpr( scalar_value<T> )
       {
         if(is_not_finite(x)) return x;
         else if( x >= ovflimitmln2 )
         {
-          auto w = exp(x * half(eve::as<T>()));
-          auto t = half(eve::as<T>()) * w;
+          auto w = exp(x * half(as<T>{}));
+          auto t = half(as<T>{}) * w;
           t *= w;
           return t;
         }
         auto t = exp(x);
-        return (x > 22) ? t * half(eve::as<T>()) : average(t, rec[pedantic](t));
+        return (x > 22) ? t * half(as<T>{}) : average(t, rec[pedantic](t));
       }
       else
       {
@@ -121,8 +121,8 @@ namespace eve
         auto c    = average(t, invt);
         auto test = x < ovflimitmln2;
         if( eve::all(test) ) return c;
-        auto w = exp(x * half(eve::as<T>()));
-        t      = half(eve::as<T>()) * w;
+        auto w = exp(x * half(as<T>{}));
+        t      = half(as<T>{}) * w;
         t *= w;
 
         c = if_else(test, c, t);

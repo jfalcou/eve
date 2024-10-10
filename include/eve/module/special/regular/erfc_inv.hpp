@@ -92,7 +92,7 @@ namespace eve
       auto a00     = oneminus(a0);
       auto w       = -log(a0 * (T(2) - a0));
       auto test    = w < T(5);
-      auto r       = nan(as(a0));
+      auto r       = nan(as{a0});
       auto notdone = (a0 <= T(2)) && (a0 >= T(0));
       if constexpr( std::is_same_v<elt_t, float> )
       {
@@ -114,7 +114,7 @@ namespace eve
           };
           notdone = last_interval(br_wge5, notdone, r, w);
         }
-        return if_else(w == inf(as(a0)), copysign(w, a00), r);
+        return if_else(w == inf(as{a0}), copysign(w, a00), r);
       }
       else // double
       {
@@ -159,7 +159,7 @@ namespace eve
           }
         }
       }
-      return if_else(w == inf(as(a0)), copysign(w, a00), a00 * r);
+      return if_else(w == inf(as{a0}), copysign(w, a00), a00 * r);
     }
   }
 }

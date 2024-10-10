@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<callable_options O, scalar_value T, typename N, scalar_value U, typename M>
   requires( sve_abi<abi_t<T, N>> )
-  EVE_FORCEINLINE wide<U, M> bit_cast_(EVE_REQUIRES(sve_), O const&, wide<T,N> x, as<wide<U,M>> const&) noexcept
+  EVE_FORCEINLINE wide<U, M> bit_cast_(EVE_REQUIRES(sve_), O const&, wide<T,N> x, as<wide<U,M>>) noexcept
   {
     if constexpr( std::is_same_v<wide<T, N>, wide<U, M>> ) return x;
     else

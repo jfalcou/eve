@@ -18,7 +18,7 @@ namespace eve
   {
     struct fill_zero
     {
-      constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as(m)); }
+      constexpr EVE_FORCEINLINE auto operator()(auto& m) const { return m = functor<zero_t>(as{m}); }
     };
 
     template<eve::value T>
@@ -71,7 +71,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::zero(as<T>())` is semantically equivalent to  `T(0)`.
+  //!      The call `eve::zero(as<T>{})` is semantically equivalent to  `T(0)`.
   //!
   //!  @groupheader{Example}
   //!

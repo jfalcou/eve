@@ -39,19 +39,19 @@ kernel_bessel_i(T n, T x) noexcept
   };
   auto br_half = [](auto xx)
   {
-    if( eve::any(xx >= maxlog(as(xx))) )
+    if( eve::any(xx >= maxlog(as{x})) )
     {
-      auto ex = eve::exp(xx / 2);
-      return ex * (ex * rsqrt(xx * two_pi(as(xx))));
+      auto ex = eve::exp(x / 2);
+      return ex * (ex * rsqrt(xx * two_pi(as{xx})));
     }
-    else return rsqrt(xx * pio_2(as(xx))) * sinh(xx);
+    else return rsqrt(xx * pio_2(as{xx})) * sinh(xx);
   };
 
   if constexpr( scalar_value<T> )
   {
-    if( is_ngez(x) ) return nan(as(x));
-    if( is_eqz(x) ) return (n == 0) ? one(as(x)) : zero(as(x));
-    if( x == inf(as(x)) ) return inf(as(x));
+    if( is_ngez(x) ) return nan(as{x});
+    if( is_eqz(x) ) return (n == 0) ? one(as{x}) : zero(as{x});
+    if( x == inf(as{x}) ) return inf(as{x});
     if( n == T(0.5) ) return br_half(x);   // cyl_bessel_i order 0.5
     if( n == 0 ) return cyl_bessel_i0(x);  // cyl_bessel_i0(x);
     if( n == 1 ) return cyl_bessel_i1(x);  // cyl_bessel_i1(x);
@@ -60,16 +60,16 @@ kernel_bessel_i(T n, T x) noexcept
   }
   else
   {
-    auto r      = nan(as(x));
-    auto isinfx = x == inf(as(x));
-    r           = if_else(isinfx, inf(as(x)), allbits);
+    auto r      = nan(as{x});
+    auto isinfx = x == inf(as{x});
+    r           = if_else(isinfx, inf(as{x}), allbits);
     x           = if_else(isinfx, mone, x);
     auto iseqzx = is_eqz(x);
     auto iseqzn = is_eqz(n);
-    if( eve::any(iseqzx) ) { r = if_else(iseqzx, if_else(iseqzn, zero, one(as(x))), r); }
+    if( eve::any(iseqzx) ) { r = if_else(iseqzx, if_else(iseqzn, zero, one(as{x})), r); }
     if( eve::any(iseqzn) ) { r = if_else(iseqzn, cyl_bessel_i0(x), r); }
-    auto iseq1n = n == one(as(n));
-    if( eve::any(iseq1n) ) { r = if_else(n == one(as(n)), cyl_bessel_i1(x), r); }
+    auto iseq1n = n == one(as{n});
+    if( eve::any(iseq1n) ) { r = if_else(n == one(as{n}), cyl_bessel_i1(x), r); }
 
     auto notdone = is_gez(x) && !(iseqzn || iseq1n);
     x            = if_else(notdone, x, allbits);

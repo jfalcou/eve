@@ -164,7 +164,7 @@ namespace eve
       [[maybe_unused]] Func<decltype(rmv_cond)> const f{rmv_cond};
 
       // Check that the mask and the value are of same kind if simd
-      constexpr bool compatible_mask = !(   simd_value<decltype(cond.mask(as(x0)))>
+      constexpr bool compatible_mask = !(   simd_value<decltype(cond.mask(as{x0}))>
                                         &&  scalar_value<decltype(f(x0,xs...))>
                                         );
       static_assert(compatible_mask, "[EVE] - Scalar values can't be masked by SIMD logicals.");

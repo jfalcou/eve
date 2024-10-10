@@ -45,7 +45,7 @@ requires(simd_value<T>)
   auto isltzx = is_ltz(x);
   x           = if_else(isltzx, zero, x);
   T          Inu, Knu, Ipnu, Kpnu;
-  const auto Eps      = eps(as(x));
+  const auto Eps      = eps(as{x});
   const T    fp_min   = T(10) * Eps;
   const int  max_iter = 15000;
   const T    x_min    = T(2);
@@ -68,7 +68,7 @@ requires(simd_value<T>)
   T d(T(0));
   T c = h;
 
-  auto test = false_(as(Eps));
+  auto test = false_(as{Eps});
   int  i;
   for( i = 1; i <= max_iter; ++i )
   {
@@ -80,7 +80,7 @@ requires(simd_value<T>)
     test = (eve::abs(dec(del)) < Eps);
     if( eve::all(test) ) break;
   }
-  if( i == max_iter ) h = if_else(test, h, nan(as(h)));
+  if( i == max_iter ) h = if_else(test, h, nan(as{h}));
   T Inul  = fp_min;
   T Ipnul = h * Inul;
   T Inul1 = Inul;
@@ -88,7 +88,7 @@ requires(simd_value<T>)
   T fact  = nu * xi;
 
   auto l = nl;
-  test   = l >= one(as(x));
+  test   = l >= one(as{x});
   while( eve::any(test) )
   {
     const T Inutemp = fma(fact, Inul, Ipnul);
@@ -96,7 +96,7 @@ requires(simd_value<T>)
     Ipnul           = if_else(test, fma(fact, Inutemp, Inul), Ipnul);
     Inul            = if_else(test, Inutemp, Inul);
     --l;
-    test = l >= one(as(x));
+    test = l >= one(as{x});
   }
 
   T    f       = Ipnul / Inul;
@@ -143,8 +143,8 @@ requires(simd_value<T>)
       }
       if( ii > max_iter )
       {
-        sum0  = if_else(test, sum0, nan(as(sum0)));
-        sum1 = if_else(test, sum1, nan(as(sum0)));
+        sum  = if_else(test, sum0, nan(as{sum0}));
+        sum1 = if_else(test, sum1, nan(as{sum0}));
       }
     }
     Kmu  = sum0;
@@ -187,18 +187,20 @@ requires(simd_value<T>)
       }
       if( ii > max_iter )
       {
-        s = if_else(test1, s, nan(as(s)));
-        hh = if_else(test1, hh, nan(as(hh)));
+        s = if_else(test1, s, nan(as{s}));
+        hh = if_else(test1, hh, nan(as{hh}));
       }
     }
+
     hh    = a1 * hh;
-    Kmu  = eve::sqrt(pio_2(as(xx)) / (xx)) * eve::exp(-xx) / s;
+    Kmu  = eve::sqrt(pio_2(as{xx}) / xx) * eve::exp(-xx) / s;
     Knu1 = Kmu * (mu + xx + T(0.5) - hh) * xi;
+
     return;
   };
 
   T Kmu, Knu1;
-  x             = if_else(is_nan(x), T(2), x);
+  x             = if_else(is_nan(x), T{2}, x);
   auto xltx_min = x < x_min;
   if( eve::all(xltx_min) ) { case_lt(x, Kmu, Knu1); }
   else if( eve::none(xltx_min) ) { case_ge(x, Kmu, Knu1); }
@@ -232,13 +234,13 @@ requires(simd_value<T>)
   }
   Knu  = Kmu;
   Kpnu = fms(nu, xi * Kmu, Knu1);
-  Inu  = if_else(is_nan(Inu), inf(as(x)), Inu);
-  Knu  = if_else(is_nan(Knu), inf(as(x)), Knu);
+  Inu  = if_else(is_nan(Inu), inf(as{x}), Inu);
+  Knu  = if_else(is_nan(Knu), inf(as{x}), Knu);
 
   if( eve::any(reflect) )
   {
     auto s = sinpi(nu);
-    Inu += if_else(reflect, inv_pi(as(x)) * 2 * s * Knu, zero);
+    Inu += if_else(reflect, inv_pi(as{x}) * 2 * s * Knu, zero);
   }
   return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
 }
@@ -249,25 +251,25 @@ auto
 kernel_bessel_ik(T nu, T x) noexcept
 requires(scalar_value<T>)
 {
-  if( x == inf(as(x)) ) return kumi::make_tuple(T(0), nan(as(x)), T(0), nan(as(x)));
-  else if( is_ltz(x) ) return kumi::make_tuple(nan(as(x)), nan(as(x)), nan(as(x)), nan(as(x)));
+  if( x == inf(as{x}) ) return kumi::make_tuple(T(0), nan(as{x}), T(0), nan(as{x}));
+  else if( is_ltz(x) ) return kumi::make_tuple(nan(as{x}), nan(as{x}), nan(as{x}), nan(as{x}));
   else if( is_eqz(x) )
   {
     if( is_eqz(nu) )
     {
-      return kumi::make_tuple(T(1), T(0), inf(as(x)), minf(as(x))); // inu, ipnu, knu, kpnu
+      return kumi::make_tuple(T(1), T(0), inf(as{x}), minf(as{x})); // inu, ipnu, knu, kpnu
     }
-    else if( nu == one(as(x)) )
+    else if( nu == one(as{x}) )
     {
-      return kumi::make_tuple(T(0), T(0.5), inf(as(x)), minf(as(x))); // inu, ipnu, knu, kpnu
+      return kumi::make_tuple(T(0), T(0.5), inf(as{x}), minf(as{x})); // inu, ipnu, knu, kpnu
     }
     else
     {
-      return kumi::make_tuple(T(0), T(0), inf(as(x)), minf(as(x))); // inu, ipnu, knu, kpnu
+      return kumi::make_tuple(T(0), T(0), inf(as{x}), minf(as{x})); // inu, ipnu, knu, kpnu
     }
   }
   T          Inu, Knu, Ipnu, Kpnu;
-  const auto Eps      = eps(as(x));
+  const auto Eps      = eps(as{x});
   const T    fp_min   = T(10) * Eps;
   const int  max_iter = 15000;
   const T    x_min    = T(2);
@@ -383,14 +385,16 @@ requires(scalar_value<T>)
       }
       if( i > max_iter )
       {
-        s = nan(as(s));
-        hh = nan(as(s));
+        s = nan(as{s});
+        hh = nan(as{s});
       }
     }
+
     hh   = a1 * hh;
-    Kmu  = eve::sqrt(pio_2(as(x)) / (x)) * eve::exp(-x) / s;
-    Knu1 = Kmu * (mu + x + T(0.5) - hh) * xi;
+    Kmu  = eve::sqrt(pio_2(as{x}) / x) * eve::exp(-x) / s;
+    Knu1 = Kmu * (mu + x + T{0.5} - hh) * xi;
   }
+
   T    Kpmu    = fms(mu, xi * Kmu, Knu1);
   T    Inumu   = xi / fms(f, Kmu, Kpmu);
   auto invInul = rec[pedantic](Inul);
@@ -404,13 +408,13 @@ requires(scalar_value<T>)
   }
   Knu  = Kmu;
   Kpnu = fms(nu, xi * Kmu, Knu1);
-  if( is_nan(Inu) ) Inu = inf(as(x));
-  if( is_nan(Knu) ) Knu = inf(as(x));
+  if( is_nan(Inu) ) Inu = inf(as{x});
+  if( is_nan(Knu) ) Knu = inf(as{x});
 
   if( reflect )
   {
     auto s = sinpi(nu);
-    Inu += inv_pi(as(x)) * 2 * s * Knu;
+    Inu += inv_pi(as{x}) * 2 * s * Knu;
   }
   return kumi::make_tuple(Inu, Ipnu, Knu, Kpnu);
 }

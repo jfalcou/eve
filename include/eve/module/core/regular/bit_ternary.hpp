@@ -114,7 +114,7 @@ namespace eve
     template < std::uint8_t K, typename T0, typename T1, typename T2, callable_options O>
     EVE_FORCEINLINE  bit_value_t<T0, T1, T2>
     bit_ternary_(EVE_REQUIRES(cpu_)
-                , O const &
+                , O const&
                 , std::integral_constant<std::uint8_t, K> const &
                 , T0 const & x
                 , T1 const & y
@@ -126,12 +126,11 @@ namespace eve
       auto wa = as_wide_as_t<T0, i_t>(x);
       auto wb = as_wide_as_t<T1, i_t>(y);
       auto wc = as_wide_as_t<T2, i_t>(z);
-      auto xa = bit_cast(wa, as<i_t>());
-      auto xb = bit_cast(wb, as<i_t>());
-      auto xc = bit_cast(wc, as<i_t>());
-      auto doit = []([[maybe_unused]] auto a,  [[maybe_unused]] auto b, [[maybe_unused]]  auto c)
-      {
-        if constexpr(K == 0x00) return zero(as(a));
+      auto xa = bit_cast(wa, as<i_t>{});
+      auto xb = bit_cast(wb, as<i_t>{});
+      auto xc = bit_cast(wc, as<i_t>{});
+      auto doit = []([[maybe_unused]] auto a,  [[maybe_unused]] auto b, [[maybe_unused]]  auto c){
+        if constexpr(K == 0x00) return zero(as{a});
         if constexpr(K == 0x01) return bit_not(bit_or(a, b, c));
         if constexpr(K == 0x02) return bit_notand(bit_or(a, b), c);
         if constexpr(K == 0x03) return bit_not(bit_or(a, b));
@@ -386,9 +385,13 @@ namespace eve
         if constexpr(K == 0xfc) return bit_or(b, a);
         if constexpr(K == 0xfd) return bit_or(a, b, bit_not(c));
         if constexpr(K == 0xfe) return bit_or(a, b, c);
-        if constexpr(K == 0xff) return eve::allbits(as(a));
+        if constexpr(K == 0xff) return eve::allbits(as{a});
       };
+<<<<<<< HEAD
       return bit_cast(doit(xa, xb, xc), as<T>());
+=======
+      return bit_cast(doit(a, b, c), as<T>{});
+>>>>>>> b4cfae764 (more cleanup)
     }
   }
   template < int a, int b, int c, int d, int e, int f , int g, int h>

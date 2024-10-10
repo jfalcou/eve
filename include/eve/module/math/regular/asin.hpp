@@ -98,28 +98,28 @@ namespace eve
       auto sgn    = eve::bitofsign(a0);
       if constexpr( std::is_same_v<elt_t, float> )
       {
-        const auto x_larger_05 = x > half(eve::as<T>());
-        T          z           = if_else(x_larger_05, half(eve::as<T>()) * oneminus(x), eve::sqr(x));
+        const auto x_larger_05 = x > half(as<T>{});
+        T          z           = if_else(x_larger_05, half(as<T>{}) * oneminus(x), eve::sqr(x));
         x                      = if_else(x_larger_05, sqrt(z), x);
         T z1 =
           eve::reverse_horner(z, T(0x1.5555c8p-3f), T(0x1.3301ecp-4f), T(0x1.747d8ep-5f)
                              , T(0x1.8c2fc6p-6f), T(0x1.5966a4p-5f));
         ;
         z1   = fma(z1, z * x, x);
-        z    = if_else(x_larger_05, pio_2(eve::as<T>()) - (z1 + z1), z1);
+        z    = if_else(x_larger_05, pio_2(as<T>{}) - (z1 + z1), z1);
         return eve::bit_xor(z, sgn);
       }
       else if constexpr( std::is_same_v<elt_t, double> )
       {
-        auto small = x < sqrteps(eve::as<T>());
+        auto small = x < sqrteps(as<T>{});
         if constexpr( scalar_value<T> ) // early scalar return
         {
           if( small ) return a0;
-          if( (x > one(eve::as<T>())) ) return nan(eve::as<T>());
+          if( (x > one(as<T>{})) ) return nan(as<T>{});
         }
         else if constexpr( simd_value<T> ) // simd preparation
         {
-          x = if_else(x > one(eve::as<T>()), eve::allbits, x);
+          x = if_else(x > one(as<T>{}), eve::allbits, x);
         }
         auto case_1 = [](const T& vx)
         { // x < 0.625
@@ -130,10 +130,10 @@ namespace eve
                                         , T(-0x1.5f2a2b6bf5d8cp+4), T(0x1.0p0));
           auto vp  = num / den;
           zz1      = sqrt(zz1 + zz1);
-          auto z   = pio_4(eve::as<T>()) - zz1;
+          auto z   = pio_4(as<T>{}) - zz1;
           zz1      = fms(zz1, vp, T(0x1.1a62633145c07p-54)); // pio_2lo
           z        = z - zz1;
-          zz1      = z + pio_4(eve::as<T>());
+          zz1      = z + pio_4(as<T>{});
           return zz1;
         };
         auto case_2 = [](const T& xx) { // xx >=  0.625

@@ -45,7 +45,7 @@ kernel_bessel_j_int_forward(I n, T x, T j0, T j1) noexcept
     T    fact = 2 * k / x;
     // rescale if we would overflow or underflow:
     auto test = (eve::abs(fact) > 1)
-                && ((valmax(as(x)) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)) && t0;
+                && ((valmax(as{x}) - eve::abs(prev)) / eve::abs(fact) < eve::abs(current)) && t0;
     if( eve::any(test) )
     {
       scale   = if_else(test, scale / current, scale);
@@ -103,7 +103,7 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
 
   if constexpr( scalar_value<I> && scalar_value<T> )
   {
-    if( x == inf(as(x)) ) return zero(as(x));
+    if( x == inf(as{x}) ) return zero(as{x});
     if( asymptotic_bessel_large_x_limit(T(n), x) ) return br_large(T(n), x);
     if( n == 0 ) return j0;                                    // cyl_bessel_j0(x);
     if( n == 1 ) return j1;                                    // cyl_bessel_j1(x);
@@ -115,9 +115,9 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
   else
   {
     using elt_t = element_type_t<T>;
-    auto r      = nan(as(x));
-    auto isinfx = x == inf(as(x));
-    r           = if_else(isinfx, zero(as(x)), allbits);
+    auto r      = nan(as{x});
+    auto isinfx = x == inf(as{x});
+    r           = if_else(isinfx, zero(as{x}), allbits);
     x           = if_else(isinfx, allbits, x);
     auto iseqzn = is_eqz(n);
     if( eve::any(iseqzn) )
@@ -125,14 +125,14 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
       r = if_else(iseqzn, j0, r);
       x = if_else(iseqzn, allbits, x);
     }
-    auto iseq1n = is_equal(n, one(as(n)));
+    auto iseq1n = is_equal(n, one(as{n}));
     if( eve::any(iseq1n) )
     {
       r = if_else(iseq1n, j1, r);
       x = if_else(iseq1n, allbits, x);
     }
     auto notdone = is_not_nan(x);
-    auto nn      = convert(n, as<elt_t>());
+    auto nn      = convert(n, as<elt_t>{});
     if( eve::any(notdone) )
     {
       notdone = next_interval(br_large, notdone, asymptotic_bessel_large_x_limit(nn, x), r, nn, x);
@@ -174,18 +174,18 @@ kernel_bessel_j_flt(T n, T x) noexcept
 
   if constexpr( scalar_value<T> )
   {
-    if( is_ltz(x) ) return nan(as(x));
-    if( x == inf(as(x)) ) return zero(as(x));
+    if( is_ltz(x) ) return nan(as{x});
+    if( x == inf(as{x}) ) return zero(as{x});
     if( asymptotic_bessel_large_x_limit(n, x) ) return br_large(n, x);
-    if( is_eqz(x) ) return zero(as(x));
+    if( is_eqz(x) ) return zero(as{x});
     return br_medium(n, x);
   }
   else
   {
     auto xlt0    = is_ltz(x);
-    auto r       = nan(as(x));
-    auto isinfx  = x == inf(as(x));
-    r            = if_else(isinfx, zero(as(x)), allbits);
+    auto r       = nan(as{x});
+    auto isinfx  = x == inf(as{x});
+    r            = if_else(isinfx, zero(as{x}), allbits);
     x            = if_else(isinfx || xlt0, allbits, x);
     auto notdone = is_not_nan(x);
 

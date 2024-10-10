@@ -101,10 +101,10 @@ namespace eve
       auto x =  eve::abs(a0);
       if constexpr(O::contains(quarter_circle))
       {
-        auto aa0nlepio4 = is_not_less_equal(x, pio_4(eve::as<T>()));
+        auto aa0nlepio4 = is_not_less_equal(x, pio_4(as<T>{}));
         if constexpr( scalar_value<T> )
         {
-          return (aa0nlepio4) ? nan(eve::as<T>()) : rec[pedantic](tancot_eval(a0));
+          return (aa0nlepio4) ? nan(as<T>{}) : rec[pedantic](tancot_eval(a0));
         }
         else { return if_else(aa0nlepio4, eve::allbits, rec[pedantic](tancot_eval(a0))); }
       }
@@ -113,9 +113,9 @@ namespace eve
         auto xleeps = x <= eps(as<T>());
         auto reduce = [](auto xx)
           {
-            auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(eve::as<T>{});
-            auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(eve::as<T>{});
-            auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(eve::as<T>{});
+            auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(as<T>{});
+            auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(as<T>{});
+            auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(as<T>{});
             auto xr     = xx - pio2_1;
             xr -= pio2_2;
             xr -= pio2_3;
@@ -125,8 +125,8 @@ namespace eve
         {
           using i_t = as_integer_t<T, signed>;
           if( xleeps ) return rec[pedantic](a0);
-          if( is_not_less_equal(x, pio_2(eve::as<T>())) ) return nan(eve::as<T>());
-          i_t n = x > pio_4(eve::as<T>());
+          if( is_not_less_equal(x, pio_2(as<T>{})) ) return nan(as<T>{});
+          i_t n = x > pio_4(as<T>{});
           if( n )
           {
             auto xr = reduce(x);
@@ -137,8 +137,8 @@ namespace eve
         }
         else
         {
-          auto xnlepio4 = is_not_less_equal(x, pio_4(eve::as(x)));
-          auto fn       = one[xnlepio4](eve::as(x));
+          auto xnlepio4 = is_not_less_equal(x, pio_4(as{x}));
+          auto fn       = one[xnlepio4](as{x});
           auto xr       = if_else(fn, reduce(x), x);
           auto y        = tancot_eval(xr);
           y             = if_else(is_not_finite(a0), eve::allbits, if_else(xnlepio4, -y, rec[pedantic](y)));
@@ -147,10 +147,10 @@ namespace eve
       }
       else if constexpr(O::contains(full_circle) || O::contains(medium) || O::contains(big) )
       {
-        auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as(a0)));
+        auto xnlelim = is_not_less_equal(x, Rempio2_limit[o](as{a0}));
         if constexpr( scalar_value<T> )
         {
-          if( xnlelim ) return nan(eve::as<T>());
+          if( xnlelim ) return nan(as<T>{});
         }
         else x = if_else(xnlelim, allbits, x);
         auto [fn, xr, dxr] = rempio2[o](x);
@@ -158,13 +158,13 @@ namespace eve
       }
       else
       {
-        if( eve::all(x <= Rempio2_limit[quarter_circle](as(a0))) )
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as{a0})) )
           return cot[quarter_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[half_circle](as(a0))))
+        else if( eve::all(x <= Rempio2_limit[half_circle](as{a0})))
           return cot[half_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[full_circle](as(a0))))
+        else if( eve::all(x <= Rempio2_limit[full_circle](as{a0})))
           return cot[full_circle](a0);
-        else if( eve::all(x <= Rempio2_limit[medium](as(a0))))
+        else if( eve::all(x <= Rempio2_limit[medium](as{a0})))
           return cot[medium](a0);
         else
           return cot[big](a0);

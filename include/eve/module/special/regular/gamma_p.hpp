@@ -31,55 +31,55 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
   EVE_CALLABLE_OBJECT(gamma_p_t, gamma_p_);
 };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var gamma_p
-//!   @brief `elementwise_callable` object computing the normalized lower incomplete \f$\Gamma\f$ function.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto gamma_p(floating_value auto x, floating_value auto y)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto gamma_p[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
-//!      constexpr auto gamma_p[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`, `y`:  [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value of the normalized lower incomplete \f$\Gamma\f$ function:
-//!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia: Incomplete gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
-//!   *  [DLMF](https://dlmf.nist.gov/8.2)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/gamma_p.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var gamma_p
+  //!   @brief `elementwise_callable` object computing the normalized lower incomplete \f$\Gamma\f$ function.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto gamma_p(floating_value auto x, floating_value auto y)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto gamma_p[conditional_expr auto c](floating_value auto x, floating_value auto y) noexcept; // 2
+  //!      constexpr auto gamma_p[logical_value auto m](floating_value auto x, floating_value auto y)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`, `y`:  [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value of the normalized lower incomplete \f$\Gamma\f$ function:
+  //!        \f$\displaystyle \frac{1}{\Gamma(x)}\int_0^{y} t^{x-1}e^{-t}\mbox{d}t\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia: Incomplete gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function)
+  //!   *  [DLMF](https://dlmf.nist.gov/8.2)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/gamma_p.cpp}
+  //================================================================================================
   inline constexpr auto gamma_p = functor<gamma_p_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
@@ -89,14 +89,14 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
     gamma_p_(EVE_REQUIRES(cpu_), O const&, T x, T a) noexcept
     {
       auto const third   = T(1 / 3.0);
-      auto       res     = nan(as<T>()); // nan case treated here
+      auto       res     = nan(as<T>{}); // nan case treated here
       auto       notdone = is_not_nan(x);
       const auto amax    = T(1048576);
       auto       test    = (a > amax);
       if( eve::any(test) )
       {
         auto z = eve::fma(1024 * rsqrt(a), x - (a - third), amax - third);
-        x      = eve::max(z, zero(as(x)));
+        x      = eve::max(z, zero(as{x}));
         a      = if_else(test, amax, a);
       }
       auto lginc = [](auto a0, auto a1, auto tt){
@@ -106,18 +106,18 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
 
         // Series expansion for x < a+1
         auto ap  = a1;
-        auto del = one(as(ap));
+        auto del = one(as{ap});
         auto ss = del;
 
         while( eve::any(abs(del) >= T(100) * epsilon(maximum(abs(ss)))) )
         {
-          ap += one(as(ap));
+          ap += one(as{ap});
           del = lx * del / ap;
           ss += del;
         }
         auto b = ss * eve::exp(fms(a1, eve::log(lx), eve::log_abs_gamma(inc(a1)) + lx));
         //  For very small a, the series may overshoot very slightly.
-        b = eve::min(b, one(as(b)));
+        b = eve::min(b, one(as{b}));
         //  if lower, b(k) = bk; else b(k) = 1-bk; end
         return if_else(is_eqz(a0) && is_eqz(a1), one, b);
       };
@@ -127,12 +127,12 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
         px = if_else(tt, px, inc(pa));
         // Continued fraction for x >= a+1
         // k = find(a ~= 0 & x >= a+1); % & x ~= 0
-        auto x0   = one(as(px));
+        auto x0   = one(as{px});
         auto x1   = px;
-        auto b0   = zero(as(px));
+        auto b0   = zero(as{px});
         auto b1   = x0;
         auto fac  = rec[pedantic](x1);
-        auto n    = one(as(px));
+        auto n    = one(as{px});
         auto g    = b1 * fac;
         auto gold = b0;
 

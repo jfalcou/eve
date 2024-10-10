@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::glaisher(as<T>())` returns the Glaisher-Kinkelin constant.
+  //!      The call `eve::glaisher(as<T>{})` returns the Glaisher-Kinkelin constant.
   //!
   //!  @groupheader{Example}
   //!

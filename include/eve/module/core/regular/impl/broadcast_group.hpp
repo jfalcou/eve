@@ -80,7 +80,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
     {
       using outer_type = detail::make_integer_t<sizeof(v_t) * Group>;
       using w_t        = as_wide_t<outer_type, fixed<card / Group>>;
-      return bit_cast(broadcast(bit_cast(w, as<w_t>()), i, lane<Size / Group>), as<that_t>());
+      return bit_cast(broadcast(bit_cast(w, as<w_t>{}), i, lane<Size / Group>), as<that_t>{});
     }
     // If the output Greater than the Group size, we slice by half
     else if constexpr( Size > Group )
@@ -125,7 +125,7 @@ requires((Group > 0) && (Group <= std::min(cardinal_v<Wide>, Size)) && (Index >=
   else
   {
     // Use the common implementation
-    return bit_cast(broadcast_group(w.mask(), g, i, sz), as(w));
+    return bit_cast(broadcast_group(w.mask(), g, i, sz), as{w});
   }
 }
 

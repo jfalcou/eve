@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::sin_1(as<T>())` returns the sine of 1.
+  //!      The call `eve::sin_1(as<T>{})` returns the sine of 1.
   //!
   //!  @groupheader{Example}
   //!

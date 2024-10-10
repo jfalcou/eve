@@ -91,15 +91,15 @@ namespace eve
       auto isnan = is_nan(x);
       auto    minlogval = []() {
         if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
-        return minlogdenormal(eve::as<T>());
+        return minlogdenormal(as<T>{});
         else
-          return minlog(eve::as<T>());
+          return minlog(as<T>{});
       };
       if constexpr( scalar_value<T> )
       {
         if constexpr( has_emulated_abi_v<wide<T>> )
         {
-          return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x);
+          return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as{x})) ? inf(as{x}) : std::exp(x);
         }
         else
         {
@@ -110,16 +110,16 @@ namespace eve
       else
       {
         using elt_t       = element_type_t<T>;
-        const T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
-        const T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
-        const T Invlog_2  = ieee_constant<0x1.7154760p+0f, 0x1.71547652b82fep+0>(eve::as<T>{});
+        const T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(as<T>{});
+        const T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(as<T>{});
+        const T Invlog_2  = ieee_constant<0x1.7154760p+0f, 0x1.71547652b82fep+0>(as<T>{});
         auto    xltminlog = x <= minlogval();
-        auto    xgemaxlog = x >= maxlog(eve::as(x));
+        auto    xgemaxlog = x >= maxlog(eve::as{x});
         if constexpr( scalar_value<T> )
         {
           if( isnan ) return x;
-          if( xgemaxlog ) return inf(eve::as(x));
-          if( xltminlog ) return zero(eve::as(x));
+          if( xgemaxlog ) return inf(eve::as{x});
+          if( xltminlog ) return zero(eve::as{x});
         }
         auto c = nearest(Invlog_2 * x);
         auto k = c;
@@ -145,7 +145,7 @@ namespace eve
         if constexpr( simd_value<T> )
         {
           z = if_else(xltminlog, eve::zero, z);
-          z = if_else(xgemaxlog, inf(eve::as(x)), z);
+          z = if_else(xgemaxlog, inf(eve::as{x}), z);
           z = if_else(isnan, allbits, z);
         }
         return z;

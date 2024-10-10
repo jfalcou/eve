@@ -25,11 +25,11 @@ namespace eve::detail
       auto const exact_mask = keep_first(c_t::value).mask(as<as_wide_t<v_t,ec_t>>{});
       if constexpr(is_logical_v<W>)
       {
-        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) && exact_mask, as(v));
+        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>{}) && exact_mask, as{v});
       }
       else
       {
-        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>()) & exact_mask.mask(), as(v));
+        v = bit_cast(bit_cast(v,as<as_wide_t<v_t,ec_t>>{}) & exact_mask.mask(), as{v});
       }
     }
 
@@ -44,10 +44,10 @@ namespace eve::detail
 
     if constexpr(c_t::value < ec_t::value)
     {
-      v = bit_cast( slide_right ( bit_cast(v,as<wide<v_t,ec_t>>())
+      v = bit_cast( slide_right ( bit_cast(v,as<wide<v_t,ec_t>>{})
                                 , index<ec_t::value - c_t::value>
                                 )
-                  , as(v)
+                  , as{v}
                   );
     }
 

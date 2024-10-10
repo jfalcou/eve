@@ -61,7 +61,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //! the call `eve::maxexponentm1(as<T>())` is semantically equivalent to
+  //! the call `eve::maxexponentm1(as<T>{})` is semantically equivalent to
   //!   - as_integer_t<T>(126) if eve::element_type_t<T> is float
   //!   - as_integer_t<T>(1022) if eve::element_type_t<T> is double
   //!

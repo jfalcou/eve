@@ -183,13 +183,13 @@ namespace eve
         auto large_negative = [](T q){
           auto st     = stirling(q);
           auto p      = floor(q);
-          auto sgngam = if_else(is_even(p), one(eve::as(q)), eve::mone);
+          auto sgngam = if_else(is_even(p), one(eve::as{q}), eve::mone);
           auto z      = q - p;
-          auto test2  = is_less(z, half(eve::as(q)));
+          auto test2  = is_less(z, half(eve::as{q}));
           z           = dec[test2](z);
           z           = q * sinpi(z);
           z           = abs(z);
-          return sgngam * pi(eve::as(q)) / (z * st);
+          return sgngam * pi(eve::as{q}) / (z * st);
         };
 
         auto other = [tgamma1](T q, const auto& test){

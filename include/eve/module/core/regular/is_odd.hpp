@@ -85,9 +85,9 @@ namespace eve
         return (a != da) && is_even[o](da);
       }
       else if constexpr( scalar_value<T> )
-        return (a & one(eve::as(a)));
+        return (a & one(eve::as{a}));
       else return
-        is_nez((a & one(eve::as(a))));
+        is_nez((a & one(eve::as{a})));
     }
   }
 }

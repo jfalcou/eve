@@ -72,7 +72,7 @@ namespace eve
   //!     2. Always returns `true`
   //!     3. [The operation is performed conditionnaly](@ref conditional).
   //!     4. The call `is_flint[pedantic](x)` also check that the input is not greater or equal to the
-  //!        largest consecutive integer in the element type of `x` (`maxflint(as(x))`).
+  //!        largest consecutive integer in the element type of `x` (`maxflint(as{x})`).
   //!
   //!  @groupheader{Example}
   //!  @godbolt{doc/core/is_flint.cpp}
@@ -88,11 +88,11 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T> is_flint_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr (integral_value<T>)
-        return true_(eve::as<T>());
+        return true_(as<T>{});
       else
       {
         if constexpr (O::contains(pedantic))
-          return is_eqz(frac(a)) && (a <= eve::maxflint(eve::as<T>()));
+          return is_eqz(frac(a)) && (a <= eve::maxflint(as<T>{}));
         else
           return is_eqz(frac[raw](a));
       }

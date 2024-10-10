@@ -100,7 +100,7 @@ namespace eve
       {
         if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle](a0);
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
+          if( is_not_finite(a0) ) return eve::zip(nan(as<T>{}), nan(as<T>{}));
         auto x             = eve::abs(a0);
         x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
         auto [fn, xr, dxr] = rem180(x);

@@ -219,11 +219,11 @@ namespace eve
 
       if constexpr( scalar_value<T> )
       {
-        if( n == one(as(n)) ) return -0.5; // mhalf(as<double>());
+        if( n == one(as{n}) ) return -0.5; // mhalf(as<double>{});
         if( is_odd(n) ) return 0.0;
         auto no2 = n / 2;
         if constexpr( sizeof(T) == 1 ) return dbernouilli_b2ns[no2];
-        else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>());
+        else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>{});
       }
       else
       {
@@ -233,10 +233,10 @@ namespace eve
         auto test   = nlt130 && even_n;
         auto nn     = if_else(test, no2, zero);
         auto r      = gather(&dbernouilli_b2ns[0], nn);
-        r           = if_else(even_n, r, zero(as(r))); // TODO why zero is not good here ?
-        r           = if_else(n == one(as(n)), mhalf(as(r)), r);
+        r           = if_else(even_n, r, zero(as{r})); // TODO why zero is not good here ?
+        r           = if_else(n == one(as{n}), mhalf(as{r}), r);
         if constexpr( sizeof(element_type_t<T>) == 1 ) return r;
-        return if_else(nlt130, r, inf(as(r)));
+        return if_else(nlt130, r, inf(as{r}));
       }
     }
   }

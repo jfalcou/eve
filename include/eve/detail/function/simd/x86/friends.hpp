@@ -40,12 +40,12 @@ requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
       storage_t dst;
       if constexpr( is_aggregated_v<abi_t> )
       {
-        u_t them = bit_cast(a.storage(),as<u_t>()) & b.storage().value;
-        dst = bit_cast(them,as<storage_t>());
+        u_t them = bit_cast(a.storage(),as<u_t>{}) & b.storage().value;
+        dst = bit_cast(them,as<storage_t>{});
       }
       else if constexpr( is_aggregated_v<abi_u> )
       {
-        dst.value = a.storage().value & bit_cast(b.storage(),as<u_t>());
+        dst.value = a.storage().value & bit_cast(b.storage(),as<u_t>{});
       }
       else
       {
@@ -85,12 +85,12 @@ requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
       storage_t dst;
       if constexpr( is_aggregated_v<abi_t> )
       {
-        u_t them = bit_cast(a.storage(),as<u_t>()) | b.storage().value;
-        dst = bit_cast(them,as<storage_t>());
+        u_t them = bit_cast(a.storage(),as<u_t>{}) | b.storage().value;
+        dst = bit_cast(them,as<storage_t>{});
       }
       else if constexpr( is_aggregated_v<abi_u> )
       {
-        dst.value = a.storage().value | bit_cast(b.storage(),as<u_t>());
+        dst.value = a.storage().value | bit_cast(b.storage(),as<u_t>{});
       }
       else
       {
@@ -117,7 +117,7 @@ self_lognot(logical<wide<T, N>> v) noexcept requires x86_abi<abi_t<T, N>>
     using l_t = logical<wide<T, N>>;
     return l_t {~v.storage()};
   }
-  else { return bit_cast(~v.bits(), as(v)); }
+  else { return bit_cast(~v.bits(), as{v}); }
 }
 
 //================================================================================================
@@ -215,8 +215,8 @@ self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<
   else
   {
     // AVX has a bad == for integers so we use XOR
-    if constexpr( current_api == avx ) return bit_cast(~v.bits() ^ w.bits(), as(v));
-    else return bit_cast(v.bits() == w.bits(), as(v));
+    if constexpr( current_api == avx ) return bit_cast(~v.bits() ^ w.bits(), as{v});
+    else return bit_cast(v.bits() == w.bits(), as{v});
   }
 }
 
@@ -279,7 +279,7 @@ self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi
   {
     return logical<wide<T, N>> {v.storage() ^ w.storage()};
   }
-  else { return bit_cast(v.bits() ^ w.bits(), as(v)); }
+  else { return bit_cast(v.bits() ^ w.bits(), as{v}); }
 }
 
 //================================================================================================
@@ -337,8 +337,8 @@ EVE_FORCEINLINE logical<wide<T, N>>
       [[maybe_unused]] auto unsigned_cmp = [](auto vv, auto wv)
       {
         using l_t     = logical<wide<T, N>>;
-        auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
-        return bit_cast((bit_cast(vv, as(sm)) - sm) < (bit_cast(wv, as(sm)) - sm), as<l_t> {});
+        auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>{});
+        return bit_cast((bit_cast(vv, as{sm}) - sm) < (bit_cast(wv, as{sm}) - sm), as<l_t> {});
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(w, v);
@@ -419,8 +419,13 @@ EVE_FORCEINLINE logical<wide<T, N>>
       [[maybe_unused]] auto unsigned_cmp = [](auto vv, auto vw)
       {
         using l_t     = logical<wide<T, N>>;
+<<<<<<< HEAD
         auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
         return bit_cast((bit_cast(vv, as(sm)) - sm) > (bit_cast(vw, as(sm)) - sm), as<l_t> {});
+=======
+        auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>{});
+        return bit_cast((bit_cast(v, as{sm}) - sm) > (bit_cast(w, as{sm}) - sm), as<l_t> {});
+>>>>>>> b4cfae764 (more cleanup)
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(v, w);

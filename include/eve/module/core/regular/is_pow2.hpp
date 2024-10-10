@@ -76,7 +76,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_pow2_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_pow2_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       return is_gtz(a) && is_eqz(a & dec(a));
     }

@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::pio_4(as<T>())` returns \f$\pi/4\f$.
+  //!      The call `eve::pio_4(as<T>{})` returns \f$\pi/4\f$.
   //!
   //!  @groupheader{Example}
   //!

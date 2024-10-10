@@ -20,7 +20,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   if constexpr( C::is_complete && !C::is_inverted ) return std::nullopt;
   else if constexpr( has_aggregated_abi_v<L> )
   {
-    if constexpr( !C::is_complete ) m = m && sve_true(c, as(m));
+    if constexpr( !C::is_complete ) m = m && sve_true(c, as{m});
     auto [lo, hi] = m.slice();
     auto lo_res   = first_true[ignore_none](lo);
     auto hi_res   = first_true[ignore_none](hi);
@@ -30,7 +30,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
   }
   else
   {
-    auto c_m = L {sve_true(c, eve::as(m))};
+    auto c_m = L {sve_true(c, eve::as{m})};
 
     // We don't need this much but it makes the `no matches` case
     // faster

@@ -54,7 +54,7 @@ namespace eve
 struct swap_adjacent_t
 {
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
+  static constexpr auto pattern(as<T>, eve::fixed<G>)
   requires(G < T::size())
   {
     return eve::fix_pattern<T::size() / G>(
@@ -66,7 +66,7 @@ struct swap_adjacent_t
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
+  static constexpr std::ptrdiff_t level(as<T> tgt, eve::fixed<G> g)
   {
     const std::ptrdiff_t g_size   = sizeof(element_type_t<T>) * G;
     const std::size_t    reg_size = sizeof(element_type_t<T>) * T::size();
@@ -95,8 +95,8 @@ struct swap_adjacent_t
 
     if constexpr( current_api == avx && reg_size >= 32 && g_size <= 2 )
     {
-      using half_t          = decltype(T {}.slice(lower_));
-      std::ptrdiff_t half_l = level(eve::as<half_t> {}, g);
+      using half_t          = decltype(T{}.slice(lower_));
+      std::ptrdiff_t half_l = level(as<half_t> {}, g);
       // since we are adding, we need to deal with aggregation
       if( reg_size > 32 ) return half_l;
       return detail::idxm::add_shuffle_levels({half_l, half_l, 4});

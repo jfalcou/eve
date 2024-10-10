@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::invlog_10(as<T>())` returns the inverse of \f$\log10\f$.
+  //!      The call `eve::invlog_10(as<T>{})` returns the inverse of \f$\log10\f$.
   //!
   //!  @groupheader{Example}
   //!

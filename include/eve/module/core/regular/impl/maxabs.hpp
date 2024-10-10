@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  maxabs_(EVE_REQUIRES(cpu_), O const & o, T0 a0, T1 a1, Ts... as) noexcept
+  maxabs_(EVE_REQUIRES(cpu_), O const& o, T0 a0, T1 a1, Ts... as) noexcept
   {
     auto abso = abs[o.drop(pedantic,numeric)];
     return eve::max[o.drop(saturated)](abso(a0), abso(a1), abso(as)...);

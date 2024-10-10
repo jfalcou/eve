@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::khinchin(as<T>())` returns a value of type T with all bits set.
+  //!      The call `eve::khinchin(as<T>{})` returns a value of type T with all bits set.
   //!
   //!  @groupheader{Example}
   //!

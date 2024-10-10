@@ -194,7 +194,7 @@ namespace eve::algo::views
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::load_,
                                                 C                             c,
                                                 S                             s,
-                                                eve::as<wide_value_type_t<I>> tgt,
+                                                as<wide_value_type_t<I>>      tgt,
                                                 backward_iterator              self)
     {
       return eve::load( eve::reverse_conditional(c, tgt), s, tgt, self.base - iterator_cardinal_v<I>);
@@ -207,7 +207,7 @@ namespace eve::algo::views
                                                 backward_iterator     self)
       requires iterator<I>
     {
-      eve::store[eve::reverse_conditional(c, eve::as(v))](v, self.base - iterator_cardinal_v<I>);
+      eve::store[eve::reverse_conditional(c, eve::as{v})](v, self.base - iterator_cardinal_v<I>);
     }
 
     EVE_FORCEINLINE friend void tagged_dispatch(eve::tag::store_,

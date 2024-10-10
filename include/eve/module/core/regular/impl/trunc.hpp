@@ -31,7 +31,7 @@ namespace eve::detail
       {
         using elt_t = element_type_t<T>;
         using i_t   = as_integer_t<elt_t>;
-        return convert(convert(a0, as<i_t>()), as<elt_t>());
+        return convert(convert(a0, as<i_t>{}), as<elt_t>{});
       }
       else if constexpr(O::contains(almost))
       {

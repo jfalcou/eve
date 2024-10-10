@@ -30,17 +30,17 @@ namespace eve::detail
     {
       if constexpr( std::same_as<T, float> )
       {
-        auto ct = one(eve::as(v0));
+        auto ct = one(eve::as{v0});
         auto es = rsqrt[raw](v0);
         auto xn = sqr(es);
-        auto he = es * half(eve::as(v0));
+        auto he = es * half(eve::as{v0});
 
         xn = vec_nmsub(v0.storage(), xn.storage(), ct.storage());
         xn = fma(xn, he, es);
 
         if( platform::supports_infinites )
         {
-          auto i = inf(eve::as(v0));
+          auto i = inf(eve::as{v0});
           xn     = if_else(is_eqz(v0), i, if_else(v0 == i, eve::zero, xn));
         }
 

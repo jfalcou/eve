@@ -29,10 +29,10 @@ EVE_FORCEINLINE wide<T, N> popcount_(EVE_REQUIRES(sve_),
                                      wide<T, N> v) noexcept
 requires sve_abi<abi_t<T, N>>
 {
-  auto alt = alternative(cond, v, as(v));
+  auto alt = alternative(cond, v, as{v});
   if constexpr( C::is_complete )
     return alt;
   else
-    return svcnt_m(alt, expand_mask(cond, as(v)), v);
+    return svcnt_m(alt, expand_mask(cond, as{v}), v);
 }
 }

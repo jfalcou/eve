@@ -59,7 +59,7 @@ namespace eve::detail
     if constexpr( C::is_complete && !C::is_inverted ) return compress_(EVE_RETARGET(cpu_), c, v, mask);
     else if constexpr ( !C::is_complete )
     {
-      return compress(ignore_none, v, mask && c.mask(as(mask)));
+      return compress(ignore_none, v, mask && c.mask(as{mask}));
     }
     else if constexpr ( compress_sve_should_split<T, N>() )
     {

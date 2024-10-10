@@ -100,7 +100,7 @@ namespace eve
       while( eve::any(inc(first) < last) )
       {
         auto mid  = average(first, last);
-        auto pmid = convert(nth_prime(mid), as<elt_t>());
+        auto pmid = convert(nth_prime(mid), as<elt_t>{});
         auto test = pmid <= n;
         first     = if_else(test, mid, first);
         last      = if_else(test, last, mid);
@@ -113,16 +113,16 @@ namespace eve
 
     template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
     constexpr EVE_FORCEINLINE auto
-    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> target) noexcept
     {
-      return convert(prime_floor(convert(n, as<uint32_t>())), target);
+      return convert(prime_floor(convert(n, as<uint32_t>{})), target);
     }
 
     template<unsigned_value T,  floating_scalar_value U, callable_options O>
     constexpr EVE_FORCEINLINE auto
-    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
+    prime_floor_(EVE_REQUIRES(cpu_), O const&, T n, as<U> target) noexcept
     {
-      auto r = convert(prime_floor(convert(n, as<uint32_t>())), target);
+      auto r = convert(prime_floor(convert(n, as<uint32_t>{})), target);
       return if_else(is_eqz(r), allbits, r);
     }
   }

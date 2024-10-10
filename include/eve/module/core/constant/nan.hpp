@@ -60,7 +60,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!    The call `eve::nan(as<T>())`  is semantically equivalent to  `T(0.0/0.0)`.
+  //!    The call `eve::nan(as<T>{})`  is semantically equivalent to  `T(0.0/0.0)`.
   //!
   //!  @groupheader{Example}
   //!

@@ -78,9 +78,9 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    sign_alternate_(EVE_REQUIRES(cpu_), O const &, T const& n) noexcept
+    sign_alternate_(EVE_REQUIRES(cpu_), O const&, T const& n) noexcept
     {
-      return if_else(is_odd(n), mone, one(as(n)));
+      return if_else(is_odd(n), mone, one(as{n}));
     }
   }
 }

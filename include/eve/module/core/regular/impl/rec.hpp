@@ -63,7 +63,7 @@ namespace eve::detail
         if( std::is_unsigned_v<T> )
         {
           auto b = a > 1 ? 0 : 1;
-          return (a ? 1 : valmax(eve::as(a))) * b;
+          return (a ? 1 : valmax(eve::as{a})) * b;
         }
         else
         {
@@ -71,13 +71,13 @@ namespace eve::detail
           auto b2 = a < -1 ? 0 : 1;
           b2 *= b1;
 
-          return (a ? a : valmax(eve::as(a))) * b2;
+          return (a ? a : valmax(eve::as{a})) * b2;
         }
       }
       else // constexpr( simd_value<T> )
       {
         if( std::is_unsigned_v<T> )
-          return if_else(is_eqz(a), valmax(eve::as(a)), if_else(eve::abs(a) == one(eve::as(a)), a, eve::zero));
+          return if_else(is_eqz(a), valmax(eve::as{a}), if_else(eve::abs(a) == one(eve::as{a}), a, eve::zero));
         else
           return map_pt(as<T>{}, eve::rec, a);
       }

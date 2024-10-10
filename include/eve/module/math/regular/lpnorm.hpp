@@ -96,14 +96,14 @@ namespace eve
       if constexpr( integral_value<P> )
       {
         using e_t =  element_type_t<r_t>;
-        auto fp =  convert(p, eve::as<e_t>());
+        auto fp =  convert(p, as<e_t>{});
         return lpnorm[o](fp, r_t(a0), r_t(a1), r_t(args)...);
       }
       else
       {
         if( eve::all(p == P(2)) ) return hypot[o](r_t(a0), r_t(a1), r_t(args)...);
         else if( eve::all(p == P(1)) ) return manhattan/*[o]*/(r_t(a0), r_t(a1), r_t(args)...);
-        else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
+        else if( eve::all(p == eve::inf(as{p})) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
         else
         {
           if (O::contains(pedantic))
@@ -117,7 +117,7 @@ namespace eve
             auto isinfp = is_infinite(rp);
             auto rinf = maxabs(r_t(a0), r_t(a1), r_t(args)...);
             r = if_else(isinfp, rinf, r);
-            return if_else(any_is_inf, inf(as<r_t>()), r);
+            return if_else(any_is_inf, inf(as<r_t>{}), r);
           }
           else
           {

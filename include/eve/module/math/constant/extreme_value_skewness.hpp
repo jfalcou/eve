@@ -71,7 +71,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::extreme_value_skewness(as<T>())` returns   \f$12\sqrt6\zeta(3)/\pi^3\f$.
+  //!      The call `eve::extreme_value_skewness(as<T>{})` returns   \f$12\sqrt6\zeta(3)/\pi^3\f$.
   //!
   //!  @groupheader{Example}
   //!

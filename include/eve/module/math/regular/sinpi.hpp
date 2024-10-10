@@ -90,23 +90,23 @@ namespace eve
     {
       if constexpr(O::contains(quarter_circle))
       {
-        return sin[eve::quarter_circle](a0 * pi(eve::as<T>()));
+        return sin[eve::quarter_circle](a0 * pi(as<T>{}));
       }
       else
       {
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return nan(eve::as<T>());
+          if( is_not_finite(a0) ) return nan(as<T>{});
         auto x = eve::abs(a0);
         if( eve::all(x <= T(0.25)) )
           return sinpi[quarter_circle](a0);
         if constexpr( scalar_value<T> )
         {
-          if( x > maxflint(eve::as<T>()) ) return T(0);
+          if( x > maxflint(as<T>{}) ) return T(0);
         }
         else
         {
           x = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
-          x = if_else(is_greater(x, maxflint(eve::as(x))), eve::zero, x);
+          x = if_else(is_greater(x, maxflint(eve::as{x})), eve::zero, x);
         }
         auto [fn, xr, dxr] = rem2(x);
         return sin_finalize(bitofsign(a0), fn, xr, dxr);

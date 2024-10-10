@@ -17,7 +17,7 @@ up_element_size(wide<T, N> x)
 {
   using T1 = detail::make_integer_t<sizeof(T) * 2, unsigned>;
   using N1 = eve::fixed<N::value / 2>;
-  return eve::bit_cast(x, eve::as<wide<T1, N1>> {});
+  return eve::bit_cast(x, as<wide<T1, N1>> {});
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t To>

@@ -89,16 +89,16 @@ namespace eve::detail
         if constexpr( scalar_value<T> )
         {
           // case valmin/-1 is treated here
-          if( b == -1 && a == eve::valmin(eve::as(a)) ) return eve::valmax(eve::as(a));
+          if( b == -1 && a == eve::valmin(eve::as{a}) ) return eve::valmax(eve::as{a});
           if( b != 0 ) return div[o.drop(saturated)](a, b);
           // negative -> valmin,  positive -> valmax
-          else return bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
+          else return bit_xor(eve::valmax(eve::as{a}), shr(a, shft));
         }
         else if constexpr( simd_value<T> )
         {
-          auto a2 = bit_xor(eve::valmax(eve::as(a)), shr(a, shft));
+          auto a2 = bit_xor(eve::valmax(eve::as{a}), shr(a, shft));
           // case valmin/-1 is treated here
-          a           = inc[!(inc(b) | add(a, eve::valmin(eve::as(a))))](a);
+          a           = inc[!(inc(b) | add(a, eve::valmin(eve::as{a})))](a);
           auto isnezb = is_nez(b);
           b           = if_else(isnezb, b, mone);
           return if_else(isnezb, div[o.drop(saturated)](a, b), a2);
@@ -107,7 +107,7 @@ namespace eve::detail
       else if constexpr( unsigned_value<T> )
       {
         if constexpr( scalar_value<T> )
-          return ( b != 0 ) ? a / b : valmax(as(a));
+          return ( b != 0 ) ? a / b : valmax(as{a});
         else
           return if_else(is_nez(b), div(a, b), allbits);
       }
@@ -134,7 +134,7 @@ namespace eve::detail
           }
           else
           {
-            return convert[saturated](floor(convert(a, as<double>()) / convert(b, as<double>())), as<elt_t>());
+            return convert[saturated](floor(convert(a, as<double>{}) / convert(b, as<double>{})), as<elt_t>{});
           }
         }
         else if constexpr( unsigned_value<T> )
@@ -161,7 +161,7 @@ namespace eve::detail
           }
           else
           {
-            return convert[saturated](ceil(convert(a,as<double>()) / convert(b,as<double>())), as<elt_t>());
+            return convert[saturated](ceil(convert(a,as<double>{}) / convert(b,as<double>{})), as<elt_t>{});
           }
         }
         else if constexpr( unsigned_value<T> )
@@ -202,7 +202,7 @@ namespace eve::detail
         }
         else
         {
-          return convert[saturated](nearest(convert(a,as<double>()) / convert(b,as<double>())), as<v_t>());
+          return convert[saturated](nearest(convert(a,as<double>{}) / convert(b,as<double>{})), as<v_t>{});
         }
       }
     }
@@ -219,7 +219,7 @@ namespace eve::detail
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T r0, T r1, Ts... rs) noexcept
   {
     auto that = r1;
     if (O::contains(upper))  that = mul[lower](r1, rs...);
@@ -231,7 +231,7 @@ namespace eve::detail
   }
 
   template<conditional_expr C, typename T, callable_options O>
-  EVE_FORCEINLINE T  div_(EVE_REQUIRES(cpu_), C const& cond, O const & o, T t, T f) noexcept
+  EVE_FORCEINLINE T  div_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T t, T f) noexcept
   requires(integral_value<T>)
   {
     auto g = if_else(cond, f, one);

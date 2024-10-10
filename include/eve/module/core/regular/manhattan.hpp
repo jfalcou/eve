@@ -97,7 +97,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
-    manhattan_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
+    manhattan_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       if constexpr (!O::contains(saturated) || floating_value<T>)
         return eve::abs(a0);
@@ -106,7 +106,7 @@ namespace eve
     }
     template<typename T0,typename T1, typename... Ts, callable_options O>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-    manhattan_(EVE_REQUIRES(cpu_), O const & o , T0 a0, T1 a1, Ts... args) noexcept
+    manhattan_(EVE_REQUIRES(cpu_), O const& o , T0 a0, T1 a1, Ts... args) noexcept
     {
       using r_t = common_value_t<T0, T1, Ts...>;
       auto l_abs = [](){
@@ -120,7 +120,7 @@ namespace eve
       {
         auto inf_found = is_infinite(r_t(a0)) || is_infinite(r_t(a1));
         inf_found =  (inf_found || ... || is_infinite(r_t(args)));
-        return if_else(inf_found, inf(as(r)), r);
+        return if_else(inf_found, inf(as{r}), r);
       }
       else
         return r;

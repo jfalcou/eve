@@ -80,7 +80,7 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T> is_ngez_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return false_(eve::as(a));
+        return false_(eve::as{a});
       else
       {
         if constexpr( scalar_value<T> )
@@ -88,7 +88,7 @@ namespace eve
           if      constexpr( integral_value<T> ) return is_ltz(a);
           else if constexpr( floating_value<T> ) return is_ltz(a) || is_nan(a);
         }
-        else return is_not_greater_equal(a, zero(eve::as(a)));
+        else return is_not_greater_equal(a, zero(eve::as{a}));
       }
     }
   }

@@ -27,7 +27,7 @@ shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
   else
   {
     using u8x16 = wide<std::uint8_t, eve::fixed<16>>;
-    auto bytes  = eve::bit_cast(x, eve::as<u8x16> {});
+    auto bytes  = eve::bit_cast(x, as<u8x16> {});
 
     constexpr auto no_we = idxm::replace_we(P::idxs, 0);
 

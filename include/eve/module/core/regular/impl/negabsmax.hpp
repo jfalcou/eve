@@ -15,7 +15,7 @@ namespace eve::detail
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  negabsmax_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+  negabsmax_(EVE_REQUIRES(cpu_), O const& o, T0 r0, T1 r1, Ts... rs) noexcept
   {
     if constexpr(O::contains(saturated))
     {

@@ -88,11 +88,11 @@ namespace eve
     {
       if constexpr( scalar_value<T> )
       {
-        if( is_eqz(a0) ) return one(eve::as(a0));
+        if( is_eqz(a0) ) return one(eve::as{a0});
         if constexpr( eve::platform::supports_infinites )
-          if( is_infinite(a0) ) return zero(eve::as<T>());
+          if( is_infinite(a0) ) return zero(as<T>{});
         if constexpr( eve::platform::supports_denormals )
-          return eve::abs(a0) < eps(eve::as<T>()) ? one(eve::as<T>()) : sin(a0) / a0;
+          return eve::abs(a0) < eps(as<T>{}) ? one(as<T>{}) : sin(a0) / a0;
         else return sin[o](a0) / a0;
       }
       else
@@ -100,9 +100,9 @@ namespace eve
         auto r1 = sin[o](a0) / a0;
         if constexpr( eve::platform::supports_denormals )
         {
-          r1 = if_else(eve::abs(a0) < eps(as<T>()), one(eve::as<T>()), r1);
+          r1 = if_else(eve::abs(a0) < eps(as<T>{}), one(as<T>{}), r1);
         }
-        else r1 = if_else(is_eqz(a0), one(eve::as<T>()), r1);
+        else r1 = if_else(is_eqz(a0), one(as<T>{}), r1);
         if constexpr( eve::platform::supports_infinites )
           r1 = if_else(is_infinite(a0), eve::zero, r1);
         return r1;

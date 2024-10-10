@@ -89,13 +89,13 @@ namespace eve::detail
         u8x8          half_byte_idx    = _mm_cvtsi64_si128(compressed_idxes);
 
         // Spread out ab => 0a0b
-        auto to_word = eve::convert(half_byte_idx, eve::as<std::uint16_t>{});
+        auto to_word = eve::convert(half_byte_idx, as<std::uint16_t>{});
         auto pshuvb_mask = ((to_word << 4) | to_word) & (std::uint16_t)0x0f0f;
 
         u8x16 v_bytes = bit_cast(v, as<u8x16>{});
         v_bytes = _mm_shuffle_epi8(v_bytes, pshuvb_mask);
 
-        return bit_cast(v_bytes, as(v));
+        return bit_cast(v_bytes, as{v});
       }
       else if constexpr ( sizeof(T) * N() == 32 )
       {
@@ -110,7 +110,7 @@ namespace eve::detail
           using f32x8 = typename wide<T,N>::template rebind <float, fixed<8>>;
           f32x8 v_floats = bit_cast(v, as<f32x8>{});
           v_floats = _mm256_permutevar8x32_ps(v_floats, to_qwords);
-          return bit_cast(v_floats, as(v));
+          return bit_cast(v_floats, as{v});
         }
       }
     }
@@ -146,9 +146,9 @@ namespace eve::detail
       else if constexpr ( match(c, category::int64x4  , category::uint64x4 ) ) return _mm256_maskz_compress_epi64(m, v);
       else if constexpr ( match(c, category::int16x8  , category::uint16x8 ) && N() == 8 )
       {
-        auto cvt       = eve::convert(v, eve::as<std::int32_t>{});
+        auto cvt       = eve::convert(v, as<std::int32_t>{});
         auto cmpressed = (*this)(cvt);
-        return eve::convert(cmpressed, eve::as<T>{});
+        return eve::convert(cmpressed, as<T>{});
       }
       else
       {
@@ -160,7 +160,7 @@ namespace eve::detail
 
   template<typename T, typename N> constexpr bool compress_bmi_should_split()
   {
-    std::size_t max_field_size = kumi::max_flat(T {}, [](auto m) { return sizeof(m); });
+    std::size_t max_field_size = kumi::max_flat(T{}, [](auto m) { return sizeof(m); });
 
          if ( N() > 16  ) return true;
     else if ( N() == 16 ) return max_field_size > 1;

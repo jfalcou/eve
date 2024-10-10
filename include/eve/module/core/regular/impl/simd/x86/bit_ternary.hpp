@@ -28,9 +28,15 @@ namespace eve::detail
   {
     using w_t = wide<T, N>;
     using i_t = as_integer_t<w_t, unsigned>;
+<<<<<<< HEAD
     auto va = bit_cast(x, as<i_t>());
     auto vb = bit_cast(y, as<i_t>());
     auto vc = bit_cast(z, as<i_t>());
+=======
+    auto a = bit_cast(x, as<i_t>{});
+    auto b = bit_cast(y, as<i_t>{});
+    auto c = bit_cast(z, as<i_t>{});
+>>>>>>> b4cfae764 (more cleanup)
     if constexpr(current_api < avx512 || sizeof(T) < 4)
     {
       auto doit = [](auto const& o, auto a, auto b, auto c)
@@ -55,7 +61,7 @@ namespace eve::detail
         else if constexpr(K == 0xd1) return bit_or(bit_not(bit_or(b, c)), bit_and(a, b));
         else return bit_ternary.behavior(as<wide<T, N>>{}, cpu_{}, o, c_t{}, a, b, c);
       };
-      return bit_cast(doit(opts,va, vb, vc), as<w_t>());
+      return bit_cast(doit(opts, va, vb, vc), as<w_t>{});
     }
     else
     {
@@ -72,7 +78,7 @@ namespace eve::detail
         else if constexpr( ca == category::uint32x4 ) return _mm_ternarylogic_epi32(a, b, c, K);
         else return bit_ternary.behavior(as<wide<T, N>>{}, cpu_{}, o, c_t{}, a, b, c);
       };
-      return bit_cast(doit(opts, va, vb, vc), as<w_t>());
+      return bit_cast(doit(opts, va, vb, vc), as<w_t>{});
     }
   }
 
@@ -82,15 +88,15 @@ namespace eve::detail
        wide<T, N> x, wide<T, N> y, wide<T, N> z) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    auto const            s = alternative(mask, x, as(x));
-    [[maybe_unused]] auto m = expand_mask(mask, as(x)).storage().value;
+    auto const            s = alternative(mask, x, as{x});
+    [[maybe_unused]] auto m = expand_mask(mask, as{x}).storage().value;
     constexpr auto        ca = categorize<wide<T, N>>();
 
     using w_t = wide<T, N>;
     using i_t = as_integer_t<w_t, unsigned>;
-    auto va = bit_cast(x, as<i_t>());
-    auto vb = bit_cast(y, as<i_t>());
-    auto vc = bit_cast(z, as<i_t>());
+    auto va = bit_cast(x, as<i_t>{});
+    auto vb = bit_cast(y, as<i_t>{});
+    auto vc = bit_cast(z, as<i_t>{});
     auto doit = [s, m](auto const& o, auto a, auto b, auto c)
     {
       using c_t = std::integral_constant<std::uint8_t, K>;
@@ -103,6 +109,6 @@ namespace eve::detail
       else if constexpr( ca == category::uint32x4       ) return _mm_mask_ternary_logic_epi32   (s, m, a, b, c, K);
       else return bit_ternary.behavior(as<wide<T, N>>{}, cpu_{}, o, c_t{}, a, b, c);
     };
-      return bit_cast(doit(opts, va, vb, vc), as<w_t>());
+      return bit_cast(doit(opts, va, vb, vc), as<w_t>{});
   }
 }

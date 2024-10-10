@@ -93,7 +93,7 @@ namespace eve
         auto test   = is_nez(a0_180) && is_flint(a0_180);
         if constexpr( scalar_value<T> ) // early return for nans in scalar case
         {
-          if( test ) return nan(eve::as<T>());
+          if( test ) return nan(as<T>{});
         }
         return if_else(test, eve::allbits, rec[pedantic](sind[o](a0)));
       }

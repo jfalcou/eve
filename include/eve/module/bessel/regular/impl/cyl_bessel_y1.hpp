@@ -20,12 +20,12 @@ namespace eve::detail
     using elt_t = element_type_t<T>;
     if constexpr( scalar_value<T> )
     {
-      if( x == 0 ) return minf(as(x));
-      if( x == inf(as(x)) ) return zero(as(x));
-      if( is_ngez(x) ) return nan(as(x));
+      if( x == 0 ) return minf(as{x});
+      if( x == inf(as{x}) ) return zero(as{x});
+      if( is_ngez(x) ) return nan(as{x});
     }
     using v_t     = element_type_t<T>;
-    auto Pi       = eve::pi(as(x));
+    auto Pi       = eve::pi(as{x});
     auto j1opi    = cyl_bessel_j1(x) / Pi;
     auto evaluate = [j1opi](auto xx, auto x1, auto x11, auto x12, auto P, auto Q)
       {
@@ -139,7 +139,7 @@ namespace eve::detail
     }
     else
   {
-      auto r       = nan(as(x));
+      auto r       = nan(as{x});
       auto notdone = is_nltz(x);
 
       if( eve::any(notdone) )
@@ -151,8 +151,8 @@ namespace eve::detail
           if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
         }
       }
-      r = if_else(is_eqz(x), minf(as(x)), r);
-      r = if_else(x == inf(as(x)), zero, r);
+      r = if_else(is_eqz(x), minf(as{x}), r);
+      r = if_else(x == inf(as{x}), zero, r);
       return r;
     }
   }

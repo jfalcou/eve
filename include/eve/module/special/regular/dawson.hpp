@@ -170,20 +170,20 @@ namespace eve
           return average(rx, xx * num / (denom * x));
         }
       };
-      auto dawson4 = [](auto v) { return v * T(0.5); };
+      auto dawson4 = [](auto v) { return v * T{0.5}; };
 
-      auto r       = nan(as<T>());
+      auto r       = nan(as<T>{});
       auto notdone = is_not_nan(aa0);
-      notdone      = next_interval(dawson1, notdone, aa0 < elt_t(3.25), r, sx, aa0);
+      notdone      = next_interval(dawson1, notdone, aa0 < elt_t{3.25}, r, sx, aa0);
       rrx          = rec[pedantic](aa0);
       sx           = sqr(rrx);
       if( eve::any(notdone) )
       {
-        notdone = next_interval(dawson2, notdone, aa0 < elt_t(6.25), r, sx, rrx, aa0);
+        notdone = next_interval(dawson2, notdone, aa0 < elt_t{6.25}, r, sx, rrx, aa0);
         if( eve::any(notdone) )
         {
-          notdone = next_interval(dawson3, notdone, aa0 < elt_t(1.0e9), r, sx, rrx, aa0);
-          if( eve::any(notdone) ) { last_interval(dawson4, aa0 >= elt_t(1.0e9), r, rrx); }
+          notdone = next_interval(dawson3, notdone, aa0 < elt_t{1.0e9}, r, sx, rrx, aa0);
+          if( eve::any(notdone) ) { last_interval(dawson4, aa0 >= elt_t{1.0e9}, r, rrx); }
         }
       }
       return eve::copysign(r, a0);

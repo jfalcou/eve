@@ -21,7 +21,7 @@ namespace eve::detail
 {
   template<typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
   EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
-                                     O const &,
+                                     O const&,
                                      T x ,
                                      index_t<I0> const & ,
                                      index_t<I1> const &) noexcept
@@ -38,17 +38,17 @@ namespace eve::detail
         auto jj = (i/S)*S;
         return (ii == I0) ? I1+jj :(ii == I1 ? I0+jj : i) ;
       };
-      auto x8 = bit_cast(x, as<u8_t>());
+      auto x8 = bit_cast(x, as<u8_t>{});
       auto y = eve::shuffle(x8, eve::as_pattern(p));
-      x = bit_cast(y, as<T>());
+      x = bit_cast(y, as<T>{});
       return x;
     }
     else if constexpr(scalar_value<T>)
     {
       using a_t = std::array<uint8_t, sizeof(T)>;
-      a_t a =  bit_cast(x, as<a_t>());
+      a_t a =  bit_cast(x, as<a_t>{});
       std::swap(a[I0], a[I1]);
-      return bit_cast(a, as<T>());
+      return bit_cast(a, as<T>{});
     }
   }
 
@@ -56,7 +56,7 @@ namespace eve::detail
   template<conditional_expr C, typename T, std::ptrdiff_t I0, std::ptrdiff_t I1, callable_options O>
   EVE_FORCEINLINE T byte_swap_pairs_(EVE_REQUIRES(cpu_),
                                      C const& cond,
-                                     O const &,
+                                     O const&,
                                      T t,
                                      index_t<I0> const & i0,
                                      index_t<I1> const & i1) noexcept

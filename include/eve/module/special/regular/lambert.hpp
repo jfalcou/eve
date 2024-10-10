@@ -94,7 +94,7 @@ namespace eve
       }
       else
       {
-        return fam(mone(as(r)), r, eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
+        return fam(mone(as{r}), r, eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
       }
     }
 
@@ -111,7 +111,7 @@ namespace eve
             T t = fms(w, e, px);
             t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
             w -= t;
-            T tol = 10 * eps(as(px)) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
+            T tol = 10 * eps(as{px}) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
             if( eve::all(eve::abs(t) < tol) ) break;
           }
           return w;
@@ -127,7 +127,7 @@ namespace eve
         auto w1 = dec(p * (inc(p * fam(T(-1.0 / 3), p, T(1.0 / 72)))));
         auto w2 = log(px);
         w2 -= if_else(px > 3, zero, log(w2));
-        auto init = if_else(px < one(as(px)), w1, w2);
+        auto init = if_else(px < one(as{px}), w1, w2);
         return halley(px, init, 10);
       };
 
@@ -140,13 +140,13 @@ namespace eve
         T l1 = log(-xx);
         T l2 = log(-l1);
         T w2 = l1 - l2 + l2 / l1;
-        return if_else(is_eqz(xx) && !positivex, minf(as(xx)), halley(xx, w2, 30));
+        return if_else(is_eqz(xx) && !positivex, minf({xx}), halley(xx, w2, 30));
       };
 
-      auto r       = nan(as<T>());                // nan case treated here
+      auto r       = nan(as<T>{});                // nan case treated here
       r            = if_else(is_eqz(x), zero, r); // zero case treated here
-      r            = if_else(x == inf(as(x)), x, r);
-      auto notdone = is_nlez(q) && (q != inf(as(x)));
+      r            = if_else(x == inf(as{x}), x, r);
+      auto notdone = is_nlez(q) && (q != inf(as{x}));
 
       if( eve::any(notdone) )
       {

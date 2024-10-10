@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::exp_pi(as<T>())` returns \f$e^\pi\f$.
+  //!      The call `eve::exp_pi(as<T>{})` returns \f$e^\pi\f$.
   //!
   //!  @groupheader{Example}
   //!

@@ -23,7 +23,7 @@ namespace eve::detail
     using elt_t = element_type_t<c_t>;
     if constexpr(scalar_value<I>)
     {
-      auto p0     = one(as(x));
+      auto p0     = one(as{x});
       if( is_eqz(nn) ) return c_t(p0);
 
       c_t y0(p0);
@@ -31,7 +31,7 @@ namespace eve::detail
 
       auto  yk    = y1;
       elt_t k     = 2;
-      elt_t k_max = nn * inc(eps(as(elt_t())));
+      elt_t k_max = nn * inc(eps(as<elt_t>{}));
       c_t   gamma(2 * dec(lambda));
       auto  test = k < k_max;
       while( test )
@@ -49,15 +49,15 @@ namespace eve::detail
       auto xx = c_t(x);
       if( has_native_abi_v<T> )
       {
-        auto   y0     = one(as(xx));
+        auto   y0     = one(as{xx});
         auto iseqzn   = is_eqz(nn);
         if( eve::all(iseqzn) ) return y0;
-        auto n  = convert(nn, as(elt_t()));
+        auto n  = convert(nn, as<elt_t>{});
         auto    y1 = 2 * lambda * xx;
 
         auto    yk = y1;
         elt_t   k(2);
-        auto    k_max = n * inc(eps(as(elt_t())));
+        auto    k_max = n * inc(eps(as<elt_t>{}));
         auto    gamma = 2 * dec(lambda);
         auto    test  = k < k_max;
         while( eve::any(test) )

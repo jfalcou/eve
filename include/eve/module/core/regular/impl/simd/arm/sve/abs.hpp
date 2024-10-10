@@ -23,11 +23,11 @@ namespace eve::detail
   requires sve_abi<abi_t<T, N>>
   {
     constexpr auto  c   = categorize<wide<T, N>>();
-    auto const      src = alternative(mask, v, as(v));
+    auto const      src = alternative(mask, v, as{v});
     
     if      constexpr( C::is_complete )                 return src;
     else if constexpr( match(c, category::unsigned_) )  return if_else(mask, v, src);
-    else                                                return svabs_m(src,expand_mask(mask, as(v)),v);
+    else                                                return svabs_m(src,expand_mask(mask, as{v}),v);
   }
   
   template<arithmetic_scalar_value T, typename N, callable_options O>

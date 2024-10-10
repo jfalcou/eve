@@ -89,15 +89,15 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        auto vlt1 = v < one(eve::as(v));
+        auto vlt1 = v < one(eve::as{v});
         auto e = exponent(v);
-        auto r = eve::ldexp(one(eve::as(v)), e);
+        auto r = eve::ldexp(one(eve::as{v}), e);
         return if_else(vlt1, eve::zero, r);
       }
       else if constexpr( signed_integral_value<T> )
       {
         auto uz = bit_floor(convert(v, uint_from<T>()));
-        return if_else(is_ltz(v), zero, convert(uz, as<element_type_t<T>>()));
+        return if_else(is_ltz(v), zero, convert(uz, as<element_type_t<T>>{}));
       }
       else
       {

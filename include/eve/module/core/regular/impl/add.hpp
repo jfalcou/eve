@@ -56,8 +56,8 @@ namespace eve::detail
       if constexpr( signed_integral_value<T> )
       {
         auto test = is_ltz(b);
-        auto pos  = min(sub(valmax(as(a)), b), a);
-        auto neg  = max(sub(valmin(as(a)), b), a);
+        auto pos  = min(sub(valmax(as{a}), b), a);
+        auto neg  = max(sub(valmin(as{a}), b), a);
         return add(b, if_else(test, neg, pos));
       }
       else
@@ -85,8 +85,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  template<callable_options O, typename T, std::same_as<T>... Ts>
+  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T r0, T r1, Ts... rs) noexcept
   {
     //TODO: both GCC and Clang can fail to properly reorder the op chain to reduce dependencies
     //      we might want to do this manually

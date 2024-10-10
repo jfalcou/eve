@@ -101,7 +101,7 @@ namespace eve
         return bit_or(bit_shl(bit_and(vx, T(vm)), vn), bit_shr(bit_andnot(vx, T(vm)), vn));
       };
 
-      if (n > N(S*4)) return zero(as(x));
+      if (n > N(S*4)) return zero(as{x});
       else if (n == 0) return x;
       else if (n == 1) //Return x with neighbor bits swapped.
         return swp(x, mk_ct(0x55), n);
@@ -114,17 +114,17 @@ namespace eve
         if      constexpr(S == 2) return (x << n) | (x >> n);
         else if constexpr(S == 4) return swp(x, 0x00ff00ffU, n);
         else if constexpr(S == 8) return swp(x, 0x00ff00ff00ff00ffUL, n);
-        else return  zero(as(x));
+        else return  zero(as{x});
       }
       else if (n == 16) //Return x with group of 16 bits swapped.
       {
         if      constexpr(S == 4) return (x << n) | (x >> n);
         else if constexpr(S == 8) return swp(x, 0x0000ffff0000ffffUL, n);
-        else return  zero(as(x));
+        else return  zero(as{x});
       }
       else if (n == 32) //Return x with group of 32 bits swapped. (S = 8)
         return (x << n) | (x >> n);
-      else return zero(as(x));
+      else return zero(as{x});
     }
   }
 }

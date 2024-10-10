@@ -101,7 +101,7 @@ namespace eve
         auto       mp       = oneminus[p >= T(0.5)](p);
         auto       t        = sqrt(-2 * log(mp));
         auto       x =
-        fma(t, T(0.27061), T(2.30753)) / fma(t, fma(t, T(0.04481), T(0.99229)), one(as(p))) - t;
+        fma(t, T(0.27061), T(2.30753)) / fma(t, fma(t, T(0.04481), T(0.99229)), one(as{p})) - t;
         x         = minus[p < T(0.5)](x);
         auto al   = (sqr(x) - T(3)) * T(1.0 / 6.0);
         auto r2a1 = rec[pedantic](a + a1);
@@ -124,10 +124,10 @@ namespace eve
       };
       auto       a1      = dec(pa);
       auto       b1      = dec(pb);
-      auto const o       = one(as(pp));
-      const auto epsi    = 10 * eps(as(pp));
+      auto const o       = one(as{pp});
+      const auto epsi    = 10 * eps(as{pp});
       auto       test    = (pa > o) && (pb > o);
-      auto       x       = nan(as(pp));
+      auto       x       = nan(as{pp});
       auto       notdone = is_not_nan(pp);
       notdone            = next_interval(large, notdone, test, x, pp, pa, pb);
       if( eve::any(notdone) ) { last_interval(small, notdone, x, pp, pa, pb); }

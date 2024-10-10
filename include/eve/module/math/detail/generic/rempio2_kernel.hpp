@@ -33,7 +33,7 @@ namespace eve::detail
       static const double mp1 = -0x1.921FB58000000p0;   /*  -1.5707963407039642      */
       static const double mp2 = 0x1.DDE973C000000p-27;  /*  1.3909067564377153e-08  */
       static const double mp3 = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto                xn  = nearest(xx * two_o_pi(eve::as<double>()));
+      auto                xn  = nearest(xx * two_o_pi(as<double>{}));
       auto                y   = fma(xn, mp2, fma(xn, mp1, xx));
       auto                n   = quadrant(xn);
       auto                da  = xn * mp3;
@@ -44,10 +44,10 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x   = convert(xx, as<double>());
-      auto n   = nearest(x * two_o_pi(eve::as<double>()));
-      auto dxr = fma(n, -pio_2(eve::as<double>()), x);
-      return  eve::zip(quadrant(convert(n, as<float>())), convert(dxr, as<float>()), T(0.0f));
+      auto x   = convert(xx, as<double>{});
+      auto n   = nearest(x * two_o_pi(as<double>{}));
+      auto dxr = fma(n, -pio_2(as<double>{}), x);
+      return  eve::zip(quadrant(convert(n, as<float>{})), convert(dxr, as<float>{}), T(0.0f));
     }
   }
 
@@ -63,7 +63,7 @@ namespace eve::detail
     static const double pp4 = 0x1.d747f23e32ed7p-83;  /*  1.9034889620193266e-25  */
     if constexpr( std::is_same_v<elt_t, double> )
     {
-      auto xn  = nearest(xx * two_o_pi(eve::as<double>()));
+      auto xn  = nearest(xx * two_o_pi(as<double>{}));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, xx))));
@@ -79,21 +79,21 @@ namespace eve::detail
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto x   = convert(xx, as<double>());
-      auto xn  = nearest(x * two_o_pi(eve::as<double>()));
+      auto x   = convert(xx, as<double>{});
+      auto xn  = nearest(x * two_o_pi(as<double>{}));
       auto xn1 = (xn + 8.0e22) - 8.0e22;
       auto xn2 = xn - xn1;
       auto y   = fma(xn2, mp2, fma(xn2, mp1, fma(xn1, mp2, fma(xn1, mp1, x))));
-      auto n   = convert(quadrant(xn), as<float>());
+      auto n   = convert(quadrant(xn), as<float>{});
       auto da  = xn1 * pp3;
       auto t   = y - da;
       da       = (y - t) - da;
       da       = fma(xn, pp4, fnma(xn2, pp3, da));
       auto a   = t + da;
       da       = (t - a) + da;
-      auto fa  = convert(a, as<float>());
-      auto dfa = convert((a - convert(fa, as<double>())) + da, as<float>());
-      if( eve::any(fa >= pio_4(eve::as<float>()) || fa < -pio_4(eve::as<float>())) )
+      auto fa  = convert(a, as<float>{});
+      auto dfa = convert((a - convert(fa, as<double>{})) + da, as<float>{});
+      if( eve::any(fa >= pio_4(as<float>{}) || fa < -pio_4(as<float>{})) )
       {
         auto [n1, fa1, dfa1] = rempio2_half_circle(fa);
         n                    = quadrant(n + n1);
@@ -116,7 +116,7 @@ namespace eve::detail
       mp1     = -0x1.921FB58000000p0;   /*  -1.5707963407039642     */
       mp2     = 0x1.DDE973C000000p-27;  /*  1.3909067564377153e-08  */
       mp3     = -0x1.CB3B399D747F2p-55; /* -4.9789962505147994e-17  */
-      auto xn = nearest(x * two_o_pi(eve::as<elt_t>()));
+      auto xn = nearest(x * two_o_pi(as<elt_t>{}));
       auto y  = fma(xn, mp2, fma(xn, mp1, x));
       auto n  = quadrant(xn);
       auto da = xn * mp3;
@@ -129,9 +129,9 @@ namespace eve::detail
       mp1     = -0x1.921fb0p+00f; /* -1.57079601e+00 // pio2_high */
                                      mp2     = -0x1.5110b4p-22f; /* -3.13916473e-07 // pio2_mid  */
                                                                     mp3     = -0x1.846988p-48f; /* -5.39030253e-15 // pio2_low */
-                                                                                                   auto xn = nearest(x * two_o_pi(eve::as<elt_t>()));
+                                                                                                   auto xn = nearest(x * two_o_pi(as<elt_t>{}));
       auto y  = fma(xn, mp3, fma(xn, mp2, fma(xn, mp1, x)));
-      return eve::zip(quadrant(xn), y, zero(as(y)));
+      return eve::zip(quadrant(xn), y, zero(as{y}));
     }
   }
 
@@ -139,12 +139,12 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto rempio2_big(T xx) noexcept
   {
     using elt_t = element_type_t<T>;
-    auto xlerfl = (xx <= Rempio2_limit[half_circle](as(xx)));
+    auto xlerfl = (xx <= Rempio2_limit[half_circle](as{xx}));
 
-    if( eve::all(xx < Rempio2_limit[quarter_circle](as(xx))) ) { return rempio2_quarter_circle(xx); }
+    if( eve::all(xx < Rempio2_limit[quarter_circle](as{xx})) ) { return rempio2_quarter_circle(xx); }
     if( eve::all(xlerfl) )                                     { return rempio2_half_circle(xx); }
-    if( eve::all(xx < Rempio2_limit[full_circle](as(xx))) )    { return rempio2_full_circle(xx); }
-    if( eve::all(xx < Rempio2_limit[medium](as(xx))) )         { return rempio2_medium(xx); }
+    if( eve::all(xx < Rempio2_limit[full_circle](as{xx})) )    { return rempio2_full_circle(xx); }
+    if( eve::all(xx < Rempio2_limit[medium](as{xx})) )         { return rempio2_medium(xx); }
     if constexpr( std::is_same_v<elt_t, double> )
     {
       using i32_tl = struct
@@ -203,7 +203,7 @@ namespace eve::detail
           T        r[6];
           if constexpr( scalar_value<T> )
           {
-            auto z = bit_and(zero_lo, bit_cast(vx1, as<ui64_t>()));
+            auto z = bit_and(zero_lo, bit_cast(vx1, as<ui64_t>{}));
             k.hi   = int32_t(z >> 32);
             k.lo   = int32_t(z & 0x00000000FFFFFFFFULL);
             k.hi   = bit_shr(k.hi, 20) & 2047;
@@ -215,15 +215,15 @@ namespace eve::detail
           }
           else
           {
-            k   = bit_cast(bit_and(bit_cast(vx1, as<ui64_t>()), zero_lo), as<i32_t>());
+            k   = bit_cast(bit_and(bit_cast(vx1, as<ui64_t>{}), zero_lo), as<i32_t>{});
             k   = bit_shr(k, 20) & 2047;
             k   = eve::max((k - 450) / 24, 0);
-            tmp = bit_cast(ui64_t(t576), as<i32_t>());
+            tmp = bit_cast(ui64_t(t576), as<i32_t>{});
             tmp -= (k * 24 << 20);
-            k = eve::max(k, zero(as(k)));
+            k = eve::max(k, zero(as{k}));
           }
-          auto inds = (bit_cast(k, as<ui64_t>()) >> 32);
-          auto tmp1 = bit_cast(tmp, as<T>());
+          auto inds = (bit_cast(k, as<ui64_t>{}) >> 32);
+          auto tmp1 = bit_cast(tmp, as<T>{});
 
           for( int i = 0; i < 6; ++i )
           {
@@ -261,7 +261,7 @@ namespace eve::detail
       T    b    = b1 + b2;
       T    bb   = if_else(eve::abs(b1) > eve::abs(b2), (b1 - b) + b2, (b2 - b) + b1);
       auto test = eve::abs(b) > 0.5;
-      auto z    = copysign(one(eve::as<T>()), b);
+      auto z    = copysign(one(as<T>{}), b);
       b         = sub[test](b, z);
       sum_v       = add[test](sum_v, z);
       T s       = b + (bb + bb1 + bb2);
@@ -275,9 +275,9 @@ namespace eve::detail
       s      = b + bb;
       t_      = (b - s) + bb;
       s      = if_else(is_not_finite(x), eve::allbits, s);
-      s      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), xx, s);
-      t_      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), t_);
-      auto q = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), quadrant(sum_v));
+      s      = if_else(xx < Rempio2_limit[quarter_circle](as{xx}), xx, s);
+      t_     = if_else(xx < Rempio2_limit[quarter_circle](as{xx}), T{0}, t_);
+      auto q = if_else(xx < Rempio2_limit[quarter_circle](as{xx}), T{0}, quadrant(sum_v));
       return eve::zip(q, s, t_);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
@@ -302,36 +302,36 @@ namespace eve::detail
         0xc0db6295, 0xdb629599, 0x6295993c, 0x95993c43, 0x993c4390, 0x3c439041};
       constexpr const double pi63 = 0x1.921FB54442D18p-62; /* 2PI * 2^-64.  */
       auto [sn, sr, dsr]          = rempio2_full_circle(xx);
-      auto xi                     = bit_cast(xx, as<ui_t>());
+      auto xi                     = bit_cast(xx, as<ui_t>{});
       auto index                  = ((xi >> 26) & 15);
       auto arr0                   = gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index);
-      auto arr4 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 4), as<uint64_t>());
-      auto arr8 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 8), as<uint64_t>());
+      auto arr4 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 4), as<uint64_t>{});
+      auto arr8 = convert(gather(eve::as_aligned(&__inv_pio4[0], cardinal_t<T> {}), index + 8), as<uint64_t>{});
 
       auto shift = ((xi >> 23) & 7);
       auto xii   = bit_or(bit_and(xi, 0xffffff), 0x800000);
       xi         = (xii << shift);
 
-      auto xi64 = convert(xi, as<uint64_t>());
-      auto res0 = convert(xi * arr0, as<uint64_t>());
+      auto xi64 = convert(xi, as<uint64_t>{});
+      auto res0 = convert(xi * arr0, as<uint64_t>{});
 
       wui_t res1 = xi64 * arr4;
       wui_t res2 = xi64 * arr8;
       res0       = ((res2 >> 32) | (res0 << 32));
       res0 += res1;
 
-      auto n    = ((res0 + (one(as(res0)) << 61)) >> 62);
+      auto n    = ((res0 + (one(as{res0}) << 61)) >> 62);
       res0      = res0 - (n << 62); // -= n << 62;
-      auto tmp  = bit_cast(res0, as<i_t>());
-      auto xx1  = convert(tmp,  as<double>());
-      auto bn   = if_else(xlerfl, sn, convert(n, as<float>()));
+      auto tmp  = bit_cast(res0, as<i_t>{});
+      auto xx1  = convert(tmp,  as<double>{});
+      auto bn   = if_else(xlerfl, sn, convert(n, as<float>{}));
       auto z    = xx1 * pi63;
-      auto sr1  = convert(z, as<float>());
-      auto dsr1 = convert(z - convert(sr1,  as<double>()), as<float>());
+      auto sr1  = convert(z, as<float>{});
+      auto dsr1 = convert(z - convert(sr1,  as<double>{}), as<float>{});
       auto br   = if_else(xlerfl, sr, sr1);
       auto dbr  = if_else(xlerfl, dsr, dsr1);
       br        = if_else(is_not_finite(xx), eve::allbits, br);
-      auto test = xx <= Rempio2_limit[full_circle](as(xx));
+      auto test = xx <= Rempio2_limit[full_circle](as{xx});
       return eve::zip(if_else(test, sn, bn), if_else(test, sr, br), if_else(test, dsr, dbr));
     }
   }

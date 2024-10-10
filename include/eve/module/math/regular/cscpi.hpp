@@ -85,13 +85,13 @@ namespace eve
     constexpr EVE_FORCEINLINE T cscpi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr(O::contains(quarter_circle))
-        return csc[quarter_circle](a0 * pi(eve::as<T>()));
+        return csc[quarter_circle](a0 * pi(as<T>{}));
       else
       {
         if constexpr( scalar_value<T> )
         {
           if( is_eqz(a0) ) return rec[pedantic](a0);
-          if( is_flint(a0) || is_not_finite(a0) ) return nan(eve::as<T>()); // nan or Inf input
+          if( is_flint(a0) || is_not_finite(a0) ) return nan(as<T>{}); // nan or Inf input
         }
         T x = abs(a0);
         if constexpr( simd_value<T> )

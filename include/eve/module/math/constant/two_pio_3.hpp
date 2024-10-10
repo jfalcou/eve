@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::two_pio_3(as<T>())` returns  \f$2\pi/3\f$.
+  //!      The call `eve::two_pio_3(as<T>{})` returns  \f$2\pi/3\f$.
   //!
   //!  @groupheader{Example}
   //!

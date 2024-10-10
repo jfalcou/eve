@@ -86,17 +86,17 @@ namespace eve
     {
       if constexpr( floating_value<T> )
       {
-        auto aisflt = is_flint[o](a * half(eve::as(a)));
+        auto aisflt = is_flint[o](a * half(eve::as{a}));
         auto aa     = eve::abs(a);
         if constexpr( eve::platform::supports_denormals )
-          return aisflt && (aa != mindenormal(eve::as<T>()));
+          return aisflt && (aa != mindenormal(as<T>{}));
         else
-          return aisflt && (aa != smallestposval(eve::as<T>()));
+          return aisflt && (aa != smallestposval(as<T>{}));
       }
       else if constexpr( scalar_value<T> )
-        return (!(a & one(eve::as(a))));
+        return (!(a & one(eve::as{a})));
       else
-        return is_eqz((a & one(eve::as(a))));
+        return is_eqz((a & one(eve::as{a})));
     }
   }
 }

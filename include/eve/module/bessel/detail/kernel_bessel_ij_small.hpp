@@ -99,7 +99,7 @@ bessel_j_small_z_series(T v, T x) noexcept
   if( eve::all(is_eqz(prefix)) ) return prefix;
   bessel_j_small_z_series_term<T> s(v, x);
   auto                            max_iter = 1000000;
-  T                               result   = sum_series(s, eps(as(x)), max_iter, zero(as(x)));
+  T                               result   = sum_series(s, eps(as{x}), max_iter, zero(as{x}));
   return prefix * result;
 }
 
@@ -138,7 +138,7 @@ bessel_i_small_z_series(T v, T x)
   if( eve::all(is_eqz(prefix)) ) return prefix;
   bessel_i_small_z_series_term<T> s(v, x);
   auto                            max_iter = 1000000;
-  T                               result   = sum_series(s, eps(as(x)), max_iter, zero(as(x)));
+  T                               result   = sum_series(s, eps(as{x}), max_iter, zero(as{x}));
   return prefix * result;
 }
 

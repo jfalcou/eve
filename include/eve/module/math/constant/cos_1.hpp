@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::cos_1(as<T>())` returns the  cosine of 1.
+  //!      The call `eve::cos_1(as<T>{})` returns the  cosine of 1.
   //!
   //!  @groupheader{Example}
   //!

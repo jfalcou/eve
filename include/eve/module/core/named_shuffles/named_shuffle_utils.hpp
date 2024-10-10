@@ -27,7 +27,7 @@ namespace eve::detail
  * struct shuffle_name_t : detail::named_shuffle_1<shuffle_name_t>
  * {
  *   template <simd_value T, std::ptrdiff_t G>
- *   static constexpr std::ptrdiff_t level(eve::as<T>, eve::fixed<G>, auto ...args)
+ *   static constexpr std::ptrdiff_t level(as<T>, eve::fixed<G>, auto ...args)
  *   {
  *     //
  *     return 2;
@@ -44,15 +44,15 @@ template<typename Name> struct named_shuffle_1 : Name
 {
   template<simd_value T, std::ptrdiff_t G, typename... Args>
   EVE_FORCEINLINE auto operator()(T x, eve::fixed<G> g, Args... args) const
-  requires requires { Name::pattern(eve::as<T> {}, g, args...); }
+  requires requires { Name::pattern(as<T> {}, g, args...); }
   {
     if constexpr( G <= 0 ) { static_assert(G > 0, "Group size <= 0 is not supported"); }
-    else return shuffle_v2(x, g, Name::pattern(eve::as<T> {}, g, args...));
+    else return shuffle_v2(x, g, Name::pattern(as<T> {}, g, args...));
   }
 
   template<simd_value T, typename... Args>
   EVE_FORCEINLINE auto operator()(T x, Args... args) const
-  requires requires { Name::pattern(eve::as<T> {}, eve::lane<1>, args...); }
+  requires requires { Name::pattern(as<T> {}, eve::lane<1>, args...); }
   {
     return operator()(x, eve::lane<1>, args...);
   }
@@ -62,15 +62,15 @@ template<typename Name> struct named_shuffle_2 : Name
 {
   template<simd_value T, std::ptrdiff_t G, typename... Args>
   EVE_FORCEINLINE auto operator()(T x, T y, eve::fixed<G> g, Args... args) const
-  requires requires { Name::pattern(eve::as<T> {}, eve::as<T> {}, g, args...); }
+  requires requires { Name::pattern(as<T> {}, as<T> {}, g, args...); }
   {
     if constexpr( G <= 0 ) { static_assert(G > 0, "Group size <= 0 is not supported"); }
-    else return shuffle_v2(x, y, g, Name::pattern(eve::as<T> {}, eve::as<T> {}, g, args...));
+    else return shuffle_v2(x, y, g, Name::pattern(as<T> {}, as<T> {}, g, args...));
   }
 
   template<simd_value T, typename... Args>
   EVE_FORCEINLINE auto operator()(T x, T y, Args... args) const
-  requires requires { Name::pattern(eve::as<T> {}, eve::as<T> {}, eve::lane<1>, args...); }
+  requires requires { Name::pattern(as<T> {}, as<T> {}, eve::lane<1>, args...); }
   {
     return operator()(x, y, eve::lane<1>, args...);
   }

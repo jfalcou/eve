@@ -91,11 +91,11 @@ namespace eve
       auto absx = eve::abs(x);
       auto t    = absx + absx;
       auto z1   = oneminus(absx);
-      auto test = absx < half(eve::as<T>());
+      auto test = absx < half(as<T>{});
       auto tmp  = if_else(test, absx, t) / z1;
       if constexpr( scalar_value<T> ) tmp = test ? fma(t, tmp, t) : tmp;
       else tmp = fma[test](tmp, t, t);
-      return signnz(x)*half(eve::as<T>())*log1p(tmp);
+      return signnz(x)*half(as<T>{})*log1p(tmp);
     }
   }
 }

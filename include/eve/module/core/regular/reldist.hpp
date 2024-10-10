@@ -85,7 +85,7 @@ namespace eve
     template<value T, callable_options O>
     constexpr T reldist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
     {
-      return dist[o](a, b)/max(abs(a), abs(b), one(as(a)));
+      return dist[o](a, b)/max(abs(a), abs(b), one(as{a}));
     }
   }
 }

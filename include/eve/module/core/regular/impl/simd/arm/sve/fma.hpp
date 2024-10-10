@@ -36,7 +36,7 @@ namespace eve::detail
     {
       // We don't care about PEDANTIC as this is a proper FMA.
       // We don't care about PROMOTE as we only accept similar types.
-      [[maybe_unused]] auto const alt = alternative(cond, a, as(a));
+      [[maybe_unused]] auto const alt = alternative(cond, a, as{a});
       if      constexpr( C::is_complete )       return alt;
       else if constexpr( !C::has_alternative )  return svmad_m(cond.mask(as<T>{}), a, b, c);
       else                                      return if_else(cond, eve::fma(a, b, c), alt);

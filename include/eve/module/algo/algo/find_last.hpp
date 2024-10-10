@@ -48,7 +48,7 @@ template<typename TraitsSupport> struct find_last_if_ : TraitsSupport
     {
       eve::logical  test  = p(eve::load[ignore](it));
 
-      auto rignore = eve::reverse_conditional(ignore, eve::as(test));
+      auto rignore = eve::reverse_conditional(ignore, eve::as{test});
 
       std::optional match = eve::last_true[rignore](test);
       if( !match ) return false;

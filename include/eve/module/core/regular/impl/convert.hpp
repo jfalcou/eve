@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<callable_options O, product_type T, product_type U>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
+  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, as<U>)
   {
     if constexpr( std::same_as<element_type_t<T>, U> )
     {

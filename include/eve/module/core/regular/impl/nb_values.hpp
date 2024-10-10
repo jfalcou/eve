@@ -45,9 +45,9 @@ nb_values_(EVE_SUPPORTS(cpu_), T const& a, T const& b) noexcept requires has_nat
     auto aa = eve::detail::bitinteger(a);
     auto bb = eve::detail::bitinteger(b);
     auto z  = if_else(
-        is_unordered(a, b), eve::valmax(eve::as<ui_t>()), bit_cast(dist(bb, aa), as<ui_t>()));
+        is_unordered(a, b), eve::valmax(as<ui_t>{}), bit_cast(dist(bb, aa), as<ui_t>{}));
     return inc[is_ltz(signnz(a) * signnz(b))](z);
   }
-  else if constexpr( integral_value<T> ) { return bit_cast(dist(a, b), as<ui_t>()); }
+  else if constexpr( integral_value<T> ) { return bit_cast(dist(a, b), as<ui_t>{}); }
 }
 }

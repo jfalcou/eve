@@ -39,11 +39,11 @@ deinterleave_groups_shuffle_as_doubles(wide<T, N> v, fixed<G>)
 {
   using doubles = wide<double, fixed<N() * sizeof(T) / 8>>;
 
-  auto cast_v = bit_cast(v, eve::as<doubles> {});
+  auto cast_v = bit_cast(v, as<doubles> {});
 
   auto res = deinterleave_groups_shuffle(cast_v, lane<G * sizeof(T) / 8>);
 
-  return bit_cast(res, as(v));
+  return bit_cast(res, as{v});
 }
 
 template<typename N, std::ptrdiff_t G>
@@ -52,8 +52,8 @@ deinterleave_groups_shuffle_as_doubles(wide<float, N> v0, wide<float, N> v1, fix
 {
   using doubles = wide<double, typename N::split_type>;
 
-  auto cast_v0 = bit_cast(v0, eve::as<doubles> {});
-  auto cast_v1 = bit_cast(v1, eve::as<doubles> {});
+  auto cast_v0 = bit_cast(v0, as<doubles> {});
+  auto cast_v1 = bit_cast(v1, as<doubles> {});
 
   auto res = deinterleave_groups_shuffle(cast_v0, cast_v1, lane<G / 2>);
 

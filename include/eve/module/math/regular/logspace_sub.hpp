@@ -107,7 +107,7 @@ namespace eve
           auto r0 = r_t(a0);
           auto r1 = r_t(a1);
           auto x    = r1-r0;
-          auto test = x > -log_2(as(x));
+          auto test = x > -log_2(as{x});
           if( eve::all(test) )
             return r0 + eve::log(-expm1(x));
           else if( eve::any(test) )

@@ -95,16 +95,16 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
     {
       if constexpr(O::contains(raw))
       {
-        auto tmp  = pio_2(eve::as(a0))
-          + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(eve::as<T>{}) - asin(a0));
+        auto tmp  = pio_2(eve::as{a0})
+          + (ieee_constant<-0x1.777a5c0p-25f, 0x1.1a62633145c07p-54>(as<T>{}) - asin(a0));
         return if_else(a0 == T(1), eve::zero, tmp);
       }
       else
       {
         if constexpr( simd_value<T> )
         {
-          auto const half  = eve::half(eve::as(a0));
-          auto const mhalf = eve::mhalf(eve::as(a0));
+          auto const half  = eve::half(eve::as{a0});
+          auto const mhalf = eve::mhalf(eve::as{a0});
 
           auto x           = eve::abs(a0);
           auto x_larger_05 = x > half;
@@ -112,29 +112,29 @@ struct acos_t : elementwise_callable<acos_t, Options, raw_option>
           x = if_else(x_larger_05, eve::sqrt(fma(mhalf, x, half)), a0);
           x = asin(x);
           x = add[x_larger_05](x, x);
-          x = eve::if_else((a0 < mhalf), eve::pi(eve::as(a0)) - x, x);
+          x = eve::if_else((a0 < mhalf), eve::pi(eve::as{a0}) - x, x);
 
-          return eve::if_else(x_larger_05, x, eve::pio_2(eve::as(a0)) - x);
+          return eve::if_else(x_larger_05, x, eve::pio_2(eve::as{a0}) - x);
         }
         else if constexpr( scalar_value<T> )
         {
           if( a0 == T(1) )          return T(0);
-          if( eve::abs(a0) > T(1) ) return nan(eve::as<T>());
+          if( eve::abs(a0) > T(1) ) return nan(as<T>{});
 
           if constexpr( std::same_as<T, float> )
           {
-            if( a0 < -0.5f )      return pi(eve::as<T>()) - 2.0f * eve::asin(eve::sqrt(inc(a0) * 0.5f));
+            if( a0 < -0.5f )      return pi(as<T>{}) - 2.0f * eve::asin(eve::sqrt(inc(a0) * 0.5f));
             else if( a0 > 0.5f )  return 2.0f * eve::asin(eve::sqrt(oneminus(a0) * 0.5f));
-            else                  return pio_2(eve::as<T>()) - eve::asin(a0);
+            else                  return pio_2(as<T>{}) - eve::asin(a0);
           }
           else if constexpr( std::same_as<T, double> )
           {
             if( a0 > 0.5 ) return 2.0 * eve::asin(eve::sqrt(fma(-0.5, a0, 0.5)));
 
-            T const pio4 = pio_4(eve::as<T>());
+            T const pio4 = pio_4(as<T>{});
 
             T z = pio4 - eve::asin(a0);
-            z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>());
+            z += T(0x1.1a62633145c07p-55); // Pio_4lo(as<T>{});
             z += pio4;
 
             return z;

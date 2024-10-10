@@ -51,7 +51,7 @@ namespace eve::detail
         T                              y2     = sqr(y);
         auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
         auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
-        auto                           factor = rsqrt(pi(as(px)) * px);
+        auto                           factor = rsqrt(pi(as{px}) * px);
         auto [sx, cx]                         = sincos(px);
         auto value                            = factor * fnma(y, rs * (sx - cx), rc * (sx + cx));
         return value;
@@ -81,12 +81,12 @@ namespace eve::detail
         eve::reverse_horner(w, T(-0x1.ffff2ep-4f), T(0x1.09dadcp-4f), T(-0x1.8d4afep-3f)
                            , T(0x1.008154p+0f), T(-0x1.3e660cp+2f), T(0x1.18fed4p+4f)
                            , T(-0x1.22728ap+5f), T(0x1.035dc0p+5f)) - pio_4(as(w));
-        return if_else(xx == inf(as(xx)), zero, p3 * cos(xn + xx));
+        return if_else(xx == inf(as{xx}), zero, p3 * cos(xn + xx));
       };
       if constexpr( scalar_value<T> )
       {
-        if( x == 0 ) return one(as(x));           // x is 0
-        if( x == inf(as(x)) ) return zero(as(x)); // x is infinite
+        if( x == 0 ) return one(as{x});           // x is 0
+        if( x == inf(as{x}) ) return zero(as{x}); // x is infinite
         if( is_nan(x) ) return x;                 // x is nan
         if( x < 2 ) return br_2(x);               // x in (0, 2]
         else if( x < 8 ) return br_8(x);          // x in (2, 8]
@@ -95,7 +95,7 @@ namespace eve::detail
       else
       {
 
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_gez(x);
         if( eve::any(notdone) )
         {
@@ -106,8 +106,8 @@ namespace eve::detail
             if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
           }
         }
-        r = if_else(is_eqz(x), one(as(x)), r);
-        r = if_else(x == inf(as(x)), zero, r);
+        r = if_else(is_eqz(x), one(as{x}), r);
+        r = if_else(x == inf(as{x}), zero, r);
         return r;
       }
     }
@@ -197,8 +197,8 @@ namespace eve::detail
       };
       if constexpr( scalar_value<T> )
       {
-        if( x == 0 ) return one(as(x));           // x is 0
-        if( x == inf(as(x)) ) return zero(as(x)); // x is infinite
+        if( x == 0 ) return one(as{x});           // x is 0
+        if( x == inf(as{x}) ) return zero(as{x}); // x is infinite
         if( is_nan(x) ) return x;                 // x is nan
         if( x < 5 ) return br_5(x);               // x in (0, 5]
         if( x < 8 ) return br_8(x);               // x in (5, 8]
@@ -206,7 +206,7 @@ namespace eve::detail
       }
       else
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_gez(x);
         if( eve::any(notdone) )
         {
@@ -217,8 +217,8 @@ namespace eve::detail
             if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
           }
         }
-        r = if_else(is_eqz(x), one(as(x)), r);
-        r = if_else(x == inf(as(x)), zero, r);
+        r = if_else(is_eqz(x), one(as{x}), r);
+        r = if_else(x == inf(as{x}), zero, r);
         return r;
       }
     }

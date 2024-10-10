@@ -103,7 +103,7 @@ namespace eve
         {
           using elt_t = element_type_t<T>;
           using r_t   = as_wide_t<elt_t, cardinal_t<I>>;
-          auto aa     = convert(a, as(elt_t{}));
+          auto aa     = convert(a, as{elt_t{}});
           return rising_factorial[o](aa, r_t{x});
         }
         else if constexpr (integral_scalar_value<I>)

@@ -60,7 +60,7 @@ namespace eve::detail
       {
         using  ftype = as<wide< as_floating_point_t<T>,N>>;
         auto that = interleave(bit_cast(a,ftype()),bit_cast(b,ftype()));
-        return kumi::map( [](auto m){ return bit_cast(m,as<type>()); }, that);
+        return kumi::map( [](auto m){ return bit_cast(m,as<type>{}); }, that);
       }
       else if constexpr(N::value == 4)
       {
@@ -131,7 +131,7 @@ namespace eve::detail
       {
         type combined = _mm_unpacklo_epi8(a, b);
         auto [lo, hi] = combined.slice();
-        return kumi::make_tuple(eve::bit_cast(lo, eve::as(a)), eve::bit_cast(lo, eve::as(b)));
+        return kumi::make_tuple(eve::bit_cast(lo, eve::as{a}), eve::bit_cast(lo, eve::as{b}));
       }
     }
     else if constexpr ( match(c,category::int8x32,  category::uint8x32,
@@ -245,9 +245,9 @@ namespace eve::detail
         xy = _mm_shuffle_ps(xy,xz,36);
         xz = _mm_shuffle_ps(c,b,17);
 
-        auto dy   = eve::bit_cast(b, eve::as<wide<double,fixed<2>>>());
-             dy   = _mm_unpackhi_pd(dy,eve::bit_cast(a, eve::as<wide<double,fixed<2>>>()));
-        auto yyx  = eve::bit_cast(dy, eve::as<type>());
+        auto dy   = eve::bit_cast(b, as<wide<double,fixed<2>>>{});
+             dy   = _mm_unpackhi_pd(dy,eve::bit_cast(a, as<wide<double,fixed<2>>>{}));
+        auto yyx  = eve::bit_cast(dy, as<type>{});
 
         xz  = _mm_shuffle_ps(xz, yyx, 34);
         a  = _mm_shuffle_ps(a, c, 35);
@@ -261,7 +261,7 @@ namespace eve::detail
     {
       using  ftype = as<wide< as_floating_point_t<T>,N>>;
       auto that = interleave(bit_cast(a,ftype()),bit_cast(b,ftype()),bit_cast(c,ftype()));
-      return kumi::map( [](auto m){ return bit_cast(m,as<type>()); }, that);
+      return kumi::map( [](auto m){ return bit_cast(m,as<type>{}); }, that);
     }
     else
     {
@@ -305,7 +305,7 @@ namespace eve::detail
       auto that = interleave( bit_cast(a,ftype()),bit_cast(b,ftype())
                             , bit_cast(c,ftype()),bit_cast(d,ftype())
                             );
-      return kumi::map( [](auto m){ return bit_cast(m,as<type>()); }, that);
+      return kumi::map( [](auto m){ return bit_cast(m,as<type>{}); }, that);
     }
     else
     {

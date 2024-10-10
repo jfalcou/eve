@@ -36,7 +36,7 @@ EVE_FORCEINLINE auto
 basic_shuffle_(EVE_SUPPORTS(cpu_), logical<wide<T, N>> const& v, Pattern p) noexcept
 {
   constexpr auto sz = Pattern::size();
-  return bit_cast(shuffle(v.mask(), p), as<logical<wide<T, fixed<sz>>>>());
+  return bit_cast(shuffle(v.mask(), p), as<logical<wide<T, fixed<sz>>>>{});
 }
 
 template<typename T, typename N, std::ptrdiff_t... I>

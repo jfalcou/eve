@@ -104,6 +104,6 @@ namespace detail
         return eve::zip(f, t);
       }
     }
-    else return eve::zip(zero(eve::as(a)), a);
+    else return eve::zip(zero(eve::as{a}), a);
   }
 }}

@@ -47,7 +47,7 @@ EVE_FORCEINLINE wide<T, N>
     using i_t = as_integer_t<wide<T, N>>;
     return bit_cast(
         slide_right_arm_extract(bit_cast(x, as<i_t> {}), bit_cast(y, as<i_t> {}), index<Shift>),
-        as(x));
+        as{x});
   }
 }
 

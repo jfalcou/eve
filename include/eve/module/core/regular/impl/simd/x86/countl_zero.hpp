@@ -49,7 +49,7 @@ namespace eve::detail
           auto w   = bit_cast(v, as<ru_t2>{});
           w   = sub[saturated](158, w);                    // undo bias
           auto v32 = bit_cast(r_t(32u), as<ru_t2>{});
-          return bit_cast(eve::min(w,v32), as<r_t>());
+          return bit_cast(eve::min(w,v32), as<r_t>{});
         }
         else return countl_zero.behavior(as<wide<T, N>>{}, cpu_{}, opts, w);
       }

@@ -76,12 +76,12 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_eqz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_eqz_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( scalar_value<T> || is_logical_v<T> )
         return !a;
       else
-        return (a == zero(eve::as(a)));
+        return (a == zero(eve::as{a}));
     }
   }
 }

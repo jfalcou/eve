@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::pi2(as<T>())` returns the square of \f$\pi\f$.
+  //!      The call `eve::pi2(as<T>{})` returns the square of \f$\pi\f$.
   //!
   //!  @groupheader{Example}
   //!

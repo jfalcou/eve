@@ -80,7 +80,7 @@ namespace eve
     template<callable_options O, typename T>
     constexpr T log_gamma_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
-      auto aa0 = if_else((a0 == minf(as(a0))) || is_lez(signgam(a0)), allbits, a0);
+      auto aa0 = if_else((a0 == minf(as{a0})) || is_lez(signgam(a0)), allbits, a0);
       return log_abs_gamma(aa0);
     }
   }

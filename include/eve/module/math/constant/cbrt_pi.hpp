@@ -70,7 +70,7 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      The call `eve::cbrt_pi(as<T>())` returns  \f$\sqrt[3]\pi\f$.
+  //!      The call `eve::cbrt_pi(as<T>{})` returns  \f$\sqrt[3]\pi\f$.
   //!
   //!  @groupheader{Example}
   //!

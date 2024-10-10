@@ -69,7 +69,7 @@ namespace eve
 struct blend_t
 {
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-  static constexpr auto pattern(eve::as<T>, eve::as<T>, eve::fixed<G>, pattern_t<I...>)
+  static constexpr auto pattern(as<T>, as<T>, eve::fixed<G>, pattern_t<I...>)
   {
     static_assert(((0 <= I && I <= 1) && ...), "pattern for blend has to only contain 0 and 1");
     static_assert(pattern_t<I...>::size() * G == T::size(), "pattern has wrong number of elements");
@@ -83,12 +83,12 @@ struct blend_t
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-  static constexpr std::ptrdiff_t level(eve::as<T>, eve::as<T>, eve::fixed<G> g, pattern_t<I...> p)
+  static constexpr std::ptrdiff_t level(as<T>, as<T>, eve::fixed<G> g, pattern_t<I...> p)
   {
     if constexpr( sizeof...(I) == 1 ) return 0;
     else if constexpr( eve::has_aggregated_abi_v<T> )
     {
-      using half_t = decltype(T {}.slice(lower_));
+      using half_t = decltype(T{}.slice(lower_));
 
       auto [p0, p1] = detail::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
 
@@ -118,7 +118,7 @@ struct blend_t
     {
       if constexpr( current_api == avx && reg_size >= 32 && g_size <= 2 )
       {
-        using half_t  = decltype(T {}.slice(lower_));
+        using half_t  = decltype(T{}.slice(lower_));
         auto [p0, p1] = detail::idxm::slice_pattern<pattern_t<I...>::size() / 2>(p);
         auto l0       = level(as<half_t> {}, as<half_t> {}, g, p0);
         auto l1       = level(as<half_t> {}, as<half_t> {}, g, p1);
@@ -136,13 +136,13 @@ struct blend_t
 
   template<simd_value T, std::ptrdiff_t G>
   static constexpr auto
-  pattern(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, pattern_formula auto gen)
+  pattern(as<T> tgt, as<T>, eve::fixed<G> g, pattern_formula auto gen)
   {
     return pattern(tgt, tgt, g, fix_pattern<T::size() / G>(gen));
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
-  static constexpr auto level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, pattern_formula auto gen)
+  static constexpr auto level(as<T> tgt, as<T>, eve::fixed<G> g, pattern_formula auto gen)
   {
     return level(tgt, tgt, g, fix_pattern<T::size() / G>(gen));
   }

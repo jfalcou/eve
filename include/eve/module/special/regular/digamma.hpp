@@ -145,8 +145,8 @@ namespace eve
 
       if constexpr( scalar_value<T> )
       {
-        auto result = zero(as(a));
-        if( a == 0 ) return copysign(inf(as(a)), a);
+        auto result = zero(as{a});
+        if( a == 0 ) return copysign(inf(as{a}), a);
         if( a < 0 )
         {
           if( 0 && (a > -1) ) result = -a;
@@ -156,9 +156,9 @@ namespace eve
             result = a - floor(a);
           }
           if( result > 0.5 ) result -= 1;
-          if( result == 0.5 ) result = zero(as(a));
-          else if( result ) result = pi(as(a)) * cotpi(result);
-          else result = nan(as(a));
+          if( result == 0.5 ) result = zero(as{a});
+          else if( result ) result = pi(as{a}) * cotpi(result);
+          else result = nan(as{a});
           // we are ready to increment result that was
           // Pi<A0>()/tanpi(remainder) if a0 < 0  and remainder != 0
           // Nan<A0>                   if a0 < 0  and remainder == 0
@@ -186,7 +186,7 @@ namespace eve
       {
         a            = if_else(is_ltz(a) && is_flint(a), allbits, a);
         auto notdone = is_not_nan(a);
-        auto result  = zero(as(a));
+        auto result  = zero(as{a});
         auto test    = is_lez(a);
         if( eve::any(test) )
         {
@@ -194,12 +194,12 @@ namespace eve
           a              = oneminus[test](a);
           auto remainder = frac[raw](a);
           remainder      = dec[remainder > 0.5](remainder);
-          remainder      = if_else(is_eqz(remainder), nan(as(a)), remainder);
-          remainder      = if_else(remainder == T(0.5), zero, pi(as(a)) * cotpi(remainder));
-          result         = if_else(is_eqz(va), copysign(inf(as(a)), va), remainder);
+          remainder      = if_else(is_eqz(remainder), nan(as{a}), remainder);
+          remainder      = if_else(remainder == T(0.5), zero, pi(as{a}) * cotpi(remainder));
+          result         = if_else(is_eqz(va), copysign(inf(as{a}), va), remainder);
           result         = if_else(test, result, zero);
         }
-        auto r = nan(as<T>());
+        auto r = nan(as<T>{});
         if( eve::any(notdone) )
         {
           notdone = next_interval(br_large, notdone, a >= dlarge, r, a, result);

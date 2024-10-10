@@ -112,7 +112,7 @@ namespace eve
 
           if (y <= 0.46875) // 15/32
           {
-            T ysq = if_else(y > epso_2(as<T>()), sqr(y), eve::zero);
+            T ysq = if_else(y > epso_2(as<T>{}), sqr(y), eve::zero);
             T res = kernel1_erf1(x, ysq);
             res   = oneminus(res);
             return res;
@@ -131,12 +131,12 @@ namespace eve
             if( is_ltz(x) ) res = T(2) - res;
             return res;
           }
-          else return (is_ltz(x)) ? T(2) : zero(as<T>());
+          else return (is_ltz(x)) ? T(2) : zero(as<T>{});
         }
         else if constexpr (std::is_same_v<T, float>)
         {
           T xx = eve::abs(x);
-          T r1 = zero(as<T>());
+          T r1 = zero(as<T>{});
           T z  = xx / inc(xx);
           if (3.0f * xx < 2.0f)
           {
@@ -161,12 +161,12 @@ namespace eve
           y          = if_else(y > T(26.543), T(27), y);
           T    sqry  = sqr(y);
           auto test1 = eve::is_less(y, T(0.46875)); // 15/32;
-          T    r1    = eve::zero(as<T>());
+          T    r1    = eve::zero(as<T>{});
           auto nb    = eve::count_true(test1);
 
           if (nb > 0) // here y < 0.46875
           {
-            T ysq = if_else(y > epso_2(as<T>()), sqry, eve::zero);
+            T ysq = if_else(y > epso_2(as<T>{}), sqry, eve::zero);
             r1    = kernel1_erf1(a0, ysq);
             r1    = oneminus(r1);
             if( nb == T::size() ) return r1;
@@ -198,7 +198,7 @@ namespace eve
         {
           T    xv     = eve::abs(a0);
           auto test0 = eve::is_ltz(a0);
-          T    r1    = zero(as<T>());
+          T    r1    = zero(as<T>{});
           auto test1 = eve::is_less(xv, 6.6666667e-01f);
           T    z     = xv / inc(xv);
 
@@ -213,7 +213,7 @@ namespace eve
           z -= T(0.4);
           T r2 = exp(-sqr(x)) * kernel_erfc2(z);
           r1   = if_else(test1, r1, r2);
-          if constexpr (eve::platform::supports_infinites) r1 = if_else(xv == inf(as<T>()), zero, r1);
+          if constexpr (eve::platform::supports_infinites) r1 = if_else(xv == inf(as<T>{}), zero, r1);
 
           return eve::if_else(test0, T(2) - r1, r1);
         }

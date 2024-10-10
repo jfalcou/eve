@@ -76,7 +76,7 @@ namespace eve
   {
     template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
-    flush_denormal_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
+    flush_denormal_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
       return if_else(is_denormal(x), zero, x);
     }

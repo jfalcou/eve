@@ -25,7 +25,7 @@ namespace eve::detail
 template<arithmetic_scalar_value T, typename N>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE wide<T, N>
-                rvv_make_splat(eve::as<wide<T, N>>, T x) noexcept
+                rvv_make_splat(as<wide<T, N>>, T x) noexcept
 {
   constexpr auto c    = categorize<wide<T, N>>();
   constexpr auto lmul = rvv_lmul_v<T, N>;
@@ -34,7 +34,7 @@ EVE_FORCEINLINE wide<T, N>
   {
     auto tgt              = as<wide<T, eve::fundamental_cardinal<T>>> {};
     auto fundamental_zero = rvv_make_splat(tgt, static_cast<T>(0));
-    fill_zero             = bit_cast(fundamental_zero, eve::as<wide<T, N>> {});
+    fill_zero             = bit_cast(fundamental_zero, as<wide<T, N>> {});
   }
 
   if constexpr( match(c, category::float64) )
@@ -125,7 +125,7 @@ EVE_FORCEINLINE wide<T, N>
 template<arithmetic_scalar_value T, typename N, arithmetic_scalar_value... Vs>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE wide<T, N>
-                rvv_make_enumerated(eve::as<wide<T, N>>, Vs... vs)
+                rvv_make_enumerated(as<wide<T, N>>, Vs... vs)
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
   std::array on_stack {static_cast<T>(vs)...};
@@ -135,7 +135,7 @@ EVE_FORCEINLINE wide<T, N>
 template<callable_options O, arithmetic_scalar_value T, typename N, typename V1, typename... Vs>
 requires rvv_abi<abi_t<T, N>>
 EVE_FORCEINLINE auto
-make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) noexcept
+make_(EVE_REQUIRES(rvv_), O const&, as<wide<T, N>> tgt, V1 v1, Vs... vs) noexcept
 {
   if constexpr( sizeof...(Vs) == 0 ) return rvv_make_splat(tgt, v1);
   else return rvv_make_enumerated(tgt, v1, vs...);

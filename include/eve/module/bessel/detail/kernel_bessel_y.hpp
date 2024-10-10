@@ -110,8 +110,8 @@ kernel_bessel_yn_small_x(T n, T x)
     k_t       = if_else(kltn, k_t * (y / (k * (n - k))), k_t);
     sum1 += if_else(kltn, k_t, zero);
   }
-  T    t1 = -eve::exp(log_p1) * sum1 * inv_pi(as(x));
-  T    p2 = -exp(n * log_xo_2) * inv_pi(as(x));
+  T    t1 = -eve::exp(log_p1) * sum1 * inv_pi(as{x});
+  T    p2 = -exp(n * log_xo_2) * inv_pi(as{x});
   T    t2(0);
   auto nezp2 = is_nez(p2);
   if( eve::any(nezp2) )
@@ -155,16 +155,16 @@ kernel_bessel_y_int_pos(I n, T x) noexcept
     auto y1 = cyl_bessel_y1(xx);
     auto z  = kernel_bessel_y_int_forward(nn, xx, y0, y1);
     z       = if_else(is_eqz(nn), y0, z);
-    return if_else(nn == one(as(nn)), y1, z);
+    return if_else(nn == one(as{nn}), y1, z);
   };
   auto br_small  = [](auto nn, auto xx) { return kernel_bessel_yn_small_x(nn, xx); };
   auto br_medium = [](auto nn, auto xx) { return kernel_bessel_y_medium(nn, xx); };
 
   if constexpr( scalar_value<I> && scalar_value<T> )
   {
-    if( is_ngez(x) ) return nan(as(x));
-    if( is_eqz(x) ) return minf(as(x));
-    if( x == inf(as(x)) ) return zero(as(x));
+    if( is_ngez(x) ) return nan(as{x});
+    if( is_eqz(x) ) return minf(as{x});
+    if( x == inf(as{x}) ) return zero(as{x});
     if( asymptotic_bessel_large_x_limit(T(n), x) ) return br_large(T(n), x);
     if( n == 0 ) return cyl_bessel_y0(x);          // cyl_bessel_y0(x);
     if( n == 1 ) return cyl_bessel_y1(x);          // cyl_bessel_y1(x);
@@ -175,16 +175,16 @@ kernel_bessel_y_int_pos(I n, T x) noexcept
   else
   {
     using elt_t = element_type_t<T>;
-    auto r      = nan(as(x));
-    auto isinfx = x == inf(as(x));
-    r           = if_else(isinfx, zero(as(x)), allbits);
+    auto r      = nan(as{x});
+    auto isinfx = x == inf(as{x});
+    r           = if_else(isinfx, zero(as{x}), allbits);
     x           = if_else(isinfx, mone, x);
     auto iseqzx = is_eqz(x);
-    if( eve::any(iseqzx) ) { r = if_else(iseqzx, minf(as(x)), r); }
+    if( eve::any(iseqzx) ) { r = if_else(iseqzx, minf(as{x}), r); }
 
     auto notdone = is_nltz(x);
     x            = if_else(notdone, x, allbits);
-    auto nn      = convert(n, as<elt_t>());
+    auto nn      = convert(n, as<elt_t>{});
     if( eve::any(notdone) )
     {
       notdone = next_interval(cyl_bessel_y0, notdone, nn == 0, r, x);
@@ -215,7 +215,7 @@ template<value I, floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_int(I n, T x) noexcept
 {
-  x           = if_else(is_ltz(x), nan(as(x)), x);
+  x           = if_else(is_ltz(x), nan(as{x}), x);
   auto nlt0   = is_ltz(n);
   auto isoddn = is_odd(n);
   auto y      = kernel_bessel_y_int_pos(eve::abs(n), x);
@@ -233,17 +233,17 @@ kernel_bessel_y_flt(T n, T x) noexcept
 
   if constexpr( scalar_value<T> )
   {
-    if( is_ltz(x) || is_ltz(n) ) return nan(as(x));
-    if( is_eqz(x) ) return minf(as(x));
-    if( x == inf(as(x)) ) return zero(as(x));
+    if( is_ltz(x) || is_ltz(n) ) return nan(as{x});
+    if( is_eqz(x) ) return minf(as{x});
+    if( x == inf(as{x}) ) return zero(as{x});
     if( asymptotic_bessel_large_x_limit(n, x) ) return br_large(n, x);
     return br_medium(n, x);
   }
   else
   {
-    auto r       = nan(as(x));
-    auto isinfx  = x == inf(as(x));
-    r            = if_else(isinfx, zero(as(x)), allbits);
+    auto r       = nan(as{x});
+    auto isinfx  = x == inf(as{x});
+    r            = if_else(isinfx, zero(as{x}), allbits);
     x            = if_else(isinfx, mone, x);
     auto notdone = is_nltz(x);
     if( eve::any(notdone) )
