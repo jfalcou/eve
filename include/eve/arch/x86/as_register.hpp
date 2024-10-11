@@ -20,63 +20,41 @@ namespace eve
   struct x86_256_;
 }
 
-#if defined(EVE_HW_X86)
-
 namespace eve
 {
-  template<typename Type, typename Size>
-  struct as_register<Type, Size, eve::x86_128_>
+  template<typename T, typename N>
+  consteval auto find_register_type(as<T>, N, x86_abi auto abi)
   {
-    static constexpr auto find()
+    constexpr size_t width = sizeof(Type) * Size::value;
+
+    if constexpr (std::same_as<abi, x86_128_)
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width <= 16)
+      if constexpr (width <= 16)
       {
-              if constexpr(std::is_same_v<Type,double> ) return  __m128d{};
-        else  if constexpr(std::is_same_v<Type,float > ) return  __m128{};
-        else  if constexpr(std::is_integral_v<Type>    ) return  __m128i{};
+             if constexpr (std::is_same_v<Type, double>) return __m128d{};
+        else if constexpr (std::is_same_v<Type, float >) return __m128{};
+        else if constexpr (std::is_integral_v<Type>    ) return __m128i{};
       }
     }
-
-    using type = decltype(find());
-    static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
-  };
-
-  template<typename Type, typename Size>
-  struct as_register<Type, Size, eve::x86_256_>
-  {
-    static constexpr auto find()
+    else if constexpr (std::same_as<abi, x86_256_>)
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width == 32)
+      if constexpr (width <= 32)
       {
-              if constexpr(std::is_same_v<Type,double> ) return __m256d{};
-        else  if constexpr(std::is_same_v<Type,float > ) return __m256{};
-        else  if constexpr(std::is_integral_v<Type>    ) return __m256i{};
+             if constexpr (std::is_same_v<Type, double>) return __m256d{};
+        else if constexpr (std::is_same_v<Type, float >) return __m256{};
+        else if constexpr (std::is_integral_v<Type>    ) return __m256i{};
       }
     }
-
-    using type = decltype(find());
-    static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
-  };
-
-  template<typename Type, typename Size>
-  struct as_register<Type, Size, eve::x86_512_>
-  {
-    static constexpr auto find()
+    else if constexpr (std::same_as<abi, x86_512_>)
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width == 64)
+      if constexpr (width <= 64)
       {
-              if constexpr(std::is_same_v<Type,double> ) return __m512d{};
-        else  if constexpr(std::is_same_v<Type,float > ) return __m512{};
-        else  if constexpr(std::is_integral_v<Type>    ) return __m512i{};
+             if constexpr (std::is_same_v<Type, double>) return __m512d{};
+        else if constexpr (std::is_same_v<Type, float >) return __m512{};
+        else if constexpr (std::is_integral_v<Type>    ) return __m512i{};
       }
     }
-
-    using type = decltype(find());
-    static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
-  };
+  }
 
   namespace detail
   {
@@ -146,69 +124,35 @@ namespace eve
     template<int N> using as_mask_t = typename as_mask<std::max(8,N)>::type;
   }
 
-  // logical uses different registers in AVX512
-  template<typename Type, typename Size>
-  struct as_logical_register<Type, Size, eve::x86_512_>
-  {
-    static constexpr auto find()
-    {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width == 64) return detail::as_mask_t<64/sizeof(Type)>{};
-    }
-
-    using type = decltype(find());
-    static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
-  };
-
 # if defined(SPY_SIMD_IS_X86_AVX512)
-  template<typename Type, typename Size>
-  struct as_logical_register<Type, Size, eve::x86_128_>
+  // logical uses different registers in AVX512
+  template<typename T, typename N>
+  consteval auto find_logical_register_type(as<T>, N, x86_abi auto abi)
   {
-    static constexpr auto find()
+    constexpr size_t width = sizeof(Type) * N::value;
+
+    if constexpr (std::same_as<abi, x86_512_> && (width == 64))
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width <= 16)
-      {
-        if constexpr(sizeof(Type) == 1) return detail::mask16{};
-        else                            return detail::mask8{};
-      }
+      return detail::as_mask_t<64 / sizeof(Type)>{};
     }
-
-    using type = decltype(find());
-    static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
-  };
-
-  template<typename Type, typename Size>
-  struct as_logical_register<Type, Size, eve::x86_256_>
-  {
-    static constexpr auto find()
+    else if constexpr (std::same_as<abi, x86_256_> && (width == 32))
     {
-      constexpr auto width = sizeof(Type)*Size::value;
-      if constexpr(width == 32)
-      {
-        if constexpr(Size::value <= 8 )  return detail::mask8{};
-        if constexpr(Size::value == 16)  return detail::mask16{};
-        if constexpr(Size::value == 32)  return detail::mask32{};
-      }
+      if constexpr (N::value <= 8 ) return detail::mask8{};
+      if constexpr (N::value == 16) return detail::mask16{};
+      if constexpr (N::value == 32) return detail::mask32{};
     }
-
-    using type = decltype(find());
-    static_assert( !std::is_void_v<type>, "[eve x86] - Type is not usable in a SIMD register");
-  };
-
+    else if constexpr (std::same_as<abi, x86_128_> && (width == 16))
+    {
+      if constexpr (sizeof(Type) == 1) return detail::mask16{};
+      else                             return detail::mask8{};
+    }
+  }
 # else
   // logical uses same registers
-  template<typename T, typename Size>
-  struct as_logical_register<T, Size, eve::x86_128_> : as_register<T, Size, eve::x86_128_>
+  template<typename T, typename N>
+  consteval auto find_logical_register_type(as<T> t, N n, x86_abi auto a)
   {
-  };
-
-  template<typename T, typename Size>
-  struct as_logical_register<T, Size, eve::x86_256_> : as_register<T, Size, eve::x86_256_>
-  {
-  };
-
+    return find_register_type(t, n, a);
+  }
 # endif
 }
-
-#endif

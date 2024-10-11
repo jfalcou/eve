@@ -53,7 +53,7 @@ shuffle_l0_2_all()
   else shuffle_test::run2_all<T, N, G, tests>(expect_l2);
 }
 
-#if defined(EVE_HW_X86)
+#if defined(EVE_INCLUDE_X86_HEADER)
 TTS_CASE("Perfect shuffle, x86, 16 bytes")
 {
   // 16x1
