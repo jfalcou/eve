@@ -78,6 +78,6 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/ppc/bit_select.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/bit_select.hpp>
 #endif

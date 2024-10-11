@@ -29,11 +29,11 @@ EVE_CALLABLE_API(shuffle_l2_, shuffle_l2)
 #  include <eve/detail/shuffle_v2/simd/x86/shuffle_l2.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/detail/shuffle_v2/simd/arm/neon/shuffle_l2.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/detail/shuffle_v2/simd/arm/sve/shuffle_l2.hpp>
 #endif
 

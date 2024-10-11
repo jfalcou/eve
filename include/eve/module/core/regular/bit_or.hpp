@@ -100,10 +100,10 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/bit_or.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/bit_or.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/bit_or.hpp>
 #endif

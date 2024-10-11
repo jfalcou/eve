@@ -36,7 +36,7 @@ namespace eve {
 #  include <eve/arch/x86/top_bits.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/arch/arm/sve/top_bits.hpp>
 #endif
 

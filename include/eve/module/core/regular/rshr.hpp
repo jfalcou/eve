@@ -86,6 +86,6 @@ namespace eve
 }
 #  include <eve/module/core/regular/impl/rshr.hpp>
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/rshr.hpp>
 #endif

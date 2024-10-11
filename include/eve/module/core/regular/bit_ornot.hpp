@@ -84,6 +84,6 @@ namespace eve
 
 #include <eve/module/core/regular/impl/bit_ornot.hpp>
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/bit_ornot.hpp>
 #endif

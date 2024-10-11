@@ -299,7 +299,7 @@ debug_call_shuffle_l_directly()
   w_t x {[](int i, int) { return i + 1; }};
 
 // disabled since no shuffle_l2 for now and breaks compilation
-#  if !defined(EVE_INCLUDE_SVE_HEADER) && !defined(EVE_INCLUDE_POWERPC_HEADER)
+#  if !defined(EVE_INCLUDE_ARM_SVE_HEADER) && !defined(EVE_INCLUDE_POWERPC_HEADER)
   if constexpr( l == 2 )
   {
     eve::detail::shuffle_l2_(eve::detail::delay_t {}, eve::current_api, p, g, x);
