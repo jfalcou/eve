@@ -156,7 +156,7 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gabba0e6a809a4
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition:</b> conditional.hpp:27</div></div>
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition:</b> value.hpp:107</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition:</b> value.hpp:33</div></div>
-<div class="ttc" id="agroup__core__arithmetic_gabba0e6a809a48695c1111a40ac5d8f40_html_gabba0e6a809a48695c1111a40ac5d8f40"><div class="ttname"><a href="group__core__arithmetic_gabba0e6a809a48695c1111a40ac5d8f40.html#gabba0e6a809a48695c1111a40ac5d8f40">eve::heaviside</a></div><div class="ttdeci">constexpr auto heaviside</div><div class="ttdoc">callable step function taking the value 0 then 1 after value s (0 by default).</div><div class="ttdef"><b>Definition:</b> heaviside.hpp:89</div></div>
+<div class="ttc" id="agroup__core__arithmetic_gabba0e6a809a48695c1111a40ac5d8f40_html_gabba0e6a809a48695c1111a40ac5d8f40"><div class="ttname"><a href="group__core__arithmetic_gabba0e6a809a48695c1111a40ac5d8f40.html#gabba0e6a809a48695c1111a40ac5d8f40">eve::heaviside</a></div><div class="ttdeci">constexpr auto heaviside</div><div class="ttdoc">elementwise_callable that return 1 if the input is greater than a threshold else 0.</div><div class="ttdef"><b>Definition:</b> heaviside.hpp:93</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition:</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
@@ -167,12 +167,12 @@ $(document).ready(function(){initNavTree('group__core__arithmetic_gabba0e6a809a4
 </ul>
 <p><b>Return value</b></p><ol type="1">
 <li>Each <a class="el" href="glossary_semantic.html#glossary_elementwise">element</a> of the result contains:<ul>
-<li><code>0</code>, if <code>x</code> is less zero.</li>
+<li><code>0</code>, if <code>x</code> is less or equal to zero.</li>
 <li><code>1</code> otherwise.</li>
 </ul>
 </li>
 <li>Each <a class="el" href="glossary_semantic.html#glossary_elementwise">element</a> of the result contains:<ul>
-<li><code>0</code>, if <code>x</code> is less than <code>s</code> (default to zero).</li>
+<li><code>0</code>, if <code>x</code> is less or equal to <code>s</code> (default to zero).</li>
 <li><code>1</code> otherwise.</li>
 </ul>
 </li>
