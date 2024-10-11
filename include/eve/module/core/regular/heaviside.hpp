@@ -9,7 +9,11 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/regular/if_else.hpp>
+#include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/constant/zero.hpp>
+
 #include <eve/forward.hpp>
 
 namespace eve
@@ -40,7 +44,7 @@ namespace eve
 //! @addtogroup core_arithmetic
 //! @{
 //!   @var heaviside
-//!   @brief `callable` step function taking the value 0 then 1 after value s (0 by default).
+//!   @brief `elementwise_callable` that return 1 if the input is greater than a threshold else 0.
 //!
 //!   **Defined in Header**
 //!
@@ -72,10 +76,10 @@ namespace eve
 //!
 //!    **Return value**
 //!        1. Each [element](@ref glossary_elementwise)  of the result contains:
-//!           * `0`, if `x` is less  zero.
+//!           * `0`, if `x` is less or equal to zero.
 //!           * `1` otherwise.
 //!        2. Each [element](@ref glossary_elementwise)  of the result contains:
-//!           * `0`, if `x` is less than `s` (default to zero).
+//!           * `0`, if `x` is less or equal to `s` (default to zero).
 //!           * `1` otherwise.
 //!        3. [The operation is performed conditionnaly](@ref conditional).
 //!
@@ -92,7 +96,7 @@ namespace eve
   {
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > 0;
@@ -101,12 +105,12 @@ namespace eve
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T heaviside_(EVE_REQUIRES(cpu_), O const &, T a, T s) noexcept
+    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O, T a, T s) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > s;
       else
-        return  if_else(a > s, one(as(a)), zero);
+        return if_else(a > s, one(as(a)), zero);
     }
   }
 }

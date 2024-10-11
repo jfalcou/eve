@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/traits/as_wide.hpp>
+
 namespace eve
 {
   namespace detail
@@ -36,6 +38,8 @@ namespace eve
           using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, unsigned>::type;
           return sd_t();
         }
+        else
+          return T{};
       };
       using type = eve::as_wide_as_t<decltype(sd()), T>;
     };
@@ -65,11 +69,31 @@ namespace eve
           using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, unsigned>::type;
           return ud_t();
         }
+        else
+          return T{};
       };
       using type = eve::as_wide_as_t<decltype(ud()), T>;
     };
   }
 
+
   template < typename T > using downgrade_t = typename detail::down<T>::type;
   template < typename T > using upgrade_t = typename detail::up<T>::type;
+  template < typename T > downgrade_t<T> downgrade(T const & a){return convert(a, as<element_type_t<downgrade_t<T>>>()); }
+  template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
+
+  namespace detail
+  {
+
+    template < typename T,  callable_options O >
+    constexpr auto resize_it(O const &, T a) noexcept
+    {
+      if constexpr(O::contains(widen))
+        return upgrade(a);
+      else
+        return a;
+    }
+  }
+
+  template < typename T,  typename O> using resized_t = decltype(detail::resize_it(O(), T()));
 }
