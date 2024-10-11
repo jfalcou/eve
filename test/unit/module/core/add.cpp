@@ -117,7 +117,6 @@ TTS_CASE_WITH("Check behavior of add widen on wide",
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::add;
-  using eve::detail::resize_it;
   using eve::widen;
   using eve::convert;
   using eve::as;
