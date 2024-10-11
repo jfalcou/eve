@@ -47,7 +47,7 @@ namespace eve
   consteval auto find_register_type(as<T>, N, eve::bundle_)
     requires (kumi::product_type<T>)
   {
-    return kumi::as_tuple<T, detail::apply_as_wide<N>::template type>{};
+    return kumi::as_tuple_t<T, detail::apply_as_wide<N>::template type>{};
   }
 
   namespace detail
