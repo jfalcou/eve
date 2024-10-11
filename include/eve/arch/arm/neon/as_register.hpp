@@ -24,31 +24,32 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::arm_64_)
   {
-    if constexpr (std::is_same_v<T, float> && (N::value <= 2))
-      {
-        return float32x2_t{};
-      }
-      else if constexpr (std::is_same_v<T, double> && (N::value <= 1))
-      {
-        #if defined(SPY_SIMD_IS_ARM_ASIMD)
-        return float64x1_t{};
-        #else
-        return emulated_{};
-        #endif
-      }
-      else if constexpr (std::is_integral_v<T>)
-      {
-        constexpr bool signed_v = std::is_signed_v<T>;
-
-        if constexpr( signed_v && (sizeof(T) == 1) && (N::value <= 8) ) return int8x8_t{};
-        if constexpr( signed_v && (sizeof(T) == 2) && (N::value <= 4) ) return int16x4_t{};
-        if constexpr( signed_v && (sizeof(T) == 4) && (N::value <= 2) ) return int32x2_t{};
-        if constexpr( signed_v && (sizeof(T) == 8) && (N::value <= 1) ) return int64x1_t{};
-        if constexpr(!signed_v && (sizeof(T) == 1) && (N::value <= 8) ) return uint8x8_t{};
-        if constexpr(!signed_v && (sizeof(T) == 2) && (N::value <= 4) ) return uint16x4_t{};
-        if constexpr(!signed_v && (sizeof(T) == 4) && (N::value <= 2) ) return uint32x2_t{};
-        if constexpr(!signed_v && (sizeof(T) == 8) && (N::value <= 1) ) return uint64x1_t{};
-      }
+    if constexpr (std::same_as<T, float> && (N::value <= 2))
+    {
+      return float32x2_t{};
+    }
+    else if constexpr (std::same_as<T, double> && (N::value <= 1))
+    {
+      #if defined(SPY_SIMD_IS_ARM_ASIMD)
+      return float64x1_t{};
+      #else
+      return emulated_{};
+      #endif
+    }
+    else if constexpr (std::signed_integral<T>)
+    {
+      if      constexpr((sizeof(T) == 1) && (N::value <= 8)) return int8x8_t{};
+      else if constexpr((sizeof(T) == 2) && (N::value <= 4)) return int16x4_t{};
+      else if constexpr((sizeof(T) == 4) && (N::value <= 2)) return int32x2_t{};
+      else if constexpr((sizeof(T) == 8) && (N::value <= 1)) return int64x1_t{};
+    }
+    else if constexpr (std::unsigned_integral<T>)
+    {
+      if      constexpr((sizeof(T) == 1) && (N::value <= 8)) return uint8x8_t{};
+      else if constexpr((sizeof(T) == 2) && (N::value <= 4)) return uint16x4_t{};
+      else if constexpr((sizeof(T) == 4) && (N::value <= 2)) return uint32x2_t{};
+      else if constexpr((sizeof(T) == 8) && (N::value <= 1)) return uint64x1_t{};
+    }
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -56,11 +57,11 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, eve::arm_128_)
   {
-    if constexpr (std::is_same_v<T, float>)
+    if constexpr (std::same_as<T, float>)
     {
       return float32x4_t{};
     }
-    else if constexpr (std::is_same_v<T, double>)
+    else if constexpr (std::same_as<T, double>)
     {
       #if defined(SPY_SIMD_IS_ARM_ASIMD)
       return float64x2_t{};
@@ -68,27 +69,27 @@ namespace eve
       return emulated_{};
       #endif
     }
-    else if constexpr (std::is_integral_v<T>)
+    else if constexpr (std::signed_integral<T>)
     {
-      constexpr bool signed_v = std::is_signed_v<T>;
-
-      if constexpr ( signed_v && (sizeof(T) == 1) && (N::value == 16)) return int8x16_t{};
-      if constexpr ( signed_v && (sizeof(T) == 2) && (N::value == 8 )) return int16x8_t{};
-      if constexpr ( signed_v && (sizeof(T) == 4) && (N::value == 4 )) return int32x4_t{};
-      if constexpr ( signed_v && (sizeof(T) == 8) && (N::value == 2 )) return int64x2_t{};
-      if constexpr (!signed_v && (sizeof(T) == 1) && (N::value == 16)) return uint8x16_t{};
-      if constexpr (!signed_v && (sizeof(T) == 2) && (N::value == 8 )) return uint16x8_t{};
-      if constexpr (!signed_v && (sizeof(T) == 4) && (N::value == 4 )) return uint32x4_t{};
-      if constexpr (!signed_v && (sizeof(T) == 8) && (N::value == 2 )) return uint64x2_t{};
+      if      constexpr ((sizeof(T) == 1) && (N::value == 16)) return int8x16_t{};
+      else if constexpr ((sizeof(T) == 2) && (N::value == 8 )) return int16x8_t{};
+      else if constexpr ((sizeof(T) == 4) && (N::value == 4 )) return int32x4_t{};
+      else if constexpr ((sizeof(T) == 8) && (N::value == 2 )) return int64x2_t{};
+    }
+    else if constexpr (std::unsigned_integral<T>)
+    {
+      if      constexpr ((sizeof(T) == 1) && (N::value == 16)) return uint8x16_t{};
+      else if constexpr ((sizeof(T) == 2) && (N::value == 8 )) return uint16x8_t{};
+      else if constexpr ((sizeof(T) == 4) && (N::value == 4 )) return uint32x4_t{};
+      else if constexpr ((sizeof(T) == 8) && (N::value == 2 )) return uint64x2_t{};
     }
   }
 
   // ---------------------------------------------------------------------------------------------
   // logical cases
-  template<typename T, typename N, typename ABI>
-  consteval auto find_logical_register_type(as<T>, N, ABI)
-    requires (std::same_as<ABI, eve::arm_64_> || std::same_as<ABI, eve::arm_128_>)
+  template<typename T, typename N>
+  consteval auto find_logical_register_type(as<T>, N n, arm_abi auto abi)
   {
-    return find_register_type(as_integer_t<T, unsigned>{}, N{}, ABI{});
+    return find_register_type(as_integer_t<T, unsigned>{}, n, abi);
   }
 }

@@ -22,58 +22,58 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, sve_abi auto ABI)
   {
-    constexpr auto width = sizeof(Type) * Size::value * 8;
+    constexpr auto width = sizeof(T) * N::value * 8;
 
     if constexpr(width <= __ARM_FEATURE_SVE_BITS)
     {
-      constexpr bool signed_v = std::is_signed_v<Type>;
+      constexpr bool signed_v = std::is_signed_v<T>;
 
-      if constexpr (std::is_same_v<Type,float>)
+      if constexpr (std::same_as<T, float>)
       {
         using type = svfloat32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (std::is_same_v<Type,double>)
+      else if constexpr (std::same_as<T, double>)
       {
         using type = svfloat64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (signed_v && sizeof(Type) == 1)
+      else if constexpr (signed_v && sizeof(T) == 1)
       {
         using type = svint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (signed_v && sizeof(Type) == 2)
+      else if constexpr (signed_v && sizeof(T) == 2)
       {
         using type = svint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (signed_v && sizeof(Type) == 4)
+      else if constexpr (signed_v && sizeof(T) == 4)
       {
         using type = svint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (signed_v && sizeof(Type) == 8)
+      else if constexpr (signed_v && sizeof(T) == 8)
       {
         using type = svint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (!signed_v && sizeof(Type) == 1)
+      else if constexpr (!signed_v && sizeof(T) == 1)
       {
         using type = svuint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (!signed_v && sizeof(Type) == 2)
+      else if constexpr (!signed_v && sizeof(T) == 2)
       {
         using type = svuint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (!signed_v && sizeof(Type) == 4)
+      else if constexpr (!signed_v && sizeof(T) == 4)
       {
         using type = svuint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (!signed_v && sizeof(Type) == 8)
+      else if constexpr (!signed_v && sizeof(T) == 8)
       {
         using type = svuint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
@@ -86,7 +86,7 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as_logical<T>, N, sve_abi auto ABI)
   {
-    constexpr auto width = sizeof(Type)*Size::value*8;
+    constexpr size_t width = sizeof(T) * N::value * 8;
 
     if constexpr (width <= __ARM_FEATURE_SVE_BITS)
     {

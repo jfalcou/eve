@@ -83,16 +83,16 @@ namespace eve
       return (sizeof(T) == t) && (N::value <= n);
     };
 
-    if constexpr (std::is_same_v<T,float> && N::value <= 4)
+    if constexpr (std::is_same_v<T, float> && (N::value <= 4))
     {
       return wrap<__vector __bool int>{};
     }
-    else if constexpr (std::is_same_v<T,double> && N::value <= 2 )
+    else if constexpr (std::is_same_v<T, double> && (N::value <= 2))
     {
       if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector __bool long>{};
       else                                                  return emulated_{};
     }
-    else if constexpr (std::is_integral_v<T> )
+    else if constexpr (std::integral<T>)
     {
       if      constexpr (size_check(1, 16))  return wrap<__vector __bool char>{};
       else if constexpr (size_check(2, 8 ))  return wrap<__vector __bool short>{};

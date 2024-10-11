@@ -25,33 +25,33 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_register_type(as<T>, N, x86_abi auto abi)
   {
-    constexpr size_t width = sizeof(Type) * Size::value;
+    constexpr size_t width = sizeof(T) * N::value;
 
     if constexpr (std::same_as<abi, x86_128_)
     {
       if constexpr (width <= 16)
       {
-             if constexpr (std::is_same_v<Type, double>) return __m128d{};
-        else if constexpr (std::is_same_v<Type, float >) return __m128{};
-        else if constexpr (std::is_integral_v<Type>    ) return __m128i{};
+             if constexpr (std::same_as<T, double>) return __m128d{};
+        else if constexpr (std::same_as<T, float >) return __m128{};
+        else if constexpr (std::is_integral_v<T>  ) return __m128i{};
       }
     }
     else if constexpr (std::same_as<abi, x86_256_>)
     {
       if constexpr (width <= 32)
       {
-             if constexpr (std::is_same_v<Type, double>) return __m256d{};
-        else if constexpr (std::is_same_v<Type, float >) return __m256{};
-        else if constexpr (std::is_integral_v<Type>    ) return __m256i{};
+             if constexpr (std::same_as<T, double>) return __m256d{};
+        else if constexpr (std::same_as<T, float >) return __m256{};
+        else if constexpr (std::is_integral_v<T>  ) return __m256i{};
       }
     }
     else if constexpr (std::same_as<abi, x86_512_>)
     {
       if constexpr (width <= 64)
       {
-             if constexpr (std::is_same_v<Type, double>) return __m512d{};
-        else if constexpr (std::is_same_v<Type, float >) return __m512{};
-        else if constexpr (std::is_integral_v<Type>    ) return __m512i{};
+             if constexpr (std::same_as<T, double>) return __m512d{};
+        else if constexpr (std::same_as<T, float >) return __m512{};
+        else if constexpr (std::is_integral_v<T>  ) return __m512i{};
       }
     }
   }
@@ -62,10 +62,10 @@ namespace eve
 
     template<int N> struct inner_mask;
 
-    template<> struct inner_mask<8>   { using type = __mmask8;  };
-    template<> struct inner_mask<16>  { using type = __mmask16; };
-    template<> struct inner_mask<32>  { using type = __mmask32; };
-    template<> struct inner_mask<64>  { using type = __mmask64; };
+    template<> struct inner_mask<8>  { using type = __mmask8;  };
+    template<> struct inner_mask<16> { using type = __mmask16; };
+    template<> struct inner_mask<32> { using type = __mmask32; };
+    template<> struct inner_mask<64> { using type = __mmask64; };
 
     template<int N> struct mask_n
     {
@@ -73,7 +73,7 @@ namespace eve
       static constexpr int bits = N;
 
       explicit constexpr operator type() const { return value; }
-      explicit constexpr operator bool() const { return (bool)value; }
+      explicit constexpr operator bool() const { return (bool) value; }
 
       // != and reverse are generated.
       // <=> didn't work for some reason for ==
@@ -129,11 +129,11 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N, x86_abi auto abi)
   {
-    constexpr size_t width = sizeof(Type) * N::value;
+    constexpr size_t width = sizeof(T) * N::value;
 
     if constexpr (std::same_as<abi, x86_512_> && (width == 64))
     {
-      return detail::as_mask_t<64 / sizeof(Type)>{};
+      return detail::as_mask_t<64 / sizeof(T)>{};
     }
     else if constexpr (std::same_as<abi, x86_256_> && (width == 32))
     {
@@ -143,8 +143,8 @@ namespace eve
     }
     else if constexpr (std::same_as<abi, x86_128_> && (width == 16))
     {
-      if constexpr (sizeof(Type) == 1) return detail::mask16{};
-      else                             return detail::mask8{};
+      if constexpr (sizeof(T) == 1) return detail::mask16{};
+      else                          return detail::mask8{};
     }
   }
 # else
