@@ -13,8 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
-#include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/regular/is_eqz.hpp>
+#include <eve/module/core/regular/ilogb.hpp>
 
 #include <type_traits>
 
@@ -26,19 +25,8 @@ namespace eve::detail
                                  wide<T, N> const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    if  constexpr(O::contains(raw))
-    {
-      using r_t    = wide<T, N>;
-      constexpr auto c = categorize<r_t>();
-      if      constexpr( c == category::float64x8 ) return convert(r_t(_mm512_getexp_pd(a0)), int_from<T>());
-      else if constexpr( c == category::float32x16) return convert(r_t(_mm512_getexp_ps(a0)), int_from<T>());
-      else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_getexp_pd(a0)), int_from<T>());
-      else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_getexp_ps(a0)), int_from<T>());
-      else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_getexp_pd(a0)), int_from<T>());
-      else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_getexp_ps(a0)), int_from<T>());
-    }
-    else
-      return exponent.behavior(cpu_{}, o, a0);
+    if  constexpr(O::contains(raw)) return ilogb(a0);
+    else return exponent.behavior(cpu_{}, o, a0);
   }
 
 // -----------------------------------------------------------------------------------------------
@@ -50,27 +38,12 @@ namespace eve::detail
                                  wide<T, N> const& v) noexcept
   requires x86_abi<abi_t<T, N>>
   {
-    auto const            s = alternative(mask, v, as(v));
+    auto const            src = alternative(mask, v, as(v));
     [[maybe_unused]] auto m = expand_mask(mask, as(v)).storage().value;
     constexpr auto        c = categorize<wide<T, N>>();
 
-    if constexpr( C::is_complete ) return s;
-    else if  constexpr(O::contains(raw))
-    {
-      using r_t        = wide<T, N>;
-
-      auto compute = [](auto v, auto cx){
-        auto src = alternative(cx, v, as<wide<T, N>> {});
-        auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
-
-        if      constexpr( c == category::float32x16) return convert(r_t(_mm512_mask_getexp_ps(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x8 ) return convert(r_t(_mm512_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x4 ) return convert(r_t(_mm256_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
-        else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
-      };
-    }
+    if constexpr( C::is_complete ) return src;
+    else if  constexpr(O::contains(raw)) return ilogb[o](v);
     else return exponent.behavior(cpu_{}, o, v);
   }
 }
