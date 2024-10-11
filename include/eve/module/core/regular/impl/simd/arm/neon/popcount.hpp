@@ -21,7 +21,7 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N>>();
 
     auto split_it = []<typename U > (U v){
-      using t_t = split_down_t<U>
+      using t_t = split_down_t<U>;
       auto z =  bit_cast(v, as<t_t>());
       return  popcount(z);
     };
