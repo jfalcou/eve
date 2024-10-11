@@ -21,15 +21,14 @@ namespace eve::detail
     constexpr auto cat = categorize<wide<T, N>>();
 
     auto split_it = []<typename U > (U v){
-      using d_t = downgrade_t<element_type_t<U>>;
-      using t_t = wide<d_t, eve::fixed<cardinal_v<U>*2>>;
+      using t_t = split_down_t<U>
       auto z =  bit_cast(v, as<t_t>());
       return  popcount(z);
     };
 
     if      constexpr( cat == category::uint8x8 ) return vcnt_u8(v);
     else if constexpr( cat == category::uint8x16) return vcntq_u8(v);
-//     else if constexpr( cat == category::uint16x4) return vpaddl_u8(split_it(v));
+    else if constexpr( cat == category::uint16x4) return vpaddl_u8(split_it(v));
 //     else if constexpr( cat == category::uint16x8) return vpaddlq_u8(split_it(v));
 //     else if constexpr( cat == category::uint32x2) return vpaddl_u16(split_it(v));
 //     else if constexpr( cat == category::uint32x4) return vpaddlq_u16(split_it(v));

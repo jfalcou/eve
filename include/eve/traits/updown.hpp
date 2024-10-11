@@ -84,16 +84,27 @@ namespace eve
 
   namespace detail
   {
-
-    template < typename T,  callable_options O >
-    constexpr auto resize_it(O const &, T a) noexcept
+    template < integral_simd_value T > struct split_down
     {
-      if constexpr(O::contains(widen))
-        return upgrade(a);
-      else
-        return a;
-    }
+      static constexpr auto spd = [](){
+        using v_t = eve::element_type_t<T>;
+        if constexpr(sizeof(v_t) == 1)
+        {
+          return T();
+        }
+        else
+        {
+          using d_t = eve::downgrade_t<v_t>;
+          constexpr auto N = cardinal_v<T>;
+          constexpr auto N2 = N*2;
+          using spd_t = wide<d_t, fixed<N2>>;
+          return spd_t();
+        }
+      };
+      using type = decltype(spd());
+    };
   }
 
-  template < typename T,  typename O> using resized_t = decltype(detail::resize_it(O(), T()));
+  template < typename T > using split_down_t = typename detail::split_down<T>::type;
+
 }
