@@ -36,12 +36,6 @@ namespace eve::detail
     else if constexpr( c == category::uint16x4 ) return fix(vaddl_u16(v, w));
     else if constexpr( c == category::int8x8   ) return fix(vaddl_s8 (v, w));
     else if constexpr( c == category::uint8x8  ) return fix(vaddl_u8 (v, w));
-//     else if constexpr( match(c, category::integer_) && sizeof(T) <= 4 )
-//     {
-//       auto [vlo, vhi] = v.slice();
-//       auto [wlo, whi] = w.slice();
-//       return eve::combine(add[opts](vlo, wlo), add[opts](wlo, whi));
-//     }
     else return add.behavior(cpu_{}, opts, v, w);
   }
 
