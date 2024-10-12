@@ -115,10 +115,10 @@ namespace eve
   }
 }
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/minus.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/minus.hpp>
 #endif

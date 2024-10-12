@@ -14,7 +14,7 @@
 #  include <eve/detail/function/simd/x86/bitmask.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/bitmask.hpp>
 #endif
 

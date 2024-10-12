@@ -91,6 +91,6 @@ struct iterate_selected_t
 
 #include <eve/module/core/regular/impl/iterate_selected.hpp>
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/iterate_selected.hpp>
 #endif

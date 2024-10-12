@@ -102,6 +102,6 @@ struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, prom
 #  include <eve/module/core/regular/impl/simd/x86/fsm.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/fsm.hpp>
 #endif

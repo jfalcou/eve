@@ -99,6 +99,6 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/x86/fanm.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/fanm.hpp>
 #endif

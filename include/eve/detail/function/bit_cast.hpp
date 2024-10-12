@@ -30,6 +30,6 @@ namespace eve
 
 #include <eve/detail/function/simd/common/bit_cast.hpp>
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/bit_cast.hpp>
 #endif

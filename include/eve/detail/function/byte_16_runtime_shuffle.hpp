@@ -33,7 +33,7 @@ namespace eve
 #  include <eve/detail/function/simd/x86/byte_16_runtime_shuffle.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/detail/function/simd/arm/neon/byte_16_runtime_shuffle.hpp>
 #endif
 

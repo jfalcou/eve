@@ -89,6 +89,6 @@ EVE_CALLABLE_API(compress_copy_scalar_impl_, compress_copy_scalar_impl)
 
 #include <eve/module/core/compress/simd/common/compress_copy_scalar.hpp>
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/compress/simd/arm/sve/compress_copy_scalar.hpp>
 #endif

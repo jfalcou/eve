@@ -74,6 +74,6 @@ namespace eve
 
 #include <eve/module/core/regular/impl/countr_zero.hpp>
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/countr_zero.hpp>
 #endif

@@ -19,6 +19,6 @@
 #  include <eve/detail/function/simd/ppc/movemask.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/detail/function/simd/arm/neon/movemask.hpp>
 #endif

@@ -17,6 +17,6 @@ EVE_MAKE_CALLABLE(last_true_, last_true);
 #include <eve/arch.hpp>
 #include <eve/module/core/regular/impl/last_true.hpp>
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/last_true.hpp>
 #endif

@@ -95,6 +95,6 @@ namespace eve
 #  include <eve/module/core/compress/simd/x86/compress.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/compress/simd/arm/sve/compress.hpp>
 #endif

@@ -28,11 +28,11 @@ namespace eve
 #  include <eve/detail/function/simd/ppc/load.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/detail/function/simd/arm/neon/load.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_SVE_HEADER)
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/detail/function/simd/arm/sve/load.hpp>
 #endif
 

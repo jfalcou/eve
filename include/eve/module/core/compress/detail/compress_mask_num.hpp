@@ -79,7 +79,7 @@ namespace eve
 #  include <eve/module/core/compress/detail/simd/x86/compress_mask_num.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/compress/detail/simd/arm/neon/compress_mask_num.hpp>
 #endif
 

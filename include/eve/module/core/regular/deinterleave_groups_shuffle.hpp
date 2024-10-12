@@ -57,6 +57,6 @@ requires(G <= N) inline constexpr auto deinterleave_groups_shuffle_pattern = fix
 #  include <eve/module/core/regular/impl/simd/x86/deinterleave_groups_shuffle.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/deinterleave_groups_shuffle.hpp>
 #endif
