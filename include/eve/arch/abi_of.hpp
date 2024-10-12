@@ -50,7 +50,7 @@ namespace eve
           else if constexpr(spy::simd_instruction_set.width == 512) return arm_sve_512_{};
           else                                                      return emulated_{};
         }
-        if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
+        else if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {
           if constexpr( spy::simd_instruction_set == spy::asimd_ )
           {
