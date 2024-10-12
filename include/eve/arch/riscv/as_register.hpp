@@ -38,7 +38,8 @@ namespace eve
     constexpr auto lmul = detail::rvv_lmul_v<T, N>;
     constexpr size_t element_bit_size = sizeof(T) * 8;
 
-    static_assert(width <= (__riscv_v_fixed_vlen * ABI::max_lmul), "[eve riscv] Type is not usable in SIMD register (too big)");
+    static_assert((element_bit_size * N::value) <= (__riscv_v_fixed_vlen * ABI::max_lmul),
+      "[eve riscv] Type is not usable in SIMD register (too big)");
 
     if constexpr (std::floating_point<T>)
     {
