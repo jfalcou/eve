@@ -27,7 +27,7 @@ namespace eve
   {
     constexpr size_t width = sizeof(T) * N::value;
 
-    if constexpr (std::same_as<abi, x86_128_)
+    if constexpr (std::same_as<abi, x86_128_>)
     {
       if constexpr (width <= 16)
       {
@@ -67,7 +67,8 @@ namespace eve
     template<> struct inner_mask<32> { using type = __mmask32; };
     template<> struct inner_mask<64> { using type = __mmask64; };
 
-    template<int N> struct mask_n
+    template<int N>
+    struct mask_n
     {
       using type = typename inner_mask<N>::type;
       static constexpr int bits = N;
