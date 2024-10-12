@@ -26,30 +26,30 @@ namespace eve
         constexpr auto width  = sizeof(Type) * Cardinal;
         constexpr bool f64    = std::is_same_v<Type,double>;
 
-        // if constexpr( spy::simd_instruction_set == spy::x86_simd_ )
-        // {
-        //        if constexpr( width <= 16) return x86_128_{};
-        //   else if constexpr( width == 32) return x86_256_{};
-        //   else if constexpr( width == 64) return x86_512_{};
-        //   else                            return aggregated_{};
-        // }
-        // else if constexpr( spy::simd_instruction_set >= spy::vsx_ )
-        // {
-        //   if constexpr(width <= 16) return ppc_{};
-        //   else                      return emulated_{};
-        // }
-        // else if constexpr( spy::simd_instruction_set >= spy::vmx_ )
-        // {
-        //   if constexpr(!f64 && width <= 16) return ppc_{};
-        //   else                              return emulated_{};
-        // }
-        // else if constexpr( spy::simd_instruction_set == spy::fixed_sve_ )
-        // {
-        //   if constexpr(spy::simd_instruction_set.width == 128)      return arm_sve_128_{};
-        //   else if constexpr(spy::simd_instruction_set.width == 256) return arm_sve_256_{};
-        //   else if constexpr(spy::simd_instruction_set.width == 512) return arm_sve_512_{};
-        //   else                                                      return emulated_{};
-        // }
+        if constexpr( spy::simd_instruction_set == spy::x86_simd_ )
+        {
+               if constexpr( width <= 16) return x86_128_{};
+          else if constexpr( width == 32) return x86_256_{};
+          else if constexpr( width == 64) return x86_512_{};
+          else                            return aggregated_{};
+        }
+        else if constexpr( spy::simd_instruction_set >= spy::vsx_ )
+        {
+          if constexpr(width <= 16) return ppc_{};
+          else                      return emulated_{};
+        }
+        else if constexpr( spy::simd_instruction_set >= spy::vmx_ )
+        {
+          if constexpr(!f64 && width <= 16) return ppc_{};
+          else                              return emulated_{};
+        }
+        else if constexpr( spy::simd_instruction_set == spy::fixed_sve_ )
+        {
+          if constexpr(spy::simd_instruction_set.width == 128)      return arm_sve_128_{};
+          else if constexpr(spy::simd_instruction_set.width == 256) return arm_sve_256_{};
+          else if constexpr(spy::simd_instruction_set.width == 512) return arm_sve_512_{};
+          else                                                      return emulated_{};
+        }
         if constexpr( spy::simd_instruction_set == spy::arm_simd_ )
         {
           if constexpr( spy::simd_instruction_set == spy::asimd_ )
@@ -65,11 +65,11 @@ namespace eve
             else                                   return emulated_{};
           }
         }
-        // else if constexpr( spy::simd_instruction_set == spy::fixed_rvv_
-        //                    && spy::simd_instruction_set.width >= 64 )
-        // {
-        //   return riscv_ {};
-        // }
+        else if constexpr( spy::simd_instruction_set == spy::fixed_rvv_
+                           && spy::simd_instruction_set.width >= 64 )
+        {
+          return riscv_ {};
+        }
         else
         {
           return emulated_{};
