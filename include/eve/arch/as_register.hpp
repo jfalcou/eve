@@ -50,9 +50,9 @@ namespace eve
   template<typename T, typename N, typename ABI>
   consteval auto as_logical_register(as<T> t, N n, ABI abi)
   {
-    if constexpr (requires{ find_register_type(t, n, abi); })
+    if constexpr (requires{ find_logical_register_type(t, n, abi); })
     {
-      using found_type = decltype(find_register_type(t, n, abi));
+      using found_type = decltype(find_logical_register_type(t, n, abi));
       static_assert(!std::same_as<found_type, void>
                     , "[EVE] - Type is not usable in a SIMD register");
 

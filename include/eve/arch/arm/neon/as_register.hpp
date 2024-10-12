@@ -90,6 +90,6 @@ namespace eve
   template<typename T, typename N>
   consteval auto find_logical_register_type(as<T>, N n, arm_abi auto abi)
   {
-    return find_register_type(as_integer_t<T, unsigned>{}, n, abi);
+    return find_register_type(as<as_integer_t<T, unsigned>>{}, n, abi);
   }
 }
