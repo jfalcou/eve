@@ -32,8 +32,8 @@ namespace eve
 
 namespace eve
 {
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, rvv_abi auto ABI)
+  template<typename T, typename N, rvv_abi ABI>
+  consteval auto find_register_type(as<T>, N, ABI)
   {
     constexpr auto lmul = detail::rvv_lmul_v<T, N>;
     constexpr size_t element_bit_size = sizeof(T) * 8;
@@ -165,7 +165,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // logical cases
   template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, rvv_abi auto ABI)
+  consteval auto find_logical_register_type(as<T>, N, rvv_abi auto)
   {
     constexpr size_t ratio = detail::rvv_logical_ratio_v<T, N>;
 

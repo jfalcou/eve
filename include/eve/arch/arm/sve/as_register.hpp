@@ -19,8 +19,8 @@ namespace eve
 
 namespace eve
 {
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, sve_abi auto ABI)
+  template<typename T, typename N, sve_abi ABI>
+  consteval auto find_register_type(as<T>, N, ABI)
   {
     constexpr auto width = sizeof(T) * N::value * 8;
 

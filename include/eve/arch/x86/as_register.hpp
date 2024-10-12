@@ -22,12 +22,12 @@ namespace eve
 
 namespace eve
 {
-  template<typename T, typename N>
-  consteval auto find_register_type(as<T>, N, x86_abi auto abi)
+  template<typename T, typename N, x86_abi ABI>
+  consteval auto find_register_type(as<T>, N, ABI)
   {
     constexpr size_t width = sizeof(T) * N::value;
 
-    if constexpr (std::same_as<abi, x86_128_>)
+    if constexpr (std::same_as<ABI, x86_128_>)
     {
       if constexpr (width <= 16)
       {
@@ -36,7 +36,7 @@ namespace eve
         else if constexpr (std::is_integral_v<T>  ) return __m128i{};
       }
     }
-    else if constexpr (std::same_as<abi, x86_256_>)
+    else if constexpr (std::same_as<ABI, x86_256_>)
     {
       if constexpr (width <= 32)
       {
@@ -45,7 +45,7 @@ namespace eve
         else if constexpr (std::is_integral_v<T>  ) return __m256i{};
       }
     }
-    else if constexpr (std::same_as<abi, x86_512_>)
+    else if constexpr (std::same_as<ABI, x86_512_>)
     {
       if constexpr (width <= 64)
       {
@@ -127,22 +127,22 @@ namespace eve
 
 # if defined(SPY_SIMD_IS_X86_AVX512)
   // logical uses different registers in AVX512
-  template<typename T, typename N>
-  consteval auto find_logical_register_type(as<T>, N, x86_abi auto abi)
+  template<typename T, typename N, x86_abi ABI>
+  consteval auto find_logical_register_type(as<T>, N, ABI)
   {
     constexpr size_t width = sizeof(T) * N::value;
 
-    if constexpr (std::same_as<abi, x86_512_> && (width == 64))
+    if constexpr (std::same_as<ABI, x86_512_> && (width == 64))
     {
       return detail::as_mask_t<64 / sizeof(T)>{};
     }
-    else if constexpr (std::same_as<abi, x86_256_> && (width == 32))
+    else if constexpr (std::same_as<ABI, x86_256_> && (width == 32))
     {
       if constexpr (N::value <= 8 ) return detail::mask8{};
       if constexpr (N::value == 16) return detail::mask16{};
       if constexpr (N::value == 32) return detail::mask32{};
     }
-    else if constexpr (std::same_as<abi, x86_128_> && (width == 16))
+    else if constexpr (std::same_as<ABI, x86_128_> && (width == 16))
     {
       if constexpr (sizeof(T) == 1) return detail::mask16{};
       else                          return detail::mask8{};
