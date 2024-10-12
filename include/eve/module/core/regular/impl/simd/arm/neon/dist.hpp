@@ -45,7 +45,9 @@ namespace eve::detail
       {
               if constexpr( c == category::float64x1 ) return vabd_f64  (v, w);
         else  if constexpr( c == category::float64x2 ) return vabdq_f64 (v, w);
+        else return dist.behavior(cpu_{}, opts, v, w);
       }
+      else return dist.behavior(cpu_{}, opts, v, w);
     }
   }
 }
