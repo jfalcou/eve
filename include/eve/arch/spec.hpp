@@ -14,9 +14,9 @@
 #    include <eve/arch/x86/spec.hpp>
 #  elif defined(EVE_INCLUDE_POWERPC_HEADER)
 #    include <eve/arch/ppc/spec.hpp>
-#  elif defined(EVE_INCLUDE_SVE_HEADER)
+#  elif defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #    include <eve/arch/arm/sve/spec.hpp>
-#  elif defined(EVE_INCLUDE_ARM_HEADER)
+#  elif defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #    include <eve/arch/arm/neon/spec.hpp>
 #  elif defined(EVE_INCLUDE_RISCV_HEADER)
 #    include <eve/arch/riscv/spec.hpp>

@@ -22,7 +22,7 @@ namespace algo_test
     , eve::wide<std::uint16_t, eve::fixed<4>>
     , eve::wide<int>
     , eve::wide<double>
-#ifndef EVE_INCLUDE_ARM_HEADER
+#ifndef EVE_INCLUDE_ARM_NEON_HEADER
     , eve::wide<std::int8_t, eve::fixed<1>>
     , eve::nofs_wide<float>
     , eve::wide<std::uint64_t>
