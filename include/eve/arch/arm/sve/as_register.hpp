@@ -84,7 +84,7 @@ namespace eve
   // ---------------------------------------------------------------------------------------------
   // logical cases
   template<typename T, typename N>
-  consteval auto find_register_type(as_logical<T>, N, sve_abi auto ABI)
+  consteval auto find_logical_register_type(as_logical<T>, N, sve_abi auto ABI)
   {
     constexpr size_t width = sizeof(T) * N::value * 8;
 

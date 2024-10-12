@@ -27,8 +27,8 @@ namespace eve
 #  error EVE_RETURN_MF already defined
 #endif
 
-#define EVE_RVV_MF(REG, LMUL) (REG __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen / LMUL)))){};
-#define EVE_RVV_M(REG, LMUL) (REG __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * LMUL)))){};
+#define EVE_RVV_MF(REG, LMUL) (REG __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen / LMUL)))){}
+#define EVE_RVV_M(REG, LMUL) (REG __attribute__((riscv_rvv_vector_bits(__riscv_v_fixed_vlen * LMUL)))){}
 
 namespace eve
 {
