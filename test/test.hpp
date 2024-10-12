@@ -163,10 +163,35 @@ namespace eve::test
       };
     };
 
-    using type = tts::concatenate_t < to_wide_t < Ts
-                                                , std::make_index_sequence<cardinals()[sizeof(Ts)]>
-                                                >...
-                                    >;
+    using type_all =
+        tts::concatenate_t<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
+
+    template<typename Type> struct rvv_pred
+    {
+      static consteval bool is_enabled()
+      {
+        // For vlen = 128, we test every type up to lmul==4
+        constexpr auto bit_size = 512;
+        if( sizeof(Type) <= bit_size / 8 ) return true;
+        using scalar_t                   = typename Type::value_type;
+        constexpr auto cardinal          = eve::cardinal_v<Type>;
+        constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+        // and double, int64, uint64
+        if( sizeof(scalar_t) != 8 ) return false;
+        // for expected cardinal (lmul==8)
+        if( expected_cardinal == cardinal ) return true;
+        // for combined type
+        if( 2 * expected_cardinal == cardinal ) return true;
+        return false;
+      }
+
+      static constexpr bool value = is_enabled();
+    };
+#ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
+    using type = tts::filter<rvv_pred, type_all>::type;
+#else
+    using type                 = type_all;
+#endif
   };
 
   // Prevent calling remove_cvref_t
