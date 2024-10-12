@@ -19,10 +19,8 @@ namespace eve::detail
   bit_reverse_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v) noexcept requires arm_abi<abi_t<T, N>>
   {
     constexpr auto cat = categorize<wide<T, N>>();
-
     else if constexpr( cat == category::uint16x8         ) return vbit_reverseq_s16(v);
     else if constexpr( cat == category::uint8x8          ) return vbit_reverse_s8(v);
-    else return bit_reverse.behavior(cpu_{}, opts, v)
-    }
+    else return bit_reverse.behavior(cpu_{}, opts, v);
   }
 }
