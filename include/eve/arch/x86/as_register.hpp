@@ -142,7 +142,7 @@ namespace eve
       if constexpr (N::value == 16) return detail::mask16{};
       if constexpr (N::value == 32) return detail::mask32{};
     }
-    else if constexpr (std::same_as<ABI, x86_128_> && (width == 16))
+    else if constexpr (std::same_as<ABI, x86_128_> && (width <= 16))
     {
       if constexpr (sizeof(T) == 1) return detail::mask16{};
       else                          return detail::mask8{};
