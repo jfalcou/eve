@@ -27,11 +27,7 @@ namespace eve::detail
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-           if constexpr( c == category::int64x1    ) return vabd_s64 (v, w);
-      else if constexpr( c == category::int64x2    ) return vabdq_s64(v, w);
-      else if constexpr( c == category::uint64x1   ) return vabd_u64 (v, w);
-      else if constexpr( c == category::uint64x2   ) return vabdq_u64(v, w);
-      else if constexpr( c == category::int32x2    ) return vabd_s32 (v, w);
+      if      constexpr( c == category::int32x2    ) return vabd_s32 (v, w);
       else if constexpr( c == category::int32x4    ) return vabdq_s32(v, w);
       else if constexpr( c == category::uint32x2   ) return vabd_u32 (v, w);
       else if constexpr( c == category::uint32x4   ) return vabdq_u32(v, w);
