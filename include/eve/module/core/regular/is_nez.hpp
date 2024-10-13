@@ -85,3 +85,7 @@ namespace eve
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/is_nez.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/is_nez.hpp>
+#endif
