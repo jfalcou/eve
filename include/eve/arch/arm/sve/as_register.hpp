@@ -24,10 +24,8 @@ namespace eve
   {
     constexpr auto width = sizeof(T) * N::value * 8;
 
-    if constexpr(width <= __ARM_FEATURE_SVE_BITS)
+    if constexpr (width <= __ARM_FEATURE_SVE_BITS)
     {
-      constexpr bool signed_v = std::is_signed_v<T>;
-
       if constexpr (std::same_as<T, float>)
       {
         using type = svfloat32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
@@ -38,45 +36,51 @@ namespace eve
         using type = svfloat64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
         return type{};
       }
-      else if constexpr (signed_v && sizeof(T) == 1)
+      else if constexpr (std::signed_integral<T>)
       {
-        using type = svint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
+        if constexpr (sizeof(T) == 1)
+        {
+          using type = svint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
+        else if constexpr (sizeof(T) == 2)
+        {
+          using type = svint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
+        else if constexpr (sizeof(T) == 4)
+        {
+          using type = svint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
+        else if constexpr (sizeof(T) == 8)
+        {
+          using type = svint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
       }
-      else if constexpr (signed_v && sizeof(T) == 2)
+      else if constexpr (std::unsigned_integral<T>)
       {
-        using type = svint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
-      }
-      else if constexpr (signed_v && sizeof(T) == 4)
-      {
-        using type = svint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
-      }
-      else if constexpr (signed_v && sizeof(T) == 8)
-      {
-        using type = svint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
-      }
-      else if constexpr (!signed_v && sizeof(T) == 1)
-      {
-        using type = svuint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
-      }
-      else if constexpr (!signed_v && sizeof(T) == 2)
-      {
-        using type = svuint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
-      }
-      else if constexpr (!signed_v && sizeof(T) == 4)
-      {
-        using type = svuint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
-      }
-      else if constexpr (!signed_v && sizeof(T) == 8)
-      {
-        using type = svuint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
-        return type{};
+        if constexpr (sizeof(T) == 1)
+        {
+          using type = svuint8_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
+        else if constexpr (sizeof(T) == 2)
+        {
+          using type = svuint16_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
+        else if constexpr (sizeof(T) == 4)
+        {
+          using type = svuint32_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
+        else if constexpr (sizeof(T) == 8)
+        {
+          using type = svuint64_t __attribute__((arm_sve_vector_bits(__ARM_FEATURE_SVE_BITS)));
+          return type{};
+        }
       }
     }
   }
