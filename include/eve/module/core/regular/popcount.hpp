@@ -75,6 +75,6 @@ namespace eve
 #  include <eve/module/core/regular/impl/simd/arm/sve/popcount.hpp>
 #endif
 
-#if defined(EVE_INCLUDE_ARM_HEADER)
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/neon/popcount.hpp>
 #endif
