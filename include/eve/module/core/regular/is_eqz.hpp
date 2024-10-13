@@ -93,5 +93,5 @@ namespace eve
 #endif
 
 #if defined(EVE_INCLUDE_ARM_NEON_HEADER)
-#  include <eve/module/core/regular/impl/simd/x86/is_eqz.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/neon/is_eqz.hpp>
 #endif
