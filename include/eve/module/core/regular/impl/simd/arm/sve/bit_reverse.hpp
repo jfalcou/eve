@@ -23,7 +23,7 @@ namespace eve::detail
   }
 
   template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> countr_zero_(EVE_REQUIRES(sve_),
+  EVE_FORCEINLINE wide<T, N> bit_reverse_(EVE_REQUIRES(sve_),
                                           C          const& mask,
                                           wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
