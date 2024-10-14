@@ -25,7 +25,7 @@ namespace eve::detail
     else
     {
       constexpr auto cat = categorize<wide<T, N>>();
-      else if constexpr( cat == category::int32x4  ) return vtstq_s32(v, v);
+      if      constexpr( cat == category::int32x4  ) return vtstq_s32(v, v);
       else if constexpr( cat == category::int16x8  ) return vtstq_s16(v, v);
       else if constexpr( cat == category::int8x16  ) return vtstq_s8(v, v);
       else if constexpr( cat == category::int32x2  ) return vtst_s32(v, v);
