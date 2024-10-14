@@ -24,7 +24,7 @@
 #endif
 
 #include <eve/arch/cpu/spec.hpp>
-#include <eve/arch/tags.hpp>
+#include <eve/arch.hpp>
 #include <type_traits>
 
 namespace eve
