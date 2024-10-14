@@ -9,6 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/spy.hpp>
+#include <eve/arch/predef.hpp>
 
 #include <cstddef>
 #include <concepts>
