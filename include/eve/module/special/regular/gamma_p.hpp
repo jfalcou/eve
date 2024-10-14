@@ -111,9 +111,9 @@ struct gamma_p_t : elementwise_callable<gamma_p_t, Options>
         {
           ap += one(as(ap));
           del = lx * del / ap;
-          sum += del;
+          ss += del;
         }
-        auto b = sum * eve::exp(fms(a1, eve::log(lx), eve::log_abs_gamma(inc(a1)) + lx));
+        auto b = ss * eve::exp(fms(a1, eve::log(lx), eve::log_abs_gamma(inc(a1)) + lx));
         //  For very small a, the series may overshoot very slightly.
         b = eve::min(b, one(as(b)));
         //  if lower, b(k) = bk; else b(k) = 1-bk; end
