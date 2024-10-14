@@ -136,7 +136,7 @@ namespace eve::detail
     }
     else
     {
-      auto br_5 = [](auto x)
+      auto br_5 = [](auto xx)
         {
           using A4 = kumi::result::generate_t<4, elt_t>;
           constexpr A4 RP = {
@@ -157,14 +157,14 @@ namespace eve::detail
             8.95222336184627338078E16,
             5.32278620332680085395E18,
           };
-          auto  z  = sqr(x);
+          auto  z  = sqr(xx);
           auto  w  = horner(z, RP) / horner(z, RQ);
           elt_t Z1 = 1.46819706421238932572E1;
           elt_t Z2 = 4.92184563216946036703E1;
-          return w * x * (z - Z1) * (z - Z2);
+          return w * xx * (z - Z1) * (z - Z2);
         };
 
-      auto br_8 = [](auto x)
+      auto br_8 = [](auto xx)
         {
           using A7 = kumi::result::generate_t<7, elt_t>;
           constexpr A7 PP = {
@@ -207,16 +207,16 @@ namespace eve::detail
             3.36093607810698293419E2,
           };
 
-          auto           w      = 5.0 * rec[pedantic](x);
+          auto           w      = 5.0 * rec[pedantic](xx);
           auto           z      = sqr(w);
           auto           p      = horner(z, PP) / horner(z, PQ);
           auto           q      = horner(z, QP) / horner(z, QQ);
           constexpr auto thpio4 = 2.35619449019234492885; /* 3*pi/4 */
-          auto           xn     = x - thpio4;
+          auto           xn     = xx - thpio4;
           auto [sxn, cxn]       = sincos(xn);
           p                     = fms(p, cxn, w * q * sxn);
           auto sq2opi           = T(.79788456080286535588);
-          return if_else(x == inf(as(x)), zero, p * sq2opi * rsqrt(x));
+          return if_else(xx == inf(as(xx)), zero, p * sq2opi * rsqrt(xx));
         };
 
       if constexpr( scalar_value<T> )

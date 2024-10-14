@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<typename T, callable_options O> constexpr
-  T cyl_bessel_k1_(EVE_REQUIRES(cpu_), O const&, T x)
+  T cyl_bessel_k1_(EVE_REQUIRES(cpu_), O const&, T xx)
   {
     using elt_t = element_type_t<T>;
 
@@ -141,23 +141,23 @@ namespace eve::detail
 
     if constexpr( scalar_value<T> )
     {
-      if( is_ngez(x) ) return nan(as(x));
-      if( x == 0 ) return inf(as(x));           // x is 0
-      if( x == inf(as(x)) ) return zero(as(x)); // x is infinite
-      if( x < one(as(x)) ) return br_1(x);      // x in (0, 1]
-      return br_large(x);                       // x in (t1, \infty)
+      if( is_ngez(xx) ) return nan(as(xx));
+      if( xx == 0 ) return inf(as(xx));            // xx is 0
+      if( xx == inf(as(xx)) ) return zero(as(xx)); // xx is infinite
+      if( xx < one(as(xx)) ) return br_1(xx);      // xx in (0, 1]
+      return br_large(xx);                         // xx in (t1, \infty)
     }
     else
     {
-      auto r       = nan(as(x));
-      auto notdone = is_gtz(x);
+      auto r       = nan(as(xx));
+      auto notdone = is_gtz(xx);
       if( eve::any(notdone) )
       {
-        notdone = next_interval(br_1, notdone, x <= T(1), r, x);
-        if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, x); }
+        notdone = next_interval(br_1, notdone, xx <= T(1), r, xx);
+        if( eve::any(notdone) ) { notdone = last_interval(br_large, notdone, r, xx); }
       }
-      r = if_else(is_eqz(x), inf(as(x)), r);
-      r = if_else(x == inf(as(x)), zero, r);
+      r = if_else(is_eqz(xx), inf(as(xx)), r);
+      r = if_else(xx == inf(as(xx)), zero, r);
       return r;
     }
   }

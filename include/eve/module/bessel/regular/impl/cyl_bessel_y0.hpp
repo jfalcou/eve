@@ -27,18 +27,18 @@ namespace eve::detail
     using v_t     = element_type_t<T>;
     auto Pi       = eve::pi(as(x));
     auto j0opi    = cyl_bessel_j0(x) / Pi;
-    auto evaluate = [j0opi](auto x, auto x1, auto x11, auto x12, auto P, auto Q)
+    auto evaluate = [j0opi](auto xx, auto x1, auto x11, auto x12, auto P, auto Q)
       {
-        T y      = sqr(x);
-        T z      = 2 * log(x / x1) * j0opi;
+        T y      = sqr(xx);
+        T z      = 2 * log(xx / x1) * j0opi;
         T r      = reverse_horner(y, P)/reverse_horner(y, Q);
-        T factor = (x + x1) * ((x - x11 / 256) - x12);
+        T factor = (xx + x1) * ((xx - x11 / 256) - x12);
         return fma(factor, r, z);
       };
 
-    auto br_3 = [evaluate](auto x)
+    auto br_3 = [evaluate](auto xx)
       {
-        x                               = if_else(x <= T(3), x, zero);
+        xx                               = if_else(xx <= T(3), xx, zero);
         using A6 = kumi::result::generate_t<6, elt_t>;
         constexpr A6 P1 = {1.0723538782003176831e+11,
                            -8.3716255451260504098e+09,
@@ -53,10 +53,10 @@ namespace eve::detail
                            6.6475986689240190091e+02,
                            1.0};
         constexpr v_t x1 = 8.9357696627916752158e-01, x11 = 2.280e+02, x12 = 2.9519662791675215849e-03;
-        return evaluate(x, x1, x11, x12, P1, Q1);
+        return evaluate(xx, x1, x11, x12, P1, Q1);
       };
 
-    auto br_5 = [evaluate](auto x)
+    auto br_5 = [evaluate](auto xx)
       {
         constexpr v_t x2 = 3.9576784193148578684e+00, x21 = 1.0130e+03, x22 = 6.4716931485786837568e-04;
         using A7 = kumi::result::generate_t<7, elt_t>;
@@ -74,10 +74,10 @@ namespace eve::detail
                            4.0669982352539552018e+05,
                            8.3030857612070288823e+02,
                            1.0};
-        return evaluate(x, x2, x21, x22, P2, Q2);
+        return evaluate(xx, x2, x21, x22, P2, Q2);
       };
 
-    auto br_8 = [evaluate](auto x)
+    auto br_8 = [evaluate](auto xx)
       {
         constexpr v_t x3 = 7.0860510603017726976e+00, x31 = 1.8140e+03, x32 = 1.1356030177269762362e-04;
         using A8 = kumi::result::generate_t<8, elt_t>;
@@ -97,10 +97,10 @@ namespace eve::detail
                            5.3924739209768057030e+05,
                            8.7903362168128450017e+02,
                            1.0};
-        return evaluate(x, x3, x31, x32, P3, Q3);
+        return evaluate(xx, x3, x31, x32, P3, Q3);
       };
 
-    auto br_large = [Pi](auto x)
+    auto br_large = [Pi](auto xx)
       {
         using A6 = kumi::result::generate_t<6, elt_t>;
         constexpr A6 PC     = {
@@ -135,12 +135,12 @@ namespace eve::detail
           9.0593769594993125859e+01,
           1.0
         };
-        T                            y      = T(8) / x;
+        T                            y      = T(8) / xx;
         T                            y2     = sqr(y);
         T                            rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
         T                            rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
-        T                            factor = rsqrt(Pi * x);
-        auto [sx, cx]                       = sincos(x);
+        T                            factor = rsqrt(Pi * xx);
+        auto [sx, cx]                       = sincos(xx);
         return factor * fma(y, rs * (cx + sx), rc * (sx - cx));
       };
 

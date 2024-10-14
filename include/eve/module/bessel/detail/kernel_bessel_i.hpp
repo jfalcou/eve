@@ -30,21 +30,21 @@ template<floating_value T>
 EVE_FORCEINLINE constexpr auto
 kernel_bessel_i(T n, T x) noexcept
 {
-  auto br_small = [](auto n, auto x) { return bessel_i_small_z_series(n, x); };
+  auto br_small = [](auto nn, auto xx) { return bessel_i_small_z_series(nn, xx); };
 
-  auto br_medium = [](auto n, auto x)
+  auto br_medium = [](auto nn, auto xx)
   {
-    auto [in, ipn, kn, kpn] = kernel_bessel_ik(n, x);
+    auto [in, ipn, kn, kpn] = kernel_bessel_ik(nn, xx);
     return in;
   };
-  auto br_half = [](auto x)
+  auto br_half = [](auto xx)
   {
-    if( eve::any(x >= maxlog(as(x))) )
+    if( eve::any(xx >= maxlog(as(xx))) )
     {
-      auto ex = eve::exp(x / 2);
-      return ex * (ex * rsqrt(x * two_pi(as(x))));
+      auto ex = eve::exp(xx / 2);
+      return ex * (ex * rsqrt(xx * two_pi(as(xx))));
     }
-    else return rsqrt(x * pio_2(as(x))) * sinh(x);
+    else return rsqrt(xx * pio_2(as(xx))) * sinh(xx);
   };
 
   if constexpr( scalar_value<T> )

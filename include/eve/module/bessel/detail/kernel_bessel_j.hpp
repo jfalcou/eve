@@ -96,10 +96,10 @@ kernel_bessel_j_int_pos(I n, T x) noexcept
   auto j0 = cyl_bessel_j0(x);
   auto j1 = cyl_bessel_j1(x);
 
-  auto br_large   = [](auto n, auto x) { return kernel_bessel_j_int_large(n, x); };
-  auto br_forward = [j0, j1](auto n, auto x) { return kernel_bessel_j_int_forward(n, x, j0, j1); };
-  auto br_small   = [](auto n, auto x) { return kernel_bessel_j_int_small(n, x); };
-  auto br_medium  = [](auto n, auto x) { return kernel_bessel_j_int_medium(n, x); };
+  auto br_large   = [](auto nn, auto xx) { return kernel_bessel_j_int_large(nn, xx); };
+  auto br_forward = [j0, j1](auto nn, auto xx) { return kernel_bessel_j_int_forward(nn, xx, j0, j1); };
+  auto br_small   = [](auto nn, auto xx) { return kernel_bessel_j_int_small(nn, xx); };
+  auto br_medium  = [](auto nn, auto xx) { return kernel_bessel_j_int_medium(nn, xx); };
 
   if constexpr( scalar_value<I> && scalar_value<T> )
   {
@@ -168,9 +168,9 @@ kernel_bessel_j_flt(T n, T x) noexcept
 {
   EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_j_flt : some nu are floating integers");
 
-  auto br_large = [](auto n, auto x) { return kernel_bessel_j_int_large(n, x); };
+  auto br_large = [](auto nn, auto xx) { return kernel_bessel_j_int_large(nn, xx); };
 
-  auto br_medium = [](auto n, auto x) { return kernel_bessel_j_int_medium(n, x); };
+  auto br_medium = [](auto nn, auto xx) { return kernel_bessel_j_int_medium(nn, xx); };
 
   if constexpr( scalar_value<T> )
   {

@@ -148,17 +148,17 @@ kernel_bessel_y_int_pos(I n, T x) noexcept
   EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_y_int_pos : somme n are not floating integer");
   EVE_ASSERT(eve::all(is_nltz(x)), "kernel_bessel_y_int_pos : somme x are not positive");
   EVE_ASSERT(eve::all(is_nltz(n)), "kernel_bessel_y_int_pos : somme n are not positive");
-  auto br_large   = [](auto n, auto x) { return kernel_bessel_y_large(n, x); };
-  auto br_forward = [](auto n, auto x)
+  auto br_large   = [](auto nn, auto xx) { return kernel_bessel_y_large(nn, xx); };
+  auto br_forward = [](auto nn, auto xx)
   {
-    auto y0 = cyl_bessel_y0(x);
-    auto y1 = cyl_bessel_y1(x);
-    auto z  = kernel_bessel_y_int_forward(n, x, y0, y1);
-    z       = if_else(is_eqz(n), y0, z);
-    return if_else(n == one(as(n)), y1, z);
+    auto y0 = cyl_bessel_y0(xx);
+    auto y1 = cyl_bessel_y1(xx);
+    auto z  = kernel_bessel_y_int_forward(nn, xx, y0, y1);
+    z       = if_else(is_eqz(nn), y0, z);
+    return if_else(nn == one(as(nn)), y1, z);
   };
-  auto br_small  = [](auto n, auto x) { return kernel_bessel_yn_small_x(n, x); };
-  auto br_medium = [](auto n, auto x) { return kernel_bessel_y_medium(n, x); };
+  auto br_small  = [](auto nn, auto xx) { return kernel_bessel_yn_small_x(nn, xx); };
+  auto br_medium = [](auto nn, auto xx) { return kernel_bessel_y_medium(nn, xx); };
 
   if constexpr( scalar_value<I> && scalar_value<T> )
   {
@@ -227,9 +227,9 @@ EVE_FORCEINLINE constexpr auto
 kernel_bessel_y_flt(T n, T x) noexcept
 {
   EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_y_flt : some nu are floating integers");
-  auto br_large = [](auto n, auto x) { return kernel_bessel_y_large(n, x); };
+  auto br_large = [](auto nn, auto xx) { return kernel_bessel_y_large(nn, xx); };
 
-  auto br_medium = [](auto n, auto x) { return kernel_bessel_y_medium(n, x); };
+  auto br_medium = [](auto nn, auto xx) { return kernel_bessel_y_medium(nn, xx); };
 
   if constexpr( scalar_value<T> )
   {

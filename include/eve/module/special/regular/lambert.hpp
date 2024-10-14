@@ -129,16 +129,16 @@ namespace eve
         return halley(px, init, 10);
       };
 
-      auto lambert1 = [&halley](auto x, auto q, auto positivex){ // branch 1 q > 0
-        T    r    = -eve::sqrt(q);
-        auto test = (x < T(-1.0e-6));
+      auto lambert1 = [&halley](auto xx, auto qq, auto positivex){ // branch 1 qq > 0
+        T    r    = -eve::sqrt(qq);
+        auto test = (xx < T(-1.0e-6));
         T    w1(0);
         if( eve::any(test) ) w1 = lambert_serie_utility(r);
-        if( eve::all(test) && eve::all(q < T(3.0e-3)) ) return w1;
-        T l1 = log(-x);
+        if( eve::all(test) && eve::all(qq < T(3.0e-3)) ) return w1;
+        T l1 = log(-xx);
         T l2 = log(-l1);
         T w2 = l1 - l2 + l2 / l1;
-        return if_else(is_eqz(x) && !positivex, minf(as(x)), halley(x, w2, 30));
+        return if_else(is_eqz(xx) && !positivex, minf(as(xx)), halley(xx, w2, 30));
       };
 
       auto r       = nan(as<T>());                // nan case treated here

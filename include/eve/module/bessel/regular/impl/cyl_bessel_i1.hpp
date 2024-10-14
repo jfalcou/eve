@@ -17,7 +17,7 @@ namespace eve::detail
   T  cyl_bessel_i1_(EVE_REQUIRES(cpu_), O const&, T x)
   {
     using elt_t = element_type_t<T>;
-    auto br_7_75 = [](auto x)
+    auto br_7_75 = [](auto xx)
       {
         if constexpr( std::same_as<elt_t, float> )
         {
@@ -30,7 +30,7 @@ namespace eve::detail
                                 5.135884609e-09f,
                                 5.262251502e-11f,
                                 1.331933703e-12f};
-          T                              xo_2 = x / 2;
+          T                              xo_2 = xx / 2;
           T                              a    = sqr(xo_2);
           T                              r    = reverse_horner(a, 1.0f, 0.5f, reverse_horner(a, P));
           return xo_2 * r;
@@ -52,7 +52,7 @@ namespace eve::detail
                                 3.410720494727771276e-19,
                                 1.625212890947171108e-21,
                                 1.332898928162290861e-23};
-          T                               xo_2 = x / 2;
+          T                               xo_2 = xx / 2;
           T                               a    = sqr(xo_2);
           T                               r    = reverse_horner(a, 1.0, 0.5, reverse_horner(a, P));
           return xo_2 * r;
@@ -60,7 +60,7 @@ namespace eve::detail
         }
       };
 
-    auto br_medium = [](auto x) // float inf double 500
+    auto br_medium = [](auto xx) // float inf double 500
       {
         if constexpr( std::same_as<elt_t, float> )
         {
@@ -70,8 +70,8 @@ namespace eve::detail
                               -4.76475741878486795e-02f,
                               -2.65157315524784407e-02f,
                               -1.47148600683672014e-01f};
-          auto                           ex = eve::exp(x / 2);
-          return ex * (ex * reverse_horner(rec[pedantic](x), P) * rsqrt(x));
+          auto                           ex = eve::exp(xx / 2);
+          return ex * (ex * reverse_horner(rec[pedantic](xx), P) * rsqrt(xx));
         }
         else
         {
@@ -85,11 +85,11 @@ namespace eve::detail
             -6.967602516005787001e+12, 4.614040809616582764e+13,  -2.298849639457172489e+14,
             8.325554073334618015e+14,  -2.067285045778906105e+15, 3.146401654361325073e+15,
             -2.213318202179221945e+15};
-          return eve::exp(x) * reverse_horner(rec[pedantic](x), P) * eve::rsqrt(x);
+          return eve::exp(xx) * reverse_horner(rec[pedantic](xx), P) * eve::rsqrt(xx);
         }
       };
 
-    auto br_large = [](auto x)
+    auto br_large = [](auto xx)
       {
         if constexpr( std::same_as<elt_t, double> )
         {
@@ -99,10 +99,10 @@ namespace eve::detail
                               -4.675105322571775911e-02,
                               -4.090421597376992892e-02,
                               -5.843630344778927582e-02};
-          auto                           ex = eve::exp(x / 2);
-          return ex * (ex * reverse_horner(rec[pedantic](x), P) / eve::sqrt(x));
+          auto                           ex = eve::exp(xx / 2);
+          return ex * (ex * reverse_horner(rec[pedantic](xx), P) / eve::sqrt(xx));
         }
-        else { return inf(as(x)); }
+        else { return inf(as(xx)); }
       };
 
     if constexpr( scalar_value<T> )
