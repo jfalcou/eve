@@ -19,18 +19,18 @@ TTS_CASE_TPL( "Check behavior of swap_if - scalar values"
   auto swapped_lhs = lhs;
   auto swapped_rhs = rhs;
 
-  eve::swap_if(false,lhs,rhs);
+  eve::swap_if(false, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 
   swapped_lhs = rhs;
   swapped_rhs = lhs;
 
-  eve::swap_if(true,lhs,rhs);
+  eve::swap_if(true, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 };
 
 TTS_CASE_WITH( "Check behavior of swap_if - wide arithmetic"
@@ -42,26 +42,26 @@ TTS_CASE_WITH( "Check behavior of swap_if - wide arithmetic"
   auto swapped_lhs = lhs;
   auto swapped_rhs = rhs;
 
-  eve::swap_if(false,lhs,rhs);
+  eve::swap_if(false, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 
   swapped_lhs = rhs;
   swapped_rhs = lhs;
 
-  eve::swap_if(true,lhs,rhs);
+  eve::swap_if(true, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 
-  swapped_lhs = T( [=](auto i, auto) { return mask.get(i) ? rhs.get(i) : lhs.get(i); } );
-  swapped_rhs = T( [=](auto i, auto) { return mask.get(i) ? lhs.get(i) : rhs.get(i); } );
+  swapped_lhs = T{ [=](auto i, auto) { return mask.get(i) ? rhs.get(i) : lhs.get(i); } };
+  swapped_rhs = T{ [=](auto i, auto) { return mask.get(i) ? lhs.get(i) : rhs.get(i); } };
 
-  eve::swap_if(mask,lhs,rhs);
+  eve::swap_if(mask, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 };
 
 TTS_CASE_WITH( "Check behavior of swap_if - logical"
@@ -73,24 +73,24 @@ TTS_CASE_WITH( "Check behavior of swap_if - logical"
   auto swapped_lhs = lhs;
   auto swapped_rhs = rhs;
 
-  eve::swap_if(false,lhs,rhs);
+  eve::swap_if(false, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 
   swapped_lhs = rhs;
   swapped_rhs = lhs;
 
-  eve::swap_if(true,lhs,rhs);
+  eve::swap_if(true, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 
-  swapped_lhs = L([=](auto i, auto) { return mask.get(i) ? rhs.get(i) : lhs.get(i); });
-  swapped_rhs = L([=](auto i, auto) { return mask.get(i) ? lhs.get(i) : rhs.get(i); });
+  swapped_lhs = L{ [=](auto i, auto) { return mask.get(i) ? rhs.get(i) : lhs.get(i); } };
+  swapped_rhs = L{ [=](auto i, auto) { return mask.get(i) ? lhs.get(i) : rhs.get(i); } };
 
-  eve::swap_if(mask,lhs,rhs);
+  eve::swap_if(mask, lhs, rhs);
 
-  TTS_EQUAL( swapped_lhs, lhs );
-  TTS_EQUAL( swapped_rhs, rhs );
+  TTS_EQUAL(lhs, swapped_lhs);
+  TTS_EQUAL(rhs, swapped_rhs);
 };

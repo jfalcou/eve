@@ -9,6 +9,7 @@
 
 #include <eve/detail/spy.hpp>
 
-#if defined(SPY_SIMD_IS_ARM_FIXED_SVE) || defined(SPY_SIMD_IS_ARM_FIXED_SVE2)
-#  define EVE_SIMD_IS_ANY_FIXED_SVE
-#endif
+#include <eve/arch/arm/predef.hpp>
+#include <eve/arch/x86/predef.hpp>
+#include <eve/arch/ppc/predef.hpp>
+#include <eve/arch/riscv/predef.hpp>

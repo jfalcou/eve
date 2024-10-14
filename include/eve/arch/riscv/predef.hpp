@@ -7,8 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/spy.hpp>
-
 // We successfully detected some native SIMD
 #if defined(SPY_SIMD_IS_RISCV_FIXED_RVV) && !defined(EVE_NO_SIMD)
 #  define EVE_SUPPORTS_NATIVE_SIMD
