@@ -34,4 +34,8 @@ TTS_CASE_WITH("Check behavior of eve::is_eqz(simd)",
 
   TTS_EQUAL(eve::is_eqz(a0), tts::map([](auto e) -> eve::logical<v_t> { return e == 0; }, a0));
   TTS_EQUAL(eve::is_eqz[t](a0), eve::if_else(t, eve::is_eqz(a0), eve::false_(eve::as(a0))));
+  if constexpr(eve::floating_value<T>)
+  {
+    TTS_EQUAL(eve::is_eqz(eve::mzero(eve::as(a0))),  eve::true_(eve::as(a0)));
+  }
 };
