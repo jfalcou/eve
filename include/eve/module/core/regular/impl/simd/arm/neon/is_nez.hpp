@@ -47,6 +47,5 @@ namespace eve::detail
       }
       else return is_nez.behavior(cpu_{}, opts, v);
     }
-    else return is_nez.behavior(cpu_{}, opts, v);
   }
 }
