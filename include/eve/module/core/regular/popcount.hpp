@@ -1,3 +1,4 @@
+//======================================================================================================================
 /*
   EVE - Expressive Vector Engine
   Copyright : EVE Project Contributors
@@ -72,4 +73,8 @@ namespace eve
 
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/regular/impl/simd/arm/sve/popcount.hpp>
+#endif
+
+#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/neon/popcount.hpp>
 #endif
