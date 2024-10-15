@@ -114,10 +114,10 @@ namespace eve
       else
       {
         r_t  that(logspace_add(a0, a1));
-        auto ladd = [](auto that, auto next) -> r_t
+        auto ladd = [](auto that_, auto next) -> r_t
           {
-            that = logspace_add(that, next);
-            return that;
+            that_ = logspace_add(that_, next);
+            return that_;
           };
         ((that = ladd(that, args)), ...);
         return that;
