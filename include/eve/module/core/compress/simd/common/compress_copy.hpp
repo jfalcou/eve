@@ -20,7 +20,8 @@ struct compress_copy_core
   {
     using COut = typename Settings::cond_out_t;
     if constexpr( eve::has_emulated_abi_v<L> ) return compress_copy_scalar;
-    else if constexpr( eve::current_api >= sve || eve::current_api >= avx512 )
+    else if constexpr( eve::current_api >= sve || eve::current_api >= avx512
+                       || eve::current_api >= rvv )
       return compress_copy_simd;
     else if constexpr( Settings::is_sparse || !COut::is_complete ) return compress_copy_scalar;
     else return compress_copy_simd;
