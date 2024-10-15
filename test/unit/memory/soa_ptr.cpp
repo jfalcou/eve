@@ -116,9 +116,9 @@ TTS_CASE("soa_ptr, +-<>")
   TTS_EQUAL(0,  a_ - a_);
 
   TTS_EQUAL((a_ + 1),  b_);
-  ++a;
+  ++a_;
   TTS_EQUAL(a_, b_);
-  --a;
+  --a_;
   TTS_EQUAL((a_ + 1),  b_);
 
   TTS_EQUAL(a_,  b_ - 1);
