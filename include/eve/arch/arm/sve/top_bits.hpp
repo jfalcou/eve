@@ -41,7 +41,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   EVE_FORCEINLINE constexpr explicit top_bits(logical_type p) requires(
       !std::same_as<storage_type, logical_type>)
-      : storage {bit_cast(p, eve::as<storage_type> {})}
+      : storage_ {bit_cast(p, eve::as<storage_type> {})}
   {
     operator&=(top_bits(ignore_none_ {}));
   }
