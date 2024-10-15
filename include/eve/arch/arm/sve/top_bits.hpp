@@ -31,13 +31,13 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
   static constexpr bool           is_cheap         = true;
 
-  storage_type storage;
+  storage_type storage_;
 
   // constructors ---------------------------------
 
   EVE_FORCEINLINE constexpr top_bits() = default;
 
-  EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage) : storage(storage) {}
+  EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage_) : storage(storage_) {}
 
   EVE_FORCEINLINE constexpr explicit top_bits(logical_type p) requires(
       !std::same_as<storage_type, logical_type>)
