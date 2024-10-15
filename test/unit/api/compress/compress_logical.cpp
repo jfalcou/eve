@@ -1,9 +1,11 @@
 #include "unit/api/compress/compress_test.hpp"
+#ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
+using types = tts::filter<rvv_compress_filter, eve::test::simd::all_types>::type;
+#else
+using types = eve::test::simd::all_types;
+#endif
 
-TTS_CASE_WITH( "Check compress behavior for logicals"
-        , eve::test::simd::all_types
-        , tts::generate(tts::logicals(1,2))
-        )
+TTS_CASE_WITH("Check compress behavior for logicals", types, tts::generate(tts::logicals(1, 2)))
 <typename L> (L logical_data)
 {
   using N = eve::fixed<L::size()>;
