@@ -48,7 +48,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   // -- constructor(ignore)
   template<relative_conditional_expr C>
-  EVE_FORCEINLINE constexpr explicit top_bits(C c) : storage {c.mask(eve::as<logical_type> {})}
+  EVE_FORCEINLINE constexpr explicit top_bits(C c) : storage_ {c.mask(eve::as<logical_type> {})}
   {}
 
   // -- constructor: logical + ignore
@@ -80,8 +80,8 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   // getters/setter ----------------------
   static constexpr std::ptrdiff_t size() { return static_size; }
 
-  EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x) { storage.set(i, x); }
-  EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const { return storage.get(i); }
+  EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x) { storage_.set(i, x); }
+  EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const { return storage_.get(i); }
 
   EVE_FORCEINLINE constexpr explicit operator bool()
   {
@@ -93,7 +93,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
     using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
     uint_type raw;
 
-    std::memcpy(&raw, &storage, sizeof(uint_type));
+    std::memcpy(&raw, &storage_, sizeof(uint_type));
 
     uint_type r = raw;
 
@@ -106,30 +106,30 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   EVE_FORCEINLINE constexpr bool operator==(top_bits const& x) const
   {
-    return !svptest_any(detail::sve_true<scalar_type>(), storage != x.storage);
+    return !svptest_any(detail::sve_true<scalar_type>(), storage_ != x.storage_);
   }
 
   EVE_FORCEINLINE top_bits& operator&=(top_bits x)
   {
-    storage = storage && x.storage;
+    storage_ = storage_ && x.storage_;
     return *this;
   }
 
   EVE_FORCEINLINE top_bits& operator|=(top_bits x)
   {
-    storage = storage || x.storage;
+    storage_ = storage_ || x.storage_;
     return *this;
   }
 
   EVE_FORCEINLINE top_bits& operator^=(top_bits x)
   {
-    storage = storage != x.storage;
+    storage_ = storage_ != x.storage_;
     return *this;
   }
 
   EVE_FORCEINLINE constexpr top_bits operator~() const
   {
-    return top_bits {!storage} & top_bits {ignore_none_ {}};
+    return top_bits {!storage_} & top_bits {ignore_none_ {}};
   }
 
   // streaming ----------------------------------
