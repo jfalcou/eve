@@ -51,7 +51,7 @@ TTS_CASE_WITH( "Check behavior of sph_bessel_jn on wide with integral order"
   }
 
 #if defined(__cpp_lib_math_special_functions)
-  auto std_sph_bessel_jn = [](auto n, auto x) -> v_t { return std::sph_bessel(unsigned(n), double(x)); };
+  auto std_sph_bessel_jn = [](auto nn, auto xx) -> v_t { return std::sph_bessel(unsigned(nn), double(xx)); };
 
   TTS_ULP_EQUAL(eve::sph_bessel_jn(3, v_t(1500)), std_sph_bessel_jn(3u, v_t(1500)), 500000.0);
   TTS_ULP_EQUAL(eve::sph_bessel_jn(2, v_t(500)), std_sph_bessel_jn(2u, v_t(500)), 500000.0);
