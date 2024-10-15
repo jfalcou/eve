@@ -101,7 +101,7 @@ requires(simd_value<T>)
 
   T    f       = Ipnul / Inul;
   auto case_lt = [=](auto xx, T& Kmu, T& Knu1){
-    x = if_else(is_eqz(xx), T(2), xx);
+    xx = if_else(is_eqz(xx), T(2), xx);
     const T x2    = xx / T(2);
     const T ffact  = rec[pedantic](sinpic(mu));
     T       dd     = -eve::log(x2);
