@@ -112,13 +112,13 @@ namespace eve
       }
       else if constexpr(O::contains(half_circle))
       {
-        auto reduce = [](auto x)
+        auto reduce = [](auto xx)
         {
           auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(eve::as<T>{});
           auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(eve::as<T>{});
           auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(eve::as<T>{});
 
-          T xr = x - pio2_1;
+          T xr = xx - pio2_1;
           xr -= pio2_2;
           xr -= pio2_3;
 

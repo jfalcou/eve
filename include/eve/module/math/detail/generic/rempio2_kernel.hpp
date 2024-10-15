@@ -185,8 +185,8 @@ namespace eve::detail
       double mp1   = double(0x1.921fb58000000p+0); /* 1.5707963407039642     */
       double mp2   = double(-0x1.dde9740000000p-27); /*-1.3909067675399456e-08 */
       T      x     = xx * tm600;
-      T      t     = prevent_gcc_abusive_contract(x * split);
-      T      x1    = t - (t - x);
+      T      t_     = prevent_gcc_abusive_contract(x * split);
+      T      x1    = t_ - (t_ - x);
       T      x2    = x - x1;
       T      sum_v(0);
 
@@ -196,7 +196,7 @@ namespace eve::detail
           double   tm24 = double(0x1.0000000000000p-24); /* 2 ^- 24  */
           double   bigv = double(0x1.8000000000000p+52); /*  6755399441055744      */
           double   big1 = double(0x1.8000000000000p+54); /* 27021597764222976      */
-          T        sum_v(0);
+          T        sum_v_(0);
           ui64_t   zero_lo(0xFFFFFFFF00000000ULL);
           i32_t    k;
           i32_t    tmp;
@@ -236,22 +236,22 @@ namespace eve::detail
           for( int i = 0; i < 3; ++i )
           {
             s = (r[i] + bigv) - bigv;
-            sum_v += s;
+            sum_v_ += s;
             r[i] -= s;
           }
           T t(0);
           for( int i = 0; i < 6; ++i ) t += r[5 - i];
           T bb = (((((r[0] - t) + r[1]) + r[2]) + r[3]) + r[4]) + r[5];
           s    = (t + bigv) - bigv;
-          sum_v += s;
+          sum_v_ += s;
           t -= s;
           T b = t + bb;
           bb  = (t - b) + bb;
-          s   = (sum_v + big1) - big1;
-          sum_v -= s;
+          s   = (sum_v_ + big1) - big1;
+          sum_v_ -= s;
           vb1  = b;
           vbb1 = bb;
-          return sum_v;
+          return sum_v_;
         };
 
       T    b1, bb1, b2, bb2;
@@ -265,20 +265,20 @@ namespace eve::detail
       b         = sub[test](b, z);
       sum_v       = add[test](sum_v, z);
       T s       = b + (bb + bb1 + bb2);
-      t         = ((b - s) + bb) + (bb1 + bb2);
+      t_         = ((b - s) + bb) + (bb1 + bb2);
       b         = s * split;
       T t1      = b - (b - s);
       T t2      = s - t1;
       b         = s * hp0;
-      bb        = (((t1 * mp1 - b) + t1 * mp2) + t2 * mp1) + (t2 * mp2 + s * hp1 + t * hp0);
+      bb        = (((t1 * mp1 - b) + t1 * mp2) + t2 * mp1) + (t2 * mp2 + s * hp1 + t_ * hp0);
       // fma ? TODO
       s      = b + bb;
-      t      = (b - s) + bb;
+      t_      = (b - s) + bb;
       s      = if_else(is_not_finite(x), eve::allbits, s);
       s      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), xx, s);
-      t      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), t);
+      t_      = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), t_);
       auto q = if_else(xx < Rempio2_limit[quarter_circle](as(xx)), T(0), quadrant(sum_v));
-      return eve::zip(q, s, t);
+      return eve::zip(q, s, t_);
     }
     else if constexpr( std::is_same_v<elt_t, float> )
     {

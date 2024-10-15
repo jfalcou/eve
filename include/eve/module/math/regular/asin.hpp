@@ -134,15 +134,15 @@ namespace eve
           zz1      = z + pio_4(eve::as<T>());
           return zz1;
         };
-        auto case_2 = [](const T& x) { // x >=  0.625
-          T    zz2 = sqr(x);
+        auto case_2 = [](const T& xx) { // xx >=  0.625
+          T    zz2 = sqr(xx);
           auto num = zz2 * eve::reverse_horner(zz2, T(-0x1.0656c06ceafd5p+3), T(0x1.39007da779259p+4), T(-0x1.04331de27907bp+4)
                                               , T(0x1.5c74b178a2dd9p+2), T(-0x1.34341333e5c16p-1), T(0x1.16b9b0bd48ad3p-8));
           auto den =
           eve::reverse_horner(zz2, T(-0x1.898220a3607acp+5), T(0x1.1705684ffbf9dp+7), T(-0x1.265bb6d3576d7p+7)
                              , T(0x1.19fc025fe9054p+6), T(-0x1.d7b590b5e0eabp+3), T(0x1.0p0));
           auto z   = num / den;
-          zz2      = fma(x, z, x);
+          zz2      = fma(xx, z, xx);
           return zz2;
         };
         auto ct1    = T(0x1.4000000000000p-1); // 0.625;
