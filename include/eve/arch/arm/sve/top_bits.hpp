@@ -85,7 +85,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   EVE_FORCEINLINE constexpr explicit operator bool()
   {
-    return svptest_any(detail::sve_true<scalar_type>(), storage);
+    return svptest_any(detail::sve_true<scalar_type>(), storage_);
   }
 
   EVE_FORCEINLINE constexpr auto as_int() const requires(static_bits_size <= 64)
