@@ -226,29 +226,29 @@ namespace eve
           && is_nez(z + y) && is_nez(x + z);
         if( eve::any(notdone) )
         {
-          auto br_pneg = [](auto x, auto y, auto z, auto p) // p < 0
+          auto br_pneg = [](auto xx, auto yy, auto zz, auto pp) // pp < 0
             {
-              swap_if(x < y, x, y);
-              swap_if(x < z, x, z);
-              swap_if(y > z, y, z);
-              // now all(x <=  y) and all(y <=  z)
-              auto q = -p;
-              p      = fms(z, (x + y + q), x * y) / (z + q);
-              auto v = (p - z) * ellint_rj(x, y, z, p);
-              v -= 3 * ellint_rf(x, y, z);
-              auto pq  = p * q;
-              auto tmp = fma(x, y, pq);
-              v += 3 * sqrt((x * y * z) / tmp) * ellint_rc(tmp, pq);
-              v /= (z + q);
+              swap_if(xx < yy, xx, yy);
+              swap_if(xx < zz, xx, zz);
+              swap_if(yy > zz, yy, zz);
+              // now all(xx <=  yy) and all(yy <=  zz)
+              auto q = -pp;
+              pp      = fms(zz, (xx + yy + q), xx * yy) / (zz + q);
+              auto v = (pp - zz) * ellint_rj(xx, yy, zz, pp);
+              v -= 3 * ellint_rf(xx, yy, zz);
+              auto pq  = pp * q;
+              auto tmp = fma(xx, yy, pq);
+              v += 3 * sqrt((xx * yy * zz) / tmp) * ellint_rc(tmp, pq);
+              v /= (zz + q);
               return v;
             };
-          notdone = next_interval(br_pneg, notdone, is_ltz(p), r, x, y, z, p);
+          notdone = next_interval(br_pneg, notdone, is_ltzz(p), r, x, y, zz, p);
           if( eve::any(notdone) )
           {
-            auto br_eqxy = [](auto x, auto p) // (x == y) && (x == z)
+            auto br_eqxy = [](auto xx, auto pp) // (xx == y) && (xx == z)
               {
-                auto rsqtx = rsqrt(x);
-                return if_else(x == p, rsqtx / x, 3 * ellint_rc(x, p) - rsqtx / (x - p));
+                auto rsqtx = rsqrt(xx);
+                return if_else(xx == pp, rsqtx / x, 3 * ellint_rc(xx, pp) - rsqtx / (xx - pp));
               };
             notdone = next_interval(br_eqxy, notdone, (x == y) && (x == z), r, x, p);
             if( eve::any(notdone) )

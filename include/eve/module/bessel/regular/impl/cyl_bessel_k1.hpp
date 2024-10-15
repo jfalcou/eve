@@ -79,7 +79,7 @@ namespace eve::detail
         }
       };
 
-    auto br_large = [](auto x) // 1 infty
+    auto br_large = [](auto xxx) // 1 infty
       {
         if constexpr( std::same_as<elt_t, float> )
         {
@@ -97,13 +97,13 @@ namespace eve::detail
             , 9.904984851e-01f
             , 4.585534549e-02f
           };
-          auto r = rec[pedantic](x);
-          if( eve::all(x < maxlog(as(x))) )
-            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
+          auto r = rec[pedantic](xxx);
+          if( eve::all(xxx < maxlog(as(xxx))) )
+            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-xxx) * rsqrt(xxx));
           else
           {
-            T ex = exp(-x / 2);
-            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * ex * rsqrt(x)) * ex;
+            T ex = exp(-xxx / 2);
+            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * ex * rsqrt(xxx)) * ex;
           }
         }
         else
@@ -128,13 +128,13 @@ namespace eve::detail
                             2.88448064302447607e+01,
                             2.27912927104139732e+00,
                             2.50358186953478678e-02};
-          auto                           r = rec[pedantic](x);
-          if( eve::all(x < maxlog(as(x))) )
-            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-x) * rsqrt(x));
+          auto                           r = rec[pedantic](xxx);
+          if( eve::all(xxx < maxlog(as(xxx))) )
+            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * exp(-xxx) * rsqrt(xxx));
           else
           {
-            T ex = exp(-x / 2);
-            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * ex * rsqrt(x)) * ex;
+            T ex = exp(-xxx / 2);
+            return ((reverse_horner(r, P)/reverse_horner(r, Q) + y) * ex * rsqrt(xxx)) * ex;
           }
         }
       };

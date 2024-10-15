@@ -82,18 +82,18 @@ namespace eve
     stirling_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       using elt_t = element_type_t<T>;
-      auto stirling1 = [](const T& x){
+      auto stirling1 = [](const T& xx){
         if constexpr( std::is_same_v<elt_t, float> )
         {
           return
-          eve::reverse_horner(x, T(0x1.555556p-4f), T(0x1.c71c72p-9f)
+          eve::reverse_horner(xx, T(0x1.555556p-4f), T(0x1.c71c72p-9f)
                              , T(-0x1.5f7260p-9f), T(-0x1.e166b2p-13f))
           ;
         }
         else if constexpr( std::is_same_v<elt_t, double> )
         {
           return
-          eve::reverse_horner(x, T(0x1.5555555555986p-4), T(0x1.c71c71b98c5fdp-9), T(-0x1.5f72607d44fd7p-9)
+          eve::reverse_horner(xx, T(0x1.5555555555986p-4), T(0x1.c71c71b98c5fdp-9), T(-0x1.5f72607d44fd7p-9)
                              , T(-0x1.e166b27e61d7cp-13), T(0x1.9cc72592d7293p-11))
           ;
         }
