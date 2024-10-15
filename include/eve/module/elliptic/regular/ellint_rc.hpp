@@ -102,9 +102,9 @@ namespace eve
       if( eve::any(notdone) )
       {
         auto tmp0 = rsqrt(y);
-        auto br_0 = [tmp0](auto x, auto y) // x == y || x == 0
+        auto br_0 = [tmp0](auto xx, auto yy) // xx == yy || xx == 0
           {
-            auto z = mul[is_eqz(x)](tmp0, pio_2(as(y)));
+            auto z = mul[is_eqz(xx)](tmp0, pio_2(as(yy)));
             return z; // if_else(x == y, tmp0, tmp0*pio_2(as(y)));
           };
         notdone = next_interval(br_0, notdone, (x == y) || is_eqz(x), r, x, y);
@@ -123,7 +123,7 @@ namespace eve
             notdone = next_interval(br_2, notdone, y > T(0.5) * x, r);
             if( eve::any(notdone) )
             {
-              auto br_3 = [tmp0, tmp1](auto x) { return log((sqrt(x) + tmp1) * tmp0) / tmp1; };
+              auto br_3 = [tmp0, tmp1](auto xx) { return log((sqrt(xx) + tmp1) * tmp0) / tmp1; };
               last_interval(br_3, notdone, r, x);
             }
           }
