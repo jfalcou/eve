@@ -8,6 +8,7 @@
 #pragma once
 
 #include "test.hpp"
+#include "unit/api/compress/compress_test_filter.hpp"
 
 #include <algorithm>
 #include <array>

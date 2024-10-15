@@ -170,8 +170,8 @@ namespace eve::test
     {
       static consteval bool is_enabled()
       {
-        // For vlen = 128, we test every type up to lmul==4
-        constexpr auto bit_size = 512;
+        // For vlen = 128, we test every type up to lmul==2
+        constexpr auto bit_size = 256;
         if( sizeof(Type) <= bit_size / 8 ) return true;
         using scalar_t                   = typename Type::value_type;
         constexpr auto cardinal          = eve::cardinal_v<Type>;

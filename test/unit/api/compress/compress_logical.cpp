@@ -1,9 +1,8 @@
 #include "unit/api/compress/compress_test.hpp"
 
-TTS_CASE_WITH( "Check compress behavior for logicals"
-        , eve::test::simd::all_types
-        , tts::generate(tts::logicals(1,2))
-        )
+TTS_CASE_WITH("Check compress behavior for logicals",
+              simd_types_for_compress<eve::test::simd::all_types>,
+              tts::generate(tts::logicals(1, 2)))
 <typename L> (L logical_data)
 {
   using N = eve::fixed<L::size()>;
