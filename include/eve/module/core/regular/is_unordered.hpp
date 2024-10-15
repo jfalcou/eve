@@ -111,5 +111,5 @@ namespace eve
 #endif
 
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm_sve/is_unordered.hpp>
+#  include <eve/module/core/regular/impl/simd/arm/sve/is_unordered.hpp>
 #endif
