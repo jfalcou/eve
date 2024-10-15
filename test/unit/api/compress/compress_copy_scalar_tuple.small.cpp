@@ -11,8 +11,9 @@
 
 using test_types = eve::test::wides<tts::types<std::int16_t, std::uint16_t, std::int8_t, std::uint8_t>>::type;
 
-TTS_CASE_TPL("Check compress copy behavior", test_types)
+TTS_CASE_TPL("Check compress copy behavior", simd_types_for_compress<test_types>)
 <typename T>(tts::type<T>) {
   using e_t = kumi::tuple<std::int8_t, eve::element_type_t<T>, double>;
-  compress_copy_tst(eve::as<eve::wide<e_t, typename T::cardinal_type>>{}, eve::compress_copy_scalar);
+  compress_copy_tst(eve::as<eve::wide<e_t, typename T::cardinal_type>> {},
+                    eve::compress_copy_scalar);
 };
