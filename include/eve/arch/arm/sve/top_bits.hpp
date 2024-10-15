@@ -31,7 +31,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   static constexpr std::ptrdiff_t static_bits_size = static_size * bits_per_element;
   static constexpr bool           is_cheap         = true;
 
-  storage_type storage_;
+  storage_type storage;
 
   // constructors ---------------------------------
 
