@@ -743,7 +743,7 @@ TTS_CASE("extract_blends")
       const auto& a_ = actual.register_blends[i];
 
       TTS_EQUAL(e.idxs, a_.idxs, REQUIRED);
-      TTS_EQUAL(e.present_in_blend, a.present_in_blend, REQUIRED) << tts::as_string(idxs);
+      TTS_EQUAL(e.present_in_blend, a_.present_in_blend, REQUIRED) << tts::as_string(idxs);
       TTS_EQUAL(e.present_in_shuffle, a_.present_in_shuffle, REQUIRED) << tts::as_string(idxs);
     }
   };
