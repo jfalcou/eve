@@ -88,25 +88,25 @@ TTS_CASE("eve.algo.find_if not in radius")
 };
 
 TTS_CASE("eve.algo.mismatch example, use previous result") {
-  std::vector<int> const a{1, 2, 3, 4, 5, 6, 6, 8};
-  std::vector<int> const b{1, 2, 2, 4, 5, 6, 7, 8};
+  std::vector<int> const a_{1, 2, 3, 4, 5, 6, 6, 8};
+  std::vector<int> const b_{1, 2, 2, 4, 5, 6, 7, 8};
 
-  eve::algo::views::zip_iterator ra_rb = eve::algo::mismatch(a, b);
-  TTS_EQUAL(ra_rb, eve::algo::mismatch(a, b.begin()));
-  TTS_EQUAL(ra_rb, eve::algo::mismatch(a.begin(), b));
+  eve::algo::views::zip_iterator ra_rb = eve::algo::mismatch(a_, b_);
+  TTS_EQUAL(ra_rb, eve::algo::mismatch(a_, b_.begin()));
+  TTS_EQUAL(ra_rb, eve::algo::mismatch(a_.begin(), b_));
 
   auto& [ra, rb] = ra_rb;
   TTS_EQUAL(*ra, 3);
   TTS_EQUAL(*rb, 2);
 
   ++ra_rb;
-  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a.end()), rb);
+  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a_.end()), rb);
   TTS_EQUAL(*ra, 6);
   TTS_EQUAL(*rb, 7);
   ++ra_rb;
 
-  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a.end()), rb);
-  TTS_EQUAL(ra_rb, eve::algo::views::zip(a.end(), b.end()));
+  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a_.end()), rb);
+  TTS_EQUAL(ra_rb, eve::algo::views::zip(a_.end(), b_.end()));
 };
 
 TTS_CASE("eve.algo.mismatch example, first point not within a radius")
