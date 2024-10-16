@@ -27,7 +27,7 @@ namespace eve::detail
     if  constexpr (!C::has_alternative)
     {
       auto m = expand_mask(mask, as(v));
-      return svmcmpuo(m,v,w);
+      return svcmpuo(m,v,w);
     }
     // If not, we delegate to the automasking
     else
@@ -41,6 +41,6 @@ namespace eve::detail
                                  wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
-    return svmcmpuo(sve_true<T>(), v, w);
+    return svcmpuo(sve_true<T>(), v, w);
   }
 }
