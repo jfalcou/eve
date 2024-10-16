@@ -15,7 +15,7 @@ namespace eve::detail
 {
 
   template<callable_options O, floating_scalar_value T, typename N, conditional_expr C>
-  EVE_FORCEINLINE wide<T, N> is_unordered_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
+  EVE_FORCEINLINE logical<wide<T, N>> is_unordered_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                                   wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
@@ -37,7 +37,7 @@ namespace eve::detail
   }
 
   template<callable_options O, floating_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> is_unordered_(EVE_REQUIRES(sve_), O const&,
+  EVE_FORCEINLINE logical<wide<T, N>> is_unordered_(EVE_REQUIRES(sve_), O const&,
                                  wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
