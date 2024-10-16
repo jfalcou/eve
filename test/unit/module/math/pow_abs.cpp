@@ -93,31 +93,31 @@ TTS_CASE_TPL("Check return types of pow_abs", eve::test::simd::ieee_reals)
   {
     w8_t a(2.4, 2.4, 1.0, 23.5, Nan, 12.5, 0.0, 0.0);
     w8_t b(0.0, -0.0, 2.4, 1.0, 12.5, Nan, -3.0, -3.5);
-    w8_t r(1.0, 1.0, 1.0, 23.5, Nan, Nan, Inf, Inf);
+    w8_t rr(1.0, 1.0, 1.0, 23.5, Nan, Nan, Inf, Inf);
     w8_t c = (eve::pow_abs)(a, b);
-    TTS_ULP_EQUAL(c, r, 2);
+    TTS_ULP_EQUAL(c, rr, 2);
   }
   {
     w8_t a(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0);
     w8_t b(-4.0, -Inf, -Inf, 3.5, 3.0, 4.0, Inf, -Inf);
-    w8_t r(Inf, Inf, Inf, 0.0, 0.0, 0.0, 1.0, 1.0);
+    w8_t rr(Inf, Inf, Inf, 0.0, 0.0, 0.0, 1.0, 1.0);
     w8_t c = (eve::pow_abs)(a, b);
-    TTS_ULP_EQUAL(c, r, 2);
+    TTS_ULP_EQUAL(c, rr, 2);
   }
   {
     w8_t a(2.0, 2.0, Nan, Inf, Inf, 1.0, 0.5, 1.5);
     w8_t b(0.0, -0.0, 0.0, 0.0, 0.0, -Inf, Inf, Inf);
-    w8_t r(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Inf);
+    w8_t rr(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, Inf);
     w8_t c = (eve::pow_abs)(a, b);
-    TTS_ULP_EQUAL(c, r, 2);
+    TTS_ULP_EQUAL(c, rr, 2);
   }
   {
     using w4_t = eve::wide<v_t, eve::fixed<4>>;
     w4_t a(0.5, 1.5, Inf, Inf);
     w4_t b(-Inf, -Inf, -3.0, 3.0);
-    w4_t r(Inf, 0.0, 0.0, Inf);
+    w4_t rr(Inf, 0.0, 0.0, Inf);
     w4_t c = (eve::pow_abs)(a, b);
-    TTS_ULP_EQUAL(c, r, 2);
+    TTS_ULP_EQUAL(c, rr, 2);
   }
 };
 
