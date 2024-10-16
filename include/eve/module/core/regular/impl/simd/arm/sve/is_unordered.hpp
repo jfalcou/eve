@@ -41,6 +41,6 @@ namespace eve::detail
                                  wide<T, N> v, wide<T, N> w) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
-    return svmcmpuo_unordered_x(sve_true<T>(), v, w);
+    return svmcmpuo(sve_true<T>(), v, w);
   }
 }
