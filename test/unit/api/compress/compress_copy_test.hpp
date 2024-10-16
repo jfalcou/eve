@@ -17,6 +17,7 @@ template<typename Type> struct rvv_compress_filter
     constexpr auto bit_size = 128;
     using scalar_t                   = typename Type::value_type;
     if( sizeof(Type) <= bit_size / 8 && sizeof(scalar_t) >= 2 ) return true;
+    return false;
     constexpr auto cardinal          = eve::cardinal_v<Type>;
     constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
     // and double

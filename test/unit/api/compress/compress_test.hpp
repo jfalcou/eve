@@ -20,6 +20,7 @@ template<typename Type> struct rvv_compress_filter
     // For vlen = 128, we test types with size >= 2 up to lmul==1
     constexpr auto bit_size = 128;
     if( sizeof(Type) <= bit_size / 8 && sizeof(Type) >= 2 ) return true;
+    return false;
     using scalar_t                   = typename Type::value_type;
     constexpr auto cardinal          = eve::cardinal_v<Type>;
     constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
