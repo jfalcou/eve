@@ -29,7 +29,6 @@ namespace eve::detail
   {
     using storage_type = Storage;
 
-//    wide_storage() : data_{} {};
     wide_storage() = default;
     wide_storage(storage_type const &r) : data_(r) {}
 
