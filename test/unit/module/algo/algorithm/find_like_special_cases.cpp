@@ -79,8 +79,8 @@ TTS_CASE("eve.algo.find_if not in radius")
   int r = 6;
 
   auto within_radius = [r_square = r * r](auto x_y) {
-    auto [x, y] = x_y;
-    return x * x + y * y <= r_square;
+    auto [vx, vy] = x_y;
+    return vx * vx + vy * vy <= r_square;
   };
 
   auto found = eve::algo::find_if_not(eve::algo::views::zip(x, y), within_radius);
@@ -88,25 +88,25 @@ TTS_CASE("eve.algo.find_if not in radius")
 };
 
 TTS_CASE("eve.algo.mismatch example, use previous result") {
-  std::vector<int> const a{1, 2, 3, 4, 5, 6, 6, 8};
-  std::vector<int> const b{1, 2, 2, 4, 5, 6, 7, 8};
+  std::vector<int> const a_{1, 2, 3, 4, 5, 6, 6, 8};
+  std::vector<int> const b_{1, 2, 2, 4, 5, 6, 7, 8};
 
-  eve::algo::views::zip_iterator ra_rb = eve::algo::mismatch(a, b);
-  TTS_EQUAL(ra_rb, eve::algo::mismatch(a, b.begin()));
-  TTS_EQUAL(ra_rb, eve::algo::mismatch(a.begin(), b));
+  eve::algo::views::zip_iterator ra_rb = eve::algo::mismatch(a_, b_);
+  TTS_EQUAL(ra_rb, eve::algo::mismatch(a_, b_.begin()));
+  TTS_EQUAL(ra_rb, eve::algo::mismatch(a_.begin(), b_));
 
   auto& [ra, rb] = ra_rb;
   TTS_EQUAL(*ra, 3);
   TTS_EQUAL(*rb, 2);
 
   ++ra_rb;
-  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a.end()), rb);
+  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a_.end()), rb);
   TTS_EQUAL(*ra, 6);
   TTS_EQUAL(*rb, 7);
   ++ra_rb;
 
-  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a.end()), rb);
-  TTS_EQUAL(ra_rb, eve::algo::views::zip(a.end(), b.end()));
+  ra_rb = eve::algo::mismatch(eve::algo::as_range(ra, a_.end()), rb);
+  TTS_EQUAL(ra_rb, eve::algo::views::zip(a_.end(), b_.end()));
 };
 
 TTS_CASE("eve.algo.mismatch example, first point not within a radius")
@@ -118,9 +118,9 @@ TTS_CASE("eve.algo.mismatch example, first point not within a radius")
   auto x_y = eve::algo::views::zip[eve::algo::common_with_types<double>](x, y);
 
   auto found = eve::algo::mismatch(x_y, within,
-    [](eve::nofs_wide<kumi::tuple<double, double>> x_y, eve::nofs_wide<double> r) {
-      auto [x, y] = x_y;
-      return x * x + y * y <= r * r;
+    [](eve::nofs_wide<kumi::tuple<double, double>> px_y, eve::nofs_wide<double> r) {
+      auto [vx, vy] = px_y;
+      return vx * vx + vy * vy <= r * r;
     }
   );
 
@@ -138,9 +138,9 @@ TTS_CASE("eve.algo.mismatch example, zip<zip>")
 
   auto found = eve::algo::mismatch(
     eve::algo::views::zip(eve::algo::views::zip(x, y), z),
-    [](auto x_y, auto z) {
-      auto [x, y] = x_y;
-      return eve::convert(x + y, eve::as<double>{}) < z;
+    [](auto x_y, auto pz) {
+      auto [vx, vy] = x_y;
+      return eve::convert(vx + vy, eve::as<double>{}) < pz;
     }
   );
 

@@ -303,7 +303,7 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
    * No zipped range becuase R1, R2 don't have to be the same length
    */
   template<relaxed_range R1, relaxed_range R2, relaxed_range RO, typename Less, typename Equal>
-  EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal) const
+  EVE_FORCEINLINE auto operator()(R1&& r1, R2&& r2, RO&& ro, Less less, Equal equal_fn) const
       -> set_intersection_result<unaligned_iterator_t<R1>,
                                  unaligned_iterator_t<R2>,
                                  unaligned_iterator_t<RO>>
@@ -311,17 +311,17 @@ template<typename TraitsSupport> struct set_intersection_ : TraitsSupport
     if constexpr( expect_smaller == 0 )
     {
       return detail::set_intersection_r1_small[TraitsSupport::get_traits()](
-          EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal);
+          EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal_fn);
     }
     else if constexpr( expect_smaller == 1 )
     {
       return detail::set_intersection_r2_small[TraitsSupport::get_traits()](
-          EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal);
+          EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal_fn);
     }
     else
     {
       return detail::set_intersection_basic[TraitsSupport::get_traits()](
-          EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal);
+          EVE_FWD(r1), EVE_FWD(r2), EVE_FWD(ro), less, equal_fn);
     }
   }
 

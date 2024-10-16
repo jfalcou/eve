@@ -150,7 +150,7 @@ template<typename Algo> struct set_intersect_ptr_test
 {
   Algo alg;
 
-  explicit set_intersect_ptr_test(Algo alg) : alg(alg) {}
+  explicit set_intersect_ptr_test(Algo a) : alg(a) {}
 
   void init(auto *, auto *f, auto *l, auto *) const { std::iota(f, l, 0); }
 

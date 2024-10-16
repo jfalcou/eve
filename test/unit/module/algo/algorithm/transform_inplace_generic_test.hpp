@@ -18,8 +18,8 @@ namespace algo_test
     Control control;
     kumi::tuple<Args...> args;
 
-    transform_inplace_ptr_test(Algo alg, Control control, Args... args) :
-      alg(alg), control(control), args{args...} {}
+    transform_inplace_ptr_test(Algo a, Control c, Args... arg) :
+      alg(a), control(c), args{arg...} {}
 
     void init(auto *pg_b, auto *, auto *, auto *pg_e) { std::iota(pg_b, pg_e, 0); }
 

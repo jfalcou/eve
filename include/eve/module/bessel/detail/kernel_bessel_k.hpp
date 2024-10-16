@@ -85,7 +85,7 @@ kernel_bessel_k_int(I n, T x) noexcept
   EVE_ASSERT(eve::all(is_flint(n)), "kernel_bessel_j_int : somme n are not floating integer");
   auto k0         = cyl_bessel_k0(x);
   auto k1         = cyl_bessel_k1(x);
-  auto br_forward = [k0, k1](auto n, auto x) { return kernel_bessel_k_int_forward(n, x, k0, k1); };
+  auto br_forward = [k0, k1](auto nn, auto xx) { return kernel_bessel_k_int_forward(nn, xx, k0, k1); };
 
   if constexpr( scalar_value<T> )
   {
@@ -122,9 +122,9 @@ kernel_bessel_k_flt(T n, T x) noexcept
   n = eve::abs(n);
   EVE_ASSERT(eve::none(is_flint(n)), "kernel_bessel_k_flt : some nu are floating integers");
 
-  auto br_medium = [](auto n, auto x)
+  auto br_medium = [](auto nn, auto xx)
   {
-    auto [i, ip, k, kp] = kernel_bessel_ik(T(n), x);
+    auto [i, ip, k, kp] = kernel_bessel_ik(T(nn), xx);
     return k;
   };
 

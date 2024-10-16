@@ -125,8 +125,8 @@ namespace eve
       r            = if_else(notdone, r, inf(as(phi0)));
       if( eve::any(notdone) )
       {
-        auto br_philarge = [aphi](auto k) // aphi*eps(as(aphi)) > one(as(aphi))
-          { return aphi * ellint_d(k) / pio_2(as(aphi)); };
+        auto br_philarge = [aphi](auto k_) // aphi*eps(as(aphi)) > one(as(aphi))
+          { return aphi * ellint_d(k_) / pio_2(as(aphi)); };
         notdone = next_interval(br_philarge, notdone, aphi * eps(as(aphi)) > one(as(aphi)), r, k);
         if( eve::any(notdone) )
         {
@@ -140,10 +140,10 @@ namespace eve
           T    c            = rec[pedantic](sqr(sinp));
           T    cm1          = sqr(cosp) * c; // c - 1
           T    k2           = sqr(k);
-          auto br_reg       = [c, cm1, k2, s, m](auto k){
+          auto br_reg       = [c, cm1, k2, s, m](auto kk_){
             auto z    = if_else(is_finite(c), s * ellint_rd(cm1, c - k2, c) / 3, zero);
             auto test = is_nez(m);
-            if( eve::any(test) ) { return z + m * ellint_d(k); }
+            if( eve::any(test) ) { return z + m * ellint_d(kk_); }
             else return z;
           };
           notdone = last_interval(br_reg, notdone, r, k);

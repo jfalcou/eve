@@ -99,46 +99,46 @@ namespace eve
     template<typename T, callable_options O>
     constexpr  kumi::tuple<T, T> lambert_(EVE_REQUIRES(cpu_), O const&, T x)
     {
-      auto halley = [](auto x, auto w_i, auto max_iters)
+      auto halley = [](auto px, auto w_i, auto max_iters)
         {
           auto w = w_i;
           for( int i = 0; i < max_iters; i++ )
           {
             T e = eve::exp(w);
             T p = inc(w);
-            T t = fms(w, e, x);
+            T t = fms(w, e, px);
             t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
             w -= t;
-            T tol = 10 * eps(as(x)) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
+            T tol = 10 * eps(as(px)) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
             if( eve::all(eve::abs(t) < tol) ) break;
           }
           return w;
         };
 
       T    q              = x + T(0.367879441171442);
-      auto lambert0_small = [](auto q) { // branch 0 q <= 1.0e-3
-        return lambert_serie_utility(eve::sqrt(q));
+      auto lambert0_small = [](auto pq) { // branch 0 q <= 1.0e-3
+        return lambert_serie_utility(eve::sqrt(pq));
       };
 
-      auto lambert0_other = [&halley](auto x, auto q){ // branch 0 q <= 1.0e'3
-        auto p  = eve::sqrt(T(5.436563656918090) * q);
+      auto lambert0_other = [&halley](auto px, auto pq){ // branch 0 q <= 1.0e'3
+        auto p  = eve::sqrt(T(5.436563656918090) * pq);
         auto w1 = dec(p * (inc(p * fam(T(-1.0 / 3), p, T(1.0 / 72)))));
-        auto w2 = log(x);
-        w2 -= if_else(x > 3, zero, log(w2));
-        auto init = if_else(x < one(as(x)), w1, w2);
-        return halley(x, init, 10);
+        auto w2 = log(px);
+        w2 -= if_else(px > 3, zero, log(w2));
+        auto init = if_else(px < one(as(px)), w1, w2);
+        return halley(px, init, 10);
       };
 
-      auto lambert1 = [&halley](auto x, auto q, auto positivex){ // branch 1 q > 0
-        T    r    = -eve::sqrt(q);
-        auto test = (x < T(-1.0e-6));
+      auto lambert1 = [&halley](auto xx, auto qq, auto positivex){ // branch 1 qq > 0
+        T    r    = -eve::sqrt(qq);
+        auto test = (xx < T(-1.0e-6));
         T    w1(0);
         if( eve::any(test) ) w1 = lambert_serie_utility(r);
-        if( eve::all(test) && eve::all(q < T(3.0e-3)) ) return w1;
-        T l1 = log(-x);
+        if( eve::all(test) && eve::all(qq < T(3.0e-3)) ) return w1;
+        T l1 = log(-xx);
         T l2 = log(-l1);
         T w2 = l1 - l2 + l2 / l1;
-        return if_else(is_eqz(x) && !positivex, minf(as(x)), halley(x, w2, 30));
+        return if_else(is_eqz(xx) && !positivex, minf(as(xx)), halley(xx, w2, 30));
       };
 
       auto r       = nan(as<T>());                // nan case treated here

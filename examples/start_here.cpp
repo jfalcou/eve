@@ -180,12 +180,12 @@ TTS_CASE("polar/cartesian")
 
   // almost -pi
   {
-    cartesian cart{-0.999, -0.1};
+    cartesian ct{-0.999, -0.1};
 
-    auto pol = convert_cartesian_to_polar(cart);
-    TTS_GREATER(get<0>(pol), 0.999);
-    TTS_LESS   (get<1>(pol), -3 * pi / 4);
-    TTS_GREATER(get<1>(pol), -pi);
+    auto p = convert_cartesian_to_polar(ct);
+    TTS_GREATER(get<0>(p), 0.999);
+    TTS_LESS   (get<1>(p), -3 * pi / 4);
+    TTS_GREATER(get<1>(p), -pi);
   }
 };
 
@@ -223,14 +223,14 @@ TTS_CASE("remove_numbers_outisde_of_treshold")
 
 TTS_CASE("reverse_parallel_arrays")
 {
-  std::vector<int>          a { -1, -2, -3, -4, -5 };
-  std::vector<std::uint8_t> b {  1,  2,  3,  4,  5 };
+  std::vector<int>          va { -1, -2, -3, -4, -5 };
+  std::vector<std::uint8_t> vb {  1,  2,  3,  4,  5 };
 
-  std::vector<int>          expected_a { -5, -4, -3, -2, -1 };
-  std::vector<std::uint8_t> expected_b {  5,  4,  3,  2,  1 };
+  std::vector<int>          expected_va { -5, -4, -3, -2, -1 };
+  std::vector<std::uint8_t> expected_vb {  5,  4,  3,  2,  1 };
 
-  reverse_parallel_arrays(a, b);
+  reverse_parallel_arrays(va, vb);
 
-  TTS_EQUAL(a, expected_a);
-  TTS_EQUAL(b, expected_b);
+  TTS_EQUAL(va, expected_va);
+  TTS_EQUAL(vb, expected_vb);
 };

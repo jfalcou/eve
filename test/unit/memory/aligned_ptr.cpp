@@ -12,6 +12,11 @@
 #include <array>
 #include <memory>
 
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
+
 TTS_CASE("aligned_ptr exposes proper traits")
 {
   using it_t  = eve::pointer_traits<eve::aligned_ptr<double>>;
@@ -280,3 +285,7 @@ TTS_CASE("previous/next aligned address")
     TTS_LESS_EQUAL(eve::previous_aligned_address(cur), eve::next_aligned_address(cur));
   }
 };
+
+#if defined(SPY_COMPILER_IS_GCC) || defined(SPY_COMPILER_IS_CLANG)
+#pragma GCC diagnostic pop
+#endif

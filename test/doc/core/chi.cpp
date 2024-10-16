@@ -8,7 +8,7 @@ int main()
   eve::wide lo = {3.0, -4.0, -10.0, 0.0};
   eve::wide hi = {4.0, -1.0, 0.0, 5.0};
 
-  auto belongs =  [](auto x){return x > 3.0 || x == 2.0; };
+  auto belongs =  [](auto v) {return v > 3.0 || v == 2.0; };
 
   std::cout << " <- x                       = " << x << '\n';
   std::cout << " <- lo                      = " << lo << '\n';

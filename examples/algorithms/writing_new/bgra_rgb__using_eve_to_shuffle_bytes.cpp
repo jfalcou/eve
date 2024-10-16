@@ -200,8 +200,6 @@ convert_bgra_to_rgb_scalar(std::span<std::uint8_t const> in, std::uint8_t* o)
 
 struct convert_bgra_to_rgb_generic_test
 {
-  std::vector<std::uint8_t> expected;
-
   void init(auto *, auto *f, auto *l, auto *) { std::iota(f, l, 0); }
 
   void run(auto rng_)

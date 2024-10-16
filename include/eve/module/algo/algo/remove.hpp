@@ -26,7 +26,7 @@ namespace eve::algo
     template <typename UnalignedI, typename P>
     struct delegate
     {
-      explicit delegate(UnalignedI out, P p) : out(out), p(p) {}
+      explicit delegate(UnalignedI o, P pr) : out(o), p(pr) {}
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {

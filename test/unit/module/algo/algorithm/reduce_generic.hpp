@@ -41,7 +41,7 @@ struct reduce_ptr_test
   Init ini;
   Algo alg;
 
-  reduce_ptr_test(Init ini, Algo alg) : ini(ini), alg(alg) {}
+  reduce_ptr_test(Init i, Algo a) : ini(i), alg(a) {}
 
   void init(auto*, auto* f, auto* l, auto*) const
   {

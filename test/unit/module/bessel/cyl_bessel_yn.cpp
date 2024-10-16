@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with integral order",
   }
 
 #if defined(__cpp_lib_math_special_functions)
-  auto std_cyl_bessel_yn = [](auto n, auto x) -> v_t { return std::cyl_neumann(n, x); };
+  auto std_cyl_bessel_yn = [](auto nn, auto xx) -> v_t { return std::cyl_neumann(nn, xx); };
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(3, v_t(1500)), std_cyl_bessel_yn(3, v_t(1500)), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(2, v_t(500)), std_cyl_bessel_yn(2, v_t(500)), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(0, v_t(10)), std_cyl_bessel_yn(0, v_t(10)), 20000.0);
@@ -120,7 +120,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_yn on wide with non integral order",
 
 #if defined(__cpp_lib_math_special_functions)
   using v_t = eve::element_type_t<T>;
-  auto std_cyl_bessel_yn = [](auto n, auto x) -> v_t { return std::cyl_neumann(n, x); };
+  auto std_cyl_bessel_yn = [](auto nn, auto xx) -> v_t { return std::cyl_neumann(nn, xx); };
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(3.5), T(1500)), T(std_cyl_bessel_yn(v_t(3.5), v_t(1500))), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(2.5), T(500)), T(std_cyl_bessel_yn(v_t(2.5), v_t(500))), 20000.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_yn(T(2.5), T(10)), T(std_cyl_bessel_yn(v_t(2.5), v_t(10))), 20000.0);

@@ -25,7 +25,7 @@ namespace eve::algo
     template <typename UnalignedI, typename Func>
     struct delegate
     {
-      explicit delegate(UnalignedI out, Func func) : out(out), func(func) {}
+      explicit delegate(UnalignedI o, Func f) : out(o), func(f) {}
 
       EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
@@ -83,7 +83,7 @@ namespace eve::algo
   //!   @note See `::transform_copy_if` and `::keep_if` for more details.
   //!
   //!   @groupheader{Callable Signatures}
-  //!   
+  //!
   //!   @code
   //!   {
   //!     template<relaxed_range Rng, typename Func>

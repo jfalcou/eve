@@ -76,17 +76,17 @@ TTS_CASE_TPL("Check  powm1", eve::test::simd::ieee_reals)
   {
     w8_t a(-0.0, -0.0, -0.0, -0.0, -1.0, -1.0, -Inf, -Inf);
     w8_t b(-Inf, -3.0, -4.0, -4.5, -Inf, Inf, -3.0, -4.0);
-    w8_t r(Inf, -Inf, Inf, Inf, 1.0, 1.0, -0.0, 0.0);
+    w8_t rr(Inf, -Inf, Inf, Inf, 1.0, 1.0, -0.0, 0.0);
     w8_t c = (eve::powm1)(a, b);
-    TTS_ULP_EQUAL(c, dec(r), 2);
+    TTS_ULP_EQUAL(c, dec(rr), 2);
   }
   {
     using w4_t = eve::wide<v_t, eve::fixed<4>>;
     w4_t a(-Inf, -Inf, -Inf, 0.0);
     w4_t b(-4.5, 4.0, 4.5, 0.0);
-    w4_t r(0.0, Inf, Inf, 1.0);
+    w4_t rr(0.0, Inf, Inf, 1.0);
     w4_t c = (eve::powm1)(a, b);
-    TTS_ULP_EQUAL(c, dec(r), 2);
+    TTS_ULP_EQUAL(c, dec(rr), 2);
   }
 };
 

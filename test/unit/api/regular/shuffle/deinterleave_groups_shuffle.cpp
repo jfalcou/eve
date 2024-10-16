@@ -14,18 +14,18 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
 {
   T field_markers { [](int i, int) { return ((i & 1) ? 0xB : 0xA) << 4; } };
 
-  T a { [](int i, int) { return ( i / 2 ) & 7; }};
-  T b { [](int i, int) { return ( i / 2 + T::size() / 2) & 7; }};
+  T a_ { [](int i, int) { return ( i / 2 ) & 7; }};
+  T b_ { [](int i, int) { return ( i / 2 + T::size() / 2) & 7; }};
 
-  a += field_markers;
-  b += field_markers;
+  a_ += field_markers;
+  b_ += field_markers;
 
   // These inputs are not properly interleaved
   // for 1 element.
   if constexpr (T::size() == 1)
   {
-    a = T{0xA0};
-    b = T{0xB0};
+    a_ = T{0xA0};
+    b_ = T{0xB0};
   }
 
   eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>
@@ -35,12 +35,12 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
     return 0xB0 | (i & 7);
   }};
 
-  auto actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<1>);
+  auto actual = eve::deinterleave_groups_shuffle(a_, b_, eve::lane<1>);
 
   TTS_EQUAL(expected, actual)
     << std::hex
-    << "\na : " << a
-    << "\nb : " << b
+    << "\na : " << a_
+    << "\nb : " << b_
     << "\ne : " << expected
     << "\nr : " << actual
     << '\n' << std::dec;
@@ -54,13 +54,13 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shu
 
   res_t expected { [](int i, int) { return i;  }};
 
-  auto [a, b] = expected.slice();
+  auto [av, bv] = expected.slice();
 
-  res_t actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<T::size()>);
+  res_t actual = eve::deinterleave_groups_shuffle(av, bv, eve::lane<T::size()>);
 
   TTS_EQUAL(expected, actual);
 
-  actual = eve::deinterleave_groups_shuffle(a, b, eve::lane<T::size() * 2>);
+  actual = eve::deinterleave_groups_shuffle(av, bv, eve::lane<T::size() * 2>);
   TTS_EQUAL(expected, actual);
 };
 
@@ -86,15 +86,15 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle"
 
         return marker | (new_i & 0xf);
       }};
-      auto [a, b] = a_b.slice();
+      auto [av, bv] = a_b.slice();
 
-      auto r = eve::deinterleave_groups_shuffle(a, b, eve::lane<G>);
+      auto r = eve::deinterleave_groups_shuffle(av, bv, eve::lane<G>);
 
       TTS_EQUAL(expected, r)
           << "\nG: " << G
           << std::hex
-          << "\na : " << a
-          << "\nb : " << b
+          << "\na : " << av
+          << "\nb : " << bv
           << "\ne : " << expected
           << "\nr : " << r << "\n"
           << '\n' << std::dec;

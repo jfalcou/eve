@@ -102,39 +102,39 @@ namespace eve
       auto ax      = eve::abs(x);
       auto notdone = is_nlez(a) && is_nlez(a + x);
       auto r       = nan(as(x));
-      auto lr0     = [](auto a, auto x) { return log_abs_gamma(x + a) - log_abs_gamma(a); };
+      auto lr0     = [](auto aa, auto xx) { return log_abs_gamma(xx + aa) - log_abs_gamma(aa); };
 
-      auto lr1 = [](auto a, auto x){
-        const auto xoa = x / a;
-        const auto den = inc(xoa);
+      auto lr1 = [](auto aa, auto xx){
+        const auto xxoaa = xx / aa;
+        const auto den = inc(xxoaa);
         const auto d2  = sqr(den);
         const auto d3  = den * d2;
         const auto d5  = d3 * d2;
         const auto d7  = d5 * d2;
-        const auto c1  = -xoa / den;
-        const auto c3  = -xoa * (3 + xoa * (3 + xoa)) / d3;
-        const auto c5  = -xoa * (5 + xoa * (10 + xoa * (10 + xoa * (5 + xoa)))) / d5;
+        const auto c1  = -xxoaa / den;
+        const auto c3  = -xxoaa * (3 + xxoaa * (3 + xxoaa)) / d3;
+        const auto c5  = -xxoaa * (5 + xxoaa * (10 + xxoaa * (10 + xxoaa * (5 + xxoaa)))) / d5;
         const auto c7 =
-        -xoa * (7 + xoa * (21 + xoa * (35 + xoa * (35 + xoa * (21 + xoa * (7 + xoa)))))) / d7;
-        const auto p8    = eve::pow(inc(xoa), 8);
+        -xxoaa * (7 + xxoaa * (21 + xxoaa * (35 + xxoaa * (35 + xxoaa * (21 + xxoaa * (7 + xxoaa)))))) / d7;
+        const auto p8    = eve::pow(inc(xxoaa), 8);
         const auto c8    = dec(rec[pedantic](p8));            /* these need not   */
-        const auto c9    = dec(rec[pedantic](p8 * inc(xoa))); /* be very accurate */
-        const auto a2    = sqr(a);
+        const auto c9    = dec(rec[pedantic](p8 * inc(xxoaa))); /* be very accurate */
+        const auto a2    = sqr(aa);
         const auto a4    = sqr(a2);
         const auto a6    = a4 * a2;
         const auto ser_1 = c1 + c3 / (30 * a2) + c5 / (105 * a4) + c7 / (140 * a6);
         const auto ser_2 = c8 / (99 * a6 * a2) - 691 * c9 / (a6 * a4) / 360360;
-        const auto ser   = (ser_1 + ser_2) / (12 * a);
-        auto       term1 = x * dec(eve::log(a)); // eve::log(a/M_E);
-        auto       lg    = eve::log1p(xoa);
-        auto       term2 = (x + a - half(as(x))) * lg;
+        const auto ser   = (ser_1 + ser_2) / (12 * aa);
+        auto       term1 = xx * dec(eve::log(aa)); // eve::log(aa/M_E);
+        auto       lg    = eve::log1p(xxoaa);
+        auto       term2 = (xx + aa - half(as(xx))) * lg;
         return term1 + term2 + ser;
       };
 
-      auto lr2 = [](auto a, auto x){
-        return if_else(dist(x + a, a) < 10 * a * eps(as(a)),
-                       eve::log1p(x * digamma(a)),
-                       log_abs_gamma(a + x) - log_abs_gamma(a));
+      auto lr2 = [](auto aa, auto xx){
+        return if_else(dist(xx + aa, aa) < 10 * aa * eps(as(aa)),
+                       eve::log1p(xx * digamma(aa)),
+                       log_abs_gamma(aa + xx) - log_abs_gamma(aa));
       };
 
       if( eve::any(notdone) )
@@ -187,32 +187,32 @@ namespace eve
 
           auto lr0 = []() { return zero(as(T())); };
 
-          auto lrpos = [](auto a, auto x) { return inner_lrising_factorial(a, x); };
+          auto lrpos = [](auto aa, auto xx) { return inner_lrising_factorial(aa, xx); };
 
-          auto lrnegint = [](auto a, auto x){ // a and a+x are negative integers uses reflection.
-            auto r = inner_lrising_factorial(-a, -x);
-            return -eve::log1p(x / a) - r;
+          auto lrnegint = [](auto aa, auto xx){ // a and a+x are negative integers uses reflection.
+            auto rr = inner_lrising_factorial(-aa, -xx);
+            return -eve::log1p(xx / aa) - rr;
           };
 
-          auto lraeqmx = [](auto a, auto){  // a+x = 0
-            return log_abs_gamma(inc(a));
+          auto lraeqmx = [](auto aa, auto){  // a+x = 0
+            return log_abs_gamma(inc(aa));
           };
 
-          auto lraneqmx = [](auto a, auto){ // a < 0.0 && a+x < 0.0
-            return minf(as(a));
+          auto lraneqmx = [](auto aa, auto){ // a < 0.0 && a+x < 0.0
+            return minf(as(aa));
           };
 
-          auto lrneg = [](auto a, auto x){
+          auto lrneg = [](auto aa, auto xx){
             // Reduce to positive case using reflection.
-            auto oma      = oneminus(a);
+            auto oma      = oneminus(aa);
             auto spioma   = sinpi(oma);
-            auto spiomamx = sinpi(oma - x);
-            auto r        = inner_lrising_factorial(oma, -x);
+            auto spiomamx = sinpi(oma - xx);
+            auto rr       = inner_lrising_factorial(oma, -xx);
             auto lnterm   = eve::log(eve::abs(spioma / spiomamx));
-            return if_else(is_nez(spiomamx * spioma), lnterm - r, allbits);
+            return if_else(is_nez(spiomamx * spioma), lnterm - rr, allbits);
           };
 
-          auto lrlast = [](auto a, auto x) { return eve::log_abs_gamma(a + x) - eve::log_abs_gamma(a); };
+          auto lrlast = [](auto aa, auto xx) { return eve::log_abs_gamma(aa + xx) - eve::log_abs_gamma(aa); };
 
           if( eve::any(notdone) )
           {
@@ -250,7 +250,7 @@ namespace eve
         {
           // regular  nan if a+x or x is negative,  better computation than raw
           auto lr0   = []() { return zero(as(T())); };
-          auto lrpos = [](auto a, auto x) { return inner_lrising_factorial(a, x); };
+          auto lrpos = [](auto aa, auto xx) { return inner_lrising_factorial(aa, xx); };
 
           auto r       = nan(as(a));
           auto notdone = is_nltz(x) || is_nltz(a + x);

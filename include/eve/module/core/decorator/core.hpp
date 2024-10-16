@@ -107,7 +107,7 @@ namespace eve
     else if constexpr(S::contains(eve::toward_zero)) return toward_zero_mode::value;
     else if constexpr(S::contains(eve::upward     )) return upward_mode::value;
     else                                             return T::id_type::value;
-  };
+  }
 
   template<typename S> consteval int rounding_control() noexcept
   {

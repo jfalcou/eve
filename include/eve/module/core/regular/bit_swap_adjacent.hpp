@@ -94,8 +94,9 @@ namespace eve
         }
         return r;
       };
-      auto swp = [](auto x, auto m, auto n)->T{
-        return bit_or(bit_shl(bit_and(x, T(m)), n), bit_shr(bit_andnot(x, T(m)), n));
+      auto swp = [](auto vx, auto vm, auto vn)->T
+      {
+        return bit_or(bit_shl(bit_and(vx, T(vm)), vn), bit_shr(bit_andnot(vx, T(vm)), vn));
       };
 
       if (n > N(S*4)) return zero(as(x));

@@ -19,7 +19,7 @@ namespace eve::detail
     using elt_t   = element_type_t<T>;
 
     // TODO specialize for float
-    auto br_large = [](auto x)
+    auto br_large = [](auto px)
     {
       using A7 = kumi::result::generate_t<7, elt_t>;
       constexpr A7 PC     = {-4.4357578167941278571e+06,
@@ -50,21 +50,21 @@ namespace eve::detail
                               3.7890229745772202641e+04,
                               8.6383677696049909675e+02,
                               1.0};
-      T                              y      = 8 * rec[pedantic](x);
+      T                              y      = 8 * rec[pedantic](px);
       T                              y2     = sqr(y);
       auto                           rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
       auto                           rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
-      auto                           factor = rsqrt(pi(as(x)) * x);
-      auto [sx, cx]                         = sincos(x);
+      auto                           factor = rsqrt(pi(as(px)) * px);
+      auto [sx, cx]                         = sincos(px);
       auto value                            = factor * fma(y, rs * (sx + cx), rc * (sx - cx));
       return value;
     };
 
     if constexpr( std::is_same_v<elt_t, float> )
     {
-      auto br_2 = [](auto x)
+      auto br_2 = [](auto px)
         {
-          const T              z  = sqr(x);
+          const T              z  = sqr(px);
           using A5 = kumi::result::generate_t<5, elt_t>;
           constexpr A5 JP = {-4.878788132172128E-009f,
                               6.009061827883699E-007f,
@@ -72,12 +72,12 @@ namespace eve::detail
                               1.937383947804541E-003f,
                               -3.405537384615824E-002f};
 
-          return (z - 1.46819706421238932572E1f) * x * horner(z, JP);
+          return (z - 1.46819706421238932572E1f) * px * horner(z, JP);
         };
 
-      auto br_8 = [](auto x)
+      auto br_8 = [](auto px)
         {
-          auto                 q       = rec[pedantic](x);
+          auto                 q       = rec[pedantic](px);
           auto                 w       = sqrt(q);
           using A8 = kumi::result::generate_t<8, elt_t>;
           constexpr A8 MO1     = {6.913942741265801E-002f,
@@ -100,7 +100,7 @@ namespace eve::detail
           auto                 p       = w * horner(q, MO1);
           w                            = sqr(q);
           auto xn                      = q * horner(w, PH1) - thpio4f;
-          return p * cos(xn + x);
+          return p * cos(xn + px);
         };
 
       if constexpr( scalar_value<T> )
@@ -136,7 +136,7 @@ namespace eve::detail
     }
     else
     {
-      auto br_5 = [](auto x)
+      auto br_5 = [](auto xx)
         {
           using A4 = kumi::result::generate_t<4, elt_t>;
           constexpr A4 RP = {
@@ -157,14 +157,14 @@ namespace eve::detail
             8.95222336184627338078E16,
             5.32278620332680085395E18,
           };
-          auto  z  = sqr(x);
+          auto  z  = sqr(xx);
           auto  w  = horner(z, RP) / horner(z, RQ);
           elt_t Z1 = 1.46819706421238932572E1;
           elt_t Z2 = 4.92184563216946036703E1;
-          return w * x * (z - Z1) * (z - Z2);
+          return w * xx * (z - Z1) * (z - Z2);
         };
 
-      auto br_8 = [](auto x)
+      auto br_8 = [](auto xx)
         {
           using A7 = kumi::result::generate_t<7, elt_t>;
           constexpr A7 PP = {
@@ -207,16 +207,16 @@ namespace eve::detail
             3.36093607810698293419E2,
           };
 
-          auto           w      = 5.0 * rec[pedantic](x);
+          auto           w      = 5.0 * rec[pedantic](xx);
           auto           z      = sqr(w);
           auto           p      = horner(z, PP) / horner(z, PQ);
           auto           q      = horner(z, QP) / horner(z, QQ);
           constexpr auto thpio4 = 2.35619449019234492885; /* 3*pi/4 */
-          auto           xn     = x - thpio4;
+          auto           xn     = xx - thpio4;
           auto [sxn, cxn]       = sincos(xn);
           p                     = fms(p, cxn, w * q * sxn);
           auto sq2opi           = T(.79788456080286535588);
-          return if_else(x == inf(as(x)), zero, p * sq2opi * rsqrt(x));
+          return if_else(xx == inf(as(xx)), zero, p * sq2opi * rsqrt(xx));
         };
 
       if constexpr( scalar_value<T> )

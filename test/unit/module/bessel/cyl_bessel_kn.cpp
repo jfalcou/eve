@@ -56,7 +56,7 @@ TTS_CASE_WITH("Check behavior of cyl_bessel_kn on wide with integral order",
   }
 
 #if defined(__cpp_lib_math_special_functions)
-  auto std_cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, double(x)); };
+  auto std_cyl_bessel_kn =  [](auto nn, auto xx)->v_t { return std::cyl_bessel_k(nn, double(xx)); };
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(3, v_t(1500)), eve::zero(eve::as<v_t>()), 5.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(2, v_t(50)), std_cyl_bessel_kn(2, v_t(50)), 5.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(0, v_t(10)), std_cyl_bessel_kn(0, v_t(10)), 5.0);
@@ -134,7 +134,7 @@ TTS_CASE_WITH( "Check behavior of cyl_bessel_kn on wide with non integral order"
 
 #if defined(__cpp_lib_math_special_functions)
   using v_t = eve::element_type_t<T>;
-  auto std_cyl_bessel_kn =  [](auto n, auto x)->v_t { return std::cyl_bessel_k(n, double(x)); };
+  auto std_cyl_bessel_kn =  [](auto nn, auto xx)->v_t { return std::cyl_bessel_k(nn, double(xx)); };
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(v_t(3.5), v_t(1500)), eve::zero(eve::as<v_t>()), 10.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(v_t(2.5), v_t(50)), std_cyl_bessel_kn(v_t(2.5), v_t(50)), 10.0);
   TTS_ULP_EQUAL(eve::cyl_bessel_kn(v_t(2.5), v_t(10)), std_cyl_bessel_kn(v_t(2.5), v_t(10)), 10.0);

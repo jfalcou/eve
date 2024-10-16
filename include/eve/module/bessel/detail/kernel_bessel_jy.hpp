@@ -80,12 +80,12 @@ requires(scalar_value<T>)
   T jpnul = h * jnul;
   T jnul1 = jnul;
   T jpnu1 = jpnul;
-  T fact  = nu * xi;
+  T factor  = nu * xi;
   for( int l = nl; l >= 1; --l )
   {
-    const T jnutemp = fma(fact, jnul, jpnul);
-    fact -= xi;
-    jpnul = fact * jnutemp - jnul;
+    const T jnutemp = fma(factor, jnul, jpnul);
+    factor -= xi;
+    jpnul = factor * jnutemp - jnul;
     jnul  = jnutemp;
   }
   if( jnul == T(0) ) jnul = Eps;
@@ -96,49 +96,49 @@ requires(scalar_value<T>)
   {
     const T x2    = x / T(2);
     T       fact  = rec[pedantic](sinpic(mu));
-    T       d     = -eve::log(x2);
-    T       e     = mu * d;
-    T       fact2 = (eve::abs(e) < Eps ? T(1) : std::sinh(e) / e);
+    T       dd    = -eve::log(x2);
+    T       e     = mu * dd;
+    T       factor2 = (eve::abs(e) < Eps ? T(1) : std::sinh(e) / e);
     T       gam1, gam2, gampl, gammi;
 
-    auto gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
+    auto gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mmu)
     {
       auto gamma_e = T(0.57721566490153286060651209008240243104215933593992);
-      gampl        = rec[pedantic](tgamma(inc(mu)));
-      gammi        = rec[pedantic](tgamma(oneminus(mu)));
-      gam1         = eve::abs(mu) < Eps ? gamma_e : (gammi - gampl) / (mu + mu);
+      gampl        = rec[pedantic](tgamma(inc(mmu)));
+      gammi        = rec[pedantic](tgamma(oneminus(mmu)));
+      gam1         = eve::abs(mmu) < Eps ? gamma_e : (gammi - gampl) / (mmu + mmu);
       gam2         = average(gammi, gampl);
       return;
     };
 
     gamma_temme(mu);
-    T ff    = (T(2) / Pi) * fact * (gam1 * eve::cosh(e) + gam2 * fact2 * d);
+    T ff    = (T(2) / Pi) * fact * (gam1 * eve::cosh(e) + gam2 * factor2 * dd);
     e       = eve::exp(e);
     T p     = e / (Pi * gampl);
     T q     = T(1) / (e * Pi * gammi);
     T muo2  = mu * T(0.5);
-    T fact3 = sinpic(muo2);
-    T r     = sqr(Pi * fact3) * muo2;
-    T c     = T(1);
-    d       = -x2 * x2;
-    T sum   = ff + r * q;
+    T factor3 = sinpic(muo2);
+    T r     = sqr(Pi * factor3) * muo2;
+    T cc    = T(1);
+    dd      = -x2 * x2;
+    T sums  = ff + r * q;
     T sum1  = p;
     {
       int i;
       for( i = 1; i <= max_iter; ++i )
       {
         ff = (i * ff + p + q) / (i * i - mu2);
-        c *= d / T(i);
+        cc *= dd / T(i);
         p /= T(i) - mu;
         q /= T(i) + mu;
-        const T del = c * (ff + r * q);
-        sum += del;
-        const T del1 = c * p - i * del;
+        const T del = cc * (ff + r * q);
+        sums += del;
+        const T del1 = cc * p - i * del;
         sum1 += del1;
-        if( eve::abs(del) < Eps * (T(1) + eve::abs(sum)) ) break;
+        if( eve::abs(del) < Eps * (T(1) + eve::abs(sums)) ) break;
       }
     }
-    nmu  = -sum;
+    nmu  = -sums;
     nnu1 = -sum1 * xi2;
     npmu = mu * xi * nmu - nnu1;
     jmu  = w / (npmu - f * nmu);
@@ -150,9 +150,9 @@ requires(scalar_value<T>)
     T p    = -xi / T(2);
     T br   = T(2) * x;
     T bi   = T(2);
-    T fact = a * xi / (p * p + q * q);
-    T cr   = br + q * fact;
-    T ci   = bi + p * fact;
+    T fct  = a * xi / (p * p + q * q);
+    T cr   = br + q * fct;
+    T ci   = bi + p * fct;
     T den  = br * br + bi * bi;
     T dr   = br / den;
     T di   = -bi / den;
@@ -170,9 +170,9 @@ requires(scalar_value<T>)
         dr = a * dr + br;
         di = a * di + bi;
         if( eve::abs(dr) + eve::abs(di) < fp_min ) dr = fp_min;
-        fact = a / (cr * cr + ci * ci);
-        cr   = br + cr * fact;
-        ci   = bi - ci * fact;
+        fct = a / (cr * cr + ci * ci);
+        cr   = br + cr * fct;
+        ci   = bi - ci * fct;
         if( eve::abs(cr) + eve::abs(ci) < fp_min ) cr = fp_min;
         den = dr * dr + di * di;
         dr /= den;
@@ -193,9 +193,9 @@ requires(scalar_value<T>)
     npmu        = (p + q / gam) * nmu;
     nnu1        = mu * xi * nmu - npmu;
   }
-  fact = jmu / jnul;
-  jnu  = fact * jnul1;
-  jpnu = fact * jpnu1;
+  factor = jmu / jnul;
+  jnu  = factor * jnul1;
+  jpnu = factor * jpnu1;
   for( int i = 1; i <= nl; ++i )
   {
     const T nnutemp = (mu + i) * xi2 * nnu1 - nmu;
@@ -264,14 +264,14 @@ requires(simd_value<T>)
   T    jpnul = h * jnul;
   T    jnul1 = jnul;
   T    jpnu1 = jpnul;
-  T    fact  = nu * xi;
+  T    factor  = nu * xi;
   auto l     = nl;
   auto test  = l >= one(as(x));
   while( eve::any(test) )
   {
-    T jnutemp = fma(fact, jnul, jpnul);
-    fact      = if_else(test, fact - xi, fact);
-    jpnul     = if_else(test, fms(fact, jnutemp, jnul), jpnul);
+    T jnutemp = fma(factor, jnul, jpnul);
+    factor      = if_else(test, factor - xi, factor);
+    jpnul     = if_else(test, fms(factor, jnutemp, jnul), jpnul);
     jnul      = if_else(test, jnutemp, jnul);
     l         = dec(l);
     test      = l >= one(as(x));
@@ -279,75 +279,75 @@ requires(simd_value<T>)
   jnul = if_else(is_eqz(jnul), Eps, jnul);
   T f  = jpnul / jnul;
 
-  auto case_lt = [=](auto x, T& nmu, T& npmu, T& nnu1, T& jmu)
+  auto case_lt = [=](auto xx, T& nmu, T& npmu, T& nnu1, T& jmu)
   {
-    const T Pi    = eve::pi(as(x));
-    const T x2    = x / T(2);
-    T       fact  = rec[pedantic](sinpic(mu));
-    T       d     = -eve::log(x2);
-    T       e     = mu * d;
-    T       fact2 = sinhc(e);
+    const T Pi    = eve::pi(as(xx));
+    const T x2    = xx / T(2);
+    T       ffactor  = rec[pedantic](sinpic(mu));
+    T       dd     = -eve::log(x2);
+    T       e     = mu * dd;
+    T       ffactor2 = sinhc(e);
     T       gam1, gam2, gampl, gammi;
-    auto    gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mu)
+    auto    gamma_temme = [&gam1, &gam2, &gampl, &gammi, Eps](auto mmu)
     {
       auto gamma_e = T(0.57721566490153286060651209008240243104215933593992);
-      gampl        = rec[pedantic](tgamma(inc(mu)));
-      gammi        = rec[pedantic](tgamma(oneminus(mu)));
-      gam1         = if_else(eve::abs(mu) < Eps, gamma_e, (gammi - gampl) / (mu + mu));
+      gampl        = rec[pedantic](tgamma(inc(mmu)));
+      gammi        = rec[pedantic](tgamma(oneminus(mmu)));
+      gam1         = if_else(eve::abs(mmu) < Eps, gamma_e, (gammi - gampl) / (mmu + mmu));
       gam2         = average(gammi, gampl);
       return;
     };
     gamma_temme(mu);
-    T ff    = (T(2) / Pi) * fact * fma(gam1, eve::cosh(e), gam2 * fact2 * d);
+    T ff    = (T(2) / Pi) * ffactor * fma(gam1, eve::cosh(e), gam2 * ffactor2 * dd);
     e       = eve::exp(e);
     T p     = e / (Pi * gampl);
     T q     = rec[pedantic](e * Pi * gammi);
     T muo2  = mu * T(0.5);
-    T fact3 = sinpic(muo2);
-    T r     = sqr(Pi * fact3) * muo2;
-    T c     = T(1);
-    d       = -x2 * x2;
-    T sum   = ff + r * q;
+    T ffactor3 = sinpic(muo2);
+    T r     = sqr(Pi * ffactor3) * muo2;
+    T cc     = T(1);
+    dd       = -x2 * x2;
+    T sum0   = ff + r * q;
     T sum1  = p;
     {
       int i;
       for( i = 1; i <= max_iter; ++i )
       {
         ff = (i * ff + p + q) / (i * i - mu2);
-        c *= d / T(i);
+        cc *= dd / T(i);
         p /= T(i) - mu;
         q /= T(i) + mu;
-        const T del = c * (ff + r * q);
-        sum += del;
-        const T del1 = c * p - i * del;
+        const T del = cc * (ff + r * q);
+        sum0 += del;
+        const T del1 = cc * p - i * del;
         sum1 += del1;
-        auto test = eve::abs(del) < Eps * (T(1) + eve::abs(sum));
-        if( eve::all(test) ) break;
+        auto test1 = eve::abs(del) < Eps * (T(1) + eve::abs(sum0));
+        if( eve::all(test1) ) break;
       }
       if( i == max_iter )
       {
-        sum  = if_else(test, sum, nan(as(sum)));
-        sum1 = if_else(test, sum1, nan(as(sum)));
+        sum0  = if_else(test, sum0, nan(as(sum0)));
+        sum1 = if_else(test, sum1, nan(as(sum0)));
       }
     }
 
-    nmu  = -sum;
+    nmu  = -sum0;
     nnu1 = -sum1 * xi2;
     npmu = mu * xi * nmu - nnu1;
     jmu  = w / (npmu - f * nmu);
     return;
   };
 
-  auto case_ge = [=](auto x, T& nmu, T& npmu, T& nnu1, T& jmu)
+  auto case_ge = [=](auto xx, T& nmu, T& npmu, T& nnu1, T& jmu)
   {
     T a    = T(0.25L) - mu2;
     T q    = T(1);
     T p    = -xi / T(2);
-    T br   = T(2) * x;
+    T br   = T(2) * xx;
     T bi   = T(2);
-    T fact = a * xi / (p * p + q * q);
-    T cr   = br + q * fact;
-    T ci   = bi + p * fact;
+    T ffactor = a * xi / (p * p + q * q);
+    T cr   = br + q * ffactor;
+    T ci   = bi + p * ffactor;
     T den  = br * br + bi * bi;
     T dr   = br / den;
     T di   = -bi / den;
@@ -364,9 +364,9 @@ requires(simd_value<T>)
       dr   = a * dr + br;
       di   = a * di + bi;
       dr   = if_else(eve::abs(dr) + eve::abs(di) < fp_min, fp_min, dr);
-      fact = a / (cr * cr + ci * ci);
-      cr   = br + cr * fact;
-      ci   = bi - ci * fact;
+      ffactor = a / (cr * cr + ci * ci);
+      cr   = br + cr * ffactor;
+      ci   = bi - ci * ffactor;
       cr   = if_else(eve::abs(cr) + eve::abs(ci) < fp_min, fp_min, cr);
       den  = dr * dr + di * di;
       dr /= den;
@@ -376,8 +376,8 @@ requires(simd_value<T>)
       temp      = p * dlr - q * dli;
       q         = p * dli + q * dlr;
       p         = temp;
-      auto test = eve::abs(dlr - T(1)) + eve::abs(dli) < Eps;
-      if( eve::all(test) ) break;
+      auto test1 = eve::abs(dlr - T(1)) + eve::abs(dli) < Eps;
+      if( eve::all(test1) ) break;
     }
     const T gam = (p - f) / q;
     jmu         = eve::sqrt(w / ((p - f) * gam + q));
@@ -406,9 +406,9 @@ requires(simd_value<T>)
     nnu1 = if_else(xltx_min, nnu1tmp1, nnu1tmp2);
     jmu  = if_else(xltx_min, jmutmp1, jmutmp2);
   }
-  fact   = jmu / jnul;
-  jnu    = fact * jnul1;
-  jpnu   = fact * jpnu1;
+  factor   = jmu / jnul;
+  jnu    = factor * jnul1;
+  jpnu   = factor * jpnu1;
   auto i = one(as(x));
   test   = i <= nl;
   while( eve::any(test) )
