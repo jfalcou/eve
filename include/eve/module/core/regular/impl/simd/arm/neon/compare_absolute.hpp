@@ -21,7 +21,7 @@ namespace eve::detail
   requires (arm_abi<abi_t<T, N>>)
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(std::same_as<F, is_less_equal>)
+    if constexpr(F{} == is_less_equal)
     {
       if constexpr( c == category::int64x1    ) return vcale_s64 (v, w);
       else if constexpr( c == category::int64x2    ) return vcaleq_s64(v, w);
@@ -47,7 +47,7 @@ namespace eve::detail
         else  if constexpr( c == category::float64x2 ) return vcaleq_f64 (v, w);
       }
     }
-    else if constexpr(std::same_as<F, is_greater_equal>)
+    else if constexpr(F{} ==  is_greater_equal)
     {
       if constexpr( c == category::int64x1    ) return vcage_s64 (v, w);
       else if constexpr( c == category::int64x2    ) return vcageq_s64(v, w);
@@ -73,7 +73,7 @@ namespace eve::detail
         else  if constexpr( c == category::float64x2 ) return vcageq_f64 (v, w);
       }
     }
-    else if constexpr(std::same_as<F, is_less>)
+    else if constexpr(F{} == is_less)
     {
       if constexpr( c == category::int64x1    ) return vcalt_s64 (v, w);
       else if constexpr( c == category::int64x2    ) return vcaltq_s64(v, w);
@@ -99,7 +99,7 @@ namespace eve::detail
         else  if constexpr( c == category::float64x2 ) return vcaltq_f64 (v, w);
       }
     }
-    else if constexpr(std::same_as<F, is_greater>)
+    else if constexpr(F{} == is_greater)
     {
       if constexpr( c == category::int64x1    ) return vcagt_s64 (v, w);
       else if constexpr( c == category::int64x2    ) return vcagtq_s64(v, w);
