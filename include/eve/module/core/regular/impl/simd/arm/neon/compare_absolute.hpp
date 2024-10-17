@@ -12,6 +12,10 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
+#include <eve/module/core/regular/is_greater_equal.hpp>
+#include <eve/module/core/regular/is_greater.hpp>
+#include <eve/module/core/regular/is_less_equal.hpp>
+#include <eve/module/core/regular/is_less.hpp>
 
 namespace eve::detail
 {
