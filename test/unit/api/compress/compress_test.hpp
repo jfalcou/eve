@@ -13,6 +13,29 @@
 #include <array>
 #include <random>
 
+template<typename Type> struct rvv_compress_filter
+{
+  static consteval bool is_enabled()
+  {
+    // For vlen = 128, we test types with size >= 2 up to lmul==1
+    constexpr auto bit_size = 128;
+    if( sizeof(Type) <= bit_size / 8 && sizeof(Type) >= 2 ) return true;
+    return false;
+    using scalar_t                   = typename Type::value_type;
+    constexpr auto cardinal          = eve::cardinal_v<Type>;
+    constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+    // and double
+    if( sizeof(scalar_t) != 8 || !std::is_floating_point_v<scalar_t> ) return false;
+    // for expected cardinal (lmul==8)
+    if( expected_cardinal == cardinal ) return true;
+    // for combined type
+    if( 2 * expected_cardinal == cardinal ) return true;
+    return false;
+  }
+
+  static constexpr bool value = is_enabled();
+};
+
 template <typename T, typename L, typename ... MaybeIgnore>
 auto make_expected(T x_, L m_, MaybeIgnore ... ignore )
 {
