@@ -12,6 +12,22 @@
 
 namespace eve
 {
+  template<typename Options>
+  struct all_t : callable<all_t, Options, conditional_option>
+  {
+    template<logical_value T>
+    EVE_FORCEINLINE bool operator()(T v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<bool T>
+    EVE_FORCEINLINE bool operator()(bool v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+
+    template<logical_value T>
+    EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
+    { return EVE_DISPATCH_CALL(v); }
+  };
+
 //================================================================================================
 //! @addtogroup core_reduction
 //! @{
@@ -56,19 +72,22 @@ namespace eve
 //!  @godbolt{doc/core/all.cpp}
 //!  @}
 //================================================================================================
-EVE_MAKE_CALLABLE(all_, all);
+  inline constexpr auto all = functor<all_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/regular/impl/all.hpp>
 
-#if defined(EVE_INCLUDE_POWERPC_HEADER)
-#  include <eve/module/core/regular/impl/simd/ppc/all.hpp>
-#endif
+// #if defined(EVE_INCLUDE_POWERPC_HEADER)
+// #  include <eve/module/core/regular/impl/simd/ppc/all.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_NEON_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/neon/all.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_NEON_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/neon/all.hpp>
+// #endif
 
-#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-#  include <eve/module/core/regular/impl/simd/arm/sve/all.hpp>
-#endif
+// #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+// #  include <eve/module/core/regular/impl/simd/arm/sve/all.hpp>
+// #endif
