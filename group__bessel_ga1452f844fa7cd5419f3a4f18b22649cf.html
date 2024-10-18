@@ -181,13 +181,13 @@ $(document).ready(function(){initNavTree('group__bessel_ga1452f844fa7cd5419f3a4f
 <div class="line"><span class="preprocessor">#include &lt;eve/module/bessel.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">double</span>{ <span class="keywordflow">return</span> 2*(i+c/2);});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint64_t{ <span class="keywordflow">return</span> 2*i;});</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> x{0.5, 1.5, 0.1, 1.0, 19.0, 25.0, 21.5, 10000.0};</div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 15, 2, 25, 26, 3, 12};</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">double</span>{ <span class="keywordflow">return</span> 2*(i+c/2);});</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t&gt;</a> wu([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> )-&gt;std::uint64_t{ <span class="keywordflow">return</span> 2*i;});</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> x{0.5, 1.5, 0.1, 1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">   <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 15, 2, 25, 26, 3, 12};</div>
+<div class="line"> </div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu = &quot;</span> &lt;&lt; wu &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n  = &quot;</span> &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>

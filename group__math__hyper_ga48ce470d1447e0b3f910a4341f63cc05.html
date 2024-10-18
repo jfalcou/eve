@@ -184,11 +184,9 @@ $(document).ready(function(){initNavTree('group__math__hyper_ga48ce470d1447e0b3f
 <div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c)-&gt;<span class="keywordtype">float</span>{ <span class="keywordflow">return</span> 2*(i-c/2);});</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = {0.0, 0.25, 0.5, 2.0, -0.0, -0.25, -0.5, -2.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> 2.f*(i-c/2);};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf                    = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
