@@ -9,6 +9,28 @@
 
 #include "test.hpp"
 
+template<typename Type> struct rvv_compress_filter
+{
+  static consteval bool is_enabled()
+  {
+    // For vlen = 128, we test types sizeof >= 2 up to lmul==1
+    constexpr auto bit_size = 128;
+    using scalar_t                   = typename Type::value_type;
+    if( sizeof(Type) <= bit_size / 8 && sizeof(scalar_t) >= 2 ) return true;
+    constexpr auto cardinal          = eve::cardinal_v<Type>;
+    constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+    // and double
+    if( sizeof(scalar_t) != 8 || !std::is_floating_point_v<scalar_t> ) return false;
+    // for expected cardinal (lmul==8)
+    if( expected_cardinal == cardinal ) return true;
+    // for combined type
+    if( 2 * expected_cardinal == cardinal ) return true;
+    return false;
+  }
+
+  static constexpr bool value = is_enabled();
+};
+
 template<typename T>
 T
 input(eve::as<T>)
@@ -151,7 +173,8 @@ compress_copy_tst_mask(eve::as<T> tgt, L m, auto algo)
       for( int j = 0; j != T::size() - i; ++j ) { for_ignore_tests(eve::ignore_extrema(i, j)); }
     }
   }
-  else if constexpr( eve::has_bundle_abi_v<T> && eve::current_api >= eve::sve )
+  else if constexpr( eve::has_bundle_abi_v<T> && (eve::current_api >= eve::sve
+                     || eve::current_api >= eve::rvv ))
   {
     for_ignore_tests(eve::ignore_extrema(0, 0));
     for_ignore_tests(eve::ignore_extrema(5, 1));
@@ -222,7 +245,7 @@ compress_copy_tst(eve::as<T> tgt, auto algo)
     compress_copy_tst_l_type(eve::as<T> {}, eve::as<T> {}, eve::compress_copy);
 
     // is just impossibly slow
-    if constexpr( eve::current_api != eve::sve512 )
+    if constexpr( eve::current_api != eve::sve512 && eve::current_api != eve::rvv )
     {
       compress_copy_tst_l_type(
           eve::as<T> {}, eve::as<eve::logical<eve::wide<std::uint8_t, N>>> {}, eve::compress_copy);
@@ -240,7 +263,7 @@ compress_copy_tst(eve::as<T> tgt, auto algo)
     }
 
     // is just impossibly slow
-    if constexpr( eve::current_api != eve::sve512 )
+    if constexpr( eve::current_api != eve::sve512 && eve::current_api != eve::rvv )
     {
       if constexpr( !std::same_as<e_t, std::uint16_t> )
       {
