@@ -14,7 +14,6 @@
 //==================================================================================================
 // Register count
 //==================================================================================================
-#if defined(EVE_HW_ARM)
 
 namespace eve
 {
@@ -28,26 +27,18 @@ struct register_count
 //==================================================================================================
 // NEON SIMD ABI
 //==================================================================================================
-#  if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_ARM)
-#    include <arm_neon.h>
-#    if !defined(EVE_ABI_DETECTED) && defined(SPY_SIMD_IS_ARM_ASIMD)
-#      define EVE_CURRENT_ABI   ::eve::arm_128_
-#      define EVE_CURRENT_API   ::eve::asimd_
-#      define EVE_ABI_NAMESPACE arm_abi_v0
-#      define EVE_ABI_DETECTED
-#    endif
-#    if !defined(EVE_ABI_DETECTED) && defined(SPY_SIMD_IS_ARM_NEON)
-#      define EVE_CURRENT_ABI   ::eve::arm_128_
-#      define EVE_CURRENT_API   ::eve::neon128_
-#      define EVE_ABI_NAMESPACE arm_abi_v0
-#      define EVE_ABI_DETECTED
-#    endif
-#  endif
+#include <arm_neon.h>
 
-#  if !defined(__aarch64__)
-#    ifndef EVE_NO_DENORMALS
-#      define EVE_NO_DENORMALS
-#    endif
-#  endif
+#if defined(SPY_SIMD_IS_ARM_ASIMD)
+#  define EVE_CURRENT_ABI   ::eve::arm_128_
+#  define EVE_CURRENT_API   ::eve::asimd_
+#  define EVE_ABI_NAMESPACE arm_abi_v0
+#elif defined(SPY_SIMD_IS_ARM_NEON)
+#  define EVE_CURRENT_ABI   ::eve::arm_128_
+#  define EVE_CURRENT_API   ::eve::neon128_
+#  define EVE_ABI_NAMESPACE arm_abi_v0
+#endif
 
+#if !defined(__aarch64__) && !defined(EVE_NO_DENORMALS)
+#  define EVE_NO_DENORMALS
 #endif

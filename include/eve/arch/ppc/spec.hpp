@@ -12,7 +12,6 @@
 
 //==================================================================================================
 // Register count
-#if defined(EVE_HW_POWERPC)
 
 namespace eve
 {
@@ -25,7 +24,6 @@ namespace eve
 
 //==================================================================================================
 // PPC SIMD ABI
-# if !defined(EVE_CURRENT_API) && defined(SPY_SIMD_IS_PPC)
 
 // #  ifndef EVE_NO_DENORMALS
 // #    define EVE_NO_DENORMALS
@@ -51,7 +49,7 @@ namespace eve
 #    define __bool bool
 #  endif
 
-#  if !defined(EVE_ABI_DETECTED) && defined(SPY_SIMD_IS_PPC_VMX)
+#  if defined(SPY_SIMD_IS_PPC_VMX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   if defined(SPY_SIMD_IS_PPC_VMX_3_01)
 #     define EVE_CURRENT_API ::eve::vmx_3_01_
@@ -67,8 +65,7 @@ namespace eve
 #     define EVE_CURRENT_API ::eve::vmx_2_03_
 #   endif
 #   define EVE_ABI_NAMESPACE ppc_abi_v0
-#   define EVE_ABI_DETECTED
-#  elif !defined(EVE_ABI_DETECTED) && defined(SPY_SIMD_IS_PPC_VSX)
+#  elif defined(SPY_SIMD_IS_PPC_VSX)
 #   define EVE_CURRENT_ABI ::eve::ppc_
 #   if defined(SPY_SIMD_IS_PPC_VSX_3_01)
 #     define EVE_CURRENT_API ::eve::vsx_3_01_
@@ -80,8 +77,4 @@ namespace eve
 #     define EVE_CURRENT_API ::eve::vsx_2_06_
 #   endif
 #   define EVE_ABI_NAMESPACE ppc_abi_v0
-#   define EVE_ABI_DETECTED
 #  endif
-# endif
-
-#endif

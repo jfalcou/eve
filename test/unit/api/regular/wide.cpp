@@ -183,7 +183,6 @@ TTS_CASE_WITH( "Check eve::wide::combine behavior"
   }
 };
 
-
 //==================================================================================================
 // Construct using CTAD
 //==================================================================================================
@@ -206,4 +205,68 @@ TTS_CASE_TPL("Check eve::wide deduction guides", eve::test::scalar::all_types)
   TTS_TYPE_IS(typename decltype(w04)::value_type, T);
   TTS_EQUAL(w08.size(), 8);
   TTS_TYPE_IS(typename decltype(w08)::value_type, T);
+};
+
+//==================================================================================================
+// Extract
+//==================================================================================================
+TTS_CASE_TPL("Check eve::wide extract/get", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+
+  {
+    T data {[](auto i, auto) { return static_cast<v_t>(1 + i); }};
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      TTS_EQUAL(data.get(i), static_cast<v_t>(1 + i));
+    }
+  }
+
+  {
+    eve::logical<T> data {[](auto i, auto) { return i % 2 == 0; }};
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      TTS_EQUAL(data.get(i), i % 2 == 0);
+    }
+  }
+};
+
+//==================================================================================================
+// Insert
+//==================================================================================================
+TTS_CASE_TPL("Check eve::wide insert/set", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using v_t = typename T::value_type;
+
+  {
+    T data { 0 };
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      data.set(i, static_cast<v_t>(1 + i));
+    }
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      TTS_EQUAL(data.get(i), static_cast<v_t>(1 + i));
+    }
+  }
+
+  {
+    eve::logical<T> data { false };
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      data.set(i, i % 2 == 0);
+    }
+
+    for (std::ptrdiff_t i = 0; i < T::size(); ++i)
+    {
+      TTS_EQUAL(data.get(i), i % 2 == 0);
+    }
+  }
 };

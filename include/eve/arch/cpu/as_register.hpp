@@ -18,47 +18,37 @@
 
 namespace eve
 {
-  template<typename Type, typename Cardinal, typename ABI>
-  struct as_register;
-
-  template<typename Type, typename Cardinal, typename ABI>
-  struct as_logical_register;
-
-  template<typename Type, typename Cardinal, typename ABI>
-  using as_register_t = typename as_register<Type, Cardinal, ABI>::type;
-
-  template<typename Type, typename Cardinal, typename ABI>
-  using as_logical_register_t = typename as_logical_register<Type, Cardinal, ABI>::type;
-
-  template<typename Type, typename Cardinal>
-  struct as_register<Type, Cardinal, eve::emulated_>
+  template<typename T, typename N>
+  consteval auto find_register_type(as<T>, N, eve::emulated_)
   {
-    using type = std::array<Type, Cardinal::value>;
-  };
+    return std::array<T, N::value>{};
+  }
 
-  template<typename Type, typename Cardinal>
-  struct as_logical_register<Type, Cardinal, eve::emulated_>
+  template<typename T, typename N>
+  consteval auto find_logical_register_type(as<T>, N, eve::emulated_)
   {
-    using type = std::array<logical<Type>, Cardinal::value>;
-  };
+    return std::array<logical<T>, N::value>{};
+  }
 
   //================================================================================================
   // Special case : product_type
   //================================================================================================
   namespace detail
   {
-    template<typename Cardinal> struct apply_as_wide
+    template<typename N>
+    struct apply_as_wide
     {
-      template<typename T> using type = as_wide<T,Cardinal>;
+      template<typename T>
+      using type = as_wide<T, N>;
     };
   }
 
-  template<typename Type, typename Cardinal>
-  requires( kumi::product_type<Type> )
-  struct  as_register<Type, Cardinal, eve::bundle_>
-        : kumi::as_tuple<Type, detail::apply_as_wide<Cardinal>::template type>
+  template<typename T, typename N>
+  consteval auto find_register_type(as<T>, N, eve::bundle_)
+    requires (kumi::product_type<T>)
   {
-  };
+    return kumi::as_tuple_t<T, detail::apply_as_wide<N>::template type>{};
+  }
 
   namespace detail
   {
@@ -113,27 +103,27 @@ namespace eve
     };
   }
 
-  template<typename Type, typename Cardinal>
-  struct as_register<Type, Cardinal, eve::aggregated_>
+  template<typename T, typename N>
+  consteval auto find_register_type(as<T>, N, eve::aggregated_)
   {
-    using type = detail::blob<Type,Cardinal>;
-  };
+    return detail::blob<T, N>{};
+  }
 
-  template<typename Type, typename Cardinal>
-  struct as_logical_register<Type, Cardinal, eve::aggregated_>
+  template<typename T, typename N>
+  consteval auto find_logical_register_type(as<T>, N, eve::aggregated_)
   {
-    using type = detail::blob<logical<Type>,Cardinal>;
-  };
+    return detail::blob<logical<T>, N>{};
+  }
 }
 
 template<std::size_t I, typename T, typename C>
-struct std::tuple_element<I, eve::detail::blob<T,C>>
+struct std::tuple_element<I, eve::detail::blob<T, C>>
 {
-  using type = typename eve::detail::blob<T,C>::value_type;
+  using type = typename eve::detail::blob<T, C>::value_type;
 };
 
 template<typename T, typename C>
-struct  std::tuple_size<eve::detail::blob<T,C>>
-      : std::integral_constant<std::size_t, eve::detail::blob<T,C>::replication>
+struct  std::tuple_size<eve::detail::blob<T, C>>
+      : std::integral_constant<std::size_t, eve::detail::blob<T, C>::replication>
 {
 };
