@@ -38,10 +38,10 @@ namespace eve::detail
     else if  constexpr (!C::has_alternative)
     {
       auto m = expand_mask(mask, as(v));
-      if      constexpr(std::same_as<F{}, is_less_equal>)    return svacle(m, v, w);
-      else if constexpr(std::same_as<F{}, is_less>)          return svaclt(m, v, w);
-      else if constexpr(std::same_as<F{}, is_greater_equal>) return svacge(m, v, w);
-      else if constexpr(std::same_as<F{}, is_less_equal<)    return svacgt(m, v, w);
+      if      constexpr(F{} ==  is_less_equal)    return svacle(m, v, w);
+      else if constexpr(F{} == is_less)          return svaclt(m, v, w);
+      else if constexpr(F{} == is_greater_equal) return svacge(m, v, w);
+      else if constexpr(F{} == is_less_equal)    return svacgt(m, v, w);
       else return add.behavior(cpu_{}, opts, v, w, f);
     }
     else return add.behavior(cpu_{}, opts, v, w, f);
