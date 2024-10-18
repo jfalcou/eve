@@ -28,7 +28,7 @@ namespace eve::detail
     return compare_absolute[true_(as(v)], v, w, f);
   }
 
-  template<callable_options O, floating_scalar_value T, typename N, conditional_expr C,  F f>
+  template<callable_options O, floating_scalar_value T, typename N, conditional_expr C,  typename F>
   EVE_FORCEINLINE wide<T, N> compare_absolute_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                                   wide<T, N> v, wide<T, N> w, F f) noexcept
   requires (sve_abi<abi_t<T, N>>)
