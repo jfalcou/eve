@@ -119,10 +119,10 @@ namespace eve
       else
       {
         r_t  that(logspace_sub(a0, a1));
-        auto lsub = [](auto that, auto next) -> r_t
+        auto lsub = [](auto that_, auto next) -> r_t
           {
-            that = logspace_sub(that, next);
-            return that;
+            that_ = logspace_sub(that_, next);
+            return that_;
           };
         ((that = lsub(that, args)), ...);
         return that;

@@ -119,11 +119,11 @@ namespace eve::detail
 
         if constexpr ( !std::same_as<no_common_type, tuple_res> )
         {
-          using type = typename tuple_res::type;
+          using res_type = typename tuple_res::type;
 
-               if constexpr ( std::same_as<type, t_as_tuple> && !is_kumi_tuple_v<T> ) return self;
-          else if constexpr ( std::same_as<type, u_as_tuple> && !is_kumi_tuple_v<U> ) return other;
-          else                                                                        return tuple_res{};
+               if constexpr ( std::same_as<res_type, t_as_tuple> && !is_kumi_tuple_v<T> ) return self;
+          else if constexpr ( std::same_as<res_type, u_as_tuple> && !is_kumi_tuple_v<U> ) return other;
+          else                                                                            return tuple_res{};
         }
         else
         {
@@ -134,13 +134,13 @@ namespace eve::detail
           if constexpr ( std::same_as<no_common_type, flat_res> ) return flat_res{};
           else
           {
-            using type = typename flat_res::type;
+            using res_type = typename flat_res::type;
 
-                 if constexpr ( std::same_as<type, t_flat> && !is_kumi_tuple_v<T> ) return self;
-            else if constexpr ( std::same_as<type, u_flat> && !is_kumi_tuple_v<U> ) return other;
-            else if constexpr ( std::same_as<type, t_flat>                        ) return self;
-            else if constexpr ( std::same_as<type, u_flat>                        ) return other;
-            else                                                                    return flat_res{};
+                 if constexpr ( std::same_as<res_type, t_flat> && !is_kumi_tuple_v<T> ) return self;
+            else if constexpr ( std::same_as<res_type, u_flat> && !is_kumi_tuple_v<U> ) return other;
+            else if constexpr ( std::same_as<res_type, t_flat>                        ) return self;
+            else if constexpr ( std::same_as<res_type, u_flat>                        ) return other;
+            else                                                                        return flat_res{};
           }
         }
       }

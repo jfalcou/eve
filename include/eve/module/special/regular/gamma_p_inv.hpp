@@ -104,7 +104,7 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
       auto x0 = x;
       int  i  = 10;
       if( eve::none(notdone) ) return x;
-      auto dgamma_p = [](auto x, auto k) { return exp(dec(k) * log(x) - x - log_abs_gamma(k)); };
+      auto dgamma_p = [](auto px, auto pk) { return exp(dec(pk) * log(px) - px - log_abs_gamma(pk)); };
       while( i )
       {
         auto dx = if_else(notdone, (gamma_p(x, k) - p) / dgamma_p(x, k), zero);

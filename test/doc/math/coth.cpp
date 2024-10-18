@@ -2,8 +2,6 @@
 #include <eve/module/math.hpp>
 #include <iostream>
 
-eve::wide<float> wf([](auto i, auto c)->float{ return 2*(i-c/2);});
-
 int main()
 {
   eve::wide wf = {0.0, 1.0, 2.0, -0.0, -1.0, -2.0,

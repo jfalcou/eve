@@ -141,7 +141,7 @@ namespace eve::algo::views
 
     converting_iterator() = default;
 
-    EVE_FORCEINLINE explicit converting_iterator(I base) : base(base) {}
+    EVE_FORCEINLINE explicit converting_iterator(I b) : base(b) {}
 
     template <std::convertible_to<I> I1>
     converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}

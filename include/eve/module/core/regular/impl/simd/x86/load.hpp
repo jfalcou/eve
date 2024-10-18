@@ -64,10 +64,10 @@ requires simd_compatible_ptr<Ptr, Pack> && (!has_bundle_abi_v<Pack>)
   else if constexpr( current_api >= avx512 )
     {
     r_t  that;
-    auto src = [&](auto const& s)
+    auto src = [&](auto const& vs)
     {
       if constexpr( C::has_alternative ) return r_t {cond.alternative};
-      else return s;
+      else return vs;
     };
     auto           mask = cond.mask(as<r_t> {}).storage().value;
     constexpr auto c    = categorize<r_t>();

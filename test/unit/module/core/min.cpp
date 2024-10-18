@@ -108,7 +108,7 @@ TTS_CASE_WITH("Check predicate version of min",
 
   w_t ref {[=](auto i, auto) { return i % 2 ? b.get(i) : a.get(i); }};
 
-  auto less_1st = [](auto a, auto b) { return get<0>(a) < get<0>(b); };
+  auto less_1st = [](auto pa, auto pb) { return get<0>(pa) < get<0>(pb); };
   TTS_EQUAL(eve::min(less_1st)(a, b), ref);
 };
 

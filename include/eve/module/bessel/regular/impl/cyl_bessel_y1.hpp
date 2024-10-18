@@ -27,16 +27,16 @@ namespace eve::detail
     using v_t     = element_type_t<T>;
     auto Pi       = eve::pi(as(x));
     auto j1opi    = cyl_bessel_j1(x) / Pi;
-    auto evaluate = [j1opi](auto x, auto x1, auto x11, auto x12, auto P, auto Q)
+    auto evaluate = [j1opi](auto xx, auto x1, auto x11, auto x12, auto P, auto Q)
       {
-        T y      = sqr(x);
-        T z      = 2 * log(x / x1) * j1opi;
+        T y      = sqr(xx);
+        T z      = 2 * log(xx / x1) * j1opi;
         T r      = reverse_horner(y, P)/reverse_horner(y, Q);
-        T factor = (x + x1) * ((x - x11 / 256) - x12) / x;
+        T factor = (xx + x1) * ((xx - x11 / 256) - x12) / xx;
         return fma(factor, r, z);
       };
 
-    auto br_4 = [evaluate](auto x)
+    auto br_4 = [evaluate](auto xx)
       {
         using A7 = kumi::result::generate_t<7, elt_t>;
         constexpr A7 P1 = {4.0535726612579544093e+13,
@@ -54,10 +54,10 @@ namespace eve::detail
                            8.2079908168393867438e+02,
                            1.0};
         constexpr v_t x1 = 2.1971413260310170351e+00, x11 = 5.620e+02, x12 = 1.8288260310170351490e-03;
-        return evaluate(x, x1, x11, x12, P1, Q1);
+        return evaluate(xx, x1, x11, x12, P1, Q1);
       };
 
-    auto br_8 = [evaluate](auto x)
+    auto br_8 = [evaluate](auto xx)
       {
         constexpr v_t x2 = 5.4296810407941351328e+00, x21 = 1.3900e+03,
         x22               = -6.4592058648672279948e-06;
@@ -80,10 +80,10 @@ namespace eve::detail
                            1.0453748201934079734e+06,
                            1.2855164849321609336e+03,
                            1.0};
-        return evaluate(x, x2, x21, x22, P2, Q2);
+        return evaluate(xx, x2, x21, x22, P2, Q2);
       };
 
-    auto br_large = [Pi](auto x)
+    auto br_large = [Pi](auto xx)
       {
         using A7 = kumi::result::generate_t<7, elt_t>;
         constexpr A7 PC = {
@@ -122,12 +122,12 @@ namespace eve::detail
           8.6383677696049909675e+02,
           1.0
         };
-        T                            y      = T(8) / x;
+        T                            y      = T(8) / xx;
         T                            y2     = sqr(y);
         T                            rc     = reverse_horner(y2, PC)/reverse_horner(y2, QC);
         T                            rs     = reverse_horner(y2, PS)/reverse_horner(y2, QS);
-        T                            factor = rsqrt(Pi * x);
-        auto [sx, cx]                       = sincos(x);
+        T                            factor = rsqrt(Pi * xx);
+        auto [sx, cx]                       = sincos(xx);
         return factor * fms(y, rs * (sx - cx), rc * (sx + cx));
       };
 

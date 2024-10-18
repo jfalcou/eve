@@ -176,11 +176,11 @@ namespace eve
         }
         else if constexpr( std::is_same_v<elt_t, float> )
         {
-          T    x     = eve::abs(a0);
+          T    xv     = eve::abs(a0);
           auto test0 = eve::is_ltz(a0);
           T    r1    = zero(as<T>());
-          auto test1 = eve::is_less(x, 6.6666667e-01f);
-          T    z     = x / inc(x);
+          auto test1 = eve::is_less(xv, 6.6666667e-01f);
+          T    z     = xv / inc(xv);
 
           auto nb = eve::count_true(test1);
           if( nb > 0 )
@@ -191,7 +191,7 @@ namespace eve
           z -= T(0.4);
           T r2 = exp(-sqr(x)) * kernel_erfc2(z);
           r1   = if_else(test1, r1, r2);
-          if constexpr( eve::platform::supports_infinites ) r1 = if_else(x == inf(as<T>()), zero, r1);
+          if constexpr( eve::platform::supports_infinites ) r1 = if_else(xv == inf(as<T>()), zero, r1);
 
           return eve::if_else(test0, T(2) - r1, r1);
         }

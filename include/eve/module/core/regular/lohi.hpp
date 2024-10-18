@@ -104,7 +104,6 @@ namespace eve
         }
         else
         {
-          using si_t = downgrade_t<as_integer_t<elt_t, unsigned>>;
           using r_t  = std::array<si_t, 2>;
           auto z     = bit_cast(a0, as<r_t>());
           return zip(z[lo_idx], z[hi_idx]);

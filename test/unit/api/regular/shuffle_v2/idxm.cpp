@@ -740,11 +740,11 @@ TTS_CASE("extract_blends")
     for( std::size_t i = 0; i != NumRegs; ++i )
     {
       const auto& e = expected.register_blends[i];
-      const auto& a = actual.register_blends[i];
+      const auto& a_ = actual.register_blends[i];
 
-      TTS_EQUAL(e.idxs, a.idxs, REQUIRED);
-      TTS_EQUAL(e.present_in_blend, a.present_in_blend, REQUIRED) << tts::as_string(idxs);
-      TTS_EQUAL(e.present_in_shuffle, a.present_in_shuffle, REQUIRED) << tts::as_string(idxs);
+      TTS_EQUAL(e.idxs, a_.idxs, REQUIRED);
+      TTS_EQUAL(e.present_in_blend, a_.present_in_blend, REQUIRED) << tts::as_string(idxs);
+      TTS_EQUAL(e.present_in_shuffle, a_.present_in_shuffle, REQUIRED) << tts::as_string(idxs);
     }
   };
 

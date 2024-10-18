@@ -39,14 +39,14 @@ namespace eve::detail
       auto base = unalign(get<2>(se));
 
       // Single-value scatter
-      auto sc = [&](auto n, auto c, auto v)
+      auto sc = [&](auto vn, auto vc, auto vv)
       {
         // We only write if mask is set
-        if constexpr(match_option<condition_key,O,ignore_none_>) write(v.get(n),base+idx.get(n));
+        if constexpr(match_option<condition_key,O,ignore_none_>) write(vv.get(vn),base+idx.get(vn));
         else
         {
-          auto m = c.mask( as<as_logical_t<T>>{} );
-          if(m.get(n)) write(v.get(n),base+idx.get(n));
+          auto vm = vc.mask( as<as_logical_t<T>>{} );
+          if(vm.get(vn)) write(vv.get(vn),base+idx.get(vn));
         }
       };
 

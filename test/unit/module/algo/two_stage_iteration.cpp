@@ -17,10 +17,10 @@ template<typename I> struct test_delegate
   std::ptrdiff_t   stop_at;
   std::vector<int> left;
 
-  test_delegate(I base, std::ptrdiff_t stop_at, std::vector<int> left)
-      : base(base)
-      , stop_at(stop_at)
-      , left(std::move(left))
+  test_delegate(I b, std::ptrdiff_t sa, std::vector<int> l)
+      : base(b)
+      , stop_at(sa)
+      , left(std::move(l))
   {}
 
   std::ptrdiff_t left_for_stage1()

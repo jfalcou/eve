@@ -34,7 +34,7 @@ struct iteration_fixture
 
 template<typename I> struct test_delegate
 {
-  test_delegate(I base, std::ptrdiff_t stop_at) : base {base}, stop_at(stop_at) {}
+  test_delegate(I b, std::ptrdiff_t sa) : base {b}, stop_at(sa) {}
 
   I              base;
   std::ptrdiff_t stop_at;
@@ -53,8 +53,8 @@ template<typename I> struct test_delegate
 
     if( overflow_tracker != -1 )
     {
-      auto ptr         = base.ptr + overflow_tracker;
-      *ptr             = *ptr - 'a' + 'A';
+      auto p        = base.ptr + overflow_tracker;
+      *p            = *p - 'a' + 'A';
       overflow_tracker = -1;
     }
 
@@ -75,8 +75,8 @@ template<typename I> struct test_delegate
 
     if( overflow_tracker != -1 )
     {
-      auto ptr         = base.ptr + overflow_tracker;
-      *ptr             = *ptr - 'a' + 'A';
+      auto p         = base.ptr + overflow_tracker;
+      *p             = *p - 'a' + 'A';
       overflow_tracker = -1;
     }
 

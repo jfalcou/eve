@@ -55,7 +55,7 @@ namespace eve::algo
     using unaligned_me   = ptr_iterator<unaligned_t<Ptr>, Cardinal>;
 
     ptr_iterator() = default;
-    explicit ptr_iterator(Ptr ptr) : ptr(ptr) {}
+    explicit ptr_iterator(Ptr p) : ptr(p) {}
 
     template <std::convertible_to<Ptr> UPtr>
     ptr_iterator(ptr_iterator<UPtr, Cardinal> const& x) : ptr(x.ptr) {}

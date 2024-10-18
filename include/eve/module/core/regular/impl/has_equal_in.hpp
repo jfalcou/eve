@@ -26,19 +26,17 @@ template<typename Op, typename T> struct has_equal_lambda
   Op op;
   T  v;
 
-  has_equal_lambda(Op op, T v) : op(op), v(v) {}
-
+  has_equal_lambda(Op o, T p) : op(o), v(p) {}
   EVE_FORCEINLINE auto operator()(auto x) const { return op(v, x); }
 };
 
 // kumi/issues/71 : tuple reduce
-
 template<typename T, typename Op> struct reduce_lambda
 {
   T  sum;
   Op op;
 
-  reduce_lambda(T sum, Op op) : sum(sum), op(op) {}
+  reduce_lambda(T s, Op o) : sum(s), op(o) {}
 
   EVE_FORCEINLINE
   friend reduce_lambda operator+(reduce_lambda self, T x) {

@@ -34,7 +34,7 @@ namespace eve::algo
 
       range_ref_wrapper() = default;
 
-      explicit range_ref_wrapper(Rng &rng) : rng(&rng) {}
+      explicit range_ref_wrapper(Rng &r) : rng(&r) {}
 
       // FIX-874: non member ones should be used
       auto begin() const { return rng->begin(); }

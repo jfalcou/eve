@@ -9,6 +9,11 @@
 
 #include <eve/traits/bit_value.hpp>
 
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
+
 template<typename T>
 constexpr eve::bit_value_t<T,float> f(T) { return {}; }
 
@@ -21,8 +26,8 @@ TTS_CASE("Scalar bit_value")
   TTS_TYPE_IS((eve::bit_value_t<std::uint8_t, std::int8_t>)         , std::uint8_t);
   TTS_TYPE_IS((eve::bit_value_t<float, std::int32_t, std::uint32_t>), float       );
 
-  [[maybe_unused]] double x = {};
-  TTS_EXPECT_NOT_COMPILES(x, { f(x); });
+  [[maybe_unused]] double u = {};
+  TTS_EXPECT_NOT_COMPILES(u, { f(u); });
 };
 
 TTS_CASE("SIMD bit_value")
@@ -67,3 +72,7 @@ TTS_CASE("Mixed scalar/SIMD bit_value")
   [[maybe_unused]] eve::wide<std::int64_t>  z = {};
   TTS_EXPECT_NOT_COMPILES (z, { f(z); });
 };
+
+#if defined(SPY_COMPILER_IS_GCC)
+#pragma GCC diagnostic pop
+#endif

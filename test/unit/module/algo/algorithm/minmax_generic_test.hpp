@@ -22,7 +22,7 @@ template<bool biggest, bool right, typename Algo, typename Check> struct minmax_
   std::int8_t looking_for = 0;
   std::int8_t filler      = 5;
 
-  minmax_ptr_test(Algo alg, Check check) : alg(alg), check(check)
+  minmax_ptr_test(Algo a, Check c) : alg(a), check(c)
   {
     if( biggest ) std::swap(looking_for, filler);
   }

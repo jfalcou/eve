@@ -44,12 +44,12 @@ scan_(EVE_SUPPORTS(cpu_), Wide v, Op op, Zero z) noexcept
   if constexpr( Wide::size() == 1 ) return v;
   else if constexpr( has_emulated_abi_v<Wide> )
   {
-    auto sum = v.get(0);
+    auto sum_value = v.get(0);
 
     for( int i = 1; i != Wide::size(); ++i )
     {
-      sum = op(sum, v.get(i));
-      v.set(i, sum);
+      sum_value = op(sum_value, v.get(i));
+      v.set(i, sum_value);
     }
 
     return v;

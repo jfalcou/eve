@@ -108,7 +108,7 @@ namespace eve::algo::views
 
     backward_iterator() = default;
 
-    EVE_FORCEINLINE explicit backward_iterator(I base) : base(base) {}
+    EVE_FORCEINLINE explicit backward_iterator(I b) : base(b) {}
 
     template <std::convertible_to<I> I1>
     EVE_FORCEINLINE backward_iterator(backward_iterator<I1> x) : base(x.base) {}

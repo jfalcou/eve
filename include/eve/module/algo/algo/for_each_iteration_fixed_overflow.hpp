@@ -121,11 +121,8 @@ namespace detail
     I      f;
     S      l;
 
-    for_each_iteration_fixed_overflow_precise_f_l(Traits traits, I f, S l)
-        : traits(traits)
-        , base(f)
-        , f(f)
-        , l(l)
+    for_each_iteration_fixed_overflow_precise_f_l(Traits t, I i, S s)
+        : traits(t), base(i), f(i), l(s)
     {
       EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
                  " len of the range is no divisible by cardinal "
@@ -148,11 +145,7 @@ namespace detail
     I      f;
     S      l;
 
-    for_each_iteration_fixed_overflow_precise_f(Traits traits, I f, S l)
-        : traits(traits)
-        , base(f)
-        , f(f)
-        , l(l)
+    for_each_iteration_fixed_overflow_precise_f(Traits t, I i, S s) : traits(t), base(i), f(i), l(s)
     {}
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
@@ -176,11 +169,11 @@ namespace detail
     I                      f;
     S                      l;
 
-    for_each_iteration_fixed_overflow_aligning(Traits traits, I f, S l)
-        : traits(traits)
-        , base(f.previous_partially_aligned())
-        , f(f)
-        , l(l)
+    for_each_iteration_fixed_overflow_aligning(Traits t, I i, S s)
+        : traits(t)
+        , base(i.previous_partially_aligned())
+        , f(i)
+        , l(s)
     {}
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)

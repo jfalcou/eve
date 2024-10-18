@@ -90,15 +90,15 @@ namespace eve
   {
     template<typename T, callable_options O>
     constexpr auto
-    betainc_inv_(EVE_REQUIRES(cpu_), O const&, T p, T a, T b) noexcept
+    betainc_inv_(EVE_REQUIRES(cpu_), O const&, T pp, T pa, T pb) noexcept
     {
       auto large = [](auto p, auto a, auto b){
         //  Set initial guess.
         auto const FiveoSix = T(5. / 6.);
         auto       a1       = dec(a);
         auto       b1       = dec(b);
-        auto       pp       = oneminus[p >= T(0.5)](p);
-        auto       t        = sqrt(-2 * log(pp));
+        auto       mp       = oneminus[p >= T(0.5)](p);
+        auto       t        = sqrt(-2 * log(mp));
         auto       x =
         fma(t, T(0.27061), T(2.30753)) / fma(t, fma(t, T(0.04481), T(0.99229)), one(as(p))) - t;
         x         = minus[p < T(0.5)](x);
@@ -121,20 +121,20 @@ namespace eve
         auto po   = pow(z, rec[pedantic](if_else(test, a, b)));
         return if_else(test, po, oneminus(po));
       };
-      auto       a1      = dec(a);
-      auto       b1      = dec(b);
-      auto const o       = one(as(p));
-      const auto epsi    = 10 * eps(as(p));
-      auto       test    = (a > o) && (b > o);
-      auto       x       = nan(as(p));
-      auto       notdone = is_not_nan(p);
-      notdone            = next_interval(large, notdone, test, x, p, a, b);
-      if( eve::any(notdone) ) { last_interval(small, notdone, x, p, a, b); }
-      auto afac = -lbeta(a, b);
+      auto       a1      = dec(pa);
+      auto       b1      = dec(pb);
+      auto const o       = one(as(pp));
+      const auto epsi    = 10 * eps(as(pp));
+      auto       test    = (pa > o) && (pb > o);
+      auto       x       = nan(as(pp));
+      auto       notdone = is_not_nan(pp);
+      notdone            = next_interval(large, notdone, test, x, pp, pa, pb);
+      if( eve::any(notdone) ) { last_interval(small, notdone, x, pp, pa, pb); }
+      auto afac = -lbeta(pa, pb);
       ;
       for( std::size_t j = 0; j < 10; ++j )
       {
-        auto err = betainc(x, a, b) - p;
+        auto err = betainc(x, pa, pb) - pp;
         auto t   = exp(fma(a1, log(x), b1 * log1p(-x)) + afac);
         auto u   = err / t; // Halley:
         auto m   = eve::min(o, u * (a1 / x - b1 / (oneminus(x))));
@@ -143,7 +143,7 @@ namespace eve
         x       = if_else(is_lez(x) && (x >= o), average(x, tt), x);
         if( eve::all(eve::abs(t) <= epsi * x) && j ) break;
       }
-      return if_else(is_lez(p), zero, if_else(p >= o, one, x));
+      return if_else(is_lez(pp), zero, if_else(pp >= o, one, x));
     }
   }
 }

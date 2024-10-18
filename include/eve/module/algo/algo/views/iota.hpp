@@ -42,11 +42,11 @@ namespace eve::algo::views
 
     iota_with_step_iterator() = default;
 
-    EVE_FORCEINLINE iota_with_step_iterator(value_type base,
-                                              value_type step,
+    EVE_FORCEINLINE iota_with_step_iterator(value_type b,
+                                              value_type s,
                                               std::ptrdiff_t i_) :
-      base(base),
-      step(step),
+      base(b),
+      step(s),
       i(0)
     {
       wide_cur = wv_type {[&](int j, int) { return j; }};

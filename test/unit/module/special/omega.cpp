@@ -43,23 +43,23 @@ TTS_CASE_WITH("Check behavior of omega on wide",
     elt_t tol = 5000 * eve::eps(eve::as<elt_t>());
     {
       auto z = eve::omega(eve::mone(eve::as<elt_t>()));
-      auto r = eve::log(z) + z;
-      TTS_RELATIVE_EQUAL(eve::mone(eve::as<elt_t>()), r, tol);
+      auto rr = eve::log(z) + z;
+      TTS_RELATIVE_EQUAL(eve::mone(eve::as<elt_t>()), rr, tol);
     }
     {
       auto z = eve::omega(a0);
-      auto r = eve::log(z) + z;
-      TTS_RELATIVE_EQUAL(a0, r, tol);
+      auto rr = eve::log(z) + z;
+      TTS_RELATIVE_EQUAL(a0, rr, tol);
     }
     {
       auto z = eve::omega(a1);
-      auto r = eve::log(z) + z;
-      TTS_RELATIVE_EQUAL(a1, r, tol);
+      auto rr = eve::log(z) + z;
+      TTS_RELATIVE_EQUAL(a1, rr, tol);
     }
     {
       auto z = eve::omega(a2);
-      auto r = eve::log(z) + z;
-      TTS_RELATIVE_EQUAL(a2, r, tol);
+      auto rr = eve::log(z) + z;
+      TTS_RELATIVE_EQUAL(a2, rr, tol);
     }
   }
 };

@@ -183,7 +183,7 @@ TTS_CASE("struct_support")
 
 TTS_CASE("product_type construction")
 {
-  supports_all_ops a{0, 1};
-  TTS_EQUAL(m0(a), 0);
-  TTS_EQUAL(m1(a), 1);
+  supports_all_ops a_{0, 1};
+  TTS_EQUAL(m0(a_), 0);
+  TTS_EQUAL(m1(a_), 1);
 };

@@ -24,7 +24,7 @@ namespace eve::algo
     {
       Op op;
 
-      explicit transform_delegate(Op op) : op(op) {}
+      explicit transform_delegate(Op o) : op(o) {}
 
       EVE_FORCEINLINE void operator()(auto it, eve::relative_conditional_expr auto ignore)
       {

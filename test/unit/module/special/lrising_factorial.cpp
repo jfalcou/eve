@@ -81,10 +81,10 @@ TTS_CASE_TPL("Check corner-cases behavior of eve::lrising_factorial on wide",
       eve::lrising_factorial[eve::pedantic](T(-20.2), T(10.3)), T(28.713944249477066251), ulp);
   TTS_ULP_EQUAL(
       eve::lrising_factorial[eve::pedantic](T(-20.2), T(30.4)), T(54.518836763604106466), ulp);
-  elt_t r =
+  elt_t rr =
       sizeof(eve::element_type_t<T>) == 4 ? 1.7954323539015604183e-06 : 3.3442530265754862841e-15;
   TTS_ULP_EQUAL(
-      eve::lrising_factorial[eve::pedantic](T(5), 10 * eve::eps(eve::as<T>())), T(r), ulp);
+      eve::lrising_factorial[eve::pedantic](T(5), 10 * eve::eps(eve::as<T>())), T(rr), ulp);
 
   ulp = 110.0;
 };

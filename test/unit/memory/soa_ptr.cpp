@@ -100,26 +100,26 @@ TTS_CASE("soa_ptr, +-<>")
   std::array<int, 4> ints;
   std::array<short, 4> shorts;
 
-  eve::soa_ptr a{ints.data(), shorts.data()};
-  eve::soa_ptr b{ints.data() + 1, shorts.data() + 1};
+  eve::soa_ptr a_{ints.data(), shorts.data()};
+  eve::soa_ptr b_{ints.data() + 1, shorts.data() + 1};
 
-  TTS_LESS         (a, b);
-  TTS_LESS_EQUAL   (a, b);
-  TTS_LESS_EQUAL   (a, a);
-  TTS_EQUAL        (a, a);
-  TTS_NOT_EQUAL    (a, b);
-  TTS_GREATER_EQUAL(b, b);
-  TTS_GREATER      (b, a);
+  TTS_LESS         (a_, b_);
+  TTS_LESS_EQUAL   (a_, b_);
+  TTS_LESS_EQUAL   (a_, a_);
+  TTS_EQUAL        (a_, a_);
+  TTS_NOT_EQUAL    (a_, b_);
+  TTS_GREATER_EQUAL(b_, b_);
+  TTS_GREATER      (b_, a_);
 
-  TTS_EQUAL(-1, a - b);
-  TTS_EQUAL(1,  b - a);
-  TTS_EQUAL(0,  a - a);
+  TTS_EQUAL(-1, a_ - b_);
+  TTS_EQUAL(1,  b_ - a_);
+  TTS_EQUAL(0,  a_ - a_);
 
-  TTS_EQUAL((a + 1),  b);
-  ++a;
-  TTS_EQUAL(a, b);
-  --a;
-  TTS_EQUAL((a + 1),  b);
+  TTS_EQUAL((a_ + 1),  b_);
+  ++a_;
+  TTS_EQUAL(a_, b_);
+  --a_;
+  TTS_EQUAL((a_ + 1),  b_);
 
-  TTS_EQUAL(a,  b - 1);
+  TTS_EQUAL(a_,  b_ - 1);
 };

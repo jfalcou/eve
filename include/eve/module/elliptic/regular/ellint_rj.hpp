@@ -123,32 +123,28 @@ namespace eve
           auto en = delta / dn;
           en /= dn;
           auto test = (en < -0.5) && (en > -1.5);
-          auto rc1p = [](auto y){
-            auto r       = zero(as(y));
-            auto notdone = true_(as(y)); //!= mone(as(y));
+          auto rc1p = [](auto y_){
+            auto r       = zero(as(y_));
+            auto notdone = true_(as(y_)); //!= mone(as(y_));
             if( eve::any(notdone) )
             {
               auto br_yltm1 = [](auto my) { return rsqrt(my) * ellint_rc(my, dec(my)); };
-              notdone       = next_interval(br_yltm1, notdone, y < mone(as(y)), r, -y);
+              notdone       = next_interval(br_yltm1, notdone, y_ < mone(as(y_)), r, -y_);
               if( eve::any(notdone) )
               {
-                auto br_ygt0 = [](auto y)
-                  {
-                    return atan(sqrt(y)) * rsqrt(y);
-                    ;
-                  };
-                notdone = next_interval(br_ygt0, notdone, is_gtz(y), r, y);
+                auto br_ygt0 = [](auto yb){ return atan(sqrt(yb)) * rsqrt(yb);};
+                notdone = next_interval(br_ygt0, notdone, is_gtz(y_), r, y_);
                 if( eve::any(notdone) )
                 {
-                  auto arg       = sqrt(-y);
+                  auto arg       = sqrt(-y_);
                   auto log1parg  = log1p(arg);
                   auto br_ygtmhf = [arg, log1parg]()
                     { return if_else(is_eqz(arg), T(1), (log1parg - log1p(-arg)) / (2 * arg)); };
-                  notdone = next_interval(br_ygtmhf, notdone, y > T(-0.5), r);
+                  notdone = next_interval(br_ygtmhf, notdone, y_ > T(-0.5), r);
                   if( eve::any(notdone) )
                   {
-                    auto br_last = [arg, log1parg](auto y) { return log1parg * rsqrt(inc(y)) / arg; };
-                    last_interval(br_last, notdone, r, y);
+                    auto br_last = [arg, log1parg](auto yy_) { return log1parg * rsqrt(inc(yy_)) / arg; };
+                    last_interval(br_last, notdone, r, y_);
                   }
                 }
               }
@@ -226,43 +222,41 @@ namespace eve
           && is_nez(z + y) && is_nez(x + z);
         if( eve::any(notdone) )
         {
-          auto br_pneg = [](auto x, auto y, auto z, auto p) // p < 0
+          auto br_pneg = [](auto xx, auto yy, auto zz, auto pp) // pp < 0
             {
-              swap_if(x < y, x, y);
-              swap_if(x < z, x, z);
-              swap_if(y > z, y, z);
-              // now all(x <=  y) and all(y <=  z)
-              auto q = -p;
-              p      = fms(z, (x + y + q), x * y) / (z + q);
-              auto v = (p - z) * ellint_rj(x, y, z, p);
-              v -= 3 * ellint_rf(x, y, z);
-              auto pq  = p * q;
-              auto tmp = fma(x, y, pq);
-              v += 3 * sqrt((x * y * z) / tmp) * ellint_rc(tmp, pq);
-              v /= (z + q);
+              swap_if(xx < yy, xx, yy);
+              swap_if(xx < zz, xx, zz);
+              swap_if(yy > zz, yy, zz);
+              // now all(xx <=  yy) and all(yy <=  zz)
+              auto q = -pp;
+              pp      = fms(zz, (xx + yy + q), xx * yy) / (zz + q);
+              auto v = (pp - zz) * ellint_rj(xx, yy, zz, pp);
+              v -= 3 * ellint_rf(xx, yy, zz);
+              auto pq  = pp * q;
+              auto tmp = fma(xx, yy, pq);
+              v += 3 * sqrt((xx * yy * zz) / tmp) * ellint_rc(tmp, pq);
+              v /= (zz + q);
               return v;
             };
           notdone = next_interval(br_pneg, notdone, is_ltz(p), r, x, y, z, p);
           if( eve::any(notdone) )
           {
-            auto br_eqxy = [](auto x, auto p) // (x == y) && (x == z)
+            auto br_eqxy = [](auto xx, auto pp) // (xx == y) && (xx == z)
               {
-                auto rsqtx = rsqrt(x);
-                return if_else(x == p, rsqtx / x, 3 * ellint_rc(x, p) - rsqtx / (x - p));
+                auto rsqtx = rsqrt(xx);
+                return if_else(xx == pp, rsqtx / xx, 3 * ellint_rc(xx, pp) - rsqtx / (xx - pp));
               };
             notdone = next_interval(br_eqxy, notdone, (x == y) && (x == z), r, x, p);
             if( eve::any(notdone) )
             {
-              auto br_eqzp = [](auto x, auto y, auto z) //  (p == z)
-                { return ellint_rd(x, y, z); };
-              notdone = next_interval(br_eqzp, notdone, (z == p), r, x, y, z);
+              notdone = next_interval(ellint_rd, notdone, (z == p), r, x, y, z);
               if( eve::any(notdone) )
               {
                 x            = if_else(notdone, x, one);
                 y            = if_else(notdone, y, one);
                 z            = if_else(notdone, z, one);
                 p            = if_else(notdone, p, one);
-                auto br_last = [](auto x, auto y, auto z, auto p) { return ellint_rj[raw](x, y, z, p); };
+                auto br_last = [](auto px, auto py, auto pz, auto pp) { return ellint_rj[raw](px, py, pz, pp); };
                 last_interval(br_last, notdone, r, x, y, z, p);
               }
             }

@@ -37,7 +37,7 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
 
   EVE_FORCEINLINE constexpr top_bits() = default;
 
-  EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage) : storage(storage) {}
+  EVE_FORCEINLINE constexpr explicit top_bits(storage_type storage_) : storage(storage_) {}
 
   EVE_FORCEINLINE constexpr explicit top_bits(logical_type p) requires(
       !std::same_as<storage_type, logical_type>)
@@ -91,15 +91,15 @@ requires(current_api >= sve && !has_aggregated_abi_v<Logical>) struct top_bits<L
   EVE_FORCEINLINE constexpr auto as_int() const requires(static_bits_size <= 64)
   {
     using uint_type = detail::make_integer_t < (static_bits_size<8) ? 1 : static_bits_size / 8>;
-    uint_type raw;
+    uint_type rraw;
 
-    std::memcpy(&raw, &storage, sizeof(uint_type));
+    std::memcpy(&rraw, &storage, sizeof(uint_type));
 
-    uint_type r = raw;
+    uint_type r = rraw;
 
-    if constexpr( bits_per_element >= 8 ) r |= (raw << 4) | (raw << 5) | (raw << 6) | (raw << 7);
-    if constexpr( bits_per_element >= 4 ) r |= (raw << 2) | (raw << 3);
-    if constexpr( bits_per_element >= 2 ) r |= (raw << 1);
+    if constexpr( bits_per_element >= 8 ) r |= (rraw << 4) | (rraw << 5) | (rraw << 6) | (rraw << 7);
+    if constexpr( bits_per_element >= 4 ) r |= (rraw << 2) | (rraw << 3);
+    if constexpr( bits_per_element >= 2 ) r |= (rraw << 1);
 
     return r;
   }

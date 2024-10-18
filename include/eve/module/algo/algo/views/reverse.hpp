@@ -100,7 +100,7 @@ namespace eve::algo::views
 
     reverse_iterator() = default;
 
-    EVE_FORCEINLINE explicit reverse_iterator(I base) : base(base) {}
+    EVE_FORCEINLINE explicit reverse_iterator(I b) : base(b) {}
 
     template <std::convertible_to<I> I1>
     EVE_FORCEINLINE reverse_iterator(reverse_iterator<I1> x) : base(x.base) {}
