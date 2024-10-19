@@ -73,13 +73,7 @@ namespace eve
 
     template<typename T> EVE_FORCEINLINE void operator[](T const& t) const
     // This requires is also TEMPORARY
-    requires( !callable_options<T> && !requires(base const& b) { b[t];} && !decorator<T>) =delete;
-
-    template<typename... Args>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, Args&&... args) const
-    {
-      return Func<OptionsValues>::deferred_call(arch, EVE_FWD(args)...);
-    }
+    requires( !callable_options<T> && !requires(base const& b) { b[t];} && !decorator<T>) = delete;
 
     template<typename R, typename... Args>
     EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, Args&&... args) const
@@ -108,20 +102,6 @@ namespace eve
 
     struct ignore { template<typename T> operator T() { return T{}; } };
 
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x, Ts const&... xs) const
-    {
-      constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
-      constexpr bool supports_map_no_conversion = requires{ map(this->derived(), x, xs...); };
-      constexpr bool any_emulated               = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
-      constexpr bool any_aggregated             = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
-
-      if      constexpr(any_aggregated)                             return aggregate(this->derived(), x, xs...);
-      else if constexpr(any_emulated && supports_map_no_conversion) return map(this->derived(), x, xs...);
-      else if constexpr(has_implementation)                         return func_t::deferred_call(a, o, x, xs...);
-      else                                                          return ignore{};
-    }
-
     template<typename R, callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto adapt_call_pt(as<R> pt, auto a, O const& o, T x, Ts const&... xs) const
     {
@@ -136,26 +116,18 @@ namespace eve
       else                                                          return ignore{};
     }
 
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0,  Ts const&... xs) const
-      requires(match_option<condition_key,O,ignore_none_>)
-    {
-      constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-      static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
-      return adapt_call(arch,opts,x0,xs...);
-    }
-
     template<typename R, callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(as<R> pt, auto arch, O const& opts, T x0,  Ts const&... xs) const
       requires(match_option<condition_key,O,ignore_none_>)
     {
       constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call_pt(pt, arch, opts, x0, xs...))>;
       static_assert(supports_call, "[EVE] - Implementation for current strict elementwise callable cannot be called or is ambiguous");
+
       return adapt_call_pt(pt, arch, opts, x0, xs...);
     }
 
-    template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
+    template<typename R, callable_options O, typename T, typename... Ts>
+    EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, T x0, Ts const&... xs) const
       requires (!match_option<condition_key, O, ignore_none_>)
     {
       // Grab the condition and drop it from the callable
@@ -187,13 +159,6 @@ namespace eve
           return detail::mask_op(cond, detail::return_2nd, x0, f(x0,xs...));
         }
       }
-    }
-
-    template<typename R, callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, T x0, Ts const&... xs) const
-      requires (!match_option<condition_key, O, ignore_none_>)
-    {
-      return this->behavior(arch, opts, x0, xs...);
     }
   };
 
@@ -235,18 +200,6 @@ namespace eve
     using ignore = typename base_t::ignore;
     using func_t = typename base_t::func_t;
 
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto adapt_call(auto a, O const& o, T x, Ts const&... xs) const
-    {
-      using          cv_t           = common_value_t<T,Ts...>;
-      constexpr bool is_callable    = !std::same_as<ignore, decltype(base_t::adapt_call(a,o,x,xs...))>;
-      constexpr bool is_convertible = requires{ func_t::deferred_call(a, o, cv_t{x}, cv_t{xs}...); };
-
-      if      constexpr(is_callable   ) return base_t::adapt_call(a,o,x,xs...);
-      else if constexpr(is_convertible) return func_t::deferred_call(a, o, cv_t{x}, cv_t{xs}...);
-      else                              return ignore{};
-    }
-
     template<typename R, callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto adapt_call_pt(as<R> pt, auto a, O const& o, T x, Ts const&... xs) const
     {
@@ -259,15 +212,6 @@ namespace eve
       else                              return ignore{};
     }
 
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
-      requires(match_option<condition_key,O,ignore_none_>)
-    {
-      constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call(arch,opts,x0,xs...))>;
-      static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
-      return adapt_call(arch,opts,x0,xs...);
-    }
-
     template<typename R, callable_options O, typename T, typename... Ts>
     constexpr EVE_FORCEINLINE auto behavior(as<R> pt, auto arch, O const& opts, T x0, Ts const&... xs) const
       requires(match_option<condition_key,O,ignore_none_>)
@@ -275,13 +219,6 @@ namespace eve
       constexpr bool supports_call = !std::same_as<ignore, decltype(adapt_call_pt(pt, arch, opts, x0, xs...))>;
       static_assert(supports_call, "[EVE] - Implementation for current elementwise callable cannot be called or is ambiguous");
       return adapt_call_pt(pt, arch, opts, x0, xs...);
-    }
-
-    template<callable_options O, typename T, typename... Ts>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, T x0, Ts const&... xs) const
-      requires(!match_option<condition_key,O,ignore_none_>)
-    {
-      return base_t::behavior(arch,opts,x0,xs...);
     }
 
     template<typename R, callable_options O, typename T, typename... Ts>
@@ -302,22 +239,10 @@ namespace eve
   {
     using base_t = strict_elementwise_callable<Func, OptionsValues, Options...>;
 
-    template<callable_options O, kumi::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x) const
-    {
-      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch,opts,a...); }, x);
-    }
-
     template<typename R, callable_options O, kumi::product_type T>
     constexpr EVE_FORCEINLINE auto behavior(as<R> pt, auto arch, O const& opts, T const& x) const
     {
       return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(pt, arch, opts, a...); }, x);
-    }
-
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x0, Ts const&... xs) const
-    {
-      return base_t::behavior(arch,opts,x0,xs...);
     }
 
     template<typename R, callable_options O, typename T, typename... Ts>
@@ -337,22 +262,10 @@ namespace eve
   {
     using base_t = elementwise_callable<Func, OptionsValues, Options...>;
 
-    template<callable_options O, kumi::product_type T>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x) const
-    {
-      return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(arch,opts,a...); }, x);
-    }
-
     template<typename R, callable_options O, kumi::product_type T>
     constexpr EVE_FORCEINLINE auto behavior(as<R> pt, auto arch, O const& opts, T const& x) const
     {
       return kumi::apply( [&](auto... a) { return static_cast<base_t const&>(*this).behavior(pt, arch, opts, a...); }, x);
-    }
-
-    template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T const& x0, Ts const&... xs) const
-    {
-      return base_t::behavior(arch,opts,x0,xs...);
     }
 
     template<typename R, callable_options O, typename T, typename... Ts>
@@ -401,8 +314,8 @@ namespace eve
   {
     using constant_callable_tag = void;
 
-    template<typename O, typename T>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> target) const
+    template<typename R, typename O, typename T>
+    EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, as<T> target) const
     {
       using func_t                =  Func<OptionsValues>;
       if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )
@@ -428,12 +341,6 @@ namespace eve
         if constexpr(match_option<condition_key, O, ignore_none_>) return that;
         else return detail::mask_op(opts[condition_key], detail::return_2nd, out_t{0}, that);
       }
-    }
-
-    template<typename R, typename O, typename T>
-    EVE_FORCEINLINE constexpr auto behavior(as<R>, auto arch, O const& opts, as<T> target) const
-    {
-      return this->behavior(arch, opts, target);
     }
   };
 }

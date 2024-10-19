@@ -23,7 +23,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
-    if constexpr( std::integral<T> ) return fnma.behavior(cpu_{}, opts, a, b, c);
+    if constexpr( std::integral<T> ) return fnma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     // UPPER LOWER  ----
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
@@ -49,7 +49,7 @@ namespace eve::detail
       }
       else
       {
-        return fnma.behavior(cpu_{}, opts, a, b, c);
+        return fnma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }
     }
     // PEDANTIC ---
