@@ -34,7 +34,7 @@ namespace eve::detail
                                   wide<T, N> v, wide<T, N> w, F f) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
-    auto const alt = alternative(mask, v, as(v));
+    auto const alt = alternative(mask, v, as(to_logical(v)));
     if constexpr( C::is_complete ) return alt;
     else if  constexpr (!C::has_alternative)
     {
