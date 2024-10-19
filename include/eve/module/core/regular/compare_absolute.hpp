@@ -17,13 +17,13 @@ namespace eve
   template<typename Options>
   struct compare_absolute_t : strict_elementwise_callable<compare_absolute_t, Options, saturated_option>
   {
-    template<typename F, value T>
+    template< value T, irregular_predicate F>
     constexpr EVE_FORCEINLINE logical<T>  operator()(T a, F f) const
     {
       return EVE_DISPATCH_CALL(a, f);
     }
 
-    template<value T, value U, typename F>
+    template<value T, value U, irregular_predicate F>
     requires(eve::same_lanes_or_scalar<T, U>)
       constexpr EVE_FORCEINLINE common_logical_t<T, U>  operator()(T a, U b, F f) const
     {
