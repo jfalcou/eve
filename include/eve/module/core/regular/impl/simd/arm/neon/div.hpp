@@ -33,7 +33,7 @@ namespace eve::detail
         else  if constexpr( c == category::float32x4 ) return vdivq_f32(a, b);
         else
         {
-          return div.behavior(cpu_{}, opts, a, b);
+          return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
         }
       }
       else if constexpr (std::same_as<T, float>)

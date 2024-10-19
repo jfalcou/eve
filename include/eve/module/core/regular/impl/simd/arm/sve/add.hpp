@@ -17,7 +17,7 @@ namespace eve::detail
   EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
     requires (sve_abi<abi_t<T, N>> && O::contains(widen))
   {
-    return add.behavior(cpu_{}, opts, v, w);
+    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>

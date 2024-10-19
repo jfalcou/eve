@@ -20,17 +20,17 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_), O const& o, wide<T, N> w) noexcept
+  EVE_FORCEINLINE as_integer_t<wide<T, N>> exponent_(EVE_REQUIRES(avx512_), O const& o, wide<T, N> w) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    if  constexpr(O::contains(raw)) return ilogb(w);
-    else return exponent.behavior(cpu_{}, o, w);
+    if constexpr(O::contains(raw)) return ilogb(w);
+    else return exponent.behavior(as<as_integer_t<wide<T, N>>>{}, cpu_{}, o, w);
   }
 
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto exponent_(EVE_REQUIRES(avx512_), C const& mask, O const& o, wide<T, N> w) noexcept
+  EVE_FORCEINLINE as_integer_t<wide<T, N>> exponent_(EVE_REQUIRES(avx512_), C const& mask, O const& o, wide<T, N> w) noexcept
     requires x86_abi<abi_t<T, N>>
   {
     auto const            src = alternative(mask, w, as{w});
@@ -39,6 +39,6 @@ namespace eve::detail
 
     if constexpr (C::is_complete) return src;
     else if  constexpr(O::contains(raw)) return ilogb[o](w);
-    else return exponent.behavior(cpu_{}, o, w);
+    else return exponent.behavior(as<as_integer_t<wide<T, N>>>{}, cpu_{}, o, w);
   }
 }

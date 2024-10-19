@@ -92,7 +92,7 @@ namespace eve::detail
       [[maybe_unused]] auto const m  = expand_mask(mask, as{a}).storage().value;
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fnma.behavior(cpu_{}, opts, a, b, c);
+      if constexpr( std::integral<T> ) return fnma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -111,7 +111,7 @@ namespace eve::detail
             return if_else(mask,s,src);
           }
         }
-        else                                                 return fnma.behavior(cpu_{}, opts, a, b, c);
+        else                                                 return fnma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }
       if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fnma[opts.drop(condition_key)](a, b, c), a);
       else if constexpr( cx == category::float32x16 ) return _mm512_mask_fnmadd_ps(a, m, b, c);

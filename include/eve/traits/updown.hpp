@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/traits/as_wide.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve
 {
@@ -18,69 +19,70 @@ namespace eve
       using v_t = eve::element_type_t<T>;
 
       static constexpr auto sd = [](){
-        if constexpr( std::same_as<v_t, double>)
+        if constexpr (std::same_as<v_t, double>)
         {
-          return float();
+          return float{};
         }
         else if constexpr( std::same_as<v_t, std::uint8_t> ||
                            std::same_as<v_t, float>        ||
                            std::same_as<v_t, std::int8_t > )
         {
-          return v_t();
+          return v_t{};
         }
-        else if constexpr(std::signed_integral<v_t>)
+        else if constexpr (std::signed_integral<v_t>)
         {
-          using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, signed>::type;
-          return sd_t();
+          using sd_t = typename eve::detail::make_integer<sizeof(v_t) / 2, signed>::type;
+          return sd_t{};
         }
         else if constexpr(std::unsigned_integral<v_t>)
         {
-          using sd_t = typename eve::detail::make_integer<sizeof(v_t)/2, unsigned>::type;
-          return sd_t();
+          using sd_t = typename eve::detail::make_integer<sizeof(v_t) / 2, unsigned>::type;
+          return sd_t{};
         }
         else
           return T{};
       };
+
       using type = eve::as_wide_as_t<decltype(sd()), T>;
     };
 
-    template < typename T > struct up
+    template <typename T> struct up
     {
       using v_t = eve::element_type_t<T>;
 
       static constexpr auto ud = [](){
-        if constexpr( std::same_as<v_t, float>)
+        if constexpr (std::same_as<v_t, float>)
         {
-          return double();
+          return double{};
         }
-        else if constexpr( std::same_as<v_t, std::uint64_t> ||
-                           std::same_as<v_t, double>        ||
-                           std::same_as<v_t, std::int64_t > )
+        else if constexpr (arithmetic_scalar_value<v_t> && (sizeof(v_t) == 8))
         {
-          return v_t();
+          return v_t{};
         }
         else if constexpr(std::signed_integral<v_t>)
         {
-          using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, signed>::type;
-          return ud_t();
+          using ud_t = typename eve::detail::make_integer<sizeof(v_t) * 2, signed>::type;
+          return ud_t{};
         }
         else if constexpr(std::unsigned_integral<v_t>)
         {
-          using ud_t = typename eve::detail::make_integer<sizeof(v_t)*2, unsigned>::type;
-          return ud_t();
+          using ud_t = typename eve::detail::make_integer<sizeof(v_t) * 2, unsigned>::type;
+          return ud_t{};
         }
         else
           return T{};
       };
+
       using type = eve::as_wide_as_t<decltype(ud()), T>;
     };
   }
 
 
-  template < typename T > using downgrade_t = typename detail::down<T>::type;
-  template < typename T > using upgrade_t = typename detail::up<T>::type;
-  template < typename T > downgrade_t<T> downgrade(T const & a){return convert(a, as<element_type_t<downgrade_t<T>>>()); }
-  template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
+  template <typename T> using downgrade_t = typename detail::down<T>::type;
+  template <typename T> using upgrade_t   = typename detail::up<T>::type;
+
+  template <typename T> downgrade_t<T> downgrade(T const& a){ return convert(a, as<element_type_t<downgrade_t<T>>>()); }
+  template <typename T>   upgrade_t<T>   upgrade(T const& a){ return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
 
   namespace detail
   {

@@ -15,12 +15,12 @@
 namespace eve::detail
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>>
-  is_nez_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v) noexcept requires arm_abi<abi_t<T, N>>
+  EVE_FORCEINLINE logical<wide<T, N>> is_nez_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> const& v) noexcept
+    requires arm_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(saturated))
     {
-      return is_nez.behavior(cpu_{}, opts, v);
+      return is_nez.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
     }
     else
     {
@@ -43,9 +43,9 @@ namespace eve::detail
         else if constexpr( cat == category::uint64x2 ) return vtstq_u64(v, v);
         else if constexpr( cat == category::int64x1  ) return vtst_s64(v, v);
         else if constexpr( cat == category::int64x2  ) return vtstq_s64(v, v);
-        else return is_nez.behavior(cpu_{}, opts, v);
+        else return is_nez.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
       }
-      else return is_nez.behavior(cpu_{}, opts, v);
+      else return is_nez.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
     }
   }
 }

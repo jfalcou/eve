@@ -91,7 +91,7 @@ namespace eve::detail
       [[maybe_unused]] auto const m  = expand_mask(mask, as{a}).storage().value;
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fnms.behavior(cpu_{}, opts, a, b, c);
+      if constexpr( std::integral<T> ) return fnms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {

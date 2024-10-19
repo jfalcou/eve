@@ -19,12 +19,13 @@ namespace eve::detail
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
+    using u_t  = upgrade_t<T>;
+    using uw_t = upgrade_t<wide<T, N>>;
+    
     constexpr auto c = categorize<wide<T, N>>();
 
     auto fix = [](auto r)
     {
-      using u_t  = upgrade_t<T>;
-      using uw_t = upgrade_t<wide<T, N>>;
       if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
       else                                               return simd_cast(wide<u_t>{r}, as<uw_t>{});
     };
@@ -41,7 +42,7 @@ namespace eve::detail
       auto [wlo, whi] = w.slice();
       return eve::combine(mul[opts](vlo, wlo), mul[opts](wlo, whi));
     }
-    else return mul.behavior(cpu_{}, opts, v, w);
+    else return mul.behavior(as<uw_t>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, typename U>

@@ -21,11 +21,11 @@ namespace eve
     template<typename T>
     struct result
     {
-      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>, unsigned>>, T>;
       using type = zipped<base, base>;
     };
 
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const
     {
       return this->behavior(as<typename result<T>::type>{}, eve::current_api, this->options(), v);
