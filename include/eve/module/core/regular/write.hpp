@@ -19,16 +19,16 @@ namespace eve
   {
     template<typename Ptr, scalar_value V>
     EVE_FORCEINLINE void operator()(V v, Ptr ptr) const noexcept
-      requires requires(Ptr p, V v) { *p = v; }
+      requires requires(Ptr p, V val) { *p = val; }
     {
       return this->behavior(as<void>{}, eve::current_api, this->options(), v, ptr);
     }
 
     template<typename Writeable, scalar_value V>
-    EVE_FORCEINLINE void operator()(V v, Writeable p) const noexcept
-      requires requires(Writeable p, V v) { p.write(v); }
+    EVE_FORCEINLINE void operator()(V v, Writeable ptr) const noexcept
+      requires requires(Writeable p, V val) { p.write(val); }
     {
-      return this->behavior(as<void>{}, eve::current_api, this->options(), v, p);
+      return this->behavior(as<void>{}, eve::current_api, this->options(), v, ptr);
     }
 
     template<typename... Ptrs, scalar_value V>
