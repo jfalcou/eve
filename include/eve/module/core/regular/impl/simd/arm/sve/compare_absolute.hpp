@@ -30,7 +30,7 @@ namespace eve::detail
   }
 
   template<callable_options O, floating_scalar_value T, typename N, conditional_expr C,  typename F>
-  EVE_FORCEINLINE wide<T, N> compare_absolute_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
+  EVE_FORCEINLINE logical<wide<T, N>> compare_absolute_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                                   wide<T, N> v, wide<T, N> w, F f) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
@@ -39,7 +39,7 @@ namespace eve::detail
     else if  constexpr (!C::has_alternative)
     {
       auto m = expand_mask(mask, as(v));
-      if      constexpr(F{} ==  is_less_equal)    return svacle(m, v, w);
+      if      constexpr(F{} ==  is_less_equal)   return svacle(m, v, w);
       else if constexpr(F{} == is_less)          return svaclt(m, v, w);
       else if constexpr(F{} == is_greater_equal) return svacge(m, v, w);
       else if constexpr(F{} == is_less_equal)    return svacgt(m, v, w);
