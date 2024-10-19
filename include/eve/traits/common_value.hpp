@@ -49,7 +49,7 @@ namespace eve::detail
   auto find_common_value() -> find_common_value_wide<Ts... >;
 
   template<typename T0, typename... Ts>
-  requires((scalar_value<T0> && ... && scalar_value<Ts>) && (std::same_as<T0,Ts> && ...))
+  requires((scalar_value<T0> && ... && scalar_value<Ts>) && (std::same_as<T0, Ts> && ...))
   T0 find_common_value();
 
   template<typename, typename... Ts>

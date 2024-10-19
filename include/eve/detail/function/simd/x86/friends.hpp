@@ -419,13 +419,8 @@ EVE_FORCEINLINE logical<wide<T, N>>
       [[maybe_unused]] auto unsigned_cmp = [](auto vv, auto vw)
       {
         using l_t     = logical<wide<T, N>>;
-<<<<<<< HEAD
         auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
-        return bit_cast((bit_cast(vv, as(sm)) - sm) > (bit_cast(vw, as(sm)) - sm), as<l_t> {});
-=======
-        auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>{});
-        return bit_cast((bit_cast(v, as{sm}) - sm) > (bit_cast(w, as{sm}) - sm), as<l_t> {});
->>>>>>> b4cfae764 (more cleanup)
+        return bit_cast((bit_cast(vv, as{sm}) - sm) > (bit_cast(vw, as{sm}) - sm), as<l_t>{});
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(v, w);

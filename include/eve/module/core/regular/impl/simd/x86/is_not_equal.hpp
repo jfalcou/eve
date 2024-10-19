@@ -32,8 +32,8 @@ namespace eve::detail
     }
     else
     {
-      auto const            s = alternative(mask, v, as{to_logical(v)});
-      [[maybe_unused]] auto m = expand_mask(mask, as{v}).storage().value;
+      auto const            s = alternative(mask, a, as{to_logical(a)});
+      [[maybe_unused]] auto m = expand_mask(mask, as{a}).storage().value;
       constexpr auto        f = to_integer(cmp_flt::neq_uq);
 
       if      constexpr( C::is_complete )            return s;

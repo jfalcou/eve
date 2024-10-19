@@ -39,9 +39,9 @@ kernel_bessel_i(T n, T x) noexcept
   };
   auto br_half = [](auto xx)
   {
-    if( eve::any(xx >= maxlog(as{x})) )
+    if( eve::any(xx >= maxlog(as{xx})) )
     {
-      auto ex = eve::exp(x / 2);
+      auto ex = eve::exp(xx / 2);
       return ex * (ex * rsqrt(xx * two_pi(as{xx})));
     }
     else return rsqrt(xx * pio_2(as{xx})) * sinh(xx);

@@ -41,11 +41,24 @@ namespace eve
       return this->behavior(as<r_t<Tup>>{}, eve::current_api, this->options(), t);
     }
 
+    // This function is out-of-line because of a circular dependency involving is_less
     template<typename Callable>
     EVE_FORCEINLINE constexpr auto operator()(Callable const& f) const noexcept
       requires(!kumi::product_type<Callable> && !value<Callable>)
     {
-      return EVE_DISPATCH_CALL(f);
+      if constexpr (std::same_as<Callable, callable_is_less_>) return functor<minmax_t>;
+      else if constexpr (std::same_as<Callable, callable_is_greater_>)
+      {
+        return [](auto x, auto y) { return kumi::reorder<1,0>(functor<minmax_t>(x,y)); };
+      }
+      else
+      {
+        return [f](auto x, auto y)
+        {
+          auto check = f(y, x);
+          return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
+        };
+      }
     }
 
     EVE_CALLABLE_OBJECT(minmax_t, minmax_);
@@ -156,25 +169,6 @@ namespace eve
         // We use > cause it is more often optimized than <
         auto check = v0 > v1;
         return zip(if_else(check, v1, v0), if_else(check, v0, v1));
-      }
-    }
-
-    // -----  Predicate case
-    template<callable_options O, typename Callable>
-    EVE_FORCEINLINE auto minmax_(EVE_REQUIRES(cpu_), O const&, Callable f)
-    {
-      if constexpr (std::same_as<Callable, callable_is_less_>) return eve::minmax;
-      else if constexpr (std::same_as<Callable, callable_is_greater_>)
-      {
-        return [](auto x, auto y) { return kumi::reorder<1,0>(minmax(x,y)); };
-      }
-      else
-      {
-        return [f](auto x, auto y)
-        {
-          auto check = f(y, x);
-          return kumi::tuple {if_else(check, y, x), if_else(check, x, y)};
-        };
       }
     }
 

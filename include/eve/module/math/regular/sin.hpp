@@ -99,7 +99,7 @@ namespace eve
   namespace detail
   {
     template<callable_options O, typename T>
-    constexpr EVE_FORCEINLINE T sin_(EVE_REQUIRES(cpu_), O const& o , T const& a0)
+    constexpr EVE_FORCEINLINE T sin_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr(O::contains(quarter_circle))
       {
@@ -119,7 +119,7 @@ namespace eve
             auto pio2_1 = ieee_constant<0x1.921f000p+0f, 0x1.921fb54400000p+0>(as<T>{});
             auto pio2_2 = ieee_constant<0x1.6a88000p-17f, 0x1.0b4611a600000p-34>(as<T>{});
             auto pio2_3 = ieee_constant<0x1.0b46000p-34f, 0x1.3198a2e000000p-69>(as<T>{});
-            T    xr     = x - pio2_1;
+            T    xr     = xx - pio2_1;
             xr -= pio2_2;
             xr -= pio2_3;
             return xr;

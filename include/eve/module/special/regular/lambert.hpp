@@ -140,7 +140,7 @@ namespace eve
         T l1 = log(-xx);
         T l2 = log(-l1);
         T w2 = l1 - l2 + l2 / l1;
-        return if_else(is_eqz(xx) && !positivex, minf({xx}), halley(xx, w2, 30));
+        return if_else(is_eqz(xx) && !positivex, minf(as{xx}), halley(xx, w2, 30));
       };
 
       auto r       = nan(as<T>{});                // nan case treated here

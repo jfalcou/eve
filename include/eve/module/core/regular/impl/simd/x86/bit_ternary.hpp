@@ -28,15 +28,9 @@ namespace eve::detail
   {
     using w_t = wide<T, N>;
     using i_t = as_integer_t<w_t, unsigned>;
-<<<<<<< HEAD
-    auto va = bit_cast(x, as<i_t>());
-    auto vb = bit_cast(y, as<i_t>());
-    auto vc = bit_cast(z, as<i_t>());
-=======
-    auto a = bit_cast(x, as<i_t>{});
-    auto b = bit_cast(y, as<i_t>{});
-    auto c = bit_cast(z, as<i_t>{});
->>>>>>> b4cfae764 (more cleanup)
+    auto va = bit_cast(x, as<i_t>{});
+    auto vb = bit_cast(y, as<i_t>{});
+    auto vc = bit_cast(z, as<i_t>{});
     if constexpr(current_api < avx512 || sizeof(T) < 4)
     {
       auto doit = [](auto const& o, auto a, auto b, auto c)

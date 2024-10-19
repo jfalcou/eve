@@ -387,11 +387,7 @@ namespace eve
         if constexpr(K == 0xfe) return bit_or(a, b, c);
         if constexpr(K == 0xff) return eve::allbits(as{a});
       };
-<<<<<<< HEAD
-      return bit_cast(doit(xa, xb, xc), as<T>());
-=======
-      return bit_cast(doit(a, b, c), as<T>{});
->>>>>>> b4cfae764 (more cleanup)
+      return bit_cast(doit(xa, xb, xc), as<T>{});
     }
   }
   template < int a, int b, int c, int d, int e, int f , int g, int h>

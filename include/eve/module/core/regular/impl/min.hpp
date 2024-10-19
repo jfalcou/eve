@@ -94,17 +94,20 @@ namespace eve::detail
       return that;
     }
   }
+}
 
-  //================================================================================================
-  // Predicate case
-  //================================================================================================
-  template<typename Callable, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  min_(EVE_REQUIRES(cpu_), O const&, Callable const& f) noexcept
+namespace eve
+{
+  template<typename Options>
+  template<typename Callable>
+  requires (!kumi::product_type<Callable> && !value<Callable>)
+  EVE_FORCEINLINE constexpr auto min_t<Options>::operator()(Callable const& f) const noexcept
   {
-    if      constexpr( std::same_as<Callable, callable_is_less_>    ) return eve::min;
-    else if constexpr( std::same_as<Callable, callable_is_greater_> ) return eve::max;
+    if      constexpr (std::same_as<Callable, callable_is_less_>   ) return eve::min;
+    else if constexpr (std::same_as<Callable, callable_is_greater_>) return eve::max;
     else
+    {
       return [f](auto x, auto y){ return eve::if_else(f(y, x), y, x); };
+    }
   }
 }

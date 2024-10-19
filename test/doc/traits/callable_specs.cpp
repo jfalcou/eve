@@ -27,7 +27,11 @@ namespace eve
   template<typename Options>
   struct func_t : callable<func_t, Options, precision>
   {
-    double operator()(int v) const { return EVE_DISPATCH_CALL(v); }
+    double operator()(int v) const
+    {
+      return this->behavior(as<double>{}, eve::current_api, this->options(), v);
+    }
+
     EVE_CALLABLE_OBJECT(func_t, func_);
   };
 

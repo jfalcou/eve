@@ -66,18 +66,18 @@ namespace eve::detail
   {
     // PROMOTE ---------------------
     // We promote before going pedantic in case it changes the behavior
-    if constexpr(O::contains(promote)) return fam[o.drop(promote)](a,b,c);
+    if constexpr (O::contains(promote)) return fam[o.drop(promote)](a, b, c);
     // PEDANTIC ---------------------
-    else if constexpr(O::contains(pedantic))
+    else if constexpr (O::contains(pedantic))
     {
-      if constexpr( std::same_as<element_type_t<T>, float> )
+      if constexpr (std::same_as<element_type_t<T>, float>)
       {
         constexpr auto tgt = as<double>{};
-        return convert(convert(a,tgt) + convert(b,tgt) * convert(c,tgt), as_element(a));
+        return convert(convert(a, tgt) + convert(b, tgt) * convert(c, tgt), as_element{a});
       }
-      else if constexpr( std::same_as<element_type_t<T>, double> )
+      else if constexpr (std::same_as<element_type_t<T>, double>)
       {
-        if constexpr(scalar_value<T>)
+        if constexpr (scalar_value<T>)
         {
           return std::fma(c, b, a);
         }
@@ -86,17 +86,18 @@ namespace eve::detail
           auto stdfam = [](auto x, auto y, auto z){
             return std::fma(y, z, x);
           };
-          return map(stdfam, a, b, c);
+
+          return map_pt(as<T>{}, stdfam, a, b, c);
         }
       }
-      else if constexpr( std::is_integral_v<element_type_t<T>> )
+      else if constexpr (std::is_integral_v<element_type_t<T>>)
       {
         // Pedantic fam has to ensure "no intermediate overflow".
         // This is done in the case of signed integers by trans-typing to unsigned type
         // to perform the computations in a guarantee 2-complement environment
         // since signed integer overflows in C++ produce "undefined results"
         constexpr auto tgt = as<as_integer_t<T, unsigned>>{};
-        return bit_cast(fam(bit_cast(a,tgt), bit_cast(b,tgt), bit_cast(c,tgt)), as<T>{});
+        return bit_cast(fam(bit_cast(a, tgt), bit_cast(b, tgt), bit_cast(c, tgt)), as<T>{});
       }
       else
       {

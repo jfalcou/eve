@@ -14,7 +14,6 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/is_greater.hpp>
 #include <eve/module/core/regular/is_less.hpp>
-#include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_ordered.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/min.hpp>
@@ -90,16 +89,17 @@ namespace eve::detail
       return that;
     }
   }
+}
 
-  //================================================================================================
-  // Predicate case
-  //================================================================================================
-  template<typename Callable, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  max_(EVE_REQUIRES(cpu_), O const&, Callable const & f) noexcept
+namespace eve
+{
+  template<typename Options>
+  template<typename Callable>
+  requires (!kumi::product_type<Callable> && !value<Callable>)
+  EVE_FORCEINLINE constexpr auto max_t<Options>::operator()(Callable const& f) const noexcept
   {
-    if      constexpr( std::same_as<Callable, eve::callable_is_less_>    ) return eve::max;
-    else if constexpr( std::same_as<Callable, eve::callable_is_greater_> ) return eve::min;
+    if      constexpr (std::same_as<Callable, eve::callable_is_less_>   ) return eve::max;
+    else if constexpr (std::same_as<Callable, eve::callable_is_greater_>) return eve::min;
     else
     {
       return [f](auto x, auto y){ return eve::if_else(f(y, x), x, y); };

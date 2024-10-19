@@ -73,12 +73,12 @@ namespace eve::detail
   EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const& b, T const& c)
   {
     // UPPER LOWER ---------------------
-    if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower)))
+    if constexpr (floating_value<T> && (O::contains(upper) || O::contains(lower)))
     {
-      if constexpr(O::contains(strict) )
+      if constexpr (O::contains(strict) )
       {
         auto r = eve::fms[o.drop(lower, upper)](a, b, c);
-        if constexpr(O::contains(lower))
+        if constexpr (O::contains(lower))
           return eve::prev(r);
         else
           return eve::next(r);
@@ -86,7 +86,7 @@ namespace eve::detail
       else
       {
         auto [r, e, e1] = eve::three_fma(a, b, -c);
-        if constexpr(O::contains(lower))
+        if constexpr (O::contains(lower))
           return eve::prev[eve::is_ltz(e+e1)](r);
         else
           return eve::next[eve::is_gtz(e+e1)](r);
@@ -94,31 +94,33 @@ namespace eve::detail
     }
     // PROMOTE ---------------------
     // We promote before going pedantic in case it changes the behavior
-    else if constexpr(O::contains(promote)) return fms[o.drop(promote)](a,b,c);
+    else if constexpr (O::contains(promote)) return fms[o.drop(promote)](a, b, c);
     // PEDANTIC ---------------------
-    else if constexpr(O::contains(pedantic))
+    else if constexpr (O::contains(pedantic))
     {
-      if constexpr( std::same_as<element_type_t<T>, float> )
+      if constexpr (std::same_as<element_type_t<T>, float>)
       {
         constexpr auto tgt = as<double>{};
-        return convert(convert(a,tgt) * convert(b,tgt) - convert(c,tgt), as_element(a));
+        return convert(convert(a, tgt) * convert(b, tgt) - convert(c, tgt), as_element{a});
       }
-      else if constexpr( std::same_as<element_type_t<T>, double> )
+      else if constexpr (std::same_as<element_type_t<T>, double>)
       {
         [[maybe_unused]] auto stdfms = [](auto sa, auto sb, auto sc){return std::fma(sa, sb, -sc); };
-        if constexpr(scalar_value<T>) return std::fma(a, b, -c);
-        else                          return map(stdfms, a, b, c);
+
+        if constexpr (scalar_value<T>) return std::fma(a, b, -c);
+        else                           return map_pt(as<T>{}, stdfms, a, b, c);
       }
-      else if constexpr( std::is_integral_v<element_type_t<T>> )
+      else if constexpr (std::is_integral_v<element_type_t<T>>)
       {
         // Pedantic fms has to ensure "no intermediate overflow".
         // This is done in the case of signed integers by trans-typing to unsigned type
         // to perform the computations in a guarantee 2-complement environment
         // since signed integer overflows in C++ produce "undefined results"
         constexpr auto tgt = as<as_integer_t<T, unsigned>>{};
-        return bit_cast(fms(bit_cast(a,tgt), bit_cast(b,tgt), bit_cast(c,tgt)), as<T>{});
+
+        return bit_cast(fms(bit_cast(a, tgt), bit_cast(b, tgt), bit_cast(c, tgt)), as<T>{});
       }
-      else  return fma(a, b, -c);
+      else return fma(a, b, -c);
     }
     // REGULAR ---------------------
     else  return a * b - c;

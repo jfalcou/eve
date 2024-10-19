@@ -143,7 +143,7 @@ requires(simd_value<T>)
       }
       if( ii > max_iter )
       {
-        sum  = if_else(test, sum0, nan(as{sum0}));
+        sum0 = if_else(test, sum0, nan(as{sum0}));
         sum1 = if_else(test, sum1, nan(as{sum0}));
       }
     }

@@ -36,12 +36,10 @@ namespace eve
       return this->behavior(as<kumi::apply_traits_t<common_value, Tup>>{}, eve::current_api, this->options(), t);
     }
 
+    // This function is out-of-line because of a circular dependency involving is_less
     template<typename Callable>
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept
-      requires (!kumi::product_type<Callable> && !value<Callable>)
-    {
-      return EVE_DISPATCH_CALL(f);
-    }
+    requires (!kumi::product_type<Callable> && !value<Callable>)
+    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept;
 
     EVE_CALLABLE_OBJECT(min_t, min_);
   };

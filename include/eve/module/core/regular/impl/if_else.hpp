@@ -43,8 +43,8 @@ template<scalar_value T, value U, value V, callable_options O>
 EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T cond, U const& t, V const& f)
 {
   if      constexpr( simd_value<U> && simd_value<V> ) return  is_nez(cond) ? t    : f;
-  else if constexpr( simd_value<U> )                  return  is_nez(cond) ? t    : U(f);
-  else if constexpr( simd_value<V> )                  return  is_nez(cond) ? V(t) : f;
+  else if constexpr( simd_value<U> )                  return  is_nez(cond) ? t    : U{f};
+  else if constexpr( simd_value<V> )                  return  is_nez(cond) ? V{t} : f;
   else                                                return  is_nez(cond) ? t    : f;
 }
 
@@ -58,14 +58,14 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& c
     using e_t = element_type_t<r_t>;
 
     if      constexpr(kumi::product_type<U> && kumi::product_type<V>) return tuple_select(cond, t, f);
-    else if constexpr(has_emulated_abi_v<T>)                          return map(if_else, cond, r_t(t), r_t(f));
-    else if constexpr(has_aggregated_abi_v<T>)                        return aggregate(if_else, cond, r_t(t), r_t(f));
+    else if constexpr(has_emulated_abi_v<T>)                          return map_pt(as<r_t>{}, if_else, cond, r_t{t}, r_t{f});
+    else if constexpr(has_aggregated_abi_v<T>)                        return aggregate(if_else, cond, r_t{t}, r_t{f});
     else if constexpr(std::same_as<logical<e_t>, element_type_t<T>>)
     {
-      if constexpr( std::same_as<U, V> )  return bit_select(cond.mask(), r_t(t), r_t(f));
-      else                                return if_else(cond, r_t(t), r_t(f));
+      if constexpr( std::same_as<U, V> )  return bit_select(cond.mask(), r_t{t}, r_t{f});
+      else                                return if_else(cond, r_t{t}, r_t{f});
     }
-    else return if_else(convert(cond, as<as_logical_t<e_t>>{}), r_t(t), r_t(f));
+    else return if_else(convert(cond, as<as_logical_t<e_t>>{}), r_t{t}, r_t{f});
   }
 }
 
@@ -93,8 +93,8 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U 
                                             , common_value<U,V>
                                             >::type;
 
-    if      constexpr( C::is_complete && C::is_inverted  ) return r_t(t);
-    else if constexpr( C::is_complete && !C::is_inverted ) return r_t(f);
+    if      constexpr( C::is_complete && C::is_inverted  ) return r_t{t};
+    else if constexpr( C::is_complete && !C::is_inverted ) return r_t{f};
     else
     {
       auto const mask = cond.mask(as<r_t>{});
