@@ -13,16 +13,13 @@
 
 namespace eve
 {
-  template<typename ...Ts>
-  struct result
-  {
-    using type = common_value_t<upgrade_t<Ts>...>;
-  };
-
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option>
   {
+    template<typename ...Ts> struct result : common_value<upgrade_t<Ts>...>
+    {};
+
     template<value T0, value T1, value... Ts>
     EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts) const noexcept
       requires (same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
