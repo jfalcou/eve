@@ -58,6 +58,7 @@ namespace eve::detail
 
   template<typename R, typename Fn, typename... Ts>
   EVE_FORCEINLINE R map_pt(as<R>, Fn &&f, Ts &&... ts) noexcept
+  requires( requires{ EVE_FWD(f)(eve::detail::get_at(EVE_FWD(ts), 0)...); } )
   {
     if constexpr (kumi::product_type<element_type_t<R>>)
     {
