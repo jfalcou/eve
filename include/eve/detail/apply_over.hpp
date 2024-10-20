@@ -32,14 +32,18 @@ namespace eve::detail
       using r_t = as_wide_t<r_e, fixed<std::max({cardinal_t<T0>{}, cardinal_t<T>{}...})>>;
       return map_pt(as<r_t>{}, f, arg0, args...);
     }
-    else                              return f(arg0, args...);
+    else return f(arg0, args...);
   }
 
   template<typename Obj, simd_value T>
   EVE_FORCEINLINE auto apply_over(Obj f, T const& v)
   {
     if      constexpr(has_aggregated_abi_v<T>) return aggregate(f, v);
-    else if constexpr(has_emulated_abi_v<T>)   return map_pt(as<decltype(f(std::declval<element_type_t<T>>()))>{}, f, v);
-    else                                       return f(v);
+    else if constexpr(has_emulated_abi_v<T>)
+    {
+      using r_t = as_wide_as_t<decltype(f(std::declval<element_type_t<T>>())), T>;
+      return map_pt(as<r_t>{}, f, v);
+    }
+    else return f(v);
   }
 }

@@ -29,17 +29,19 @@ namespace eve::detail
   template<typename Out, typename... Bs>
   EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
   {
+    using kumi::get;
+
     auto const inside = [&]<typename I>(I)
     {
-      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
+      return std::tuple_element_t<I::value, Out>(get<I::value>(ps)...);
     };
 
     return detail::apply<kumi::size<Out>::value>( [&]( auto const&... I)
-    {
-      Out that;
-      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
-      return that;
-    }
+      {
+        Out that;
+        ((get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+        return that;
+      }
     );
   }
 
