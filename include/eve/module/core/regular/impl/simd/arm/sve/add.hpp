@@ -14,21 +14,21 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires (sve_abi<abi_t<T, N>> && O::contains(widen))
   {
-    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
+    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, a, b);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
-  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires (sve_abi<abi_t<T, N>> && O::contains(widen))
   {
-    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
+    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, a, b);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
-  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires (sve_abi<abi_t<T, N>> && !O::contains(widen))
   {
     auto const alt = alternative(mask, a, as{a});
@@ -60,10 +60,10 @@ namespace eve::detail
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires (sve_abi<abi_t<T, N>> && !O::contains(widen))
   {
-    // We call the saturated add if required or we just go to the common case of doing v+w
+    // We call the saturated add if required or we just go to the common case of doing a+b
     if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) )
     {
       return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
