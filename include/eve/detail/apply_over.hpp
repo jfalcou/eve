@@ -29,7 +29,7 @@ namespace eve::detail
     else if constexpr(any_emulated)
     {
       using r_e = decltype(f(std::declval<element_type_t<T0>>(), std::declval<element_type_t<T>>()...));
-      using r_t = as_wide_as_t<r_e, fixed<std::max({cardinal_t<T0>{}, cardinal_t<T>{}...})>>;
+      using r_t = as_wide_t<r_e, fixed<std::max({cardinal_t<T0>{}, cardinal_t<T>{}...})>>;
       return map_pt(as<r_t>{}, f, arg0, args...);
     }
     else                              return f(arg0, args...);
