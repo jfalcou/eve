@@ -108,7 +108,7 @@ namespace eve
         }
         else if constexpr (integral_scalar_value<I>)
         {
-          return rising_factorial[o](T{a}, x);
+          return rising_factorial[o](static_cast<T>(a), x);
         }
       }
       else
