@@ -16,16 +16,10 @@ namespace eve
   template<typename Options>
   struct bit_mask_t : elementwise_callable<bit_mask_t, Options>
   {
-    template<typename T>
-    struct result { using type = T; };
-
-    template<typename T>
-    struct result<logical<T>> { using type = T; };
-
     template<value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const
+    constexpr EVE_FORCEINLINE as_arithmetic_t<T> operator()(T v) const
     {
-      return this->behavior(as<typename result<T>::type>{}, eve::current_api, this->options(), v);
+      return this->behavior(as<as_arithmetic_t<T>>{}, eve::current_api, this->options(), v);
     }
 
     EVE_CALLABLE_OBJECT(bit_mask_t, bit_mask_);
