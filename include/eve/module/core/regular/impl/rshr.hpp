@@ -19,7 +19,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
   {
     if constexpr (scalar_value<U> && scalar_value<T>)
     {
@@ -30,7 +30,7 @@ namespace eve::detail
       else
       {
         #ifndef NDEBUG
-          return is_gtz(a1) ? T(a0 >> max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
+          return is_gtz(a1) ? T(a0 >> max(zero(eve::as{a1}), a1)) : T(a0 << max(zero(eve::as{a1}), minus(a1)));
         #else
           return is_gtz(a1) ? T(a0 >> a1) : T(a0 << minus(a1));
         #endif
@@ -49,7 +49,7 @@ namespace eve::detail
       else
       {
         #ifndef NDEBUG
-          return is_gtz(a1) ? T(a0 >> max(zero(eve::as(a1)), a1)) : T(a0 << max(zero(eve::as(a1)), minus(a1)));
+          return is_gtz(a1) ? T(a0 >> max(zero(eve::as{a1}), a1)) : T(a0 << max(zero(eve::as{a1}), minus(a1)));
         #else
           return is_gtz(a1) ? T(a0 >> a1) : T(a0 << minus(a1));
         #endif
@@ -68,7 +68,7 @@ namespace eve::detail
       else
       {
         #ifndef NDEBUG
-          return if_else(is_gtz(a1), T(a0 >> max(zero(eve::as(a1)), a1)), T(a0 << max(zero(eve::as(a1)), -a1)));
+          return if_else(is_gtz(a1), T(a0 >> max(zero(eve::as{a1}), a1)), T(a0 << max(zero(eve::as{a1}), -a1)));
         #else
           return if_else(is_gtz(a1), T(a0 >> a1), T(a0 << minus(a1)));
         #endif
@@ -77,7 +77,7 @@ namespace eve::detail
   }
 
   template<callable_options O, integral_value T, std::ptrdiff_t S>
-  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T v, index_t<S>) noexcept
+  EVE_FORCEINLINE constexpr auto rshr_(EVE_REQUIRES(cpu_), O const&, T v, index_t<S>) noexcept
   {
     if constexpr (S == 0) return v;
     else                  return rshr(v, S);

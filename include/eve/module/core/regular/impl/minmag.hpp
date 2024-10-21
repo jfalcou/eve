@@ -25,7 +25,7 @@ namespace eve::detail
 
   template<typename T0, typename T1, typename... Ts, callable_options O>
   EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...>
-  minmag_(EVE_REQUIRES(cpu_), O const & o, T0 a, T1 b, Ts... cs) noexcept
+  minmag_(EVE_REQUIRES(cpu_), O const& o, T0 a, T1 b, Ts... cs) noexcept
   {
     using r_t = common_value_t<T0, T1, Ts...>;
     auto mino = min[o.drop(saturated)];

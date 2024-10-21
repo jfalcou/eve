@@ -17,6 +17,7 @@ namespace eve::detail
 {
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
     if constexpr(floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
@@ -34,13 +35,13 @@ namespace eve::detail
           auto aapbb = mul[opts](aa, bb);
           return slice(aapbb, eve::upper_);
         }
-        else                                             return mul.behavior(cpu_{}, opts, a, b);
+        else                                             return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
      }
-      else                                               return mul.behavior(cpu_{}, opts, a, b);
+      else                                               return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && std::integral<T>)
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -112,14 +113,14 @@ namespace eve::detail
         constexpr auto smul = [](auto va, auto vb) { return va * vb; };
 
         if constexpr (N::value >= 2) return aggregate(smul, s, b);
-        else                         return map(smul, s, b);
+        else                         return map(as<wide<T, N>>{}, smul, s, b);
       }
     }
   }
 
   template<callable_options O, conditional_expr C, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> mul_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
-  requires x86_abi<abi_t<T, N>>
+    requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -128,27 +129,21 @@ namespace eve::detail
 
     if constexpr(floating_value<T> &&( O::contains(lower) || O::contains(upper)) && !O::contains(strict))
     {
-      if constexpr(current_api >= avx512)
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_mul_round_pd (src, m, a, b, dir);
+      else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_mul_round_ps (src, m, a, b, dir);
+      else
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_mask_mul_round_pd (src, m, a, b, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_mask_mul_round_ps (src, m, a, b, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-        {
-          auto aa = eve::combine(a, a);
-          auto bb = eve::combine(b, b);
-          auto aapbb = mul[opts.drop(condition_key)](aa, bb);
-          auto s =  slice(aapbb, eve::upper_);
-          return if_else(cx,s,src);
-        }
-        else                                             return add.behavior(cpu_{}, opts, a, b);
+        auto aa = eve::combine(a, a);
+        auto bb = eve::combine(b, b);
+        auto aapbb = mul[opts.drop(condition_key)](aa, bb);
+        auto s =  slice(aapbb, eve::upper_);
+        return if_else(cx,s,src);
       }
-      else                                               return add.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -158,7 +153,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, a, b);
-      else                                          return mul.behavior(cpu_{}, opts, a, b);
+      else                                          return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
   }
 }

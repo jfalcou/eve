@@ -21,69 +21,69 @@ namespace eve
   struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option>
   {
     template<value P, floating_value T0, floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-     EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P>
-    operator()(P p, T0 t0, T1 t1, Ts...ts) const noexcept
+    EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P> operator()(P p, T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(p, t0, t1, ts...);
+      return this->behavior(as<as_wide_as_t<common_value_t<T0, T1, Ts...>, P>>{}, eve::current_api, this->options(), p, t0, t1, ts...);
     }
 
     template<value P, kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<kumi::apply_traits_t<eve::common_value,Tup>, P>
-    operator()(P p, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(p, t); }
+    EVE_FORCEINLINE constexpr as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P> operator()(P p, Tup const& t) const noexcept
+    {
+      return this->behavior(as<as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P>>{}, eve::current_api, this->options(), p, t);
+    }
 
     EVE_CALLABLE_OBJECT(lpnorm_t, lpnorm_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var lpnorm
-//!
-//! @brief `strict_elementwise_callable` object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n
-//! |x_i|^p\right)^{\frac1p} \f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto lpnorm(floating_value auto p, floating_value auto x,floating_value auto... xs )                         noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto lpnorm[conditional_expr auto c](loating_value auto p, floating_value auto x,floating_value auto... xs)  noexcept; // 2
-//!      constexpr auto lpnorm[logical_value auto m](loating_value auto p, floating_value auto x,floating_value auto... xs)     noexcept; // 2
-//!
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!   * `p`: [floating value](@ref floating_value)
-//!   * `x`, `... xs`: [floating values](@ref floating_value)
-//!   * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!   * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1. \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
-//!   2. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/lpnorm.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var lpnorm
+  //!
+  //! @brief `strict_elementwise_callable` object computing the lpnorm operation \f$ \left(\sum_{i = 0}^n
+  //! |x_i|^p\right)^{\frac1p} \f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto lpnorm(floating_value auto p, floating_value auto x,floating_value auto... xs )                         noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto lpnorm[conditional_expr auto c](loating_value auto p, floating_value auto x,floating_value auto... xs)  noexcept; // 2
+  //!      constexpr auto lpnorm[logical_value auto m](loating_value auto p, floating_value auto x,floating_value auto... xs)     noexcept; // 2
+  //!
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!   * `p`: [floating value](@ref floating_value)
+  //!   * `x`, `... xs`: [floating values](@ref floating_value)
+  //!   * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!   * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1. \f$ \left(\sum_{i = 0}^n |x_i|^p\right)^{\frac1p} \f$.
+  //!   2. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/lpnorm.cpp}
+  //================================================================================================
   inline constexpr auto lpnorm = functor<lpnorm_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
@@ -96,14 +96,14 @@ namespace eve
       if constexpr( integral_value<P> )
       {
         using e_t =  element_type_t<r_t>;
-        auto fp =  convert(p, eve::as<e_t>());
+        auto fp =  convert(p, as<e_t>{});
         return lpnorm[o](fp, r_t(a0), r_t(a1), r_t(args)...);
       }
       else
       {
         if( eve::all(p == P(2)) ) return hypot[o](r_t(a0), r_t(a1), r_t(args)...);
         else if( eve::all(p == P(1)) ) return manhattan/*[o]*/(r_t(a0), r_t(a1), r_t(args)...);
-        else if( eve::all(p == eve::inf(as(p))) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
+        else if( eve::all(p == eve::inf(as{p})) ) return maxabs[numeric](r_t(a0), r_t(a1), r_t(args)...);
         else
         {
           if (O::contains(pedantic))
@@ -117,7 +117,7 @@ namespace eve
             auto isinfp = is_infinite(rp);
             auto rinf = maxabs(r_t(a0), r_t(a1), r_t(args)...);
             r = if_else(isinfp, rinf, r);
-            return if_else(any_is_inf, inf(as<r_t>()), r);
+            return if_else(any_is_inf, inf(as<r_t>{}), r);
           }
           else
           {

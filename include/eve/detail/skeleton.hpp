@@ -26,54 +26,22 @@ namespace eve::detail
     else                                      return EVE_FWD(t);
   }
 
-  // Checks that a map is valid so that callable that discard this and try another route
-  template<typename F, typename... Ts>
-  concept supports_mapping =  requires(F func, Ts... ts)
-  {
-    { func(eve::detail::get_at(ts, 0)...) };
-  };
-
-  // Compute a transformed wide type
-  template<typename F, typename... Ts>
-  struct wide_result;
-
-  template<typename F, typename... Ts>
-  requires supports_mapping<F,Ts...>
-  struct wide_result<F,Ts...>
-  {
-    template<typename T>
-    static constexpr std::ptrdiff_t card() noexcept
-    {
-      if constexpr(simd_value<T>) return T::size(); else return 1;
-    }
-
-    static constexpr std::size_t card_v = std::max({card<std::decay_t<Ts>>()...});
-    using value_t                       = decltype(std::declval<F>()(eve::detail::get_at(std::declval<Ts>(), 0)...));
-    using fixed_t                       = fixed<card_v>;
-
-    template<typename S> struct widen : as_wide<S, fixed_t> {};
-
-    using base  = std::conditional_t< kumi::product_type<value_t>
-                                    , kumi::as_tuple<value_t,widen>
-                                    , as_wide<value_t, fixed_t>
-                                    >;
-    using type = typename base::type;
-  };
-
   template<typename Out, typename... Bs>
   EVE_FORCEINLINE auto rebuild( Bs const&... ps) noexcept
   {
+    using kumi::get;
+
     auto const inside = [&]<typename I>(I)
     {
-      return std::tuple_element_t<I::value,Out>(kumi::get<I::value>(ps)...);
+      return std::tuple_element_t<I::value, Out>(get<I::value>(ps)...);
     };
 
     return detail::apply<kumi::size<Out>::value>( [&]( auto const&... I)
-    {
-      Out that;
-      ((kumi::get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
-      return that;
-    }
+      {
+        Out that;
+        ((get<std::decay_t<decltype(I)>::value>(that) = inside(I)),...);
+        return that;
+      }
     );
   }
 
@@ -82,29 +50,28 @@ namespace eve::detail
   {
     // Not a lambda as we need force-inlining
     template<typename Func, typename Idx, typename... Ts>
-    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept
+    EVE_FORCEINLINE auto operator()(Func &&fn, Idx i, Ts &&... vs) const noexcept -> decltype(EVE_FWD(fn)(eve::detail::get_at(EVE_FWD(vs), i)...))
     {
       return EVE_FWD(fn)(eve::detail::get_at(EVE_FWD(vs), i)...);
     }
   };
 
-  template<typename Fn, typename... Ts>
-  EVE_FORCEINLINE typename wide_result<Fn, Ts...>::type map(Fn &&f, Ts &&... ts) noexcept
+  template<typename R, typename Fn, typename... Ts>
+  EVE_FORCEINLINE R map(as<R>, Fn &&f, Ts &&... ts) noexcept
+  requires( requires{ EVE_FWD(f)(eve::detail::get_at(EVE_FWD(ts), 0)...); } )
   {
-    using w_t = typename wide_result<Fn, Ts...>::type;
-
-    if constexpr( kumi::product_type<element_type_t<w_t>> )
+    if constexpr (kumi::product_type<element_type_t<R>>)
     {
-      return  apply<cardinal_v<std::tuple_element_t<0,w_t>>>
+      return  apply<cardinal_v<std::tuple_element_t<0, R>>>
               ( [&](auto... I)
                 {
-                  return rebuild<w_t>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
+                  return rebuild<R>(map_{}(EVE_FWD(f), I, EVE_FWD(ts)...)...);
                 }
               );
     }
     else
     {
-      return apply<cardinal_v<w_t>>([&](auto... I) { return w_t{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
+      return apply<cardinal_v<R>>([&](auto... I) { return R{map_{}( EVE_FWD(f), I, EVE_FWD(ts)...)...}; } );
     }
   }
 

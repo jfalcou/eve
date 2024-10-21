@@ -15,8 +15,7 @@
 namespace eve::detail
 {
 template<typename U, integral_scalar_value T, typename N>
-EVE_FORCEINLINE auto
-gather_(EVE_SUPPORTS(avx2_), U const* p, wide<T, N> v) noexcept -> wide<U, N>
+EVE_FORCEINLINE auto gather_(EVE_SUPPORTS(avx2_), U const* p, wide<T, N> v) noexcept -> wide<U, N>
 requires x86_abi<abi_t<T, N>>
 {
   // Aggregation cases

@@ -348,10 +348,10 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     // and not just zip
     using T = common_type_t<value_type_t<R1>, eve::value_type_t<R2>>;
 
-    auto converted_res = operator()(views::convert(EVE_FWD(haystack), eve::as<T> {}),
-                                    views::convert(EVE_FWD(needle), eve::as<T> {}),
+    auto converted_res = operator()(views::convert(EVE_FWD(haystack), as<T> {}),
+                                    views::convert(EVE_FWD(needle), as<T> {}),
                                     eve::is_equal);
-    return views::convert(converted_res, eve::as<value_type_t<R1>> {});
+    return views::convert(converted_res, as<value_type_t<R1>> {});
   }
 };
 

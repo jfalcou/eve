@@ -19,73 +19,76 @@ namespace eve
   template<typename Options>
   struct sinhc_t : elementwise_callable<sinhc_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sinhc_t, sinhc_);
   };
 
-//================================================================================================
-//! @addtogroup math_hyper
-//! @{
-//! @var sinhc
-//!
-//! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}{2x}\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto sinhc(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto sinhc[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto sinhc[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!`x`:   [floating value](@ref eve::floating_value).
-//!
-//! **Return value**
-//!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input divided by the
-//!      input. In particular:
-//!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
-//!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
-//!        * If the element is a `Nan`, `NaN` is returned.
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/sinhc.cpp}
-//!
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_hyper
+  //! @{
+  //! @var sinhc
+  //!
+  //! @brief `elementwise_callable` object computing \f$\frac{e^x-e^{-x}}{2x}\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto sinhc(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto sinhc[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto sinhc[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!`x`:   [floating value](@ref eve::floating_value).
+  //!
+  //! **Return value**
+  //!
+  //!   1.  Returns the [elementwise](@ref glossary_elementwise) hyperbolic sine of the input divided by the
+  //!      input. In particular:
+  //!        * If the element is \f$\pm0\f$, \f$1\f$ is returned.
+  //!        * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ is returned.
+  //!        * If the element is a `Nan`, `NaN` is returned.
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/sinhc.cpp}
+  //!
+  //================================================================================================
   inline constexpr auto sinhc = functor<sinhc_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T sinhc_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr( scalar_value<T> )
       {
-        if( is_eqz(a0) ) return one(eve::as(a0));
+        if( is_eqz(a0) ) return one(eve::as{a0});
         if constexpr( eve::platform::supports_infinites )
-          if( is_infinite(a0) ) return zero(eve::as<T>());
+          if( is_infinite(a0) ) return zero(as<T>{});
         if constexpr( eve::platform::supports_denormals )
-          return eve::abs(a0) < eps(as<T>()) ? one(eve::as<T>()) : sinh(a0) / a0;
+          return eve::abs(a0) < eps(as<T>{}) ? one(as<T>{}) : sinh(a0) / a0;
         else return sinh(a0) / a0;
       }
       else
@@ -111,20 +114,20 @@ namespace eve
         };
 
         T    x   = abs(a0);
-        auto lt1 = is_less(x, one(eve::as<T>()));
+        auto lt1 = is_less(x, one(as<T>{}));
         auto nb  = eve::count_true(lt1);
-        T    z   = zero(eve::as<T>());
+        T    z   = zero(as<T>{});
         if( nb > 0 )
         {
           z = sinhc_kernel(sqr(x));
           if( nb >= T::size() ) return z;
         }
-        auto test1 = is_greater(x, maxlog(eve::as<T>()) - log_2(eve::as<T>()));
-        T    fac   = if_else(test1, half(eve::as<T>()), one(eve::as<T>()));
+        auto test1 = is_greater(x, maxlog(as<T>{}) - log_2(as<T>{}));
+        T    fac   = if_else(test1, half(as<T>{}), one(as<T>{}));
         T    tmp   = exp(x * fac);
-        T    tmp1  = (half(eve::as<T>()) * tmp) / x;
+        T    tmp1  = (half(as<T>{}) * tmp) / x;
         T    r     = if_else(test1, tmp1 * tmp, average(tmp, -rec[pedantic](tmp)) / x);
-        if constexpr( eve::platform::supports_infinites ) r = if_else(x == inf(eve::as<T>()), x, r);
+        if constexpr( eve::platform::supports_infinites ) r = if_else(x == inf(as<T>{}), x, r);
         return if_else(lt1, z, r);
       }
     }

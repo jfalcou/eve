@@ -114,7 +114,7 @@ store_(EVE_SUPPORTS(sse2_),
     {
       constexpr auto c = categorize<wide<T, N>>();
 
-      auto m = cond.mask(as(v)).storage().value;
+      auto m = cond.mask(as{v}).storage().value;
 
       if constexpr( c == category::float64x2 ) _mm_mask_store_pd(ptr.get(), m, v);
       else if constexpr( c == category::float64x4 ) _mm256_mask_store_pd(ptr.get(), m, v);
@@ -140,7 +140,7 @@ store_(EVE_SUPPORTS(sse2_),
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    auto m = cond.mask(as(v)).storage().value;
+    auto m = cond.mask(as{v}).storage().value;
 
     if constexpr( c == category::float64x2 ) _mm_mask_storeu_pd(ptr, m, v);
     else if constexpr( c == category::float64x4 ) _mm256_mask_storeu_pd(ptr, m, v);

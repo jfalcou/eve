@@ -29,8 +29,8 @@ namespace eve::detail
     wide<T, N> operator()(wide<T, N> v) const
       requires ( sizeof(T) < 4 )
     {
-      auto bigger = operator()(eve::convert(v, eve::as<std::int32_t>{}));
-      return eve::convert(bigger, eve::as<T>{});
+      auto bigger = operator()(eve::convert(v, as<std::int32_t>{}));
+      return eve::convert(bigger, as<T>{});
     }
 
     template <typename T>
@@ -59,7 +59,7 @@ namespace eve::detail
     if constexpr( C::is_complete && !C::is_inverted ) return compress_(EVE_RETARGET(cpu_), c, v, mask);
     else if constexpr ( !C::is_complete )
     {
-      return compress(ignore_none, v, mask && c.mask(as(mask)));
+      return compress(ignore_none, v, mask && c.mask(as{mask}));
     }
     else if constexpr ( compress_sve_should_split<T, N>() )
     {

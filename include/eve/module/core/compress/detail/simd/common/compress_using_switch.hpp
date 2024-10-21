@@ -33,7 +33,7 @@ namespace eve::detail
     }
     else if constexpr ( like_aggregate && !C::is_complete )
     {
-      mask = mask && c.mask(as(mask));
+      mask = mask && c.mask(as{mask});
 
       return compress_using_switch(ignore_none, v, mask);
     }

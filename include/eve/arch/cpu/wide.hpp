@@ -70,6 +70,14 @@ namespace eve
   {
     using storage_base = detail::wide_storage<as_register_t<Type, Cardinal, abi_t<Type, Cardinal>>>;
 
+    // split_type does not exist on cardinals of size 1
+    // this function returns a void_t if the split_type does not exist
+    template <typename T, typename N>
+    static constexpr auto get_split_type() noexcept
+    {
+      if constexpr (N::value > 1) return wide<T, typename N::split_type>{};
+    }
+
     public:
     //! The type stored in the register.
     using value_type = Type;
@@ -88,6 +96,12 @@ namespace eve
 
     //! Opt-in for like concept
     using is_like = value_type;
+
+    //! Type representing a wide of the same type but with a cardinal twice the size
+    using combined_type = wide<Type, typename Cardinal::combined_type>;
+
+    //! Type representing a wide of the same type but with a cardinal half the size
+    using split_type = decltype(get_split_type<Type, Cardinal>());
 
     //! @brief Generates a eve::wide from a different type `T` and cardinal `N`.
     //! If unspecified, `N` is computed as `expected_cardinal_t<T>`.
@@ -148,7 +162,7 @@ namespace eve
     template<typename S>
     requires std::constructible_from<Type,S>
     EVE_FORCEINLINE explicit wide(S const& v) noexcept
-        : storage_base(detail::make(eve::as<wide>{}, Type(v)))
+        : storage_base(detail::make(as<wide>{}, Type(v)))
     {}
 
     //! Constructs a eve::wide from a sequence of scalar values of proper size
@@ -158,7 +172,7 @@ namespace eve
                   && std::is_convertible_v<S0,Type>
                   && (std::is_convertible_v<S1, Type> && ... && std::is_convertible_v<Ss, Type>)
                 )
-        : storage_base(detail::make(eve::as<wide> {},
+        : storage_base(detail::make(as<wide>{},
                                     static_cast<Type>(v0),
                                     static_cast<Type>(v1),
                                     static_cast<Type>(vs)...))
@@ -212,7 +226,7 @@ namespace eve
     //==============================================================================================
     template<eve::invocable<size_type, size_type> Generator>
     EVE_FORCEINLINE wide(Generator&& g) noexcept
-        : storage_base(detail::fill(eve::as<wide> {}, EVE_FWD(g)))
+        : storage_base(detail::fill(as<wide>{}, EVE_FWD(g)))
     {}
 
     //! @brief Constructs a eve::wide by combining two eve::wide of half the current cardinal.
@@ -440,7 +454,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      return bit_and(bit_cast(w, as<wide<S, Cardinal>>()), s);
+      return bit_and(bit_cast(w, as<wide<S, Cardinal>>{}), s);
     }
 
     //! @brief Performs a Compound bitwise or on all the wide lanes and assign the result to the current
@@ -529,7 +543,7 @@ namespace eve
         requires(!kumi::product_type<Type> && supports_bitwise_call<S, wide>)
 #endif
     {
-      return bit_xor(bit_cast(w, as<wide<S, Cardinal>>()), s);
+      return bit_xor(bit_cast(w, as<wide<S, Cardinal>>{}), s);
     }
 
     //==============================================================================================
@@ -985,7 +999,7 @@ namespace eve
       else
       {
         constexpr auto sz   = sizeof(storage_type) / sizeof(Type);
-        auto           that = bit_cast(p, as<std::array<Type, sz>>());
+        auto           that = bit_cast(p, as<std::array<Type, sz>>{});
 
         os << '(' << +that[0];
         for( size_type i = 1; i != p.size(); ++i ) os << ", " << +that[i];

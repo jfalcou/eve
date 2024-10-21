@@ -28,13 +28,17 @@ namespace eve
 template<typename Options>
 struct rat_t : elementwise_callable<rat_t, Options>
 {
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE zipped<T,T>
-  operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<floating_value T>
+  constexpr EVE_FORCEINLINE zipped<T, T> operator()(T v) const
+  {
+    return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), v);
+  }
 
-  template<eve::floating_value T, eve::floating_value U>
-  constexpr EVE_FORCEINLINE zipped<common_value_t<T,U>,common_value_t<T,U>>
-  operator()(T v, U t) const  { return EVE_DISPATCH_CALL(v, t); }
+  template<floating_value T, floating_value U>
+  constexpr EVE_FORCEINLINE zipped<common_value_t<T, U>, common_value_t<T, U>> operator()(T v, U t) const
+  {
+    return this->behavior(as<zipped<common_value_t<T, U>, common_value_t<T, U>>>{}, eve::current_api, this->options(), v, t);
+  }
 
   EVE_CALLABLE_OBJECT(rat_t, rat_);
 };
@@ -83,13 +87,13 @@ struct rat_t : elementwise_callable<rat_t, Options>
 
 namespace detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto rat_(EVE_REQUIRES(cpu_), O const& o, T const& x) noexcept
   {
     return rat[o](x, T(1.0e-6) * eve::abs(x));
   }
 
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr auto
   rat_(EVE_REQUIRES(cpu_), O const&, T const& x, T const& tol) noexcept
   {
@@ -97,10 +101,10 @@ namespace detail
     {
       if( is_infinite(x) || is_eqz(x) ) return zip(sign(x), T{0});
       auto n     = nearest(x);
-      auto d     = one(as(x));
+      auto d     = one(as{x});
       auto frac  = x - n;
-      auto lastn = one(as(x));
-      auto lastd = zero(as(x));
+      auto lastn = one(as{x});
+      auto lastd = zero(as{x});
 
       while( abs(x - n / d) >= tol )
       {
@@ -123,10 +127,10 @@ namespace detail
       auto is_inf = is_infinite(x);
       auto y      = if_else(is_inf, zero, x);
       auto n      = nearest(y);
-      auto d      = one(as(y));
+      auto d      = one(as{y});
       auto frac   = y - n;
-      auto lastn  = one(as(y));
-      auto lastd  = zero(as(y));
+      auto lastn  = one(as{y});
+      auto lastd  = zero(as{y});
 
       while( true )
       {

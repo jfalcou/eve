@@ -20,7 +20,7 @@ namespace eve::detail
     else if constexpr( std::is_same_v<T, double> )
     {
       // TODO (joel) : Test on proper VSX HW
-      return map(eve::nearest, v0);
+      return map(as<wide<T, N>>{}, eve::nearest, v0);
     }
   }
 }

@@ -29,7 +29,7 @@
 namespace eve::detail
 {
 
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T rem_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(integral_value<T>)
@@ -58,7 +58,7 @@ namespace eve::detail
       }
       else
       {
-        if constexpr( current_api == neon && simd_value<T> ) return map(rem, a, b);
+        if constexpr( current_api == neon && simd_value<T> ) return map(as<T>{}, rem, a, b);
         else
         {
           return if_else(is_unordered(a, b) || is_infinite(a) || is_eqz(b),
@@ -71,7 +71,7 @@ namespace eve::detail
 
 
   template<conditional_expr C, typename T, callable_options O>
-  EVE_FORCEINLINE T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const & o, T t, T f) noexcept
+  EVE_FORCEINLINE T  rem_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T t, T f) noexcept
   requires(integral_value<T>)
   {
     auto g = if_else(cond, f, one);

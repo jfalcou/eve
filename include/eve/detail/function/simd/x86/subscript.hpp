@@ -53,7 +53,7 @@ namespace eve::detail
     {
       auto m = p.bits();
       m.set(i, logical<T>(v).bits());
-      p = bit_cast(m, as(p));
+      p = bit_cast(m, as{p});
     }
   }
 }

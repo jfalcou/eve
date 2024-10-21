@@ -117,8 +117,7 @@ TTS_CASE_WITH("Check behavior of mul on signed types",
 {
   using eve::mul;
   using eve::saturated;
-  TTS_EQUAL(mul[a2 > T(64)](a0, a1),
-            tts::map([](auto e, auto f, auto g) { return g > 64 ? mul(e, f) : e; }, a0, a1, a2));
+  TTS_EQUAL(mul[a2 > T(64)](a0, a1), tts::map([](auto e, auto f, auto g) { return g > 64 ? mul(e, f) : e; }, a0, a1, a2));
   TTS_EQUAL(
       mul[saturated][a2 > T(64)](a0, a1),
       tts::map([](auto e, auto f, auto g) { return g > 64 ? mul[saturated](e, f) : e; }, a0, a1, a2));

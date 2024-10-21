@@ -41,8 +41,8 @@ namespace eve::detail
     using tmp_t = decltype([v](){ if constexpr(pure_pair) return get<0>(v); else  return v;}());
     using r_t = std::decay_t<tmp_t>;
     using u_t =   underlying_type_t<r_t>;
-    u_t tiny = 16*smallestposval(as<u_t>()) ;
-    u_t terminator(eps <= 0 ? eve::abs(eps)*eve::eps(as<u_t>()) : u_t(eps));
+    u_t tiny = 16*smallestposval(as<u_t>{}) ;
+    u_t terminator(eps <= 0 ? eve::abs(eps)*eve::eps(as<u_t>{}) : u_t(eps));
     size_t counter(max_terms);
 
     r_t f{};
@@ -99,15 +99,15 @@ namespace eve::detail
     using tmp_t = decltype([v](){ if constexpr(pure_pair) return get<0>(v); else  return v;}());
     using r_t = std::decay_t<tmp_t>;
     using u_t =   underlying_type_t<r_t>;
-    u_t tiny = 16*smallestposval(as<u_t>()) ;
-    u_t terminator(eps <= 0 ? eve::abs(eps)*eve::eps(as<u_t>()) : u_t(eps));
+    u_t tiny = 16*smallestposval(as<u_t>{}) ;
+    u_t terminator(eps <= 0 ? eve::abs(eps)*eve::eps(as<u_t>{}) : u_t(eps));
     size_t counter(max_terms);
 
     r_t f{};
     if constexpr(pure_pair) f = get<1>(v); else f = v;
     f = if_else(is_eqz(f), tiny, f);
     r_t a0{};
-    if constexpr(pure_pair) a0 = get<0>(v); else a0 = one(as<r_t>());
+    if constexpr(pure_pair) a0 = get<0>(v); else a0 = one(as<r_t>{});
     a0 = if_else(is_eqz(a0), tiny, a0);
     auto C = f;
     r_t  D{0};

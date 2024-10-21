@@ -23,10 +23,12 @@ namespace eve
 template<typename Options>
 struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 {
-  template<eve::floating_value T0, eve::floating_value T1>
-  requires (same_lanes_or_scalar<T0, T1>)
-  EVE_FORCEINLINE constexpr eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
-  { return EVE_DISPATCH_CALL(a, b); }
+  template<floating_value T0, floating_value T1>
+  EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
+    requires (same_lanes_or_scalar<T0, T1>)
+  {
+    return this->behavior(as<common_value_t<T0, T1>>{}, eve::current_api, this->options(), a, b);
+  }
 
   EVE_CALLABLE_OBJECT(gamma_p_inv_t, gamma_p_inv_);
 };
@@ -84,21 +86,21 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto  gamma_p_inv_(EVE_REQUIRES(cpu_), O const&, T p, T k) noexcept
     {
       if constexpr( std::is_same_v<element_type_t<T>, float> )
       {
-        return convert(gamma_p_inv(convert(p, as<double>()), convert(k, as<double>())), as<float>());
+        return convert(gamma_p_inv(convert(p, as<double>{}), convert(k, as<double>{})), as<float>{});
       }
-      p                 = if_else(is_ltz(p) || p > one(as(p)), allbits, p);
+      p                 = if_else(is_ltz(p) || p > one(as{p}), allbits, p);
       auto       iseqzp = is_eqz(p);
-      auto       iseq1p = p == one(as(p));
-      auto       x      = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), allbits));
+      auto       iseq1p = p == one(as{p});
+      auto       x      = if_else(iseq1p, inf(as{p}), if_else(iseqzp, zero(as{p}), allbits));
       logical<T> notdone(is_not_nan(p) && !iseqzp && !iseq1p);
       auto       d   = rec[pedantic](9 * k);
       auto       omp = oneminus(p);
-      auto       y   = oneminus(d - sqrt_2(as(omp)) * erfc_inv(2 * omp) * eve::sqrt(d));
+      auto       y   = oneminus(d - sqrt_2(as{omp}) * erfc_inv(2 * omp) * eve::sqrt(d));
 
       x       = if_else(notdone, k * sqr(y) * y, x);
       auto x0 = x;
@@ -110,20 +112,20 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
         auto dx = if_else(notdone, (gamma_p(x, k) - p) / dgamma_p(x, k), zero);
         x -= dx;
         if( i < 7 )
-          notdone = notdone && is_not_less(abs(dx), 4 * eps(as(x)) * max(eve::abs(x), one(as(x))));
+          notdone = notdone && is_not_less(abs(dx), 4 * eps(as{x}) * max(eve::abs(x), one(as{x})));
         if( eve::none(notdone) ) return x;
         --i;
       }
 
       notdone  = notdone || is_ltz(y);
       x        = if_else(notdone, eve::abs(x0), x);
-      auto xlo = if_else(notdone, eve::min(x / 2, zero(as(x))), x);
-      auto xhi = if_else(notdone, eve::min(x * 2, eve::valmax(as(x))), x);
+      auto xlo = if_else(notdone, eve::min(x / 2, zero(as{x})), x);
+      auto xhi = if_else(notdone, eve::min(x * 2, eve::valmax(as{x})), x);
       auto inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
       while( eve::any(inl) )
       {
-        xlo = if_else(inl, eve::max(xlo / 2, zero(as(x))), xlo);
-        xhi = if_else(inl, eve::min(xhi * 2, eve::valmax(as(x))), xhi);
+        xlo = if_else(inl, eve::max(xlo / 2, zero(as{x})), xlo);
+        xhi = if_else(inl, eve::min(xhi * 2, eve::valmax(as{x})), xhi);
         inl = ((gamma_p(xlo, k) > p) || (gamma_p(xhi, k) < p)) && (xlo != xhi);
       }
       auto xmed = average(xlo, xhi);
@@ -136,8 +138,8 @@ struct gamma_p_inv_t : elementwise_callable<gamma_p_inv_t, Options>
         notdone   = (ulpdist(xlo, xhi) > 1) && gmp != 0;
         xmed      = average(xlo, xhi);
       }
-      xmed = if_else(iseq1p, inf(as(p)), if_else(iseqzp, zero(as(p)), xmed));
-      return if_else(k == one(as(k)), -eve::log1p(-p), xmed);
+      xmed = if_else(iseq1p, inf(as{p}), if_else(iseqzp, zero(as{p}), xmed));
+      return if_else(k == one(as{k}), -eve::log1p(-p), xmed);
     }
   }
 }

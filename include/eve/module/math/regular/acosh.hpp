@@ -21,8 +21,11 @@ namespace eve
   template<typename Options>
   struct acosh_t : elementwise_callable<acosh_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(acosh_t, acosh_);
 };
@@ -88,20 +91,20 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T acosh_(EVE_REQUIRES(cpu_), O const&, T const& x)
     {
       const T    t    = dec(x);
-      auto const test = is_greater(t, inv_2eps(eve::as<T>()));
+      auto const test = is_greater(t, inv_2eps(as<T>{}));
 
       if constexpr( simd_value<T> )
       {
         const T z = if_else(test, x, t + sqrt(fma(t, t, t + t)));
-        return add[test](log1p(z), log_2(eve::as<T>()));
+        return add[test](log1p(z), log_2(as<T>{}));
       }
       else if constexpr( scalar_value<T> )
       {
-        if( test ) { return eve::log(t) + log_2(eve::as<T>()); }
+        if( test ) { return eve::log(t) + log_2(as<T>{}); }
         else { return eve::log1p(t + eve::sqrt(fma(t, t, t + t))); }
       }
     }

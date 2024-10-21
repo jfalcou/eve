@@ -19,7 +19,7 @@
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T sqrt_(EVE_REQUIRES(cpu_),
                                     O const& o,
                                     T const& a0) noexcept
@@ -47,6 +47,6 @@ namespace eve::detail
     else if constexpr( scalar_value<T> )
       return std::sqrt(a0);
     else
-      return map(eve::sqrt, a0);
+      return map(as<T>{}, eve::sqrt, a0);
   }
 }

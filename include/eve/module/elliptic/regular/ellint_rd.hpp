@@ -20,77 +20,78 @@ namespace eve
   template<typename Options>
   struct ellint_rd_t : elementwise_callable<ellint_rd_t, Options, raw_option>
   {
-    template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
-    requires (same_lanes_or_scalar<T0, T1, T2>)
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
-   { return EVE_DISPATCH_CALL(a, b, c); }
+    template<floating_value T0, floating_value T1, floating_value T2>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2>)
+    {
+      return this->behavior(as<common_value_t<T0, T1, T2>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
     EVE_CALLABLE_OBJECT(ellint_rd_t, ellint_rd_);
   };
 
-//================================================================================================
-//! @addtogroup elliptic
-//! @{
-//!   @var ellint_rd
-//!   @brief  `elementwise_callable` object computing the Carlson's elliptic integral
-//!   \f$  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
-//!   (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/elliptic.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto ellint_rd(floating_value auto x, floating_value auto y, floating_value auto z)   noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto ellint_rd[conditional_expr auto c](floating_value auto x, floating_value auto y,
-//!                                                        floating_value auto z)                        noexcept; // 2
-//!      constexpr auto ellint_rd[logical_value auto m](floating_value auto x, floating_value auto y,
-//!                                                     floating_value auto z)                           noexcept; // 2
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`, `y`: [floating values](@ref floating_value). `x` and `y` must be
-//!       strictly positive and `y` non zero. In any other case, the result is NaN.
-//!     * `z`: strictly positive [floating values](@ref eve::floating_value). In any other
-//!       case, the result is `NaN`.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!      1. the value of \f$  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
-//!         (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$ is returned.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
-//!
-//!  @groupheader{External references}
-//!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
-//!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/elliptic/ellint_rc.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup elliptic
+  //! @{
+  //!   @var ellint_rd
+  //!   @brief  `elementwise_callable` object computing the Carlson's elliptic integral
+  //!   \f$  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+  //!   (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/elliptic.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto ellint_rd(floating_value auto x, floating_value auto y, floating_value auto z)   noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto ellint_rd[conditional_expr auto c](floating_value auto x, floating_value auto y,
+  //!                                                        floating_value auto z)                        noexcept; // 2
+  //!      constexpr auto ellint_rd[logical_value auto m](floating_value auto x, floating_value auto y,
+  //!                                                     floating_value auto z)                           noexcept; // 2
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`, `y`: [floating values](@ref floating_value). `x` and `y` must be
+  //!       strictly positive and `y` non zero. In any other case, the result is NaN.
+  //!     * `z`: strictly positive [floating values](@ref eve::floating_value). In any other
+  //!       case, the result is `NaN`.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!      1. the value of \f$  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+  //!         (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\f$ is returned.
+  //!      2. [The operation is performed conditionnaly](@ref conditional)
+  //!
+  //!  @groupheader{External references}
+  //!   *  [DLMF: Elliptic Integrals](https://dlmf.nist.gov/19.2)
+  //!   *  [Wolfram MathWorld: Elliptic Integral](https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/elliptic/ellint_rc.cpp}
+  //================================================================================================
   inline constexpr auto ellint_rd = functor<ellint_rd_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr auto  ellint_rd_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
+    template<callable_options O, typename T>
+    constexpr T ellint_rd_(EVE_REQUIRES(cpu_), O const&, T x, T y, T z) noexcept
     {
-      if constexpr(O::contains(raw))
+      if constexpr (O::contains(raw))
       {
         using elt_t = element_type_t<T>;
         T    xn     = x;
@@ -98,15 +99,15 @@ namespace eve
         T    zn     = z;
         T    an     = (x + y + T(3) * z) / 5;
         T    a0     = an;
-        auto epsi   = pow_abs(elt_t(0.25) * eps(as(element_type_t<T>())), -1 / T(8));
+        auto epsi   = pow_abs(elt_t(0.25) * eps(as<element_type_t<T>>{}), -1 / T(8));
         T    q = epsi * (eve::max)((eve::max)(eve::abs(an - xn), eve::abs(an - yn)), eve::abs(an - zn))
           * elt_t(1.2);
-        T fn(one(as(x)));
-        T rd_sum(zero(as(x)));
+        T fn(one(as{x}));
+        T rd_sum(zero(as{x}));
 
         // duplication
         unsigned k  = 0;
-        T        hf = half(as(x));
+        T        hf = half(as{x});
         for( ; k < 30; ++k )
         {
           T root_x = eve::sqrt(xn);
@@ -155,7 +156,7 @@ namespace eve
       }
       else
       {
-        auto r       = nan(as(x));
+        auto r       = nan(as{x});
         auto notdone = is_nltz(x) && is_nltz(y) && is_nlez(z) && is_nez(x + y);
         // z equal to zero or any parameter nan or less than zero or more than one of x and y zero implies
         // nan

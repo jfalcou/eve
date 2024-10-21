@@ -30,7 +30,7 @@
 namespace eve::detail
 {
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
+  EVE_FORCEINLINE constexpr common_value_t<T, U> mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
     if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
@@ -112,13 +112,13 @@ namespace eve::detail
               if constexpr (sizeof(elt_t) <= 4)
               {
                 using supw_t = upgrade_t<elt_t>;
-                auto z      = mul(convert(a, as<supw_t>()), convert(b, as<supw_t>()));
-                auto s      = saturate(z, as<elt_t>());
-                return convert(s, as<elt_t>());
+                auto z      = mul(convert(a, as<supw_t>{}), convert(b, as<supw_t>{}));
+                auto s      = saturate(z, as<elt_t>{});
+                return convert(s, as<elt_t>{});
               }
               else
               {
-                auto that = map(eve::mul[saturated], a, b);
+                auto that = map(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
                 return that;
               }
             }
@@ -153,13 +153,13 @@ namespace eve::detail
             if constexpr (sizeof(elt_t) <= 4)
             {
               using supw_t = upgrade_t<elt_t>;
-              auto z      = mul(convert(a, as<supw_t>()), convert(b, as<supw_t>()));
-              auto s      = saturate(z, as<elt_t>());
-              return convert(s, as<elt_t>());
+              auto z      = mul(convert(a, as<supw_t>{}), convert(b, as<supw_t>{}));
+              auto s      = saturate(z, as<elt_t>{});
+              return convert(s, as<elt_t>{});
             }
             else
             {
-              auto that = map(eve::mul[saturated], a, b);
+              auto that = map(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
               return that;
             }
           }
@@ -179,7 +179,7 @@ namespace eve::detail
   }
 
   template<callable_options O, typename T, typename U, typename... Vs>
-  EVE_FORCEINLINE constexpr T mul_(EVE_REQUIRES(cpu_), O const & o, T r0, U r1, Vs... rs) noexcept
+  EVE_FORCEINLINE constexpr T mul_(EVE_REQUIRES(cpu_), O const& o, T r0, U r1, Vs... rs) noexcept
   {
     //TODO: optimize, see add_
     r0   = mul[o](r0,r1);

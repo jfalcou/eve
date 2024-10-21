@@ -22,13 +22,12 @@
 namespace eve
 {
   template<typename Options>
-  struct is_even_t : elementwise_callable<is_even_t, Options>
+  struct is_even_t : elementwise_callable<is_even_t, Options, pedantic_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_even_t, is_even_);
@@ -82,23 +81,22 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_even_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_even_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
       if constexpr( floating_value<T> )
       {
-        auto aisflt = is_flint(a * half(eve::as(a)));
+        auto aisflt = is_flint[o](a * half(eve::as{a}));
         auto aa     = eve::abs(a);
         if constexpr( eve::platform::supports_denormals )
-          return aisflt && (aa != mindenormal(eve::as<T>()));
+          return aisflt && (aa != mindenormal(as<T>{}));
         else
-          return aisflt && (aa != smallestposval(eve::as<T>()));
+          return aisflt && (aa != smallestposval(as<T>{}));
       }
       else if constexpr( scalar_value<T> )
-        return (!(a & one(eve::as(a))));
+        return (!(a & one(eve::as{a})));
       else
-        return is_eqz((a & one(eve::as(a))));
+        return is_eqz((a & one(eve::as{a})));
     }
   }
 }

@@ -17,7 +17,7 @@ shuffle_l3_and_0(P p, fixed<G> g, wide<T, N> x)
   if constexpr( !idxm::is_just_zeroes_replaced(P::idxs) ) return no_matching_shuffle;
   else
   {
-    return x & is_na_or_we_mask(p, g, eve::as(x));
+    return x & is_na_or_we_mask(p, g, eve::as{x});
   }
 }
 

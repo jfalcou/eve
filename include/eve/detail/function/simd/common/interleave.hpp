@@ -40,14 +40,14 @@ namespace eve::detail
       using up_e_t = upgrade_t<eve::element_type_t<T>>;
       using up_t   = wide<up_e_t, eve::fixed<T::size() / 2>>;
 
-      auto [abcd00, abcd01] = interleave(bit_cast(ab0, as<up_t>()), bit_cast(cd0, as<up_t>()));
-      auto [abcd10, abcd11] = interleave(bit_cast(ab1, as<up_t>()), bit_cast(cd1, as<up_t>()));
+      auto [abcd00, abcd01] = interleave(bit_cast(ab0, as<up_t>{}), bit_cast(cd0, as<up_t>{}));
+      auto [abcd10, abcd11] = interleave(bit_cast(ab1, as<up_t>{}), bit_cast(cd1, as<up_t>{}));
 
       return kumi::make_tuple (
-        bit_cast(abcd00, as(v0)),
-        bit_cast(abcd01, as(v0)),
-        bit_cast(abcd10, as(v0)),
-        bit_cast(abcd11, as(v0))
+        bit_cast(abcd00, as{v0}),
+        bit_cast(abcd01, as{v0}),
+        bit_cast(abcd10, as{v0}),
+        bit_cast(abcd11, as{v0})
       );
     }
     else
@@ -83,6 +83,6 @@ namespace eve::detail
   requires( T::abi_type::is_wide_logical )
   {
     auto that = interleave(v0.mask(),vs.mask()...);
-    return  kumi::map( [](auto m) { return bit_cast(m, as<logical<T>>()); }, that);
+    return  kumi::map( [](auto m) { return bit_cast(m, as<logical<T>>{}); }, that);
   }
 }

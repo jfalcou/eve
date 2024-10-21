@@ -23,72 +23,75 @@ namespace eve
                                                             >
   {
     template<value I, floating_value T>
-    requires (same_lanes_or_scalar<I, T>)
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept
+      requires (same_lanes_or_scalar<I, T>)
+    {
+      return this->behavior(as<as_wide_as_t<T, I>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(lrising_factorial_t, lrising_factorial_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var lrising_factorial
-//!   @brief `elementwise_callable` object computing the natural logarithm of the rising Factorial function i.e.
-//!   \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      template<typename I, typename T> constexpr as_wide_as_t<T, I> lrising_factorial(I a, T x) noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto lrising_factorial[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 2
-//!      constexpr auto lrising_factorial[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
-//!
-//!      // Semantic options
-//!      constexpr auto lrising_factoriale[raw]/*any of the above overloads*/)                     noexcept; // 3
-//!      constexpr auto lrising_factorialee[pedantic](/*any of the above overloads*/)              noexcept; // 4
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `a`: [value](@ref eve::floating_value).
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value of the natural logarithm of the rising_factorial is returned( `a` and `x` must be strictly positive).
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
-//!        not both positive.
-//!     4. The `pedantic` option  uses reflection tricks and computes
-//!        the function for all real `a` and `x`, and in fact computes the logarithm of the absolute
-//!        value of the Pochammer symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$
-//!        returning nan only if the result is really undefined.
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld: Rising Factorial](https://mathworld.wolfram.com/RisingFactorial.html)
-//!   *  [Wikipedia: Falling and rising factorials](https://en.wikipedia.org/wiki/Falling_and_rising_factorials
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/special/regular/lrising_factorial.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var lrising_factorial
+  //!   @brief `elementwise_callable` object computing the natural logarithm of the rising Factorial function i.e.
+  //!   \f$\log\left(\frac{\Gamma(x+a)}{\Gamma(x)}\right)\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      template<typename I, typename T> constexpr as_wide_as_t<T, I> lrising_factorial(I a, T x) noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto lrising_factorial[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 2
+  //!      constexpr auto lrising_factorial[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
+  //!
+  //!      // Semantic options
+  //!      constexpr auto lrising_factoriale[raw]/*any of the above overloads*/)                     noexcept; // 3
+  //!      constexpr auto lrising_factorialee[pedantic](/*any of the above overloads*/)              noexcept; // 4
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `a`: [value](@ref eve::floating_value).
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value of the natural logarithm of the rising_factorial is returned( `a` and `x` must be strictly positive).
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!     3. The `raw` option  uses the crude formula with all its limitations and inacurracies and return a Nan if `a` and `a+x` are
+  //!        not both positive.
+  //!     4. The `pedantic` option  uses reflection tricks and computes
+  //!        the function for all real `a` and `x`, and in fact computes the logarithm of the absolute
+  //!        value of the Pochammer symbol \f$\log\left|\frac{\Gamma(x+a)}{\Gamma(x)}\right|\f$
+  //!        returning nan only if the result is really undefined.
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld: Rising Factorial](https://mathworld.wolfram.com/RisingFactorial.html)
+  //!   *  [Wikipedia: Falling and rising factorials](https://en.wikipedia.org/wiki/Falling_and_rising_factorials
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/special/regular/lrising_factorial.cpp}
+  //================================================================================================
   inline constexpr auto lrising_factorial = functor<lrising_factorial_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
@@ -96,7 +99,8 @@ namespace eve
     /////////////////////////////////////////////////////////////////////////////////////////
     //utilities
 
-    template<typename T> constexpr EVE_FORCEINLINE auto inner_lrising_factorial(T a, T x) noexcept
+    template<typename T>
+    constexpr EVE_FORCEINLINE auto inner_lrising_factorial(T a, T x) noexcept
     {
       // Assumes a>0 and a+x>0.
       auto ax      = eve::abs(x);
@@ -132,14 +136,14 @@ namespace eve
       };
 
       auto lr2 = [](auto aa, auto xx){
-        return if_else(dist(xx + aa, aa) < 10 * aa * eps(as(aa)),
+        return if_else(dist(xx + aa, aa) < 10 * aa * eps(as{aa}),
                        eve::log1p(xx * digamma(aa)),
                        log_abs_gamma(aa + xx) - log_abs_gamma(aa));
       };
 
       if( eve::any(notdone) )
       {
-        auto test0 = (10 * ax > a) || (10 * ax * log(eve::max(a, T(2))) > one(as(x)));
+        auto test0 = (10 * ax > a) || (10 * ax * log(eve::max(a, T(2))) > one(as{x}));
         notdone    = next_interval(lr0, notdone, test0, r, a, x);
         if( eve::any(notdone) )
         {
@@ -153,8 +157,8 @@ namespace eve
     // end utilities
     /////////////////////////////////////////////////////////////////////////////////////////
 
-    template<typename I, typename T, callable_options O>
-    constexpr as_wide_as_t<T, I> lrising_factorial_(EVE_REQUIRES(cpu_), O const& d, I a, T x) noexcept
+    template<callable_options O, typename I, typename T>
+    constexpr as_wide_as_t<T, I> lrising_factorial_(EVE_REQUIRES(cpu_), O const& o, I a, T x) noexcept
     {
       // Integral first parameter
       if constexpr(integral_value<I> )
@@ -163,12 +167,12 @@ namespace eve
         {
           using elt_t = element_type_t<T>;
           using r_t   = as_wide_t<elt_t, cardinal_t<I>>;
-          auto aa     = convert(a, as(elt_t()));
-          return lrising_factorial[d](aa, r_t(x));
+          auto aa     = convert(a, as<elt_t>{});
+          return lrising_factorial[o](aa, r_t(x));
         }
         else if constexpr( integral_scalar_value<I> )
         {
-          return lrising_factorial[d](T(a), x);
+          return lrising_factorial[o](T(a), x);
         }
       }
       else
@@ -182,10 +186,10 @@ namespace eve
         else if constexpr(O::contains(pedantic))
         {
           // pedantic computes also for negative values and even negative integer values
-          auto r       = nan(as(a));
+          auto r       = nan(as{a});
           auto notdone = is_not_nan(a) && is_not_nan(x);
 
-          auto lr0 = []() { return zero(as(T())); };
+          auto lr0 = []() { return zero(as<T>{}); };
 
           auto lrpos = [](auto aa, auto xx) { return inner_lrising_factorial(aa, xx); };
 
@@ -199,7 +203,7 @@ namespace eve
           };
 
           auto lraneqmx = [](auto aa, auto){ // a < 0.0 && a+x < 0.0
-            return minf(as(aa));
+            return minf(as{aa});
           };
 
           auto lrneg = [](auto aa, auto xx){
@@ -249,10 +253,10 @@ namespace eve
         else
         {
           // regular  nan if a+x or x is negative,  better computation than raw
-          auto lr0   = []() { return zero(as(T())); };
+          auto lr0   = []() { return zero(as<T>{}); };
           auto lrpos = [](auto aa, auto xx) { return inner_lrising_factorial(aa, xx); };
 
-          auto r       = nan(as(a));
+          auto r       = nan(as{a});
           auto notdone = is_nltz(x) || is_nltz(a + x);
           if( eve::any(notdone) )
           {
@@ -264,5 +268,4 @@ namespace eve
       }
     }
   }
-
 }

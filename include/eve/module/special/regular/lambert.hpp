@@ -17,65 +17,67 @@ namespace eve
   template<typename Options>
   struct lambert_t : elementwise_callable<lambert_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    zipped<T,T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr zipped<T, T> operator()(T v) const noexcept
+    {
+      return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(lambert_t, lambert_);
   };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var lambert
-//!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto lambert(floating_value auto x) ;                        noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto lambert[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto lambert[logical_value auto m](floating_value auto x)    noexcept; // 2
-///!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. A tuple of the two branch values of the Lambert function is returned with the following
-//!       considerations:
-//!        * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
-//!          returned are NaN.
-//!        * If the inputs are positive, only one branch exist and the two returned values are equal.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)
-//!   *  [DLMF](https://dlmf.nist.gov/4.13)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/lambert.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var lambert
+  //!   @brief Computes the inverse of the function \f$ x \rightarrow xe^x \f$
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto lambert(floating_value auto x) ;                        noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto lambert[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto lambert[logical_value auto m](floating_value auto x)    noexcept; // 2
+  ///!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. A tuple of the two branch values of the Lambert function is returned with the following
+  //!       considerations:
+  //!        * The branches are not defined for input less than \f$e^{-1}\f$ in that case the values
+  //!          returned are NaN.
+  //!        * If the inputs are positive, only one branch exist and the two returned values are equal.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)
+  //!   *  [DLMF](https://dlmf.nist.gov/4.13)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/lambert.cpp}
+  //================================================================================================
   inline constexpr auto lambert = functor<lambert_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
@@ -92,12 +94,12 @@ namespace eve
       }
       else
       {
-        return fam(mone(as(r)), r, eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
+        return fam(mone(as{r}), r, eve::horner(r, -1.80949529206e+00f, 2.33164314895e+00f));
       }
     }
 
-    template<typename T, callable_options O>
-    constexpr  kumi::tuple<T, T> lambert_(EVE_REQUIRES(cpu_), O const&, T x)
+    template<callable_options O, typename T>
+    constexpr kumi::tuple<T, T> lambert_(EVE_REQUIRES(cpu_), O const&, T x)
     {
       auto halley = [](auto px, auto w_i, auto max_iters)
         {
@@ -109,7 +111,7 @@ namespace eve
             T t = fms(w, e, px);
             t /= if_else(is_gtz(w), e * p, e * p - T(0.5) * inc(p) * t / p);
             w -= t;
-            T tol = 10 * eps(as(px)) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
+            T tol = 10 * eps(as{px}) * eve::max(eve::abs(w), rec[pedantic](eve::abs(p) * e));
             if( eve::all(eve::abs(t) < tol) ) break;
           }
           return w;
@@ -125,7 +127,7 @@ namespace eve
         auto w1 = dec(p * (inc(p * fam(T(-1.0 / 3), p, T(1.0 / 72)))));
         auto w2 = log(px);
         w2 -= if_else(px > 3, zero, log(w2));
-        auto init = if_else(px < one(as(px)), w1, w2);
+        auto init = if_else(px < one(as{px}), w1, w2);
         return halley(px, init, 10);
       };
 
@@ -138,13 +140,13 @@ namespace eve
         T l1 = log(-xx);
         T l2 = log(-l1);
         T w2 = l1 - l2 + l2 / l1;
-        return if_else(is_eqz(xx) && !positivex, minf(as(xx)), halley(xx, w2, 30));
+        return if_else(is_eqz(xx) && !positivex, minf(as{xx}), halley(xx, w2, 30));
       };
 
-      auto r       = nan(as<T>());                // nan case treated here
+      auto r       = nan(as<T>{});                // nan case treated here
       r            = if_else(is_eqz(x), zero, r); // zero case treated here
-      r            = if_else(x == inf(as(x)), x, r);
-      auto notdone = is_nlez(q) && (q != inf(as(x)));
+      r            = if_else(x == inf(as{x}), x, r);
+      auto notdone = is_nlez(q) && (q != inf(as{x}));
 
       if( eve::any(notdone) )
       {

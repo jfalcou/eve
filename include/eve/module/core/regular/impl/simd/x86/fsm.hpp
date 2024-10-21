@@ -29,11 +29,11 @@ namespace eve::detail
     // hardware VMADD, thus ensuring the pedantic behavior by default, hence why we don't care about
     // PEDANTIC. As usual, we don't care about PROMOTE as we only accept similar types.
 
-    if      constexpr( C::is_complete )               return alternative(mask, v, as(v));
+    if      constexpr( C::is_complete )               return alternative(mask, v, as{v});
     else if constexpr( !C::has_alternative )
     {
       constexpr auto              c = categorize<wide<T, N>>();
-      [[maybe_unused]] auto const m = expand_mask(mask, as(v)).storage().value;
+      [[maybe_unused]] auto const m = expand_mask(mask, as{v}).storage().value;
       if ((O::contains(lower) || O::contains(upper))&& floating_value<T>) return if_else(mask, eve::fsm[opts.drop(condition_key)](v, w, x), v);
       else if constexpr( c == category::float32x16) return _mm512_mask3_fmsub_ps(w, x, v, m);
       else if constexpr( c == category::float64x8 ) return _mm512_mask3_fmsub_pd(w, x, v, m);
@@ -44,6 +44,6 @@ namespace eve::detail
       // No rounding issue with integers, so we just mask over regular FSM
       else                                          return if_else(mask, eve::fsm(v, w, x), v);
     }
-    else                                            return if_else(mask, eve::fsm[opts.drop(condition_key)](v, w, x), alternative(mask, v, as(v)));
+    else                                            return if_else(mask, eve::fsm[opts.drop(condition_key)](v, w, x), alternative(mask, v, as{v}));
   }
 }

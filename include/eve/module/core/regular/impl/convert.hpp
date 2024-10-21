@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<callable_options O, product_type T, product_type U>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
+  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, as<U>)
   {
     if constexpr( std::same_as<element_type_t<T>, U> )
     {
@@ -81,7 +81,7 @@ namespace eve::detail
         }
         else
         {
-          if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t)) 
+          if constexpr (sizeof(out_ae_t) == sizeof(in_ea_t))
           {
             return bit_cast(v0, as<out_t> {});
           }
@@ -95,7 +95,7 @@ namespace eve::detail
             using i_t = as<logical<as_integer_t<out_ae_t, signed>>>;
             return bit_cast(convert(v0, i_t {}), as<out_t> {});
           }
-          else 
+          else
           {
             return convert_impl(EVE_TARGETS(current_api_type), v0, tgt);
           }
@@ -114,7 +114,7 @@ namespace eve::detail
           return bit_cast(v0, as<wide<Out, N>>{});
         }
         // Converting between integral of different signs is just a bit_cast away
-        if constexpr (std::signed_integral<in_e_t> && std::unsigned_integral<Out>)
+        else if constexpr (std::signed_integral<in_e_t> && std::unsigned_integral<Out>)
         {
           auto s_res = convert(maybe_saturate(v0), eve::as<std::make_signed_t<Out>> {});
           return bit_cast(s_res, eve::as<wide<Out, N>> {});

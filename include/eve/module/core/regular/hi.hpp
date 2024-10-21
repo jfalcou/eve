@@ -21,12 +21,14 @@ namespace eve
     template<typename T>
     struct result
     {
-      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
+      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>, unsigned>>,T>;
     };
 
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type
-    operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<value T>
+    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T a) const noexcept
+    {
+      return this->behavior(as<typename result<T>::type>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(hi_t, hi_);
   };
@@ -75,14 +77,14 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto hi_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       using elt_t = element_type_t<T>;
       if constexpr( sizeof(elt_t) == 1 ) // nibbles extraction
       {
         using ui_t = as_integer_t<T, unsigned>;
-        auto uia0  = bit_cast(a0, as<ui_t>());
+        auto uia0  = bit_cast(a0, as<ui_t>{});
         return ui_t((uia0 & ui_t(0xF0)) >> 4);
       }
       else

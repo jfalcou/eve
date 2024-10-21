@@ -70,11 +70,11 @@ namespace eve
 //!
 //!   @code
 //!   // start with + offset
-//!   in += ignore_in.offset(eve::as(m));
-//!   out += ignore_out.offset(eve::as(m));
+//!   in += ignore_in.offset(eve::as{m});
+//!   out += ignore_out.offset(eve::as{m});
 //!
-//!   eve::keep_first ignore_in1(ignore_in.count(eve::as(m)));
-//!   eve::keep_first ignore_out1(ignore_out.count(eve::as(m)));
+//!   eve::keep_first ignore_in1(ignore_in.count(eve::as{m}));
+//!   eve::keep_first ignore_out1(ignore_out.count(eve::as{m}));
 //!
 //!   // load + store
 //!   auto x = eve::load[ignore_in1](in);

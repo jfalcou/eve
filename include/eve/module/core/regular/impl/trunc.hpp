@@ -20,9 +20,8 @@
 namespace eve::detail
 {
 
-  template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  trunc_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
+  template<callable_options O, typename T>
+  EVE_FORCEINLINE constexpr T trunc_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
   {
     if constexpr(integral_value<T>)
       return a0;
@@ -32,7 +31,7 @@ namespace eve::detail
       {
         using elt_t = element_type_t<T>;
         using i_t   = as_integer_t<elt_t>;
-        return convert(convert(a0, as<i_t>()), as<elt_t>());
+        return convert(convert(a0, as<i_t>{}), as<elt_t>{});
       }
       else if constexpr(O::contains(almost))
       {
@@ -44,16 +43,15 @@ namespace eve::detail
       }
       else
       {
-        auto not_already_integral = !is_not_less_equal(abs(a0), maxflint(eve::as<T>()));
+        auto not_already_integral = !is_not_less_equal(abs(a0), maxflint(as<T>{}));
         auto a = if_else(not_already_integral, a0, zero);
         return if_else(not_already_integral, trunc[raw](a), a0);
       }
     }
   }
 
-  template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  trunc_(EVE_REQUIRES(cpu_), O const& o, T const & a0, as<U> const& ) noexcept
+  template<callable_options O, typename T, typename U>
+  EVE_FORCEINLINE constexpr auto trunc_(EVE_REQUIRES(cpu_), O const& o, T const& a0, as<U>) noexcept
   {
     if constexpr(integral_value<T>)
       return convert(a0, as_element<as_integer_t<T,U>>{});

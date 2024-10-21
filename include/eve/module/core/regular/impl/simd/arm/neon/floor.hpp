@@ -16,7 +16,7 @@ namespace eve::detail
   template<floating_scalar_value T, typename N, callable_options O>
   EVE_FORCEINLINE wide<T, N> floor_(EVE_REQUIRES(neon128_),
                                     O const& o,
-                                    wide<T, N> const& v) noexcept
+                                    wide<T, N> v) noexcept
   requires arm_abi<abi_t<T, N>>
   {
     if constexpr(!O::contains(almost))
@@ -29,9 +29,9 @@ namespace eve::detail
         else if constexpr( cat == category::float32x2 ) return vrndm_f32(v);
         else if constexpr( cat == category::float32x4 ) return vrndmq_f32(v);
       }
-      else return map(floor, v);
+      else return map(as<wide<T, N>>{}, floor, v);
     }
     else
-      return floor_(EVE_TARGETS(cpu_), o, v);
+      return floor.behavior(as<wide<T, N>>{}, cpu_{}, o, v);
   }
 }

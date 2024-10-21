@@ -58,11 +58,11 @@
 //!
 //!   * for example eve::cos,  eve::cosd,  eve::cospi.
 //!
-//!   * The main avantage of using `eve::cospi(x)` instead of `eve::cos(eve::pi(as(x)* x))`
+//!   * The main avantage of using `eve::cospi(x)` instead of `eve::cos(eve::pi(as{x}* x))`
 //!     (as well as the other pi ended functions) is that
 //!     if `x` is exactly representable the multiplication by the floating \f$\pi\f$ multiplier is not.
 //!
-//!     For example eve::cos(eve::pio_2(as<double>()))) is 6.1232e-17 (as pio_2 is not exact),
+//!     For example eve::cos(eve::pio_2(as<double>{}))) is 6.1232e-17 (as pio_2 is not exact),
 //!     but eve::cospi(0.5) is 0 (as 0.5 is exact).
 //!
 //! Moreover each function can be decorated with eve::quarter_circle,  eve:half_circle,

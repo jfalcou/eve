@@ -32,6 +32,7 @@ TTS_CASE_WITH("Check behavior of lentz_b on reals",
   size_t m = 1000u;
   double tol = sizeof(u_t) == 4 ? 1.0e-2 : 1.0e-7;
   using eve::lentz_b;
+
   {
     // frac with constant coefs
     auto ref = (a1+eve::sqrt(eve::sqr(a1)+4))/2;
@@ -40,6 +41,7 @@ TTS_CASE_WITH("Check behavior of lentz_b on reals",
     auto f2 = [a1](){return a1; };
     TTS_RELATIVE_EQUAL(lentz_b(f2, eps, m), ref, tol);
   }
+
   {
     // tan test with lambda
     auto ref = eve::tan(z);

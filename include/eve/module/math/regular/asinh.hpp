@@ -22,101 +22,103 @@ namespace eve
   template<typename Options>
   struct asinh_t : elementwise_callable<asinh_t, Options>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(asinh_t, asinh_);
-};
+  };
 
-
-//================================================================================================
-//! @addtogroup math_invhyper
-//! @{
-//!   @var asinh
-//!   @brief `elementwise_callable` object computing the inverse hyperbolic
-//!   sine :\f$\log(x+\sqrt{x^2+1})\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto asinh(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto asinh[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto asinh[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic sine of the
-//!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
-//!      In particular:
-//!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
-//!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
-//!      * If the element is a `NaN`, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference: asinh](https://en.cppreference.com/w/cpp/numeric/math/asinh)
-//!   *  [Wolfram MathWorld: Inverse Hyperbolic Sine](https://mathworld.wolfram.com/InverseHyperbolicSine.html)
-//!   *  [Wikipedia]: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
-//!   *  [DLMF: Inverse hyperbolic functions](https://dlmf.nist.gov/4.37)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/asinh.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_invhyper
+  //! @{
+  //!   @var asinh
+  //!   @brief `elementwise_callable` object computing the inverse hyperbolic
+  //!   sine :\f$\log(x+\sqrt{x^2+1})\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto asinh(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto asinh[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto asinh[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref eve::floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1. Returns the [elementwise](@ref glossary_elementwise) inverse hyperbolic sine of the
+  //!      input in the range  \f$[-\frac\pi2, \frac\pi2]\f$.
+  //!      In particular:
+  //!      * If the element is \f$\pm0\f$, \f$\pm0\f$ is returned.
+  //!      * If the element is \f$\pm\infty\f$, \f$\pm\infty\f$ returned.
+  //!      * If the element is a `NaN`, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference: asinh](https://en.cppreference.com/w/cpp/numeric/math/asinh)
+  //!   *  [Wolfram MathWorld: Inverse Hyperbolic Sine](https://mathworld.wolfram.com/InverseHyperbolicSine.html)
+  //!   *  [Wikipedia]: Inverse hyperbolic functions](https://en.wikipedia.org/wiki/Inverse_hyperbolic_functions)
+  //!   *  [DLMF: Inverse hyperbolic functions](https://dlmf.nist.gov/4.37)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/asinh.cpp}
+  //================================================================================================
   inline constexpr auto asinh = functor<asinh_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T asinh_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       using vt_t = element_type_t<T>;
       T x        = eve::abs(a0);
       if constexpr( scalar_value<T> )
-        if( x < sqrteps(eve::as<T>()) ) return a0; // scalar early return
-      auto x_gt_oneosqrteps = x > oneosqrteps(eve::as<T>());
+        if( x < sqrteps(as<T>{}) ) return a0; // scalar early return
+      auto x_gt_oneosqrteps = x > oneosqrteps(as<T>{});
       auto bts              = bitofsign(a0);
       if constexpr( std::is_same_v<vt_t, double> )
       {
         if constexpr( scalar_value<T> ) // faster for great or small values
         {
-          if( x_gt_oneosqrteps ) return bit_xor(log(x) + log_2(eve::as<T>()), bts);
-          else if( x >= eve::half(eve::as<T>()) )
-            return bit_xor(log(x + hypot(one(eve::as<T>()), x)), bts);
+          if( x_gt_oneosqrteps ) return bit_xor(log(x) + log_2(as<T>{}), bts);
+          else if( x >= eve::half(as<T>{}) )
+            return bit_xor(log(x + hypot(one(as<T>{}), x)), bts);
         }
         // remaining scalar case and all simd cases to avoid multiple computations as
         // this one is always ok
-        T z = if_else(x_gt_oneosqrteps, dec(x), x + sqr(x) / eve::inc(hypot(one(eve::as<T>()), x)));
-        if constexpr( eve::platform::supports_infinites ) z = if_else((x == inf(eve::as<T>())), x, z);
-        z = add[x_gt_oneosqrteps](eve::log1p(z), log_2(eve::as<T>()));
+        T z = if_else(x_gt_oneosqrteps, dec(x), x + sqr(x) / eve::inc(hypot(one(as<T>{}), x)));
+        if constexpr( eve::platform::supports_infinites ) z = if_else((x == inf(as<T>{})), x, z);
+        z = add[x_gt_oneosqrteps](eve::log1p(z), log_2(as<T>{}));
         return bit_xor(z, bts);
       }
       else if constexpr( std::is_same_v<vt_t, float> )
       {
-        auto        x_lt_half = x < half(eve::as<T>());
+        auto        x_lt_half = x < half(as<T>{});
         T           x2        = sqr(x);
-        T           z         = zero(eve::as<T>());
+        T           z         = zero(as<T>{});
         std::size_t nb        = eve::count_true(x_lt_half);
         if( nb > 0 )
         {
@@ -124,10 +126,10 @@ namespace eve
                                  , T(-0x1.5dcb02p-5f), T(0x1.49adccp-6f))* x;
           if( nb >= cardinal_v<T> ) return bit_xor(z, bts);
         }
-        auto case_1 = [](T const& vx) { return vx; };                                       // great x
-        auto case_2 = [](T const& vx) { return average(vx, hypot(one(eve::as<T>()), vx)); }; // lesser x
+        auto case_1 = [](T const& vx) { return vx; };                                   // great x
+        auto case_2 = [](T const& vx) { return average(vx, hypot(one(as<T>{}), vx)); }; // lesser x
         auto tmp    = branch<scalar_value<T>>(x_gt_oneosqrteps, case_1, case_2)(x);
-        auto z1     = bit_xor(if_else(x_lt_half, z, log(tmp) + log_2(eve::as<T>())), bts);
+        auto z1     = bit_xor(if_else(x_lt_half, z, log(tmp) + log_2(as<T>{})), bts);
         if constexpr( eve::platform::supports_invalids )  return if_else(is_nan(a0), eve::allbits, z1);
         else                                              return z1;
       }

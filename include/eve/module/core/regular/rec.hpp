@@ -17,9 +17,11 @@ template<typename Options>
 struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
                                     lower_option, upper_option, strict_option>
 {
-  template<eve::value T>
+  template<value T>
   constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-  { return EVE_DISPATCH_CALL(v); }
+  {
+    return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+  }
 
   EVE_CALLABLE_OBJECT(rec_t, rec_);
 };
@@ -68,7 +70,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. call a proper system intrinsic if one exists, but with possibly
 //!         very poor accuracy in return (circa 12 bits). Otherwise it uses the regular call.
-//!      4. equivalent to the division operation of `one(as(x))` by `x`.
+//!      4. equivalent to the division operation of `one(as{x})` by `x`.
 //!      5. The inverse is computed in a 'round toward \f$-\infty\f$ mode. The result is guaranted
 //!         to be less or equal to the exact one (except for Nans).
 //!      6. The inverse is computed  in a 'round toward \f$\infty\f$ mode. The result is guaranted

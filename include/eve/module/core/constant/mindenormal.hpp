@@ -17,15 +17,18 @@ namespace eve
   struct mindenormal_t : constant_callable<mindenormal_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if      constexpr(std::integral<T>        ) return T(1);
-      else if constexpr(std::same_as<T, float>  ) return T( 0x1p-149);
-      else if constexpr(std::same_as<T, double> ) return T(0x0.0000000000001p-1022);
+      if      constexpr (std::integral<T>       ) return T{1};
+      else if constexpr (std::same_as<T, float> ) return T{0x1p-149};
+      else if constexpr (std::same_as<T, double>) return T{0x0.0000000000001p-1022};
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(mindenormal_t, mindenormal_);
   };
@@ -57,7 +60,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!     The call `eve::mindenormal(as<T>())` is semantically equivalent to:
+//!     The call `eve::mindenormal(as<T>{})` is semantically equivalent to:
 //!       * `T(1)'            if eve::element_type_t<T> is integral
 //!       * `T(1.4013e-45f)`  if eve::element_type_t<T> is float
 //!       * `T(4.94066e-324)` if eve::element_type_t<T> is double

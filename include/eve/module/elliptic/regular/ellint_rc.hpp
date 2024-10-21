@@ -20,11 +20,12 @@ namespace eve
   template<typename Options>
   struct ellint_rc_t : elementwise_callable<ellint_rc_t, Options>
   {
-    template<eve::floating_value T0, eve::floating_value T1>
-    requires (same_lanes_or_scalar<T0, T1>)
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    template<floating_value T0, floating_value T1>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
+    {
+      return this->behavior(as<common_value_t<T0, T1>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(ellint_rc_t, ellint_rc_);
   };
@@ -85,11 +86,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr auto ellint_rc_(EVE_REQUIRES(cpu_), O const&, T x, T y) noexcept
     {
       auto ylt0   = is_ltz(y);
-      auto prefix = one(as(x));
+      auto prefix = one(as{x});
       if( eve::any(ylt0) ) // provisions for y < 0
       {
         prefix = if_else(ylt0, sqrt(x / (x - y)), one);
@@ -97,14 +98,14 @@ namespace eve
         y      = if_else(ylt0, -y, y);
       }
       // now all y are >= 0
-      auto r       = nan(as(x));
+      auto r       = nan(as{x});
       auto notdone = is_nltz(x) && is_nez(y);
       if( eve::any(notdone) )
       {
         auto tmp0 = rsqrt(y);
         auto br_0 = [tmp0](auto xx, auto yy) // xx == yy || xx == 0
           {
-            auto z = mul[is_eqz(xx)](tmp0, pio_2(as(yy)));
+            auto z = mul[is_eqz(xx)](tmp0, pio_2(as{yy}));
             return z; // if_else(x == y, tmp0, tmp0*pio_2(as(y)));
           };
         notdone = next_interval(br_0, notdone, (x == y) || is_eqz(x), r, x, y);
@@ -129,7 +130,7 @@ namespace eve
           }
         }
       }
-      return if_else(x == inf(as(x)), zero, r * prefix);
+      return if_else(x == inf(as{x}), zero, r * prefix);
     }
   }
 }

@@ -31,6 +31,14 @@ namespace eve
     using type = T;
 
     constexpr as()          noexcept {}
-    explicit constexpr as(T const&)  noexcept {}
+    explicit constexpr as(T const&) noexcept {}
+  };
+
+  template<>
+  struct as<void>
+  {
+    using type = void;
+
+    constexpr as() noexcept {}
   };
 }

@@ -18,71 +18,74 @@ namespace eve
   template<typename Options>
   struct log10_t : elementwise_callable<log10_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE  constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE  constexpr T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(log10_t, log10_);
   };
 
-//================================================================================================
-//! @addtogroup math_log
-//! @{
-//! @var log10
-//!
-//! @brief `elementwise_callable` object computing the base 10  logarithm: \f$\log_{10} x\f$.
-//!
-//!   **Defined in Header**
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto log10(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto log10[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!    * `x`: [floating value](@ref eve::floating_value).
-//!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!    * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!    1.  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
-//!      In particular, for floating inputs:
-//!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
-//!        * If the element is \f$1\f$, \f$+0\f$ is returned.
-//!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
-//!        * If the element is less than 0, `NaN` is returned.
-//!    2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log10)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CommonLogarithm.html)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/log10.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_log
+  //! @{
+  //! @var log10
+  //!
+  //! @brief `elementwise_callable` object computing the base 10  logarithm: \f$\log_{10} x\f$.
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto log10(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto log10[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto log10[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!    * `x`: [floating value](@ref eve::floating_value).
+  //!    * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!    * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!    1.  Returns the [elementwise](@ref glossary_elementwise) the base 10 logarithm  of `x`
+  //!      In particular, for floating inputs:
+  //!        * If the element is \f$\pm0\f$, \f$-\infty\f$ is returned.
+  //!        * If the element is \f$1\f$, \f$+0\f$ is returned.
+  //!        * If the element is \f$\infty\f$, \f$\infty\f$ is returned.
+  //!        * If the element is less than 0, `NaN` is returned.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/log10)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/CommonLogarithm.html)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Logarithm)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/log10.cpp}
+  //================================================================================================
   inline constexpr auto log10 = functor<log10_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
     log10_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
@@ -95,10 +98,10 @@ namespace eve
           using elt_t   = element_type_t<T>;
           constexpr bool is_avx = current_api == avx;
           using TT =  std::conditional_t<is_avx, T, iT >;
-          T Invlog_10hi = ieee_constant<0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2>(eve::as<T>{});
-          T Invlog_10lo = ieee_constant<-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36>(eve::as<T>{});
-          T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(eve::as<T>{});
-          T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(eve::as<T>{});
+          T Invlog_10hi = ieee_constant<0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2>(as<T>{});
+          T Invlog_10lo = ieee_constant<-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36>(as<T>{});
+          T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(as<T>{});
+          T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(as<T>{});
           if constexpr( std::is_same_v<elt_t, float> )
           {
             /* origin: FreeBSD /usr/src/lib/msun/src/e_log10f.c */
@@ -119,7 +122,7 @@ namespace eve
             logical<T> test;
             if constexpr( eve::platform::supports_denormals )
             {
-              test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
+              test = is_less(a0, smallestposval(as<T>{})) && isnez;
               if( eve::any(test) )
               {
                 k = sub[test](k, TT(25));
@@ -130,18 +133,18 @@ namespace eve
             {
               auto [xx, kk]     = eve::frexp(x);
               x = xx;
-              auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+              auto x_lt_sqrthf = (invsqrt_2(as<T>{}) > x);
               k += dec[x_lt_sqrthf](kk);
               f    = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
             }
             else
             {
-              uiT ix = bit_cast(x, as<uiT>());
+              uiT ix = bit_cast(x, as<uiT>{});
               /* reduce x into [sqrt(2)/2, sqrt(2)] */
               ix += 0x3f800000 - 0x3f3504f3;
-              k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
+              k += bit_cast(ix >> 23, as<iT>{}) - 0x7f;
               ix       = (ix & 0x007fffff) + 0x3f3504f3;
-              x        = bit_cast(ix, as<T>());
+              x        = bit_cast(ix, as<T>{});
               f        = dec(x);
             }
             T s      = f / (2.0f + f);
@@ -150,8 +153,8 @@ namespace eve
             T t1     = w * eve::reverse_horner(w, T(0x1.999c26p-2f), T(0x1.f13c4cp-3f));
             T t2     = z * eve::reverse_horner(w, T(0x1.555554p-1f), T(0x1.23d3dcp-2f));
             T R      = t2 + t1;
-            T hfsq   = half(eve::as<T>()) * sqr(f);
-            T dk     = convert(k, as<float>());
+            T hfsq   = half(as<T>{}) * sqr(f);
+            T dk     = convert(k, as<float>{});
             T hibits = f - hfsq;
             hibits   = bit_and(hibits, uiT(0xfffff000ul));
             T lobits = fma(s, hfsq + R, f - hibits - hfsq);
@@ -165,9 +168,9 @@ namespace eve
             T zz;
             if constexpr( eve::platform::supports_infinites )
             {
-              zz = if_else(isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+              zz = if_else(isnez, if_else(a0 == inf(as<T>{}), inf(as<T>{}), r), minf(as<T>{}));
             }
-            else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+            else { zz = if_else(isnez, r, minf(as<T>{})); }
             return if_else(is_ngez(a0), eve::allbits, zz);
           }
           else if constexpr( std::is_same_v<elt_t, double> )
@@ -190,7 +193,7 @@ namespace eve
             logical<T> test;
             if constexpr( eve::platform::supports_denormals )
             {
-              test = is_less(a0, smallestposval(eve::as<T>())) && isnez;
+              test = is_less(a0, smallestposval(as<T>{})) && isnez;
               if( eve::any(test) )
               {
                 k = sub[test](k, TT(54));
@@ -202,17 +205,17 @@ namespace eve
             {
               auto [xx, kk]     = eve::frexp(x);
               x =  xx;
-              auto x_lt_sqrthf = (invsqrt_2(eve::as<T>()) > x);
+              auto x_lt_sqrthf = (invsqrt_2(as<T>{}) > x);
               k += dec[x_lt_sqrthf](kk);
               f  = dec(x + if_else(x_lt_sqrthf, x, eve::zero));
             }
             else
             {
-              uiT hx = bit_cast(x, as<uiT>()) >> 32;
+              uiT hx = bit_cast(x, as<uiT>{}) >> 32;
               hx += 0x3ff00000 - 0x3fe6a09e;
-              k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
+              k += bit_cast(hx >> 20, as<iT>{}) - 0x3ff;
               hx = (bit_and(hx, 0x000fffffull)) + 0x3fe6a09e;
-              x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>()), 0xffffffffull)), as<T>());
+              x  = bit_cast(hx << 32 | (bit_and(bit_cast(x, as<uiT>{}), 0xffffffffull)), as<T>{});
               f  = dec(x);
             }
             T s  = f / (2.0f + f);
@@ -222,11 +225,11 @@ namespace eve
             T t2 = z * eve::reverse_horner(w, T(0x1.5555555555593p-1), T(0x1.2492494229359p-2)
                                           , T(0x1.7466496cb03dep-3), T(0x1.2f112df3e5244p-3));
             T R    = t2 + t1;
-            T hfsq = half(eve::as<T>()) * sqr(f);
-            T dk   = convert(k, as<double>());
+            T hfsq = half(as<T>{}) * sqr(f);
+            T dk   = convert(k, as<double>{});
             //      T r = -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); // fast ?
             T hi     = f - hfsq;
-            hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
+            hi       = bit_and(hi, (allbits(as<uiT>{}) << 32));
             T lo     = f - hi - hfsq + s * (hfsq + R);
             T val_hi = hi * Invlog_10hi;
             T y      = dk * Log10_2hi;
@@ -246,9 +249,9 @@ namespace eve
             if constexpr( eve::platform::supports_infinites )
             {
               zz = if_else(
-                isnez, if_else(a0 == inf(eve::as<T>()), inf(eve::as<T>()), r), minf(eve::as<T>()));
+                isnez, if_else(a0 == inf(as<T>{}), inf(as<T>{}), r), minf(as<T>{}));
             }
-            else { zz = if_else(isnez, r, minf(eve::as<T>())); }
+            else { zz = if_else(isnez, r, minf(as<T>{})); }
             return if_else(is_ngez(a0), eve::allbits, zz);
           }
         }
@@ -258,10 +261,10 @@ namespace eve
       {
         using uiT     = as_integer_t<T, unsigned>;
         using iT      = as_integer_t<T, signed>;
-        T Invlog_10hi = ieee_constant<0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2>(eve::as<T>{});
-        T Invlog_10lo = ieee_constant<-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36>(eve::as<T>{});
-        T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(eve::as<T>{});
-        T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(eve::as<T>{});
+        T Invlog_10hi = ieee_constant<0x1.bcc0000p-2f, 0x1.bcb7b15200000p-2>(as<T>{});
+        T Invlog_10lo = ieee_constant<-0x1.09d5b20p-15f, 0x1.b9438ca9aadd5p-36>(as<T>{});
+        T Log10_2hi   = ieee_constant<0x1.3400000p-2f, 0x1.3440000000000p-2>(as<T>{});
+        T Log10_2lo   = ieee_constant<0x1.04d4280p-12f, 0x1.3509f79fef312p-18>(as<T>{});
         if constexpr( std::is_same_v<T, float> )
         {
           /* origin: FreeBSD /usr/src/lib/msun/src/e_log10f.c */
@@ -276,27 +279,27 @@ namespace eve
            * ====================================================
            */
           auto x = a0;
-          uiT ix = bit_cast(x, as<uiT>());
+          uiT ix = bit_cast(x, as<uiT>{});
           iT  k  = 0;
           if( ix < 0x00800000 || ix >> 31 ) /* x < 2**-126  */
           {
-            if( ix << 1 == 0 ) return minf(eve::as<T>()); /* log(+-0)=-inf */
-            if( ix >> 31 ) return nan(eve::as<T>());      /* log(-#) = NaN */
+            if( ix << 1 == 0 ) return minf(as<T>{}); /* log(+-0)=-inf */
+            if( ix >> 31 ) return nan(as<T>{});      /* log(-#) = NaN */
             if constexpr( eve::platform::supports_denormals )
             { /* subnormal number, scale up x */
               k -= 25;
               x *= 33554432.0f;
-              ix = bit_cast(x, as<iT>());
+              ix = bit_cast(x, as<iT>{});
             }
           }
           else if( ix >= 0x7f800000 ) { return x; }
-          else if( ix == 0x3f800000 ) return zero(eve::as(x));
+          else if( ix == 0x3f800000 ) return zero(eve::as{x});
 
           /* reduce x into [sqrt(2)/2, sqrt(2)] */
           ix += 0x3f800000 - 0x3f3504f3;
-          k += bit_cast(ix >> 23, as<iT>()) - 0x7f;
+          k += bit_cast(ix >> 23, as<iT>{}) - 0x7f;
           ix     = (ix & 0x007fffff) + 0x3f3504f3;
-          x      = bit_cast(ix, as<T>());
+          x      = bit_cast(ix, as<T>{});
           T f    = dec(x);
           T s    = f / (2.0f + f);
           T z    = sqr(s);
@@ -333,27 +336,27 @@ namespace eve
            * ====================================================
            */
           auto x = a0;
-          uiT hx = bit_cast(x, as<uiT>()) >> 32;
+          uiT hx = bit_cast(x, as<uiT>{}) >> 32;
           iT  k  = 0;
           if( hx < 0x00100000 || hx >> 31 )
           {
-            if( is_eqz(x) ) return minf(eve::as<T>()); /* log(+-0)=-inf */
-            if( hx >> 31 ) return nan(eve::as<T>());   /* log(-#) = NaN */
+            if( is_eqz(x) ) return minf(as<T>{}); /* log(+-0)=-inf */
+            if( hx >> 31 ) return nan(as<T>{});   /* log(-#) = NaN */
             /* subnormal number, scale x up */
             if constexpr( eve::platform::supports_denormals )
             {
               k -= 54;
               x *= 18014398509481984.0;
-              hx = bit_cast(x, as<uiT>()) >> 32;
+              hx = bit_cast(x, as<uiT>{}) >> 32;
             }
           }
           else if( hx >= 0x7ff00000 ) return x;
-          else if( x == one(eve::as<T>()) ) return zero(eve::as<T>());
+          else if( x == one(as<T>{}) ) return zero(as<T>{});
           /* reduce x into [sqrt(2)/2, sqrt(2)] */
           hx += 0x3ff00000 - 0x3fe6a09e;
-          k += bit_cast(hx >> 20, as<iT>()) - 0x3ff;
+          k += bit_cast(hx >> 20, as<iT>{}) - 0x3ff;
           hx  = (hx & 0x000fffff) + 0x3fe6a09e;
-          x   = bit_cast((uint64_t)hx << 32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>()))), as<T>());
+          x   = bit_cast((uint64_t)hx << 32 | (bit_and(0xffffffffull, bit_cast(x, as<uiT>{}))), as<T>{});
           T f = dec(x);
           T hfsq = 0.5 * sqr(f);
           T s    = f / (2.0f + f);
@@ -368,7 +371,7 @@ namespace eve
           //          return -(hfsq-(s*(hfsq+R))-f)*Invlog_10<T>()+dk*Log_2olog_10<T>(); //raw ?
 
           T hi     = f - hfsq;
-          hi       = bit_and(hi, (allbits(eve::as<uiT>()) << 32));
+          hi       = bit_and(hi, (allbits(as<uiT>{}) << 32));
           T lo     = f - hi - hfsq + s * (hfsq + R);
           T val_hi = hi * Invlog_10hi;
           T y      = dk * Log10_2hi;

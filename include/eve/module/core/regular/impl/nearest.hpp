@@ -20,7 +20,7 @@
 namespace eve::detail
 {
 
-  template<typename T, callable_options O>
+  template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T
   nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
   {
@@ -30,7 +30,7 @@ namespace eve::detail
     {
       auto s   = bitofsign(a0);
       auto v   = bit_xor(a0, s);
-      auto t2n = twotonmb(eve::as(a0));
+      auto t2n = twotonmb(eve::as{a0});
       auto d0  = v + t2n;
       auto d   = d0 - t2n;
       if constexpr( scalar_value<T> )
@@ -40,9 +40,8 @@ namespace eve::detail
     }
   }
 
-  template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
-  nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
+  template<callable_options O, typename T, typename U>
+  EVE_FORCEINLINE constexpr auto nearest_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U>) noexcept
   {
     auto z = nearest(a0);
     if constexpr(unsigned_value<U>)

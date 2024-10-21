@@ -22,9 +22,10 @@
 namespace eve::detail
 {
 template<typename T, floating_value U, callable_options O>
-constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)
+constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
 requires(std::same_as<element_type_t<T>, element_type_t<U>>)
 {
+  b = if_else(is_finite(b), b, zero);
   return ldexp[o](a, convert(trunc(b), as_element<as_integer_t<T>>{}));
 }
 
@@ -74,9 +75,9 @@ constexpr auto ldexp_(EVE_REQUIRES(cpu_), O const& o, T a, U b)
     using shf_t = std::conditional_t<simd_value<T>, T, elt_t>;
 
     auto  bb   = convert(b, as<element_type_t<i_t>>{});
-    auto  ik   = bb + maxexponent(as<shf_t>());
-          ik <<= nbmantissabits(as<shf_t>());
-    return a * bit_cast(ik, as<as_wide_as_t<T,U>>());
+    auto  ik   = bb + maxexponent(as<shf_t>{});
+          ik <<= nbmantissabits(as<shf_t>{});
+    return a * bit_cast(ik, as<as_wide_as_t<T,U>>{});
   }
 }
 }

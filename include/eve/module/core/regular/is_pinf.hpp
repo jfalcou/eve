@@ -19,11 +19,10 @@ namespace eve
   template<typename Options>
   struct is_pinf_t : elementwise_callable<is_pinf_t, Options>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_pinf_t, is_pinf_);
@@ -63,7 +62,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1. For floating entries returns true if x is equals to `eve::inf(as(x))`,
+//!     1. For floating entries returns true if x is equals to `eve::inf(as{x})`,
 //!       and is always false for integral types.
 //!     2. [The operation is performed conditionnaly](@ref conditional).
 //!
@@ -77,14 +76,14 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_pinf_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    is_pinf_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( integral_value<T> )
-        return false_(eve::as(a));
+        return false_(eve::as{a});
       else
-        return (a == inf(eve::as(a)));
+        return (a == inf(eve::as{a}));
     }
   }
 }

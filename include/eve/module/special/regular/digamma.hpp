@@ -18,69 +18,72 @@
 
 namespace eve
 {
-template<typename Options>
-struct digamma_t : elementwise_callable<digamma_t, Options>
-{
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct digamma_t : elementwise_callable<digamma_t, Options>
+  {
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
-  EVE_CALLABLE_OBJECT(digamma_t, digamma_);
-};
+    EVE_CALLABLE_OBJECT(digamma_t, digamma_);
+  };
 
-//================================================================================================
-//! @addtogroup special
-//! @{
-//!   @var digamma
-//!   @brief `elementwise_callable` object computing the Digamma function i.e.
-//!   the logarithmic derivative of the \f$\Gamma\f$  function.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/special.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `x`: [floating_value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!   **Return value**
-//!
-//!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
-//!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
-//!
-//!   @groupheader{Example}
-//!   @godbolt{doc/special/digamma.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup special
+  //! @{
+  //!   @var digamma
+  //!   @brief `elementwise_callable` object computing the Digamma function i.e.
+  //!   the logarithmic derivative of the \f$\Gamma\f$  function.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/special.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto digamma(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto digamma[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto digamma[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `x`: [floating_value](@ref value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!   **Return value**
+  //!
+  //!     1. The value of the Digamma function: \f$\psi(x) = \frac{\Gamma'(x)}{\Gamma(x)}\f$ is returned.
+  //!     2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [DLMF: Gamma and Psi Functions](https://dlmf.nist.gov/5.2#i)
+  //!   *  [Wolfram MathWorld: Digamma Function](https://mathworld.wolfram.com/DigammaFunction.html)
+  //!
+  //!   @groupheader{Example}
+  //!   @godbolt{doc/special/digamma.cpp}
+  //================================================================================================
   inline constexpr auto digamma = functor<digamma_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr T  digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
+    template<callable_options O, typename T>
+    constexpr T digamma_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
     {
       using elt_t  = element_type_t<T>;
       auto dlarge = (std::is_same_v<elt_t, double>) ? 20 : 10;
@@ -142,8 +145,8 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 
       if constexpr( scalar_value<T> )
       {
-        auto result = zero(as(a));
-        if( a == 0 ) return copysign(inf(as(a)), a);
+        auto result = zero(as{a});
+        if( a == 0 ) return copysign(inf(as{a}), a);
         if( a < 0 )
         {
           if( 0 && (a > -1) ) result = -a;
@@ -153,9 +156,9 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
             result = a - floor(a);
           }
           if( result > 0.5 ) result -= 1;
-          if( result == 0.5 ) result = zero(as(a));
-          else if( result ) result = pi(as(a)) * cotpi(result);
-          else result = nan(as(a));
+          if( result == 0.5 ) result = zero(as{a});
+          else if( result ) result = pi(as{a}) * cotpi(result);
+          else result = nan(as{a});
           // we are ready to increment result that was
           // Pi<A0>()/tanpi(remainder) if a0 < 0  and remainder != 0
           // Nan<A0>                   if a0 < 0  and remainder == 0
@@ -183,7 +186,7 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
       {
         a            = if_else(is_ltz(a) && is_flint(a), allbits, a);
         auto notdone = is_not_nan(a);
-        auto result  = zero(as(a));
+        auto result  = zero(as{a});
         auto test    = is_lez(a);
         if( eve::any(test) )
         {
@@ -191,12 +194,12 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
           a              = oneminus[test](a);
           auto remainder = frac[raw](a);
           remainder      = dec[remainder > 0.5](remainder);
-          remainder      = if_else(is_eqz(remainder), nan(as(a)), remainder);
-          remainder      = if_else(remainder == T(0.5), zero, pi(as(a)) * cotpi(remainder));
-          result         = if_else(is_eqz(va), copysign(inf(as(a)), va), remainder);
+          remainder      = if_else(is_eqz(remainder), nan(as{a}), remainder);
+          remainder      = if_else(remainder == T(0.5), zero, pi(as{a}) * cotpi(remainder));
+          result         = if_else(is_eqz(va), copysign(inf(as{a}), va), remainder);
           result         = if_else(test, result, zero);
         }
-        auto r = nan(as<T>());
+        auto r = nan(as<T>{});
         if( eve::any(notdone) )
         {
           notdone = next_interval(br_large, notdone, a >= dlarge, r, a, result);

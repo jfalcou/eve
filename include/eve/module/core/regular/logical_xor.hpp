@@ -21,18 +21,18 @@ namespace eve
     template<logical_value T, logical_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
     constexpr EVE_FORCEINLINE auto operator()(T a, U b) const noexcept -> decltype(logical_and(a, b))
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return this->behavior(as<decltype(logical_and(a, b))>{}, eve::current_api, this->options(), a, b); }
 
     template<logical_value U>
     constexpr EVE_FORCEINLINE U operator()(bool a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return this->behavior(as<U>{}, eve::current_api, this->options(), a, b); }
 
     template<logical_value T>
     constexpr EVE_FORCEINLINE T operator()(T a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return this->behavior(as<T>{}, eve::current_api, this->options(), a, b); }
 
     constexpr EVE_FORCEINLINE bool operator()(bool a, bool b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+    { return this->behavior(as<bool>{}, eve::current_api, this->options(), a, b); }
 
     EVE_CALLABLE_OBJECT(logical_xor_t, logical_xor_);
   };
@@ -80,9 +80,9 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, typename U, callable_options O>
+    template<callable_options O, typename T, typename U>
     EVE_FORCEINLINE auto logical_xor_(EVE_REQUIRES(cpu_),
-                                      O const & ,
+                                      O const& ,
                                       logical<T> const& a,
                                       logical<U> const& b) noexcept
     {
@@ -96,29 +96,29 @@ namespace eve
        return logical_xor(a, as_logical_t<T>(b.value()));
       else if constexpr(cardinal_v<T> == cardinal_v<U>)
       {
-        return bit_cast ( a.bits() != convert(b, as<logical<element_type_t<T>>>()).bits()
-                        , as<logical<T>>()
+        return bit_cast ( a.bits() != convert(b, as<logical<element_type_t<T>>>{}).bits()
+                        , as<logical<T>>{}
                         );
       }
     }
 
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr
-    auto logical_xor_(EVE_REQUIRES(cpu_), O const & , T a, bool b) noexcept
+    auto logical_xor_(EVE_REQUIRES(cpu_), O const& , T a, bool b) noexcept
     {
       return T(b) !=  a;
     }
 
     template<typename U, callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_xor_(EVE_REQUIRES(cpu_), O const & , bool a, U b) noexcept
+    auto logical_xor_(EVE_REQUIRES(cpu_), O const& , bool a, U b) noexcept
     {
       return U(a) !=  b;
     }
 
     template<callable_options O>
     EVE_FORCEINLINE constexpr
-    auto logical_xor_(EVE_REQUIRES(cpu_), O const & , bool a, bool b) noexcept
+    auto logical_xor_(EVE_REQUIRES(cpu_), O const& , bool a, bool b) noexcept
     {
       return a!=b;
     }

@@ -11,8 +11,11 @@ namespace eve
   struct func_t : callable<func_t, Options, conditional_option>
   {
     // Note that decoration doesn't impact signature declaration
-    template<eve::integral_value T>
-    EVE_FORCEINLINE T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+    template<integral_value T>
+    EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
     EVE_CALLABLE_OBJECT(func_t, func_);
   };
 
@@ -23,8 +26,12 @@ namespace eve
   struct other_func_t : callable<other_func_t, Options, relative_conditional_option>
   {
     // Note that decoration doesn't impact signature declaration
-    template<eve::integral_value T>
-    EVE_FORCEINLINE T  operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+    template<integral_value T>
+    EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
+
     EVE_CALLABLE_OBJECT(other_func_t, other_func_);
   };
 

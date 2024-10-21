@@ -14,72 +14,73 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct exp_t : elementwise_callable<exp_t, Options, pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(exp_t, exp_);
   };
 
-//================================================================================================
-//! @addtogroup math_exp
-//! @{
-//! @var exp
-//! @brief `elementwise_callable` object computing \f$e^x\f$.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/math.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      constexpr auto exp(floating_value auto x)                          noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
-//!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//! **Parameters**
-//!
-//!     * `x`: [floating value](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//! **Return value**
-//!
-//!   1.  Returns the [elementwise](@ref glossary_elementwise) natural exponential
-//!       of the input. In particular:
-//!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
-//!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
-//!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
-//!       * If the element is a `NaN`, `NaN` is returned
-//!   2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
-//!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
-//!   *  [DLMF](https://dlmf.nist.gov/4.2)
-//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/math/exp.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup math_exp
+  //! @{
+  //! @var exp
+  //! @brief `elementwise_callable` object computing \f$e^x\f$.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/math.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      constexpr auto exp(floating_value auto x)                          noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto exp[conditional_expr auto c](floating_value auto x) noexcept; // 2
+  //!      constexpr auto exp[logical_value auto m](floating_value auto x)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //! **Parameters**
+  //!
+  //!     * `x`: [floating value](@ref floating_value).
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //! **Return value**
+  //!
+  //!   1.  Returns the [elementwise](@ref glossary_elementwise) natural exponential
+  //!       of the input. In particular:
+  //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned
+  //!       * If the element is \f$-\infty\f$, \f$+0\f$ is returned
+  //!       * If the element is \f$\infty\f$, \f$\infty\f$ is returned
+  //!       * If the element is a `NaN`, `NaN` is returned
+  //!   2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/exp)
+  //!   *  [Wolfram MathWorld](https://mathworld.wolfram.com/ExponentialFunction.html)
+  //!   *  [DLMF](https://dlmf.nist.gov/4.2)
+  //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Exponential_function)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/math/exp.cpp}
+  //================================================================================================
   inline constexpr auto exp = functor<exp_t>;
-//================================================================================================
-//!  @}
-//================================================================================================
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
   namespace detail
   {
@@ -90,15 +91,15 @@ namespace eve
       auto isnan = is_nan(x);
       auto    minlogval = []() {
         if constexpr(O::contains(pedantic) && eve::platform::supports_denormals)
-        return minlogdenormal(eve::as<T>());
+        return minlogdenormal(as<T>{});
         else
-          return minlog(eve::as<T>());
+          return minlog(as<T>{});
       };
       if constexpr( scalar_value<T> )
       {
         if constexpr( has_emulated_abi_v<wide<T>> )
         {
-          return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as(x))) ? inf(as(x)) : std::exp(x);
+          return (x <= minlogval()) ? T(0) : (x >= eve::maxlog(as{x})) ? inf(as{x}) : std::exp(x);
         }
         else
         {
@@ -109,16 +110,16 @@ namespace eve
       else
       {
         using elt_t       = element_type_t<T>;
-        const T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(eve::as<T>{});
-        const T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(eve::as<T>{});
-        const T Invlog_2  = ieee_constant<0x1.7154760p+0f, 0x1.71547652b82fep+0>(eve::as<T>{});
+        const T Log_2hi   = ieee_constant<0x1.6300000p-1f, 0x1.62e42fee00000p-1>(as<T>{});
+        const T Log_2lo   = ieee_constant<-0x1.bd01060p-13f, 0x1.a39ef35793c76p-33>(as<T>{});
+        const T Invlog_2  = ieee_constant<0x1.7154760p+0f, 0x1.71547652b82fep+0>(as<T>{});
         auto    xltminlog = x <= minlogval();
-        auto    xgemaxlog = x >= maxlog(eve::as(x));
+        auto    xgemaxlog = x >= maxlog(eve::as{x});
         if constexpr( scalar_value<T> )
         {
           if( isnan ) return x;
-          if( xgemaxlog ) return inf(eve::as(x));
-          if( xltminlog ) return zero(eve::as(x));
+          if( xgemaxlog ) return inf(eve::as{x});
+          if( xltminlog ) return zero(eve::as{x});
         }
         auto c = nearest(Invlog_2 * x);
         auto k = c;
@@ -144,7 +145,7 @@ namespace eve
         if constexpr( simd_value<T> )
         {
           z = if_else(xltminlog, eve::zero, z);
-          z = if_else(xgemaxlog, inf(eve::as(x)), z);
+          z = if_else(xgemaxlog, inf(eve::as{x}), z);
           z = if_else(isnan, allbits, z);
         }
         return z;

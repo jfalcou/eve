@@ -68,7 +68,7 @@ template<typename U, value X, integral_scalar_value T>
 EVE_FORCEINLINE auto
 gather_(EVE_SUPPORTS(cpu_), logical<X> const& cond, U const *ptr, T const& v) noexcept
 {
-  return cond ? *(ptr + v) : zero(as<U>());
+  return cond ? *(ptr + v) : zero(as<U>{});
 }
 
 //================================================================================================
@@ -84,6 +84,6 @@ template<typename U, typename S, value X, integral_scalar_value T>
 EVE_FORCEINLINE auto
 gather_(EVE_SUPPORTS(cpu_), logical<X> const& cond, aligned_ptr<U, S> ptr, T const& v) noexcept
 {
-  return cond ? *(ptr + v) : zero(as<U>());
+  return cond ? *(ptr + v) : zero(as<U>{});
 }
 }

@@ -40,12 +40,12 @@ requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
       storage_t dst;
       if constexpr( is_aggregated_v<abi_t> )
       {
-        u_t them = bit_cast(a.storage(),as<u_t>()) & b.storage().value;
-        dst = bit_cast(them,as<storage_t>());
+        u_t them = bit_cast(a.storage(),as<u_t>{}) & b.storage().value;
+        dst = bit_cast(them,as<storage_t>{});
       }
       else if constexpr( is_aggregated_v<abi_u> )
       {
-        dst.value = a.storage().value & bit_cast(b.storage(),as<u_t>());
+        dst.value = a.storage().value & bit_cast(b.storage(),as<u_t>{});
       }
       else
       {
@@ -85,12 +85,12 @@ requires(x86_abi<abi_t<T, N>> || x86_abi<abi_t<U, N>>)
       storage_t dst;
       if constexpr( is_aggregated_v<abi_t> )
       {
-        u_t them = bit_cast(a.storage(),as<u_t>()) | b.storage().value;
-        dst = bit_cast(them,as<storage_t>());
+        u_t them = bit_cast(a.storage(),as<u_t>{}) | b.storage().value;
+        dst = bit_cast(them,as<storage_t>{});
       }
       else if constexpr( is_aggregated_v<abi_u> )
       {
-        dst.value = a.storage().value | bit_cast(b.storage(),as<u_t>());
+        dst.value = a.storage().value | bit_cast(b.storage(),as<u_t>{});
       }
       else
       {
@@ -117,12 +117,12 @@ self_lognot(logical<wide<T, N>> v) noexcept requires x86_abi<abi_t<T, N>>
     using l_t = logical<wide<T, N>>;
     return l_t {~v.storage()};
   }
-  else { return bit_cast(~v.bits(), as(v)); }
+  else { return bit_cast(~v.bits(), as{v}); }
 }
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_eq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -215,14 +215,14 @@ self_eq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi<
   else
   {
     // AVX has a bad == for integers so we use XOR
-    if constexpr( current_api == avx ) return bit_cast(~v.bits() ^ w.bits(), as(v));
-    else return bit_cast(v.bits() == w.bits(), as(v));
+    if constexpr( current_api == avx ) return bit_cast(~v.bits() ^ w.bits(), as{v});
+    else return bit_cast(v.bits() == w.bits(), as{v});
   }
 }
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_neq(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -279,12 +279,12 @@ self_neq(logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept requires x86_abi
   {
     return logical<wide<T, N>> {v.storage() ^ w.storage()};
   }
-  else { return bit_cast(v.bits() ^ w.bits(), as(v)); }
+  else { return bit_cast(v.bits() ^ w.bits(), as{v}); }
 }
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_less(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -337,8 +337,8 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       [[maybe_unused]] auto unsigned_cmp = [](auto vv, auto wv)
       {
         using l_t     = logical<wide<T, N>>;
-        auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
-        return bit_cast((bit_cast(vv, as(sm)) - sm) < (bit_cast(wv, as(sm)) - sm), as<l_t> {});
+        auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>{});
+        return bit_cast((bit_cast(vv, as{sm}) - sm) < (bit_cast(wv, as{sm}) - sm), as<l_t> {});
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(w, v);
@@ -349,11 +349,11 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       else if constexpr( use_avx2 && c == category::uint16x16 ) return unsigned_cmp(v, w);
       else if constexpr( use_avx2 && c == category::int8x32 ) return _mm256_cmpgt_epi8(w, v);
       else if constexpr( use_avx2 && c == category::uint8x32 ) return unsigned_cmp(v, w);
-      else if constexpr( c == category::int64x2 ) return map(lt, v, w);
+      else if constexpr( c == category::int64x2 ) return map(as<logical<wide<T, N>>>{}, lt, v, w);
       else if constexpr( c == category::int32x4 ) return _mm_cmplt_epi32(v, w);
       else if constexpr( c == category::int16x8 ) return _mm_cmplt_epi16(v, w);
       else if constexpr( c == category::int8x16 ) return _mm_cmplt_epi8(v, w);
-      else if constexpr( c == category::uint64x2 ) return map(lt, v, w);
+      else if constexpr( c == category::uint64x2 ) return map(as<logical<wide<T, N>>>{}, lt, v, w);
       else if constexpr( c == category::uint32x4 ) return unsigned_cmp(v, w);
       else if constexpr( c == category::uint16x8 ) return unsigned_cmp(v, w);
       else if constexpr( c == category::uint8x16 ) return unsigned_cmp(v, w);
@@ -364,7 +364,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
 
 //================================================================================================
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE as_logical_t<wide<T, N>>
+EVE_FORCEINLINE logical<wide<T, N>>
                 self_greater(wide<T, N> v, wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -420,7 +420,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       {
         using l_t     = logical<wide<T, N>>;
         auto const sm = signmask(as<as_integer_t<wide<T, N>, signed>>());
-        return bit_cast((bit_cast(vv, as(sm)) - sm) > (bit_cast(vw, as(sm)) - sm), as<l_t> {});
+        return bit_cast((bit_cast(vv, as{sm}) - sm) > (bit_cast(vw, as{sm}) - sm), as<l_t>{});
       };
 
       if constexpr( use_avx2 && c == category::int64x4 ) return _mm256_cmpgt_epi64(v, w);
@@ -432,7 +432,7 @@ EVE_FORCEINLINE as_logical_t<wide<T, N>>
       else if constexpr( use_avx2 && c == category::int8x32 ) return _mm256_cmpgt_epi8(v, w);
       else if constexpr( use_avx2 && c == category::uint8x32 ) return unsigned_cmp(v, w);
       else if constexpr( use_sse4 && c == category::int64x2 ) return _mm_cmpgt_epi64(v, w);
-      else if constexpr( c == category::int64x2 ) return map(gt, v, w);
+      else if constexpr( c == category::int64x2 ) return map(as<logical<wide<T, N>>>{}, gt, v, w);
       else if constexpr( c == category::int32x4 ) return _mm_cmpgt_epi32(v, w);
       else if constexpr( c == category::int16x8 ) return _mm_cmpgt_epi16(v, w);
       else if constexpr( c == category::int8x16 ) return _mm_cmpgt_epi8(v, w);

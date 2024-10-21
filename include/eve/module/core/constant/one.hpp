@@ -17,13 +17,16 @@ namespace eve
   struct one_t : constant_callable<one_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      return T(1);
+      return T{1};
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(one_t, one_);
   };
@@ -55,7 +58,7 @@ namespace eve
 //!
 //!    **Return value**
 //!
-//!      The call `eve::one(as<T>())` is semantically equivalent to `T(1)`
+//!      The call `eve::one(as<T>{})` is semantically equivalent to `T(1)`
 //!
 //!  @groupheader{Example}
 //!

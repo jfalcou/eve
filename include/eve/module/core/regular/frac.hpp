@@ -20,9 +20,11 @@ namespace eve
   template<typename Options>
   struct frac_t : elementwise_callable<frac_t, Options, raw_option, almost_option, pedantic_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(frac_t, frac_);
   };
@@ -73,7 +75,7 @@ namespace eve
 //!     3. just `x-trunc(x)`.
 //!     4. zeros and not finite values are all handled properly.
 //!     5. `almost` allows a fuzzy interpretation of `frac` using internally the `almost` version of `trunc`.
-//!     6. with no tolerance value, the call is equivalent to `frac[tolerance = 3*eps(as(x))(x)`
+//!     6. with no tolerance value, the call is equivalent to `frac[tolerance = 3*eps(as{x})(x)`
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference](https://en.cppreference.com/w/cpp/numeric/math/modf)
@@ -87,24 +89,23 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T frac_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr (floating_value<T>)
       {
         if constexpr(O::contains(raw))      return a-trunc[o](a);
         else
         {
           auto f = if_else(is_eqz(a), a, a - trunc[o](a));
           if constexpr(platform::supports_infinites && O::contains(pedantic))
-            return if_else(is_infinite(a), bit_and(a, signmask(as(a))), f);
+            return if_else(is_infinite(a), bit_and(a, signmask(as{a})), f);
           else
             return f;
         }
       }
       else
-        return zero(eve::as(a));
+        return zero(eve::as{a});
     }
   }
 }

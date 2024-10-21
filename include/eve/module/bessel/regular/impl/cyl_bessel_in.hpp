@@ -13,7 +13,7 @@
 namespace eve::detail
 {
 
-  template<typename I, typename T, callable_options O> constexpr
+  template<callable_options O, typename I, typename T> constexpr
   EVE_FORCEINLINE as_wide_as_t<T, I>
   cyl_bessel_in_(EVE_REQUIRES(cpu_), O const&, I nu, T x)
 {
@@ -22,12 +22,12 @@ namespace eve::detail
       if constexpr( simd_value<I> && scalar_value<T> )
       {
         using c_t = wide<T, cardinal_t<I>>;
-        return cyl_bessel_in(convert(nu, as(x)), c_t(x));
+        return cyl_bessel_in(convert(nu, as{x}), c_t(x));
       }
       else if constexpr( simd_value<I> && simd_value<T> )
       {
         using elt_t = element_type_t<T>;
-        auto tnu    = convert(nu, as(elt_t()));
+        auto tnu    = convert(nu, as<elt_t>{});
         return cyl_bessel_in(tnu, x);
       }
       else if constexpr( integral_scalar_value<I> )

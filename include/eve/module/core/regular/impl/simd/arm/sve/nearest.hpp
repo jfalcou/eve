@@ -29,9 +29,9 @@ namespace eve::detail
                                       wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    auto alt = alternative(cond, v, as(v));
+    auto alt = alternative(cond, v, as{v});
 
     if      constexpr(C::is_complete && !C::is_inverted) return alt;
-    else   return svrintn_m(alt, cond.mask(as(v)), v);
+    else   return svrintn_m(alt, cond.mask(as{v}), v);
   }
 }

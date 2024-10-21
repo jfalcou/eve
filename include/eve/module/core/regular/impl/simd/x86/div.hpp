@@ -15,7 +15,6 @@
 
 namespace eve::detail
 {
-
   template<callable_options O, typename T, typename N>
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
@@ -24,7 +23,7 @@ namespace eve::detail
                  O::contains(toward_zero) || O::contains(upward) ||
                  O::contains(downward) || O::contains(to_nearest))
     {
-      return div.behavior(cpu_{}, opts, a, b);
+      return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -47,11 +46,11 @@ namespace eve::detail
               auto aapbb = div[opts](aa, bb);
               return  slice(aapbb, eve::upper_);
             }
-            else                                             return div.behavior(cpu_{}, opts, a, b);
+            else                                             return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
           }
-          else                                               return div.behavior(cpu_{}, opts, a, b);
+          else                                               return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
         }
-        else                                                 return div.behavior(cpu_{}, opts, a, b);
+        else                                                 return div.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
       else  if constexpr  ( c == category::float64x8  ) return _mm512_div_pd(a, b);
       else  if constexpr  ( c == category::float64x4  ) return _mm256_div_pd(a, b);
@@ -70,7 +69,7 @@ namespace eve::detail
         auto s = a;
         constexpr auto sdiv = [](auto va, auto vb) { return va /= vb; };
         if constexpr( N::value >= 2  )  return aggregate(sdiv, s, b);
-        else                            return map(sdiv, s, b);
+        else                            return map(as<wide<T, N>>{}, sdiv, s, b);
       }
     }
   }
@@ -78,32 +77,25 @@ namespace eve::detail
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(avx512_),
-                                  C const          &cx,
-                                  O const          &o,
-                                  wide<T, N> v,
-                                  wide<T, N> w) noexcept requires x86_abi<abi_t<T, N>>
+  EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(avx512_), C const& cx, O const& o, wide<T, N> v, wide<T, N> w) noexcept
+    requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
     if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
-      if constexpr(current_api >= avx512)
+      auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
+      if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
+      else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
+      else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
+                            c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
       {
-        auto constexpr dir =(O::contains(lower) ? _MM_FROUND_TO_NEG_INF : _MM_FROUND_TO_POS_INF) |_MM_FROUND_NO_EXC;
-        if      constexpr  ( c == category::float64x8  ) return  _mm512_add_round_pd (v, w, dir);
-        else if constexpr  ( c == category::float32x16 ) return  _mm512_add_round_ps (v, w, dir);
-        else if constexpr  ( c == category::float64x4 ||  c == category::float64x2 ||
-                             c == category::float32x8 ||  c == category::float32x4 || c == category::float32x2)
-        {
-          auto vv = combine(v, v);
-          auto ww = combine(w, w);
-          auto vvpww = div[o](vv, ww);
-          auto s =  slice(vvpww, eve::upper_);
-          return if_else(cx,s,src);
-        }
+        auto vv = combine(v, v);
+        auto ww = combine(w, w);
+        auto vvpww = div[o](vv, ww);
+        auto s =  slice(vvpww, eve::upper_);
+        return if_else(cx,s,src);
       }
-      return div.behavior(cpu_{}, o, v, w);
     }
     else if constexpr (O::contains(toward_zero) || O::contains(upward) ||
                        O::contains(downward) || O::contains(to_nearest))
@@ -121,8 +113,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x4 ) return _mm256_mask_div_pd(src, m, v, w);
       else if constexpr( c == category::float32x4 ) return _mm_mask_div_ps(src, m, v, w);
       else if constexpr( c == category::float64x2 ) return _mm_mask_div_pd(src, m, v, w);
-      else return abs.behavior(cpu_{}, o, v, w);
+      else return div.behavior(as<wide<T, N>>{}, cpu_{}, o, v, w);
     }
   }
-
 }

@@ -18,11 +18,10 @@ namespace eve
   template<typename Options>
   struct is_gez_t : elementwise_callable<is_gez_t, Options>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_gez_t, is_gez_);
@@ -75,14 +74,13 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_gez_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_gez_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( unsigned_value<T> )
-        return true_(eve::as(a));
+        return true_(as{a});
       else
-        return a >= zero(eve::as(a));
+        return a >= zero(as{a});
     }
   }
 }

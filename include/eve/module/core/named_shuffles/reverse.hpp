@@ -56,18 +56,18 @@ namespace eve
 //================================================================================================
 struct reverse_t
 {
-  template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(eve::as<T>, eve::fixed<G>)
+  template<simd_value T, std::ptrdiff_t G> static constexpr auto pattern(as<T>, eve::fixed<G>)
   {
     return eve::fix_pattern<T::size() / G>([](int i, int size) { return size - i - 1; });
   }
 
   template<simd_value T, std::ptrdiff_t G>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g)
+  static constexpr std::ptrdiff_t level(as<T> tgt, eve::fixed<G> g)
   {
     if constexpr( eve::has_aggregated_abi_v<T> )
     {
       if constexpr( G == T::size() / 2 ) return 0;
-      using half_t = decltype(T {}.slice(lower_));
+      using half_t = decltype(T{}.slice(lower_));
       return level(as<half_t> {}, g);
     }
 

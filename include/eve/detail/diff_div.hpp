@@ -22,8 +22,8 @@ namespace eve::detail
                                        ) noexcept
   {
     auto derivexp = (sizeof(element_type_t<T>) == 4) ? -12 :-26;
-    auto e = ldexp(one(as(x)), derivexp);
-    auto h = eve::max(e*ldexp(one(as(x)), exponent(x)), e);
+    auto e = ldexp(one(as{x}), derivexp);
+    auto h = eve::max(e*ldexp(one(as{x}), exponent(x)), e);
     return  (f(x+h)-f(x-h))/(h+h);
   }
 
@@ -33,8 +33,8 @@ namespace eve::detail
                                        ) noexcept
   {
     auto derivexp = (sizeof(element_type_t<T>) == 4) ? -12 :-26;
-    auto e = ldexp(one(as(x)), derivexp);
-    auto h = eve::max(e*ldexp(one(as(x)), exponent(x)), e);
+    auto e = ldexp(one(as{x}), derivexp);
+    auto h = eve::max(e*ldexp(one(as{x}), exponent(x)), e);
     return  (f(x+h)-f(x))/(h);
   }
 
@@ -44,8 +44,8 @@ namespace eve::detail
                                        ) noexcept
   {
     auto derivexp = (sizeof(element_type_t<T>) == 4) ? -12 :-26;
-    auto e = ldexp(one(as(x)), derivexp);
-    auto h = eve::max(e*ldexp(one(as(x)), exponent(x)), e);
+    auto e = ldexp(one(as{x}), derivexp);
+    auto h = eve::max(e*ldexp(one(as{x}), exponent(x)), e);
     return  (f(x)-f(x-h))/(h);
   }
 }

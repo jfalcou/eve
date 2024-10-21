@@ -53,7 +53,7 @@ namespace eve
 //! * S - shift by how many elements to shift
 //!
 //!  (2), (4) - call (1) (3) respectively, with S = G * S
-//!  (1) - equivalent to calling `eve::slide_left(x, eve::zero(eve::as(x)));`
+//!  (1) - equivalent to calling `eve::slide_left(x, eve::zero(eve::as{x}));`
 //!  (3) - slide_left [abcd], [efgh], index<1> ==> [bcde]
 //!
 //! **Return value**
@@ -69,14 +69,14 @@ struct slide_left_impl_t
 {
   // One agr
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S>
-  static constexpr auto pattern(eve::as<T>, eve::fixed<G>, eve::index_t<S>)
+  static constexpr auto pattern(as<T>, eve::fixed<G>, eve::index_t<S>)
   {
     static_assert(G > 0 && 0 <= S && S <= T::size() / G);
     return eve::fix_pattern<T::size() / G>([](int i, int n) { return (i + S) < n ? i + S : na_; });
   }
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
-  static constexpr std::ptrdiff_t level(eve::as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
+  static constexpr std::ptrdiff_t level(as<T> tgt, eve::fixed<G> g, eve::index_t<S_> s)
   {
     using abi_t                             = typename T::abi_type;
     const std::size_t        reg_size       = sizeof(element_type_t<T>) * T::size();
@@ -89,18 +89,18 @@ struct slide_left_impl_t
     else if constexpr( S == T::size() ) return 1;
     else if constexpr( eve::has_aggregated_abi_v<T> )
     {
-      using half_t = decltype(T {}.slice(lower_));
+      using half_t = decltype(T{}.slice(lower_));
       if constexpr( S > T::size() / 2 )
       {
         // just second is shifted
-        return level(eve::as<half_t> {}, eve::lane<1>, eve::index<S - T::size() / 2>);
+        return level(as<half_t> {}, eve::lane<1>, eve::index<S - T::size() / 2>);
       }
       else
       {
         // When combining halves, always taking just max. Even if that might not report
         // the mask required for one of the halves.
-        auto halves_together = level(eve::as<half_t> {}, eve::as<half_t> {}, g, s);
-        auto just_second     = level(eve::as<half_t> {}, g, s);
+        auto halves_together = level(as<half_t> {}, as<half_t> {}, g, s);
+        auto just_second     = level(as<half_t> {}, g, s);
         return std::max(halves_together, just_second);
       }
     }
@@ -134,7 +134,7 @@ struct slide_left_impl_t
 
   template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t S_>
   static constexpr std::ptrdiff_t
-  level(eve::as<T> tgt, eve::as<T>, eve::fixed<G> g, eve::index_t<S_> s)
+  level(as<T> tgt, as<T>, eve::fixed<G> g, eve::index_t<S_> s)
   {
     using abi_t                       = typename T::abi_type;
     constexpr std::ptrdiff_t S        = S_ * G;

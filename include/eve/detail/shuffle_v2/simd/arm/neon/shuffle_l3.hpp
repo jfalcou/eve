@@ -36,7 +36,7 @@ shuffle_l3_neon_tbl(P, fixed<G>, wide<T, N> x)
   else
   {
     using u8xN = wide<std::uint8_t, eve::fixed<N::value * sizeof(T)>>;
-    auto bytes = eve::bit_cast(x, eve::as<u8xN> {});
+    auto bytes = eve::bit_cast(x, as<u8xN> {});
 
     constexpr auto no_we = idxm::replace_we(P::idxs, 0);
 

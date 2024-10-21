@@ -58,9 +58,9 @@ template<typename T, typename N, std::ptrdiff_t G>
     //          on avx, splitting will be not ideal as well
     if constexpr( g_sz == 4 )
     {
-      auto floats = eve::bit_cast(v, eve::as<wide<float, fixed<n>>> {});
+      auto floats = eve::bit_cast(v, as<wide<float, fixed<n>>> {});
       floats      = _mm256_permute_ps(floats, _MM_SHUFFLE(3, 1, 2, 0));
-      v           = eve::bit_cast(floats, as(v));
+      v           = eve::bit_cast(floats, as{v});
       return deinterleave_groups_shuffle(v, lane<N() / 4>);
     }
     // pshuvb is crazy cheap, let's use the register when >= ssse3
@@ -75,7 +75,7 @@ template<typename T, typename N, std::ptrdiff_t G>
     // otherwise we have to use shorts, no chars shuffles
     else if constexpr( g_sz == 1 && current_api < ssse3 )
     {
-      auto shorts = eve::convert(v, eve::as<std::uint16_t> {});
+      auto shorts = eve::convert(v, as<std::uint16_t> {});
       shorts      = deinterleave_groups_shuffle(shorts, lane<G>);
       return eve::convert(shorts, as<T> {});
     }

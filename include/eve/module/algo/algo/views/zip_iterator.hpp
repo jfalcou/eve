@@ -115,7 +115,7 @@ namespace eve::algo::views
     };
 
     template <typename Self, typename T>
-    auto convert_zipped(Self self, eve::as<T> tgt);
+    auto convert_zipped(Self self, as<T> tgt);
   }
 
   template <typename T, typename U>
@@ -225,7 +225,7 @@ namespace eve::algo::views
       }
 
       template <typename T>
-      EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_iterator<Is...> self, eve::as<T> tgt)
+      EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_iterator<Is...> self, as<T> tgt)
       {
         return detail::convert_zipped(self, tgt);
       }
@@ -378,7 +378,7 @@ namespace eve::algo::views
     template< relative_conditional_expr C, decorator S>
     EVE_FORCEINLINE friend auto tagged_dispatch (
         eve::tag::load_, C const& c, S const& s
-      , eve::as<wide_value_type_t<zip_iterator>> const&
+      , as<wide_value_type_t<zip_iterator>>
       , zip_iterator self
     )
     {
@@ -387,12 +387,12 @@ namespace eve::algo::views
       {
         kumi::for_each([&](auto part_alt, auto i, auto& r) {
             auto new_c = c.map_alternative([&](auto) { return part_alt; });
-            r = eve::load(new_c, s, as(r), i); }
+            r = eve::load(new_c, s, as{r}, i); }
           , c.alternative, self.storage, res);
       }
       else
       {
-        kumi::for_each([&](auto i, auto& r) { r = eve::load(c, s, as(r), i); }
+        kumi::for_each([&](auto i, auto& r) { r = eve::load(c, s, as{r}, i); }
                       , self.storage, res);
       }
       return res;

@@ -28,7 +28,7 @@ namespace eve::detail
 
   template<typename T, typename S, callable_options O>
   EVE_FORCEINLINE constexpr T fracscale_(EVE_REQUIRES(cpu_),
-                                         O const & o,
+                                         O const& o,
                                          T const & a0,
                                          S const & scale) noexcept
   {
