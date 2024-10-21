@@ -15,21 +15,36 @@ namespace eve
 {
   template<typename Options>
   struct mul_t : strict_tuple_callable<mul_t, Options, saturated_option, lower_option,
-                                       upper_option, strict_option>
+                                       upper_option, strict_option, widen_option>
   {
     template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<T0, T1, Ts...> constexpr operator()(T0 t0, T1 t1, Ts...ts)
+      const noexcept
+    {
+      return EVE_DISPATCH_CALL(t0, t1, ts...);
+    }
+
+    template<eve::value T0, value T1, value... Ts>
+    requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... > //typename result<T0, T1, Ts...>::type
+    constexpr operator()(T0 t0, T1 t1, Ts...ts)
+      const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && Options::contains(widen))
+    EVE_FORCEINLINE constexpr
+    upgrade_t<kumi::apply_traits_t<eve::common_value,Tup>>
+    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
+    template<kumi::non_empty_product_type Tup>
+    requires(eve::same_lanes_or_scalar_tuple<Tup> && !Options::contains(widen))
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
-
     EVE_CALLABLE_OBJECT(mul_t, mul_);
   };
 
@@ -64,7 +79,8 @@ namespace eve
 //!      constexpr auto mul[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto mul[lower][strict](/*any of the above overloads*/)            noexcept; // 5
 //!      constexpr auto mul[upper][strict](/*any of the above overloads*/)            noexcept; // 6
-///!   }
+//!      constexpr auto sub[widen](/*any of the above overloads*/)                    noexcept; // 7
+//!   }
 //!   @endcode
 //!
 //!   **Parameters**
@@ -90,6 +106,8 @@ namespace eve
 //!    6. The product is computed in a 'round toward \f$\infty\f$ mode. The result is guaranted
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
+//!    7. The operation is computed in the double sized element type (if available).
+//!       This decorator has no effect on double and 64 bits integrals.
 //!
 //!   @note
 //!      Although the infix notation with `*` is supported for two parameters, the `*` operator on

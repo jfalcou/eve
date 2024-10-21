@@ -59,8 +59,10 @@ TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::mul[eve::saturated](v_t(), v_t(), T()), T);
   TTS_EXPR_IS(eve::mul[eve::saturated](v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::mul[eve::saturated](v_t(), v_t(), v_t()), v_t);
-
-  if constexpr( eve::floating_value<T> ) {}
+  TTS_EXPR_IS(eve::mul[eve::widen](T(), T()), eve::upgrade_t<T>);
+  TTS_EXPR_IS(eve::mul[eve::widen](T(), v_t()), eve::upgrade_t<T>);
+  TTS_EXPR_IS(eve::mul[eve::widen](v_t(), T()), eve::upgrade_t<T>);
+  TTS_EXPR_IS(eve::mul[eve::widen](v_t(), v_t()), eve::upgrade_t<v_t>);
 };
 
 //==================================================================================================
@@ -100,6 +102,25 @@ TTS_CASE_WITH("Check behavior of mul on wide",
     TTS_EXPECT(eve::all(mul[strict][upper](w0, w1)  >= mul[upper](w0, w1)));
     TTS_EXPECT(eve::all(mul[strict][lower](w0, -w1) <= mul[lower](w0, -w1)));
   }
+};
+
+TTS_CASE_WITH("Check behavior of mul widen on wide",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::mul;
+  using eve::widen;
+  using eve::convert;
+  using eve::as;
+
+  TTS_ULP_EQUAL(mul[widen](a0, a1), mul(eve::upgrade(a0), eve::upgrade(a1)), 0.5);
+  TTS_ULP_EQUAL(mul[widen ](a0, a1, a2), mul(eve::upgrade(a0), eve::upgrade(a1), eve::upgrade(a2)), 0.5);
+  TTS_ULP_EQUAL(mul[widen ](kumi::tuple{a0, a1}), mul[widen ](a0, a1), 0.5);
+  TTS_ULP_EQUAL(mul[widen ](kumi::tuple{a0, a1, a2}), mul[widen ](a0, a1, a2), 0.5);
+
 };
 
 //==================================================================================================

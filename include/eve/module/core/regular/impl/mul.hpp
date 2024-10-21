@@ -32,7 +32,11 @@ namespace eve::detail
   template<callable_options O, typename T, typename U>
   EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept
   {
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    if constexpr(O::contains(widen))
+    {
+      return mul[opts.drop(widen)](upgrade(a), upgrade(b));
+    }
+    else    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -179,11 +183,16 @@ namespace eve::detail
   }
 
   template<callable_options O, typename T, typename U, typename... Vs>
-  EVE_FORCEINLINE constexpr T mul_(EVE_REQUIRES(cpu_), O const & o, T r0, U r1, Vs... rs) noexcept
+  EVE_FORCEINLINE constexpr auto mul_(EVE_REQUIRES(cpu_), O const & o, T r0, U r1, Vs... rs) noexcept
   {
     //TODO: optimize, see add_
-    r0   = mul[o](r0,r1);
-    ((r0 = mul[o](r0,rs)),...);
-    return r0;
+    if constexpr(O::contains(widen))
+      return mul[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+    else
+    {
+      r0   = mul[o](r0,r1);
+      ((r0 = mul[o](r0,rs)),...);
+      return r0;
+    }
   }
 }
