@@ -13,12 +13,6 @@
 
 namespace eve
 {
-  template<typename ...Ts>
-  struct result
-  {
-    using type = common_value_t < upgrade_t<Ts>... >;
-  };
-
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,
                                 upper_option, strict_option, widen_option>
@@ -33,7 +27,7 @@ namespace eve
 
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && Options::contains(widen))
-      EVE_FORCEINLINE auto//typename result<T0, T1, Ts...>::type
+      EVE_FORCEINLINE common_value_t<upgrade_t<T0>, upgrade_t<T1>, upgrade_t<Ts>... > //typename result<T0, T1, Ts...>::type
     constexpr operator()(T0 t0, T1 t1, Ts...ts)
       const noexcept
     {
@@ -51,6 +45,7 @@ namespace eve
     EVE_FORCEINLINE constexpr
     kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
+
     EVE_CALLABLE_OBJECT(add_t, add_);
   };
 
@@ -114,7 +109,8 @@ namespace eve
 //!       to be greater or equal to the exact one (except for Nans). Combined with `strict` the option
 //!       ensures generally faster computation, but strict inequality.
 //!    7. The summation is computed in the double sized element type (if available).
-//!       This decorator has no effect on double and  64 bits integrals.//!
+//!       This decorator has no effect on double and  64 bits integrals.
+//!
 //!   @note
 //!      Although the infix notation with `+` is supported for two parameters, the `+` operator on
 //!      standard scalar types is the original one and so can lead to automatic promotion.

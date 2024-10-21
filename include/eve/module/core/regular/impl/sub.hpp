@@ -27,9 +27,13 @@
 namespace eve::detail
 {
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
+    if constexpr(O::contains(widen))
+    {
+      return sub[o.drop(widen)](upgrade(a), upgrade(b));
+    }
+    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -48,7 +52,7 @@ namespace eve::detail
          return eve::next[eve::is_gtz(e)](r);
       }
     }
-    if constexpr (O::contains(saturated) && integral_value<T>)
+    else if constexpr (O::contains(saturated) && integral_value<T>)
     {
       if constexpr (scalar_value<T>)
       {
@@ -105,10 +109,15 @@ namespace eve::detail
   }
 
   template<callable_options O, typename T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE constexpr T sub_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  EVE_FORCEINLINE constexpr auto sub_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   {
-    r0   = sub[o](r0,r1);
-    ((r0 = sub[o](r0,rs)),...);
-    return r0;
+    if constexpr(O::contains(widen))
+      return sub[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
+    else
+    {
+      r0   = sub[o](r0,r1);
+      ((r0 = sub[o](r0,rs)),...);
+      return r0;
+    }
   }
 }
