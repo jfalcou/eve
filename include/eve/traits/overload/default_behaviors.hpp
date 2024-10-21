@@ -106,12 +106,12 @@ namespace eve
     constexpr EVE_FORCEINLINE auto adapt_call(as<R> pt, auto a, O const& o, T x, Ts const&... xs) const
     {
       constexpr bool has_implementation         = requires{ func_t::deferred_call(a, o, x, xs...); };
-      constexpr bool supports_map_no_conversion = requires{ map(pt, this->derived(), x, xs...); };
+      constexpr bool supports_map_no_conversion = requires{ detail::map(pt, this->derived(), x, xs...); };
       constexpr bool any_emulated               = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
       constexpr bool any_aggregated             = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
 
       if      constexpr(any_aggregated)                             return aggregate(this->derived(), x, xs...);
-      else if constexpr(any_emulated && supports_map_no_conversion) return map(pt, this->derived(), x, xs...);
+      else if constexpr(any_emulated && supports_map_no_conversion) return detail::map(pt, this->derived(), x, xs...);
       else if constexpr(has_implementation)                         return func_t::deferred_call(a, o, x, xs...);
       else                                                          return ignore{};
     }
