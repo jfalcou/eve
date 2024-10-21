@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T, integral_value S>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, S> operator()(T t0, S s) const noexcept
       requires (same_lanes_or_scalar<T, S>)
-    {      
+    {
       return this->behavior(as<as_wide_as_t<T, S>>{}, eve::current_api, this->options(), t0, s);
     }
 
@@ -108,7 +108,7 @@ namespace eve
       // W >> S case: broadcast the scalar & rerun
       else if constexpr (scalar_value<U>)               return shr(a, as_wide_as_t<U, T>{s});
       // W >> W case: all backends rejected the op, generic fallback
-      else                                              return map_pt(as<T>{}, []<typename V>(V v, auto b) { return static_cast<V>(v >> b); }, a, s);
+      else                                              return map(as<T>{}, []<typename V>(V v, auto b) { return static_cast<V>(v >> b); }, a, s);
     }
 
     template<callable_options O, typename T, std::ptrdiff_t S>

@@ -79,7 +79,7 @@ namespace eve::detail
         if( std::is_unsigned_v<T> )
           return if_else(is_eqz(a), valmax(eve::as{a}), if_else(eve::abs(a) == one(eve::as{a}), a, eve::zero));
         else
-          return map_pt(as<T>{}, eve::rec, a);
+          return map(as<T>{}, eve::rec, a);
       }
     }
   }

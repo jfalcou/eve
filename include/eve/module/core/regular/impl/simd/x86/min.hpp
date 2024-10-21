@@ -90,7 +90,7 @@ namespace eve::detail
         return detail::if_else_min(a, b);
       else if constexpr( current_api >= sse4_2 && c == category::uint64x2 )
         return detail::if_else_min(a, b);
-      else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map_pt(as<wide<T, N>>{}, min, a, b);
+      else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map(as<wide<T, N>>{}, min, a, b);
       // 128 - 32 bit ints
       else if constexpr( current_api >= sse4_1 && c == category::int32x4 ) return _mm_min_epi32(a, b);
       else if constexpr( current_api >= sse4_1 && c == category::uint32x4 )

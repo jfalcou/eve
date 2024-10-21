@@ -57,9 +57,6 @@ namespace eve::detail
 
           if constexpr( C::is_complete && !C::is_inverted ) return alternative(c, a0, as<r_t>{});
     else  if constexpr( C::is_complete &&  C::is_inverted ) return f(a0, ax...);
-    else                                                    return if_else( c.mask(as<r_t>{})
-                                                                          , f(a0, ax...)
-                                                                          , alternative(c, a0, as<r_t>{})
-                                                                          );
+    else return if_else(c.mask(as<r_t>{}), f(a0, ax...), alternative(c, a0, as<r_t>{}));
   }
 }

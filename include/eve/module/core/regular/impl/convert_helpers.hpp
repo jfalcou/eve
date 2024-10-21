@@ -99,7 +99,7 @@ EVE_FORCEINLINE as_wide_t<Out, cardinal_t<In>> convert_impl(EVE_REQUIRES(cpu_), 
   }
   else
   {
-    return map_pt(as<out_t>{}, convert, v0, tgt);
+    return map(as<out_t>{}, convert, v0, tgt);
   }
 }
 
@@ -158,7 +158,7 @@ EVE_FORCEINLINE wide<U, N> convert_slice(wide<T, N> v, as<U> tgt)
     auto [l, h] = v.slice();
     return wide<U, N>(convert(l, tgt), convert(h, tgt));
   }
-  else return map_pt(as<wide<U, N>>{}, convert, v, tgt);
+  else return map(as<wide<U, N>>{}, convert, v, tgt);
 }
 
 // Convert integer from 2^n -> 2^n+1

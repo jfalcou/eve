@@ -163,7 +163,7 @@ namespace eve
         else if constexpr( has_aggregated_abi_v<U> )
           return aggregate(eve::saturate, a0, at);
         else if constexpr( has_emulated_abi_v<U> )
-          return map_pt(as<U>{}, eve::saturate, a0, at);
+          return map(as<U>{}, eve::saturate, a0, at);
         else
         {
           if constexpr( std::is_floating_point_v<Target> ) // saturating to floating point

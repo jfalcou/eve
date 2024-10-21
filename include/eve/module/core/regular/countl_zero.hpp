@@ -83,7 +83,7 @@ namespace eve
       if constexpr( scalar_value<T> )
         return T(std::countl_zero(x));
       else
-        return map_pt(as<T>{}, countl_zero, x);
+        return map(as<T>{}, countl_zero, x);
     }
   }
 }

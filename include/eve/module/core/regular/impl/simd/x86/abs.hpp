@@ -36,7 +36,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8       ) return _mm512_abs_pd(w);
       else if constexpr( match(c, category::float_)     ) return bit_notand(mzero(as{w}), w);
       else if constexpr( c == category::int64x8         ) return _mm512_abs_epi64(w);
-      else if constexpr( match(c, category::size64_)    ) return map_pt(as<wide<T, N>>{}, eve::abs, w);
+      else if constexpr( match(c, category::size64_)    ) return map(as<wide<T, N>>{}, eve::abs, w);
       else if constexpr( c == category::int32x16        ) return _mm512_abs_epi32(w);
       else if constexpr( c == category::int32x8 )
       {

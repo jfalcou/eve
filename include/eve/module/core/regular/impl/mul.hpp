@@ -118,7 +118,7 @@ namespace eve::detail
               }
               else
               {
-                auto that = map_pt(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
+                auto that = map(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
                 return that;
               }
             }
@@ -159,7 +159,7 @@ namespace eve::detail
             }
             else
             {
-              auto that = map_pt(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
+              auto that = map(as<common_value_t<T, U>>{}, eve::mul[saturated], a, b);
               return that;
             }
           }

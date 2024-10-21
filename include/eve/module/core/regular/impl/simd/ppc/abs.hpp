@@ -22,7 +22,7 @@ namespace eve::detail
 
     if      constexpr(O::contains(saturated))            return abs_(EVE_TARGETS(cpu_), opts, v);
     else if constexpr( match(cat, category::unsigned_)  ) return v;
-    else if constexpr( match(cat, category::size64_)    ) return map_pt(as<wide<T, N>>{}, eve::abs, v);
+    else if constexpr( match(cat, category::size64_)    ) return map(as<wide<T, N>>{}, eve::abs, v);
     else                                                  return vec_abs(v.storage());
   }
 }

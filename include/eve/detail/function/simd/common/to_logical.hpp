@@ -34,7 +34,7 @@ EVE_FORCEINLINE logical<wide<T, N>> to_logical(wide<T, N> const& v) noexcept
   }
   else
   {
-    return map_pt(as<logical<wide<T, N>>>{}, [](auto e) { return logical<T>(e != 0); }, v);
+    return map(as<logical<wide<T, N>>>{}, [](auto e) { return logical<T>(e != 0); }, v);
   }
 }
 

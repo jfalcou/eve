@@ -64,6 +64,6 @@ namespace eve::detail
       else  if constexpr( cat == category::int64x2)   return nope(vceqq_s64(v, z));
       else  if constexpr( cat == category::uint64x2)  return nope(vceqq_u64(v, z));
     }
-    else  if constexpr( sizeof(T) == 8 )            return map_pt(as<logical<wide<T, N>>>{}, nez, v);
+    else  if constexpr( sizeof(T) == 8 )            return map(as<logical<wide<T, N>>>{}, nez, v);
   }
 }

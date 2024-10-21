@@ -30,7 +30,7 @@ namespace eve::detail
     {
       using r_e = decltype(f(std::declval<element_type_t<T0>>(), std::declval<element_type_t<T>>()...));
       using r_t = as_wide_t<r_e, fixed<std::max({cardinal_t<T0>{}, cardinal_t<T>{}...})>>;
-      return map_pt(as<r_t>{}, f, arg0, args...);
+      return map(as<r_t>{}, f, arg0, args...);
     }
     else return f(arg0, args...);
   }
@@ -42,7 +42,7 @@ namespace eve::detail
     else if constexpr(has_emulated_abi_v<T>)
     {
       using r_t = as_wide_as_t<decltype(f(std::declval<element_type_t<T>>())), T>;
-      return map_pt(as<r_t>{}, f, v);
+      return map(as<r_t>{}, f, v);
     }
     else return f(v);
   }

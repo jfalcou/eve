@@ -87,7 +87,7 @@ namespace eve::detail
             return std::fma(y, z, x);
           };
 
-          return map_pt(as<T>{}, stdfam, a, b, c);
+          return map(as<T>{}, stdfam, a, b, c);
         }
       }
       else if constexpr (std::is_integral_v<element_type_t<T>>)

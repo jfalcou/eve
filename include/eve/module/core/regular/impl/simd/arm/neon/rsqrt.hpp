@@ -30,7 +30,7 @@ namespace eve::detail
         if constexpr( cat == category::float64x1 ) return vrsqrte_f64(w);
         else if constexpr( cat == category::float64x2 ) return vrsqrteq_f64(w);
       }
-      else return map_pt(as<wide<T, N>>{}, rsqrt, w);
+      else return map(as<wide<T, N>>{}, rsqrt, w);
     }
     else
     {
@@ -63,7 +63,7 @@ namespace eve::detail
           return that_t(vmulq_f64(vrsqrtsq_f64(w, inv * inv), inv));
         }
       }
-      else return map_pt(as<wide<T, N>>{}, rsqrt, w);
+      else return map(as<wide<T, N>>{}, rsqrt, w);
     }
   }
 }
