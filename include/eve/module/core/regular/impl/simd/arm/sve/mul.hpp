@@ -13,6 +13,22 @@
 namespace eve::detail
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), O const& opts,
+                            wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>> && O::contains(widen))
+  {
+    return mul.behavior(cpu_{}, opts, v, w);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
+  EVE_FORCEINLINE auto mul_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
+                            wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>> && O::contains(widen))
+  {
+    return mul.behavior(cpu_{}, opts, v, w);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T,N> mul_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
@@ -33,7 +49,7 @@ namespace eve::detail
     // ignore all just return alternative
     if constexpr( C::is_complete ) return alt;
     if constexpr(((O::contains(lower) || O::contains(upper)) && floating_value<T>) ||
-                 (O::contains(saturated) && std::integral<T>))
+                 (O::contains(saturated) && std::integral<T>) || O::contains(widen))
     {
      return mul.behavior(cpu_{}, opts, a, b);
     }
