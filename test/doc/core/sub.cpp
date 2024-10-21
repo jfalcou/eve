@@ -29,4 +29,9 @@ int main()
   std::cout << std::setprecision(20) << "-> sub(wf0, wf1)          = " << eve::sub(wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> sub[lower](wf0, wf1)   = " << eve::sub[eve::lower](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> sub[upper](wf0, wf1)   = " << eve::sub[eve::upper](wf0, wf1) << "\n";
+
+  std::cout << "-> sub(wu0, wu1)                 = " << eve::sub(wu0, wu1) << "\n";
+  std::cout << "-> sub[widen](wu0, wu1)          = " << eve::sub[eve::widen](wu0, wu1) << "\n";
+  std::cout << "-> sub(wf0, wf1)                 = " << eve::sub(wf0, wf1) << "\n";
+  std::cout << "-> sub[widen](wf0, wf1)          = " << eve::sub[eve::widen](wf0, wf1) << "\n";
 }

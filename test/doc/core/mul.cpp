@@ -31,4 +31,9 @@ int main()
   std::cout << std::setprecision(20) << "-> add[lower][strict](wf0, wf1)   = " << eve::add[eve::lower][eve::strict](wf0, wf1) << "\n";
   std::cout << std::setprecision(20) << "-> add[upper][strict](wf0, wf1)   = " << eve::add[eve::upper][eve::strict](wf0, wf1) << "\n";
 
+  std::cout << "-> mul(wu0, wu1)                 = " << eve::mul(wu0, wu1) << "\n";
+  std::cout << "-> mul[widen](wu0, wu1)          = " << eve::mul[eve::widen](wu0, wu1) << "\n";
+  std::cout << "-> mul(wf0, wf1)                 = " << eve::mul(wf0, wf1) << "\n";
+  std::cout << "-> mul[widen](wf0, wf1)          = " << eve::mul[eve::widen](wf0, wf1) << "\n";
+
 }

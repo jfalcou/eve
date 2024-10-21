@@ -59,7 +59,10 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types)
   TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), v_t(), T()), T);
   TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), T(), v_t()), T);
   TTS_EXPR_IS(eve::sub[eve::saturated](v_t(), v_t(), v_t()), v_t);
-};
+  TTS_EXPR_IS(eve::sub[eve::widen](T(), T()), eve::upgrade_t<T>);
+  TTS_EXPR_IS(eve::sub[eve::widen](T(), v_t()), eve::upgrade_t<T>);
+  TTS_EXPR_IS(eve::sub[eve::widen](v_t(), T()), eve::upgrade_t<T>);
+  TTS_EXPR_IS(eve::sub[eve::widen](v_t(), v_t()), eve::upgrade_t<v_t>);};
 
 //==================================================================================================
 //==  sub simd tests
@@ -76,7 +79,7 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   using eve::upper;
   using eve::strict;
   using eve::sub;
-  
+
   TTS_EQUAL(sub(a0, a2), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
   TTS_EQUAL(sub[saturated](a0, a2),
             tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
@@ -109,6 +112,25 @@ TTS_CASE_WITH("Check behavior of sub on wide",
     TTS_EXPECT(eve::all(sub[strict][upper](w0, w1)  >= sub[upper](w0, w1)));
     TTS_EXPECT(eve::all(sub[strict][lower](w0, -w1) <= sub[lower](w0, -w1)));
   }
+};
+
+TTS_CASE_WITH("Check behavior of sub widen on wide",
+              eve::test::simd::all_types,
+              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)))
+<typename T>(T const& a0, T const& a1,  T const&a2)
+{
+  using eve::sub;
+  using eve::widen;
+  using eve::convert;
+  using eve::as;
+
+  TTS_ULP_EQUAL(sub[widen](a0, a1), sub(eve::upgrade(a0), eve::upgrade(a1)), 0.5);
+  TTS_ULP_EQUAL(sub[widen ](a0, a1, a2), sub(eve::upgrade(a0), eve::upgrade(a1), eve::upgrade(a2)), 0.5);
+  TTS_ULP_EQUAL(sub[widen ](kumi::tuple{a0, a1}), sub[widen ](a0, a1), 0.5);
+  TTS_ULP_EQUAL(sub[widen ](kumi::tuple{a0, a1, a2}), sub[widen ](a0, a1, a2), 0.5);
+
 };
 
 //==================================================================================================

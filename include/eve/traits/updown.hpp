@@ -22,9 +22,7 @@ namespace eve
         {
           return float();
         }
-        else if constexpr( std::same_as<v_t, std::uint8_t> ||
-                           std::same_as<v_t, float>        ||
-                           std::same_as<v_t, std::int8_t > )
+        else if constexpr( (sizeof(v_t) == 1) || (floating_scalar_value<v_t> && (sizeof(v_t) <= 4)))
         {
           return v_t();
         }
@@ -53,9 +51,7 @@ namespace eve
         {
           return double();
         }
-        else if constexpr( std::same_as<v_t, std::uint64_t> ||
-                           std::same_as<v_t, double>        ||
-                           std::same_as<v_t, std::int64_t > )
+        else if constexpr( arithmetic_scalar_value<v_t> && sizeof(v_t) >= 8)
         {
           return v_t();
         }
