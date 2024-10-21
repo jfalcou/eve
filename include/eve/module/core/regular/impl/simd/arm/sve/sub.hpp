@@ -12,6 +12,21 @@
 
 namespace eve::detail
 {
+  template<callable_options O, arithmetic_scalar_value T, typename N>
+  EVE_FORCEINLINE auto sub_(EVE_REQUIRES(sve_), O const& opts,
+                            wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>> && O::contains(widen))
+  {
+    return sub.behavior(cpu_{}, opts, v, w);
+  }
+
+  template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
+  EVE_FORCEINLINE auto sub_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
+                            wide<T, N> v, wide<T, N> w) noexcept
+  requires (sve_abi<abi_t<T, N>> && O::contains(widen))
+  {
+    return sub.behavior(cpu_{}, opts, v, w);
+  }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, conditional_expr C>
   EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
