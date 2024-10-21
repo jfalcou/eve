@@ -16,9 +16,16 @@ namespace eve::detail
   {
     if constexpr (simd_value<T>)
     {
-      // assume T != U
-      if constexpr (simd_value<U>) return bit_xor(a, bit_cast(b, as<T>{}));
-      else                         return bit_xor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
+      if constexpr (simd_value<U>)
+      {
+        if constexpr (std::same_as<T, U>)
+        {
+          apply<cardinal_t<T>::value>([&](auto... I) { (a.set(I, a.get(I) ^ b.get(I)), ...); });
+          return a;
+        }
+        else return bit_xor(a, bit_cast(b, as<T>{}));
+      }
+      else return bit_xor(a, T{ bit_cast(b, as<element_type_t<T>>{}) });
     }
     else if constexpr (simd_value<U>)
     {
@@ -32,7 +39,7 @@ namespace eve::detail
       return bit_cast(static_cast<i_t>(bit_cast(a, as<i_t>{}) ^ bit_cast(b, as<i_t>{})), as(a));
     }
   }
-  
+
   //================================================================================================
   // N parameters
   //================================================================================================
