@@ -11,7 +11,7 @@
 
 using test_types = eve::test::wides<tts::types<double, std::int64_t, std::uint64_t, float, std::int32_t, std::uint32_t>>::type;
 
-TTS_CASE_TPL("Check compress copy logical", test_types)
+TTS_CASE_TPL("Check compress copy logical", simd_types_for_compress<test_types>)
 <typename T>(tts::type<T>) {
   compress_copy_tst(eve::as<eve::logical<T>>{}, eve::compress_copy_simd);
 };
