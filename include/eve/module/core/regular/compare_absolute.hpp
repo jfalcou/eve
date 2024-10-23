@@ -37,8 +37,8 @@ namespace eve
 //! @addtogroup core_predicates
 //! @{
 //!   @var compare_absolute
-//!   @brief `elementwise callable` returning a logical true  if and only if the element value of the first parameter is
-//!          greater  than the second one.
+//!   @brief `elementwise callable` returning a logical true  if and only if the absolute value of the first parameters
+//!    satisfy the predicate parameters.
 //!
 //!   @groupheader{Header file}
 //!
