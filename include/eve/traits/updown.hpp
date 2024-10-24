@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/traits/as_wide.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve
 {
@@ -53,9 +54,7 @@ namespace eve
         {
           return double();
         }
-        else if constexpr( std::same_as<v_t, std::uint64_t> ||
-                           std::same_as<v_t, double>        ||
-                           std::same_as<v_t, std::int64_t > )
+        else if constexpr (arithmetic_scalar_value<v_t> && (sizeof(v_t) == 8))
         {
           return v_t();
         }
