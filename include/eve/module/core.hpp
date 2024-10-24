@@ -30,19 +30,36 @@
 //! @ingroup core
 //! Core arithmetic functions
 //!
+//! abs, absmax, absmin, add, agm, average, ceil, chi, clamp, copysign, dec, dist, div, dot, fdim,
+//! floor, flush_denormal, fmod, frac, fracscale, heaviside, inc, lerp, manhattan, max, maxabs, maxmag,
+//! min, minabs, minmag, minmax, minus, modf, mul, nearest, negabsmax, negabsmin, negate, negatenz,
+//! negmaxabs, negminabs, of_class, oneminus, rat, rec, reldist, rem, remainder, rotl, rotr, round,
+//! roundscale, rshl, rshr, rsqrt, saturate, shl, shr, sign, sign_alternate, signnz, sqr, sqrt,
+//! sub, trunc
+//!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
 //! These functions are low level and acting on the bit representation of the involved datas.
+//!
+//! bit_and, bit_andnot, bit_cast, bit_ceil, bit_flip, bit_floor, bit_mask, bit_not, bit_notand,
+//! bit_notor, bit_or, bit_ornot, bit_reverse, bit_select, bit_set, bit_shl, bit_shr, bit_swap_adjacent,
+//! bit_swap_pairs, bit_ternary, bit_unset, bit_width, bit_xor, byte_reverse, byte_swap_adjacent,
+//! byte_swap_pairs, countl_one, countl_zero, countr_one, countr_zero, firstbitset, firstbitunset,
+//! hi, lo, lohi, popcount, swap_pairs
 //!
 //! @defgroup core_constants  Constants
 //! @ingroup core
 //! Basic useful constants (scalar and SIMD)
 //!
-//! All EVE constants can be called in two ways:
+//! All EVE constants can be called in three ways:
 //!    * ct(eve::as<T>())   where T is the wished constant type
 //!    * ct(t)              where t is an instance of a type T
+//!    * ct[cond](...)      where cond is a conditional expression.
 //!
 //! Where ct denotes the constant name.
+//!
+//! When the condition is present and evaluate to false the result element default to zero,
+//! but this behavior can be changed if the condition is expressed by an `if_(...).else_(...) clause`.
 //!
 //! @defgroup core_decorators  Decorators
 //! @ingroup core
@@ -99,6 +116,13 @@
 //!
 //!      Except for average with integral typed inputs these decocators have no impact on integer calls.
 //!
+//!     * upgraded computations
+//!
+//!       - `widen`: the result is computes in the upgraded type corresding to the elements parameters. Presently, this has no effect
+//!          on 64 bits types as the upgrade type is currently the type itself.
+//!          If the widen decorator is used,  it is the responsability of the user to use `convert` if he needs to get back to the input
+//!          type sizes.
+
 //!     * Fuzzy
 //!
 //!       - `almost`: allows some laxity on the predicate result or the integer rounding direction
@@ -112,7 +136,8 @@
 //!
 //!        - saturated: the operations are executed with saturation which avoids overflow.
 //!
-//!          This option can be used with eve::abs, eve::absmax, eve::absmin, eve::add, eve::bit_floor, eve::convert, eve::dec, eve::dist,
+//!          This option can be used with eve::abs, eve::absmax, eve::absmin, eve::add, eve::bit_floor, eve::convert, eve::compare_absolute,
+//!          eve::dec, eve::dist,
 //!          eve::div, eve::inc, eve::manhattan, eve::maxabs, eve::maxmag, eve::minabs, eve::minmag, eve::minus, eve::mul,
 //!          eve::negabsmax, eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::oneminus, eve::prev, eve::sqr, eve::sub
 //!
