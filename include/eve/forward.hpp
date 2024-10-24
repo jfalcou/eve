@@ -29,7 +29,7 @@ struct ignore_extrema;
 namespace eve::detail
 {
   // to_logical -----------------------------------------------------------
-  template<typename T, typename N> logical<wide<T, N>> to_logical(wide<T, N> const& v) noexcept;
+  template<typename T, typename N> logical<wide<T, N>> to_logical(wide<T, N> v) noexcept;
 
   template<value T> EVE_FORCEINLINE logical<T> to_logical(logical<T> v) noexcept;
 
