@@ -38,7 +38,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_eqmz_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_eqmz_(EVE_REQUIRES(avx512_),
                                      C const& cx,
                                      O const& o,
                                      wide<T, N> const& v) noexcept

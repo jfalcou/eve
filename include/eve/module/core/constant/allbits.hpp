@@ -34,42 +34,42 @@ namespace eve
     EVE_CALLABLE_OBJECT(allbits_t, allbits_);
   };
 
-  //================================================================================================
-  //! @addtogroup core_constants
-  //! @{
-  //!   @var allbits
-  //!   @brief Computes a constant with all bits set.
-  //!
-  //!   **Defined in Header**
-  //!
-  //!   @code
-  //!   #include <eve/module/core.hpp>
-  //!   @endcode
-  //!
-  //!   @groupheader{Callable Signatures}
-  //!
-  //!   @code
-  //!   namespace eve
-  //!   {
-  //!     template<eve::plain_value T> constexpr T allbits(as<T> x) noexcept;
-  //!   }
-  //!   @endcode
-  //!
-  //!   **Parameters**
-  //!
-  //!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
-  //!
-  //!   **Return value**
-  //!
-  //!   The call `eve::allbits(as<T>{})` returns a value of type `T` with all bits set.
-  //!
-  //!   @groupheader{Example}
-  //!
-  //!   @godbolt{doc/core/constant/allbits.cpp}
-  //! @}
-  //================================================================================================
-  inline constexpr auto allbits = functor<allbits_t>;
+//================================================================================================
+//! @addtogroup core_constants
+//! @{
+//!   @var allbits
+//!   @brief Computes a constant with all bits set.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   @groupheader{Callable Signatures}
+//!
+//!   @code
+//!   namespace eve
+//!   {
+//!     template<eve::plain_value T> constexpr T allbits(as<T> x) noexcept;
+//!   }
+//!   @endcode
+//!
+//!   **Parameters**
+//!
+//!     * `x` :  [Type wrapper](@ref eve::as) instance embedding the type of the constant.
+//!
+//!   **Return value**
+//!
+//!   The call `eve::allbits(as<T>())` returns a value of type `T` with all bits set.
+//!
+//!   @groupheader{Example}
+//!
+//!   @godbolt{doc/core/constant/allbits.cpp}
+//! @}
+//================================================================================================
+inline constexpr auto allbits = functor<allbits_t>;
 
-  // Required for if_else optimisation detections
-  using callable_allbits_ = tag_t<allbits>;
+// Required for if_else optimisation detections
+using callable_allbits_ = tag_t<allbits>;
 }
