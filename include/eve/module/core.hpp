@@ -24,7 +24,11 @@
 //! @defgroup core_accuracy  Accuracy helpers
 //! @ingroup core
 //! These functions allows performing some basic arithmetics operations with greater accuracy
-//! even when and upgraded type is not available.
+//! even when a truly upgraded type is not available.
+//!
+//! [diff_of_prod](@ref diff_of_prod), [fast_two_add](@ref fast_two_add),
+//! [sum_of_prod](@ref sum_of_prod), [three_fma](@ref three_fma), [two_add](@ref two_add),
+//! [two_prod](@ref two_prod), .
 //!
 //! @defgroup core_arithmetic  Arithmetic operations
 //! @ingroup core
@@ -124,7 +128,8 @@
 //!          eve::fma, eve::fms, eve::fnma, eve::fnms, eve::frac, eve::frexp, eve::fsm, eve::fsnm, eve::ifrexp, eve::is_flint,
 //!          eve::is_negative, eve::is_not_flint, eve::is_not_infinite, eve::is_unit, eve::ldexp, eve::lerp, eve::manhattan, eve::max,
 //!          eve::maxabs, eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::modf, eve::negabsmax,
-//!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist, eve::rsqrt, eve::signnz, eve::sum_of_prod,
+//!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist,
+//!          eve::rsqrt, eve::signnz, eve::sum_of_prod,
 //!
 //!   * integer roundings :
 //!
@@ -155,17 +160,17 @@
 //!
 //!    * upgraded computations
 //!
-//!       - `widen`: the result is computes in the upgraded type corresding to the elements parameters. Presently, this has no effect
-//!          on 64 bits types as the upgrade type is currently the type itself.
-//!          If the widen decorator is used,  it is the responsability of the user to use `convert` if he needs to get back to the input
-//!          type sizes.
+//!       - `widen`: the result is computed in the upgraded type corresponding to the elements parameters. Presently, this has no effect
+//!          on 64 bits types as the upgrade type is the type itself.
+//!          If the widen decorator is used,  it is the responsability of the user to use [convert](@ref convert)
+//!          if it is  needed to get back to the input type sizes.
 //!
 //!    * Fuzzy
 //!
 //!       - `almost`: allows some laxity on the predicate result or the integer rounding direction
 //!       - `definitely`: impose some rigidity on the predicate result or the integer rounding direction
 //!
-//!       these two decorators can be used with the functions eve::ceil,  eve::floor, eve::frac, eve::modf, eve::trunc,
+//!       these two decorators can be used with the functions eve::ceil,  eve::floor, eve::frac, [eve::modf](@ref modf), eve::trunc,
 //!       `almost` with the predicates eve::is_equal, eve::is_greater_equal, eve::is_less_equal, eve::is_not_greater, eve::is_not_less,
 //!       `definitely` with the predicates eve::is_not_equal, eve::is_not_greater_equal, ieve::s_not_less_equal, eve::is_greater, eve::is_less,
 //!

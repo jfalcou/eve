@@ -82,9 +82,7 @@ namespace eve
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bitwise_operation)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_andnot.cpp}
-//!  @groupheader{Semantic Modifiers}
 //================================================================================================
   inline constexpr auto bit_andnot = functor<bit_andnot_t>;
 //================================================================================================

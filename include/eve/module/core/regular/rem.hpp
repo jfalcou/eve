@@ -74,7 +74,7 @@ namespace eve
 //!         For unsigned integral the options upward and nearest are undefined behaviour as the result could
 //!         be negative.
 //!
-//!    @notes Although the infix notation with `%` is supported, the `%` operator on
+//!    @note Although the infix notation with `%` is supported, the `%` operator on
 //!     standard integral scalar type is the original one and so can lead to automatic
 //!     promotion. Moreover due to C++ limitations, `%` is not available for scalar floating
 //!     point values.

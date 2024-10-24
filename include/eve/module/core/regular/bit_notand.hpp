@@ -39,7 +39,7 @@ namespace eve
 //!   @var bit_notand
 //!   @brief  `strict_tuple_callable` object computing the bitwise NOTAND of its arguments.
 //!
-//!   **Defined in Header**
+//!   @groupheader{Header file}
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
