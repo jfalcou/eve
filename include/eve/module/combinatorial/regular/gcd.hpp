@@ -15,17 +15,18 @@
 
 namespace eve
 {
-template<typename Options>
-struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
-{
-  template<eve::value T, value U>
-  requires (same_lanes_or_scalar<T, U>)
-  constexpr EVE_FORCEINLINE
-  common_value_t<T, U> operator()(T v, U w) const noexcept
-  { return EVE_DISPATCH_CALL(v, w); }
+  template<typename Options>
+  struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
+  {
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T v, U w) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), v, w);
+    }
 
-  EVE_CALLABLE_OBJECT(gcd_t, gcd_);
-};
+    EVE_CALLABLE_OBJECT(gcd_t, gcd_);
+  };
 
 //================================================================================================
 //! @addtogroup combinatorial

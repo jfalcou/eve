@@ -23,18 +23,16 @@ namespace eve
   struct heaviside_t : elementwise_callable<heaviside_t, Options>
   {
     template<value T>
-    constexpr EVE_FORCEINLINE T
-    operator()(T a) const noexcept
+    constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
     {
-      return EVE_DISPATCH_CALL(a);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a);
     }
 
     template<value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U>
-    operator()(T a, U s) const noexcept
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U s) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(a, s);
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, s);
     }
 
     EVE_CALLABLE_OBJECT(heaviside_t, heaviside_);
@@ -94,23 +92,22 @@ namespace eve
 
   namespace detail
   {
-
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const&, T a) noexcept
     {
-      if constexpr(scalar_value<T>)
+      if constexpr (scalar_value<T>)
         return a > 0;
       else
-        return if_else(is_gtz(a), one(as(a)), zero);
+        return if_else(is_gtz(a), one(as{a}), zero);
     }
 
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O, T a, T s) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const&, T a, T s) noexcept
     {
-      if constexpr(scalar_value<T>)
+      if constexpr (scalar_value<T>)
         return a > s;
       else
-        return if_else(a > s, one(as(a)), zero);
+        return if_else(a > s, one(as{a}), zero);
     }
   }
 }

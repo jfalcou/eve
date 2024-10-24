@@ -12,11 +12,19 @@ namespace my_lib
   template<typename Options>
   struct func_t : eve::callable<func_t, Options>
   {
-    // operator() are defined here to maximize quality of error message. They all use EVE_DISPATCH_CALL at some point.
+    // operator() are defined here to maximize quality of error message.
     template<eve::integral_value T>
-    EVE_FORCEINLINE T       operator()(T v)       const { return EVE_DISPATCH_CALL(v); }
-    EVE_FORCEINLINE double  operator()(double v)  const { return EVE_DISPATCH_CALL(v); }
-    EVE_FORCEINLINE void    operator()(float)     const = delete;
+    EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(eve::as<T>{}, eve::current_api, this->options(), v);
+    }
+
+    EVE_FORCEINLINE double operator()(double v) const
+    {
+      return this->behavior(eve::as<double>{}, eve::current_api, this->options(), v);
+    }
+
+    EVE_FORCEINLINE void operator()(float) const = delete;
 
     // This ties the function object to the overload set
     EVE_CALLABLE_OBJECT_FROM(my_lib::impl, func_t, func_);

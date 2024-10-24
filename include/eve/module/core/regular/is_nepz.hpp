@@ -16,11 +16,10 @@ namespace eve
   template<typename Options>
   struct is_nepz_t : elementwise_callable<is_nepz_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_nepz_t, is_nepz_);
@@ -73,9 +72,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_nepz_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_nepz_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       return !is_eqpz(a);
     }

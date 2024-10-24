@@ -19,8 +19,11 @@ namespace eve
   template<typename Options>
   struct inc_t : elementwise_callable<inc_t, Options, saturated_option, lower_option, upper_option, strict_option>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(inc_t, inc_);
   };
@@ -91,38 +94,37 @@ namespace eve
     EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
       if constexpr(integral_value<T> && O::contains(saturated))
-        return inc[a != valmax(eve::as(a))](a);
+        return inc[a != valmax(as{a})](a);
       else if constexpr( signed_integral_scalar_value<T>)
       {
         using u_t = as_integer_t<T>;
-        return T(u_t(a)+u_t(1));
+        return T(u_t{a} + u_t{1});
       }
       else
-        return eve::add[o](a, one(eve::as(a)));
+        return eve::add[o](a, one(as{a}));
     }
-
 
     template<conditional_expr C, value T, callable_options O>
     EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), C cond, O const& o, T const& a) noexcept
     {
-      if constexpr(simd_value<T>)
+      if constexpr (simd_value<T>)
       {
         constexpr bool  iwl = T::abi_type::is_wide_logical;
         using           m_t = as_logical_t<T>;
 
-        if      constexpr(O::contains(saturated))  return inc[cond.mask(as<m_t>{}) && (a != valmin(eve::as(a)))](a);
-        else if constexpr(integral_value<T> && iwl)
+        if      constexpr (O::contains(saturated)) return inc[cond.mask(as<m_t>{}) && (a != valmin(as{a}))](a);
+        else if constexpr (integral_value<T> && iwl)
         {
           auto m = cond.mask(as<m_t>{});
 
           if constexpr (simd_value<decltype(m)>) return a - convert(m.bits(), as_element<T>{});
           else                                   return a - bit_cast(m.mask(), int_from<decltype(m.mask())>{});
         }
-        else                                     return add[o](a,one(eve::as(a)));
+        else                                     return add[o](a,one(eve::as{a}));
       }
       else
       {
-        return add[o](a,one(eve::as(a)));
+        return add[o](a,one(eve::as{a}));
       }
     }
   }

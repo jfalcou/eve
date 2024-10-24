@@ -22,9 +22,11 @@ namespace eve
                                           , full_circle_option, medium_option, big_option
                                           >
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE
-    zipped<T,T,T> operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE zipped<T, T, T> operator()(T v) const noexcept
+    {
+      return this->behavior(as<zipped<T, T, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(rempio2_t, rempio2_);
   };
@@ -90,7 +92,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE auto
     rempio2_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
@@ -101,10 +103,10 @@ namespace eve
       else if constexpr( O::contains(big))             return rempio2_big(x);
       else
       {
-        if( eve::all(x <= Rempio2_limit[quarter_circle](as(x))))   return eve::zip(T(0), x, T(0));
-        else if( eve::all(x <= Rempio2_limit[half_circle](as(x)))) return rempio2_half_circle(x);
-        else if( eve::all(x <= Rempio2_limit[full_circle](as(x)))) return rempio2_full_circle(x);
-        else if( eve::all(x <= Rempio2_limit[medium](as(x))))      return rempio2_medium(x);
+        if( eve::all(x <= Rempio2_limit[quarter_circle](as{x})))   return eve::zip(T(0), x, T(0));
+        else if( eve::all(x <= Rempio2_limit[half_circle](as{x}))) return rempio2_half_circle(x);
+        else if( eve::all(x <= Rempio2_limit[full_circle](as{x}))) return rempio2_full_circle(x);
+        else if( eve::all(x <= Rempio2_limit[medium](as{x})))      return rempio2_medium(x);
         else                                                        return rempio2_big(x);
       }
     }

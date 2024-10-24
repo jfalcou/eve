@@ -25,9 +25,11 @@ namespace eve
   template<typename Options>
   struct bit_floor_t : elementwise_callable<bit_floor_t, Options>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(bit_floor_t, bit_floor_);
   };
@@ -81,21 +83,20 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    bit_floor_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T bit_floor_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
-      if constexpr( floating_value<T> )
+      if constexpr (floating_value<T>)
       {
-        auto vlt1 = v < one(eve::as(v));
+        auto vlt1 = v < one(eve::as{v});
         auto e = exponent(v);
-        auto r = eve::ldexp(one(eve::as(v)), e);
+        auto r = eve::ldexp(one(eve::as{v}), e);
         return if_else(vlt1, eve::zero, r);
       }
       else if constexpr( signed_integral_value<T> )
       {
         auto uz = bit_floor(convert(v, uint_from<T>()));
-        return if_else(is_ltz(v), zero, convert(uz, as<element_type_t<T>>()));
+        return if_else(is_ltz(v), zero, convert(uz, as<element_type_t<T>>{}));
       }
       else
       {

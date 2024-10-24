@@ -33,6 +33,6 @@ namespace eve::detail
 
     if      constexpr(C::is_complete && !C::is_inverted) return alt;
     else if constexpr(!O::contains(almost))             return svrintm_m(alt, cond.mask(as(v)), v);
-    else                                                 return floor.behavior(cpu_{}, opts, v);
+    else                                                 return floor.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
   }
 }

@@ -18,8 +18,11 @@ namespace eve
 template<typename Options>
 struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 {
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<floating_value T>
+  constexpr EVE_FORCEINLINE T operator()(T v) const
+  {
+    return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+  }
 
   EVE_CALLABLE_OBJECT(acospi_t, acospi_);
 };
@@ -86,7 +89,7 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T acospi_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr( has_native_abi_v<T> ) return radinpi(acos[o](a0));

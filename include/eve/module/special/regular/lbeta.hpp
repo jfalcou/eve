@@ -14,17 +14,18 @@
 
 namespace eve
 {
-template<typename Options>
-struct lbeta_t : elementwise_callable<lbeta_t, Options>
-{
-  template<eve::floating_value T0, eve::floating_value T1>
-  requires (same_lanes_or_scalar<T0, T1>)
-  EVE_FORCEINLINE constexpr
-  eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept
-  { return EVE_DISPATCH_CALL(a, b); }
+  template<typename Options>
+  struct lbeta_t : elementwise_callable<lbeta_t, Options>
+  {
+    template<floating_value T0, floating_value T1>
+    EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 a, T1 b) const  noexcept
+      requires (same_lanes_or_scalar<T0, T1>)
+    {
+      return this->behavior(as<common_value_t<T0, T1>>{}, eve::current_api, this->options(), a, b);
+    }
 
-  EVE_CALLABLE_OBJECT(lbeta_t, lbeta_);
-};
+    EVE_CALLABLE_OBJECT(lbeta_t, lbeta_);
+  };
 
 //================================================================================================
 //! @addtogroup special

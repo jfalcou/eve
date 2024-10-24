@@ -18,8 +18,11 @@ namespace eve
   struct lookup_t : callable<lookup_t, Options>
   {
     template<simd_value V, integral_simd_value I>
-    requires( same_lanes<V,I> )
-    constexpr EVE_FORCEINLINE V operator()(V v, I i) const noexcept { return EVE_DISPATCH_CALL(v,i); }
+    constexpr EVE_FORCEINLINE V operator()(V v, I i) const noexcept
+      requires (same_lanes<V, I>)
+    {
+      return this->behavior(as<V>{}, eve::current_api, this->options(), v, i);
+    }
 
     EVE_CALLABLE_OBJECT(lookup_t, lookup_);
   };

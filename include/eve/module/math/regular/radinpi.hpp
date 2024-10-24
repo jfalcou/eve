@@ -14,12 +14,14 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct radinpi_t : elementwise_callable<radinpi_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(radinpi_t, radinpi_);
   };
@@ -73,11 +75,10 @@ namespace eve
   namespace detail
   {
     template<floating_value T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    EVE_FORCEINLINE constexpr T radinpi_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       if constexpr( has_native_abi_v<T> )
-        return inv_pi(eve::as(a)) * a;
+        return inv_pi(as{a}) * a;
       else
         return apply_over(radinpi, a);
     }

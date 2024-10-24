@@ -15,14 +15,17 @@ namespace eve
   template<typename Options>
   struct factorial_t : elementwise_callable<factorial_t, Options>
   {
-    template<eve::integral_value T>
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<double, T >
-    operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<integral_value T>
+    EVE_FORCEINLINE constexpr as_wide_as_t<double, T> operator()(T v) const noexcept
+    {
+      return this->behavior(as<as_wide_as_t<double, T>>{}, eve::current_api, this->options(), v);
+    }
 
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(factorial_t, factorial_);
   };

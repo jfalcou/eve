@@ -32,7 +32,7 @@ namespace eve::detail
     else if constexpr( cat == category::uint16x8) return vpaddlq_u8(split_it(v));
     else if constexpr( cat == category::uint32x2) return vpaddl_u16(split_it(v));
     else if constexpr( cat == category::uint32x4) return vpaddlq_u16(split_it(v));
-    else return popcount.behavior(cpu_{}, o, v);
+    else return popcount.behavior(as<wide<T, N>>{}, cpu_{}, o, v);
 
   }
 }

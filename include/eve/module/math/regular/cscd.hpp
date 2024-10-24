@@ -18,8 +18,11 @@ namespace eve
   template<typename Options>
   struct cscd_t : elementwise_callable<cscd_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(cscd_t, cscd_);
   };
@@ -79,7 +82,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T cscd_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr(O::contains(quarter_circle))
@@ -90,7 +93,7 @@ namespace eve
         auto test   = is_nez(a0_180) && is_flint(a0_180);
         if constexpr( scalar_value<T> ) // early return for nans in scalar case
         {
-          if( test ) return nan(eve::as<T>());
+          if( test ) return nan(as<T>{});
         }
         return if_else(test, eve::allbits, rec[pedantic](sind[o](a0)));
       }

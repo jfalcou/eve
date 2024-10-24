@@ -32,7 +32,7 @@ namespace eve::detail
 
     if constexpr( O::contains(almost))
     {
-      return is_not_greater.behavior(cpu_{}, opts, a, b);
+      return is_not_greater.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -66,7 +66,7 @@ namespace eve::detail
   {
     if constexpr( C::has_alternative || O::contains(almost))
     {
-      return is_not_greater.behavior(cpu_{}, opts, v, w);
+      return is_not_greater.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v, w);
     }
     else
     {

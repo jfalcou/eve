@@ -38,13 +38,13 @@ namespace eve::detail
     }
     else if constexpr( c == category::float64x4 ) return l_t(_mm256_cmp_pd(a, b, m));
     else if constexpr( c == category::float32x8 ) return l_t(_mm256_cmp_ps(a, b, m));
-    else return is_lessgreater.behavior(cpu_{}, o, a, b);
+    else return is_lessgreater.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, a, b);
   }
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_lessgreater_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_lessgreater_(EVE_REQUIRES(avx512_),
                                                            C          const &cx,
                                                            O          const &o,
                                                            wide<T, N> const &v,
@@ -55,7 +55,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative )
     {
-      return is_lessgreater.behavior(cpu_{}, o, v, w);
+      return is_lessgreater.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, v, w);
     }
     else
     {

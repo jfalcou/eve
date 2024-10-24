@@ -16,9 +16,9 @@ namespace eve::detail
   struct make_t : callable<make_t, Options>
   {
     template<typename Target, typename... T>
-    EVE_FORCEINLINE constexpr auto operator()(as<Target> tgt, T... vs) const noexcept
+    EVE_FORCEINLINE constexpr typename Target::storage_type operator()(as<Target> tgt, T... vs) const noexcept
     {
-      return EVE_DISPATCH_CALL(tgt, vs...);
+      return this->behavior(as<typename Target::storage_type>{}, eve::current_api, this->options(), tgt, vs...);
     }
 
     EVE_CALLABLE_OBJECT(make_t, make_);

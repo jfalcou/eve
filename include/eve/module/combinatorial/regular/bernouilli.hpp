@@ -18,9 +18,11 @@ namespace eve
   template<typename Options>
   struct bernouilli_t : elementwise_callable<bernouilli_t, Options>
   {
-    template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<double, T> operator()(T v) const noexcept  { return EVE_DISPATCH_CALL(v); }
+    template<unsigned_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<double, T> operator()(T v) const noexcept
+    {
+      return this->behavior(as<as_wide_as_t<double, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(bernouilli_t, bernouilli_);
   };

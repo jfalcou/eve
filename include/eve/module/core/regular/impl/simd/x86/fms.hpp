@@ -28,7 +28,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
-    if constexpr( std::integral<T> ) return fms.behavior(cpu_{}, opts, a, b, c);
+    if constexpr( std::integral<T> ) return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     // UPPER LOWER  ----
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
@@ -48,17 +48,17 @@ namespace eve::detail
             auto aabbcc = fms[opts](aa, bb, cc);
             return  slice(aabbcc, eve::upper_);
           }
-          else                                             return fms.behavior(cpu_{}, opts, a, b, c);
+          else                                             return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
         }
-        else                                               return fms.behavior(cpu_{}, opts, a, b, c);
+        else                                               return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }
-      else                                                 return fms.behavior(cpu_{}, opts, a, b, c);
+      else                                                 return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     }
    // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
     {
       if constexpr( supports_fma3 ) return fms(a, b, c);
-      else                          return fms.behavior(cpu_{}, opts, a, b, c);
+      else                          return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     }
     // REGULAR ---
     // we don't care about PROMOTE as we only accept similar types.
@@ -101,7 +101,7 @@ namespace eve::detail
 
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fms.behavior(cpu_{}, opts, v, w, x);
+      if constexpr( std::integral<T> ) return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -122,11 +122,11 @@ namespace eve::detail
               auto s =  slice(aabbcc, eve::upper_);
               return if_else(mask,s,src);
             }
-            else                                             return fms.behavior(cpu_{}, opts, v, w, x);
+            else                                             return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
           }
-          else                                               return fms.behavior(cpu_{}, opts, v, w, x);
+          else                                               return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
         }
-        else                                                 return fms.behavior(cpu_{}, opts, v, w, x);
+        else                                                 return fms.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w, x);
       }
       else if constexpr( cx == category::float32x16) return _mm512_mask_fmsub_ps(v, m, w, x);
       else if constexpr( cx == category::float64x8 ) return _mm512_mask_fmsub_pd(v, m, w, x);

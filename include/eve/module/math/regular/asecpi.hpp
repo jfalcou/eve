@@ -16,14 +16,18 @@
 
 namespace eve
 {
-template<typename Options>
-struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
-{
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  template<typename Options>
+  struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
+  {
+      template<floating_value T>
+      constexpr EVE_FORCEINLINE T operator()(T v) const
+      {
+        return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+      }
 
-  EVE_CALLABLE_OBJECT(asecpi_t, asecpi_);
-};
+    EVE_CALLABLE_OBJECT(asecpi_t, asecpi_);
+  };
+
 //================================================================================================
 //! @addtogroup math_invtrig
 //! @{
@@ -87,7 +91,7 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T asecpi_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
       return radinpi(asec[o](a));

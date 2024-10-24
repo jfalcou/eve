@@ -25,7 +25,7 @@ namespace eve::detail
   {
     constexpr auto cat = categorize<wide<T, N>>();
     // Integral don't do anything special ----
-    if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
+    if constexpr( std::integral<T> ) return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     // UPPER LOWER  ----
     else if constexpr(O::contains(lower) || O::contains(upper))
     {
@@ -45,17 +45,17 @@ namespace eve::detail
             auto aabbcc = fma[opts](aa, bb, cc);
             return  slice(aabbcc, eve::upper_);
           }
-          else                                             return fma.behavior(cpu_{}, opts, a, b, c);
+          else                                             return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
         }
-        else                                               return fma.behavior(cpu_{}, opts, a, b, c);
+        else                                               return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }
-      else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
+      else                                                 return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     }
     // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
     {
       if constexpr( supports_fma3 ) return fma(a, b, c);
-      else                          return fma.behavior(cpu_{}, opts, a, b, c);
+      else                          return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     }
     // REGULAR ---
     // we don't care about PROMOTE as we only accept similar types.
@@ -71,7 +71,7 @@ namespace eve::detail
         else if constexpr( cat == category::float32x8 ) return _mm256_fmadd_ps(a, b, c);
         else if constexpr( cat == category::float32x4 ) return _mm_fmadd_ps   (a, b, c);
       }
-      else return fma.behavior(cpu_{}, opts, a, b, c);
+      else return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
     }
   }
 
@@ -97,7 +97,7 @@ namespace eve::detail
       [[maybe_unused]] auto const m  = expand_mask(mask, as(a)).storage().value;
 
       // Integral don't do anything special ----
-      if constexpr( std::integral<T> ) return fma.behavior(cpu_{}, opts, a, b, c);
+      if constexpr( std::integral<T> ) return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       // UPPER LOWER  ----
       else if constexpr(O::contains(lower) || O::contains(upper))
       {
@@ -118,11 +118,11 @@ namespace eve::detail
               auto s =  slice(aabbcc, eve::upper_);
               return if_else(mask,s,src);
             }
-            else                                             return fma.behavior(cpu_{}, opts, a, b, c);
+            else                                             return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
           }
-          else                                               return fma.behavior(cpu_{}, opts, a, b, c);
+          else                                               return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
         }
-        else                                                 return fma.behavior(cpu_{}, opts, a, b, c);
+        else                                                 return fma.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b, c);
       }
       else if constexpr( cx == category::float32x16 ) return _mm512_mask_fmadd_ps(a, m, b, c);
       else if constexpr( cx == category::float64x8  ) return _mm512_mask_fmadd_pd(a, m, b, c);

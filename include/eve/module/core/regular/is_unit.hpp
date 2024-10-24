@@ -19,11 +19,10 @@ namespace eve
   template<typename Options>
   struct is_unit_t : elementwise_callable<is_unit_t, Options, pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_unit_t, is_unit_);
@@ -76,11 +75,10 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE as_logical_t<T>
-    is_unit_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE as_logical_t<T> is_unit_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      return is_equal(abs(a), one(as<T>()));
+      return is_equal(abs(a), one(as<T>{}));
     }
   }
 }

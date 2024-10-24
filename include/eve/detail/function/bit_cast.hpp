@@ -16,10 +16,10 @@ namespace eve
   struct bit_cast_t : callable<bit_cast_t, Options>
   {
     template<typename T, typename Target>
-    requires (sizeof(T) == sizeof(Target))
-    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> const& tgt) const noexcept
+    EVE_FORCEINLINE constexpr Target operator()(T const& a, as<Target> tgt) const noexcept
+      requires (sizeof(T) == sizeof(Target))
     {
-      return EVE_DISPATCH_CALL(a,tgt);
+      return this->behavior(as<Target>{}, eve::current_api, this->options(), a, tgt);
     }
 
     EVE_CALLABLE_OBJECT(bit_cast_t, bit_cast_);

@@ -30,7 +30,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
     {
-      return max.behavior(cpu_{}, opts, v0, v1);
+      return max.behavior(as<wide<T, N>>{}, cpu_{}, opts, v0, v1);
     }
     else
     {
@@ -90,7 +90,7 @@ namespace eve::detail
         return detail::if_else_max(v0, v1);
       else if constexpr( current_api >= sse4_2 && c == category::uint64x2 )
         return detail::if_else_max(v0, v1);
-      else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map(max, v0, v1);
+      else if constexpr( match(c, category::int64x2, category::uint64x2) ) return map(as<wide<T, N>>{}, max, v0, v1);
       // 128 - 32 bit ints
       else if constexpr( current_api >= sse4_1 && c == category::int32x4 ) return _mm_max_epi32(v0, v1);
       else if constexpr( current_api >= sse4_1 && c == category::uint32x4 )
@@ -117,7 +117,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
     {
-      return max.behavior(cpu_{}, opts, v, w);
+      return max.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else
     {
@@ -165,7 +165,7 @@ namespace eve::detail
       else if constexpr( c == category::uint64x4  ) return _mm256_mask_max_epu64 (src, m, v, w);
       else if constexpr( c == category::uint64x2  ) return _mm_mask_max_epu64    (src, m, v, w);
 
-      else return max.behavior(cpu_{}, opts, v, w);
+      else return max.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
   }
 }

@@ -18,8 +18,11 @@ namespace eve
   template<typename Options>
   struct arg_t : elementwise_callable<arg_t, Options, pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(arg_t, arg_);
   };
@@ -81,11 +84,10 @@ namespace eve
 
 namespace eve::detail
 {
-  template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
-  arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+  template<callable_options O, typename T>
+  EVE_FORCEINLINE constexpr T arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
   {
-    auto z = if_else(is_negative(a), pi(eve::as(a)), eve::zero);
+    auto z = if_else(is_negative(a), pi(eve::as{a}), eve::zero);
     if constexpr( platform::supports_nans && O::contains(pedantic))
       return if_else(is_nan(a), eve::allbits, z);
     else

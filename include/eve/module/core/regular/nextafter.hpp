@@ -19,10 +19,12 @@ namespace eve
   template<typename Options>
   struct nextafter_t : elementwise_callable<nextafter_t, Options, pedantic_option>
   {
-    template<eve::value T, eve::value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<value T, value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T t, U u) const noexcept
-    { return EVE_DISPATCH_CALL(t, u); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), t, u);
+    }
 
     EVE_CALLABLE_OBJECT(nextafter_t, nextafter_);
   };
@@ -80,9 +82,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const & b) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const& b) noexcept
     {
       if constexpr( scalar_value<T> )
         return (a < b) ? next[o](a) : ((a > b) ? prev[o](a) : a);

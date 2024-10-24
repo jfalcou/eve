@@ -29,7 +29,7 @@ namespace eve::detail
         else if constexpr( cat == category::float32x2 ) return vrndm_f32(v);
         else if constexpr( cat == category::float32x4 ) return vrndmq_f32(v);
       }
-      else return map(floor, v);
+      else return map(as<wide<T, N>>{}, floor, v);
     }
     else
       return floor_(EVE_TARGETS(cpu_), o, v);

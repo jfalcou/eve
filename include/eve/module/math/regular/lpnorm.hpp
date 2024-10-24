@@ -21,17 +21,17 @@ namespace eve
   struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, pedantic_option>
   {
     template<value P, floating_value T0, floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-     EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P>
-    operator()(P p, T0 t0, T1 t1, Ts...ts) const noexcept
+    EVE_FORCEINLINE constexpr as_wide_as_t<common_value_t<T0, T1, Ts...>, P> operator()(P p, T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(p, t0, t1, ts...);
+      return this->behavior(as<as_wide_as_t<common_value_t<T0, T1, Ts...>, P>>{}, eve::current_api, this->options(), p, t0, t1, ts...);
     }
 
     template<value P, kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    as_wide_as_t<kumi::apply_traits_t<eve::common_value,Tup>, P>
-    operator()(P p, Tup const& t) const noexcept { return EVE_DISPATCH_CALL(p, t); }
+    EVE_FORCEINLINE constexpr as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P> operator()(P p, Tup const& t) const noexcept
+    {
+      return this->behavior(as<as_wide_as_t<kumi::apply_traits_t<common_value,Tup>, P>>{}, eve::current_api, this->options(), p, t);
+    }
 
     EVE_CALLABLE_OBJECT(lpnorm_t, lpnorm_);
   };

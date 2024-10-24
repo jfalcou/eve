@@ -20,12 +20,13 @@ namespace eve::detail
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
+    using u_t  = upgrade_t<T>;
+    using uw_t = upgrade_t<wide<T, N>>;
+    
     constexpr auto c = categorize<wide<T, N>>();
 
     auto fix = [](auto r)
     {
-      using u_t  = upgrade_t<T>;
-      using uw_t = upgrade_t<wide<T, N>>;
       if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
       else                                               return simd_cast(wide<u_t>{r}, as<uw_t>{});
     };
@@ -36,7 +37,7 @@ namespace eve::detail
     else if constexpr( c == category::uint16x4 ) return fix(vaddl_u16(v, w));
     else if constexpr( c == category::int8x8   ) return fix(vaddl_s8 (v, w));
     else if constexpr( c == category::uint8x8  ) return fix(vaddl_u8 (v, w));
-    else return add.behavior(cpu_{}, opts, v, w);
+    else return add.behavior(as<uw_t>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
@@ -48,7 +49,7 @@ namespace eve::detail
     if constexpr((O::contains_any(lower, upper)  && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
-      return add.behavior(cpu_{}, opts, v, w);
+      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
 
     else

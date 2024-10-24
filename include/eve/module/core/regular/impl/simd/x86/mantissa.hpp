@@ -75,6 +75,6 @@ namespace eve::detail
       }
     }
     else
-      return mantissa.behavior(cpu_{}, o, v);
+      return mantissa.behavior(as<wide<T, N>>{}, cpu_{}, o, v);
   }
 }

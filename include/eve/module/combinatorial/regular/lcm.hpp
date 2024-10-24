@@ -20,11 +20,12 @@ namespace eve
   template<typename Options>
   struct lcm_t : elementwise_callable<lcm_t, Options>
   {
-    template<eve::value T, eve::value U>
-    requires (same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE
-    common_value_t<T, U> operator()(T v, U w) const noexcept
-    { return EVE_DISPATCH_CALL(v, w); }
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T v, U w) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), v, w);
+    }
 
     EVE_CALLABLE_OBJECT(lcm_t, lcm_);
   };

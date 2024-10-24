@@ -70,7 +70,7 @@ namespace eve::detail
     }
     else
     {
-      return shl.behavior(cpu_{}, opts, v, s);
+      return shl.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, s);
     }
   }
 
@@ -92,7 +92,7 @@ namespace eve::detail
     else  if constexpr(            c == category::uint64x8 ) return _mm512_sllv_epi64(v, sc);
     else  if constexpr(            c == category::uint32x16) return _mm512_sllv_epi32(v, sc);
     else  if constexpr(            c == category::uint16x32) return _mm512_sllv_epi16(v, sc);
-    else                                                     return shl.behavior(cpu_{}, opts, v, s);
+    else                                                     return shl.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, s);
   }
 
   // slh[mask](wide_val, wide_mask)

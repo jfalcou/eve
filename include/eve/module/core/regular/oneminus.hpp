@@ -24,9 +24,11 @@ namespace eve
   struct oneminus_t : elementwise_callable<oneminus_t, Options, saturated_option, lower_option,
                                            upper_option, strict_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T a) const
-    { return EVE_DISPATCH_CALL(a); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(oneminus_t, oneminus_);
   };
@@ -97,28 +99,28 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr T
-    oneminus_(EVE_REQUIRES(cpu_), O const & o, T v) noexcept
+    oneminus_(EVE_REQUIRES(cpu_), O const& o, T v) noexcept
     {
       using elt_t = element_type_t<T>;
       if constexpr( std::is_floating_point_v<elt_t> || !O::contains(saturated) )
       {
-        return add[o](one(eve::as<T>()), minus(v));
+        return add[o](one(as<T>{}), minus(v));
       }
       else
       {
         if constexpr( std::is_unsigned_v<elt_t> )
         {
-          return one[is_eqz(v)](as(v));
+          return one[is_eqz(v)](as{v});
         }
         else if constexpr( scalar_value<T> )
         {
-          return (v <= valmin(eve::as(v)) + 2) ? valmax(eve::as(v)) : oneminus(v);
+          return (v <= valmin(eve::as{v}) + 2) ? valmax(eve::as{v}) : oneminus(v);
         }
         else if constexpr( simd_value<T> )
         {
-          return if_else(v < valmin(eve::as(v)) + 2, valmax(eve::as(v)), oneminus(v));
+          return if_else(v < valmin(eve::as{v}) + 2, valmax(eve::as{v}), oneminus(v));
         }
       }
     }

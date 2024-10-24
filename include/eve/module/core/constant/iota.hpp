@@ -15,15 +15,17 @@
 
 namespace eve
 {
+  template <typename Options>
+  struct iota_t : callable<iota_t, Options, conditional_option>
+  {
+    template <arithmetic_simd_value T>
+    EVE_FORCEINLINE constexpr T operator()(as<T> tgt) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), tgt);
+    }
 
-template <typename Options>
-struct iota_t : callable<iota_t, Options, conditional_option>
-{
-  template <eve::arithmetic_simd_value T>
-  EVE_FORCEINLINE constexpr T operator()(as<T> tgt) const { return EVE_DISPATCH_CALL(tgt); }
-  EVE_CALLABLE_OBJECT(iota_t, iota_);
-};
-
+    EVE_CALLABLE_OBJECT(iota_t, iota_);
+  };
 
 //================================================================================================
 //! @addtogroup core_constants

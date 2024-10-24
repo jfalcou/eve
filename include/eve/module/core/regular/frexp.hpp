@@ -17,8 +17,10 @@ namespace eve
 template<typename Options>
 struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_option>
 {
-  template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const { return EVE_DISPATCH_CALL(v); }
+  template<floating_value T>
+  constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const {
+    return this->behavior(as<zipped<T,T>>{}, eve::current_api, this->options(), v);
+  }
 
   EVE_CALLABLE_OBJECT(frexp_t, frexp_);
 };
@@ -79,13 +81,13 @@ struct frexp_t : elementwise_callable<frexp_t, Options, pedantic_option, raw_opt
 //! @}
 //================================================================================================
 
-namespace detail
-{
-template<typename T, callable_options O>
-EVE_FORCEINLINE constexpr auto frexp_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
-{
-  auto [m, e] = ifrexp[o](a0);
-  return eve::zip(m, convert(e,as_element<T>{}));
+  namespace detail
+  {
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto frexp_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
+    {
+      auto [m, e] = ifrexp[o](a0);
+      return eve::zip(m, convert(e,as_element<T>{}));
+    }
+  }
 }
-
-}}

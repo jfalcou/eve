@@ -34,7 +34,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_getexp_ps(a0)), int_from<T>());
       else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_getexp_pd(a0)), int_from<T>());
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_getexp_ps(a0)), int_from<T>());
-      else                                          return ilogb.behavior(cpu_{}, o, a0);
+      else                                          return ilogb.behavior(as<as_integer_t<wide<T, N>>>{}, cpu_{}, o, a0);
   }
 
 // -----------------------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ namespace eve::detail
       else if constexpr( c == category::float32x8 ) return convert(r_t(_mm256_mask_getexp_ps(src, m, v)), int_from<T>());
       else if constexpr( c == category::float64x2 ) return convert(r_t(_mm_mask_getexp_pd(src, m, v)), int_from<T>());
       else if constexpr( c == category::float32x4 ) return convert(r_t(_mm_mask_getexp_ps(src, m, v)), int_from<T>());
-      else                                          return ilogb.behavior(cpu_{}, o, v);
+      else                                          return ilogb.behavior(as<as_integer_t<wide<T, N>>>{}, cpu_{}, o, v);
     }
   }
 }

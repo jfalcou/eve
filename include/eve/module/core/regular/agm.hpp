@@ -31,10 +31,12 @@ namespace eve
   template<typename Options>
   struct agm_t : elementwise_callable<agm_t, Options>
   {
-    template<eve::floating_value T,  floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<floating_value T, floating_value U>
     constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires(same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(agm_t, agm_);
   };
@@ -91,13 +93,11 @@ namespace eve
 
   namespace detail
   {
-
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    agm_(EVE_REQUIRES(cpu_), O const &, T a,  T b) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto agm_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
     {
       auto ex = exponent(average(a, b));
-      auto r     = nan(as<T>());
+      auto r     = nan(as<T>{});
       auto null = is_eqz(a)||is_eqz(b);
       r = if_else(null, zero, r);
       auto infi = is_infinite(a) || is_infinite(b);
@@ -109,7 +109,7 @@ namespace eve
       a =  ldexp(a, -ex);
       b =  ldexp(b, -ex);
       auto c  = average(a, -b);
-      while (eve::any(eve::abs(c) > T(2)*eps(as(c))))
+      while (any(abs(c) > T(2)*eps(as{c})))
       {
         auto an=average(a, b);
         auto bn=sqrt(a*b);

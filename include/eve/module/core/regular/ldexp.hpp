@@ -23,7 +23,7 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, pedantic_option>
   requires(eve::same_lanes_or_scalar<T, U>)
   constexpr EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
   {
-    return EVE_DISPATCH_CALL(x,n);
+    return this->behavior(as<as_wide_as_t<T,U>>{}, eve::current_api, this->options(), x, n);
   }
 
   EVE_CALLABLE_OBJECT(ldexp_t, ldexp_);

@@ -16,18 +16,18 @@ namespace eve
   template<typename Options>
   struct laguerre_t : strict_elementwise_callable<laguerre_t, Options, associated_option>
   {
-    template<eve::integral_value N, eve::floating_value T>
-    requires (same_lanes_or_scalar<N, T>)
-    constexpr EVE_FORCEINLINE eve::as_wide_as_t<T, N> operator()(N n, T t) const
+    template<integral_value N, floating_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, N> operator()(N n, T t) const
+      requires (same_lanes_or_scalar<N, T>)
     {
-      return EVE_DISPATCH_CALL(n,t);
+      return this->behavior(as<as_wide_as_t<T, N>>{}, eve::current_api, this->options(), n, t);
     }
 
-    template<eve::integral_value N, eve::integral_value M, eve::floating_value T>
-    requires (same_lanes_or_scalar<N, M, T>)
-    constexpr EVE_FORCEINLINE eve::as_wide_as_t<T, common_value_t<M,N>> operator()(N n, M m, T t) const
+    template<integral_value N, integral_value M, floating_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, common_value_t<M, N>> operator()(N n, M m, T t) const
+      requires (same_lanes_or_scalar<N, M, T>)
     {
-      return EVE_DISPATCH_CALL(n, m, t);
+      return this->behavior(as<as_wide_as_t<T, common_value_t<M, N>>>{}, eve::current_api, this->options(), n, m, t);
     }
 
     EVE_CALLABLE_OBJECT(laguerre_t, laguerre_);

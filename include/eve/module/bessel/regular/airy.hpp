@@ -17,8 +17,11 @@ namespace eve
   template<typename Options>
   struct airy_t : elementwise_callable<airy_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr zipped<T,T> operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr zipped<T, T> operator()(T a) const noexcept
+    {
+      return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(airy_t, airy_);
   };

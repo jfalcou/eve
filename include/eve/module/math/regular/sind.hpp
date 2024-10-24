@@ -18,8 +18,11 @@ namespace eve
   template<typename Options>
   struct sind_t : elementwise_callable<sind_t, Options, quarter_circle_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sind_t, sind_);
   };
@@ -83,7 +86,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T sind_(EVE_REQUIRES(cpu_), O const& , T const& a0)
     {
       auto x = eve::abs(a0);
@@ -95,7 +98,7 @@ namespace eve
       {
         if( eve::all(eve::abs(x) <= T(45)) )  return sind[quarter_circle](a0);
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return nan(eve::as<T>());
+          if( is_not_finite(a0) ) return nan(as<T>{});
          x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
         auto [fn, xr, dxr] = rem180(x);
         return sin_finalize(bitofsign(a0), fn, xr, dxr);
