@@ -28,9 +28,11 @@ namespace eve
   template<typename Options>
   struct exponent_t : elementwise_callable<exponent_t, Options, raw_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE as_integer_t<T> operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<as_integer_t<T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(exponent_t, exponent_);
   };
@@ -87,9 +89,9 @@ namespace eve
     template<floating_value T, callable_options O>
     constexpr as_integer_t<T>  exponent_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      auto z = bit_and(exponentmask(as<T>()), a);
-      auto x = (z >> nbmantissabits(eve::as<T>()));
-      return sub[is_nez(a)](x, maxexponent(eve::as<T>()));
+      auto z = bit_and(exponentmask(as<T>{}), a);
+      auto x = (z >> nbmantissabits(as<T>{}));
+      return sub[is_nez(a)](x, maxexponent(as<T>{}));
     }
   }
 }

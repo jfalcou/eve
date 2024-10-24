@@ -24,9 +24,11 @@ namespace eve
   template<typename Options>
   struct byte_reverse_t : elementwise_callable<byte_reverse_t, Options>
   {
-    template<eve::unsigned_value T>
+    template<unsigned_value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(byte_reverse_t, byte_reverse_);
   };
@@ -104,9 +106,8 @@ namespace eve
       }
     }
 
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    byte_reverse_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T byte_reverse_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
       if constexpr(scalar_value<T>)
       {
@@ -123,8 +124,8 @@ namespace eve
           constexpr auto C = cardinal_v<T>;
           using u8_t = wide<uint8_t, fixed<S*C>>;
           auto p = [] (auto i, auto ) { auto E = sizeof(e_t); return (i/E+1)*E-1-i%E; };
-          auto y = eve::shuffle(bit_cast(x, as<u8_t>()), eve::as_pattern(p));
-          return bit_cast(y, as<T>());
+          auto y = eve::shuffle(bit_cast(x, as<u8_t>{}), eve::as_pattern(p));
+          return bit_cast(y, as<T>{});
         }
       }
     }

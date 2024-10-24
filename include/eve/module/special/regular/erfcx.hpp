@@ -20,8 +20,11 @@ namespace eve
   template<typename Options>
   struct erfcx_t : elementwise_callable<erfcx_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(erfcx_t, erfcx_);
   };

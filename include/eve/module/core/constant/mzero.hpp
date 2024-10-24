@@ -16,16 +16,19 @@ namespace eve
   template<typename Options>
   struct mzero_t : constant_callable<mzero_t, Options, lower_option, upper_option>
   {
-    template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    template<plain_value T>
+    static EVE_FORCEINLINE constexpr T value(as<T>, auto const&)
     {
-      if      constexpr(std::integral<T>        ) return T(0);
-      else if constexpr(std::same_as<T, float>  ) return T(-0.0f);
-      else if constexpr(std::same_as<T, double> ) return T(-0.0);
+      if      constexpr (std::integral<T>       ) return T{0};
+      else if constexpr (std::same_as<T, float> ) return T{-0.0f};
+      else if constexpr (std::same_as<T, double>) return T{-0.0};
    }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_FORCEINLINE constexpr T operator()(as<T> v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(mzero_t, mzero_);
   };

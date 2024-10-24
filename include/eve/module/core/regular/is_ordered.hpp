@@ -18,11 +18,11 @@ namespace eve
   template<typename Options>
   struct is_ordered_t : elementwise_callable<is_ordered_t, Options>
   {
-    template<value T,  value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    template<value T, value U>
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires(eve::same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(a, b);
+      return this->behavior(as<common_logical_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_ordered_t, is_ordered_);
@@ -75,27 +75,27 @@ namespace eve
 
   namespace detail
   {
-    template<value T, value U, callable_options O>
+    template<callable_options O, value T, value U>
     EVE_FORCEINLINE constexpr auto
     is_ordered_(EVE_REQUIRES(cpu_),
-                  O const & ,
+                  O const& ,
                   logical<T> const& , logical<U> const& ) noexcept
     {
       using r_t =   common_logical_t<logical<T>, logical<U>>;
-      return true_(as<r_t>());
+      return true_(as<r_t>{});
     }
 
 
-    template<value T, value U, callable_options O>
+    template<callable_options O, value T, value U>
     EVE_FORCEINLINE constexpr auto
     is_ordered_(EVE_REQUIRES(cpu_),
-                  O const & ,
+                  O const& ,
                   T const& aa, U const& bb) noexcept
     {
       using w_t =  common_value_t<T, U>;
       {
         if constexpr(integral_value<T> )
-          return true_(as<w_t>());
+          return true_(as<w_t>{});
         else
         {
           auto a = w_t(aa);

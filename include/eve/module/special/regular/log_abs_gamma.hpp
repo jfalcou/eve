@@ -16,9 +16,11 @@ namespace eve
   template<typename Options>
   struct log_abs_gamma_t : elementwise_callable<log_abs_gamma_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
-    T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(log_abs_gamma_t, log_abs_gamma_);
   };

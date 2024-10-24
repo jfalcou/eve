@@ -14,20 +14,23 @@
 
 namespace eve
 {
-template<typename Options>
-struct false_t : constant_callable<false_t, Options, lower_option, upper_option>
-{
-  template<typename T>
-  static EVE_FORCEINLINE constexpr auto value(eve::as<T> const&, auto const&)
+  template<typename Options>
+  struct false_t : constant_callable<false_t, Options, lower_option, upper_option>
   {
-    return as_logical_t<T>(false);
-  }
+    template<typename T>
+    static EVE_FORCEINLINE constexpr auto value(as<T>, auto const&)
+    {
+      return as_logical_t<T>(false);
+    }
 
-  template<typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T>  operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    template<typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(as<T> v) const
+    {
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), v);
+    }
 
-  EVE_CALLABLE_OBJECT(false_t, false__);
-};
+    EVE_CALLABLE_OBJECT(false_t, false__);
+  };
 
 //================================================================================================
 //! @addtogroup core_constants

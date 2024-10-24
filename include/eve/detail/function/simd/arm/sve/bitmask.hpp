@@ -36,7 +36,7 @@ template<typename T, typename N>
 EVE_FORCEINLINE auto
 to_mask(sve_ const&, logical<wide<T, N>> p) noexcept
 {
-  return bit_cast(p.bits(), eve::as<wide<T, N>>{});
+  return bit_cast(p.bits(), as<wide<T, N>>{});
 }
 
 }

@@ -22,9 +22,11 @@ namespace eve
                                 upper_option, strict_option>
   {
     template<value T,  value U, value V,  value W>
-    requires(eve::same_lanes_or_scalar<T, U, V, W>)
     constexpr EVE_FORCEINLINE common_value_t<T, U, V, W> operator()(T a, U b, V c, W d) const
-    { return EVE_DISPATCH_CALL(a, b, c, d); }
+      requires (same_lanes_or_scalar<T, U, V, W>)
+    {
+      return this->behavior(as<common_value_t<T, U, V, W>>{}, eve::current_api, this->options(), a, b, c, d);
+    }
 
     EVE_CALLABLE_OBJECT(sum_of_prod_t, sum_of_prod_);
   };
@@ -86,9 +88,9 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr auto
-    sum_of_prod_(EVE_REQUIRES(cpu_), O const & o,
+    sum_of_prod_(EVE_REQUIRES(cpu_), O const& o,
                   T const &a,  T const &b,
                   T const &c,  T const &d) noexcept
     {

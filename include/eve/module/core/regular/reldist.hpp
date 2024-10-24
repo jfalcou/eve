@@ -21,9 +21,11 @@ namespace eve
   struct reldist_t : elementwise_callable<reldist_t, Options,  pedantic_option>
   {
     template<floating_value T,  floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
-    { return EVE_DISPATCH_CALL(a, b); }
+      requires (same_lanes_or_scalar<T, U>)
+    {
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(reldist_t, reldist_);
   };
@@ -83,7 +85,7 @@ namespace eve
     template<value T, callable_options O>
     constexpr T reldist_(EVE_REQUIRES(cpu_), O const& o, T a, T b)
     {
-      return dist[o](a, b)/max(abs(a), abs(b), one(as(a)));
+      return dist[o](a, b)/max(abs(a), abs(b), one(as{a}));
     }
   }
 }

@@ -24,9 +24,11 @@ namespace eve
   template<typename Options>
   struct ilogb_t : elementwise_callable<ilogb_t, Options>
   {
-    template<eve::floating_value T>
+    template<floating_value T>
     constexpr EVE_FORCEINLINE as_integer_t<T> operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<as_integer_t<T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(ilogb_t, ilogb_);
   };
@@ -73,13 +75,13 @@ namespace eve
 
   namespace detail
   {
-    template<floating_value T, callable_options O>
-    constexpr auto  ilogb_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    template<callable_options O, floating_value T>
+    constexpr auto ilogb_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
-      auto z = bit_and(exponentmask(as<T>()), a);
-      auto x = (z >> nbmantissabits(eve::as<T>()));
-      x = sub(x, maxexponent(eve::as<T>()));
-      return if_else(is_eqz(a)||is_not_finite(a), valmin(as(x)), x);
+      auto z = bit_and(exponentmask(as<T>{}), a);
+      auto x = (z >> nbmantissabits(as<T>{}));
+      x = sub(x, maxexponent(as<T>{}));
+      return if_else(is_eqz(a) || is_not_finite(a), valmin(as{x}), x);
     }
   }
 }

@@ -19,8 +19,11 @@ namespace eve
   template<typename Options>
   struct erfc_inv_t : elementwise_callable<erfc_inv_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    EVE_FORCEINLINE T operator()(T v) const noexcept
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(erfc_inv_t, erfc_inv_);
   };

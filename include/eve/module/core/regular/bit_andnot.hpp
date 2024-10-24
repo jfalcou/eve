@@ -16,20 +16,17 @@ namespace eve
   template<typename Options>
   struct bit_andnot_t : strict_tuple_callable<bit_andnot_t, Options>
   {
-    template<eve::value T0, value T1, value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
-    operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    template<value T0, value T1, value... Ts>
+    EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0, t1, ts...);
+      return this->behavior(as<bit_value_t<T0, T1, Ts...>>{}, eve::current_api, this->options(), t0, t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr
-    kumi::apply_traits_t<eve::bit_value,Tup>
-    operator()(Tup const& t) const noexcept requires(kumi::size_v<Tup> >= 2)
-    { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::bit_value, Tup> operator()(Tup const& t) const noexcept
+      requires (eve::same_lanes_or_scalar_tuple<Tup> && (kumi::size_v<Tup> >= 2))
+    { return this->behavior(as<kumi::apply_traits_t<eve::bit_value, Tup>>{}, eve::current_api, this->options(), t); }
 
     EVE_CALLABLE_OBJECT(bit_andnot_t, bit_andnot_);
   };

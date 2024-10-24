@@ -19,32 +19,31 @@ namespace eve
                                                   , condon_shortley_option, associated_option, spherical_option
                                                   >
   {
-    template<eve::floating_value ...Ts>
-    requires (same_lanes_or_scalar<Ts...>)
-    constexpr EVE_FORCEINLINE
-    eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
+    template<floating_value... Ts>
+    constexpr EVE_FORCEINLINE common_value_t<Ts...> operator()(Ts...b) const noexcept
+      requires (same_lanes_or_scalar<Ts...>)
     {
-      return EVE_DISPATCH_CALL(b...);
+      return this->behavior(as<common_value_t<Ts...>>{}, eve::current_api, this->options(), b...);
     }
-    template<eve::integral_value T0, eve::floating_value ...Ts>
-    requires (same_lanes_or_scalar<T0, Ts...>)
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
+
+    template<integral_value T0, floating_value... Ts>
+    constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<Ts...>, T0> operator()(T0 a, Ts... b) const noexcept
+      requires (same_lanes_or_scalar<T0, Ts...>)
     {
-      return EVE_DISPATCH_CALL(a, b...);
+      return this->behavior(as<as_wide_as_t<common_value_t<Ts...>, T0>>{}, eve::current_api, this->options(), a, b...);
     }
-    template<eve::integral_value T0, eve::integral_value T1, eve::floating_value ...Ts>
-    requires (same_lanes_or_scalar<T0, T1, Ts...>)
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<eve::common_value_t<Ts ...>, eve::common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts...c) const noexcept
+
+    template<integral_value T0, integral_value T1, floating_value... Ts>
+    constexpr EVE_FORCEINLINE as_wide_as_t<common_value_t<Ts...>, common_value_t<T0, T1>> operator()(T0 a, T1 b, Ts... c) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(a, b, c...);
+      return this->behavior(as<as_wide_as_t<common_value_t<Ts...>, common_value_t<T0, T1>>>{}, eve::current_api, this->options(), a, b, c...);
     }
 
     EVE_CALLABLE_OBJECT(legendre_t, legendre_);
   };
 
-//================================================================================================
+  //================================================================================================
 //! @addtogroup polynomial
 //! @{
 //!   @var legendre

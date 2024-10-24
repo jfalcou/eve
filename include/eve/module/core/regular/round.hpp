@@ -21,9 +21,11 @@ namespace eve
   struct round_t : elementwise_callable<round_t, Options, upward_option, downward_option,
                                         to_nearest_option, toward_zero_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T x) const noexcept
-    { return EVE_DISPATCH_CALL(x); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), x);
+    }
 
     EVE_CALLABLE_OBJECT(round_t, round_);
   };
@@ -85,9 +87,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
-    round_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto round_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
       if constexpr(integral_value<T>)
         return x;

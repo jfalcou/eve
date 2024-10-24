@@ -30,11 +30,11 @@ namespace eve
   struct is_equal_t : strict_elementwise_callable<is_equal_t, Options, numeric_option, almost_option>
   {
     template<value T, value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const
+      requires(eve::same_lanes_or_scalar<T, U>)
     {
 //      static_assert( valid_tolerance<common_value_t<T, U>, Options>::value, "[eve::is_equal] simd tolerance requires at least one simd parameter." );
-    return EVE_DISPATCH_CALL(a, b);
+    return this->behavior(as<common_logical_t<T, U>>{}, eve::current_api, this->options(), a, b);
     }
 
     EVE_CALLABLE_OBJECT(is_equal_t, is_equal_);
@@ -90,7 +90,7 @@ namespace eve
 //!            - if `tol` is a floating value then  \f$|x - y| \le \mbox{tol}\cdot \max(|x|, |y|)\f$
 //!            - if `tol` is a positive integral value then there are not more than `tol` values of the type
 //!               of `x` representable in the interval \f$[x, y[\f$.
-//!            - if `tol` is omitted then the tolerance `tol` default to `3*eps(as(x))`.
+//!            - if `tol` is omitted then the tolerance `tol` default to `3*eps(as{x})`.
 //!
 //!   @note Although the infix notation with `==` is supported, the `==` operator on
 //!      standard scalar types is the original one and so returns bool result, not `eve::logical`.
@@ -105,31 +105,29 @@ namespace eve
 
   namespace detail
   {
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
+    template<callable_options O, value T, value U>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U> is_equal_(EVE_REQUIRES(cpu_), O const&, logical<T> a, logical<U> b) noexcept
     {
-      if constexpr( scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a == b);
+      if constexpr (scalar_value<U> && scalar_value<T>) return common_logical_t<T,U>(a == b);
       else                                              return a == b;
     }
 
-    template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
-    is_equal_(EVE_REQUIRES(cpu_),O const & o, T const& a, U const& b) noexcept
+    template<callable_options O, value T, value U>
+    EVE_FORCEINLINE constexpr common_logical_t<T,U> is_equal_(EVE_REQUIRES(cpu_),O const& o, T const& a, U const& b) noexcept
     {
-      if constexpr(O::contains(almost))
+      if constexpr (O::contains(almost))
       {
         using w_t = common_logical_t<T,U>;
         using r_t = common_value_t<T, U>;
 
         auto tol = o[almost].value(r_t{});
 
-        if constexpr(integral_value<decltype(tol)>)
-          return if_else(nb_values(a, b) <= tol, true_(as<w_t>()), false_(as<w_t>())) ;
+        if constexpr (integral_value<decltype(tol)>)
+          return if_else(nb_values(a, b) <= tol, true_(as<w_t>{}), false_(as<w_t>{})) ;
         else
           return dist[pedantic](a, b) <= tol * max(eve::abs(a), eve::abs(b));
       }
-      else if constexpr(O::contains(numeric))
+      else if constexpr (O::contains(numeric))
       {
         using r_t = common_value_t<T, U>;
         auto tmp  = is_equal(a, b);
@@ -138,7 +136,7 @@ namespace eve
       }
       else
       {
-        if constexpr(scalar_value<U> && scalar_value<T>)  return common_logical_t<T,U>(a == b);
+        if constexpr (scalar_value<U> && scalar_value<T>) return common_logical_t<T, U>(a == b);
         else                                              return a == b;
       }
     }

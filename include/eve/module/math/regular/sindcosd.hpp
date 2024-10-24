@@ -26,8 +26,11 @@ namespace eve
   struct sindcosd_t : elementwise_callable< sindcosd_t, Options, quarter_circle_option
                                           >
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE zipped<T,T> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE zipped<T, T> operator()(T v) const
+    {
+      return this->behavior(as<zipped<T, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sindcosd_t, sindcosd_);
   };
@@ -85,9 +88,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto
-    sindcosd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    template<callable_options O, typename T>
+    constexpr EVE_FORCEINLINE auto sindcosd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr(O::contains(quarter_circle))
       {
@@ -97,7 +99,7 @@ namespace eve
       {
         if( eve::all(eve::abs(a0) <= T(45)) ) return sindcosd[quarter_circle](a0);
         if constexpr( scalar_value<T> )
-          if( is_not_finite(a0) ) return eve::zip(nan(eve::as<T>()), nan(eve::as<T>()));
+          if( is_not_finite(a0) ) return eve::zip(nan(as<T>{}), nan(as<T>{}));
         auto x             = eve::abs(a0);
         x                  = if_else(is_not_finite(x), eve::allbits, x); // nan or Inf input
         auto [fn, xr, dxr] = rem180(x);

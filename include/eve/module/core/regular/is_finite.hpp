@@ -18,11 +18,10 @@ namespace eve
   template<typename Options>
   struct is_finite_t : elementwise_callable<is_finite_t, Options>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    template<value T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_finite_t, is_finite_);
@@ -77,12 +76,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_finite_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr as_logical_t<T> is_finite_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
     {
       if constexpr( is_logical_v<T> || integral_value<T>)
-        return true_(eve::as(a));
+        return true_(eve::as{a});
       else
         return is_eqz(a - a);
     }

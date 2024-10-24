@@ -14,15 +14,18 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct expmx2_t : elementwise_callable<expmx2_t, Options>
   {
-    template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(expmx2_t, expmx2_);
   };
+
 //================================================================================================
 //! @addtogroup math_exp
 //! @{
@@ -70,9 +73,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    expmx2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T expmx2_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       if constexpr( has_native_abi_v<T> )
         return rec[pedantic](eve::expx2(a0));

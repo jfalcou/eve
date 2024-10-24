@@ -19,8 +19,11 @@ namespace eve
   struct sec_t : elementwise_callable<sec_t, Options, quarter_circle_option, half_circle_option,
              full_circle_option, medium_option, big_option>
   {
-    template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<floating_value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(sec_t, sec_);
   };
@@ -89,7 +92,7 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T sec_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       return eve::rec[pedantic](cos[o](a0));

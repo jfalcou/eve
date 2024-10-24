@@ -16,15 +16,17 @@ namespace eve
   template<typename Options>
   struct interleave_t : callable<interleave_t, Options>
   {
-
     template<eve::simd_value T, std::same_as<T>... Ts>
     EVE_FORCEINLINE kumi::tuple<T, Ts...> operator()(T v, Ts... vs) const noexcept
-    { return EVE_DISPATCH_CALL(v, vs...); }
-
+    {
+      return this->behavior(as<kumi::tuple<T, Ts...>>{}, eve::current_api, this->options(), v, vs...);
+    }
 
     template<simd_value T, std::same_as<T>... Ts>
     EVE_FORCEINLINE kumi::tuple<logical<T>, logical<Ts>...> operator()(logical<T> v, logical<Ts>... vs) const noexcept
-    { return EVE_DISPATCH_CALL(v, vs...); }
+    {
+      return this->behavior(as<kumi::tuple<logical<T>, logical<Ts>...>>{}, eve::current_api, this->options(), v, vs...);
+    }
 
     EVE_CALLABLE_OBJECT(interleave_t, interleave_);
   };

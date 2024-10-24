@@ -19,8 +19,11 @@ namespace eve
   template<typename Options>
   struct gd_t : elementwise_callable<gd_t, Options>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(gd_t, gd_);
   };
@@ -81,10 +84,10 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     constexpr EVE_FORCEINLINE T gd_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
-      return 2*atan(tanh(a0*half(as(a0))));
+      return 2*atan(tanh(a0*half(as{a0})));
     }
   }
 }

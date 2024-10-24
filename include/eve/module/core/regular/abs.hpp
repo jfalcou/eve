@@ -16,9 +16,11 @@ namespace eve
   template<typename Options>
   struct abs_t : elementwise_callable<abs_t, Options, saturated_option>
   {
-    template<eve::value T>
+    template<value T>
     constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(abs_t, abs_);
   };

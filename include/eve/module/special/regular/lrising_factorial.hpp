@@ -23,8 +23,11 @@ namespace eve
                                                             >
   {
     template<value I, floating_value T>
-    requires (same_lanes_or_scalar<I, T>)
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+    constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept
+      requires (same_lanes_or_scalar<I, T>)
+    {
+      return this->behavior(as<as_wide_as_t<T, I>>{}, eve::current_api, this->options(), a, b);
+    }
 
     EVE_CALLABLE_OBJECT(lrising_factorial_t, lrising_factorial_);
   };

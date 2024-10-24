@@ -14,13 +14,14 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct exp_t : elementwise_callable<exp_t, Options, pedantic_option>
   {
-    template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept
-    { return EVE_DISPATCH_CALL(v); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T v) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(exp_t, exp_);
   };

@@ -18,17 +18,18 @@
 
 namespace eve
 {
-template<typename Options>
-struct betainc_t : elementwise_callable<betainc_t, Options>
-{
-  template<eve::floating_value T0, eve::floating_value T1, eve::floating_value T2>
-  requires (same_lanes_or_scalar<T0, T1, T2>)
-  constexpr EVE_FORCEINLINE eve::common_value_t<T0, T1, T2>
-  operator()(T0 a, T1 b, T2 c) const noexcept
-  { return EVE_DISPATCH_CALL(a, b, c); }
+  template<typename Options>
+  struct betainc_t : elementwise_callable<betainc_t, Options>
+  {
+    template<floating_value T0, floating_value T1, floating_value T2>
+    constexpr EVE_FORCEINLINE common_value_t<T0, T1, T2> operator()(T0 a, T1 b, T2 c) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, T2>)
+    {
+      return this->behavior(as<common_value_t<T0, T1, T2>>{}, eve::current_api, this->options(), a, b, c);
+    }
 
-  EVE_CALLABLE_OBJECT(betainc_t, betainc_);
-};
+    EVE_CALLABLE_OBJECT(betainc_t, betainc_);
+  };
 
 //================================================================================================
 //! @addtogroup special

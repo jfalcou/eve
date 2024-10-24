@@ -18,16 +18,18 @@ namespace eve
   struct horner_t : callable<horner_t, Options, pedantic_option>
   {
     template<floating_value X, value T, value... Ts>
-    requires(eve::same_lanes_or_scalar<X, T, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...>
-    operator()(X x, T t,  Ts...ts) const noexcept
-    { return EVE_DISPATCH_CALL(x, t, ts...); }
+    EVE_FORCEINLINE constexpr common_value_t<X, T, Ts...> operator()(X x, T t,  Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<X, T, Ts...>)
+    {
+      return this->behavior(as<common_value_t<X, T, Ts...>>{}, eve::current_api, this->options(), x, t, ts...);
+    }
 
     template<floating_value X, kumi::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr
-    eve::common_value_t<kumi::apply_traits_t<eve::common_value,Tup>, X>
-    operator()(X x, Tup const& t) const noexcept
-    { return EVE_DISPATCH_CALL(x, t); }
+    EVE_FORCEINLINE constexpr common_value_t<kumi::apply_traits_t<common_value, Tup>, X> operator()(X x, Tup const& t) const noexcept
+      requires (same_lanes_or_scalar_tuple<Tup> && same_lanes_or_scalar<X, kumi::element_t<0, Tup>>)
+    {
+      return this->behavior(as<common_value_t<kumi::apply_traits_t<common_value, Tup>, X>>{}, eve::current_api, this->options(), x, t);
+    }
 
     EVE_CALLABLE_OBJECT(horner_t, horner_);
   };

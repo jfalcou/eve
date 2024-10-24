@@ -19,19 +19,17 @@ namespace eve
   struct chi_t : callable<chi_t, Options, conditional_option>
   {
     template<value T, value U, value V>
-    requires(eve::same_lanes_or_scalar<T, U, V>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V>
-    operator()(T a, U lo, V hi) const noexcept
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U lo, V hi) const noexcept
+      requires(same_lanes_or_scalar<T, U, V>)
     {
       EVE_ASSERT(eve::all(lo <= hi), "[eve::chi] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL(a, lo, hi);
+      return this->behavior(as<common_value_t<T, U, V>>{}, eve::current_api, this->options(), a, lo, hi);
     }
 
-    template<value T,  typename  B>
-    constexpr EVE_FORCEINLINE T
-    operator()(T a, B const & belongs) const noexcept
+    template<value T, typename  B>
+    constexpr EVE_FORCEINLINE T operator()(T a, B const & belongs) const noexcept
     {
-      return EVE_DISPATCH_CALL(a, belongs);
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a, belongs);
     }
 
     EVE_CALLABLE_OBJECT(chi_t, chi_);
@@ -94,10 +92,10 @@ namespace eve
   {
 
     template<typename T0, typename T1,  typename T2, callable_options O>
-    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T0 a, T1 l, T2 h) noexcept
+    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const& c, T0 a, T1 l, T2 h) noexcept
     {
       using r_t =  common_value_t<T0, T1, T2>;
-      auto z = if_else( r_t(a) < r_t(h) && r_t(a) >= r_t(l), one(as<r_t>()), zero);
+      auto z = if_else( r_t(a) < r_t(h) && r_t(a) >= r_t(l), one(as<r_t>{}), zero);
       if constexpr(O::contains(eve::condition_key))
         return mask_op(c[eve::condition_key], return_2nd, a, z);
       else
@@ -105,9 +103,9 @@ namespace eve
     }
 
     template<typename T, typename B, callable_options O>
-    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T x, B const & b) noexcept
+    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const& c, T x, B const & b) noexcept
     {
-     auto z = if_else(b(x), one(as(x)), zero);
+     auto z = if_else(b(x), one(as{x}), zero);
      if constexpr(O::contains(eve::condition_key))
        return  mask_op(c[eve::condition_key], return_2nd, x, z);
      else

@@ -18,68 +18,70 @@ namespace eve
   template<typename Options>
   struct bernouilli_t : elementwise_callable<bernouilli_t, Options>
   {
-    template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
-    as_wide_as_t<double, T> operator()(T v) const noexcept  { return EVE_DISPATCH_CALL(v); }
+    template<unsigned_value T>
+    constexpr EVE_FORCEINLINE as_wide_as_t<double, T> operator()(T v) const noexcept
+    {
+      return this->behavior(as<as_wide_as_t<double, T>>{}, eve::current_api, this->options(), v);
+    }
 
     EVE_CALLABLE_OBJECT(bernouilli_t, bernouilli_);
   };
 
-//================================================================================================
-//! @addtogroup combinatorial
-//! @{
-//!   @var bernouilli
-//!   @brief  `elementwise_callable` object computing the nth Bernouilli number \f$b_n\f$ as a double.
-//!
-//!   @groupheader{Header file}
-//!
-//!   @code
-//!   #include <eve/module/combinatorial.hpp>
-//!   @endcode
-//!
-//!   @groupheader{Callable Signatures}
-//!
-//!   @code
-//!   namespace eve
-//!   {
-//!      // Regular overload
-//!      template<unsigned_value  N, floating_value T>
-//!      constexpr as_wide_as_t<T,N> bernouilli(unsigned_value auto n)             noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
-//!      constexpr auto bernouilli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
-//!   }
-//!   @endcode
-//!
-//!   **Parameters**
-//!
-//!     * `n`: unsigned argument.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!
-//!    **Return value**
-//!       The result's element type is `double` to avoid overflow as possible and
-//!       its cardinal is the same as `n`.
-//!
-//!       1. The value of the nth Bernouilli number is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
-//!
-//!  @groupheader{External references}
-//!   *  [Wolfram MathWorld: Bernoulli Number](https://mathworld.wolfram.com/BernoulliNumber.html)
-//!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
-//!
-//!  @groupheader{Example}
-//!  @godbolt{doc/combinatorial/bernouilli.cpp}
-//================================================================================================
+  //================================================================================================
+  //! @addtogroup combinatorial
+  //! @{
+  //!   @var bernouilli
+  //!   @brief  `elementwise_callable` object computing the nth Bernouilli number \f$b_n\f$ as a double.
+  //!
+  //!   @groupheader{Header file}
+  //!
+  //!   @code
+  //!   #include <eve/module/combinatorial.hpp>
+  //!   @endcode
+  //!
+  //!   @groupheader{Callable Signatures}
+  //!
+  //!   @code
+  //!   namespace eve
+  //!   {
+  //!      // Regular overload
+  //!      template<unsigned_value  N, floating_value T>
+  //!      constexpr as_wide_as_t<T,N> bernouilli(unsigned_value auto n)             noexcept; // 1
+  //!
+  //!      // Lanes masking
+  //!      constexpr auto bernouilli[conditional_expr auto c](unsigned_value auto n) noexcept; // 2
+  //!      constexpr auto bernouilli[logical_value auto m](unsigned_value auto n)    noexcept; // 2
+  //!   }
+  //!   @endcode
+  //!
+  //!   **Parameters**
+  //!
+  //!     * `n`: unsigned argument.
+  //!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
+  //!     * `m`: [Logical value](@ref logical) masking the operation.
+  //!
+  //!    **Return value**
+  //!       The result's element type is `double` to avoid overflow as possible and
+  //!       its cardinal is the same as `n`.
+  //!
+  //!       1. The value of the nth Bernouilli number is returned.
+  //!       2. [The operation is performed conditionnaly](@ref conditional).
+  //!
+  //!  @groupheader{External references}
+  //!   *  [Wolfram MathWorld: Bernoulli Number](https://mathworld.wolfram.com/BernoulliNumber.html)
+  //!   *  [Wikipedia: Bernoulli Number](https://en.wikipedia.org/wiki/Bernoulli_number)
+  //!
+  //!  @groupheader{Example}
+  //!  @godbolt{doc/combinatorial/bernouilli.cpp}
+  //================================================================================================
   inline constexpr auto bernouilli = functor<bernouilli_t>;
-//================================================================================================
-//! @}
-//================================================================================================
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   namespace detail
   {
-    template<unsigned_value T, callable_options O>
+    template<callable_options O, unsigned_value T>
     constexpr EVE_FORCEINLINE auto
     bernouilli_(EVE_REQUIRES(cpu_), O const&, T n)
     {
@@ -217,11 +219,11 @@ namespace eve
 
       if constexpr( scalar_value<T> )
       {
-        if( n == one(as(n)) ) return -0.5; // mhalf(as<double>());
+        if( n == one(as{n}) ) return -0.5; // mhalf(as<double>{});
         if( is_odd(n) ) return 0.0;
         auto no2 = n / 2;
         if constexpr( sizeof(T) == 1 ) return dbernouilli_b2ns[no2];
-        else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>());
+        else return (no2 < 130) ? dbernouilli_b2ns[no2] : inf(as<double>{});
       }
       else
       {
@@ -231,10 +233,10 @@ namespace eve
         auto test   = nlt130 && even_n;
         auto nn     = if_else(test, no2, zero);
         auto r      = gather(&dbernouilli_b2ns[0], nn);
-        r           = if_else(even_n, r, zero(as(r))); // TODO why zero is not good here ?
-        r           = if_else(n == one(as(n)), mhalf(as(r)), r);
+        r           = if_else(even_n, r, zero(as{r})); // TODO why zero is not good here ?
+        r           = if_else(n == one(as{n}), mhalf(as{r}), r);
         if constexpr( sizeof(element_type_t<T>) == 1 ) return r;
-        return if_else(nlt130, r, inf(as(r)));
+        return if_else(nlt130, r, inf(as{r}));
       }
     }
   }

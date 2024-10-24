@@ -18,10 +18,9 @@ namespace eve
   struct is_positive_t : elementwise_callable<is_positive_t, Options>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
-    operator()(T t) const noexcept
+    EVE_FORCEINLINE constexpr as_logical_t<T> operator()(T t) const noexcept
     {
-      return EVE_DISPATCH_CALL(t);
+      return this->behavior(as<as_logical_t<T>>{}, eve::current_api, this->options(), t);
     }
 
     EVE_CALLABLE_OBJECT(is_positive_t, is_positive_);
@@ -81,11 +80,11 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
+    template<callable_options O, typename T>
     EVE_FORCEINLINE constexpr as_logical_t<T>
-    is_positive_(EVE_REQUIRES(cpu_), O const &, T const& v) noexcept
+    is_positive_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept
     {
-      if constexpr( unsigned_value<T> ) return true_(eve::as(v));
+      if constexpr( unsigned_value<T> ) return true_(eve::as{v});
       else
       {
         if constexpr( signed_integral_value<T> ) return is_gez(v);
@@ -94,7 +93,7 @@ namespace eve
           using elt_t = element_type_t<T>;
           using swi_t = as_wide_t<eve::as_integer_t<elt_t, signed>, cardinal_t<T>>;
           using lwi_t = as_logical_t<as_wide_t<elt_t, cardinal_t<T>>>;
-          return bit_cast(is_gez(bit_cast(v, as<swi_t>())), as<lwi_t>());
+          return bit_cast(is_gez(bit_cast(v, as<swi_t>{})), as<lwi_t>{});
         }
         else
         {

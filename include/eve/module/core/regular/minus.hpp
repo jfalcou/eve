@@ -21,12 +21,14 @@ namespace eve
   template<typename Options>
   struct minus_t : elementwise_callable<minus_t, Options, saturated_option>
   {
-    template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const { return EVE_DISPATCH_CALL(a); }
+    template<value T>
+    constexpr EVE_FORCEINLINE T operator()(T a) const
+    {
+      return this->behavior(as<T>{}, eve::current_api, this->options(), a);
+    }
 
     EVE_CALLABLE_OBJECT(minus_t, minus_);
   };
-
 
 //================================================================================================
 //! @addtogroup core_arithmetic
@@ -70,7 +72,7 @@ namespace eve
 //!          is not representable and the result is incorrect (in this case eve::minus(valmin) is valmin).
 //!      2. [The operation is performed conditionnaly](@ref conditional).
 //!      3. The saturated version of eve::minus. More specifically, for any signed integer value `x`, the expression
-//!         `minus[saturated](valmin(as(x)))` evaluates to `valmax(as(x))`.
+//!         `minus[saturated](valmin(as{x}))` evaluates to `valmax(as{x})`.
 //!
 //!  @note  Although the operator notation with `-` is supported, the `-` operator on
 //!     standard scalar type is the original one and so can lead to automatic promotion.
@@ -86,16 +88,16 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const &, T v) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr T minus_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
     {
       if      constexpr (floating_value<T>)
       {
-        return bit_xor(v, signmask(eve::as(v)));
+        return bit_xor(v, signmask(eve::as{v}));
       }
       else if constexpr (O::contains(saturated))
       {
-        return if_else(v == valmin(as<T>()), valmax(as<T>()), minus(v));
+        return if_else(v == valmin(as<T>{}), valmax(as<T>{}), minus(v));
       }
       else
       {
@@ -107,7 +109,7 @@ namespace eve
         }
         else
         {
-          if constexpr (simd_value<T>) return bit_cast(-bit_cast(v, as<u_t>()), as<T>());
+          if constexpr (simd_value<T>) return bit_cast(-bit_cast(v, as<u_t>{}), as<T>{});
           else                         return T(-(u_t(v)));
         }
       }

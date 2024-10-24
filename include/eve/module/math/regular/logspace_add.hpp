@@ -18,23 +18,25 @@ namespace eve
   template<typename Options>
   struct logspace_add_t : tuple_callable<logspace_add_t, Options>
   {
-    template<eve::floating_value T, floating_value U>
-    requires(eve::same_lanes_or_scalar<T, U>)
+    template<floating_value T, floating_value U>
     EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
+      requires (same_lanes_or_scalar<T, U>)
     {
-      return EVE_DISPATCH_CALL(t, u);
+      return this->behavior(as<common_value_t<T, U>>{}, eve::current_api, this->options(), t, u);
     }
 
-    template<eve::floating_value T0, floating_value T1, floating_value... Ts>
-    requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
+    template<floating_value T0, floating_value T1, floating_value... Ts>
     EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+      requires (same_lanes_or_scalar<T0, T1, Ts...>)
     {
-      return EVE_DISPATCH_CALL(t0,  t1, ts...);
+      return this->behavior(as<common_value_t<T0, T1, Ts...>>{}, eve::current_api, this->options(), t0,  t1, ts...);
     }
 
     template<kumi::non_empty_product_type Tuple>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tuple>
-    operator()(Tuple const& t) const noexcept { return EVE_DISPATCH_CALL(t); }
+    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value, Tuple> operator()(Tuple const& t) const noexcept
+    {
+      return this->behavior(as<kumi::apply_traits_t<eve::common_value, Tuple>>{}, eve::current_api, this->options(), t);
+    }
 
 
     EVE_CALLABLE_OBJECT(logspace_add_t, logspace_add_);

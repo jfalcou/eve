@@ -16,17 +16,15 @@
 
 namespace eve
 {
-
   template<typename Options>
   struct clamp_t : elementwise_callable<clamp_t, Options>
   {
     template<value T, value U, value V>
-    requires(eve::same_lanes_or_scalar<T, U, V>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V>
-    operator()(T a, U lo, V hi) const noexcept
+    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U lo, V hi) const noexcept
+      requires(eve::same_lanes_or_scalar<T, U, V>)
     {
       EVE_ASSERT(eve::all(lo <= hi), "[eve::clamp] bounds are not correctly ordered");
-      return EVE_DISPATCH_CALL(a, lo, hi);
+      return this->behavior(as<common_value_t<T, U, V>>{}, eve::current_api, this->options(), a, lo, hi);
     }
 
     EVE_CALLABLE_OBJECT(clamp_t, clamp_);
@@ -90,8 +88,8 @@ namespace eve
 
   namespace detail
   {
-    template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
+    template<callable_options O, typename T>
+    EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const&, T a, T l, T h) noexcept
     {
       return eve::min(eve::max(a, l), h);
     }
