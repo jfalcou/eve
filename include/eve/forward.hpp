@@ -40,7 +40,7 @@ namespace eve::detail
   template<relative_conditional_expr C, simd_value T> as_logical_t<T> to_logical(C c, as<T>) noexcept;
 
   template<relative_conditional_expr C, simd_value T>
-  auto EVE_FORCEINLINE to_logical(C c, as<T>) noexcept requires(current_api >= avx512);
+  as_logical_t<T> EVE_FORCEINLINE to_logical(C c, as<T>) noexcept requires(current_api >= avx512);
 
   template<conditional_expr C, typename Op, typename Arg0, typename... Args>
   EVE_FORCEINLINE auto mask_op(C const&                     c,
