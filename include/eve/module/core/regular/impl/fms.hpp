@@ -107,7 +107,7 @@ namespace eve::detail
       {
         [[maybe_unused]] auto stdfms = [](auto sa, auto sb, auto sc){return std::fma(sa, sb, -sc); };
         if constexpr(scalar_value<T>) return std::fma(a, b, -c);
-        else                          return map(stdfms, a, b, c);
+        else                          return map(as<T>{}, stdfms, a, b, c);
       }
       else if constexpr( std::is_integral_v<element_type_t<T>> )
       {

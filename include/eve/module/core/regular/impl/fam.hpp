@@ -86,7 +86,7 @@ namespace eve::detail
           auto stdfam = [](auto x, auto y, auto z){
             return std::fma(y, z, x);
           };
-          return map(stdfam, a, b, c);
+          return map(as<T>{}, stdfam, a, b, c);
         }
       }
       else if constexpr( std::is_integral_v<element_type_t<T>> )
