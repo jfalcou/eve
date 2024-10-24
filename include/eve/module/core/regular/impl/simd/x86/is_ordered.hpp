@@ -51,7 +51,6 @@ namespace eve::detail
                                    O          const& o,
                                    wide<T, N> const& v,
                                    wide<T, N> const& w) noexcept
-  -> decltype(is_ordered(v, w))
     requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
