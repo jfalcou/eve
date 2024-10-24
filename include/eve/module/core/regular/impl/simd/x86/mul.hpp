@@ -34,13 +34,13 @@ namespace eve::detail
           auto aapbb = mul[opts](aa, bb);
           return slice(aapbb, eve::upper_);
         }
-        else                                             return mul.behavior(cpu_{}, opts, a, b);
+        else                                             return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
      }
-      else                                               return mul.behavior(cpu_{}, opts, a, b);
+      else                                               return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && std::integral<T>)
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -142,13 +142,13 @@ namespace eve::detail
           auto s =  slice(aapbb, eve::upper_);
           return if_else(cx,s,src);
         }
-        else                                             return add.behavior(cpu_{}, opts, a, b);
+        else                                             return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
-      else                                               return add.behavior(cpu_{}, opts, a, b);
+      else                                               return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -158,7 +158,7 @@ namespace eve::detail
       else if constexpr( c == category::float64x8 ) return _mm512_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_mul_pd   (src, m, a, b);
       else if constexpr( c == category::float64x2 ) return _mm_mask_mul_pd      (src, m, a, b);
-      else                                          return mul.behavior(cpu_{}, opts, a, b);
+      else                                          return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
   }
 }

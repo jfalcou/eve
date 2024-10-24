@@ -41,7 +41,7 @@ namespace eve::detail
       auto [wlo, whi] = w.slice();
       return eve::combine(mul[opts](vlo, wlo), mul[opts](wlo, whi));
     }
-    else return mul.behavior(cpu_{}, opts, v, w);
+    else return mul.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N, typename U>
@@ -51,7 +51,7 @@ namespace eve::detail
     if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) ||
                  (O::contains(saturated) && std::integral<T>))
     {
-      return mul.behavior(cpu_{}, opts, a, b);
+      return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -113,12 +113,12 @@ namespace eve::detail
           else if constexpr( c == category::float64x2 ) return vmulq_f64 (a, b);
           else
           {
-            return mul.behavior(cpu_{}, opts, a, b);
+            return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
           }
         }
         else
         {
-          return mul.behavior(cpu_{}, opts, a, b);
+          return mul.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
         }
       }
     }

@@ -37,11 +37,11 @@ namespace eve::detail
             auto aapbb = sub[opts](aa, bb);
             return slice(aapbb, eve::upper_);
           }
-          else                                             return sub.behavior(cpu_{}, opts, a, b);
+          else                                             return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
         }
-        else                                               return sub.behavior(cpu_{}, opts, a, b);
+        else                                               return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
       }
-      else                                                 return sub.behavior(cpu_{}, opts, a, b);
+      else                                                 return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr(O::contains(saturated))
     {
@@ -59,7 +59,7 @@ namespace eve::detail
       else if constexpr( c == category::uint16x8  )             return _mm_subs_epu16   (a, b);
       else if constexpr( c == category::int8x16   )             return _mm_subs_epi8    (a, b);
       else if constexpr( c == category::uint8x16  )             return _mm_subs_epu8    (a, b);
-      else                                                      return sub.behavior(cpu_{}, opts, a, b);
+      else                                                      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {
@@ -131,9 +131,9 @@ namespace eve::detail
           auto s =  slice(vvpww, eve::upper_);
           return if_else(cx,s,src);
         }
-        else                                             return add.behavior(cpu_{}, opts, v, w);
+        else                                             return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
       }
-      else                                               return add.behavior(cpu_{}, opts, v, w);
+      else                                               return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else if constexpr(O::contains(saturated))
     {
@@ -152,7 +152,7 @@ namespace eve::detail
       else if constexpr( c == category::uint16x8  )             return _mm_mask_subs_epu16(src, m, v, w);
       else if constexpr( c == category::int8x16   )             return _mm_mask_subs_epi8(src, m, v, w);
       else if constexpr( c == category::uint8x16  )             return _mm_mask_subs_epu8(src, m, v, w);
-      else                                                      return sub.behavior(cpu_{}, opts, v, w);
+      else                                                      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
     else
     {
@@ -175,7 +175,7 @@ namespace eve::detail
       else if constexpr( match(c,category::int8x64 , category::uint8x64 ) ) return _mm512_mask_sub_epi8 (src, m, v, w);
       else if constexpr( match(c,category::int8x32 , category::uint8x32 ) ) return _mm256_mask_sub_epi8 (src, m, v, w);
       else if constexpr( match(c,category::int8x16 , category::uint8x16 ) ) return _mm_mask_sub_epi8    (src, m, v, w);
-      else                                                                  return sub.behavior(cpu_{}, opts, v, w);
+      else                                                                  return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, v, w);
     }
   }
 }

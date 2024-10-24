@@ -14,7 +14,7 @@
 namespace eve::detail
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(sse2_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(sse2_),
                                                                  O const          &o,
                                                                  wide<T, N> const &a,
                                                                  wide<T, N> const &b) noexcept
@@ -26,7 +26,7 @@ namespace eve::detail
 
     if constexpr( O::contains(definitely))
     {
-      return is_not_greater_equal.behavior(cpu_{}, o, a, b);
+      return is_not_greater_equal.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, a, b);
     }
     else
     {
@@ -52,7 +52,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE  as_logical_t<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_not_greater_equal_(EVE_REQUIRES(avx512_),
                                                                   C          const& mask,
                                                                   O          const& o,
                                                                   wide<T, N> const& v,
@@ -61,7 +61,7 @@ namespace eve::detail
   {
     if constexpr( C::has_alternative || O::contains(definitely))
     {
-      return is_not_greater_equal.behavior(cpu_{}, o, v, w);
+      return is_not_greater_equal.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, v, w);
     }
     else
     {

@@ -21,7 +21,7 @@ namespace eve::detail
                                               wide<T, N> v, wide<T, N> w) noexcept
   requires (ppc_abi<abi_t<T, N>> && O::contains(widen))
   {
-    return add.behavior(cpu_{}, opts, v, w);
+    return add.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, typename T, typename N>
@@ -30,10 +30,10 @@ namespace eve::detail
     requires (ppc_abi<abi_t<T, N>> && !O::contains(widen))
   {
     if constexpr(O::contains_any(lower, upper))
-      return add.behavior(cpu_{}, opts, a, b);
+      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     else if constexpr (O::contains(saturated) && std::integral<T>)
     {
-      return add.behavior(cpu_{}, opts, a, b);
+      return add.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {

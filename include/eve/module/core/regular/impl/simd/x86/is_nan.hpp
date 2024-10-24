@@ -45,18 +45,17 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_nan_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_nan_(EVE_REQUIRES(avx512_),
                                      C const& cx,
                                      O const& o,
                                      wide<T, N> const& v) noexcept
-  -> decltype(is_not_less_equal(v, v))
     requires x86_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return is_nan.behavior(cpu_{}, o, v, v);
+      return is_nan.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, v, v);
     }
     else
     {

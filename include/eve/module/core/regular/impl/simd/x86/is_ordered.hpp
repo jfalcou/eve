@@ -46,7 +46,7 @@ namespace eve::detail
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_ordered_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_ordered_(EVE_REQUIRES(avx512_),
                                    C          const& cx,
                                    O          const& o,
                                    wide<T, N> const& v,
@@ -58,7 +58,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical )
     {
-      return is_ordered.behavior(cpu_{}, o, v, w);
+      return is_ordered.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, v, w);
     }
     else
     {

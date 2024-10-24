@@ -20,7 +20,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(saturated))
     {
-      return is_nez.behavior(cpu_{}, opts, v);
+      return is_nez.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
     }
     else
     {
@@ -43,9 +43,9 @@ namespace eve::detail
         else if constexpr( cat == category::uint64x2 ) return vtstq_u64(v, v);
         else if constexpr( cat == category::int64x1  ) return vtst_s64(v, v);
         else if constexpr( cat == category::int64x2  ) return vtstq_s64(v, v);
-        else return is_nez.behavior(cpu_{}, opts, v);
+        else return is_nez.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
       }
-      else return is_nez.behavior(cpu_{}, opts, v);
+      else return is_nez.behavior(as<logical<wide<T, N>>>{}, cpu_{}, opts, v);
     }
   }
 }

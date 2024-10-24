@@ -23,7 +23,7 @@ namespace eve::detail
     if constexpr( integral_value<T> && sizeof(T) < 8 )
       return vec_avg(v0.storage(), v1.storage());
     else if constexpr( O::contains(upper) && integral_value<T>)
-      return average.behavior(cpu_{}, opts, v0, v1);
+      return average.behavior(as<wide<T, N>>{}, cpu_{}, opts, v0, v1);
     else if constexpr( floating_value<T> )
       return fma[opts](v0, half(eve::as(v0)), v1 * half(eve::as(v0)));
     else

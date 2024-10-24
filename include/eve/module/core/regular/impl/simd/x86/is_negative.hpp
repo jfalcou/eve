@@ -37,13 +37,13 @@ namespace eve::detail
       else if constexpr( c == category::float32x4 ) return s_t {_mm_fpclass_ps_mask(a, f)};
     }
     else
-      return  is_negative.behavior(cpu_{}, o, a);
+      return  is_negative.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, a);
   }
 
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_negative_(EVE_REQUIRES(avx512_),
+  EVE_FORCEINLINE logical<wide<T, N>> is_negative_(EVE_REQUIRES(avx512_),
                                      C const& cx,
                                      O const& o,
                                      wide<T, N> const& v) noexcept
@@ -53,7 +53,7 @@ namespace eve::detail
 
     if constexpr( C::has_alternative || C::is_complete || abi_t<T, N>::is_wide_logical || !O::contains(pedantic))
     {
-      return is_negative.behavior(cpu_{}, o, v);
+      return is_negative.behavior(as<logical<wide<T, N>>>{}, cpu_{}, o, v);
     }
     else
     {

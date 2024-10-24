@@ -41,7 +41,7 @@ namespace eve::detail
       auto [wlo, whi] = w.slice();
       return eve::combine(sub[opts](vlo, wlo), sub[opts](wlo, whi));
     }
-    else return sub.behavior(cpu_{}, opts, v, w);
+    else return sub.behavior(as<upgrade_t<wide<T, N>>>{}, cpu_{}, opts, v, w);
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
@@ -50,11 +50,11 @@ namespace eve::detail
   {
     if constexpr(O::contains_any(lower, upper))
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) && integral_value<T>)
     {
-      return sub.behavior(cpu_{}, opts, a, b);
+      return sub.behavior(as<wide<T, N>>{}, cpu_{}, opts, a, b);
     }
     else
     {

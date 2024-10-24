@@ -25,7 +25,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(saturated))
     {
-      return abs.behavior(cpu_{}, opts, v);
+      return abs.behavior(as<wide<T, N>>{}, cpu_{}, opts, v);
     }
     else
     {

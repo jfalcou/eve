@@ -48,6 +48,6 @@ iota_(EVE_REQUIRES(sve_), eve::callable_options auto const& opts, eve::as<T> tgt
   using C = decltype(opts[condition_key]);
 
   if constexpr( C::is_complete && C::is_inverted) return sveindex<T>(0, 1);
-  else return eve::iota.behavior(cpu_ {}, opts, tgt);
+  else return eve::iota.behavior(as<T>{}, cpu_ {}, opts, tgt);
 }
 }
