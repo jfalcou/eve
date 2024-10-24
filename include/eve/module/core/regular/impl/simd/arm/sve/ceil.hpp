@@ -26,7 +26,7 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> ceil_(EVE_REQUIRES(sve_),
                              C          const& cond,
                              O          const& opts,
-                             wide<T, N> const& v) noexcept -> wide<T, N>
+                             wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
     auto alt = alternative(cond, v, as(v));
