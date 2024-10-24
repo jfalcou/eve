@@ -35,14 +35,14 @@ namespace eve
   //!    Unfortunately, not for all `simd_value`, not for all plaftorms that can be done
   //!    efficiently. So the operation splits the input into chunks for which it's possible.
   //!
-  //!    The function pefroms the following steps:
+  //!    The function perfoms the following steps:
   //!      1) splits the simd_value and mask into chunks, that can be processed in one go.
   //!         This depends on what instructions are availiable.
   //!      2) Each chunk, gets shuffled in a way that moves selected elements (mask == true) to
   //!         the front. The tail of the resulting value is unspecified.
   //!         [a, b, c, d], (false, true, false, true) -> [b, d, _, _]
   //!      3) For each chunk we also compute how many elements are selected. (in the example - 2).
-  //!      4) Both shuffled chunk and a number are put in a `kumi::tupe<simd_value, std::ptrdiff_t>`
+  //!      4) Both shuffled chunk and a number are put in a `kumi::tuple<simd_value, std::ptrdiff_t>`
   //!         TODO: there is a bug where sometimes it's an `int` and not `std::ptrdiff_t`.
   //!      5) Those chunks are combined together in another tuple.
   //!
@@ -64,7 +64,7 @@ namespace eve
   //!       template <relative_conditional_expr C,
   //!                 simd_value T,
   //!                 logical_simd_value L>
-  //!       auto compress[C ignore](T x, L m)                // (2)
+  //!       auto compress[C ignore](T x, L m)              // (2)
   //!    }
   //!    @endcode
   //!
@@ -77,8 +77,9 @@ namespace eve
   //!
   //!  **Return value**
   //!
-  //!    `kumi::tuple<kumi::tuple<simd_value, std::ptrdiff_t>, ...>` - tuple of compressed chunks,
-  //!     constructed as described earlier.
+  //!    1. `kumi::tuple<kumi::tuple<simd_value, std::ptrdiff_t>, ...>` - tuple of compressed chunks,
+  //!        constructed as described earlier.
+  //!    2. [The operation is performed conditionnaly](@ref conditional).
   //!
   //!  @groupheader{Example}
   //!

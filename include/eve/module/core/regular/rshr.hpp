@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_bitops
 //! @{
 //!   @var rshr
 //!   @brief Computes the arithmetic right/left shift operation according to shift sign.

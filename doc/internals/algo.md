@@ -16,7 +16,7 @@ details like correct tail handling, alignment handling or unrolling.
 All those features are usable through generic interfaces to allow for reuse of similar loops
 structure at the cost of some idiosyncrasies.
 
-For a in-depth discussion about those issues, you can take a look at the Algorithms section
+For an in-depth discussion about those issues, you can take a look at the Algorithms section
 of our [CppCon talk](https://www.youtube.com/embed/WZGNCPBMInI?t=1412).
 
 # Basic Components
@@ -25,7 +25,7 @@ of our [CppCon talk](https://www.youtube.com/embed/WZGNCPBMInI?t=1412).
 
 Many algorithms require some form of `while(f != l)` loop. However, with SIMD, even this simple
 operation is non trivial. **EVE** algorithm building-blocks provide implementation for the most
-frequent loop structure. Those loops can then customized and reused without having to care about
+frequent loop structures. Those loops can then customized and reused without having to care about
 the actual range type used. For example, eve::mismatch is implemented as a customized call to eve::find.
 
 ## Ranges or Iterators

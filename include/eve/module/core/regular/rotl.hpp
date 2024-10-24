@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_bitops
 //! @{
 //!   @var rotl
 //!   @brief Bitwise rotation to the left

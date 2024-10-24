@@ -23,12 +23,12 @@ namespace eve
 //!   #include <eve/module/core.hpp>
 //!   @endcode
 //!
-//!   If this function doesn't work for you, maybe you are looking for eve::comress_store or
+//!   If this function doesn't work for you, maybe you are looking for eve::compress_store or
 //!   eve::compress. However this function is faster.
 //!
 //!   You can think about this function as `std::copy_if` but instead of a predicate,
 //!   you pass in logical_simd_value. Similar to `std::copy_if` it returns you
-//!   a pointers to where the output ended.
+//!   a pointer to where the output ended.
 //!   @note: you might be missing information about the last selected element written,
 //!   but unfortunately that adds overhead we couldn't fix (#1656)
 //!
@@ -39,7 +39,7 @@ namespace eve
 //!                     being slower for certain usecases.
 //!     * dense/sparse - wether or not you expect a lot of selected elements.
 //!
-//!   @note `safe` version does not touch not selected elements. So, for example,
+//!   @note `safe` version only touch selected elements. So, for example,
 //!   other threads can read/write them without a race condition.
 //!
 //!   ## Preloaded values
@@ -59,14 +59,14 @@ namespace eve
 //!     * they are treated as not selected, regardless of the mask value
 //!   2nd is the output side ignore:
 //!     * elements that are ignored, will not be written.
-//!       having initial offset is equvialent to offeting the `o + offset`.
+//!       having initial offset is equivalent to offseting the `o + offset`.
 //!       followed by keep_first(count)
 //!     Example:
 //!       if the `eve::ignore_extrema(1, L::size() - 2)` is passed,
 //`       the first selected element will be written at o + 1.
-//!     Defaults to 1st ignore.
+//!     Default 1s ignore.
 //!
-//!   If the mask == true this and it's `unsafe` variation, this is the same behaviour as
+//!   If the mask == true this and its `unsafe` variation, have the same behaviour as
 //!
 //!   @code
 //!   // start with + offset
@@ -81,7 +81,7 @@ namespace eve
 //!   eve::store[ignore_out1](x, out);
 //!   @endcode
 //!
-//!   For safe behaviour, we'd also have to make sure not to write not selected elements.
+//!   For safe behaviour, we also have to make sure not to write not selected elements.
 //!
 //!   @groupheader{Callable Signatures}
 //!
