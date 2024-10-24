@@ -254,7 +254,7 @@
 //! @ingroup core
 //! Type conversions
 //!
-//! [as_value](@ref as_value), [convert](@ref convert), [simd_cast](@ref simd_cast),
+//! [convert](@ref convert), [simd_cast](@ref simd_cast),
 //!
 //! @defgroup core_simd SIMD Specific Operations
 //! @ingroup core

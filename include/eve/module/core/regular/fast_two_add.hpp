@@ -30,7 +30,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var quick_two_add
+//!   @var fast_two_add
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
 //!   pair of  add and error,
 //!
@@ -68,7 +68,7 @@ namespace eve
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/regular/fast_two_add.cpp}
 //================================================================================================
-inline constexpr auto fast_two_add = functor<fast_two_add_t>;
+  inline constexpr auto fast_two_add = functor<fast_two_add_t>;
 //================================================================================================
 //! @}
 //================================================================================================

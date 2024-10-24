@@ -30,7 +30,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
-//!   @var fmod
+//!   @var remainder
 //!   @brief mimick the std::remainder function for floating values.
 //!
 //!   @groupheader{Header file}

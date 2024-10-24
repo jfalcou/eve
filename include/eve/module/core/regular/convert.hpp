@@ -84,10 +84,11 @@ namespace eve
   //!
   //!     The expression `convert[saturated](x,t)` computes a saturated conversion of `x` to
   //!     the type wrapped by `t`.
-  //!
-  //! @}
   //================================================================================================
   inline constexpr auto convert = functor<convert_t>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }
 
 #include <eve/module/core/regular/impl/convert.hpp>
