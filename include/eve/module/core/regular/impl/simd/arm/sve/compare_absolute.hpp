@@ -23,11 +23,16 @@ namespace eve::detail
 
   template<callable_options O, floating_scalar_value T, typename N,  typename F>
   EVE_FORCEINLINE logical<wide<T, N>>
-  compare_absolute_(EVE_REQUIRES(sve_), O const&,
+  compare_absolute_(EVE_REQUIRES(sve_), O const& opts,
                     wide<T, N> v, wide<T, N> w,  F f) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {
-    return compare_absolute[true_(as(v))](v, w, f);
+    auto m = sve_true<T>();
+    if      constexpr(F{} == is_less_equal)    return svacle(m, v, w);
+    else if constexpr(F{} == is_less)          return svaclt(m, v, w);
+    else if constexpr(F{} == is_greater_equal) return svacge(m, v, w);
+    else if constexpr(F{} == is_less_equal)    return svacgt(m, v, w);
+    else return compare_absolute.behavior(cpu_{}, opts, v, w, f);
   }
 
   template<callable_options O, floating_scalar_value T, typename N, conditional_expr C,  typename F>
