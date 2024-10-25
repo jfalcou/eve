@@ -12,6 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/traits/overload.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

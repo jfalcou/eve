@@ -11,6 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

@@ -11,6 +11,7 @@
 #include <eve/module/core/constant/maxflint.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/frac.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

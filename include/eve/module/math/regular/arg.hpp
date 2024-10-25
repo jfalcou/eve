@@ -11,7 +11,6 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/pi.hpp>
 
-
 namespace eve
 {
 

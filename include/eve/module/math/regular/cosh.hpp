@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/regular/exp.hpp>

@@ -16,9 +16,8 @@
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/abs.hpp>
-
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/traits/as_logical.hpp>
-
 
 namespace eve
 {

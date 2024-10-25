@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/combinatorial/regular/nth_prime.hpp>
 #include <eve/module/core.hpp>
 

@@ -9,6 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

@@ -9,7 +9,6 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/decorators.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core.hpp>

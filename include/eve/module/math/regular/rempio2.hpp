@@ -9,7 +9,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/regular/decorators.hpp>
 
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/rempio2_kernel.hpp>

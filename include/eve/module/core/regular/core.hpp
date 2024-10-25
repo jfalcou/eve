@@ -55,6 +55,7 @@
 #include <eve/module/core/regular/countr_one.hpp>
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <eve/module/core/regular/dec.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core/regular/deinterleave_groups.hpp>
 #include <eve/module/core/regular/deinterleave_groups_shuffle.hpp>
 #include <eve/module/core/regular/diff_of_prod.hpp>

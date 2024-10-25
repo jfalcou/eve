@@ -7,6 +7,18 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/traits/overload.hpp>
+#include <eve/module/core/regular/bit_or.hpp>
+#include <eve/module/core/regular/bit_and.hpp>
+#include <eve/module/core/constant/mantissamask.hpp>
+#include <eve/module/core/constant/allbits.hpp>
+#include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/is_nez.hpp>
+#include <eve/forward.hpp>
+#include <eve/module/core/regular/decorators.hpp>
+
 namespace eve
 {
 

@@ -22,6 +22,7 @@
 #include <eve/module/core/regular/is_normal.hpp>
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

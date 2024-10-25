@@ -10,7 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/as_element.hpp>
-#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core.hpp>
 
 namespace eve

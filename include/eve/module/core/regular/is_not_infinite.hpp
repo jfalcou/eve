@@ -10,6 +10,7 @@
 #include <eve/module/core/constant/true.hpp>
 #include <eve/module/core/regular/is_finite.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

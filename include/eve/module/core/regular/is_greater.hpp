@@ -11,6 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

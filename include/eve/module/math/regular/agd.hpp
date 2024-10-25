@@ -8,7 +8,6 @@
 #pragma once
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/tan.hpp>
 #include <eve/module/math/regular/atan.hpp>
