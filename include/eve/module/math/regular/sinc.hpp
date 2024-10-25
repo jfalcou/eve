@@ -54,13 +54,13 @@ namespace eve
 //! **Parameters**
 //!
 //!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**
 //!
-//!   1. Returns the [elementwise](@ref glossary_elementwise) sine of the input divided by the input.
-//!      In particular:
+//!    1. Returns the [elementwise](@ref glossary_elementwise) sine of the input divided by the input.
+//!       In particular:
 //!       * If the element is \f$\pm0\f$, \f$1\f$ is returned.
 //!       * If the element is \f$\pm\infty\f$, 0 is returned.
 //!       * If the element is a `Nan`, `NaN` is returned.

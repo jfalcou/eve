@@ -71,8 +71,8 @@ namespace eve
 //!                     the result is `NaN`.
 //!     * `p`:  Non-zero [floating real arguments](@ref eve::floating_value). In any other case,
 //!             the result is `NaN`.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!

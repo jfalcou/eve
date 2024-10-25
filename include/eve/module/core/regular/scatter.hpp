@@ -61,15 +61,15 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 //!
 //!   **Parameters**
 //!
-//!     * `v` :  [SIMD value](@ref eve::simd_value) to scatter
-//!     * `ptr` : Base pointer to scatter to.
-//!     * `idx` :  [Integral SIMD value](@ref eve::integral_simd_value) containing the index to scatter to.
+//!     * `v`:  [simd value](@ref eve::simd_value) to scatter
+//!     * `ptr`: Base pointer to scatter to.
+//!     * `idx`:  [Integral simd value](@ref eve::integral_simd_value) containing the index to scatter to.
 //!
 //!   @groupheader{Semantic Modifiers}
 //!
 //!   * Masked Call
 //!
-//!   eve::scatter can be masked using [Relative conditionals](@ref relative_conditional_expr) to skip scattering
+//!   eve::scatter can be masked using [Relative conditionals](@ref eve::relative_conditional_expr) to skip scattering
 //!   of certain elements.
 //!
 //!   The call `eve::scatter[cond](v,p,i)` is semantically equivalent to:

@@ -79,7 +79,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `x`, `y`: [integral value](@ref eve::integral_value) arguments.
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.

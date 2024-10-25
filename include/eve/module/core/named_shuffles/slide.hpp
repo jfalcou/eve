@@ -62,7 +62,6 @@ namespace eve
 //! @groupheader{Example}
 //!
 //!  @godbolt{doc/core/named_shuffles/slide_left.cpp}
-//! @}
 //================================================================================================
 
 struct slide_left_impl_t
@@ -170,5 +169,8 @@ struct slide_left_t : detail::named_shuffle_1<slide_left_impl_t>
 {};
 
 inline constexpr auto slide_left2 = slide_left_t {};
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
 }

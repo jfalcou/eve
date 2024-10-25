@@ -40,7 +40,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref eve::logical_value_value).
+//!     * `x`: [argument](@ref eve::logical_value).
 //!     * `t`: [top bits](@ref top_bits).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
@@ -69,9 +69,11 @@ namespace eve
 //!     The call `eve::$name$[mask](x, ...)` provides a masked
 //!     version of `count_true which count the non masked non zero element
 //!
-//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(count_true_, count_true);
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/regular/impl/count_true.hpp>

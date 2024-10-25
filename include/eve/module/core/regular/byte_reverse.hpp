@@ -59,7 +59,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref eve::logical_value_value).
+//!     * `x`: [argument](@ref eve::logical_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

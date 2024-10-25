@@ -63,7 +63,7 @@ namespace eve
 //!   a not exactly representable number the result can be not exactly what you expect.
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/significants.cpp}
+//!  @godbolt{doc/math/significants.cpp}
 //================================================================================================
   inline constexpr auto significants = functor<significants_t>;
 //================================================================================================

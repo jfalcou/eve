@@ -110,7 +110,7 @@ namespace eve
 //!
 //!     **Example**
 //!
-//!       @godbolt{doc/core/masked/minmax.cpp}
+//!       @godbolt{doc/core/minmax.cpp}
 //!
 //================================================================================================
   inline constexpr auto minmax = functor<minmax_t>;

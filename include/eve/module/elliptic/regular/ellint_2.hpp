@@ -63,12 +63,12 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `phi`: [floating Jacobi amplitude](@reffloating_value).
-//!     * `k`: [floating elliptic modulus](@ref floating_value). `k` must satisfy
+//!     * `phi`: [floating Jacobi amplitude](@ref eve::floating_value).
+//!     * `k`: [floating elliptic modulus](@ref eve::floating_value). `k` must satisfy
 //!             \f$k^2\sin^2\phi \le 1\f$ or the result is `NaN`. In the complete case this means
 //!             \f$|k| \le 1\f$.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!

@@ -69,8 +69,8 @@ namespace eve
 //!     * `n`: [integral argument](@ref eve::integral_value).
 //!     * `lambda`: [real floating argument](@ref eve::floating_value). Must be greater than \f$-\frac12\f$.
 //!     * `x`: [real floating argument](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!

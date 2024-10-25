@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T, integral_value N>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
       requires(eve::same_lanes_or_scalar<T, N>)
-    {                 
+    {
       return EVE_DISPATCH_CALL(t0, s);
     }
 
@@ -74,7 +74,7 @@ namespace eve
 //!          If `N` is the size in bits  of the element type of `T`, all
 //!          [elements](@ref glossary_elementwise) of n must belong to the
 //!          interval: `]-N, N[` or the result is undefined.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!       2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/rshr.cpp}

@@ -51,7 +51,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [integral value](@ref integral_value).
+//!     * `x`: [integral value](@ref eve::integral_value).
 //!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
 //!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!

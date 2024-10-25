@@ -75,8 +75,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n`, `m`, `l`, `ln`, `lnm1` : [integral positive arguments](@ref integral_value).
-//!     * `x` : [floating argument](@ref floating_value).
+//!     * `n`, `m`, `l`, `ln`, `lnm1` : [integral positive arguments](@ref eve::integral_value).
+//!     * `x` : [floating argument](@ref eve::floating_value).
 //!
 //!   **Return value**
 //!

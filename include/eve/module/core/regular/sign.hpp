@@ -63,7 +63,7 @@ namespace eve
 //!
 //!   **Return value**
 //!
-//!     1;  The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
+//!     1. The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
 //!        - `+1` , if `x` is greater than 0
 //!        - `-1` , if `x` is less than 0
 //!        -  \f$\pm0\f$, if `x` is \f$\pm0\f$

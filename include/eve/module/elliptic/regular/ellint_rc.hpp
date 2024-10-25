@@ -59,10 +59,10 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [floating valuess](@ref floating_value). `x` and `y` must be
+//!     * `x`, `y`: [floating valuess](@ref eve::floating_value). `x` and `y` must be
 //!                 strictly positive and `y` non zero or the result is `NaN`.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!

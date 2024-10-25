@@ -54,7 +54,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `n` :  [integral positive arguments](@ref value) of flint
+//!     * `n` :  [integral positive arguments](@ref eve::value) of flint
 //!     * `x` :  [real floating argument](@ref eve::floating_value).
 //!     * `a` :  [real floating argument](@ref eve::floating_value).
 //!
@@ -68,7 +68,7 @@ namespace eve
 //!   *  [Wolfram MathWorld: Abel Polynomial](https://mathworld.wolfram.com/AbelPolynomial.html)
 //!
 //!   @groupheader{Example}
-//!   @godbolt{doc/polynomial/regular/abel.cpp}
+//!   @godbolt{doc/polynomial/abel.cpp}
 //================================================================================================
   inline constexpr auto abel = functor<abel_t>;
 //================================================================================================

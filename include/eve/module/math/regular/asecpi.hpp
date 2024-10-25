@@ -57,8 +57,8 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 //!   **Parameters**
 //!
 //!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -69,8 +69,8 @@ struct asecpi_t : elementwise_callable<asecpi_t, Options, raw_option>
 //!     * If the element is \f$0\f$, \f$1\f$ is returned.
 //!     * If the element \f$|x| < 1\f$, `NaN` is returned.
 //!     * If the element is a `Nan`, `NaN` is returned.
-//!    2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
-//!    3. [The operation is performed conditionnaly](@ref conditional).
+//!   2. Same as 1 but uses a faster implementation which can be slightly less accurate near 'x = 1'
+//!   3. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{External references}
 //!   *  [Wolfram MathWorld: Inverse Hyperbolic Secant](https://mathworld.wolfram.com/InverseHyperbolicSecant.html)

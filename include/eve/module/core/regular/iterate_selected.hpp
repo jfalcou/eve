@@ -76,10 +76,9 @@ struct iterate_selected_t
 //!    * f - callback, that's invoked for every true index. Return false to break.
 //!
 //!  **Return value**
-//!    * true iff the user broke the exuction (f returned true).
+//!    * true iff the user broke the exeuction (f returned true).
 //!
-//!  @groupheader {Example}
-//!
+//!  @groupheader{Example}
 //!  @godbolt{doc/core/iterate_selected.cpp}
 //================================================================================================
   inline constexpr auto iterate_selected = functor<iterate_selected_t>;

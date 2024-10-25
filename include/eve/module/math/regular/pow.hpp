@@ -110,8 +110,8 @@ namespace eve
 //!       * pow(\f$+\infty\f$, y) returns +0 for any y less than 0
 //!       * pow(\f$+\infty\f$, y) returns \f$+\infty\f$ for any y greater than 0
 //!       * except where specified above, if any argument is NaN, NaN is returned
-//!     2. [The operation is performed conditionnaly](@ref conditional)
-//!     3. faster but less accurate call
+//!    2. [The operation is performed conditionnaly](@ref conditional)
+//!    3. faster but less accurate call
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/pow.cpp}

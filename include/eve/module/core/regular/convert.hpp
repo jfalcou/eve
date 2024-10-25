@@ -55,8 +55,11 @@ namespace eve
   //!   @code
   //!   namespace eve
   //!   {
-  //!      template<value T, scalar_value Target>
-  //!      Target convert( T x, as_<Target> t)  noexcept
+  //!      // Regular overloads
+  //!      template<value T, scalar_value Target> Target convert( T x, as_<Target> t)  noexcept; //1
+  //!
+  //!      // Semantic option
+  //!      constexpr auto convert[saturated](/* any of the above overloads */)         noexcept; // 2
   //!   }
   //!   @endcode
   //!
@@ -67,23 +70,15 @@ namespace eve
   //!
   //!    **Return value**
   //!
-  //!      * [Elementwise](@ref glossary_elementwise) conversion of `x` in the `Target` type is returned.
+  //!      1.  [Elementwise](@ref glossary_elementwise) conversion of `x` in the `Target` type is returned.
+  //!      2.  The expression `convert[saturated](x,t)` computes a saturated conversion of `x` to
+  //!          the type wrapped by `t`
   //!
-  //!  @note
-  //!      *  Conversion operated by [eve::convert](#eve::convert) follows the regular rules of
+  //!  @note  In scalar mode Conversions operated by `convert`, follow the regular rules of
   //!         C++ type conversion, including the cases leading to Undefined Behaviors.
   //!
-  //!
   //!  @groupheader{Example}
-  //!
   //!  @godbolt{doc/core/convert.cpp}
-  //!
-  //!  @groupheader{Semantic Modifiers}
-  //!
-  //!   * eve::saturated
-  //!
-  //!     The expression `convert[saturated](x,t)` computes a saturated conversion of `x` to
-  //!     the type wrapped by `t`.
   //================================================================================================
   inline constexpr auto convert = functor<convert_t>;
   //================================================================================================
