@@ -71,4 +71,3 @@ inline constexpr auto sqrtsmallestposval = functor<sqrtsmallestposval_t>;
 //! @}
 //================================================================================================
 }
-//

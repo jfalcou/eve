@@ -77,4 +77,3 @@ inline constexpr auto iota = functor<iota_t>;
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/constant/simd/arm/sve/iota.hpp>
 #endif
-//

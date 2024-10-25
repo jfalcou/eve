@@ -17,6 +17,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_constants
 //! @{
+//!   @var constant
 //!   @brief Computes a floating constant from its scalar hexadecimal integral representation.
 //!
 //!   **Defined in Header**
@@ -45,30 +46,27 @@ namespace eve
 //!      from the bits found in Bitpattern.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/constant/constant.cpp}
-//!
 //================================================================================================
 
-template<value T, auto BitsPattern>
-EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
-{
-  using t_t = translate_element_type_t<T>;
-
-  if constexpr( std::integral<t_t> ) { return static_cast<T>(BitsPattern); }
-  else
+  template<value T, auto BitsPattern>
+  EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
   {
-    if constexpr( sizeof(t_t) != sizeof(BitsPattern) )
+    using t_t = translate_element_type_t<T>;
+
+    if constexpr( std::integral<t_t> ) { return static_cast<T>(BitsPattern); }
+    else
     {
-      static_assert(sizeof(t_t) == sizeof(BitsPattern),
-                    "[eve::constant] floating_point case - BitsPattern has not the correct size");
-      return T {};
+      if constexpr( sizeof(t_t) != sizeof(BitsPattern) )
+      {
+        static_assert(sizeof(t_t) == sizeof(BitsPattern),
+                      "[eve::constant] floating_point case - BitsPattern has not the correct size");
+        return T {};
+      }
+      else return static_cast<T>(bit_cast(BitsPattern, as<t_t> {}));
     }
-    else return static_cast<T>(bit_cast(BitsPattern, as<t_t> {}));
   }
-}
 //================================================================================================
 //! @}
 //================================================================================================
 }
-//

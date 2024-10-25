@@ -89,7 +89,7 @@
 //! but this behavior can be changed if the condition is expressed by an `if_(...).else_(...) clause`.
 //!
 //! [allbits](@ref allbits), [as_value](@ref as_value), [bitincrement](@ref bitincrement),
-//! [constant](@ref constant), [core](@ref core), [eps](@ref eps), [exponentmask](@ref exponentmask),
+//! [constant](@ref constant), [eps](@ref eps), [exponentmask](@ref exponentmask),
 //! [false_](@ref false_), [half](@ref half), [ieee_constant](@ref ieee_constant),
 //! [inf](@ref inf), [iota](@ref iota), [logeps](@ref logeps), [mantissamask](@ref mantissamask),
 //! [maxexponent](@ref maxexponent), [maxexponentm1](@ref maxexponentm1),
