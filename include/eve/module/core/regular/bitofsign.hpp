@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/constant/signmask.hpp>
 #include <eve/module/core/regular/bit_and.hpp>

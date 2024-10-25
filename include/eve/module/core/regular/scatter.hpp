@@ -11,7 +11,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/memory/aligned_ptr.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve
 {

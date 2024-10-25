@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/branch.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 #include <eve/module/math/regular/acos.hpp>

@@ -9,7 +9,7 @@
 
 #include <cstdint>
 #include <cfenv>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 namespace eve::detail
 {

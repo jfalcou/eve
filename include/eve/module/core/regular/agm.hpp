@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/constant/nan.hpp>
 #include <eve/module/core/regular/abs.hpp>

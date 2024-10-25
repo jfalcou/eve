@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core/regular/ceil.hpp>
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/nearest.hpp>

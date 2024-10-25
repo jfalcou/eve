@@ -14,7 +14,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 
 #include <type_traits>
 

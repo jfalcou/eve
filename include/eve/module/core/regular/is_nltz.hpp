@@ -8,7 +8,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 #include <eve/module/core/regular/is_not_less.hpp>
 #include <eve/module/core/constant/false.hpp>

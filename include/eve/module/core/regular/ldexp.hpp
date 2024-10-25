@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
-#include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/decorators.hpp>
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
