@@ -98,11 +98,18 @@ In a less formal way, **EVE** @ref glossary_arithmetic generalizes the notion of
 arithmetic operations. By construction, a large majority of @ref glossary_arithmetic are _de facto_
 @ref glossary_elementwise.
 
+@subsection glossary_bitwise Bitwise Functions
+
+**EVE** @ref glossary_bitwise are @ref glossary_arithmetic that are quite type agnostic as long as they are all
+**size-compatible**. By construction, all but [bit_select](@ref eve::bit_select) @ref glossary_bitwise are
+ de facto_ @ref glossary_elementwise and return a value in the (possibly vector extended)
+ type of their first parameter.
+
 @subsection glossary_logical Logical Functions
 
 **EVE** @ref glossary_logical are @ref glossary_arithmetic that can only be applied to
 [logical values](@ref eve::logical_value) `L1`, ..., `Ln`  as long as they are all
-**cardinal-compatible**. By construction, a large majority of @ref glossary_bitwise are
+**cardinal-compatible**. By construction, a large majority of @ref glossary_logical are
 _de facto_ @ref glossary_elementwise.
 
 @subsection glossary_constant Constant Functions
