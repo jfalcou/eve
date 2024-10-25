@@ -57,8 +57,8 @@ namespace eve
 //!     * `x` :  [argument](@ref eve::integral_value).
 //!     * `n` :  size of the groups of bytes to be swapped. Must be a power of 2 and
 //!              less than the half size of the elements of x
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

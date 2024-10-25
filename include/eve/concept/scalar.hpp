@@ -34,6 +34,7 @@ template<typename Type> struct logical;
 
 //==================================================================================================
 //! @ingroup simd_concepts
+//! @{
 //! @concept plain_scalar_value
 //! @brief Specify that a type represents a plain scalar value
 //! The concept `plain_scalar_value<T>` is satisfied if and only if the translation of T is an
@@ -45,9 +46,13 @@ template<typename Type> struct logical;
 //==================================================================================================
 template<typename T>
 concept plain_scalar_value = detail::is_plain<translate_t<T>>();
+//================================================================================================
+//! @}
+//================================================================================================
 
 //==================================================================================================
 //! @ingroup simd_concepts
+//! @{
 //! @concept logical_scalar_value
 //! @brief Specify that a type represents a logical scalar value
 //! The concept `logical_scalar_value<T>` is satisfied if and only if T is an instance of
@@ -60,6 +65,9 @@ concept plain_scalar_value = detail::is_plain<translate_t<T>>();
 template<typename T>
 concept logical_scalar_value = detail::instance_of<T, logical>
                                && plain_scalar_value<typename T::value_type>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 namespace eve::detail

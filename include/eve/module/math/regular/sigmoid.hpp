@@ -51,7 +51,7 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`: [floating value](@ref floating_value).
+//!     * `x`: [floating value](@ref eve::floating_value).
 //!     * `c`: [Conditional sigmoidression](@ref conditional_sigmoidr) masking the operation.
 //!     * `m`: [Logical value](@ref logical) masking the operation.
 //!

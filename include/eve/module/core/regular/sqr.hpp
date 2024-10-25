@@ -62,9 +62,9 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`: [value](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

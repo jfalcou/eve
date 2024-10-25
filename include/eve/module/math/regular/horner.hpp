@@ -71,8 +71,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [evaluation point floating value](@ref floating_value) arguments.
-//!     * `ci...`: [floating values](@ref floating_value) polynom coefficients in decreasing power order,
+//!     * `x`: [evaluation point floating value](@ref eve::floating_value) arguments.
+//!     * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in decreasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
 //!     * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.

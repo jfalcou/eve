@@ -30,7 +30,7 @@ namespace eve
 //! @{
 //!   @var three_fma
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   triplet  of an fma value f and two errors e1 and e2 such that \f$ax+y = f+r_1+r_2/f$
+//!   triplet  of an fma value f and two errors e1 and e2 such that \f$ax+y = f+r_1+r_2\f$
 //!
 //!   **Defined in Header**
 //!
@@ -65,7 +65,7 @@ namespace eve
 //!
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/regular/three_fma.cpp}
+//!  @godbolt{doc/core/three_fma.cpp}
 //================================================================================================
   inline constexpr auto three_fma = functor<three_fma_t>;
 //================================================================================================

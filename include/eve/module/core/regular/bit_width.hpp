@@ -55,8 +55,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`: [unsigned argument](@ref eve::unsigned_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!      1. The value of  number of bits needed to store the value `x`,

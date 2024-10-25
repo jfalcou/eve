@@ -65,8 +65,8 @@ namespace eve
 //!
 //!     * `x`: [argument](@ref eve::value).
 //!     * `n`: n scalar delimiting the band to be reversed at both ends of x.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!      1. The values of the of the parameter are returned with bits in reversed order.

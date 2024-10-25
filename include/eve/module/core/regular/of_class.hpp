@@ -56,7 +56,7 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [value](@ref value).
+//!     * `x`: [value](@ref eve::value).
 //!     * `i`: combination of floating point classes to check
 //!
 //!   **Return value**

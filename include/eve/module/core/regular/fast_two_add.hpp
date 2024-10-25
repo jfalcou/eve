@@ -66,7 +66,7 @@ namespace eve
 //! @warning   the algoritm needs |x| >= |y|,  and will assert if the condition is not met
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/regular/fast_two_add.cpp}
+//!  @godbolt{doc/core/fast_two_add.cpp}
 //================================================================================================
   inline constexpr auto fast_two_add = functor<fast_two_add_t>;
 //================================================================================================

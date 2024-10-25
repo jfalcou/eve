@@ -58,8 +58,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `n` :  [argument](@ref eve::value). Must be signed integral or flint.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

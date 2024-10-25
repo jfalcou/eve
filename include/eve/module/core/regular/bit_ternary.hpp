@@ -66,8 +66,8 @@ namespace eve
 //!     * `k`: integral constant whose bits are the result of a lookup table for the ternary operation.
 //!       The consteval function mfb (make from bits) can be used to generate this constant from its bits (see below).
 //!     * `u`, `v`, `w`, : first [argument](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

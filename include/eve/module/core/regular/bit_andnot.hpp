@@ -66,8 +66,8 @@ namespace eve
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...`: other [arguments](@ref eve::value).
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!      1. The return value type is  to the common `bit_value` of the parameters. Each parameter

@@ -59,8 +59,8 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!   **Parameters**
 //!
 //!     * `x`:  [real](@ref eve::value) argument.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

@@ -91,7 +91,6 @@ namespace eve
 //!
 //!   @groupheader{Example}
 //!   @godbolt{doc/polynomial/regular/gegenbauer.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto gegenbauer = functor<gegenbauer_t>;
 //================================================================================================

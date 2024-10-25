@@ -55,8 +55,8 @@ namespace eve
 //!     * `x` :  [argument](@ref eve::integral_value).
 //!     * `i0` : first index
 //!     * `i1` : second index
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

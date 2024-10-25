@@ -49,8 +49,8 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `m`: [mask](@ref value)
-//!     * `x`, `y`: [selection choices](@ref value)
+//!     * `m`: [mask](@ref eve::value)
+//!     * `x`, `y`: [selection choices](@ref eve::value)
 //!
 //!    **Return value**
 //!         The value of the selected bits is returned.

@@ -64,8 +64,8 @@ namespace eve
 //!
 //!     * `x`: value to clamp.
 //!     * `lo`, `hi`: [the boundary values](@ref eve::value) to clamp `x` to.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!        1. Each [element](@ref glossary_elementwise)  of the result contains:

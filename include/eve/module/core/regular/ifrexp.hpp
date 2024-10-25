@@ -51,7 +51,7 @@ struct ifrexp_t : strict_elementwise_callable<ifrexp_t, Options, pedantic_option
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [value](@ref value).
+//!     * `x`: [value](@ref eve::value).
 //!
 //!   **Return value**
 //!
