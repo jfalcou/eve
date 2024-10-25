@@ -64,9 +64,12 @@ struct iota_t : callable<iota_t, Options, conditional_option>
 //!  @groupheader{Example}
 //!
 //!  @godbolt{test/doc/core/constant/iota.cpp}
-//! @}
+//!
 //================================================================================================
 inline constexpr auto iota = functor<iota_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/constant/simd/common/iota.hpp>
@@ -74,3 +77,4 @@ inline constexpr auto iota = functor<iota_t>;
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/constant/simd/arm/sve/iota.hpp>
 #endif
+//

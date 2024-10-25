@@ -63,7 +63,11 @@ struct bitincrement_t : constant_callable<bitincrement_t, Options, lower_option,
 //!   @groupheader{Example}
 //!
 //!   @godbolt{doc/core/constant/bitincrement.cpp}
-//! @}
+//!
 //================================================================================================
 inline constexpr auto bitincrement = functor<bitincrement_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 }
+//

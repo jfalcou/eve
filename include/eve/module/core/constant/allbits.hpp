@@ -72,3 +72,4 @@ inline constexpr auto allbits = functor<allbits_t>;
 // Required for if_else optimisation detections
 using callable_allbits_ = tag_t<allbits>;
 }
+//

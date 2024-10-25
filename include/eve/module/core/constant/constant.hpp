@@ -47,7 +47,7 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/constant/constant.cpp}
-//! @}
+//!
 //================================================================================================
 
 template<value T, auto BitsPattern>
@@ -67,4 +67,8 @@ EVE_FORCEINLINE auto constant(eve::as<T> const& = {})
     else return static_cast<T>(bit_cast(BitsPattern, as<t_t> {}));
   }
 }
+//================================================================================================
+//! @}
+//================================================================================================
 }
+//
