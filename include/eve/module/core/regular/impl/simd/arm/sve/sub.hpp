@@ -18,7 +18,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(widen))
     {
-      return sub.behavior(cpu_{}, opts, v, w);
+      return sub.behavior(cpu_{}, opts, a, b);
     }
     else
     {
@@ -53,7 +53,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(widen))
     {
-      return sub.behavior(cpu_{}, opts, v, w);
+      return sub.behavior(cpu_{}, opts, a, b);
     }
     else
     {

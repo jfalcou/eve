@@ -31,7 +31,7 @@ namespace eve::detail
   {
     if constexpr(O::contains(widen))
     {
-      return mul.behavior(cpu_{}, opts, v, w);
+      return mul.behavior(cpu_{}, opts, a, b);
     }
     else
     {
