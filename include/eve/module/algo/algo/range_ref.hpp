@@ -21,7 +21,6 @@ namespace eve::algo
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/range_ref.hpp>`
   //!
-  //! @}
   //================================================================================================
 
   template<relaxed_range Rng>
@@ -45,6 +44,9 @@ namespace eve::algo
       {
         return preprocess_range(traits, *self.rng);
       }
+  //================================================================================================
+  //!  @}
+  //================================================================================================
   };
 
   //================================================================================================
@@ -59,22 +61,14 @@ namespace eve::algo
   //!
   //!   **Required header:** `#include <eve/module/algo/algo/range_ref.hpp>`
   //!
-  //! @}
   //================================================================================================
 
   template <typename T>
   concept non_owning_range = relaxed_range<T> && requires {
     typename T::is_non_owning;
   };
-
   //================================================================================================
-  //! @addtogroup algorithms
-  //! @{
-  //!    @var range_ref
-  //!    @brief for a `non_owning_range` returns it, otherwise returns a `range_ref_wrapper`.
-  //!
-  //!   **Required header:** `#include <eve/module/algo/algo/range_ref.hpp>`
-  //! @}
+  //!  @}
   //================================================================================================
 
   struct range_ref_
@@ -86,5 +80,17 @@ namespace eve::algo
     EVE_FORCEINLINE auto operator()(R& r) const { return range_ref_wrapper{r}; }
   };
 
+  //================================================================================================
+  //! @addtogroup algo_concepts
+  //! @{
+  //!    @var range_ref
+  //!    @brief for a `non_owning_range` returns it, otherwise returns a `range_ref_wrapper`.
+  //!
+  //!   **Required header:** `#include <eve/module/algo/algo/range_ref.hpp>`
+  //================================================================================================
+
   inline constexpr range_ref_ range_ref;
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 }

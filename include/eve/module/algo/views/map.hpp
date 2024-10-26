@@ -31,7 +31,6 @@ namespace eve::views
   //!
   //!    @struct map_range
   //!    @brief a shorthand for `eve::algo::views::map_range`
-  //! @}
   //================================================================================================
   using eve::algo::views::map_load_op;
   using eve::algo::views::map_store_op;
@@ -39,4 +38,8 @@ namespace eve::views
   using eve::algo::views::map_convert;
   using eve::algo::views::map_iterator;
   using eve::algo::views::map_range;
+  //================================================================================================
+  //! @}
+  //================================================================================================
+}
 }

@@ -78,8 +78,6 @@ struct iterate_selected_t
 //!  **Return value**
 //!    * true iff the user broke the exeuction (f returned true).
 //!
-//!  @groupheader{Example}
-//!  @godbolt{doc/core/iterate_selected.cpp}
 //================================================================================================
   inline constexpr auto iterate_selected = functor<iterate_selected_t>;
 //================================================================================================
