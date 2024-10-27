@@ -52,7 +52,7 @@ namespace eve::algo
   //================================================================================================
   //! @addtogroup algo_concepts
   //! @{
-  //!    @var non_owning_range
+  //!    @concept non_owning_range
   //!    @brief a non_owning range is a relaxed_range that does not own it's elements and
   //!           can be copied without it's contents being affected
   //!           TODO: FIX-#1017: how is this related to `std::borrowed_range`?

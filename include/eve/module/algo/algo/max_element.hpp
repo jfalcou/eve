@@ -88,8 +88,10 @@ template<typename TraitsSupport> struct max_element_ : TraitsSupport
 //!   @see `max_value`
 //!   @see `min_element`
 //!
+//================================================================================================
+  inline constexpr auto max_element = function_with_traits<max_element_>[default_simple_algo_traits];
+//================================================================================================
 //! @}
 //================================================================================================
-inline constexpr auto max_element = function_with_traits<max_element_>[default_simple_algo_traits];
 
 }
