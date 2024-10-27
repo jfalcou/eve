@@ -67,9 +67,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [floating values](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!    * `x`, `y`: [floating values](@ref eve::floating_value).
+//!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

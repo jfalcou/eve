@@ -65,10 +65,10 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`, `...xs`: [real](@ref eve::value) arguments.
-//!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!    * `x`, `...xs`: [real](@ref eve::value) arguments.
+//!    * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
+//!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**
 //!
