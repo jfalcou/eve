@@ -78,7 +78,7 @@ namespace eve
 //!      2. equivalent to the call on the elements of the tuple.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @groupheader{External references
+//!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bitwise_operation)
 //!
 //!  @groupheader{Example}
