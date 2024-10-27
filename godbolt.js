@@ -160,6 +160,7 @@ class SendToGodbolt extends HTMLElement {
           "compilers": [],
           "executors": [
             {
+              "arguments": "",
               "compiler": {
                 "id": "clang1500",
                 "libs": [
