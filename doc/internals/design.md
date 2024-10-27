@@ -65,8 +65,13 @@ following protocol:
   - Let `func` be an **EVE** object function object that supports masks and let `cond`
     be a [logical value](@ref eve::logical_value) or a [conditional expression](@ref eve::conditional_expr).
 
-  - Then, for any [value](@ref eve::value) `x`, the expression `func[cond](x, ...)`
-    is equivalent to `if_else(cond, func_(x,...), x)`.
+  - Then, for any [value](@ref eve::value) `x`, the expression
+
+            func[cond](x, ...)
+
+    is equivalent to
+
+            if_else(cond, func_(x,...), x).
 
 In these basic cases, if the mask is set to `false` for a given lane, the value returned by the
 function is the corresponding value of `x`, regardless of other parameters. Note that this semantic
