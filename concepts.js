@@ -1,6 +1,9 @@
 var concepts =
 [
     [ "eve", "namespaceeve.html", [
+      [ "algo", null, [
+        [ "non_owning_range", "concepteve_1_1algo_1_1non__owning__range.html", null ]
+      ] ],
       [ "wide_cardinal", "concepteve_1_1wide__cardinal.html", null ],
       [ "conditional_expr", "concepteve_1_1conditional__expr.html", null ],
       [ "relative_conditional_expr", "concepteve_1_1relative__conditional__expr.html", null ],
