@@ -69,8 +69,8 @@ namespace eve
 //!     * `x`: value to chi.
 //!     * `lo`, `hi`: [the boundary values](@ref eve::value) of the interval.
 //!     * `belongs`: predicate function
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!        1. Each [element](@ref glossary_elementwise)  of the result contains:
@@ -86,9 +86,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/chi.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto chi = functor<chi_t>;
+//================================================================================================
+//! @}
+//================================================================================================
 
   namespace detail
   {

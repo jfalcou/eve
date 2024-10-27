@@ -59,8 +59,8 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!   **Parameters**
 //!
 //!     * `x`:  [real](@ref eve::value) argument.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -75,7 +75,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
 //!        to be greater or equal to the exact one (except for Nans).
 //!
 //!  @note
-//!     For [integral value](@ref integral_value) `rec(x)` is equivalent to:
+//!     For [integral value](@ref eve::integral_value) `rec(x)` is equivalent to:
 //!       * If x==1 or x==-1, x is returned.
 //!       * If x==0,  [the greatest representable positive value](@ref eve::valmax) is returned.
 //!       * Otherwise 0 is returned.

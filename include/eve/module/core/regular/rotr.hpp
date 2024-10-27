@@ -37,7 +37,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_bitops
 //! @{
 //!   @var rotr
 //!   @brief Bitwise rotation to the right
@@ -66,8 +66,8 @@ namespace eve
 //!
 //!     * `x`: [argument](@ref eve::unsigned_value) to be rotated.
 //!     * `n`: [shift](@ref eve::integral_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

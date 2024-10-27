@@ -55,7 +55,6 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/named_shuffles/broadcast_lane.cpp}
-//! @}
 //================================================================================================
 struct broadcast_lane_t
 {
@@ -126,5 +125,8 @@ struct broadcast_lane_t
 };
 
 inline constexpr auto broadcast_lane = detail::named_shuffle_1<broadcast_lane_t> {};
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
 }

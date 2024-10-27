@@ -57,10 +57,10 @@ namespace eve
 //!   }
 //!   @endcode
 //!
-//!     * `x` :[value](@ref value) argument.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!     * `tol' [scalar_value](@ref value) tolerance.
+//!     * `x` :[value](@ref eve::value) argument.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `tol' [scalar_value](@ref eve::value) tolerance.
 //!
 //!   **Return value**
 //!

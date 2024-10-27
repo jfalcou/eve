@@ -30,7 +30,7 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_arithmetic
 //! @{
-//!   @var fmod
+//!   @var remainder
 //!   @brief mimick the std::remainder function for floating values.
 //!
 //!   @groupheader{Header file}
@@ -56,8 +56,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`, `y`:   [real](@ref eve::value) arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -66,14 +66,14 @@ namespace eve
 //!        * If `x` is \f$\pm\inf\f$ or `NaN`, `NaN` is returned.
 //!        * If `y` is \f$\pm0\f$  \f$\pm0\f$ is returned
 //!        * If `y` is `NaN`, `NaN` is returned.
-//!       2. [The operation is performed conditionnaly](@ref conditional).
+//!      2. [The operation is performed conditionnaly](@ref conditional).
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/remainder.cpp}
 //================================================================================================
   inline constexpr auto remainder = functor<remainder_t>;
 //================================================================================================
-///! @}
+//! @}
 //================================================================================================
 
   namespace detail

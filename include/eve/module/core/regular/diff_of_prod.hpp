@@ -65,9 +65,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`, `z`, `t`:  [floating values](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`, `y`, `z`, `t`:  [floating values](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -80,7 +80,7 @@ namespace eve
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/diff_of_prod.cpp}
 //================================================================================================
- inline constexpr auto diff_of_prod = functor<diff_of_prod_t>;
+  inline constexpr auto diff_of_prod = functor<diff_of_prod_t>;
 //================================================================================================
 //! @}
 //================================================================================================

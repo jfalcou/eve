@@ -24,11 +24,18 @@
 //! @defgroup core_accuracy  Accuracy helpers
 //! @ingroup core
 //! These functions allows performing some basic arithmetics operations with greater accuracy
-//! even when and upgraded type is not available.
+//! even when a truly upgraded type is not available.
+//!
+//! [diff_of_prod](@ref eve::diff_of_prod), [fast_two_add](@ref eve::fast_two_add),
+//! [sum_of_prod](@ref eve::sum_of_prod), [three_fma](@ref eve::three_fma), [two_add](@ref eve::two_add),
+//! [two_prod](@ref eve::two_prod), .
 //!
 //! @defgroup core_arithmetic  Arithmetic operations
 //! @ingroup core
 //! Core arithmetic functions
+//!
+//! These functions allows performing some basic arithmetics operations with greater accuracy
+//! even when and upgraded type is not available.
 //!
 //! @defgroup core_bitops Bitwise functions
 //! @ingroup core
@@ -38,11 +45,15 @@
 //! @ingroup core
 //! Basic useful constants (scalar and SIMD)
 //!
-//! All EVE constants can be called in two ways:
+//! All EVE constants can be called in three ways:
 //!    * ct(eve::as<T>())   where T is the wished constant type
 //!    * ct(t)              where t is an instance of a type T
+//!    * ct\[cond\](...)      where cond is a conditional expression.
 //!
-//! Where ct denotes the constant name.
+//! Here ct denotes the constant name.
+//!
+//! When the condition is present and evaluate to false the result element default to zero,
+//! but this behavior can be changed if the condition is expressed by an `if_(...).else_(...) clause`.
 //!
 //! @defgroup core_decorators  Decorators
 //! @ingroup core
@@ -70,7 +81,8 @@
 //!          eve::fma, eve::fms, eve::fnma, eve::fnms, eve::frac, eve::frexp, eve::fsm, eve::fsnm, eve::ifrexp, eve::is_flint,
 //!          eve::is_negative, eve::is_not_flint, eve::is_not_infinite, eve::is_unit, eve::ldexp, eve::lerp, eve::manhattan, eve::max,
 //!          eve::maxabs, eve::maxmag, eve::min, eve::minabs, eve::minmag, eve::minmax, eve::modf, eve::negabsmax,
-//!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist, eve::rsqrt, eve::signnz, eve::sum_of_prod,
+//!          eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::nextafter, eve::prev, eve::rec, eve::reldist,
+//!          eve::rsqrt, eve::signnz, eve::sum_of_prod,
 //!
 //!   * integer roundings :
 //!
@@ -99,22 +111,30 @@
 //!
 //!      Except for average with integral typed inputs these decocators have no impact on integer calls.
 //!
-//!     * Fuzzy
+//!    * upgraded computations
+//!
+//!       - `widen`: the result is computed in the upgraded type corresponding to the elements parameters. Presently, this has no effect
+//!          on 64 bits types as the upgrade type is the type itself.
+//!          If the widen decorator is used,  it is the responsability of the user to use [convert](@ref eve::convert)
+//!          if it is  needed to get back to the input type sizes.
+//!
+//!    * Fuzzy
 //!
 //!       - `almost`: allows some laxity on the predicate result or the integer rounding direction
 //!       - `definitely`: impose some rigidity on the predicate result or the integer rounding direction
 //!
-//!       these two decorators can be used with the functions eve::ceil,  eve::floor, eve::frac, eve::modf, eve::trunc,
+//!       these two decorators can be used with the functions eve::ceil,  eve::floor, eve::frac, [eve::modf](@ref eve::modf), eve::trunc,
 //!       `almost` with the predicates eve::is_equal, eve::is_greater_equal, eve::is_less_equal, eve::is_not_greater, eve::is_not_less,
 //!       `definitely` with the predicates eve::is_not_equal, eve::is_not_greater_equal, ieve::s_not_less_equal, eve::is_greater, eve::is_less,
 //!
-//!      * saturation
+//!    * saturation
 //!
-//!        - saturated: the operations are executed with saturation which avoids overflow.
+//!       - saturated: the operations are executed with saturation which avoids overflow.
 //!
-//!          This option can be used with eve::abs, eve::absmax, eve::absmin, eve::add, eve::bit_floor, eve::convert, eve::dec, eve::dist,
-//!          eve::div, eve::inc, eve::manhattan, eve::maxabs, eve::maxmag, eve::minabs, eve::minmag, eve::minus, eve::mul,
-//!          eve::negabsmax, eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::oneminus, eve::prev, eve::sqr, eve::sub
+//!       This option can be used with eve::abs, eve::absmax, eve::absmin, eve::add, eve::bit_floor, eve::convert, eve::compare_absolute,
+//!       eve::dec, eve::dist,
+//!       eve::div, eve::inc, eve::manhattan, eve::maxabs, eve::maxmag, eve::minabs, eve::minmag, eve::minus, eve::mul,
+//!       eve::negabsmax, eve::negabsmin, eve::negmaxabs, eve::negminabs, eve::next, eve::oneminus, eve::prev, eve::sqr, eve::sub
 //!
 //! @defgroup core_fma_family  Fused multiply add family
 //! @ingroup core
@@ -130,16 +150,19 @@
 //!
 //! Take care that can be very expansive if the proper hardware capabilities are not present.
 //!
-//! By themselves tne regular version of these function acts in the naive (and less accurate way)
+//! By themselves the regular version of these function acts by maping the std implementation
 //! if the intrinsics are not at hand.
 //!
-//! @defgroup core_reduction  Reductions
-//! @ingroup core
-//! Operations providing a scalar value from SIMD vectors
+//! [fam](@ref eve::fam), [fanm](@ref eve::fanm), [fma](@ref eve::fma), [fms](@ref eve::fms), [fnms](@ref eve::fnms),
+//! [fsm](@ref eve::fsm), [fsnm](@ref eve::fsnm).
+//!
+//!  @defgroup core_reduction  Reductions
+//!  @ingroup core
+//!  Operations providing a scalar value from SIMD vectors
 //!
 //! @defgroup core_internal  IEEE operations
 //! @ingroup core
-//! Operations related to classical IEEE functions
+//! Operations related to classical IEEE functions and the floating representation of real numbers
 //!
 //! @defgroup core_logical  Logical operations
 //! @ingroup core
@@ -149,9 +172,15 @@
 //! @ingroup core
 //! Operations returning logical values
 //!
+//! Mind that in SIMD context these functions DO NOT return boolean but logical values that is
+//! an internal representation of a vector of truth values that can be handled by the function of
+//! the previous section (core_logical).
+//!
 //! @defgroup core_conversions Conversions
 //! @ingroup core
 //! Type conversions
+//!
+//! [convert](@ref eve::convert), [simd_cast](@ref eve::simd_cast),
 //!
 //! @defgroup core_simd SIMD Specific Operations
 //! @ingroup core

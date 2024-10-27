@@ -64,9 +64,9 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!      * `x`: [floating value](@ref floating_value).
-//!      * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!      * `m`: [Logical value](@ref logical) masking the operation.
+//!      * `x`: [floating value](@ref eve::floating_value).
+//!      * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!      * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**
 //!   1 .The computation returns a tuple-like whose elements are `sinpi(x)` and `cospi(x)`

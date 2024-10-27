@@ -73,9 +73,9 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`, `y`:  [arguments](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
-//!     * `tol`: [scalar value](@ref value) tolerance.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!     * `tol`: [scalar value](@ref eve::value) tolerance.
 //!
 //!   **Return value**
 //!

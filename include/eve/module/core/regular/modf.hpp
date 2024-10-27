@@ -75,35 +75,36 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/modf.cpp}
-//! @}
 //================================================================================================
   inline constexpr auto modf = functor<modf_t>;
 //================================================================================================
+//! @}
 //================================================================================================
 
-namespace detail
-{
-  template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr auto modf_(EVE_REQUIRES(cpu_), O const& o, T a) noexcept
+  namespace detail
   {
-    if constexpr(floating_value<T>)
+    template<typename T, callable_options O>
+    EVE_FORCEINLINE constexpr auto modf_(EVE_REQUIRES(cpu_), O const& o, T a) noexcept
     {
-      auto t = trunc[o.drop(pedantic)](a);
-      if constexpr(O::contains(raw))
+      if constexpr(floating_value<T>)
       {
-        return eve::zip(a-t, t);
-      }
-      else
-      {
-        auto f = if_else(is_eqz(a), a, a-t);
-        if constexpr(platform::supports_infinites)
+        auto t = trunc[o.drop(pedantic)](a);
+        if constexpr(O::contains(raw))
         {
-          f = if_else(is_infinite(a), eve::zero, f);
+          return eve::zip(a-t, t);
         }
+        else
+        {
+          auto f = if_else(is_eqz(a), a, a-t);
+          if constexpr(platform::supports_infinites)
+          {
+            f = if_else(is_infinite(a), eve::zero, f);
+          }
 
-        return eve::zip(f, t);
+          return eve::zip(f, t);
+        }
       }
+      else return eve::zip(zero(eve::as(a)), a);
     }
-    else return eve::zip(zero(eve::as(a)), a);
   }
-}}
+}

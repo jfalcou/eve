@@ -56,8 +56,8 @@ struct acospi_t : elementwise_callable<acospi_t, Options, raw_option>
 //! **Parameters**
 //!
 //!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**
 //!

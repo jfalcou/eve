@@ -61,10 +61,13 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/constant/valmin.cpp}
-//! @}
+//!
 //================================================================================================
   inline constexpr auto valmin = functor<valmin_t>;
 
 // Required for if_else optimisation detections
 using callable_valmin_ = tag_t<valmin>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

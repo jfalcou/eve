@@ -66,8 +66,8 @@ namespace eve
 //!     * `x`: first [argument](@ref eve::value).
 //!     * `xs...`: other [arguments](@ref eve::value).
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!      1. The return value type is  to the common `bit_value` of the parameters. Each parameter
@@ -78,13 +78,11 @@ namespace eve
 //!      2. equivalent to the call on the elements of the tuple.
 //!      3. [The operation is performed conditionnaly](@ref conditional).
 //!
-//!  @groupheader{External references
+//!  @groupheader{External references}
 //!   *  [Wikipedia](https://en.wikipedia.org/wiki/Bitwise_operation)
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/bit_andnot.cpp}
-//!  @groupheader{Semantic Modifiers}
 //================================================================================================
   inline constexpr auto bit_andnot = functor<bit_andnot_t>;
 //================================================================================================

@@ -50,7 +50,7 @@ template<eve::value V, std::integral I> auto get(V const& v,  I i)
 @endcode
 
 @subsection glossary_elementwise Element-wise Operations
-For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn` , a Callable Object `f`
+For any [values](@ref eve::value) `x1, ..., xn` of types `T1, ..., Tn` , a Callable Object `f`
 returning a [value](@ref eve::value) of type `R` is said to be **Element-wise** if the expression
 `R r = f(x1, ...,xn)` is semantically equivalent to:
 
@@ -80,7 +80,7 @@ definition is required by the internal implementation.
 
 @subsection glossary_arithmetic Arithmetic Functions
 
-For any [values](@ref eve::value) `x1`, ..., `xn` of types `T1`, ..., `Tn` so that the expression
+For any [values](@ref eve::value) `x1, ..., xn` of types `T1, ..., Tn` so that the expression
 `using C = eve::common_compatible_t<T1,...,Tn>` is valid, a Callable Object `f` is said to be
 an **Arithmetic Function** if the expression `C r = f(x1, ...,xn)` is semantically equivalent to:
 
@@ -98,11 +98,18 @@ In a less formal way, **EVE** @ref glossary_arithmetic generalizes the notion of
 arithmetic operations. By construction, a large majority of @ref glossary_arithmetic are _de facto_
 @ref glossary_elementwise.
 
+@subsection glossary_bitwise Bitwise Functions
+
+**EVE** @ref glossary_bitwise are @ref glossary_arithmetic that are quite type agnostic as long as they are all
+**size-compatible**. By construction, all but [bit_select](@ref eve::bit_select) @ref glossary_bitwise are
+ de facto_ @ref glossary_elementwise and return a value in the (possibly vector extended)
+ type of their first parameter.
+
 @subsection glossary_logical Logical Functions
 
 **EVE** @ref glossary_logical are @ref glossary_arithmetic that can only be applied to
-[logical values](@ref eve::logical_value) `L1`, ..., `Ln`  as long as they are all
-**cardinal-compatible**. By construction, a large majority of @ref glossary_bitwise are
+[logical values](@ref eve::logical_value) `L1, ..., Ln`  as long as they are all
+**cardinal-compatible**. By construction, a large majority of @ref glossary_logical are
 _de facto_ @ref glossary_elementwise.
 
 @subsection glossary_constant Constant Functions
@@ -125,10 +132,13 @@ than its mathematical value.
 The constant implementation is so that, for any constant generator `g`:
 
   - `g(eve::as<T>())`returns the nearest representable value of the mathematical constant
-  - `eve::downward(g)(eve::as<T>())`returns a value no lesser than 0.5 ULP from the mathematical constant
-  - `eve::upward(g)(eve::as<T>())`returns a value no greater than 0.5 ULP from the mathematical constant
+  - `g[eve::downward](eve::as<T>())`returns a value no lesser than 0.5 ULP from the mathematical constant
+  - `g[eve::upward](eve::as<T>())`returns a value no greater than 0.5 ULP from the mathematical constant
 
-For all constants, `eve::downward(g)(eve::as<T>()) <= g(eve::as<T>()) <= eve::upward(g)(eve::as<T>())`
+For all constants,
+
+ `g[eve::downward](eve::as<T>()) <= g(eve::as<T>()) <= g[eve::upward](eve::as<T>())`
+
 is always verified.
 
 We encourage user facing issue with reproducible computation to use those decorators to make all

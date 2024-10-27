@@ -41,9 +41,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`: [argument](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -52,9 +52,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/any.cpp}
-//! @}
 //================================================================================================
 EVE_MAKE_CALLABLE(any_, any);
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/regular/impl/any.hpp>

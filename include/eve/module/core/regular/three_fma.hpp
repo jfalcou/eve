@@ -10,8 +10,6 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/two_add.hpp>
-#include <eve/module/core/regular/fast_two_add.hpp>
-
 
 namespace eve
 {
@@ -19,8 +17,8 @@ namespace eve
   struct three_fma_t : elementwise_callable<three_fma_t, Options>
   {
     template<eve::floating_value T, eve::floating_value U, eve::floating_value V>
-   requires(eve::same_lanes_or_scalar<T, U, V>)
-     constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>
+    requires(eve::same_lanes_or_scalar<T, U, V>)
+      constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>, common_value_t<T, U, V>>
     operator()(T t, U u, V v) const noexcept
     { return EVE_DISPATCH_CALL(t, u, v); }
 
@@ -30,9 +28,9 @@ namespace eve
 //================================================================================================
 //! @addtogroup core_accuracy
 //! @{
-//!   @var two_prod
+//!   @var three_fma
 //!   @brief Computes the [elementwise](@ref glossary_elementwise)
-//!   triplet  of an fma value f and two errors e1 and e2 such that \f$ax+y = f+r_1+r_2/f$
+//!   triplet  of an fma value f and two errors e1 and e2 such that \f$ax+y = f+r_1+r_2\f$
 //!
 //!   **Defined in Header**
 //!
@@ -67,7 +65,7 @@ namespace eve
 //!
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/regular/tthree_fma.cpp}
+//!  @godbolt{doc/core/three_fma.cpp}
 //================================================================================================
   inline constexpr auto three_fma = functor<three_fma_t>;
 //================================================================================================

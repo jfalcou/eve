@@ -41,8 +41,8 @@ namespace eve
 //!   **Parameter**
 //!
 //!     * `x`: [argument](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -51,9 +51,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/minimum.cpp}
-//! @}
 //================================================================================================
   EVE_MAKE_CALLABLE(minimum_, minimum);
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/regular/impl/minimum.hpp>

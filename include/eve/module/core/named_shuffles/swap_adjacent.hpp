@@ -49,7 +49,6 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/named_shuffles/swap_adjacent.cpp}
-//! @}
 //================================================================================================
 struct swap_adjacent_t
 {
@@ -116,5 +115,8 @@ struct swap_adjacent_t
 };
 
 inline constexpr auto swap_adjacent = detail::named_shuffle_1<swap_adjacent_t> {};
+  //================================================================================================
+  //!  @}
+  //================================================================================================
 
 }

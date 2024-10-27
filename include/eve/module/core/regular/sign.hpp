@@ -58,12 +58,12 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`: [argument](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
-//!     1;  The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
+//!     1. The [elementwise](@ref glossary_elementwise) sign of `x` computed as:
 //!        - `+1` , if `x` is greater than 0
 //!        - `-1` , if `x` is less than 0
 //!        -  \f$\pm0\f$, if `x` is \f$\pm0\f$

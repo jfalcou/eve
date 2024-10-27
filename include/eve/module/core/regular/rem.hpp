@@ -61,9 +61,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [values](@ref value) argumentx.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`, `y`: [values](@ref eve::value) argumentx.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!         For unsigned integral the options upward and nearest are undefined behaviour as the result could
 //!         be negative.
 //!
-//!    @notes Although the infix notation with `%` is supported, the `%` operator on
+//!    @note Although the infix notation with `%` is supported, the `%` operator on
 //!     standard integral scalar type is the original one and so can lead to automatic
 //!     promotion. Moreover due to C++ limitations, `%` is not available for scalar floating
 //!     point values.

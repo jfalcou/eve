@@ -60,10 +60,13 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/constant/mone.cpp}
-//! @}
+//!
 //================================================================================================
 inline constexpr auto mone = functor<mone_t>;
 
 // Required for if_else optimisation detections
 using callable_mone_ = tag_t<mone>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

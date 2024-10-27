@@ -55,9 +55,9 @@ struct gcd_t : elementwise_callable<gcd_t, Options, raw_option>
 //!
 //!   **Parameters**
 //!
-//!     * `p`, `n`: [values](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `p`, `n`: [values](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

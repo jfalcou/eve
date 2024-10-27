@@ -86,6 +86,7 @@ concept invocable = requires(F&& f, Args&&...args)
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @brief std::predicate but doesn't require regularity
   //!
   //! @tparam T
@@ -94,4 +95,8 @@ concept invocable = requires(F&& f, Args&&...args)
   concept irregular_predicate = requires (T&& f, Args&&... args) {
     { !f(EVE_FWD(args)...) } -> std::convertible_to<bool>;
   };
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
 }

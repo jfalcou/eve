@@ -18,7 +18,7 @@ namespace eve
     template<integral_value T, integral_value N>
     EVE_FORCEINLINE constexpr as_wide_as_t<T, N> operator()(T t0, N s) const noexcept
       requires(eve::same_lanes_or_scalar<T, N>)
-    {                 
+    {
       return EVE_DISPATCH_CALL(t0, s);
     }
 
@@ -35,7 +35,7 @@ namespace eve
   };
 
 //================================================================================================
-//! @addtogroup core_arithmetic
+//! @addtogroup core_bitops
 //! @{
 //!   @var rshr
 //!   @brief Computes the arithmetic right/left shift operation according to shift sign.
@@ -64,8 +64,8 @@ namespace eve
 //!
 //!     * `x`: [argument](@ref eve::value) to be shifted.
 //!     * `n`: [shift](@ref eve::integral_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -74,7 +74,7 @@ namespace eve
 //!          If `N` is the size in bits  of the element type of `T`, all
 //!          [elements](@ref glossary_elementwise) of n must belong to the
 //!          interval: `]-N, N[` or the result is undefined.
-//!      2. [The operation is performed conditionnaly](@ref conditional)
+//!       2. [The operation is performed conditionnaly](@ref conditional)
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/rshr.cpp}

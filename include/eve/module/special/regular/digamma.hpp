@@ -56,9 +56,9 @@ struct digamma_t : elementwise_callable<digamma_t, Options>
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [floating_value](@ref value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`: [floating_value](@ref eve::value).
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!

@@ -53,8 +53,8 @@ namespace eve
 //!   **Parameters**
 //!
 //!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!  @groupheader{External references}
 //!   *  [C++ standard reference: asin](https://en.cppreference.com/w/cpp/numeric/math/asin)
@@ -67,7 +67,7 @@ namespace eve
 //!    1. Returns the [elementwise](@ref glossary_elementwise) value in \f$\pi\f$ multiples
 //!      of the arc sine of the input in the range \f$]-\frac12, \frac12]\f$.
 //!      In particular:
-//!      * If the element is \f$\pm0\f$, \it is returned unmodified.
+//!      * If the element is \f$\pm0\f$, it is returned unmodified.
 //!      * If the element \f$|x| > 1\f$, `NaN` is returned.
 //!      * If the element is a `Nan`, `NaN` is returned.
 //!    2. [The operation is performed conditionnaly](@ref conditional).

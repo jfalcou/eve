@@ -49,9 +49,7 @@ namespace eve
 //!      the conversion of `x` to type Target or the the eve constant of type Target.
 //!
 //!  @groupheader{Example}
-//!
 //!  @godbolt{doc/core/constant/as_value.cpp}
-//! @}
 //================================================================================================
   EVE_MAKE_CALLABLE(as_value_, as_value);
 
@@ -63,9 +61,9 @@ namespace eve
          if constexpr( requires { typename From::constant_callable_tag; } ) return from(t);//if constexpr( instance_of<From,functor> ) return from(t);
     else if constexpr( scalar_value<T> ) return static_cast<T>(from);
     else return T {from};
-   //  if constexpr( requires{ from(t);} ) return from(t);
-//       else if constexpr( scalar_value<T> ) return static_cast<T>(from);
-//       else return T(from);
     }
   }
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }

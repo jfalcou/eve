@@ -79,11 +79,11 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [integral value](@ref integral_value) arguments.
+//!     * `x`, `y`: [integral value](@ref eve::integral_value) arguments.
 //!     * `xs...`: [floating value](@ref eve::floating_value) arguments.
 //!     * `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -94,7 +94,8 @@ namespace eve
 //!        to be less than or equal to 0.5 of the average floating value, but may differ
 //!        by unity from the truncation given by `(x+y)/2`. Moreover, as some architectures provide
 //!        simd intrinsics to perform the operation, the scalar results may differ by one unit from
-//!        simd ones which are system dependent. </br>
+//!        simd ones which are system dependent.
+//!
 //!        However the `dowward` (respectively `upward`) options can be used to ensure the result is equivalent to
 //!        the integral conversion of `floor((x+y)/2)`, (respectively  `ceil((x+y)/2)`).
 //!     2. the arithmetic mean of its arguments. No overflow occurs.

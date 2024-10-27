@@ -73,10 +73,13 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/constant/zero.cpp}
-//! @}
+//!
 //================================================================================================
   inline constexpr auto zero = functor<zero_t>;
 
   // Required for if_else optimisation detections
   using callable_zero_ = tag_t<zero>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

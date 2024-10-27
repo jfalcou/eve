@@ -61,10 +61,13 @@ namespace eve
 //!  @groupheader{Example}
 //!
 //!  @godbolt{doc/core/constant/valmax.cpp}
-//! @}
+//!
 //================================================================================================
   inline constexpr auto valmax = functor<valmax_t>;
 
 // Required for if_else optimisation detections
 using callable_valmax_ = tag_t<valmax>;
+//================================================================================================
+//! @}
+//================================================================================================
 }

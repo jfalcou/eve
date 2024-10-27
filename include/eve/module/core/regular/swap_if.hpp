@@ -32,30 +32,34 @@ namespace eve
 //!
 //!   @godbolt{doc/core/swap_if.cpp}
 //!
-//! @}
 //================================================================================================
-template<logical_value Mask, value Value>
-void
-swap_if(Mask const& mask, Value& lhs, Value& rhs) noexcept
-{
-  if constexpr( scalar_value<Mask> )
+
+  template<logical_value Mask, value Value>
+  void
+  swap_if(Mask const& mask, Value& lhs, Value& rhs) noexcept
+  {
+    if constexpr( scalar_value<Mask> )
+    {
+      using std::swap;
+      if( static_cast<bool>(mask) ) swap(lhs, rhs);
+    }
+    else
+    {
+      auto tmp = lhs;
+      lhs      = if_else(mask, rhs, lhs);
+      rhs      = if_else(mask, tmp, rhs);
+    }
+  }
+
+  template<value Value>
+  void
+  swap_if(bool mask, Value& lhs, Value& rhs) noexcept
   {
     using std::swap;
     if( static_cast<bool>(mask) ) swap(lhs, rhs);
   }
-  else
-  {
-    auto tmp = lhs;
-    lhs      = if_else(mask, rhs, lhs);
-    rhs      = if_else(mask, tmp, rhs);
-  }
-}
+//================================================================================================
+//! @}
+//================================================================================================
 
-template<value Value>
-void
-swap_if(bool mask, Value& lhs, Value& rhs) noexcept
-{
-  using std::swap;
-  if( static_cast<bool>(mask) ) swap(lhs, rhs);
-}
 }

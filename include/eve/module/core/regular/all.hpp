@@ -41,10 +41,10 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [argument](@ref logical_value).
+//!     * `x`: [argument](@ref eve::logical_value).
 //!     * `t`: [top bits](@ref top_bits).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!   **Return value**
 //!
@@ -54,9 +54,11 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/all.cpp}
-//!  @}
 //================================================================================================
 EVE_MAKE_CALLABLE(all_, all);
+//================================================================================================
+//! @}
+//================================================================================================
 }
 
 #include <eve/module/core/regular/impl/all.hpp>

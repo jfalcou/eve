@@ -20,6 +20,7 @@ namespace eve
 {
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept value
   //! @brief The concept `value<T>` is satisfied if and only if T satisfies
   //! either `eve::scalar_value` or `eve::simd_value`.
@@ -31,9 +32,13 @@ namespace eve
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
   template<typename T> concept value                 = simd_value<T> || scalar_value<T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept integral_value
   //! @brief The concept `integral_value<T>` is satisfied if and only if T satisfies
   //! `eve::value` and the element type satisfies `std::integral`
@@ -44,9 +49,13 @@ namespace eve
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
   template<typename T> concept integral_value        = value<T> && std::integral<translate_element_type_t<T>>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept signed_value
   //! @brief The concept `signed_value<T>` is satisfied if and only if T satisfies
   //! `eve::value` and the element type satisfies `std::is_signed`
@@ -57,9 +66,13 @@ namespace eve
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
   template<typename T> concept signed_value          = value<T> && std::is_signed_v<translate_element_type_t<T>>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept unsigned_value
   //! @brief The concept `unsigned_value<T>` is satisfied if and only if T satisfies
   //! `eve::value` and the element type satisfies `std::unsigned_integral`
@@ -69,9 +82,13 @@ namespace eve
   //! - `eve::wide<std::uint8_t, eve::fixed<1>>`
   //================================================================================================
   template<typename T> concept unsigned_value        = value<T> && std::unsigned_integral<translate_element_type_t<T>>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept signed_integral_value
   //! @brief The concept `signed_integral_value<T>` is satisfied if and only if T satisfies
   //! `eve::value` and the element type satisfies `std::signed_integral`
@@ -81,9 +98,13 @@ namespace eve
   //! - `eve::wide<int, eve::fixed<1>>`
   //================================================================================================
   template<typename T> concept signed_integral_value = value<T> && std::signed_integral<translate_element_type_t<T>>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept floating_value
   //! @brief The concept `floating_value<T>` is satisfied if and only if T satisfies
   //! `eve::value` and the element type satisfies `std::floating_point`
@@ -93,9 +114,13 @@ namespace eve
   //! - `eve::wide<float, eve::fixed<2>>`
   //================================================================================================
   template<typename T> concept floating_value        = value<T> && std::floating_point<translate_element_type_t<T>>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept logical_value
   //! @brief The concept `logical_value<T>` is satisfied if and only if T satisfies
   //! `eve::value` and the element type satisfies is_logical_v
@@ -105,10 +130,14 @@ namespace eve
   //! - `eve::logical<double>`
   //================================================================================================
   template<typename T> concept logical_value         = value<T> && is_logical_v<T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
 
   //================================================================================================
   //! @ingroup simd_concepts
+  //! @{
   //! @concept plain_value
   //! @brief The concept `plain_value<T>` is satisfied if and only if T satisfies
   //! `eve::plain_simd_value` or `eve::plain_scalar_value`.
@@ -118,4 +147,7 @@ namespace eve
   //! - `eve::wide<double>`
   //================================================================================================
   template<typename T> concept plain_value         = plain_simd_value<T> || plain_scalar_value<T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 }

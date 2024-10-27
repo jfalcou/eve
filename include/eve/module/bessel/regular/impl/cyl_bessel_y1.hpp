@@ -135,7 +135,7 @@ namespace eve::detail
     {
       if( x <= T(4) ) return br_4(x); // x in (0, 4]
       if( x <= T(8) ) return br_8(x); // x in (4, 8]
-      return br_large(x);             // x in (8, \infty)
+      return br_large(x);             // x in (8, infty)
     }
     else
   {

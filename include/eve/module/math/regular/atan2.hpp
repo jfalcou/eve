@@ -67,9 +67,9 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`, `y`: [floating values](@ref floating_value).
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`, `y`: [floating values](@ref eve::floating_value).
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
@@ -104,7 +104,7 @@ namespace eve
 //!   *  [Wikipedia: Atan2](https://en.wikipedia.org/wiki/Atan2)
 //!
 //!  @groupheader{Example}
-//!  @godbolt{doc/core/atan2.cpp}
+//!  @godbolt{doc/math/atan2.cpp}
 //================================================================================================
   inline constexpr auto atan2 = functor<atan2_t>;
 //================================================================================================

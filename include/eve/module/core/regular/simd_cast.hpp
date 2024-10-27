@@ -62,66 +62,68 @@ namespace eve
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/core/simd_cast.cpp}
+//================================================================================================
+  template<typename Options> struct simd_cast_t : callable<simd_cast_t, Options>
+  {
+    template<typename T, typename U> static constexpr bool enabled_for(as<T>, as<U>)
+    {
+      using abi_t = typename T::abi_type;
+      if constexpr( plain_simd_value<T> && plain_simd_value<U> ) return true;
+      // This just happens to be true now, might not be the case on some future platform.
+      else if constexpr( logical_simd_value<T> && logical_simd_value<U> ) return true;
+      else if constexpr( abi_t::is_wide_logical && logical_simd_value<T> )
+      {
+        return enabled_for(as<typename T::mask_type> {}, as<U> {});
+      }
+      else if constexpr( abi_t::is_wide_logical && logical_simd_value<U> )
+      {
+        return enabled_for(as<T> {}, as<typename U::mask_type> {});
+      }
+      else if constexpr( product_simd_value<T> && product_simd_value<U> )
+      {
+        if constexpr( std::tuple_size_v<T> != std::tuple_size_v<U> ) return false;
+        else
+        {
+          auto make_as = []<typename M>(M) { return as<M> {}; };
+
+          using t_types = kumi::result::map_t<decltype(make_as), T>;
+          using u_types = kumi::result::map_t<decltype(make_as), U>;
+
+          return kumi::inner_product(t_types {},
+                                     u_types {},
+                                     true,
+                                     std::logical_and<> {},
+                                     [](auto a, auto b) { return enabled_for(a, b); });
+        }
+      }
+      else return false;
+    }
+
+    template<simd_value T, simd_value Target>
+    EVE_FORCEINLINE constexpr Target operator()(T x, as<Target> tgt) const noexcept
+    requires(enabled_for(as<T> {}, as<Target> {}))
+    {
+      return EVE_DISPATCH_CALL(x, tgt);
+    }
+
+    EVE_CALLABLE_OBJECT(simd_cast_t, simd_cast_);
+  };
+
+  inline constexpr auto simd_cast = functor<simd_cast_t>;
+//================================================================================================
 //! @}
 //================================================================================================
-template<typename Options> struct simd_cast_t : callable<simd_cast_t, Options>
-{
-  template<typename T, typename U> static constexpr bool enabled_for(as<T>, as<U>)
+
+  namespace detail
   {
-    using abi_t = typename T::abi_type;
-    if constexpr( plain_simd_value<T> && plain_simd_value<U> ) return true;
-    // This just happens to be true now, might not be the case on some future platform.
-    else if constexpr( logical_simd_value<T> && logical_simd_value<U> ) return true;
-    else if constexpr( abi_t::is_wide_logical && logical_simd_value<T> )
+    // This function is forward declared wrapper around simd_cast,
+    // so that internally we can call it anywhere.
+    template<typename T, typename Target> EVE_FORCEINLINE Target call_simd_cast(T x, as<Target> tgt)
     {
-      return enabled_for(as<typename T::mask_type> {}, as<U> {});
+      return eve::simd_cast(x, tgt);
     }
-    else if constexpr( abi_t::is_wide_logical && logical_simd_value<U> )
-    {
-      return enabled_for(as<T> {}, as<typename U::mask_type> {});
-    }
-    else if constexpr( product_simd_value<T> && product_simd_value<U> )
-    {
-      if constexpr( std::tuple_size_v<T> != std::tuple_size_v<U> ) return false;
-      else
-      {
-        auto make_as = []<typename M>(M) { return as<M> {}; };
 
-        using t_types = kumi::result::map_t<decltype(make_as), T>;
-        using u_types = kumi::result::map_t<decltype(make_as), U>;
-
-        return kumi::inner_product(t_types {},
-                                   u_types {},
-                                   true,
-                                   std::logical_and<> {},
-                                   [](auto a, auto b) { return enabled_for(a, b); });
-      }
-    }
-    else return false;
-  }
-
-  template<simd_value T, simd_value Target>
-  EVE_FORCEINLINE constexpr Target operator()(T x, as<Target> tgt) const noexcept
-  requires(enabled_for(as<T> {}, as<Target> {}))
-  {
-    return EVE_DISPATCH_CALL(x, tgt);
-  }
-
-  EVE_CALLABLE_OBJECT(simd_cast_t, simd_cast_);
-};
-
-inline constexpr auto simd_cast = functor<simd_cast_t>;
-
-namespace detail
-{
-  // This function is forward declared wrapper around simd_cast,
-  // so that internally we can call it anywhere.
-  template<typename T, typename Target> EVE_FORCEINLINE Target call_simd_cast(T x, as<Target> tgt)
-  {
-    return eve::simd_cast(x, tgt);
-  }
-
-} // namespace detail
+  } // namespace detail
 
 } // namespace eve
 

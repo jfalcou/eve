@@ -61,9 +61,9 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`, `y`: [floating_value](@ref floating_value) arguments.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `x`, `y`: [floating_value](@ref eve::floating_value) arguments.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**
 //!
@@ -89,8 +89,8 @@ namespace eve
 //!      *  pow_abs(\f$+\infty\f$, y) returns \f$+0\f$ for any negative y.
 //!      *  pow_abs(\f$+\infty\f$, y) returns \f$+\infty\f$ for any positive y.
 //!      *  except where specified above, if any argument is NaN, NaN is returned.
-//!     2. [The operation is performed conditionnaly](@ref conditional)
-//!     3. faster but less accurate call.
+//!   2. [The operation is performed conditionnaly](@ref conditional)
+//!   3. faster but less accurate call.
 //!
 //!  @groupheader{Example}
 //!  @godbolt{doc/math/pow_abs.cpp}

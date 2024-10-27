@@ -55,8 +55,8 @@ namespace eve
 //!
 //!     * `x`: [argument](@ref eve::integral_value).
 //!     * `n`: size of the groups of bits to be swapped. n MUST be a power of 2 else the call will assert.
-//!     * `c`: [Conditional expression](@ref conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref logical) masking the operation.
+//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!      1. Return `x` with pairs of contiguous groups of N bits swapped in each element.
