@@ -71,7 +71,7 @@ requires(rvv_abi<abi_t<T, N>>)
     return eve::replace_ignored(res, cond, cond.alternative);
   }
   else if constexpr( C::is_complete && !C::is_inverted ) return wide<T, N>(0);
-  else if constexpr( C::is_complete && C::is_inverted && N() == expected_cardinal_v<T> )
+  else if constexpr( C::is_complete && C::is_inverted )
   {
     return perform_alternative_load(rvv_true<T, N>(), tgt, ptr);
   }

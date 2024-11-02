@@ -445,6 +445,7 @@ namespace tts
     }
     using type = decltype(filter_impl(Type {}));
   };
+
   template<typename T> struct type {};
   using real_types        = types < double,float>;
   using int_types         = types < std::int64_t , std::int32_t , std::int16_t , std::int8_t>;

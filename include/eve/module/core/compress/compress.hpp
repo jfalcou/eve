@@ -101,3 +101,7 @@ namespace eve
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
 #  include <eve/module/core/compress/simd/arm/sve/compress.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/module/core/compress/simd/riscv/compress.hpp>
+#endif
