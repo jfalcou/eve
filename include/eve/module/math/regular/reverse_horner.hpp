@@ -65,13 +65,13 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`: [evaluation point floating value](@ref eve::floating_value) arguments.
-//!     * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in increasing power order,
+//!    * `x`: [evaluation point floating value](@ref eve::floating_value) arguments.
+//!    * `ci...`: [floating values](@ref eve::floating_value) polynom coefficients in increasing power order,
 //!        Note that the values of the `ci` are not necessarily floating but the non floating ones
 //!        are to be scalar
-//!     * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!    * `tci`: [non empty tuple](@ref kumi::non_empty_product_type) of floating values.
+//!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!

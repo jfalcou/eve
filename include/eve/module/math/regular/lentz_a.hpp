@@ -45,10 +45,10 @@ struct lentz_a_t : strict_elementwise_callable<lentz_a_t, Options>
 //!
 //!   **Parameters**
 //!
-//!     * `g`   : generator function.
-//!     * `tol` : tolerance value. If negative the effective tolerance will be abs(tol)*eve::eps(as(< u_t>)
+//!    * `g`   : generator function.
+//!    * `tol` : tolerance value. If negative the effective tolerance will be abs(tol)*eve::eps(as(< u_t>)
 //!               where u_t is the underlying floating type  associated to the return type of the invocable g.
-//!     * `max_terms` : no more than max_terms calls to the generator will be made,
+//!    * `max_terms` : no more than max_terms calls to the generator will be made,
 //!
 //!   The generator type should be an invocable which supports the following operations:
 //!   *  The call to g()  returns a floating value or a pair (kumi::tuple) of such.

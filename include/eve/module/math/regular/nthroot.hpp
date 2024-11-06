@@ -61,10 +61,10 @@ namespace eve
 //!
 //! **Parameters**
 //!
-//!     * `x`: [floating value](@ref eve::floating_value).
-//!     * `n`: [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref is_flint).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!    * `x`: [floating value](@ref eve::floating_value).
+//!    * `n`: [integral_value](@ref eve::integral_value). Actually `n` can be a [flint](@ref is_flint).
+//!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //! **Return value**
 //!

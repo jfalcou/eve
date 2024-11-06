@@ -72,16 +72,16 @@ namespace eve
 //!
 //!   **Parameters**
 //!
-//!     * `x`:  [real floating argument](@ref eve::floating_value).
-//!     * `ci`:  tuple  containing the coefficients by decreasing power order.
-//!     * `cm`:  tuple  containing the nodes by decreasing power order.
-//!     * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.
+//!    * `x`:  [real floating argument](@ref eve::floating_value).
+//!    * `ci`:  tuple  containing the coefficients by decreasing power order.
+//!    * `cm`:  tuple  containing the nodes by decreasing power order.
+//!    * `cmi...`: all the coefficients followed by all the nodes, both in decreasing power order.
 //!                The total number of values is to be odd. If s is this number, the (s+1)/2 first
 //!                are taken as the coefs and the others are the nodes.
 //!                Note that the values of the cmi are not necessarily floating but the non floating ones
 //!                are to be scalar
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
+//!    * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
+//!    * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
