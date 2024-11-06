@@ -162,10 +162,13 @@ $(function(){initNavTree('group__math__exp_ga0a3642b91604e578b8d4ef6314d39495.ht
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
 <div class="ttc" id="agroup__math__exp_ga0a3642b91604e578b8d4ef6314d39495_html_ga0a3642b91604e578b8d4ef6314d39495"><div class="ttname"><a href="#ga0a3642b91604e578b8d4ef6314d39495">eve::exp2</a></div><div class="ttdeci">constexpr auto exp2</div><div class="ttdoc">elementwise_callable object computing .</div><div class="ttdef"><b>Definition</b> exp2.hpp:90</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b> </p><pre class="fragment">* `x`: [value](@ref eve::value).
-* `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-* `m`: [Logical value](@ref eve::logical_value) masking the operation.
-</pre><p><b>Return value</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><code>x</code>: <a class="el" href="concepteve_1_1value.html">value</a>.</li>
+<li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
+<li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
 <ol type="1">
 <li>Returns the <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> exponential of base 2 of the input. In particular, for floating inputs:<ul>
 <li>If the element is \(\pm0\), \(1\) is returned</li>

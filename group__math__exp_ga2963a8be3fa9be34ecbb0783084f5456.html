@@ -165,10 +165,13 @@ $(function(){initNavTree('group__math__exp_ga2963a8be3fa9be34ecbb0783084f5456.ht
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:132</div></div>
 <div class="ttc" id="agroup__math__exp_ga2963a8be3fa9be34ecbb0783084f5456_html_ga2963a8be3fa9be34ecbb0783084f5456"><div class="ttname"><a href="#ga2963a8be3fa9be34ecbb0783084f5456">eve::pow_abs</a></div><div class="ttdeci">constexpr auto pow_abs</div><div class="ttdoc">Callable object computing the pow_abs function .</div><div class="ttdef"><b>Definition</b> pow_abs.hpp:98</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b> </p><pre class="fragment">* `x`, `y`: [floating_value](@ref eve::floating_value) arguments.
-* `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-* `m`: [Logical value](@ref eve::logical_value) masking the operation.
-</pre><p><b>Return value</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><code>x</code>, <code>y</code>: <a class="el" href="concepteve_1_1floating__value.html">floating_value</a> arguments.</li>
+<li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
+<li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
 <p>Returns <a class="el" href="glossary_semantic.html#glossary_elementwise">elementwise</a> \(|x|^y\).</p>
 <ol type="1">
 <li>The result type is the <a class="el" href="namespaceeve.html#a3019f6287bf3bec97c901d25528dc546">common type</a> of the two parameters. In particular we have (IEC 60559) for floating entries:<ul>

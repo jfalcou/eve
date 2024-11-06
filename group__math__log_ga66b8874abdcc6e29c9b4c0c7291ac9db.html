@@ -163,11 +163,14 @@ $(function(){initNavTree('group__math__log_ga66b8874abdcc6e29c9b4c0c7291ac9db.ht
 <div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:132</div></div>
 <div class="ttc" id="agroup__math__log_ga66b8874abdcc6e29c9b4c0c7291ac9db_html_ga66b8874abdcc6e29c9b4c0c7291ac9db"><div class="ttname"><a href="#ga66b8874abdcc6e29c9b4c0c7291ac9db">eve::logspace_add</a></div><div class="ttdeci">constexpr auto logspace_add</div><div class="ttdoc">tuple_callable object computing the logspace_add operation:</div><div class="ttdef"><b>Definition</b> logspace_add.hpp:89</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
-</div><!-- fragment --><p><b>Parameters</b> </p><pre class="fragment">* `x`, `...xs`: [real](@ref eve::floating_value) arguments.
-* `tup`: [non empty tuple](@ref kumi::non_empty_product_type) of arguments.
-* `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-* `m`: [Logical value](@ref eve::logical_value) masking the operation.
-</pre><p><b>Return value</b></p>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><code>x</code>, <code>...xs</code>: <a class="el" href="concepteve_1_1floating__value.html">real</a> arguments.</li>
+<li><code>tup</code>: non empty tuple of arguments.</li>
+<li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
+<li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
 <ol type="1">
 <li>The call <code><a class="el" href="#ga66b8874abdcc6e29c9b4c0c7291ac9db" title="tuple_callable object computing the logspace_add operation:">logspace_add(x, xs...)</a></code> is semantically equivalent to <code>log(<a class="el" href="group__math__exp_ga01387edd49b1ff23f210c7105d65839e.html#ga01387edd49b1ff23f210c7105d65839e" title="elementwise_callable object computing .">exp(log(x))</a> + + <a class="el" href="group__math__exp_ga01387edd49b1ff23f210c7105d65839e.html#ga01387edd49b1ff23f210c7105d65839e" title="elementwise_callable object computing .">exp(log(xs))</a>...)</code> without causing unnecessary overflows or throwing away too much accuracy.</li>
 <li>equivalent to the call on the elements of the tuple.</li>
