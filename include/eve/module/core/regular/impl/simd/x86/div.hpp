@@ -92,7 +92,7 @@ namespace eve::detail
     auto src = alternative(cx, v, as<wide<T, N>> {});
     if constexpr(O::contains(left))
     {
-      return sub.behavior(cpu_{}, o, v, w);
+      return div.behavior(cpu_{}, o, v, w);
     }
     else if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
