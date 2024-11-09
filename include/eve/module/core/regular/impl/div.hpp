@@ -49,7 +49,11 @@ namespace eve::detail
   template<callable_options O, typename T>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
-    if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
+    if constexpr(O::contains(left))
+    {
+      return div[o.drop(left)](b, a);
+    }
+    else if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower) ))
     {
       if constexpr(O::contains(strict))
       {
@@ -220,6 +224,7 @@ namespace eve::detail
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
   EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+  requires(!O::contains(left))
   {
     auto that = r1;
     if (O::contains(upper))  that = mul[lower](r1, rs...);

@@ -16,7 +16,7 @@ namespace eve::detail
   EVE_FORCEINLINE auto sub_(EVE_REQUIRES(sve_), C const& mask, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(widen))
+    if constexpr(O::contains_any(widen, left))
     {
       return sub.behavior(cpu_{}, opts, a, b);
     }
@@ -51,7 +51,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto sub_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(widen))
+    if constexpr(O::contains(left))
+    {
+      return sub[opts.drop(left)](b, a);
+    }
+    else if constexpr(O::contains(widen))
     {
       return sub.behavior(cpu_{}, opts, a, b);
     }

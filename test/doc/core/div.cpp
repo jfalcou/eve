@@ -13,6 +13,7 @@ int main()
             << " <- qf                    = " << qf << '\n'
             << " -> div(pf, qf)           = " << eve::div(pf, qf) << '\n'
             << " -> pf / qf               = " << pf / qf << '\n'
+            << " -> div[left](pf, qf)     = " << eve::div[eve::left](pf, qf) << "\n"
             << " -> div[upper](pf, qf)    = " << eve::div[eve::upper](pf, qf) << '\n'
             << " -> div[lower](pf, qf)    = " << eve::div[eve::lower](pf, qf) << '\n'
             << " -> div[pf> qf](pf, qf)   = " << eve::div[pf>qf](pf, qf) << '\n';
@@ -24,8 +25,8 @@ int main()
             << " <- rf                       = " << rf << '\n'
             << " <- sf                       = " << sf << '\n'
             << " -> div[toward_zero](rf, sf) = " << eve::div[eve::toward_zero](rf, sf) << '\n'
-            << " -> div[lower](rf, sf)    = " << eve::div[eve::lower](rf, sf)    << '\n'
-            << " -> div[upper](rf, sf)      = " << eve::div[eve::upper](rf, sf)      << '\n'
+            << " -> div[lower](rf, sf)       = " << eve::div[eve::lower](rf, sf)       << '\n'
+            << " -> div[upper](rf, sf)       = " << eve::div[eve::upper](rf, sf)       << '\n'
             << " -> div[to_nearest](rf, sf)  = " << eve::div[eve::to_nearest](rf, sf)  << '\n';
 
   auto k = kumi::tuple{pf, pf, pf, 1};
