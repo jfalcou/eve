@@ -43,7 +43,7 @@ namespace eve::detail
   {
     if (O::contains(left))
     {
-      return sub[opts.drop(left)](b, a);
+      return sub.behavior(cpu_{}, opts, a, b);
     }
     else if constexpr (O::contains(saturated) || O::contains(upper) || O::contains(lower))
     {
