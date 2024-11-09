@@ -51,8 +51,8 @@ namespace eve::detail
   {
     if constexpr(O::contains(left))
     {
-      return sub[opts.drop(left)](b, a)
-        }
+      return sub[opts.drop(left)](b, a);
+    }
     else if constexpr(O::contains_any(lower, upper))
     {
       return sub.behavior(cpu_{}, opts, a, b);
