@@ -18,7 +18,7 @@ namespace eve::detail
   {
     if (O::contains(left))
     {
-      return sub[opts.drop(left)](b, a);
+      return div[opts.drop(left)](b, a);
     }
     else if constexpr (O::contains_any(saturated, upper, lower, toward_zero,
                                   upward, downward, to_nearest, widen))
