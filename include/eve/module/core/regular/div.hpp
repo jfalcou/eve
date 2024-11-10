@@ -104,7 +104,7 @@ namespace eve
 //!       ensures generally faster computation, but strict inequality.
 //!      7. computes the saturated division of `x` by  `y`.
 //!         The result is always defined even if the denominator is 0.
-//!      8. `sub[left](a, b)` is semantically equivalent to  `sub(b, a)`
+//!      8. `div[left](a, b)` is semantically equivalent to  `div(b, a)`
 ///!
 //!         The relevant cases are just in fact the division by 0 for integral types
 //!         in which case the result is [`eve::valmin(as(x))`](@ref valmin) or
