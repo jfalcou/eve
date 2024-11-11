@@ -20,29 +20,40 @@ namespace eve::detail
                                              wide<T, N> v, wide<T, N> w) noexcept
   requires (arm_abi<abi_t<T, N>> && O::contains(widen))
   {
-    constexpr auto c = categorize<wide<T, N>>();
+    if (O::contains(left))
+    {
+      return sub[opts.drop(left)](w, v);
+    }
+    else
+    {
+      constexpr auto c = categorize<wide<T, N>>();
 
-    auto fix = [](auto r){
-      using u_t  = upgrade_t<T>;
-      using uw_t = upgrade_t<wide<T, N>>;
-      if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
-      else                                               return simd_cast(wide<u_t>{r}, as<uw_t>{});
-    };
+      auto fix = [](auto r){
+        using u_t  = upgrade_t<T>;
+        using uw_t = upgrade_t<wide<T, N>>;
+        if constexpr(N::value == expected_cardinal_v<u_t>) return uw_t{r};
+        else                                               return simd_cast(wide<u_t>{r}, as<uw_t>{});
+      };
 
-    if      constexpr( c == category::int32x2  ) return fix(vsubl_s32(v, w));
-    else if constexpr( c == category::uint32x2 ) return fix(vsubl_u32(v, w));
-    else if constexpr( c == category::int16x4  ) return fix(vsubl_s16(v, w));
-    else if constexpr( c == category::uint16x4 ) return fix(vsubl_u16(v, w));
-    else if constexpr( c == category::int8x8   ) return fix(vsubl_s8 (v, w));
-    else if constexpr( c == category::uint8x8  ) return fix(vsubl_u8 (v, w));
-    else return sub.behavior(cpu_{}, opts, v, w);
+      if      constexpr( c == category::int32x2  ) return fix(vsubl_s32(v, w));
+      else if constexpr( c == category::uint32x2 ) return fix(vsubl_u32(v, w));
+      else if constexpr( c == category::int16x4  ) return fix(vsubl_s16(v, w));
+      else if constexpr( c == category::uint16x4 ) return fix(vsubl_u16(v, w));
+      else if constexpr( c == category::int8x8   ) return fix(vsubl_s8 (v, w));
+      else if constexpr( c == category::uint8x8  ) return fix(vsubl_u8 (v, w));
+      else return sub.behavior(cpu_{}, opts, v, w);
+    }
   }
 
   template<callable_options O, arithmetic_scalar_value T, typename N>
   EVE_FORCEINLINE wide<T, N> sub_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires (arm_abi<abi_t<T, N>> && !O::contains(widen))
   {
-    if constexpr(O::contains_any(lower, upper))
+    if constexpr(O::contains(left))
+    {
+      return sub[opts.drop(left)](b, a);
+    }
+    else if constexpr(O::contains_any(lower, upper))
     {
       return sub.behavior(cpu_{}, opts, a, b);
     }

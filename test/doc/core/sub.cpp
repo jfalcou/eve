@@ -21,6 +21,7 @@ int main()
   std::cout << "<- wu1                           = " << wu1 << "\n";
 
   std::cout << "-> sub(wf0, wf1)                 = " << eve::sub(wf0, wf1) << "\n";
+  std::cout << "-> sub[left](wf0, wf1)           = " << eve::sub[eve::left](wf0, wf1) << "\n";
   std::cout << "-> sub[ignore_last(2)](wf0, wf1) = " << eve::sub[eve::ignore_last(2)](wf0, wf1) << "\n";
   std::cout << "-> sub[wf0 != 0](wf0, wf1)       = " << eve::sub[wf0 != 0](wf0, wf1) << "\n";
   std::cout << "-> sub(wu0, wu1)                 = " << eve::sub(wu0, wu1) << "\n";

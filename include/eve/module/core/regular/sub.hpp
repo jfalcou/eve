@@ -15,7 +15,8 @@ namespace eve
 {
   template<typename Options>
   struct sub_t : tuple_callable<sub_t, Options, saturated_option, lower_option,
-                                upper_option, strict_option, widen_option>
+                                upper_option, strict_option, widen_option, left_option,
+                                right_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...> && !Options::contains(widen))
@@ -79,6 +80,8 @@ namespace eve
 //!      constexpr auto sub[lower](/*any of the above overloads*/)                    noexcept; // 5
 //!      constexpr auto sub[upper](/*any of the above overloads*/)                    noexcept; // 6
 //!      constexpr auto sub[widen](/*any of the above overloads*/)                    noexcept; // 7
+//!      constexpr auto sub[right](/*any of the above overloads*/)                    noexcept; // 1
+//!      constexpr auto sub[left](/*any of the above overloads*/)                     noexcept; // 8
 //!   }
 //!   @endcode
 //!
@@ -106,6 +109,7 @@ namespace eve
 //!       to be greater or equal to the exact one (except for Nans).
 //!    7. The operation is computed in the double sized element type (if available).
 //!       This decorator has no effect on double and 64 bits integrals.
+//!    8. `sub[left](a, b)` is semantically equivalent to  `sub(b, a)`
 //!
 //!
 //!   @note

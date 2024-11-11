@@ -16,7 +16,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires sve_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated) || O::contains(upper) || O::contains(lower))
+    if (O::contains(left))
+    {
+      return div[opts.drop(left)](b, a);
+    }
+    else if constexpr (O::contains(saturated) || O::contains(upper) || O::contains(lower))
     {
       return div.behavior(cpu_{}, opts, a, b);
     }
@@ -37,7 +41,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T,N> div_(EVE_REQUIRES(sve_), C const& cx, O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains(saturated) || O::contains(upper) || O::contains(lower))
+    if (O::contains(left))
+    {
+      return div.behavior(cpu_{}, opts, a, b);
+    }
+    else if constexpr (O::contains(saturated) || O::contains(upper) || O::contains(lower))
     {
       return div.behavior(cpu_{}, opts, a, b);
     }

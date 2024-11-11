@@ -18,7 +18,11 @@ namespace eve::detail
   EVE_FORCEINLINE auto sub_(EVE_REQUIRES(vmx_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires ppc_abi<abi_t<T, N>>
   {
-    if constexpr( O::contains_any(lower, upper, widen) || (O::contains(saturated) && std::integral<T>))
+    if constexpr(O::contains(left))
+    {
+      return sub[opts.drop(left)](b, a);
+    }
+    else if constexpr( O::contains_any(lower, upper, widen) || (O::contains(saturated) && std::integral<T>))
       return sub.behavior(cpu_{}, opts, a, b);
     else
       return wide<T, N>(vec_sub(a.storage(), b.storage()));

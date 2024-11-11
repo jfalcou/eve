@@ -25,13 +25,16 @@ namespace eve
   struct associated_mode      {};
   struct compensated_mode     {};
   struct condon_shortley_mode {};
+  struct cylindrical_mode     {};
   struct definitely_mode      {};
   struct kind_1_mode          {};
   struct kind_2_mode          {};
+  struct left_mode            {};
   struct numeric_mode         {};
   struct p_kind_mode          {};
   struct promote_mode         {};
   struct q_kind_mode          {};
+  struct right_mode           {};
   struct spherical_mode       {};
   struct successor_mode       {};
 
@@ -53,15 +56,18 @@ namespace eve
   [[maybe_unused]] inline constexpr auto associated       = ::rbr::flag( associated_mode{}      );
   [[maybe_unused]] inline constexpr auto compensated      = ::rbr::flag( compensated_mode{}     );
   [[maybe_unused]] inline constexpr auto condon_shortley  = ::rbr::flag( condon_shortley_mode{} );
+  [[maybe_unused]] inline constexpr auto cylindrical      = ::rbr::flag( cylindrical_mode{}     );
   [[maybe_unused]] inline constexpr auto downward         = ::rbr::flag( downward_mode{}        );
   [[maybe_unused]] inline constexpr auto kind_1           = ::rbr::flag( kind_1_mode{}          );
   [[maybe_unused]] inline constexpr auto kind_2           = ::rbr::flag( kind_2_mode{}          );
+  [[maybe_unused]] inline constexpr auto left             = ::rbr::flag( left_mode{}            );
   [[maybe_unused]] inline constexpr auto numeric          = ::rbr::flag( numeric_mode{}         );
   [[maybe_unused]] inline constexpr auto pedantic         = ::rbr::flag( pedantic_mode{}        );
   [[maybe_unused]] inline constexpr auto p_kind           = ::rbr::flag( p_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto promote          = ::rbr::flag( promote_mode{}         );
   [[maybe_unused]] inline constexpr auto q_kind           = ::rbr::flag( q_kind_mode{}          );
   [[maybe_unused]] inline constexpr auto raw              = ::rbr::flag( raw_mode{}             );
+  [[maybe_unused]] inline constexpr auto right            = ::rbr::flag( right_mode{}           );
   [[maybe_unused]] inline constexpr auto spherical        = ::rbr::flag( spherical_mode{}       );
   [[maybe_unused]] inline constexpr auto successor        = ::rbr::flag( successor_mode{}       );
   [[maybe_unused]] inline constexpr auto to_nearest       = ::rbr::flag( to_nearest_mode{}      );
@@ -76,8 +82,10 @@ namespace eve
   struct associated_option      : detail::exact_option<associated>      {};
   struct compensated_option     : detail::exact_option<compensated>     {};
   struct condon_shortley_option : detail::exact_option<condon_shortley> {};
+  struct cylindrical_option     : detail::exact_option<cylindrical>     {};
   struct kind_1_option          : detail::exact_option<kind_1>          {};
   struct kind_2_option          : detail::exact_option<kind_2>          {};
+  struct left_option            : detail::exact_option<left>            {};
   struct numeric_option         : detail::exact_option<numeric>         {};
   struct p_kind_option          : detail::exact_option<p_kind>          {};
   struct promote_option         : detail::exact_option<promote>         {};
@@ -87,6 +95,7 @@ namespace eve
   struct downward_option        : detail::exact_option<downward>        {};
   struct pedantic_option        : detail::exact_option<pedantic>        {};
   struct raw_option             : detail::exact_option<raw>             {};
+  struct right_option           : detail::exact_option<right>           {};
   struct to_nearest_option      : detail::exact_option<to_nearest>      {};
   struct toward_zero_option     : detail::exact_option<toward_zero>     {};
   struct upward_option          : detail::exact_option<upward>          {};

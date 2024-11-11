@@ -86,6 +86,8 @@ TTS_CASE_WITH("Check behavior of div on wide",
   TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return div[saturated](e, f); }, a0, a2), 1);
   TTS_ULP_EQUAL(div(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div(e, mul(f, g)); }, a0, a1, a2), 1);
   TTS_ULP_EQUAL(div[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[saturated](e, mul[saturated](f, g)); }, a0, a1, a2), 1);
+  TTS_IEEE_EQUAL(eve::div[eve::left](a0, a2), eve::div(a2, a0));
+  TTS_IEEE_EQUAL(eve::div[eve::left][a0 < 5](a0, a2), eve::if_else(a0 < 5, eve::div(a2, a0), a0));
   if constexpr (eve::floating_value<T>)
   {
     TTS_ULP_EQUAL( div[lower](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return div[lower](div[lower](e, f), g); }, a0, a1, a2), 2.0);

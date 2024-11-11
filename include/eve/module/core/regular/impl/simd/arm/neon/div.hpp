@@ -16,7 +16,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
   requires arm_abi<abi_t<T, N>>
   {
-    if constexpr (O::contains_any(saturated, upper, lower, toward_zero,
+    if (O::contains(left))
+    {
+      return div[opts.drop(left)](b, a);
+    }
+    else if constexpr (O::contains_any(saturated, upper, lower, toward_zero,
                                   upward, downward, to_nearest, widen))
     {
       return div.behavior(cpu_{}, opts, a, b);

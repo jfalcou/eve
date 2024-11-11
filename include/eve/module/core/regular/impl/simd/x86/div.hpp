@@ -20,7 +20,11 @@ namespace eve::detail
   EVE_FORCEINLINE wide<T, N> div_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept
     requires x86_abi<abi_t<T, N>>
   {
-    if constexpr(O::contains(saturated) ||
+    if constexpr(O::contains(left))
+    {
+      return div[opts.drop(left)](b, a);
+    }
+    else if constexpr(O::contains(saturated) ||
                  O::contains(toward_zero) || O::contains(upward) ||
                  O::contains(downward) || O::contains(to_nearest))
     {
@@ -86,7 +90,11 @@ namespace eve::detail
   {
     constexpr auto c = categorize<wide<T, N>>();
     auto src = alternative(cx, v, as<wide<T, N>> {});
-    if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
+    if constexpr(O::contains(left))
+    {
+      return div.behavior(cpu_{}, o, v, w);
+    }
+    else if constexpr (floating_value<T> &&  !O::contains(strict) && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr(current_api >= avx512)
       {

@@ -15,7 +15,9 @@ namespace eve
 {
   template<typename Options>
   struct div_t : tuple_callable<div_t, Options, saturated_option, upward_option, downward_option,
-                                to_nearest_option, toward_zero_option, upper_option, lower_option, strict_option>
+                                to_nearest_option, toward_zero_option, upper_option,
+                                lower_option, strict_option, left_option,
+                                right_option>
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
@@ -69,7 +71,9 @@ namespace eve
 //!      constexpr auto div[upper][srict](/*any of the above overloads*/)             noexcept; // 6
 //!
 //!      // Semantic options
+//!      constexpr auto div[right](/*any of the above overloads*/)                    noexcept; // 1
 //!      constexpr auto div[saturated](integral_value auto x, integral_value auto y)) noexcept; // 7
+//!      constexpr auto div[left](/*any of the above overloads*/)                     noexcept; // 8
 //!   }
 //!   @endcode
 //!
@@ -100,7 +104,8 @@ namespace eve
 //!       ensures generally faster computation, but strict inequality.
 //!      7. computes the saturated division of `x` by  `y`.
 //!         The result is always defined even if the denominator is 0.
-//!
+//!      8. `div[left](a, b)` is semantically equivalent to  `div(b, a)`
+///!
 //!         The relevant cases are just in fact the division by 0 for integral types
 //!         in which case the result is [`eve::valmin(as(x))`](@ref valmin) or
 //!         [`valmax(as(x))`](ref eve::valmax) according to the dividend sign, and
