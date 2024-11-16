@@ -160,7 +160,7 @@ namespace eve
       }
       else
       {
-        if constexpr( scalar_value<T> )
+        if constexpr( scalar_value<T> && scalar_value<U> )
         {
           if( a0 == mone(as(a0)) && is_infinite(a1) ) return one(as<r_t>());
         }
