@@ -39,7 +39,7 @@ namespace eve
 //! @addtogroup core_bitops
 //! @{
 //!   @var bit_ternary
-//!   @brief `strict_elementwise_callable` object implementing ternary logic.
+//!   @brief `callable` object implementing ternary logic.
 //!
 //!   @groupheader{Header file}
 //!
@@ -52,12 +52,7 @@ namespace eve
 //!   @code
 //!   namespace eve
 //!   {
-//!      // Regular overloads
 //!      constexpr auto bit_ternary(integral_constant k, auto u, auto v, auto w)         noexcept; // 1
-//!
-//!      // Lanes masking
-//!      constexpr auto bit_xor[conditional_expr auto c](/*any of the above overloads*/) noexcept; // 2
-//!      constexpr auto bit_xor[logical_value auto m](/*any of the above overloads*/)    noexcept; // 2
 //!   }
 //!   @endcode
 //!
@@ -66,8 +61,6 @@ namespace eve
 //!     * `k`: integral constant whose bits are the result of a lookup table for the ternary operation.
 //!       The consteval function mfb (make from bits) can be used to generate this constant from its bits (see below).
 //!     * `u`, `v`, `w`, : first [argument](@ref eve::value).
-//!     * `c`: [Conditional expression](@ref eve::conditional_expr) masking the operation.
-//!     * `m`: [Logical value](@ref eve::logical_value) masking the operation.
 //!
 //!    **Return value**
 //!
