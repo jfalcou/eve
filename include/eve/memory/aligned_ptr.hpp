@@ -10,7 +10,6 @@
 #include <eve/assert.hpp>
 #include <eve/memory/align.hpp>
 #include <eve/memory/is_aligned.hpp>
-#include <eve/memory/is_aligned.hpp>
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/element_type.hpp>
 
