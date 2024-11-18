@@ -12,7 +12,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/dist.hpp>
-#include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>

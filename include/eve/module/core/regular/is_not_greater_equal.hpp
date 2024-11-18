@@ -17,7 +17,6 @@
 #include <eve/module/core/regular/fanm.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/next.hpp>
-#include <eve/module/core/regular/max.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 

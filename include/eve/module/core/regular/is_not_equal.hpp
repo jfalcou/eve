@@ -11,7 +11,6 @@
 #include <eve/detail/function/friends.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
-#include <eve/traits/as_logical.hpp>
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/convert.hpp>

@@ -13,7 +13,6 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/if_else.hpp>
-#include <eve/traits/as_logical.hpp>
 #include <eve/module/core/regular/fam.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/max.hpp>
