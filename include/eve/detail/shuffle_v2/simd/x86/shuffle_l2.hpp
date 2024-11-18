@@ -84,7 +84,7 @@ shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
   if constexpr( sizeof(T) * G < 4 ) return no_matching_shuffle;
   else if constexpr( !P::has_zeroes )
   {
-    constexpr int m = idxm::x86_mm_shuffle_4(*P::repeated_16);
+    constexpr auto m = static_cast<_MM_PERM_ENUM>(idxm::x86_mm_shuffle_4(*P::repeated_16));
 
     if constexpr( P::reg_size == 16 ) return _mm_shuffle_epi32(x, m);
     else if constexpr( current_api == avx )
@@ -98,7 +98,7 @@ shuffle_l2_x86_repeated_128_4x32(P p, fixed<G> g, wide<T, N> x)
   else if constexpr( current_api < avx512 ) return no_matching_shuffle;
   else
   {
-    constexpr int m    = idxm::x86_mm_shuffle_4(*P::repeated_16);
+    constexpr auto   m = static_cast<_MM_PERM_ENUM>(idxm::x86_mm_shuffle_4(*P::repeated_16));
     auto          mask = is_na_or_we_logical_mask(p, g, as(x)).storage();
 
     if constexpr( P::reg_size == 16 ) return _mm_maskz_shuffle_epi32(mask, x, m);
