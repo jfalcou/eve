@@ -150,24 +150,14 @@ $(function(){initNavTree('group__core__bitops_gadbcf7304c34de136c4c62b68ceaa19cb
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">   <span class="comment">// Regular overloads</span></div>
 <div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadbcf7304c34de136c4c62b68ceaa19cb">bit_ternary</a>(integral_constant k, <span class="keyword">auto</span> u, <span class="keyword">auto</span> v, <span class="keyword">auto</span> w)         <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
-<div class="line"> </div>
-<div class="line">   <span class="comment">// Lanes masking</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga6c8a73d644a582b4684e31c5239e4529.html#ga6c8a73d644a582b4684e31c5239e4529">bit_xor</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
-<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__core__bitops_ga6c8a73d644a582b4684e31c5239e4529.html#ga6c8a73d644a582b4684e31c5239e4529">bit_xor</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
-<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:132</div></div>
-<div class="ttc" id="agroup__core__bitops_ga6c8a73d644a582b4684e31c5239e4529_html_ga6c8a73d644a582b4684e31c5239e4529"><div class="ttname"><a href="group__core__bitops_ga6c8a73d644a582b4684e31c5239e4529.html#ga6c8a73d644a582b4684e31c5239e4529">eve::bit_xor</a></div><div class="ttdeci">constexpr auto bit_xor</div><div class="ttdoc">strict_tuple_callable object computing the bitwise XOR of its arguments.</div><div class="ttdef"><b>Definition</b> bit_xor.hpp:86</div></div>
-<div class="ttc" id="agroup__core__bitops_gadbcf7304c34de136c4c62b68ceaa19cb_html_gadbcf7304c34de136c4c62b68ceaa19cb"><div class="ttname"><a href="#gadbcf7304c34de136c4c62b68ceaa19cb">eve::bit_ternary</a></div><div class="ttdeci">constexpr auto bit_ternary</div><div class="ttdoc">strict_elementwise_callable object implementing ternary logic.</div><div class="ttdef"><b>Definition</b> bit_ternary.hpp:106</div></div>
+<div class="ttc" id="agroup__core__bitops_gadbcf7304c34de136c4c62b68ceaa19cb_html_gadbcf7304c34de136c4c62b68ceaa19cb"><div class="ttname"><a href="#gadbcf7304c34de136c4c62b68ceaa19cb">eve::bit_ternary</a></div><div class="ttdeci">constexpr auto bit_ternary</div><div class="ttdoc">callable object implementing ternary logic.</div><div class="ttdef"><b>Definition</b> bit_ternary.hpp:99</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:18</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><code>k</code>: integral constant whose bits are the result of a lookup table for the ternary operation. The consteval function mfb (make from bits) can be used to generate this constant from its bits (see below).</li>
 <li><code>u</code>, <code>v</code>, <code>w</code>, : first <a class="el" href="concepteve_1_1value.html">argument</a>.</li>
-<li><code>c</code>: <a class="el" href="concepteve_1_1conditional__expr.html">Conditional expression</a> masking the operation.</li>
-<li><code>m</code>: <a class="el" href="concepteve_1_1logical__value.html">Logical value</a> masking the operation.</li>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
