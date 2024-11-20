@@ -18,4 +18,4 @@
 //!   **Convenience header:** @code{.cpp} #include <eve/module/elliptic.hpp> @endcode
 //! @}
 //==================================================================================================
-#include <eve/module/elliptic/regular/elliptic.hpp>
+#include <eve/module/elliptic/elliptic.hpp>

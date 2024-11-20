@@ -33,6 +33,7 @@
 #include <eve/module/core/constant/nbmantissabits.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/constant/oneosqrteps.hpp>
+#include <eve/module/math/constant/oneotwoeps.hpp>
 #include <eve/module/core/constant/signmask.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
 #include <eve/module/core/constant/sqrteps.hpp>

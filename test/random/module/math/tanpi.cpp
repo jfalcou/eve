@@ -10,8 +10,8 @@
 #include "producers.hpp"
 
 #include <cmath>
-#include <eve/detail/function/tmp/boost_math_cospi.hpp>
-#include <eve/detail/function/tmp/boost_math_sinpi.hpp>
+#include <tmp_boost/boost_math_cospi.hpp>
+#include <tmp_boost/boost_math_sinpi.hpp>
 
 TTS_CASE_TPL("Random check for eve::tanpi", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)

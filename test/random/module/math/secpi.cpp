@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-#include <eve/detail/function/tmp/boost_math_cospi.hpp>
+#include <tmp_boost/boost_math_cospi.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 #include "producers.hpp"

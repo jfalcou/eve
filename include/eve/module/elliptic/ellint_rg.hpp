@@ -12,8 +12,8 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/hz_device.hpp>
 #include <eve/module/core.hpp>
-#include <eve/module/elliptic/regular/ellint_rd.hpp>
-#include <eve/module/elliptic/regular/ellint_rf.hpp>
+#include <eve/module/elliptic/ellint_rd.hpp>
+#include <eve/module/elliptic/ellint_rf.hpp>
 #include <eve/module/math.hpp>
 #include <eve/traits/common_value.hpp>
 
